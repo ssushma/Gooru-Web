@@ -1,0 +1,280 @@
+.moreInfoMetaData {
+	width: 160px;
+	float: left;
+	border-right: 2px dashed #DDD;
+	height: 230px;
+	overflow: auto;
+	padding-right: 10px;
+	padding-left: 11px;
+}
+
+.moreInfoTitle {
+	color: #515151;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.gradeIcon,.tagIcon,.likesIcon,.timeIcon,.shareIcon,.rightsIcon {
+	background: url("images/Collection-Search/icon-sprite.png")
+		no-repeat scroll transparent;
+	display: block;
+	float: left;
+	cursor: pointer;
+	margin-left: 3px;
+}
+
+.gradeIcon {
+    background-position: -70px -44px;
+    height: 21px;
+    margin-right: 11px;
+    width: 23px;
+}
+
+
+/* 
+grade modification......
+.gradeIcon {
+    background-position: -70px -44px;
+    height: 21px;
+    margin-right: 11px;
+    width: 23px;
+} */
+
+.tagIcon {
+    background-position: -69px -366px;
+    height: 18px;
+    margin-right: 11px;
+    width: 23px;
+}
+
+/* .tagIcon {
+	modification
+	background-position: -69px -366px;
+
+	} */
+
+.likesIcon {
+    background-position: -39px -180px;
+    height: 18px;
+    margin-right: 11px;
+    width: 23px;
+}
+
+.timeIcon {
+    background-position: -39px -206px;
+    height: 18px;
+    margin-right: 11px;
+    width: 23px;
+}
+
+.shareIcon {
+    background-position: -39px -230px;
+    height: 18px;
+    margin-right: 11px;
+    width: 23px;
+}
+
+.rightsIcon {
+    background-position: -67px -344px;
+    height: 18px;
+    margin-right: 11px;
+    width: 23px;
+}
+
+.moreInfoRightScrollPanel {
+	width: 365px;
+	height: 212px;
+	float: left;
+	padding-left: 10px;
+}
+
+
+/* modification */
+.moreInfoResourceSearceRightScrollPanel {
+	width: 549px;
+	height: 212px;
+	float: left;
+	padding-left: 10px;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+}
+
+
+.moreInfoRightsLbl{
+	float: left;
+	padding-left: 372px;
+}
+
+
+
+/*Scroll bar style for default scrolls*/
+.moreInfoRightScrollPanel::-webkit-scrollbar {
+	width: 8px;
+} /* this targets the default scrollbar (compulsory) */
+.moreInfoRightScrollPanel::-webkit-scrollbar-track {
+	background-color: white;
+	width: 15px;
+}
+/* the new scrollbar will have a flat appearance with the set background color */
+.moreInfoRightScrollPanel::-webkit-scrollbar-thumb { /*background-color: rgba(0, 0, 0, 0.2);*/
+	background-color: rgba(0, 0, 0, 0.2);
+	width: 15px;
+} /* this will style the thumb, ignoring the track */
+.moreInfoRightScrollPanel::-webkit-scrollbar-button {
+	background-color: #DDDDDD;
+	width: 0px;
+	height: 0px;
+}
+/* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+.moreInfoRightScrollPanel::-webkit-scrollbar-corner {
+	background-color: red;
+}
+
+.moreInfoRightPanel {
+	width: 345px;
+	float: left;
+}
+
+
+
+
+/* modification */
+.moreInfoResourceSearchRightPanel {
+	width: 488px;
+	float: left;
+}
+
+
+.moreInfoResourcesCountLblTxt {
+	color: #515151;
+	float: left;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-right: 7px;
+}
+.imageIcon {
+	width: 19px;
+	height: 14px;
+	float: left;
+	margin-right: 15px;
+}
+
+.imageIcon img {
+	display: block;
+	margin: auto;
+	float: left;
+}
+
+.htmlTxt {
+	display: block;
+	float: left;
+	width: 115px;
+	cursor: pointer;
+}
+/* to be modify */
+.resourceSearchHtmlTxt {
+	
+	float: right;
+	position: relative;
+	top: 70px;
+
+}
+.resourceCollectionThumbnailPanel{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #999999;
+	width: 534px;
+	position: relative;
+	height: 94px;
+	clear: both;
+	
+}
+
+.resourceCollectionTitlePanel {
+	float: left;
+	height: 70px;
+	max-width:275px
+}
+
+
+.clear {
+	clear: both;
+	height: 10px;
+}
+
+.questionRadioButtonContainer{
+	float:left;
+	width:120px;
+	margin-left:5px;
+	margin-top:3px;
+	margin-bottom:3px;
+	
+}
+.questionRadioButton{
+	background: url(images/settings/radio.png) no-repeat;
+	width: 19px;
+	height: 17px;
+	display: inline-block;
+	margin-bottom: -5px;
+	cursor:pointer;
+}
+.questionRadioButton:hover{
+	background-position: 0px -17px;
+}
+.questionRadioButtonSelected:hover{
+	background-position: 0px -51px;
+}
+.questionRadioButtonSelected{
+	background: url(images/settings/radio.png) no-repeat;
+	width: 19px;
+	height: 17px;
+	display: inline-block;
+	margin-bottom: -5px;
+	background-position: 0px -34px;
+	cursor:pointer;
+}
+.questionRadioButtonSelected:hover{
+	background: url(images/settings/radio.png) no-repeat;
+	width: 19px;
+	height: 17px;
+	display: inline-block;
+	margin-bottom: -5px;
+	background-position: 0px -51px;
+}
+
+/*  PPP css*/
+
+.publicPPMoreInfoRightScrollPanel {
+	width: 500px;
+	height: 212px;
+	float: left;
+	padding-left: 10px;
+}
+
+.notFriendly{
+	font-style: italic;
+	color: #999;
+	float: left;
+	font-size: 12px;
+}
+.questionMark{
+	float:left;
+	cursor: pointer;
+	position: absolute;
+	top: 39px;
+	left: 46px;
+}
+
+/* .questionContainer:hover, .imageHeight:hover {
+	display:block;
+}
+
+.questionContainer{
+	display: none;
+} */
+
+.imageHeight{
+	margin-top: 20px;
+	cursor: pointer;
+}
+

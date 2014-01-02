@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:my="urn:import:org.ednovo.gooru.player.collection.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.AssignmentsTabViewCBundle"
+		field="res" />
+	<g:FlowPanel ui:field="popUpCopyCollection"
+		styleName="{res.css.addCollectionToAssignPopUpBorder}">
+		<g:HTMLPanel styleName="{res.css.copyPopupResourcesUserInputTwo}">
+			<g:HTMLPanel styleName="{res.css.copyPopupleftAndWidth}">Choose a Collection*</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.copyPopupResourcesListPanel}">
+				<g:Label ui:field="collectionFirstElement"
+					styleName="{res.css.copyPopUpResourceListBoxTextTop}"></g:Label>
+				<g:FocusPanel ui:field="copyPopUpResourceListImage"
+					styleName="{res.css.copyPopUpResourceListImage}" height="19px"
+					width="19px"></g:FocusPanel>
+			</g:HTMLPanel>
+			<g:ScrollPanel ui:field="copyPopUpScrollHtmlPanel"
+				styleName="{res.css.copyPopupResourcesPanel}">
+				<g:HTMLPanel ui:field="htmlScrollPanel" styleName="{res.css.copyPopUpPanelStyle}"></g:HTMLPanel>
+			</g:ScrollPanel>
+			<!--<g:ListBox styleName="{res.css.copyPopupResources}" ui:field="copyPopupListBox"> 
+				</g:ListBox> -->
+		</g:HTMLPanel>
+		<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatorySelectCollectionLbl" />
+
+		<uc:HTMLEventPanel ui:field="collectionListContainer"
+			styleName="{res.css.addCollectionToAssignmentContainerClick}">
+			<g:Label ui:field="nocollectionMsgLabel" styleName="{res.css.noCollectionMsg}" />
+			<g:HTMLPanel styleName="{res.css.copyPopupResourcesButtonContainer}">
+				<g:HTMLPanel styleName="{res.css.copyPopupSettingPageAddBtn}"
+					ui:field="addLabel">
+					<g:Label styleName="{res.css.copyPopupSettingPageChangePasswordText}"
+						ui:field="btnAdd">Add</g:Label>
+				</g:HTMLPanel>
+				<g:Label styleName="{res.css.copyPopupResourcesCancelButton}"
+					ui:field="btnCancel">Cancel</g:Label>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.clear}" />
+			<g:HTMLPanel ui:field="loadingPanel"
+				styleName="{res.css.noCollectionMsgForAddPopUp}">
+				<g:Label text="Loading..." />
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.cantFindCollectionInfo}">Can’t find a Collection on the list? Make sure that those Collections are shareable with others in Collection Edit.</g:HTMLPanel>
+		</uc:HTMLEventPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

@@ -1,0 +1,1245 @@
+#btnStartUsingGooru.emphasis {
+	font-weight:bold;
+}
+
+.inputRow input[type="text"], .inputRow input[type="password"] {
+ 	width: 275px;
+	height: 17px;
+	padding: 5px;
+	border: 1px solid #DDD;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	margin-top:5px;
+	display: inline;
+}
+
+.popupGlass {
+	background-color:rgba(0,0,0,.5);
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0px;
+	left:0px;
+	
+}
+
+.popup {
+	background-color:white;
+	margin:50px auto;
+	padding:3px;
+	width: 500px;
+	/* height: 450px; */
+}
+
+.popup.interests {
+	width: 700px;
+}
+
+.popupInner {
+	border: 1px solid #DDD;
+	position:relative;	
+	/* height:520px; */
+}
+
+.popupHeader {
+	padding:10px 15px;
+	color:white;
+	background-color:#4e9746;
+	font-size:16px;
+	/* Safari 4-5, Chrome 1-9 */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7AB075), to(#4e9746));
+
+	/* Safari 5.1, Chrome 10+ */
+	background: -webkit-linear-gradient(top, #7AB075, #4e9746);
+
+	/* Firefox 3.6+ */
+	background: -moz-linear-gradient(top, #7AB075, #4e9746);
+
+	/* IE 10 */
+	background: -ms-linear-gradient(top, #7AB075, #4e9746);
+
+	/* Opera 11.10+ */
+	background: -o-linear-gradient(top, #7AB075, #4e9746);
+	
+	/* IE 6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#7AB075', EndColorStr='#4e9746');
+}
+
+.popup .closeButton {
+	width:17px;
+	height:17px;
+	background: url("images/signup/close-button.png") no-repeat;
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+
+.popup .closeButton:hover {
+	opacity:.6;
+	cursor:pointer;
+}
+
+.popupContent {
+	padding:28px 75px;
+	background-color: transparent;
+	text-align: center;
+	/* height: 190px; */
+}
+
+.interests .popupContent {
+	padding:15px;
+}
+.popupContentProfilePage{
+	padding:28px 0px;
+	background-color: transparent;
+	text-align: center;
+}
+
+.tooltipContainer {
+	width: 150px;
+	position: absolute;
+	left:-80px;
+	z-index:9999;
+	margin-top: 0px;
+}
+
+.arrowBorder {
+ 	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+	margin:auto;
+	border-top: none;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	top: -9px;
+	border-top: none;
+	z-index: 100;
+}
+.tooltipContent {
+	text-align:left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 180px;
+	float:left;
+}
+
+.tooltipContentTitle {
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+.inputRow {
+	position:relative;
+	height: 41px;
+}
+
+.horizontalTooltipContainer {
+	/* display:block; */
+}
+
+.horizontalTooltipContainer {
+	width: 230px;
+	position: absolute;
+	left: -195px;
+	z-index: 9999;
+	top: -3px;
+	/* display:none; */
+}
+
+.horizontalArrow {
+	float: left;
+	margin-left: -1px;
+	margin-top: 10px;
+}
+
+.horizontalTooltipContainer .arrowBorder {
+ 	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent transparent #DDD;
+	position: relative;
+	top: -0px;
+	right: -1px;
+	border-right: none;
+}
+
+.horizontalTooltipContainer .arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent transparent white;
+	position: relative;
+	top: -20px;
+	border-right: none;
+	z-index: 100;
+}
+
+.interests .tooltipContainer {
+	padding:15px;
+}
+
+.questionHover {
+	/* display:inline; */
+	margin:2px;
+	border-radius:10px;
+	padding:1px 5px;
+	background-color:#87BADD;
+	color:white;
+	cursor:pointer;
+}
+
+.questionHoverContainer {
+	display:inline-block;
+	position:relative;
+}
+
+.questionHoverContainer .tooltipContainer {
+	width:180px;
+	margin-top: 3px;;
+}
+
+.tooltipContainer {
+	display:none;
+}
+
+/******************************************************* page content ****/
+
+.popup.imgBG {
+	background: white url("images/login/registration-bg.png") no-repeat;
+	background-position: -50px 30px;
+}
+.popup.imgBGprofile {
+	background: white url("images/login/registration-bg.png") no-repeat;
+	background-position: -50px 30px;
+	width:700px;
+}
+
+.h1 {
+	font-size:20px;
+	text-align:center;
+	margin:0px 0px 20px 0px;
+}
+
+.h1.green{
+	color: #4e9746;
+}
+
+.subheader {
+	text-align:center;
+	margin:-10px 0px 15px 0px;
+}
+
+.h2 {
+	font-size:16px;
+	text-align:center;
+	margin:10px 0px;
+}
+
+.leftContainer {
+	width:280px;
+	height:340px;
+	float:left;
+}
+
+#jackWestQuotation {
+	background: url("images/signup/quotation-jack-west.png") no-repeat;
+}
+
+.rightContainer {
+	width:330px;
+	float:right;
+}
+
+.rightContainerShort {
+	margin-top:20px;
+}
+
+.signInContainer {
+	background-color:#f0f0f0;
+	border:1px solid #ddd;
+	padding:50px;
+	padding-bottom:25px;
+	text-align:center;
+}
+
+.gConnectButton {
+	padding:16px 16px 15px 64px;
+	color:white;
+	background: #1076BB url("images/signup/g.png") left center no-repeat;
+	background: url("images/signup/g.png") left center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: url("images/signup/g.png") left center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/signup/g.png") left center no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/signup/g.png") left center no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/signup/g.png") left center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+	border-radius:4px;
+	border:1px solid #1076BB;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
+.gConnectButton:hover {
+	background: #1076BB url("images/signup/g.png") left center no-repeat;
+}
+
+.gConnectWhy {
+	color:#999;
+}
+
+.divider {
+	border-bottom:1px solid #ddd;
+	width:100%;
+	height:1em;
+	margin:10px 0px 20px 0px;
+}
+
+.dividerText {
+	display:inline;
+	position:relative;
+	top:.5em;
+	padding:0px 10px;
+	background-color:#F0F0F0;
+}
+
+.emailSignIn {
+	color:#999;
+	padding-top:10px;
+	line-height:1.5em;
+}
+
+.haveAccount {
+	margin-top:15px;
+	text-align:center;
+	color:#999;
+	display: inline;
+}
+
+.footer {
+	clear:both;
+	text-align:center;
+	background: rgba(100,100,100,.1);
+	padding:10px;
+	width:478px;
+	/* position:absolute; */
+	bottom:0px;
+	border-top:1px solid #ddd;
+	height: 210px;
+}
+
+.userInfoContainer {
+	background-color:#f0f0f0;
+	border:1px solid #ddd;
+	margin-top: 20px;
+	/* margin-bottom: 20px; */
+}
+
+.role {
+	margin:20px 0px;
+	text-align:center;
+}
+
+#submitRegistration {
+	display: block;
+	margin: 30px auto 0px auto;
+}
+
+#signUp {
+	display:block;
+	margin: 30px auto 0px auto;
+	width: 70px;
+}
+
+.roleOption {
+	width:69px;
+	display:inline-block;
+	text-align:center;
+}
+
+.roleOptionImage {
+	width:100%;
+	height:45px;
+	margin: 10px 0px 5px 0px;
+}
+
+.roleOptionInput {
+	margin: 5px auto;
+	width: 12px;
+	display: block;
+}
+
+.teacherRole .roleOptionImage {
+	background: url("images/signup/teacher.png") center bottom no-repeat;
+}
+
+.studentRole .roleOptionImage {
+	background: url("images/signup/student.png") center bottom no-repeat;
+}
+
+.parentRole .roleOptionImage {
+	background: url("images/signup/parent.png") center bottom no-repeat;
+}
+
+.otherRole .roleOptionImage {
+	background: url("images/signup/other.png") center bottom no-repeat;
+}
+
+.teacherRoleSelected .roleOptionImage{
+	background: url("images/signup/teacher_selected.png") center bottom no-repeat;
+}
+
+.studentRoleSelected .roleOptionImage{
+	background: url("images/signup/student_selected.png") center bottom no-repeat;
+}
+
+.parentRoleSelected .roleOptionImage{
+	background: url("images/signup/parent_selected.png") center bottom no-repeat;
+}
+
+.otherRoleSelected .roleOptionImage{
+	background: url("images/signup/other_selected.png") center bottom no-repeat;
+}
+
+
+.studentRoleDefault .roleOptionImage {
+	background: url("images/signup/student_selected.png") center bottom no-repeat;
+}
+.roleOption:hover .tooltipContainer, .questionHoverContainer:hover .tooltipContainer, .questionHoverContainerParentAccount:hover .tooltipContainer{
+	display:block;
+}
+
+.congratsHeader {
+	text-align: center;
+	font-size: 20px;
+	margin: 0px 0px 20px 0px;
+	color: #4e9746;
+}
+
+.congratsTop {
+	text-align:left !important;
+	overflow:hidden;
+	margin:10px 0px;
+}
+
+.congratsTop .header {
+	color:#4e9746;
+	text-align:left;
+	font-size:20px;
+	margin-bottom:15px;
+	width:200px;
+	float:left;
+}
+
+.congratsTop .subheader {
+	width:400px;
+	float:left;
+	margin:0px;
+	text-align:left !important;
+}
+
+.leftAlign {
+	text-align:left !important;
+}
+
+.skipSubmit {
+	text-align:center;
+	margin-top:15px;
+}
+
+.gooruReminder {
+	text-align:center;
+	margin:30px 0px;
+	line-height:1.4em;
+}
+
+.gooruReminder img {
+	margin-right:2px;
+}
+
+.ssoLoginMethodsText {
+	width:232px;
+	text-align:left;
+	margin:auto;
+}
+
+.supportMessage {
+	margin-top:20px;
+}
+
+.DOTSbuttons {
+	margin:20px 0px;
+}
+
+.DOTSbuttons .tileContainer {
+	display:inline-block;
+	margin: 0px 10px;
+	line-height:1.8em;
+}
+
+.DOTSbuttons .tile {
+	background: url("images/signup/dots.png");
+	width:54px;
+	height:54px;
+}
+
+.DOTSbuttons .tile:hover {
+	cursor:pointer;
+	opacity:.6;
+}
+
+.discover .tile {
+	background-position:0px 0px;
+}
+
+.organize .tile {
+	background-position:0px -54px;
+}
+
+.teach .tile {
+	background-position:0px -108px;
+}
+
+.study .tile {
+	background-position:0px -162px;
+}
+
+.h6 {
+	font-weight:bold;
+	margin-top:10px;
+}
+
+.selectGrades {
+	cursor: default;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	padding: 7px 0px 10px 0px;
+}
+
+.gradeOption {
+	display:inline-block;
+	padding:4px 5px;
+	margin-top:5px;
+	width:13px;
+	text-align:center;
+	margin-right: 3px;
+	cursor: pointer !important;
+}
+
+.longWidth {
+	width:auto;
+}
+
+.gradeOption:hover, .gradeOption.active {
+	background-color:#87BADD;
+	color:white;
+	border-radius:4px;
+	cursor:default;
+}
+
+.selectCourses {
+	margin: 10px 0px;
+	cursor: default;
+	overflow: hidden;
+	//height: 232px;
+}
+
+.subjectTabs {
+	height: 257px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 150px;
+	float: left;
+	margin-right: 10px;
+}
+
+.courseContainer {
+	width:500px;
+	float:right;
+	height:257px;
+	overflow-y:auto;
+}
+
+.subjectOption {
+	height:49px;
+	width:113px;
+	cursor:default;
+	line-height:50px;
+	background: url("images/signup/subject-banner.png") no-repeat;
+	margin-bottom: 8px;
+}
+
+.subjectOption:hover {
+	cursor:pointer;
+	background: url("images/signup/banner-science.png") no-repeat;
+	color:white;
+}
+.subjectOptionMath {
+	height:49px;
+	width:113px;
+	cursor:default;
+	line-height:50px;
+	background: url("images/signup/subject-banner.png") no-repeat;
+	margin-bottom: 8px;
+}
+.subjectOptionMath:hover {
+	cursor:pointer;
+	background: url("images/signup/Math_Active.png") no-repeat;
+	color:white;
+}
+.subjectOptionSS {
+	height:49px;
+	width:113px;
+	cursor:default;
+	line-height:50px;
+	background: url("images/signup/subject-banner.png") no-repeat;
+	margin-bottom: 8px;
+}
+.subjectOptionSS:hover {
+	cursor:pointer;
+	background: url("images/signup/SS_Active.png") no-repeat;
+	color:white;
+}
+.subjectOptionELA {
+	height:49px;
+	width:113px;
+	cursor:default;
+	line-height:50px;
+	background: url("images/signup/subject-banner.png") no-repeat;
+	margin-bottom: 8px;
+}
+.subjectOptionELA:hover {
+	cursor:pointer;
+	background: url("images/signup/ELA_Active.png") no-repeat;
+	color:white;
+}
+.subjectOption.active {
+	background: url("images/signup/banner-science.png") no-repeat;
+	color:white;
+}
+.subjectOptionMath.mathActive {
+	background: url("images/signup/Math_Active.png") no-repeat;
+	color:white;
+}
+.subjectOptionSS.ssActive {
+	background: url("images/signup/SS_Active.png") no-repeat;
+	color:white;
+}
+.subjectOptionELA.elaActive {
+	background: url("images/signup/ELA_Active.png") no-repeat;
+	color:white;
+}
+.subjectOption span {
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:40px;
+	margin-right: 15px;
+	line-height: 1.2em;
+}
+.subjectOptionMath span {
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:40px;
+	margin-right: 15px;
+	line-height: 1.2em;
+}
+.subjectOptionSS span {
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:40px;
+	margin-right: 15px;
+	line-height: 1.2em;
+}
+.subjectOptionELA span {
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:40px;
+	margin-right: 15px;
+	line-height: 1.2em;
+}
+.subjectOption:last-child {
+	margin-right:0px;
+}
+
+.courseOption {
+	background-color:white;
+	color:#515151;
+	width:100px;
+	display:inline-block;
+	margin: 0px 10px 10px 0px;
+	border:1px solid #ddd;
+}
+
+.courseOption.selected {
+	background-color:#4C98CC;
+	color:white;
+	width:100px;
+	display:inline-block;
+	margin: 0px 10px 10px 0px;
+	border:1px solid #ddd;
+}
+
+.courseOption .title {
+	padding: 0px 5px 5px 5px;
+	text-align: center;
+	line-height: 25px;
+	height: 25px;
+}
+
+.verticallyCentered {
+	display:inline-block;
+	vertical-align:middle;
+	line-height: 1.2em;
+}
+
+.courseOption:hover,  .courseOption.active:hover {
+	cursor:pointer;
+	background-color:#4C98CC;
+	color:white;
+	width:100px;
+	display:inline-block;
+	margin: 0px 10px 10px 0px;
+	border:1px solid #ddd;
+}
+
+.courseOption.active {
+	opacity:1;
+	cursor:default;
+}
+
+.metadataSelection .leftContainer {
+	width:220px;
+}
+
+.metadataSelection .rightContainer {
+	width:400px;
+}
+
+.startUsingGooru {
+	margin:30px auto;
+	/* display: block !important; */
+}
+
+.ssoEmail {
+	background: #e3e3e3;
+	padding: 7px;
+	text-align: center;
+}
+
+.mpTwoLoginOptions {
+	margin-top:30px;
+	text-align:center;
+}
+
+.mpTwoLoginOptions .left {
+	float:left;
+	width:125px;
+	border-right:1px solid #ddd;
+	padding:15px 15px 15px 0px;
+}
+
+.mpTwoLoginOptions .right {
+	float:left;
+	width:190px;
+	padding:15px 0px 15px 15px;
+}
+
+.mpTwoLoginOptions .questionHoverContainer {
+	margin-top:7px;
+}
+
+.tooltipImage {
+	width:100%;
+}
+
+.skipSubmit button {
+	margin:5px;
+}
+
+.chooseUsername {
+	text-align:center;
+}
+.chooseUsernameInStu {
+	text-align:center;
+	margin-top:8px;
+}
+input.halfSize {
+	width: 130px !important;
+}
+
+.userInfoContainer.emailReg {
+	margin-top:0px;
+	padding-top:10px;
+}
+
+.agreeToPolicies {
+	text-align:center;
+	margin: 10px 0px -20px 0px;
+	width: 353px;
+}
+
+.emailReg .role {
+	margin-top:10px;
+}
+
+.emailReg .questionHoverContainer {
+	margin-right: -2px;
+	margin-top: 8px;
+}
+
+.popupBackground{
+	background: none !important;
+}
+
+.whyGoogle{
+	display: inline;
+}
+
+.alreadyHaveContainer{
+	text-align:center;
+	padding: 25px;
+}
+
+.roleLabel {
+	opacity:.5;
+}
+
+#btnSignUp{
+	margin-top: 15px;
+	margin-bottom: 15px;	
+}
+
+#tbBirthday{
+	width: 130px;
+}
+
+.userCreateContainer{
+	background-color: transparent;
+}
+.dob{
+	height: 40px;
+	float: left;
+	width: 142px;
+	margin-left: 4px;	
+}
+.dob.gooruDateBox{
+	border: none;
+	padding: 0px;
+}
+
+.errorMsgDisplay{
+	border: 2px solid orange !important;
+}
+
+.loginTextBoxMargin {
+	margin: 0 auto;
+	margin-top: 5px;
+}
+
+
+/* Thanks popup */
+.thanksPopup{
+	padding-top: 50px;
+	background-color: transparent;
+}
+
+.thanksPopupContent {
+	margin:50px auto;
+	padding:3px;
+	width: 500px;
+	text-align: center;
+}
+
+.userNameTxtBox{
+	float: left;
+	margin-left: 25px;
+}
+
+.pleaseWait{
+	margin-top: 25px;
+	font-style: italic;
+	color: #515151;
+	margin-top: 20px;
+}
+.error{
+	/* position: absolute; */
+	top: 27px;
+	left: 10px;
+	font: 12px arial;
+	float: left;
+	/* margin-top: -14px; */
+	width: 150px;
+	margin-left: 166px;
+	color: #fab03a;
+}
+
+
+.errorLbl{
+	font: 12px arial;
+	margin-left: 30px;
+	margin-top: -4px;
+	width: 100%;
+	padding: 0;
+}
+
+.errorRow {
+	position:relative;
+	/* height: 10px; */
+}
+
+.dobError{
+	font: 12px arial;
+	float: left;
+	margin-top: -5px;
+	width: 150px;
+	margin-left: 166px;
+}
+.loadingImage{
+	margin: 20px 0px 0px 130px;
+}
+.termsAlignStyle{
+	margin-right: 2px;
+}
+
+.belowThirteenPanel{
+	background-color:rgba(136,187,221,0.2);
+	width:341px;
+	height:250px;
+}
+
+.parentsAccount{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:16px;
+	line-height:120%;
+	font-weight:bold;
+	text-align:center;
+	padding: 15px;
+}
+.questionHoverContainerParentAccount{
+	margin-right: 25px;
+	margin-top: -34px;
+	float: right;
+}
+.parentEmailContainer{
+	margin-left: 52px;
+	margin-top: 5px;
+	height: 45px;
+	float: left;
+}
+.rightIconImage
+{
+	width: 14px;
+	height: 10px;
+	background-position: 0px 0px;
+	background:url("images/signup/right-mark.png");
+	float: right;
+	position: relative;
+	top: -25px;
+	right: 20px;
+}
+.orBoder{
+	width: 40px;
+	text-align: center;
+	margin: 0 auto;
+	position: relative;
+	padding: 3px;
+	
+}
+.orBoderLeftSide{
+	border-bottom: 1px solid #c7c7c7;
+	top: 60px;
+	width: 120px;
+	position: relative;
+	margin-left: 20px;
+}
+.orBoderRightSide{
+	border-bottom: 1px solid #c7c7c7;
+	margin-right: 20px;
+	width: 120px;
+	position: relative;
+	top: 10px;
+	float: right;
+}
+.orContainerDown
+{
+	margin-top: 35px;	
+}
+.parentEmailError{
+	font: 10px arial;
+	margin-left: 63px;
+	color: #fab03a;
+	width: 194px;
+	clear: both;
+}
+.parentEmail
+{
+	word-wrap: break-word;
+	width: auto;
+	float: left;
+}
+.parentEmailIdContainer
+{
+	float: left;
+	vertical-align: top;
+}
+.termsAndConditionContainer{
+	text-align:center;
+}
+.termsAndConditionContainerAlign{
+	margin-left: 59px;
+	width: 373px;
+	margin-top: -15px;
+}
+
+.createStudentAccount{
+	width: 180px;
+	padding: 10px 20px;
+}
+
+
+#btnStartUsingGooru{
+	width: 200px;
+	height: 40px;	
+}
+.leaveRegistrationBottomContainer {
+	background-color: rgba(240,240,240,0.3);
+	border:1px solid #ddd;
+	text-align:right;
+	width: 500px;
+	height: 48px;
+}
+.leaveRegistarionFooterText
+{
+	text-align:center;
+	margin-top:8px;
+}
+.popupInnerLeaveReg {
+	border: 1px solid #DDD;
+	position:relative;	
+	height:300px;
+}
+.leaveRegistrationButtonContainer{
+	margin: 0px auto;
+	text-align: center;
+}
+.popupContentLeaveRegistration {
+	padding:65px 75px;
+	background-color: transparent;
+	text-align: center;
+}
+.signUpButtonStyle
+{
+	margin-bottom: 15px;
+}
+.stuEmailContainer
+{
+	margin-left: 111px;
+	margin-top: 30px;
+	height: 54px;
+}
+.turnsThirteenButtonContainer
+{
+	margin-left: 145px;
+	margin-bottom: 20px;
+}
+.popupcornerBg {
+	width: 593px;
+	padding: 10px;
+	font-size: 12px;
+	font-weight: normal;
+	background-color: #F0F0F0;
+	border: 1px solid #CCC;
+	position: relative;
+	margin-left: 41px;
+}
+.usersRight {
+	display: inline-block;
+	vertical-align: top;
+	margin: 10px 0px;
+}
+.changePassowrdlabel
+{
+	color: #1076bb;	
+	float: left;
+	cursor: pointer;
+	margin-left: 3px;
+}
+.buttonContainer {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.popupFooter {
+	text-align: center;
+	color: rgb(81,81,81);
+	font-size: 12px;
+	font-weight: normal;
+	background-color: rgba(240, 240, 240, 0.3);
+	border: 1px solid #ddd;
+	width: 696px;
+	margin-left: 0px;
+	height: 48px;
+}
+.inputTextStyle{
+	padding: 5px;
+	width: 196px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	height: 17px;
+	border: 1px solid #ddd;
+}
+.textAreaStyle {
+	padding: 10px;
+	width: 405px;
+	height: 50px;
+	font-family: Arial, Helvetica, sans-serif;
+	border-color: #ddd;
+	margin-top: 8px;
+}
+.userWhiteBg
+{
+       display:inline-block;
+       vertical-align:top;
+       padding:10px;
+       margin-right: 10px;
+       background-color:#fff;
+}
+.userLabel
+{
+     padding:3px 0px;
+ }
+.users {
+	display: inline-block;
+	vertical-align: top;
+}
+.popupFooterText{
+	margin-top:5px;
+}
+.profilePopup {
+	background-color:white;
+	margin:50px auto;
+	padding:3px;
+
+}
+.editBtn {
+	position: absolute;
+	top: 84px;
+	left: 47px;
+	font-size: 12px;
+	padding: 8px;
+	font-weight: normal;
+	color: rgb(16,118,184);
+	/* Firefox v3.6+ */
+	background-image: -moz-linear-gradient(43% 0% -90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+	/* safari v4.0+ and by Chrome v3.0+ */
+	background-image: -webkit-gradient(linear, 43% 0%, 43% 97%, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(221,221,221)));
+	/* Chrome v10.0+ and by safari nightly build*/
+	background-image: -webkit-linear-gradient(-90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+	/* Opera v11.10+ */
+	background-image: -o-linear-gradient(-90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+	/* IE v10+ */
+	background-image: -ms-linear-gradient(-90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+	border-color: rgb(204,204,204);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 5px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 5px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 5px;
+	border-style: solid;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff,endColorstr=#ffdddddd,GradientType=0)";
+ 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffffff, endColorstr=#ffdddddd, GradientType=0);
+}
+.editBtn:hover {
+	background: #EEE;
+	color: #1076BB;
+	cursor: pointer;
+}
+.subheaderprofile {
+	text-align:center;
+	margin:10px 0px 15px 124px;
+	width: 63%;
+}
+.userRegErrorStylePPPFName{
+	margin-left: 0px;
+	font: 10px arial;
+	color: #fab03a;
+	float: left;
+	text-align: right;
+	position: absolute;
+	top: 53px;
+}
+.userRegErrorStylePPPLName{
+	font: 10px arial;
+	color: #fab03a;
+	float: right;
+	right: 30px;
+	position: absolute;
+	top: 53px;
+}
+.h2Header {
+	font-size:16px;
+	text-align:center;
+	margin-top: 27px;
+}
+.updatingText{
+	float: center;
+	margin-left: 67px;
+}
+.h2DontWHeader{
+	font-size:16px;
+	text-align:center;
+	width: 364px;
+	margin-top: 20px;
+}
+.profilePasswordError{
+	clear: both;
+	left: -26px;
+	padding: 3px;
+	color: #fab03a;
+	font: 10px arial;
+}
+
+.errorContainer{
+	height: 18px;
+}
+.stuEmailTopContainer{
+	word-wrap: break-word;
+	padding-left: 30px;
+	height: 10px;
+}
+.afterThirteenh2Container{
+	width: 330px;
+}
+.pleaseWaitSS{
+	font-style: italic;
+	color: #515151;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.subHeaderTurnsThirteen{
+	font-size: 16px;
+	text-align: center;
+	margin: 10px 0;
+	margin-left: -4px;
+}

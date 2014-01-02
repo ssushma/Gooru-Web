@@ -1,0 +1,117 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:gui="urn:import:org.ednovo.gooru.client.ui">
+	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
+		<g:HTMLPanel styleName="{res.css.popupInner}">
+			<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
+			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
+			<g:HTMLPanel ui:field="panelSignUp">
+				<g:HTMLPanel styleName="{res.css.popupContent}">
+					<g:Label styleName="{res.css.h1}" ui:field="lblStuDes" />
+					<g:HTMLPanel styleName="{res.css.userInfoContainer} {res.css.emailReg}">
+					   <g:HTMLPanel  styleName="{res.css.stuEmailTopContainer}">
+						<g:Label ui:field="lblTxtParent" styleName="{res.css.parentEmailIdContainer}" />
+						<g:Label ui:field="lblParentEmailId" styleName="{res.css.parentEmail}"/></g:HTMLPanel>
+							<g:HTMLPanel styleName="{res.css.chooseUsernameInStu}">
+							<g:HTMLPanel styleName="{res.css.inputRow}">
+								<g:HTMLPanel styleName="{res.css.horizontalTooltipContainer}"
+									ui:field="panelUserNamePopUp">
+									<g:Label styleName="{res.css.tooltipContent}" ui:field="lblPickWisely" />
+									<g:HTMLPanel styleName="{res.css.horizontalArrow}">
+										<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+										<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+									</g:HTMLPanel>
+								</g:HTMLPanel>
+								<gg:TextBoxWithPlaceholder ui:field="txtChooseUsername"
+									styleName="{res.css.halfSize} {res.css.userNameTxtBox}" />
+								<g:SimplePanel ui:field="sPanelDateOfBirth"
+									styleName="{res.css.dob}" />
+								<g:HTMLPanel styleName="{res.css.questionHoverContainer}">
+									<g:Label styleName="{res.css.questionHover}" ui:field="lblQuestionMark" />
+									<g:HTMLPanel styleName="{res.css.tooltipContainer}">
+										<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+										<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+										<g:HTMLPanel styleName="{res.css.tooltipContent}">
+											<g:Label styleName="{res.css.tooltipContentTitle}"
+												ui:field="lblWhyEnterBirthday" />
+											<g:Label ui:field="lblWhyEnterBirthdayDesc" />
+										</g:HTMLPanel>
+									</g:HTMLPanel>
+								</g:HTMLPanel>
+								<gui:HTMLEventPanel ui:field="panelDataOfBirth">
+								</gui:HTMLEventPanel>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="{res.css.errorRow}">
+								<gg:ErrorLabelUc ui:field="userNameValidUc" />
+								<gg:ErrorLabelUc ui:field="dateValidationUc"
+									styleName="{res.css.error}" />
+							</g:HTMLPanel>
+							
+								<g:HTMLPanel styleName="{res.css.inputRow}">
+						<g:HTMLPanel styleName="{res.css.horizontalTooltipContainer}"
+							ui:field="panelPassword">
+							<g:Label styleName="{res.css.tooltipContent}" ui:field="lblPasswordTooltipContent"/>
+							<g:HTMLPanel styleName="{res.css.horizontalArrow}">
+								<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+								<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<gg:TextBoxWithPlaceholder ui:field="txtChoosePassword"
+							password="true" />
+					</g:HTMLPanel>
+							
+							
+							<!-- <g:HTMLPanel styleName="{res.css.inputRow}">
+								<gg:TextBoxWithPlaceholder ui:field="txtChoosePassword"
+										password="true" />
+								</g:HTMLPanel> -->
+								<g:HTMLPanel styleName="{res.css.inputRow}">
+									<gg:TextBoxWithPlaceholder ui:field="txtConfirmPassword"
+										password="true" />
+									<gg:ErrorLabelUc ui:field="passwordValidUc" />
+								</g:HTMLPanel>
+								<g:HTMLPanel styleName="{res.css.role}">
+									<g:HTMLPanel styleName="{res.css.roleOption} {res.css.teacherRole}">
+										<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
+										<g:Label styleName="{res.css.roleLabel}" ui:field="lblTeacher"></g:Label>
+										<g:HTMLPanel ui:field="rdTeacher" />
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="{res.css.roleOption} {res.css.studentRoleDefault}">
+										<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
+										<g:Label ui:field="lblStudent"></g:Label>
+										<g:HTMLPanel ui:field="rdStudent" />
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="{res.css.roleOption} {res.css.parentRole}">
+										<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
+										<g:Label styleName="{res.css.roleLabel}" ui:field="lblParent"></g:Label>
+										<g:HTMLPanel ui:field="rdParent" />
+									</g:HTMLPanel>
+									<g:HTMLPanel styleName="{res.css.roleOption} {res.css.otherRole}">
+										<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
+										<g:Label styleName="{res.css.roleLabel}" ui:field="lblOther"></g:Label>
+										<g:HTMLPanel ui:field="rdOther" />
+									</g:HTMLPanel>
+									<gg:ErrorLabelUc ui:field="lblSelectRole">Please select role.</gg:ErrorLabelUc>
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.termsAndConditionContainer}">
+						<g:HTMLPanel styleName="{res.css.termsAndConditionContainerAlign}">	    
+						<g:InlineLabel ui:field="lblAgree"></g:InlineLabel>
+						<g:Anchor ui:field="ancCopyRight" styleName="{res.css.termsAlignStyle}"></g:Anchor>
+						<g:Anchor ui:field="ancTermsAndPrivacy" styleName="{res.css.termsAlignStyle}"></g:Anchor>
+						<g:InlineLabel>and</g:InlineLabel>
+						<g:Anchor ui:field="ancPrivacy" styleName="{res.css.termsAlignStyle}"></g:Anchor>
+						</g:HTMLPanel>
+						<g:Button ui:field="btnSignUp" styleName="primary {res.css.signUpButtonStyle}"></g:Button>
+						<g:Label styleName="{res.css.pleaseWaitSS}" ui:field="lblPleaseWait" />
+		</g:HTMLPanel>
+			</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	
+</ui:UiBinder> 

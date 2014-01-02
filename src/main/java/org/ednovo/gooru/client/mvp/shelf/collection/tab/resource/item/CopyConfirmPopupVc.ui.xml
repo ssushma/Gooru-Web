@@ -1,0 +1,70 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:my="urn:import:org.ednovo.gooru.player.collection.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
+		field="ress" />
+
+	<g:FlowPanel>
+		<!-- <g:HTMLPanel styleName="{ress.css.collectionEditPopUpOuterDiv}"> <g:HTMLPanel 
+			styleName="{ress.css.collectionEditHeaderText}">Copy Resources to</g:HTMLPanel> 
+			<g:Label ui:field="cancelButton" styleName="{ress.css.collectionEditPopupBtnSprite} 
+			{ress.css.collectionEditPopupCloseBtn}"></g:Label> </g:HTMLPanel> -->
+		<g:HTMLPanel><!--styleName="{res.css.copyPopupResourcesWrapper}"> -->
+			<g:HTMLPanel styleName="{ress.css.copyPopupResourcesNewContainer}">
+
+				<!-- styleName="{res.css.copyPopupResourcesContainer}"> -->
+				<!-- <g:HTMLPanel styleName="{res.css.copyPopupResourcesHeader}"> <g:HTMLPanel 
+					styleName="{res.css.copyPopupResourcesHeaderTitle}">Copy Resources to</g:HTMLPanel> 
+					</g:HTMLPanel> -->
+				<g:HTMLPanel styleName="{ress.css.copyPopupResourcesUserInputTwo}">
+					<g:HTMLPanel styleName="{ress.css.copyPopupleftAndWidth}">Choose a collection to copy this
+						resources to</g:HTMLPanel>
+					<!-- <input type="text" value="Course" styleName="{res.css.copyPopupResources}" 
+						/> -->
+					<g:HTMLPanel styleName="{ress.css.copyPopupResourcesListPanel}">
+					   <g:Label styleName="{ress.css.copyPopUpResourceListBoxLoadingTxt}" ui:field="loadingTextLbl" text="loading..."></g:Label>
+						<g:Label ui:field="resourceFirstElement"
+							styleName="{ress.css.copyPopUpResourceListBoxTextTop}"></g:Label>
+						<g:FocusPanel ui:field="copyPopUpResourceListImage"
+							styleName="{ress.css.copyPopUpResourceListImage}" height="19px"
+							width="19px"></g:FocusPanel>
+					</g:HTMLPanel>
+					<g:ScrollPanel ui:field="copyPopUpScrollHtmlPanel"
+						styleName="{ress.css.copyPopupResourcesPanel}">
+						<g:HTMLPanel ui:field="htmlScrollPanel" styleName="{ress.css.copyPopUpPanelStyle}"></g:HTMLPanel>
+					</g:ScrollPanel>
+					<!-- <g:ListBox styleName="{res.css.copyPopupResources}" ui:field="copyPopupListBox"> 
+						<g:item value='1'> first item </g:item> <g:item value='2'> second item </g:item> 
+						</g:ListBox> -->
+					<!-- <g:HTMLPanel styleName="{res.css.copyPopupResourcesDownArrow}"> 
+						<img src="images/CopyResourcePopup/down-arrow.png" width="13" height="8" 
+						alt="" /> </g:HTMLPanel> -->
+				</g:HTMLPanel>
+				<uc:HTMLEventPanel ui:field="popUpCopyCollection"
+					styleName="{ress.css.copyPopupResourcesButtonContainerClick}">
+					<g:HTMLPanel styleName="{ress.css.copyPopupResourcesButtonContainer}">
+						<g:HTMLPanel styleName="{ress.css.copyPopupSettingPageAddBtn}"
+							ui:field="copyLabel">
+							<gg:BlueButtonUc
+								styleName="{ress.css.copyPopupSettingPageChangePasswordText}"
+								ui:field="btnCopy">Copy</gg:BlueButtonUc>
+						</g:HTMLPanel>
+						<g:Label styleName="{ress.css.copyPopupResourcesCancelButton}"
+							ui:field="btnCancel">
+							Cancel
+						</g:Label>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{ress.css.clear}" />
+					<g:HTMLPanel ui:field="loadingPanel"
+						styleName="{ress.css.noCollectionMsgForAddPopUp}">
+						<g:Label text="copying..." />
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
+
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

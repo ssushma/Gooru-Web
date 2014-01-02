@@ -1,0 +1,394 @@
+/* Assign Tab in collection Edit */
+.mainContainer{
+	padding: 10px 0px 0px 16px;
+	width: 100%;
+	min-height: 250px;
+}
+.labelText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	padding-bottom: 30px;
+	padding-top: 8px;	
+	width: 50%;
+	float: left;
+}
+
+.dropdownContainer{
+	background-color:rgb(255,255,255);
+	width:310px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+	margin-left: 100px;
+}
+
+.controlsContainer{
+	float:left;
+	margin-top:30px;
+}
+
+.labelTitlePrivateText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	padding-top: 3px;
+}
+.labelTitleText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:18px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;	
+	padding-top: 8px;
+}
+
+.placeHolderText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(153,153,153);
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	width: 90%;
+}
+
+.arrow {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	top: -9px;
+	float: right;
+	margin-top: 10px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+
+.assignmentsContainer{
+	float : left;
+}
+
+.buttonAssignContainer{
+	clear: both;
+	float: right;
+}
+
+
+.scrollPanelContainer{
+	background-color:rgb(255,255,255);
+	width:310px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 29px;
+	left: 4px;
+	z-index: 9;
+	position: absolute !important;
+	margin-left: -5px;
+	height: auto;
+	max-height: 162px;
+}
+
+
+.classpageTitleText {
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(81,81,81);
+	padding: 7px 0 6px 6px;
+	font-size:12px;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 98%;
+}
+.classpageTitleText:hover {
+ 	background-color: #CFE3F1;
+	cursor: pointer;
+}
+
+.selectedClasspageText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:#515151;
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 281px;
+}
+
+
+.disableAssignButon{
+	display: inline-block;
+	clear: both;
+	float: right;
+	color: #999;
+	padding: 7px 9px;
+	border-radius: 4px;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	opacity: 1;
+}
+
+.activeAssignButton:hover{
+	cursor:pointer;
+	background: #1076BB;
+	clear: both;
+	float: right;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB');
+}
+.activeAssignButton{
+	color: white;
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	cursor: pointer;
+	clear: both;
+	float: right;
+	background-color: #1076bb;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB');
+}
+
+.errorMessage{
+	color: #FBB03B;
+	clear: both;
+	width: 400px;
+	font-size: 12px !important;
+	margin-top: 30px;
+	margin-left: -5px;
+}
+
+/* End Assign Tab in collection Edit */
+
+/* Success popup */
+.assignDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding: 10px 0px 30px 2px;
+	width: 94%;
+}
+
+.assignMiddle {
+	padding: 15px 0px 0px 120px;
+}
+
+.assignCollection {
+	float: left;
+}
+
+.assignSprite {
+	background: url(images/Classpage/assign-sprite.png) no-repeat;
+}
+
+.assignCollectionIcon {
+	background-position: -52px -206px;
+	width: 25px;
+	height: 25px;
+	float: left;
+}
+
+.assignCollectionDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: center;
+	display:inline;
+}
+
+.assignTo {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81,81,81);
+	text-align: center;
+	padding: 12px 0px;
+}
+
+.assignClasspageTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: center;
+	font-weight: bold;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.assignAssignmentTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: center;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.assignHeader {
+	width: 406px;
+	height: 31px;
+	padding: 10px 0px 0px 10px;
+	background-color: rgb(81,81,81);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#515151');
+}
+
+.assignTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(255,255,255);
+	width: 94%;
+}
+.assignCloseMarker {
+	float: left;
+}
+
+.assignCloseMark {
+	background-position: -52px -116px;
+	width: 18px;
+	height: 19px;
+	cursor: pointer;
+}
+.assign {
+	background-color: #fff;
+	width: 418px;
+}
+
+.assignContent {
+	background-color: transparent;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+}
+.conent{
+	width: 396px;
+	text-align: center;
+	padding: 10px 10px 40px 10px;
+}
+
+.labelTextDisable{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:#999;
+	text-align:left;
+	padding-bottom: 30px;
+	padding-top: 8px;	
+	width: 43%;
+	float: left;
+}
+
+.labelNoClasspageText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	padding-top: 8px;
+	padding-bottom: 20px;
+	float: left;
+}
+
+.labelTeachLink{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	text-align:left;
+	padding-top: 8px;	
+	float: left;
+	text-decoration: none !important;
+	color: #515151; 
+	/* cursor: pointer; */
+}
+
+/* .labelTeachLink:hover{
+	color: #87BADD;
+} */
+
+.noClasspageContianer{
+	padding: 0px 0px 15px 0px;
+	min-height: 50px;
+	width: 75%;
+}
+.loadingpanelImage{
+	background: url(images/core/B-Dot.gif) no-repeat;
+	height:170px;
+	width: 233px;
+	margin: 0 auto;
+}
+.container{
+	padding: 10px 0px 0px 16px;
+	min-height: 250px;
+	width: 60%;
+}
+.noAssignments{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: #999;
+	text-align: left;
+	padding-top: 8px;
+	padding-left: 5px;
+	margin-left: 100px;
+	position: absolute;
+}
+
+/*End Success popup */
+
+

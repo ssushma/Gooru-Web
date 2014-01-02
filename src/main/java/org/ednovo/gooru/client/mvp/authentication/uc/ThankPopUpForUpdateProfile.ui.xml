@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
+		<g:HTMLPanel styleName="{res.css.popupInnerLeaveReg}">
+			<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
+			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
+			<g:HTMLPanel ui:field="panelSignUp">
+				<g:HTMLPanel styleName="{res.css.popupContentLeaveRegistration}">
+					<g:Label styleName="{res.css.h1} {res.css.green}" ui:field="lblHeading" />
+					<g:Label styleName="{res.css.h2Header}" ui:field="lblSubHeading" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+
+			<g:HTMLPanel styleName="{res.css.leaveRegistrationButtonContainer}">
+				<g:Button ui:field="btnOk" styleName="primary"></g:Button>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+
+		<g:HTMLPanel styleName="{res.css.leaveRegistrationBottomContainer}">
+			<g:HTMLPanel styleName="{res.css.leaveRegistarionFooterText}">
+				<g:Label text="If you have any questions," />
+				<g:InlineLabel text="Please contact" />
+				<g:Anchor ui:field="supportLink" href="mailto:support@goorulearning.org"
+					target="_blank">support@goorulearning.org</g:Anchor>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

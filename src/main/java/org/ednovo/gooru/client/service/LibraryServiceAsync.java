@@ -1,0 +1,47 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+package org.ednovo.gooru.client.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.ednovo.gooru.shared.model.library.ConceptDo;
+import org.ednovo.gooru.shared.model.library.CourseDo;
+import org.ednovo.gooru.shared.model.library.LessonDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.shared.model.library.SubjectDo;
+import org.ednovo.gooru.shared.model.library.TopicDo;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+public interface LibraryServiceAsync extends BaseServiceAsync {
+
+	void getCourses(String subjectName, AsyncCallback<ArrayList<CourseDo>> callback);
+	void getLibraryFeaturedUsers(AsyncCallback<ArrayList<LibraryUserDo>> callback);
+	void getLessonsOnPagination(String subjectName, String topicId, int offset, int limit, AsyncCallback<ArrayList<LessonDo>> callback);
+	void getSubjects(String subjectId, AsyncCallback<HashMap<String, SubjectDo>> callback);
+	void getConcept(String gooruOid, boolean skipCollectionItems, AsyncCallback<ConceptDo> callback);
+	void getTopicsOnPagination(String subjectId, String unitId, AsyncCallback<ArrayList<TopicDo>> callback);
+}

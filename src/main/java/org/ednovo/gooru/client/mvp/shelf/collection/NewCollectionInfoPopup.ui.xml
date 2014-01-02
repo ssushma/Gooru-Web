@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.collectionInfoContainer{
+		width: 200px;
+		padding: 4px;	
+		border: 1px solid #ccc;
+		position: absolute;
+		z-index: 999;
+		background: #fff;
+		}
+	</ui:style>
+	<g:FlowPanel styleName="{style.collectionInfoContainer}">
+		<g:Label ui:field="collectionInfoLbl"/>
+	</g:FlowPanel>
+</ui:UiBinder> 

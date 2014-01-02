@@ -1,0 +1,90 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:qac="urn:import:org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style field= "addWebResourceStyle" src="addResource.css" type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceBundle"/>
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
+		field="res"></ui:with>
+	<g:FlowPanel styleName="{addWebResourceStyle.addResourceFormRightOuterDiv}">
+    <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormRightInnerMainDiv}">
+      <g:Label ui:field="questionTypeHeader" styleName="{addWebResourceStyle.questionTypeHeaderStyle}"></g:Label>
+      <g:Label ui:field="questionTypeText" styleName="{addWebResourceStyle.questionTypeTextStyle}"></g:Label>
+      <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}">
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}">
+          <g:HTMLPanel  styleName="{addWebResourceStyle.questionTextContainerStyle}">
+         	 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitle}"> Question *</g:HTMLPanel>
+         	  <!-- <g:Anchor styleName="{addWebResourceStyle.markAsBlankLabel}" ui:field="makeBlank" >Mark as a blank</g:Anchor>  -->
+         	<!--  <g:Button styleName="{addWebResourceStyle.tinyMceToolBarButton}" ui:field="questionNameTextAreaToolBarButton">A</g:Button> -->
+          </g:HTMLPanel>
+          <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
+          	<tinyMce:TinyMCE width="1" height="1" ui:field="questionNameTextArea" characterLimit="500"></tinyMce:TinyMCE>
+          </g:HTMLPanel>
+        </g:HTMLPanel>
+         <g:HTMLPanel styleName="{addWebResourceStyle.addQuestionImageButtonContainer}"><g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle} {addWebResourceStyle.addResourceBottmTitleAlign}" ui:field="addQuestionImg">+ Question Image</g:Anchor></g:HTMLPanel>
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
+           <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForQuestion"></g:Label>
+        </g:HTMLPanel>
+        
+        <g:HTMLPanel ui:field="addQuestImgContainer">
+			
+	    </g:HTMLPanel>
+        
+         <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceContainer}" ui:field="answerchoiceTitleContainer">
+            <g:Label styleName="{addWebResourceStyle.addResourceFormTitleChoice}" ui:field="addResourceFormTitleChoice">Answer Choices *</g:Label>
+            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormTitleChoiceAlign}">Correct</g:HTMLPanel>
+          </g:FlowPanel>
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionAnswerChoiceContainer">
+         	<qac:AddQuestionAnswerChoice labelName="A"></qac:AddQuestionAnswerChoice>
+            <qac:AddQuestionAnswerChoice labelName="B"></qac:AddQuestionAnswerChoice>
+        </g:HTMLPanel>
+         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="questionTrueOrFalseAnswerChoiceContainer">
+         	
+        </g:HTMLPanel>
+        <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice">+ Answer Choice</g:Anchor>
+        <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
+          <g:Label text="" ui:field="errorMessageForAnsCheck" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>
+          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>   
+        </g:HTMLPanel>
+        <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}">
+          <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}"> Explanation</g:Label>
+          <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
+          <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="400"></tinyMce:TinyMCE>
+           <!--  <g:TextArea ui:field="explainationTextArea" styleName="{addWebResourceStyle.addResourceFormTextarea}"></g:TextArea> -->
+          </g:HTMLPanel>
+        </g:FlowPanel>
+         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForExplanation"></g:Label>
+        <g:HTMLPanel ui:field="hintsContainer"></g:HTMLPanel>
+        <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addHintsLabel">+ Hints</g:Anchor>
+         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForHintsCheck"></g:Label>
+      </g:HTMLPanel>
+      <g:HTMLPanel styleName="{addWebResourceStyle.resourceRightsContainer}">
+        	<g:CheckBox ui:field="rightsChkBox" styleName="{addWebResourceStyle.resourceRightsCheckBox}" ></g:CheckBox>
+        	<g:Label ui:field="rightsLbl" styleName="{addWebResourceStyle.ownResourceFormDeclarationText}">I agree to Gooru's copyright policy.</g:Label> 
+     <uc:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">
+	        	<g:HTMLPanel styleName="{res.css.resourceRightsPopupContainer}" ui:field="panelContentRights">
+					<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.resourceRightsInnerPopup}">
+						<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
+						<g:HTMLPanel ui:field="rightsContent">
+     						I agree that I either own this copyrighted content or have permission by the copyright holder to use this content. Further, I will use this material for educational uses only. Please refer to the 
+     						<g:Anchor styleName="{res.css.anchorText}" text="Community Guidelines" ui:field="commuGuideLinesAnr"/>, <g:Anchor styleName="{res.css.customAnchorText}" text=" Terms," ui:field="termsAndPolicyAnr"/>
+     						<g:Anchor styleName="{res.css.customAnchorText}" text=" Privacy" ui:field="privacyAnr"/>
+     		 				and <g:Anchor styleName="{res.css.anchorText}" text=" Copyright" ui:field="copyRightAnr"/> for additional information.
+    	 				</g:HTMLPanel>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+        	</uc:HTMLEventPanel>
+         </g:HTMLPanel>
+     <g:HTMLPanel styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="buttonContainer">
+     	<g:Button styleName="grayPrimaryButton" ui:field="cancelButton">Cancel</g:Button>
+        <uc:HTMLEventPanel styleName="{addWebResourceStyle.addResourceOk}" ui:field="addQuestionResourceButton">
+          <gg:BlueButtonUc styleName="primary" ui:field="addbutton">Add</gg:BlueButtonUc>
+        </uc:HTMLEventPanel>
+      </g:HTMLPanel>
+      <g:Label  styleName="{addWebResourceStyle.addResourceButtonContainer}" ui:field="loadingTextLbl" text="adding..."></g:Label>
+      </g:FlowPanel>
+  </g:FlowPanel>
+</ui:UiBinder>

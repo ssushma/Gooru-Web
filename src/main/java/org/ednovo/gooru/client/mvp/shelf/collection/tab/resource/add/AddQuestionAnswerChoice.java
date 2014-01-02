@@ -1,0 +1,183 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
+
+import org.ednovo.gooru.client.ui.TinyMCE;
+
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
+import com.google.gwt.event.dom.client.HasMouseOverHandlers;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+/**
+ * 
+ * @fileName : AddQuestionAnswerChoice.java
+ *
+ * description :This class is used to Add Answer choice for Question.  
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 02-Jan-2014
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: Gooru Team
+ */
+public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
+	
+	public interface AddQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddQuestionAnswerChoice>{
+		
+	}
+	
+	public static AddQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddQuestionAnswerChoiceUiBinder.class);
+	
+	@UiField Label labelChoice,optionSelectedButton,errorMessageforAnswerChoice;
+	@UiField TinyMCE answerTextBox;
+	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner;
+	@UiField AddResourceBundle addWebResourceStyle;
+	public String fieldValue;
+	public Label ansChoiceDeleteButton=new Label();
+	private String richTextData=null;
+	public AddQuestionAnswerChoice(){
+		initWidget(uiBinder.createAndBindUi(this));
+	}
+	/**
+	 * This Constructor is used to Add Answer Choice .
+	 * @param labelName
+	 */
+	public AddQuestionAnswerChoice(String labelName){
+		initWidget(uiBinder.createAndBindUi(this));
+		labelChoice.setText(labelName);
+		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
+		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+		deleteButtonContainer.add(ansChoiceDeleteButton);
+	}
+	/**
+	 * This Constructor is used to Add Answer Choice . 
+	 * @param labelName
+	 * @param richTextData
+	 */
+	public AddQuestionAnswerChoice(String labelName,String richTextData){
+		initWidget(uiBinder.createAndBindUi(this));
+		this.richTextData=richTextData;
+		labelChoice.setText(labelName);
+		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
+		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+		deleteButtonContainer.add(ansChoiceDeleteButton);
+	}
+	/**
+	 * This method is used to Execute onloading..
+	 */
+	@Override
+	public void onLoad(){
+		super.onLoad();
+		 Scheduler.get().scheduleDeferred(new ScheduledCommand(){
+				@Override
+				public void execute() {
+						setRichTextData();
+				}
+	       });
+	}
+	/**
+	 * 
+	 * @function setRichTextData 
+	 * 
+	 * @created_date : 02-Jan-2014
+	 * 
+	 * @description :This method is used to Set Rich Text.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	 public void setRichTextData(){
+		   if(richTextData!=null){
+			   answerTextBox.setText(richTextData);
+		   }	   
+	   }
+	 /**
+	  * 
+	  * @function setLabelName 
+	  * 
+	  * @created_date : 02-Jan-2014
+	  * 
+	  * @description :This method is used to set label name.
+	  * 
+	  * 
+	  * @parm(s) : @param labelName
+	  * 
+	  * @return : void
+	  *
+	  * @throws : <Mentioned if any exceptions>
+	  *
+	  */
+	public void setLabelName(String labelName){
+		labelChoice.setText(labelName);
+	}
+	
+	/**
+	 * This method is used to Execute on Mouse over
+	 */
+	@Override
+	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		// TODO Auto-generated method stub
+		return addDomHandler(handler, MouseOverEvent.getType());
+	}
+	
+	/**
+	 * This method is used to Execute Mouse Out..
+	 */
+	@Override
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		// TODO Auto-generated method stub
+		return addDomHandler(handler, MouseOutEvent.getType());
+	}
+	
+//	@UiHandler("answerTextBox")
+//	public void keyUponAnswerTextBox(KeyUpEvent event){
+//		String textBoxValue=answerTextBox.getText();
+//		if(textBoxValue.length()>0){
+//			errorMessageforAnswerChoice.setText("");
+//		}
+//	}
+
+}

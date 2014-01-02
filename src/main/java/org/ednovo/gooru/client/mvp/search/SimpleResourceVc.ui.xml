@@ -1,0 +1,81 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style>
+		.metaDataPanel {
+			font-size: 12px;
+			font-weight: normal;
+			color: #999999;
+			margin-top: 0px;
+		}
+		
+		.resourceThumbnailPanel {
+			clear: both;
+			height: 56px;
+			padding-top: 14px;
+			width: 345px;
+		}
+		
+		.resourceTitlePanel {
+			float: left;
+			height: 60px;
+		}
+		
+		.resourceTitle {
+			font-size: 12px;
+			font-weight: bold;
+			color: #515151;
+			height: 20px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			cursor: pointer;
+			float: left;
+		}
+		
+		.resourceThumbnail {
+			width: 81px;
+			height: 61px;
+			float: left;
+			margin: 0 10px 0 0;
+		}
+		
+		.resourceThumbnails {
+			width: 81px;
+			height: 61px;
+		}
+		
+		.resourceName {
+			font-size: 12px;
+			position: relative;
+			top: -17px;
+			background-color: #4E9746;
+			text-align: center;
+			color: #FFFFFF;
+		}
+		
+		.resourceOrder {
+			color: #515151;
+			float: left;
+			font-size: 20px;
+			padding-right: 8px;
+		}
+		.imgHeight{
+			height: 16px;
+			margin-left: 5px;
+			float: left;
+			cursor: pointer;
+		}
+
+	</ui:style>
+	<g:HTMLPanel>
+		<g:FlowPanel styleName="{style.resourceThumbnailPanel}" ui:field="internalPanel1">
+			<uc:ResourceImageUc ui:field="resourceImageUc" />
+			<g:Label styleName="{style.resourceOrder}" ui:field="positionLbl" />
+			<g:FlowPanel styleName="{style.resourceTitlePanel}" ui:field="resourceTitlePanel">
+				<g:HTML styleName="{style.resourceTitle} collectionSearchResource" ui:field="resourceTitleLbl" />
+				<g:Image altText="Not ipad friendly" title="Not ipad friendly" styleName="{style.imgHeight}" ui:field="imgNotFriendly" url="images/mos/ipadFriendly.png" ></g:Image>
+				<g:FlowPanel styleName="{style.metaDataPanel}" ui:field="metaDataFloPanel" />
+			</g:FlowPanel>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

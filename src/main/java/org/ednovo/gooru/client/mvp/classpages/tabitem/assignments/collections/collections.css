@@ -1,0 +1,143 @@
+.myCollectionTitleDashedNoBorderContainerTwo {
+	/* 	margin: 0px 0px 10px 20px; */
+	float: left;
+	width: 100%;
+	min-height: 132px;
+}
+
+.myCollectionInsightChapterContainerNoBorder {
+	float: left;
+	width: 100%;
+	height: 116px;
+	margin: 0px 0px 0px 0px;
+}
+
+.myCollectionInsightChapterBigImageContainer {
+	float: left;
+	width: 120px;
+	height: 116px;
+	margin-right: 15px;
+}
+.myCollectionInsightChapterBigImage:hover {
+	opacity: 0.6;
+}
+.myCollectionInsightChapterBigImage {
+	float: left;
+	width: 127px;
+	height: 90px;
+}
+
+.blueBar {
+	float: left;
+	background-color: #1076BB;
+	width: 7px;
+	height: 90px;
+}
+
+.myCollectionInsightChapterTitleContainer {
+	float: left;
+	width: 470px;
+	height: 100px;
+}
+
+.myCollectionInsightChapterTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #1076bb;
+	font-weight: bold;
+	cursor: pointer;
+}
+.myCollectionInsightChapterTitle:hover{
+	color: #4c98cc;
+}
+.myCollectionInsightChapterSubTitleBlack {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	clear: both;
+	cursor: pointer;
+	margin-top: 8px;
+}
+
+.imageDim {
+	width: 120px;
+	height: 90px;
+	cursor: pointer;
+	border-left:7px solid #1076BB;
+}
+
+.collectionHover {
+	background-color: rgba(0, 0, 0, 0.6);
+	cursor: pointer;
+	display: none;
+	height: 91px;
+	position: relative;
+	top: -94px;
+	width: 121px;
+	z-index: 20;
+}
+
+.playIcon {
+	background: url("images/Collection-Search/play-icon.png") no-repeat
+		scroll 0 0 transparent;
+	cursor: pointer;
+	height: 16px;
+	left: 53px;
+	position: relative;
+	top: 38px;
+	width: 12px;
+}
+
+.collectionThumbnail:hover .collectionHover {
+	display: block;
+}
+
+.collectionHoverEditRemoveContainer {
+	width: 51px;
+	height: 47px;
+	float: right;
+	margin-right: 11px; 
+}
+
+.CollectionHoverEideButton {
+	color: white;
+	background-color: #1076bb;
+	border-radius: 4px;
+	padding: 9px 10px;
+	border: 1px solid #1076bb;
+	font-family: Arial, Helvetica, sans-serif;
+	display: inline-block;
+	/* margin: 10px; */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	float: right;
+	font-size: 12px;
+	cursor: pointer;
+	margin-bottom: 8px;
+	margin-right: 7px;
+}
+
+.CollectionHoverEideButton:hover {
+	color: white;
+	background: #1076bb;
+	cursor: pointer;
+	float: right;
+}
+
+.CollectionHoverEideRemove {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076BB;
+	cursor: pointer;
+	margin-top:10px;
+}
+
+.CollectionHoverEideRemove:hover {
+	opacity:.6;
+}

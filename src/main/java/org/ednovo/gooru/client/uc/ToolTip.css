@@ -1,0 +1,62 @@
+/*ToolTipPopUPcss*/
+.organizeContainer {
+display: block;
+width: 240px;
+margin: 0 auto;
+}
+.PopupArrow {
+	background: url(images/bubble-arrow.png);
+	display: block;
+	width: 25px;
+	height: 13px;
+	position: relative;
+	margin: 0px auto;
+	z-index: 999999;
+/* top: 9px; */
+}
+.organizePopupTextContainer {
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: #515151;
+	font-size: 12px;
+	padding: 5px;
+	position: relative;
+	top: -1px;
+	color: #515151;
+	float:left;
+	line-height:18px;
+	z-index: 99999;
+}
+.organizeTextContainer
+{
+	float:left; 
+	min-width: 84px;
+	max-width: 300px;
+}
+.organizeText
+{
+	float:left; 
+	font-family:Arial, Helvetica, sans-serif; 
+	font-size:12px; 
+	margin: 2px 0px 0px 8px;
+}
+
+.content {
+	background-color: white;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	color: #515151;
+	font-size: 12px;
+	padding: 5px;
+	position: relative;
+	top: -4px;
+}

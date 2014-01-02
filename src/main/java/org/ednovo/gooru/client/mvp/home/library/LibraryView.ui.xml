@@ -1,0 +1,44 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="libraryStyle" src="library.css"/>
+	<ui:style field="libraryStyleUc" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
+
+	<g:HTMLPanel>
+	
+		<g:HTMLPanel ui:field="courseTabs" styleName="tabs"/>
+		
+		<g:HTMLPanel ui:field="landingBanner"/>
+		
+		<g:HTMLPanel ui:field="container">
+		   
+		   <g:Label styleName="{libraryStyle.pageTitle} {libraryStyle.h2}" ui:field="featuredCousesLbl">Featured Courses</g:Label>
+		   
+		   <g:HTMLPanel ui:field="featuredCourseTabs" styleName="tabs">
+		   			<g:HTMLPanel ui:field="featuredCourses"/>
+		   </g:HTMLPanel>
+		   
+		   <g:HTMLPanel ui:field="courseBanner">
+		       <g:Image ui:field="courseImage"/>
+		       <g:Label styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
+		   </g:HTMLPanel>
+		   
+		   <g:HTMLPanel ui:field="featuredEducator">
+		    <g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
+				<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label><g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}">See all featured contributors.</g:Anchor>
+		   </g:HTMLPanel>
+		   
+		   <g:HTMLPanel ui:field="leftNav"/>
+		   
+		   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
+		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
+		       <g:HTMLPanel ui:field="contentScroll"/>
+		   </g:HTMLPanel>
+		
+		</g:HTMLPanel>
+		
+		<g:HTMLPanel ui:field="contributorsContainer"/>
+	
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

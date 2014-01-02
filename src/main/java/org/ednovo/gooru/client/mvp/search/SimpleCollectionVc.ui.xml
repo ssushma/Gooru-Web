@@ -1,0 +1,133 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style >
+		/*Need to change for collection*/
+		.collectionThumbnailPanel {
+			clear: both;
+			height: 94px;
+			position: relative;
+			width: 357px;/*modification :430*/
+			
+			
+			/*padding-top: 10px;
+padding-bottom: 10px;
+border-bottom: 1px solid #515151;
+width: 497px;*//
+			
+		}
+		/***/
+		/*need to change for collection*/
+		.collectionThumbnail {
+			float: left;
+			height: 91px;
+			margin: 0 10px 0 0;
+			width: 121px;
+		}
+		/**/
+		.collectionThumbnails {
+			width: 121px;
+			height: 91px;
+		}
+		
+		.collectionTitlePanel {
+			float: left;
+			height: 70px;
+			max-width:214px
+		}
+		
+		.collectionTitle {
+			color: #515151;/*modification :rgb(16, 118, 187)*/
+			font-size: 12px;
+			font-weight: bold;
+			height: 18px;
+			margin-bottom: 3px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 210px;
+		}
+		
+		.metaDataPanel {
+			font-size: 12px;
+			font-weight: normal;
+			color: #999999;
+			margin-top: 0px;
+			clear: both;
+		}
+		
+		.resourceCount {
+			float: left;
+			/*clear: both;*/
+			color: #4E9746;
+			  /*modification :margin-left: 145px;margin-top: -13px;*/
+			
+		}
+		
+		/*changes for collections*/
+		.collectionNotify {
+			background: none repeat scroll 0 0 #1076BB;
+			height: 91px;
+			position: absolute;
+			width: 8px;
+			z-index: 4;
+		}
+		
+		.author {
+			font-style: italic;
+			margin-bottom: 3px;
+			margin-right: 4px;
+			color: #999999;
+			float:left;
+		}
+		
+		.authorName {
+			font-style: italic;
+			/* margin-bottom: 3px;
+			margin-right: 4px; */
+			color: #999999;
+		} 
+		
+		.grades {
+			
+			margin-bottom: 3px;
+			margin-right: 4px;
+			color: #999999;
+			float:left;
+		}
+		
+		 
+		
+		.collectionGradesPanel {
+			float: right;
+			height: 68px;
+			max-width: 100px;
+			margin-right: 20px;
+			margin-top: 20px;
+		}
+		
+		.resourceCountImg {
+			clear: both;
+		}
+</ui:style>
+	<g:HTMLPanel>
+		<g:FlowPanel styleName="{style.collectionThumbnailPanel}" ui:field="internalPanel1">
+			<uc:CollectionImageUc ui:field="collectionImageUc" />
+			<g:FlowPanel styleName="{style.collectionTitlePanel}" ui:field="collectionTitlePanel">
+				<g:HTML styleName="{style.collectionTitle}" ui:field="collectionTitleLbl" />
+				<g:Label styleName="{style.author}" ui:field="creatorNameLbl" />
+				<g:Label styleName="{style.authorName}" ui:field="creatorNameLblValue" />
+				<g:HTMLPanel ui:field="containerPanel"></g:HTMLPanel>
+				<g:FlowPanel styleName="{style.metaDataPanel}" ui:field="metaDataFloPanel" />
+				<g:FlowPanel ui:field="standardsDataPanel"></g:FlowPanel>
+				<g:Label styleName="{style.resourceCountImg}" />	
+				<g:Label styleName="{style.resourceCount}" ui:field="resourceCountLbl" />
+				
+			</g:FlowPanel>
+			
+			<g:FlowPanel styleName="{style.collectionGradesPanel}" ui:field="collectionGradePanel">
+				<g:Label styleName="{style.grades}" ui:field="gradesLblValue" />
+			</g:FlowPanel>
+			
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

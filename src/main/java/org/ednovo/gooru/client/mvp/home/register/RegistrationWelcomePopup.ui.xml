@@ -1,0 +1,15 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.home.register.RegisterCBundle" field="res" />
+	<g:FlowPanel styleName="{res.css.welcomePopup}">
+		<g:FlowPanel>
+			<g:Label styleName="{res.css.getstartMessage}" text="Get started on Gooru:" />
+			<g:Label styleName="{res.css.happyLearning}" text="Now, on your way! Happy Studying!" />
+		</g:FlowPanel>
+		<g:FlowPanel styleName="{res.css.welcomeButtonBox}">
+			<gg:BlueButtonUc text="Ok" ui:field="registerWelcomeUc" />
+		</g:FlowPanel>
+	</g:FlowPanel>
+
+</ui:UiBinder> 

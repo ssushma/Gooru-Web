@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
+		<g:HTMLPanel styleName="{res.css.popupInner}">
+			<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
+			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
+			<g:HTMLPanel ui:field="panelSignUp">
+				<g:HTMLPanel styleName="{res.css.popupContent}">
+					<g:Label styleName="{res.css.h1} {res.css.green}" ui:field="lblStuDes" />
+					<g:HTMLPanel styleName="{res.css.afterThirteenh2Container}">
+					<g:InlineLabel styleName="{res.css.h2}" ui:field="lblStuDesDetails" />
+					<g:HTMLPanel styleName="{res.css.questionHoverContainer}">
+						<g:Label styleName="{res.css.questionHover}" ui:field="lblQuestionMark" />
+						<g:HTMLPanel styleName="{res.css.tooltipContainer}">
+							<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+							<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+							<g:HTMLPanel styleName="{res.css.tooltipContent}"
+								ui:field="tooltipContent">
+								<g:Label styleName="{res.css.tooltipContentTitle}"
+									ui:field="lblfeaturesTitle" />
+								<g:Label ui:field="lblfeaturesTitleDes1" />
+								<g:Label ui:field="lblfeaturesTitleDes2" />
+								<g:Label ui:field="lblfeaturesTitleDes3" />
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:InlineLabel styleName="{res.css.subHeaderTurnsThirteen}" ui:field="lblStuDesDetails2" />
+				</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.stuEmailContainer}">
+					<gg:TextBoxWithPlaceholder ui:field="txtEmailId"></gg:TextBoxWithPlaceholder>
+					<gg:ErrorLabelUc ui:field="emailValidUc" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.turnsThirteenButtonContainer}">
+				<g:Button ui:field="btnEnterLater" styleName="secondary"></g:Button>
+				<g:Button ui:field="btnSubmit" styleName="primary"></g:Button>
+				<g:Label ui:field="lblUpdating" styleName="{res.css.updatingText}">submitting...</g:Label>
+			</g:HTMLPanel>
+
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

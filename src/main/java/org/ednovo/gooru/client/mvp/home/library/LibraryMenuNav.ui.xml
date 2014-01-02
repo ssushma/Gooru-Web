@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style field="libraryStyle" src="library.css"/>
+	<ui:style field="libraryStyleUc" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
+	<g:HTMLPanel styleName="{libraryStyle.tabsInner}" ui:field="tabsInner">
+	      <g:Label styleName="{libraryStyle.tabsLi} tabsLi {libraryStyle.singleLink} {libraryStyle.active}" ui:field="featuredCourses">Featured</g:Label>
+	      <panel:HTMLEventPanel styleName="{libraryStyle.tabsLi} courseScrollStyle tabsLi" ui:field="sciencePanel">
+	         Science
+	         <g:HTMLPanel styleName="{libraryStyle.dropdown} {libraryStyle.courseScrollStyle}" ui:field="scienceCourses"/>
+	      </panel:HTMLEventPanel>
+	      <panel:HTMLEventPanel styleName="{libraryStyle.tabsLi} tabsLi" ui:field="mathPanel">
+	         Math
+	         <g:HTMLPanel styleName="{libraryStyle.dropdown} {libraryStyle.courseScrollStyle}" ui:field="mathCourses"/>
+	      </panel:HTMLEventPanel>
+	      <panel:HTMLEventPanel styleName="{libraryStyle.tabsLi} tabsLi" ui:field="socialPanel">
+	         Social Sciences
+	         <g:HTMLPanel styleName="{libraryStyle.dropdown} {libraryStyle.courseScrollStyle}" ui:field="socialCourses"/>
+	      </panel:HTMLEventPanel>
+	      <panel:HTMLEventPanel styleName="{libraryStyle.tabsLi} tabsLi" ui:field="elaPanel">
+	         Language Arts
+	         <g:HTMLPanel styleName="{libraryStyle.dropdown} {libraryStyle.courseScrollStyle}" ui:field="elaCourses"/>
+	      </panel:HTMLEventPanel>
+	      <g:Anchor styleName="{libraryStyle.tabsLi} tabsLi {libraryStyle.singleLink} {libraryStyle.last}" ui:field="aboutGooruAnr">About Gooru</g:Anchor>
+	</g:HTMLPanel>
+</ui:UiBinder> 

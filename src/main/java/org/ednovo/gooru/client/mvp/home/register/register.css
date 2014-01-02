@@ -1,0 +1,654 @@
+.registerPopup {
+	background: none repeat scroll 0 0 #FFFFFF;
+	width: 750px;
+	z-index: 100;
+}
+
+.registerPopupGlassPanel {
+	background-color: #000000;
+	opacity: 0.3;
+	z-index: 99;
+}
+
+.registerFormContainer {
+	border: 1px solid #CCCCCC;
+	height: 398px;
+	margin: -4px 4px 4px;
+}
+
+.registerMessageDiv {
+	clear: both;
+	float: left;
+	margin: 15px 5px 8px 15px;
+	width: 95%;
+}
+
+.registerFieldsContainer {
+	float: left;
+	width: 100%;
+	margin: 3px 0;
+}
+
+.registerLeftContainer {
+	float: left;
+	width: 355px;
+	margin-left: 15px;
+	font-weight: bold;
+}
+
+.registerRightContainer {
+	float: left;
+	font-weight: bold;
+	margin-left: 5%;
+	width: 45%;
+}
+
+.registerFormField {
+	font-weight: normal;
+	width: 375px;
+	float: left;
+	padding: 8px 0;
+}
+
+.registerGenderRow {
+	float: left;
+	width: 40%;
+	margin-top: -6px;
+}
+
+.registerTermsAndCondtion {
+	font-size: 13px;
+	margin: 30px 25px 20px 15px;
+	width: 96%;
+	float: left;
+}
+
+.actionField {
+	width: 100%;
+	text-align: center;
+}
+
+.registerFormInputs {
+	float: left;
+	font-size: 13px;
+	font-weight: normal;
+	width: 125px;
+}
+
+.registerFormFields {
+	height: 310px;
+	background: #fff;
+	width: 200px;
+	height: 25px;
+	border: 1px solid #ccc;
+}
+
+.genderoptions {
+	float: left;
+	width: 100%;
+}
+
+.genderInputField {
+	float: left;
+	width: 100px !important;
+}
+
+.containerText {
+	float: left;
+	color: #60A020;
+	font-size: 15px;
+}
+
+.collectionFormCancelButton {
+	clear: both;
+	cursor: pointer;
+	position: relative;
+	text-decoration: none;
+	top: 0;
+}
+
+.overRideBlueButton {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background-color: #1076bb;
+	border: 0 none;
+	border-radius: 4px 4px 4px 4px;
+	clear: both;
+	color: #fff;
+	cursor: pointer;
+	 
+	margin: 10px 10px 10px 10px;
+	padding: 8px 9px 8px 9px;
+	position: relative; 
+}
+
+.supportText {
+	color: #0f76bb;
+	float: left;
+	cursor: pointer;
+}
+
+.footerDiv {
+	float: left;
+	cursor: pointer;
+}
+
+.footerDiv:hover,.supportText:hover,.collectionFormCancelButton:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.errorValidation {
+	/* background-color: #FFFFCC;
+	border: 1px solid #CC0000; */
+	font: 10px arial;
+	color: #fab03a;
+	left: 39.1%;
+	margin: 3px 3px -6px;
+	padding: 3px;
+	position: relative;
+	width: 145px;
+	display: none;
+}
+
+.listBoxAlign {
+	border: 1px solid #CCCCCC;
+	padding: 5px 12px;
+	width: 150px;
+}
+
+.registerRightFormField {
+	float: left;
+	font-size: 13px;
+	font-weight: normal;
+	width: 100px;
+	padding: 5px 0;
+}
+
+.registerRightsFormFields {
+	float: left;
+	font-size: 13px;
+	font-weight: normal;
+	width: 200px;
+	padding: 5px 0;
+}
+
+.registerRightsFormFields {
+	float: left;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 5px 0;
+}
+
+.emailTxtBox,.calendarStyle {
+	border: 1px solid #ccc;
+	padding: 5px;
+	width: 258px;
+}
+
+.dateStyle {
+	z-index: 9999;
+}
+
+.registerContentDiv {
+	border: 1px solid #CCCCCC;
+	margin: -4px 4px 4px;
+	float: left;
+}
+
+.registerSaveAndShareContentDiv {
+	border: 1px solid #CCCCCC;
+	margin: -4px 4px 4px;
+	float: left;
+	height: 562px;
+	width: 788px;
+}
+
+.registerEmailDiv {
+	clear: both;
+	float: left;
+	margin-left: 10px;
+	margin-top: 6px;
+	padding: 16px;
+	width: 100%;
+}
+
+.registerAlignInputs {
+	width: 130px;
+	color: #999999;
+	padding-left: 8px;
+	float: left;
+	margin-left: 5px;
+	margin-top: 5px;
+	text-align: center;
+}
+
+.registerSaveAndShareAlignInputs {
+	width: 130px;
+	color: #999999;
+	padding-left: 8px;
+	float: left;
+	margin-left: 15px;
+	margin-top: 5px;
+	text-align: center;
+}
+
+.registerActionField {
+ 
+width: 100%;
+float: left;
+}
+
+.registerTextAlign {
+	padding: 10px;
+}
+
+.registerLabelAlign {
+	clear: both;
+	float: left;
+	margin: 15px 5px 8px 15px;
+	width: 95%;
+}
+
+.emailIdParent {
+	float: left;
+	width: 30%;
+}
+
+.parentFormButtonDiv {
+	text-align: center;
+	width: 100%;
+}
+
+.errorBoxStyle {
+	border: 1px solid #ccc;
+	padding: 5px;
+	width: 258px;
+	/* background-color: #FFFFCC; */
+}
+
+.gooruDateError {
+	border: 0 none;
+	float: left;
+	height: 20px;
+	width: 228px;
+	/* background-color: #FFFFCC; */
+}
+
+.gooruDateBoxError {
+	border: 1px solid #ccc;
+	float: left;
+	margin-bottom: 3px;
+	padding: 2px;
+	width: 264px;
+	/* background-color: #FFFFCC; */
+}
+
+.parentDateBoxError {
+	border: 1px solid #CCCCCC;
+	float: left;
+	margin-bottom: 3px;
+	padding: 1px;
+	width: 216px;
+	/* background-color: #FFFFCC; */
+}
+
+.parentDateTextError {
+	border: 0 none;
+	float: left;
+	height: 20px;
+	width: 181px;
+	/* background-color: #FFFFCC; */
+}
+
+.registerContentAlign {
+	margin-bottom: 10px;
+	float: left;
+	width: 100%;
+}
+
+.userRegistrationText {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #CCCCCC;
+	width: 200px;
+	height: 25px;
+}
+
+.userRegistrationError {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #CCCCCC;
+	width: 200px;
+	/* background-color: #FFFFCC; */
+	height: 25px;
+}
+
+.userErrorLabel {
+	/* background-color: #FFFFCC; */
+	/* border: 1px solid #CC0000; */
+	font: 10px arial;
+	color: #fab03a;
+	margin-top: 3px;
+	padding: 3px;
+	width: 194px;
+}
+
+.userRegErrorStyle {
+	/* background-color: #FFFFCC; */
+	/* border: 1px solid #CC0000; */
+	font: 10px arial;
+	margin-left: 126px;
+	color: #fab03a;
+	margin-top: 3px;
+	padding: 3px;
+	width: 207px;
+	clear: both;
+}
+
+.registerErrorLabel {
+	/*  background-color: #FFFFCC;
+	border: 1px solid #CC0000; */
+	clear: both;
+	font: 11px arial;
+	color: #fab03a;
+	margin-left: 144px;
+	margin-top: 3px;
+	padding: 3px;
+	width: 194px;
+}
+
+.validationTextBox {
+	float: left;
+	width: 220px;
+}
+
+.registerRightFormInputs {
+	float: left;
+	font-size: 13px;
+	font-weight: normal;
+	width: 100px;
+}
+
+.childAccountText1 {
+	color: #515151;
+	font-size: 13px;
+	line-height: 18px;
+	padding: 18px;
+}
+
+.childAccountText2 {
+	margin-top: -24px;
+	padding: 18px;
+}
+
+.childRegisterContent {
+	border: 1px solid #CCCCCC;
+	margin: -4px 4px 4px;
+	float: left;
+}
+
+.childConfirmButton {
+	background-color: #1076bb;
+	border: 0 none;
+	border-radius: 4px 4px 4px 4px;
+	clear: both;
+	color: #FFFFFF;
+	cursor: pointer;
+	font-weight: bold;
+	margin-left: 25em;
+	padding: 8px 9px;
+	position: relative;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background-color: #1076BB;
+}
+
+.rightErrorLabel {
+	/* background-color: #FFFFCC; */
+	/* border: 1px solid #CC0000; */
+	clear: both;
+	font: 10px arial;
+	color: #fab03a;
+	margin-left: 100px;
+	margin-top: 3px;
+	padding: 3px;
+	width: 212px;
+}
+
+.guardianEmailId {
+	border: 1px solid #CCCCCC;
+	float: left;
+	height: 20px;
+	margin-top: -5px;
+	margin-bottom: 3px;
+	width: 250px;
+}
+
+.guardianErrorEmail {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #CCCCCC;
+	/* background-color: #FFFFCC; */
+	float: left;
+	height: 20px;
+	margin-bottom: 3px;
+	margin-top: -5px;
+	width: 250px;
+}
+
+.parentErrorLabel {
+	/* background-color: #FFFFCC; */
+	/* border: 1px solid #CC0000; */
+	clear: both;
+	font: 10px arial;
+	color: #fab03a;
+	margin-left: 147px;
+	padding: 3px;
+	width: 194px;
+}
+
+.registerPopupStyle {
+	background: none repeat scroll 0 0 #FFFFFF;
+	clip: inherit !important;
+	overflow: visible !important;
+	position: absolute !important;
+	width: 500px;
+}
+
+.registerHeaderDiv {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666),
+		to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	color: #FFFFFF;
+	margin: 4px;
+	padding: 10px 15px;
+}
+
+.registerHeaderText {
+	font-size: 16px;
+	color: #fff;
+}
+
+/********** Registration welcome popup***********/
+.welcomePopup {
+	min-height: 100px;
+	text-align: center;
+}
+
+.getstartMessage {
+	color: #1076BB;
+	font-size: 16px;
+}
+
+.happyLearning {
+	font-size: 12px;
+	margin-top: 30px;
+}
+
+.welcomeButtonBox {
+	text-align: center;
+}
+
+/*********** Registration Confirmation popup ***********/
+.shelfItemContentDiv {
+	border: 1px solid #CCCCCC;
+	height: 172px !important;
+	margin: -4px 4px 4px;
+}
+
+.registerSuccessMessage {
+	clear: both;
+	float: left;
+	margin: 5px 4px 5px 15px;
+	width: 95%;
+}
+
+.registerFormButtonDiv {
+	    position: relative;
+    text-align: center;
+    top: 14px;
+    width: 100%;
+}	
+
+
+.supportTextMsg {
+	color: #0f76bb;
+}
+
+.contactUsText {
+	float: left;
+}
+
+.registerContactMessage {
+	margin-left: 15px;
+	float: left;
+	width: 95%;
+}
+
+
+.registerSaveAndShareText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #515151;
+	text-align: center;
+	margin-top: 24px;
+	width: 636px;
+	margin-left: 100px;
+}
+
+.registerInnerContainer {
+	width: 494px;
+	height: 366px;
+	margin: 0 auto;
+	margin-top: 70px;
+}
+
+.registersaveAndSharePopupTotalContainerNew {
+background: none repeat scroll 0 0 #fff;
+clip: inherit !important;
+overflow: visible !important;
+position: absolute !important;
+ 
+top: -3px;
+z-index: 10;
+float: left;
+left: -2px;
+}
+
+
+
+.registerSaveAndShareHeaderTitle {
+	width: 350px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 24px;
+}
+
+	
+
+
+.registerTextAlign2{
+float: left;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+color: #515151;
+text-align: center;
+margin-top: 8px;
+clear: both;
+margin-left: 11px;
+width: 100%;
+margin-bottom: 25px;
+}
+
+ 
+.saveAndShareHaveAnAccountTwo {
+float: left;
+width: 100%;
+width: 150px;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+color: #1076BB;
+cursor: pointer;
+text-align: center;
+margin-top: 30px;
+margin-left: 172px;
+}
+.registerContentsize
+{
+    width:570px;
+    float: left;
+}
+ 
+ 
+ 
+ .resourceRegisterAlign {
+ 
+width: 100%;
+float: left;
+}
+
+
+.resourceRegisterError
+{
+   /* background-color: #FFFFCC;*/
+	/*border: 1px solid #CC0000; */
+	clear: both	;
+  /*font: 10px arial;*/
+	/*margin-left: 300px;*/
+	margin-top: 3px;
+	float: right;
+    color: #FBB03B;
+	/*width: 208px;*/
+	padding-right: 72px;
+}
+
+
+.overResourceRideBlueButton {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background-color: #1076bb;
+	border: 0 none;
+	border-radius: 4px 4px 4px 4px;
+	clear: both;
+	color: #fff;
+	cursor: pointer;
+	 
+	margin: 10px 10px 10px 189px;
+	padding: 8px 9px 8px 9px;
+	position: relative; 
+}

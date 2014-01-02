@@ -1,0 +1,130 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:qac="urn:import:org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item"
+	xmlns:uqi="urn:import:org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+	ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+	ui:generateLocales="default">
+	<ui:style field="editQuestionStyle" src="EditQuestionResource.css"
+		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.UpdateResourceBundle" />
+	<g:HTMLPanel styleName="{editQuestionStyle.editQuestionPopupContainer}">
+		<g:Label ui:field="lblEditQuestionTitle" styleName="{editQuestionStyle.editQuestionPopupHeader}"></g:Label>
+		<g:HTMLPanel styleName="{editQuestionStyle.questionOptionsContainer}">
+			<uc:HTMLEventPanel styleName="{editQuestionStyle.buttonDeSelected}"
+				ui:field="questionTabButton">
+				<g:RadioButton name="questionTypeGrouop" ui:field="multipleChoiceRadioButton"
+					checked="true" styleName="{editQuestionStyle.questionRadioButtonStyle}"></g:RadioButton>
+				<g:Anchor ui:field="ancMultipleChoice" styleName="{editQuestionStyle.editResourceBigTitle}"></g:Anchor>
+			</uc:HTMLEventPanel>
+			<uc:HTMLEventPanel styleName="{editQuestionStyle.buttonDeSelected}"
+				ui:field="trueOrFlaseButton">
+				<g:RadioButton name="questionTypeGrouop" ui:field="trueOrFalseRadioButton"
+					styleName="{editQuestionStyle.questionRadioButtonStyle}"></g:RadioButton>
+				<g:Anchor ui:field="ancTrueOfFalse" styleName="{editQuestionStyle.editResourceBigTitle}"></g:Anchor>
+			</uc:HTMLEventPanel>
+			<uc:HTMLEventPanel styleName="{editQuestionStyle.buttonDeSelected}"
+				ui:field="openEndedButton">
+				<g:RadioButton name="questionTypeGrouop" ui:field="openEndedRadioButton"
+					styleName="{editQuestionStyle.questionRadioButtonStyle}"></g:RadioButton>
+				<g:Anchor ui:field="ancOpenEnded" styleName="{editQuestionStyle.editResourceBigTitle}"></g:Anchor>
+			</uc:HTMLEventPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{editQuestionStyle.addResourcePopupOuterdiv}">
+			<g:HTMLPanel styleName="{editQuestionStyle.addResourceEditPopup}">
+				<g:HTMLPanel styleName="{editQuestionStyle.addResourceEditFormOuterDiv}">
+					<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContainer}">
+						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}"
+							ui:field="listQuestionType">
+							<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormTitle}">Question
+								Type</g:HTMLPanel>
+							<g:HTMLPanel styleName="{editQuestionStyle.addResourceCategoryDiv}">
+								<g:ListBox styleName="{editQuestionStyle.addResourceCategoryInputDiv}"
+									ui:field="questionTypeListBox">
+									<g:item value='MC'>Multiple Choice</g:item>
+									<g:item value='T/F'>True/False</g:item>
+									<g:item value='OE'>Open Ended</g:item>
+								</g:ListBox>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}">
+							<g:Label styleName="{editQuestionStyle.addResourceFormTitle}" ui:field="lblQuestion"></g:Label>
+							<g:HTMLPanel
+								styleName="{editQuestionStyle.addResourceFormInputControl} editQuestionTextcontainer"
+								ui:field="questionTextRichTextboxContainer">
+								<!-- <g:TextArea styleName="{editQuestionStyle.addResourceFormTextarea} 
+									{editQuestionStyle.addResourceFormAnswerTextAlign}" text="" ui:field='resourceQuestion'></g:TextArea> -->
+								<!-- <tinyMce:TinyMCE ui:field="resourceQuestion"></tinyMce:TinyMCE> -->
+							</g:HTMLPanel>
+							<g:Label styleName="{editQuestionStyle.addResourceBottmTitle}"
+								ui:field="lblAddQuestion"></g:Label>
+							<g:Label styleName="{editQuestionStyle.addResourceFormInputBottomText}"
+								ui:field="errorMessageForQuestion"></g:Label>
+						</g:HTMLPanel>
+						<g:HTMLPanel ui:field="questionImageContainer">
+							<uqi:UpdateQuestionImageView
+								ui:field="updateQuestionImageView"></uqi:UpdateQuestionImageView>
+
+						</g:HTMLPanel>
+
+
+
+						<g:HTMLPanel styleName="{editQuestionStyle.clear}">
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}"
+							ui:field="answerchoiceTitleContainer">
+							<g:HTMLPanel
+								styleName="{editQuestionStyle.addResourceFormTitleChoiceContianer}">
+								<g:Label styleName="{editQuestionStyle.addResourceFormTitleChoice}"
+									ui:field="lblChoices"></g:Label>
+								<g:Label styleName="{editQuestionStyle.addResourceFormTitleChoiceAlign}"
+									ui:field="lblCorrect"></g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+
+						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}"
+							ui:field="questionAnswerChoiceContainer">
+
+						</g:HTMLPanel>
+						<g:Label styleName="{editQuestionStyle.addResourceBottmTitle}"
+							ui:field="lblAddAnswerChoice"></g:Label>
+						<g:Label text="" ui:field="errorMessageForAnsCheck"
+							styleName="{editQuestionStyle.addResourceFormInputBottomText}" />
+						<g:Label text="" ui:field="ansChoiceErrMsg"
+							styleName="{editQuestionStyle.addResourceFormInputBottomText}" />
+						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}">
+							<g:Label styleName="{editQuestionStyle.addResourceFormTitle}" ui:field="lblExplanation"></g:Label>
+							<g:HTMLPanel
+								styleName="{editQuestionStyle.addResourceFormInputControl} editQuestionTextcontainer"
+								ui:field="questionExplantionRichTextboxContainer">
+								<!-- <g:TextArea styleName="{editQuestionStyle.addResourceFormTextarea} 
+									{editQuestionStyle.addResourceFormAnswerTextAlign}" text="" ui:field="explainationTextArea"></g:TextArea> -->
+								<!-- <tinyMce:TinyMCE ui:field="explainationTextArea"></tinyMce:TinyMCE> -->
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:Label styleName="{editQuestionStyle.addResourceFormInputBottomText}"
+							ui:field="lblErrorMessageForExplanation"></g:Label>
+						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormTitleOuterdiv}"
+							ui:field="addQuestionHintsContainer">
+
+
+						</g:HTMLPanel>
+						<g:Label styleName="{editQuestionStyle.addResourceBottmTitle}"
+							ui:field="lblAddHints"></g:Label>
+						<g:Label styleName="{editQuestionStyle.addResourceFormInputBottomText}"
+							ui:field="errorMessageForHintsCheck"></g:Label>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{editQuestionStyle.addResourceGrayButtonContainer}" ui:field="panelPleaseWait">
+						<g:Label ui:field="lblPleaseWait" styleName="{editQuestionStyle.pleaseWait}" />
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{editQuestionStyle.addResourceGrayButtonContainer}"  ui:field="panelControls">
+						<g:Button ui:field="btnSave" styleName="{editQuestionStyle.btnSave}"></g:Button>
+						<g:Button styleName="{editQuestionStyle.btnCancel}"
+							ui:field="btnCancel"></g:Button>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

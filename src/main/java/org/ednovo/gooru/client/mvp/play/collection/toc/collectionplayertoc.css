@@ -1,0 +1,12 @@
+.nav-toc-container{
+	padding: 5px;
+	min-height: 127px;
+	float:left;
+}
+
+.nav-toc-wrapper{
+	width:960px;
+	margin:0 auto;
+	overflow-x: auto;
+	background-color: #F0F0F0;
+}

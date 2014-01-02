@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"  
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	<context:annotation-config />
+
+	<aop:aspectj-autoproxy />
+	
+	<bean id="appSessionHolder" class="org.ednovo.gooru.server.AppSessionHolder" scope="request"/>
+	
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+		
+	<bean id="restUsername" class="java.lang.String">
+		<constructor-arg>
+			<value>${rest.username}</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="restPassword" class="java.lang.String">
+		<constructor-arg>
+			<value>${rest.password}</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="restConstants"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="rest.endpoint">${rest.endpoint}</prop>
+				<prop key="rest.password">${rest.password}</prop>
+				<prop key="rest.username">${rest.username}</prop>
+				<prop key="search.password">${search.password}</prop>
+				<prop key="search.username">${search.username}</prop>
+				<prop key="search.endpoint">${search.endpoint}</prop>
+				<prop key="api.key">${api.key}</prop>
+				<prop key="home.endpoint">${home.endpoint}</prop>
+				<prop key="domain.name">${domain.name}</prop>
+				<prop key="classic.endpoint">${classic.endpoint}</prop>
+				<prop key="docViewer.cache">${docViewer.cache}</prop>
+				<prop key="google.analtics.additional.accounts">${google.analtics.additional.accounts}</prop>
+				<prop key="production.switch">${production.switch}</prop>
+				<prop key="google.signin">${google.signin}</prop>
+				<prop key="profile.image.url">${profile.image.url}</prop>
+				<prop key="cdn.endpoint">${cdn.endpoint}</prop>
+				<prop key="log.api.key">${log.api.key}</prop>
+				<prop key="whats.new.mos.link">${whats.new.mos.link}</prop>
+				<prop key="whats.new.fib.link">${whats.new.fib.link}</prop>
+				<prop key="mos.link">${mos.link}</prop>
+				<prop key="gooru.release.version">${gooru.release.version}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="collectionConstants"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="collection.math.week1">${collection.math.week1}</prop>
+				<prop key="collection.science.week1">${collection.science.week1}</prop>
+				<prop key="collection.social.week1">${collection.social.week1}</prop>
+				<prop key="collection.language.week1">${collection.language.week1}</prop>
+				<prop key="collection.math.week2">${collection.math.week2}</prop>
+				<prop key="collection.science.week2">${collection.science.week2}</prop>
+				<prop key="collection.social.week2">${collection.social.week2}</prop>
+				<prop key="collection.language.week2">${collection.language.week2}</prop>
+				<prop key="collection.math.week3">${collection.math.week3}</prop>
+				<prop key="collection.science.week3">${collection.science.week3}</prop>
+				<prop key="collection.social.week3">${collection.social.week3}</prop>
+				<prop key="collection.language.week3">${collection.language.week3}</prop>
+				<prop key="collection.math.week4">${collection.math.week4}</prop>
+				<prop key="collection.science.week4">${collection.science.week4}</prop>
+				<prop key="collection.social.week4">${collection.social.week4}</prop>
+				<prop key="collection.language.week4">${collection.language.week4}</prop>
+				<prop key="collection.math.week5">${collection.math.week5}</prop>
+				<prop key="collection.science.week5">${collection.science.week5}</prop>
+				<prop key="collection.social.week5">${collection.social.week5}</prop>
+				<prop key="collection.language.week5">${collection.language.week5}</prop>
+				<prop key="classroom.use.cases">${classroom.use.cases}</prop>
+				<prop key="classroom.how.to.use">${classroom.how.to.use}</prop>
+				<prop key="collection.switch.date">${collection.switch.date}</prop>
+			</props>
+		</property>
+	</bean>
+		
+</beans>

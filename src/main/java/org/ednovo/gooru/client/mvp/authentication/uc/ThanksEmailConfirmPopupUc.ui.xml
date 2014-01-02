@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBG}">
+		<g:HTMLPanel styleName="{res.css.popupInner}" ui:field="panelPopupInner">
+			<g:Label styleName="{res.css.popupHeader}" ui:field="lblLoginHeading"></g:Label>
+			<g:Label ui:field="lblClose"
+				styleName="{res.css.closeButton}"></g:Label>
+			<g:HTMLPanel styleName="{res.css.thanksPopupContent}">
+				<g:Label styleName="{res.css.congratsHeader}" ui:field="lblCongratsHeader"/>
+				<g:Label styleName="{res.css.subheader}" ui:field="lblCheckYourEmail"/>
+				<g:Button styleName="primary {res.css.startUsingGooru}" ui:field="btnStartUsingGooru"/>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,46 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+
+	<ui:style field="StudentStyle" src="StudentStyles.css" />
+		
+	<g:HTMLPanel>
+		<!-- <panel:HTMLEventPanel styleName="{StudentStyle.classPageArrContainer}" 
+			ui:field="backToEditPanel" visible="false"> <g:HTMLPanel styleName="{StudentStyle.classPageArrOuterDiv}"> 
+			<g:HTMLPanel styleName="{StudentStyle.classPageSpriteImg classPageArrIcon}"></g:HTMLPanel> 
+			<g:Image styleName="{StudentStyle.classPageArrImg}" url="./images/Classpage/student/NextArrow.png" 
+			width="120" height="90" /> </g:HTMLPanel> <g:HTMLPanel styleName="{StudentStyle.classPageArrText}">Back</g:HTMLPanel> 
+			</panel:HTMLEventPanel> -->
+      <g:HTMLPanel styleName="{StudentStyle.classpageContainer}">
+		<g:HTMLPanel styleName="{StudentStyle.classpageBannerview}">
+			<g:HTMLPanel styleName="{StudentStyle.classpageBanner}">
+				<g:Image title="Classpage" altText="Classpage"  ui:field="studentViewImage" styleName="{StudentStyle.classpageImage}" width="815" height="180" />
+				<g:Button styleName="{StudentStyle.classpageHoverButton}" ui:field="backToEditPanel" visible="false">Return to Teacher View</g:Button>
+				<g:HTMLPanel styleName="{StudentStyle.classpageHoverbg}">
+					<g:Label styleName="{StudentStyle.classpageHoverTitle}" ui:field="mainTitleLbl"></g:Label>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		</g:HTMLPanel>
+
+
+		<g:HTMLPanel styleName="{StudentStyle.classPageContainerforAssignment}">
+
+			<g:HTMLPanel styleName="{StudentStyle.classPageContentDiv}">
+				<!-- <g:Label styleName="{StudentStyle.classPageRoundedMainHeading}"
+					ui:field="mainTitleLbl"></g:Label> -->
+				<g:Label styleName="{StudentStyle.classPageNoAssignment}"
+					ui:field="noAssignmentMsg" visible="false">Oops! Looks like your teacher
+					hasn't added any Assignments to his/her page yet. Check back later to
+					see if there are any changes!</g:Label>
+
+				<g:HTMLPanel ui:field="contentpanel" />
+				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}">
+					<g:FlowPanel styleName="{StudentStyle.paginationPanel}"
+						ui:field="paginationPanel" />
+				</g:FlowPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

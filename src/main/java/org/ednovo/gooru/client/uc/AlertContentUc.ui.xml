@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.title{
+			background: none repeat scroll 0 0 #515151;
+			border-radius: 4px 4px 0 0;
+			color: #FFFFFF;
+			height: 30px;
+			padding-left: 5px;
+			padding-top: 10px;
+			text-align: left;
+		}
+		.content{
+			min-height: 102px;
+			border: 1px solid #c1bfbf;
+			padding: 10px;
+			background-color: white;
+		}
+		.contentStyle{
+			width: 98%;		
+			word-wrap: break-word;
+		}
+		.okButton{
+			margin: 5px auto;
+    		text-align: center;
+    		width: 100%;
+    		margin-top: 39px;
+		}
+		.okButton button {
+			color:#515151;
+		}
+		.okButton button:hover {
+			color:#515151;
+			background: #ddd;
+		}
+	</ui:style>
+	<g:FlowPanel>
+		<g:FlowPanel ui:field="headerPanel" styleName="{style.title}">
+			<g:Label ui:field="alertMessageHeaderField"/>	
+		</g:FlowPanel>
+		<g:FlowPanel ui:field="contentPanel" styleName="{style.content}">
+			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField"/>
+		<g:FlowPanel styleName="{style.okButton}">
+			<g:Button text = "Ok" ui:field="okButton"/>
+		</g:FlowPanel>
+		</g:FlowPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

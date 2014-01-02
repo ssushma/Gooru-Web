@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupCBundle"
+		field="res" />
+		<g:HTMLPanel styleName="{res.css.popupOuter}">
+			<g:HTMLPanel styleName="{res.css.popupInner}">
+				<g:HTMLPanel styleName="{res.css.popupHeader}">
+					Title your Classpage!
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.popupContent}">
+					<g:HTMLPanel styleName="{res.css.popupTitle}">
+						Title*
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.popupInputBoxContainer}">
+						<g:TextBox styleName="{res.css.popupInputBox}" ui:field="classpageTitleTxt" />
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.popupMandatoryContainer}">
+						<g:Label styleName="{res.css.popupMandatoryTitleText}"
+							ui:field="mandatoryClasspageTitleLbl">Please enter title.</g:Label>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:Label styleName="{res.css.creating}" ui:field="panelLoading"></g:Label>
+				<g:HTMLPanel styleName="{res.css.popupButtinContainer}" ui:field="panelControls">
+					<g:Label ui:field="addBtnLbl" styleName="{res.css.popupOkButton}">OK</g:Label>
+					<g:Label ui:field="cancelPopupBtnLbl" styleName="{res.css.popupOkCancel}">Cancel</g:Label>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+</ui:UiBinder>

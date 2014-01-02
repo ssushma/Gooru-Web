@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="landingPageStyle" src="../landing-page.css" />
+		<g:HTMLPanel styleName="{landingPageStyle.pageSection} gooruProvides" ui:field="panelHowToUseGooru">
+		   <h2>How to Use Gooru</h2>
+		   <g:Anchor ui:field="backto" href="#" styleName="{landingPageStyle.returnToTop}">back to the top</g:Anchor>
+		   <g:HTMLPanel styleName="{landingPageStyle.contentBlock}">
+		      <div class="{landingPageStyle.aboutDOTS} discover">
+		         <div class="{landingPageStyle.dotsImage} {landingPageStyle.discoverImage}"></div>
+		         <h3>Discover</h3>
+		         the best free K-12 learning resources on the Web.
+		      </div>
+		      <div class="{landingPageStyle.aboutDOTS} organize">
+		         <div class="{landingPageStyle.dotsImage} {landingPageStyle.organizeImage}"></div>
+		         <h3>Organize</h3>
+		         resources you've discovered into quizzes or collections which are customizable playlists.
+		      </div>
+		      <div class="{landingPageStyle.aboutDOTS} teach">
+		         <div class="{landingPageStyle.dotsImage} {landingPageStyle.teachImage}"></div>
+		         <h3>Teach</h3>
+		         collections in the classroom or assign them to your students as homework.
+		      </div>
+		      <div class="{landingPageStyle.aboutDOTS} study">
+		         <div class="{landingPageStyle.dotsImage} {landingPageStyle.studyImage}"></div>
+		         <h3>Study</h3>
+		         Using collections and quizzes hand-picked by you, students complete assignments tailored to their exact needs at their own pace.
+		      </div>
+		      <div class="{landingPageStyle.clearfix} {landingPageStyle.learnMoreDOTS}">
+		         <g:Anchor ui:field="youTubePlayerContainer">
+		         	<img src="images/landing-page/video-icon.png" alt="video icon" class="{landingPageStyle.videoIcon}"/>Watch our Video
+		         </g:Anchor> OR <g:Anchor href="http://about.goorulearning.org/product/overview/" target="_blank" ui:field="learnmore">Learn More about Gooru</g:Anchor>
+		      </div>
+		   </g:HTMLPanel>
+		</g:HTMLPanel>
+</ui:UiBinder> 

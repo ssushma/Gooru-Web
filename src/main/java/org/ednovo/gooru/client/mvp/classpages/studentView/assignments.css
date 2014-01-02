@@ -1,0 +1,373 @@
+.myFolderRightContentWrapperTwo {
+	width: 95%;
+	height: auto;
+	background-color: #FFF;
+	float: left;
+	border-radius: 4px;
+	margin: 15px 0px 20px 23px;
+	moz-box-shadow: 2px 2px 4px #d1d0d0;
+	-webkit-box-shadow: 2px 2px 4px #d1d0d0;
+	box-shadow: 2px 2px 4px #d1d0d0;
+}
+
+.myCollectionAssigntmentTitleText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: rgb(81, 81, 81);
+	margin: margin:     10px 0px 0px 5px;
+	width: 90%;
+}
+
+.myAssigntmentTitlePanel {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #515151;
+	margin: 10px 0px 0px 10px;
+	width: 90%;
+}
+
+.myCollectionAssigntmentDueDateText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	/* color: #4C9645; */
+	color: rgb(81, 81, 81);
+	margin: 8px 0px 0px 5px;
+	width: 90%;
+}
+
+.myCollectionAssigntmentDescriptionText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	margin: 10px 0px 10px 0px;
+	width: 99.5%;
+	word-wrap: break-word;
+}
+
+.myCollectionAssigntmentDescriptionPanel {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #999999;
+	margin: 5px 0px 10px 10px;
+	width: 89%;
+}
+
+.myCollectionTitleDashedBorderContainer {
+	border: 1px dashed #999;
+	float: left;
+	width: 97%;
+	margin-left: 10px;
+	margin-bottom: 12px;
+	background-color: transparent;
+	min-height: 148px;
+	border-color: rgba(221, 221, 221, 0.5);
+	border-width: 1px;
+	border-style: dashed;
+	font-size: 12px;
+	height: auto;
+}
+
+.myCollectionDrandAndDropContainer {
+	margin: 10px 0px 0px 10px;
+	float: left;
+}
+
+.myClasspageMyCollectionBg {
+	float: left;
+/* 	background: url(../images/Classpage/assignments/mycollection.png); */
+	width: 142px;
+	height: 27px; /*margin:50px 0px 0px 287px;*/
+}
+
+.myClasspageMyCollectionText {
+	float: left;
+	font-size: 12px;
+	margin: 4px 0px 0px 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #515151;
+}
+
+.myCollectionDragHereImage {
+	float: left;
+	background: url(../images/Classpage/assignments/drag-collection.png);
+	width: 151px;
+	height: 96px;
+	margin: 10px 0px 30px -141px;
+}
+
+.myCollectionEditAndDeleteContainer {
+	float: right;
+	margin: 10px 13px 0px 0px;
+	width: 56px;
+	height: 60px;
+}
+
+.myCollectionEditBg {
+	float: left;
+	width: 56px;
+	height: 30px;
+	cursor: pointer;
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+			background: #1076BB;
+}
+
+.myCollectionEditBg:hover {
+	float: left;
+	width: 56px;
+	height: 30px;
+	cursor: pointer;
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	background: #1076BB;
+}
+
+.myCollectionDeleteContainer {
+	float: left;
+	width: 56px;
+	height: 30px;
+	cursor: pointer;
+	color: #1076B9;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.myCollectionDeleteText {
+	float: left;
+	padding: 8px 0px 0px 11px;
+}
+
+.metaContainer {
+	width: 100%;
+}
+
+.metaInfoContainer {
+	width: 80%;
+	float: left;
+}
+
+.myCollectionAssigntmentTitleTextInput {
+	float: left;
+	width: 305px;
+	height: 25px;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+	font-size: 16px;
+}
+
+.myCollectionAssigntmentDueDateTextInputText {
+	float: left;
+	color: #999999;
+	background-color: rgb(255, 255, 255);
+	width: 305px;
+	height: 25px;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+	font-size: 12px;
+}
+
+.myCollectionAssigntmentDescriptionTextArea {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #999999;
+	margin: 10px 0px 10px 0px;
+	max-width: 97%;
+	width: 97%;
+	height: 59px;
+	max-width: 97%;
+	max-height: 59px;
+	text-align: left;
+	background-color: rgb(255, 255, 255);
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+}
+
+.dueDateLblContainerPanel {
+	width: 11%;
+	float: left;
+}
+
+.dueDateContainerPanel {
+	width: 33%;
+	float: left;
+}
+
+.dueDateTxtContainerPanel {
+	width: 33%;
+	float: left;
+}
+
+.myCollectionUpdateText {
+	float: left;
+	padding: 8px 0px 0px 8px;
+}
+
+.myCollectionEditText {
+	float: left;
+	padding: 8px 0px 0px 17px;
+}
+
+.addCollectionToAssign {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(16, 118, 185);
+	text-align: left;
+	margin: 10px 5px 0px 10px;
+	cursor: pointer;
+	width: 153px;
+}
+/* Add Collection */
+.copyPopupResourcesUserInputTwo {
+	width: 384px;
+	float: left;
+	margin: 12px 0px 0px 34px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	position: relative;
+	height: 30px;
+}
+
+.copyPopupleftAndWidth {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+}
+
+.copyPopupResources {
+	font-family: Arial, Helvetica, sans-serif;
+	width: 84%;
+	border: 1px solid #999;
+	height: 28px;
+	padding: 2px 2px 5px 5px;
+	font-size: 11px;
+}
+
+.copyPopupResourcesButtonContainer {
+	width: 125px;
+	margin: 0 auto;
+}
+
+.copyPopupSettingPageAddBtn:hover {
+	background-color: #1076BB;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 15px;
+}
+
+.copyPopupSettingPageAddBtn {
+	float: left;
+	height: 30px;
+	cursor: pointer;
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #1076BB;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 15px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	margin-top: 50px;
+	width: 46px;
+}
+
+.copyPopupSettingPageChangePasswordText {
+	float: left;
+	padding: 8px 8px 0px 8px;
+}
+
+.copyPopupResourcesCancelButton {
+	float: left;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076bb;
+	margin: 57px 0px 0px 17px;
+	cursor: pointer;
+}
+
+/*CollectionUc*/
+.collectionThumbnail {
+	float: left;
+	height: 91px;
+	margin: 0 10px 0 0;
+	width: 121px;
+}
+
+.collectionThumbnails {
+	width: 121px;
+	height: 91px;
+}
+
+.collectionNotify {
+	background: none repeat scroll 0 0 #1076BB;
+	height: 91px;
+	position: absolute;
+	width: 8px;
+}
+
+.collectionHover {
+	background-color: rgba(0, 0, 0, 0.6);
+	cursor: pointer;
+	display: none;
+	height: 91px;
+	position: relative;
+	top: -94px;
+	width: 121px;
+	z-index: 20;
+}
+
+.collectionThumbnail:hover .collectionHover {
+	display: block;
+}
+
+.playIcon {
+	background: url("images/Collection-Search/play-icon.png") no-repeat
+		scroll 0 0 transparent;
+	cursor: pointer;
+	height: 16px;
+	left: 53px;
+	position: relative;
+	top: 38px;
+	width: 12px;
+}

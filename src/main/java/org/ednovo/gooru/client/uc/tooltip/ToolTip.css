@@ -1,0 +1,350 @@
+@charset "utf-8";
+/* CSS Document */
+.hoverPopupContainer {
+	display: block;
+	min-width: 75px;
+	max-width: 143px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.hoverPopupArrow {
+	background: url(images/core/bubble-arrow.png);
+	display: block;
+	width: 25px;
+	height: 10px;
+	position: relative;
+	margin: 0 auto;
+	z-index: 999999;
+	/* top: 9px; */
+}
+
+.hoverPopupArrowNewResource {
+	background: url(images/core/bubble-arrow.png);
+	display: block;
+	width: 25px;
+	height: 10px;
+	position: relative;
+	margin: 0 auto;
+	z-index: 999999;
+	margin-left: 53px;
+}
+
+.gooruGuidePopupArrow {
+	background: url(images/core/bubble-arrow.png);
+	display: block;
+	width: 25px;
+	height: 10px;
+	position: relative;
+	margin-left: 215px;
+	z-index: 999;
+}
+
+.hoverPopupTextContainer {
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	color: #515151;
+	font-size: 12px;
+	padding: 5px;
+	position: relative;
+	top: -1px;
+	color: #fab03a;
+	text-align: center;
+}
+
+/***********************************  organise popup *********************************/
+.organizeContainer {
+	display: block;
+	width: 240px;
+	margin: 0 auto;
+}
+
+.searchorganizeContainer {
+	display: block;
+	width: 109px;
+	margin: 0 auto;
+}
+
+.organizePopupTextContainer {
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	color: #515151;
+	font-size: 12px;
+	padding: 5px;
+	position: relative;
+	top: -1px;
+	color: #515151;
+	float: left;
+	line-height: 18px;
+	z-index: 99999;
+}
+
+.searchorganizePopupTextContainer {
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	color: #515151;
+	font-size: 12px;
+	/*padding: 3px 116px 0px 154px;*/
+	position: relative;
+	top: -1px;
+	color: #515151;
+	float: left;
+	line-height: 18px;
+	z-index: 99999;
+	width: 409px;
+	min-height: 128px;
+	height: auto;
+}
+
+.organizeTextContainer {
+	float: left;
+	width: 206px;
+	margin: 15px 15px 5px 15px;
+}
+
+.searchOrganizeTextContainer {
+	float: left; /*width:206px;  margin:15px 15px 5px 15px;*/
+}
+
+.organizeText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 5px;
+}
+
+.organizeRemainigText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.EditPageRemainigText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.searchOrganizeRemainigText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	width: 400px;
+	float: left;
+	margin: 14px;
+}
+
+.gooruguideText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	float: left;
+}
+
+.organizePopupQuestionText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	margin-top: 13px;
+}
+
+.organizePopupEmailSupport {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+}
+
+.studyTextContainer {
+	float: left;
+}
+
+.messageTextContainer {
+	float: left;
+	width: 229px;
+}
+
+.comingSoonText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	margin-right: 5px;
+	color: #FBB03B;
+}
+
+/**/
+.searchOrganizeExampleText {
+	float: left;
+	clear: both;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #87BADD;
+	margin-left: 14px;
+}
+
+.searchOrganizeExample {
+	float: left;
+	margin-left: 14px;;
+}
+
+.searchOrganizeLinkText {
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076BB;
+	cursor: pointer;
+}
+
+.searchOrganizeLinkText:hover {
+	color: #87BADD;
+	text-decoration: none;
+}
+
+/*GlobalToolTip css */
+.resourceRightsPopupContainer {
+	width: 219px;
+	position: absolute;
+	top: 28px;
+	left: -94px;
+	z-index: 999;
+}
+
+}
+.arrowShadow {
+	background-color: transparent;
+	width: 6px;
+	height: 17px;
+	position: absolute;
+	top: -7px;
+	left: 193px;
+	z-index: -10;
+	box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+.arrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: absolute;
+	top: -10px;
+	left: 244px;
+	border-top: none;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	/* position: absolute; */
+	left: 103px;
+	top: -9px;
+	border-top: none;
+}
+
+.resourceRightsInnerPopup {
+	clear: both;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.resourceRightsPopupTitle {
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+/* ToolTip css*/
+.tooltipContainer {
+	width: 150px;
+	position: absolute;
+}
+
+.arrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+	margin: auto;
+	border-top: none;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	top: -9px;
+	border-top: none;
+	z-index: 100;
+}
+
+.tooltipContent {
+	text-align: left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 195px;
+	float: left;
+}
+
+.tooltipContentTitle {
+	padding-bottom: 10px;
+}
+
+.classCodeTxtBox {
+	width: 103px;
+	border: 1px #E3E3E3 solid !important;
+	background-color: #FFF !important;
+	font-size: 12px !important;
+	outline: 0;
+	padding: 6px;
+	font-family: Tahoma, sans-serif !important;
+	text-transform: uppercase;
+}

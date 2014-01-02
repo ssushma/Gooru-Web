@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+
+.framebreaker-container{
+	background: black;
+	position:relative;
+}
+
+.framebreaker-wrapper{
+	margin: 0 auto;
+	width: 800px;
+	background-image: url("images/framebreaker-background.png");
+	position: relative;
+	min-height:550px;
+}
+
+.framebreaker-resource-container{
+	background: rgba(0, 0, 0, 0.7);
+	width: 800px;
+	height: 80px;
+	float: left;
+	margin-top: 230px;
+}
+
+.framebreaker-resource-wrapper{
+	width: 350px;
+	float: left;
+	height: 80px;
+}
+
+.framebreaker-resource-thumbnail{
+	width: 80px;
+	float: left;
+	margin-left: 50px;
+	margin-top: 10px;
+}
+
+.framebreaker-resource-content{
+	width: 200px;
+	float: left;
+	text-align: left;
+	margin-left: 10px;
+	height: 80px;
+	color: white;
+}
+
+.framebreaker-resource-title{
+	margin-top: 15px;
+	font-size: 13px;
+	height: 1.1em;
+	overflow: hidden;
+}
+.framebreaker-resource-attribution{
+	margin-top: 18px;
+	font-size: 12px;
+	height: 1.1em;
+	overflow: hidden;
+	color: #999;
+}
+.framebreaker-resource-url-conatiner{
+	width: 400px;
+	float: left;
+	height: 80px;
+	color: white;
+	font-size: 18px;
+}
+
+.framebreaker-resource-url-content{
+	font-size: 17px;
+	margin-top: 30px;
+}
+.framebreaker-resource-url{
+	text-decoration: none !important;
+	color: #1076BB;
+}
+.framebreaker-resource-url:hover{
+	color: #87BADD !important;
+	cursor: pointer;
+}
+
+
+
+
+

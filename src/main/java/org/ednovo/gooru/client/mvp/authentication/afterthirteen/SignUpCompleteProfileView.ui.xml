@@ -1,0 +1,73 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.authentication.SignUpCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.popup} {res.css.imgBGprofile}">
+		<g:HTMLPanel styleName="{res.css.popupInner}">
+			<g:Label styleName="{res.css.popupHeader}" ui:field="lblTitle" />
+			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
+			<g:HTMLPanel ui:field="panelSignUp">
+				<g:HTMLPanel styleName="{res.css.popupContentProfilePage}">
+					<g:Label styleName="{res.css.h1} {res.css.green}" ui:field="lblHeading" />
+					<g:Label styleName="{res.css.subheaderprofile}" ui:field="lblSubHeading" />
+
+
+					<g:HTMLPanel styleName="{res.css.popupcornerBg}">
+
+						<g:HTMLPanel styleName="{res.css.userWhiteBg}">
+							<g:HTMLPanel styleName="{res.css.users}">
+								<g:Image ui:field="profileImage" />
+							</g:HTMLPanel>
+							<g:Button ui:field="btnEditImage" styleName="{res.css.editBtn}" />
+							<g:Label styleName="{res.css.userLabel}" ui:field="userName" />
+						</g:HTMLPanel>
+
+						<g:HTMLPanel styleName="{res.css.usersRight}">
+							<gg:TextBoxWithPlaceholder styleName="{res.css.inputTextStyle}"
+								ui:field="txtFirstName" />
+
+
+							<gg:TextBoxWithPlaceholder styleName="{res.css.inputTextStyle}"
+								ui:field="txtlastName" />
+
+							<br />
+							<gg:ErrorLabelUc ui:field="firstNameValidUc"
+								styleName="{res.css.userRegErrorStylePPPFName}" />
+							<gg:ErrorLabelUc ui:field="lastNameValidUc"
+								styleName="{res.css.userRegErrorStylePPPLName}" />
+							<g:TextArea styleName="{res.css.textAreaStyle}"
+								ui:field="txtAreaAbout" />
+							<br />
+							<g:Label ui:field="lblchangePassword" styleName="{res.css.changePassowrdlabel}"></g:Label>
+							<br />
+							<g:HTMLPanel ui:field="passwordContainer">
+								<gg:TextBoxWithPlaceholder ui:field="txtPassword"
+									password="true" styleName="{res.css.inputTextStyle}" />
+								<gg:TextBoxWithPlaceholder ui:field="txtConfirmPassword"
+									password="true" styleName="{res.css.inputTextStyle}" />
+								<gg:ErrorLabelUc ui:field="passwordValidUc"  styleName="{res.css.profilePasswordError}"/>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+
+					<g:HTMLPanel styleName="{res.css.buttonContainer}">
+						<g:Button ui:field="btnUpdateProfileLater" styleName="secondary"></g:Button>
+						<g:Button ui:field="btnSubmit" styleName="primary"></g:Button>
+						<g:Label ui:field="lblUpdating">submitting...</g:Label>
+					</g:HTMLPanel>
+
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.popupFooter}">
+					<g:HTMLPanel styleName="{res.css.popupFooterText}">
+						If you have any questions,
+						<br />
+						please contact
+						<g:Anchor ui:field="supportLink" href="mailto:support@goorulearning.org"
+							target="_blank">support@goorulearning.org</g:Anchor>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

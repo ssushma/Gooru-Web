@@ -1,0 +1,119 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:sl="urn:import:org.ednovo.gooru.client.mvp.shelf.list"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.list.ShelfListCBundle"
+		field="res" />
+	<ui:style>
+		.shelfPanel {
+		float: right;
+		height: 97%;
+		margin-bottom: -143px;
+		min-height: 759px;
+		position: fixed;
+		right: 0;
+		top: 51px;
+		width: 311px;
+		}
+
+		.shelfPanelForWorkspace {
+		height: 97%;
+		margin-bottom: -143px;
+		min-height: 759px;
+		position: fixed;
+		left: 62px;
+		top: 173px;
+		width: 311px;
+		}
+		.dropPanel {
+		height: 100%;
+
+		width: 311px;
+		overflow-y: auto !important;
+		}
+
+		.shelfDirection {
+		color: #999999;
+		font-style: italic;
+		margin-top: 63px;
+		}
+
+		.shelfHeader {
+		margin: 0px 0 0px;
+		float: left;
+		}
+
+		.collectionScrlPanel {
+		overflow-y: scroll !important;
+		overflow-x: hidden !important;
+		height:590px;
+		}
+
+		.getStartedNewFolder {
+		float: left;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		color: #1076BB;
+		cursor:pointer;
+		margin-left: 14px;
+		margin: 24px 0px 0px 19px;
+		}
+		.getStartedCollection {
+		float: left;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		cursor:pointer;
+		color: #1076BB;
+		margin: 24px 0px 52px 0px;
+		margin-left: 14px;
+		margin: 24px 0px 52px 19px;
+		}
+		.getStartedCollection {
+		float: left;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		cursor:pointer;
+		color: #1076BB;
+		margin: 24px 0px 52px 0px;
+		}
+
+		.getStartedSeparator {
+		float: left;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		color: #1076BB;
+		margin: 24px 9px 22px 9px;
+		}
+
+	</ui:style>
+	<g:FocusPanel styleName="{style.shelfPanel}" ui:field="shelfFocPanel">
+		<uc:LabelGlassPanel glassText="Save this Collection"
+			styleName="{style.dropPanel}" glassStyleName="{res.css.shelfGlassPanel}"
+			topStyleName="{res.css.shelfGlassTopPanel}" ui:field="shelfDropPanel">
+
+			<uc:glassContent>
+				<g:ScrollPanel ui:field="collectionListScrollpanel"
+					styleName="{style.collectionScrlPanel}">
+					<g:FlowPanel styleName="{style.shelfHeader}">
+						<!-- <sl:ShelfAddCollection ui:field="addCollectionItem" label="+New 
+							Collection" /> -->
+						<g:FlowPanel ui:field="folderCollectionPanel">
+							<sl:ShelfAddCollection ui:field="addCollectionItem" />
+							<sl:ShelfAddCollection ui:field="newCollectionShelf"
+								label="New Collection" />
+						</g:FlowPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionNavContainerHeading}"
+							ui:field="folderListPanelEvent">
+							<g:Label styleName="{res.css.myFolderCollectionNavContainerHeadingText}">Folders</g:Label>
+						</g:HTMLPanel>
+						<g:Label ui:field="noCollectionMsgLbl"></g:Label>
+						<g:VerticalPanel ui:field="myShelfVerPanel" />
+						<g:SimplePanel ui:field="dragImageSimPanel" />
+					</g:FlowPanel>
+				</g:ScrollPanel>
+
+			</uc:glassContent>
+
+		</uc:LabelGlassPanel>
+	</g:FocusPanel>
+</ui:UiBinder> 

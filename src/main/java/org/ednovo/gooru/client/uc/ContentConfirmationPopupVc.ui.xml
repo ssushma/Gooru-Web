@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+		
+		.removePopupContainer {
+			border: 1px solid #CCCCCC;
+			height: 100px !important;
+			margin: -4px 4px 4px;
+		}
+		
+		.actionField {
+		     text-align: center;
+		     width: 100%;
+		}
+		
+		.removeText {
+			padding: 10px;
+			width: 90%;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:FlowPanel styleName="{style.removePopupContainer}" height="100px">
+			<g:FlowPanel styleName="{style.removeText}">
+				<g:Label ui:field="contentText" />
+			</g:FlowPanel>
+			<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
+				<gg:BlueButtonUc text="Ok" ui:field="okButton" styleName="primary" />
+				<g:Anchor text="Cancel" ui:field="cancelButton" styleName="collectionFormCancelButton" />
+			</g:FlowPanel>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

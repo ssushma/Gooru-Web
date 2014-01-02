@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+<ui:style field="noResultStyle" src="no-results.css" type="org.ednovo.gooru.client.mvp.search.NoSearchResultBundle" />
+	<g:HTMLPanel>
+	    <div class="{noResultStyle.noResultsBox}">
+	    <div class="{noResultStyle.container}">
+			<div class="{noResultStyle.noResults}">
+				<div class="{noResultStyle.header}">We didn't find any results for that...</div>
+				<div class="{noResultStyle.leftColumn}">You may try:
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.orange}"></div><div class="{noResultStyle.liContent}">Removing some filters</div></div>
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.green}"></div><div class="{noResultStyle.liContent}">Checking the spelling</div></div>
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.lightBlue}"></div><div class="{noResultStyle.liContent}">Using a different keyword</div></div>
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.blue}"></div><div class="{noResultStyle.liContent}">Changing the toggle (resources vs. collections)</div></div>
+				</div>
+				<div class="{noResultStyle.rightColumn}"></div>
+			</div>
+			<g:HTMLPanel styleName="{noResultStyle.suggestedResources}" ui:field="suggestedCollectionContainer">
+				<g:Label styleName="{noResultStyle.header}">Try our suggested collections</g:Label>
+				<g:Label styleName="{noResultStyle.suggestedCollectionCount}" ui:field="suggestedCollectionCountLbl"/>
+			</g:HTMLPanel>
+		</div>
+	</div>
+</g:HTMLPanel>
+</ui:UiBinder> 

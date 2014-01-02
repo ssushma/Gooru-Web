@@ -1,0 +1,505 @@
+
+.collectionXPlayerSegmentWrapper {
+	width: 1150px;
+	min-height: 500px;
+	height: auto;
+	margin: 0 auto;
+}
+
+.collectionXPlayerSegmentHeader {
+	width: 1150px;
+	height: 57px;
+	float: left;
+	background-color: #515151;
+}
+
+.collectionXPlayerSegmentHeaderTitle {
+	float: left;
+	font-size: 24px;
+	color: #FFF;
+	width: 801px;
+	margin: 17px 0px 0px 26px;
+}
+
+.collectionxPlayerSummaryBottomDescription {
+	float: left;
+	margin-left: 130px;
+	font-size: 12px;
+	font-family: arial;
+	color: #FFF;
+	margin-top: -13px;
+}
+.collection-share-view-text{
+	margin-left: 283px; 
+	font-size: 12px;
+	color:#515151;
+}
+
+
+.collectionxPlayerSummaryWrapper {
+	width: 960px;
+	margin: 0 auto;
+	min-height: 600px;
+	height: auto;
+	background-color: #f0f0f0;
+	float: left;
+	position:relative;
+}
+
+.collectionxPlayerSummaryTitle {
+	width: 402px;
+	margin: 0 auto;
+	color: #515151;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 21px;
+}
+
+.collectionxPlayerSummaryTitleText {
+	padding-top: 40px;
+}
+
+.collectionxPlayerRefreshContainer {
+	width: 100px;
+	height: 44px;
+	margin: 0 auto;
+}
+
+.collectionPlayerReplayContainer {
+	background: #f0f0f0;
+}
+
+.collectionxPlayerShareContainer {
+	margin: 0 auto;
+	background: #f0f0f0;
+}
+
+.collectionxPlayerRefreshImage {
+	float: left;
+	cursor: pointer;
+	margin-top: 15px;
+	width: 100px;
+	opacity: 1.0;
+}
+
+.collectionxPlayerRefreshImage:hover {
+	opacity: 0.6;
+}
+
+.collectionPlayerSummaryShareContainer {
+	height: 80px;
+	width:82%;
+	margin-left: 90px;
+	padding: 15px 0px 15px 0px;
+}
+
+.collectionPlayerSummaryShareTextBox {
+	width: 294px;
+	float: left;
+	height: 25px;
+	padding-left: 10px;
+	font-size: 14px;
+	color: #414141;
+}
+
+.collectionxPlayerRefreshText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076bb;
+	font-size: 16px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-top: 3px;
+}
+
+.collectionxPlayerShareText {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFF;
+	font-size: 12px;
+	cursor: pointer;
+	margin-right: 10px;
+	/* margin-left: 6px; */
+	margin-top: 10px;
+	padding-bottom: 4px;
+}
+
+.collectionxPlayerSummaryQuestionTitle {
+	float: left;
+	width: 93%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	color: #ffffff;
+	margin-top: 40px;
+	margin-left: 110px; 
+}
+
+.collectionxPlayerSummaryAnswerCorrectlyContainer {
+	float: left;
+	width: 93%;
+	height: 43px;
+	margin-top: 18px;
+	margin-left: 114px; 
+}
+
+.collectionxPlayerSummaryAnswerCorrectlyText {
+	font-size: 12px;
+	float: left;
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.collectionxPlayerSummaryAnswerCorrectlyBoxContainer {
+	float: left;
+	clear: both;
+	margin-top: 3px;
+}
+
+.collectionxPlayerSummaryAnswerCorrectlyBoxGray {
+	width: 400px;
+	height: 22px;
+	float: left;
+	background-color: #999999;
+}
+
+.collectionxPlayerSummaryAnserCorrectlyBoxGreen {
+	float: left;
+	background-color: #4e9746;
+	height: 22px;
+}
+
+.collectionxPlayerSummaryQuestionContainer {
+	float: left;
+	margin-top: 40px;
+	width: 861px;
+	/* margin-left: 40px; */
+	margin-left: 62px;
+}
+
+.collectionxPlayerSummaryQuestionImage {
+	float: left;
+	width: 80px;
+	height: 60px;
+	margin-top: 20px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerContainer {
+	width: 766px;
+	float: left;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerWrongImage {
+	float: left;
+	width: 12px;
+	height: 15px;
+	margin-right: 7px;
+	margin-left: -18px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerRigntImage {
+	float: left;
+	width: 15px;
+	height: 16px;
+	margin-right: 7px;
+	margin-left: -22px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerQuestion {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	margin-left: 18px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerOptionOneContainer {
+	float: left;
+	width: 700px;
+	clear: both;
+	margin-top: 7px;
+	margin-left: 18px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerOrder {
+	float: left;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFF;
+	margin-right: 15px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerOptions {
+	float: left;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFF;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerOptionContainer {
+	float: left;
+	width: 700px;
+	clear: both;
+	margin-left: 18px;
+}
+
+.collectionxPlayerSummaryQuestionAndAnswerDescribtion {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #4E9746;
+	margin-top: 8px;
+	margin-left: 17px;
+}
+
+.collectionxPlayerSummaryStudyMoreContainer {
+	width: 90%;
+	min-height: 90px;
+	height: auto;
+	float: left;
+	margin-top: 20px;
+}
+
+.collectionxPlayerSummaryAuthorName {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	width: 80%;
+	margin-left: 10px;
+	color: #FFF;
+	margin-top: 5px;
+}
+
+.collectionxPlayerSummaryPartDetails {
+	width: 270px;
+	margin-left: 10px;
+	float: left;
+	margin-top: 5px;
+	color: #FFF;
+}
+
+.collectionxPlayerChapterBgIcon2 {
+	width: 120px;
+	float: left;
+	height: 90px;
+	background-image: url(../images-2/chapter-icon.png);
+}
+
+.collectionxPlayerChapterBlueBar2 {
+	width: 8px;
+	height: 90px;
+	float: left;
+	background-image: url(../images-2/chapter-icon-blue-bar.png);
+}
+
+.collectionxPlayerDetailsSummaryTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-right: 5px;
+}
+
+.collectionxPlayerBulletTwo {
+	width: 5px;
+	height: 5px;
+	float: left;
+	background-color: #4e9746;
+	margin-left: 7px;
+	margin-top: 7px;
+	margin-right: 7px;
+}
+
+.collectionxPlayerDetailsSummaryView {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-right: 5px;
+}
+
+.collectionxPlayerBulletTwo {
+	width: 5px;
+	height: 5px;
+	float: left;
+	background-color: #4e9746;
+	margin-left: 7px;
+	margin-top: 7px;
+	margin-right: 7px;
+}
+
+.left {
+	float: left;
+}
+
+.collectionxPlayerResouresSmallNumberImage {
+	float: left;
+	margin-top: 4px;
+	margin-right: 5px;
+}
+
+.collectionxPlayerResouresCount {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #4f9747;
+	float: left;
+}
+
+.collectionxPlayerSummaryStudyMoreChapterTitles {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #1076bb;
+	width: 80%;
+	font-weight: bold;
+	margin-left: 10px;
+}
+.collectionPlayerInputSeparatorLine
+{
+float: left;
+margin-right: 20px;
+width: 1px;
+height: 25px;
+background-color: #999;
+margin-left: 20px;
+margin-top: 14px;
+	
+}
+.socialMediaBigIcon
+{
+/* margin-top: 22px;  */
+margin-top:10px;
+float: left; 
+font-size: 12px;
+font-family: Arial, Helvetica, sans-serif;
+color: #FFF;
+}
+.collectionPlayerSumShareContainer{
+	float:left;
+}
+
+.cpIconsContainer {
+	width: 200px;
+	float: right;
+	margin-right: 100px;
+}
+
+.cpSummaryText {
+	float: left;
+	color: #515151;
+	font-size: 12px;
+	margin-top: 3px;
+	margin-right: 8px;
+}
+
+.cpPrintEmailIcon {
+	float: left;
+	margin-left: 5px;
+	cursor: pointer;
+}
+.printElementContainer {
+	padding-top: 5px;
+	float: left;
+	width: 960px;
+	background: white;
+	border-top: 1px solid #ddd;
+}
+.ftmSummaryPageContainer {
+	margin-top: 10px;
+	display: inline-block;
+}
+
+/*collection summary style*/
+
+.collection-summary-wrapper{
+	float: left;
+	min-height: 60px;
+	width: 860px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
+.collection-summary-thumbnail-wrapper{
+	width: 110px;
+	display: inline;
+	height: 60px;
+	padding-left: 10px;
+}
+.collection-summary-serial-num{
+	width: 20px;
+	float: left;
+	padding-right: 10px;
+	font-size: 26px;
+	padding-top: 10px;
+	color: #515151;
+	display: inline;
+}
+.collection-summary-thumbnail{
+	float: left;
+	width: 80px;
+	height: 60px;
+}
+
+.collection-summary-content-wrapper{
+	width: 614px;
+	display: inline-block;
+}
+.collection-summary-question-text{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	margin-left: 48px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.collection-summary-answer{
+	width: 700px;
+	margin: 0 0 5px 48px;
+}
+.collection-summary-answer-option{
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #999;
+	margin-top: 3px;
+	display: inline;
+	
+}
+.collection-summary-answer-text{
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #999;
+	word-wrap: break-word;
+	margin: 3px 0px 0px 3px;
+	width: 558px;
+	display: inline;
+}
+.collection-summary-explanation-text{
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #4E9746;
+	word-wrap: break-word;
+	margin: 3px 0px 0px 48px;
+	width: 558px;
+	padding-bottom: 20px;
+	display: inline-block;
+}
+.collection-email-icon{
+	margin-top: 3px;
+	margin-right: 10px;
+	width:20px;
+	height:25px;
+	float:left;
+	background:url("images/emailIcon.png") no-repeat;
+}
+
+.collection-print-icon{
+	width:20px;
+	height:20px;
+	float:left;
+	background:url("images/printIcon.png") no-repeat;
+}
+
+.collection-print-icon:hover,.collection-email-icon:hover{
+	opacity:0.7;
+	cursor:pointer;
+}
+
+
+

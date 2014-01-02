@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res" />
+	<g:HTMLPanel styleName="{res.css.toolTip}">
+		<g:HTMLPanel styleName="{res.css.profilePopup}">
+			<g:HTMLPanel styleName="{res.css.profilePopupInnerContaienr}">
+				<g:Image ui:field="profileImage" styleName="{res.css.profilePopupInnerImage}"></g:Image>
+				<g:HTMLPanel styleName="{res.css.profilePopupInnerSeparator}"></g:HTMLPanel>
+				<g:Label styleName="{res.css.profilePopupInnerTitle}"
+					ui:field="userNameLbl">Jody Silverman</g:Label>
+				<!-- <g:HTMLPanel styleName="{res.css.profilePopupInnerHints}"> has created 
+					<span>103</span> public collections </g:HTMLPanel> -->
+				<g:Label styleName="{res.css.profilePopupInnerDetails}"
+					ui:field="userProfileDesc">Lorem ipsum dolor sit amet,
+					consectetur adipiscing elit. Proin diam elit, luctus id porttitor
+					semper, feugiat ac elit. Aenean non sagittis arcu, sit amet
+					commodo felis. Proin mattis tristique posuere.</g:Label>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+		<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

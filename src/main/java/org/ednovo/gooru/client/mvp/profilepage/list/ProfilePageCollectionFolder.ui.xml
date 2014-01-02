@@ -1,0 +1,22 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.profilepage.list.ShelfListCBundle" field="res" />	
+	<ui:style field="ProfilePageStyle" src="../profile-page-style.css" />
+	<g:FlowPanel>
+		<g:FocusPanel ui:field="titleFocPanel">
+            <g:FlowPanel>
+                <g:FlowPanel styleName="{ProfilePageStyle.folderlimarker}" ui:field="folderIcon"/>
+                <g:FlowPanel styleName="{ProfilePageStyle.collectionlimarker}" ui:field="collectionIcon"/>
+				<g:HTML styleName="{ProfilePageStyle.folder-li-title}" ui:field="titleLbl" />
+			</g:FlowPanel>
+		</g:FocusPanel>
+		<g:DisclosurePanel styleName="{res.css.shelfCollection}" ui:field="disPanel" animationEnabled="true">
+			<g:customHeader>
+				<g:SimplePanel />
+			</g:customHeader>
+			<g:FocusPanel ui:field="wrapperFocPanel" styleName="{res.css.shelfContentWrapperPanelForFolders}" >
+					<g:VerticalPanel ui:field="contentVerPanel"></g:VerticalPanel>
+			</g:FocusPanel>
+		</g:DisclosurePanel>
+	</g:FlowPanel>
+</ui:UiBinder>

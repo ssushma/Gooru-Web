@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:t="urn:import:org.ednovo.gooru.client.uc" xmlns:dnd="urn:import:org.ednovo.gooru.client.mvp.dnd">
+	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchMoreInfoVcCBundle" field="res" />
+	<g:FlowPanel>
+			 <g:FlowPanel styleName="{res.css.moreInfoMetaData}" ui:field="metaInfoFloPanel">
+                       <g:Label styleName="{res.css.moreInfoTitle}" text="More Information" />
+                       <s:MoreInfoFieldVc imageStyle="{res.css.gradeIcon}" toolTip="Grade" ui:field="gradeFieldVc" />
+                       <s:MoreInfoFieldVc imageStyle="{res.css.tagIcon}" toolTip="Vocabulary" ui:field="tagsFieldVc" />
+                       <s:MoreInfoFieldVc imageStyle="{res.css.timeIcon}" toolTip="Average Time" ui:field="timeFieldVc" />
+                       <s:MoreInfoFieldVc imageStyle="{res.css.likesIcon}" toolTip="Likes" ui:field="likesFieldVc" />
+                       <s:MoreInfoFieldVc imageStyle="{res.css.shareIcon}" toolTip="Share" ui:field="shareField" />
+                       <s:MoreInfoFieldVc imageStyle="{res.css.rightsIcon}" toolTip="License" ui:field="rightsFieldVc" />
+               </g:FlowPanel>
+             <!--   <g:Label styleName="{res.css.moreInfoResourcesCountLblTxt}" text="Liciense" /> -->
+            
+             <g:Label ui:field="rightsLbl" text="Resource License:" styleName="{res.css.moreInfoRightsLbl}"></g:Label>
+             <s:MoreInfoFieldVc imageStyle="{res.css.rightsIcon}" toolTip="License" ui:field="resourceSearchRightsFieldVc"/>
+            
+				
+		<g:ScrollPanel styleName="{res.css.moreInfoRightScrollPanel}" ui:field="resourceScrPanel">
+			<g:FlowPanel styleName="{res.css.moreInfoRightPanel}" ui:field="resourceMoreInfoRightPanel" >
+				<g:Label styleName="{res.css.moreInfoResourcesCountLblTxt}" ui:field="countLblTxt" />
+				<g:Label styleName="{res.css.moreInfoResourcesCountLblTxt}" ui:field="countLbl"/>
+				<g:Label styleName="{res.css.notFriendly}" ui:field="lblNotFriendly"/>
+				<g:Image title="Question Mark" altText="Question Mark" styleName="{res.css.questionMark}" ui:field="imgQuestionImage" url="images/mos/questionmark.png"></g:Image>
+				<s:MoreInfoFieldVc  toolTip="Grade" ui:field="resourceSearchGradeFieldVc" />
+				<t:ErrorMessagePanel ui:field="messageInfo" />
+				<dnd:AppMirageDragContainer ui:field="usedInResourcesPanel" />
+			</g:FlowPanel>
+		</g:ScrollPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 
+
+
+				

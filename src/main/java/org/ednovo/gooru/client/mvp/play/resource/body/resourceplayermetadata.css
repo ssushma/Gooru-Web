@@ -1,0 +1,55 @@
+.collectionPlayerWrapper{
+	width: 960px;
+	height: 525px;
+	margin: 0 auto;
+}
+.resourcePlayerLeftArrowContainer{
+	margin-top: 100px;
+	float: left;
+	width: 60px;
+	height: 60px;
+	margin-left: -75px;
+	position: absolute;
+}
+.leftArrowButtonNormal, .rightArrowButtonNormal{
+	background-image: url(images/player_images.png);
+	width: 60px;
+	height: 60px;
+}
+.leftArrowButtonNormal{
+	background-position: -63px -33px;
+	width: 60px;
+	height: 60px;
+	background-color: #262626;
+	outline: none;
+	border: 0;
+}
+.leftArrowButtonNormal:hover{
+	background-position: 0 -33px;
+	cursor:pointer;
+}
+.collectionPlayerContainer{
+	width: 960px;
+	min-height: 525px;
+	margin: 0 auto;
+}
+.resourcePlayerRightArrowContainer{
+	margin-top: 100px;
+	float: right;
+	margin-left: 975px;
+	width: 60px;
+	height: 60px;
+	position: absolute;
+}
+.rightArrowButtonNormal{
+	background-position: -191px -33px;
+	width: 60px;
+	height: 60px;
+	background-color: #262626;
+	outline: none;
+	border: 0;
+}
+.rightArrowButtonNormal:hover{
+	background-position: -127px -33px;
+	cursor:pointer;
+}

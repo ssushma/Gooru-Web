@@ -1,0 +1,2555 @@
+.important {
+	font-weight: bold;
+}
+
+.resourceThumbnails {
+	width: 81px;
+	height: 61px;
+}
+
+.resourceNarrationPanel {
+	background: url("images/Collection-Search/icon-sprite.png") no-repeat
+		scroll -69px -195px transparent;
+	float: left;
+	height: 16px;
+	padding-left: 0;
+	position: relative;
+	width: 7%;
+}
+
+.resourceTitle {
+	float: left;
+	height: 20px;
+	width: 80%;
+	font-size: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.resourceTitle1 {
+	height: 25px;
+	font-size: 12px;
+	font-weight: bold;
+	float: left;
+	width: 80%;
+	margin-bottom: 5px;
+}
+
+.resourceTitleCursor {
+	float: left;
+	cursor: pointer;
+	/* width: 80%; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.collectionResource {
+	border: 1px solid #FFFFFF;
+	float: left;
+	margin-bottom: 11px;
+	padding: 2px;
+	position: relative;
+	width: 780px;
+	border-radius: 4px;
+	/* height:120px; */
+}
+
+.collectionResource:HOVER {
+	border: 1px solid #DDDDDD;
+	border-radius: 4px 4px 4px 4px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+}
+
+.collectionResourceEdit {
+	border: 1px solid #F8F8F8;
+	border-radius: 4px 4px 4px 4px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+}
+
+.resourceMainPanel {
+	float: left;
+	padding: 10px 0px 25px 10px;
+	width: 650px;
+}
+
+.actionPanel {
+	float: left;
+	height: 65px;
+	position: absolute;
+	right: 18px;
+	text-align: center;
+	top: 8px;
+	width: 93px;
+}
+
+.overRideBlueButton {
+	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	border: 0 none;
+	border-radius: 4px 4px 4px 4px;
+	clear: both;
+	color: #FFFFFF;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 7px 7px 7px 7px;
+	position: relative;
+	width: 100px;
+	height: 29px;
+	background-color: #1076BB;
+}
+
+.overRideBlueButton:HOVER {
+	background: #1076BB;
+	color: #ffffff !important;
+	cursor: pointer;
+}
+
+.copyAction,.removeAction {
+	color: #4C90BF;
+	text-align: center;
+	padding-top: 6px;
+	cursor: pointer;
+}
+
+.editResourceInfo {
+	color: #4C90BF;
+	text-align: center;
+	padding-top: 6px;
+	cursor: pointer;
+}
+
+.editResourceInfo:Hover {
+	color: #4C90BF;
+}
+
+.removeAction:HOVER {
+	color: #87BADD;
+}
+
+.copyAction:HOVER {
+	color: #87BADD;
+}
+
+.toLbl {
+	color: #515151;
+	font-size: 12px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 1px;
+}
+
+.textBox {
+	border: 1px solid #ddd;
+	width: 28px;
+	height: 23px;
+	text-align: right;
+	padding-right: 3px;
+}
+
+.questionBox {
+	border: 1px solid #999999;
+	clear: both;
+	height: 50px;
+	margin-bottom: 9px;
+	width: 68%;
+}
+
+.editPanel {
+	margin-bottom: 7px;
+	margin-left: 90px;
+}
+
+.fromLbl {
+	color: #515151;
+	font-size: 12px;
+	float: left;
+	padding-top: 5px;
+	padding-left: 0px;
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+.shelfResourceSequenceNumber {
+	color: #515151;
+	float: left;
+	padding-top: 13px;
+	font-size: 2em;
+	position: relative;
+	height: 100px;
+	/* margin-bottom: 10px; */
+	/* This is removed because, numbers are not properly aligned with Boxes. */
+}
+
+.shelfResourceSequenceSpacer {
+	float: left;
+	margin-bottom: 11px;
+	position: relative;
+	height: 30px;
+}
+
+.shelfResourceDragdropPositioner {
+	float: left;
+	margin-bottom: 11px;
+	padding: 1px 0;
+	position: relative;
+	width: 790px;
+	background-color: #dbeaf5;
+	height: 89px;
+	border-radius: 7px 7px 7px 7px;
+	zoom: 1; /* IE gain hasLayout */
+	z-index: 100;
+}
+
+.shelfResourceDragdropSpacer {
+	float: left;
+	margin-bottom: 11px;
+	position: relative;
+	width: 790px;
+	height: 30px;
+	zoom: 1; /* IE gain hasLayout */
+	z-index: 98;
+}
+
+.resourceNarration {
+	height: 16px;
+	overflow: hidden;
+	/* text-indent: 20px; */
+	word-wrap: break-word;
+	float: left;
+	padding-left: 0;
+	position: relative;
+	text-align: left;
+	/*  left: -45px; */
+	/* cursor: pointer; */
+	left: -20px;
+	width: 505px;
+	color: #999999;
+}
+
+.resourceVideoTime {
+	/* height: 16px;
+	overflow: hidden;
+ */ /* text-indent: 20px; */
+	word-wrap: break-word;
+	float: left;
+	padding-left: 0;
+	position: relative;
+	text-align: left;
+	width: 505px;
+	color: #999999;
+	left: 0px;
+	top: 0px;
+}
+
+.resourceNarrationEdit {
+	border: 1px solid #999999;
+	color: #515151;
+	width: 560px;
+	height: 60px;
+	max-height: 60px;
+	max-width: 530px;
+	margin-top: 0px;
+}
+
+.resourceNarrationEdit-readonly {
+	color: #CCCCCC;
+}
+
+.narrationAlertMessage {
+	color: #f9b039;
+	display: none;
+	font-size: 12px;
+	font-style: italic;
+	position: absolute;
+	text-align: right;
+	width: 68%;
+}
+
+.pencilEditImage {
+	background: url("images/Collection-Search/icon-sprite.png") repeat
+		scroll -71px -169px transparent;
+	float: left;
+	height: 18px;
+	margin-left: 5px;
+	width: 14px;
+	display: block;
+	cursor: pointer;
+}
+
+.pencilImageHide {
+	background: url("images/Collection-Search/icon-sprite.png") repeat
+		scroll -71px -169px transparent;
+	float: left;
+	height: 18px;
+	margin-left: 5px;
+	width: 14px;
+	display: none;
+}
+
+.pencilAllign {
+	position: relative;
+	right: 45px;
+}
+
+.reorderLabel {
+	float: right;
+	color: #999999;
+	position: relative;
+	top: 5px;
+}
+
+.shelfResourceSequencePanel {
+	margin: 0 10px;
+}
+
+.reorderLabelContainer { /* top: -19px; */
+	position: relative;
+	float: left;
+}
+
+.newResourceLabelNoHover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: #1076BB;
+	text-align: left;
+	cursor: pointer;
+	width: 120px;
+}
+
+.newResourceLabel {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: #1076BB;
+	text-align: left;
+	cursor: pointer;
+	width: 120px;
+}
+
+.newResourceLabel:hover {
+	color: #87BADD;
+}
+
+.newResourceMessageLabel {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: #1076BB;
+	text-align: left;
+	cursor: default;
+}
+
+.noResourceLabel {
+	clear: both;
+	color: #999999;
+	position: relative;
+	text-align: center;
+	width: 100%;
+	font-style: italic;
+}
+
+.noResourceContainer {
+	text-align: center;
+}
+
+.newResourceLabelColor {
+	color: rgb(16, 118, 186);
+}
+
+/*.................Popup..................*/
+.myFolderCollectionEditResource {
+	padding: 0px 0px 0px 20px;
+}
+
+.myFolderCollectionPopupSprite {
+	width: 640px;
+	height: 480px;
+	background: url(images/NewResourcePopup/popup-sprites.png) no-repeat;
+}
+
+.myFolderCollectionArrowleftContainer {
+	position: absolute;
+	top: 12px;
+	float: right;
+	right: 10px;
+}
+
+.myFolderCollectionArrowleft {
+	background-position: -44px 0;
+	width: 15px;
+	height: 10px;
+	cursor: pointer;
+}
+
+.clear {
+	clear: both;
+}
+
+.myFolderCollectionPopupContainer {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.myFolderCollectionPopupOuterdiv { /* width: 42%; */
+	margin: 0 auto;
+	position: relative;
+	padding: 3px 7px 3px 5px;
+	background: #fff;
+	border-color: rgb(221, 221, 221);
+}
+
+/************** Copy Confirmation Popup*******************/
+/*.copyPopupResources{
+	width:288px; font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#999999; height:28px; margin-top:10px;
+}*/
+.copyPopupResources {
+	font-family: Arial, Helvetica, sans-serif;
+	width: 89.5%;
+	border: 1px solid #999;
+	height: 28px;
+	padding: 2px 2px 5px 5px;
+	font-size: 11px;
+	overflow-x: hidden;
+	overflow-y: visible;
+}
+
+.copyPopupResourcesListPanel {
+	font-family: Arial, Helvetica, sans-serif;
+	width: 88%;
+	border: 1px solid #999;
+	height: 20px;
+	padding: 2px 2px 5px 5px;
+	font-size: 11px;
+	position: relative;
+}
+
+.copyPopUpResourceListImage {
+	position: absolute;
+	top: 12px;
+	float: right;
+	right: -4px;
+	background: url(images/down-arrow.png) no-repeat;
+	cursor: pointer;
+}
+
+.copyPopUpResourceListBoxText {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+	padding: 7px 0 6px 10px;
+	font-size: 12px;
+}
+
+.copyPopUpResourceListBoxText:hover {
+	background-color: #87BADD;
+	cursor: pointer;
+}
+
+.copyPopUpResourceListBoxTextTop {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+	padding: 6px 0 6px 5px;
+	font-size: 12px;
+}
+
+.copyPopUpResourceListBoxLoadingTxt {
+	padding: 6px 0 6px 5px;
+	font-size: 12px;
+	font-style: italic;
+	width: 100%;
+	height: 80px;
+	z-index: 9;
+	position: absolute;
+}
+
+.copyPopupResourcesPanel {
+	Font-family: Arial, Helvetica, sans-serif;
+	width: 89.5%;
+	border: 1px solid #999;
+	height: 187px;
+	padding: 2px 2px 5px 0px;
+	font-size: 11px;
+	overflow-x: hidden;
+	overflow-y: visible;
+	background-color: #fff;
+	border-top: none;
+}
+
+.copyPopUpPanelStyle {
+	min-width: 280px;
+}
+
+.copyPopupBirthday {
+	width: 212px;
+	margin-left: 21px;
+}
+
+.copyPopupleftAndWidth {
+	/*float: left;*/
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000;
+	padding-bottom: 8px;
+}
+
+/*.copyPopupResourcesDownArrow{
+	position:absolute; margin-top:-21px; margin-left:272px; cursor:pointer;
+	
+}*/
+.copyPopupResourcesDownArrow {
+	position: absolute;
+	margin-top: -26px;
+	margin-left: 272px;
+	cursor: pointer;
+}
+
+.copyPopupEmail {
+	width: 212px;
+	margin-left: 32px;
+}
+
+.copyPopupResourcesUserInput {
+	width: 448px;
+	float: left;
+	margin: 22px 0px 0px 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+}
+
+.copyPopupResourcesUserInputTwo {
+	/*width: 384px;*/
+	width: 330px;
+	float: left;
+	margin: 12px 0px 0px 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	position: relative;
+	height: 30px;
+}
+
+.copyPopupResourcesWrapper {
+	width: 403px;
+	height: 225px;
+	margin: 0 auto;
+	border: 1px solid #dddddd;
+	background-color: #FFF;
+}
+
+.copyPopupRegisterWrapper {
+	width: 505px;
+	height: 261px;
+	margin: 0 auto;
+	border: 1px solid #dddddd;
+	background-color: #FFF;
+}
+
+.copyPopupResourcesContainer {
+	width: 395px;
+	height: 217px;
+	margin: 3px;
+	border: 1px solid #dddddd;
+	background-color: #FFF;
+}
+
+.copyPopupRegisterContainer {
+	width: 497px;
+	height: 252px;
+	margin: 3px;
+	border: 1px solid #dddddd;
+	background-color: #FFF;
+}
+
+.copyPopupResourcesHeader {
+	width: 395px;
+	height: 34px;
+	float: left;
+	background-color: #515151;
+}
+
+.copyPopupResourcesHeaderTitle {
+	float: left;
+	font: 17px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 9px 0px 0px 10px;
+	color: #FFF;
+}
+
+.copyPopupResourcesDescribtion {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	width: 448px;
+	margin: 16px 0px 0px 16px;
+}
+
+.copyPopupResourcesButtonContainer {
+	width: 125px;
+	margin: 0 auto;
+}
+
+.copyPopupResourcesButtonContainerClick {
+	width: 340px;
+	height: 134px;
+}
+
+.copyPopupResourcesSendButton {
+	float: left;
+	width: 61px;
+	height: 33px;
+	cursor: pointer;
+	margin-top: 30px;
+}
+
+.copyPopResourcesOkButton {
+	float: left;
+	cursor: pointer;
+	margin-top: 70px;
+	width: 42px;
+	height: 31px;
+}
+
+.copyPopupResourcesQuestionMark {
+	float: right;
+	color: #1076bb;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-right: 120px;
+	margin-top: 3px;
+}
+
+.copyPopupResourcesSendButton {
+	float: left;
+	width: 50px;
+	height: 33px;
+	cursor: pointer;
+	margin-top: 30px;
+}
+
+.copyPopupResourcesCancelButton {
+	float: left;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076bb;
+	margin: 58px 0px 0px 17px;
+	cursor: pointer;
+}
+
+.copyPopupSettingPageAddBtn:hover {
+	background-color: #1076BB;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 15px;
+}
+
+.copyPopupSettingPageAddBtn {
+	float: left;
+	height: 30px;
+	cursor: pointer;
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #1076BB;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 15px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	margin-top: 50px;
+	width: 46px;
+}
+
+.copyPopupSettingPageChangePasswordText {
+	float: left;
+	/* padding: 8px 8px 0px 8px; */
+	border: 0 outset buttonface;
+	border-image: initial;
+	background-color: transparent;
+	box-sizing: border-box;
+	padding: 5px 7px 5px 7px;
+	color: #FFF;
+	cursor: pointer;
+}
+
+.copyPopupSettingPageEducationInfoLeftInputDropDown {
+	float: left;
+	width: 288px;
+	min-height: 130px;
+	height: auto;
+	border: 1px solid #DDD;
+	background-color: #FFF;
+	position: relative;
+	z-index: 9999999999;
+}
+
+.copyPopupSettingPageEducationInfoLeftInputDropDownTextContainer {
+	float: left;
+	margin: 10px 0px 0px 0px;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+	cursor: pointer;
+	width: 100%;
+	height: 24px;
+}
+
+.copyPopupSettingPageEducationInfoLeftInputDropDownTextContainer:hover {
+	float: left;
+	margin: 10px 0px 0px 0px;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+	cursor: pointer;
+	width: 100%;
+	height: 24px;
+	background-color: #DDD;
+}
+
+.copyPopupSettingPageEducationInfoLeftInputDropDownText {
+	float: left;
+	margin: 5px 0px 0px 10px;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+	cursor: pointer;
+	width: 278px;
+	height: 100%;
+}
+
+.copyPopupSettingPageEducationInfoLeftInputDropDownTextContainerTwo {
+	float: left;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #000;
+	cursor: pointer;
+	width: 100%;
+	height: 24px;
+}
+
+.copyPopupSettingPageEducationInfoLeftInputDropDownTextContainerTwo:hover
+	{
+	float: left;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	cursor: pointer;
+	width: 100%;
+	background-color: #1076BB;
+	color: #FFF;
+	height: 24px;
+	background-color: #DDD;
+}
+
+/******************************/
+user agent stylesheetdiv {
+	display: block;
+}
+
+.myFolderCollectionPopup {
+	float: left;
+	background-color: #FFF;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	width: 100%;
+	margin-bottom: 6px;
+	/* height: 556px; */
+	background: url("../images/core/background-image.png");
+}
+
+.myFolderCollectionBlackBg {
+	width: 100%;
+	height: 39px;
+	background-color: rgb(81, 81, 81);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666),
+		to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+}
+
+.myFolderCollectionTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	line-height: 120%;
+	color: rgb(255, 255, 255);
+	padding: 8px 5px 5px 10px;
+}
+
+.myFolderCollectionUrlContent {
+	float: left;
+	width: 135px;
+	/*height: 510px;*/
+	border-bottom: none;
+	border-left: none;
+	border-style: solid;
+	border-color: rgb(221, 221, 221);
+	border-left: none;
+	border-bottom: none;
+	background: url("../images/core/background-image.png") !important;
+}
+
+.myFolderCollectionUrlbg {
+	margin: 0px;
+	color: #515151;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #eee;
+	background: white;
+	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
+		
+		 
+		'#FDFDFD', endColorstr=    '#EDEDED');
+	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
+		to(#EDEDED));
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+}
+
+.myFolderCollectionUrlbg:hover {
+	background-image: -moz-linear-gradient(194% 3% -90deg, #DDD 0%, white 99%);
+	background-image: -webkit-gradient(linear, 194% 3%, 194% 159%, color-stop(0, #DDD),
+		color-stop(0.99, white));
+	width: 125px;
+	height: 37px;
+	cursor: pointer;
+	-moz-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)";
+	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
+		
+		 
+		#ffdddddd, endColorstr=    #ffffffff, GradientType=    0);
+}
+
+.myFolderCollectionUrlbgTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: #515151 !important;
+	text-align: left;
+	text-decoration: none !important;
+	display: inline-block;
+}
+
+.myFolderCollectionUrlbgTitle:hover {
+	color: #515151;
+	opacity: 1;
+	text-decoration: none
+}
+
+.myFolderCollectionFormContainer {
+	float: left;
+	padding: 0px 21px 0px 18px;
+	width: 360px;
+	border-left: 1px solid #DDD;
+	/* height: 518px; */
+	background-color: white;
+}
+
+.myFolderCollectionFormContent {
+	padding: 0px 0px 0px 0px;
+}
+
+.myFolderCollectionFormTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 8px 0px 2px 0px;
+}
+
+.myFolderCollectionFormInputControl {
+	background-color: transparent;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+	margin-bottom: 10px;
+}
+
+.myFolderCollectionFormInputNoneborder {
+	border: none;
+}
+
+.myFolderCollectionCategoryDiv {
+	position: relative;
+}
+
+.myFolderCollectionCategoryInputDiv {
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	height: 28px;
+	margin-bottom: 10px;
+}
+
+.myFolderCollectionCategoryDivText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(153, 153, 153);
+	padding: 3px 0 0 5px;
+}
+
+.myFolderCollectionFormInputBottomText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 30%;
+	color: rgb(250, 176, 58);
+	text-align: right;
+	position: relative;
+}
+
+.addNewResourceMandatoryCategory {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 30%;
+	color: rgb(250, 176, 58);
+	text-align: right;
+	position: relative;
+	top: 10px;
+}
+
+.myFolderCollectionThumbImageContainer {
+	position: relative;
+	padding: 20px 0px 0px 0px;
+}
+
+.myFolderCollectionThumbImageDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 0px 0px 5px 0px;
+}
+
+.myFolderCollectionThumbRect {
+	position: relative;
+	background-color: rgb(240, 240, 240);
+	width: 80px;
+	height: 60px;
+	border-color: rgb(221, 221, 221);
+	border-style: solid;
+	border-width: 1px;
+	float: left;
+	padding: 2px;
+}
+
+.myFolderCollectionThumbArrLContainer {
+	position: absolute;
+	top: 0px;
+	top: 23px;
+	left: -15px;
+}
+
+.myFolderCollectionThumbArrLeftIcon {
+	background-position: 0px 0px;
+	width: 12px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.myFolderCollectionThumbArrRContainer {
+	position: absolute;
+	top: 20px;
+	left: 90px;
+}
+
+.myFolderCollectionThumbArrRightIcon {
+	background-position: 0px -20px;
+	width: 15px;
+	height: 48px;
+	cursor: pointer;
+}
+
+.myFolderCollectionThumbRectDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 155%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+}
+
+.myFolderCollectionThumbOrtext {
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 24px 0px 0px 18px;
+	font-size: 13px;
+	line-height: 155%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	float: left;
+}
+
+.myFolderCollectionThumbUploadImagetext {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(16, 118, 186);
+	text-align: center;
+	padding: 28px 0px 0px 12px;
+	float: left;
+	cursor: pointer;
+}
+
+.myFolderCollectionRefreshMainContainer {
+	padding: 0px 0px 0px 9px;
+}
+
+.myFolderCollectionRefreshContainer {
+	/*padding: 0px 0px 0px 15px;*/
+	
+}
+
+.myFolderCollectionRefreshInnerContainer {
+	float: left;
+	padding: 5px 0px 0px 0px;
+}
+
+.myFolderCollectionRefreshInnerContainer {
+	float: left;
+	padding: 5px 0px 0px 0px;
+	/* width: 65px; */
+}
+
+.myFolderCollectionRefreshIcon {
+	background-position: -25px 0px;
+	width: 19px;
+	height: 14px;
+	cursor: pointer;
+}
+
+.myFolderCollectionRefresh {
+	float: left;
+	padding: 2px;
+}
+
+.myFolderCollectionRefreshText {
+	font-size: 12px;
+	overflow: hidden;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(153, 153, 153);
+	padding: 4px 0px 0px 5px;
+	cursor: pointer;
+}
+
+.myFolderCollectionFormTextarea {
+	height: 81px;
+}
+
+.myFolderCollectionFormDesc {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-style: italic;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	padding: 10px 0px 10px 0px;
+}
+
+.myFolderCollectionBlueButtonContainer {
+	width: 25%;
+	margin: 0 auto;
+}
+
+.myFolderCollectionBlue_Ok {
+	width: 40px;
+	float: left;
+	background-color: #1076bb;
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	padding: 5px 0px 5px 0px;
+	margin-bottom: 15px;
+}
+
+.myFolderCollectionBlue_OkTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-size: 12px;
+	font-style: normal;
+	text-align: center;
+}
+
+.myFolderCollectionBlue_Cancel {
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	color: #1076BB;
+	font-style: normal;
+	padding: 5px 0px 0px 5px;
+}
+
+.myFolderCollectionGridbg {
+	float: left;
+	position: relative;
+	background-color: #ccc;
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	width: 80px;
+	height: 20px;
+	margin: 4px 2px 2px 4px;
+}
+
+.inputTextBox {
+	outline: 0;
+	/* width: 308px; */
+	width: 98%;
+	height: 28px;
+	border: 0px;
+	color: rgb(81, 81, 81);
+	padding: 0px 0px 0px 5px;
+}
+
+.urlLabel {
+	outline: 0;
+	/* width: 308px; */
+	width: 98%;
+	height: 36px;
+	border: 0px;
+	color: rgb(81, 81, 81);
+	padding: 0px 0px 0px 5px;
+	word-wrap: break-word;
+}
+
+.myFolderCollectionButtonContainer {
+	float: left;
+	margin: 30px 0px 15px 99px;
+}
+
+.myFolderEditButtonContainer {
+	text-align: center;
+	width: 135px;
+	margin: 0 auto;
+}
+
+.myFolderCollectionOk {
+	float: left;
+}
+
+.myFolderCollectionAddTitle {
+	
+}
+
+.myFolderCollectionCancel {
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076BB;
+	font-style: normal;
+	margin: 9px 20px;
+	cursor: pointer;
+	float: left;
+}
+
+.myFolderCollectionCancel:hover,.myFolderCollectionThumbUploadImagetext:hover
+	{
+	color: #87BADD;
+}
+
+.myFolderCollectionFolderleftdesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-style: italic;
+	color: rgb(153, 153, 153);
+	text-align: left;
+}
+
+.myFolderCollectionFolderspriteNew {
+	width: 640px;
+	height: 480px;
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+}
+
+.myFolderCollectionFolderVideoOuterContainer {
+	float: left;
+	width: 100%;
+	padding: 0px 0px 2px 0px;
+}
+
+.myFolderCollectionFolderVideoOuterContainer:HOVER {
+	cursor: pointer;
+	background-color: #CFE3F1
+}
+
+.myFolderCollectionFolderVideoContainer {
+	padding: 0px 0px 0px 0px;
+}
+
+.myFolderCollectionFolderVideoInnerdiv {
+	float: left;
+	width: 37px;
+	height: 25px;
+	margin: 0px 0px 0px 7px;
+}
+
+.myFolderCollectionFolderVideoContent {
+	padding: 3px 0px 0px 0px;
+}
+
+.myFolderCollectionFolderspriteVideo {
+	background-position: 0px -20px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -4px;*/
+}
+
+.myFolderCollectionFolderspriteInteractive {
+	background-position: -60px 0px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -2px;*/
+}
+
+.myFolderCollectionFolderspriteWebsite {
+	background-position: 0px 0px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -2px;*/
+}
+
+.myFolderCollectionFolderspriteSlide {
+	background-position: -30px 0px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -2px;*/
+}
+
+.myFolderCollectionFolderspriteHandout {
+	background-position: -60px -20px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -4px;*/
+}
+
+.myFolderCollectionFolderspriteTextbook {
+	background-position: 0px -44px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -2px;*/
+}
+
+.myFolderCollectionFolderspriteLesson {
+	background-position: -30px -43px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -3px;*/
+}
+
+.myFolderCollectionFolderspriteQuestion {
+	background-position: -30px -20px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -4px;*/
+}
+
+.myFolderCollectionFolderspriteExam {
+	background-position: -60px -43px;
+	width: 28px;
+	height: 22px;
+	float: left;
+	/*margin-top: -2px;*/
+}
+
+.myFolderCollectionFolderVideoTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	padding: 5px 0px 0px 0px;
+}
+
+.myFolderCollectionFolderDropdown { /* height: 250px; */
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	z-index: 1;
+	top: -11px;
+	width: 358px;
+}
+
+.myFolderCollectionFolderUpdateDropdown { /* height: 250px; */
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	z-index: 1;
+	width: 463px;
+	margin-top: -11px;
+}
+
+.newPopupTextArea {
+	width: 98%;
+	height: 98%;
+	border: 0px;
+	max-width: 351px;
+	max-height: 79px;
+}
+
+.newPopupTextAreaEdit {
+	width: 98%;
+	height: 98%;
+	border: 0px;
+	max-width: 490px;
+	max-height: 79px;
+}
+
+.categoryListBox {
+	font-family: Arial, Helvetica, sans-serif;
+	width: 100%;
+	border: 1px solid #999;
+	height: 28px;
+	padding: 2px 2px 5px 5px;
+	font-size: 11px;
+}
+
+.resourceThumbnailImage {
+	width: 80px;
+	height: 60px;
+}
+
+/* Css for ExistsResource */
+.resourceExistsPopupSpriteImg {
+	width: 640px;
+	height: 480px;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat left top;
+}
+
+.resourceExistsPopupSpriteVideoContainer {
+	position: absolute;
+	top: 46px;
+}
+
+.resourceExistsPopupSpriteVideo {
+	background-position: 0px -20px;
+	width: 27px;
+	height: 22px;
+}
+
+.resourceExistsPopupPopupOuterContainer { /* width: 35%; */
+	margin: 0 auto;
+}
+
+.resourceExistsPopupContainer {
+	float: left;
+	padding: 3px;
+	background-color: #fff;
+}
+
+.resourceExistsPopup {
+	float: left;
+	background-color: #FFF;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	padding: 0px 0px 20px 0px;
+}
+
+.resourceExistsPopupBlackBg {
+	float: left;
+	width: 100%;
+	height: 45px;
+	margin-bottom: 15px;
+	background-color: rgb(81, 81, 81);
+}
+
+.resourceExistsPopupTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(255, 255, 255);
+	text-align: left;
+	padding: 12px;
+}
+
+.resourceExistsPopupDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 250%;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 0px 0px 0px 15px;
+}
+
+input[type="text"] {
+	outline: 0;
+}
+
+.resourceExistsPopupFormContainer {
+	float: left;
+	padding: 0px 0px 10px 10px;
+}
+
+.resourceExistsPopupFormTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 5px 0px 10px 0px;
+}
+
+.resourceExistsPopupFormInputControl {
+	width: 380px;
+	height: 27px;
+	background-color: transparent;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+	margin: 0px 15px 0px 0px;
+}
+
+.resourceExistsPopupBlueButtonContainer {
+	width: 35%;
+	margin: 0 auto;
+	padding: 7px 0px 0px 0px;
+}
+
+.resourceExistsPopupBluebg {
+	float: left;
+	width: 70px;
+	font-weight: bold;
+	background-color: #1076bb;
+	padding: 0px 0px 0px 0px;
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	margin-bottom: 15px;
+}
+
+.resourceExistsPopupBlue_Ok {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-size: 12px;
+	font-style: normal;
+	text-align: center;
+	padding: 8px 0px 8px 0px;
+}
+
+.resourceExistsPopupBlue_OkTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-size: 12px;
+	font-style: normal;
+	text-align: center;
+	cursor: pointer;
+}
+
+.resourceExistsPopupBlue_Cancel {
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	font-size: 12px;
+	color: #1076BB;
+	font-style: normal;
+	padding: 8px 0px 0px 10px;
+	cursor: pointer;
+}
+
+.resourceExistsPopupRoundedCorner {
+	float: left;
+	width: 430px;
+	background-color: #fff;
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	margin: 10px 15px 30px 0px;
+	box-shadow: 1px 1px 10px #ccc;
+}
+
+.resourceExistsPopupRoundedCornerThumbimgContainer {
+	padding: 5px 0px 5px 5px;
+}
+
+.resourceExistsPopupRoundedCornerThumbimg {
+	float: left;
+	position: relative;
+	padding: 8px 8px 12px 8px;
+}
+
+.resourceExistsPopupRoundedCornerThumbHeading {
+	font-family: Arial, Helvetica, sans-serif;
+	/* float: left; */
+	color: #000;
+	font-size: 16px;
+	padding: 5px 0px 0px 1px;
+}
+
+.resourceExistsImageDim {
+	min-height: 60px;
+	min-width: 80px;
+}
+
+.resourceExistsResourceTypeSprite {
+	
+}
+
+.resourceExistsResourceTypeSpriteVideo {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: 0px -20px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteInteractive {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: -60px 0px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteWebsite {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: 0px 0px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteSlide {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: -30px 0px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteHandout {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: -60px -20px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteTextbook {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: 0px -44px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteLesson {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: -30px -43px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteQuestion {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: -30px -20px;
+	width: 28px;
+	height: 22px;
+}
+
+.resourceExistsResourceTypeSpriteExam {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png)
+		no-repeat;
+	background-position: -60px -43px;
+	width: 28px;
+	height: 22px;
+}
+
+.myWebResourceContainer {
+	float: left;
+	padding: 0px 25px 33px 18px;
+	width: 91%;
+	border-left: 1px solid #DDD;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	max-height: 550px;
+	min-height: 300px;
+}
+
+.reportResource {
+	text-decoration: none;
+	color: #1076BB;
+}
+
+.reportResourceContainer {
+	float: right;
+	clear: both;
+	margin-right: 12px;
+}
+
+.buttonSelected {
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd),
+		to(#f5f5f5));
+	background: -moz-linear-gradient(top, #ddd, #f5f5f5);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, .1);
+	border-top: 1px solid #ccc;
+	padding: 10px;
+	cursor: default;
+	border-bottom: 1px solid #ddd;
+	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
+		
+		 
+		'#ddd', endColorstr=    '#f5f5f5');
+}
+
+.buttonDeSelected {
+	margin: 0px;
+	color: #515151;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #eee;
+	background: white;
+	padding: 10px;
+	cursor: pointer;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
+		to(#EDEDED));
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
+		
+		 
+		'#FDFDFD', endColorstr=    '#EDEDED');
+}
+
+.buttonDeSelected:hover {
+	background: #efefef;
+	box-shadow: none;
+}
+
+.resourceCategoryLabel {
+	float: left;
+	padding: 5px 0 0 2px;
+}
+
+.copyPopupResourcesNewContainer {
+	border: 1px solid #ccc;
+	float: left;
+	margin-top: -5px;
+	margin-left: 4px;
+	width: 97%;
+	margin-bottom: 4px;
+}
+
+.noCollectionMsgForAddPopUp {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	color: rgb(153, 153, 153);
+	text-align: center;
+	padding-bottom: 15px;
+	padding-top: 40px;
+}
+
+.loadingImageForSelfEdit {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 150px;
+	margin: 0 auto;
+	margin-top: 110px;
+}
+
+.loadingImageMainDiv {
+	height: 597px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 99999999;
+}
+
+.loadingImageForResource {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 190px;
+	margin: 0 auto;
+	margin-top: 150px;
+	position: absolute;
+	z-index: 9999999;
+	margin-left: 220px;
+}
+/* .collectionEditPopupBtnSprite {
+	background: url(images/sprites-login.png) no-repeat;
+}
+
+.collectionEditPopupCloseBtn {
+	background-position: -52px -116px;
+	width: 18px;
+	height: 19px;
+	float: right;
+	cursor: pointer;
+}
+.collectionEditPopUpOuterDiv {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666),
+		to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+	background-color: #515151;
+	color: #FFFFFF;
+	margin: 4px;
+	padding: 10px 15px;
+	height:20px;
+}
+.collectionEditHeaderText {
+	font-size: 16px;
+	color: #fff;
+	width: 90%;
+    float: left;
+} */
+.addResourceThumbnailContent {
+	float: left;
+	padding: 6px;
+}
+
+.addResourceImgDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	max-width: 80px;
+	word-wrap: break-word;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding-left: 1px;
+	padding-top: 2px;
+}
+
+.addButtonTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	text-align: center;
+	padding: 7px 0px 0px 0px;
+	cursor: pointer;
+}
+
+.assessmentAddContainer {
+	/* Firefox v3.6+ */
+	background-color: #1076bb;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-top-right-radius: 0px;
+	-moz-border-bottom-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	background-image: -moz-linear-gradient(99% 0% -90deg, rgb(76, 152, 204)
+		0%, rgb(16, 118, 187) 100%);
+	/* safari v4.0+ and by Chrome v3.0+ */
+	background-image: -webkit-gradient(linear, 99% 0%, 99% 100%, color-stop(0, rgb(76, 152,
+		204)), color-stop(1, rgb(16, 118, 187)));
+	/* Chrome v10.0+ and by safari nightly build*/
+	background-image: -webkit-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	/* Opera v11.10+ */
+	background-image: -o-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	/* IE v10+ */
+	background-image: -ms-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 100%);
+	/*background-image: linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+        rgb(16, 118, 187) 100%);*/
+	width: 52px;
+	height: 29px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	float: left;
+	margin-left: 20px;
+	background-color: #1076BB;
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
+		endColorstr=#ff1076bb, GradientType=0);
+}
+
+.assessmentDownnArrow {
+	background: url(images/NewResourcePopup/downarr.fw.png) no-repeat;
+	float: left;
+	width: 29px;
+	height: 29px;
+	margin-left: 3px;
+	position: Relative;
+}
+
+.assessmentPopup {
+	/* width: 170px;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: 35px;
+    float: left;
+    left: 0px;
+    z-index:1000;
+    background-color:#fff;
+    padding: 8px 0px 7px 8px; */
+	width: 170px;
+	border: 1px solid #ddd;
+	position: absolute;
+	top: 246px;
+	float: right;
+	left: 95px;
+	z-index: 1000;
+	background-color: #fff;
+	padding: 8px 0 7px 8px;
+}
+
+.assessmentPopupList {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 180%;
+	color: #1076bb;
+	text-align: left;
+}
+
+.assessmentPopupList:hover {
+	cursor: pointer;
+	color: #87BADD;
+}
+
+.contentCollectionBtnbg {
+	width: 113px;
+	height: 29px;
+	background: -moz-linear-gradient(center top, #4c98cc, #1076bb) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc),
+		to(#1076bb));
+	background: -webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background-image: -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+	background-color: #1076bb;
+	border: 0 none;
+	margin-bottom: 10px;
+	/* margin-left: 570px;
+margin-top: 18px; */
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: #fff;
+	cursor: pointer;
+	float: left;
+	margin-right: 20px;
+}
+
+.contentCollectionBtnbgGray {
+	width: 113px;
+	height: 29px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bbb),
+		to(#999));
+	background: -webkit-linear-gradient(top, #bbb, #999);
+	background: -moz-linear-gradient(top, #bbb, #999);
+	background: -ms-linear-gradient(top, #bbb, #999);
+	background: -o-linear-gradient(top, #bbb, #999);
+	background-color: #ccc;
+	border: 0 none;
+	margin-bottom: 10px;
+	/* margin-left: 570px;
+margin-top: 18px; */
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: #fff;
+	cursor: pointer;
+	float: left;
+	margin-right: 20px;
+}
+
+.contentCollectionBtnbgGray:hover {
+	cursor: default;
+}
+
+.contentCollectionBtnbg:hover {
+	cursor: pointer;
+	background: #1076bb;
+}
+
+.contentCollectionPlusIcon {
+	background: url(images/NewResourcePopup/plus.fw.png) no-repeat;
+	width: 12px;
+	height: 12px;
+	float: left;
+	margin-left: 9px;
+	margin-top: 7px;
+}
+
+.contentCollectionAddTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: normal;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 6px 0px 0px 7px;
+	float: left;
+}
+
+.contentCollectionEdit {
+	float: left;
+	width: 97%;
+	margin-left: 23px;
+	border-bottom: 1px solid #ccc;
+}
+
+.addResourceCloseButtonContainer {
+	float: right;
+	padding: 10px 10px 0 0;
+}
+
+.addResourceCloseButton {
+	background: url(images/sprites-login.png) no-repeat;
+	background-position: -52px -116px;
+	width: 18px;
+	height: 19px;
+	cursor: pointer;
+}
+
+.addResourceCloseButton:hover {
+	opacity: 0.6;
+}
+
+/* */
+.addResource,.addResourceDisable {
+	margin: 0px 10px 10px 0px;
+}
+
+.questionRadioButtonStyle {
+	display: none;
+}
+
+.addNewResourceBackgroudColor {
+	background-color: rgb(231, 244, 248);
+	border: 1px solid #FFFFFF;
+	float: left;
+	margin-bottom: 11px;
+	padding: 2px;
+	position: relative;
+	width: 780px;
+}
+
+/* Add user own resource css class */
+.ownResourceFormInputTextBox {
+	outline: 0;
+	/* width: 308px; */
+	width: 97%;
+	height: 28px;
+	border: 0px;
+	color: rgb(81, 81, 81);
+	padding: 0px 0px 0px 5px;
+}
+
+.ownResourceFormInputTextBoxForError {
+	outline: 0;
+	/* width: 308px; */
+	width: 97%;
+	height: 28px;
+	border: 0px;
+	color: rgb(81, 81, 81);
+	padding: 0px 0px 0px 5px;
+	border: 1px solid #FF9900;
+}
+
+.ownResourceFormInputControl {
+	background-color: transparent;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+	margin-bottom: 10px;
+	width: 80%
+}
+
+.ownResourceFormOk {
+	float: left;
+	margin-left: 85px;
+}
+/* 
+.ownResourceCancel {
+	float: left;
+} */
+.ownResourceFormCancel {
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	cursor: pointer;
+	margin-bottom: 10px;
+	margin-left: -115px;
+	padding: 8px 8px;
+	float: left;
+	color: #1076ba;
+}
+
+.ownResourceFormCancel:hover,.ownResourceFormBrowse:hover,.ownResourceFormUpload:hover,.resourceUploadPosition
+	{
+	cursor: pointer;
+	background: #eee;
+}
+
+.ownResourceFormUpload {
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	cursor: pointer;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	padding: 8px 8px;
+	float: left;
+	color: #1076ba;
+}
+
+.ownResourceFormBrowse {
+	border-radius: 4px;
+	padding: 7px 6px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	cursor: pointer;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	padding: 8px 8px;
+	float: left;
+	color: #1076ba;
+}
+
+.ownResourceFormBrowsePosition {
+	float: right;
+	margin-right: -72px;
+	margin-top: -4px;
+}
+
+.ownResourceFormRightsContent {
+	position: relative;
+	float: left;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	margin: 27px 10px 0px 3px;
+	background: url(images/Classpage/sprite-classpage-type.png) no-repeat
+		left top;
+	background-position: 0px -46px;
+}
+
+.ownResourceFormRightsContent:hover {
+	cursor: pointer;
+}
+
+.resourceRightsPopupContainer {
+	width: 286px;
+	position: absolute;
+	top: 20px;
+	left: -243px;
+}
+
+.arrowShadow {
+	background-color: transparent;
+	width: 6px;
+	height: 17px;
+	position: absolute;
+	top: -7px;
+	left: 193px;
+	z-index: -10;
+	box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+.arrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: absolute;
+	top: -10px;
+	left: 244px;
+	border-top: none;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: absolute;
+	left: 242px;
+	top: -9px;
+	border-top: none;
+}
+
+.resourceRightsInnerPopup {
+	clear: both;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 11px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.resourceRightsPopupTitle {
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+.ownResourceFormDeclarationText {
+	float: left;
+	margin-top: 29px;
+	font-size: 13px;
+}
+
+.editButtonContainer {
+	width: 118px !important;
+	/* height: 96px; */
+	cursor: pointer !important;
+	border: 1px solid #ddd;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	float: right;
+	margin-right: 8px;
+	background-color: #fff;
+	position: absolute;
+	left: 653px;
+	top: 45px;
+	z-index: 99;
+}
+
+.editButtonText {
+	width: 107px !important;
+	height: 16px !important;
+	font-size: 12px !important;
+	color: #515151 !important;
+	cursor: pointer !important;
+	float: left;
+	text-decoration: none !important;
+	padding: 4px 0;
+	padding-left: 11px;
+}
+
+.editButtonText:hover {
+	background-color: #cfe3f1;
+	border-radius: 2px 2px 2px 2px;
+	opacity: 1;
+}
+
+.panelAlignRight {
+	float: right;
+	margin-right: 8px;
+}
+
+.resourceUploadPosition {
+	float: right;
+	margin-top: -29px;
+	position: absolute;
+	width: 349px;
+	height: 19px;
+	margin-left: 0px;
+	padding: 5px;
+	opacity: 0;
+}
+
+.resourceUploadEditPosition {
+	float: right;
+	margin-top: -32px;
+	position: absolute;
+	width: 455px;
+	height: 26px;
+	margin-left: -4px;
+	padding: 5px;
+	opacity: 0;
+}
+
+.resourceRightsCheckBox {
+	float: left;
+	margin-left: -3px;
+	margin-top: 30px;
+}
+
+.resourceRightsContainer {
+	margin-left: 79px;
+	width: 100%;
+}
+
+.resourceRightsContainerWeb {
+	margin-left: 120px;
+	width: 100%;
+	height: 65px;
+}
+
+.resourceRightsContainerPdf {
+	margin-left: 120px;
+	width: 100%;
+}
+
+.resourceRightsMessage {
+	float: left;
+	padding: 20px 0 2px 15px;
+	width: 400px;
+}
+
+.anchorText {
+	text-decoration: none !important;
+	cursor: pointer;
+}
+
+.processing {
+	text-align: center;
+	width: 95%;
+	color: #999 !important;
+	font-style: italic;
+	padding: 10px;
+}
+
+.narrationCancelButton {
+	margin-top: 10px;
+	width: 100px;
+}
+
+.videoText {
+	padding-left: 0px;
+	float: left;
+	padding-right: 10px;
+	text-align: left;
+}
+
+.videoStartTimeLabel {
+	float: left;
+	padding-right: 10px;
+}
+
+.outerdivContainer {
+	float: left;
+	padding-right: 10px;
+}
+
+.videoEndTimeLabel {
+	width: 50px;
+	float: left;
+	left: 0px;
+	position: relative;
+	top: 0px;
+}
+
+.videoImageContainer {
+	background: url(images/VideoTime.png) no-repeat;
+	float: left;
+	height: 18px;
+	padding-left: 0;
+	position: relative;
+	width: 5%;
+}
+
+.pdfImageContainer {
+	background: url(images/note.png) no-repeat;
+	float: left;
+	height: 18px;
+	padding-left: 0;
+	position: relative;
+	width: 5%;
+}
+
+.editTimeContainer {
+	float: left;
+	padding-left: 10px;
+	width: 263px;
+}
+
+.startStopTimeDisplayText {
+	padding: 0px 0px 10px 10px;
+}
+
+.MinuteLabel {
+	float: left;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-left: 5px;
+}
+
+.textAlignContainer {
+	float: left;
+}
+
+.outerdivContainer {
+	float: left;
+	padding-right: 10px;
+}
+
+.gEditButton {
+	margin-top: 10px;
+	padding: 8px 65px 8px 10px;
+	color: white;
+	background: #1076bb url(images/g.png) 55px -9px no-repeat;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC),
+		to(#1076BB));
+	background: url(images/g.png) 55px -9px no-repeat,
+		-webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url(images/g.png) 55px -9px no-repeat,
+		-ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/g.png) 55px -9px no-repeat,
+		-o-linear-gradient(top, #4c98cc, #1076bb);
+	border-radius: 4px;
+	border: 1px solid #1076bb;
+	cursor: pointer;
+}
+
+.gEditButton:hover {
+	background: #1076BB url(images/g.png) 55px -9px no-repeat;
+}
+
+.customAnchorText {
+	text-decoration: none !important;
+	cursor: pointer;
+}
+
+.myFolderCollectionFormInputControlForErrors {
+	background-color: transparent;
+	border-color: #ddd;
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+	margin-bottom: 10px;
+	border: 1px solid #FF9900;
+}
+
+.ownResourceFormInputControlForErrors {
+	background-color: transparent;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+	margin-bottom: 10px;
+	border: 1px solid #FF9900;
+	width: 80%
+}
+
+.fileActionPanel {
+	text-align: center;
+	margin-top: 70px;
+	margin-bottom: 10px;
+}
+
+.adding {
+	text-align: center;
+	width: 95%;
+	color: #999 !important;
+	font-style: italic;
+	padding: 10px;
+	margin-top: 70px;
+	margin-bottom: 10px;
+}
+
+.fileActionPanelEditFile {
+	text-align: center;
+	margin-top: 70px;
+	margin-bottom: 10px;
+	margin-left: 162px;
+}
+
+.fileEditAdding {
+	text-align: center;
+	width: 95%;
+	color: #999 !important;
+	font-style: italic;
+	padding: 10px;
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+
+.btnAdd {
+	margin-left: 25px;
+}
+
+.fileUplodDefultLbl {
+	height: 28px;
+	color: rgb(81, 81, 81);
+	padding: 8px 0px 2px 0px;
+	float: left;
+}
+
+.changeFileBtnPosition {
+	float: right;
+}
+
+.rollBackToPaperClipPos {
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1076bb;
+	font-style: normal;
+	margin: 2px 0px;
+	cursor: pointer;
+	float: left;
+}
+
+.fileContainer {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 35px;
+}
+
+.paperClip {
+	float: left;
+	margin-top: 5px;
+	margin-right: 5px;
+}
+
+.imgHeight {
+	height: 16px;
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+.infoCourseListText {
+	width: 256px !important;
+	/* height: 16px !important; */
+	font-size: 13px !important;
+	color: #515151 !important;
+	cursor: pointer !important;
+	/* float: left; */
+	text-decoration: none !important;
+	padding: 4px 0;
+	padding-left: 17px;
+	word-wrap: break-word;
+}
+
+.infoCourseListText:hover {
+	background-color: #CFE3F1;
+	border-radius: 2px 2px 2px 2px;
+	opacity: 1.0;
+	cursor: pointer !important;
+}
+
+.collectionInfoCourseList {
+	background-color: #CFE3F1;
+	border-radius: 2px 2px 2px 2px;
+	opacity: 1.0;
+}
+
+.collectionInfobuttonSelected {
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd),
+		to(#f5f5f5));
+	background: -moz-linear-gradient(top, #ddd, #f5f5f5);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, .1) !important;
+	border-top: 1px solid #ccc !important;
+	padding: 10px;
+	background: rgb(230, 230, 230) !important;
+	cursor: default;
+	border-bottom: 1px solid #ddd !important;
+	filter: progid:    DXImageTransform.Microsoft.gradient(    startColorstr=
+		
+		 
+		'#ddd', endColorstr=    '#f5f5f5');
+}
+
+.loginPopupGlassStyle {
+	z-index: 99999;
+	background-color: black;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
+}

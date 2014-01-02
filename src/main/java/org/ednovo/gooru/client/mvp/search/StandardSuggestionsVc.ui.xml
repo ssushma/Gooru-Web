@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.container {
+			display: block;
+			width: 425px;
+			background-color: white;
+			border: 1px solid #DDDDDD;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			color: #515151;
+			font-size: 12px;
+			padding: 10px;
+			float: left;
+		}
+		
+		.moreStandards {
+			color: #1076bb;
+			float: right;
+		}
+	</ui:style>
+	<g:FlowPanel styleName="{style.container}">
+		<g:FlowPanel ui:field="contentPanel" />
+		<g:Label styleName="{style.moreStandards}" text="see 10 more" />
+	</g:FlowPanel>
+</ui:UiBinder> 

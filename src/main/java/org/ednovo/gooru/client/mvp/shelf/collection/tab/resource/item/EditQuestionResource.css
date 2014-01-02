@@ -1,0 +1,955 @@
+/*.................Popup..................*/
+.addResourceEditResource {
+	padding: 0px 0px 0px 20px;
+}
+
+.answerDeselected,.answerSelected,.addResourcePopupSprite,.addResourceFormAnswerDelete
+	{
+	width: 640px;
+	height: 480px;
+	background: url(images/sprites.png) no-repeat;
+}
+
+.addResourceArrowleftContainer {
+	float: right;
+	right: 10px;
+	margin: -9px 7px 0px 0px;
+}
+
+.addResourceArrowleft {
+	background-position: -44px 0;
+	width: 15px;
+	height: 10px;
+}
+
+.answerDeselected {
+	background-position: 0px -50px;
+	width: 20px;
+	height: 18px;
+	cursor: pointer;
+}
+
+.answerDeselected:hover {
+	background-position: -20px -50px;
+	width: 20px;
+	height: 18px;
+}
+
+.answerSelected {
+	background-position: -20px -50px;
+	width: 20px;
+	height: 18px;
+	cursor: pointer;
+}
+
+.clear {
+	clear: both;
+}
+
+.addResourcePopupOuterdiv {
+	float: left;
+	width: 66%;
+	margin: 0 auto;
+	position: relative;
+	padding: 3px 3px 3px 3px;
+	background: #fff;
+	border-color: rgb(221, 221, 221);
+	border-left: #ddd solid 1px;
+}
+
+.addResourcePopup {
+	float: left;
+	width: 100%;
+	background-color: #FFF;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+}
+
+.addResourceEditPopup {
+	float: left;
+	width: 99%;
+	background-color: #FFF;
+}
+
+.addResourceBlackBg {
+	width: 100%;
+	height: 39px;
+	background-color: rgb(81, 81, 81);
+}
+
+.addResourceTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	line-height: 120%;
+	color: rgb(255, 255, 255);
+	padding: 8px 5px 5px 10px;
+}
+
+.addResourceUrlContent {
+	float: left;
+	width: 125px;
+	background-color: #FFF;
+}
+
+.addResourceUrlbg {
+	/* Firefox v3.6+ */
+	background-image: -moz-linear-gradient(194% 3% -90deg, rgb(221, 221, 221)
+		0%, rgb(255, 255, 255) 99%);
+	/* safari v4.0+ and by Chrome v3.0+ */
+	background-image: -webkit-gradient(linear, 194% 3%, 194% 159%, color-stop(0, rgb(221, 221,
+		221)), color-stop(0.99, rgb(255, 255, 255)));
+	/* Chrome v10.0+ and by safari nightly build*/
+	background-image: -webkit-linear-gradient(-90deg, rgb(221, 221, 221) 0%,
+		rgb(255, 255, 255) 99%);
+	/* Opera v11.10+ */
+	background-image: -o-linear-gradient(-90deg, rgb(221, 221, 221) 0%,
+		rgb(255, 255, 255) 99%);
+	/* IE v10+ */
+	background-image: -ms-linear-gradient(-90deg, rgb(221, 221, 221) 0%,
+		rgb(255, 255, 255) 99%);
+	width: 125px;
+	height: 37px;
+	/* Firefox v3.5+ */
+	-moz-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	/* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+ */
+	box-shadow: inset 0px 0px 0px rgba(0, 0, 0, 0.2);
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)";
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,
+		endColorstr=#ffffffff, GradientType=0);
+}
+
+.addResourceUrlbg:hover {
+	/* Firefox v3.6+ */
+	background-image: -moz-linear-gradient(194% 3% -90deg, rgb(221, 221, 221)
+		0%, rgb(255, 255, 255) 99%);
+	/* safari v4.0+ and by Chrome v3.0+ */
+	background-image: -webkit-gradient(linear, 194% 3%, 194% 159%, color-stop(0, rgb(221, 221,
+		221)), color-stop(0.99, rgb(255, 255, 255)));
+	/* Chrome v10.0+ and by safari nightly build*/
+	width: 125px;
+	height: 37px;
+	cursor: pointer;
+	/* Firefox v3.5+ */
+	-moz-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	/* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+ */
+	box-shadow: inset -2px 1px 4px rgba(0, 0, 0, 0.2);
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ffffffff,GradientType=0)";
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,
+		endColorstr=#ffffffff, GradientType=0);
+}
+
+.addResourceUrlbgTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: #000;
+	text-align: left;
+	padding: 8px 0px 5px 10px;
+}
+
+.addResourceFormOuterDiv {
+	float: left;
+	padding: 0px 0px 0px 10px;
+	border-left: 1px solid rgb(221, 221, 221);
+}
+
+.addResourceEditFormOuterDiv {
+	float: left;
+	padding: 0px 0px 0px 30px;
+}
+
+.addResourceFormContainer {
+	padding: 0px 0px 10px 8px;
+}
+
+.addResourceFormContent {
+	padding: 0px 0px 0px 0px;
+}
+
+.addResourceFormTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 8px 0px 2px 0px;
+}
+
+.addResourceFormTitleChoiceOuterdiv {
+	margin: 10px 0px 0px 0px;
+}
+
+.addResourceFormTitleOuterdiv {
+	padding: 0px 0px 0px 0px;
+}
+
+.addResourceFormTitleChoiceContianer {
+	position: relative;
+	padding: 20px 0px;
+}
+
+.addResourceFormTitleChoice {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	position: absolute;
+	top: 20px;
+}
+
+.addResourceFormTitleChoiceAlign {
+	position: absolute;
+	top: 20px;
+	float: right;
+	right: -44px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	text-align: left;
+}
+
+.addResourceFormAnswerContainer {
+	width: 100%;
+	margin: 10px 0px 38px 0px;
+}
+
+.addResourceFormAlphaText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	font-weight: bold;
+	text-align: left;
+	padding: 8px 10px 0px 10px;
+}
+
+.addResourceFormAlphaTextNone {
+	padding: 8px 10px 0px 0px;
+}
+
+.addResourceFormAlphaTextNormal {
+	font-style: normal;
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	text-align: left;
+}
+
+.addResourceFormAnswerInputControl {
+	float: left;
+	width: 290px;
+	height: 28px;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+}
+
+.addResourceFormAnswerTextAlign {
+	font-size: 12px;
+	color: rgb(81, 81, 81);
+	padding: 8px 0px 0px 8px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.addResourceFormAnswerInputText {
+	width: 276px;
+	height: 19px;
+	border: none;
+	outline: 0;
+}
+
+.addResourceFormAnswerMarkContainer {
+	position: relative;
+}
+
+.addResourceFormAnswerMarkbg {
+	float: right;
+	/* right: -36px;
+	position: absolute; */
+	top: 2px;
+	margin-right: -34px;
+}
+
+.addResourceFormAnswerMarker {
+	background-position: 0px -50px;
+	width: 20px;
+	height: 18px;
+}
+
+.addResourceFormAnswerMarker:hover {
+	background-position: -20px -50px;
+	width: 20px;
+	height: 18px;
+}
+
+.addResourceFormAnswerDeletebg {
+	position: absolute;
+	top: 0px;
+	float: right;
+	right: 10px;
+}
+
+.addResourceFormAnswerDelete {
+	background-position: 11px -67px;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.addResourceFormInputControl {
+	background-color: transparent;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 1px;
+	border-style: solid;
+}
+
+.addResourceFormInputTextField {
+	width: 352px;
+	height: 28px;
+	outline: 0;
+	border: 0px;
+	color: rgb(81, 81, 81);
+	padding: 0px 0px 0px 5px;
+}
+
+.addResourceFormInputTextarea {
+	width: 352px;
+	height: 30px;
+	outline: 0;
+	border: 0px;
+	color: rgb(81, 81, 81);
+	padding: 0px 0px 0px 5px;
+	background: transparent;
+}
+
+.addResourceFormInputNoneborder {
+	border: none;
+}
+
+.addResourceCategoryDiv {
+	position: relative;
+}
+
+.addResourceCategoryInputDiv {
+	width: 100%;
+	height: 28px;
+	outline: 0;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+}
+
+.addResourceCategoryDivText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000;
+	padding: 6px 0px 0px 7px;
+}
+
+.addResourceFormInputBottomText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 30%;
+	color: rgb(250, 176, 58);
+	text-align: right;
+	padding: 10px 0px 7px 0px;
+}
+
+.addResourceThumbImageContainer {
+	position: relative;
+	padding: 20px 0px 0px 0px;
+}
+
+.addResourceThumbImageDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 0px 0px 8px 0px;
+}
+
+.addResourceThumbRectContainer {
+	padding: 0px;
+	width: 100%;
+	height: 65px;
+	position: relative;
+}
+
+.addResourceThumbRect {
+	position: relative;
+	background-color: rgb(240, 240, 240);
+	width: 80px;
+	height: 60px;
+	border-color: rgb(221, 221, 221);
+	border-style: solid;
+	border-width: 1px;
+	float: left;
+	margin-left: 16px;
+	padding: 2px;
+}
+
+.addResourceThumbArrLContainer {
+	position: absolute;
+	top: 20px;
+	left: 0px;
+}
+
+.addResourceThumbArrLeftIcon {
+	background-position: 0px 0px;
+	width: 12px;
+	height: 20px;
+}
+
+.addResourceThumbArrRContainer {
+	position: absolute;
+	top: 18px;
+	right: 235px;
+}
+
+.addResourceThumbArrRightIcon {
+	background-position: 0px -20px;
+	width: 15px;
+	height: 28px;
+}
+
+.addResourceThumbRectDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 155%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+}
+
+.addResourceThumbOrtext {
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 20px 0px 0px 30px;
+	font-size: 13px;
+	line-height: 155%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	float: left;
+}
+
+.addResourceThumbUploadImagetext {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(16, 118, 186);
+	text-align: center;
+	padding: 25px 0px 0px 12px;
+	float: left;
+	cursor: pointer;
+}
+
+.addResourceRefreshMainContainer {
+	padding: 0px 0px 0px 9px;
+}
+
+.addResourceRefreshContainer {
+	padding: 0px 0px 0px 15px;
+}
+
+.addResourceRefreshInnerContainer {
+	float: left;
+	padding: 2px 0px 0px 0px;
+}
+
+.addResourceRefreshIcon {
+	background-position: -25px 0px;
+	width: 19px;
+	height: 14px;
+}
+
+.addResourceRefresh {
+	float: left;
+	padding: 2px;
+}
+
+.addResourceRefreshText {
+	font-size: 12px;
+	overflow: hidden;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(153, 153, 153);
+	padding: 2px 0px 0px 5px;
+}
+
+.addResourceFormTextarea {
+	width: 97%;
+	height: 80px;
+	outline: 0;
+	border: none;
+	resize: none;
+}
+
+.addResourceFormDesc {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-style: italic;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	padding: 10px 0px 10px 0px;
+}
+
+.addResourceBlueButtonContainer {
+	width: 25%;
+	margin: 0 auto;
+}
+
+.addResourceBlue_Ok {
+	width: 40px;
+	float: left;
+	background-color: #1076bb;
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	padding: 5px 0px 5px 0px;
+	margin-bottom: 15px;
+}
+
+.addResourceBlue_OkTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-size: 12px;
+	font-style: normal;
+	text-align: center;
+}
+
+.addResourceBlue_Cancel {
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	color: #1076BB;
+	font-style: normal;
+	padding: 5px 0px 0px 5px;
+}
+
+.addResourceGridbg {
+	float: left;
+	position: relative;
+	background-color: #ccc;
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	width: 80px;
+	height: 20px;
+	margin: 4px 2px 2px 4px;
+}
+
+.addResourceButtonContainer {
+	float: left;
+	padding: 20px 0px 10px 140px;
+}
+
+.addResourceOk {
+	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background-color: #1076BB;
+	border: 0 none;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: white;
+	cursor: pointer;
+	font-weight: bold;
+	float: left;
+	width: 67px;
+	height: 30px;
+}
+
+.addResourceOk:hover {
+	color: white;
+	background: #1076BB;
+	cursor: pointer;
+}
+
+.addResourceAddTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	text-align: center;
+	padding: 7px 0px 0px 0px;
+	cursor: pointer;
+}
+
+.btnCancel {
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	cursor: pointer;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	padding: 10px 15px;
+}
+
+.btnCancel:hover{
+	cursor: pointer;
+	background: #eee;
+}
+
+.addResourceFolderleftdesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-style: italic;
+	color: rgb(153, 153, 153);
+	text-align: left;
+}
+
+.addResourceFolderspriteNew {
+	width: 640px;
+	height: 480px;
+	background: url(images/spritenew.png) no-repeat;
+}
+
+.addResourceFolderVideoOuterContainer {
+	float: left;
+	width: 100%;
+	padding: 0px 0px 2px 0px;
+}
+
+.addResourceFolderVideoOuterContainer:hover {
+	cursor: pointer;
+	background-color: rgb(221, 221, 221);
+}
+
+.addResourceFolderVideoContainer {
+	padding: 0px 0px 0px 0px;
+}
+
+.addResourceFolderVideoInnerdiv {
+	float: left;
+	width: 37px;
+	height: 25px;
+	margin: 0px 0px 0px 7px;
+}
+
+.addResourceFolderVideoContent {
+	padding: 3px 0px 0px 0px;
+}
+
+.addResourceFolderspriteVideo {
+	background-position: 0px -20px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteInteractive {
+	background-position: -60px 0px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteWebsite {
+	background-position: 0px 0px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteSlide {
+	background-position: -30px 0px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteHandout {
+	background-position: -60px -20px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteTextbook {
+	background-position: 0px -44px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteLesson {
+	background-position: -30px -43px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteQuestion {
+	background-position: -30px -20px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderspriteExam {
+	background-position: -60px -43px;
+	width: 28px;
+	height: 22px;
+}
+
+.addResourceFolderVideoTitle {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	padding: 8px 0px 0px 0px;
+}
+
+.addResourceFolderDropdown {
+	height: 250px;
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: absolute;
+	top: 29px;
+	background-color: rgb(255, 255, 255);
+	z-index: 1;
+}
+
+.addResourceBottmTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(16, 118, 186);
+	line-height: 120%;
+	text-align: right;
+	margin: 5px 0px 0px 0px;
+	cursor: pointer;
+	float: right;
+}
+
+.addResourceBottmTitle:hover,.addResourceCancel:hover {
+	color: #87BADD;
+}
+
+.addResourceThumbimgContainer {
+	width: 100%;
+}
+
+.addResourceThumbimgHeading {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	padding: 15px 0px 5px 0px;
+}
+
+.addResourceThumbimg {
+	float: left;
+	padding: 0px 0px 0px 0px;
+	width: 80px;
+	height: 60px;
+}
+
+.addResourceThumbimgLeftContainer {
+	padding: 15px 0px 0px 0px;
+}
+
+.addResourceThumbimgLeftContent {
+	float: left;
+	padding: 0px 0px 0px 10px;
+}
+
+.addResourceEditThumbimgLeft {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(16, 118, 187);
+	padding: 5px 0px 0px 5px;
+	cursor: pointer;
+}
+
+.addResourceEditThumbimgLeft:hover {
+	color: #87BADD;
+}
+
+.addResourceThumbimgLeft {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(16, 118, 187);
+	text-align: right;
+	padding: 12px 0px 0px 7px;
+}
+
+.addResourceGrayButtonContainer {
+	width: 100%;
+	height: 37px;
+	text-align: center;
+}
+
+.addResourceGrayOk {
+	/* Firefox v3.6+ */
+	background-image: -moz-linear-gradient(99% 0% -90deg, rgb(221, 221, 221)
+		0%, rgb(153, 153, 153) 100%);
+	/* safari v4.0+ and by Chrome v3.0+ */
+	background-image: -webkit-gradient(linear, 99% 0%, 99% 100%, color-stop(0, rgb(221, 221,
+		221)), color-stop(1, rgb(153, 153, 153)));
+	/* Chrome v10.0+ and by safari nightly build*/
+	background-image: -webkit-linear-gradient(-90deg, rgb(221, 221, 221) 0%,
+		rgb(153, 153, 153) 100%);
+	/* Opera v11.10+ */
+	background-image: -o-linear-gradient(-90deg, rgb(221, 221, 221) 0%,
+		rgb(153, 153, 153) 100%);
+	/* IE v10+ */
+	background-image: -ms-linear-gradient(-90deg, rgb(221, 221, 221) 0%,
+		rgb(153, 153, 153) 100%);
+	float: left;
+	font-weight: bold;
+	width: 67px;
+	height: 30px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,endColorstr=#ff999999,GradientType=0)";
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd,
+		endColorstr=#ff999999, GradientType=0);
+}
+
+.editQuestionPopupContainer {
+	float: left;
+	width: 98%;
+	margin: 4px;
+	border: 1px solid #DDD;
+}
+
+.editQuestionPopupHeader {
+	padding: 10px 15px;
+	color: white;
+	background-color: #515151;
+	font-size: 16px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666),
+		to(#515151));
+	background: -webkit-linear-gradient(top, #666, #515151);
+	background: -moz-linear-gradient(top, #666, #515151);
+	background: -ms-linear-gradient(top, #666, #515151);
+	background: -o-linear-gradient(top, #666, #515151);
+}
+
+
+
+.buttonSelected {
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd),
+		to(#f5f5f5));
+	background: -moz-linear-gradient(top, #ddd, #f5f5f5);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, .1);
+	border-top: 1px solid #ccc;
+	padding: 10px;
+	cursor: default;
+	border-bottom: 1px solid #ddd;
+	filter: progid:  DXImageTransform.Microsoft.gradient(  startColorstr= 
+		'#ddd', endColorstr=  '#f5f5f5');
+}
+
+.buttonDeSelected {
+	margin: 0px;
+	color: #515151;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #eee;
+	background: white;
+	padding:10px;
+	cursor: pointer;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
+		to(#EDEDED));
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+	filter: progid:  DXImageTransform.Microsoft.gradient(  startColorstr= 
+		'#FDFDFD', endColorstr=  '#EDEDED');
+}
+
+.buttonDeSelected:hover {
+	background: #efefef;
+	box-shadow: none;
+}
+
+.questionRadioButtonStyle{
+	display:none;
+}
+
+.editResourceBigTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: #515151 !important;
+	text-align: left;
+	text-decoration: none !important;
+	display: inline-block;
+}
+
+.questionOptionsContainer{
+	width: 32%;
+	float: left;
+}
+
+.btnSave{
+	margin-bottom: 10px;
+	margin-right: 10px;
+	cursor: pointer;
+	color: #fff;
+	border: 1px solid #1076bb;
+	display: inline-block;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background-color: #1076bb;
+	cursor: pointer;
+	padding: 8px 15px;
+	background: #1076bb;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc), to(#1076bb));
+	background: -webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+}
+
+.btnSave:hover{
+	background: #1076bb;
+	cursor: pointer;
+}
+
+
+.pleaseWait{
+	font-style: italic;
+	color: #999;
+}

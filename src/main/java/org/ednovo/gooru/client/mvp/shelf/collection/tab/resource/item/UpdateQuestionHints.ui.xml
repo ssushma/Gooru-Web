@@ -1,0 +1,25 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:qac="urn:import:org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item"
+    xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui"
+    ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default" >
+    <ui:style
+        field="editQuestionStyle"
+        src="EditQuestionResource.css" >
+    </ui:style>
+<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}" >
+  <g:Label styleName="{editQuestionStyle.addResourceFormTitle}" ui:field="addHintsLabel"></g:Label>
+     <g:Label styleName="{editQuestionStyle.addResourceFormAlphaTextNormal} {editQuestionStyle.addResourceFormAlphaTextNone}" ui:field="hintsChoice"></g:Label>
+      <g:HTMLPanel styleName="{editQuestionStyle.addResourceFormAnswerInputControl} editAnswerChoiceAndHintsTextcontainer" >
+       <!-- <g:TextBox styleName="{editQuestionStyle.addResourceFormAnswerInputText} {editQuestionStyle.addResourceFormAnswerTextAlign}" maxLength="150" value="" ui:field="hintsTextBox"/> -->
+        <tinyMce:TinyMCE ui:field="hintsTextBox" characterLimit="150"></tinyMce:TinyMCE>
+       <g:HTMLPanel styleName="{editQuestionStyle.addResourceFormAnswerDeletebg}">
+            <g:Label ui:field="hintDelLbl" styleName="{editQuestionStyle.addResourceFormAnswerDelete}"/>
+       </g:HTMLPanel>
+      </g:HTMLPanel>
+        
+ <g:HTMLPanel styleName="{editQuestionStyle.clear}" ></g:HTMLPanel>
+</g:HTMLPanel>
+</ui:UiBinder>

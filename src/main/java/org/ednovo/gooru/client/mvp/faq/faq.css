@@ -1,0 +1,9 @@
+.footerHighlight {
+    float: left;
+    border-bottom: 2px solid;
+}
+
+.gooruGuideFooterHighlight {
+    display: inline-block;
+    opacity:1 !important;
+}

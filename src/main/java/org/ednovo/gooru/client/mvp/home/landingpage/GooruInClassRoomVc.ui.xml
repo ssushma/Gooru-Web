@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field="landingPageStyle" src="../landing-page.css" type="org.ednovo.gooru.client.mvp.home.LandingPageStyleCss" />
+	<g:HTMLPanel styleName="{landingPageStyle.pageSection} {landingPageStyle.whyUseGooru}" ui:field="panelGooruClassRoom">
+	   <h2>Gooru in the Classroom</h2>
+	   <g:Anchor ui:field="backto" href="#" styleName="{landingPageStyle.returnToTop}">back to the top</g:Anchor> 
+	   <g:HTMLPanel styleName="{landingPageStyle.contentBlock}">
+	      <h3>Five Teaching Methods using Gooru Collections Inside and Outside the Classroom</h3>
+	      <g:HTMLPanel styleName="{landingPageStyle.methodsList} {landingPageStyle.tabs}">
+	         <panel:HTMLEventPanel ui:field="gooruCrTab1" styleName="{landingPageStyle.methodsListLi} {landingPageStyle.methodsLiFirst}">Blended Learning</panel:HTMLEventPanel>
+	         <panel:HTMLEventPanel ui:field="gooruCrTab2" styleName="{landingPageStyle.methodsListLi}">Flipped Classroom</panel:HTMLEventPanel>
+	         <panel:HTMLEventPanel ui:field="gooruCrTab3" styleName="{landingPageStyle.methodsListLi}">Assessments</panel:HTMLEventPanel>
+	         <panel:HTMLEventPanel ui:field="gooruCrTab4" styleName="{landingPageStyle.methodsListLi}">Project-Based Learning</panel:HTMLEventPanel>
+	         <panel:HTMLEventPanel ui:field="gooruCrTab5" styleName="{landingPageStyle.methodsListLi} {landingPageStyle.methodsLiLast}">Enriched Instruction</panel:HTMLEventPanel>
+	      </g:HTMLPanel>
+	      <g:HTMLPanel styleName="{landingPageStyle.clearfix} {landingPageStyle.methodsContent}" ui:field="methodsContentContainer">
+	      </g:HTMLPanel>
+	   </g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder>

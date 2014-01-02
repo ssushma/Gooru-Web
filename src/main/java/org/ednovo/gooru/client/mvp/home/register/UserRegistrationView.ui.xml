@@ -1,0 +1,92 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:dt="urn:import:com.google.gwt.user.datepicker.client">
+        <ui:with type="org.ednovo.gooru.client.mvp.home.register.RegisterCBundle" field="res" />
+    <g:FlowPanel styleName="{res.css.registerContentDiv}" ui:field="userRegisterFloPanel">
+        <g:FlowPanel styleName="{res.css.registerMessageDiv}">
+            <g:HTML ui:field="welcomeMessageHtml">
+                <p>Thanks for confirming your email! Finish up the registration process by filling out the following information.You can always visit the settings page to update any information.</p>
+            </g:HTML>
+        </g:FlowPanel>
+        <g:FlowPanel styleName="{res.css.registerFieldsContainer}" >
+            <g:FlowPanel styleName="{res.css.registerLeftContainer}">
+                <g:Label styleName="{res.css.containerText}" ui:field="accountTypeFieldLbl" text="Account" />
+            </g:FlowPanel>
+            <g:FlowPanel styleName="{res.css.registerRightContainer}">
+                <g:Label styleName="{res.css.containerText}" ui:field="accountInformationLbl" text="Information" />
+            </g:FlowPanel>    
+        <g:FlowPanel styleName="{res.css.registerFieldsContainer}" >
+        <g:FlowPanel styleName="{res.css.registerLeftContainer}">
+            <g:FlowPanel styleName="{res.css.registerFormField}" ui:field="firstnameFloPanel">
+                <g:Label styleName="{res.css.registerFormInputs}" text="First Name" />
+                <gg:ValidTextUc ui:field="firstNameFieldUc" styleName="{res.css.validationTextBox}"/>
+            </g:FlowPanel>
+            <g:FlowPanel styleName="{res.css.registerFormField}" ui:field="lastnameFloPanel">
+                <g:Label styleName="{res.css.registerFormInputs}" text="Last Name" />
+                <gg:ValidTextUc ui:field="lastNameFieldUc" styleName="{res.css.validationTextBox}"/>
+            </g:FlowPanel>
+            <g:FlowPanel styleName="{res.css.registerFormField}">
+                <g:Label styleName="{res.css.registerFormInputs}" text="UserName" />
+                <g:TextBox ui:field="userNameFieldTxtBox" styleName="{res.css.registerFormFields}"/>
+                <gg:ErrorLabelUc ui:field="userNameValidUc"/>
+            </g:FlowPanel>
+            
+            <g:FlowPanel styleName="{res.css.registerFormField}">
+                <g:Label styleName="{res.css.registerFormInputs}" text="Password" />
+                <g:PasswordTextBox styleName="{res.css.registerFormFields}" ui:field="passwordFieldTxtBox" />
+                <gg:ErrorLabelUc ui:field="passwordValidUc" />
+            </g:FlowPanel>
+                      
+            <g:FlowPanel styleName="{res.css.registerFormField}">
+                <g:Label styleName="{res.css.registerFormInputs}" text="Confirm Password" />
+                <g:PasswordTextBox styleName="{res.css.registerFormFields}" ui:field="confirmPasswordFieldTxtBox" />
+                <gg:ErrorLabelUc ui:field="confirmPasswordValidUc"/>
+            </g:FlowPanel>  
+                                                          
+        </g:FlowPanel>        
+        <g:FlowPanel styleName="{res.css.registerRightContainer}">
+           <g:FlowPanel styleName="{res.css.registerFormField}" ui:field="birthdayFloPanel">
+            	<g:Label text = "Birthday" styleName="{res.css.registerRightFormInputs}"/>
+				<g:SimplePanel ui:field="dateSimPanel"/>
+				<gg:ErrorLabelUc ui:field="dateValidationUc"/>
+			</g:FlowPanel>            
+            <g:FlowPanel styleName="{res.css.registerRightsFormFields}">
+                <g:Label styleName="{res.css.registerRightFormField}" text="Email" />
+                <g:Label styleName="{res.css.registerRightFormField}" ui:field="userEmailFieldLbl" />
+            </g:FlowPanel>            
+            <g:FlowPanel styleName="{res.css.registerFormField}">
+                <g:FlowPanel styleName="{res.css.genderInputField}">
+                    <g:Label text="Gender" />
+                </g:FlowPanel>
+            <g:FocusPanel ui:field="genderFocusFocPanel">    
+              <g:FlowPanel styleName="{res.css.registerGenderRow}" ui:field="genderFieldsFloPanel">
+                    <gg:GenderRadioButton ui:field="female"  styleName="{res.css.genderoptions}" genderValue="F" name="gender" text="Female"/>
+                    <gg:GenderRadioButton  ui:field="male" styleName="{res.css.genderoptions}" genderValue="M" name="gender" text="Male"/>
+                    <gg:GenderRadioButton ui:field="other" styleName="{res.css.genderoptions}" genderValue="O" name="gender" text="Other"/>
+                    <gg:GenderRadioButton ui:field="donot" styleName="{res.css.genderoptions}" genderValue="X" name="gender" text="Do not wish to share"/>     
+                 </g:FlowPanel>
+           </g:FocusPanel>
+                 <gg:ErrorLabelUc ui:field="genderValidUc"/>                
+            </g:FlowPanel>
+        <g:FlowPanel styleName="{res.css.registerFormField}" ui:field="userCategoryFloPanel">
+            <g:Label styleName="{res.css.registerRightFormField}" text="I am a:" />
+            <g:ListBox ui:field="userCategoryLisBox" styleName="{res.css.listBoxAlign}" />
+        </g:FlowPanel>                
+        </g:FlowPanel>
+        </g:FlowPanel>
+
+        <g:FlowPanel styleName="{res.css.registerTermsAndCondtion}" ui:field="termsAndConditionFloPanel">
+            <g:Label styleName="{res.css.footerDiv}" text="By clicking Register, I understand and agree with the rules and restrictions of this registration, the &nbsp; " />
+            <g:Anchor styleName="{res.css.supportText}" text="Terms of Use and Privacy Policy"  ui:field="termsAndConditionsAnr"/>
+            <g:Label styleName="{res.css.footerDiv}" text="&nbsp; and&nbsp; " />
+            <g:Anchor styleName="{res.css.supportText}" text="Copyright Policy" ui:field="copyRightPolicyAnr" />
+            <g:Label styleName="{res.css.footerDiv}" text="&nbsp;of Gooru." />
+             
+        </g:FlowPanel>    
+        <g:FlowPanel styleName="{res.css.actionField}">
+            <gg:BlueButtonUc text="Register" ui:field="updateUserDetailsUc" styleName="{res.css.overRideBlueButton}"/>
+            <g:Anchor text="Cancel" ui:field="cancelAnr" styleName="{res.css.collectionFormCancelButton}"/>
+        </g:FlowPanel>    
+        </g:FlowPanel>
+    </g:FlowPanel>    
+</ui:UiBinder> 

@@ -1,0 +1,346 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+package org.ednovo.gooru.client.uc;
+
+import java.util.Date;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
+import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
+/**
+ * @fileName : DateBoxUc.java
+ *
+ * @description : This class is  date box user controller.
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 31-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: Gooru Team
+ */
+public class DateBoxUc extends FlowPanel implements MessageProperties {
+
+	private TextBox dateBox;
+
+	private Label calendarIcon;
+
+	private DatePickerUc datePickerUc;
+//	private DatePicker datePicker;
+	
+	boolean isRegistration = true;
+
+	private static final String AFTER_CURRENT_DATE = "The date entered shouldn't be greater than current date.";
+	
+	private static final String BEFORE_CURRENT_DATE = "The date entered shouldn't be lesser than current date.";
+
+	/**
+	 * Class constructor
+	 */
+	public DateBoxUc(boolean isRegistration,boolean isSmall,boolean isStudent) {
+		super();
+		this.isRegistration = isRegistration;
+		UcCBundle.INSTANCE.css().ensureInjected();
+		
+		calendarIcon = new Label();
+		calendarIcon.setStyleName(UcCBundle.INSTANCE.css().gooruCalendarIcon());
+		
+		dateBox = new TextBox();
+		dateBox.getElement().setId("tbBirthday");
+		dateBox.setReadOnly(true);
+		if (!isRegistration){
+				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBoxAssignment());
+				dateBox.getElement().getStyle().setWidth(271, Unit.PX);
+		}else{
+			dateBox.getElement().setAttribute("Placeholder", "Birthday");
+			if (!isSmall){
+				this.setStyleName(UcCBundle.INSTANCE.css().gooruDateBox());
+			}else{
+				calendarIcon.addStyleName(UcCBundle.INSTANCE.css().iconPosition());
+			}
+		}
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
+        	this.getElement().getStyle().setZIndex(9999999);
+        }else{
+        	this.getElement().getStyle().clearZIndex();
+        }
+		
+		datePickerUc = new DatePickerUc(isRegistration);
+		dateBox.setStyleName(UcCBundle.INSTANCE.css().gooruDateText());
+		if(!isStudent){
+		calendarIcon.addClickHandler(new OnIconClick());
+		}
+		this.add(dateBox);
+		this.add(calendarIcon);
+//		datePickerUc.getDoneButton().addClickHandler(new OnDoneClick());
+		datePickerUc.getTodayButton().addClickHandler(new OnTodayClick());
+		datePickerUc.getDatePicker().addValueChangeHandler(new OnDateChange());
+		datePickerUc.hide();
+		datePickerUc.listYear.addChangeHandler(new OnYearChange());
+		datePickerUc.listMonths.addChangeHandler(new OnMonthChange());
+		
+	}
+	/**
+	 * This inner class is used to handle the click event on the date icon.
+	 */
+	private class OnIconClick implements ClickHandler {
+		@Override
+		
+		public void onClick(ClickEvent event) {
+			//datePickerUc.reset();
+			int left = calendarIcon.getAbsoluteLeft() - 163;
+			int top = dateBox.getAbsoluteTop() + 25;
+			showDatePickerPopup(left, top);
+			boolean isRegistration=false;
+			if(!datePickerUc.isRegistration){
+				datePickerUc.reset();
+			}
+			
+		}
+
+	}
+	/**
+	 * This inner class is used to handle the click event on the today's date.
+	 */
+	private class OnTodayClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			datePickerUc.setYear();
+			datePickerUc.setMonth(true);
+			datePickerUc.getDatePicker().setCurrentMonth(new Date());
+			Date selectedDate = new Date();
+			String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
+			dateBox.setText(dateString);
+		}
+	}
+	/**
+	 * This inner class is used to handle the change event on change of the month.
+	 */
+	private class OnMonthChange implements ChangeHandler {
+		@Override
+		public void onChange(ChangeEvent event) {
+			String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
+			
+			dateBox.setText(dateBox.getText() != null && !dateBox.getText().isEmpty() ?  (selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateBox.getText().substring(2) : "");
+		}
+	}
+	/**
+	 * This inner class is used to handle the change event on change of the year.
+	 */
+	private class OnYearChange implements ChangeHandler {
+		@Override
+		public void onChange(ChangeEvent event) {
+			GWT.log("On Year Change");
+			dateBox.setText(dateBox.getText() != null && !dateBox.getText().isEmpty() ? dateBox.getText().substring(0, 6) + datePickerUc.listYear.getItemText(datePickerUc.listYear.getSelectedIndex()) : "");
+		}
+	}
+
+//	private class OnDoneClick implements ClickHandler {
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			
+//		}
+//	}
+	/**
+	 * This method is used for date validation.
+	 */
+	public boolean dateValidation(){
+		boolean isValid = isRegistration ? hasValidateDate() : hasValidateForDate();
+		if (isValid) {
+			if (!(dateBox.getText() == null || (dateBox.getText() != null && dateBox.getText().isEmpty()))) {
+				datePickerUc.hide();
+				return true;
+			}
+			return false;
+		} else { 
+			if (isRegistration){
+				new AlertContentUc(GL0065, AFTER_CURRENT_DATE);
+			}else{
+				new AlertContentUc(GL0065, BEFORE_CURRENT_DATE);
+			}
+			return false;
+		}
+	}
+	/**
+	 * This inner class is used to handle the value change event on change of the date.
+	 */
+	private class OnDateChange implements ValueChangeHandler<Date> {
+		@Override
+		public void onValueChange(ValueChangeEvent<Date> event) {
+			
+			Date selectedDate = datePickerUc.getDatePicker().getValue();
+			
+			
+			if(datePickerUc.isRegistration){
+				if(selectedDate.before(new Date())||selectedDate.equals(new Date())){
+					datePickerUc.listMonths.clear();
+					if(selectedDate.getYear()==new Date().getYear()){
+						datePickerUc.setMonth(true);
+					}else{
+						datePickerUc.setMonth(false);
+					}
+					datePickerUc.listMonths.setSelectedIndex(selectedDate.getMonth());
+					datePickerUc.listYear.setSelectedIndex(selectedDate.getYear()-10);
+					String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
+					String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
+			
+					dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
+					Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
+					errorMessageElement.getStyle().setDisplay(Display.NONE);
+				}
+			}else{
+				if(selectedDate.after(new Date())||selectedDate.equals(new Date())){
+					datePickerUc.listMonths.clear();
+					if(selectedDate.getYear()==new Date().getYear()){
+						datePickerUc.setMonth(true);
+					datePickerUc.listMonths.setSelectedIndex(selectedDate.getMonth()-new Date().getMonth());
+					}else{
+						datePickerUc.setMonth(false);
+						datePickerUc.listMonths.setSelectedIndex(selectedDate.getMonth());
+					}
+					
+					datePickerUc.listYear.setSelectedIndex(selectedDate.getYear()-113);
+					String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
+				
+					String selectedMonth = (Integer.parseInt(datePickerUc.listMonths.getValue(datePickerUc.listMonths.getSelectedIndex())) + 1) + "";
+			
+					dateBox.setText((selectedMonth.length() == 1 ? "0" + selectedMonth  : selectedMonth)  + dateString.substring(2));
+					Element errorMessageElement=Document.get().getElementById("datePickerErrorMessageLabel");
+					errorMessageElement.getStyle().setDisplay(Display.NONE);
+					
+				}
+			}
+			
+			
+			
+
+			
+		
+		}
+	}
+		
+
+	/**
+	 * @return selected date
+	 */	
+	public String getDate() {
+		Date selectedDate = datePickerUc.getDatePicker().getValue();
+		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(selectedDate);
+		
+		return dateString;
+	
+	}
+
+	/**
+	 * @return selected year
+	 */
+	public int getYear() {
+		Date selectedDate = datePickerUc.getDatePicker().getValue();
+		int year = selectedDate.getYear();
+return year;
+	}
+
+	public Date getValue() {
+		return datePickerUc.getDatePicker().getValue();
+	}
+
+	/**
+	 * View datePickerPopup
+	 * 
+	 * @param left
+	 *            position of the popup
+	 * @param top
+	 *            position of the popup
+	 */
+	public void showDatePickerPopup(int left, int top) {
+		datePickerUc.setPopupPosition(left, top);
+		datePickerUc.show();
+		
+	}
+
+	/**
+	 * @return true if date is valid else false
+	 */
+	public boolean hasValidateDate() {
+		boolean isValid = true;
+		Date current = new Date();
+		Date selected = getDatePickerUc().getDatePicker().getValue();
+		if (dateBox.getText() != null && dateBox.getText().length() > 0 && selected.after(current)) {
+			 isValid = false;
+		}
+		return isValid;
+	}
+	
+	/**
+	 * @return true if date is valid else false
+	 */
+	public boolean hasValidateForDate() {
+		boolean isValid = true;
+		Date current = new Date();
+		Date selected = getDatePickerUc().getDatePicker().getValue();
+		if (dateBox.getText() != null && dateBox.getText().length() > 0 && selected.before(current)) {
+			 isValid = false;
+		}
+		return isValid;
+	}
+	/**
+	 * This will return the date box.
+	 */
+	public TextBox getDateBox() {
+		return dateBox;
+	}
+	/**
+	 * This will return the date box done button.
+	 */
+	public Button getDoneButton() {
+		
+		return datePickerUc.getDoneButton();
+	}
+	/**
+	 * This will return the date picker.
+	 */
+	public DatePickerUc getDatePickerUc() {
+		return datePickerUc;
+	}
+}

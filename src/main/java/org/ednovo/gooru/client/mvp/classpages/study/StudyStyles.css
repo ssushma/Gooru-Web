@@ -1,0 +1,89 @@
+.classPageContainer {
+	width: 1100px;
+	margin: 0 auto;
+	/* background-color: #eeecec; */
+}
+.classPageContentDiv {
+	width: 550px;
+	margin: 0 auto;
+}
+.classPageContentDesc {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding: 120px 0px 60px 43px;
+}
+.classPageSearchContainer {
+	overflow: hidden;
+	padding: 0px 0px 10px 60px;
+}
+.classPageSearchDesc {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding: 7px 15px 0px 0px;
+}
+.classPageSearchInput {
+	float: left;
+	font-size: 12px;
+	background-color: rgb(255,255,255);
+	width: 200px;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+	margin: 0px 10px 0px 0px;
+	padding: 0px 0px 0px 6px;
+	text-transform:uppercase;
+	font-family: Tahoma, sans-serif !important;
+}
+.classPageButtonContainer {
+	float: left;
+	padding: 0px 0px 0px 0px;
+}
+.classPageSearchButton {
+	background-color: #1076bb;
+	background-image: -webkit-gradient(linear, 51% 3%, 51% 100%, color-stop(0, rgb(76,152,204)), color-stop(0.99, rgb(16,118,187)));
+	background-image: -webkit-linear-gradient(-90deg, rgb(76,152,204) 0%, rgb(16,118,187) 99%);
+	background-image: -o-linear-gradient(-90deg, rgb(76,152,204) 0%, rgb(16,118,187) 99%);
+	background-image: -ms-linear-gradient(-90deg, rgb(76,152,204) 0%, rgb(16,118,187) 99%);
+	width: 50px;
+	height: 30px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc, endColorstr=#ff1076bb, GradientType=0);
+}
+.classPageSearchButtonText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: bold;
+	color: rgb(255,255,255);
+	text-align: center;
+	padding: 8px 0px 0px 0px;
+	cursor:pointer;
+}
+.clear {
+	clear: both;
+}
+.classPageOrangeText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(249,176,57);
+	text-align: left;
+	padding: 0px 53px 10px 0px;
+	width: 39%;
+	margin: 0 auto;
+	word-wrap: break-word;
+}

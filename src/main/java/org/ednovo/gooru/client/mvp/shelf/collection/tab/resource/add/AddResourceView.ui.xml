@@ -1,0 +1,76 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
+		field="res"></ui:with>
+	<g:FlowPanel>
+		<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupOuterdiv}">
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionPopupContainer}">
+				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
+						<g:Label styleName="{res.css.myFolderCollectionTitle}"
+							ui:field="titleLbl">Add a resource</g:Label>
+						<g:HTMLPanel styleName="{res.css.addResourceCloseButtonContainer}">
+							<g:Label styleName="{res.css.addResourceCloseButton}"
+								ui:field="addResourceCloseButton"></g:Label>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionUrlContent}" ui:field="addResourceTabContainer">
+					
+					    <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="urlTabButton">
+							<g:Anchor  ui:field="fromweb" styleName="{res.css.myFolderCollectionUrlbgTitle}">From Web</g:Anchor>
+						</uc:HTMLEventPanel>
+						
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="myComputerTabButton">
+							<g:Anchor ui:field="fromfile" styleName="{res.css.myFolderCollectionUrlbgTitle}">From File</g:Anchor>
+						</uc:HTMLEventPanel>
+						
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="searchTabButton">
+							<g:Anchor ui:field="fromwsearch" styleName="{res.css.myFolderCollectionUrlbgTitle}">From Search</g:Anchor>
+						</uc:HTMLEventPanel>
+						
+						
+						
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="questionTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="multipleChoiceRadioButton"
+								checked="true" styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor ui:field="multiplechoice" styleName="{res.css.myFolderCollectionUrlbgTitle}">Multiple Choice</g:Anchor>
+						</uc:HTMLEventPanel>
+						
+						<!-- <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="multipleAnswerTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="multipleAnswerRadioButton"
+									styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}">Multiple Answer</g:Anchor>
+						</uc:HTMLEventPanel> -->
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="trueOrFlaseButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="trueOrFalseRadioButton"
+								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor ui:field="truefalase" styleName="{res.css.myFolderCollectionUrlbgTitle}">True/False</g:Anchor>
+						</uc:HTMLEventPanel>
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="fillInTheBlankTabButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="fillInTheBlankRadioButton"
+									styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}">Fill in the Blank</g:Anchor>
+						</uc:HTMLEventPanel>
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="openEndedButton">
+							<g:RadioButton name="questionTypeGrouop" ui:field="openEndedRadioButton"
+								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
+							<g:Anchor  ui:field="openended" styleName="{res.css.myFolderCollectionUrlbgTitle}">Open-Ended</g:Anchor>
+						</uc:HTMLEventPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel ui:field="tabViewContainer">
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder>

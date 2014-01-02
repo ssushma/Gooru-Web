@@ -1,0 +1,617 @@
+/*HeaderUc*/
+.goorulandingHeaderContainer {
+	background: -moz-linear-gradient(center top, #515151, #333333) repeat
+		scroll 0 0 transparent;
+	height: 50px;
+	position: relative;
+	z-index: 50;
+	background-color: #515151;
+	height: 50px;
+	/* Safari 4-5, Chrome 1-9 */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#515151),
+		to(#333) );
+	/* Safari 5.1, Chrome 10+ */
+	background: -webkit-linear-gradient(top, #515151, #333);
+	/* IE 10 */
+	background-image: -ms-linear-gradient(top, #515151, #333);
+	/* Opera 11.10+ */
+	background: -o-linear-gradient(top, #515151, #333);
+	background-color:#333333;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+}
+
+@eval GOORU_LEARNING_LOGO org.ednovo.gooru.client.GooruImageResourceBundle.getLandingPageSprite();
+.gooruLearningIcon {
+    background: GOORU_LEARNING_LOGO no-repeat scroll 0 -207px transparent;
+    float: left;
+    height: 30px;
+    margin: 10px 5px 10px 11px;
+    width: 112px;
+}
+
+.logoDiv {
+	margin: auto;
+	width: 960px;
+}
+
+.editInputBox {
+	border: 1px solid #DDDDDD;
+	font-size: 12px;
+	height: 26px;
+	width: 300px;
+	padding-left: 5px;
+	margin-right:10px;
+}
+
+.editSearchButton {
+	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB) );
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background-color:#1076BB;
+	border: medium none;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: #ffffff;
+	margin-left: 10px;
+	padding: 4px 7px;
+}
+
+.editSearchButton:hover {
+	background: #1076BB;;
+	cursor: pointer;
+}
+
+.editSearchInputBoxDiv {
+    float: left;
+    text-align: right;
+    height: 50px;
+}
+
+.loggedInfo {
+	color: #FFFFFF;
+    cursor: pointer;
+    float: left;
+    padding: 16px;
+}
+
+.loggedInfo:HOVER{
+	background-color: #393939;
+}	
+
+.hiMsg {
+	color: #FFFFFF;
+	float: left;
+	cursor: pointer;
+	width: 15px;
+}
+
+.login {
+	color: #FFFFFF;
+	float: left;
+	margin-top: 17px;
+	/* cursor: pointer; */
+	margin-right: 5px;
+}
+
+.logoutDownArrow {
+	width: 34px;
+	height: 34px;
+	background: url(images/Collection-Search/SettingsIcon.png) no-repeat;
+	float: left;
+	margin-top: 9px;
+	cursor:pointer;
+	/* margin-left: 5px;
+	width: 11px;
+	height: 6px;
+	margin-top: 5px;  DO-1535*/
+	
+}
+
+
+.logoutPanel {
+	z-index: 99;
+	background: white;
+	
+}
+}
+
+.logoutPopup {
+	z-index: 99999;
+	/* border: 1px solid #E7E7E7 !important;
+	padding: 3px; */
+	background: white;
+	border-radius: 4px;
+}
+
+/*FooterUc*/
+.goorulandingFooterContainer {
+	/* background-color: #333333; 
+	height: 85px;
+	width: 100%;
+	top: 75px;
+	position: relative;
+	clear: both;
+	z-index: 50;
+	text-align: center;*/
+	
+	height: 85px;
+	
+/* 	width: 62%;
+	margin-left: 170px; */
+	
+	width:950px;
+	margin:auto;
+	
+	margin-top: 75px;
+	clear: both;
+	z-index: 50;
+	text-align: center;
+}
+
+.homePageFooterMenu {
+	clear: both;
+	margin: 0 auto;
+	padding-top: 10px;
+	width: 816px;
+}
+
+.homePageFooterMenu a {
+	color:rgb(153,153,153) !important;
+    margin: 0px 16px 0px 0px;
+	cursor: pointer;
+	text-decoration: none;
+	font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+line-height:120%;
+text-align:center;
+}
+.homePageFooterMenu a:HOVER {
+	 opacity: 0.6;
+}
+
+.homePageFooterMenu div {
+	display: inline;
+}
+
+.homePageFooterMenu div a {
+	padding-right: 10px;
+}
+
+.homePageFooterMenu div a:hover {
+	color: #4C98CC !important;
+	text-decoration: none;
+}
+
+.gooruCopyRight {
+	color: #999999 !important;
+}
+.facebookImage {
+	background: url("images/fb.png");
+	width: 11px;
+	height: 20px;
+}
+
+.twitterImage {
+	background: url("images/twitter.png");
+	width: 25px;
+	height: 20px;
+}
+
+.youtubeImage {
+	background: url("images/youtube.png");
+	width: 50px;
+	height: 21px;
+}
+
+.googleplusImage {
+	background: url("images/googleplus.png");
+	height: 20px;
+	width: 22px;
+}
+
+.pinterestImage {
+	background: url("images/pinterest.png");
+	width: 20px;
+	height: 21px;
+}
+
+.facebookImage:hover, .twitterImage:hover, .youtubeImage:hover, .googleplusImage:hover, .pinterestImage:hover {
+	opacity:0.6;
+}
+
+.learnMoreIconsDiv {
+	margin: auto;
+	width: 18%;
+}
+
+.learnMoreIconsDiv div {
+	float: left;
+	margin-top: 10px;
+}
+
+div.learnMoreIconsDiv,div.learnMoreIconsDiv {
+	float: left;
+	margin-top: 8px;
+}
+
+.imageUploadPopup {
+	
+	border: 10px solid #515151;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+	background: none repeat scroll 0 0 #FFFFFF;
+	clip: inherit !important;
+	overflow: visible !important;
+	position: absolute !important;
+	/* z-index: 999;  DO-1434*/
+	z-index: 9999;
+}
+
+.uploadActive {
+	min-height: 20px;
+	border-bottom: 1px solid #C1D9FF;
+	border-left: 1px solid #C1D9FF;
+	border-top: 1px solid #C1D9FF;
+	margin: 0 0 1px;
+	padding: 5px;
+	cursor: pointer;
+	color: #515151 !important;
+	display: block;
+	background: #ffffff;
+	display: block !important;
+}
+
+.uploadClose {
+	min-height: 20px;
+	border-bottom: 1px solid #C1D9FF;
+	border-left: 1px solid #C1D9FF;
+	border-top: 1px solid #C1D9FF;
+	margin: 0 0 1px;
+	padding: 5px;
+	cursor: pointer;
+	display: block;
+	color: #1076BB !important;
+	background-color: #E5ECF9;
+	background-repeat: repeat-x;
+	border-right: 1px solid #C1D9FF;
+}
+
+.uploadClose:hover{
+	text-decoration:none;
+}
+.uploadActive:hover{
+	text-decoration:none;
+}
+.deactivated {
+	color: #999999;
+	cursor: default !important;
+}
+
+.deactivated:hover {
+	cursor: default !important;
+}
+
+.imageCropPopup {
+	border: 10px solid #515151;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+	width: 600px !important;
+}
+
+/* .classicViewLabel {
+	background-color: #4C98CC;
+	border-radius: 0 0 2px 2px;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: block;
+	height: 18px;
+	text-align: center;
+	width: 120px;
+	box-shadow: 2px 2px 2px 2px #CCCCCC;
+	padding: 4px;
+} */
+
+.gooruClassicView {
+	background-color: #4C98CC;
+	border-radius: 0 0 4px 4px;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: block;
+	height: 18px;
+	text-align: center;
+	width: 120px;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	padding: 4px;
+}
+
+.gooruGuideImg {
+	background: url("images/help_icon_v2.png") no-repeat scroll 0 0
+		transparent;
+	cursor: pointer;
+	/* float: right; */
+	height: 40px;
+	left: 110px;
+	position: relative;
+	right: 157px;
+	top: 6px;
+	width: 26px;
+}
+
+.loggedInGooruGuideImg {
+	background: url("images/help_icon_v2.png") no-repeat scroll 0 0
+		transparent;
+	cursor: pointer;
+ 
+	height: 40px;
+	left: 7px;
+	position: relative;
+	 
+	top: 6px;
+	width: 28px;
+}
+
+.imageUrlError {
+	background-color: #FFFFCC;
+	border: 1px solid #CC0000;
+	clear: both;
+	font: 10px arial;
+	margin-top: 3px;
+	padding: 5px;
+	width: 260px;
+}
+
+.textboxUrlError {
+	border: 1px solid #CCCCCC;
+	float: left;
+	height: 27px;
+	margin-right: 5px;
+	width: 270px;
+	background-color: #FFFFCC;
+}
+
+/************ Gooru Guide Info ***************/
+.guideInfoText {
+	margin-bottom: 20px;
+	font-size: 12px;
+}
+
+.gooruGuideCont {
+	padding: 15px;
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+
+.gooruGuideButton {
+	text-align: center;
+}
+
+.guideButton {
+	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB) );
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	background-color:#1076BB;
+	border: medium none;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: white;
+	display: inline-block;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size:12px;
+	padding: 8px 9px;
+}
+
+.guideButton:hover {
+	background: #1076BB;
+	cursor: pointer;
+}
+
+.guideInfoArrow {
+	/* background: url("images/gooru-guide-popup-arrow.png") repeat
+		scroll -96px -98px transparent;
+	float: right;
+	height: 11px;
+	position: relative;
+	right: 26px;
+	top: -26px;
+	width: 26px; */
+	background: url(images/gooru-guide-popup-arrow.png);
+	float: right;
+	height: 11px;
+	position: relative;
+	right: 21px;
+	top: -26px;
+	width: 28px;
+}
+.tryitoutpopup {
+	border: 0px !important; 
+}
+
+/* Dots Header CSS */
+
+.teachUserNameTextWhite {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 12px;
+			color: #FFF;
+			float: left;
+			cursor: pointer;
+			padding: 16px;
+}
+
+.teachUserNameTextWhiteActive{
+			background-color:#393939;
+			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#292929), to(#414141));
+			background: -webkit-linear-gradient(top, #292929, #414141);
+			background: -moz-linear-gradient(top, #292929, #414141);
+			background: -ms-linear-gradient(top, #292929, #414141);
+			background: -o-linear-gradient(top, #292929, #414141);
+			-moz-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			padding: 15px;
+			float: left;
+			color: #FFF;
+			font-family: arial;
+			font-size: 12px;
+}
+
+.teachUserNameTextGrayActive{
+			background-color:#393939;
+			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#292929), to(#414141));
+			background: -webkit-linear-gradient(top, #292929, #414141);
+			background: -moz-linear-gradient(top, #292929, #414141);
+			background: -ms-linear-gradient(top, #292929, #414141);
+			background: -o-linear-gradient(top, #292929, #414141);
+			-moz-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			padding: 15px;
+			float: left;
+			color: #999;
+			font-family: arial;
+			font-size: 12px;
+}
+
+.menuActive{
+	background-color:#393939;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#292929), to(#414141));
+	background: -webkit-linear-gradient(top, #292929, #414141);
+	background: -moz-linear-gradient(top, #292929, #414141);
+	background: -ms-linear-gradient(top, #292929, #414141);
+	background: -o-linear-gradient(top, #292929, #414141);
+	-moz-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+	-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+	box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+	padding: 15px;
+	float: left;
+	color: white;
+	font-family: arial;
+	font-size: 12px;
+	cursor: pointer;
+	padding: 16px;
+	
+}
+
+.menu{
+	color: white;
+	float: left;
+	cursor: pointer;
+	padding: 16px;
+	cursor: pointer;
+}
+
+.menu:hover{
+	background-color: #393939;
+	color: white;
+	float: left;
+	cursor: pointer;
+	padding: 16px;
+	cursor: pointer;
+}
+
+.teachUserNameTextBlack {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #999;
+	float: left;
+	cursor: pointer;
+	padding: 16px;
+}
+
+.loginUserNameContainer{
+	/*float: right;
+	margin-top: 17px;
+	cursor: pointer;
+	margin-right: 5px;*/
+}
+.loggedUserNameText{
+	color: #fff;
+	cursor: pointer;
+	float: left;
+}
+.registerLink{
+	cursor:pointer;
+	float:left;
+}
+.registerLink:hover{
+	opacity:0.6;
+}
+
+.signUpButton {
+	color: white;
+	border-radius: 4px;
+	padding:6px 16px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	font-family: arial;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #1076bb;
+	cursor: pointer;
+	margin: 10px;
+}
+
+.signUpButton:hover{
+	background: #1076bb;
+	cursor: pointer;
+}
+
+	.profileImageContainer{
+			float: left;
+			width: 131px;
+			height: 131px;
+		}
+		
+		.profileImageContainer:hover{
+			float: left;
+			/*width: 121px;
+			height: 121px;
+			margin: 5px;*/
+			background:#ddd;
+			cursor: pointer;
+		}
+		.profileImageActive{
+			float: left;
+			/*width: 121px;
+			height: 121px;
+			margin: 5px;*/
+			width: 131px;
+			height: 131px;
+			background:#ddd;
+			moz-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+			cursor: pointer;
+		}
+

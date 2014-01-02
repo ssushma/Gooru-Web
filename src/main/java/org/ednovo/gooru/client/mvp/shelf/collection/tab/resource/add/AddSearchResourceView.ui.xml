@@ -1,0 +1,23 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:qac="urn:import:org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add" xmlns:tinyMce="urn:import:org.ednovo.gooru.client.ui">
+	<ui:style field= "addWebResourceStyle" src="addResource.css" type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourceBundle"/>
+<g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormOuterDiv}">
+   <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormContainer}">
+   	  <g:Label styleName="{addWebResourceStyle.addSearchTitleText}">Search from Gooru’s millions of resources</g:Label>
+      <g:Label styleName="{addWebResourceStyle.addSearchContentText}">Search for a keyword, then drag the resource you want from search results page into your collection</g:Label>
+      <g:HTMLPanel styleName="{addWebResourceStyle.addResourceSearchContent}">
+         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputText}">
+            <g:TextBox styleName="{addWebResourceStyle.addResourceFormInputTextBox}" ui:field="searchBox"/>
+         </g:HTMLPanel>
+         <g:Button styleName="{addWebResourceStyle.addResourceButton}" ui:field="addResourceButton">Go to Search </g:Button>
+      </g:HTMLPanel>
+	  <g:HTMLPanel ui:field="searchResultspanel">
+	  	  <g:Label styleName="{addWebResourceStyle.addSearchTitleText}">Suggested Resources</g:Label>
+	      <g:Label styleName="{addWebResourceStyle.addSearchContentText}" ui:field="totalResources"/>
+	      <uc:HTMLEventPanel styleName="{addWebResourceStyle.suggestedResources}" ui:field="suggestedResourcesPanel"/>
+   	</g:HTMLPanel>
+   </g:HTMLPanel>
+</g:HTMLPanel>
+</ui:UiBinder>

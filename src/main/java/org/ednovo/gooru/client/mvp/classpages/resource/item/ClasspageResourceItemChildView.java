@@ -1,0 +1,409 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+package org.ednovo.gooru.client.mvp.classpages.resource.item;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.child.ChildView;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+/**
+ * 
+ * @fileName : ClasspageResourceItemChildView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 27-Dec-2013
+ *
+ * @Author : Gooru Team
+ *
+ * @Reviewer: Gooru Team
+ */
+public class ClasspageResourceItemChildView extends
+		ChildView<ClasspageResourceItemChildPresenter> implements
+		IsClasspageResourceItemView, MessageProperties {
+
+	@UiField(provided = true)
+	ClasspageResourceItemCBundle res;
+
+	private CollectionDo collectionDo;
+	
+	@UiField
+	Label classpageTitleLbl, openClasspageLbl, studentViewLbl;
+	
+	@UiField
+	HTMLPanel actionVerPanel;
+	
+	@UiField
+	Label confirmDeleteLbl;
+	
+	DeleteConfirmPopupVc deleteConfirmVc =null;
+
+//	private static final String REG_EXP = "^(?:[01]\\d|2[0-3]):(?:[0-5]\\d):(?:[0-5]\\d)$";
+
+	
+	private static ClasspageResourceItemChildViewUiBinder uiBinder = GWT
+			.create(ClasspageResourceItemChildViewUiBinder.class);
+
+	interface ClasspageResourceItemChildViewUiBinder extends
+			UiBinder<Widget, ClasspageResourceItemChildView> {
+	}
+
+
+	/**
+	 * Class constructor
+	 * 
+	 * @param collectionItem
+	 *            instance of {@link CollectionItemDo}
+	 */
+	public ClasspageResourceItemChildView(CollectionDo collection) {
+		
+		res = ClasspageResourceItemCBundle.INSTANCE;
+		ClasspageResourceItemCBundle.INSTANCE.css().ensureInjected();
+		initWidget(uiBinder.createAndBindUi(this));
+		this.collectionDo = collection;
+		
+		setData(collection);
+		
+		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
+		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
+		setPresenter(new ClasspageResourceItemChildPresenter(this));
+		
+		actionVerPanel.setVisible(false);
+		/**
+		 * create delete confirmation pop and delete the collection if user wants
+		 * 
+		 * @param clickEvent
+		 *            instance of {@link ClickEvent}
+		 */
+		confirmDeleteLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				deleteConfirmVc = new DeleteConfirmPopupVc("Are you sure?","\""+ collectionDo.getTitle() + "\"" + " Classpage.")  {
+					
+					@Override
+					public void onTextConfirmed() {
+						getPresenter().deleteClasspage(collectionDo);
+						deleteConfirmVc.hide();
+						Window.enableScrolling(true);
+				        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+
+					}
+				};
+			}
+		});
+		/**
+		 * This will display Student view teach page on click of studentViewLbl.
+		 */
+		studentViewLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				MixpanelUtil.Click_StudentView_Teachpage();
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("id", collectionDo.getGooruOid());
+				params.put("pageNum", "0");
+				params.put("pos", "1");
+				params.put("pageSize", "10");
+				params.put("b", "true");
+				params.put("source", "T");
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+			}
+		});
+	}
+	/**
+	 * 
+	 * @function onPostCollectionDelete 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description :This will hide the deleteConfirmVc.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public void onPostCollectionDelete() {
+		deleteConfirmVc.hide();
+	}
+	
+	/**
+	 * 
+	 * To show the ResourceMetaDataInfo Edit,Copy and Remove buttons
+	 */
+	private class ActionPanelHover implements MouseOverHandler {
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			actionVerPanel.setVisible(true);
+		}
+	}
+
+	/**
+	 * 
+	 * To hide the ResourceMetaDataInfo Edit,Copy and Remove buttons
+	 */
+	private class ActionPanelOut implements MouseOutHandler {
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			
+			actionVerPanel.setVisible(false);
+
+		}
+	}
+
+	/**
+	 * set collection meta data , set title
+	 * 
+	 * 
+	 * @param collection
+	 *            instance of {@link CollectionDo}
+	 */
+	private void setData(CollectionDo collection) {
+		
+		classpageTitleLbl.setText(collection.getTitle());
+		
+	}
+	/**
+	 * 
+	 * @function OnClickOpenClasspage 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description :This UIHandler is used to open class page.
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@UiHandler("openClasspageLbl")
+	public void OnClickOpenClasspage(ClickEvent event){
+		MixpanelUtil.Click_Open_Teachpage();
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("classpageid", collectionDo.getGooruOid());
+		params.put("pageSize", "10");
+		params.put("pageNum", "0");
+		params.put("pos", "1");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE, params,true);
+	}
+	
+	/**
+	 * 
+	 * @function getDragHandle 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description :Method to return drag handle widget.
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : the drag handle widget
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public Widget getDragHandle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IsDraggableMirage initDraggableMirage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/**
+	 * 
+	 * @function onDragBlur 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description : This is related to drag events on blur handler.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public void onDragBlur() {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * 
+	 * @function getDragId 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description : This is used to get drag id.
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public String getDragId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/**
+	 * 
+	 * @function getDragType 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description : This is used to get drag type.
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : DRAG_TYPE
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public DRAG_TYPE getDragType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/**
+	 * 
+	 * @function getDragTopCorrection 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description : This is used to get DragTopCorrection.
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : int
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public int getDragTopCorrection() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	/**
+	 * 
+	 * @function getDragLeftCorrection 
+	 * 
+	 * @created_date : 27-Dec-2013
+	 * 
+	 * @description : This is used to get DragLeftCorrection
+	 * 
+	 * 
+	 * @parm(s) : @return
+	 * 
+	 * @return : int
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public int getDragLeftCorrection() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+
+}

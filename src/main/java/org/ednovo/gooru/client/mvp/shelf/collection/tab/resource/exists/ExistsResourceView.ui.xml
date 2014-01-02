@@ -1,0 +1,44 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle" field="res" />
+	<g:PopupPanel glassEnabled="true" autoHideEnabled="true">
+		<g:HTMLPanel styleName="{res.css.resourceExistsPopupPopupOuterContainer}">
+			<g:HTMLPanel styleName="{res.css.resourceExistsPopupContainer}">
+				<g:HTMLPanel styleName="{res.css.resourceExistsPopup}">
+					<g:HTMLPanel styleName="{res.css.resourceExistsPopupBlackBg}">
+						<g:HTMLPanel styleName="{res.css.resourceExistsPopupTitle}">Already Exists!</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.resourceExistsPopupFormContainer}">
+						<g:HTMLPanel styleName="{res.css.resourceExistsPopupFormTitle}">This resource already exists!</g:HTMLPanel>
+						<g:Label styleName="{res.css.resourceExistsPopupFormTitle}" ui:field="resourceUrlLbl" text=""></g:Label>
+						<g:HTMLPanel styleName="{res.css.resourceExistsPopupRoundedCorner}">
+							<g:HTMLPanel styleName="{res.css.resourceExistsPopupRoundedCornerThumbimgContainer}">
+								<g:HTMLPanel styleName="{res.css.resourceExistsPopupRoundedCornerThumbimg}">
+									<g:HTMLPanel styleName="{res.css.resourceExistsPopupSpriteVideoContainer}">
+										<g:Image ui:field="resourceIconImg"
+											styleName="{res.css.resourceExistsResourceTypeSprite} {res.css.resourceExistsPopupSpriteVideo}"></g:Image>
+									</g:HTMLPanel>
+									<g:Image styleName="" url="images/thumbimg-I.png" ui:field="resourceThumbnailImg" width="80" height="60" />
+								</g:HTMLPanel>
+								<g:Label styleName="{res.css.resourceExistsPopupRoundedCornerThumbHeading}" ui:field="resourceTitleLbl">Stars and the Universe</g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.resourceExistsPopupBlueButtonContainer}" ui:field="buttonContainer">
+						<g:HTMLPanel styleName="{res.css.resourceExistsPopupBluebg}">
+							<g:HTMLPanel styleName="{res.css.resourceExistsPopupBlue_Ok}">
+								<g:Label styleName="{res.css.resourceExistsPopupBlue_OkTitle}" ui:field="addExistsResourceBtnLbl">Add</g:Label>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:Label styleName="{res.css.resourceExistsPopupBlue_Cancel}" ui:field="cancelExistsResourcePopupBtnLbl">Cancel</g:Label>
+					</g:HTMLPanel>
+					<g:Label  styleName="{res.css.resourceExistsPopupBlueButtonContainer}" ui:field="loadingTextLbl" text="adding..."></g:Label>
+				 <g:HTMLPanel styleName="{res.css.reportResourceContainer}">
+					    <g:Anchor target="_blank" ui:field="reportResInfoLbl" styleName="{res.css.reportResource}"></g:Anchor>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:PopupPanel>
+</ui:UiBinder>

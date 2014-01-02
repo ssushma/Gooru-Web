@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchMoreInfoVcCBundle" field="res" />
+	<g:FlowPanel>
+		<uc:LeftToolTipWidgetUc>
+			<uc:widget>
+				<g:SimplePanel styleName="{res.css.imageIcon}" ui:field="imageIconSimPanel" />
+			</uc:widget>
+			<uc:toolTipWidget>
+				<g:HTML styleName="{res.css.htmlTxt}" ui:field="toolTipHtml" />
+			</uc:toolTipWidget>
+		</uc:LeftToolTipWidgetUc>
+		
+		<g:FlowPanel styleName="{res.css.htmlTxt}" ui:field="contentFloPanel"/>
+		<g:SimplePanel styleName="{res.css.clear}" ui:field="clearSimplePanel"/>	
+	</g:FlowPanel>
+</ui:UiBinder> 

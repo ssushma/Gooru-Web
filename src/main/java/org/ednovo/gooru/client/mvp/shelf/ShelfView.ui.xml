@@ -1,0 +1,154 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:col="urn:import:org.ednovo.gooru.client.mvp.shelf.collection"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
+		field="res" />
+
+	<g:FlowPanel styleName="{res.css.userShelfViewMainCenterContainer}"
+		ui:field="shelfViewMainContainer">
+		<g:FlowPanel
+			styleName="{res.css.userShelfViewContainer} {res.css.floatShelfTabLeft}">
+			<g:FlowPanel styleName="{res.css.backToSearchPanel}"
+				ui:field="backToSearchFloPanel" visible="false">
+				<g:HTML styleName="{res.css.preBackToSearch}" ui:field="backToSearchPreHtml"  visible="false"/>
+				<g:HTML styleName="{res.css.backToSearch}" ui:field="backToSearchHtml" />
+			</g:FlowPanel>
+			<g:SimplePanel ui:field="shelfTabSimPanel" styleName="{res.css.userShelfViewList}" />
+		</g:FlowPanel>
+		<g:FlowPanel ui:field="noCollectionResetPanel" styleName="{res.css.noCollectionMessage}"></g:FlowPanel>
+		
+	 <g:HTMLPanel styleName="{res.css.userCollectionInShelfContainer}">
+	      <g:HTMLPanel styleName="{res.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
+		      <g:Label  styleName="{res.css.loadingImageForSelfEdit}" />
+		   </g:HTMLPanel>
+		<g:FlowPanel  ui:field="collectionFloPanel">
+			  
+			<g:FlowPanel styleName="{res.css.userCollectionInShelf}">
+				<col:CollectionUploadImageUc ui:field="collectionImageShelfUc" />
+				<g:FlowPanel styleName="{res.css.userCollectionInfo}">
+
+					<panel:HTMLEventPanel ui:field="collectionTitleContainer"
+						styleName="{res.css.collectionTitleContainer}">
+						<panel:HTMLEventPanel ui:field="editCollectionTitle">
+							<uc:EditableLabelUc styleName="{res.css.collectionTitle}"
+								ui:field="collectionTitleUc" />
+						</panel:HTMLEventPanel>
+						<g:Label styleName="{res.css.collectionEditImage}"
+							ui:field="collectionEditImageLbl" />
+
+					</panel:HTMLEventPanel>
+
+					<g:HTMLPanel styleName="{res.css.buttonContainer}">
+					<g:Button ui:field="editSelfCollectionSaveButtonCancel" styleName="{res.css.mySelfCollectionEditTitlePreviewCancelButton}">Cancel</g:Button>
+						<!-- <g:HTMLPanel
+							styleName="{res.css.mySelfCollectionEditTitlePreviewCancelButton}">
+							<panel:HTMLEventPanel ui:field="editSelfCollectionSaveButtonCancel"
+								styleName="{res.css.cursor}">Cancel</panel:HTMLEventPanel>
+						</g:HTMLPanel> -->
+						<!-- <panel:HTMLEventPanel ui:field="editSelfCollectionSaveButton"
+							styleName="{res.css.mySelfCollectionEditTitleSaveButton}">
+							<g:HTMLPanel styleName="{res.css.mySelfCollectionrEditTitle}">
+								<g:HTMLPanel styleName="{res.css.cursor}">Save</g:HTMLPanel>
+							</g:HTMLPanel>
+						</panel:HTMLEventPanel> -->
+						<g:Button ui:field="editSelfCollectionSaveButton" styleName="primary {res.css.mySelfCollectionrEditTitle} ">Save</g:Button>
+					</g:HTMLPanel>
+
+
+					<g:FlowPanel styleName="{res.css.titleAlertContainer}">
+						<!-- <g:Label styleName="{res.css.collectionOwner}" text="You created 
+							this collection." /> -->
+						<g:Label styleName="{res.css.titleAlertMessage}" ui:field="titleAlertMessageLbl"
+							text="Character limit reached." />
+					</g:FlowPanel>
+
+					<panel:HTMLEventPanel ui:field="collectionDescriptionTitleContainer"
+						styleName="{res.css.collectionDescriptionTitleContainer}">
+						<g:Label styleName="{res.css.collectionDescriptionTitle}"
+							text="Learning Objective:" ui:field="collectionDescriptionTitle" />
+
+					</panel:HTMLEventPanel>
+
+					<panel:HTMLEventPanel ui:field="editCollectionDescTitle"
+						styleName="{res.css.collectionTitleContainer}">
+						<panel:HTMLEventPanel styleName="collectionDesctionConatiner">
+							<uc:EditableTextAreaUc styleName="{res.css.collectionDescription}"
+								ui:field="collectionDescriptionUc" extraTextAreaStyleName="{res.css.collectionDescriptionTxtArea}"
+								extraHtmlStyleName="{res.css.collectionDescriptionHtml}" />
+
+						</panel:HTMLEventPanel>
+						<g:Label ui:field="simplePencilPanel" styleName="{res.css.collectionEditImage}" />
+					</panel:HTMLEventPanel>
+					<g:HTMLPanel styleName="{res.css.buttonContainerDesc}">
+					<g:Button ui:field="editSelfCollectionDescSaveButtonCancel" styleName="{res.css.mySelfCollectionEditTitlePreviewCancelButton}">Cancel</g:Button>
+						<!-- <g:HTMLPanel
+							styleName="{res.css.mySelfCollectionEditDescPreviewCancelButton}">
+							<panel:HTMLEventPanel ui:field="editSelfCollectionDescSaveButtonCancel"
+								styleName="{res.css.cursor}">Cancel</panel:HTMLEventPanel>
+						</g:HTMLPanel> -->
+						<!-- <panel:HTMLEventPanel ui:field="editSelfCollectionDescSaveButton"
+							styleName="{res.css.mySelfCollectionEditDescSaveButton}">
+							<g:HTMLPanel styleName="{res.css.mySelfCollectionrEditTitle}">
+								<g:HTMLPanel styleName="{res.css.cursor}">Save</g:HTMLPanel>
+							</g:HTMLPanel>
+						</panel:HTMLEventPanel> -->
+                   <g:Button ui:field="editSelfCollectionDescSaveButton" styleName="primary {res.css.mySelfCollectionrEditTitle}">Save</g:Button>
+					</g:HTMLPanel>
+					<!-- <g:FlowPanel styleName="{res.css.titleAlertContainer}"> -->
+					<g:Label styleName="{res.css.descriptionAlertMessage}"
+						ui:field="descriptionAlertMessageLbl" text="Character limit reached." />
+					<!-- </g:FlowPanel> -->
+					
+					
+				</g:FlowPanel>
+				
+			    <g:FlowPanel styleName="{res.css.panelAlignRight}">
+				    
+					 <g:Button text="Preview" styleName="primary"
+						ui:field="collectionPreviewBtn" />
+
+
+					 <g:Label styleName="{res.css.userCopyCollection}" text="Copy"
+						ui:field="copyCollectionLbl" />
+					<g:Label styleName="{res.css.userCopyCollection}" ui:field="deleteUserCollectionLbl" /> 
+			 	</g:FlowPanel>
+				<!-- <g:FlowPanel styleName="{res.css.editButtonContainer}" ui:field="collectionEditButtonContainer">
+				      <g:Label styleName="{res.css.editButtonText}" ui:field="collectionPreviewBtn" text="Preview"></g:Label>
+				      <g:Label styleName="{res.css.editButtonText}" ui:field="copyCollectionLbl" text="Copy"></g:Label>
+				      <g:Label styleName="{res.css.editButtonText}" ui:field="deleteUserCollectionLbl" text="Delete"></g:Label>
+				    </g:FlowPanel> -->
+			</g:FlowPanel>
+		    <g:HTMLPanel ui:field="panelFriendly" styleName="{res.css.objectFloat} {res.css.friendlyDiv}">
+		        <g:Image altText="Not ipad friendly" title="Not ipad friendly" ui:field="imgFriendly" url="images/mos/ipadFriendly.png" styleName="{res.css.objectFloat}"></g:Image>
+		        <g:Label ui:field="lblFriendly" styleName="{res.css.objectFloat} {res.css.objectFontType}">This collection is mobile friendly.</g:Label>
+		        <g:Image title="Question Mark" altText="Question Mark" ui:field="imgNotFriendly" url="images/mos/questionmark.png" styleName="friendlyQuestionMark"></g:Image>
+		    </g:HTMLPanel>
+			<g:FlowPanel styleName="{res.css.userCollectionMetaDataInfoContainer}">
+				<col:CollectionTabTitleVc label="Info"
+					ui:field="infoTabVc" /><!-- imageStyle="{res.css.userCollectionMetaInfoImage}" --> <!-- ui:field="infoTabVc" /> -->
+				<col:CollectionTabTitleVc label="Content"
+					enabled="true" ui:field="resourceTabVc" /> <!-- imageStyle="{res.css.userCollectionMetaResourceImage}" enabled="true" 
+					ui:field="resourceTabVc" /> -->
+				<col:CollectionTabTitleVc label="Share"
+					ui:field="shareTabVc" /><!-- imageStyle="{res.css.userCollectionMetaShareImage}" 
+					ui:field="shareTabVc"/> -->
+				<col:CollectionTabTitleVc label="Assign"
+					imageStyle="{res.css.userCollectionMetaAssignImage}" ui:field="assignTabVc"
+					enabled="true" />
+				<col:CollectionTabTitleVc label="Collaborator"
+					ui:field="collaboratorTabVc" enabled="false" /><!-- imageStyle="{res.css.userCollectionMetaCollaboratorImage}" 
+					ui:field="collaboratorTabVc" enabled="false"/> -->
+				<g:HTMLPanel ui:field="collPopup"></g:HTMLPanel>
+				<col:CollectionTabTitleVc label="Statistics"
+					ui:field="statisticsTabVc" enabled="false" /> <!-- imageStyle="{res.css.userCollectionMetaStatisticsImage}" ui:field="statisticsTabVc" 
+					enabled="false" /> -->
+				<g:HTMLPanel ui:field="statPopup"></g:HTMLPanel>
+			</g:FlowPanel>
+			<g:SimplePanel ui:field="collectionMetaDataSimPanel"
+				styleName="{res.css.metaInfo}" />
+
+		</g:FlowPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

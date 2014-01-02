@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle" field="res" />
+	<g:HTMLPanel>
+		<panel:HTMLEventPanel styleName="{res.css.collectionThumbnail}" ui:field="collectionEditImageContainer">
+			<g:Image styleName="{res.css.collectionThumbnails}" ui:field="collectionImg" />
+			<g:Label styleName="{res.css.changeImage}" ui:field="changeImgLbl" text="Edit Image"></g:Label>
+		</panel:HTMLEventPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

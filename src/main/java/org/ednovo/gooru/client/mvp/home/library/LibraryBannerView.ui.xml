@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<ui:style field="libraryStyle" src="library.css" />
+		
+	<g:HTMLPanel ui:field="landingBannerInner">
+		<g:HTMLPanel styleName="{libraryStyle.header}">Transform Learning. Inspire Students.</g:HTMLPanel>
+		<g:HTMLPanel styleName="{libraryStyle.subheader}">Create and share collections of engaging web resources with your students. Browse courses in our K-12 Community Library to get started.</g:HTMLPanel>
+		<g:HTMLPanel styleName="{libraryStyle.fourSteps}">
+			<g:HTMLPanel styleName="{libraryStyle.step}">
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImage}">
+					<g:HTMLPanel styleName="{libraryStyle.find}" />
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImageData}">
+					<span>Find</span>
+					standards-aligned, interactive learning materials tied to Common Core
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{libraryStyle.step}">
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImage}">
+					<g:HTMLPanel styleName="{libraryStyle.share}"></g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImageData}">
+					<span>Share</span>
+					custom collections, personalized to meet to unique needs of your students
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{libraryStyle.step}">
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImage}">
+					<g:HTMLPanel styleName="{libraryStyle.measure}"></g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImageData}">
+					<span>Measure</span>
+					your students' engagement, comprehension, and progress 
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{libraryStyle.last} {libraryStyle.step}">
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImage}">
+					<g:HTMLPanel styleName="{libraryStyle.contribute}"></g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{libraryStyle.libraryBannerImageData}">
+					<span>Contribute</span>
+					to an active community of teachers and students
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

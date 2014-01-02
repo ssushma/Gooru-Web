@@ -1,0 +1,100 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style>
+		.imageCropContainer {
+			min-height: 281px;
+			padding: 4px;
+			min-width: 160px;
+		}
+		
+		.backPageLink {
+			color: #0F76BB;
+			cursor: pointer;
+		}
+		
+		.overRideBlueButton {
+			background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
+				scroll 0 0 transparent;
+			border: 0 none;
+			border-radius: 4px 4px 4px 4px;
+			clear: both;
+			color: #FFFFFF;
+			cursor: pointer;
+			font-weight: bold;
+			margin: 10px 0;
+			padding: 8px 9px;
+			position: relative;
+		}
+		
+		.collectionFormCancelButton {
+			clear: both;
+			cursor: pointer;
+			left: 25px;
+			position: relative;
+			text-decoration: none;
+			top: 0;
+		}
+		
+		.actionField {
+			float: left;
+			width: auto;
+			margin-left: 40%;
+			margin-top: 50px;
+		}
+		
+		.loadingTxtStyle {
+			float: left;
+			width: auto;
+			margin-left: 40%;
+			padding-bottom: 20px;
+            padding-top: 20px;
+            font-style: italic;
+		}
+		
+		.cropImageWidget {
+			min-width: 160px;
+			min-height: 120px;
+			margin:0 auto;
+		}
+		
+		.cropImageWidgetLoading {
+			height: 70%;
+			left: 0;
+			margin-top: 50px;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+		
+		.cropImageLoadingPanel {
+			height: 100%;
+			width: 100%;
+		}
+	</ui:style>
+	<g:FlowPanel styleName="{style.imageCropContainer}"
+		ui:field="imagCropContainer">
+		<g:Label styleName="{style.backPageLink}" ui:field="backPageLinkLbl"
+			text="« Back to upload"></g:Label>
+		<g:HTMLPanel>
+			<h2>Crop this picture</h2>
+			<p>You can drag the box to select the crop area, and use the handle
+				to resize it.</p>
+		</g:HTMLPanel>
+		<g:FlowPanel ui:field="cropImageWidgetFloPanel" styleName="{style.cropImageWidget}">
+			 <g:FlowPanel styleName="{style.cropImageWidgetLoading}">
+				<g:VerticalPanel styleName="{style.cropImageLoadingPanel}"
+					ui:field="cropImageLoadingVerPanel">
+					<gg:LoadingUc loadingText="Preparing for cropping..."
+						ui:field="cropImageLoading" />
+				</g:VerticalPanel> 
+			</g:FlowPanel>
+		</g:FlowPanel>
+		<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
+			<gg:BlueButtonUc text="Crop" ui:field="cropImageBtn" />
+			<g:Anchor text="Cancel" ui:field="cancelButtonAnr"
+				styleName="{style.collectionFormCancelButton}" />
+		</g:FlowPanel>
+		 <g:Label  styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl" text="cropping..."></g:Label>
+	</g:FlowPanel>
+</ui:UiBinder> 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:style field= "playerStyle" src="collectionplayermetadata.css"/>
+	<g:FlowPanel>
+		<g:HTMLPanel styleName="{playerStyle.collectionPlayerRightContainer}">
+			<g:FlowPanel styleName="{playerStyle.collectionPlayerBackgroundImages}">
+				<g:Image styleName="{playerStyle.collectionPlayerBackgroundImages}" ui:field="collectionThumbnailImage"/> 
+				<g:HTMLPanel styleName="{playerStyle.collectionPlayLeftBarAssess}"></g:HTMLPanel>
+			</g:FlowPanel>
+			<g:HTMLPanel styleName="{playerStyle.collectionPlayerCoverSocialContainer}">
+				<g:Button styleName="{playerStyle.arrowButton}" ui:field="studyButton">Study</g:Button>
+				<g:FlowPanel styleName="collectionPlayerCoverSocial">
+					<g:FlowPanel styleName="{playerStyle.collectionPlayerCoverSocialViewsImageContainer}">
+						<g:InlineLabel styleName="collectionPlayerCoverOwnerTextBold">Created by:&nbsp;</g:InlineLabel>  
+						<g:InlineLabel ui:field="userNameLabel"></g:InlineLabel>
+					</g:FlowPanel> 
+					<g:FlowPanel styleName="{playerStyle.collectionPlayerCoverSocialViewsImageContainer}">
+						<g:InlineLabel styleName="{playerStyle.coverButtonViews}"></g:InlineLabel> 
+						<g:InlineLabel styleName="collectionPlayerCoverSocialPeopleLike" ui:field="viewsCountLabel"></g:InlineLabel>
+					</g:FlowPanel> 
+					<g:FlowPanel styleName="{playerStyle.collectionPlayerCoverSocialViewsImageContainer}">
+						<g:InlineLabel styleName="{playerStyle.coverButtonLikes}"></g:InlineLabel>
+						<g:InlineLabel styleName="collectionPlayerCoverSocialPeopleLike" ui:field="likesCountLabel"></g:InlineLabel>
+					</g:FlowPanel>
+					<g:FlowPanel styleName="{playerStyle.collectionDescriptionContainer}">
+						<g:Label styleName="collectionPlayerCoverDescription" ui:field="collectionGoalLabel"></g:Label>
+					</g:FlowPanel>
+				</g:FlowPanel> 
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<g:FlowPanel styleName="{playerStyle.collectionCoverBottomContainerDiv}">
+				<uc:BottomButtonView ui:field="courseButton" buttonName="Course" buttonStyle="{playerStyle.courseButtonText}" countStyle="{playerStyle.courseButtonCount}" styleName="{playerStyle.courseButtonContainer}"></uc:BottomButtonView>
+				<uc:BottomButtonView ui:field="standardButton" buttonName="Standards" buttonStyle="{playerStyle.courseButtonText}" countStyle="{playerStyle.courseButtonCount}" styleName="{playerStyle.standButtonContainer}"></uc:BottomButtonView>
+				<uc:BottomButtonView ui:field="acknowledgeButton" buttonName="Acknowledgements" buttonStyle="{playerStyle.courseButtonText}" countStyle="{playerStyle.courseButtonCount}" styleName="{playerStyle.acknowButtonContainer}"></uc:BottomButtonView>
+		</g:FlowPanel>
+		<g:FlowPanel styleName="{playerStyle.playerbottomContainer}">
+			<g:FlowPanel ui:field="upArrowImage"></g:FlowPanel>
+			<g:FlowPanel styleName="{playerStyle.playerbottomInnerContainer}" ui:field="bottomContainer"></g:FlowPanel>
+		</g:FlowPanel>
+		
+	</g:FlowPanel>
+</ui:UiBinder>

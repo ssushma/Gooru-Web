@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field= "toolTip" src="ToolTip.css"/>
+	<g:FlowPanel styleName="{toolTip.organizeContainer}">
+	    <g:HTMLPanel styleName="{toolTip.hoverPopupArrow}"></g:HTMLPanel>
+	    <g:FlowPanel styleName="{toolTip.organizePopupTextContainer}">
+	        <g:FlowPanel styleName="{toolTip.organizeTextContainer}">
+	             <!-- <g:HTMLPanel styleName="{toolTip.comingSoonText}">Coming soon!</g:HTMLPanel> -->
+	              <g:FlowPanel styleName="{toolTip.studyTextContainer}">
+		        	<g:HTMLPanel styleName="{toolTip.organizeText}">Teach</g:HTMLPanel>
+		            <g:HTMLPanel styleName="{toolTip.organizeRemainigText}">collections in the classroom or assign them to your students as homework.</g:HTMLPanel>
+		            
+		           </g:FlowPanel>
+	        </g:FlowPanel>
+	     </g:FlowPanel>
+	</g:FlowPanel>
+    
+</ui:UiBinder> 

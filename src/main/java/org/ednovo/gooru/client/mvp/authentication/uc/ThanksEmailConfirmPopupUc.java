@@ -1,0 +1,253 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
+package org.ednovo.gooru.client.mvp.authentication.uc;
+
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+
+import com.gargoylesoftware.htmlunit.html.applets.AppletClassLoader;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.FontWeight;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
+
+/**
+ * 
+ * @fileName : ThanksEmailConfirmPopupUc.java
+ *
+ * @description : This popup is shown after user click on link from confirmation mail.
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 26-Dec-2013
+ *
+ * @Author : Gooru Team
+ *
+ * @Reviewer: Gooru Team
+ */
+public class ThanksEmailConfirmPopupUc extends PopupPanel {
+ 
+	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose; //lblDiscover,lblOrganize,lblTeach
+	
+	@UiField Button btnStartUsingGooru;//btnDiscover, btnOrganize, btnTeach,
+	
+	@UiField HTMLPanel panelPopupInner;
+	
+	@UiField(provided = true)
+	SignUpCBundle res;
+	String account=null;
+	String parentEmailId=null;
+	String dob = null;
+	String userName = null;
+	String privateGooruUId = null;
+	
+	@UiTemplate("ThanksEmailConfirmPopupUc.ui.xml")
+	interface Binder extends UiBinder<Widget, ThanksEmailConfirmPopupUc> {
+
+	}
+
+	private static final Binder binder = GWT.create(Binder.class);
+	
+	/**
+	 * Class constructor , to create Login Popup. 
+	 */
+	
+	public ThanksEmailConfirmPopupUc(){
+		super(false);
+		this.setGlassEnabled(true);
+		
+        this.res = SignUpCBundle.INSTANCE;
+        res.css().ensureInjected();
+        add(binder.createAndBindUi(this));
+
+    	this.getElement().getStyle().setHeight(332, Unit.PX);
+    	panelPopupInner.getElement().getStyle().setHeight(277, Unit.PX);
+
+        setTextAndIds();
+        
+        setHandlers();
+        
+		this.center();
+	}
+
+	
+	/**
+	 * 
+	 * @function setHandlers 
+	 * 
+	 * @created_date : 15-09-2013
+	 * 
+	 * @description : This will set handlers.
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private void setHandlers(){
+
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		
+		this.removeStyleName("gwt-PopupPanel");
+		this.getElement().getStyle().setZIndex(99999);
+	
+	}
+	
+	
+	/**
+	 * 
+	 * @function setText 
+	 * 
+	 * @created_date : Aug 25, 2013
+	 * 
+	 * @description
+	 * 	To the labels for each controls.
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void setTextAndIds(){
+		lblLoginHeading.setText(MessageProperties.GL0501);
+		lblCongratsHeader.setText(MessageProperties.GL0502);
+		lblCongratsHeader.getElement().getStyle().setFontWeight(FontWeight.BOLD);
+
+		btnStartUsingGooru.setText(MessageProperties.GL0431);						
+		btnStartUsingGooru.setVisible(true);
+		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
+	}
+	/**
+	 * 
+	 * @function clickOnClose 
+	 * 
+	 * @created_date : 26-Dec-2013
+	 * 
+	 * @description : This is used to close popup on cancel button click.
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@UiHandler("lblClose")
+	public void clickOnClose(ClickEvent event){
+		closePopUp();
+	}
+	/**
+	 * 
+	 * @function clickOnStartUsingGooru 
+	 * 
+	 * @created_date : 26-Dec-2013
+	 * 
+	 * @description : This is used to close popup on StartUsingGooru button click.
+	 * 
+	 * 
+	 * @parm(s) : @param event
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@UiHandler("btnStartUsingGooru")
+	public void clickOnStartUsingGooru(ClickEvent event){
+		closePopUp();
+	}
+	/**
+	 * 
+	 * @function closePopUp 
+	 * 
+	 * @created_date : Dec 13, 2013
+	 * 
+	 * @description
+	 * 	This method is used to close the popup.
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void closePopUp(){
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		
+		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		params.remove("gooruuid");
+		params.remove("dob");
+		params.remove("callback");
+		params.remove("sessionid");
+		params.remove("type");
+		
+		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params);
+		
+		hide();
+	}
+
+}
+

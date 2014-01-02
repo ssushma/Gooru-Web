@@ -1,0 +1,655 @@
+.userShelfViewContainer {
+	float: left;
+}
+
+.floatShelfTabLeft {
+	float: right;
+	min-height: 759px;
+	position: relative;
+	width: 311px;
+}
+
+.userShelfViewList {
+	position: relative;
+	top: -51px;
+}
+
+.newMockLeftAlignController {
+	margin: 0px auto;
+	/* float: left; */
+	width: 815px;
+	max-width: 815px;
+	/* border-right: 1px solid #dddddd; */
+	height: 100%;
+	min-height: 500px;
+	/* left: 188px; */
+	position: relative;
+	/* margin-top: -26px; */
+	/* top: 36px; */
+}
+
+.howToUseThisPageBlue {
+	float: right;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 10px 11px 0px 0px;
+	color: #1076BB;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.myCollectionShareStudentContainer {
+	position: relative;
+	width: 815px;
+	min-width: 815px;
+	background-color: gray;
+	height: 180px;
+}
+
+.myClasspageWrapperTwoChapterTextNoWelcome {
+	float: left;
+	width: 83%;
+	height: 37px;
+	margin: 0px 0px 21px 23px;
+	font-size: 20px;
+	color: #515151;
+}
+
+.myClasspageWrapperTwoChapterText {
+	float: left; /*width:257px;*/
+	height: 28px;
+	margin: 17px;
+	font-size: 20px;
+	color: white;
+}
+
+.myClassPageTitle {
+	float: left;
+	height: 39px;
+	text-align: left;
+	font-size: 32px;
+	font-weight: bold;
+	/* margin-right: 17px; */
+}
+
+.blueButtonView:hover {
+	color: white;
+	background: #1076BB;
+	cursor: pointer;
+	float: right;
+}
+
+.blueButtonView {
+	color: white;
+	background-color: #1076bb;
+	border-radius: 4px;
+	padding: 8px 9px;
+	border: none;
+	font-weight: bold;
+	margin: 10px 23px;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	margin: 32px 23px 2px 0px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	cursor: pointer;
+	float: right;
+	font-size: 12px;
+}
+
+.blueButtonView:hover {
+	color: white;
+	background: #1076BB;
+	cursor: pointer;
+	float: right;
+}
+
+.tabs {
+	clear: both;
+	background: rgb(239, 239, 239);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD),
+		to(#EDEDED));
+	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -ms-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
+	border: 1px solid #ddd;
+	margin: 0px 21px 0px 26px;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+}
+
+.tabsli {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 0px -2px;
+}
+
+.tabsliactive:hover {
+	-moz-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
+	background: rgb(239, 239, 239);
+	background: -moz-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(239,
+		239, 239, 1)), color-stop(32%, rgba(247, 247, 247, 1)),
+		color-stop(100%, rgba(239, 239, 239, 1)));
+	background: -webkit-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: -o-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: linear-gradient(to bottom, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
+}
+
+.tabsli:hover {
+	/*background: #f0f0f0;*/
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	cursor: pointer;
+	background-color: #efefef;
+}
+
+.active {
+	-moz-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 5px 16px 0px rgba(0, 0, 0, .1);
+	background: rgb(216, 216, 216);
+	background: -moz-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(239,
+		239, 239, 1)), color-stop(32%, rgba(247, 247, 247, 1)),
+		color-stop(100%, rgba(239, 239, 239, 1)));
+	background: -webkit-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: -o-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	background: linear-gradient(to bottom, rgba(239, 239, 239, 1) 0%,
+		rgba(247, 247, 247, 1) 32%, rgba(239, 239, 239, 1) 100%);
+	/*filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#efefef',
+		endColorstr='#efefef', GradientType=0);*/
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#efefef',GradientType=0 );
+}
+
+.addAsAnAssignmentMarginBlue {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #1076BB;
+	margin: 10px 0 0px 23px;
+	clear: both;
+	cursor: pointer;
+	width: 25%;	
+}
+
+.noAssignmentMsg{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	font-style:italic;
+	color:rgb(153,153,153);
+	text-align:center;
+	text-align: center;
+	width: 350px;
+	top: 100px;
+	position: relative;
+	margin: 0 auto;
+}
+.loadingpanelImage{
+background: url(images/core/B-Dot.gif) no-repeat;
+	height:170px;
+	width: 233px;
+	color:rgb(153,153,153);
+	text-align:center;
+	top: 80px;
+	position: relative;
+	margin: 0 auto;
+	}
+.myClassPageTitleButtonContainer {
+	float: right;
+	width: 100%;
+	margin-top: -18px;
+	background-color: wheat;
+}
+.editTitleButton {
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #1076BB;
+	cursor: pointer;
+	margin: 72px 10px 10px 0px;
+	width: 80%;
+}
+
+.editTitleButton:hover {
+	color: #87BADD;
+	cursor: pointer;
+}
+
+.searchResultContainer {
+	width: 100%;
+	float: left;
+}
+
+.paginationPanel {
+	clear: both;
+	padding: 20px 0px;
+	text-align: left;
+}
+
+.classPageEditArrContainer {
+	padding: 5px 0 0 0;
+	position: absolute;
+	cursor: pointer;
+	margin-left: -40px;
+	margin-top: 11px;
+}
+
+.classPageEditArrOuterDiv {
+	float: left;
+	/* padding: 5px 0px 0px 0px; */
+	position: relative;
+}
+
+.classPageEditArrIcon {
+	background-position: -52px 100px;
+	width: 10px;
+	height: 25px;
+}
+
+.classPageEditArrText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: bold;
+	color: #1076b8;
+	text-align: left;
+	position: absolute;
+	top: 12px;
+	float: left;
+	left: 123px;
+}
+
+.classPageEditArrImg{
+	position: absolute;
+	/* top: 51px; */
+	float: left;
+	left: 109px;
+}
+
+.simplePencil {
+	height: 64px;
+	min-width: 50px;
+}
+
+.collectionEditImage {
+	background: url("images/Collection-Search/icon-sprite.png") repeat
+		scroll -71px -169px transparent;
+	float: right;
+	height: 18px;
+	width: 14px;
+	cursor: pointer;
+	margin-top: 15px;
+}
+
+.userCollectionInfo {
+	position: absolute;
+	bottom: 0;
+	float: left;
+	margin: 10px 0px 0px 0px;
+	width: 100%;
+	background-color: rgba(16,118,187,0.5);
+}
+
+.collectionTitle {
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+	width: auto;
+}
+
+.titleAlertContainer {
+	float: left;
+	width: 80%;
+}
+
+.titleAlertMessage {
+	display: none;
+	color: #f9b039;
+	float: right;
+	font-size: 12px;
+	margin-top: -9px;
+	
+}
+
+.collectionDescriptionTitle {
+	color: #999999;
+	clear: both;
+	float: left;
+	font-size: 12px;
+}
+
+.collectionDescription {
+	border: none !important;
+	clear: both;
+	float: left;
+	height: 60px;
+	width: 550px;
+	font-style: italic;
+}
+
+.descriptionAlertMessage {
+	color: #fbb03b;
+	float: right;
+	font-size: 12px;
+	font-style: italic;
+	position: relative;
+	right: 20px;
+	top: 3px;
+	display: none;
+}
+
+
+.collectionDescriptionTxtArea,.collectionDescriptionHtml {
+	border: 1px solid #DDDDDD;
+	float: left;
+	height: 60px !important;
+	width: 550px !important;
+	font-size: 12px !important;
+	padding: 1px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+.classPagebuttonContainer {
+	float: right;
+	margin-top: -43px;
+	margin-right: 20px;
+}
+.classPageEditTitleCancelButton {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	display: block;
+	text-align: center;
+	line-height: 120%;
+	color: rgb(16, 118, 185);
+	margin: 5px 0px 10px 4px;
+	float: right;
+	}
+	.cursor {
+	cursor: pointer;
+}
+	
+	
+.classPageEditTitleSaveButton {
+	width: 50px;
+	height: 23px;
+	margin: 0px 0px 5px 50px;
+	float: right;
+	/* Firefox v3.6+ */
+	background-image: -moz-linear-gradient(50% 0% -90deg, rgb(76, 152, 204)
+		0%, rgb(16, 118, 187) 99%);
+	/* safari v4.0+ and by Chrome v3.0+ */
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgb(76, 152,
+		204)), color-stop(0.99, rgb(16, 118, 187)));
+	/* Chrome v10.0+ and by safari nightly build*/
+	background-image: -webkit-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 99%);
+	/* Opera v11.10+ */
+	background-image: -o-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 99%);
+	/* IE v10+ */
+	background-image: -ms-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 99%);
+	background-image: linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+		rgb(16, 118, 187) 99%);
+	/* Firefox v1.0+ */
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	background: #1076bb;
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,
+		endColorstr=#ff1076bb, GradientType=0);
+}
+.classPageEditTitle {
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+	padding: 4px 2px 2px 2px;
+}
+
+
+.classpageHoverButton {
+	position: relative;
+	top: -147px;
+	right: 20px;
+	float:right
+}
+.classpageHoverButton:hover{
+	color: white;
+	cursor: pointer;
+	background: #1076BB;
+}
+
+.classpageEditButton {
+	position: relative;
+	margin: 0px auto;
+	left: 366px;
+	top: -120px;
+	visibility: hidden;
+}
+
+.classpageDeleteButton {
+	margin: 20px;
+}
+.classpageEditButton:hover, .classpageDeleteButton:hover{
+	background: #eee;
+	cursor: pointer;
+}
+
+.classpageTitleSave{
+	float: left;
+	margin-left: 5px;
+}
+
+
+.classpageTitleSave:hover{
+	color: white;
+	cursor: pointer;
+	background: #1076BB;
+}
+
+
+.classpageTitleCancel{
+	float:left;
+	margin-left: 10px;
+}
+
+.classpageClasscode {
+	width: 725px;
+	margin: 0 auto;
+	background-color: rgba(221,221,221,0.5);
+	padding-left: 30px;
+	height: 55px;
+	border: 1px solid rgba(153,153,153,0.5);
+	border-top: none;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-moz-border-top-right-radius: 0px;
+}
+
+.classpageCodeDesc {
+	float: left;
+	padding: 15px 0px 0px 0px;
+	position: absolute;
+}
+.classpageCodeShare {
+	float: left;
+	padding: 6px 7px 0px 0px;
+	font-weight: bold;
+}
+.classpageCodeShareOr {
+	float: left;
+	padding: 6px 7px 0px 0px;
+}
+.classpageCodeShareInput {
+	float: left;
+}
+
+
+.classpageCodeHelp {
+	position: relative;
+	float: left;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	margin: 5px 10px 0px 3px;
+	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
+	background-position: 0px -46px;
+}
+.classpageCodeHelp:hover {
+	cursor: pointer;
+}
+
+.classpageShareCodeInput{
+	margin-top: 2px;
+	color: #515151;
+	padding: 4px 2px;
+	background-color: rgb(255,255,255);
+	border: 1px solid rgb(221,221,221);
+	width: 70px;
+	font-family: Tahoma, sans-serif !important;
+	text-transform:uppercase;
+	
+}
+
+.classpageShareLinkInput{
+	width:140px;
+	margin-top: 2px;
+	color: #515151;
+	padding: 4px 9px;
+	background-color: rgb(255,255,255);
+	border: 1px solid rgb(221,221,221);
+}
+
+.classpageTopLine{
+	border-top: 1px solid rgba(153, 153, 153, 0.5);
+	width: 100%;
+	margin: 0px auto;
+	margin-top: 60px;
+	text-align: center;
+	
+}
+
+.addAssignment{
+	margin-top: 20px;
+}
+
+.addAssignment:hover{
+	background: url("images/Classpage/plus_blue.png") 11px 11px no-repeat, #eee;
+	cursor: pointer;
+}
+
+.classpageAddPlusIcon {
+	position: relative;
+	top: -31px;
+	left: 10px;
+	width: 21px;
+	height: 22px;
+	background: url(images/Classpage/sprite-classpage-type.png) no-repeat left top;
+}
+
+.assignmentsContainer{
+	overflow: hidden;
+	min-height: 400px;
+	height: auto;
+}
+
+.classpageCodeInnerPopup {
+	clear: both;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.2);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.2);
+	box-shadow: 0 0 10px rgba(0,0,0,.2);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.classpageCodePopupTitle {
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+
+.arrowShadow {
+    background-color: transparent;
+	width: 6px;
+	height: 17px;
+	position: absolute;
+	top: -7px;
+	left: 193px;
+	z-index: -10;
+	box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+}
+
+.arrowBorder {
+    width: 0px;
+    height: 0px;
+    border: 10px solid;
+    border-color: transparent transparent #DDD transparent;
+    position:absolute;
+    top: -10px;
+	left: 201px;
+	border-top: none;
+}
+
+.arrow {
+    width: 0px;
+    height: 0px;
+    border: 10px solid;
+    border-color: transparent transparent white transparent;
+    position:absolute;
+    left: 201px;
+    top: -9px;
+    border-top: none;
+}
+
+.codePopupContainer{
+	width: 227px;
+	position: absolute;
+	top: 50px;
+	left: 215px;	
+}
+
+.webLinkPopupContainer{
+	width: 227px;
+	position: absolute;
+	top: 50px;
+	left: 502px;	
+}
+.classpageImage{
+	width:815px;
+	height:180px;
+}

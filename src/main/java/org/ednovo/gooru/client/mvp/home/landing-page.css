@@ -1,0 +1,814 @@
+* {
+	margin:0px;
+	padding:0px;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	color:#515151;
+	font-size:12px;
+	font-weight:normal;
+	background: url("images/landing-page/gray_noise_25.png") repeat;
+}
+
+.clearfix {
+	clear:both;
+}
+
+a img {
+    border:none;
+}
+
+a {
+	text-decoration:none !important;
+	color:#1076BB;
+}
+
+a:hover {
+	opacity:.6;
+	cursor:pointer;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #999;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #999;
+	opacity:1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #999;
+	opacity:1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #999;
+}
+
+.searchBtn {
+	font-size: 12px;
+	color: white;
+	background-color: #1076bb;
+	border-radius: 4px;
+	padding: 8px 9px;
+	border: none;
+	font-weight: bold;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background: #1076BB;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+	border: 1px solid #1076BB;
+}
+
+.searchBtn:hover {
+	background:#1076BB;
+	cursor:pointer;
+}
+
+@eval LANDING_BANNER org.ednovo.gooru.client.GooruImageResourceBundle.getLandingPageBanner();
+.banner {
+	background: LANDING_BANNER repeat-x;
+	height:360px;
+	color:white;
+}
+
+.bannerContent {
+	width: 1100px;
+	margin: 0px auto;
+	padding: 150px 40px 80px 40px;
+}
+
+.tagline {
+	width:540px;
+	float:left;
+	margin-top:20px;
+}
+
+.tagline h1 {
+	font-size:36px;
+	margin-bottom:10px;
+}
+
+.tagline h2 {
+	font-size:16px;
+	font-weight:normal;
+}
+
+.searchContainer {
+	width:410px;
+	float:right;
+	border-radius:4px;
+	background-color:rgba(255,255,255,.3);
+	padding:15px;
+}
+
+.searchBar {
+	margin-right:5px;
+	font-size:16px !important;
+	padding:9px !important;
+	width: 300px;
+	padding: 7px;
+	border: 1px solid #DDD;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+}
+
+.searchContainer button {
+	font-size:16px;
+	padding:9px 11px;
+	//width: 78px;
+}
+
+.filters {
+	margin-top:10px;
+	border-top:1px solid rgba(255,255,255,.3);
+}
+
+.filtersHeader {
+	padding: 5px 0px;
+}
+
+@eval COURSE_FILTER_IMAGE org.ednovo.gooru.client.GooruImageResourceBundle.getStartedImage();
+.courseFilter {
+	cursor: pointer;
+	width: 184px;
+	float:left;
+	padding: 7px;
+	margin-right:7px;
+	border: 1px solid #DDD;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	background-color:white;
+	color:#999;
+	background: white url("images/landing-page/dropdown-menu-arrow.png") no-repeat right center;
+	position: relative;
+}
+
+.standardFilter {
+	width:184px !important;
+	float:left;
+	padding: 7px;
+	border: 1px solid #DDD;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+}
+
+.videoIcon {
+	vertical-align:middle;
+	margin-right:5px;
+}
+
+.pageNav {
+	white-space: nowrap;
+	border-bottom: 1px solid #ccc;
+	background: rgb(239,239,239);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#EDEDED));
+	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -ms-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+}
+
+.pageNav .tabs {
+	width:1105px;
+	margin:auto;
+	font-size:16px;
+}
+
+.tabs li {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 0px -2px;
+}
+
+.pageNav .tabs li {
+	padding:20px 75px;
+	border-left:1px solid #ccc;
+}
+
+.pageNav .tabs li.last {
+	border-right:1px solid #ccc;
+}
+
+.tabs li:hover {
+	background-color: #e5e5e5;
+	cursor: pointer;
+}
+
+.contentContainer {
+	width: 1100px;
+	margin: 0px auto 75px auto;
+}
+
+.pageSection {
+	margin-top:50px;
+}
+
+.pageSection h2 {
+	font-size:26px;
+	text-align:center;
+	color: rgba(100,100,100, 0.8);
+	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
+	filter: alpha(opacity=100);
+}
+
+@eval RETURN_TO_TOP org.ednovo.gooru.client.GooruImageResourceBundle.getReturnToTop();
+.returnToTop {
+	display:block;
+	color:#999 !important;
+	text-decoration:none !important;
+	text-align:right;
+	background: RETURN_TO_TOP bottom right no-repeat;
+	padding-right:27px;
+	width:95px;
+	float:right;
+	margin-bottom:10px;
+}
+
+.courseTabs {
+	text-align:center;
+	margin-top:30px;
+}
+
+.courseTabs li {
+	font-size:14px;
+	background-color:#E4E4E4;
+	border:1px solid #CCC;
+	border-bottom:none;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	display:inline-block;
+	padding:10px 60px;
+	margin:0px -2px;
+}
+
+.courseTabs li:hover {
+	background-color:#F5F5F5;
+	cursor:pointer;
+}
+
+.courseTabs li.active {
+	background-color: white;
+	padding-bottom: 11px;
+	margin-bottom: -1px;
+	margin-top:-11px;
+	padding:20px 80px 10px 80px;
+	font-size:16px;
+}
+
+.courseTabsLi {
+	font-size:14px;
+	background-color:#E4E4E4;
+	border:1px solid #CCC;
+	border-bottom:none;
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	display:inline-block;
+	padding:10px 60px;
+	margin:0px -2px;
+}
+
+.courseTabsLi:hover {
+	background-color:#F5F5F5;
+	cursor:pointer;
+}
+
+.courseTabsLiActive, .courseTabsLiActive:hover {
+	cursor:default;
+	background-color: white;
+	padding-bottom: 11px;
+	margin-bottom: -1px;
+	margin-top:-11px;
+	padding:20px 80px 10px 80px;
+	font-size:16px;
+}
+
+.featuredContent {
+	background-color:white;
+	border:1px solid #CCC;
+	border-radius:4px;
+	padding:30px 18px;
+	min-height: 289px;
+}
+
+.courseSection {
+	border: 1px solid #ddd;
+	padding:15px;
+	float:left;
+	margin: 0px 5px;
+	height: 257px;
+}
+
+.courseTitle {
+	border-bottom: 1px solid #DDD;
+	padding: 10px 15px;
+	font-size:16px;
+	margin:-15px -15px 0px -15px;
+	width:170px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: #F5F5F5;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#F5F5F5));
+	background: -webkit-linear-gradient(top, #FFFFFF, #F5F5F5);
+	background: -moz-linear-gradient(top, #FFFFFF, #F5F5F5);
+	background: -ms-linear-gradient(top, #FFFFFF, #F5F5F5);
+	background: -o-linear-gradient(top, #FFFFFF, #F5F5F5);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FFFFFF', EndColorStr='#F5F5F5');
+}
+
+.collectionWrapper {
+	display:inline-block;
+	margin-top:15px;
+	height: 232px;
+}
+
+.extraCollection {
+	margin-left: 17px;
+	border-left: 1px solid #ddd;
+	padding-left: 21px;
+}
+
+.featuredCollection {
+	cursor: pointer;
+	width:160px;
+	height:120px;
+	background-color:#ddd;
+	border-left:10px solid #1076BB;
+	margin:0px 0px 10px 0px;
+}
+
+.featuredCollection:hover {
+	opacity:.6
+}
+
+.collectionTitle {
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom:5px;
+	width:170px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.collectionAuthor {
+	color:#999;
+	font-style:italic;
+	width: 170px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.collectionStandards, .collectionGrades {
+	margin-top:10px;
+}
+
+.collectionGrades {
+	width:60px;
+	float:left;
+}
+
+.gradeTag, .standardsTag {
+	color:white;
+	display:inline-block;
+	border-radius:4px;
+	margin-top:5px;
+	cursor:default;
+}
+
+.gradeTag {
+	background-color:#87BADD;
+	padding:3px 7px;
+}
+
+.standardsTag {
+	background-color:#515151;
+	font-size:10px;
+	padding:4px 5px 5px 5px;
+}
+
+.standardsTag div {
+	max-width: 100px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.contentBlock {
+	background-color: white;
+	border-radius: 4px;
+	min-height: 100px;
+	margin-top: 10px;
+	display: block;
+	clear:both;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.aboutDOTS {
+	width:140px;
+	float:left;
+	margin: 30px 67px;
+	text-align:center;
+}
+
+.aboutDOTS h3 {
+	color:#515151;
+	font-size:16px;
+	font-weight:normal;
+}
+
+@eval DOTS_IMAGE org.ednovo.gooru.client.GooruImageResourceBundle.getDotsImage();
+.aboutDOTS .dotsImage {
+	background: DOTS_IMAGE no-repeat;
+	width:140px;
+	height:140px;
+	margin-bottom:10px;
+}
+
+.aboutDOTS .discoverImage {
+	background-position:0px 0px;
+}
+
+.aboutDOTS .organizeImage {
+	background-position:0px -140px;
+}
+
+.aboutDOTS .teachImage {
+	background-position:0px -280px;
+}
+
+.aboutDOTS .studyImage {
+	background-position:0px -420px;
+}
+
+.learnMoreDOTS, .methodsContent {
+	border-top: 1px solid #DDD;
+	padding:10px;
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	text-align:center;
+	background: #F5F5F5;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F5F5F5), to(#FFFFFF));
+	background: -webkit-linear-gradient(top, #F5F5F5, #FFFFFF);
+	background: -moz-linear-gradient(top, #F5F5F5, #FFFFFF);
+	background: -ms-linear-gradient(top, #F5F5F5, #FFFFFF);
+	background: -o-linear-gradient(top, #F5F5F5, #FFFFFF);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#F5F5F5', EndColorStr='#FFFFFF');
+}
+
+.methodsContent {
+	padding:30px;
+}
+
+.learnMoreDOTS a {
+	padding: 0px 10px;
+}
+
+.whyUseGooru {
+	color:#999;
+}
+
+.whyUseGooru h3 {
+	font-size:16px;
+	font-weight:normal;
+	text-align:center;
+	padding:30px 0px 20px 0px;
+}
+
+.methodsList {
+	white-space: nowrap;
+	border: 1px solid #ddd;
+	width:966px;
+	margin:0px auto 30px auto;
+	font-size:16px;
+	border-radius:15px;
+	background: rgb(239,239,239);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#EDEDED));
+	background: -webkit-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -moz-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -ms-linear-gradient(top, #FDFDFD, #EDEDED);
+	background: -o-linear-gradient(top, #FDFDFD, #EDEDED);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+}
+
+.methodsListLi {
+	border-right:1px solid #ddd;
+	padding:20px 30px;
+	display: inline-block;
+	margin: 0px -2px;
+	font-size: 16px;
+	color: #999;
+}
+
+.methodsListLi:hover {
+	background-color: #e5e5e5;
+	cursor: pointer;
+}
+
+
+.methodsLiFirst {
+	border-top-left-radius:15px;
+	border-bottom-left-radius:15px;
+}
+
+.methodsLiLast {
+	border-right:none;
+	border-top-right-radius:15px;
+	border-bottom-right-radius:15px;
+}
+
+.methodsLiActive, .methodsLiActive:hover {
+	color:white;
+	background: #1076BB;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1076BB), to(#4C98CC));
+	background: -webkit-linear-gradient(top, #1076BB, #4C98CC);
+	background: -moz-linear-gradient(top, #1076BB, #4C98CC);
+	background: -ms-linear-gradient(top, #1076BB, #4C98CC);
+	background: -o-linear-gradient(top, #1076BB, #4C98CC);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#1076BB', EndColorStr='#4C98CC');
+}
+
+.pageNavListLi {
+	padding: 20px 75px;
+	border-left: 1px solid #ccc;
+	display: inline-block;
+	margin: 0px -2px;
+}
+
+.pageNavListLi:hover {
+	background-color: #e5e5e5;
+	cursor: pointer;
+}
+
+.pageNavListLiLast {
+	border-right: 1px solid #ccc;
+}
+
+.methodsList li {
+	border-right:1px solid #ddd;
+	padding:20px 30px;
+}
+
+.methodsList li.last {
+	border-right:none;
+	border-top-right-radius:15px;
+	border-bottom-right-radius:15px;
+}
+
+.methodsList li.first {
+	border-top-left-radius:15px;
+	border-bottom-left-radius:15px;
+}
+
+.methodsList li.active {
+	color:white;
+	background: #1076BB;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1076BB), to(#4C98CC));
+	background: -webkit-linear-gradient(top, #1076BB, #4C98CC);
+	background: -moz-linear-gradient(top, #1076BB, #4C98CC);
+	background: -ms-linear-gradient(top, #1076BB, #4C98CC);
+	background: -o-linear-gradient(top, #1076BB, #4C98CC);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#1076BB', EndColorStr='#4C98CC');
+}
+
+.methodsCollection {
+	background-color:#DDD;
+	border-left: 15px solid #1076BB;
+	width:266px;
+	height:200px;
+	float:left;
+	margin:0px 50px;
+}
+
+.methodsCollection:hover {
+	opacity:.6;
+	cursor:pointer;
+}
+
+.methodsContentDescription {
+	text-align:left;
+	width:615px;
+	float:left;
+	font-size:14px;
+}
+
+h3.methodsContentTitle {
+	padding-top:0px;
+	font-size:26px;
+	font-weight:normal;
+	text-align:left;
+	color:#515151;
+}
+
+.methodsContentTitle {
+	padding-top: 0px;
+	font-size: 26px;
+	font-weight: normal;
+	text-align: left;
+	color: #515151;
+}
+
+.getStartedOption {
+	width:265px;
+	margin:48px;
+	float:left;
+}
+
+.getStartedOption:hover {
+	opacity:.6;
+	cursor:pointer;
+}
+
+@eval GET_STARTED_OPTION_IMAGE org.ednovo.gooru.client.GooruImageResourceBundle.getStartedImage();
+.getStartedOption .image {
+	width:82px;
+	height:74px;
+	background: GET_STARTED_OPTION_IMAGE no-repeat;
+	float:left;
+	margin-right:20px;
+}
+
+.getStartedOption .description {
+	width:160px;
+	float:left;
+}
+
+.getStartedOption.search .image {
+	background-position:0px 0px;
+}
+
+.getStartedOption.create .image {
+	background-position:0px -74px;
+}
+
+.getStartedOption.signup .image {
+	background-position:0px -148px;
+}
+
+.getStartedOption h3 {
+	font-size:16px;
+	font-weight:normal;
+}
+
+@eval ABOUT_GOORU_LOGO org.ednovo.gooru.client.GooruImageResourceBundle.getGooruLogoSmall();
+.aboutGooruLogo {
+	width: 99px;
+	height: 30px;
+	background: ABOUT_GOORU_LOGO no-repeat;
+	margin: 20px 0px;
+}
+
+.aboutBlurb {
+	font-size: 16px;
+	width: 950px;
+	margin: 0px auto 25px auto;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 25px;
+}
+
+.supportersContentBlock {
+	padding:25px;
+	text-align:center;
+}
+
+.supportersText {
+	font-size:16px;
+	margin-bottom:20px;
+}
+
+.supportersImg{
+	margin:10px;
+	vertical-align:middle;
+}
+
+.getStarted {	
+	
+}
+
+.collectionMetadata {
+	height: 84px;
+	width:170px;
+}
+
+.loadingImage {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 175px;
+	margin: 0 auto;				
+}
+
+.gradeDropdown {
+	width: 198px;
+	border: 1px solid #ddd;
+	position: absolute;
+	top: 29px;
+	right: -1px;
+	z-index: 1;
+	background-color: #fff;
+}
+
+.gradeDropdown-list {
+	display: block;
+	padding: 5px 15px;
+}
+
+.gradeDropdown-list:hover{
+	cursor: pointer;
+	background-color: #CFE3F1;
+}
+
+.teachersPickHeading {
+	font-size: 26px;
+	font-weight:bold;
+	text-align: center;
+	color: rgba(100, 100, 100, 0.8);
+	text-shadow: 1px 2px 2px #eee, 0 0 0 #000, 1px 2px 2px #eee;
+}
+
+.userNamePPPenabled {
+	color: #1076bb;
+	cursor: pointer;
+}
+
+.userNamePPPdisabled {
+	color: #999 !important;
+	cursor: text !important;
+}
+
+.userNamePPPdisabled:hover {
+	opacity: 1.0 !important;
+}
+
+.hoverCollectionContainer {
+	cursor: pointer;
+	display: none;
+	height: 70px;
+	width: 160px;
+	z-index: 23;
+	top: 0px;
+	left: 0px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.featuredCollectionHoverEvent {
+	cursor: pointer;
+	position: relative;
+}
+
+.collectionInlineMsg{	
+	color: #1076BB;
+	cursor:pointer;
+}
+
+.collectionInlineMsg:hover{
+	color: #87BADD;
+	text-decoration:none;
+}
+.topWrapper{
+background: -webkit-gradient(linear, 0 0, 0 100%, from(#666), to(#515151));
+background: -webkit-linear-gradient(top, #666, #515151);
+background: -moz-linear-gradient(top, #666, #515151);
+background: -ms-linear-gradient(top, #666, #515151);
+background: -o-linear-gradient(top, #666, #515151);
+background-color: #515151;
+color: #fff;
+margin: 4px;
+height: 532px !important;
+}
+.titleStyle {
+float: left;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 18px;
+line-height: 120%;
+color: #fff;
+padding: 8px 5px 5px 10px;
+}
+.closeButton
+{
+background: url(images/sprites-login.png) no-repeat;
+background-position: -52px -116px;
+width: 18px;
+height: 19px;
+cursor: pointer;
+}
+.buttonContainer{
+float: right;
+padding: 10px 10px 0 0;
+}
+.borderTopStyle{
+border: 1px solid #fff;
+position: relative;
+top: 41px;
+background: #fff;
+}
+

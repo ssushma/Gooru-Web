@@ -1,0 +1,462 @@
+/*ShelfTab*/
+.shelfCollectionBtnbg {
+	width: 145px;
+	height: 29px;
+	background: -moz-linear-gradient(center top, #4c98cc, #1076bb) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc),
+		to(#1076bb));
+	background: -webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background-image: -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+	background-color: #1076bb;
+	border: 0 none;
+	margin-bottom: 10px;
+	border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-ms-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	-o-border-radius: 4px 4px 4px 4px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.shelfCollectionBtnbg:hover {
+	cursor: pointer;
+	background: #1076bb;
+}
+
+.shelfCollectionPlusIcon {
+	background: url(images/NewResourcePopup/plus.fw.png) no-repeat;
+	width: 12px;
+	height: 12px;
+	float: left;
+	margin-left: 9px;
+	margin-top: 7px;
+}
+
+.shelfCollectionAddTitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 120%;
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 6px 0px 0px 7px;
+	float: left;
+}
+
+.shelfNewCollection {
+	margin-bottom: 10px;
+	height: 17px;
+	width: 90px;
+	color: #fff;
+	border: 1px solid #1076BB;
+	display: inline-block;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background-color: #1076BB;
+	padding: 8px 15px 8px 32px;
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, #1076BB;
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC),
+		to(#1076BB));
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+	cursor: pointer;
+}
+
+.shelfNewCollection:hover {
+	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
+		no-repeat, #1076BB;
+	cursor: pointer;
+}
+
+.resourceCollectionPanelStyle {
+	margin: 5px 0px !important;
+	color: #515151 !important;
+	background-color: #ddd;
+	padding: 0 !important;
+	height: 40px !important;
+	border: dashed 1px #999;
+	width: 294px;
+	padding-top: 2px;
+	-moz-box-shadow: inset 0px 0px 5px rgba(100, 100, 100, .3);
+	-webkit-box-shadow: inset 0px 0px 5px rgba(100, 100, 100, .3);
+	box-shadow: inset 0px 0px 6px rgba(100, 100, 100, .3);
+}
+
+.blueBorder {
+	/*border-top: 4px solid transparent !important;
+	border-bottom: 4px solid transparent !important;*/
+	background-color: #bbb;
+}
+
+.shelfNewCollectionText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: normal;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 2px 0px 0px 0px;
+	float: left;
+}
+
+.resourceCollectionPanelText {
+	font-size: 12px !important;
+	height: 18px !important;
+	padding: 12px !important;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.shelfCollection {
+	
+}
+
+.shelfGlassTopPanel {
+	display: table;
+	width: 100%;
+	cursor: pointer;
+	z-index: 99;
+}
+
+.shelfGlassPanel {
+	background-color: rgba(204,204,204,0.4) !important;
+	z-index: 12;
+}
+
+.shelfCollectionTitle {
+	width: 311px !important;
+	height: 40px !important;
+	margin: 0px !important;
+	color: #515151 !important;
+	border-bottom: 1px solid #ddd !important;
+	border-top: 1px solid #eee !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD),
+		to(#EDEDED)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #FDFDFD, #EDEDED) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #EDEDED;
+	padding: 0px !important;
+}
+
+.shelfCollectionTitle:hover {
+	background: none repeat scroll 0 0 #EFEFEF !important;
+	border-top: 1px solid #eee !important;
+	box-shadow: none !important;
+	cursor: pointer !important;
+}
+
+.shelfCollectionTitleActive {
+	width: 311px !important;
+	height: 40px !important;
+	margin: 0px !important;
+	color: #515151 !important;
+	padding: 0px !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd),
+		to(#f5f5f5));
+	background: -moz-linear-gradient(top, #ddd, #f5f5f5);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, .1);
+	border-top: 1px solid #ccc;
+	cursor: pointer !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd',
+		endColorstr='#f5f5f5');
+}
+
+.shelfFolderL2TitleActive {
+	background: none repeat scroll 0 0 #EFEFEF !important;
+	border-top: 1px solid #eee !important;
+	box-shadow: none !important;
+	cursor: pointer !important;
+	width: 100%;
+	float: left;
+}
+
+.shelfCollectionTitleText {
+	height: 18px;
+	padding: 10px;
+	padding-top: 12px;
+	width: 62%;
+	float: left;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.shelfResourcePanel {
+	background: none repeat scroll 0 0 #FFFFFF;
+	height: 25px;
+}
+
+.shelfResourceImage {
+	float: left;
+	height: 20px;
+	width: 20px;
+}
+
+.shelfResourceTitle {
+	float: left;
+	width: 240px;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 3px;
+}
+
+.shelfContentPanel {
+	min-height: 25px;
+	margin: 7px 7px 0 7px;
+}
+
+.shelfContentWrapperPanel {
+	width: 291px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	padding: 9px;
+}
+
+.shelfBlueLbl {
+	background: -webkit-gradient(linear, left top, left bottom, from(#87BADD),
+		to(#1076BB)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #87BADD, #1076BB) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #1076BB;
+	height: 17px !important;
+	width: 3px !important;
+	display: inline-block !important;
+	float: left !important;
+	margin-top: 11px !important;
+	margin-left: 10px !important;
+}
+
+.shelfBlueLbl:hover {
+	background: none repeat scroll 0 0 #4C98CC !important;
+}
+
+.shelfGreyLbl {
+	background: -webkit-gradient(linear, left top, left bottom, from(#dddddd),
+		to(#dddddd)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #dddddd, #dddddd) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #dddddd;
+	height: 17px !important;
+	width: 16px !important;
+	margin-right: 8px !important;
+	display: inline-block !important;
+	float: left !important;
+	margin-top: 11px !important;
+}
+
+.shelfGreyLbl:hover {
+	background: none repeat scroll 0 0 #dddddd !important;
+}
+
+.shelfDarkGreyLbl {
+	background: -webkit-gradient(linear, left top, left bottom, from(#4C4646),
+		to(#4C4646)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #4C4646, #4C4646) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #4C4646;
+	height: 17px !important;
+	width: 18px !important;
+	margin-right: 8px !important;
+	display: inline-block !important;
+	float: left !important;
+	margin-top: 11px !important;
+}
+
+.shelfDarkGreyLbl:hover {
+	background: none repeat scroll 0 0 #4C4646 !important;
+}
+
+.shelfGradientOpen {
+	background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA),
+		to(#FAFAFA)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #FDFDFD, #EDEDED) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #EDEDED;
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, .1) !important;
+	border-top: 1px solid #ddd !important;
+	border-bottom: 1px solid #ddd !important;
+}
+
+.shelfGradientOpen:hover {
+	background: none repeat scroll 0 0 #EFEFEF !important;
+	box-shadow: none !important;
+	cursor: pointer !important;
+}
+
+.myFoldersListIcon {
+	float: left;
+	background: url(images/folders/folder-icon.png) no-repeat;
+	width: 20px;
+	height: 20px;
+	margin: 12px 7px 0 10px;
+}
+
+/* css For folders start */
+.myFoldersL2ListIcon {
+	float: left;
+	background: url(images/folders/folder-icon.png) no-repeat;
+	width: 20px;
+	height: 20px;
+	margin: 13px 7px 0 27px;
+}
+
+.myFoldersL3ListIcon {
+	float: left;
+	background: url(images/folders/folder-icon.png) no-repeat;
+	width: 20px;
+	height: 20px;
+	margin: 13px 7px 0 48px;
+}
+
+.shelfContentWrapperPanelForFolders {
+	width: 301px;
+	background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.shelfContentWrapperPanelFolderResource {
+	width: 301px;
+	background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.shelfContentPanelForFolders {
+	min-height: 33px;
+	margin: 9px 7px 0 9px;
+}
+
+.shelfBlueFolderLbl {
+	background: -webkit-gradient(linear, left top, left bottom, from(#87BADD),
+		to(#1076BB)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #87BADD, #1076BB) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #1076BB;
+	height: 17px !important;
+	width: 3px !important;
+	display: inline-block !important;
+	float: left !important;
+	margin-top: 11px !important;
+	margin-left: 28px !important;
+}
+
+.shelfBlueL3FolderLbl {
+	background: -webkit-gradient(linear, left top, left bottom, from(#87BADD),
+		to(#1076BB)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #87BADD, #1076BB) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #1076BB;
+	height: 17px !important;
+	width: 3px !important;
+	display: inline-block !important;
+	float: left !important;
+	margin-top: 11px !important;
+	margin-left: 49px !important;
+}
+
+.shelfBlueL3DataFolderLbl {
+	background: -webkit-gradient(linear, left top, left bottom, from(#87BADD),
+		to(#1076BB)) !important; /* for webkit browsers */
+	background: -moz-linear-gradient(center top, #87BADD, #1076BB) repeat
+		scroll 0 0 transparent !important; /* for firefox 3.6+ */
+	background-color: #1076BB;
+	height: 17px !important;
+	width: 3px !important;
+	display: inline-block !important;
+	float: left !important;
+	margin-top: 11px !important;
+	margin-left: 54px !important;
+}
+
+/* css For folders end  */
+.shelfPanel {
+	float: right;
+	height: 97%;
+	margin-bottom: -143px;
+	min-height: 759px;
+	position: fixed;
+	right: 0;
+	top: 51px;
+	width: 311px;
+}
+
+.shelfPanelForWorkspace {
+	height: 97%;
+	margin-bottom: -143px;
+	min-height: 759px;
+	position: fixed;
+	/* left: 40px; */
+	width: 311px;
+}
+
+.shelfPanelForShelf {
+	height: 97%;
+	margin-bottom: -143px;
+	min-height: 759px;
+	position: fixed;
+	margin-left: 62px;
+	top: 116px;
+	width: 311px;
+}
+
+.myFolderCollectionNavContainerHeading {
+	width: 311px;
+	float: left;
+	height: 38px;
+	margin-top: 15px;
+	color: #515151 !important;
+	border-bottom: 1px solid #ddd !important;
+	border-top: 1px solid #eee !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd),
+		to(#ededed)) !important;
+	background: -moz-linear-gradient(center top, #fdfdfd, #ededed) repeat
+		scroll 0 0 transparent !important;
+	background-color: #ededed;
+	padding: 0;
+}
+
+.myFolderCollectionNavContainerHeadingText {
+	float: left;
+	padding: 12px 0px 0px 12px;
+	font-size: 16px;
+}
+
+.myShelfEditButton {
+	border-radius:0px;
+	display: none;
+	width: 45px !important;
+	height: 40px !important;
+	background: -moz-linear-gradient(center top, #4c98cc, #1076bb) repeat
+		scroll 0 0 transparent;
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc),
+		to(#1076bb));
+	background: -webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background-image: -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: -o-linear-gradient(top, #4c98cc, #1076bb);
+	background-color: #1076bb;
+	border: 0 none;
+	color: #fff;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 8px 9px;
+}
+
+.myShelfEditButton:HOVER {
+	background: #1076BB;
+	color: #FFFFFF !important;
+}

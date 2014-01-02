@@ -1,0 +1,52 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="WelcomePage" src="folderwelcomepage.css" />
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{WelcomePage.welcomeToWorkspaceContainer}">
+		   <g:HTMLPanel styleName="{WelcomePage.welcomeToWorkspaceText}">
+		      Create and Organize your Collections!
+		   </g:HTMLPanel>
+		   <g:HTMLPanel styleName="{WelcomePage.getStartedTextContainer}">
+		      <g:HTMLPanel styleName="{WelcomePage.getStartedText}">Collections are playlists of educational resources that can be personalized for your students learning. Create your own collection by discovering resources on Gooru, the Web, or by adding your own questions.</g:HTMLPanel>
+		      <g:Label styleName="{WelcomePage.getStartedCollection}" ui:field="newCollectionUIHandler"></g:Label>
+		   </g:HTMLPanel>
+		      	<g:HTMLPanel styleName="{WelcomePage.workspaceTextOptions}">
+					<g:HTMLPanel styleName="{WelcomePage.firstDiv}">
+						<g:HTMLPanel styleName="{WelcomePage.imgTextContainer}">
+							<g:Image title="Rounded One" altText="Rounded One" styleName="{WelcomePage.imageCss}" height="35"
+								url="images/rounded-one.png" width="35" />
+							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}">Create</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceCreateDesc}">Create a collection and add selected resources.</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}">
+						    <g:Image title="Workspace" altText="Workspace" styleName="{WelcomePage.workspaceImg}" url="images/folders/workspace-image.png" />
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{WelcomePage.secondDiv}">
+						<g:HTMLPanel styleName="{WelcomePage.imgTextContainerCustomize}">
+							<g:Image title="Rounded Two" altText="Rounded Two" styleName="{WelcomePage.imageCss}" height="35"
+								url="images/rounded-two.png" width="35" />
+							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}">Customize</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceDesc}">Organize and add narration to guide your students.</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}"><g:Image title="Narration" altText="Narration" styleName="{WelcomePage.customizeIma}" url="images/folders/narration-image.png" /></g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{WelcomePage.thirdDiv}">
+						<g:HTMLPanel styleName="{WelcomePage.imgTextContainer}">
+							<g:Image title="Rounded Three" altText="Rounded Three" styleName="{WelcomePage.imageCss}" height="35"
+								url="images/rounded-three.png" width="35" />
+							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}">Share</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceShareDesc}">Share collections through a link or assign them to your class.</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}"><g:Image title="Share Assign" altText="Share Assign" styleName="{WelcomePage.shareImg}" url="images/folders/share-assign-image.png" /></g:HTMLPanel>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+		    <g:HTMLPanel styleName="{WelcomePage.workspaceTextSupport}">
+				<g:HTMLPanel styleName="{}">Need some more help? Visit our 
+				    <g:Anchor ui:field="supportCenterAnr" styleName="{WelcomePage.supportLink}" href="http://support.goorulearning.org/forums" target="_blank">support center</g:Anchor>.
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
+	ui:generateLocales='default'>
+<ui:style field= "addWebResourceStyle" src="addResource.css"/>
+	
+	
+	
+	 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimgContainer}">
+            <g:Label text="Question Image" ui:field="displayQuestLbl" styleName="{addWebResourceStyle.addResourceThumbimgHeading}"/> 
+            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimg}">
+             <g:Image styleName="{addWebResourceStyle.questionimage}" ui:field="questionImageContainer"></g:Image>
+            </g:HTMLPanel>	
+            <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimgLeftContent}">
+              <g:Label text="Change Image" ui:field="changeImgLbl" styleName="{addWebResourceStyle.addResourceThumbimgLeft}"/> 
+              <g:Label text="Remove Image" ui:field="removeImgLbl" styleName="{addWebResourceStyle.addResourceThumbimgLeft}"/> 
+            </g:HTMLPanel>
+     </g:HTMLPanel>
+          
+ </ui:UiBinder>

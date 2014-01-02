@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.mvp.home"
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:ab="urn:import:org.ednovo.gooru.client.mvp.home" xmlns:bb="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:lp="urn:import:org.ednovo.gooru.client.mvp.home.library">
+	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
+		field="res" />
+	<ui:style field="globalCSS" src="./css/gooru-global.css" />
+	<ui:style field="landingPageStyle" src="landing-page.css" />
+	<lp:LibraryView ui:field="libraryView"/>
+</ui:UiBinder>
