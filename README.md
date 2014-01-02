@@ -1,6 +1,6 @@
 Gooru Web 0.5.11.0
 =============
-Introducing Gooru Web 1.0 - a one stop solution to find, share, measure and contribute the Gooru OER content
+Introducing Gooru Web 0.5.11.0 - a one stop solution to find, share, measure and contribute the Gooru OER content
 
 Introduction
 ==============
@@ -44,7 +44,7 @@ Gooru Collection Player is capable of rendering all types of Gooru Collections i
 
 Environment setup and build process
 ==============
-Eclipse IDE is used for the development of Gooru Web. Each developer machine should have the below configuration at minimum level.
+Eclipse IDE is used for the development of Gooru Web 0.5.11.0. Each developer machine should have the below configuration at minimum level.
 JDK: 1.6 or above 
 Memory: 4 GB RAM
 Disk Space: 20 GB
