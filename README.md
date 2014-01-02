@@ -1,4 +1,4 @@
-Gooru Web 1.0
+Gooru Web 0.5.11.0
 =============
 Introducing Gooru Web 1.0 - a one stop solution to find, share, measure and contribute the Gooru OER content
 
