@@ -33,11 +33,21 @@
 		<webapp.container.home>${env.CATALINA_HOME}</webapp.container.home>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
-
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>false</enabled></releases>
+		</repository>
+		<!-- Repository for gquery plugins -->
+		<repository>
+			<id>gwtquery-plugins</id>
+			<url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo</url>
+		</repository>
+	</repositories>
 	<dependencies>
-
 		<!-- Spring dependencies -->
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
@@ -353,6 +363,23 @@
 			<artifactId>gwt-storage</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+        <groupId>com.googlecode.gwtupload</groupId>
+        <artifactId>gwtupload</artifactId>
+        <version>0.6.6</version>
+      </dependency>
+		<dependency>
+	     <groupId>com.googlecode.gwtquery</groupId>
+	     <artifactId>gwtquery</artifactId>
+	     <!-- Check last available version in the downloads page -->
+	     <version>1.4.0</version>
+	     <!-- If you are using old versions of gwt, uncomment the appropriate line -->
+	     <!-- <classifier>2.1.0</classifier> -->
+	     <!-- <classifier>2.0.1</classifier> -->
+	     <scope>provided</scope>
+	   </dependency>
+		
+		
 	</dependencies>
 	<profiles>
 		<profile>
