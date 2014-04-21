@@ -1,0 +1,80 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a="urn:import:aj.org.objectweb.asm"
+	xmlns:gt="urn:import:com.tractionsoftware.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.collaborators}">
+		<!-- View mode for all collaborators in a respective collection -->
+		<g:Label styleName="{res.css.collaboratorSectionTitle}"
+				ui:field="lblCollectionCreator" />
+		<g:HTMLPanel ui:field="panelViewMode"
+			styleName="{res.css.collaboratorContentPanel}">
+			<!-- To List the Owner of the Collection -->
+			<g:HTMLPanel styleName="{res.css.panelCollaborators} {res.css.collaboratorBorderBottom}"
+				ui:field="panelCreator">
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.collaboratorViewPanel}">
+				<g:Label styleName="{res.css.collaboratorSectionTitle}"
+					ui:field="lblCurrentCollaborators" />
+				<!-- To Show List all Collaborators -->
+				<g:HTMLPanel ui:field="panelCollaboratorsList">
+				   	<!-- Display Loading image... Clear once got the Data from API's -->
+					<g:HTMLPanel ui:field="panelLoading">
+						<g:Label styleName="loadingpanelImage" />
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<!-- Edit mode for Creator of the collection -->
+		<g:HTMLPanel ui:field="panelEditMode" styleName="{res.css.collaboratorContainer}">
+			<!-- -->
+			<g:HTMLPanel styleName="{res.css.collaboratorBg}">
+				<g:Label styleName="{res.css.collaboratorTitle}" ui:field="lblYouAreTheCollectionCreator"/>
+				<g:HTMLPanel styleName="{res.css.collaboratorContent}">
+					<g:Label styleName="{res.css.collaboratorSubTitle}"
+						ui:field="lblAddCollaborator"/>
+					<g:Label styleName="{res.css.collaboratorDesc}" ui:field="lblCollaboratorsDesc"/>
+					<g:Label styleName="{res.css.collaboratorHeading}"
+						ui:field="lblInviteCollaborators"/>
+					<g:HTMLPanel styleName="{res.css.buttonContainer}">
+					    <g:HTMLPanel ui:field="panelSuggestBox"></g:HTMLPanel>
+						<!-- <g:TextBox styleName="{res.css.collaboratorInputBox}"
+							ui:field="txtCollaboratorsName" /> -->
+						<g:HTMLPanel ui:field="panelActions" styleName="{res.css.buttonTooltip}">
+							<g:Button styleName="primary" ui:field="btnInvite"/>
+							<!-- Tooltips -->
+							<g:HTMLPanel styleName="{res.css.tooltipContainer}" ui:field="panelCode">
+								<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+								<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+								<g:Label styleName="{res.css.tooltipContent}" ui:field="lblText"></g:Label>
+							</g:HTMLPanel>
+							<g:Label ui:field="lblPleaseWait" styleName="{res.css.pleaseWait}" />
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:Label ui:field="lblErrorMessage" styleName="errorMessage {res.css.error}" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+				
+				<g:HTMLPanel ui:field="panelPendingSmallLoadingIcon">
+					<g:Label styleName="loadingpanelImageSmall" />
+				</g:HTMLPanel>
+				
+			  <g:HTMLPanel styleName="{res.css.collaboratorContentPanel}" ui:field="panelPendingContainer">
+			    <g:Label styleName="{res.css.collaboratorPanelTitle}" ui:field="lblPendingInvitations"/>
+				<!--  List Pending Collaborators -->
+			    <g:VerticalPanel styleName="{res.css.radioButtonContainer}" ui:field="panelPendingCollabListContainer" />
+			  </g:HTMLPanel>
+			  <g:HTMLPanel styleName="{res.css.collaboratorContentPanel}" ui:field="panelActiveContainer">
+			    <g:Label styleName="{res.css.collaboratorPanelTitle}" ui:field="lblCurrentCollabTitle"/>
+			    <!-- <g:HTMLPanel ui:field="panelCurrentSmallLoadingIcon">
+					<g:Label styleName="loadingpanelImageSmall" />
+				</g:HTMLPanel> -->
+			    <g:VerticalPanel styleName="{res.css.panelCollaborators}" ui:field="panelActiveCollabListContainer" />
+			  </g:HTMLPanel>
+			  <g:Button styleName="secondary {res.css.collaboratorBtn}" ui:field="btnRemoveSelectedInvities" />
+			<!-- -->
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

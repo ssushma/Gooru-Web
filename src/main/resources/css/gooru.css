@@ -1,4 +1,4 @@
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td, button
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,ins,kbd,q,s,samp,small,strike,strong,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td, button
 {
 	border: 0;
 	margin: 0;
@@ -58,7 +58,31 @@ caption,th,td {
 a img {
 	border: 0;
 }
-
+.shelfFolderItemTitle{
+	padding-top: 3px;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width:80%;
+}
+.shelfFolderItemTitle span.AM img{
+	max-height:25px !important;
+}
+.resourceTitleShare {
+			color: #515151;
+			font-size: 12px;
+			font-weight: bold;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding-bottom: 3px;
+		}
+.resourceTitleShare span.AM img {
+	max-height: 29px !important;
+	}
+#chkLogin input[type="checkbox"]{
+	vertical-align: middle;
+}
 input[type="checkbox"], input[type="radio"] {
 	margin-right: 0.5ex !important;
 }
@@ -583,7 +607,7 @@ body {
 	border: none !important;
 	color: #515151 !important;
 	font-size: 12px !important;
-	min-width: 293px !important;
+	min-width: 173px !important;
 	margin:0px;
 	padding: 5px 6px !important;
 	cursor: pointer !important;
@@ -808,7 +832,7 @@ body {
 .filterCheckBox {
 	float: left;
 	width: 160px;
-	margin: 2px 5px;
+ 	margin: 2px 5px;
 }
 
 .videos label {
@@ -839,14 +863,25 @@ body {
 	background-position: 0px -167px !important;	
 }
 
-.textbooks label {
+.texts label {
 	background-position: 0px -195px !important;
 }
 
 .websites label {
 	background-position: 0px -223px !important;
 }
-
+.webpage label{
+	background-position: 0px -223px !important;
+}
+.audio label{
+	background-position: 0px -279px !important;
+}
+.image label {
+	background-position: 0px -251px !important;
+}
+.other label {
+	background-position: 0px -307px !important;
+}
 .rightsToolTip {
 	float: left;
 }
@@ -867,41 +902,62 @@ body {
 .websiteSmall {
 	background-position: 0px -224px !important;
 }
-
-.examSmall, .challengeSmall {
-	background-position: 0px -84px !important;
+.webpageSmall {
+	background-position: 0px -224px !important;
+}
+.examSmall {
+	/* background-position: 0px -84px !important; */
+	background-position: 0px -224px !important;
 }
 
 .textbookSmall {
-	background-position: 0px -196px !important;
+	/* background-position: 0px -196px !important; */
+	background-position: 0px -55px !important;
 }
 
 .handoutSmall {
-	background-position: 0px -56px !important;
+	/* background-position: 0px -56px !important; */
+	background-position: 0px -55px !important;
 }
 
 .lessonSmall {
-	background-position: 0px -112px !important;
+	/* background-position: 0px -112px !important; */
+	background-position: 0px -55px !important;
 }
 
 .slideSmall {
-	background-position: 0px -168px !important;
+	background-position: 0px -251px !important;
+	/* background-position: 0px -168px !important; */
 }
 
 .questionSmall {
 	background-position: 0px -140px !important;
 }
-
+.challengeSmall {
+	background-position: 0px -307px !important;	
+}
+.textSmall {
+	background-position: 0px -55px !important;
+}
+.imageSmall {
+	background-position: 0px -251px !important;
+}
+.audioSmall{
+	background-position: 0px -279px !important;
+}
+.otherSmall{
+	background-position: 0px -307px !important;
+}
 /*********/
 .shelfEditDesc {
-	width: 550px !important;
+	width: 380px !important;
 	border: 1px solid #ccc;
 	height: 70px !important;
 	font-size: 14px;
 }
 
 .shelfEditTitle {
-	width: 550px !important;
+	width: 380px !important;
 	border: 1px solid #ccc;
 	font-size: 14px;
 	height:20px;
@@ -940,7 +996,9 @@ body {
 	cursor: pointer;
 	float: left;
 	margin: 5px;
-	width: 45px;
+	width: 30px;
+	padding:2px 0px;
+	border-radius:4px;
 }
 .gradeList:HOVER {
 	background: none repeat scroll 0 0 #1076BB;
@@ -1065,23 +1123,23 @@ td.datePickerMonth{
 /* Resource type Icon to set Dynamically*/
 
 .resourceExistsResourceTypeSpriteVideo {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: 0px -20px;
+	background-position: 0px 1px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteInteractive {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: -60px 0px;
+	background-position: 0px -27px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteWebsite {
-	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: 0px 0px;
+	background-position: 0px -223px;
 	width: 28px;
 	height: 22px;
 }
@@ -1124,6 +1182,34 @@ td.datePickerMonth{
 	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: -60px -43px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteAudio {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: 0px -297px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteImage {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: 0px -251px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteOther {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: -0px -307px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteText {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: -0px -55px;
 	width: 28px;
 	height: 22px;
 }
@@ -1170,7 +1256,7 @@ td.datePickerMonth{
 }
 
 .hoverStasPopupContainerPos{
-	left: 123px;
+	left: 27px;
 }
 .shelfEditTitleForAssignment {
 	width: 633px !important;
@@ -1236,7 +1322,7 @@ td.datePickerMonth{
 .resourceNarrationContainer iframe, .resourceNarrationContainer table.mceLayout {
 	height: 66px!important;
 	min-height: 50px!important;
-	width:536px !important;
+	width: 386px !important;
 }
 
 
@@ -1275,7 +1361,7 @@ td.datePickerMonth{
 .collectionDesctionConatiner iframe, .collectionDesctionConatiner table.mceLayout {
 	height: 64px!important;
 	min-height: 30px!important;
-	width: 554px !important;
+	width: 400px !important;
 }
 p{
 	padding:0;
@@ -1291,6 +1377,7 @@ p{
 	max-height:25px !important;
 	margin-bottom: 5px;/* DO-1366 */
 }
+
 .collectionEditDescription span.AM img{
 	max-height:25px !important;
 }
@@ -1402,4 +1489,263 @@ n
 {
 font-weight: normal;
 color:#999;
+}
+.mobilefriendlyContainer  input[type="checkbox"] {
+	margin: 3px 0.5ex !important;
+}
+
+.mobilefriendlyContainer .filterCheckBox label {
+	background: url(../images/mos/ipadFriendly.png) no-repeat transparent;
+ 	padding-left: 30px;
+	padding-bottom: 6px;
+}
+.navigationText span.AM img{
+	max-height:23px;
+	height:23px;
+}
+
+.loadingpanelImage{
+	background: url(../images/core/B-Dot.gif) no-repeat;
+	height:170px;
+	width: 233px;
+	margin: 0 auto;
+}
+
+.loadingpanelImageSmall{
+	background: url(../images/core/loading-sm.gif) no-repeat;
+	height:50px;
+	width: 50px;
+	margin: 0 auto;
+}
+
+/* Raido button select and deselect */
+.radio-normal-icon,.radio-selected-icon{
+	background: url("../images/radio_checkbox_icons.png") -0px -0px no-repeat;
+	cursor: pointer;
+}
+.radio-normal-icon{
+	background-position: 0 0;
+	width: 19px;
+	height: 16px;
+	float: left;
+}
+.radio-normal-icon:hover{
+	background-position: 0 -17px;
+	width: 19px;
+	height: 16px;
+	float: left;
+}
+.radio-selected-icon{
+	background-position: 0 -33px;
+	width: 19px;
+	height: 16px;
+	float: left;
+}
+.radio-selected-icon:hover{
+	background-position: 0 -51px;
+	width: 19px;
+	height: 16px;
+	float: left;
+}
+
+/* To override GWT tree CSS*/
+.gwt-Tree > div:first-child {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.gwt-Tree > div {
+  padding: 0px 0px !important;
+}
+
+.gwt-Tree > div[hidefocus=true] {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.gwt-Tree .gwt-TreeItem {
+	margin: 0px !important;
+}
+
+.gwt-Tree .gwt-TreeItem > div{
+	margin: 0px !important;
+}
+
+.gwt-Tree .gwt-TreeItem > div[hidefocus=true] {
+  margin: 0px !important;
+}
+
+.gwt-Tree .gwt-TreeItem-selected > div{
+	margin: 0px !important;
+}
+
+/** Add css rules here for your application. */
+
+.auto_suggest {
+    z-index: 20;
+	font-size: 14px;
+	width: 86%;
+	/* padding-left: 5px; */
+	float: left;
+	margin-right: 18px;
+	height: auto !important;
+/*     background-color: white;
+    padding: 10px;
+    width: 400px;
+    height: 230px; */
+}
+
+.original-token-input {
+    width: 396px;
+    border: 1px solid #8496ba;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    padding: 4px 8px;
+}
+
+/* Example tokeninput style #2: gooru style */
+ul.token-input-list-gooru {
+    overflow: hidden;
+    max-height: 100px;
+	overflow-x: hidden;
+	overflow-y: auto;
+    /* width: 500px; */
+    border: 1px solid #DDD;
+    cursor: text;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    min-height: 1px;
+    z-index: 999;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+ul.token-input-list-gooru {
+    list-style-type: none;
+}
+
+ul.token-input-list-gooru li input {
+    border: 0;
+    width: 100px;
+    padding: 3px 8px;
+    background-color: white;
+    margin: 2px 0;
+}
+
+li.token-input-token-gooru {
+    overflow: hidden;
+    height: 16px !important;
+    height: 1%;
+	margin: 4px;
+	padding: 3px 3px;
+    background-color: #eff2f7;
+    color: #000;
+    cursor: default;
+    border: 1px solid #ccd5e4;
+    font-size: 12px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+}
+
+li.token-input-token-gooru p {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+li.token-input-token-gooru span {
+    /* color: #a6b3cf; */
+    margin-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+li.token-input-selected-token-gooru {
+    /* background-color: #5670a6;
+    border: 1px solid #3b5998;
+    color: #fff; */
+}
+
+li.token-input-input-token-gooru {
+    float: left;
+}
+
+.token-input-input-token-gooru .gwt-SuggestBox{
+	border: none !important;
+	background-color: #FFF !important;
+	font-size: 12px !important;
+	height: 20px;
+	width: 475px;
+}
+.folderDelete{
+	z-index: 99;
+}
+
+.wrapperParent {
+	
+}
+.errorMessageMaindiv {
+	width: 1100px;
+	margin: 0 auto;
+	position: relative;
+}
+.errorMessageContent {
+	height: 600px;
+}
+.errorMessageContentBg {
+	height: 470px;
+	background: url(../images/message-bg.png) 0px 15px no-repeat;
+}
+.errorMessageHeading {
+	font-size: 38px;
+	color: rgb(81,81,81);
+	width: 640px;
+	padding-top: 40px;
+	padding-left: 50px;
+}
+.errorMessageDiv {
+	float: right;
+	margin-right: 70px;
+	font-size: 38px;
+	color: rgb(81,81,81);
+}
+.detective {
+	width: 243px;
+	height: 61px;
+	color: #fff;
+	font-size: 38px;
+	color: #FFF;
+	text-align: left;
+	border: 1px solid #1076BB;
+	padding: 7px 14px;
+	border-radius: 4px;
+	background: #1076BB;
+	background: url(../images/preview-arrow.png) 210px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC), to(#1076BB));
+	background: url(../images/preview-arrow.png) 210px center no-repeat, -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(../images/preview-arrow.png) 210px center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(../images/preview-arrow.png) 210px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
+}
+.detective:hover {
+	background: url(../images/preview-arrow.png) 210px center no-repeat, #1076BB;
+	cursor: pointer;
+}
+.studyNowToolTipLbl {
+	padding: 5px;
+	cursor: pointer;
+	padding-left: 10px;
+}
+.studyNowToolTipLbl:hover {
+	background: #cfe3f1;
+}
+.discoverTooltipLabel {
+	padding: 6px;
+	cursor: pointer;
+	padding-left: 12px;
+}
+.discoverTooltipLabel:hover {
+	background-color: #cfe3f1;
 }

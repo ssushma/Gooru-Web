@@ -25,59 +25,32 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : ThumbnailDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class ThumbnailDo implements Serializable{
 	private static final long serialVersionUID = -5295887028298720878L;
 	private boolean defaultImage;
 	private String dimensions;
 	private String url;
-	/** 
-	 * This method is to get the defaultImage
-	 */
+	public ThumbnailDo(){}
 	public boolean isDefaultImage() {
 		return defaultImage;
 	}
-	/** 
-	 * This method is to set the defaultImage
-	 */
 	public void setDefaultImage(boolean defaultImage) {
 		this.defaultImage = defaultImage;
 	}
-	/** 
-	 * This method is to get the dimensions
-	 */
 	public String getDimensions() {
 		return dimensions;
 	}
-	/** 
-	 * This method is to set the dimensions
-	 */
 	public void setDimensions(String dimensions) {
 		this.dimensions = dimensions;
 	}
-	/** 
-	 * This method is to get the url
-	 */
 	public String getUrl() {
 		return url;
 	}
-	/** 
-	 * This method is to set the url
-	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}

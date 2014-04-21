@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : PostSearchHandler.java
- *
- * @description : To Set post search view
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface PostSearchHandler extends EventHandler {
 

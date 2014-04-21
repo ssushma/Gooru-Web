@@ -30,19 +30,10 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
- * @fileName : PlayerBundle.java
- *
- * @description : This interface is used to set the styles for player. 
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface PlayerBundle extends ClientBundle {
 
@@ -152,8 +143,23 @@ public interface PlayerBundle extends ClientBundle {
 		@ClassName("resource-type-exam")
 		public String examResourceType();
 		
+		@ClassName("resource-type-audio")
+		public String audioResourceType();
+		
+		@ClassName("resource-type-text")
+		public String textResourceType();
+				
+		@ClassName("resource-type-imageIcon")
+		public String imageResourceType();
+		
+		@ClassName("resource-type-other")
+		public String otherResourceType();
+		
 		@ClassName("resource-default-video")
-		public String videoResourceDefault();
+		public String videoResourceDefault();	
+		
+		@ClassName("resource-noresource-default")
+		public String noResourceDefault();
 		
 		@ClassName("resource-default-interactive")
 		public String interactiveResourceDefault();
@@ -179,6 +185,18 @@ public interface PlayerBundle extends ClientBundle {
 		@ClassName("resource-default-exam")
 		public String examResourceDefault();
 		
+		@ClassName("resource-default-text")
+		public String textResourceDefault();
+	
+		@ClassName("resource-default-image")
+		public String imageResourceDefault();
+	
+		@ClassName("resource-default-audio")
+		public String audioResourceDefault();
+	
+		@ClassName("resource-default-other")
+		public String otherResourceDefault();
+			
 		@ClassName("resource-type-image")
 		public String resourceTypeImage();
 		
@@ -240,6 +258,10 @@ public interface PlayerBundle extends ClientBundle {
 		@ClassName("player-container")
 		public String setPlayerContainer();
 		
+		
+		@ClassName("studyplayer-container")
+		public String setStudyPlayerContainer();
+		
 		public String dropdownListItemContainer();
 		
 		public String thumbsDownActive();
@@ -250,6 +272,120 @@ public interface PlayerBundle extends ClientBundle {
 		
 		public String thumbsUpNormal();
 		
+		@ClassName("resource-standard-num")
+		public String resourcestandardNum();
+		
+		@ClassName("gradeNumber")
+		public String setGradeNumber();
+		
+		@ClassName("standardMoreLink")
+		public String getstandardMoreLink();
+		
+		@ClassName("info-style-Standard")
+		public String getstandardMoreInfo();
+		
+		@ClassName("courseTooltip")
+		public String courseTooltip();
+		
+		@ClassName("flagButtonActive")
+		public String flagButtonActive();
+		
+		@ClassName("flagButtonDisable")
+		public String flagButtonDisable();
+		
+		@ClassName("playerCoverFlagImage")
+		public String playerCoverFlagImage();
+		
+		@ClassName("playerCoverFlagImageOrange")
+		public String playerCoverFlagImageOrange();
+		
+		@ClassName("flagButtonOrange")
+		public String flagButtonOrange();
+		
+		public String flagButtonNormal();
+		
+		public String ipadFriendlyIconBlock();
+		
+		public String glassStyle();
+		
+		@ClassName("playerPreviewCoverFlagImage")
+		public String playerPreviewCoverFlagImage();
+		
+		@ClassName("previewCoverFlagImageOrange")
+		public String previewCoverFlagImageOrange();
+		
+		@ClassName("collectionplayerEndFlagBlackImage")
+		public String collectionplayerEndFlagBlackImage();
+		
+		@ClassName("collectionplayerEndFlagOrange")
+		public String collectionplayerEndFlagOrange();
+		
+		@ClassName("collectionPlayerWrapper")
+		public String collectionPlayerWrapper();
+		
+		@ClassName("collectionPlayerWrapperPadding")
+		public String collectionPlayerWrapperPadding();
+		
+		public String getResourceErrorStyle();
+		
+		public String flagButtonOrangeActive();
+		
+		@ClassName("toCommentTextPreviewPlayer")
+		public String toCommentTextPreviewPlayer();
+		
+		public String collectionreplay();
+		
+		public String teamHyperLink();
+		
+		public String collectionreplayText();
+		
+		@ClassName("resource-type-info-video")
+		public String videoResourceTypeInfo();
+		
+		@ClassName("resource-type-info-interactive")
+		public String interactiveResourceTypeInfo();
+		
+		@ClassName("resource-type-info-slide")
+		public String slideResourceTypeInfo();
+		
+		@ClassName("resource-type-info-question")
+		public String questionResourceTypeInfo();
+		
+		@ClassName("resource-type-info-website")
+		public String websiteResourceTypeInfo();
+		
+		@ClassName("resource-type-info-textbook")
+		public String textbookResourceTypeInfo();
+		
+		@ClassName("resource-type-info-handout")
+		public String handoutResourceTypeInfo();
+		
+		@ClassName("resource-type-info-lesson")
+		public String lessonResourceTypeInfo();
+		
+		@ClassName("resource-type-info-exam")
+		public String examResourceTypeInfo();
+		
+		@ClassName("resource-type-info-audio")
+		public String audioResourceTypeInfo();
+		
+		@ClassName("resource-type-info-imageIcon")
+		public String imageResourceTypeInfo();
+		
+		@ClassName("resource-type-info-other")
+		public String otherResourceTypeInfo();
+		
+		@ClassName("resource-type-info-text")
+		public String textResourceTypeInfo();
+	
+		public String setPopupStandardArrow();
+		
+		public String supportTip();
+		
+		public String btnResourceLink();
+		
+		@ClassName("studyPlayer")
+		public String studyPlayer();
 	}
 
 	@Source("playerstyle.css")

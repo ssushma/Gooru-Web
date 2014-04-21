@@ -78,19 +78,20 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * 
  * @fileName : AssignmentsTabView.java
- *
- * @description : This is the view for Assignments.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
+ * 
+ * @description :
+ * 
+ * 
+ * @version : 5.5 
+ * 
+ * @date: May 17, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
 public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		implements IsAssignmentsTabView, MessageProperties {
@@ -98,11 +99,11 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	@UiField(provided = true)
 	AssignmentsTabViewCBundle res;
 
-	private static final String MANDATORY_TITLE = MessageProperties.GL0173;
-	private static final String MANDATORY_DUEDATE = MessageProperties.GL0235;
-	private static final String MANDATORY_DIRECTIONS = MessageProperties.GL0236;
+	private static final String MANDATORY_TITLE = GL0173;
+	private static final String MANDATORY_DUEDATE = GL0235;
+	private static final String MANDATORY_DIRECTIONS =GL0236;
 
-	private static final String CHARACTERS_LIMIT = MessageProperties.GL0143;
+	private static final String CHARACTERS_LIMIT =GL0143;
 
 	AddCollectionsPopupVc addCollections = null;
 
@@ -257,15 +258,15 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleTxt.getElement().setId("txtAssignmentTitle");
 		assignmentDescriptionTxtArea.getElement().setId("tatDescription");
 		cancelLabel.getElement().setId("lblCancel");
-		btnEditAssignment.setText(MessageProperties.GL0140);
-		deleteLabel.setText(MessageProperties.GL0237);
-		cancelLabel.setText(MessageProperties.GL0142);
+		btnEditAssignment.setText(GL0140);
+		deleteLabel.setText(GL0237);
+		cancelLabel.setText(GL0142);
 		mandatoryTitleLabel.setText(MANDATORY_TITLE);
-		lblDueDateDisplay.setText(MessageProperties.GL0238 + MessageProperties.GL_SPL_SEMICOLON);
+		lblDueDateDisplay.setText(GL0238 +GL_SPL_SEMICOLON);
 		mandatoryDueDateLabel.setText(MANDATORY_DUEDATE);
 		mandatoryDirectionLabel.setText(MANDATORY_DIRECTIONS);
-		btnAddCollectionToAssign.setText(MessageProperties.GL0239);
-		clickToExpandLabel.setText(MessageProperties.GL0241);
+		btnAddCollectionToAssign.setText(GL0239);
+		clickToExpandLabel.setText(GL0241);
 	}
 
 	/**
@@ -288,8 +289,9 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		}
 		return isValid;
 	}
-	/**
-	 * This inner class is used to override classes/method for Data picker.
+
+	/*
+	 * override classes/method for Data picker.
 	 */
 	private class OnDateFocus implements FocusHandler {
 		@Override
@@ -305,9 +307,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 		}
 	}
-	/**
-	 * This inner class will handle the click event when clicked on Done.
-	 */
+
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -321,9 +321,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			}
 		}
 	}
-	/**
-	 * This inner class will handle the blur event on date picker.
-	 */
+
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -336,20 +334,6 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	}
 
 	// To hide and show controls (parms visibility)
-	/**
-	 * @function hideShowControls 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to hide/show the controls.
-	 * 
-	 * @parm(s) : @param visibility
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	private void hideShowControls(boolean visibility) {
 		assignmentTitleTxt.setVisible(visibility);
 		// assignmentDueDateTxt.setVisible(visibility);
@@ -358,40 +342,16 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentTitleTxtPanel.setVisible(visibility);
 		assignmentTitleTxt.setFocus(true);
 	}
-	/**
-	 * @function hideShowLabels 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This methos is used to hide and show labels 
-	 * 
-	 * @parm(s) : @param visibility
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
+	// To hide and show labels (parms visibility)
 	private void hideShowLabels(boolean visibility) {
 		assignmentTitelLbl.setVisible(visibility);
 		dueDateLbl.setVisible(visibility);
 		assignmentDescriptionLbl.setVisible(visibility);
 		assignmentTitleLblPanel.setVisible(visibility);
 	}
-	/**
-	 * @function setUiElements 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to set display the content to UI
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
+	// Display the content to UI
 	private void setUiElements() {
 		
 		String taskTitle = assignmentsSearchDo.getTask().getTitle().replaceAll("%20"," ");
@@ -412,10 +372,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		assignmentDescriptionTxtArea.setText(description);
 	}
 
-	
-	/**
-	 * This inner class is used to handle the click event on the add collection to assignment.
-	 */
+	// Display add collections popup
 	public class OnClickAddCollectionToAssignment implements ClickHandler {
 
 		@Override
@@ -441,7 +398,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 											"Please choose one of the following...")) {
 
 						addCollections.getMandatorySelectCollectionLbl()
-								.setText("Please select a collection.");
+								.setText(GL1134);
 						addCollections.getMandatorySelectCollectionLbl()
 								.setVisible(true);
 						return;
@@ -619,25 +576,12 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		// }
 		// }
 	}
-	/**
-	 * @function onClickEditAssignment 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the Edit assignment.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("btnEditAssignment")
 	public void onClickEditAssignment(ClickEvent event) {
 		if (btnEditAssignment.getText().equalsIgnoreCase("edit")) {
 			isInEditMode = true;
-			btnEditAssignment.setText(MessageProperties.GL0240);
+			btnEditAssignment.setText(GL0240);
 //			btnEditAssignment.setStyleName("myCollectionUpdateText");
 
 			cancelLabel.setVisible(true);
@@ -684,7 +628,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			if (isFormFilled) {
 
 				isInEditMode = false;
-				btnEditAssignment.setText("Edit");
+				btnEditAssignment.setText(GL0140);
 //				btnEditAssignment.setStyleName("myCollectionEditText");
 
 				AssignmentDo assignmentDo = new AssignmentDo();
@@ -726,24 +670,11 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			}
 		}
 	}
-	/**
-	 * @function onClickCancelUpdate 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the cancel label.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("cancelLabel")
 	public void onClickCancelUpdate(ClickEvent event) {
 		isInEditMode = false;
-		btnEditAssignment.setText("Edit");
+		btnEditAssignment.setText(GL0140);
 //		btnEditAssignment.setStyleName("myCollectionEditText");
 		cancelLabel.setVisible(false);
 		deleteLabel.setVisible(true);
@@ -758,24 +689,11 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		setUiElements();
 	}
 
-	/**
-	 * @function onClickDeleteAssignment 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description :	 This will handle the click event on the delete Assignment for deleting the assignment from Classpage
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	// Method for deleting Assignment from Classpage
 	@UiHandler("deleteLabel")
 	public void onClickDeleteAssignment(ClickEvent event) {
-		deleteConfirmVc = new DeleteConfirmPopupVc("Are you sure?", "\""
-				+ assignmentTitelLbl.getHTML() + "\"" + " Assignment.") {
+		deleteConfirmVc = new DeleteConfirmPopupVc(GL0748, "\""
+				+ assignmentTitelLbl.getHTML() + "\"" + GL0103+GL_SPL_FULLSTOP) {
 
 			@Override
 			public void onTextConfirmed() {
@@ -784,9 +702,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			}
 		};
 	}
-	/**
-	 * This method is called when the collection is deleted.
-	 */
+
 	@Override
 	public void onPostCollectionDelete() {
 		deleteConfirmVc.hide();
@@ -842,9 +758,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			}
 		}
 	}
-	/**
-	 * This inner class will handle the key up handler on the assignment description.
-	 */
+
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -891,92 +805,70 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 	public void insertCollectionToAssignment(ResourceDo resourceDo) {
 
-		 cv = new CollectionsView(resourceDo, true, assignmentId);
+		 cv = new CollectionsView();
 
 		collectionsPanel.add(cv);
 	}
-	/**
-	 * It wil handle the drag handler.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * It will check the IsDraggableMirage
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will handle the on blur on the drag.
-	 */
+
 	@Override
 	public void onDragBlur() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag widget id.
-	 */
+
 	@Override
 	public String getDragId() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag top correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag left correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This method is used to display the assignment container.
-	 */
+
 	@Override
 	public void showPanel(boolean visible) {
 		assignmentContainerPanel.setVisible(visible);
 
 	}
-	/**
-	 * This method is used to disable the add new collection button.
-	 */
+
 	@Override
 	public void disableAddNewCollection() {
 		btnAddCollectionToAssign.setVisible(false);
 	}
-	/**
-	 * This method is used to hide loading image.
-	 */
+
 	@Override
 	public void hideLoading() {
 		loadingPanel.setVisible(false);
 	}
-	/**
-	 * This method is used to close all opended popups.
-	 */
+
 	@Override
 	public void closeAllOpenedPopUp() {
 		if(addCollections !=null){
 			addCollections.hide();
 		}
-		if(cv !=null){
-			cv.hideWaitPopup();
-		}
+//		if(cv !=null){
+//			cv.hideWaitPopup();
+//		}
 		
 		
 	}

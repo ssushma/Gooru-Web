@@ -24,7 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -40,21 +50,9 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : ProfilePageDescriptionEditUc.java
- *
- * @description : This class is used to edit the profile page description.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class ProfilePageDescriptionEditUc extends Composite implements
-		HasValue<String> {
+		HasValue<String>,MessageProperties {
 
 	private static ProfileBiographyEditUCUiBinder uiBinder = GWT
 			.create(ProfileBiographyEditUCUiBinder.class);
@@ -74,42 +72,54 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 
 	@UiField
 	protected FocusPanel focusPanel;
-	@UiField Label errorLabel;
+	@UiField Label errorLabel,errorLabelForEditText;
 	protected String placeholder = "";
 
 	private Label biographyLabel;
 	private Label biographyEditImage;
-	
+	public boolean isHavingBadWordsInTextbox;
 	protected String text;
 	@UiField(provided = true)
 	UcCBundle res;
-	/**
-	 * Class constructor.
-	 */
+
 	public ProfilePageDescriptionEditUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
-		
+		errorLabel.setText(GL1043);
 		biographyLabel = new Label();
 		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 500px; min-height: 33px;");
 		
-		biographyEditImage = new Label("Edit");
+		biographyEditImage = new Label(GL0140);
 		biographyEditImage.setStyleName(res.css().editImage());
 		errorLabel.setVisible(false);
-		
+		errorLabelForEditText.getElement().setAttribute("style", "float: left;text-align: right;width: 76%;");
+		errorLabelForEditText.setVisible(false);
 		editTextBox.getElement().setAttribute("maxlength", "500");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setAttribute("id", "txtAreaAboutYourself");
+		editTextBox.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", editTextBox.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+					@Override
+					public void onSuccess(Boolean value) {
+							isHavingBadWordsInTextbox = value;
+							SetStyleForProfanity.SetStyleForProfanityForTextArea(editTextBox, errorLabelForEditText, value);
+					}
+				});
+			}
+		});
 		
 	}
 
 	public Label getBiographyEditImage() {
 		return biographyEditImage;
 	}
-	/**
-	 * This inner class is used to handle the keyup handler.
-	 */
+	
 	private class ValidateConfirmText implements KeyUpHandler {
 
 		@Override
@@ -147,6 +157,14 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 
 	}
 
+	public Label getErrorLabel()
+	{
+		return errorLabelForEditText;
+	}
+	public TextArea geteditTextBox()
+	{
+		return editTextBox;
+	}
 	public void cancel() {
 		editTextBox.setText(biographyLabel.getText());
 		errorLabel.setVisible(false);
@@ -168,24 +186,18 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	public void checkCharacterLimit(String text) {
 
 	}
-	/**
-	 * This is used to add the change hanlder.
-	 */
+
 	@Override
 	public HandlerRegistration addValueChangeHandler(
 			ValueChangeHandler<String> handler) {
 		return addHandler(handler, ValueChangeEvent.getType());
 	}
-	/**
-	 * This will get the value.
-	 */
+
 	@Override
 	public String getValue() {
 		return editTextBox.getText();
 	}
-	/**
-	 * This will set the value.
-	 */
+
 	@Override
 	public void setValue(String value) {
 		biographyLabel.setText(value.length() > 500 ? value.substring(0, 500) + "..."
@@ -205,22 +217,16 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
-	/**
-	 * This will get the text.
-	 */
+
 	public String getText() {
 		return text;
 	}
-	/**
-	 * This will set the text.
-	 */
+
 	public void setText(String text) {
 		this.text = text;
 		setValue(text);
 	}
-	/**
-	 * This will set the value.
-	 */
+
 	@Override
 	public void setValue(String value, boolean fireEvents) {
 

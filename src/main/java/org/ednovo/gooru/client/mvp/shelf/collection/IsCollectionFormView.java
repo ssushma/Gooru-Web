@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
- * 
- * @fileName : IsCollectionFormView.java
+ * @author Search Team
  *
- * @description : This interface is used to collection meta data info and library information
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionFormView extends PopupView, IsViewWithHandlers<CollectionFormUiHandlers> {
 

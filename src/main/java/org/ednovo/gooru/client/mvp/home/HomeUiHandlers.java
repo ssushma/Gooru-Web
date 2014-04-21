@@ -36,19 +36,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
 /**
+ * @author Search Team
  * 
- * @fileName : HomeUiHandlers.java
- *
- * @description : UIHandlers for HomeView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface HomeUiHandlers extends BaseUiHandlers {
 	

@@ -28,21 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : AssetsDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class AssetsDo implements Serializable
 {
@@ -52,27 +38,18 @@ public class AssetsDo implements Serializable
 	private static final long serialVersionUID = 1L;
 	private AssetDo asset;
 	private String assetKey;
-	/** 
-	 * This method is to get the asset
-	 */
+	
+	public AssetsDo(){}
+	
 	public AssetDo getAsset() {
 		return asset;
 	}
-	/** 
-	 * This method is to set the asset
-	 */
 	public void setAsset(AssetDo asset) {
 		this.asset = asset;
 	}
-	/** 
-	 * This method is to get the assetKey
-	 */
 	public String getAssetKey() {
 		return assetKey;
 	}
-	/** 
-	 * This method is to set the assetKey
-	 */
 	public void setAssetKey(String assetKey) {
 		this.assetKey = assetKey;
 	}

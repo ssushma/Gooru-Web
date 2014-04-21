@@ -4,26 +4,30 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle"
 		field="res" />
+		<ui:with
+		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
+		field="resAssign" />
 	<g:HTMLPanel styleName="{res.css.assign}">
 		<g:HTMLPanel styleName="{res.css.assignContent}">
 			<g:HTMLPanel styleName="{res.css.assignHeader}">
-				<g:HTMLPanel styleName="{res.css.assignTitle}">Success!</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.assignTitle}" ui:field="successPopUpHeader"></g:HTMLPanel>
 				<g:Label ui:field="cancelButton"
 					styleName="{res.css.assignCloseMarker} {res.css.assignSprite} {res.css.assignCloseMark}"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.conent}">
-				<g:HTMLPanel styleName="{res.css.assignDesc}">You have successfully assigned</g:HTMLPanel>
-				<!-- <g:HTMLPanel styleName="{res.css.assignCollection} {res.css.assignSprite} 
-					{res.css.assignCollectionIcon}"></g:HTMLPanel> -->
-				<g:Image url="./images/Classpage/collection-image-frame.png" />
-				<g:Label ui:field="lblCollectionTitle" styleName="{res.css.assignCollectionDesc}">
-				    Exponents Collection</g:Label>
-				<g:HTMLPanel styleName="{res.css.assignTo}">to</g:HTMLPanel>
-				<g:Label ui:field="lblClasspageTitle" styleName="{res.css.assignClasspageTitle}">Word
-					Problems Galore for Algebra I AP</g:Label>
-				<g:Label ui:field="lblAssignmentTitle" styleName="{res.css.assignAssignmentTitle}">Word
-					Problems Galore for Algebra I AP</g:Label>
+			
+				<g:HTMLPanel styleName="{res.css.contentSuccess}" ui:field="assignMoreCpContainer">
+				<g:InlineLabel ui:field="assignMoreCpLbl"
+					styleName="{resAssign.css.labelTextSucees} {resAssign.css.cpSuccessMsg}"></g:InlineLabel> 
+					<g:InlineLabel ui:field="ancClasspageTitle" styleName="{res.css.assignmentLabel}"/>
+				
 			</g:HTMLPanel>
+					<g:Button styleName="primary {res.css.assignClassPageBtn}"
+					ui:field="classPageDoneBtn"></g:Button>
+				</g:HTMLPanel>
+					
+			</g:HTMLPanel>
+			
 		</g:HTMLPanel>
-	</g:HTMLPanel>
+
 </ui:UiBinder> 

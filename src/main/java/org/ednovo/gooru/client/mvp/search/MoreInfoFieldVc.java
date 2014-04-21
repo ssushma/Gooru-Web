@@ -40,19 +40,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : MoreInfoFieldVc.java
+ * @author Search Team
  *
- * @description : This is used to set moreinfo in search.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class MoreInfoFieldVc extends Composite {
 

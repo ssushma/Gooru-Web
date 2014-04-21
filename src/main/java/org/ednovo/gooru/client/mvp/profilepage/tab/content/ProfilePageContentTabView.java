@@ -39,19 +39,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ProfilePageContentTabView.java
- *
- * @description : This file deals with ProfilePage Content TabView.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageContentTabView extends BaseViewWithHandlers<ProfilePageContentTabUiHandlers> implements IsProfilePageContentTabView {
 
@@ -76,16 +65,12 @@ public class ProfilePageContentTabView extends BaseViewWithHandlers<ProfilePageC
 	public ProfilePageContentTabView() {
 		setWidget(uiBinder.createAndBindUi(this));
 	}
-	/**
-	 * This is used to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
 	}
-	/**
-	 * setInSlot() is a method used by GWTP in it's lifecycle to set the widget hierarchy that has to be shown to the user. Each time setInSlot is called, it will replace the previous presenter that was assigned to that slot
-	 */
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -94,9 +79,7 @@ public class ProfilePageContentTabView extends BaseViewWithHandlers<ProfilePageC
 			}
 		}
 	}
-	/**
-	 * This is used to set content item data.
-	 */
+	
 	@Override
 	public void setContentItemData(List<CollectionItemDo> collectionItemDo) {
 		Iterator<CollectionItemDo> iterator = collectionItemDo.iterator();
@@ -109,16 +92,12 @@ public class ProfilePageContentTabView extends BaseViewWithHandlers<ProfilePageC
 			}
 		}
 	}
-	/**
-	 * This is used to clear content item data.
-	 */
+	
 	@Override
 	public void clearContentItemData() {
 		publicPPRightContainer.clear();
 	}
-	/**
-	 * This is used to set the metadata.
-	 */
+
 	@Override
 	public void setMetaData(CollectionItemDo collectionItemDo) {
 		publicPPRightContainer.add(new ProfilePageCollectionMetaData(collectionItemDo));

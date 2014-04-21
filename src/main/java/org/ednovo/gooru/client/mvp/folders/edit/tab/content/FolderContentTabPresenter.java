@@ -42,19 +42,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 /**
- * 
- * @fileName : FolderContentTabPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for FolderContentTabView.java.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class FolderContentTabPresenter extends PresenterWidget<IsFolderContentTabView> implements FolderContentTabUiHandlers {
 
@@ -78,9 +67,7 @@ public class FolderContentTabPresenter extends PresenterWidget<IsFolderContentTa
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshCollectionInFolderLevelListEvent.TYPE, this);		
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -101,9 +88,7 @@ public class FolderContentTabPresenter extends PresenterWidget<IsFolderContentTa
 			}
 		});
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+	
 	@Override
 	public void onReveal() {
 		
@@ -112,17 +97,13 @@ public class FolderContentTabPresenter extends PresenterWidget<IsFolderContentTa
 		getView().reset();
 		
 	}
-	/**
-	 * This method is used to hide some content.
-	 */
+	
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().onUnload();
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset(){
 		String folderLevel = AppClientFactory.getPlaceManager().getRequestParameter("level");
@@ -165,17 +146,13 @@ public class FolderContentTabPresenter extends PresenterWidget<IsFolderContentTa
 			SimpleAsyncCallback<List<CollectionItemDo>> getAllFoldersAsyncCallback) {
 		this.getAllFoldersAsyncCallback = getAllFoldersAsyncCallback;
 	}
-	/**
-	 * This is used to get the folder details based on folder id.
-	 */
+
 	@Override
 	public void getSecondThirdLevelFolders() {
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
 		getFolderService().getFolders(folderId, getGetAllFoldersAsyncCallback());
 	}
-	/**
-	 * This method is used to refresh the collections in folder level list.
-	 */
+
 	@Override
 	public void refreshCollectionInFolderLevelList(CollectionDo collectionDo,
 			RefreshFolderType refreshFolderType) {

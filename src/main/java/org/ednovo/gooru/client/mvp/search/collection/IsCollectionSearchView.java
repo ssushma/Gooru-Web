@@ -31,19 +31,8 @@ import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 
 /**
+ * @author Search Team
  * 
- * @fileName : IsCollectionSearchView.java
- *
- * @description : This is the interface for CollectionSearchView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionSearchView extends IsSearchView<CollectionSearchResultDo> {
 

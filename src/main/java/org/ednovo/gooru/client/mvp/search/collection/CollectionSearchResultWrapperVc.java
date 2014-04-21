@@ -37,19 +37,8 @@ import com.google.gwt.uibinder.client.UiChild;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionSearchResultWrapperVc.java
- *
- * @description : This file is used to get Collection MoreInfo.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionSearchResultWrapperVc extends SearchResultWrapperVc<CollectionSearchResultDo, CollectionItemSearchResultDo> {
 
@@ -68,14 +57,10 @@ public class CollectionSearchResultWrapperVc extends SearchResultWrapperVc<Colle
 		this.searchDragController = searchDragController;
 		this.collectionId=collectionId;
 	}
-	/**
-	 * Default constructor.
-	 */
+
 	public CollectionSearchResultWrapperVc() {
 	}
-	/**
-	 * returns CollectionMoreInfoVc.
-	 */
+
 	@Override
 	protected SearchMoreInfoVc<CollectionSearchResultDo, CollectionItemSearchResultDo> getSearchMoreInfoVc() {
 		if(moreInfoVc == null) {
@@ -83,9 +68,7 @@ public class CollectionSearchResultWrapperVc extends SearchResultWrapperVc<Colle
 		}
 		return moreInfoVc;
 	}
-	/**
-	 * This is used to set the content.
-	 */
+	
 	@UiChild(tagname="content")
 	protected void setContent(Widget widget) {
 		super.setContent(widget);

@@ -70,7 +70,7 @@
 	</ui:style>
 	<g:FlowPanel styleName="{style.shareShortenUrlContainer}">
 		<g:FlowPanel styleName="{style.shareLineInSocialMediaPartContainer}">
-			<g:Label styleName="{style.shareLineInSocialMediaText}">Share this link via</g:Label>
+			<g:Label styleName="{style.shareLineInSocialMediaText}" ui:field="shareViaText"></g:Label>
 			<g:HTMLPanel styleName="{style.shareLineInSocialMedia}" ui:field="socialContentPanel"/>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{style.shareSeparatorLine}"></g:FlowPanel>

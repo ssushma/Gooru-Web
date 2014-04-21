@@ -72,8 +72,10 @@
 			<uc:ResourceImageUc ui:field="resourceImageUc" />
 			<g:Label styleName="{style.resourceOrder}" ui:field="positionLbl" />
 			<g:FlowPanel styleName="{style.resourceTitlePanel}" ui:field="resourceTitlePanel">
+			   <g:HTMLPanel styleName="{style.resourceTitle} collectionSearchResource" ui:field="resourceTitleContainer">
 				<g:HTML styleName="{style.resourceTitle} collectionSearchResource" ui:field="resourceTitleLbl" />
-				<g:Image altText="Not ipad friendly" title="Not ipad friendly" styleName="{style.imgHeight}" ui:field="imgNotFriendly" url="images/mos/ipadFriendly.png" ></g:Image>
+			</g:HTMLPanel>
+				<g:Image styleName="{style.imgHeight}" ui:field="imgNotFriendly"></g:Image>
 				<g:FlowPanel styleName="{style.metaDataPanel}" ui:field="metaDataFloPanel" />
 			</g:FlowPanel>
 		</g:FlowPanel>

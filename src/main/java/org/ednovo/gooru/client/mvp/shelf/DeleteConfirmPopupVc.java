@@ -28,9 +28,11 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -40,7 +42,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -49,24 +53,26 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public abstract class DeleteConfirmPopupVc extends AppPopUp {
+public abstract class DeleteConfirmPopupVc extends AppPopUp implements MessageProperties{
 
-	@UiField
-	Anchor cancelAnr;
+	/*@UiField
+	Anchor cancelAnr;*/
 
-	@UiField
-	BlueButtonUc okButtonUc;
+	@UiField Button okButtonUc,cancelAnr;
 
 	@UiField
 	TextBox inlineTxtBox;
 
 	@UiField
-	Label entityLbl,loadingTextLbl;
+	Label entityLbl,loadingTextLbl,permenantText,typeDeleteText;
 	
 	@UiField
-	FlowPanel buttonContainer;
+	FlowPanel buttonContainer,msgFlowPanel;
+	
+	@UiField
+	HTML confirmMessagesText;
 
-	private String confirmText = "DELETE";
+	private String confirmText = GL0558.toUpperCase();
 
 	private static DeleteConfirmPopupVcUiBinder uiBinder = GWT.create(DeleteConfirmPopupVcUiBinder.class);
 
@@ -85,11 +91,13 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
 		super();
 		setContent(title, uiBinder.createAndBindUi(this));
 		setStyleName("deleteResourcePopup");
+		inlineTxtBox.getElement().setAttribute("placeholder", GL0826);
 		inlineTxtBox.addKeyUpHandler(new ValidateConfirmText());
 		inlineTxtBox.getElement().setId("txtInline");
 		okButtonUc.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
-		entityLbl.setText(entityInfo);
+		msgFlowPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		entityLbl.setText(" "+entityInfo);
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -98,6 +106,13 @@ public abstract class DeleteConfirmPopupVc extends AppPopUp {
         buttonContainer.setVisible(true);
 		show();
 		center();
+		confirmMessagesText.setHTML(GL0824);
+		permenantText.setText(GL0825);
+		typeDeleteText.setText(GL0826);
+		okButtonUc.setText(GL0190);
+		cancelAnr.setText(GL0142);
+		loadingTextLbl.setText(GL0560);
+		//GL0190
 	}
 
 	/*@Override

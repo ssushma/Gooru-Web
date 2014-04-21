@@ -27,19 +27,7 @@ package org.ednovo.gooru.client.mvp.classpages;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-/**
- * @fileName : ClasspageListPopupViewCBundle.java
- *
- * @description :  This interface is used to set the Css in the list of class pages popup.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 
 public interface ClasspageListPopupViewCBundle extends ClientBundle {
 
@@ -71,6 +59,8 @@ public interface ClasspageListPopupViewCBundle extends ClientBundle {
 		String gooruGuide();
 		
 		String noClasspageYet();
+		
+		String classpageTitleStudyHeader();
 		
 		String classpageTitleHeader();
 		

@@ -38,20 +38,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+
 /**
- * 
- * @fileName : ProfilePageListPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for ProfilePageListView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageListPresenter extends PresenterWidget<IsProfilePageListView> implements ProfilePageListUiHandlers {
 
@@ -75,9 +65,7 @@ public class ProfilePageListPresenter extends PresenterWidget<IsProfilePageListV
 		getView().setUiHandlers(this);
 		addRegisteredHandler(RefreshProfileListEvent.TYPE, this);
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	public void onReset() {
 		//super.onReset();
@@ -130,61 +118,21 @@ public class ProfilePageListPresenter extends PresenterWidget<IsProfilePageListV
 			SimpleAsyncCallback<List<CollectionItemDo>> getWorkSpaceAsyncCallback) {
 		this.getWorkSpaceAsyncCallback = getWorkSpaceAsyncCallback;
 	}
-	/**
-	 * This method is used to get shelf collection list items.
-	 */
+
 	@Override
 	public void getSelfCollectionListItems(int pageSize, Integer pageNumber,boolean clearShelfPanel) {
 		getProfilePageService().getUserWorkSpace("c3a96812-62a1-4318-846f-f16fdb99f8d4", getGetWorkSpaceAsyncCallback());
 	}
-	/**
-	 * This method is used to refresh profile list.
-	 */
+
 	@Override
 	public void refreshProfileList(String collectionId, String folderLevel) {
 		getView().refreshProfileList(collectionId, folderLevel);
 	}
-	/**
-	 * 
-	 * @function setUserData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set userData.
-	 * 
-	 * 
-	 * @parm(s) : @param firstName
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setUserData(String firstName){
 		getView().setNoCollectionData(firstName);
 	}
-	/**
-	 * 
-	 * @function setShelfListData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set shelf list data.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setShelfListData(List<CollectionItemDo> collectionItemDo) {
 		getView().clearMyShelfVerPanel();
 		getView().setUserShelfData(collectionItemDo,clrPanel);

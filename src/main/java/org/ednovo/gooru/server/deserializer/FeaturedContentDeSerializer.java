@@ -33,19 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
-/**
- * @fileName : FeaturedContentDeSerializer.java
- *
- * @description : This class is used to deserialize featured content.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Component
 public class FeaturedContentDeSerializer extends DeSerializer{
 	/**

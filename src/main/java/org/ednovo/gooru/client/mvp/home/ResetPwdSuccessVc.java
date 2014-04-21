@@ -42,19 +42,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ResetPwdSuccessVc.java
+ * @author Search Team
  *
- * @description : Related to reset password success popup .
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 	
@@ -66,7 +55,7 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 	@UiField
 	Label resetPasswordLbl;
 	
-	private static final String LOGIN_WITH_NEW_PWD = "! You may now log in with your new password.";
+	private static final String LOGIN_WITH_NEW_PWD = GL_SPL_EXCLAMATION+" "+GL1256;
 
 	private static resetPasswordSuccessVcUiBinder uiBinder = GWT
 			.create(resetPasswordSuccessVcUiBinder.class);
@@ -88,6 +77,7 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 		resetPasswordLbl.setText(userName+LOGIN_WITH_NEW_PWD);
 		appPopUp.show();
 		appPopUp.center();
+		okBtnUc.setText(GL0190);
 		Window.enableScrolling(false);
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 	}

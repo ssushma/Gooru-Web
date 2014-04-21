@@ -27,19 +27,10 @@
  */
 package org.ednovo.gooru.shared.model.search;
 
+
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionSearchResultDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionSearchResultDo extends ResourceSearchResultDo {
 
@@ -55,56 +46,43 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 
 	private int hasAddedToShelf = 0;
 	
+	private Integer collaboratorCount;
+	
 	
 	public CollectionSearchResultDo() {
 
 	}
 
-
-	/** 
-	 * This method is to get the resourceCount
-	 */
 	public int getResourceCount() {
 		return resourceCount;
 	}
 
-
-	/** 
-	 * This method is to set the resourceCount
-	 */
 	public void setResourceCount(int resourceCount) {
 		this.resourceCount = resourceCount;
 	}
 
-
-	/** 
-	 * This method is to get the creatorName
-	 */
 	public String getCreatorName() {
 		return creatorName;
 	}
 
-
-	/** 
-	 * This method is to set the creatorName
-	 */
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
 	}
-
-
-	/** 
-	 * This method is to get the hasAddedToShelf
-	 */
+	
 	public int getHasAddedToShelf() {
 		return hasAddedToShelf;
 	}
 
-
-	/** 
-	 * This method is to set the hasAddedToShelf
-	 */
 	public void setHasAddedToShelf(int hasAddedToShelf) {
 		this.hasAddedToShelf = hasAddedToShelf;
 	}
+
+	public Integer getCollaboratorCount() {
+		return collaboratorCount;
+	}
+
+	public void setCollaboratorCount(Integer collaboratorCount) {
+		this.collaboratorCount = collaboratorCount;
+	}
+	
 }

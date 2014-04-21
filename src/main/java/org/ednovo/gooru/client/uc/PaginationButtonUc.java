@@ -26,19 +26,10 @@ package org.ednovo.gooru.client.uc;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Anchor;
+
 /**
- * @fileName : PaginationButtonUc.java
+ * @author Search Team
  *
- * @description : This  class is used to set pagination button.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class PaginationButtonUc extends Anchor {
 

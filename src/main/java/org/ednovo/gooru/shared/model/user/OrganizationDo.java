@@ -26,21 +26,7 @@ package org.ednovo.gooru.shared.model.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : OrganizationDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class OrganizationDo extends PartyDo {
 
@@ -50,17 +36,13 @@ public class OrganizationDo extends PartyDo {
 	private static final long serialVersionUID = -2998691000518432118L;
 
 	private String organizationCode;
+	
+	public OrganizationDo(){}
 
-	/** 
-	 * This method is to get the organizationCode
-	 */
 	public String getOrganizationCode() {
 		return organizationCode;
 	}
 
-	/** 
-	 * This method is to set the organizationCode
-	 */
 	public void setOrganizationCode(String organizationCode) {
 		this.organizationCode = organizationCode;
 	}

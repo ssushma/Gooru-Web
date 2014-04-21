@@ -36,21 +36,14 @@ import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
+
 /**
- * @fileName : ShelfCollectionResourceChildPresenter.java
- *
- * @description : This class is the presenter for the shelf collection resource child presenter.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfCollectionResourceChildPresenter, IsShelfCollectionResourceView> {
 
@@ -90,22 +83,6 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	public void updateCollectionItem(String collectionItemId, String narration, String start, String stop) {
 		getResourceService().updateCollectionItemMetadata(collectionItemId, narration, null, start, stop, getUpdateCollectionItemAsyncCallback());
 	}
-	/**
-	 * @function updateNarrationItem 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to update the narration.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemId
-	 * @parm(s) : @param narration
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void updateNarrationItem(String collectionItemId, String narration) {
 		getResourceService().updateNarrationMetadata(collectionItemId, narration, null, getUpdateCollectionItemAsyncCallback());
 	}
@@ -114,22 +91,6 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	/*public void getUserCollections(){
 		getResourceService().getUserCollection(getUserCollectionsAsyncCallback());
 	}*/
-	/**
-	 * @function getUserColletionsList 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to get the user collection list.
-	 * 
-	 * 
-	 * @parm(s) : @param pageSize
-	 * @parm(s) : @param pageNum
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void getUserColletionsList(Integer pageSize,Integer pageNum)
 	{
 		getResourceService().getUserCollectionList(pageSize,pageNum,false,getUserCollectionsAsyncCallback());
@@ -175,7 +136,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
     	
     }*/
 	/**
-	 * @return instance of {@link CollectionDo} after update the collections
+	 * @return instance of {@link CollectionItemDo} after update the collection item
 	 */
 	public SimpleAsyncCallback<List<CollectionDo>> getUserCollectionsAsyncCallback() {
 		if (getMyUserCollectionsAsyncCallback == null) {
@@ -189,9 +150,25 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		}
 		return getMyUserCollectionsAsyncCallback;
 	}
-	/**
-	 * @return instance of {@link CollectionItemDo} after update the collection item
-	 */
+	
+	public void getWorkspaceData(int offset,int limit,final boolean clearShelfPanel){
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+			}
+		});
+	}
+
+	public void getFolderItems(final TreeItem item,String parentId) {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().setFolderItems(item,folderListDo);
+			}
+		});
+	}
+
 	public SimpleAsyncCallback<CollectionItemDo> getUpdateCollectionItemAsyncCallback() {
 		if (updateCollectionItemAsyncCallback == null) {
 			updateCollectionItemAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
@@ -261,21 +238,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		}
 		return copyCollectionItemAsyncCallback;
 	}
-	/**
-	 * @function getDeleteCollectionItemAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is simple async call back for  delete collection item.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Void>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public SimpleAsyncCallback<Void> getDeleteCollectionItemAsyncCallback() {
 		if (deleteCollectionItemAsyncCallback == null) {
 			deleteCollectionItemAsyncCallback = new SimpleAsyncCallback<Void>() {
@@ -288,21 +251,6 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		}
 		return deleteCollectionItemAsyncCallback;
 	}
-	/**
-	 * @function getUpdateQuestionItemResourceAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This is simple async call back for update question item.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Void>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public SimpleAsyncCallback<Void> getUpdateQuestionItemResourceAsyncCallback() {
 		if (updateQuestionItemResourceAsyncCallback == null) {
 			updateQuestionItemResourceAsyncCallback = new SimpleAsyncCallback<Void>() {
@@ -316,22 +264,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 		}
 		return updateQuestionItemResourceAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUpdateQuestionItemResourceAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to update question item resource async call back.
-	 * 
-	 * 
-	 * @parm(s) : @param updateQuestionItemResourceAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setUpdateQuestionItemResourceAsyncCallback(
 			SimpleAsyncCallback<Void> updateQuestionItemResourceAsyncCallback) {
 		this.updateQuestionItemResourceAsyncCallback = updateQuestionItemResourceAsyncCallback;
@@ -340,20 +273,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 	
 	
 	
-	/**
-	 * @function getResourceService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to get the resource async service.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ResourceServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public ResourceServiceAsync getResourceService() {
 		
 		return AppClientFactory.getInjector().getResourceService();

@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -44,7 +45,6 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
-import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ProfilePageServiceAsync;
@@ -65,19 +65,18 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
- * 
  * @fileName : ProfilePagePresenter.java
- *
- * @description : This is the presenter class for ProfilePageView.java
- *
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: July 12, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, IsProfilePageProxy> implements ProfilePageUiHandlers {
 	
@@ -99,6 +98,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	private SimpleAsyncCallback<List<CollectionItemDo>> getWorkSpaceAsyncCallback;
 	
+	private SimpleAsyncCallback<List<CollectionItemDo>> getFolderItemsAsyncCallback;
+
 	private SimpleAsyncCallback<BiographyDo> userProfileBiographyAsyncCallback;
 
 	private int PARENT_FOLDER_ID = 0;
@@ -111,10 +112,15 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	private String callBack = "";
 	
+	SignUpPresenter signUpViewPresenter = null;
+	
+	private boolean isRefresh = false;
+	
 	@Inject
-	public ProfilePagePresenter(ProfilePageListPresenter profilePageListPresenter, IsProfilePageView view, IsProfilePageProxy proxy,ImageUploadPresenter imageUploadPresenter) {
+	public ProfilePagePresenter(ProfilePageListPresenter profilePageListPresenter, IsProfilePageView view, IsProfilePageProxy proxy,ImageUploadPresenter imageUploadPresenter, SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.signUpViewPresenter = signUpViewPresenter;
 		this.profilePageListPresenter = profilePageListPresenter;
 		this.imageUploadPresenter=imageUploadPresenter;
 		addRegisteredHandler(RequestFolderOpenEvent.TYPE, this);
@@ -127,16 +133,12 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsProfilePageProxy extends ProxyPlace<ProfilePagePresenter> {
 	}
-	/**
-	 * This method is used to get the view token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	protected void onReveal() {
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.PROFILE_PAGE_TITLE);
@@ -145,88 +147,62 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(false));
 		callBack = "reveal";
 		createProfileUserData();
-		//getUserWorkSpace();
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset() {
-		String userResetId = AppClientFactory.getPlaceManager().getRequestParameter("id");
-		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
-		if(folderId!=null) {
-			callBack = "reset";
+		if(AppClientFactory.getPlaceManager().refreshPlace()) {
+			String userResetId = AppClientFactory.getPlaceManager().getRequestParameter("id");
+			String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
+			if(folderId!=null) {
+				callBack = "reset";
+			}
+			if(userResetId != userId) {
+				callBack = "reveal";
+				userId = userResetId;
+				createProfileUserData();
+			}
+			getUserWorkSpace();
+			if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
+				//To show SignUp (Registration popup)
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
 		}
-		if(userResetId != userId) {
-			userId = userResetId;
-			createProfileUserData();
-		}
-		getUserWorkSpace();
 	}
-	/**
-	 * 
-	 * @function getUserWorkSpace 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to get the folders based on folder id.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	protected void getUserWorkSpace() {
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
 		getView().setContentTabVisibility(true);
+		if(folderId!=null&&!isRefresh) {
+			isRefresh = true;
+			getProfilePageService().getUserWorkSpace(userId, getFolderItemsAsyncCallback());
+		}
 		if(folderId!=null) {
 			getProfilePageService().getFolders(folderId, getGetWorkSpaceAsyncCallback());
 		} else {
 			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
 		}
+		
+		
 	}
-	/**
-	 * onUnBind() is not called when the Presenter is hidden, that would trigger the onHide() method.
-	 */
+	
 	@Override
 	protected void onUnbind() {
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
-	/**
-	 * This method is used to close all the opened popup's and to close ImageUpload Widget.
-	 */
+	
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().closeAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 	}
-	/**
-	 * 
-	 * @function createProfileUserData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to create profile user data.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	private void createProfileUserData() {
 		getView().showProfileView(true);
 		if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())) {
@@ -239,18 +215,20 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				AppClientFactory.getInjector().getUserService().getUserProfileV2Details(userId, USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
 					@Override
 					public void onSuccess(ProfileDo result) {
-						profileDo = result;
-						AppClientFactory.setBrowserWindowTitle(SeoTokens.PROFILE_PAGE_TITLE + profileDo.getUser().getUsernameDisplay());
-						getView().setProfileData(profileDo);
-						setInSlot(TYPE_PUBLIC_SHELF_VIEW, profilePageListPresenter);
-						profilePageListPresenter.setUserData(profileDo.getUser().getUsernameDisplay());
-						
-						if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())&&!isChildUser(result)) {
-							getView().enableEditableData(profileOptionvalue);
-							getView().getChilNoShareOption().setVisible(false);
-						} else if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())&&isChildUser(result)){
-							getView().disableChildData();
-							getView().getChilNoShareOption().setVisible(true);
+						if(result!=null){
+							profileDo = result;
+							AppClientFactory.setBrowserWindowTitle(SeoTokens.PROFILE_PAGE_TITLE + profileDo.getUser().getUsernameDisplay());
+							getView().setProfileData(profileDo);
+							setInSlot(TYPE_PUBLIC_SHELF_VIEW, profilePageListPresenter);
+							profilePageListPresenter.setUserData(profileDo.getUser().getUsernameDisplay());
+							
+							if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())&&!isChildUser(result)) {
+								getView().enableEditableData(profileOptionvalue);
+								getView().getChilNoShareOption().setVisible(false);
+							} else if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())&&isChildUser(result)){
+								getView().disableChildData();
+								getView().getChilNoShareOption().setVisible(true);
+							}
 						}
 					}
 				});
@@ -282,26 +260,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function isChildUser 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to check wheather the user is child user or not.
-	 * 
-	 * 
-	 * @parm(s) : @param profileDo
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private boolean isChildUser(ProfileDo profileDo) {
 		dob = profileDo.getDateOfBirth();
 		if (profileDo.getUser().getLoginType().equalsIgnoreCase("credential")) {
@@ -328,34 +287,13 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		}
 		return isUserUnder13();
 	}
-	/**
-	 * 
-	 * @function getAge 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to get the age based on dob.
-	 * 
-	 * 
-	 * @parm(s) : @param birthDate
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private int getAge(Date birthDate) {
 		long ageInMillis = new Date().getTime() - birthDate.getTime();
 		Date age = new Date(ageInMillis);
 		return age.getYear() - 70;
 	}
-	/**
-	 * This method is used to set the share view.
-	 */
+
 	@Override
 	public void setShareView() {
 		String id=AppClientFactory.getPlaceManager().getRequestParameter("id");
@@ -373,9 +311,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			}
 		});
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -408,25 +344,25 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				}
 			}
 		});
+
+		setFolderItemsAsyncCallback(new SimpleAsyncCallback<List<CollectionItemDo>>() {
+			@Override
+			public void onSuccess(List<CollectionItemDo> collectionItemDo) {
+				profilePageListPresenter.setShelfListData(collectionItemDo);
+			}
+		});
 	}
-	/**
-	 * This method is used to get the url parameters.
-	 */
+
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 	}
-	/**
-	 * This method is use dto go to profile page.
-	 */
+
 	@Override
 	public void requestFolderView(String collectionId, Map<String, String> params) {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE, params);
 	}
-	/**
-	 * This method is used to update profile visibility setting.
-	 * 
-	 */
+
 	@Override
 	public void updateProfileVisibilitySetting(String optionalValue) {
 		AppClientFactory.getInjector().getUserService().updateUserProfileVisibility(
@@ -467,32 +403,39 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			SimpleAsyncCallback<List<CollectionItemDo>> getWorkSpaceAsyncCallback) {
 		this.getWorkSpaceAsyncCallback = getWorkSpaceAsyncCallback;
 	}
+
 	/**
-	 * @return the userProfileBiographyAsyncCallback
+	 * @return the getGetWorkSpaceAsyncCallback
 	 */
+	public SimpleAsyncCallback<List<CollectionItemDo>> getFolderItemsAsyncCallback() {
+		return getFolderItemsAsyncCallback;
+	}
+
+	/**
+	 * @param getWorkSpaceAsyncCallback
+	 *            the getWorkSpaceAsyncCallback to set
+	 */
+	public void setFolderItemsAsyncCallback(
+			SimpleAsyncCallback<List<CollectionItemDo>> getFolderItemsAsyncCallback) {
+		this.getFolderItemsAsyncCallback = getFolderItemsAsyncCallback;
+	}
+	
 	public SimpleAsyncCallback<BiographyDo> getUserProfileBiographyAsyncCallback() {
 		return userProfileBiographyAsyncCallback;
 	}
-	/**
-	 * @param userProfileBiographyAsyncCallback
-	 *            the userProfileBiographyAsyncCallback to set
-	 */
+
 	public void setUserProfileBiographyAsyncCallback(
 			SimpleAsyncCallback<BiographyDo> userProfileBiographyAsyncCallback) {
 		this.userProfileBiographyAsyncCallback = userProfileBiographyAsyncCallback;
 	}
-	/**
-	 * This method is used to clear the Content Item Data and to set the Collection Data.
-	 */
+
 	@Override
 	public void requestCollectionView(CollectionItemDo collectionItemDo,
 			Map<String, String> params) {
 		getView().clearContentItemData();
 		getView().setCollectionData(collectionItemDo);
 	}
-	/**
-	 * This method is used to show the upload image widget.
-	 */
+
 	@Override
 	public void showUploadImageWidget() {
 		//FIXME under age 13 
@@ -502,16 +445,12 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
 	}
-	/**
-	 * This method is used to set the profile image.
-	 */
+
 	@Override
 	public void setUserProfileImage(String imageUrl) {
 		getView().setUserProfileImage(imageUrl);
 	}
-	/**
-	 * This methodis used to update user biography.
-	 */
+
 	@Override
 	public void updateUserBiography(String gooruUid, String bioText, String userType,
 			String firstName, String lastName, String gender) {
@@ -520,9 +459,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 						gooruUid), bioText, userType, firstName, lastName,
 						gender, getUserProfileBiographyAsyncCallback());
 	}
-	/**
-	 * This method is used to add course.
-	 */
+
 	@Override
 	public void addCourse(Set<ProfileCodeDo> profileCodeDo) {
 		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDo, "profilePage", new SimpleAsyncCallback<Void>(){
@@ -532,9 +469,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			}
 		});
 	}
-	/**
-	 * This method is used to delete course.
-	 */
+
 	@Override
 	public void deleteCourse(CodeDo codeDo) {
 		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, "profilePage", new SimpleAsyncCallback<Void>(){
@@ -544,53 +479,15 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function isUserUnder13 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :Returns isUserUnder13.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public boolean isUserUnder13() {
 		return isUserUnder13;
 	}
-	/**
-	 * 
-	 * @function setUserUnder13 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set isUserUnder13.
-	 * 
-	 * 
-	 * @parm(s) : @param isUserUnder13
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserUnder13(boolean isUserUnder13) {
 		this.isUserUnder13 = isUserUnder13;
 	}
-	/**
-	 * This method is used to get taxonomy data.
-	 */
+
 	@Override
 	public void getTaxonomyData() {
 		final String userId = AppClientFactory.getPlaceManager().getRequestParameter("id");

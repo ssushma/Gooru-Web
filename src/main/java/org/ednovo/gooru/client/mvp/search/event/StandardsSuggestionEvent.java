@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -31,19 +33,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : StandardsSuggestionEvent.java
- *
- * @description : This is used to set StandardsSuggestions.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class StandardsSuggestionEvent extends GwtEvent<StandardsSuggestionHandler> {
 
@@ -57,61 +48,21 @@ public class StandardsSuggestionEvent extends GwtEvent<StandardsSuggestionHandle
 	public StandardsSuggestionEvent(SearchDo<CodeDo> searchDo) {
 		setSearchDo(searchDo);
 	}
-	/**
-	 *  Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<StandardsSuggestionHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(StandardsSuggestionHandler handler) {
 		handler.requestStandardsSuggestion(getSearchDo());
 	}
-	/**
-	 * 
-	 * @function getSearchDo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns searchDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchDo<CodeDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchDo<CodeDo> getSearchDo() {
 		return searchDo;
 	}
-	/**
-	 * 
-	 * @function setSearchDo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to set SearchDo
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchDo(SearchDo<CodeDo> searchDo) {
 		this.searchDo = searchDo;
 	}

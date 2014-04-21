@@ -28,21 +28,6 @@
 package org.ednovo.gooru.client.mvp.classpages.event;
 
 import com.google.gwt.event.shared.EventHandler;
-/**
- * 
- * @fileName : UpdateClasspageImageEventHandler.java
- *
- * @description : This file deals with update Classpage Image EventHandlers.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 public interface UpdateClasspageImageEventHandler extends EventHandler {
 
 	

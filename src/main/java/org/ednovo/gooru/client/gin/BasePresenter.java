@@ -31,20 +31,10 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
+
 /**
+ * @author Search Team
  * 
- * @fileName : BasePresenter.java
- *
- * @description : A singleton presenter, the basic building block of all the presenters.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 
 public abstract class BasePresenter<V extends IsView, P extends Proxy<?>> extends Presenter<V, P> {
@@ -68,6 +58,7 @@ public abstract class BasePresenter<V extends IsView, P extends Proxy<?>> extend
 	public void onBind() {
 		super.onBind();
 		getView().onLoad();
+//		this.getWidget().getElement().addClassName("wrapperParent");
 //		Element element = Document.get().getElementById("divLoading");
 //		if (element!=null){
 //			element.removeFromParent();

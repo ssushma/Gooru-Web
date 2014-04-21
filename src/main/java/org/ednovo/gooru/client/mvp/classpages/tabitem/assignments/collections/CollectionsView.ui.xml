@@ -3,34 +3,42 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:a="urn:import:aj.org.objectweb.asm"
 	xmlns:gt="urn:import:com.tractionsoftware.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
 	xmlns:dt="urn:import:com.google.gwt.user.datepicker.client">
-	<ui:with
-		type="org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsCBundle"
-		field="res" />
-	<g:HTMLPanel>
-		<g:HTMLPanel styleName="{res.css.myCollectionTitleDashedNoBorderContainerTwo}">
-			<g:HTMLPanel styleName="{res.css.myCollectionInsightChapterContainerNoBorder}">
-				<g:HTMLPanel styleName="{res.css.myCollectionInsightChapterBigImageContainer}">
-					<g:HTMLPanel styleName="{res.css.myCollectionInsightChapterBigImage}">
-						<g:Image title="Collection" altText="Collection" ui:field="collectionImage" styleName="{res.css.imageDim}"/>
-						<g:FlowPanel styleName="{res.css.collectionHover}">
-							<g:Label styleName="{res.css.playIcon}" />
-						</g:FlowPanel>
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.myCollectionInsightChapterTitleContainer}">
-					<g:HTMLPanel styleName="{res.css.myCollectionInsightChapterTitle}">
-						<g:HTML text="Collection Title" ui:field="collectionTitle"></g:HTML>
-					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{res.css.myCollectionInsightChapterSubTitleBlack}">
-						<!-- <g:Label text="Collection Description" ui:field="collectionDesc"></g:Label> -->
-						<g:HTML ui:field="collectionDesc" />
-					</g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.collectionHoverEditRemoveContainer}" ui:field="actionPanel">
-					<g:Button styleName="primary" ui:field="editCollectionLbl">Edit</g:Button>
-                    <g:Label styleName="{res.css.CollectionHoverEideRemove}" ui:field="removeCollectionLbl">Remove</g:Label>
-                </g:HTMLPanel>
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-	</g:HTMLPanel>
+	<ui:style field="style" src="collections.css" />
+	<g:FlowPanel styleName="{style.classpageContainer}" ui:field="classpageItemContainer">
+	  <g:FlowPanel styleName="{style.classpageHeader}" ui:field="editButtonsToolBar">
+	    <g:HTMLPanel styleName="{style.headerLeft}">
+	    	<g:Label styleName="{style.headerText} " ui:field="dueDateText"></g:Label>
+	    	<g:Label styleName="{style.headerDueDate}" ui:field="dueDate"></g:Label>
+	    </g:HTMLPanel>
+	    <g:FlowPanel styleName="{style.headerRight}"  ui:field="headerRightPanel">
+	      <g:Button styleName="{style.viewAnaytics}" ui:field="viewClassItemAnalyticsButton"></g:Button>
+	      	<g:FlowPanel styleName="{style.AnalyticsDropdown}" ui:field="dropdownPanelAnalyticsButton">
+	        <g:Label styleName="{style.AnalyticsDropdownLi}" ui:field="moniterProgress"></g:Label>
+	        <g:Label styleName="{style.AnalyticsDropdownLi}" ui:field="collectionSummary"></g:Label>
+     	  </g:FlowPanel>
+	      <g:Button styleName="{style.editButton}" ui:field="editClassItemButton"></g:Button>
+	      <g:FlowPanel styleName="{style.classpageDropdown}" ui:field="dropdownPanel">
+	        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editDueDateButton"></g:Label>
+	        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editDirectionButton"></g:Label>
+	        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="editCollection"></g:Label>
+	        <g:Label styleName="{style.classpadeDropdownLi}" ui:field="deleteItemButton"></g:Label>
+     	  </g:FlowPanel>
+	    </g:FlowPanel>
+	  </g:FlowPanel>
+	  <g:FlowPanel styleName="{style.classpageContent}">
+	    <g:Label styleName="{style.classpageHeading}" ui:field="directionsLabel"></g:Label>
+	    <g:HTMLPanel styleName="{style.classpageDesc}" ui:field="directionContentPanel"></g:HTMLPanel>
+	    <g:Label styleName="{style.classpageBorder}"></g:Label>
+	    <g:FlowPanel styleName="{style.classpageContentPanel}">
+		    <g:HTMLPanel styleName="{style.classpageResourceThumbnail}" ui:field="thumbnailContainer"> 
+		    	<g:Image  ui:field="collectionImage" styleName="{style.classpageResourceImage}"/> 
+		    </g:HTMLPanel>
+		    <g:FlowPanel styleName="{style.resourceHeaderTextPanel}">
+		      <g:Anchor styleName="{style.resourceTitle}" ui:field="classpageItemTitle"></g:Anchor>
+		      <g:Label styleName="{style.classpageHeading}" ui:field="learningObjective"></g:Label>
+		      <g:HTML styleName="{style.classpageDesc}" ui:field="learningObject"></g:HTML>
+		    </g:FlowPanel>
+	  	</g:FlowPanel>
+	  </g:FlowPanel>
+	</g:FlowPanel>
 </ui:UiBinder> 

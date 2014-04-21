@@ -29,19 +29,8 @@ import java.util.Map;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RequestFolderOpenHandler.java
- *
- * @description : To Set specific folder view in folders workspace by given folderId
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface RequestFolderOpenHandler extends EventHandler {
 

@@ -52,5 +52,9 @@ public class ChildView<U extends IsChildPresenter> extends Composite implements 
 	public U getPresenter() {
 		return childPresenter;
 	}
+	@Override
+	public void onLoad(){
+		super.onLoad();
+	}
 
 }

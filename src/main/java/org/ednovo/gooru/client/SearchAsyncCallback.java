@@ -29,21 +29,7 @@ import java.util.Date;
 import org.ednovo.gooru.shared.model.search.AbstractSearchDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-/**
- * 
- * @fileName : SearchAsyncCallback.java
- *
- * @description :  This class requests GWT async API calls.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public abstract class SearchAsyncCallback<T extends AbstractSearchDo<?>> implements AsyncCallback<T> {
 
 	private long version = 0;
@@ -52,31 +38,14 @@ public abstract class SearchAsyncCallback<T extends AbstractSearchDo<?>> impleme
 	public void onFailure(Throwable caught) {
 		// Ignore Search Errors
 	}
-	/**
-	 * On API call success sets respective error message.
-	 */
+
 	@Override
 	public final void onSuccess(T result) {
 		if (version == result.getVersion()) {
 			onCallSuccess(result);
 		}
 	}
-	/**
-	 * 
-	 * @function execute 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method will execute automatically.
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 *
-	 */
+
 	public final void execute(T searchDo) {
 		searchDo.setVersion(new Date().getTime());
 		version = searchDo.getVersion();

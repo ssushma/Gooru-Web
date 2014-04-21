@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -42,22 +43,11 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-	/**
-	 * 
-	 * @fileName : SearchHomeFilterVc.java
-	 *
-	 * @description : This file is related to Search Filters.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-public class SearchHomeFilterVc extends Composite {
+/**
+ * @author Search Team
+ *
+ */
+public class SearchHomeFilterVc extends Composite implements MessageProperties{
 
 	private static SearchHomeFilterVcUiBinder uiBinder = GWT.create(SearchHomeFilterVcUiBinder.class);
 
@@ -81,6 +71,8 @@ public class SearchHomeFilterVc extends Composite {
 	HomeCBundle res;
 
 	private CheckBox filterCheBox;
+	
+	@UiField Label filterOptionsLbl,standardText,sourceLbl;
 
 	/**
 	 * Class constructor
@@ -89,6 +81,9 @@ public class SearchHomeFilterVc extends Composite {
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		filterOptionsLbl.setText(GL1309.toUpperCase());
+		standardText.setText(GL0724.toUpperCase());
+		sourceLbl.setText(GL0566.toUpperCase());
 	}
 
 	/**
@@ -99,7 +94,7 @@ public class SearchHomeFilterVc extends Composite {
 		Collection<String> categories = filterList.getCategories().values();
 		List<String> subjects = filterList.getSubjects();
 
-		Label gradeLabel = new Label("GRADE");
+		Label gradeLabel = new Label(GL1076.toUpperCase());
 		gradeLabel.setStyleName(HomeCBundle.INSTANCE.css().filterSubHeader());
 		filterGradeFloPanel.clear();
 		filterGradeFloPanel.add(gradeLabel);
@@ -112,7 +107,7 @@ public class SearchHomeFilterVc extends Composite {
 			filterGradeFloPanel.add(filterCheBox);
 		}
 
-		Label categoryLabel = new Label("RESOURCE TYPE");
+		Label categoryLabel = new Label(GL1310.toUpperCase());
 		categoryLabel.setStyleName(HomeCBundle.INSTANCE.css().filterSubHeader());
 		filterColOneResourceTypeFloPanel.clear();
 		filterColTwoResourceTypeFloPanel.clear();
@@ -131,7 +126,7 @@ public class SearchHomeFilterVc extends Composite {
 			i++;
 		}
 
-		Label subjectLabel = new Label("SUBJECTS");
+		Label subjectLabel = new Label(GL1311.toUpperCase());
 		subjectLabel.setStyleName(HomeCBundle.INSTANCE.css().filterSubHeader());
 		filterSubjectFloPanel.clear();
 		filterSubjectFloPanel.add(subjectLabel);

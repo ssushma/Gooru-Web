@@ -4,15 +4,13 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<g:FlowPanel ui:field="logPanel" styleName="{res.css.logPanel}">
-		<g:Anchor styleName="{res.css.logoutText}" ui:field="anrSettings" href="#settings"></g:Anchor>
+		<g:Anchor styleName="{res.css.logoutText}" ui:field="anrSettings"></g:Anchor>
 		<g:Anchor styleName="{res.css.logoutText}" ui:field="classicGooruAnr"></g:Anchor>
 		<g:HTMLPanel styleName="{res.css.userMenuBottomLine}" />
-		<g:Anchor styleName="{res.css.logoutText}" ui:field="supportAnr"
-			href="http://support.goorulearning.org/hc/en-us"
-			target="_blank"></g:Anchor>
+		<g:Anchor styleName="{res.css.logoutText}" ui:field="supportAnr" target="_blank"></g:Anchor>
 		<g:Anchor styleName="{res.css.logoutText}" ui:field="feedbackAnr"></g:Anchor>
 		<!-- <g:Anchor styleName="{res.css.logoutText}" ui:field="gooruAnr"></g:Anchor> -->
-		<g:HTMLPanel styleName="{res.css.userMenuBottomLine}" />
+		<g:HTMLPanel styleName="{res.css.userMenuBottomLine}"/>
 		<g:Anchor styleName="{res.css.logoutText}" ui:field="logoutAnr"></g:Anchor>
 	</g:FlowPanel>
 </ui:UiBinder> 

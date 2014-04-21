@@ -29,19 +29,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
- * 
- * @fileName : SearchMoreInfoVcCBundle.java
+ * @author Search Team
  *
- * @description : This file is the interface for SearchMoreInfoVc and to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SearchMoreInfoVcCBundle extends ClientBundle {
 

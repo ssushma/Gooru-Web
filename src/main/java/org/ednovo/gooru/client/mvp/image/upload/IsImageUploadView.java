@@ -29,18 +29,10 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.gwtplatform.mvp.client.PopupView;
+
 /**
- * @fileName : IsImageUploadView.java
+ * @author Search Team
  *
- * @description :  Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsImageUploadView extends PopupView, IsViewWithHandlers<ImageUploadUiHandlers> {
 	/**

@@ -30,18 +30,8 @@ package org.ednovo.gooru.client.mvp.shelf.event;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
- * @fileName : EmbedEnableHandler.java
- *
- * @description : Handler for {@link EmbedEnableEvent}.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface EmbedEnableHandler extends EventHandler {
 

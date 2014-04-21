@@ -3,7 +3,9 @@
 	padding: 0px;
 	font-family:Arial, sans-serif !important;
 }
-
+.shelfFolderItemTitle span.AM img{
+	max-height:25px !important;
+}
 body {
 	background: url("../images/gray_noise_25.png");
 	color:#515151;
@@ -205,6 +207,9 @@ button.disabled, button.disabled:hover {
 .plusButton.secondary {
 	padding: 7px 9px 7px 25px;
 	
+	/* IE 10 */
+	background: #DDD url("../images/buttons/plus-blue.png") 7px center no-repeat;
+	
 	/* Safari 4-5, Chrome 1-9 */
 	background: url("../images/buttons/plus-blue.png") 7px center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#DDD));
 
@@ -213,9 +218,6 @@ button.disabled, button.disabled:hover {
 
 	/* Firefox 3.6+ */
 	background: url("../images/buttons/plus-blue.png") 7px center no-repeat, -moz-linear-gradient(top, #FDFDFD, #DDD);
-
-	/* IE 10 */
-	background: url("../images/buttons/plus-blue.png") 7px center no-repeat, -ms-linear-gradient(top, #FDFDFD, #DDD);
 
 	/* Opera 11.10+ */
 	background: url("../images/buttons/plus-blue.png") 7px center no-repeat, -o-linear-gradient(top, #FDFDFD, #DDD);
@@ -322,15 +324,20 @@ button.disabled, button.disabled:hover {
 	height: 20px;
 }
 
-.interactive { background-position: 0px 0px; }
-.textbook { background-position: -27px -0px; }
-.question { background-position: -54px -0px; }
-.handout { background-position: -0px -20px; }
-.lesson { background-position: -27px -20px; }
-.exam { background-position: -54px -20px; }
-.slide { background-position: -0px -40px; }
-.video { background-position: -27px -40px; }
-.website { background-position: -54px -40px; }
+.interactive {background-position: 0px -28px;}
+.textbook {background-position: 0px -196px;}
+.question {background-position: 0px -140px;}
+.handout {background-position: 0px -56px;}
+.lesson {background-position: 0px -112px;}
+.exam {background-position: 0px -84px;}
+.slide {background-position: 0px -168px;}
+.video {background-position: 0px 0px;}
+.website {background-position: 0px -224px;}
+.webpage {background-position: 0px -224px;}
+.audio {background-position: 0px -279px;}
+.image {background-position: 0px -251px;}
+.other {background-position: 0px -307px;}
+.text {background-position: 0px -196px;}
 
 .grayPrimaryButton{
 	color: #1076BB;
@@ -359,4 +366,441 @@ button.disabled, button.disabled:hover {
 	width: 200px;
 	height: 175px;
 	margin: 0 auto;				
+}
+/* added in release-5.12 */
+/*searchHomeFilter*/
+
+.categoryFilterContainer  input[type="checkbox"] {
+	margin: 3px 0.5ex !important;
+}
+
+.categoryFilterContainer .filterCheckBox label {
+	padding: 3px 31px;
+	background: url(../images/resource-type-icons.png) no-repeat transparent;
+}
+
+.filterCheckBox {
+	float: left;
+/* 	width: 160px;
+ */	margin: 2px 5px;
+}
+
+.videos label {
+	background-position: 0px 1px !important;	
+}
+
+.interactives label {
+	background-position: 0px -27px !important;
+}
+
+/*.handouts label {
+	background-position: 0px -55px !important;
+}
+
+ .exams label {
+	background-position: 0px -83px !important;
+}
+
+.lessons label {
+	background-position: 0px -111px !important;
+} */
+
+.questions label {
+	background-position: 0px -139px !important;
+}
+/* 
+.slides label {
+	background-position: 0px -167px !important;	
+}
+ */
+.texts label {
+	background-position: 0px -55px !important;
+}
+
+.websites label {
+	background-position: 0px -223px !important;
+}
+.audio label{
+	background-position: 0px -279px !important;
+}
+.images label {
+	background-position: 0px -251px !important;
+}
+.other label {
+	background-position: 0px -307px !important;
+}
+.webpage label {
+	background-position: 0px -223px !important;
+}
+
+/*///////////////////////// NEW //////////////////*/
+button.primary.dropdownButton {
+	padding: 7px 43px 7px 10px;
+	color: white;
+	background: #1076bb url("../images/folders/panel/dropdown-button.png") right center no-repeat;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC),
+		to(#1076BB));
+	background: url("../images/folders/panel/dropdown-button.png") right center no-repeat,
+		-webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("./_images/dropdown-button.png") right center no-repeat,
+		-ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url("../images/folders/panel/dropdown-button.png") right center no-repeat,
+		-o-linear-gradient(top, #4c98cc, #1076bb);
+	border-radius: 4px;
+	border: 1px solid #1076bb;
+	cursor: pointer;
+}
+
+button.primary.dropdownButton:hover {
+	background: #1076BB url("../images/folders/panel/dropdown-button.png") right center no-repeat;
+}
+
+button.secondary.dropdownButton {
+	padding: 7px 43px 7px 10px;
+	color: #1076BB;
+	background: #DDD url("../images/folders/panel/dropdown-button-secondary.png") right center no-repeat;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FDFDFD),
+		to(#DDD));
+	background: url("../images/folders/panel/dropdown-button-secondary.png") right center no-repeat,
+		-webkit-linear-gradient(top, #FDFDFD, #DDD);
+	background: url("./_images/dropdown-button-secondary.png") right center no-repeat,
+		-ms-linear-gradient(top, #FDFDFD, #DDD);
+	background: url("../images/folders/panel/dropdown-button-secondary.png") right center no-repeat,
+		-o-linear-gradient(top, #FDFDFD, #DDD);
+	border-radius: 4px;
+	border: 1px solid #DDD;
+	cursor: pointer;
+}
+
+button.secondary.dropdownButton:hover {
+	background: #DDD url("../images/folders/panel/dropdown-button-secondary.png") right center no-repeat;
+}
+
+.dropdownButtonContainer {
+	float: right;
+	width: 76px;
+}
+
+.dropdownButtonContainer .dropdown {
+    display:none;
+    background: white;
+    border: 1px solid #ddd;
+    width: 95px;
+    position: absolute;
+    z-index: 98;
+    line-height: 1.2em;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.dropdownButtonContainer:hover .dropdown {
+    display:block;
+}
+
+.dropdownButtonContainer .dropdown .option {
+    padding:5px;
+}
+
+.dropdownButtonContainer .dropdown .option:hover {
+    background-color:#CFE3F1;
+    cursor:pointer;
+}
+
+.dropdownButtonContainer .dropdown .option.disabled {
+    color:#999;
+}
+
+.dropdownButtonContainer .dropdown .option.disabled:hover {
+    background-color:white;
+    cursor:default;
+}
+
+button.backArrowButton {
+    font-size:12px;
+	padding: 7px 10px 7px 24px;
+	color: #1076BB;
+	background: #DDD url("../images/folders/panel/back-button-arrow.png") left center no-repeat;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#FDFDFD),
+		to(#DDD));
+	background: url("../images/folders/panel/back-button-arrow.png") left center no-repeat,
+		-webkit-linear-gradient(top, #FDFDFD, #DDD);
+	background: url("./_images/back-button-arrow.png") left center no-repeat,
+		-ms-linear-gradient(top, #FDFDFD, #DDD);
+	background: url("../images/folders/panel/back-button-arrow.png") left center no-repeat,
+		-o-linear-gradient(top, #FDFDFD, #DDD);
+	border-radius: 4px;
+	border: 1px solid #DDD;
+	cursor: pointer;
+}
+
+button.backArrowButton:hover {
+	background: #DDD url("../images/folders/panel/back-button-arrow.png") left center no-repeat;
+}
+
+.pleaseWaitMessage {
+	font-style:italic;
+	color:#515151;
+}
+
+.toggle div.toggleSpanMainDiv div
+{
+	display: none;
+}
+@media only screen
+{
+	.toggle
+	{
+		display: block;
+		height: 30px;
+		overflow: visible;
+		padding: 0;
+		position: relative;
+		color: white;
+		cursor:pointer;
+	}
+	.toggle *
+	{
+		box-sizing: border-box;
+		moz-box-sizing: border-box;
+		webkit-box-sizing: border-box;
+	}
+	.toggle a
+	{
+		display: block;
+		moz-transition: all 0.3s ease-out;
+		transition: all 0.3s ease-out;
+		webkit-transition: all 0.3s ease-out;
+		background-color: white;
+		border: 1px solid lightgrey;
+		border-radius: 100%;
+		box-shadow: inset 0 -3px 3px rgba(0, 0, 0, 0.025), 0 1px 4px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.1);
+		left: 5px;
+		moz-transition: all 0.3s ease-out;
+		transition: all 0.3s ease-out;
+		webkit-transition: all 0.3s ease-out;
+		display: block;
+		height: 25px;
+		padding: 0;
+		position: absolute;
+		right: 50%;
+		top: 4px;
+		width: 25px;
+		z-index: 4;
+	}
+	.toggle div, .toggle >  div.toggleSpanMainDiv
+	{
+		line-height: 32px;
+		vertical-align: middle;
+	}
+	.toggle div
+	{
+		display: block;
+		position: relative;
+		width: 100%;
+		z-index: 3;
+	}
+	.toggle input
+	{
+		opacity: 0;
+		position: absolute;
+		z-index: 5;
+		cursor: pointer;
+	}
+	.toggle input:checked ~ a
+	{
+		right: 0%;
+	}
+	.toggle > div.toggleSpanMainDiv
+	{
+		left: -100px;
+		margin: 0;
+		padding-right: 100px;
+		position: absolute;
+		text-align: left;
+
+		/* width: 100%; */
+		width:inherit;
+	}
+	.toggle > div.toggleSpanMainDiv div
+	{
+		display: block;
+		left: 0;
+		margin-left: 100px;
+		position: absolute;
+		text-align: center;
+		top: 0;
+		z-index: 5;
+		opacity: 0;
+/*		width: 100%;*/
+		width:inherit;
+		-moz-box-sizing:border-box;
+	}
+	.toggle > div.toggleSpanMainDiv div:last-child
+	{
+		left: 0;
+	}
+	.toggle > div.toggleSpanMainDiv div:first-of-type
+	{
+		opacity: 1;
+		padding-left: 30px;
+	}
+	.toggle > div.toggleSpanMainDiv div:last-of-type
+	{
+		padding-right: 30px;
+	}
+	.toggle > div.toggleSpanMainDiv:before
+	{
+		background-color: #999;
+		border: 1px solid #777;
+		border-radius: 30px;
+		//box-shadow: inset rgba(0, 0, 0, 0.1) 0 1px 0;
+		background-color:#999;
+		-moz-box-shadow:    inset 0 0 10px #777;
+	   -webkit-box-shadow: inset 0 0 10px #777;
+	   box-shadow:         inset 0 0 10px #777;
+		content: '';
+		display: block;
+		height: 32px;
+/*		width: 100%;*/
+		width:inherit;
+		left: 100px;
+		position: absolute;
+		top: 0;
+		moz-transition: all 0.5s ease-out;
+		transition: all 0.5s ease-out;
+		webkit-transition: all 0.5s ease-out;
+	}
+	.toggle input:checked ~ a
+	{
+		left: 100%;
+		margin-left: -30px;
+	}
+	.toggle input:checked ~ div.toggleSpanMainDiv:before
+	{
+		border-color: #1076BB;
+		//box-shadow: inset 0 0 0 30px #1076BB;
+		background: #579ECF;
+		-moz-box-shadow:    inset 0 0 10px #1076BB;
+	   	-webkit-box-shadow: inset 0 0 10px #1076BB;
+	   	box-shadow:         inset 0 0 10px #1076BB;
+	}
+	.toggle input:checked ~ div.toggleSpanMainDiv div:first-of-type
+	{
+		opacity: 0;
+	}
+	.toggle input:checked ~ div.toggleSpanMainDiv div:last-of-type
+	{
+		color: white;
+		opacity: 1;
+	}
+	input:checked + div
+	{
+		color: #3a3a3a;
+	}
+	.checkboxStyle {
+		color: #999999;
+		width:120px;
+		height: 34px;
+		border: 1px solid #DDD;
+		vertical-align: middle;
+	}
+}
+
+/* Question mark with tool tip popup */
+.questionHoverContainer {
+	display:inline-block;
+	position:relative;
+}
+
+.questionHoverContainer .tooltipContainer {
+	width:180px;
+	margin-top: 3px;;
+}
+
+.tooltipContainer {
+	display:none;
+}
+
+.roleOption:hover .tooltipContainer, .questionHoverContainer:hover .tooltipContainer, .questionHoverContainerParentAccount:hover .tooltipContainer{
+	display:block;
+}
+
+.questionHoverContainer {
+	margin-top:7px;
+}
+
+.emailReg .questionHoverContainer {
+	margin-right: -2px;
+	margin-top: 8px;
+}
+
+.questionHover {
+	display:inline;
+	margin:2px;
+	border-radius:10px;
+	padding:1px 5px;
+	background-color:#87BADD;
+	color:white;
+	cursor:pointer;
+}
+
+.tooltipContainer {
+	width: 150px;
+	position: absolute;
+	left:-80px;
+	z-index:9999;
+	margin-top: 0px;
+}
+
+.interests .tooltipContainer {
+	padding:15px;
+}
+
+
+.arrowBorder {
+ 	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+	margin:auto;
+	border-top: none;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	top: -9px;
+	border-top: none;
+	z-index: 100;
+}
+.tooltipContent {
+	text-align:left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 180px;
+	float:left;
+}
+
+.tooltipContentTitle {
+	font-weight: bold;
+	padding-bottom: 10px;
 }

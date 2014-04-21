@@ -27,18 +27,10 @@ package org.ednovo.gooru.client.mvp.folders.edit.tab.info;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+
 /**
- * @fileName : FolderInfoTabUiHandlers.java
+ * @author Search Team
  *
- * @description : The interface for view classes that handles all the UI-related code for a FolderInfoTabPresenter.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface FolderInfoTabUiHandlers extends BaseUiHandlers {
 	

@@ -22,15 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
 
@@ -38,10 +43,19 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface LibraryServiceAsync extends BaseServiceAsync {
 
-	void getCourses(String subjectName, AsyncCallback<ArrayList<CourseDo>> callback);
-	void getLibraryFeaturedUsers(AsyncCallback<ArrayList<LibraryUserDo>> callback);
-	void getLessonsOnPagination(String subjectName, String topicId, int offset, int limit, AsyncCallback<ArrayList<LessonDo>> callback);
-	void getSubjects(String subjectId, AsyncCallback<HashMap<String, SubjectDo>> callback);
+	void getCourses(String subjectName, String libraryName, AsyncCallback<ArrayList<CourseDo>> callback);
+	void getLibraryFeaturedUsers(String libraryName, AsyncCallback<ArrayList<LibraryUserDo>> callback);
+	void getLessonsOnPagination(String subjectName, String topicId, int offset, int limit, String libraryName, AsyncCallback<ArrayList<LessonDo>> callback);
+	void getSubjects(String subjectId, String libraryName, AsyncCallback<HashMap<String, SubjectDo>> callback);
+	void getSubjectsForStandards(String subjectId, String libraryName, AsyncCallback<HashMap<String, StandardsDo>> callback);
 	void getConcept(String gooruOid, boolean skipCollectionItems, AsyncCallback<ConceptDo> callback);
-	void getTopicsOnPagination(String subjectId, String unitId, AsyncCallback<ArrayList<TopicDo>> callback);
+	void getTopicsOnPagination(String subjectId, String unitId, String libraryName, int offset, String standardId, AsyncCallback<ArrayList<TopicDo>> callback);
+	void getLibraryCollections(String courseType, String lessonId, String libraryName, AsyncCallback<ArrayList<ConceptDo>> callback);
+	void getPopularCollectionsData(String courseId, AsyncCallback<ArrayList<ConceptDo>> callback);
+	void getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType, AsyncCallback<PartnerFolderListDo> callback);
+	void getPartnerChildFolders(String gooruUid, int offset, int limit,String parentId,String sharingType, String collectionType, AsyncCallback<PartnerConceptListDo> callback);
+	void getPartnerPaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<PartnerFolderListDo> callback);
+	void getPartners(AsyncCallback<ArrayList<LibraryUserDo>> callback) throws GwtException;
+	void getConceptForStandards(String gooruOid,String rooteNodeId, boolean skipCollectionItems, AsyncCallback<ConceptDo> callback);
+
 }

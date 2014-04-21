@@ -22,23 +22,11 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client;
 
 import org.ednovo.gooru.shared.exception.GwtException;
-/**
- * 
- * @fileName : HasError.java
- *
- * @description : Checks for errors.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface HasError {
 
 	void setErrors(GwtException exception);

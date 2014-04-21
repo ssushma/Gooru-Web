@@ -35,19 +35,10 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
+
 /**
- * @fileName : SearchDeSerializer.java
- *
- * @description : This class is used to deserialize search results.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  extends DeSerializer{
 
@@ -87,6 +78,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String LICENSE = "license";
 	public static final String VOTES_UP = "votesUp";
 	public static final String VOTES_DOWN = "votesDown";
+	public static final String COLLABORATOR_COUNT = "collaboratorCount";
 	public static final String ASSETURI = "assetURI";
 	public static final String RESOURCE_SOURCE="resourceSource";
 	public static String QUESTION_TEXT = "questionText";
@@ -97,6 +89,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	
 	public static final String MEDIA_TYPE = "mediaType";
 
+	public static final String RESOURCE_FORMAT = "resourceFormat";
 	/**
 	 * Deserialize the search json object
 	 * @param jsonRep instance of {@link JsonRepresentation}

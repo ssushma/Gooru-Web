@@ -134,7 +134,7 @@
 	
 	<g:HTMLPanel styleName="{style.shareAlertPopup}">
 		<g:HTMLPanel styleName="{style.alertHeaderStyle}">
-			<g:HTMLPanel styleName="{style.alertHeaderTxtStyle}">Are you sure this is correct?</g:HTMLPanel>
+			<g:HTMLPanel styleName="{style.alertHeaderTxtStyle}" ui:field="areYouSureText"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.addResourceCloseButtonContainer}">
 							<g:Label styleName="{style.addResourceCloseButton}"
 								ui:field="previewCloseButton"></g:Label>
@@ -142,9 +142,7 @@
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.alertBodyStyle}">
 			<g:HTMLPanel styleName="{style.alertSuccessTxt}">
-				<g:Label  styleName="{style.alertSuccessMsgTxt}">You are about to make this resource public, meaning it will be discoverable in
-				   		search by the  Gooru community. After doing so, you will not be able to change any of the information, which includes the URL,
-				   			title, description, category, and image. However, you will be able to edit the narration or remove the 	resource at any point.</g:Label>
+				<g:Label  styleName="{style.alertSuccessMsgTxt}" ui:field="messageText"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.privateMsgTxt}"></g:HTMLPanel>
 		</g:HTMLPanel>
@@ -152,35 +150,35 @@
 		<g:HTMLPanel styleName="{style.alertBodyStyle1}">
 		
 			<g:HTMLPanel styleName="{style.contentDiv}">
-				<g:Label  styleName="{style.leftColumnBold}">Uploaded URL</g:Label>
+				<g:Label  styleName="{style.leftColumnBold}"></g:Label>
 				<g:Label ui:field="filePathValueLbl" styleName="{style.rightColumn}"></g:Label>
 			</g:HTMLPanel>
 			
 			<g:HTMLPanel styleName="{style.contentDiv}">
-				<g:Label styleName="{style.leftColumnBold}">Title</g:Label>
+				<g:Label styleName="{style.leftColumnBold}" ui:field="titleText"></g:Label>
 				<g:Label ui:field="resourceTitleValueLbl" styleName="{style.rightColumn}"></g:Label>
 			</g:HTMLPanel>
 			
 			<g:HTMLPanel styleName="{style.contentDiv}">
-				<g:Label styleName="{style.leftColumnBold}" ui:field="descriptionTxtLbl">Description</g:Label>
+				<g:Label styleName="{style.leftColumnBold}" ui:field="descriptionTxtLbl"></g:Label>
 				<g:Label ui:field="descriptionTxtValueLbl" styleName="{style.rightColumn}"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.contentDiv}">
-				<g:Label styleName="{style.leftColumnBold}">Category</g:Label>
+				<g:Label styleName="{style.leftColumnBold}" ui:field="categoryText"></g:Label>
 				<g:Label ui:field="categoryValueLbl" styleName="{style.rightColumn}"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{style.contentDiv}">
-				<g:Label styleName="{style.leftColumnBold}" ui:field="thumbnailLbl">Thumbnail Image</g:Label>
+				<g:Label styleName="{style.leftColumnBold}" ui:field="thumbnailLbl"></g:Label>
 				
 				<g:HTMLPanel styleName="{style.rightColumn}"><g:Image url="" ui:field="setThumbnailImage" styleName="{style.resourceThumbnailImage}"></g:Image></g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 
 		<g:HTMLPanel styleName="{style.okSuccessBtn}" ui:field="actionPanel">
-			<gg:BlueButtonUc text="Go Back" ui:field="goBackBtn" styleName="secondary" />
-	         <gg:BlueButtonUc text="Yes" ui:field="okButton" styleName="primary" />
+			<gg:BlueButtonUc  ui:field="goBackBtn" styleName="secondary"/>
+	         <gg:BlueButtonUc ui:field="okButton" styleName="primary" />
 		</g:HTMLPanel>
-		<g:Label styleName="{style.adding}" ui:field="lblConfirmAdding">adding...</g:Label>
+		<g:Label styleName="{style.adding}" ui:field="lblConfirmAdding"></g:Label>
 	</g:HTMLPanel>
 	
 	

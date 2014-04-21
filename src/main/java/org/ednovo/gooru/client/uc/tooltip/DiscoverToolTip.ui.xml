@@ -1,53 +1,19 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style>
-		.organizeTextContainer {
-			float: left;
-			width: 241px;
-			margin: 8px 4px 5px 8px;
-		}
-		
-		.hoverPopupArrow {
-			background: url(images/core/bubble-arrow.png);
-			display: block;
-			width: 25px;
-			height: 10px;
-			position: relative;
-			margin-left: 26px;
-			z-index: 999999;
-		}
-        .organizeRemainigText {
-	        font-family: Arial, Helvetica, sans-serif;
-	        font-size: 12px;
-			font-weight: bold;
-	        white-space: nowrap;
-	        overflow: hidden;
-	        text-overflow: ellipsis;
-			color: #333333;
-	    }
-		.categoryLbl {
-			color: #333333;
-		}
-		.sourceLbl {
-			font-style: italic;
-			color: #999999;
-		}
-	</ui:style>
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="toolTip" src="ToolTip.css" />
-		
-	<g:FlowPanel styleName="{toolTip.organizeContainer}">
-		<g:HTMLPanel styleName="{style.hoverPopupArrow}"
-			ui:field="arowPanel"></g:HTMLPanel>
-		<g:FlowPanel styleName="{toolTip.organizePopupTextContainer}">
-			<g:FlowPanel styleName="{style.organizeTextContainer}">
-				<g:HTML styleName="{style.organizeRemainigText}" ui:field="descPanel">
-					<br />
-				</g:HTML>
-				<g:Label ui:field="categoryLbl" styleName="{style.categoryLbl}"></g:Label>
-				<g:Label ui:field="sourceLbl" styleName="{style.sourceLbl}"></g:Label>
-			</g:FlowPanel>
-		</g:FlowPanel>
-	</g:FlowPanel>
-
-</ui:UiBinder> 
+	<ui:style>
+		/* Add CSS here. See the GWT docs on UI Binder for more details */
+	</ui:style>
+	<g:HTMLPanel styleName="{toolTip.tooltipContainer}"
+		ui:field="panelCode">
+		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
+		<g:HTMLPanel styleName="{toolTip.discoverTooltipContent}" ui:field="tooltipPanel">
+			<g:Label styleName="{toolTip.discoverTooltipLabel}" ui:field="lblGooruLibrary" />
+			<g:Label styleName="{toolTip.discoverTooltipLabel}" ui:field="lblRusdLibrary" />
+<!-- 			<panel:HTMLEventPanel styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
+			<g:HTMLPanel ui:field="dropdownImg" styleName="{toolTip.partnerDropDownArrow}"></g:HTMLPanel>
+ -->		</g:HTMLPanel>
+<!-- 		<panel:HTMLEventPanel styleName="{toolTip.partnerLibraryContainer}" ui:field="partnerLibContainer"/>
+ -->	</g:HTMLPanel>
+</ui:UiBinder>

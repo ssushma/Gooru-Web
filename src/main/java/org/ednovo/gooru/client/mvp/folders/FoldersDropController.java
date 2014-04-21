@@ -37,21 +37,7 @@ import com.allen_sauer.gwt.dnd.client.util.LocationWidgetComparator;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : FoldersDropController.java
- *
- * @description : This is the DropController for folders.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FoldersDropController extends AppVerticalPanelDropController {
 
 	private Widget positioner;
@@ -59,9 +45,7 @@ public class FoldersDropController extends AppVerticalPanelDropController {
 	public FoldersDropController(VerticalPanel dropTarget) {
 		super(dropTarget);
 	}
-	/**
-	 * This method is used to set new position.
-	 */
+	
 	@Override
 	protected Widget newPositioner(DragContext context) {
 		Widget widget = super.newPositioner(context);
@@ -70,9 +54,7 @@ public class FoldersDropController extends AppVerticalPanelDropController {
 		positioner = widget;
 		return widget;
 	}
-	/**
-	 * This method is used to get the widget location.
-	 */
+
 	@Override
 	protected LocationWidgetComparator getLocationWidgetComparator() {
 		return new LocationWidgetComparator() {
@@ -96,9 +78,7 @@ public class FoldersDropController extends AppVerticalPanelDropController {
 			}
 		};
 	}
-	/**
-	 * This will set the positioner to 2 if the positionerIndex is 0.
-	 */
+
 	@Override
 	public void onEnter(DragContext context) {
 		super.onEnter(context);
@@ -108,9 +88,7 @@ public class FoldersDropController extends AppVerticalPanelDropController {
 			dropTarget.insert(positioner, 2);
 		}
 	}
-	/**
-	 * This will check weather the positioner not already in the correct location and it will not do anything if the positioner is the only widget. If it is outside the drop target,it will remove the  positioner to indicate a drop else it will set the target index to drop target. 
-	 */
+	
 	@Override
 	public void onMove(DragContext context) {
 		int targetIndex = DOMUtil.findIntersect(dropTarget, new CoordinateLocation(context.mouseX, context.mouseY), getMoveLocationWidgetComparator());
@@ -129,9 +107,7 @@ public class FoldersDropController extends AppVerticalPanelDropController {
 			}
 		}
 	}
-	/**
-	 * This will add the drag context.
-	 */
+
 	@Override
 	public void onLeave(DragContext context) {
 		positioner.removeFromParent();

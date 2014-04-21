@@ -38,49 +38,34 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HTMLPanel;
-/**
- * @fileName : HTMLEventPanel.java
- *
- * @description : This class will handle the click event for the html panel (Custom panel)
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class HTMLEventPanel extends HTMLPanel implements HasClickHandlers,HasMouseOutHandlers,HasMouseOverHandlers,HasBlurHandlers{
+
+	
 
 	public HTMLEventPanel(String html) {
 		super(html);
 	}
-	/**
-	 * This will add the dom handler click event.
-	 */
+
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
 	}
 
-	/**
-	 * This will add the dom handler mouse over event.
-	 */
+	
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	/**
-	 * This will add the dom handler mouse out event.
-	 */
+
 	
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
-	/**
-	 * This will add the dom handler blur event.
-	 */
+
 	@Override
 	public HandlerRegistration addBlurHandler(BlurHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, BlurEvent.getType());
 	}
 

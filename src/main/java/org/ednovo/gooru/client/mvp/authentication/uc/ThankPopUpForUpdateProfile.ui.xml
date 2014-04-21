@@ -21,10 +21,10 @@
 
 		<g:HTMLPanel styleName="{res.css.leaveRegistrationBottomContainer}">
 			<g:HTMLPanel styleName="{res.css.leaveRegistarionFooterText}">
-				<g:Label text="If you have any questions," />
-				<g:InlineLabel text="Please contact" />
-				<g:Anchor ui:field="supportLink" href="mailto:support@goorulearning.org"
-					target="_blank">support@goorulearning.org</g:Anchor>
+				<g:Label ui:field="queriesText"/>
+				<g:InlineLabel ui:field="contactText" />
+				<g:Anchor ui:field="supportLink" 
+					target="_blank"></g:Anchor>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>

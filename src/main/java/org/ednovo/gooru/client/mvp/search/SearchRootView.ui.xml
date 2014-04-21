@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gc="urn:import:org.ednovo.gooru.client.mvp.search" >
-	<ui:style>
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gc="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home" >
+	<ui:style type="org.ednovo.gooru.client.mvp.search.SearchRootView.Style">
 		.searchWrapper {
 			/*min-height: 383px;*/
 			margin: 0 auto;
@@ -48,6 +48,10 @@
 			border-bottom: 2px solid #4E9746 !important;
 			font-weight: bold;
 		}
+
+		.bodyHeight {
+			height: auto !important;
+		}
 		
 		.searchResultPanel {
 		    clear: both;
@@ -89,7 +93,7 @@
 		<g:SimplePanel styleName="{style.searchWrapper}"  ui:field="searchWrapperSimPanel"/>
 		<g:SimplePanel ui:field="shelfTabSimPanel"/>
 		<g:Label ui:field="lodingImage" styleName="{style.loadingImageContainer}" />
-
+		<sg:FooterUc />
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

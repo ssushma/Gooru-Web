@@ -26,26 +26,14 @@ package org.ednovo.gooru.shared.model.library;
 
 import java.io.Serializable;
 
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : LibraryResourceDo.java
- *
- * @description :  This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class LibraryResourceDo implements Serializable {
 	
@@ -54,9 +42,12 @@ public class LibraryResourceDo implements Serializable {
 	private String category;
 	private String gooruOid;
 	private String url;
+	private String collectionItemId;
 	private ThumbnailDo thumbnails;
 	private ResourceSourceDo resourceSource;
 	private ResourceTypeDo resourceType;
+	private ResourceFormatDo resourceFormat;
+	public LibraryResourceDo(){}
 	
 	/** 
 	 * This method is to get the title
@@ -141,5 +132,21 @@ public class LibraryResourceDo implements Serializable {
 	 */
 	public void setResourceType(ResourceTypeDo resourceType) {
 		this.resourceType = resourceType;
+	}
+
+	public ResourceFormatDo getResourceFormat() {
+		return resourceFormat;
+	}
+
+	public void setResourceFormat(ResourceFormatDo resourceFormat) {
+		this.resourceFormat = resourceFormat;
+	}
+
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
 	}
 }

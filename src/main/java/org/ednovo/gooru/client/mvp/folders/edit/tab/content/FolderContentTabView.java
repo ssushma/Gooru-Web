@@ -50,19 +50,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : FolderContentTabUiHandlers.java
- *
- * @description : This file deals with folders creation/removal
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabUiHandlers> implements IsFolderContentTabView {
 
@@ -99,24 +88,18 @@ public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabU
 		workspaceFoldersList.getElement().getStyle().setFloat(Float.LEFT);
 		secondThirdLevelFoldersPanelVc.getElement().getStyle().setFloat(Float.LEFT);
 	}
-	/**
-	 * This method is used to clear the folder's panel.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
 		secondThirdLevelFoldersPanelVc.clear();
 	}
-	/**
-	 * This method is used to disable the noWorkspaceLbl.
-	 */
+
 	@Override
 	public void disablenoWorkspaceLbl() {
 		noWorkspaceLbl.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * This method is used to enable the noWorkspaceLbl.
-	 */
+	
 	@Override
 	public void enablenoWorkspaceLbl() {
 		noWorkspaceLbl.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -126,25 +109,7 @@ public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabU
 	public void clearWorkspaceFoldersListPanel() {
 		workspaceFoldersList.clear();
 	}
-	/**
-	 * 
-	 * @function OnClickNewFolder 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This UIHandler is used to create new folder if the max size not exceeds the limit.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("newFolderUIHandler")
 	public void OnClickNewFolder(ClickEvent event) {
 		if(checkFolderCollectionSize()){
@@ -171,25 +136,7 @@ public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabU
 					PlaceTokens.CREATEFOLDER, params);
 		}
 	}
-	/**
-	 * 
-	 * @function OnClickNewCollection 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This UIHandler is used to create new collection if the max size not exceeds the limit.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("newCollectionUIHandler")
 	public void OnClickNewCollection(ClickEvent event) {
 		if(checkFolderCollectionSize()){
@@ -205,9 +152,7 @@ public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabU
 				PlaceTokens.COLLECTION, params);
 		}
 	}
-	/**
-	 * This uihandler is used to add the folder.
-	 */
+	
 	@Override
 	public void addFolder(CollectionItemDo collectionItemDo) {
 		Label label = new Label("");
@@ -231,33 +176,25 @@ public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabU
 		}
 		return false;
 	}
-	/**
-	 * This is used to initialize the CollectionDo.
-	 */
+
 	@Override
 	public void setData(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		getUiHandlers().getSecondThirdLevelFolders();
 	}
-	/**
-	 * This method is used to refresh the collection items in folder level list.
-	 */
+
 	@Override
 	public void refreshCollectionInFolderLevelList(CollectionItemDo collectionItemDo, RefreshFolderType refreshType) {
 		FolderItemChildView folderItemChildView = new FolderItemChildView(collectionItemDo);
 		workspaceFoldersList.insert(folderItemChildView, 0);
 		
 	}
-	/**
-	 * This is used to disable the new folders ui handlers.
-	 */
+
 	@Override
 	public void disableNewFolderUiHandler() {
 		newFolderUIHandler.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * This is used to enable the new folders ui handlers.
-	 */
+
 	@Override
 	public void enableNewFolderUiHandler() {
 		newFolderUIHandler.getElement().getStyle().setDisplay(Display.BLOCK);

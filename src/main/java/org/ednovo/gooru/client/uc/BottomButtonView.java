@@ -36,19 +36,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : BottomButtonView.java
- *
- * @description : This class is used to display the button bottom view.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class BottomButtonView extends Composite implements HasClickHandlers{
 
 	@UiField InlineLabel buttonName;

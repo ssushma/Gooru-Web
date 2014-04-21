@@ -32,28 +32,12 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : FoldersPanelVc.java
- *
- * @description : This file  is used to rearrange the DragContainer position.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FoldersPanelVc extends AppRepositionDragContainer {
 	
 	private AppVerticalPanelDropController widgetDropController;
 	private ResourceDragController dragController;
-	/**
-	 * Constructor
-	 */
+	
 	public FoldersPanelVc(){
 		super();
 		dragController = new ResourceDragController(RootPanel.get(),false,false);
@@ -61,55 +45,43 @@ public class FoldersPanelVc extends AppRepositionDragContainer {
 		dragController.registerDropController(widgetDropController);
 		setDragController(dragController);
 	}
-	/**
-	 * This is used to reorder the folder item by setting the widget index.
-	 */
+	
+	
+
 	@Override
 	public void onDrop(Draggable draggable) {
 		FolderItemChildView folderVc = (FolderItemChildView) draggable.getDraggableUc();
 		folderVc.reorderFolderItem(getWidgetIndex(draggable));
 	}
-	/**
-	 * This is the onDragOver event.
-	 */
+
 	@Override
 	public void onDragOver(Draggable draggable) {
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * This is the onDragOut event.
-	 */
+
 	@Override
 	public void onDragOut(Draggable draggable) {
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * To get the drop target.
-	 */
+
 	@Override
 	public Widget getDropTarget() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * This method is used to register the drop controller.
-	 */
+
 	@Override
 	public void registerDropController() {
 		dragController.registerDropController(widgetDropController);
 	}
-	/**
-	 * This methos is used to unregister the drop controller.
-	 */
+
 	@Override
 	public void unregisterDropController() {
 		dragController.unregisterDropController(widgetDropController);
 	}
-	/**
-	 * This methos is used to re register the drop controller.
-	 */
+
 	@Override
 	public void reregisterDropController() {
 		// TODO Auto-generated method stub

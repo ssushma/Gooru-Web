@@ -33,8 +33,10 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -74,21 +76,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : EditUserOwnResourcePopupVc.java
- *
- * @description : This class is used to display edit user own resource popup.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+
+public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements MessageProperties  {
 	CollectionItemDo collectionItemDo;
 
 	@UiField
@@ -98,7 +89,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	FormPanel fileuploadForm;
 	
 	@UiField
-	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights;
+	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText;
 	
 
 	@UiField
@@ -116,21 +107,22 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	@UiField
 	public TextArea descriptionTxtAera;
 	
-	@UiField Label lblAdding;
+	@UiField Label lblAdding,resoureDropDownLbl;
 	
 	@UiField HTMLEventPanel lblContentRights;
 
 	@UiField
-	Image setThumbnailImage;
+	Image setThumbnailImage,clipImage;
 	
 	@UiField
 	Label descCharcterLimit;
 	@UiField
 	CheckBox rightsChkBox;
-	@UiField Label resourceCategoryLabel;
-	@UiField HTMLPanel categorypanel,slide,handout,textbook,lesson,resourceTypePanel,panelAction;
-	@UiField Anchor copyRightAnr;
-	@UiField Anchor termsAndPolicyAnr,privacyAnr;
+	@UiField Label resourceCategoryLabel,andText,additionalText,agreeText;
+	@UiField HTMLPanel categorypanel,texts,image,resourceTypePanel,panelAction,fileTitleText,
+	descriptionText,categoryLabel,thumbnailImageText;
+	@UiField Anchor copyRightAnr,rollBackToPaperClip;
+	@UiField Anchor termsAndPolicyAnr,privacyAnr,cancelResourcePopupBtnLbl;
 	@UiField Anchor commuGuideLinesAnr;
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -147,7 +139,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
-	private static final String PNG = ".png";
+	private static final String PNG =GL0899;
 	public boolean fileChanged=false;
 	String mediaFileName=null;
 	String originalFileName=null;
@@ -156,7 +148,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	String filePath;
 	
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|jpeg|pdf))$)";
-	private static final String RESOURCE_FILE_SUPPORT_MSG = "Oops! We only support PDF and JPG files.";
+	private static final String RESOURCE_FILE_SUPPORT_MSG =GL0955;
 	private static final String IMAGE_UPLOAD_URL = "/v2/media?sessionToken={0}";
 	
 	private static EditUserOwnResourcePopupVcUiBinder uiBinder = GWT.create(EditUserOwnResourcePopupVcUiBinder.class);
@@ -165,16 +157,54 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	}
 	
 
-	/**
-	 * Class constructor.
-	 * @param collectionItemDo
-	 */
+
 	public EditUserOwnResourcePopupVc(CollectionItemDo collectionItemDo) {
 		
 		super();
 		this.collectionItemDo = collectionItemDo;
-		setContent("Edit Resource", uiBinder.createAndBindUi(this));
-
+		setContent(GL0949, uiBinder.createAndBindUi(this));
+		uploadName.getElement().setInnerHTML(" "+GL0948);
+		browseResourceBtn.setText(GL0902);
+		rollBackToPaperClip.setText(GL0950);
+		changeFileBtn.setText(GL0951);
+		fileTitleText.getElement().setInnerHTML(GL0952);
+		mandatoryTitleLbl.setText(GL0173);
+		descriptionText.getElement().setInnerHTML(GL0904);
+		categoryLabel.getElement().setInnerHTML(GL0906);
+		mandatoryCategoryLbl.setText(GL0917);
+		/*videoLabel.getElement().setInnerHTML(GL0918);
+		interactiveText.getElement().setInnerHTML(GL0919);
+		websiteText.getElement().setInnerHTML(GL0920);*/
+		/*slideText.getElement().setInnerHTML(GL0908);
+		handoutText.getElement().setInnerHTML(GL0907);
+		textbookLabel.getElement().setInnerHTML(GL0909);
+		lessonText.getElement().setInnerHTML(GL0910);
+		examText.getElement().setInnerHTML(GL0921);*/
+		textsText.getElement().setInnerHTML(GL1044);
+		//audioText.getElement().setInnerHTML(GL1045);
+		imagesText.getElement().setInnerHTML(GL1046);
+		//otherText.getElement().setInnerHTML(GL1047);
+		
+		
+		
+		/*slideText.getElement().setInnerHTML(GL0908);
+		handoutText.getElement().setInnerHTML(GL0907);
+		textbookLabel.getElement().setInnerHTML(GL0909);
+		lessonText.getElement().setInnerHTML(GL0910);*/
+		thumbnailImageText.getElement().setInnerHTML(GL0911);
+		uploadImageLbl.setText(GL0912);
+		rightsLbl.setText(GL0869);
+		agreeText.setText(GL0870);
+		commuGuideLinesAnr.setText(GL0871);
+		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		privacyAnr.setText(" "+GL0873);
+		andText.setText(" "+GL_GRR_AND+" ");
+		copyRightAnr.setText(" "+GL0875);
+		additionalText.setText(GL0874);
+		addResourceBtn.setText(GL0141);
+		cancelResourcePopupBtnLbl.setText(GL0142);
+		lblAdding.setText(GL0591.toLowerCase());
+		clipImage.setUrl("images/paperclip.png");
 		addResourceBtn.addClickHandler(new AddClickHandler());
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
@@ -215,8 +245,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		defaultFileTxtContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		uploadContainer.getElement().getStyle().setDisplay(Display.NONE);
 		uploadName.getElement().getStyle().setDisplay(Display.NONE);
-		fileTextLbl.setText("Your file is uploaded.");
-		browseResourceBtn.getElement().getStyle().setMarginRight(-94, Unit.PX);
+		fileTextLbl.setText(GL0954);
+		browseResourceBtn.getElement().getStyle().setMarginRight(9, Unit.PX);
 		copyRightAnr.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -279,13 +309,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/entries/24471116-Gooru-Community-Guidelines","_blank",""); 
+				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 			}
 		});
 	}
-	/**
-	 * This method will call at the time of loading and it will set the rich text box.
-	 */
+	
 	public void onLoad(){
 		super.onLoad();
 		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
@@ -296,21 +324,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			}
         });
 	}
-	/**
-	 * @function cancelPopUp 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on cancel button of resoruce popup.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelPopUp(ClickEvent clickEvent) {
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
@@ -320,21 +334,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 
 		hide();
 	}
-	/**
-	 * @function getResourceMetaInfo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to get resource meta information.
-	 * 
-	 * 
-	 * @parm(s) : @param url
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void getResourceMetaInfo(String url) {
 		AppClientFactory
 				.getInjector()
@@ -348,29 +348,12 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 							}
 						});
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set data.
-	 * 
-	 * 
-	 * @parm(s) : @param result
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setData(ResourceMetaInfoDo result) {
 		setResMetaInfo(result);
 		updateUi();
 	}
-	/**
-	 * This inner class will handle the click event on rights.
-	 */
+
 	 private class rightsChecked implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -383,45 +366,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 				
 			}
 	}
-	 /**
-		 * This method is used to set the resource meta information.
-		 */
 	private void setResMetaInfo(ResourceMetaInfoDo result) {
 		this.resMetaInfoDo = result;
 	}
-	/**
-	 * @function setResourceDescription 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set the resource description.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setResourceDescription(){
 		descriptionTxtAera.setText(collectionItemDo.getResource().getDescription());
 	}
-	/**
-	 * @function onChangeFileUploadBtn 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the change event on choose resoruce button.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("chooseResourceBtn")
 	public void onChangeFileUploadBtn(ChangeEvent event){
 		if (!"".equalsIgnoreCase(chooseResourceBtn.getFilename())) {
@@ -429,7 +381,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			double sizeOfImage=Double.parseDouble(size);
 			if(sizeOfImage>5){
 				isValidImageSize=false;
-				resourceContentChkLbl.setText("Oops! We only support files under 5MB.");
+				resourceContentChkLbl.setText(GL0913);
 				resourceContentChkLbl.setVisible(true);
 				fileuploadForm.reset();
 				if(!resourcePathTextBox.getText().equalsIgnoreCase("")){
@@ -439,21 +391,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		}
 	}
 	
-	/**
-	 * @function displayResourceInfo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display the resource information.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void displayResourceInfo() {
 		String url = collectionItemDo.getResource().getUrl();
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
@@ -472,24 +410,25 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 
 		setThumbnailImage.setVisible(true);
 		String category = collectionItemDo.getResource().getCategory();
-		 if (category.equalsIgnoreCase("Slide")) {
-			resourceCategoryLabel.setText("Slide");
-			categorypanel.setStyleName(slide.getStyleName());
+		
+		/* if (category.equalsIgnoreCase(GL0918)) {
+			resourceCategoryLabel.setText(GL0918 );
+			categorypanel.setStyleName(video.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase("Handout")) {
-			resourceCategoryLabel.setText("Handout");
-			categorypanel.setStyleName(handout.getStyleName());
+		} else if (category.equalsIgnoreCase(GL0919)) {
+			resourceCategoryLabel.setText(GL0919);
+			categorypanel.setStyleName(interactive.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase("Textbook")) {
-			resourceCategoryLabel.setText("Textbook");
-			categorypanel.setStyleName(textbook.getStyleName());
+		} else if (category.equalsIgnoreCase(GL0920)|| category.equalsIgnoreCase("Exam")) {
+			resourceCategoryLabel.setText(GL0920);
+			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase("Lesson")) {
-			resourceCategoryLabel.setText("Lesson");
-			categorypanel.setStyleName(lesson.getStyleName());
+		} */  if (category.equalsIgnoreCase(GL1046) || category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")) {
+			resourceCategoryLabel.setText(GL1046);
+			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 //		} else if (category.equalsIgnoreCase("Question")) {
@@ -497,28 +436,36 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 //			categorypanel.setStyleName(question.getStyleName());
 //			resourceTypePanel.setVisible(false);
 //			resoureDropDownLblOpen=false;
-		} 
+		} else if (category.equalsIgnoreCase(GL1044)|| category.equalsIgnoreCase("Textbook")|| category.equalsIgnoreCase("Lesson")|| category.equalsIgnoreCase("Handout")||category.equalsIgnoreCase("Text")) {
+			resourceCategoryLabel.setText(GL1044);
+			categorypanel.setStyleName(texts.getStyleName());
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen=false;
+		/*}else if (category.equalsIgnoreCase(GL1045)) {
+			resourceCategoryLabel.setText(GL1045);
+			categorypanel.setStyleName(audio.getStyleName());
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen=false;
+		}else if (category.equalsIgnoreCase(GL1047)) {
+			resourceCategoryLabel.setText(GL1047);
+			categorypanel.setStyleName(other.getStyleName());
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen=false;*/
+		}
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(url, category);
 	}
-	/**
-	 * @function setImage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set image.
-	 * 
-	 * 
-	 * @parm(s) : @param url
-	 * @parm(s) : @param category
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setImage(String url, String category){
+		if(category.contains("lesson")||category.contains("textbook")||category.contains("handout"))
+		{
+			category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
+		}
+		if(category.contains("slide")||category.contains("Slide"))
+		{
+			category=category.replaceAll("slide","image");
+		}
 		if (thumbnailUrlStr.endsWith("null")) {
 			if (url.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
@@ -529,28 +476,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		} 
 		setThumbnailImage.setUrl(thumbnailUrlStr);
 	}
-	/**
-	 * @function updateUi 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to update ui.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void updateUi() {
 		setThumbnailImage.setVisible(true);
 
 	}
-	/**
-	 * This inner class is used to handle the click events on upload button.
-	 */
+	
 	private class ChangeFileBtnClick implements ClickHandler{
 
 		@Override
@@ -565,59 +495,15 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		}
 		
 	}
-	/**
-	 * @function onMouseOver 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the mouse over event on the content rights label.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("lblContentRights")
 	public void onMouseOver(MouseOverEvent event){
 		panelContentRights.setVisible(true);
 	}
-	/**
-	 * @function onMouseOut 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the mouse out event on the content rights label.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("lblContentRights")
 	public void onMouseOut(MouseOutEvent event){
 		panelContentRights.setVisible(false);
 	}
-	/**
-	 * @function onClickRollBackPaperClip 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on roll back to paper clip.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("rollBackToPaperClip")
 	public void onClickRollBackPaperClip(ClickEvent clickEvent){
 		uploadName.getElement().getStyle().setDisplay(Display.NONE);
@@ -625,9 +511,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		defaultFileTxtContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		resourceContentChkLbl.setVisible(false);
 	}
-	/**
-	 * This inner class is used to handle the click events.
-	 */
+
 	private class AddClickHandler implements ClickHandler {
 		@SuppressWarnings("deprecation")
 		@Override
@@ -641,10 +525,16 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			 titleStr = titleTextBox.getText().trim();
 			 categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
 			 filePath = resourcePathTextBox.getText().trim();
-			 
+			 if(categoryStr.contains("Videos")||categoryStr.contains("Interactives")||categoryStr.contains("Images")||categoryStr.contains("Texts"))
+				{
+				 categoryStr=categoryStr.substring(0, categoryStr.length()-1);
+					 if(categoryStr.contains("Image")){
+						 categoryStr="Slide";
+					 }
+				}
 			 if(uploadContainer.isVisible()){
 				 if(resourcePathTextBox.getText().trim() == null || resourcePathTextBox.getText().trim().equalsIgnoreCase("")){
-					 resourceContentChkLbl.setText("Please add a file.");
+					 resourceContentChkLbl.setText(GL0914);
 					 resourceContentChkLbl.setVisible(true);
 					 isValidate = false;
 				 }
@@ -652,7 +542,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			
 			
 			if (titleStr == null || titleStr.equalsIgnoreCase("")) {
-				mandatoryTitleLbl.setText("Please enter a title.");
+				mandatoryTitleLbl.setText(GL0173);
 				mandatoryTitleLbl.setVisible(true);
 				isValidate = false;
 			}
@@ -662,11 +552,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			}
 			if(descriptionTxtAera.getText().trim()==null || descriptionTxtAera.getText().trim().equals("")){
 				isValidate = false;
-				descCharcterLimit.setText("Please add a description.");
+				descCharcterLimit.setText(GL0905);
 				descCharcterLimit.setVisible(true);
 			}
 			if (categoryStr == null	|| categoryStr.equalsIgnoreCase("-1")|| categoryStr.equalsIgnoreCase("Choose a resource category")) {
-				mandatoryCategoryLbl.setText("Please choose a category.");
+				mandatoryCategoryLbl.setText(GL0917);
 				mandatoryCategoryLbl.setVisible(true);
 				isValidate = false;
 			}
@@ -675,7 +565,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 				/*String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/0deeb890-8a4b-468e-87c0-5615d69e856e.jpg\",\"imageValidationMsg\":null,\"name\":\"555cb7a6-4312-434e-8e09-004a72fa4073.jpg\",\"originalFilename\":\"download(2).jpg\",\"size\":462358,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://devrepo.goorulearning.org/qalive/uploaded-media/0deeb890-8a4b-468e-87c0-5615d69e856e.jpg\"}";
 				parseUploadFileDetails(str);*/ 
 				
-				if(fileChanged && (uploadContainer.isVisible())){ 
+				if(fileChanged && (uploadContainer.isVisible())){
 					fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
 					fileuploadForm.addFormHandler(new FormHandler() {
 						public void onSubmitComplete(FormSubmitCompleteEvent event) {
@@ -693,6 +583,13 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 					fileuploadForm.submit();
 				}
 				else{
+					if(categoryStr.contains("Images")||categoryStr.contains("Texts"))
+					{
+						categoryStr=categoryStr.substring(0, categoryStr.length()-1);
+						 if(categoryStr.contains("Image")||categoryStr.contains("Images")){
+							 categoryStr="Slide";
+						 }
+					}
 					updateUserOwnResource(filePath,mediaFileName,originalFileName,titleStr,descriptionTxtAera.getText().trim(),categoryStr,thumbnailUrlStr);
 				}
 			}
@@ -715,9 +612,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 		}
 	}
 
-	/**
-	 * This will handle the click event on edit image button.
-	 */
+	
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -734,152 +629,101 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			resourceContentChkLbl.setVisible(false);
 		}
 	}
-	/**
-	 * This will handle the keyup event on titleTextBox.
-	 */
+
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
-				mandatoryTitleLbl.setText("Character limit reached.");
+				mandatoryTitleLbl.setText(GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
 	}
-	/**
-	 * This will handle the keyup event on descriptionTxtAera.
-	 */
+
 	private class DescriptionKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
 			descCharcterLimit.setVisible(false);
 			if (descriptionTxtAera.getText().length() >= 300) {
 				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0,300));
-				descCharcterLimit.setText("Character limit reached.");
+				descCharcterLimit.setText(GL0143);
 				descCharcterLimit.setVisible(true);
 			}
 		}
 	}
 
 
-	/**
-	 * @function slideResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on slide resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("slideResourcePanel")
-	void slideResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Slide");
-		categorypanel.setStyleName(slide.getStyleName());
+	
+	/*@UiHandler("videoResourcePanel")
+	void videoResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_video_selected");
+		resourceCategoryLabel.setText(GL0918);
+		categorypanel.setStyleName(video.getStyleName());
 		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen=false;
-	}
-	/**
-	 * 
-	 * @function handoutResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on handout resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("handoutResourcePanel")
-	void handoutResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Handout");
-		categorypanel.setStyleName(handout.getStyleName());
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}*/
+
+	/*@UiHandler("interactiveResourcePanel")
+	void interactiveResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_interactive_selected");
+		resourceCategoryLabel.setText(GL0919);
+		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen=false;
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
 	}
-	/**
-	 * 
-	 * @function textbookResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on textbook resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("textbookResourcePanel")
-	void textbookResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Textbook");
-		categorypanel.setStyleName(textbook.getStyleName());
+
+	@UiHandler("websiteResourcePanel")
+	void websiteResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_website_selected");
+		resourceCategoryLabel.setText(GL0920);
+		categorypanel.setStyleName(website.getStyleName());
 		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen=false;
-	}
-	/**
-	 * @function lessonResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on lesson resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("lessonResourcePanel")
-	void lessonResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Lesson");
-		categorypanel.setStyleName(lesson.getStyleName());
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}*/
+
+	@UiHandler("imageResourcePanel")
+	void slideResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
+		resourceCategoryLabel.setText(GL1046);
+		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen=false;
-	}	
-	/**
-	 * @function dropDownClick 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on resource drop down.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("resoureDropDownLbl")
-	public void dropDownClick(ClickEvent event){
-		if(resoureDropDownLblOpen==false){
-			resourceTypePanel.setVisible(true);
-			resoureDropDownLblOpen=true;
-			
-		} else {
-			resourceTypePanel.setVisible(false);
-			resoureDropDownLblOpen=false;
-		}
-		
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
 	}
+
+	@UiHandler("textResourcePanel")
+	void handoutResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
+		resourceCategoryLabel.setText(GL1044);
+		categorypanel.setStyleName(texts.getStyleName());
+		resourceTypePanel.setVisible(false);
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}
+
+	/*@UiHandler("audioResourcePanel")
+	void textbookResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_audio_selected");
+		resourceCategoryLabel.setText(GL1045);
+		categorypanel.setStyleName(audio.getStyleName());
+		resourceTypePanel.setVisible(false);
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}
+
+	@UiHandler("otherResourcePanel")
+	void lessonResourcePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_other_selected");
+		resourceCategoryLabel.setText(GL1047);
+		categorypanel.setStyleName(other.getStyleName());
+		resourceTypePanel.setVisible(false);
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}*/
 
 	/*public void setImageThumbnail() {
 		setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
@@ -921,32 +765,16 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 	public void setThumbnailUrlStr(String thumbnailUrlStr) {
 		this.thumbnailUrlStr = thumbnailUrlStr;
 	}
-	/** 
-	 * This method is to set the file name with out resp url.
-	 */
+	
 	public void setFileNameWithOutRespUrl(String fileNameWithOutRespUrl ){
 		this.fileNameWithOutRespUrl = fileNameWithOutRespUrl;
 	}
-	/**
-	 * @function handelFormEvent 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to handle form the event.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void handelFormEvent() {
 		chooseResourceBtn.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
-				 if(hasValidateResource()){
+				if(hasValidateResource()){
 					 isValidImageSize=true;
 					 resourceContentChkLbl.setVisible(false);
 					 resourcePathTextBox.setText(chooseResourceBtn.getFilename().trim());
@@ -967,21 +795,19 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp  {
 			}
 		});
 	}
-	/**
-	 * @function hasValidateResource 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to validate the resoruce.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	@UiHandler("resoureDropDownLbl")
+	public void dropDownClick(ClickEvent event) {
+		if (resoureDropDownLblOpen == false) {
+			resourceTypePanel.setVisible(true);
+			resoureDropDownLblOpen = true;
+
+		} else {
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen = false;
+		}
+
+	}
+	
 	public boolean hasValidateResource(){
 		boolean isValid = true;
 		String uploadResourceName = chooseResourceBtn.getFilename();

@@ -84,8 +84,8 @@
 	            <g:Label styleName="{style.alertSuccessMsgTxt}" ui:field="shareMsgLbl"/>
 	         </g:HTMLPanel>
 	         <g:HTMLPanel styleName="{style.okSuccessBtn}" ui:field="buttonContainer">
-	         	<gg:BlueButtonUc text="Keep Collection in Classpage" ui:field="goBackBtn" styleName="secondary" />
-	         	<gg:BlueButtonUc text="Make Collection Private" ui:field="okButton" styleName="primary" />
+	         	<gg:BlueButtonUc  ui:field="goBackBtn" styleName="secondary" />
+	         	<gg:BlueButtonUc  ui:field="okButton" styleName="primary" />
 	         </g:HTMLPanel>
 	      </g:HTMLPanel>
 	</g:HTMLPanel>

@@ -28,21 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : AttachToDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class AttachToDo implements Serializable{
 
@@ -54,6 +40,8 @@ public class AttachToDo implements Serializable{
 	
 	private String id;
 	private String type;
+	
+	public AttachToDo(){}
 	/** 
 	 * This method is to get the id
 	 */

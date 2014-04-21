@@ -25,50 +25,26 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : GenderDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class GenderDo implements Serializable {
 
 	private static final long serialVersionUID = -3767593742558515070L;
 	private String genderId;
 	private String name;
-	/** 
-	 * This method is to get the genderId
-	 */
+	
+	public GenderDo(){}
+	
 	public String getGenderId() {
 		return genderId;
 	}
-	/** 
-	 * This method is to set the genderId
-	 */
 	public void setGenderId(String genderId) {
 		this.genderId = genderId;
 	}
-	/** 
-	 * This method is to get the name
-	 */
 	public String getName() {
 		return name;
 	}
-	/** 
-	 * This method is to set the name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 
 }

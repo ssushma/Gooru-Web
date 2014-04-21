@@ -24,28 +24,25 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AlertMessageUc.java
- *
- * @description : This class will display the  customized alert messages.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
-public class AlertMessageUc extends Composite {
+public class AlertMessageUc extends Composite implements MessageProperties {
 
 	public AppPopUp appPopUp;
 
@@ -76,42 +73,18 @@ public class AlertMessageUc extends Composite {
 		content.add(messageContent);
 		appPopUp.show();
 		appPopUp.center();
+		okButton.setText(GL0190);
 		okButton.getElement().setId("btnOk");
 	}
-	/**
-	 * @function onClick 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the ok button.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("okButton")
 	public void onClick(ClickEvent clickEvent) {
 		hide();
 	}
-	/**
-	 * @function hide 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to hide the popup.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void hide() {
+		Window.enableScrolling(true);
+		 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		appPopUp.hide();
 	}
 }

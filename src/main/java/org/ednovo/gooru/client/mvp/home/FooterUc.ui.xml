@@ -4,91 +4,85 @@
 	<ui:with type="org.ednovo.gooru.client.GooruCBundle" field="res" />
 	<ui:style>
 		.connectUs {
-		margin: 0 auto;
+			margin: 0 auto;
 		}
 
 		table.connectUs td {
-		vertical-align: middle !important;
-		width: 105px;
+			vertical-align: middle !important;
+			width: 105px;
 		}
 
-		.learnMoreIconsDiv div
-		{
-		float: left;
-		margin-top: 10px;
+		.learnMoreIconsDiv div{
+			<!-- float: left; -->
+			margin-top: 10px;
 		}
 
-		div.learnMoreIconsDiv
-		div.socialTextConnectUs,div.learnMoreIconsDiv div.socialBlogImages
-		{
-		float: left;
-		margin-top: 8px;
+		div.learnMoreIconsDiv div.socialTextConnectUs, div.learnMoreIconsDiv div.socialBlogImages{
+			<!-- float: left; -->
+			margin-top: 8px;
+			display:inline-block
 		}
 
 		.socialBlogImages {
-		margin-left:60px;
+			<!-- margin-left:60px; -->
 		}
 
 		.socialBlogImages a span {
-		float: left;
-		margin-left: 8px;
+			float: left;
+			margin-left: 8px;
 		}
 
 		.learnMoreIcon {
-		background: url("images/social-imgs.png") repeat
-		scroll 0 0 transparent;
-		height: 21px;
-		margin-bottom: 0;
-		margin-left:
-		auto;
-		margin-right: auto;
-		position: relative;
-		top: 6px;
-		width: 266px;
+			background: url("images/social-imgs.png") repeat scroll 0 0 transparent;
+			height: 21px;
+			margin-bottom: 0;
+			margin-left:auto;
+			margin-right: auto;
+			position: relative;
+			top: 6px;
+			width: 266px;
 		}
 
 		.learnMoreIconBoder {
-		border-bottom: 1px solid #444444;
-		clear: both;
-		height: 2px;
-		margin-bottom: 0;
-		margin-left: auto;
-		margin-right: auto;
-		position: relative;
-		top: 3px;
-		width: 399px;
+			border-bottom: 1px solid #444444;
+			clear: both;
+			height: 2px;
+			margin-bottom: 0;
+			margin-left: auto;
+			margin-right: auto;
+			position: relative;
+			top: 3px;
+			width: 399px;
 		}
 
 		.innerFooterDiv {
-		margin:
-		auto;
-		width: 960px;
+			<!-- margin:auto;
+			width: 690px; -->
 		}
 
 		.socialBlogImages a {
-		background-repeat:no-repeat;
+			background-repeat:no-repeat;
 		}
 
 		.socialBlogImages a:hover {
-		opacity: 0.6;
+			opacity: 0.6;
 		}
 
 		.learnMoreIconsDiv {
-		margin:
-		auto;
-		width: 30%;
+			<!-- margin:auto; -->
+			width: 100%;
 		}
 
 		.connectWithUS {
-		color: #D4D4D4;
-		float: left;
-		font-size: 13px;
+			color: #D4D4D4;
+			float: left;
+			font-size: 13px;
 		}
 	</ui:style>
 	<g:FlowPanel styleName="{res.css.goorulandingFooterContainer}"
 		ui:field="goorulandingFooterContainer">
 		<g:FlowPanel styleName="{style.innerFooterDiv}" ui:field="innerFooterDiv">
-			<g:HTMLPanel>
+			<g:HTMLPanel styleName="{style.innerFooterDiv}">
 				<g:FlowPanel styleName="{style.learnMoreIconsDiv}">
 					<g:HTML styleName="{style.socialBlogImages}">
 						<a href="https://www.facebook.com/gooru" target="_blank">
@@ -110,26 +104,26 @@
 					</g:HTML>
 				</g:FlowPanel>
 				<g:HTMLPanel styleName="{res.css.homePageFooterMenu}">
-					<g:Anchor text="About" ui:field="aboutGooruAnr" />
+					<g:Anchor ui:field="aboutGooruAnr"/>
 					<!-- <g:Anchor text="Features" ui:field="featuresAnr" /> -->
-					<g:Anchor text="Community" ui:field="communityAnr" />
-					<g:Anchor text="Support" ui:field="supportAnr" />
-					<g:Anchor text="Terms" ui:field="termsAndPolicyAnr" />
+					<g:Anchor ui:field="communityAnr"/>
+					<g:Anchor ui:field="supportAnr"/>
+					<g:Anchor ui:field="termsAndPolicyAnr"/>
 					<!--Add-->
-					<g:Anchor text="Privacy" ui:field="privacyAndPolicyAnr" />
+					<g:Anchor ui:field="privacyAndPolicyAnr"/>
 					
-					<g:Anchor text="Copyright" ui:field="copyRightAnr" />
-					<g:Anchor text="Careers" ui:field="careersAnr" />
-					<g:Anchor text="Contact Us" ui:field="contactUsAnr" />
+					<g:Anchor ui:field="copyRightAnr"/>
+					<g:Anchor ui:field="careersAnr"/>
+					<g:Anchor ui:field="contactUsAnr"/>
 					<g:SimplePanel styleName="{res.css.gooruCopyRight}">
-						<g:Label text="© Gooru 2013" />
+						<g:Label ui:field="copyRightYearText"/>
 					</g:SimplePanel>
 				</g:HTMLPanel>
 				<div style="width: 114px;height: 36px;overflow: hidden;display: inline-block;margin-top: 10px;">
 				    <g:Anchor ui:field="mixpanelLink">
 					<!-- <a href="https://mixpanel.com/f/partner" ui:filed="mixpanelLink"> -->
 						<img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png"
-							alt="Mobile Analytics" />
+							alt="Mobile Analytics"/>
 					<!-- </a> -->
 					</g:Anchor>
 				</div>

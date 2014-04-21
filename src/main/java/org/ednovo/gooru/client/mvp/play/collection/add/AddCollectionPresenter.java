@@ -46,7 +46,7 @@ public class AddCollectionPresenter extends PresenterWidget<IsAddCollectionView>
 	@Override
 	protected void onBind() {
 		super.onBind();
-		getView().setCollectionThumbnail();
+
 	}
 	
 	@Override

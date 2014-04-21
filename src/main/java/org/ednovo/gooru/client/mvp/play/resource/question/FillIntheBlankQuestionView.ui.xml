@@ -6,10 +6,10 @@
 	<ui:style field="oeStyle" src="questionresource.css" type="org.ednovo.gooru.client.mvp.play.resource.question.QuestionStyleResource"/>
 	<g:FlowPanel>
 		<g:FlowPanel styleName="{oeStyle.openEndedQuestionAnswerContainer}">
-	          	  <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerTitle}">Answer</g:HTMLPanel>
+	          	  <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerTitle}" ui:field="answerText"></g:HTMLPanel>
 	          	  <g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
 	          	  <g:FlowPanel ui:field="optionsContainer"></g:FlowPanel>
-	          	  <g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.adjustCheckAnswerButton}" ui:field="checkAnswer">Check Answer</g:Button>
+	          	  <g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.adjustCheckAnswerButton}" ui:field="checkAnswer"></g:Button>
 	     </g:FlowPanel>
 	     <g:FlowPanel ui:field="resultPanel"></g:FlowPanel>
 	</g:FlowPanel>

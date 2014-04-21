@@ -32,19 +32,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : NewCollectionInfoPopup.java
+ * @author Search Team
  *
- * @description : This file is related to New CollectionInfoPopup
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class NewCollectionInfoPopup extends PopupPanel {
 	

@@ -40,19 +40,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : ProfilePageGradeLabel.java
+ * @author Search Team
  *
- * @description : This class is used to handle the click event on profile page grade label.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageGradeLabel extends Label implements ClickHandler {
 	
@@ -121,9 +112,7 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 			}
 		}
 	}
-	/**
-	 * This will handle the click event.
-	 */
+
 	@Override
 	public void onClick(ClickEvent event) {
 		if(this.getElement().getAttribute("selected").contains("selected")){
@@ -153,21 +142,7 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		}
 		
 	}
-	/**
-	 * @function updateGrade 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will update the grades
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void updateGrade(String grade){
 		String userLevel = AppClientFactory.getCurrentPlaceToken().toString();
 		if(userLevel.equalsIgnoreCase(PlaceTokens.SETTINGS)) {
@@ -182,21 +157,7 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 				}
 		});
 	}
-	/**
-	 * @function removeGrade 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will remove the grades.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private void removeGrade(String grade){
 		String userLevel = AppClientFactory.getCurrentPlaceToken().toString();
 		if(userLevel.equalsIgnoreCase(PlaceTokens.SETTINGS)) {
@@ -227,22 +188,7 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		return builder.toString();
 	}*/
 	
-	/**
-	 * @function generateGrade 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will generate the grades.
-	 * 
-	 * 
-	 * @parm(s) : @param gradeTxt
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String generateGrade(String gradeTxt){
 		String tmpGradeTxt = "";
 		if (gradeTxt.indexOf("-") > 0){
@@ -270,22 +216,7 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		}
 		return tmpGradeTxt;
 	}
-	/**
-	 * @function generateGradeIfHypen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will generate the grades with hypen.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String generateGradeIfHypen(String grade){
 		String gradeList[];
 		StringBuilder gradeStr = new StringBuilder();

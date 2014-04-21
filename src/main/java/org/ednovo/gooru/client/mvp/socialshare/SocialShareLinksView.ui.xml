@@ -3,12 +3,12 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
 		field="res" />
-	<g:FlowPanel styleName="{res.css.shareLink}" ui:field="shareLinkFlwPl">
-		<g:Label text="Share this with others by copying and pasting these links" ui:field="shareLbl"/>
-		<g:FlowPanel styleName="{res.css.shareLinkBoxContainer}">
+	<g:FlowPanel styleName="{res.css.shareLink2}" ui:field="shareLinkFlwPl">
+		<g:Label ui:field="shareLbl"/>
+		<g:FlowPanel styleName="{res.css.shareLinkBoxContainer}" ui:field="shareLinkContainer">
 			<g:TextArea styleName="{res.css.shareLinkBox}" ui:field="shareLinkTxtBox" />
 		</g:FlowPanel>
-		<g:Label styleName="{res.css.shareLinkSwitchUrl}" ui:field="swithUrlLbl" text="Switch to Bit.ly" />
-		<g:Label styleName="{res.css.shareLinkSwitchEmbed}" ui:field="swithToEmbedLbl" text="Switch to embed code" />
+		<g:Label styleName="{res.css.shareLinkSwitchUrl}" ui:field="swithUrlLbl"/>
+		<g:Label styleName="{res.css.shareLinkSwitchEmbed}" ui:field="swithToEmbedLbl"/>
 	</g:FlowPanel>
 </ui:UiBinder> 

@@ -27,19 +27,10 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 /**
- * @fileName : WindowUc.java
+ * @author Search Team
  *
- * @description : This class is used to display the dialog box.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class WindowUc extends DialogBoxUc {
 

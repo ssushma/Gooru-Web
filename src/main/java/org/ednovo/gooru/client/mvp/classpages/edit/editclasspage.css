@@ -17,8 +17,8 @@
 .newMockLeftAlignController {
 	margin: 0px auto;
 	/* float: left; */
-	width: 815px;
-	max-width: 815px;
+	width: 1000px;
+	max-width: 1000px;
 	/* border-right: 1px solid #dddddd; */
 	height: 100%;
 	min-height: 500px;
@@ -39,10 +39,14 @@
 
 .myCollectionShareStudentContainer {
 	position: relative;
-	width: 815px;
-	min-width: 815px;
+	width: 1000px;
+	min-width: 1000px;
 	background-color: gray;
 	height: 180px;
+}
+
+.myCollectionShareStudentContainer > .headerContainer{
+	height:180px;
 }
 
 .myClasspageWrapperTwoChapterTextNoWelcome {
@@ -198,21 +202,21 @@
 	color:rgb(153,153,153);
 	text-align:center;
 	text-align: center;
-	width: 350px;
+	/* width: 350px; */
 	top: 100px;
 	position: relative;
 	margin: 0 auto;
 }
 .loadingpanelImage{
-background: url(images/core/B-Dot.gif) no-repeat;
-	height:170px;
+	background: url(images/core/B-Dot.gif) no-repeat;
+	height: 170px;
 	width: 233px;
-	color:rgb(153,153,153);
-	text-align:center;
-	top: 80px;
+	color: #999;
 	position: relative;
-	margin: 0 auto;
-	}
+	display: inline-block;
+	text-align: center;
+	margin-left: 300px;
+}
 .myClassPageTitleButtonContainer {
 	float: right;
 	width: 100%;
@@ -237,12 +241,21 @@ background: url(images/core/B-Dot.gif) no-repeat;
 .searchResultContainer {
 	width: 100%;
 	float: left;
+	margin-top:-7px;
 }
 
 .paginationPanel {
-	clear: both;
-	padding: 20px 0px;
-	text-align: left;
+	text-align: center;
+	width: 70px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-left: 351px;
+	color: #1076BB;
+	background-image: url("../images/core/background-image.png") !important;
+}
+.paginationPanel:hover{
+	cursor:pointer;
+	color: #87BADD;
 }
 
 .classPageEditArrContainer {
@@ -442,10 +455,23 @@ background: url(images/core/B-Dot.gif) no-repeat;
 	background: #1076BB;
 }
 
+.monitorButton {
+	position: relative;
+	right: -94px;
+	float:right;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+.monitorButton:hover{
+	color: white;
+	cursor: pointer;
+	background: #1076BB;
+}
+
 .classpageEditButton {
 	position: relative;
 	margin: 0px auto;
-	left: 366px;
+	left: 478px;
 	top: -120px;
 	visibility: hidden;
 }
@@ -529,6 +555,7 @@ background: url(images/core/B-Dot.gif) no-repeat;
 	margin-top: 2px;
 	color: #515151;
 	padding: 4px 2px;
+	font-size: 12px;
 	background-color: rgb(255,255,255);
 	border: 1px solid rgb(221,221,221);
 	width: 70px;
@@ -542,21 +569,22 @@ background: url(images/core/B-Dot.gif) no-repeat;
 	margin-top: 2px;
 	color: #515151;
 	padding: 4px 9px;
+	font-size: 12px;
 	background-color: rgb(255,255,255);
 	border: 1px solid rgb(221,221,221);
 }
 
 .classpageTopLine{
-	border-top: 1px solid rgba(153, 153, 153, 0.5);
+	border-top: 1px solid #D0D0D0;
 	width: 100%;
 	margin: 0px auto;
-	margin-top: 60px;
+	float:left;
 	text-align: center;
-	
 }
 
 .addAssignment{
 	margin-top: 20px;
+	margin-left:0px !imporant;
 }
 
 .addAssignment:hover{
@@ -640,16 +668,157 @@ background: url(images/core/B-Dot.gif) no-repeat;
 	width: 227px;
 	position: absolute;
 	top: 50px;
-	left: 215px;	
+	left: 188px;
+	z-index:99;	
 }
 
 .webLinkPopupContainer{
 	width: 227px;
 	position: absolute;
 	top: 50px;
-	left: 502px;	
+	left: 475px;	
+	z-index:99;	
 }
 .classpageImage{
-	width:815px;
+	width:1000px;
 	height:180px;
+}
+/*New CSS for 6.1 teach  */
+.teachContainer {
+       width: 1002px;
+       margin: 0 auto;
+       overflow: visible;
+}
+.teachTab {
+       text-align: center;
+       padding-bottom: 20px;
+       margin: 20px 0px;
+       border-bottom: 1px solid #ddd;
+       margin-left:122px;
+}
+.teachTab .select {
+       color: #fff;
+       cursor: pointer;
+       padding: 10px 60px;
+       background-image: -moz-linear-gradient(#1076BB 0%, #579ECF 100%);
+       background-image: -webkit-gradient(linear, color-stop(0, #1076BB), color-stop(1, #579ECF));
+       background-image: -webkit-linear-gradient(#1076BB 0%, #579ECF 100%);
+       background-image: -o-linear-gradient(#1076BB 0%, #579ECF 100%);
+       background-image: -ms-linear-gradient(#1076BB 0%, #579ECF 100%);
+       border: 1px solid #1076BB;
+       -moz-box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
+       -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
+       box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
+}
+/* .teachTab .selected {
+       position: relative;
+       left: 7px;
+       border-radius: 5px 0px 0px 5px;
+} */
+.teachTab .selectd {
+       position: relative;
+       right: 7px;
+       border-radius: 0px 5px 5px 0px;
+}
+.teachTab .deselect {
+       color: #515151;
+       cursor: pointer;
+       padding: 10px 60px;
+       background-image: -moz-linear-gradient(3% 0% -90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+       background-image: -webkit-gradient(linear, 3% 0%, 3% 114%, color-stop(0, rgb(255,255,255)), color-stop(1, rgb(221,221,221)));
+       background-image: -webkit-linear-gradient(-90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+       background-image: -o-linear-gradient(-90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+       background-image: -ms-linear-gradient(-90deg, rgb(255,255,255) 0%, rgb(221,221,221) 100%);
+       border: 1px solid #ccc;
+       border-radius: 5px;
+}
+.teachContent {
+       padding: 30px;
+       min-height: 500px;
+       border-radius: 4px;
+       -moz-border-radius: 4px;
+       -ms-border-radius: 4px;
+       border: 1px solid #eaeaea;
+       background: #fff;
+}
+.teachTitle {
+       display: inline-block;
+       vertical-align: top;
+       font-size: 16px;
+       font-weight: bold;
+       padding-bottom: 30px;
+   padding-top:8px;
+}
+.classpageHover {
+	width: 1002px;
+    height:241px;
+	margin: 0 auto;
+    border-radius:4px;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	background: url('/images/Classpage/no-collections.png') no-repeat;
+}
+.classpageHoverTitle {
+	font-size: 24px;
+	color: #999;
+    padding: 100px 180px 0px 180px;
+	text-align: center;
+}
+
+
+.teachTab button:first-child{
+	color: #515151;
+	cursor: pointer;
+	padding: 10px 60px;
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0, #ddd 100%);
+	background: -webkit-gradient(linear, 3% 0, 3% 114%, color-stop(0, #fff), color-stop(1, #ddd));
+	background: -webkit-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -o-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -ms-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -linear-gradient(#fff 0, #ddd 100%) !important;
+	border: 1px solid #ccc;
+	border-radius: 5px 0px 0px 5px;
+}
+
+.teachTab button:last-child{
+	margin-left: -4px;
+	color: #515151;
+	cursor: pointer;
+	padding: 10px 60px;
+	background: -moz-linear-gradient(3% 0 -90deg, #fff 0, #ddd 100%);
+	background: -webkit-gradient(linear, 3% 0, 3% 114%, color-stop(0, #fff), color-stop(1, #ddd));
+	background: -webkit-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -o-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -ms-linear-gradient(-90deg, #fff 0, #ddd 100%);
+	background: -linear-gradient(#fff 0, #ddd 100%) !important;
+	border: 1px solid #ccc;
+	border-radius: 0px 5px 5px 0px;
+	
+}
+
+.teachTab > .selected{
+    color: #FFF !important;
+    background: #1076BB;
+    background: -moz-linear-gradient(3% 0 -90deg, #1076bb 0, #579ecf 100%) !important;
+    background: -webkit-gradient(linear, color-stop(0, #1076bb), color-stop(1, #579ecf)) !important;
+	background: -webkit-linear-gradient(#1076bb 0, #579ecf 100%) !important;
+	background: -o-linear-gradient(#1076bb 0, #579ecf 100%) !important;
+	background: -ms-linear-gradient(#1076bb 0, #579ecf 100%) !important;
+	background: -linear-gradient(#1076bb 0, #579ecf 100%) !important;
+	border: 1px solid #1076bb !important;
+	-moz-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.15) !important;
+	-webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.15) !important;
+	box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.15) !important;
+}
+.iframeBorder{
+	border:none;
+	width: 1000px !important;
+	height: 1000px !important;
+	background-color: #e7e7e7;
+	position: relative;
+}
+.backArrowButton{
+	margin-top:20px;
+	margin-bottom:20px;
 }

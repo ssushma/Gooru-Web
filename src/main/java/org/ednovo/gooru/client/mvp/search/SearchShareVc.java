@@ -35,32 +35,24 @@ import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchShareVc.java
- *
- * @description : This file is used to add social resource info and to share urls.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class SearchShareVc extends Composite {
+public class SearchShareVc extends Composite implements MessageProperties {
 
 	private static SearchShareVcUiBinder uiBinder = GWT
 			.create(SearchShareVcUiBinder.class);
@@ -84,6 +76,7 @@ public class SearchShareVc extends Composite {
 	/*@UiField FlowPanel embedContainer;*/
 	
 	@UiField FlowPanel socialShareLinksViewContainer;
+	@UiField Label shareViaText;
 	
 	public SocialShareLinksView socialShareLinksView = null;
 
@@ -102,9 +95,13 @@ public class SearchShareVc extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
-		socialShareLinksView.getShareLbl().setText("Or share this with others by copying and pasting these links");
+		shareViaText.setText(GL0638);
+		socialShareLinksView.getShareLbl().setText(GL0511);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);
+		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setFloat(Float.LEFT);
+		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingLeft(10, Unit.PX);
+		socialShareLinksView.getShareLinkContainer().getElement().getStyle().setWidth(353, Unit.PX);
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String, String>>() {
 			@Override
 			public void onSuccess(Map<String, String> shortenUrl) {
@@ -125,7 +122,7 @@ public class SearchShareVc extends Composite {
 			public void onSuccess(Map<String, String> result) {
 				if (result != null && result.containsKey("shortenUrl")) {
 					//embedContainer.add(new SearchEmbedVc(result.get(SHORTEN_URL), true));
-					socialShareLinksView.setEmbedBitlyLink(result.get("shortenUrl"));
+					socialShareLinksView.setEmbedBitlyLink(result.get("decodeRawUrl"));
 					rawUrl=result.get("rawUrl").toString();
 				}			
 			}
@@ -145,7 +142,7 @@ public class SearchShareVc extends Composite {
 	}
 	
 	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
+	 * 
 	 */
 	public void onReveal() {
 		Map<String, String> params = new HashMap<String, String>();
@@ -176,37 +173,23 @@ public class SearchShareVc extends Composite {
 		if (shortenUrl != null && shortenUrl.containsKey(SHORTEN_URL)) {
 			//shortenUrlTxtBox.setText(shortenUrl.get(SHORTEN_URL));
 			socialShareLinksView.setData(shortenUrl);
+			rawUrl=shortenUrl.get("rawUrl").toString();
 		}
-		rawUrl=shortenUrl.get("rawUrl").toString();
 		addSocialResource();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
+			Map<String, String> paramsEmbed = new HashMap<String, String>();
+			paramsEmbed.put("type", AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken());
+			paramsEmbed.put("shareType", "embed");
+			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(searchResultDo.getGooruOid(), paramsEmbed, getShareUrlWithGenerationAsyncCallback());
 //			panelMain.getElement().getStyle().setMarginLeft(-2, Unit.PX);
 		}else{
 			//panelMain.getElement().getStyle().setMarginLeft(15, Unit.PX);
 		}
 	}
-	/**
-	 * 
-	 * @function addSocialResource 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set the social resource info.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void addSocialResource() {
 		SocialShareDo shareDo = new SocialShareDo();
-		shareDo.setBitlylink(socialShareLinksView.getshareLinkTxtBox().getText());
+		shareDo.setBitlylink(rawUrl);
 		shareDo.setRawUrl(rawUrl);
 		shareDo.setTitle(searchResultDo.getResourceTitle());
 		shareDo.setDescription(searchResultDo.getDescription());
@@ -218,38 +201,19 @@ public class SearchShareVc extends Composite {
 		}else{
 			shareDo.setOnlyIcon(true);
 		}
+		shareDo.setDecodeRawUrl(socialShareLinksView.getshareLinkTxtBox().getText());
 		shareDo.setOnlyIcon(false);
 		shareDo.setShareType("public");
 		SocialShareView socialView = new SocialShareView(shareDo);
 		socialContentPanel.add(socialView);
 
 	}
-	/**
-	 * 
-	 * @function setShareUrlGenerationAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the shared url.
-	 * 
-	 * 
-	 * @parm(s) : @param shareShortenUrlAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setShareUrlGenerationAsyncCallback(
 			SimpleAsyncCallback<Map<String, String>> shareShortenUrlAsyncCallback) {
 		this.shareUrlGenerationAsyncCallback = shareShortenUrlAsyncCallback;
 	}
-	/** 
-	 * return shareUrlGenerationAsyncCallback
-	 */
+
 	public SimpleAsyncCallback<Map<String, String>> getShareShortenUrlAsyncCallback() {
 		return shareUrlGenerationAsyncCallback;
 	}
@@ -260,15 +224,13 @@ public class SearchShareVc extends Composite {
 		return shareUrlWithGenerationAsyncCallback;
 	}
 	/** 
-	 * This method is to set the shareUrl With GenerationAsyncCallback
+	 * This method is to set the shareUrlWithGenerationAsyncCallback
 	 */
 	public void setShareUrlWithGenerationAsyncCallback(
 			SimpleAsyncCallback<Map<String, String>> shareUrlWithGenerationAsyncCallback) {
 		this.shareUrlWithGenerationAsyncCallback = shareUrlWithGenerationAsyncCallback;
 	}
-	/** 
-	 * To set collectionItemDo.
-	 */
+
 	public void setData(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo =collectionItemDo;
 	}

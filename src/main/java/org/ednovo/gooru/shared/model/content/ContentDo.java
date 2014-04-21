@@ -33,21 +33,7 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ContentDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ContentDo implements Serializable {
 
@@ -58,64 +44,47 @@ public class ContentDo implements Serializable {
 	private UserDo creator;
 	private Set<CodeDo> taxonomySet = new HashSet<CodeDo>();
 	private String sharing;
-	/** 
-	 * This method is to get the gooruOid
-	 */
+	
+	public ContentDo(){}
+
 	public String getGooruOid() {
 		return gooruOid;
 	}
-	/** 
-	 * This method is to set the gooruOid
-	 */
+
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
-	/** 
-	 * This method is to get the user
-	 */
+
 	public UserDo getUser() {
 		return user;
 	}
-	/** 
-	 * This method is to set the user
-	 */
+
 	public void setUser(UserDo user) {
 		this.user = user;
 	}
-	/** 
-	 * This method is to get the creator
-	 */
+
 	public UserDo getCreator() {
 		return creator;
 	}
-	/** 
-	 * This method is to set the creator
-	 */
+
 	public void setCreator(UserDo creator) {
 		this.creator = creator;
 	}
-	/** 
-	 * This method is to get the taxonomySet
-	 */
-	public Set<CodeDo> getTaxonomySet() {
-		return taxonomySet;
-	}
-	/** 
-	 * This method is to set the taxonomySet
-	 */
+
 	public void setTaxonomySet(Set<CodeDo> taxonomySet) {
 		this.taxonomySet = taxonomySet;
 	}
-	/** 
-	 * This method is to get the sharing
-	 */
-	public String getSharing() {
-		return sharing;
+
+	public Set<CodeDo> getTaxonomySet() {
+		return taxonomySet;
 	}
-	/** 
-	 * This method is to set the sharing
-	 */
+
 	public void setSharing(String sharing) {
 		this.sharing = sharing;
 	}
+
+	public String getSharing() {
+		return sharing;
+	}
+
 }

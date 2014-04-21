@@ -24,28 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : NoCollectionInShelfListView.java
+ * @author Search Team
  *
- * @description : This is used for no collection in shelf list view
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class NoCollectionInShelfListView extends Composite {
+public class NoCollectionInShelfListView extends Composite implements MessageProperties{
 
+	@UiField Label emptyCollMsg_1,emptyCollMsg_2;
+	
 	private static NoCollectionInShelfListViewUiBinder uiBinder = GWT.create(NoCollectionInShelfListViewUiBinder.class);
 
 	interface NoCollectionInShelfListViewUiBinder extends UiBinder<Widget, NoCollectionInShelfListView> {
@@ -56,6 +51,8 @@ public class NoCollectionInShelfListView extends Composite {
 	 */
 	public NoCollectionInShelfListView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		emptyCollMsg_1.setText(GL1031+GL_SPL_QUESTION);
+		emptyCollMsg_2.setText(GL1058);
 	}
 
 }

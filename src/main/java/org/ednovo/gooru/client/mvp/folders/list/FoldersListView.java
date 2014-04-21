@@ -30,21 +30,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-/**
- * 
- * @fileName : FoldersListView.java
- *
- * @description : This is the view file for folders list view.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FoldersListView extends BaseViewWithHandlers<FoldersListUiHandlers> implements IsFoldersListView{
 
 	private static FoldersViewUiBinder uiBinder = GWT.create(FoldersViewUiBinder.class);

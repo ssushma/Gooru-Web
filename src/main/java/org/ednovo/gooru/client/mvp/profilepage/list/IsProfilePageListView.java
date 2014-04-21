@@ -31,19 +31,8 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 /**
- * 
- * @fileName : IsProfilePageListView.java
+ * @author Search Team
  *
- * @description : This is the interface for ProfilePageListView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsProfilePageListView extends IsViewWithHandlers<ProfilePageListUiHandlers> {
 

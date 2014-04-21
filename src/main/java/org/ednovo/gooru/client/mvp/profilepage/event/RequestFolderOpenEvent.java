@@ -29,19 +29,8 @@ import java.util.Map;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RequestFolderOpenEvent.java
- *
- * @description : RequestFolder Open Event
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RequestFolderOpenEvent extends GwtEvent<RequestFolderOpenHandler> {
 
@@ -57,105 +46,29 @@ public class RequestFolderOpenEvent extends GwtEvent<RequestFolderOpenHandler> {
 		setCollectionId(collectionId);
 		setParams(params);
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RequestFolderOpenHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(RequestFolderOpenHandler handler) {
 		handler.requestFolderView(getCollectionId(), getParams());
 	}
-	/**
-	 * 
-	 * @function getCollectionId 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns collectionId
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public String getCollectionId() {
 		return collectionId;
 	}
-	/**
-	 * 
-	 * @function setCollectionId 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :To set CollectionId
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setCollectionId(String collectionId) {
 		this.collectionId = collectionId;
 	}
-	/**
-	 * 
-	 * @function getParams 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :Return params.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Map<String,String>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public Map<String, String> getParams() {
 		return params;
 	}
-	/**
-	 * 
-	 * @function setParams 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :To set Params.
-	 * 
-	 * 
-	 * @parm(s) : @param params
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setParams(Map<String, String> params) {
 		this.params = params;
 	}	

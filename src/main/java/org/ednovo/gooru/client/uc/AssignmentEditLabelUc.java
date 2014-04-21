@@ -24,9 +24,19 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -41,21 +51,9 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : AssignmentEditLabelUc.java
- *
- * @description : This class is used to display the assignment edit label.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class AssignmentEditLabelUc extends Composite implements
-		HasValue<String> {
+		HasValue<String>,MessageProperties {
 
 	private static AssignmentEditLabelUcUiBinder uiBinder = GWT
 			.create(AssignmentEditLabelUcUiBinder.class);
@@ -83,24 +81,81 @@ public class AssignmentEditLabelUc extends Composite implements
 
 	// static boolean pencilVisiblity = true;
 
+	boolean isHavingBadWords=false;
+	
 	@UiField(provided = true)
 	UcCBundle res;
-	/**
-	 * Class constructor.
-	 */
+
 	public AssignmentEditLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
-		errorLabel.setText(MessageProperties.GL0173);
+		errorLabel.setText(GL0173);
 		errorLabel.setVisible(false);
 		deckPanel.showWidget(0);
 
+		
+		editTextBox.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", editTextBox.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						isHavingBadWords = value;
+						if (value){
+							editTextBox.getElement().getStyle().setBorderColor("orange");
+							errorLabel.setText(GL0554);
+							errorLabel.setVisible(true);
+						}else{
+							setValue(editTextBox.getText(), true); // fires events, too
+							
+							editTextBox.getElement().getStyle().clearBackgroundColor();
+							editTextBox.getElement().getStyle().setBorderColor("#ccc");
+							errorLabel.setVisible(false);
+						}
+					}
+				});
+			}
+		});
+		editTextBox.addKeyPressHandler(new KeyPressHandler() {
+
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				editTextBox.getElement().getStyle().clearBackgroundColor();
+				editTextBox.getElement().getStyle().setBorderColor("#ccc");
+				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", editTextBox.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+						
+						@Override
+						public void onSuccess(Boolean value) {
+							isHavingBadWords = value;
+							if (value){
+								editTextBox.getElement().getStyle().setBorderColor("orange");
+								errorLabel.setText(GL0554);
+								errorLabel.setVisible(true);
+							}else{
+								switchToLabel();
+								editTextBox.getElement().getStyle().clearBackgroundColor();
+								editTextBox.getElement().getStyle().setBorderColor("#ccc");
+								errorLabel.setVisible(false);
+							}
+						}
+					});
+				} else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
+					editTextBox.setText(editLabel.getText()); // reset to the original value
+				}
+			}
+		});
+		
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 
 	}
-	/**
-	 * This will handle the key up hanler.
-	 */
+
 	private class ValidateConfirmText implements KeyUpHandler {
 
 		@Override
@@ -146,6 +201,12 @@ public class AssignmentEditLabelUc extends Composite implements
 		if (editTextBox.getText().trim().length() > 0) {
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else {
+			
+			if (isHavingBadWords){
+				errorLabel.setText(GL0554);
+			}else{
+				errorLabel.setText(GL0173);
+			}
 			errorLabel.setVisible(true);
 //			new AlertContentUc("Oops", "Title Shouldn't be empty!");
 			//checkEmptyTitle(text);
@@ -204,6 +265,10 @@ public class AssignmentEditLabelUc extends Composite implements
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	/*public void checkEmptyTitle(String text){
 		
@@ -234,28 +299,20 @@ public class AssignmentEditLabelUc extends Composite implements
 	public String getPlaceholder() {
 		return placeholder;
 	}
-	/**
-	 * set the  placeholder
-	 */
+
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
-	/**
-	 * get the text
-	 */
+
 	public String getText() {
 		return text;
 	}
-	/**
-	 * set the text
-	 */
+
 	public void setText(String text) {
 		this.text = text;
 		setValue(text);
 	}
-	/**
-	 * set the values.
-	 */
+
 	@Override
 	public void setValue(String value, boolean fireEvents) {
 
@@ -263,9 +320,7 @@ public class AssignmentEditLabelUc extends Composite implements
 			ValueChangeEvent.fireIfNotEqual(this, getValue(), value);
 		setValue(value);
 	}
-	/**
-	 * This will return the textbox source.
-	 */
+
 	public TextBox getTextBoxSource() {
 		return editTextBox;
 	}

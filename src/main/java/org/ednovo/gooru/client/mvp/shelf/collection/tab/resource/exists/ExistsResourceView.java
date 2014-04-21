@@ -23,7 +23,20 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists;
-
+/**
+* @fileName : ExistsResourceView.java 
+*
+* @description :This file is responsible show view based on ExistsResourceView.ui.xml
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -37,6 +50,7 @@ import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -54,20 +68,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : ExistsResourceView.java
- *
- * @description : This file is responsible show view based on ExistsResourceView.ui.xml
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class ExistsResourceView extends AppPopUp{
+
+public class ExistsResourceView extends AppPopUp implements MessageProperties{
 
 	private static ExistsResourceViewUiBinder uiBinder = GWT.create(ExistsResourceViewUiBinder.class);
 
@@ -88,8 +90,8 @@ public class ExistsResourceView extends AppPopUp{
 	
 	@UiField Image resourceThumbnailImg,resourceIconImg;
 	
-	@UiField HTMLPanel buttonContainer;
-
+	@UiField HTMLPanel buttonContainer,alreadyExistsText,resourceExistsText;
+	
 	AddResourceView appPopup=null;
 	
 	ExistsResourceDo existsResourceDo=null;
@@ -101,9 +103,7 @@ public class ExistsResourceView extends AppPopUp{
 			UiBinder<Widget, ExistsResourceView> {
 		
 	}
-	/**
-	 * Class constructor.
-	 */
+	
 	public ExistsResourceView() {
 		
 		setWidget(uiBinder.createAndBindUi(this));
@@ -111,7 +111,13 @@ public class ExistsResourceView extends AppPopUp{
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-
+        alreadyExistsText.getElement().setInnerHTML(GL0932+GL_SPL_EXCLAMATION);
+        resourceExistsText.getElement().setInnerHTML(GL0933+GL_SPL_EXCLAMATION);
+        resourceThumbnailImg.setUrl("images/thumbimg-I.png");
+        resourceTitleLbl.setText(GL0935);
+        addExistsResourceBtnLbl.setText(GL0590);
+        cancelExistsResourcePopupBtnLbl.setText(GL0142);
+        loadingTextLbl.setText(GL0591.toLowerCase());
         addExistsResourceBtnLbl.getElement().setId("lblAdd");
         cancelExistsResourcePopupBtnLbl.getElement().setId("lblCancel");
 		cancelExistsResourcePopupBtnLbl.addClickHandler(new CloseExistsClickHandler());
@@ -121,22 +127,7 @@ public class ExistsResourceView extends AppPopUp{
 		buttonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
 		}
-	/**
-	 * 
-	 * @function onClickReport 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on the report res info label.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("reportResInfoLbl")
 	public void onClickReport(ClickEvent event){
 		hide();
@@ -146,9 +137,7 @@ public class ExistsResourceView extends AppPopUp{
 	}
 		
 	//Click handler for Close/Cancel
-	/**
-	 * This inner class is used to handle the click events (close/ cancel)
-	 */
+	
 	private class CloseExistsClickHandler implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -184,45 +173,22 @@ public class ExistsResourceView extends AppPopUp{
 			});
 		}
 	}
-	/**
-	 * This will get the resourceDo model object.
-	 */
+	
 	public ExistsResourceDo getExistsResourceDo() {
 		return existsResourceDo;
 	}
-	/**
-	 * This will set the resourceDo model object.
-	 */
 	public void setExistsResourceDo(ExistsResourceDo existsResourceDo) {
 		this.existsResourceDo = existsResourceDo;
 	}
-	/**
-	 * This will get the collectionDo model object.
-	 */
+	
 	public CollectionDo getCollectionDo() {
 		return collectionDo;
 	}
-	/**
-	 * This will set the collectionDo model object.
-	 */
+
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 	}
-	/**
-	 * @function displayResourceInformation 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display resource information.
-	 * 
-	 * @parm(s) : @param existsResourceDo
-	 * @parm(s) : @param collectionDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void displayResourceInformation(ExistsResourceDo existsResourceDo, CollectionDo collectionDo) {
 		this.existsResourceDo = existsResourceDo;
 		setCollectionDo(collectionDo);
@@ -253,11 +219,11 @@ public class ExistsResourceView extends AppPopUp{
 			@Override
 			public void onSuccess(GetFlagContentDO result) {
 				if(result==null ){
-					reportResInfoLbl.setText("Flag this Resource.");
+					reportResInfoLbl.setText(GL1497);
 				}
 				else
 				{
-					reportResInfoLbl.setText("You have already flagged this resource. Flag it again.");	
+					reportResInfoLbl.setText(GL1498);	
 				}
 			}
 			
@@ -266,48 +232,31 @@ public class ExistsResourceView extends AppPopUp{
 			}
 		});
 	}
-	/**
-	 * @function setResourceIconStyle 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method will set the resource icons styles.
-	 * 
-	 * 
-	 * @parm(s) : @param categoryStr
-	 * @parm(s) : @param resourceThumbnailImage
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setResourceIconStyle(String categoryStr, Image resourceThumbnailImage){
 		if (categoryStr.equalsIgnoreCase("Video")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteVideo");
 		}else if (categoryStr.equalsIgnoreCase("Interactive")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteInteractive");
-		}else if (categoryStr.equalsIgnoreCase("Website")){
+		}else if (categoryStr.equalsIgnoreCase("Website")||categoryStr.equalsIgnoreCase("Exam")||categoryStr.equalsIgnoreCase("Webpage")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteWebsite");
-		}else if (categoryStr.equalsIgnoreCase("Slide")){
-			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteSlide");
-		}else if (categoryStr.equalsIgnoreCase("Handout")){
-			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteHandout");
-		}else if (categoryStr.equalsIgnoreCase("Textbook")){
-			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteTextbook");
-		}else if (categoryStr.equalsIgnoreCase("Lesson")){
-			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteLesson");
+		}else if (categoryStr.equalsIgnoreCase("Slide")||categoryStr.equalsIgnoreCase("Image")){
+			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteImage");
+		}else if (categoryStr.equalsIgnoreCase("Handout")||categoryStr.equalsIgnoreCase("Textbook")||categoryStr.equalsIgnoreCase("Lesson")||categoryStr.equalsIgnoreCase("Text")){
+			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteText");
 		}else if (categoryStr.equalsIgnoreCase("Question")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteQuestion");
-		}else if (categoryStr.equalsIgnoreCase("Exam")){
-			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteExam");
+		}else if (categoryStr.equalsIgnoreCase("Audio")){
+			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteAudio");
+		}else if(categoryStr.equalsIgnoreCase("Other")){
+			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteOther");
+		}else if(categoryStr.equalsIgnoreCase("Image")){
+			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteImage");
 		}else{
-			
+			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteWebsite");
 		}
 	}
-	/**
-	 * This method will set the add new resource popup.
-	 */
+
 	public void setAddNewPopup(AddResourceView appPopup) {
 		this.appPopup = appPopup;
 	}

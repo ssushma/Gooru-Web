@@ -28,18 +28,17 @@ import org.ednovo.gooru.client.child.ChildPresenter;
 
 /**
  * 
- * @fileName : LoginPluginPresenter.java
+ * @fileName : AssignCollectionPresenter.java
  *
- * @description : This is the presenter class for LoginPluginView.java
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Jul 30, 2013
  *
- * @Author : Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class LoginPluginPresenter extends ChildPresenter<LoginPluginPresenter, IsLoginPlugin>
 {
@@ -49,47 +48,14 @@ public class LoginPluginPresenter extends ChildPresenter<LoginPluginPresenter, I
 		super(childView);
 	}
 	
-	/**
-	 * 
-	 * @function onBind 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is called when the presenter is instantiated.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+
+	
 	private void onBind() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * 
-	 * @function onLoad 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is called immediately after a widget becomes attached to the browser's document.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	
 	private void onLoad() {
 		throw new RuntimeException("Not implemented");
 	}	

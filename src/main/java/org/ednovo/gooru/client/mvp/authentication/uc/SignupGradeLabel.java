@@ -68,9 +68,7 @@ public class SignupGradeLabel extends Label implements ClickHandler {
 			this.addStyleName(SignUpCBundle.INSTANCE.css().longWidth());
 		}
 	}
-    /**
-     * Based on css styles either it will go to remove grade or update the grade.
-     */
+
 	@Override
 	public void onClick(ClickEvent event) {
 		if(this.getStyleName().toString().contains("active")){
@@ -81,25 +79,7 @@ public class SignupGradeLabel extends Label implements ClickHandler {
 			this.addStyleName(SignUpCBundle.INSTANCE.css().active());
 		}
 	}
-	/**
-	 * 
-	 * @function updateGrade 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to update the grade.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void updateGrade(String grade){
 		AppClientFactory.getInjector().getProfilePageService().addGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 				@Override
@@ -108,25 +88,7 @@ public class SignupGradeLabel extends Label implements ClickHandler {
 				}
 		});
 	}
-    /**
-     * 
-     * @function removeGrade 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to remove the grade.
-     * 
-     * 
-     * @parm(s) : @param grade
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	private void removeGrade(String grade){
 		AppClientFactory.getInjector().getProfilePageService().deleteGradeUserProfile(grade, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 				@Override

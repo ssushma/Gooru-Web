@@ -10,7 +10,7 @@
 			<g:HTMLPanel styleName="{deviceSupport.push}"></g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{deviceSupport.imageContainer}">
-			<g:Image title="Tech Saavy" altText="Tech Saavy" url="images/DeviceSupport/tech-saavy.png" styleName="{deviceSupport.mainImg}" />
+			<g:Image styleName="{deviceSupport.mainImg}" ui:field="deviceSupportLbl"/>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

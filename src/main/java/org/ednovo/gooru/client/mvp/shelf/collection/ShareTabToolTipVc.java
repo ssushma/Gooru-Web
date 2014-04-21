@@ -24,28 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ShareTabToolTipVc.java
+ * @author Search Team
  *
- * @description : This file is related to ShareTab ToolTipVc.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ShareTabToolTipVc extends PopupPanel{
+public class ShareTabToolTipVc extends PopupPanel implements MessageProperties{
 
+	@UiField Label tooltipText;
 	private static ShareTabToolTipVcUiBinder uiBinder = GWT
 			.create(ShareTabToolTipVcUiBinder.class);
 
@@ -59,5 +53,6 @@ public class ShareTabToolTipVc extends PopupPanel{
 	public ShareTabToolTipVc() {
 		super(true);
 		setWidget(uiBinder.createAndBindUi(this));
+		tooltipText.setText(GL0845);
 	}
 }

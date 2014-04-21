@@ -53,18 +53,18 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @fileName : ThanksEmailConfirmPopupUc.java
  *
- * @description : This popup is shown after user click on link from confirmation mail.
- *
+ * @description : 
+ *		This popup is shown after user click on link from confirmation mail.
  *
  * @version : 1.0
  *
- * @date: 26-Dec-2013
+ * @date: Dec 13, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
-public class ThanksEmailConfirmPopupUc extends PopupPanel {
+public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProperties{
  
 	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose; //lblDiscover,lblOrganize,lblTeach
 	
@@ -116,7 +116,7 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel {
 	 * 
 	 * @created_date : 15-09-2013
 	 * 
-	 * @description : This will set handlers.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -160,56 +160,19 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel {
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(MessageProperties.GL0501);
-		lblCongratsHeader.setText(MessageProperties.GL0502);
+		lblLoginHeading.setText(GL0501);
+		lblCongratsHeader.setText(GL0502);
 		lblCongratsHeader.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 
-		btnStartUsingGooru.setText(MessageProperties.GL0431);						
+		btnStartUsingGooru.setText(GL0431);						
 		btnStartUsingGooru.setVisible(true);
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
 	}
-	/**
-	 * 
-	 * @function clickOnClose 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to close popup on cancel button click.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("lblClose")
 	public void clickOnClose(ClickEvent event){
 		closePopUp();
 	}
-	/**
-	 * 
-	 * @function clickOnStartUsingGooru 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to close popup on StartUsingGooru button click.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("btnStartUsingGooru")
 	public void clickOnStartUsingGooru(ClickEvent event){
 		closePopUp();

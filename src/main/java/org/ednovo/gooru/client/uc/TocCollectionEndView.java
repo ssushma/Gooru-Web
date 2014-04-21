@@ -26,6 +26,10 @@ package org.ednovo.gooru.client.uc;
 
 
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -36,29 +40,20 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : TocCollectionEndView.java
- *
- * @description : This class is used to display the collection end view.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class TocCollectionEndView extends Composite implements HasClickHandlers{
+
+public class TocCollectionEndView extends Composite implements HasClickHandlers,MessageProperties{
 
 	@UiField Image resourceThumbnail;
 	
 	@UiField HTMLPanel resourceTitle;
+	
+	@UiField FlowPanel endImageContainer,endContainer;
 	
 	private String thumbnailUrl;
 	
@@ -66,17 +61,18 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 
 	interface TocCollectionEndViewUiBinder extends UiBinder<Widget, TocCollectionEndView> {
 	}
-	/**
-	 * Class constructor.
-	 */
+	
 	public TocCollectionEndView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceTitle.getElement().setInnerHTML(GL1051);
 	}
 	
 	@UiConstructor
 	public TocCollectionEndView(String thumbnailUrl){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
+		resourceTitle.getElement().setInnerHTML(GL1051);
+		setResourcePlayLink();
 	}
 	
 	public void onLoad(){
@@ -86,6 +82,20 @@ public class TocCollectionEndView extends Composite implements HasClickHandlers{
 	@UiHandler("resourceThumbnail")
 	public void onErrorImageLoad(ErrorEvent event){
 		resourceThumbnail.setUrl("images/default-collection-image-160x120.png");
+	}
+	public void setResourcePlayLink(){
+		Anchor resourceAnchor=new Anchor();
+		resourceAnchor.setHref(getResourceLink());
+		resourceAnchor.setStyleName("");
+		resourceAnchor.getElement().appendChild(endImageContainer.getElement());
+		endContainer.add(resourceAnchor);
+	}
+	public String getResourceLink(){
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		String resourceLink="#"+viewToken+"&id="+collectionId+"&view=end";
+		resourceLink += PreviewPlayerPresenter.setConceptPlayerParameters();
+		return resourceLink;
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {

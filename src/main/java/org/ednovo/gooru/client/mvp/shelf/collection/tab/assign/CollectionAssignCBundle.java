@@ -31,19 +31,8 @@ import com.google.gwt.resources.client.CssResource;
 
 
 /**
- * 
- * @fileName : CollectionAssignCBundle.java
+ * @author Search Team
  *
- * @description : This is the interface for CollectionAssignTabView and to apply css styles
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionAssignCBundle extends ClientBundle{
 	
@@ -61,6 +50,8 @@ public interface CollectionAssignCBundle extends ClientBundle{
 		String controlsContainer();
 
 		String labelTitleText();
+		
+		String directionsErrorLbl();
 
 		String placeHolderText();
 
@@ -129,6 +120,16 @@ public interface CollectionAssignCBundle extends ClientBundle{
 		String labelTitlePrivateText();
 		
 		String errorMessage();
+		
+		String contentSuccess();
+		
+		String assignClassPageBtn();
+		
+		String assignmentLabel();
+		
+		String directionsTextArea();
+		
+		String duedateContainer();
 	}
 	@Source("CollectionAssign.css")
 	CollectionAssignCss css();

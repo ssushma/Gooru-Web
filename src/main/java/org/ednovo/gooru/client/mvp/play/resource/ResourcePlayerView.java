@@ -24,11 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource;
 
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
+import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.header.ResourcePlayerHeaderView;
+import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,27 +42,34 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.HandlerRegistration;
+import com.gwtplatform.mvp.client.proxy.NavigationEvent;
+import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayerUiHandlers> implements IsResourcePlayerView{
+public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayerUiHandlers> implements IsResourcePlayerView, MessageProperties{
 	
 	
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
 	
 	@UiField ResourcePlayerHeaderView headerView;
-	
+	//ResourceInfoView resourceInfoView=new ResourceInfoView();
 	private PopupPanel appPopUp;
 	private boolean isInfoButtonActive=false;
 	private boolean isShareButtonActive=false;
 	private boolean isAddButtonActive=false;
+	private boolean isFlagButtonActive=false;
 	private int userRating=0;
-	private static final String RESOURCE_THUMBS_WIDGET_MODE="RESOURCE_RATING";
-	
+	private static final String RESOURCE_PLAYER="resourceplayer";
+	GlobalTooltipWithButton globalTooltipWithButton;
+	private HandlerRegistration autoHideHandler;
+	private final EventBus eventBus;
 	
 	private static CollectionPlayerViewUiBinder uiBinder = GWT.create(CollectionPlayerViewUiBinder.class);
 
@@ -66,6 +79,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	@Inject
 	public ResourcePlayerView(EventBus eventBus){
 		super(eventBus);
+		this.eventBus = eventBus;
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		appPopUp=new PopupPanel();
 		appPopUp.setGlassEnabled(true);
@@ -76,9 +90,36 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		headerView.getAddButton().addClickHandler(new ShowTabWidgetView("add"));
 		getNavigationContainer().getElement().getStyle().setProperty("display", "none");
 		headerView.getCloseButton().addClickHandler(new CloseResourcePlayerEvent());
-		headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
-		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());
+		headerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
+		
+		/*headerView.getThumbsDownButton().addClickHandler(new UpdateThumbsDownEvent());
+		headerView.getThumbsUpButton().addClickHandler(new UpdateThumbsUpEvent());*/
+		//resourceInfoView.getHideButton().addClickHandler(new ShowTabWidgetView("info"));
+		setAutoHideOnNavigationEventEnabled(true);
 	}
+	 
+	  @Override
+	  public void setAutoHideOnNavigationEventEnabled(boolean autoHide) {
+	    if (autoHide) {
+	      if (autoHideHandler != null) {
+	        return;
+	      }
+	      autoHideHandler = eventBus.addHandler(NavigationEvent.getType(),
+	          new NavigationHandler() {
+	            @Override
+	            public void onNavigation(NavigationEvent navigationEvent) {
+	             if(!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+	            	 hideFromPopup(false);
+	            	 resetPlayer();
+	             }
+	            }
+	          });
+	    } else {
+	      if (autoHideHandler != null) {
+	        autoHideHandler.removeHandler();
+	      }
+	    }
+	  }
 
 	@Override
 	public FlowPanel getPlayerBodyContainer() {
@@ -94,8 +135,8 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 
 	@Override
 	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,
-			boolean isShareButtonEnable) {
-		headerView.enableButtons(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable);
+			boolean isShareButtonEnable,boolean isFlagButtonEnable) {
+		headerView.enableButtons(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable,isFlagButtonEnable);
 	}
 	
 	public class ShowTabWidgetView implements ClickHandler{
@@ -106,12 +147,17 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		@Override
 		public void onClick(ClickEvent event) {
 			if(tabView.equalsIgnoreCase("info")){
+				MixpanelUtil.clickInfo(RESOURCE_PLAYER);
 				setTabPlaceRequest(tabView,headerView.isInfoButtonEnabled(),isInfoButtonActive);
 			}else if(tabView.equalsIgnoreCase("share")){
+				MixpanelUtil.clickShareResource(RESOURCE_PLAYER); 
 				setTabPlaceRequest(tabView,headerView.isShareButtonEnabled(),isShareButtonActive);
 			}
 			else if(tabView.equalsIgnoreCase("add")){
 				setTabPlaceRequest(tabView,headerView.isAddButtonEnabled(),isAddButtonActive);
+			}
+			else if(tabView.equalsIgnoreCase("flag")){
+				setTabPlaceRequest(tabView,true,isFlagButtonActive);
 			}
 		}
 		
@@ -120,10 +166,14 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public class CloseResourcePlayerEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			hideFromPopup(true);
-			hide();
-			resetThumbsButtons();
-			resetResourcePlayer();
+			resetPlayer();
 		}
+	}
+	
+	public void resetPlayer(){
+		hide();
+		resetThumbsButtons();
+		resetResourcePlayer();
 	}
 	
 	public void setTabPlaceRequest(String tabView, boolean isButtonEnable,boolean  isButtonActive){
@@ -133,8 +183,10 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 				PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId);
 				AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 			 }else{
-				   PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId).with("tab", tabView);
+				    PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId).with("tab", tabView);
+				    boolean refreshPlace=tabView.equalsIgnoreCase("add")?true:false;
 					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+					ResourcePlayerMetadataView.removePadding();
 			 }
 		}
 		
@@ -156,23 +208,31 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 
 	@Override
 	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive,
-			boolean makeShareButtonActive) {
-		headerView.makeButtonActive(makeAddButtonActive,makeInfoButtionActive, makeShareButtonActive);
-		setActiveButton(makeAddButtonActive, makeInfoButtionActive,makeShareButtonActive);
-		
+			boolean makeShareButtonActive,boolean makeFlagButtonActive) {
+		headerView.makeButtonActive(makeAddButtonActive,makeInfoButtionActive, makeShareButtonActive,makeFlagButtonActive);
+		setActiveButton(makeAddButtonActive, makeInfoButtionActive,makeShareButtonActive,makeFlagButtonActive);
+		if(makeInfoButtionActive || makeShareButtonActive)
+		{
+			ResourcePlayerMetadataView.removePadding();
+		}
+		if(!AppClientFactory.isAnonymous() && makeAddButtonActive){
+			ResourcePlayerMetadataView.removePadding();
+		}
 	}
 
 	@Override
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion) {
-		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion);		
-		setActiveButton(false,false,false);
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectFlagButton) {
+		headerView.clearActiveButton(deselectAddButton,deselectInfoButton, deselectShareButtion,deselectFlagButton);		
+		setActiveButton(false,false,false,false);
+		ResourcePlayerMetadataView.addPadding();
 	}
 	
 	public void setActiveButton(boolean makeAddButtonActive,boolean makeInfoButtionActive,
-			boolean makeShareButtonActive){
+			boolean makeShareButtonActive,boolean makeFlagButtonActive){
 		this.isAddButtonActive=makeAddButtonActive;
 		this.isInfoButtonActive=makeInfoButtionActive;
 		this.isShareButtonActive=makeShareButtonActive;
+		this.isFlagButtonActive=makeFlagButtonActive;
 	}
 
 	@Override
@@ -188,7 +248,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void resetResourcePlayer(){
 		getUiHandlers().resetResourcePlayer();
 	}
-	private class UpdateThumbsDownEvent implements ClickHandler{
+	/*private class UpdateThumbsDownEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			if(AppClientFactory.isAnonymous()){
@@ -210,11 +270,10 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 				getUiHandlers().updateResourceThumbsRating(thumbsStaus);
 			}
 		}
-	}
+	}*/
 	@Override
 	public void updateThumbsRatingView(int userThumbRating) {
-		System.out.println("user rating in view==>"+userThumbRating);
-		userRating=userThumbRating;
+		/*userRating=userThumbRating;
 		if(userThumbRating==0){
 			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
 			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
@@ -224,7 +283,19 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 		}else if(userThumbRating==1){
 			headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
 			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpActive());
+		}*/
+		
+		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
+		if(resourcePlayerFirstTimeUser==null){
+			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
+			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
+			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
+			globalTooltipWithButton.setStyleName("");
+			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
+			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
+			globalTooltipWithButton.show();
 		}
+		
 	}
 
 	public int getUserRating() {
@@ -236,9 +307,19 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	}
 	
 	public void resetThumbsButtons(){
-		userRating=0;
+		/*userRating=0;
 		headerView.getThumbsDownButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsDownNormal());
-		headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());
+		headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpNormal());*/
+	}
+
+	@Override
+	public Button getFlagButton() {
+		return headerView.getFlagButton();
+	}
+
+	@Override
+	public void makeFlagButtonOrange() {
+		headerView.makeFlagButtonOrange();
 	}
 	
 }

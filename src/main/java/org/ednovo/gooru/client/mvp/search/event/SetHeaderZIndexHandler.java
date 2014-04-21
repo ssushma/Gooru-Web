@@ -32,19 +32,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetHeaderZIndexHandler.java
- *
- * @description : This is the event handler to Set ZIndex  for Header.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SetHeaderZIndexHandler extends EventHandler, BaseUiHandlers {
 

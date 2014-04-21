@@ -28,25 +28,15 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.LabelUc;
 import org.ednovo.gooru.client.uc.StatisticsItemUc;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionStatisticsTabVc.java
- *
- * @description : This file is to show the collection statistics information
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class CollectionStatisticsTabVc extends FlowPanel {
+public class CollectionStatisticsTabVc extends FlowPanel implements MessageProperties{
 
 	private FlowPanel showAddsFloPanel;
 
@@ -80,16 +70,16 @@ public class CollectionStatisticsTabVc extends FlowPanel {
 	 *            instance of the {@link CollectionDo}
 	 */
 	public void setData(CollectionDo collection) {
-		statisticsLblUc = new LabelUc("Quick Glance:");
+		statisticsLblUc = new LabelUc(GL1491+GL_SPL_SEMICOLON);
 		statisticsLblUc.setStyleName(ShelfCBundle.INSTANCE.css().headerLabel());
 		this.add(statisticsLblUc);
-		showAddsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().addsImageStyle(), "adds", "50"));
+		showAddsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().addsImageStyle(), GL1493, "50"));
 		this.add(showAddsFloPanel);
-		showViewsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().viewsImageStyle(), "views", collection.getViews()));
+		showViewsFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().viewsImageStyle(), GL0934, collection.getViews()));
 		this.add(showViewsFloPanel);
-		showLikesFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().likesImageStyle(), "likes", "49"));
+		showLikesFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().likesImageStyle(), GL0729.toLowerCase(), "49"));
 		this.add(showLikesFloPanel);
-		showAvgTimeFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().avgTimeImageStyle(), "avg time", collection.getEstimatedTime()));
+		showAvgTimeFloPanel.add(new StatisticsItemUc(ShelfCBundle.INSTANCE.css().avgTimeImageStyle(), GL1492, collection.getEstimatedTime()));
 		this.add(showAvgTimeFloPanel);
 	}
 

@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.home.landingpage;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -40,22 +41,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : YoutubePopupVc.java
- *
- * @description :  This file is to add youtube video url to youtube video container.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class YoutubePopupVc extends PopupPanel{
+
+public class YoutubePopupVc extends PopupPanel implements MessageProperties{
 
 	@UiField HTMLPanel youtubeVideoContainer;
 	@UiField Label titleText;
@@ -65,12 +52,7 @@ public class YoutubePopupVc extends PopupPanel{
 
 	interface YoutubePopUpUiBinder extends UiBinder<Widget, YoutubePopupVc> {
 	}
-/**
- * Constructor.
- * This file is to add youtube video url to youtube video container.
- * @param title
- * @param youtubeVideoUrl
- */
+
 	public YoutubePopupVc(String title, String youtubeVideoUrl) {
 		super(true);
 		setWidget(uiBinder.createAndBindUi(this));
@@ -83,37 +65,14 @@ public class YoutubePopupVc extends PopupPanel{
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.show();
 		this.center();
-		titleText.setText("Watch Our Video");
-		
-		
+		titleText.setText(GL1331);
 	}
-	/**
-	 * To hide YoutubePopup.
-	 */
+
 	@Override
 	public void hide(boolean autoClose){
 	    super.hide(true);
 	    Window.enableScrolling(true);
 	}
-	/**
-	 * 
-	 * @function onCloseButtonClick 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To hide YoutubePopup on closeButton click.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("closeButton")
 	public void onCloseButtonClick(ClickEvent event)
 	{

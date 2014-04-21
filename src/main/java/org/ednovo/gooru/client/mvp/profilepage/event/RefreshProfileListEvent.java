@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.profilepage.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : RefreshProfileListEvent.java
- *
- * @description : RefreshProfileList Event
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RefreshProfileListEvent extends GwtEvent<RefreshProfileListHandler> {
 
@@ -51,25 +40,17 @@ public class RefreshProfileListEvent extends GwtEvent<RefreshProfileListHandler>
 	private String collectionId;
 	
 	private String folderLevel;
-	/**
-	 * Constructor.
-	 * @param collectionId
-	 * @param currentFolderLevel
-	 */
+	
 	public RefreshProfileListEvent(String collectionId, String currentFolderLevel) {
 		this.collectionId = collectionId;
 		this.folderLevel = currentFolderLevel;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RefreshProfileListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(RefreshProfileListHandler handler) {
 		handler.refreshProfileList(collectionId, folderLevel);

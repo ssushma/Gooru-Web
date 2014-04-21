@@ -34,19 +34,10 @@ import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 
 import com.google.inject.Singleton;
+
 /**
+ * @author Search Team
  * 
- * @fileName : ServiceModule.java
- *
- * @description : All presenter class will be bind.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ServiceModule extends AppPresenterModule {
 

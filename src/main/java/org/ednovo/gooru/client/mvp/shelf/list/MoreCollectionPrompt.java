@@ -25,32 +25,30 @@
 package org.ednovo.gooru.client.mvp.shelf.list;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : MoreCollectionPrompt.java
+ * @author Search Team
  *
- * @description : This is used to give prompt for more collections
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class MoreCollectionPrompt extends Composite  {
+public class MoreCollectionPrompt extends Composite implements MessageProperties{
 
 	private static MoreCollectionPromptUiBinder uiBinder = GWT.create(MoreCollectionPromptUiBinder.class);
 	
 	protected AppPopUp appPopUp;
+	@UiField Label manyResourcesText,tipLabelText,splitCollectionText;
+	@UiField BlueButtonUc okButton;
+	@UiField Anchor cancelButton;
 
 	interface MoreCollectionPromptUiBinder extends UiBinder<Widget, MoreCollectionPrompt> {
 	}
@@ -60,9 +58,14 @@ public class MoreCollectionPrompt extends Composite  {
 	 */
 	public MoreCollectionPrompt() {
 		appPopUp = new AppPopUp();
-		appPopUp.setContent("Hmmm..", uiBinder.createAndBindUi(this));
+		appPopUp.setContent(GL0981,uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
+		manyResourcesText.setText(GL0978);
+		tipLabelText.setText(GL0979);
+		splitCollectionText.setText(GL0980);
+		okButton.setText(GL0190.toLowerCase());
+		cancelButton.setText(GL0142);
 	}
 
 }

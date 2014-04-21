@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.ClearClasspageListEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
@@ -41,6 +42,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -51,19 +53,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : LogoutPopupVc.java
+ * @author Search Team
  *
- * @description : Related to logout popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class LogoutPopupVc extends Composite implements MessageProperties{
 
@@ -77,7 +68,7 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 	
 	@UiField Label lblClassDismissed;
 	
-	private static final String HEAR_THE_BELL_TEXT = MessageProperties.GL0188;
+	private static final String HEAR_THE_BELL_TEXT = GL0188;
 
 	private static LogoutPopupVcUiBinder uiBinder = GWT.create(LogoutPopupVcUiBinder.class);
 
@@ -93,9 +84,9 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(HEAR_THE_BELL_TEXT, uiBinder.createAndBindUi(this));
 		
-		lblClassDismissed.setText(MessageProperties.GL0189);
-		okBtnUc.setText(MessageProperties.GL0190);
-		cancelAnr.setText(MessageProperties.GL0142);
+		lblClassDismissed.setText(GL0189);
+		okBtnUc.setText(GL0190);
+		cancelAnr.setText(GL0142);
 		
 		appPopUp.show();
 		appPopUp.center();
@@ -142,9 +133,39 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 					AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
 					AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
 				}
-				
+				AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(null));
+
 				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
 					Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+					if(map.containsKey("query"))
+					{
+						String queryVal = map.get("query");
+						queryVal = queryVal.replaceAll("%5C1", "&");
+						try
+						{
+						queryVal = URL.decodeQueryString(queryVal);
+						}
+						catch(Exception ex)
+						{
+							
+						}
+						map.put("query", queryVal);
+					}
+					if(map.containsKey("flt.subjectName"))
+					{
+						String subjectNameVal = map.get("flt.subjectName");
+						subjectNameVal = subjectNameVal.replaceAll("%5C1", "&");
+						try
+						{
+							subjectNameVal = URL.decodeQueryString(subjectNameVal);
+						}
+						catch(Exception ex)
+						{
+							
+						}
+						subjectNameVal = subjectNameVal.replace("+", " ");
+						map.put("flt.subjectName", subjectNameVal);
+					}
 					map.remove("callback");
 					map.remove("type");
 					map.remove("userName");

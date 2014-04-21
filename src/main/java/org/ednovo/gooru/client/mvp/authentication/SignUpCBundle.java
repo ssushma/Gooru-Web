@@ -27,21 +27,22 @@ package org.ednovo.gooru.client.mvp.authentication;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-	/**
-	 * 
-	 * @fileName : SignUpCBundle.java
-	 *
-	 * @description : This file is used to handle popup's and tooltips.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
+/**
+ * 
+ * @fileName : SignUpCBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 20-09-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface SignUpCBundle extends ClientBundle {
 	
 	static final SignUpCBundle INSTANCE = GWT.create(SignUpCBundle.class);
@@ -65,6 +66,12 @@ public interface SignUpCBundle extends ClientBundle {
 		String tooltipContentTitle();
 
 		String inputRow();
+		
+		String errorRowFirstName();
+		
+		String inputRowWidth();
+		
+		String inputRowWidthRight();
 
 		String horizontalTooltipContainer();
 
@@ -377,6 +384,7 @@ public interface SignUpCBundle extends ClientBundle {
 		
 		String subjectOptionELA();
 
+		String signUpPopUpGlassCss();
 	}
 	@Source("SignUp.css")
 	SignUp css();

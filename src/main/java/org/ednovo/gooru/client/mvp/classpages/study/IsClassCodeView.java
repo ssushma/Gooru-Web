@@ -27,21 +27,7 @@ package org.ednovo.gooru.client.mvp.classpages.study;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
 import com.google.gwt.user.client.ui.Label;
-/**
- * 
- * @fileName : IsClassCodeView.java
- *
- * @description : This file is used to get the error label and clearing the error label.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsClassCodeView extends IsViewWithHandlers<ClassCodeUiHandlers>  {
 
 	

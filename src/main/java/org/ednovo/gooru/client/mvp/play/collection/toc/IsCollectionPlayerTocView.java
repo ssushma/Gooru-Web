@@ -33,4 +33,6 @@ public interface IsCollectionPlayerTocView extends IsViewWithHandlers<Collection
 	
 	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome);
 	
+	public void clearNavigationPanel();
+	
 }

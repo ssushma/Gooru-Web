@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.home.library.assign;
 
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : SocialShareSmallStyle.java
- *
- * @description : This is used to apply css styles for SocialShareSmallView.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface SocialShareSmallStyle extends CssResource {
 
 	String classPageShareButtonsFTEBgDisable();

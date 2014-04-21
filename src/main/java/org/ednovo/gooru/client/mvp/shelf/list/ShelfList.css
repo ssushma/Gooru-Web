@@ -50,31 +50,23 @@
 }
 
 .shelfNewCollection {
-	margin-bottom: 10px;
 	height: 17px;
 	width: 90px;
-	color: #fff;
-	border: 1px solid #1076BB;
-	display: inline-block;
+	color: white;
+	background-color: #1076bb;
+	font-size: 12px;
 	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	background-color: #1076BB;
 	padding: 8px 15px 8px 32px;
-	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
-		no-repeat, #1076BB;
-	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
-		no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC),
-		to(#1076BB));
-	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
-		no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
-	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
-		no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
-	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
-		no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
-	background: url("images/NewResourcePopup/plus.fw.png") 11px 11px
-		no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
-	cursor: pointer;
+	border: 1px solid #1076BB;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	margin-bottom: 10px;
+	background: #1076BB;
+	background: #1076BB url("images/NewResourcePopup/plus.fw.png") 11px center no-repeat;
+	background: url("images/NewResourcePopup/plus.fw.png") 11px center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: url("images/NewResourcePopup/plus.fw.png") 11px center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/NewResourcePopup/plus.fw.png") 11px center no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/NewResourcePopup/plus.fw.png") 11px center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
 }
 
 .shelfNewCollection:hover {
@@ -100,7 +92,10 @@
 .blueBorder {
 	/*border-top: 4px solid transparent !important;
 	border-bottom: 4px solid transparent !important;*/
-	background-color: #bbb;
+	/* background-color: #bbb; */
+	
+	border: 2px dashed #A6CAA2;
+    background-color:#E1F0D1;
 }
 
 .shelfNewCollectionText {
@@ -116,8 +111,6 @@
 
 .resourceCollectionPanelText {
 	font-size: 12px !important;
-	height: 18px !important;
-	padding: 12px !important;
 	text-align: center;
 	margin: 0 auto;
 }
@@ -209,7 +202,7 @@
 
 .shelfResourceTitle {
 	float: left;
-	width: 240px;
+	width: 210px;
 	white-space: nowrap !important;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -324,12 +317,12 @@
 }
 
 .shelfContentWrapperPanelForFolders {
-	width: 301px;
+	width: 272px;
 	background: none repeat scroll 0 0 #FFFFFF;
 }
 
 .shelfContentWrapperPanelFolderResource {
-	width: 301px;
+	width: 272px;
 	background: none repeat scroll 0 0 #FFFFFF;
 }
 
@@ -403,12 +396,12 @@
 
 .shelfPanelForShelf {
 	height: 97%;
-	margin-bottom: -143px;
-	min-height: 759px;
-	position: fixed;
-	margin-left: 62px;
-	top: 116px;
-	width: 311px;
+ 	margin-bottom: -143px; 
+ 	min-height: 759px; 
+	position: absolute;
+	/* margin-left: 62px; */
+	/* top: 116px; */
+	width: 295px;
 }
 
 .myFolderCollectionNavContainerHeading {

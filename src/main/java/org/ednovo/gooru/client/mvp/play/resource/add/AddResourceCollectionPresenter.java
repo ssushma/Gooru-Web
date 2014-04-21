@@ -31,9 +31,11 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -60,10 +62,15 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 		return getView().getAddCollectionViewButton();
 	}
 	
+	public Label getAddNewCollectionButton(){
+		return getView().getAddNewCollectionLabel();
+	}
+	
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo){
 		getView().setCollectionItemData(collectionId, collectionItemDo);
 		pageNum=1;
-		getUserWorkspace(true);
+		//getUserWorkspace(true);
+		getUserShelfData();
 	}
 	
 	@Override
@@ -79,7 +86,7 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 	public void updateWorkSpaceLink(String collectionId){
 		getView().updateWorkSpaceLink(collectionId);
 		pageNum=1;
-		getUserWorkspace(true);
+		getUserShelfData();
 	}
 	@Override
 	public void getUserShelfCollections(int dropdownListContainertWidgetCount) {
@@ -88,15 +95,36 @@ public class AddResourceCollectionPresenter extends PresenterWidget<IsAddResourc
 	}
 	
 	public void getUserWorkspace(final boolean isClearPanel){
-		AppClientFactory.getInjector().getPlayerAppService().getWorkspaceCollections(AppClientFactory.getGooruUid(), pageNum+"", pageSize+"", new SimpleAsyncCallback<ArrayList<CollectionItemsList>>() {
+		AppClientFactory.getInjector().getPlayerAppService().getWorkspaceCollections("", pageNum+"", pageSize+"", new SimpleAsyncCallback<ArrayList<CollectionItemsList>>() {
 			@Override
 			public void onSuccess(ArrayList<CollectionItemsList> userCollectionsList) {
 				getView().addCollectionItems(userCollectionsList, isClearPanel);
 			}
 		});
-	}	
+	}		
 	
-	public Label getAddNewCollectionButton(){
-		return getView().getAddNewCollectionButton();
+	public void getUserShelfData(){
+		getView().resetSelectionData();
+		getWorkspaceData(0,20,true);
 	}
+	
+	public void getWorkspaceData(int offset,int limit,final boolean clearShelfPanel){
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,null, null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+			}
+		});
+	}
+
+	@Override
+	public void getFolderItems(final TreeItem item,String parentId) {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,null, null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().setFolderItems(item,folderListDo);
+			}
+		});
+	}
+
 }

@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import java.util.Map;
@@ -52,19 +54,8 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceSearchPresenter.java
- *
- * @description : This is used to get the resource search results.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsResourceSearchView, ResourceSearchPresenter.IsResourceSearchProxy> implements SearchUiHandlers {
 
@@ -94,17 +85,11 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	protected void onReveal() {
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 	}
-*/	
-	/**
-	 * This is used to get the parameters from url.
-	 */
-	@Override
+*/	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 	}
-	/**
-	 * This is used to get search filters.
-	 */
+
 	@Override
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = super.getSearchFilters();
@@ -114,16 +99,12 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		}
 		return filters;
 	}
-	/**
-	 * This is used to get the place token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.RESOURCE_SEARCH;
 	}	
-	/**
-	 * This is used to get the resource search results.
-	 */
+
 	@Override
 	protected void requestSearch(SearchDo<ResourceSearchResultDo> searchDo, SearchAsyncCallback<SearchDo<ResourceSearchResultDo>> searchAsyncCallback) {
 		if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")){

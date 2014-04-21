@@ -1,22 +1,22 @@
 @charset "utf-8";
 
 .collectionPlayerAddResourcesContainer {
-	width: 960px;
-	height: 166px;
-	margin: 0 auto;
-	background-color: #F0F0F0;
+	width: 100%;
+	height: 120px;
+	background-color: #515151;
 	overflow: hidden;
+	margin-top:50px;
 }
 
 .collectionPlayerAddResourcesContent {
 	width: 100%;
-	height: 80px;	
+	height: 35px;	
 }
 
 .collectionPlayerAddResourcesIconContainer {
 	width: 230px;
 	margin: 0 auto;
-	height: 60px;
+	height: 35px;
 }
 
 .collectionPlayerAddResourcesIconHolder {
@@ -63,8 +63,8 @@
 .collectionPlayerAddResourcesText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
-	color: #515151;
-	margin-top: 30px;
+	color: #FFF;
+	margin-top: 10px;
 	margin-left: 10px;
 	float: left;
 }
@@ -79,11 +79,10 @@
 }
 
 .collectionPlayerExistingCollectionContainer {
-	width: 900px;
-	height: 67px;
-	background-color: #FFF;
-	margin-left: 20px;
-	float: left;
+	width: 960px;
+	/* height: 67px;
+	background-color: #FFF; */
+	margin:0 auto;
 }
 
 .collectionPlayerExistingCollectionContent {
@@ -91,13 +90,13 @@
 	margin-left: 160px;
 	min-height: 42px;
 	height: auto;
-	margin-top: 18px;
+	padding: 0px 20px 0 20px;
 }
 
 .collectionPlayerExistingCollectionText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	color: #515151;
+	color: #FFF;
 	float: left;
 	margin-top: 6px;
 }
@@ -160,7 +159,7 @@
 	float: right;
 	margin-top: 6px;
 	font-size: 14px;
-	color: #515151;
+	color: #FFF;
 }
 /* .collectionAddingErrorStyles{
 font-style: italic;
@@ -181,7 +180,7 @@ color: orange;
 	margin-top: -13px;
 	font-size: 12px;
 	color: #FBB03B;
-	margin-left: 273px;
+	margin-left: 290px;
 	font-family: arial;
 	font-style: italic;
 }
@@ -969,27 +968,27 @@ body {
 	float: right;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
-	color: #1076BB;
-	margin-right: 42px;
+	color: #6c889A;
+	margin-right: 45px;
+	margin-top: 20px;
 	cursor: pointer;
 }
 .collectionPlayerAddResourcesInstead:hover{
-	color: #4C98CC;
+	opacity: 0.6;
 }
 
 .successMessageContainer{
-	margin: 20px 0px 0px 20px;
-	width: 900px;
-	background-color:#FFFFFF;
+	margin: 0 auto;
+	width: 960px;
 }
 .successMessageLabelText{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	line-height: 120%;
-	color: #515151;
+	color: #FFF;
 	text-align: center;
-	padding-bottom: 7px;
-	padding-top: 5px;
+	padding-bottom: 4px;
+	padding-top: 8px;
 }
 .workSpaceLinkContainer{
 	font-family: Arial, Helvetica, sans-serif;
@@ -1004,10 +1003,11 @@ body {
 	cursor: pointer;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
-	color: #1076BB;
+	color: #6c889A;
 }
 .workSpaceLinkText:hover{
-	color: #4C98CC;
+	/* color: #4C98CC; */
+	opacity:0.6;
 	text-decoration: none;
 }
 .addCollectionInsteadLabelContainer{
@@ -1039,7 +1039,8 @@ body {
 	float:right;
 }
 .addResourceInsteadContainer{
-	float:right;
+	width:960px;
+	margin:0 auto;
 }
 .addButtonHideLbl {
 	float: right;
@@ -1052,4 +1053,23 @@ body {
 
 .addButtonHideLbl:hover {
 	color: #87badd;	
+}
+.resource-info-bottomImageContainer{
+	text-align: center;
+	cursor: pointer;
+	width: 45px;
+	margin: 0 auto;
+}
+.resource-info-hideImage{
+	display: inline-block;
+	background-image: url("images/hide_arrow.png");
+	width: 10px;
+	color: #fff;
+	height:6px;
+}
+.resource-info-hideText{
+	display: inline-block;
+	vertical-align: top;
+	color: #fff;
+	margin-left: 4px;
 }

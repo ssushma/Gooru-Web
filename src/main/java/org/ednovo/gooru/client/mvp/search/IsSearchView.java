@@ -34,25 +34,14 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
 /**
+ * @author Search Team
  * 
- * @fileName : IsSearchView.java
- *
- * @description : tHIS FILE IS RELATED TO SEARCH.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWithHandlers<SearchUiHandlers> {
 	
@@ -130,7 +119,7 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	 * Add collections to user shelf
 	 * @param shelfCollections collections list
 	 */
-	void setShelfCollections(List<CollectionDo> shelfCollections) ;
+	void setShelfCollections(List<FolderDo> shelfCollections) ;
 
 	void resetFilters();
 

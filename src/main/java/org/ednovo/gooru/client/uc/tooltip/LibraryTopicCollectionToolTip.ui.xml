@@ -1,0 +1,53 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.organizeTextContainer {
+			float: left;
+			width: 241px;
+			margin: 8px 4px 5px 8px;
+		}
+		
+		.hoverPopupArrow {
+			background: url(images/core/bubble-arrow.png);
+			display: block;
+			width: 25px;
+			height: 10px;
+			position: relative;
+			margin-left: 26px;
+			z-index: 999999;
+		}
+        .organizeRemainigText {
+	        font-family: Arial, Helvetica, sans-serif;
+	        font-size: 12px;
+			font-weight: bold;
+	        white-space: nowrap;
+	        overflow: hidden;
+	        text-overflow: ellipsis;
+			color: #333333;
+	    }
+		.categoryLbl {
+			color: #333333;
+		}
+		.sourceLbl {
+			font-style: italic;
+			color: #999999;
+		}
+	</ui:style>
+	<ui:style field="toolTip" src="ToolTip.css" />
+		
+	<g:FlowPanel styleName="{toolTip.organizeContainer}">
+		<g:HTMLPanel styleName="{style.hoverPopupArrow}"
+			ui:field="arowPanel"></g:HTMLPanel>
+		<g:FlowPanel styleName="{toolTip.organizePopupTextContainer}" ui:field="organizePopupTextContainer">
+			<g:FlowPanel ui:field="textFlowPanel" styleName="{style.organizeTextContainer}">
+				<g:HTML styleName="{style.organizeRemainigText}" ui:field="descPanel">
+					<br />
+				</g:HTML>
+				<g:HTML ui:field="categoryLbl" styleName="{style.categoryLbl}"></g:HTML>
+				<g:Label ui:field="sourceLbl" styleName="{style.sourceLbl}"></g:Label>
+			</g:FlowPanel>
+		</g:FlowPanel>
+	</g:FlowPanel>
+
+</ui:UiBinder> 

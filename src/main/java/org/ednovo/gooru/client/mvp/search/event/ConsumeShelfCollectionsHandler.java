@@ -30,23 +30,13 @@ package org.ednovo.gooru.client.mvp.search.event;
 import java.util.List;
 
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ConsumeShelfCollectionsHandler.java
- *
- * @description : Consume Shelf Collections Handler to set shelf collections .
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ConsumeShelfCollectionsHandler extends EventHandler {
 
@@ -54,6 +44,6 @@ public interface ConsumeShelfCollectionsHandler extends EventHandler {
 	 * Set shelf collections 
 	 * @param shelfCollections instance of {@link CollectionDo} as list
 	 */
-	void consumeShelfCollections(List<CollectionDo> shelfCollections);
+	void consumeShelfCollections(List<FolderDo> shelfCollections);
 
 }

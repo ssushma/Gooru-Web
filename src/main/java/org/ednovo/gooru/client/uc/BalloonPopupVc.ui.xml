@@ -5,7 +5,7 @@
 		<g:HTMLPanel styleName="{res.css.hoverPopupContainer}" ui:field="popupContainer">
 		    <g:HTMLPanel styleName="{res.css.hoverPopupArrow}"></g:HTMLPanel>
 		    <g:HTMLPanel styleName="{res.css.hoverPopupTextContainer}">
-		        <g:Label ui:field="popupDesc" styleName="{res.css.comingSoonLbl}">Coming soon!</g:Label>
+		        <g:Label ui:field="popupDesc" styleName="{res.css.comingSoonLbl}"></g:Label>
 		    </g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:FlowPanel>

@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.home;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
-import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -35,35 +35,19 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : WaitPopupVc.java
- *
- * @description : Information about WaitPopup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public abstract class WaitPopupVc extends AppPopUp {
+public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
 
-	@UiField
-	Anchor cancelAnr;
+	@UiField Button cancelAnr,okButtonUc;
 
-	@UiField
-	BlueButtonUc okButtonUc;
-	
-	@UiField
-	Label messageTextLabel;
+	@UiField Label messageTextLabel,removingText;
 
 	private static WaitPopupVcUiBinder uiBinder = GWT.create(WaitPopupVcUiBinder.class);
 
@@ -82,14 +66,17 @@ public abstract class WaitPopupVc extends AppPopUp {
 		super();
 		setContent(title, uiBinder.createAndBindUi(this));
 		setStyleName("deleteResourcePopup");
-		okButtonUc.setStyleName("overRideBlueButtonDelete");
+		//okButtonUc.setStyleName("overRideBlueButtonDelete");
 		messageTextLabel.setText(entityInfo);
+		cancelAnr.setText(GL0142);
+		okButtonUc.setText(GL0190);
 		okButtonUc.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
+		removingText.setText(GL1021);
+		removingText.setVisible(false);
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-
 		show();
 		center();
 	}
@@ -103,10 +90,8 @@ public abstract class WaitPopupVc extends AppPopUp {
 	@UiHandler("cancelAnr")
 	public void onCancelClick(ClickEvent clickEvent) {
 		hide();
-
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
 	}
 
 	/**
@@ -117,7 +102,19 @@ public abstract class WaitPopupVc extends AppPopUp {
 	 */
 	@UiHandler("okButtonUc")
 	public void removeResource(ClickEvent clickEvent) {
+		hideButtons(false);
 		this.onTextConfirmed();
+	}
+	public void hide(){
+		super.hide();
+		Window.enableScrolling(true);
+        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+	}
+	
+	public void hideButtons(boolean isHide){
+		cancelAnr.setVisible(isHide);
+		okButtonUc.setVisible(isHide);
+		removingText.setVisible(!isHide);
 	}
 
 	public abstract void onTextConfirmed();

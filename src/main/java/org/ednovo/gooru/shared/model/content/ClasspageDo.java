@@ -24,25 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.content;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import org.ednovo.gooru.shared.model.user.CreatorDo;
+import org.ednovo.gooru.shared.model.user.UserDo;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ClasspageDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
-public class ClasspageDo extends ResourceDo {
+public class ClasspageDo implements Serializable{
 
 
 	/**
@@ -52,7 +44,19 @@ public class ClasspageDo extends ResourceDo {
 	
 	private String collectionType;
 	private String title;
+	private String classpageId;
+	private String thumbnailUrl;
+	private String classpageCode;
+	private ArrayList<String> permissions;
+	private int totalHitCount;
+	private Integer statusCode;
+	private String sharing;
+	private String status;
+	private String creatorId;
+	private String creatorUsername;
+	private String creatorProfileImage;
 	
+	public ClasspageDo(){}
 	
 	/** 
 	 * This method is to get the collectionType
@@ -77,5 +81,137 @@ public class ClasspageDo extends ResourceDo {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
-	}	
+	}
+
+	/**
+	 * @return the classpageId
+	 */
+	public String getClasspageId() {
+		return classpageId;
+	}
+
+	/**
+	 * @param classpageId the classpageId to set
+	 */
+	public void setClasspageId(String classpageId) {
+		this.classpageId = classpageId;
+	}
+
+	/**
+	 * @return the thumbnailUrl
+	 */
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+
+	/**
+	 * @param thumbnailUrl the thumbnailUrl to set
+	 */
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
+	}
+
+	/**
+	 * @return the classpageCode
+	 */
+	public String getClasspageCode() {
+		return classpageCode;
+	}
+
+	/**
+	 * @param classpageCode the classpageCode to set
+	 */
+	public void setClasspageCode(String classpageCode) {
+		this.classpageCode = classpageCode;
+	}
+
+	/**
+	 * @return the permissions
+	 */
+	public ArrayList<String> getPermissions() {
+		return permissions;
+	}
+
+	/**
+	 * @param permissions the permissions to set
+	 */
+	public void setPermissions(ArrayList<String> permissions) {
+		this.permissions = permissions;
+	}
+
+	public int getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	public void setTotalHitCount(int totalHitCount) {
+		this.totalHitCount = totalHitCount;
+	}
+
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	/** 
+	 * This method is to get the sharing
+	 */
+	public String getSharing() {
+		return sharing;
+	}
+
+	/** 
+	 * This method is to set the sharing
+	 */
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(String creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public String getCreatorUsername() {
+		return creatorUsername;
+	}
+
+	public void setCreatorUsername(String creatorUsername) {
+		this.creatorUsername = creatorUsername;
+	}
+
+	public String getCreatorProfileImage() {
+		return creatorProfileImage;
+	}
+
+	public void setCreatorProfileImage(String creatorProfileImage) {
+		this.creatorProfileImage = creatorProfileImage;
+	}
+
+
+
+
+
+	
+	
+	
 }

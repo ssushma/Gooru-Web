@@ -26,19 +26,21 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.share;
 
 import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
+
 /**
  * 
  * @fileName : IsShareTabView.java
  *
- * @description : Acts as a bridge between the Presenter and view.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface IsShareTabView extends IsChildView<ShareTabPresenter>, IsDraggable {
 

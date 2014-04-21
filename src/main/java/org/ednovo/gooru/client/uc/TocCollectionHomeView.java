@@ -25,6 +25,10 @@
 package org.ednovo.gooru.client.uc;
 
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -35,43 +39,36 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : TocCollectionHomeView.java
- *
- * @description : This class is used to display the collection home view.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class TocCollectionHomeView extends Composite implements HasClickHandlers{
+
+public class TocCollectionHomeView extends Composite implements HasClickHandlers,MessageProperties {
 
 	@UiField Image resourceThumbnail;
 	@UiField HTMLPanel resourceTitle;
+	@UiField FlowPanel homeImageContainer,homeContainer;
 	private String thumbnailUrl;
 	private static TocResourceViewUiBinder uiBinder = GWT.create(TocResourceViewUiBinder.class);
 
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocCollectionHomeView> {
 	}
-	/**
-	 * class constructor.
-	 */
+	
 	public TocCollectionHomeView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		resourceTitle.getElement().setInnerHTML(GL1052);
 	}
 	
 	@UiConstructor
 	public TocCollectionHomeView(String thumbnailUrl){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
+		resourceTitle.getElement().setInnerHTML(GL1052);
+		setResourcePlayLink();
 	}
 	
 	public void onLoad(){
@@ -81,6 +78,20 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	@UiHandler("resourceThumbnail")
 	public void onErrorImageLoad(ErrorEvent event){
 		resourceThumbnail.setUrl("images/default-collection-image-160x120.png");
+	}
+	public void setResourcePlayLink(){
+		Anchor resourceAnchor=new Anchor();
+		resourceAnchor.setHref(getResourceLink());
+		resourceAnchor.setStyleName("");
+		resourceAnchor.getElement().appendChild(homeImageContainer.getElement());
+		homeContainer.add(resourceAnchor);
+	}
+	public String getResourceLink(){
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		String resourceLink="#"+viewToken+"&id="+collectionId;
+		resourceLink += PreviewPlayerPresenter.setConceptPlayerParameters();
+		return resourceLink;
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {

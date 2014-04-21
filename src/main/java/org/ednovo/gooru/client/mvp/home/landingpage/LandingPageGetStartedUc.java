@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,26 +39,16 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : LandingPageGetStartedUc.java
- *
- * @description : Deals with signup,discover and organize links.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class LandingPageGetStartedUc extends Composite {
+
+public class LandingPageGetStartedUc extends Composite implements MessageProperties {
 
 	@UiField HTMLEventPanel signUpLink, discoverLink, organizeLink;
 	@UiField Anchor backto;
+	@UiField Label howToStartText,searchLbl,createText,signUpLbl;
+	@UiField HTMLPanel searchDescLbl,startCollectionLbl,shareLbl;
 	
 	private static LandingPageGetStartedUcUiBinder uiBinder = GWT
 			.create(LandingPageGetStartedUcUiBinder.class);
@@ -65,32 +56,20 @@ public class LandingPageGetStartedUc extends Composite {
 	interface LandingPageGetStartedUcUiBinder extends
 			UiBinder<Widget, LandingPageGetStartedUc> {
 	}
-	/**
-	 * CONSTRUCTOR.
-	 */
+
 	public LandingPageGetStartedUc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		howToStartText.setText(GL1333);
+		backto.setText(GL1260);
+		searchLbl.setText(GL0176);
+		searchDescLbl.getElement().setInnerText(GL1334);
+		createText.setText(GL1335);
+		startCollectionLbl.getElement().setInnerText(GL1336);
+		signUpLbl.setText(GL0186);
+		shareLbl.getElement().setInnerText(GL1337+GL_SPL_EXCLAMATION);
 		backto.getElement().setId("lnkBackTo");
 	}
-	/**
-	 * 
-	 * @function onClickSignUpLink 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :on click of signUpLink it will goto RegisterVc.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("signUpLink")
 	void onClickSignUpLink(ClickEvent event) {
        MixpanelUtil.ClickOnSignUp();
@@ -98,48 +77,12 @@ public class LandingPageGetStartedUc extends Composite {
 		registerVc.show();
 		registerVc.center();
 	}
-	/**
-	 * 
-	 * @function onClickSignUpLink 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :on click of discoverLink it will goto search.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	;
 	@UiHandler("discoverLink")
 	void onClickDiscoverLink(ClickEvent event) {
 		MixpanelUtil.ClickOnSearch();
 	}
-	/**
-	 * 
-	 * @function onClickSignUpLink 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :on click of organizeLink it will goto create.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("organizeLink")
 	void onClickOrganizeLink(ClickEvent event) {
 		MixpanelUtil.ClickOnCreate();

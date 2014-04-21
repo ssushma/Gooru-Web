@@ -58,6 +58,7 @@
 				<prop key="home.endpoint">${home.endpoint}</prop>
 				<prop key="domain.name">${domain.name}</prop>
 				<prop key="classic.endpoint">${classic.endpoint}</prop>
+				<prop key="docViewer.home">${docViewer.home}</prop>
 				<prop key="docViewer.cache">${docViewer.cache}</prop>
 				<prop key="google.analtics.additional.accounts">${google.analtics.additional.accounts}</prop>
 				<prop key="production.switch">${production.switch}</prop>
@@ -69,39 +70,11 @@
 				<prop key="whats.new.fib.link">${whats.new.fib.link}</prop>
 				<prop key="mos.link">${mos.link}</prop>
 				<prop key="gooru.release.version">${gooru.release.version}</prop>
+				<prop key="analytics.endpoint">${analytics.endpoint}</prop>
+				<prop key="facebook.app_id">${facebook.app_id}</prop>
+				<prop key="facebook.dialogfeedurl">${facebook.dialogfeedurl}</prop>
+				<prop key="taxonomy.preferences">${taxonomy.preferences}</prop>
 			</props>
 		</property>
 	</bean>
-	
-	<bean id="collectionConstants"
-		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="properties">
-			<props>
-				<prop key="collection.math.week1">${collection.math.week1}</prop>
-				<prop key="collection.science.week1">${collection.science.week1}</prop>
-				<prop key="collection.social.week1">${collection.social.week1}</prop>
-				<prop key="collection.language.week1">${collection.language.week1}</prop>
-				<prop key="collection.math.week2">${collection.math.week2}</prop>
-				<prop key="collection.science.week2">${collection.science.week2}</prop>
-				<prop key="collection.social.week2">${collection.social.week2}</prop>
-				<prop key="collection.language.week2">${collection.language.week2}</prop>
-				<prop key="collection.math.week3">${collection.math.week3}</prop>
-				<prop key="collection.science.week3">${collection.science.week3}</prop>
-				<prop key="collection.social.week3">${collection.social.week3}</prop>
-				<prop key="collection.language.week3">${collection.language.week3}</prop>
-				<prop key="collection.math.week4">${collection.math.week4}</prop>
-				<prop key="collection.science.week4">${collection.science.week4}</prop>
-				<prop key="collection.social.week4">${collection.social.week4}</prop>
-				<prop key="collection.language.week4">${collection.language.week4}</prop>
-				<prop key="collection.math.week5">${collection.math.week5}</prop>
-				<prop key="collection.science.week5">${collection.science.week5}</prop>
-				<prop key="collection.social.week5">${collection.social.week5}</prop>
-				<prop key="collection.language.week5">${collection.language.week5}</prop>
-				<prop key="classroom.use.cases">${classroom.use.cases}</prop>
-				<prop key="classroom.how.to.use">${classroom.how.to.use}</prop>
-				<prop key="collection.switch.date">${collection.switch.date}</prop>
-			</props>
-		</property>
-	</bean>
-		
 </beans>

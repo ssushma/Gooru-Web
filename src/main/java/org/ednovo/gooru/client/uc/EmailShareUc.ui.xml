@@ -13,12 +13,12 @@
 		<g:HTMLPanel styleName="{res.css.classPageEmailHeaderContainer}">
 			<g:HTMLPanel styleName="{res.css.classPageEmaiInputContainer}">
 				<g:Label styleName="{res.css.classPageEmaiInputText}" ui:field="lblFrom"/>
-				<g:TextBox styleName="{res.css.classPageEmailInputControl}" ui:field="fromTxt"/>
+				<gg:TextBoxWithPlaceholder styleName="{res.css.classPageEmailInputControl}" ui:field="fromTxt"/>
 				<g:Label styleName="{res.css.emailShareErrorLabel}" ui:field="fromValidation"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.classPageEmaiInputContainer}">
 				<g:Label styleName="{res.css.classPageEmaiInputText}" ui:field="lblTo"/>
-				<g:TextBox styleName="{res.css.classPageEmailInputControl}" ui:field="toTxt"/>
+				<gg:TextBoxWithPlaceholder styleName="{res.css.classPageEmailInputControl}" ui:field="toTxt"/>
 				<g:Label styleName="{res.css.emailShareErrorLabel}" ui:field="toValidation"></g:Label>
 				<g:HTMLPanel styleName="{res.css.classPageEmailCheckBoxContainer}">
 					<g:HTMLPanel styleName="{res.css.classPageEmailCheckBoxBg}" >
@@ -33,18 +33,27 @@
 				<g:HTMLPanel>
 					<g:TextBox styleName="{res.css.classPageEmailInputNormalControl}" ui:field="subTxt" />
 				</g:HTMLPanel>
+					<g:Label ui:field="mandatoryErrorLbl"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.classPageEmaiInputContainer}">
 				<g:Label styleName="{res.css.classPageEmaiInputText}" ui:field="lblMessage" />
 				<g:HTMLPanel styleName="{res.css.classPageEmailInputControlInnerDiv}">
 					<g:RichTextArea	styleName="{res.css.classPageEmailInputNormalControl} {res.css.classPageEmailAlign}" ui:field="msgTxa"/>
 				</g:HTMLPanel>
-			</g:HTMLPanel>	
+					<g:Label ui:field="mandatoryErrorRichTextArea"/>
+			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.classPageEmailButtonContainer}">
+			<g:HTMLPanel styleName="{res.css.classPageEmaiInputContainer}">
+					<g:Label styleName="{res.css.txtAlignLeft}" ui:field="noteTxt"></g:Label>
+					</g:HTMLPanel>
+			<!-- <g:HTMLPanel styleName="{res.css.classPageEmailButtonContainer}">
 				<g:HTMLPanel styleName="{res.css.classPageEmailButtonBg}">
 					<gg:BlueButtonUc styleName="{res.css.classPageEmailButtonTitle}" ui:field="btnSend" />
 				</g:HTMLPanel>
+				<g:Label styleName="{res.css.classPageEmailButtonCancel}" ui:field="cancelLbl" />
+			</g:HTMLPanel> -->
+			<g:HTMLPanel styleName="{res.css.shareEmailButtonContainer}">
+ 					<g:Button styleName="{res.css.emailPrimary} {res.css.emailSendButton}" ui:field="btnSend" />
 				<g:Label styleName="{res.css.classPageEmailButtonCancel}" ui:field="cancelLbl" />
 			</g:HTMLPanel>
 		</g:HTMLPanel>

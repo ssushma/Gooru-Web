@@ -28,21 +28,27 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.ednovo.gooru.shared.model.code.CodeDo;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * 
  * @fileName : V2UserDo.java
  *
- * @description : This class is used as data object.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Sep 27, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 @JsonInclude(Include.NON_NULL)
 public class V2UserDo extends ResponseStatusDo implements Serializable {
@@ -61,6 +67,35 @@ public class V2UserDo extends ResponseStatusDo implements Serializable {
 	private String accountType;
 	private ProfileV2Do profile;
 	private String password;
+	private GenderDo gender;
+	private String userType;
+	private String externalId;
+	private CodeDo codeDo;
+	//private List<CodeDo> courses;
+	private String aboutMe;
+	private String grade;
+	private Integer isPublisherRequestPending;
+	
+	private CityDo city;
+	private CountryDo country;
+	private ProvinceDo province;
+	
+	private UserMetaDo meta;
+	
+	public V2UserDo(){}
+	
+	public String getEmailConfirmStatus() {
+		return emailConfirmStatus;
+	}
+	public void setEmailConfirmStatus(String emailConfirmStatus) {
+		this.emailConfirmStatus = emailConfirmStatus;
+	}
+	public String getAccountType() {
+		return accountType;
+	}
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
 	/** 
 	 * This method is to get the createdOn
 	 */
@@ -110,63 +145,196 @@ public class V2UserDo extends ResponseStatusDo implements Serializable {
 		this.user = user;
 	}
 	/** 
-	 * This method is to get the dateOfBirth
+	 * This method is to get the user date of birth
 	 */
 	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 	/** 
-	 * This method is to set the dateOfBirth
+	 * This method is to set the user dateofbirth
 	 */
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	/** 
-	 * This method is to get the emailConfirmStatus
-	 */
-	public String getEmailConfirmStatus() {
-		return emailConfirmStatus;
-	}
-	/** 
-	 * This method is to set the emailConfirmStatus
-	 */
-	public void setEmailConfirmStatus(String emailConfirmStatus) {
-		this.emailConfirmStatus = emailConfirmStatus;
-	}
-	/** 
-	 * This method is to get the accountType
-	 */
-	public String getAccountType() {
-		return accountType;
-	}
-	/** 
-	 * This method is to set the accountType
-	 */
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-	/** 
-	 * This method is to get the profile
-	 */
 	public ProfileV2Do getProfile() {
 		return profile;
 	}
-	/** 
-	 * This method is to set the profile
-	 */
 	public void setProfile(ProfileV2Do profile) {
 		this.profile = profile;
 	}
-	/** 
-	 * This method is to get the password
-	 */
 	public String getPassword() {
 		return password;
 	}
-	/** 
-	 * This method is to set the password
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	/** 
+	 * This method is to get the gender
+	 */
+	public GenderDo getGender() {
+		return gender;
+	}
+
+	/** 
+	 * This method is to set the gender
+	 */
+	public void setGender(GenderDo gender) {
+		this.gender = gender;
+	}
+
+	/** 
+	 * This method is to get the userType
+	 */
+	public String getUserType() {
+		return userType;
+	}
+
+	/** 
+	 * This method is to set the userType
+	 */
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	/** 
+	 * This method is to get the externalId
+	 */
+	public String getExternalId() {
+		return externalId;
+	}
+
+	/** 
+	 * This method is to set the externalId
+	 */
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	/** 
+	 * This method is to get the courses
+	 *//*
+	public List<CodeDo> getCourses() {
+		return courses;
+	}
+
+	*//** 
+	 * This method is to set the courses
+	 *//*
+	public void setCourses(List<CodeDo> courses) {
+		this.courses = courses;
+	}
+*/
+	/** 
+	 * This method is to get the aboutMe
+	 */
+	public String getAboutMe() {
+		return aboutMe;
+	}
+
+	/** 
+	 * This method is to set the aboutMe
+	 */
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+
+	/** 
+	 * This method is to get the grade
+	 */
+	public String getGrade() {
+		return grade;
+	}
+
+	/** 
+	 * This method is to set the grade
+	 */
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	/** 
+	 * This method is to get the isPublisherRequestPending
+	 */
+	public Integer getIsPublisherRequestPending() {
+		return isPublisherRequestPending;
+	}
+
+	/** 
+	 * This method is to set the isPublisherRequestPending
+	 */
+	public void setIsPublisherRequestPending(Integer isPublisherRequestPending) {
+		this.isPublisherRequestPending = isPublisherRequestPending;
+	}
+
+	/** 
+	 * This method is to get the city
+	 */
+	public CityDo getCity() {
+		return city;
+	}
+
+	/** 
+	 * This method is to set the city
+	 */
+	public void setCity(CityDo city) {
+		this.city = city;
+	}
+
+	/** 
+	 * This method is to get the country
+	 */
+	public CountryDo getCountry() {
+		return country;
+	}
+
+	/** 
+	 * This method is to set the country
+	 */
+	public void setCountry(CountryDo country) {
+		this.country = country;
+	}
+
+	/** 
+	 * This method is to get the province
+	 */
+	public ProvinceDo getProvince() {
+		return province;
+	}
+
+	/** 
+	 * This method is to set the province
+	 */
+	public void setProvince(ProvinceDo province) {
+		this.province = province;
+	}
+	/** 
+	 * This method is to get the meta data 
+	 */
+	public UserMetaDo getMeta() {
+		return meta;
+	}
+	/** 
+	 * This method is to set the meta data 
+	 */
+	public void setMeta(UserMetaDo meta) {
+		this.meta = meta;
+	}
+	/** 
+	 * This method is to get the course
+	 */
+	public CodeDo getCodeDo() {
+		return codeDo;
+	}
+	/** 
+	 * This method is to set the course
+	 */
+	public void setCodeDo(CodeDo codeDo) {
+		this.codeDo = codeDo;
+	}
+
+	
+	
+
+	
 }

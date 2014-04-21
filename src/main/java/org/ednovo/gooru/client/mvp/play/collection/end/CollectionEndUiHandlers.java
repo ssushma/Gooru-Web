@@ -28,4 +28,6 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionEndUiHandlers extends BaseUiHandlers{
 	public void sendEmail(String fromEmail, final String toEmail, String copyEmail,String subject, String message);
+	public void generatePdf(String innerHtml, String completedDateTime,String fromEmail);
+	public void getContentReport(String collectionId);
 }

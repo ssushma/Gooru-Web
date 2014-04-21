@@ -3,7 +3,7 @@
 	<ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res" />
 	<g:FocusPanel ui:field="focusPanel" styleName="{res.css.editableField}">
 		<g:DeckPanel ui:field="deckPanel">
-			<g:Label ui:field="editLabel" styleName="{res.css.editableSelfField"/>
+			<g:Label ui:field="editLabel" styleName="{res.css.editableSelfField}"/>
 			<g:TextBox styleName="edit" maxLength="50" ui:field="editTextBox" />
 		</g:DeckPanel>
 	</g:FocusPanel>

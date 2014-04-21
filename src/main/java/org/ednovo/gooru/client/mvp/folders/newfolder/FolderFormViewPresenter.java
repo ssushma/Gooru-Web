@@ -54,19 +54,13 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
+
 /**
- * @fileName : FolderFormViewPresenter.java
+ * 
+ * @author BLR Team
  *
- * @description : This is the presenter for the folder form view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
+
 public class FolderFormViewPresenter extends
 		BasePlacePresenter<IsFoldersPopupView, IsFolderPopUpFormProxy>
 		implements FoldersPopupUiHandlers {
@@ -106,24 +100,18 @@ public class FolderFormViewPresenter extends
 		super(view, proxy);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This method is used to get the view token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.CREATEFOLDER;
 	}
-	/**
-	 * This method is used to create a new folder.
-	 */
+
 	@Override
 	public void createFolder(CollectionDo collectionDo) {
 		getFolderService().createFolder(collectionDo,
 				getCollectionAsyncCallback());
 	}
-	/**
-	 * This method is used to create a new folder on the parent node.
-	 */
+
 	@Override
 	public void createFolderToParentFolder(CollectionDo collectionDo,
 			String parentId) {
@@ -163,9 +151,7 @@ public class FolderFormViewPresenter extends
 			SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
-	/**
-	 * This LifeCycle method is called when the binding the object. And it will set the folders data.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -220,9 +206,7 @@ public class FolderFormViewPresenter extends
 			}
 		});
 	}
-	/**
-	 * This is where a presenter performs the operations required to become visible. The reason this is called revealIn Parent is due to the hierarchical nature of presenters.
-	 */
+
 	@Override
 	protected final void revealInParent() {
 		RevealRootPopupContentEvent.fire(FolderFormViewPresenter.this, this);
@@ -262,10 +246,6 @@ public class FolderFormViewPresenter extends
 		this.courseAsyncCallback = courseAsyncCallback;
 	}
 
-	/**
-	 * Lifecycle method called whenever this presenter is about to be
-	 * revealed.
-	 */
 	@Override
 	protected void onReveal() {
 		super.onReveal();

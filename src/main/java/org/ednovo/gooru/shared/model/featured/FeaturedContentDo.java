@@ -26,74 +26,39 @@ package org.ednovo.gooru.shared.model.featured;
 
 import java.io.Serializable;
 
-/**
- * 
- * @fileName : FeaturedContentDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FeaturedContentDo implements Serializable {
 	private static final long serialVersionUID = -8046999602373721761L;
 	private String contentTitle;
 	private String url;
 	private String displayTitle;
 	private String collectionId;
-	/** 
-	 * This method is to get the contentTitle
-	 */
+	public FeaturedContentDo(){}
 	public String getContentTitle() {
 		return contentTitle;
 	}
-	/** 
-	 * This method is to set the contentTitle
-	 */
 	public void setContentTitle(String contentTitle) {
 		this.contentTitle = contentTitle;
 	}
-	/** 
-	 * This method is to get the url
-	 */
 	public String getUrl() {
 		return url;
 	}
-	/** 
-	 * This method is to set the url
-	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	/** 
-	 * This method is to get the displayTitle
-	 */
 	public String getDisplayTitle() {
 		return displayTitle;
 	}
-	/** 
-	 * This method is to set the displayTitle
-	 */
 	public void setDisplayTitle(String displayTitle) {
 		this.displayTitle = displayTitle;
 	}
-	/** 
-	 * This method is to get the collectionId
-	 */
-	public String getCollectionId() {
-		return collectionId;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	/** 
-	 * This method is to set the collectionId
-	 */
 	public void setCollectionId(String collectionId) {
 		this.collectionId = collectionId;
 	}
-
+	public String getCollectionId() {
+		return collectionId;
+	}
 }

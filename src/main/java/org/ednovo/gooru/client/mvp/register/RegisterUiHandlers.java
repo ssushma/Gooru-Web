@@ -27,19 +27,8 @@ package org.ednovo.gooru.client.mvp.register;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 /**
- * 
- * @fileName : RegisterUiHandlers.java
+ * @author Search Team
  *
- * @description : UIHandler file for RegisterView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface RegisterUiHandlers extends BaseUiHandlers {
 

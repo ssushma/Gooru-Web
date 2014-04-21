@@ -9,40 +9,35 @@ xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.edn
 <g:HTMLPanel styleName="{res.css.registrationPopupContainer}">
   <g:HTMLPanel styleName="{res.css.registrationPopupInnerdiv}">
     <g:HTMLPanel styleName="{res.css.registrationPopupHeaderBg}">
-      <g:HTMLPanel styleName="{res.css.registrationPopupHeaderTitle}">Almost done...</g:HTMLPanel>
+      <g:HTMLPanel styleName="{res.css.registrationPopupHeaderTitle}" ui:field="almostDoneText"></g:HTMLPanel>
       <g:HTMLPanel styleName="{res.css.registrationPopupCloseBtnContainer}">
         <panel:HTMLEventPanel ui:field="cancelButton" styleName="{res.css.registrationPopupBtnSprite} {res.css.registrationPopupCloseBtn}"></panel:HTMLEventPanel>
       </g:HTMLPanel>
     </g:HTMLPanel>
-    <g:HTMLPanel styleName="{res.css.registrationPopupDesc}">Before we let you free, please fill out the following two fields:</g:HTMLPanel>
+    <g:HTMLPanel styleName="{res.css.registrationPopupDesc}" ui:field="fillOutText"></g:HTMLPanel>
     <g:HTMLPanel styleName="{res.css.registrationPopupInputContainer}">
-      <g:HTMLPanel styleName="{res.css.registrationPopupInputText}">Email</g:HTMLPanel>
+      <g:HTMLPanel styleName="{res.css.registrationPopupInputText}" ui:field="emailText"></g:HTMLPanel>
       <g:HTMLPanel styleName="{res.css.registrationPopupInputOuterDiv}">
         <g:TextBox ui:field="emailTxtBox" styleName="{res.css.registrationPopupInputControl} {res.css.registrationPopupInputBorderNone}"/>
       </g:HTMLPanel>
     </g:HTMLPanel>
     <g:HTMLPanel styleName="{res.css.registrationPopupInputContainer}">
-      <g:HTMLPanel styleName="{res.css.registrationPopupInputText}">Username</g:HTMLPanel>
+      <g:HTMLPanel styleName="{res.css.registrationPopupInputText}" ui:field="uNameLbl"></g:HTMLPanel>
       <g:HTMLPanel styleName="{res.css.registrationPopupInputOuterDiv}">
-        <g:TextBox ui:field="userNameTxtBox"  styleName="{res.css.registrationPopupInputControl}"/>
+        <g:TextBox ui:field="userNameTxtBox" styleName="{res.css.registrationPopupInputControl}"/>
          <g:Label styleName="{res.css.almostDoneFormInputBottomText}" ui:field="errorMessageForUserNameLbl"></g:Label>
       </g:HTMLPanel>
      
     </g:HTMLPanel>
     
     <g:HTMLPanel styleName="{res.css.registrationPopupInputContainer}">
-      	<g:HTMLPanel styleName="{res.css.registrationPopupRoleText}">Role</g:HTMLPanel>
+      	<g:HTMLPanel styleName="{res.css.registrationPopupRoleText}" ui:field="roleText"></g:HTMLPanel>
       <g:HTMLPanel styleName="{res.css.registrationPopupDropdownControl}">
        	 <!-- <div class="{res.css.registrationPopupDropdownDesc}">Student</div>
         <div class="{res.css.registrationPopupDownArrContainer}">
           <div class="{res.css.registrationPopupDownArrSprite}{res.css.registrationPopupDownArr}"></div>
         </div> -->
         <g:ListBox ui:field="roleListBox" styleName="{res.css.registrationPopupDropdownControl} {res.css.registrationPopupInputDropDownText}">
-       		<g:item>what is your role?</g:item>
-       		<g:item>Student</g:item>
-			<g:item>Teacher</g:item>
-			<g:item>Parent</g:item>
-			<g:item>Other</g:item>
           <!-- <div class="{res.css.registrationPopupDropdownList}">Student</div>
           <div class="{res.css.registrationPopupDropdownList}">Teacher</div> -->
         </g:ListBox>
@@ -51,14 +46,14 @@ xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.edn
     </g:HTMLPanel>
     
      <g:HTMLPanel styleName="{res.css.registrationLegalMessage}">
-     	By clicking OK, I understand and agree with the rules and <br/>restrictions of this registration, the 
-     	<g:Anchor styleName="{res.css.anchorText}" text="Terms of Use and Privacy Policy" ui:field="termsAndPolicyAnr"/><br/>
-     	 and the <g:Anchor styleName="{res.css.anchorText}" text="Copyright Policy" ui:field="copyRightAnr"/> of Gooru.
+     <g:Label ui:field="agreeText"></g:Label>
+     	<g:Anchor styleName="{res.css.anchorText}" ui:field="termsAndPolicyAnr"/><br/>
+     	 <g:Label ui:field="andText"></g:Label><g:Anchor styleName="{res.css.anchorText}" ui:field="copyRightAnr"/><g:Label ui:field="gooruText"></g:Label> 
      </g:HTMLPanel>
     
     <g:HTMLPanel  styleName="{res.css.registrationPopupButtonCotnainer}">
       <g:HTMLPanel ui:field="buttonContainer" styleName="{res.css.registrationPopupBlueButton}">
-        <panel:HTMLEventPanel ui:field="okButton" styleName="{res.css.registrationPopupButtonText}">OK</panel:HTMLEventPanel>
+        <panel:HTMLEventPanel ui:field="okButton" styleName="{res.css.registrationPopupButtonText}"></panel:HTMLEventPanel>
       </g:HTMLPanel>
     </g:HTMLPanel>
   </g:HTMLPanel>

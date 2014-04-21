@@ -7,7 +7,7 @@
 	<g:HTMLPanel styleName="{collectionSummaryPageStyle.collection-summary-wrapper}">
 		<g:HTMLPanel styleName="{collectionSummaryPageStyle.collection-summary-thumbnail-wrapper}">
 			<g:Label styleName="{collectionSummaryPageStyle.collection-summary-serial-num}" ui:field="questionSerialNum"></g:Label>
-			<g:Image styleName="{collectionSummaryPageStyle.collection-summary-thumbnail}" ui:field="questionThumbnail"  url="http://d2evc3ksyfg5cd.cloudfront.net/qalive/f000/0014/0838/slides/thumbnail.jpg" />
+			<g:Image styleName="{collectionSummaryPageStyle.collection-summary-thumbnail}" ui:field="questionThumbnail"/>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{collectionSummaryPageStyle.collection-summary-content-wrapper}">
 			<g:HTML styleName="{collectionSummaryPageStyle.collection-summary-question-text}" ui:field="questionText"></g:HTML>

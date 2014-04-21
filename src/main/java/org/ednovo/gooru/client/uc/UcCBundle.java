@@ -30,19 +30,10 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
- * @fileName : UcCBundle.java
- *
- * @description : This interface is used to set css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface UcCBundle extends ClientBundle {
 
@@ -185,24 +176,34 @@ public interface UcCBundle extends ClientBundle {
 		
 		/* Resource type images*/
 		
-		String VideoSmall();
+		String videoSmall();
 		
-		String InteractiveSmall();
+		String interactiveSmall();
 		
-		String WebsiteSmall();
+		String websiteSmall();
 		
-		String ExamSmall();
+		String examSmall();
 		
-		String TextbookSmall();
+		String textbookSmall();
 		
-		String HandoutSmall();
+		String textSmall();
 		
-		String LessonSmall();
+		String handoutSmall();
 		
-		String SlideSmall();
+		String lessonSmall();
 		
-		String QuestionSmall();
+		String slideSmall();
+		
+		String questionSmall();
 
+		String imageSmall();
+		
+		String audioSmall();
+		
+		String otherSmall();
+		
+		String webpageSmall();
+		
 		String imageUploadPopup();
 		
 		String textBoxWithPlaceholderText();
@@ -357,6 +358,12 @@ public interface UcCBundle extends ClientBundle {
 		String editableSelfField();
 		String displayNone();
 		
+		String shareEmailButtonContainer();
+		String emailPrimary();
+		String emailSecondary();
+		
+		String emailSendButton();
+		
 
 		// PPP //
 		
@@ -413,6 +420,8 @@ public interface UcCBundle extends ClientBundle {
 		String iconPosition();
 		String errorValidationEmailForSetting();
 		String editableFieldlastNameSetting();
+		
+		String txtAlignLeft();
 		
 	}
 

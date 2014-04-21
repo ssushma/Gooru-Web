@@ -32,19 +32,18 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
- * 
  * @fileName : FoldersUiHandlers.java
- *
- * @description : This file is the UIHandlers for FoldersView.java
- *
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: Apr 17, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 
 public interface FoldersUiHandlers extends BaseUiHandlers, RefreshCollectionInFolderListHandler {

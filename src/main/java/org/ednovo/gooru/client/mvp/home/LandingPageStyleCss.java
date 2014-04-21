@@ -24,21 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : LandingPageStyleCss.java
- *
- * @description : This file is used to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface LandingPageStyleCss extends CssResource{
 
 	String methodsLiActive();

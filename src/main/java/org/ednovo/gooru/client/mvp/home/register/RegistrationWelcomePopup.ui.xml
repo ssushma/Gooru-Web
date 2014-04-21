@@ -4,11 +4,11 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.register.RegisterCBundle" field="res" />
 	<g:FlowPanel styleName="{res.css.welcomePopup}">
 		<g:FlowPanel>
-			<g:Label styleName="{res.css.getstartMessage}" text="Get started on Gooru:" />
-			<g:Label styleName="{res.css.happyLearning}" text="Now, on your way! Happy Studying!" />
+			<g:Label styleName="{res.css.getstartMessage}" ui:field="getStartedText"/>
+			<g:Label styleName="{res.css.happyLearning}" ui:field="happyStudyingText" />
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{res.css.welcomeButtonBox}">
-			<gg:BlueButtonUc text="Ok" ui:field="registerWelcomeUc" />
+			<gg:BlueButtonUc ui:field="registerWelcomeUc"/>
 		</g:FlowPanel>
 	</g:FlowPanel>
 

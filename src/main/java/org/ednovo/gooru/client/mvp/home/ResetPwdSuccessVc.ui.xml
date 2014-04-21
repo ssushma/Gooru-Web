@@ -4,14 +4,12 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle"
 		field="res" />
 	<g:HTMLPanel>
-		<g:FlowPanel styleName="{res.css.resetPwdSuccessContainer}"
-			height="100px">
+		<g:FlowPanel styleName="{res.css.resetPwdSuccessContainer}" height="100px">
 			<g:FlowPanel styleName="{res.css.resetSuccessText}">
 				<g:Label ui:field="resetPasswordLbl" styleName="{res.css.resetPwdSuccessText}" />
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.okBlueBtn}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="Ok" ui:field="okBtnUc"
-					styleName="overRideBlueButton" />
+				<gg:BlueButtonUc ui:field="okBtnUc" styleName="overRideBlueButton"/>
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

@@ -43,6 +43,16 @@
 		<servlet-name>collection</servlet-name>
 		<url-pattern>/newgooru/actionServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>uploadServlet</servlet-name>
+    <servlet-class>org.ednovo.gooru.server.service.uploadServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>uploadServlet</servlet-name>
+    <url-pattern>/newgooru/upServlet</url-pattern>
+  </servlet-mapping>
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>

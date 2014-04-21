@@ -22,22 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : SetUserProfileImageEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event is fired , it will set the user profile image url.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SetUserProfileImageEvent extends GwtEvent<SetUserProfileImageEventHandler> {
 

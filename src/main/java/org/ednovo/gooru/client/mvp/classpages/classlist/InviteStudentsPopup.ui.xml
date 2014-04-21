@@ -1,0 +1,118 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<ui:style>
+	    .inputLabel {
+		    font-weight:bold;
+		    margin-bottom:5px;
+		}
+		.teachPopupInput {
+			margin-left: 50px;
+			margin-bottom: 10px;
+		}
+		.teachPopupDisplay {
+			width: 100%;
+			/* min-height: 642px; */
+			overflow: hidden;
+			background-color: rgba(0,0,0,0.5);
+		}
+		.teachPopup {
+			background-color: white;
+			width: 450px;
+			/* margin: 50px auto; */
+			padding: 3px;
+		}
+		.teachPopupInner {
+			border: 1px solid #DDD;
+		}
+		.teachPopupHeader {
+			padding: 10px 15px;
+			color: white;
+			background-color: #515151;
+			font-size: 16px;
+			/* Safari 4-5, Chrome 1-9 */
+			background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
+			/* Safari 5.1, Chrome 10+ */
+			background: -webkit-linear-gradient(top, #666, #515151);
+			/* Firefox 3.6+ */
+			background: -moz-linear-gradient(top, #666, #515151);
+			/* IE 10 */
+			background: -ms-linear-gradient(top, #666, #515151);
+			/* Opera 11.10+ */
+			background: -o-linear-gradient(top, #666, #515151);
+			
+			/* IE 6-9 */
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#515151');
+		}
+		.teachPopupContent {
+			padding: 15px;
+			text-align: center;
+		}
+		.teachPopupContent {
+			text-align: left;
+		}
+		.teachPopupContent .header {
+			font-size: 12px;
+			text-align: left;
+			color: #515151;
+			padding: 25px 0px 0px 65px;
+			margin-bottom: 15px;
+		}
+		.teachPopupLabel {
+			color: #515151;
+			padding: 30px 0px 10px 90px;
+		}
+		.buttonBlock {
+			width: 100%;
+			text-align: center;
+			margin: 23px auto 0px auto;
+		}
+		.extra {
+			margin-bottom: 0px !important;
+		}
+		.teachPopupInner {
+			overflow: auto;
+		}
+		.listTextarea {
+			color: #999;
+			width: 415px;
+			height: 65px;
+			font-size: 12px;
+			border: 1px solid #ddd;
+			padding-top: 5px;
+			padding-left: 5px;
+			resize: none;
+		}
+		.btn {
+	 		margin-left: 10px;
+			padding: 7px 20px !important;
+		}
+		.errorMessage{
+			font-style: italic;
+			color: #FBB03B;
+			float: right;
+			position: absolute;
+			right: 20px;
+		}
+	</ui:style>
+		
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.teachPopupDisplay}">
+			<g:HTMLPanel styleName="{style.teachPopup}">
+				<g:HTMLPanel  styleName="{style.teachPopupInner}">
+					<g:HTMLPanel  styleName="{style.teachPopupHeader}" ui:field="headerPanel"/>
+					<g:HTMLPanel styleName="{style.teachPopupContent}">
+						<g:HTMLPanel styleName="{style.inputLabel}" ui:field="titlePanel"/>
+						<g:TextArea styleName="{style.listTextarea}" ui:field="emailTextArea"></g:TextArea>
+						<g:Label styleName="{style.errorMessage}" ui:field="emailValidationLbl"></g:Label>	
+						<g:HTMLPanel styleName="{style.buttonBlock}">
+							<g:Button styleName="secondary {style.btn}" ui:field="cancelBtn"></g:Button>
+							<g:Button styleName="primary {style.btn}" ui:field="inviteBtn"></g:Button>
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

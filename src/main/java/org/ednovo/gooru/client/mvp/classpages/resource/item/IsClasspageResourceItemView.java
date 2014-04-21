@@ -31,19 +31,8 @@ import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 
 /**
+ * @author SearchTeam
  * 
- * @fileName : IsClasspageResourceItemView.java
- *
- * @description : This file deals with the collection  Delete. 
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsClasspageResourceItemView extends IsChildView<ClasspageResourceItemChildPresenter>, IsDraggable {
 

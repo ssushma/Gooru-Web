@@ -22,36 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client;
 
 import java.io.IOException;
 
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-/**
- * 
- * @fileName : SimpleAsyncCallback.java
- *
- * @description : This class is used in async calls.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 
+public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,MessageProperties {
 
-	/**
-	 * On API call failure sets respective error message.
-	 */
 	@Override
 	public void onFailure(Throwable caught) {
 		String message = "";
@@ -63,22 +48,22 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T> {
 				message = ((GwtException) caught).getMessage();
 			} else if (caught.getMessage() != null) {
 				if (caught.getMessage().contains("Login")) {
-					message = "You need to be logged in";
+					message = GL1096;
 				}
 				if (caught.getMessage().contains("403")) {
-					message = "You Don't have Access To Perform This Action";
+					message = GL1095;
 				} else if (caught.getMessage().contains("CODE_502")) {
-					message = "Application is Down";
+					message = GL0695;
 				} else {
 					message = caught.getMessage();
 				}
 			} else {
-				message = "Error Occured";
+				message = GL0839;
 			}
 			if (message.trim().toString().equalsIgnoreCase("0")){
 				
 			}else{
-				new AlertContentUc("Error", message);
+				new AlertContentUc(GL0844, message);
 			}
 		}
 	}

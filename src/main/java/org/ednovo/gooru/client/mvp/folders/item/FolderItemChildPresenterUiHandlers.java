@@ -25,19 +25,7 @@
 package org.ednovo.gooru.client.mvp.folders.item;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * @fileName : FolderItemChildPresenterUiHandlers.java
- *
- * @description : The interface for view classes that handles all the UI-related code for a FolderItemChildPresenter.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface FolderItemChildPresenterUiHandlers extends BaseUiHandlers{
 	void deleteFolder(String folderId);
 

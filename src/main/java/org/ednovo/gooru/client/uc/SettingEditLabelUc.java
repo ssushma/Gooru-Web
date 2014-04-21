@@ -45,16 +45,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : SettingEditLabelUc.java
- *
- * @description : This class is used to change first name in setting page.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
+ * 
+ * @description :This class is used to change first name in setting page.
+ * 
+ * 
+ * @version : 5.9
+ * 
+ * @date: Sep 20, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
 public class SettingEditLabelUc extends Composite implements MessageProperties,HasValue<String> {
 
@@ -81,9 +82,6 @@ public class SettingEditLabelUc extends Composite implements MessageProperties,H
 	@UiField(provided = true)
 	UcCBundle res;
 	private static final String FNAME = "firstname";
-	/**
-	 * Class constructor.
-	 */
 	public SettingEditLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));

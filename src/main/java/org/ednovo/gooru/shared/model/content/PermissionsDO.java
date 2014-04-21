@@ -29,20 +29,21 @@ package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
 import java.util.List;
+
+
 /**
- * 
  * @fileName : PermissionsDO.java
  *
- * @description :  This class is used as data object.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 31-Dec-2013
+ * @date: 05-Jun-2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public class PermissionsDO implements Serializable{
 	

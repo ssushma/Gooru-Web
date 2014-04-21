@@ -24,6 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+/**
+* @fileName : IsAddResourceView.java 
+*
+* @description :This file is responsible for UI Handlers.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -32,20 +46,7 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.gwtplatform.mvp.client.PopupView;
-/**
- * 
- * @fileName : IsAddResourceView.java
- *
- * @description : This file is responsible for UI Handlers.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddResourceUiHandlers>{
 	void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage, boolean isUserOwnResourceImage);
 

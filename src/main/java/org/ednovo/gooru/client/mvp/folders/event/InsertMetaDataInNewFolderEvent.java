@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.folders.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : InsertMetaDataInNewFolderEvent.java
- *
- * @description : This file is used to insert metaData in NewFolder.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class InsertMetaDataInNewFolderEvent extends GwtEvent<InsertMetaDataInNewFolderHandler> {
 
@@ -60,39 +49,17 @@ public class InsertMetaDataInNewFolderEvent extends GwtEvent<InsertMetaDataInNew
 		setCourse(course);
 		setCourseId(courseId);
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<InsertMetaDataInNewFolderHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(InsertMetaDataInNewFolderHandler handler) {
 		handler.insertMetaDataInNewFolder(getGrade(), getCourse(), getCourseId());
 	}
-	/**
-	 * 
-	 * @function getGrade 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description getters and setters for grade,course and courseId.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public String getGrade() {
 		return grade;
 	}

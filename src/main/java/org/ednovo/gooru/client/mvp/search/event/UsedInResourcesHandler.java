@@ -28,19 +28,8 @@
 package org.ednovo.gooru.client.mvp.search.event;
 
 /**
- * 
- * @fileName : UsedInResourcesHandler.java
+ * @author Search Team
  *
- * @description : This Handler is used to Get resource that are used in other collection item.  
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface UsedInResourcesHandler {
 	

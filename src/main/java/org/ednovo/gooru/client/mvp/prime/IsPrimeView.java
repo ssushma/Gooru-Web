@@ -27,19 +27,8 @@ package org.ednovo.gooru.client.mvp.prime;
 import org.ednovo.gooru.client.gin.IsView;
 
 /**
+ * @author Search Team
  * 
- * @fileName : IsPrimeView.java
- *
- * @description : This is the interface for PrimeView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsPrimeView extends IsView {
 

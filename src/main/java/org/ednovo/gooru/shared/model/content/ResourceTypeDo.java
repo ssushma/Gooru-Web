@@ -28,21 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ResourceTypeDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ResourceTypeDo implements Serializable {
 	private static final long serialVersionUID = -6275994990965281074L;
@@ -50,40 +36,30 @@ public class ResourceTypeDo implements Serializable {
 	private String name;
 	private String description;
 	private String type;
-	/** 
-	 * This method is to get the name
-	 */
-	public String getName() {
-		return name;
-	}
-	/** 
-	 * This method is to set the name
-	 */
+	
+	public ResourceTypeDo(){}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	/** 
-	 * This method is to get the description
-	 */
-	public String getDescription() {
-		return description;
+
+	public String getName() {
+		return name;
 	}
-	/** 
-	 * This method is to set the description
-	 */
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/** 
-	 * This method is to get the type
-	 */
-	public String getType() {
-		return type;
+
+	public String getDescription() {
+		return description;
 	}
-	/** 
-	 * This method is to set the type
-	 */
+
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getType() {
+		return type;
 	}
 }

@@ -28,18 +28,10 @@
 package org.ednovo.gooru.client.mvp.dnd;
 
 import com.google.gwt.user.client.ui.IsWidget;
+
 /**
- * @fileName : IsDraggableMirage.java
- *
- * @description : This interface is used to check widget.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface IsDraggableMirage extends IsWidget {
 	

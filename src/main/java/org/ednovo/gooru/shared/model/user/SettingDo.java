@@ -26,20 +26,7 @@ package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
 import java.util.Date;
-/**
- * 
- * @fileName : SettingDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SettingDo implements Serializable {
 
 	private static final long serialVersionUID = -2570709586812060758L;
@@ -54,125 +41,93 @@ public class SettingDo implements Serializable {
 	private String loginType;
 	private String aboutMe;
 	private Date dateOfBirth;
-	/** 
-	 * This method is to get the user
-	 */
-	public UserDo getUser() {
-		return user;
-	}
-	/** 
-	 * This method is to set the user
-	 */
-	public void setUser(UserDo user) {
-		this.user = user;
-	}
-	/** 
-	 * This method is to get the city
-	 */
-	public CityDo getCity() {
-		return city;
-	}
-	/** 
-	 * This method is to set the city
-	 */
-	public void setCity(CityDo city) {
-		this.city = city;
-	}
-	/** 
-	 * This method is to get the country
-	 */
-	public CountryDo getCountry() {
-		return country;
-	}
-	/** 
-	 * This method is to set the country
-	 */
-	public void setCountry(CountryDo country) {
-		this.country = country;
-	}
-	/** 
-	 * This method is to get the province
-	 */
-	public ProvinceDo getProvince() {
-		return province;
-	}
-	/** 
-	 * This method is to set the province
-	 */
-	public void setProvince(ProvinceDo province) {
-		this.province = province;
-	}
-	/** 
-	 * This method is to get the gender
-	 */
-	public GenderDo getGender() {
-		return gender;
-	}
-	/** 
-	 * This method is to set the gender
-	 */
-	public void setGender(GenderDo gender) {
-		this.gender = gender;
-	}
-	/** 
-	 * This method is to get the externalId
-	 */
-	public String getExternalId() {
-		return externalId;
-	}
-	/** 
-	 * This method is to set the externalId
-	 */
-	public void setExternalId(String externalId) {
-		this.externalId = externalId;
-	}
-	/** 
-	 * This method is to get the userType
-	 */
-	public String getUserType() {
-		return userType;
-	}
-	/** 
-	 * This method is to set the userType
-	 */
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	/** 
-	 * This method is to get the loginType
-	 */
-	public String getLoginType() {
-		return loginType;
-	}
-	/** 
-	 * This method is to set the loginType
-	 */
-	public void setLoginType(String loginType) {
-		this.loginType = loginType;
-	}
-	/** 
-	 * This method is to get the aboutMe
-	 */
-	public String getAboutMe() {
-		return aboutMe;
-	}
-	/** 
-	 * This method is to set the aboutMe
-	 */
-	public void setAboutMe(String aboutMe) {
-		this.aboutMe = aboutMe;
-	}
-	/** 
-	 * This method is to get the dateOfBirth
-	 */
+	
+	public SettingDo(){}
+	
+	
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
-	/** 
-	 * This method is to set the dateOfBirth
-	 */
+
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
+	public UserDo getUser() {
+		return user;
+	}
+
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+
+	public CityDo getCity() {
+		return city;
+	}
+
+	public void setCity(CityDo city) {
+		this.city = city;
+	}
+
+	public CountryDo getCountry() {
+		return country;
+	}
+
+	public void setCountry(CountryDo country) {
+		this.country = country;
+	}
+
+	public ProvinceDo getProvince() {
+		return province;
+	}
+
+	public void setProvince(ProvinceDo province) {
+		this.province = province;
+	}
+
+	public GenderDo getGender() {
+		return gender;
+	}
+
+	public void setGender(GenderDo gender) {
+		this.gender = gender;
+	}
+
+	public String getExternalId() {
+		return externalId;
+	}
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public String getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
+
+	public String getAboutMe() {
+		return aboutMe;
+	}
+
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+
+	
+	
+
+	
 	
 }

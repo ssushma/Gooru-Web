@@ -27,18 +27,10 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.mvp.home.register.RegisterCBundle;
 
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : ErrorLabelUc.java
+ * @author Search Team
  *
- * @description : This file used to display the error label.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ErrorLabelUc extends Label {
 	

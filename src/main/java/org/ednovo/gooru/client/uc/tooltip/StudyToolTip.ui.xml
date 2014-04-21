@@ -8,8 +8,8 @@
 	        <g:FlowPanel styleName="{toolTip.organizeTextContainer}">
 	              <!-- <g:HTMLPanel styleName="{toolTip.comingSoonText}">Coming soon!</g:HTMLPanel> -->
 	              <g:FlowPanel styleName="{toolTip.studyTextContainer}">
-		        	<g:HTMLPanel styleName="{toolTip.organizeText}">Study</g:HTMLPanel>
-		            <g:HTMLPanel styleName="{toolTip.organizeRemainigText}">collections at your own pace and get guidance from your teacher's narration.</g:HTMLPanel>
+		        	<g:HTMLPanel styleName="{toolTip.organizeText}" ui:field="studyText"></g:HTMLPanel>
+		            <g:HTMLPanel styleName="{toolTip.organizeRemainigText}" ui:field="guidanceText"></g:HTMLPanel>
 		            
 	              </g:FlowPanel>
 	        </g:FlowPanel>

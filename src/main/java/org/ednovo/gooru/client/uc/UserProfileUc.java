@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
@@ -33,22 +35,24 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
+ * 
  * @fileName : UserProfileUc.java
- *
+ * 
  * @description : This class used to show the Popup whe we mouse over on User
  *              Name.
- *
- *
+ * 
  * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
+ * 
+ * @date: Jul 25, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
-public class UserProfileUc extends Composite {
+
+public class UserProfileUc extends Composite implements MessageProperties{
 
 	private static UserProfileUcUiBinder uiBinder = GWT
 			.create(UserProfileUcUiBinder.class);
@@ -64,13 +68,8 @@ public class UserProfileUc extends Composite {
 
 	String aboutUser;
 
-	private static final String PROFILE_DEFAULT_IMAGE = "./images/profilepage/user-profile-popup-pic-small.png";
-	/**
-	 * Class constructor.
-	 * @param userName
-	 * @param aboutMe
-	 * @param thumbnailImage
-	 */
+	private static final String PROFILE_DEFAULT_IMAGE ="./images/profilepage/user-profile-popup-pic-small.png";
+
 	public UserProfileUc(String userName, String aboutMe, String thumbnailImage) {
 		initWidget(uiBinder.createAndBindUi(this));
 		UcCBundle.INSTANCE.css().ensureInjected();
@@ -80,6 +79,8 @@ public class UserProfileUc extends Composite {
 				this.aboutUser = this.aboutUser.substring(0, 60) + "...";
 			}
 		}
+		userNameLbl.setText(GL1053);
+		userProfileDesc.setText(GL1054);
 		userNameLbl.setText(userName);
 		userProfileDesc.setText(this.aboutUser);
 		profileImage.addErrorHandler(new ProfileDefaultImage());
@@ -90,31 +91,14 @@ public class UserProfileUc extends Composite {
 		profileImage.setAltText(userName);
 		profileImage.setTitle(userName);
 	}
-	/**
-	 * This inner class handles the error image event.
-	 */
+
 	private class ProfileDefaultImage implements ErrorHandler {
 		@Override
 		public void onError(ErrorEvent event) {
 			profileImage.setUrl(PROFILE_DEFAULT_IMAGE);
 		}
 	}
-	/**
-	 * 
-	 * @function setUserProfileImageUrl 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set user profile image url.
-	 * 
-	 * 
-	 * @parm(s) : @param imageUrl
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setUserProfileImageUrl(String imageUrl) {
 		double randomNumber = Math.random();
 		profileImage.setUrl(imageUrl + "?p=" + randomNumber);

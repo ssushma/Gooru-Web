@@ -94,7 +94,7 @@
 										<g:Label styleName="{res.css.roleLabel}" ui:field="lblOther"></g:Label>
 										<g:HTMLPanel ui:field="rdOther" />
 									</g:HTMLPanel>
-									<gg:ErrorLabelUc ui:field="lblSelectRole">Please select role.</gg:ErrorLabelUc>
+									<gg:ErrorLabelUc ui:field="lblSelectRole"></gg:ErrorLabelUc>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
@@ -104,7 +104,7 @@
 						<g:InlineLabel ui:field="lblAgree"></g:InlineLabel>
 						<g:Anchor ui:field="ancCopyRight" styleName="{res.css.termsAlignStyle}"></g:Anchor>
 						<g:Anchor ui:field="ancTermsAndPrivacy" styleName="{res.css.termsAlignStyle}"></g:Anchor>
-						<g:InlineLabel>and</g:InlineLabel>
+						<g:InlineLabel ui:field="andText"></g:InlineLabel>
 						<g:Anchor ui:field="ancPrivacy" styleName="{res.css.termsAlignStyle}"></g:Anchor>
 						</g:HTMLPanel>
 						<g:Button ui:field="btnSignUp" styleName="primary {res.css.signUpButtonStyle}"></g:Button>

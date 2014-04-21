@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.exception.GwtException;
@@ -32,8 +33,10 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.model.content.PermissionsDO;
+import org.ednovo.gooru.shared.model.content.MetaDO;
+import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
@@ -51,15 +54,15 @@ public interface ResourceService extends BaseService {
 	 */
 	public CollectionDo createCollection(CollectionDo collectionDo, String codeId)  throws GwtException;
 	
-	/**
+/*	*//**
 	 * Create new collection inside a parent
 	 * @param collectionDo instance of {@link CollectionDo} has collection meta info
 	 * @param codeId taxonomy code
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
-	 */
+	 *//*
 	public CollectionDo createCollectionInParent(CollectionDo collectionDo, String codeId, String parentId)  throws GwtException;
-
+*/
 	/**
 	 * update existing collection
 	 * @param collectionDo instance of {@link CollectionDo} is to be updated
@@ -127,7 +130,7 @@ public interface ResourceService extends BaseService {
 	 */
 //	public List<CollectionItemDo> getCollectionItems(CollectionDo collectionDo)  throws GwtException;
 
-	public PermissionsDO getPermissions(String collectionId) throws GwtException;
+	public MetaDO getPermissions(String collectionId) throws GwtException;
 	
 	/**
 	 * Get collection by collectionId
@@ -322,5 +325,36 @@ public interface ResourceService extends BaseService {
   	//To delete content report
   	public String deleteContentReport(String gooruOid);
 
+  	/**
+  	 * 
+  	 * @function checkProfanity 
+  	 * 
+  	 * @created_date : Jan 3, 2014
+  	 * 
+  	 * @description
+  	 * 		This method is used to check the user inputs whether has as bad words.
+  	 * 
+  	 * @parm(s) : @param parms
+  	 * @parm(s) : @return
+  	 * @parm(s) : @throws GwtException
+  	 * 
+  	 * @return : boolean
+  	 *
+  	 * @throws : <Mentioned if any exceptions>
+  	 *
+  	 * 
+  	 *
+  	 *
+  	 */
+  	public Boolean checkProfanity(Map<String, String> parms)  throws GwtException;
+  	
+	public List<ProfanityCheckDo> checkProfanityForList(List<ProfanityCheckDo> parms)  throws GwtException;
 	
+	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType) throws GwtException;
+
+	public CollectionDo updateCollectionInfo(CollectionDo collectionDo,
+			String teacherTips) throws GwtException;
+
+	public CollectionDo getCollectionInfoV2API(String collectionId)
+			throws GwtException;
 }

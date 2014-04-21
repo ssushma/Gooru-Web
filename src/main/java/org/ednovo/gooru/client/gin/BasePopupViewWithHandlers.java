@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
 
 import com.google.gwt.dom.client.Document;
@@ -35,19 +36,10 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+
 /**
+ * @author Search Team
  * 
- * @fileName : BasePopupViewWithHandlers.java
- *
- * @description : Base class for a popup that implements the {@link BaseUiHandlers}  interface.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extends PopupViewWithUiHandlers<H> implements IsViewWithHandlers<H> {
 
@@ -61,18 +53,14 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 	}
 	
 	private boolean isHideFromCloseButton=false;
-	/**
-	 * This method is used to display the popup
-	 */
+
 	@Override
 	public void show() {
 		Window.enableScrolling(false);
 		super.show();
 		super.center();
 	}
-	/**
-	 * This method is used to hide the popup
-	 */
+
 	@Override
 	public void hide() {
 		super.hide();
@@ -85,9 +73,7 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 		}
 		
 	}
-	/**
-	 * This method is used to set the boolean value, is popup closed by closing icon or not.
-	 */
+	
 	public void hideFromPopup(boolean isHideFromCloseButton){
 		this.isHideFromCloseButton=isHideFromCloseButton;
 	}
@@ -96,14 +82,13 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 	public void reset() {
 		
 	}
-	/**
-	 * This method is called on the on unload.
-	 */
+
 	@Override
 	public void onUnload() {
 		if(isHideFromCloseButton){
 			if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)){
-				AppClientFactory.getPlaceManager().revealPlayerPreviousPlace(false, getDefaultView());
+				AppClientFactory.getPlaceManager().revealClosePlayer();
+				setSeoToken();
 			}
 		}
 	}
@@ -113,22 +98,19 @@ public abstract class BasePopupViewWithHandlers<H extends BaseUiHandlers> extend
 	}
 
 	protected abstract String getDefaultView();
-	/**
-	 * 
-	 * @function getSettings 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method will check the is the user logged in or not.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : FilterSettings
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	protected FilterSettings getSettings() {
 		return AppClientFactory.getLoggedInUser() != null ? AppClientFactory.getLoggedInUser().getSettings() : null;
+	}
+	private void setSeoToken(){
+		String seoToken=AppClientFactory.getPlaceManager().getBeforePlayerOpenSeoToken();
+		if(seoToken!=null&&!seoToken.equals("")){
+			Window.setTitle(seoToken);
+		}else if(AppClientFactory.isAnonymous()){
+			Window.setTitle(SeoTokens.HOME_TITLE_ANONYMOUS);
+		}else{
+			Window.setTitle(SeoTokens.HOME_TITLE_LOGGEDIN);
+		}
 	}
 
 }

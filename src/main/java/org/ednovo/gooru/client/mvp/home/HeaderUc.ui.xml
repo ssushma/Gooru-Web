@@ -84,7 +84,7 @@
 		}
 		.header-inner {
 			/*width: 1110px;*/
-			width:1200px;
+			width:1000px;
 			height: 50px;
 			margin: auto;
 		}
@@ -208,7 +208,7 @@
 			/*width: 0px;*/
 			float: right;
 			 height: 50px;
-             width:650px;
+             width:580px;
 		}
 		.teachUserNameTextContainer {
 			float: left;
@@ -349,11 +349,11 @@
 		.helpAndSettingsContainer
 		{
 			float: left;
-			width: 94px;
+			width: 29px;
 		}
 		.loginInfo{
 	         float: right;
-			 width: 295px;
+			 width: 235px;
 		}
 		.classCodeTxtBox{
 	        margin-left: 15px;
@@ -368,7 +368,7 @@
         }
         .signUpButton
 		{
-			margin: 10px;
+			margin: 10px 0px 10px 10px;
 		}
 		.username
 		{
@@ -432,9 +432,10 @@
                    <g:HTMLPanel ui:field="dotsPanel" styleName="{style.teachUserNameTextContainerAddAssignment}">
                        
                       <uc:HTMLEventPanel styleName="{style.menu}" ui:field="discoverLinkContainer">
-                        	<g:Label ui:field="discoverLink" />
+                        	<g:Label ui:field="discoverLink" styleName="{res.css.discoverTextStyle}"/>
+                        	<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImg"/>
                       </uc:HTMLEventPanel>
-                      
+                     
                       <uc:HTMLEventPanel styleName="{style.menu}" ui:field="organizeLinkContainer">
                         	<g:Label ui:field="organizeLink" />
                       </uc:HTMLEventPanel>
@@ -484,10 +485,10 @@
          <uc:HTMLEventPanel styleName="{style.resourceRightsPopupContainer}"  ui:field="acctActivationPl">
 					<g:HTMLPanel styleName="{style.resourceRightsInnerPopup}">
 						<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
-						<g:HTMLPanel >
-     						You haven't confirmed your email account yet.
-     						<g:Anchor styleName="{style.anchorText}" text="Resend email," ui:field="resendEmailAncr"/>
-     						 Thanks!
+						<g:HTMLPanel>
+     						<g:Label ui:field="confirmEmailText"></g:Label>
+     						<g:Anchor styleName="{style.anchorText}" ui:field="resendEmailAncr"/>
+     						<g:Label ui:field="thanksLbl"></g:Label>
     	 				</g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>

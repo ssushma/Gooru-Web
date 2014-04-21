@@ -34,18 +34,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.validation.FieldError;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 /**
- * @fileName : GwtAbstractServiceImpl.java
+ * @author Search Team
  *
- * @description : This is the gwt abstract service implementation.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @SuppressWarnings("serial")
 public abstract class GwtAbstractServiceImpl extends RemoteServiceServlet implements ApplicationContextAware
@@ -58,44 +50,32 @@ public abstract class GwtAbstractServiceImpl extends RemoteServiceServlet implem
 	private static final String UNEXPECTED_FAILURE = "Unexpected Failure";
 
 	private ApplicationContext applicationContext;
-	/**
-	 * Class constructor.
-	 */
+
 	public GwtAbstractServiceImpl()
 	{
 		super();
 	}
-	/**
-	 *  This will set the application context.
-	 */
+
 	public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException
 	{
 		this.applicationContext = applicationContext;
 	}
-	/**
-	 * This will get the message.
-	 */
+
 	public String getMessage(final FieldError error)
 	{
 		return applicationContext.getMessage(error, Locale.getDefault());
 	}
-	/**
-	 * This will get the message for exception code.
-	 */
+
 	public String getMessageForExceptionCode(final String code)
 	{
 		return getMessageForExceptionCode(code, null);
 	}
-	/**
-	 * This will get the message for exception code.
-	 */
+
 	public String getMessageForExceptionCode(final String code, final Object[] args)
 	{
 		return this.applicationContext.getMessage(code, args, null, Locale.getDefault());
 	}
-	/**
-	 * This will execute on before request deserialized.
-	 */
+
 	@Override
 	protected void onBeforeRequestDeserialized(final String serializedRequest)
 	{

@@ -4,7 +4,7 @@
 	<g:FlowPanel styleName="{res.css.removeToolTipConatainer}">
 		<g:SimplePanel styleName="{res.css.removeTollTipTopImage}" />
 		<g:SimplePanel styleName="{res.css.removeToolTipContentContainer}" ui:field="contentPanel">
-		    <g:Label styleName="">Remove</g:Label>
+		    <g:Label styleName="" ui:field="removeText"></g:Label>
 		</g:SimplePanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

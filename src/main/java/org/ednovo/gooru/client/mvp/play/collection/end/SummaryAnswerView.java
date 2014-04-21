@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.end;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -49,6 +50,23 @@ public class SummaryAnswerView extends Composite{
 	}
 	public SummaryAnswerView(){
 		initWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	@UiConstructor
+	public SummaryAnswerView(String fibQuest,boolean fibAnsIsCorrect) { 
+		initWidget(uiBinder.createAndBindUi(this));
+		questionAnswerText.setHTML(removeHtmlTags(fibQuest));
+		if(fibAnsIsCorrect){
+			questionAnswerChoice.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+		}else{
+			questionAnswerChoice.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
+		}
+	}
+	
+	public SummaryAnswerView(AttemptedAnswersDo attemptedAnswersDo) { 
+		initWidget(uiBinder.createAndBindUi(this));
+		questionAnswerText.setHTML(removeHtmlTags(attemptedAnswersDo.getAnswersText()));
+				
 	}
 	@UiConstructor
 	public SummaryAnswerView(QuestionAnswerDo questionAnserDo,int sequenceNum,boolean userAttempedStatus){

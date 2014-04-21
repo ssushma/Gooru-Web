@@ -24,7 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
@@ -42,20 +51,22 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
  * @fileName : EditableLabelUc.java
  *
- * @description : This is the edit label control.
+ * @description : 
  *
- * @version : 1.0
  *
- * @date: 31-Dec-2013
+ * @version : 5.5
+ *
+ * @date: June 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
-public class EditableLabelUc extends Composite implements HasValue<String> {
+public class EditableLabelUc extends Composite implements HasValue<String>,MessageProperties {
 
 	private static EditableLabelUcUiBinder uiBinder = GWT
 			.create(EditableLabelUcUiBinder.class);
@@ -78,6 +89,8 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	protected String placeholder = "";
 
 	protected String text;
+	
+	boolean isHavingBadWords=false;
 
 	@UiField(provided = true)
 	UcCBundle res;
@@ -110,18 +123,60 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		 * @Override public void onBlur(BlurEvent event) { switchToLabel(); }
 		 * });
 		 */
+		editTextBox.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", editTextBox.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						isHavingBadWords = value;
+						if (value){
+							editTextBox.getElement().getStyle().setBorderColor("orange");
+							showProfanityError(true);
+						}else{
+							showProfanityError(false);
+							setValue(editTextBox.getText(), true); // fires events, too
+							
+							editTextBox.getElement().getStyle().clearBackgroundColor();
+							editTextBox.getElement().getStyle().setBorderColor("#ccc");
 
+						}
+					}
+				});
+			}
+		});
 		editTextBox.addKeyPressHandler(new KeyPressHandler() {
 
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-
+				editTextBox.getElement().getStyle().clearBackgroundColor();
+				editTextBox.getElement().getStyle().setBorderColor("#ccc");
+				showProfanityError(false);
 				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-					switchToLabel();
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", editTextBox.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+						
+						@Override
+						public void onSuccess(Boolean value) {
+							isHavingBadWords = value;
+							if (value){
+								editTextBox.getElement().getStyle().setBorderColor("orange");
+								showProfanityError(true);
+							}else{
+								switchToLabel();
+								showProfanityError(false);
+								editTextBox.getElement().getStyle().clearBackgroundColor();
+								editTextBox.getElement().getStyle().setBorderColor("#ccc");
+							}
+						}
+					});
 				} else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
-					editTextBox.setText(editLabel.getText()); // reset to the
-																// original
-																// value
+					editTextBox.setText(editLabel.getText()); // reset to the original value
 				}
 			}
 		});
@@ -134,6 +189,12 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			checkCharacterLimit(editTextBox.getText());
+			if(editTextBox.getText().length() >= 50){
+				editTextBox.getElement().getStyle().setBorderColor("orange");
+			}else{
+				editTextBox.getElement().getStyle().clearBackgroundColor();
+				editTextBox.getElement().getStyle().setBorderColor("#ccc");
+			}
 		}
 	}
 
@@ -148,6 +209,7 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 		editTextBox.setFocus(true);
 		editTextBox.addStyleName("shelfEditTitle");
 		editTextBox.setMaxLength(50);
+		editTextBox.getElement().getStyle().setBorderColor("#ccc");
 	}
 
 	/**
@@ -156,10 +218,14 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	public void switchToLabel() {
 		if (deckPanel.getVisibleWidget() == 0)
 			return;
-		if (editTextBox.getText().length() > 0) {
+		if (editTextBox.getText().length() > 0 && !isHavingBadWords) {			
 			setValue(editTextBox.getText(), true); // fires events, too
 		} else {
-			new AlertContentUc("Oops", "Title Shouldn't be empty!");
+			if (isHavingBadWords){
+				editTextBox.getElement().getStyle().setBorderColor("orange");
+			}else{
+				new AlertContentUc(GL0061,GL1026+GL_SPL_EXCLAMATION);
+			}
 			return;
 		}
 		deckPanel.showWidget(0);
@@ -191,6 +257,15 @@ public class EditableLabelUc extends Composite implements HasValue<String> {
 	public void checkCharacterLimit(String text) {
 
 	}
+	
+	// Override this method to catch on blur
+	/**
+	 * @param text
+	 */
+	public void showProfanityError(boolean value) {
+	}
+	
+	
 
 	@Override
 	public HandlerRegistration addValueChangeHandler(

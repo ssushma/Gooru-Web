@@ -1,6 +1,10 @@
-Gooru Web 0.5.11.0
+Gooru Web
 =============
-Introducing Gooru Web 0.5.11.0 - a solution to help teachers faciliate personalized learning for students.
+Introducing Gooru Web  - a solution to help teachers faciliate personalized learning for students.
+
+##Version:
+Dev version : 0.6.1.5
+Production Version : 0.6.1
 
 ##Introduction
 Gooru Web is the front-end of the Gooru application. Gooru’s free solution enables teachers to create, curate, and share collections of web resources on any K-12 topic. With millions of multimedia resources and quiz questions, Gooru makes it easy to discover topic-relevant and standards-aligned content to address specific students’ needs.  At Gooru, we believe education is a human right.  Now, with access to this Git repository, open-sourced under the MIT license, you can build along side us to support this mission and help students around the world reach their full potential.

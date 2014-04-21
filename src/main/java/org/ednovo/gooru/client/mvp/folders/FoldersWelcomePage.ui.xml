@@ -4,47 +4,46 @@
 	<ui:style field="WelcomePage" src="folderwelcomepage.css" />
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{WelcomePage.welcomeToWorkspaceContainer}">
-		   <g:HTMLPanel styleName="{WelcomePage.welcomeToWorkspaceText}">
-		      Create and Organize your Collections!
+		   <g:HTMLPanel styleName="{WelcomePage.welcomeToWorkspaceText}" ui:field="createLbl">
 		   </g:HTMLPanel>
 		   <g:HTMLPanel styleName="{WelcomePage.getStartedTextContainer}">
-		      <g:HTMLPanel styleName="{WelcomePage.getStartedText}">Collections are playlists of educational resources that can be personalized for your students learning. Create your own collection by discovering resources on Gooru, the Web, or by adding your own questions.</g:HTMLPanel>
+		      <g:HTMLPanel styleName="{WelcomePage.getStartedText}" ui:field="gettingStartedLbl"></g:HTMLPanel>
 		      <g:Label styleName="{WelcomePage.getStartedCollection}" ui:field="newCollectionUIHandler"></g:Label>
 		   </g:HTMLPanel>
 		      	<g:HTMLPanel styleName="{WelcomePage.workspaceTextOptions}">
 					<g:HTMLPanel styleName="{WelcomePage.firstDiv}">
 						<g:HTMLPanel styleName="{WelcomePage.imgTextContainer}">
-							<g:Image title="Rounded One" altText="Rounded One" styleName="{WelcomePage.imageCss}" height="35"
-								url="images/rounded-one.png" width="35" />
-							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}">Create</g:HTMLPanel>
+							<g:Image styleName="{WelcomePage.imageCss}" height="35"
+								width="35" ui:field="roundedOneLbl"/>
+							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}" ui:field="createTextLbl"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{WelcomePage.workspaceCreateDesc}">Create a collection and add selected resources.</g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceCreateDesc}" ui:field="selectedLbl"></g:HTMLPanel>
 						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}">
-						    <g:Image title="Workspace" altText="Workspace" styleName="{WelcomePage.workspaceImg}" url="images/folders/workspace-image.png" />
+						    <g:Image styleName="{WelcomePage.workspaceImg}" ui:field="workSpaceLbl"/>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{WelcomePage.secondDiv}">
 						<g:HTMLPanel styleName="{WelcomePage.imgTextContainerCustomize}">
-							<g:Image title="Rounded Two" altText="Rounded Two" styleName="{WelcomePage.imageCss}" height="35"
-								url="images/rounded-two.png" width="35" />
-							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}">Customize</g:HTMLPanel>
+							<g:Image styleName="{WelcomePage.imageCss}" height="35"
+								width="35" ui:field="roundedTwoLbl"/>
+							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}" ui:field="customizeLbl"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{WelcomePage.workspaceDesc}">Organize and add narration to guide your students.</g:HTMLPanel>
-						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}"><g:Image title="Narration" altText="Narration" styleName="{WelcomePage.customizeIma}" url="images/folders/narration-image.png" /></g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceDesc}" ui:field="guideStudentsLbl"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}"><g:Image styleName="{WelcomePage.customizeIma}" ui:field="narrationLbl"/></g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{WelcomePage.thirdDiv}">
 						<g:HTMLPanel styleName="{WelcomePage.imgTextContainer}">
-							<g:Image title="Rounded Three" altText="Rounded Three" styleName="{WelcomePage.imageCss}" height="35"
-								url="images/rounded-three.png" width="35" />
-							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}">Share</g:HTMLPanel>
+							<g:Image styleName="{WelcomePage.imageCss}" height="35"
+								width="35" ui:field="roundedThreeLbl" />
+							<g:HTMLPanel styleName="{WelcomePage.workspaceTitleText}" ui:field="shareLbl"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{WelcomePage.workspaceShareDesc}">Share collections through a link or assign them to your class.</g:HTMLPanel>
-						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}"><g:Image title="Share Assign" altText="Share Assign" styleName="{WelcomePage.shareImg}" url="images/folders/share-assign-image.png" /></g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceShareDesc}" ui:field="assignLbl"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{WelcomePage.workspaceThumbnail}"><g:Image styleName="{WelcomePage.shareImg}" ui:field="shareAssignLbl"/></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 		    <g:HTMLPanel styleName="{WelcomePage.workspaceTextSupport}">
-				<g:HTMLPanel styleName="{}">Need some more help? Visit our 
-				    <g:Anchor ui:field="supportCenterAnr" styleName="{WelcomePage.supportLink}" href="http://support.goorulearning.org/forums" target="_blank">support center</g:Anchor>.
+				<g:HTMLPanel styleName="{WelcomePage.needSomeMore}"><g:Label ui:field="needHelpLbl"></g:Label>
+				    <g:Anchor ui:field="supportCenterAnr" styleName="{WelcomePage.supportLink}" target="_blank"></g:Anchor>.
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

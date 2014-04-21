@@ -34,43 +34,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
-/**
- * @fileName : EmbedController.java
- *
- * @description : This is embed controller.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 
 public class EmbedController extends MultiActionController{
 	
 	@Inject
 	private ResourceServiceImpl resourceService;
-	/**
-	 * @function collection 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to flush the htmloutput.
-	 * 
-	 * 
-	 * @parm(s) : @param request
-	 * @parm(s) : @param response
-	 * @parm(s) : @throws IOException
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void collection(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		String id=request.getParameter("id");
 		 StringBuffer htmlOutput=new StringBuffer();
@@ -80,6 +52,7 @@ public class EmbedController extends MultiActionController{
 			String protocolRequest = request.getScheme();
 			String homeEndPoint = resourceService.getHomeEndPointForEmbed();
 			String restEndPoint = resourceService.getRestEndPointForEmbed();
+			String cssEndPoint=homeEndPoint.replaceAll(MessageProperties.HTTP+":", "").replaceAll(MessageProperties.HTTPS+":", "");
 
 			if(protocolRequest.equalsIgnoreCase(MessageProperties.HTTPS)) {
 				homeEndPoint = homeEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
@@ -101,7 +74,7 @@ public class EmbedController extends MultiActionController{
 				 String questoionResourceCountString=questoionResourceCount==1?"1 question":questoionResourceCount+" questions";
 				 String collectionItems=resourcesString+" "+questoionResourceCountString;
 				 htmlOutput.append(" <!DOCTYPE html>").append("<html><head>").append("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />")
-				 			.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""+homeEndPoint+"/css/embed.css\">").append("</head>")
+				 			.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""+cssEndPoint+"/css/embed.css\">").append("</head>")
 				 			.append("<body><div class=\"embed-container\"><div class=\"collection-image\"><a href=\""+homeEndPoint+"/#collection-play&id="+collectionDo.getGooruOid()+"\"target=\"_blank\" class=\"collectionImage\"><image onerror=\"this.src='"+homeEndPoint+"/images/collection-default-image.png'\" src="+collectionDo.getThumbnails().getUrl()+" width=\"310px\" height=\"208px\"><div class=\"button\">Study</div></a></div>")
 				 			.append("<div class=\"metadata\">").append("<h1 class=\"title\"><a href=\""+homeEndPoint+"/#collection-play&id="+collectionDo.getGooruOid()+"\"target=\"_blank\">"+collectionDo.getTitle()+"</a></h1>")
 				 			.append("<div class=\"description\"><span class=\"label\">Description: </span>"+collectionDo.getGoals()+"</div>")

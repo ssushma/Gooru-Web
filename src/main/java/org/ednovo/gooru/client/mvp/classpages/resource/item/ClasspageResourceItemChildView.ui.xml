@@ -8,13 +8,13 @@
 		    
 			<g:HTMLPanel styleName="{res.css.myClassPageNewAddedWrapper}" ui:field="classpageItemPanel">
     			<g:HTMLPanel styleName="{res.css.myClassPageNewAddedTitle}">
-                	<g:Label text="Algebra I" ui:field="classpageTitleLbl"></g:Label>
+                	<g:Label ui:field="classpageTitleLbl"></g:Label>
                 	
                 </g:HTMLPanel>
                 <g:HTMLPanel styleName="{res.css.myClassPageNewAddedLeftButtonContainer}" ui:field="actionVerPanel">
-				<g:Label styleName="{res.css.blueButtonOpen}" ui:field="openClasspageLbl">Open</g:Label>
-				<g:Label styleName="{res.css.studentViewButton}" ui:field="studentViewLbl">Student View</g:Label>
-				<g:Label styleName="{res.css.deleteButton}" ui:field="confirmDeleteLbl">Delete</g:Label>
+				<g:Label styleName="{res.css.blueButtonOpen}" ui:field="openClasspageLbl"></g:Label>
+				<g:Label styleName="{res.css.studentViewButton}" ui:field="studentViewLbl"></g:Label>
+				<g:Label styleName="{res.css.deleteButton}" ui:field="confirmDeleteLbl"></g:Label>
 	    	</g:HTMLPanel>
 			</g:HTMLPanel>
 			

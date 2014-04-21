@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
@@ -50,22 +51,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * 
- * @fileName : ThanksPopupUc.java
- *
- * @description : This file deals with Thanks popup.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class ThanksPopupUc extends PopupPanel {
+
+public class ThanksPopupUc extends PopupPanel implements MessageProperties{
  
 	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo,lblClose; //lblDiscover,lblOrganize,lblTeach
 	
@@ -131,7 +118,7 @@ public class ThanksPopupUc extends PopupPanel {
 	 * 
 	 * @created_date : 15-09-2013
 	 * 
-	 * @description : This is used to set handlers.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -151,28 +138,12 @@ public class ThanksPopupUc extends PopupPanel {
 		
 //		this.setStyleName(res.css().thanksPopup());
 		this.removeStyleName("gwt-PopupPanel");
-		this.getElement().getStyle().setZIndex(99999);
+		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		
 	
 	}
-	/**
-	 * 
-	 * @function setAccountType 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to set account type.
-	 * 
-	 * 
-	 * @parm(s) : @param type
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setAccountType(String type){
 		if (type.equalsIgnoreCase("normal")){
 			btnStartUsingGooru.setVisible(true);
@@ -201,15 +172,15 @@ public class ThanksPopupUc extends PopupPanel {
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(MessageProperties.GL0186);
-		lblCongratsHeader.setText(MessageProperties.GL0429);
-		lblCheckYourEmail.setText(MessageProperties.GL0430);
-		lblWhatsNext.setText(MessageProperties.GL0432);
+		lblLoginHeading.setText(GL0186);
+		lblCongratsHeader.setText(GL0429);
+		lblCheckYourEmail.setText(GL0430);
+		lblWhatsNext.setText(GL0432);
 	
 		//This is not required when registered as parent.		
-		btnStartUsingGooru.setText(MessageProperties.GL0431);
+		btnStartUsingGooru.setText(GL0431);
 		//This is not required when registered as parent.
-		lblLearnHowTo.setText(MessageProperties.GL0433);
+		lblLearnHowTo.setText(GL0433);
 		lblLearnHowTo.setVisible(false);
 		lblWhatsNext.setVisible(false);
 		//This is not required when registered as parent.
@@ -220,7 +191,7 @@ public class ThanksPopupUc extends PopupPanel {
 //		lblTeach.setText(MessageProperties.GL0181);
 		
 		//This is not required for Regular user.
-		btnStartCreatingStudent.setText(MessageProperties.GL0472);
+		btnStartCreatingStudent.setText(GL0472);
 				
 		btnStartUsingGooru.setVisible(account.equalsIgnoreCase("regular") ? true : false);			
 //		lblWhatsNext.setVisible(account.equalsIgnoreCase("regular") ? true : false);
@@ -234,64 +205,43 @@ public class ThanksPopupUc extends PopupPanel {
 		
 		btnStartCreatingStudent.setVisible(account.equalsIgnoreCase("parent") ? true : false);
 		
-		htmlSupport.setHTML(MessageProperties.GL0437);
+		htmlSupport.setHTML(GL0437);
 		
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
 		btnStartCreatingStudent.getElement().setId("btnStartCreatingStudent");
 	}
-	/**
-	 * 
-	 * @function clickOnStartGooru 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :  This will dispaly start us using gooru on StartUsingGooru button click.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("btnStartUsingGooru")
 	public void clickOnStartGooru(ClickEvent event){
 		Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
 		map.remove("callback");
 		map.remove("type");
-		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+		map.remove("privateGooruUId");
+		map.remove("dob");
+		map.remove("userName");
+		map.remove("emailId");
+		map.remove("email");
+		String revealPlace = map.get("rp") !=null && !map.get("rp").equalsIgnoreCase("") ? map.get("rp") : null;
+		String collId = map.get("id") !=null && !map.get("id").equalsIgnoreCase("") ? map.get("id") : null;
+		
+		String viewToken =  revealPlace != null ? revealPlace : AppClientFactory.getCurrentPlaceToken();		
+		map.remove("rp");
+		
+		AppClientFactory.getPlaceManager().revealPlace(viewToken, map);
 		hide();
 	}
-	/**
-	 * 
-	 * @function clickOnClose 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to close popup.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("lblClose")
 	public void clickOnClose(ClickEvent event){
 		if (account.equalsIgnoreCase("parent")){ 
 			startCreatingStudent();
 		}
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
 		hide();
 	}
 //	@UiHandler("btnDiscover")
@@ -306,49 +256,13 @@ public class ThanksPopupUc extends PopupPanel {
 //	public void clickOnTeachBtn(ClickEvent event){
 //		
 //	}
-	/**
-	 * 
-	 * @function clickOnStartCreatingStudent 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to call create student.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("btnStartCreatingStudent")
 	public void clickOnStartCreatingStudent(ClickEvent event){
 		hide();
 		startCreatingStudent();
 	}
-	/**
-	 * 
-	 * @function clickOnStartCreatingStudent 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to create student.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void startCreatingStudent(){
 		String externalId = AppClientFactory.getLoggedInUser().getExternalId();
 		String email = AppClientFactory.getLoggedInUser().getEmailId();

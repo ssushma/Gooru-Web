@@ -29,35 +29,20 @@ package org.ednovo.gooru.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-	/**
-	 * 
-	 * @fileName : InvokeGooruGuideBubbleEvent.java
-	 *
-	 * @description : This method is used to invoke the GooruGuideBubble
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * @author Search Team
+ * 
+ */
 public class InvokeGooruGuideBubbleEvent extends GwtEvent<InvokeGooruGuideBubbleHandler> {
 
 	public static final Type<InvokeGooruGuideBubbleHandler> TYPE = new Type<InvokeGooruGuideBubbleHandler>();
 
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<InvokeGooruGuideBubbleHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 *This method will be  called by HandlerManager and it will be used to invoke the gooru guide bubble event.
-	 */
+
 	@Override
 	protected void dispatch(InvokeGooruGuideBubbleHandler handler) {
 		handler.invokeGooruGuideBubble();

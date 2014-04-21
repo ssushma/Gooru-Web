@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertForImageUpload;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
@@ -52,6 +53,7 @@ import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -62,23 +64,16 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+
 /**
- * @fileName : ImageUploadView.java
+ * @author Search Team
  *
- * @description : This is the top-level for the image uplaod view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandlers> implements IsImageUploadView, MessageProperties {
 
@@ -102,7 +97,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	Anchor imageUploadOnWebLbl,uploadGooruImages;
 
 	@UiField
-	Anchor imageUploadOnComputerLbl;
+	Anchor imageUploadOnComputerLbl,readThisLbl;
 
 	@UiField
 	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer;
@@ -138,6 +133,11 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@UiField
 	ErrorLabelUc urlValidation;
+	@UiField
+	HTMLPanel notWorkingPanel;
+	
+	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
+	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
 	
 	private static final String IMAGE_UPLOAD_URL = "/media?sessionToken={0}&uploadFileName={1}&resize=true&width=600&height=450";
 	
@@ -155,11 +155,29 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	public ImageUploadView(EventBus eventBus) {
 		super(eventBus);
 		GooruCBundle.INSTANCE.css().ensureInjected();
-		appPopUp = new AppPopUp("type");
+		appPopUp = new AppPopUp(GL1424);
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
 		appPopUp.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
-		imageCropPopup = new AppPopUp("type");
+		imageCropPopup = new AppPopUp(GL1424);
 		imageCropPopup.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
+		chooseText.setText(GL1215+GL_SPL_SEMICOLON);
+		imageUploadOnWebLbl.setText(GL1216);
+		imageUploadOnComputerLbl.setText(GL1217);
+		uploadGooruImages.setText(GL1218);
+		uploadFromComputer.setText(GL1219);
+		uploadLimitText.setText(GL1220);
+		notWorkingLblText.setText(GL1221+" "+GL_SPL_QUESTION);
+		readThisLbl.setText(GL1222+GL_SPL_EXCLAMATION);
+		onSystemCancelBtn.setText(GL0142);
+		uploadFromWebText.setText(GL1223);
+		imageURLLbl.setText(GL1224);
+		uploadImageButtonOnWeb.setText(GL1225);
+		typeImageurlText.setText(GL1226);
+		infoUrlUploadText.setText(GL1227);
+		onWebCancelBtn.setText(GL0142);
+		chooseFromText.setText(GL1228+GL_SPL_SEMICOLON);
+		okButtonOnUploadGooruImages.setText(GL0190);
+		cancelButtonOnUploadGooruImages.setText(GL0142);
 		fileUpload.getElement().setAttribute("size", "25");
 		fileUpload.getElement().setId("fileUpload");
 		onWebCancelBtn.getElement().setId("btnCancel");
@@ -179,24 +197,35 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		urlValidation.setStyleName(GooruCBundle.INSTANCE.css().imageUrlError());
 		handelFormEvent();
 		appPopUp.setModal(true);
+		notWorkingPanel.setVisible(false);
+		readThisLbl.setHref(GL1265);
 //		Window.enableScrolling(false);
 //		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
 		addClickEventToDefaultImages();
 		fileuploadForm.addSubmitHandler(new FormPanel.SubmitHandler() {
-			public void onSubmit(SubmitEvent event) {
+			public void onSubmit(final SubmitEvent event) {
+				String browesr = BrowserAgent.getWebBrowserClient();
+				if(browesr.contains("ie")){
+					Timer timer = new Timer(){
+			            @Override
+			            public void run()
+			            {
+			            	glasspanelLoadingImage(false);
+			            	fileuploadForm.reset();
+			            	event.cancel();
+			            	notWorkingPanel.setVisible(true);
+			            }
+			    };
+			    timer.schedule(10000);
+				}
 				if (!"".equalsIgnoreCase(fileUpload.getFilename())) {
 					String size=getFileNameSize();
 					  
 					double sizeOfImage=Double.parseDouble(size);
 					if(sizeOfImage>5){
-						
-				 
-				 
-						new AlertForImageUpload(GL0061,"The image you are trying to upload is either the wrong file type or too large! Please upload another image.");
+						new AlertForImageUpload(GL0061,GL1229);
 						 glasspanelLoadingImage(false);
-							 
 						fileuploadForm.reset();
-						
 						event.cancel(); 
 				//		Window.enableScrolling(true);
 				//		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
@@ -239,20 +268,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		// TODO Auto-generated method stub
 
 	}
-	/**
-	 * @function addClickEventToDefaultImages 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to add click events to the default images.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void addClickEventToDefaultImages(){
 		int widgetsCount=gooruProfileDefaultImagesContainer.getWidgetCount();
 		for(int widgetIndex=0;widgetsCount>widgetIndex;widgetIndex++){
@@ -266,21 +282,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			});
 		}
 	}
-	/**
-	 * @function highlightSelectedImage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to highlight the selected image.
-	 * 
-	 * 
-	 * @parm(s) : @param widgetIndex
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	private void highlightSelectedImage(int widgetIndex){
 		GooruImagesView gooruImagesView=(GooruImagesView)gooruProfileDefaultImagesContainer.getWidget(widgetIndex);
 		gooruImagesView.profileGooruDefaultImage.setStyleName(GooruCBundle.INSTANCE.css().profileImageActive());
@@ -290,20 +291,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		this.selectedWidgetIndex=widgetIndex;
 	}
-	/**
-	 * @function resetProfileImageSelected 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to reset the profile image selected one.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void resetProfileImageSelected(){
 		this.selectedWidgetIndex=-1;
 		int widgetsCount=gooruProfileDefaultImagesContainer.getWidgetCount();
@@ -313,9 +301,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 	}
 	
-	/**
-	 * This inner class is used to set the focus handler.
-	 */
+
 	private class OnTextFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -323,9 +309,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			urlValidation.setVisible(false);
 		}
 	}
-	/**
-	 * This method is used to set the display based on the age.
-	 */
+	
 	public void showUploadTypeWidgets(boolean isUserUnder13){
 		this.isUserUnder13=isUserUnder13;
 		if(isUserUnder13){
@@ -382,20 +366,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	/**
-	 * @function uploadImagesFromGooru 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will hanle the click event on the uplaod gooru images.
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("uploadGooruImages")
 	public void uploadImagesFromGooru(ClickEvent clickEvent){
 		uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
@@ -422,21 +393,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		
 	}
-	/**
-	 * @function cancelOnGooruImages 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the cancel and upload buttons.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("cancelButtonOnUploadGooruImages")
 	public void cancelOnGooruImages(ClickEvent event){
 		appPopUp.hide();
@@ -471,21 +428,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			getUiHandlers().imageWebUpload(imageWebUploadUrlTxtBox.getText());
 		}
 	}
-	/**
-	 * @function uploadGooruDefaultImage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the ok and upload gooru images.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("okButtonOnUploadGooruImages")
 	public void uploadGooruDefaultImage(ClickEvent clickEvent){
 		if(this.selectedWidgetIndex!=-1){
@@ -540,9 +483,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		}
 		return isValid;
 	}
-	/**
-	 * This method is used to set the upload image.
-	 */
+
 	@Override
 	public void setImageUpload(final MediaUploadDo mediaUploadDo) {
 		imageCropPopup.clear();
@@ -596,12 +537,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			appPopUp.hide();
 			imageCropPopup.hide();
 			resetImageUploadWidget();
-			new AlertContentUc("Oops", mediaUploadDo != null && mediaUploadDo.getImageValidationMsg() != null ? mediaUploadDo.getImageValidationMsg() : "Something went wrong, please try again with some other cover image.");
+			new AlertContentUc(GL1089, mediaUploadDo != null && mediaUploadDo.getImageValidationMsg() != null ? mediaUploadDo.getImageValidationMsg() : GL1230);
 		}
 	}
-	/**
-	 * This will handle the form event for uploading.
-	 */
+
 	@Override
 	public void handelFormEvent() {
 		fileUpload.addChangeHandler(new ChangeHandler() {
@@ -631,16 +570,12 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		});
 
 	}
-	/**
-	 * This will close the upload image popup.
-	 */
+
 	@Override
 	public void closeImageUploadWidget() {
 		appPopUp.hide();
 	}
-	/**
-	 * This will enable the glass panel in the back ground of the popup.
-	 */
+
 	@Override
 	public void glasspanelLoadingImage(boolean state) {
 		glassPanelWithLoadingUc.setVisible(state);
@@ -658,6 +593,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		resetProfileImageSelected();
 		imageCropPopup.clear();
 		imageCropPopup.hide();
+		notWorkingPanel.setVisible(false);
 		if(isEdit){
 			
 		}else{
@@ -704,15 +640,11 @@ var fileSize;
                  
     
   }-*/;
-	/**
-	 * This method is used to set the aspect ratio
-	 */
+	
 	public void setAspectRatio(float aspectRatio){
 		this.aspectRatio=aspectRatio;
 	}
-	/**
-	 * This method is used to set the boolean value is the user editing the form question or not.
-	 */
+
 	@Override
 	public void isFromEditQuestion(boolean isEdit) {
 		this.isEdit=isEdit;

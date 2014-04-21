@@ -53,20 +53,21 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	private ClasspageServiceAsync classpageServiceAsync;
 	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
-
+	
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDY)
 	public interface IsClassCodeProxy extends ProxyPlace<ClassCodePresenter> {
 	}
+	
+	
 	@Inject
 	public ClassCodePresenter(IsClassCodeView view,
 			IsClassCodeProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This is called when the presenter is instantiated.
-	 */
+	
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -91,9 +92,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		});
 		
 	}
-	/**
-	 * onReveal called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -104,41 +103,19 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 	}
-	/**
-	 * onReset is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset() {
 		super.onReset();
 		getView().clearAll();
 	}
-	/**
-	 * This is used to get the place token
-	 */
+	
 	@Override
 	public String getViewToken() {
 		
 		return PlaceTokens.STUDY;
 	}
-	/**
-	 * 
-	 * @function setcollectionAsyncCallback 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is used to set collectionAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setcollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
@@ -149,33 +126,15 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	public SimpleAsyncCallback<CollectionDo> getcollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getclasspageServiceAsync 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This will return classpageServiceAsync
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ClasspageServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public ClasspageServiceAsync getclasspageServiceAsync() {
 		return classpageServiceAsync;
 	}
-	/**
-	 * This method is used to go to Studentview.
-	 */
+
 	@Override
 	public void gotoStudentsView(String tbvalue) {
 		this.getclasspageServiceAsync().v2getClasspageByCode(tbvalue, getcollectionAsyncCallback());
+		
 	}
+	
 }

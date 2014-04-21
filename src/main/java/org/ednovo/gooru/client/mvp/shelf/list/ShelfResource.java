@@ -27,6 +27,8 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 import org.ednovo.gooru.client.effects.FontWeightEffect;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.WhiteSpace;
@@ -43,22 +45,50 @@ public class ShelfResource extends FlowPanel {
 	private Label imageLbl;
 	private HTML titleLbl;
 	
-	private CollectionItemDo collectionItemDo = null;
+	private FolderItemDo collectionItemDo = null;
+	
+	private FolderDo resources = null;
 
 	/**
 	 * Class constructor , assign colletionItem instance
 	 * @param collectionItem instance of {@link CollectionItemDo}
 	 */
-	public ShelfResource(CollectionItemDo collectionItem) {
+	public ShelfResource(FolderItemDo collectionItem) {
 		this.collectionItemDo = collectionItem;
 		imageLbl = new Label();
 		titleLbl = new HTML();
-		this.getElement().setAttribute("collectionType", collectionItem.getResource().getResourceType().getName());
+		this.getElement().setAttribute("collectionType", collectionItem.getType());
 		titleLbl.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourceTitle());
 		titleLbl.addStyleName("collectionItemTitle");
 		titleLbl.getElement().getStyle().setWhiteSpace(WhiteSpace.NOWRAP);
 		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
 		this.setData(collectionItem);
+	}
+
+	public ShelfResource(FolderDo resources) { 
+		this.resources = resources;
+		imageLbl = new Label();
+		titleLbl = new HTML();
+		this.getElement().setAttribute("collectionType", resources.getType());
+		titleLbl.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourceTitle());
+		titleLbl.addStyleName("collectionItemTitle");
+		titleLbl.getElement().getStyle().setWhiteSpace(WhiteSpace.NOWRAP);
+		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
+		this.setData(resources);
+	}
+
+	private void setData(FolderDo resources) { 
+		if(resources.getResourceFormat()!=null) {
+			ImageUtil.renderResourceImage(imageLbl, resources.getResourceFormat().getValue());
+		}
+		if (resources.getTitle() != null && resources.getTitle().length() > 0) {
+//			titleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 30));
+			titleLbl.setHTML(resources.getTitle().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+		} else {
+			titleLbl.setHTML("--");
+		}
+		this.add(imageLbl);
+		this.add(titleLbl);
 	}
 
 	public void updateCurrentTitle(String newTitle) {
@@ -74,11 +104,13 @@ public class ShelfResource extends FlowPanel {
 	 * Assign collection item info  title, image url 
 	 * @param collectionItem instance of {@link CollectionItemDo}
 	 */
-	private void setData(CollectionItemDo collectionItem) {
-		ImageUtil.renderResourceImage(imageLbl, collectionItem.getResource().getCategory());
-		if (collectionItem.getResource().getTitle() != null && collectionItem.getResource().getTitle().length() > 0) {
+	private void setData(FolderItemDo collectionItem) {
+		if(collectionItem.getResourceFormat()!=null) {
+			ImageUtil.renderResourceImage(imageLbl, collectionItem.getResourceFormat().getValue());
+		}
+		if (collectionItem.getTitle() != null && collectionItem.getTitle().length() > 0) {
 //			titleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 30));
-			titleLbl.setHTML(collectionItem.getResource().getTitle().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
+			titleLbl.setHTML(collectionItem.getTitle().replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", ""));
 		} else {
 			titleLbl.setHTML("--");
 		}
@@ -93,14 +125,14 @@ public class ShelfResource extends FlowPanel {
 	/**
 	 * @return instance of {@link CollectionItemDo} 
 	 */
-	public CollectionItemDo getCollectionItemDo() {
-		return collectionItemDo;
+	public FolderDo getCollectionItemDo() {
+		return resources;
 	}
 
 	/**
 	 * @param collectionItemDo the {@link CollectionItemDo} to set
 	 */
-	public void setCollectionItemDo(CollectionItemDo collectionItemDo) {
+	public void setCollectionItemDo(FolderItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 	}
 	

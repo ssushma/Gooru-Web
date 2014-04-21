@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.event;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ActivateSearchBarHandler.java
- *
- * @description : This file is used to show and hide the search bar.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ActivateSearchBarHandler extends EventHandler {
 

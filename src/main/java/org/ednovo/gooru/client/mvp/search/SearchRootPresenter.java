@@ -55,19 +55,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchRootPresenter.java
- *
- * @description : This is to register  handlers for PreSearchEvent and postSearchEvent.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SearchRootPresenter extends BasePresenter<IsSearchRootView, SearchRootPresenter.IsSearchRootProxy> implements SearchRootUiHandlers {
 
@@ -108,24 +97,24 @@ public class SearchRootPresenter extends BasePresenter<IsSearchRootView, SearchR
 		addRegisteredHandler(GetSearchKeyWordEvent.TYPE, this);
 		this.shelfTabPresenter = shelfTabPresenter;
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
+	
+		
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
 		Window.scrollTo(0,0);
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
+	
+
+	
+	
 	@Override
 	public void onReset() {
 		super.onReset();
@@ -147,74 +136,30 @@ public class SearchRootPresenter extends BasePresenter<IsSearchRootView, SearchR
 		setInSlot(TYPE_SHELF_TAB, shelfTabPresenter);
 		
 	}
-	/**
-	 * 
-	 * @function getSearchService 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : returns searchService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
-	/**
-	 * 
-	 * @function setSearchService 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : To set Search service.
-	 * 
-	 * 
-	 * @parm(s) : @param searchService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
 	}
-	/**
-	 * This is to call postSearch method from it's view.
-	 */
+
 	@Override
 	public <T extends ResourceSearchResultDo> void postSearch(SearchDo<T> searchDo) {
 		getView().postSearch(searchDo);
 	}
-	/**
-	 * This is to call preSearch method from it's view.
-	 */
+
 	@Override
 	public <T extends ResourceSearchResultDo> void preSearch(SearchDo<T> searchDo) {
 		getView().preSearch(searchDo);
 	}
-	/**
-	 * This method is to fire RevealContentEvent.
-	 */
+	
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, WrapPresenter.TYPE_VIEW, this);
 	}
-	/**
-	 * This is used to get the search ketword.
-	 */
+
 	@Override
 	public void getSearchKeyword() {
 		String searchText=getView().getSearchText();

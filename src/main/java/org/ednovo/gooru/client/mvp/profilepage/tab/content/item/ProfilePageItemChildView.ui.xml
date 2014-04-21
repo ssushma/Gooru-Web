@@ -9,7 +9,7 @@
 				<g:Label styleName="{ProfilePageItemStyle.folderDescription}" ui:field="lblChildItemDescription"></g:Label>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{ProfilePageItemStyle.blockHoverButtons}" ui:field="actionVerPanel">
-				<g:Button styleName="{ProfilePageItemStyle.gooru-button}" ui:field="childItemOpenBtn">Open</g:Button>
+				<g:Button styleName="{ProfilePageItemStyle.gooru-button}" ui:field="childItemOpenBtn"></g:Button>
 			</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder>

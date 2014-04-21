@@ -24,6 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.assignments;
 
+/*
+ * 
+ * @fileName : AssignmentPopupView.java
+ *
+ * @description : This class is responsible to show and add assignments 
+ *
+ *
+ * @version : 5.3
+ *
+ * @date: May 4, 2013
+ *
+ * @Author Gooru team
+ *
+ * @Reviewer:
+ */
+
 import java.util.Date;
 
 import org.ednovo.gooru.client.uc.DateBoxUc;
@@ -33,6 +49,7 @@ import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -52,25 +69,10 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-	/**
-	 * 
-	 * @fileName : AssignmentPopupView.java
-	 *
-	 * @description : This is the view file related to AssignmentPopup view.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-public abstract class AssignmentPopupView extends Composite {
+public abstract class AssignmentPopupView extends Composite implements MessageProperties{
 
-	private static final String MANDATORY_TITLE = "Please enter a title.";
-	private static final String CHARACTERS_LIMIT = "Character limit reached.";
+	private static final String MANDATORY_TITLE = GL0173;
+	private static final String CHARACTERS_LIMIT = GL0143;
 	String classpageId = "";
 
 	public interface AssignmentPopupViewUiBinder extends
@@ -90,10 +92,10 @@ public abstract class AssignmentPopupView extends Composite {
 			.create(AssignmentPopupViewUiBinder.class);
 
 	@UiField
-	public Label cancelResourcePopupBtnLbl, addResourceBtnLbl;
+	public Label cancelResourcePopupBtnLbl, addResourceBtnLbl,assignmentTitleLabel,assignmentDirectionLabel;
 
 	@UiField
-	Label mandatoryTitleLabel, mandatoryDueDateLabel, mandatoryDirectionLabel;
+	Label mandatoryTitleLabel, mandatoryDueDateLabel, mandatoryDirectionLabel,assignmentDueDateLabel;
 
 	@UiField
 	TextBox assignmentTitleTxt;
@@ -102,11 +104,17 @@ public abstract class AssignmentPopupView extends Composite {
 	TextArea assignmentDirectionsTxtArea;
 	
     boolean isClicked = false;
-	/**
-	 * Default Constructor.
-	 */
+
 	public AssignmentPopupView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		assignmentTitleLabel.setText(GL1407+GL_SPL_STAR);
+		mandatoryTitleLabel.setText(GL0173);
+		assignmentDueDateLabel.setText(GL0238);
+		mandatoryDueDateLabel.setText(GL0235);
+		assignmentDirectionLabel.setText(GL1408);
+		mandatoryDirectionLabel.setText(GL0236);
+		addResourceBtnLbl.setText(GL0590);
+		cancelResourcePopupBtnLbl.setText(GL0142);
 		mandatoryDueDateLabel.getElement().setAttribute("id", "datePickerErrorMessageLabel");
 		assignmentTitleTxt.getElement().setAttribute("id", "txtAssignmentTitle");
 		assignmentDirectionsTxtArea.getElement().setAttribute("id", "txtAreaDirections");
@@ -166,25 +174,11 @@ public abstract class AssignmentPopupView extends Composite {
 		}
 		return isValid;
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentPopupView.java
-	 *
-	 * @description : This will reflct on focus of Date.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
-			dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
+dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
 			dateBoxUc.getDateBox().removeStyleName(
 					AddAssignmentContainerCBundle.INSTANCE.css()
 							.gooruDateError());
@@ -194,21 +188,7 @@ public abstract class AssignmentPopupView extends Composite {
 
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentPopupView.java
-	 *
-	 * @description : This is used to display date.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -224,21 +204,7 @@ public abstract class AssignmentPopupView extends Composite {
 			}
 		}
 	}
-    /**
-     * 
-     * @fileName : AssignmentPopupView.java
-     *
-     * @description : This is used to get the date validations.
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 27-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -259,21 +225,7 @@ public abstract class AssignmentPopupView extends Composite {
 			hidePopup();
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AssignmentPopupView.java
-	 *
-	 * @description : This click handler is used set title,character limits...
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class AddClickHandler implements ClickHandler {
 
 		@Override
@@ -371,21 +323,7 @@ public abstract class AssignmentPopupView extends Composite {
 	// mandatoryDueDateLabel.setVisible(false);
 	// }
 	// }
-    /**
-     * 
-     * @fileName : AssignmentPopupView.java
-     *
-     * @description : This is used to set the character limit if the title length exceeds 50 characters.
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 27-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -397,21 +335,7 @@ public abstract class AssignmentPopupView extends Composite {
 			}
 		}
 	}
-	/**
-     * 
-     * @fileName : AssignmentPopupView.java
-     *
-     * @description : This is used to set the character limit if the assignment Directions TextArea length exceeds 50 characters.
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 27-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -429,25 +353,7 @@ public abstract class AssignmentPopupView extends Composite {
 	/*
 	 * Custom methods
 	 */
-	/**
-	 * 
-	 * @function clearFields 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description :  This is used to clear all the fields.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void clearFields() {
 		mandatoryDirectionLabel.setVisible(false);
 		mandatoryDueDateLabel.setVisible(false);

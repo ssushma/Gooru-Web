@@ -36,19 +36,21 @@ import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
-/**
+
+/*
  * 
  * @fileName : AssignmentsTabPresenter.java
  *
  * @description : This is presenter widget class used in Creating Assignment and setting to UI
  *
+ *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: May 10, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class AssignmentsTabPresenter extends ChildPresenter<AssignmentsTabPresenter, IsAssignmentsTabView>{
 
@@ -144,20 +146,7 @@ public class AssignmentsTabPresenter extends ChildPresenter<AssignmentsTabPresen
 		
 		getResourceService().getUserCollectionList(pageSize,pageNum,true,getUserCollectionsAsyncCallback());
 	}
-	/**
-	 * @function getUserCollectionsAsyncCallback 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to get use collections.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<List<CollectionDo>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public SimpleAsyncCallback<List<CollectionDo>> getUserCollectionsAsyncCallback() {
 		if (getMyUserCollectionsAsyncCallback == null) {
 			
@@ -172,20 +161,13 @@ public class AssignmentsTabPresenter extends ChildPresenter<AssignmentsTabPresen
 		}
 		return getMyUserCollectionsAsyncCallback;
 	}
-	 /**
-	  * @function getAssignmentCollections 
-	  * 
-	  * @created_date : 27-Dec-2013
-	  * 
-	  * @description : Retrive all collection related to a particular assignment.
-	  * 
-	  * @parm(s) : @param assignmentId
-	  * 
-	  * @return : void
-	  *
-	  * @throws : <Mentioned if any exceptions>
-	  *
-	  */
+	
+	/*
+	 * @description : Retrive all collection related to a particular assignment
+	 * 
+	 * @param : assignmentId
+	 */
+	 
 	public void getAssignmentCollections(String assignmentId) {
 		AppClientFactory.getInjector().getClasspageService().v2GetAssignmentCollectionsById(assignmentId, new SimpleAsyncCallback<List<ResourceDo>>() {
 

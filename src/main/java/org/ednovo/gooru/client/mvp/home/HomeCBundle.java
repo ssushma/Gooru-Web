@@ -29,19 +29,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
- * 
- * @fileName : HomeCBundle.java
+ * @author Search Team
  *
- * @description : This file is to apply css styles for HomeView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface HomeCBundle extends ClientBundle{
 	
@@ -488,6 +477,8 @@ public interface HomeCBundle extends ClientBundle{
 		
 		String loginPopupGlassStyle();
 		
+		String playerAddToolTipGlassStyle();
+		
 		String userMenuBottomLine();
 		
 		/* ClasspageList VC CSS*/
@@ -517,6 +508,10 @@ public interface HomeCBundle extends ClientBundle{
 		
 		String classpageTitleHeader();
 		String gwtSuggestBoxPopup();
+		
+		String setAsCenterPopup();
+		String okButtonmargin();
+		String removingText();
 	}
      @Source("Home.css")
      HomeCss css();

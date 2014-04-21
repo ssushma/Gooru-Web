@@ -39,19 +39,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author BLR Team
  * 
- * @fileName : SuccessPopupAssignVc.java
- *
- * @description : THis file is related to SuccessPopupAssign.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public abstract class SuccessPopupAssignVc extends PopupPanel {
  
@@ -69,7 +58,7 @@ public abstract class SuccessPopupAssignVc extends PopupPanel {
 	private static final Binder binder = GWT.create(Binder.class);
 	
 	/**
-	 * Constructor.
+	 * 
 	 */
 	public SuccessPopupAssignVc(String assignmentTitle, String collectionTitle, String classpageTitle) {
 		super(false);

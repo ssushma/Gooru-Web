@@ -32,7 +32,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 *
 * @date: Apr 6 2013
    	
-* @Author  Anil Tumbalam, Shiva Linga Reddy
+* @Author  Gooru Team
 * 
 * @Reviewer 
 *

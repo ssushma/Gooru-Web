@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
@@ -31,19 +33,8 @@ import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent.DROP_ARE
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : UnregisterSearchDropHandler.java
- *
- * @description : This file is to Remove dropped resource/collection 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface UnregisterSearchDropHandler extends EventHandler {
 

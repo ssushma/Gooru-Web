@@ -29,22 +29,11 @@ package org.ednovo.gooru.client.mvp.search;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-/**
- * 
- * @fileName : IsSearchRootView.java
- *
- * @description : This file is the interface for SearchRootView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 
+/**
+ * @author Search Team
+ * 
+ */
 public interface IsSearchRootView extends IsViewWithHandlers<SearchRootUiHandlers> {
 
 	/**

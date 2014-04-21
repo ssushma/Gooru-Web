@@ -29,7 +29,10 @@ import java.util.List;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/folderService")
@@ -86,4 +89,50 @@ public interface FolderService extends BaseService {
 	 * @throws GwtException
 	 */
 	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException;
+	
+	//New APIs for 6.0
+	/**
+	 * Get Folders of the second level and third level by User
+	 * @return serialized created {@link List<CollectionDo>}
+	 * @throws GwtException
+	 */
+	public FolderListDo getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType) throws GwtException;
+	
+	/**
+	 * Create Folder - generic method for first, second and third levels.
+	 * @return serialized created {@link FolderDo}
+	 * @throws GwtException
+	 */
+	public FolderDo createFolder(String folderName, String parentId, boolean addToShelf) throws GwtException;
+
+	/**
+	 * delete a folder from organize
+	 * @return serialized created {@link void}
+	 * @throws GwtException
+	 */
+	public void deleteCollectionsFolder(String folderId) throws GwtException;
+	
+	/**
+	 * Move a Collection into a selected target folder.
+	 * @param sourceId
+	 * @param targetId
+	 * @throws GwtException
+	 */
+	public void moveCollectionIntoFolder(String sourceId, String targetId) throws GwtException;
+	
+	
+	public CollectionDo createCollectionInParent(CollectionDo data, String courseCodeId,String folderId)throws GwtException;
+	
+	/**
+	 * updates the folder title for a particular folder.
+	 * @param folderId
+	 * @param title
+	 * @throws GwtException
+	 */
+	public void updateFolder(String folderId, String title) throws GwtException;
+	
+	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf)throws GwtException;
+	
+	public FolderListDo getCollectionResources(String parentId,String sharingType, String collectionType) throws GwtException;
+	
 }

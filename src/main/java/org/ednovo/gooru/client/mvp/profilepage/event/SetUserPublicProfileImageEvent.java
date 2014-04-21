@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.profilepage.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetUserPublicProfileImageEvent.java
- *
- * @description : SetUserPublicProfileImage Event
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SetUserPublicProfileImageEvent extends GwtEvent<SetUserPublicProfileImageEventHandler> {
 
@@ -56,16 +45,12 @@ public class SetUserPublicProfileImageEvent extends GwtEvent<SetUserPublicProfil
 	public SetUserPublicProfileImageEvent(String imageUrl) {
 		this.imageUrl=imageUrl;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SetUserPublicProfileImageEventHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SetUserPublicProfileImageEventHandler handler) {
 		handler.setUserProfileImage(imageUrl);

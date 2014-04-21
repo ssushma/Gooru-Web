@@ -28,18 +28,21 @@ import org.ednovo.gooru.shared.model.library.ConceptDo;
 
 import com.google.gwt.event.shared.EventHandler;
 /**
+ * 
  * @fileName : OpenLessonConceptHandler.java
  *
- * @description : Handler for {@link OpenLessonConceptEvent}.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Dec 4, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
+
 public interface OpenLessonConceptHandler extends EventHandler {
 	/**
 	 * @function openLessonConcept 
@@ -48,14 +51,13 @@ public interface OpenLessonConceptHandler extends EventHandler {
 	 * 
 	 * @description
 	 * 
-	 * 
-	 * @parm(s) : @param collectionDo
+	 * @parm(s) : @param conceptDo
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	*/
 	
-	void openLessonConcept(ConceptDo conceptDo, Integer topicId);
+	void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode);
 
 }

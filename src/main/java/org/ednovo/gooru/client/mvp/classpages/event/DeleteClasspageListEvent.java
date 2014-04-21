@@ -26,21 +26,21 @@ package org.ednovo.gooru.client.mvp.classpages.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-	/**
-	 * 
-	 * @fileName : DeleteClasspageListEvent.java
-	 *
-	 * @description : This file is used to delete the ClasspageListEvents.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : DeleteClasspageListEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Aug 17, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class DeleteClasspageListEvent extends GwtEvent<DeleteClasspageListHandler> {
 
 	public static final Type<DeleteClasspageListHandler> TYPE = new Type<DeleteClasspageListHandler>();
@@ -55,16 +55,12 @@ public class DeleteClasspageListEvent extends GwtEvent<DeleteClasspageListHandle
 		
 		this.classpageId = classpageId;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<DeleteClasspageListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke lregisterogin handler event.
-	 */
+
 	@Override
 	protected void dispatch(DeleteClasspageListHandler handler) {
 		handler.deleteClasspage(classpageId);

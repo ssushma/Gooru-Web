@@ -5,33 +5,33 @@
 <g:HTMLPanel ui:field="printPageContainer">
    <g:HTMLPanel ui:field="gooruLogoContainer"/>
    <g:HTMLPanel ui:field="userNameContainer">
-      <g:Label ui:field="userName">Name:</g:Label>
+      <g:Label ui:field="userName"></g:Label>
       <g:Label ui:field="userField"/>
    </g:HTMLPanel>
    <g:HTMLPanel ui:field="userClassContainer">
-      <g:Label ui:field="userClass">Class:</g:Label>
+      <g:Label ui:field="userClass"></g:Label>
       <g:HTMLPanel ui:field="classField"/>
    </g:HTMLPanel>
    <g:HTMLPanel ui:field="mainContainer">
       <g:HTMLPanel ui:field="metaDataLeftContainer">
          <g:HTMLPanel ui:field="metaDataTitleContainer">
-         	<g:Label ui:field="metaDataTitleTxt">Collection Title:&nbsp;</g:Label>
+         	<g:Label ui:field="metaDataTitleTxt"></g:Label>
         	<g:Label ui:field="metaDataTitleLbl"></g:Label>
          </g:HTMLPanel>
          <g:HTMLPanel ui:field="metaDataUserNameContainer">
-         	<g:Label ui:field="metaDataUserNameTxt">Username:&nbsp;</g:Label>
+         	<g:Label ui:field="metaDataUserNameTxt"></g:Label>
         	<g:Label ui:field="metaDataUserNameLbl"></g:Label>
          </g:HTMLPanel>
       </g:HTMLPanel>
       <g:HTMLPanel ui:field="metaDataRightContainer">
 	      <g:HTMLPanel ui:field="timeContainer"/>
 	      <g:HTMLPanel ui:field="metaDataTimeContainer">
-	         	<g:Label ui:field="metaDataTimeTxt">Time spent:&nbsp;</g:Label>
+	         	<g:Label ui:field="metaDataTimeTxt"></g:Label>
 	        	<g:Label ui:field="metaDataTimeLbl"></g:Label>
 	      </g:HTMLPanel>
       </g:HTMLPanel>
       <g:HTMLPanel ui:field="oeQuestionsContainer">
-	      <g:Label ui:field="oeQuestionLbl">Open Ended Questions</g:Label>
+	      <g:Label ui:field="oeQuestionLbl"></g:Label>
 	      <g:HTMLPanel ui:field="oeQuestionsBox"></g:HTMLPanel>
       </g:HTMLPanel>
       

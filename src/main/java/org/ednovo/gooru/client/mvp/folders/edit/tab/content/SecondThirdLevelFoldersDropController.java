@@ -37,34 +37,15 @@ import com.allen_sauer.gwt.dnd.client.util.LocationWidgetComparator;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : SecondThirdLevelFoldersDropController.java
- *
- * @description : This file is related to folders drag and drop events
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SecondThirdLevelFoldersDropController extends AppVerticalPanelDropController {
 
 	Widget positioner;
-	/**
-	 * Constructor.
-	 * @param dropTarget
-	 */
+
 	public SecondThirdLevelFoldersDropController(VerticalPanel dropTarget) {
 		super(dropTarget);
 	}
-	/**
-	 * This is used to set the new position.
-	 */
+	
 	@Override
 	protected Widget newPositioner(DragContext context) {
 		Widget widget = super.newPositioner(context);
@@ -73,9 +54,7 @@ public class SecondThirdLevelFoldersDropController extends AppVerticalPanelDropC
 		positioner = widget;
 		return widget;
 	}
-	/**
-	 * This is used to get the widget location.
-	 */
+	
 	@Override
 	protected LocationWidgetComparator getLocationWidgetComparator() {
 		return new LocationWidgetComparator() {
@@ -99,9 +78,7 @@ public class SecondThirdLevelFoldersDropController extends AppVerticalPanelDropC
 			}
 		};
 	}
-	/**
-	 * This method is used to set the position to drop target based on positionerIndex.
-	 */
+	
 	@Override
 	public void onEnter(DragContext context) {
 		super.onEnter(context);
@@ -111,9 +88,7 @@ public class SecondThirdLevelFoldersDropController extends AppVerticalPanelDropC
 			dropTarget.insert(positioner, 2);
 		}
 	}
-	/**
-	 * This method is used to set the position to drop target based on targetIndex.
-	 */
+
 	@Override
 	public void onMove(DragContext context) {
 		int targetIndex = DOMUtil.findIntersect(dropTarget, new CoordinateLocation(context.mouseX, context.mouseY), getMoveLocationWidgetComparator());
@@ -132,9 +107,7 @@ public class SecondThirdLevelFoldersDropController extends AppVerticalPanelDropC
 			}
 		}
 	}
-	/**
-	 * This method is used to set the DragContext.
-	 */
+	
 	@Override
 	public void onLeave(DragContext context) {
 		positioner.removeFromParent();

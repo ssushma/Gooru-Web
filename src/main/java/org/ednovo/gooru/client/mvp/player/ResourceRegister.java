@@ -61,6 +61,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -94,6 +95,8 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 
 	@UiField
 	SimplePanel dateSimPanel;
+	
+	@UiField Label wantToSaveAndShareText,getAnAccountText,signUpGooruText,birthDateText,emailText;
   
 	private DateBoxUc dateBoxUc;
 
@@ -105,7 +108,7 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 
 	private String dob;
 	
-	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = "The email address specified already exists with in Gooru. Please use sign-in to log in to your existing account.";
+	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = GL0214;
 	
 	private static final String PARENT = "Parent";
 	
@@ -162,8 +165,16 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 		setWidget(uiBinder.createAndBindUi(this));
 		this.setAutoHideEnabled(true);
 		setGlassEnabled(true);
+		wantToSaveAndShareText.setText(GL0669);
+		getAnAccountText.setText(GL0670);
+		signUpGooruText.setText(GL0671);
+		birthDateText.setText(GL0672);
+		emailText.setText(GL0212);
+		goBtnUc.setText(GL0673);
+		cancelAnr.setText(GL0674);
+		iHaveAcc.setText(GL0675);
 		
-		
+		//GL0675
 		dateBoxUc = new DateBoxUc(true,false,false);
 		dateSimPanel.add(dateBoxUc);
 		dateValidationUc.setStyleName(RegisterCBundle.INSTANCE.css()

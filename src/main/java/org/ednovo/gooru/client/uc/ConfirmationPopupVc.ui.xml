@@ -35,10 +35,10 @@
 				<g:Label ui:field="contentText" />
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="Ok" ui:field="okButton" styleName="overRideBlueButton" />
-				<g:Anchor text="Cancel" ui:field="cancelButton" styleName="collectionFormCancelButton" />
+				<g:Button ui:field="cancelButton" styleName="secondary"/>
+			    <gg:BlueButtonUc ui:field="okButton" styleName="primary" />
 			</g:FlowPanel>
-			<g:Label styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl" text="removing..."></g:Label>
+			<g:Label styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl"></g:Label>
 		</g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.TextBox;
+
 /**
- * @fileName : TextBoxWithFocus.java
- *
- * @description : This class is used to display the text box with focus.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author SearchTeam
+ * 
  */
 public class TextBoxWithFocus extends TextBox {
 

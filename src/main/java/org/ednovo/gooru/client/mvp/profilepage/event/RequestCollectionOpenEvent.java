@@ -31,19 +31,8 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RequestCollectionOpenEvent.java
- *
- * @description : RequestCollectionOpen Event
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RequestCollectionOpenEvent extends GwtEvent<RequestCollectionOpenHandler> {
 
@@ -59,105 +48,29 @@ public class RequestCollectionOpenEvent extends GwtEvent<RequestCollectionOpenHa
 		setCollectionItemDo(collectionItemDo);
 		setParams(params);
 	}
-	/**
-	 *  Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RequestCollectionOpenHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(RequestCollectionOpenHandler handler) {
 		handler.requestCollectionView(collectionItemDo, getParams());
 	}
-	/**
-	 * 
-	 * @function getCollectionItemDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns collectionItemDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionItemDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public CollectionItemDo getCollectionItemDo() {
 		return collectionItemDo;
 	}
-	/**
-	 * 
-	 * @function setCollectionItemDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :collectionItemDo to set.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setCollectionItemDo(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 	}
-	/**
-	 * 
-	 * @function getParams 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to get params.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Map<String,String>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public Map<String, String> getParams() {
 		return params;
 	}
-	/**
-	 * 
-	 * @function setParams 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set params.
-	 * 
-	 * 
-	 * @parm(s) : @param params
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setParams(Map<String, String> params) {
 		this.params = params;
 	}	

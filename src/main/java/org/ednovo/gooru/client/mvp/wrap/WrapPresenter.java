@@ -48,36 +48,22 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
 /**
+ * @author Search Team
  * 
- * @fileName : WrapPresenter.java
- *
- * @description : The class <code>WrapPresenter</code> will preview a resource info. The GWT server async services will be initialized 
- *  and the API calls to fetch the resource info data from Gooru will be done from here. 
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author: Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implements InvokeLoginHandler, InvokeRegisterHandler, ActivateSearchBarHandler, InvokeGooruGuideBubbleHandler,HomeHandler,SetDiscoverLinkHandler {
-
-
-
+	
+	
+	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_VIEW = new Type<RevealContentHandler<?>>();
 
 	@ProxyStandard
 	public interface IsWrapProxy extends Proxy<WrapPresenter> {
 	}
-	/**
-	 * Class constructor
-	 * @param view {@link IsWrapView}
-	 * @param proxy {@link IsWrapProxy}
-	 */
+
 	@Inject
 	public WrapPresenter(IsWrapView view, IsWrapProxy proxy) {
 		super(view, proxy);
@@ -90,7 +76,6 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 	@Override
 	protected final void revealInParent() {
-		// trigger setInSlot in the RootView
 		RevealContentEvent.fire(this, PrimePresenter.TYPE_VIEW, this);
 	}
 
@@ -98,10 +83,7 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	public void invokeLogin() {
 		getView().invokeLogin();
 	}
-	/**
-	 * To show the Login data in Header
-	 * @param user {@link UserDo}
-	 */
+	
 	public void setLoginData(UserDo user) {
 		getView().setLoginData(user);
 	}
@@ -110,10 +92,7 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 	public void invokeRegister() {
 		getView().invokeRegister();
 	}
-	/**
-	 * To Activate the search bar in Header
-	 * @param activate {@link Boolean}
-	 */
+
 	@Override
 	public void activateSearchBar(boolean activate) {
 		getView().activateSearchBar(activate);
@@ -121,27 +100,21 @@ public class WrapPresenter extends BasePresenter<IsWrapView, IsWrapProxy> implem
 
 	@Override
 	public void invokeGooruGuideBubble() {
-		//		getView().invokeGooruGuideBubble();
-
+//		getView().invokeGooruGuideBubble();
+		
 	}
-	/**
-	 * To view the Classic Button in Header
-	 * @param activate {@link Boolean}
-	 */
+
 	@Override
 	public void activateClassicButton(boolean activate) {
 		getView().activateClassicButton(activate);
-
+		
 	}
-	/**
-	 * To manage Menu (DOTS) in Header
-	 * @param tabType {@link HeaderTabType}
-	 */
+
 	@Override
 	public void setSelected(HeaderTabType tabType) {
-
-		getView().setDotsPanelSelection(tabType);
-
+			
+			getView().setDotsPanelSelection(tabType);
+			
 	}
 
 	/* (non-Javadoc)

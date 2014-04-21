@@ -32,18 +32,10 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : IsCollectionResourceTabView.java
+ * @author Search Team
  *
- * @description :   Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionResourceTabView extends IsViewWithHandlers<CollectionResourceTabUiHandlers> {
 	

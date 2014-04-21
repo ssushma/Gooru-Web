@@ -26,18 +26,10 @@
  * 
  */
 package org.ednovo.gooru.client.mvp.home.event;
+
 /**
- * @fileName : HeaderTabType.java
- *
- * @description : This enum will have the type of available header tabs and it will set and return the selected header value.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author ClasspageTeam
+ * 
  */
 public enum HeaderTabType {
 

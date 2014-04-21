@@ -27,17 +27,19 @@ package org.ednovo.gooru.client.mvp.play.collection.share.email;
 
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SentEmailSuccessVc extends PopupPanel{
+public class SentEmailSuccessVc extends PopupPanel implements MessageProperties{
 
 	private static SentEmailSuccessVcUiBinder uiBinder = GWT
 			.create(SentEmailSuccessVcUiBinder.class);
@@ -49,6 +51,7 @@ public class SentEmailSuccessVc extends PopupPanel{
 
 	@UiField
 	Label okLbl,toEmailLbl;
+	@UiField HTMLPanel emailToFriendText,thanksEmailText;
 	
 
 	/**
@@ -60,8 +63,13 @@ public class SentEmailSuccessVc extends PopupPanel{
 		toEmailLbl.setText(toEmail);
 		this.setGlassEnabled(true);
 		this.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setGlassPanelStyle());
+		this.getElement().getStyle().setZIndex(99999);
 		this.show();
 		this.center();
+		emailToFriendText.getElement().setInnerHTML(GL0222);
+		thanksEmailText.getElement().setInnerHTML(GL0648);
+		okLbl.setText(GL0190);
+	
 	}
 	
 	/**

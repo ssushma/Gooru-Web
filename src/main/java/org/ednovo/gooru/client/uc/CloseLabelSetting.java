@@ -24,24 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-/**
- * @fileName : CloseLabelSetting.java
- *
- * @description : This class is used to set the class label settings.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandler{
+
+public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandler,MessageProperties{
 	private Label label;
 
 	private Label removeLabel;
@@ -52,7 +42,7 @@ public abstract class CloseLabelSetting  extends FlowPanel implements ClickHandl
 	public CloseLabelSetting(String text) {
 		removeLabel = new Label();
 		removeLabel.setStyleName(UcCBundle.INSTANCE.css().closeLabelRemoveInSetting());
-		removeLabel.setText("X ");
+		removeLabel.setText(GL_GRR_Close+" ");
 		label = new Label();
 		label.setStyleName(UcCBundle.INSTANCE.css().closeLabelText());
 		label.setText(text);

@@ -44,18 +44,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+
 /**
- * @fileName : ImageUploadPresenter.java
+ * @author Search Team
  *
- * @description : This is presenter for the image upload. 
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> implements ImageUploadUiHandlers {
 	private boolean isCollectionImage=true;
@@ -121,9 +113,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 		//this.setAddResourcePresenter(addResourcePresenter);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This LifeCycle method is called when the binding the object. And it will set the view for the upload image.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -275,34 +265,16 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			SimpleAsyncCallback<String> editResourceImageAysncCallback) {
 		this.editResourceImageAysncCallback = editResourceImageAysncCallback;
 	}
-	/**
-	 * This method is used when the user uploading from the web.
-	 */
 	@Override
 	public void imageWebUpload(String imageURL) {
 		this.getMediaUploadService().imageWebUpload(imageURL, getImageWebUploadAsyncCallback());
 	}
-	/**
-	 * This method is used to save the images.
-	 */
+	
 	@Override
 	public void saveImage(String gooruOid, String fileName) {
 		this.getMediaUploadService().saveImage(gooruOid, fileName, getSaveImageAsyncCallback());
 	}
-	/**
-	 * @function saveQuestionImage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to save the question image.
-	 * 
-	 * @parm(s) : @param fileName
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void saveQuestionImage(String fileName){
 		this.getMediaUploadService().saveQuestionImage(getCollectionItemId(), fileName, saveQuestionImageAysncCallback);
 	}
@@ -310,50 +282,16 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	/*public void saveResourceImage(String fileName){
 		this.getMediaUploadService().saveResourceImage(getCollectionItemId(), fileName, editResourceImageAysncCallback);
 	}*/
-	/**
-	 * @function saveUserProfileImage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to save the user profile image.
-	 * 
-	 * @parm(s) : @param fileName
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void saveUserProfileImage(String fileName){
 		this.getMediaUploadService().uploadProfileImage(fileNameWithoutRepository,fileName, uploadProfileImageAsyncCallback);
 	}
-	/**
-	 * 
-	 * @function saveUserProfileImage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to save the user profile image.
-	 * 
-	 * @parm(s) : @param mediaUpload
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void saveUserProfileImage(MediaUploadDo mediaUpload){
 		this.getMediaUploadService().uploadProfileImage(mediaUpload.getName(),mediaUpload.getUrl(), uploadProfileImageAsyncCallback);
 	}
-	/**
-	 * This method is used to upload gooru default image.
-	 */
 	public void uploadGooruDefaultImage(String imageURL) {
 		this.getMediaUploadService().imageWebUpload(imageURL, getGooruDefaultProfileUploadAsyncCallback());
 	}
-	/**
-	 * This method is used to crop the image.
-	 */
 	@Override
 	public void cropImage(String fileName, String height, String width, String xPostion, String yPosition,String imageUrl) {
 		this.fileNameWithoutRepository=fileName;
@@ -366,107 +304,72 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			this.getMediaUploadService().cropImage(fileName, height, width, xPostion, yPosition,imageUrl, getCropImageAsyncCallback());
 		}
 	}
-	/**
-	 * This method is used to upload the image .
-	 */
+	
 	@Override
 	public void imageFileUpload(String response) {
 		this.getMediaUploadService().imageFileUpload(response, getImageFileUploadAsyncCallback());
 	}
-	/**
-	 * This method is used to set the image web async callback.
-	 */
+	
 	public void setImageWebUploadAsyncCallback(SimpleAsyncCallback<MediaUploadDo> imageWebUploadAsyncCallback) {
 		this.imageWebUploadAsyncCallback = imageWebUploadAsyncCallback;
 	}
-	/**
-	 * This method is used to get the web uploaded async call.
-	 */
+
 	public SimpleAsyncCallback<MediaUploadDo> getImageWebUploadAsyncCallback() {
 		return imageWebUploadAsyncCallback;
 	}
-	/**
-	 * This method is used to set the upload service.
-	 */
+
 	public void setMediaUploadService(MediaUploadServiceAsync mediaUploadService) {
 		this.mediaUploadService = mediaUploadService;
 	}
-	/**
-	 * This method is used to get the media upload service.
-	 */
+
 	public MediaUploadServiceAsync getMediaUploadService() {
 		return mediaUploadService;
 	}
-	/**
-	 * This method is used to set the save image async call back.
-	 */
+
 	public void setSaveImageAsyncCallback(SimpleAsyncCallback<String> saveImageAsyncCallback) {
 		this.saveImageAsyncCallback = saveImageAsyncCallback;
 	}
-	/**
-	 * This method is used to get the save iamge async call back.
-	 */
+
 	public SimpleAsyncCallback<String> getSaveImageAsyncCallback() {
 		return saveImageAsyncCallback;
 	}
-	/**
-	 * This method is used to set crop image async callback.
-	 */
+
 	public void setCropImageAsyncCallback(SimpleAsyncCallback<String> cropImageAsyncCallback) {
 		this.cropImageAsyncCallback = cropImageAsyncCallback;
 	}
-	/**
-	 * This method is used to get the crop image async call back.
-	 */
+
 	public SimpleAsyncCallback<String> getCropImageAsyncCallback() {
 		return cropImageAsyncCallback;
 	}
-	/**
-	 * This method will assign the shelf view.
-	 */
+
 	public void setShelfView(IsShelfView shelfView) {
 		this.shelfView = shelfView;
 	}
-	/**
-	 * This method will get the shelf view.
-	 */
 
 	public IsShelfView getShelfView() {
 		return shelfView;
 	}
-	/**
-	 * This method will set the image file upalod async call back.
-	 */
+
 	public void setImageFileUploadAsyncCallback(SimpleAsyncCallback<MediaUploadDo> imageFileUploadAsyncCallback) {
 		this.imageFileUploadAsyncCallback = imageFileUploadAsyncCallback;
 	}
-	/**
-	 * This method will get the image file upalod async call back.
-	 */
+
 	public SimpleAsyncCallback<MediaUploadDo> getImageFileUploadAsyncCallback() {
 		return imageFileUploadAsyncCallback;
 	}
-	/**
-	 * This method will check is the user uploading collection image.
-	 */
+
 	public boolean isCollectionImage() {
 		return isCollectionImage;
 	}
-	/**
-	 * This method will set the user upload type as collection image.
-	 */
+
 	public void setCollectionImage(boolean isCollectionImage) {
 		this.isCollectionImage = isCollectionImage;
 	}
-	/**
-	 * This method will check is the user is in resource view.
-	 */
+
 	public IsAddResourceView getAddResourceView() {
 		return addResourceView;
 	}
-	/**
-	 * This method will set the user  in resource view.
-	 */
+
 	public void setAddResourceView(IsAddResourceView addResourceView) {
 		this.addResourceView = addResourceView;
 	}
@@ -525,121 +428,83 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 	public void setEditResourceImage(boolean isEditResourceImage) {
 		this.isEditResourceImage = isEditResourceImage;
 	}
-	/**
-	 * This method will return the simple async call back.
-	 */
+
 	public SimpleAsyncCallback<String> getUploadProfileImage() {
 		return uploadProfileImageAsyncCallback;
 	}
-	/**
-	 * This method will set the upload profile image view.
-	 */
+
 	public void setUploadProfileImage(SimpleAsyncCallback<String> uploadProfileImageAsyncCallback) {
 		this.uploadProfileImageAsyncCallback = uploadProfileImageAsyncCallback;
 	}
-	/**
-	 * This method will check the is on profile image view.
-	 */
+
 	public boolean isProfileImage() {
 		return isProfileImage;
 	}
-	/**
-	 * This method will set the profile image.
-	 */
+
 	public void setProfileImage(boolean isProfileImage) {
 		getView().setAspectRatio(1.0f);
 		this.isProfileImage = isProfileImage;
 	}
-	/**
-	 * This method will display the upload type widgets.
-	 */
+	
 	public void showUploadTypeWidgets(boolean isUserUnder13){
 		getView().showUploadTypeWidgets(isUserUnder13);
 	}
-	/**
-	 * This method will return the simple async call back.
-	 */
+
 	public SimpleAsyncCallback<MediaUploadDo> getGooruDefaultProfileUploadAsyncCallback() {
 		return gooruDefaultProfileUploadAsyncCallback;
 	}
-	/**
-	 * This method will set the gooru default image async call back.
-	 */
+
 	public void setGooruDefaultProfileUploadAsyncCallback(
 			SimpleAsyncCallback<MediaUploadDo> gooruDefaultProfileUploadAsyncCallback) {
 		this.gooruDefaultProfileUploadAsyncCallback = gooruDefaultProfileUploadAsyncCallback;
 	}
-	/**
-	 * This method will check the public profile image.
-	 */
+
 	public boolean isPublicProfileImage() {
 		return isPublicProfileImage;
 	}
-	/**
-	 * This method will set the public profile image.
-	 */
+
 	public void setPublicProfileImage(boolean isPublicProfileImage) {
 		getView().setAspectRatio(1.0f);
 		this.isPublicProfileImage = isPublicProfileImage;
 	}
-	/**
-	  * This method will check the user is on class page view.
-	  */
+
 	public boolean isClassPageImage() {
 		return isClassPageImage;
 	}
-	/**
-	  * This method will set the class page image.
-	  */
+
 	public void setClassPageImage(boolean isClassPageImage) {
 		getView().setAspectRatio(4.53f);
 		this.isClassPageImage = isClassPageImage;
 	}
-	/**
-	  * This method will return the class page id.
-	  */
+
 	public String getClasspageId() {
 		return classpageId;
 	}
-	/**
-	  * This method will set the class page id.
-	  */
+
 	public void setClasspageId(String classpageId) {
 		this.classpageId = classpageId;
 	}
-	/**
-	  * This method will check the user own resoruce image view.
-	  */
+
 	public boolean isUserOwnResourceImage() {
 		return isuserOwnResourceImage;
 	}
-	 /**
-	  * This method will set the user own resoruce image view.
-	  */
+
 	public void setUserOwnResourceImage(boolean isuserOwnResourceImage) {
 		this.isuserOwnResourceImage = isuserOwnResourceImage;
 	}
-	 /**
-	  * This method will check the edit user own resource image.
-	  */
+
 	public boolean isEditUserOwnResourceImage() {
 		return isEditUserOwnResourceImage;
 	}
-	 /**
-	  * This method will set the edit user own resource image.
-	  */
+
 	public void setEditUserOwnResourceImage(boolean isEditUserOwnResourceImage) {
 		this.isEditUserOwnResourceImage = isEditUserOwnResourceImage;
 	}
-	 /**
-	  * This method will check is update profile image.
-	  */
+
 	public boolean isUdateProfileImage() {
 		return isUdateProfileImage;
 	}
-	 /**
-	  * This method will set the update profile image.
-	  */
+
 	public void setUdateProfileImage(boolean isUdateProfileImage) {
 		getView().setAspectRatio(1.0f);
 		this.isUdateProfileImage = isUdateProfileImage;

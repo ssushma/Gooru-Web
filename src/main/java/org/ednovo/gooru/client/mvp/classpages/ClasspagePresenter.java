@@ -59,25 +59,24 @@ import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.HandlerRegistration;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+
+
 /**
- * 
- * @fileName : ClasspagePresenter.java
+ * @fileName : ClasspagesPresenter.java
  *
- * @description :  This is the presenter of the Classpage.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 26-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsClasspageProxy> implements ClasspageUiHandlers {
 
@@ -96,24 +95,11 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	private String limit="10";//pagesize
     int resultSize;
 	private int offSet=0;
-	/**
-	 * 
-	 * Manually reveals a presenter. Only use this method if your presenter is configured
-     * to use manual reveal via {@link Presenter#useManualReveal()}. This method should be
-     * called following one or more asynchronous server calls in
-     * {@link Presenter#prepareFromRequest(PlaceRequest)}.
-	 *
-	 */
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.TEACH)
 	public interface IsClasspageProxy extends ProxyPlace<ClasspagePresenter> {
 	}
-	/**
-	 * This is used to register the handlers.
-	 * @param eventBus
-	 * @param view
-	 * @param proxy
-	 */
+
 	@Inject
 	public ClasspagePresenter(EventBus eventBus, IsClasspageView view, IsClasspageProxy proxy) {
 		
@@ -136,15 +122,15 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		});
 		
 	}
+
+
+	
 	
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * Lifecycle method called whenever this presenter is about to be
-	 * revealed.
-	 */
+
 	@Override
 	protected void onReveal() {
 		
@@ -166,29 +152,12 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		
 	}
-
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+	
 	@Override
 	protected void onReset() {
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 	}
-	 /**
-	   * Lifecycle method called when binding the object.
-	   * Any event handler should be
-	   * initialised here rather than in the constructor. Also, it is good practice to
-	   * perform any costly initialisation here.
-	   * <p />
-	   * Handlers registered by calling
-	   * {@link #registerHandler(HandlerRegistration)} will be removed
-	   * when unbinding. Any other initialisation that takes place here (or as a
-	   * side-effect of what is done here) should be taken down in {@link #onUnbind()}.
-	   * <p />
-	   * This method will never be invoked more then once, or if it is, the second
-	   * time will necessarily be preceded by an invocation of {@link #onUnbind()}.
-	   */
+	
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -203,7 +172,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 				assignmentDo.setClasspageId(classpageId);
 				
 				TaskDo taskDo = new TaskDo();
-				taskDo.setTitle(MessageProperties.GL0121);
+				taskDo.setTitle(GL0121);
 				taskDo.setTypeName("assignment");
 				assignmentDo.setTask(taskDo);
 				
@@ -242,13 +211,17 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description : This method is used to open a class page in the Edit mode.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param gooruOId
 	 * 
 	 * @return : void
 	 * 
 	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
 	 * 
 	 */
 	private void OpenClasspageEdit(String gooruOId) {
@@ -260,9 +233,6 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		AppClientFactory.getPlaceManager().revealPlace(
 				PlaceTokens.EDIT_CLASSPAGE, params);
 	}
-	/**
-	 * This method is used to refresh the all class page items.
-	 */
 	@Override
 	public void refreshClasspageResourceItemList(
 			CollectionDo classpageResourceItem, RefreshType refreshType) {
@@ -277,19 +247,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 			refreshClasspage();
 		
 	}
-	/**
-	 * @function refreshClasspage 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to refresh the class pages.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	void refreshClasspage(){
 	  List<CollectionDo> tmpClasspageList = new ArrayList<CollectionDo>();
 		
@@ -329,9 +287,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		
 	}
 	
-	/**
-	 * This method is used to create a new class page.
-	 */
+
 	@Override
 	public void createClasspage(CollectionDo collectionDo) {
 
@@ -340,9 +296,7 @@ public class ClasspagePresenter extends BasePlacePresenter<IsClasspageView, IsCl
 		 getView().getClassPageScrollPanel().scrollToTop();
 		
 	}
-	/**
-	 * This method is used to get all the list of class pages.
-	 */
+	
 	@Override
 	public void getAllClasspages(String limit, String offSet) {
 

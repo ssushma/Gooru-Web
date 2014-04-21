@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.search.event;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : GetSearchKeyWordHandler.java
- *
- * @description : Get SearchKeyWord Handler to get search keyword.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface GetSearchKeyWordHandler extends EventHandler {
 

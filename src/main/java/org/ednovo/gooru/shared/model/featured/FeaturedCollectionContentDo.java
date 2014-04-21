@@ -31,27 +31,15 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : FeaturedCollectionContentDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class FeaturedCollectionContentDo implements Serializable{
 	
 	private static final long serialVersionUID = -6903126019265446978L;
 	
 	private List<CollectionDo> scollections;
+	
+	public FeaturedCollectionContentDo(){}
 	
 	/**
 	 * @return the collection

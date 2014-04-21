@@ -24,7 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -35,8 +37,10 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,6 +48,8 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -65,20 +71,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : EditResourcePopupVc.java
- *
- * @description : This class is used to display  edit resource popup.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class EditResourcePopupVc extends AppPopUp {
+
+public abstract class EditResourcePopupVc extends AppPopUp implements MessageProperties{
 
 	CollectionItemDo collectionItemDo;
 
@@ -89,13 +83,13 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 	public Label generateImageLbl;
 
 	@UiField
-	Label mandatoryUrlLbl, mandatoryTitleLbl;
+	Label mandatoryUrlLbl, mandatoryTitleLbl,agreeText,additionalText;
 
 	@UiField
-	Label mandatoryCategoryLbl, urlTextLbl;
+	Label mandatoryCategoryLbl, urlTextLbl,andText;
 
 	@UiField
-	Label leftArrowLbl, rightArrowLbl, uploadImageLbl;
+	Label leftArrowLbl, rightArrowLbl, uploadImageLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 
 	@UiField
 	public TextBox titleTextBox;
@@ -113,15 +107,15 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 	
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer;
+	HTMLPanel descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel;//otherPanel
 	
 	@UiField Label resourceCategoryLabel,loadingTextLbl,rightsLbl;
 	
-	 @UiField HTMLPanel categorypanel,video,interactive,website,slide,handout,textbook,lesson,exam,resourceTypePanel;
+	 @UiField HTMLPanel categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel;//other,
 	 @UiField CheckBox rightsChkBox;
 	 @UiField Anchor copyRightAnr;
 	 @UiField Anchor termsAndPolicyAnr,privacyAnr;
-	@UiField Anchor commuGuideLinesAnr;
+	@UiField Anchor commuGuideLinesAnr,cancelResourcePopupBtnLbl;
 	ResourceMetaInfoDo resMetaInfoDo = null;
 	private CopyRightPolicyVc copyRightPolicy;
 	
@@ -139,7 +133,8 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
 	private static final String PNG = ".png";
-
+	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
+	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
 
@@ -148,16 +143,13 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 	}
 
 	public abstract void updateResource(CollectionItemDo collectionItemDo);
-	/**
-	 * Class constructor.
-	 * @param collectionItemDo
-	 */
+
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
 		super();
 		// this.getElement().getStyle().setWidth(450, Unit.PX);
 		// this.getElement().getStyle().setHeight(788, Unit.PX);
 		this.collectionItemDo = collectionItemDo;
-		setContent("Edit Resource", uiBinder.createAndBindUi(this));
+		setContent(GL0949, uiBinder.createAndBindUi(this));
 
 		addResourceBtn.addClickHandler(new AddClickHandler());
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
@@ -180,12 +172,44 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		saveButtonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
 		panelContentRights.setVisible(false);
+		mandatoryTitleLblForSwareWords.setVisible(false);
+		mandatoryDescLblForSwareWords.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-
+        mandatoryTitleLbl.setText(GL0173);
+        descCharcterLimit.getElement().setInnerText(GL0143);
+        mandatoryCategoryLbl.setText(GL1515);
+        thumbnailLbl.getElement().setInnerText(GL0911);
+        titleTextPanel.getElement().setInnerText(GL0318+GL_SPL_STAR);
+        videoPanel.getElement().setInnerHTML(GL0918);
+        interactivePanel.getElement().setInnerHTML(GL0919);
+		websitePanel.getElement().setInnerHTML(GL1396);
+		textsPanel.getElement().setInnerHTML(GL1044);
+		audioPanel.getElement().setInnerHTML(GL1045);
+		imagePanel.getElement().setInnerHTML(GL1046);
+		generateImageLbl.setText(GL0922);
+		orLbl.getElement().setInnerText(GL_GRR_Hyphen+GL0209.toLowerCase()+GL_GRR_Hyphen);
+		uploadImageLbl.setText(GL0912);
+		refreshLblPanel.getElement().setInnerText(GL0923);
+		rightsLbl.setText(GL0869);
+		agreeText.setText(GL0870);
+		commuGuideLinesAnr.setText(GL0871);
+		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		privacyAnr.setText(" "+GL0873);
+		andText.setText(" "+GL_GRR_AND+" ");
+		copyRightAnr.setText(" "+GL0875);
+		additionalText.setText(GL0874);
+		addResourceBtn.setText(GL0141);
+		cancelResourcePopupBtnLbl.setText(GL0142);
+		loadingTextLbl.setText(GL0808.toLowerCase());
+//		otherPanel.getElement().setInnerHTML(MessageProperties.GL1047);  
+		resourceFormat.getElement().setInnerHTML(GL0906); 
+		resDescription.getElement().setInnerHTML(GL0904); 
+		urlTextPanel.getElement().setInnerHTML(GL0915);
+		mandatoryUrlLbl.setText(GL0916);
 		
 		displayResourceInfo();
 		show();
@@ -254,14 +278,12 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/entries/24471116-Gooru-Community-Guidelines","_blank",""); 
+				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 			}
 		});
-
+		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
+		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
 	}
-	/**
-	 * This method will call at the time of loading and it will set the rich text box.
-	 */
 	public void onLoad(){
 		super.onLoad();
 		Scheduler.get().scheduleDeferred(new ScheduledCommand(){
@@ -272,23 +294,16 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 			}
         });
 	}
-	/**
-	 * This will handle the mouse over event on content rights label.
-	 */
 	@UiHandler("lblContentRights")
 	public void onMouseOver(MouseOverEvent event){
 		panelContentRights.setVisible(true);
 	}
-	/**
-	 * This will handle the mouse out event on content rights label.
-	 */
+	
 	@UiHandler("lblContentRights")
 	public void onMouseOut(MouseOutEvent event){
 		panelContentRights.setVisible(false);
 	}
-	/**
-	 * This will handle the click event on cancel button in the resoruce popup.
-	 */
+
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelPopUp(ClickEvent clickEvent) {
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
@@ -298,21 +313,7 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 
 		hide();
 	}
-	/**
-	 * @function getResourceMetaInfo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to get the resource meta info.
-	 * 
-	 * 
-	 * @parm(s) : @param url
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void getResourceMetaInfo(String url) {
 		AppClientFactory
 				.getInjector()
@@ -326,30 +327,13 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 							}
 						});
 	}
-	/**
-	 * @function setData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set data.
-	 * 
-	 * 
-	 * @parm(s) : @param result
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setData(ResourceMetaInfoDo result) {
 		setResMetaInfo(result);
 		setThumbnailImages(result.getImages());
 		updateUi();
 		rightArrowLbl.setVisible(true);
 	}
-	/**
-	 * This inner class will handle the click event on rights.
-	 */
 	private class rightsChecked implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -362,51 +346,18 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 				
 			}
 	}
-	/**
-	 * This method is used to set the thumbnail images.
-	 */
 	private void setThumbnailImages(List<String> images) {
 		thumbnailImagesLink = images;
 	}
-	/**
-	 * This method is used to set the resource meta information.
-	 */
+
 	private void setResMetaInfo(ResourceMetaInfoDo result) {
 		this.resMetaInfoDo = result;
 	}
-	/**
-	 * @function setResourceDescription 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set the resource description.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setResourceDescription(){
 		descriptionTxtAera.setText(collectionItemDo.getResource().getDescription());
 	}
-	/**
-	 * @function displayResourceInfo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display the resource information.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void displayResourceInfo() {
 		String url = collectionItemDo.getResource().getUrl();
 		urlTextLbl.setText(url);
@@ -426,40 +377,67 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 
 		setThumbnailImage.setVisible(true);
 		String category = collectionItemDo.getResource().getCategory();
-		if (category.equalsIgnoreCase("Video")) {
-			resourceCategoryLabel.setText("Video");
+		
+		if (category.equalsIgnoreCase("Video")||category.equalsIgnoreCase("Videos")) {
+			resourceCategoryLabel.setText(GL0918);
 			categorypanel.setStyleName(video.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 			
 		} else if (category.equalsIgnoreCase("Interactive")) {
-			resourceCategoryLabel.setText("Interactive");
+			resourceCategoryLabel.setText(GL0919);
 			categorypanel.setStyleName(interactive.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase("Website")) {
-			resourceCategoryLabel.setText("Website");
+		} else if (category.equalsIgnoreCase("Website")||category.equalsIgnoreCase("websites")||category.equalsIgnoreCase("webpage")) {
+			resourceCategoryLabel.setText(GL1396);
 			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
-		} else if (category.equalsIgnoreCase("Slide")) {
-			resourceCategoryLabel.setText("Slide");
-			categorypanel.setStyleName(slide.getStyleName());
+		}
+		else if(category.equalsIgnoreCase("audio")) {
+			resourceCategoryLabel.setText(GL1045);
+			categorypanel.setStyleName(audio.getStyleName());
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen=false;
+		}
+	//	else if((category.equalsIgnoreCase("texts")||(category.equalsIgnoreCase("Slide")||(category.equalsIgnoreCase("Handout")||(category.equalsIgnoreCase("Textbook")||(category.equalsIgnoreCase("Lesson")) {
+		else if(category.equalsIgnoreCase("texts")||category.equalsIgnoreCase("text")) {
+				resourceCategoryLabel.setText(GL1044);
+			categorypanel.setStyleName(texts.getStyleName());
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen=false;
+		}
+		else if (category.equalsIgnoreCase("image")) {
+			resourceCategoryLabel.setText(GL1046);
+			categorypanel.setStyleName(image.getStyleName());
+			resourceTypePanel.setVisible(false);
+			resoureDropDownLblOpen=false;
+		}
+//		else if (category.equalsIgnoreCase("other")) {
+//			resourceCategoryLabel.setText(MessageProperties.GL1047);
+//			categorypanel.setStyleName(other.getStyleName());
+//			resourceTypePanel.setVisible(false);
+//			resoureDropDownLblOpen=false;
+//		} 
+		else if (category.equalsIgnoreCase("Slide")) {
+			resourceCategoryLabel.setText(GL1046);
+			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Handout")) {
-			resourceCategoryLabel.setText("Handout");
-			categorypanel.setStyleName(handout.getStyleName());
+			resourceCategoryLabel.setText(GL1044);
+			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Textbook")) {
-			resourceCategoryLabel.setText("Textbook");
-			categorypanel.setStyleName(textbook.getStyleName());
+			resourceCategoryLabel.setText(GL1044);
+			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Lesson")) {
-			resourceCategoryLabel.setText("Lesson");
-			categorypanel.setStyleName(lesson.getStyleName());
+			resourceCategoryLabel.setText(GL1044);
+			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 //		} else if (category.equalsIgnoreCase("Question")) {
@@ -468,8 +446,8 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 //			resourceTypePanel.setVisible(false);
 //			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Exam")) {
-			resourceCategoryLabel.setText("Exam");
-			categorypanel.setStyleName(exam.getStyleName());
+			resourceCategoryLabel.setText(GL1396);
+			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		}
@@ -477,22 +455,7 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(url, category);
 	}
-	/**
-	 * @function setImage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set image.
-	 * 
-	 * 
-	 * @parm(s) : @param url
-	 * @parm(s) : @param category
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setImage(String url, String category){
 		if (thumbnailUrlStr.endsWith("null")) {
 			if (url.indexOf("youtube") >0){
@@ -504,21 +467,6 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		} 
 		setThumbnailImage.setUrl(thumbnailUrlStr);
 	}
-	/**
-	 * @function updateUi 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to update ui.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void updateUi() {
 		generateImageLbl.setVisible(false);
 		setThumbnailImage.setVisible(true);
@@ -527,78 +475,107 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 			rightArrowLbl.setVisible(false);
 		}
 	}
-	/**
-	 * This inner class is used to handle the click events.
-	 */
+
 	private class AddClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", titleTextBox.getValue());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						isHavingBadWordsInTextbox = value;
+						if(value){
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
+						}else{
+							parms.put("text", descriptionTxtAera.getText());
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+								
+								@Override
+								public void onSuccess(Boolean result) {
+									isHavingBadWordsInRichText=result;
+									if(result){
+										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
+									}else{
+										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
+											boolean isValidate = true;
+											
+											String titleStr = titleTextBox.getText().trim();
+											String categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
+											
+											String urlStr = urlTextLbl.getText().trim();
+											String youTubeId = getYoutubeVideoId(urlStr);
 
-			boolean isValidate = true;
+											
+											if (titleStr.toLowerCase().contains("http://") || titleStr.toLowerCase().contains("https://") || titleStr.toLowerCase().contains("ftp://")){
+												mandatoryTitleLbl.setText(GL0323);
+												mandatoryTitleLbl.setVisible(true);
+												isValidate = false;
+											}
+											
+											if(!rightsChkBox.getValue()){
+												rightsLbl.getElement().getStyle().setColor("orange");
+												isValidate = false;
+											}
+											if (titleStr == null || titleStr.equalsIgnoreCase("")) {
+												mandatoryTitleLbl.setText(GL0173);
+												mandatoryTitleLbl.setVisible(true);
+												isValidate = false;
+											}
+											if (categoryStr == null
+													|| categoryStr.equalsIgnoreCase("-1")
+													|| categoryStr
+															.equalsIgnoreCase("Choose a resource format")) {
+												mandatoryCategoryLbl.setText(GL0917);
+												mandatoryCategoryLbl.setVisible(true);
+												isValidate = false;
+											}
+											
+											if(urlStr.indexOf("youtube")!=-1){
+												if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
+													if(!categoryStr.equalsIgnoreCase("Webpage")){
+														mandatoryCategoryLbl.setText(GL0927);
+														mandatoryCategoryLbl.setVisible(true);
+														isValidate = false;
+													}else{
+														isValidate = true;
+													}
+												}
+											}
 
-			String descriptionStr = descriptionTxtAera.getText().trim();
-			String titleStr = titleTextBox.getText().trim();
-			String categoryStr =resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
-			String idStr = "";
-			String urlStr = urlTextLbl.getText().trim();
-			String youTubeId = getYoutubeVideoId(urlStr);
-
-			
-			if (titleStr.toLowerCase().contains("http://") || titleStr.toLowerCase().contains("https://") || titleStr.toLowerCase().contains("ftp://")){
-				mandatoryTitleLbl.setText("Title cannot be a URL.");
-				mandatoryTitleLbl.setVisible(true);
-				isValidate = false;
-			}
-			
-			if(!rightsChkBox.getValue()){
-				rightsLbl.getElement().getStyle().setColor("orange");
-				isValidate = false;
-			}
-			if (titleStr == null || titleStr.equalsIgnoreCase("")) {
-				mandatoryTitleLbl.setText("Please enter a title.");
-				mandatoryTitleLbl.setVisible(true);
-				isValidate = false;
-			}
-			if (categoryStr == null
-					|| categoryStr.equalsIgnoreCase("-1")
-					|| categoryStr
-							.equalsIgnoreCase("Choose a resource category")) {
-				mandatoryCategoryLbl.setText("Please choose a category.");
-				mandatoryCategoryLbl.setVisible(true);
-				isValidate = false;
-			}
-			
-			if(urlStr.indexOf("youtube")!=-1){
-				if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
-					if(!categoryStr.equalsIgnoreCase("Website")){
-						mandatoryCategoryLbl.setText("Looks like this is a Playlist not a video! Please select Website.");
-						mandatoryCategoryLbl.setVisible(true);
-						isValidate = false;
-					}
+											if (isValidate) {
+												saveButtonContainer.setVisible(false);
+												loadingTextLbl.setVisible(true);
+												collectionItemDo.getResource().setTitle(titleStr);
+												collectionItemDo.getResource().setDescription(descriptionTxtAera.getText().trim());
+												if(categoryStr.contains("Videos")||categoryStr.contains("Interactives")||categoryStr.contains("Images")||categoryStr.contains("Texts"))
+												{
+													categoryStr=categoryStr.substring(0, categoryStr.length()-1);
+													/* if(categoryStr.contains("Image")||categoryStr.contains("Images")){
+														 categoryStr="Slide";
+													 }*/
+												}
+												collectionItemDo.getResource().setCategory(categoryStr);
+												
+												if (thumbnailUrlStr!=null){
+													collectionItemDo.getResource().getThumbnails().setUrl(thumbnailUrlStr);
+												}else{
+													collectionItemDo.getResource().getThumbnails().setUrl(null);
+												}
+												collectionItemDo.getResource().setUrl(urlStr);
+												updateResource(collectionItemDo);
+											}
+										}
+									}
+								}
+							});
+						}
 				}
-			}
-
-			if (isValidate) {
-				saveButtonContainer.setVisible(false);
-				loadingTextLbl.setVisible(true);
-				collectionItemDo.getResource().setTitle(titleStr);
-				collectionItemDo.getResource().setDescription(descriptionTxtAera.getText().trim());
-				collectionItemDo.getResource().setCategory(categoryStr);
-				
-				if (thumbnailUrlStr!=null){
-					collectionItemDo.getResource().getThumbnails().setUrl(thumbnailUrlStr);
-				}else{
-					collectionItemDo.getResource().getThumbnails().setUrl(null);
-				}
-				
-				updateResource(collectionItemDo);
-			}
+			});
 		}
 	}
-	/**
-	 * This will handle the click event on edit image button.
-	 */
+
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -607,22 +584,18 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 	}
 
 	public abstract void resourceImageUpload();
-	/**
-	 * This will handle the keyup event on titleTextBox.
-	 */
+
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
-				mandatoryTitleLbl.setText("Character limit reached.");
+				mandatoryTitleLbl.setText(GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
 	}
-	/**
-	 * This will handle the keyup event on descriptionTxtAera.
-	 */
+
 	private class DescriptionKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -633,149 +606,82 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 			}
 		}
 	}
-	/**
-	 * @function leftArrowClick 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on left arrow.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("leftArrowLbl")
 	void leftArrowClick(ClickEvent event) {
 		activeImageIndex--;
 		setImageThumbnail();
 	}
-	/**
-	 * @function rightArrowClick 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : this will handle the click event on right arrow.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("rightArrowLbl")
 	void rightArrowClick(ClickEvent event) {
 		activeImageIndex++;
 		setImageThumbnail();
 	}
-	/**
-	 * @function videoResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on video resource panel.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("videoResourcePanel")
 	void videoResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Video");
-	//	resourceCategoryLabel.setStyleName(video.getStyleName());
+		resourceCategoryLabel.setText(GL0918);
+		//resourceCategoryLabel.setStyleName(video.getStyleName());
 		categorypanel.setStyleName(video.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}
-	/**
-	 * @function interactiveResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on interactive resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Interactive");
+		resourceCategoryLabel.setText(GL0919);
 		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}
-	/**
-	 * @function websiteResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on website resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event){
-		resourceCategoryLabel.setText("Website");
+		resourceCategoryLabel.setText(GL1396);
 		categorypanel.setStyleName(website.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}
-	/**
-	 * @function slideResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on slide resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("slideResourcePanel")
+	@UiHandler("imageResourcePanel")
+	void slideResourcePanel(ClickEvent event) {
+		resourceCategoryLabel.setText(GL1046);
+		categorypanel.setStyleName(image.getStyleName());
+		resourceTypePanel.setVisible(false);
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}
+
+	@UiHandler("textResourcePanel")
+	void handoutResourcePanel(ClickEvent event) {
+		resourceCategoryLabel.setText(GL1044);
+		categorypanel.setStyleName(texts.getStyleName());
+		resourceTypePanel.setVisible(false);
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}
+
+	@UiHandler("audioResourcePanel")
+	void textbookResourcePanel(ClickEvent event) {
+		resourceCategoryLabel.setText(GL1045);
+		categorypanel.setStyleName(audio.getStyleName());
+		resourceTypePanel.setVisible(false);
+		resoureDropDownLblOpen = false;
+		mandatoryCategoryLbl.setVisible(false);
+	}
+
+//	@UiHandler("otherResourcePanel")
+//	void lessonResourcePanel(ClickEvent event) {
+//		resourceCategoryLabel.setText(MessageProperties.GL1047);
+//		categorypanel.setStyleName(other.getStyleName());
+//		resourceTypePanel.setVisible(false);
+//		resoureDropDownLblOpen = false;
+//		mandatoryCategoryLbl.setVisible(false);
+//	}
+	/*@UiHandler("slideResourcePanel")
 	void slideResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText("Slide");
 		categorypanel.setStyleName(slide.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}
-	/**
-	 * @function handoutResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on handout resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("handoutResourcePanel")
 	void handoutResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText("Handout");
@@ -783,21 +689,6 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}
-	/**
-	 * @function textbookResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on textbook resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("textbookResourcePanel")
 	void textbookResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText("Textbook");
@@ -805,21 +696,6 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
 	}
-	/**
-	 * @function lessonResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on lesson resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("lessonResourcePanel")
 	void lessonResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText("Lesson");
@@ -834,44 +710,13 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 //		resourceTypePanel.setVisible(false);
 //		resoureDropDownLblOpen=false;
 //	}
-	/**
-	 * 
-	 * @function examResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on exam resource panel.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("examResourcePanel")
 	void examResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText("Exam");
 		categorypanel.setStyleName(exam.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
-	}
-	/**
-	 * @function dropDownClick 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This will handle the click event on resource drop down label.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	}*/
 	@UiHandler("resoureDropDownLbl")
 	public void dropDownClick(ClickEvent event){
 		if(resoureDropDownLblOpen==false){
@@ -884,21 +729,7 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		}
 		
 	}
-	/**
-	 * @function setImageThumbnail 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set thumbnail images.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setImageThumbnail() {
 		if (activeImageIndex == 0) {
 			leftArrowLbl.setVisible(false);
@@ -913,21 +744,7 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 		setThumbnailImage.setUrl(thumbnailImagesLink.get(activeImageIndex));
 		thumbnailUrlStr = thumbnailImagesLink.get(activeImageIndex);
 	}
-	/**
-	 * @function refreshClick 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on refresh label.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
 		
@@ -979,30 +796,13 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 	public void setThumbnailUrlStr(String thumbnailUrlStr) {
 		this.thumbnailUrlStr = thumbnailUrlStr;
 	}
-	/** 
-	 * This method is to set file name with out resp url
-	 */
+	
 	public void setFileNameWithOutRespUrl(String fileNameWithOutRespUrl ){
 		this.fileNameWithOutRespUrl = fileNameWithOutRespUrl;
 		rightArrowLbl.setVisible(false);
 	}
 	
-	/**
-	 * @function getYoutubeVideoId 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to get youtube video id.
-	 * 
-	 * 
-	 * @parm(s) : @param youtubeUrl
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public String getYoutubeVideoId(String youtubeUrl) {
 
 		youtubeUrl=youtubeUrl.replaceAll("feature=player_detailpage&", "");
@@ -1020,5 +820,40 @@ public abstract class EditResourcePopupVc extends AppPopUp {
 			}
 			return videoId;
 	
+	}
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private TextArea textArea;
+		public CheckProfanityInOnBlur(TextBox textBox,TextArea textArea,Label label){
+			this.textBox=textBox;
+			this.label=label;
+			this.textArea=textArea;
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+			Map<String, String> parms = new HashMap<String, String>();
+			if(textBox!=null){
+				parms.put("text", textBox.getValue());
+			}else{
+				parms.put("text", textArea.getText());
+			}
+			addResourceBtn.setEnabled(false);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					addResourceBtn.setEnabled(true);
+					if(textBox!=null){
+						isHavingBadWordsInTextbox = value;
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+					}else{
+						isHavingBadWordsInRichText=value;
+						SetStyleForProfanity.SetStyleForProfanityForTextArea(textArea, label, value);
+					}
+					
+				}
+			});
+		}
 	}
 }

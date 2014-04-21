@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
- * 
- * @fileName : IsCollectionFormInPlayView.java
+ * @author Search Team
  *
- * @description : This file is used to set the collection meta data info and it will set library codes as well.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionFormInPlayView extends PopupView, IsViewWithHandlers<CollectionFormInPlayUiHandlers> {
 

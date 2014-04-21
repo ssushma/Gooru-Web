@@ -25,19 +25,21 @@
 package org.ednovo.gooru.client.mvp.home.library.events;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
+ * 
  * @fileName : SetConceptTitleStyleEvent.java
  *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event fires, it will get and set the topic id,lesson id and concept id . 
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: 11-Dec-2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class SetConceptTitleStyleEvent extends GwtEvent<SetConceptTitleStyleHandler> {
 
@@ -48,7 +50,7 @@ public class SetConceptTitleStyleEvent extends GwtEvent<SetConceptTitleStyleHand
 	public static final Type<SetConceptTitleStyleHandler> TYPE = new Type<SetConceptTitleStyleHandler>();
 	
 	/**
-	 * class constructor.
+	 * 
 	 */
 	public SetConceptTitleStyleEvent(String conceptId, Integer topicId, Integer lessonId) {
 		this.conceptId=conceptId;

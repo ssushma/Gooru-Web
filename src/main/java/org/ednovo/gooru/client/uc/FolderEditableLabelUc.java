@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -39,20 +41,12 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : FolderEditableLabelUc.java
+ * @author Search Team
  *
- * @description : This class is used to display the folder editable label.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class FolderEditableLabelUc extends Composite implements HasValue<String> {
+public class FolderEditableLabelUc extends Composite implements HasValue<String>,MessageProperties {
 
 	private static EditableLabelUc1UiBinder uiBinder = GWT.create(EditableLabelUc1UiBinder.class);
 
@@ -160,7 +154,7 @@ public class FolderEditableLabelUc extends Composite implements HasValue<String>
 		if(editTextBox.getText().length() > 0){
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else{
-			new AlertContentUc("Oops","Title Shouldn't be empty!");
+			new AlertContentUc(GL0061,GL1026+GL_SPL_EXCLAMATION);
 			return;
 		}
 		deckPanel.showWidget(0);

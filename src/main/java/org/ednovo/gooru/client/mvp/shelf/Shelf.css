@@ -7,9 +7,11 @@
 	margin: 0 auto;
 }
 .userShelfViewMainCenterContainer {
-	min-height: 440px;
-	width: 1260px;
+	min-height: 440px; 
+	/*height:100%;*/
+	width: 1000px;
 	margin: 0 auto;
+	margin-top:-50px;
 }
 
 .userShelfViewList {
@@ -20,9 +22,10 @@
 	background: none repeat scroll 0 0 #FFFFFF;
 	box-shadow: 0 1px 5px 2px #DDDDDD;
 	float: left;
-	margin-left: 76px;
-	width: 865px;
-	position: relative;
+	/* margin-left: 76px; */
+	width: 731px;
+	/* position: relative; */
+	/* Removed this because to show on top */
 	margin-top: 50px;
 }
 
@@ -31,13 +34,14 @@
 }
 
 .userCollectionInShelf {
-	height: 180px;
+	/* height: 180px; */
+	margin-top:54px;
 }
 
 .userCollectionInfo {
 	float: left;
-	margin: 10px 0;
-	width: 558px;
+	margin: 20px 0;
+	width: 380px; /* reduce again */
 	height: 120px;
 }
 
@@ -70,9 +74,9 @@
 	font-size: 12px;
 	font-style: italic;
 	position: absolute;
-	top: 3px;
-	float: right;
-	right: 120px;
+	/* top: 3px;
+	right: 120px; DO-3502*/
+	right: 79px;
 }
 
 .descriptionAlertMessage {
@@ -112,7 +116,7 @@
 .collectionDescriptionTxtArea,.collectionDescriptionHtml {
 	/* border: 1px solid #DDDDDD; */
 	float: left;
-	height: 71px !important;
+	height: 53px !important;
 	/* width: 550px !important; */
 	font-size: 12px !important;
 	padding: 1px;
@@ -145,7 +149,7 @@
 	margin-left: 2px;
 	width: 14px;
 	cursor: pointer;
-	margin-top:12px;
+	/* margin-top:12px; */
 }
 
 .userCollectionMetaDataInfoContainer {
@@ -174,7 +178,7 @@
 
 .collectionMetaDataTabTitle {
 	float: left;
-	padding: 9px 5.5%;
+	padding: 9px 4.2%;
 	text-align: center;
 	cursor: pointer !important;
 }
@@ -254,13 +258,13 @@
 }
 
 .userCollectionMetaShelfFtLft {
-	float: left;
+	/* float: left; */
 }
 
 .metaInfo {
 	clear: both;
-	min-height: 300px;
-	 padding: 20px;
+	min-height: 450px;
+	padding: 20px;
 }
 
 .folderMetaInfo {
@@ -272,7 +276,8 @@
 	min-height: 700px;
 	float: left;
 	margin: 0 auto;
-	padding-left: 100px;
+	/* padding-left: 100px; */
+	padding-left: 67px;
 }
 
 /*AddShelfResource*/
@@ -353,17 +358,17 @@
 }
 
 .plusImage {
-	height: 14px;
-	width: 14px;
+	height: 27px;
+	width: 27px;
 	z-index: 91;
-	background: url("images/plus-drag.png") no-repeat;
+	background: url("images/SearchDragImages/plus.png") no-repeat;
 }
 
 .minusImage {
-	height: 14px;
-	width: 14px;
+	height: 27px;
+	width: 27px;
 	z-index: 91;
-	background: url("images/minus-drag.png") no-repeat;
+	background: url("images/SearchDragImages/orangeminus.png") no-repeat;
 }
 
 .floatShelfTabLeft {
@@ -371,13 +376,15 @@
 	clear: both;
 	min-height: 759px;
 	position: relative;
-	width: 311px;
+	width: 280px;
 }
 
 /****************/
-.videoSmall,.interactiveSmall,.websiteSmall,.examSmall,.textbookSmall,.handoutSmall,.lessonSmall,.slideSmall,.questionSmall,.challengeSmall
+.videoSmall,.interactiveSmall,.websiteSmall,.examSmall,.textbookSmall,.handoutSmall,.lessonSmall,.slideSmall,.questionSmall,.challengeSmall,.webpageSmall,.imageSmall,.otherSmall,.audioSmall
 	{
-	background: url("images/Collection-Search/icon-sprite.png") no-repeat
+/* 	background: url("images/Collection-Search/icon-sprite.png") no-repeat
+		scroll; */
+	background: url("../images/resource-type-icons.png") no-repeat
 		scroll;
 	float: left;
 	height: 20px;
@@ -386,45 +393,55 @@
 }
 
 .videoSmall {
-	background-position: -8px 0px;
+	background-position: 0px 0px;
 }
 
 .interactiveSmall {
-	background-position: -8px -28px;
+	background-position: 0px -28px;
 }
 
 .websiteSmall {
-	background-position: -8px -224px;
+	background-position: 0px -224px;
 }
-
+.webpageSmall {
+	background-position: 0px -224px;
+}
 .examSmall {
-	background-position: -8px -84px;
+	background-position: 0px -84px;
 }
 
 .challengeSmall {
-	background-position: -8px -84px;
+	background-position: 0px -84px;
 }
 
 .textbookSmall {
-	background-position: -8px -196px;
+	background-position: 0px -55px;
 }
 
 .handoutSmall {
-	background-position: -8px -56px;
+	background-position: 0px -56px;
 }
 
 .lessonSmall {
-	background-position: -8px -112px;
+	background-position: 0px -112px;
 }
 
 .slideSmall {
-	background-position: -8px -168px;
+	background-position: 0px -168px;
 }
 
 .questionSmall {
-	background-position: -8px -140px;
+	background-position: 0px -140px;
 }
-
+.imageSmall {
+	background-position: 0px -251px;
+}
+.audioSmall{
+	background-position: 0px -279px;
+}
+.otherSmall{
+	background-position: 0px -307px;
+}
 .collectionSmall {
 	border-color: #388ECB;
 	float: left;
@@ -450,10 +467,11 @@
 	font-size: 15px;
 	font-weight: bolder;
 	height: 42px;
-	margin-left: 66px;
-	width: 312px;
+	/* margin-left: 66px; */
+	width: 276px;
 	position: fixed;
 	margin-top: 23px;
+	display: none;
 }
 
 .preBackToSearch {
@@ -474,7 +492,7 @@
 	white-space: nowrap !important;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: 266px;
+	width: 265px;
 }
 
 .howToDo {
@@ -506,7 +524,13 @@
 	cursor: pointer;
 	margin: 10px 24px;
 	text-align: center;
-	margin-left: 16px;
+	/* margin-left: 16px; */
+}
+
+.deleteDiv {
+	margin: 10px 24px;
+	text-align: center;
+	color: #999;
 }
 
 .userCopyCollection:hover {
@@ -515,7 +539,7 @@
 
 .showShareInnerDiv {
 	float: left;
-	width: 250px;
+	width: 195px;
 	margin-left: 14px;
 	margin-bottom: 30px;
 	margin-top: 30px;
@@ -528,16 +552,22 @@
 
 .shareLinkContainer {
 	float: left;
-	width: 98%;
+	width: 100%;
 	margin-left: 2%;
 	margin-top: -20px;
 }
 
 .shareLink {
 	padding: 20px;
-	width: 46%;
+	width: 197px;
 	float: left;
-	padding-left: 10px;
+	/* padding-left: 10px;
+	margin-right: 25px; */
+}
+
+.shareLink2 {
+	padding: 20px;
+	width: 603px;
 }
 
 .shareLinkFlowPanel {
@@ -547,10 +577,12 @@
 
 .shareLinkBoxContainer {
 	height: 59px;
-	padding: 5px 10px;
-	/* background: #f0f0f0; */
-	width: 82%;
+	/* padding: 5px 10px;
+	background: #f0f0f0;
+	width: 82%; */
 	margin-top: 8px;
+	width: 386px;
+	float: right;
 }
 
 .shareLinkBox {
@@ -611,12 +643,12 @@
 }
 
 .showShareSubTitles {
-	clear: both;
+	/* clear: both;
 	left: 10px;
 	position: relative;
 	width: 144px;
 	margin: 0 auto;
-	text-align: center;
+	text-align: center; */
 }
 
 /*StatisticsItemUc*/
@@ -792,7 +824,8 @@
 	color: #515151;
 	font-size: 14px;
 	line-height: 31px;
-	float: left;
+	/* float: left; */
+	display: inline;
 }
 
 .resourceIndex {
@@ -800,12 +833,12 @@
 	line-height: 22px;
 	padding-top: 5px;
 	word-wrap: break-word;
+	display: inline;
 }
 
 .confirmMessageTitle {
 	
 }
-
 .inlineText {
 	font-size: 12px;
 	border: 1px solid #ccc;
@@ -854,7 +887,28 @@
 
 .panelAlignRight {
 	float: right;
-	margin-top:10px;
+	margin-top:20px;
+	text-align: center;
+	width: 100px;
+}
+
+.deleteIcon {
+	background: url('../images/folders/exclamation-mark.png') no-repeat center;
+    width:55px;
+    height:55px;
+    margin:10px auto 20px auto;
+}
+
+.inputText
+{
+	width: 300px;
+    height: 17px;
+    padding: 5px;
+    border: 1px solid #DDD;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    margin:10px 3px 0px 3px;
+    background-color:#f9f9f9;
 }
 
 /* Comming soon Popup */
@@ -927,7 +981,8 @@
 	margin-top: 173px;;
 	position: absolute;
 	z-index: 5;
-	margin-left: 324px;
+	/* margin-left: 324px; */
+	margin-left: 700px;
 }
 
 .loadingImageMainDiv {
@@ -957,7 +1012,7 @@
 	margin-top: 280px;
 	position: absolute;
 	z-index: 5;
-	margin-left: 324px;
+	margin-left: 269px;
 }
 
 .mySelfCollectionEditTitlePreviewCancelButton {
@@ -1054,21 +1109,25 @@
 }
 
 .collectionTitleContainer {
-	width: 558px;
+/* 	width: 445px; */
 	height: 20px;
-	float: left;
+	/* float: left; */
 }
 
 .buttonContainer {
 	position: absolute;
-	top: 34px;
+	top: 97px;
 	float: right;
-	right: 131px;
+	/* right: 116px; DO-3502*/
+	right: 102px;
 }
 
 .buttonContainerDesc {
-	margin-right: 20px;
-	margin-top:137px;
+	/* margin-right: 2px;
+	margin-top:73px; DO-3502*/
+	margin-right: -3px;
+	margin-top: 74px;
+	
 }
 /*collection share new correction*/
 .collectionShareLineSeparator {
@@ -1313,7 +1372,7 @@
 }
 .collectionVisibilityMain{
 	float: left;
-	width: 862px;
+	/* width: 816px; */
 	font-size: 16px;
 	color: #999;
 }
@@ -1324,7 +1383,7 @@
 }
 .collectionVisibleShareLineSeparator {
 	float: left;
-	width: 89%;
+	width: 100%;
 	height: 1px;
 	background-color: #DDD;
 	margin: 5px 0px 3px 0px;
@@ -1409,16 +1468,16 @@ padding-left: 11px;
 	background-position: 0px -51px;
 }
 .publicVisibleIcon {
-	background: url("images/Collection-Search/privacy_icons.png") no-repeat -1px -32px transparent;
+	background: url("images/Collection-Search/privacy_icons1.png") no-repeat -1px -67px transparent;
 	cursor: pointer;
 	display: block;
-	height: 31px;
-	width: 31px;
+	height: 34px;
+	width: 33px;
 	margin: 0 auto;
 }
 
 .privateVisibleIcon {
-	background: url("images/Collection-Search/privacy_icons.png") no-repeat -33px -28px transparent;
+	background: url("images/Collection-Search/privacy_icons1.png") no-repeat -33px -28px transparent;
 	cursor: pointer;
 	display: block;
 	height: 36px;
@@ -1427,11 +1486,11 @@ padding-left: 11px;
 }
 
 .linkVisibleIcon {
-	background: url("images/Collection-Search/privacy_icons.png") no-repeat -64px -50px transparent;
+	background: url("images/Collection-Search/privacy_icons1.png") no-repeat 0px -30px transparent;
 	cursor: pointer;
 	display: block;
-	height: 14px;
-	width: 37px;
+	height: 35px;
+	width: 33px;
 	margin: 0 auto;
 }
 
@@ -1441,12 +1500,12 @@ padding-left: 11px;
 
 .shareableVisibleIconBottom {
 	margin-bottom: 10px;
-	margin-top: 18px;
+	margin-top: 0px;
 }
 
 .privateVisibleIconBottom {
-	margin-top: -3px;
-	margin-bottom: 6px;
+	margin-top: -1px;
+	margin-bottom: 11px;
 }
 .objectFloat{
 	float: left;
@@ -1454,11 +1513,43 @@ padding-left: 11px;
 .friendlyDiv{
 	width: 405px;
 	margin-bottom: 15px;
-	margin-top: -35px;
-	margin-left: 10px;
+	/* margin-top: -35px; */
+	margin-left: 19px;
 }
 
 .objectFontType{
 	font-style: italic;
 	margin-top: 2px;
+}
+
+.analyticsStyle {
+	 float: left; 
+	padding: 9px 2.6%;
+	text-align: center;
+	cursor: pointer !important;
+}
+.analyticsStyle:hover {
+	background: none repeat scroll 0 0 #efefef !important;
+	box-shadow: none !important;
+}
+.folderBorderColor{
+	float:left;
+	border-color:#fbb03b !important;
+}
+
+.lastEditedBy{
+	text-align: right;
+	margin: 7px 26px 0px 0px;
+}
+.deleteOkayButton{
+	margin-right:10px;
+}
+.aleartDescText {
+	width: 69%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 120%;
+	text-align: center;
+	padding: 15px 0px 0px 86px;
+	word-wrap: break-word;
 }

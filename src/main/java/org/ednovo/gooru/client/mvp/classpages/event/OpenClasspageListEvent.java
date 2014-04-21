@@ -26,41 +26,37 @@ package org.ednovo.gooru.client.mvp.classpages.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-	/**
-	 * 
-	 * @fileName : OpenClasspageListEvent.java
-	 *
-	 * @description : This file deals with ClasspageList Events.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : OpenClasspageListEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Aug 18, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class OpenClasspageListEvent extends GwtEvent<OpenClasspageListHandler> {
 
 	public static final Type<OpenClasspageListHandler> TYPE = new Type<OpenClasspageListHandler>();
 
 	/**
-	 * This is used to open classpage list events.
+	 * 
 	 */
 	public OpenClasspageListEvent() {
 		
 	}
-	/**
-	 *  Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<OpenClasspageListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke lregisterogin handler event.
-	 */
+
 	@Override
 	protected void dispatch(OpenClasspageListHandler handler) {
 		handler.openClasspageList();

@@ -33,6 +33,8 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -42,28 +44,19 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : FooterUc.java
+ * @author Search Team
  *
- * @description : This file deals with footer.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class FooterUc extends Composite {
+public class FooterUc extends Composite implements MessageProperties {
 
 	private static FooterUcUiBinder uiBinder = GWT.create(FooterUcUiBinder.class);
 
@@ -74,7 +67,7 @@ public class FooterUc extends Composite {
 
 		@Override
 		public void setFooterEvent(String placeName) {
-			setMargins(placeName);
+//			setMargins(placeName);
 		}
 
 		
@@ -109,6 +102,8 @@ public class FooterUc extends Composite {
 
 	@UiField
 	Anchor contactUsAnr;
+	
+	@UiField Label copyRightYearText;
 	
 	private TermsAndPolicyVc termsAndPolicyVc;
 	
@@ -156,7 +151,7 @@ public class FooterUc extends Composite {
 		
 		
 		/**
-		 * Added click handler for showing Privacy Policy popup in footer 
+		 * Added click handler for showing Terms ans Policy popup in footer 
 		 **/
 		privacyAndPolicyAnr.addClickHandler(new ClickHandler() {
 			@Override
@@ -168,10 +163,6 @@ public class FooterUc extends Composite {
 				termsAndPolicyVc.center();
 			}
 		});
-		/**
-		 * Added click handler for showing Terms and Conditions popup in footer 
-		 **/
-
 		termsAndPolicyAnr.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -199,6 +190,15 @@ public class FooterUc extends Composite {
 		});
 
 		initWidget(uiBinder.createAndBindUi(this));
+		aboutGooruAnr.setText(GL1242);
+		communityAnr.setText(GL1243);
+		supportAnr.setText(GL0194);
+		termsAndPolicyAnr.setText(GL0872);
+		privacyAndPolicyAnr.setText(GL0873);
+		copyRightAnr.setText(GL0875);
+		careersAnr.setText(GL1244);
+		contactUsAnr.setText(GL1245);
+		copyRightYearText.setText(GL1246);
 		mixpanelLink.setTarget("_blank");
 		mixpanelLink.setHref("https://mixpanel.com/f/partner");
 	
@@ -208,7 +208,7 @@ public class FooterUc extends Composite {
 		//featuresAnr.setTarget("_blank");
 		communityAnr.setHref("http://about.goorulearning.org/community/");
 		communityAnr.setTarget("_blank");
-		supportAnr.setHref("http://support.goorulearning.org/home");
+		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
 		supportAnr.setTarget("_blank");
 		careersAnr.setHref("http://about.goorulearning.org/about/careers/");
 		careersAnr.setTarget("_blank");
@@ -223,25 +223,7 @@ public class FooterUc extends Composite {
 		contactUsAnr.getElement().setId("lnkcontactUs");
 		AppClientFactory.getEventBus().addHandler(SetFooterEvent.TYPE,setFooter);
 	}
-	/**
-	 * 
-	 * @function setMargins 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set Margins.
-	 * 
-	 * 
-	 * @parm(s) : @param placeName
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setMargins(String placeName){
 		goorulandingFooterContainer.getElement().getStyle().clearMargin();
 		goorulandingFooterContainer.getElement().getStyle().clearTop();
@@ -249,7 +231,9 @@ public class FooterUc extends Composite {
 		goorulandingFooterContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		if (placeName.equals(PlaceTokens.FOLDERS) || placeName.equals(PlaceTokens.EDIT_FOLDERS) || placeName.equals(PlaceTokens.SHELF)){
 			goorulandingFooterContainer.getElement().getStyle().setMargin(304, Unit.PX);
+			goorulandingFooterContainer.getElement().getStyle().setMarginBottom(4, Unit.PX);
 			goorulandingFooterContainer.getElement().getStyle().setTop(75, Unit.PX);
+			goorulandingFooterContainer.getElement().getStyle().setMarginLeft(252, Unit.PX);
 			goorulandingFooterContainer.getElement().getStyle().setPosition(Position.RELATIVE);
 		}else if(placeName.equals(PlaceTokens.TEACH)){
 			goorulandingFooterContainer.getElement().getStyle().setMarginTop(220, Unit.PX);
@@ -261,5 +245,10 @@ public class FooterUc extends Composite {
 	//For setting the width of the footer from PPP page
 	public void setFooterWidth() {
 		innerFooterDiv.setWidth("860px");
+	}
+	
+	@UiHandler("supportAnr")
+	public void onClickSupport(ClickEvent event){
+		MixpanelUtil.mixpanelEvent("Footer_Click_Support");
 	}
 }

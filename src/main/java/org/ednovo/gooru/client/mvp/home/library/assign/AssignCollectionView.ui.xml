@@ -11,17 +11,22 @@
 			<g:Label ui:field="lblAssignCollectionPrivate" styleName="{res.css.labelTitlePrivateText}"></g:Label>
 		</g:HTMLPanel>
 		<g:HTMLPanel ui:field="panelNoClasspages">
-			<g:Image title="No Classpage" altText="No Classpage"
-				url="images/library/banner-assign.png" styleName="{res.css.noClassPageBanner}"></g:Image>
+			<g:Image  styleName="{res.css.noClassPageBanner}" ui:field="lblNoClassPageImage"></g:Image>
+
 			<g:Label ui:field="lblNoClassPage" styleName="{res.css.labeldNoClassPageText}">
 			</g:Label>
 			<g:Label ui:field="lblNoClassPageMsg" styleName="{res.css.labeldNoClassPageText}">
 			</g:Label>
 		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}" ui:field="loadingImageLabel">
+	      <g:Label  styleName="{res.css.loadingImageForSelfEdit}" />
+	   	</g:HTMLPanel>
 		<g:HTMLPanel ui:field="htmlPanelContainer">
 			<g:HTMLPanel styleName="{res.css.controlsContainer}"
 				ui:field="controlsContainer">
+
 				<g:HTMLPanel>
+
 					<g:Label ui:field="lblClasspages" styleName="{res.css.labelText}"></g:Label>
 
 					<g:HTMLPanel styleName="{res.css.dropdownContainer}">
@@ -35,8 +40,29 @@
 						</g:ScrollPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
+				
+	<g:HTMLPanel styleName="{res.css.duedateContainer}">
+		<g:HTMLPanel styleName="{res.css.duedateDiv}">
+			<g:Label ui:field="lblDuedate" styleName="{res.css.duedateDivLabel}"></g:Label>
+				<g:Label ui:field="lblDuedateOptional" styleName="{res.css.duedateDivLabel}"></g:Label>
+		</g:HTMLPanel>
+		<g:HTMLPanel ui:field="duedateContainer" styleName="{res.css.directionsTextAreaContainer}">
+			</g:HTMLPanel>
+	</g:HTMLPanel>
+	
+	<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
+		<g:HTMLPanel styleName="{res.css.directionsDiv}">
+		<g:Label ui:field="lblDirections" styleName="{res.css.directionsDivLabel}"></g:Label>
+		<g:Label ui:field="lblDirectionsOptional" styleName="{res.css.directionsDivLabel}"></g:Label>
+		</g:HTMLPanel>
+		<g:HTMLPanel>
+		<g:TextArea ui:field="textAreaVal" styleName="{res.css.directionsTextArea}"></g:TextArea>
+		<g:Label ui:field="directionsErrorLbl" styleName="{res.css.directionsErrorLbl}"></g:Label>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+	
 
-				<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
+		<!-- 		<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
 					<g:Label ui:field="lblAssignments" styleName="{res.css.labelText}"></g:Label>
 					<g:Label ui:field="lblNoAssignments" styleName="{res.css.noAssignments}"></g:Label>
 					<g:HTMLPanel styleName="{res.css.dropdownContainer}"
@@ -50,16 +76,19 @@
 						</g:ScrollPanel>
 						<g:Label styleName="{res.css.errorMessage}" ui:field="lblAssignmentErrorMsg"></g:Label>
 					</g:HTMLPanel>
-				</g:HTMLPanel>
+				</g:HTMLPanel> -->
 
 			</g:HTMLPanel>
 			<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>
 
 			<g:HTMLPanel ui:field="assignMoreCpContainer">
-				<g:Label ui:field="assignMoreCpLbl"
-					styleName="{res.css.labelText} {res.css.cpSuccessMsg}"></g:Label>
-				<g:Button styleName="primary {res.css.assignClassPageBtn}"
-					ui:field="classPageBtn">Assign to another Classpage</g:Button>
+				<g:InlineLabel ui:field="assignMoreCpLbl"
+					styleName="{res.css.labelTextSucees} {res.css.cpSuccessMsg}"></g:InlineLabel> 
+					<g:InlineLabel ui:field="ancClasspageTitle" styleName="{res.css.assignmentLabel}"/>
+					<g:HTMLPanel styleName="{res.css.buttonWidth}">
+					<g:Button styleName="primary {res.css.assignClassPageBtn}"
+					ui:field="classPageBtn"></g:Button>
+					</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>

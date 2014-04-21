@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -30,19 +32,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SourceSuggestionEvent.java
- *
- * @description : This event is to set SourceSuggestions.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SourceSuggestionEvent extends GwtEvent<SourceSuggestionHandler> {
 
@@ -56,61 +47,21 @@ public class SourceSuggestionEvent extends GwtEvent<SourceSuggestionHandler> {
 	public SourceSuggestionEvent(SearchDo<String> searchDo) {
 		setSearchDo(searchDo);
 	}
-	/**
-	 *  Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SourceSuggestionHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SourceSuggestionHandler handler) {
 		handler.requestSourceSuggestion(getSearchDo());
 	}
-	/**
-	 * 
-	 * @function getSearchDo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns SearchDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchDo<String>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchDo<String> getSearchDo() {
 		return searchDo;
 	}
-	/**
-	 * 
-	 * @function setSearchDo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :To set SearchDo
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchDo(SearchDo<String> searchDo) {
 		this.searchDo = searchDo;
 	}

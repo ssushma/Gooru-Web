@@ -33,21 +33,14 @@ import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TreeItem;
+
 /**
- * @fileName : IsShelfCollectionResourceView.java
- *
- * @description :  Acts as a bridge between the Presenter and view.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author SearchTeam
+ * 
  */
 public interface IsShelfCollectionResourceView extends IsChildView<ShelfCollectionResourceChildPresenter>, IsDraggable {
 
@@ -88,6 +81,10 @@ public interface IsShelfCollectionResourceView extends IsChildView<ShelfCollecti
 	void addNewResource();
 	
 	Label getVisible();
+	
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel);
+	
+	public void setFolderItems(TreeItem item, FolderListDo folderListDo);
 	
 	
 	

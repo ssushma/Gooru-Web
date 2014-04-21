@@ -37,19 +37,10 @@ import com.google.gwt.uibinder.client.UiChild;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : DownToolTipWidgetUc.java
+ * @author Search Team
  *
- * @description : This is the down tool tip widget.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler, MouseOutHandler, ClickHandler {
 
@@ -58,6 +49,8 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 	private Widget toolTipWidget;
 	private boolean isIe= false;
 	private boolean isFireFox=false;
+	String newMsg;
+	int Count;
 	
 	List<Map<String, String>> standards = null;
 	
@@ -69,7 +62,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		addDomHandler(this, MouseOutEvent.getType());
 		addDomHandler(this, MouseOverEvent.getType());
 		addDomHandler(this, ClickEvent.getType());
-	}
+		}
 
 	/**
 	 * Class constructor with two parameter
@@ -91,6 +84,14 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		setToolTipWidget(toolTipWidget);
 	}
 	
+	public String getTooltipPopUpUc(String Message) {
+		newMsg =	Message;
+		return newMsg;
+	}
+	public int getTooltipPopUpUcCount(int count) {
+		Count =	count;
+		return Count;
+	}
 	/**
 	 * Class constructor with two parameter
 	 * @param widget instance of {@link Widget}
@@ -118,6 +119,7 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 		this.toolTipWidget = toolTipWidget;
 		if (toolTipWidget != null) {
 			tooltipPopUpUc = new DownToolTipUc();
+			tooltipPopUpUc.getElement().setAttribute("style", "z-index: 99999;");
 			tooltipPopUpUc.setContent(toolTipWidget);
 		}
 	}
@@ -161,15 +163,23 @@ public class DownToolTipWidgetUc extends FocusPanel implements MouseOverHandler,
 			}
 			else if(isFireFox)
 			{
-				
 				tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-85,getWidget().getAbsoluteTop()+10);
 				tooltipPopUpUc.show();
 				if(tooltipPopUpUc.getElement().getStyle().getTop().equalsIgnoreCase("0px")){
 					tooltipPopUpUc.hide();
 				}else{
 					tooltipPopUpUc.show();
-					
 				}
+				if(newMsg !=null && newMsg!=""){
+				if(isFireFox && newMsg.contains("Team")){
+					tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-25,getWidget().getAbsoluteTop()+10);
+				}
+				}
+				if(Count>=1){
+					if(isFireFox && Count>=1){
+						tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft()-50,getWidget().getAbsoluteTop()+10);
+					}
+					}
 			}
 			else{
 				tooltipPopUpUc.setPopupPosition(getWidget().getAbsoluteLeft() + (getWidget().getOffsetWidth() / 2) - (tooltipPopUpUc.getOffsetWidth() / 2), getWidget().getAbsoluteTop() + getWidget().getOffsetHeight());	

@@ -35,19 +35,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HTMLPanel;
-/**
- * @fileName : HTMLEventPanel.java
- *
- * @description :  This class is used to make the html panel clickable.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class HTMLEventPanel extends HTMLPanel implements HasClickHandlers,HasMouseOutHandlers,HasMouseOverHandlers {
 
 	
@@ -55,24 +43,20 @@ public class HTMLEventPanel extends HTMLPanel implements HasClickHandlers,HasMou
 	public HTMLEventPanel(String html) {
 		super(html);
 	}
-	/**
-	 * This will add the click event.
-	 */
+
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
 	}
 
-	/**
-	 * This will add the mouse over event.
-	 */
+	
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
 
-	/**
-	 * This will add the mouse out event.
-	 */
+	
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 

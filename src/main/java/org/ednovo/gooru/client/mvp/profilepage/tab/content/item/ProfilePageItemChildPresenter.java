@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.item;
 import org.ednovo.gooru.client.child.ChildPresenter;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ProfilePageItemChildPresenter.java
- *
- * @description : This is the presenter class for ProfilePageItemChildView
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageItemChildPresenter extends ChildPresenter<ProfilePageItemChildPresenter, IsProfilePageItemView>{
 

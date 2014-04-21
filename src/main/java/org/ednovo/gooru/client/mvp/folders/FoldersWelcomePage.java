@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.folders;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,30 +35,22 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : FoldersWelcomePage.java
- *
- * @description : This is the welcome page for folders.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class FoldersWelcomePage extends Composite {
+
+public class FoldersWelcomePage extends Composite implements MessageProperties{
 
 	@UiField
-	Label newCollectionUIHandler;
+	Label newCollectionUIHandler,needHelpLbl;
 	
 	@UiField
 	Anchor supportCenterAnr;
+	
+	@UiField HTMLPanel createLbl,gettingStartedLbl,createTextLbl,selectedLbl,customizeLbl,guideStudentsLbl,shareLbl,assignLbl;
+	
+	@UiField Image roundedOneLbl,workSpaceLbl,roundedTwoLbl,narrationLbl,roundedThreeLbl,shareAssignLbl;
 
 	private static FoldersWelcomePageUiBinder uiBinder = GWT
 			.create(FoldersWelcomePageUiBinder.class);
@@ -65,33 +58,44 @@ public class FoldersWelcomePage extends Composite {
 	interface FoldersWelcomePageUiBinder extends
 			UiBinder<Widget, FoldersWelcomePage> {
 	}
-	/**
-	 * Constructor.
-	 */
+
 	public FoldersWelcomePage() {
 		initWidget(uiBinder.createAndBindUi(this));
-		supportCenterAnr.setHref("http://support.goorulearning.org/home");
+		//supportCenterAnr.setHref("http://support.goorulearning.org/home");
 		supportCenterAnr.setTarget("_blank");
+		createLbl.getElement().setInnerText(GL1508);
+		gettingStartedLbl.getElement().setInnerText(GL1509);
+		roundedOneLbl.setTitle(GL1398);
+		roundedOneLbl.setAltText(GL1398);
+		roundedOneLbl.setUrl("images/rounded-one.png");
+		createTextLbl.getElement().setInnerText(GL1335);
+		selectedLbl.getElement().setInnerText(GL1510);
+		workSpaceLbl.setTitle(GL1511);
+		workSpaceLbl.setAltText(GL1511);
+		workSpaceLbl.setUrl("images/folders/workspace-image.png");
+		roundedTwoLbl.setTitle(GL1400);
+		roundedTwoLbl.setAltText(GL1400);
+		roundedTwoLbl.setUrl("images/rounded-two.png");
+		customizeLbl.getElement().setInnerText(GL0631);
+		guideStudentsLbl.getElement().setInnerText(GL1512);
+		narrationLbl.setTitle(GL1036);
+		narrationLbl.setAltText(GL1036);
+		narrationLbl.setUrl("images/folders/narration-image.png");
+		roundedThreeLbl.setTitle(GL1403);
+		roundedThreeLbl.setAltText(GL1403);
+		roundedThreeLbl.setUrl("images/rounded-three.png");
+		shareLbl.getElement().setInnerText(GL0526);
+		assignLbl.getElement().setInnerText(GL1513);
+		shareAssignLbl.setTitle(GL1514);
+		shareAssignLbl.setAltText(GL1514);
+		shareAssignLbl.setUrl("images/folders/share-assign-image.png");
+		needHelpLbl.setText(GL1405);
+		needHelpLbl.getElement().setAttribute("style", "float: left;margin-left: 27%;");
+		supportCenterAnr.setText(GL1406);
+		supportCenterAnr.getElement().setAttribute("style", "float: left;padding-left: 5px;");
+		supportCenterAnr.setHref("http://support.goorulearning.org/hc/en-us");
 	}
-	/**
-	 * 
-	 * @function OnClickNewCollection 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This UIHandler is used to create new colletion.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("newCollectionUIHandler")
 	public void OnClickNewCollection(ClickEvent event) {
 		AppClientFactory.getPlaceManager()

@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.image.upload;
 
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.LoadingUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.code.gwt.crop.client.GWTCropper;
 import com.google.gwt.core.client.GWT;
@@ -37,24 +38,17 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : ImageCropView.java
+ * @author Search Team
  *
- * @description : This class is used to for image cropping .
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public abstract class ImageCropView extends Composite {
+public abstract class ImageCropView extends Composite implements MessageProperties{
 
 	@UiField
 	Label backPageLinkLbl;
@@ -77,6 +71,8 @@ public abstract class ImageCropView extends Composite {
 	@UiField
 	Label loadingTextLbl;
 	
+	@UiField HTML cropText,dragText;
+	
 	@UiField
 	FlowPanel buttonContainer;
 	
@@ -94,6 +90,13 @@ public abstract class ImageCropView extends Composite {
 	public ImageCropView() {
 		super();
 		initWidget(uiBinder.createAndBindUi(this));
+		backPageLinkLbl.setText(GL1231);
+		cropText.setHTML(GL1232);
+		dragText.setHTML(GL1233);
+		cropImageLoading.setLoadingText(GL1234);
+		cropImageBtn.setText(GL1235);
+		cancelButtonAnr.setText(GL0142);
+		loadingTextLbl.setText(GL1236);
 		cropImageLoadingVerPanel.setCellVerticalAlignment(cropImageLoading, HasVerticalAlignment.ALIGN_MIDDLE);
 		buttonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);

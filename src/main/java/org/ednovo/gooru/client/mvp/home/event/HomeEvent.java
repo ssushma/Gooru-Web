@@ -28,20 +28,10 @@
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : HomeEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user switch form one tab to another tab it should
- * be processed by presenters that are responsible for displaying related views or messages.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class HomeEvent extends GwtEvent<HomeHandler> {
 
@@ -55,9 +45,7 @@ public class HomeEvent extends GwtEvent<HomeHandler> {
 	public HomeEvent(HeaderTabType tabType) {
 		this.tabType = tabType;
 	}
-	/**
-	 * This will return the associated type.
-	 */
+
 	@Override
 	public Type<HomeHandler> getAssociatedType() {
 		return TYPE;

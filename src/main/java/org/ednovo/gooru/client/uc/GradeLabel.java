@@ -27,27 +27,20 @@ package org.ednovo.gooru.client.uc;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : GradeLabel.java
+ * @author Search Team
  *
- * @description : This class is used to display the grade labels.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class GradeLabel extends Label implements ClickHandler {
 	
@@ -95,9 +88,7 @@ public class GradeLabel extends Label implements ClickHandler {
 			}
 		}
 	}
-	/**
-	 * This will handle the click event on the grade label.
-	 */
+
 	@Override
 	public void onClick(ClickEvent event) {
 		if(this.getElement().getAttribute("selected").contains("selected")){
@@ -116,27 +107,15 @@ public class GradeLabel extends Label implements ClickHandler {
 			this.getElement().getStyle().setColor("#fff");
 			this.getElement().setAttribute("selected", "selected");
 			if(!gradeList.contains(this.getText())){
-			gradeList.add(this.getText());
-			updateGrade(gradeList);
+				gradeList.add(this.getText());
+				updateGrade(gradeList);
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+				}
 			}
 		}
 		
 	}
-	/**
-	 * @function updateGrade 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will update the grade.
-	 * 
-	 * 
-	 * @parm(s) : @param gradeList
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	private void updateGrade(List<String> gradeList){
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collection.getGooruOid(), null, null, join(gradeList, ","), null, null, null,null,null,null, new SimpleAsyncCallback<CollectionDo>(){
 			
@@ -146,22 +125,7 @@ public class GradeLabel extends Label implements ClickHandler {
 			}
 		});
 	}
-	/**
-	 * @function join 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to join the list.
-	 * 
-	 * @parm(s) : @param list
-	 * @parm(s) : @param separator
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String join(List<?> list,String separator){
 		StringBuilder builder =null;
 		if(list != null){
@@ -176,22 +140,7 @@ public class GradeLabel extends Label implements ClickHandler {
 		return builder.toString();
 	}
 	
-	/**
-	 * @function generateGrade 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to generate the grades.
-	 * 
-	 * 
-	 * @parm(s) : @param gradeTxt
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String generateGrade(String gradeTxt){
 		String tmpGradeTxt = "";
 		if (gradeTxt.indexOf("-") > 0){
@@ -219,22 +168,7 @@ public class GradeLabel extends Label implements ClickHandler {
 		}
 		return tmpGradeTxt;
 	}
-	/**
-	 * @function generateGradeIfHypen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will generate the grades with hypen.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String generateGradeIfHypen(String grade){
 		String gradeList[];
 		StringBuilder gradeStr = new StringBuilder();

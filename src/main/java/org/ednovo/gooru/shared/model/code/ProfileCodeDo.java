@@ -25,34 +25,16 @@
 package org.ednovo.gooru.shared.model.code;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : ProfileCodeDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class ProfileCodeDo implements Serializable {
+	
 	private static final long serialVersionUID = 1849886397443409797L;
-	private CodeDo code;
-	/** 
-	 * This method is to get the code
-	 */
+	public ProfileCodeDo(){}
 	public CodeDo getCode() {
 		return code;
 	}
-	/** 
-	 * This method is to set the code
-	 */
 	public void setCode(CodeDo code) {
 		this.code = code;
 	}
+	private CodeDo code;
 }

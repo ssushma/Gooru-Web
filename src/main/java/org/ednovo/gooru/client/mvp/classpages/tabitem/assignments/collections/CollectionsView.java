@@ -24,343 +24,568 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
+import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-	/**
-	 * 
-	 * @fileName : CollectionsView.java
-	 *
-	 * @description : This class is used to display the collection in an assignment tab.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-public class CollectionsView extends ChildView<CollectionsPresenter> implements
-		IsCollectionsView, MessageProperties {
-	 
-	@UiField(provided = true)
-	CollectionsCBundle res;
-
-	private static String DEFULT_IMAGE = "images/default-collection-image.png";
-
-	private static final String NULL = "null";
-
-//	private CollectionItemDo collectionItemDo;
+/**
+ * 
+ * @fileName : CollectionsView.java
+ *
+ * @description : This class is used to display the collection in an assignment tab.
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: May 10, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView,MessageProperties{
 	
-	private ResourceDo resourceDo;
+	@UiField Button viewClassItemAnalyticsButton,editClassItemButton;
 	
-	private  String assignmentId;
+	@UiField FlowPanel dropdownPanel,editButtonsToolBar,classpageItemContainer,dropdownPanelAnalyticsButton;
 	
-	boolean isTeacherView;
-
-	@UiField
-	Label removeCollectionLbl;
+	@UiField HTMLPanel directionContentPanel,thumbnailContainer;
 	
-	@UiField
-	Button  editCollectionLbl;
-
-	@UiField
-	HTML collectionDesc,collectionTitle;
-
-	@UiField
-	Image collectionImage;
-
-	@UiField
-	HTMLPanel actionPanel;
-	int itemSize;
-	int itemCounter;
-
-	WaitPopupVc waitConfirmVc=null;
+	@UiField HTML learningObject;
+	
+	@UiField Anchor classpageItemTitle;
+	
+	@UiField Label editDueDateButton,editDirectionButton,deleteItemButton,dueDateText,dueDate,editCollection,directionsLabel,learningObjective,moniterProgress,collectionSummary;
+	
+	@UiField Image collectionImage;
+	
+	@UiField FlowPanel headerRightPanel;
+	
+	private EditToolBarView editToolBarView=null;
+	
+	private TextArea directionTextArea=null;
+	
+	private String directionText="";
+	private Label directionErrorLabel=new Label();
+	
+	private ClasspageItemDo classpageItemDo=null;
+	
+	private WaitPopupVc removeConfirmBox=null;
+	
+	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
+	public interface CollectionsViewUiBinder extends UiBinder<Widget, CollectionsView> {}
+	
+	public CollectionsView(){
 		
-	private static CollectionsViewUiBinder uiBinder = GWT
-			.create(CollectionsViewUiBinder.class);
-
-	interface CollectionsViewUiBinder extends UiBinder<Widget, CollectionsView> {
 	}
-
-	/**
-	 * Class constructor
-	 * 
-	 * @param resourceDo instance of {@link ResourceDo}
-	 * @param isTeacherView to handle show and hiding the controls
-	 * @param assignmentID
-	 *            
-	 */
-	public CollectionsView(final ResourceDo resourceDo, boolean isTeacherView,  String assignmentId) {
-
-		res = CollectionsCBundle.INSTANCE;
-		CollectionsCBundle.INSTANCE.css().ensureInjected();
+	
+	public CollectionsView(ClasspageItemDo classpageItemDo){
 		initWidget(uiBinder.createAndBindUi(this));
-		this.resourceDo = resourceDo;
-		this.isTeacherView = isTeacherView;
-		this.assignmentId = assignmentId;
-		editCollectionLbl.getElement().setId("btnEditCollection");
-		removeCollectionLbl.getElement().setId("lblRemoveCollection");
+		setStaticTexts();
 		setPresenter(new CollectionsPresenter(this));
-		//To handle error thumbnail urls and set the gooru default images
-		collectionImage.addErrorHandler(new ErrorHandler() {
+		
+		CollectionsCBundle.INSTANCE.css().ensureInjected();
+		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 
-			@Override
-			public void onError(ErrorEvent event) {
-				collectionImage.setUrl(DEFULT_IMAGE);
-				collectionImage.setAltText(resourceDo.getTitle());
-				collectionImage.setTitle(resourceDo.getTitle());
+		this.classpageItemDo=classpageItemDo;
+		dropdownPanel.setVisible(false);
+		dropdownPanelAnalyticsButton.setVisible(false);
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hidePopup(event);
+	          }
+	    });
+		setClasspageItemDo();
+		editClassItemButton.addClickHandler(new OpenDropdownPanelEvent());
+		viewClassItemAnalyticsButton.addClickHandler(new OpenAnalyticsDropdownPanelEvent());
+		editDirectionButton.addClickHandler(new EditDirectionEvent());
+		editDueDateButton.addClickHandler(new EditDueDateEvent());
+		deleteItemButton.addClickHandler(new DeleteItemEvent());
+		editCollection.addClickHandler(new CollectionEditEvent());
+		
+		moniterProgress.addClickHandler(new monitorProgressEvent());
+		
+		collectionSummary.addClickHandler(new CollectionSummaryEvent());
+		/**
+		 * Adding Event Handler.
+		 * @param UpdateSocialShareMetaDataEvent.TYPE is type of event.
+		 * @param setHeader is Object of Handler.
+		 */
+		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
+	}
+	public void setStaticTexts(){
+		viewClassItemAnalyticsButton.setText(GL0510);
+		editClassItemButton.setText(GL0140);
+		editDueDateButton.setText(GL1368);
+		editDirectionButton.setText(GL1369);
+		editCollection.setText(GL1370);
+		deleteItemButton.setText(GL1371);
+		directionsLabel.setText(GL1372);	
+		learningObjective.setText(GL1373);
+		moniterProgress.setText(GL1586);
+		collectionSummary.setText(GL1587);
+		
+		
+		
+	}
+	public CollectionsView(ClasspageItemDo classpageItemDo,boolean isStudentView){
+		initWidget(uiBinder.createAndBindUi(this));
+		setPresenter(new CollectionsPresenter(this));
+		CollectionsCBundle.INSTANCE.css().ensureInjected();
+		this.classpageItemDo=classpageItemDo;
+		headerRightPanel.removeFromParent();
+		setClasspageItemDo();
+		setStaticTexts();
+	}
+	
+	public void setClasspageItemDo(){
+		this.directionText=this.classpageItemDo.getDirection();
+		//editCollection.setHref("#"+PlaceTokens.SHELF+"&id="+classpageItemDo.getCollectionId());
+		setClasspageItemTitle();
+		setDirection(directionText);
+		setDueDate();
+		setLearningObject();
+		setThumbnailUrl();
+	}
+	private void setClasspageItemTitle(){
+		classpageItemTitle.setHTML(classpageItemDo.getCollectionTitle());
+		classpageItemTitle.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+	}
+	public String getCurrentPlaceToken(){
+		String placeToken=AppClientFactory.getCurrentPlaceToken();
+		if(placeToken!=null){
+			if(placeToken.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				placeToken="teach";
+			}else if(placeToken.equals(PlaceTokens.STUDENT)){
+				placeToken="study";
 			}
-		});
-		setUiElements();	
-		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
-		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
-		actionPanel.setVisible(false);
-		//Setting click handlers
-		collectionImage.addClickHandler(new CollectionImageClick());
-		collectionTitle.addClickHandler(new CollectionTitleClick());
-		editCollectionLbl.addClickHandler(new CollectionEditClick());
-		removeCollectionLbl.addClickHandler(new CollectionRemoveClick());
-		
+		}
+		return placeToken;
+	}
+	private void setDueDate(){
+		String dueDate=classpageItemDo.getPlannedEndDate();
+		if(dueDate!=null&&!dueDate.equals("")){
+			dueDateText.setText(GL1390);
+			dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
+			this.dueDate.setText(dueDate.toString());
+		}
+	}
+	public void setLearningObject(){
+		String learningObject=classpageItemDo.getGoal();
+		if(learningObject!=null&&!learningObject.equals("")&&!learningObject.equals("null")){
+			this.learningObject.setHTML(learningObject);
+		}else{
+			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
+			this.learningObject.setHTML(GL1374);
+		}
+	}
+
+	public void setThumbnailUrl(){
+		collectionImage.setUrl(classpageItemDo.getThumbnailUrl()!=null?StringUtil.formThumbnailName(classpageItemDo.getThumbnailUrl(),"-160x120."):"null");
+		Anchor thumbnailAnchor=new Anchor();
+		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
+		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
+		thumbnailContainer.add(thumbnailAnchor);
+	}
+	@UiHandler("collectionImage")
+	public void setErrorImage(ErrorEvent event){
+		collectionImage.setUrl("images/default-collection-image-160x120.png");
+	}
+	public void setDefaultMessage(){
 		
 	}
-	/**
-	 * 
-	 * @function setUiElements 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : To Display the content to UI
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	private void setUiElements() {
-		//collectionTitle.setText(resourceDo.getTitle());
-		collectionTitle.setHTML(resourceDo.getTitle());
-		collectionDesc.setHTML(resourceDo.getGoals());
-
-		setUrl(resourceDo.getThumbnails().getUrl());
-	}
-	/**
-	 * Class for Handling Click event for Removing the collections from Assignments
-	 * On Confirmation by user the Collection will removed.
-	 */
-	private class CollectionRemoveClick implements ClickHandler{
-
+	private class OpenDropdownPanelEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			waitConfirmVc = new WaitPopupVc("Wait!","Are you sure you want to remove this collection? Students may be using this... Don't worry, however, because the collection will not be deleted from your folders.")  {
-				
+			if(dropdownPanel.isVisible()){
+				dropdownPanel.setVisible(false);
+			}else{
+				dropdownPanel.setVisible(true);
+			}
+		}
+	}
+	private class OpenAnalyticsDropdownPanelEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(dropdownPanelAnalyticsButton.isVisible()){
+				dropdownPanelAnalyticsButton.setVisible(false);
+			}else{
+				dropdownPanelAnalyticsButton.setVisible(true);
+			}
+		}
+	}
+	private class EditDirectionEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			dropdownPanel.setVisible(false);
+			editDirection();
+			editButtonsToolBar.setVisible(false);
+			editToolBarView=new EditToolBarView(false);
+			if(classpageItemDo.getPlannedEndDate()!=null&&!classpageItemDo.getPlannedEndDate().toString().equals("")){
+				editToolBarView.dueDatePanel.add(new Label(classpageItemDo.getPlannedEndDate()!=null?classpageItemDo.getPlannedEndDate().toString():"")); // TODO need to set date.
+				editToolBarView.dueDateText.add(new Label(GL1390));
+				editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
+				editToolBarView.dueDatePanel.setStyleName(CollectionsCBundle.INSTANCE.css().dateText());
+			}
+			editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
+			editToolBarView.saveButton.addClickHandler(new UpdateEditedContentEvent());
+			classpageItemContainer.insert(editToolBarView, 0);
+		}
+	}
+	
+	private class EditDueDateEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			dropdownPanel.setVisible(false);
+			editButtonsToolBar.setVisible(false);
+			editToolBarView=new EditToolBarView(true);
+			editToolBarView.dueDateText.add(new Label(GL1390));
+			editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
+			//editToolBarView.dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
+			editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
+			editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent());
+			classpageItemContainer.insert(editToolBarView, 0);
+		}
+		
+	}
+	private class DeleteItemEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			dropdownPanel.setVisible(false);
+			removeConfirmBox=new WaitPopupVc(GL1387,GL1388) {
 				@Override
 				public void onTextConfirmed() {
-					
-					getPresenter().RemoveCollectionFormAssignemnt(resourceDo.getGooruOid(), assignmentId);
-					
+					getPresenter().deleteClasspageItem(classpageItemDo.getCollectionItemId());
 				}
 			};
 		}
-	}
-	/**
-	 * Click event handler for editing the collection.
-	 */
-	private class CollectionEditClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			AppClientFactory.setPreviousPlaceRequest(AppClientFactory.getPlaceManager().getCurrentPlaceRequest());
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", resourceDo.getGooruOid() });
-		}
-	}
-	
-	/**
-	 * Click event handler for Collection Title 
-	 */
-	
-	private class CollectionTitleClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			OpenPlayer();
-		}
-	}
-	/**
-	 * Click event handler for Collection Image 
-	 */
-	private class CollectionImageClick implements ClickHandler{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			OpenPlayer();
-		}
-	}
-	/**
-	 * 
-	 * @function OpenPlayer 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description :Open collection player on clicking on Collection title or image
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void OpenPlayer(){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", resourceDo.getGooruOid());
-		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
-	}
-	
-	/**
-	 * 
-	 * To show the ResourceMetaDataInfo Edit,Copy and Remove buttons
-	 */
-	private class ActionPanelHover implements MouseOverHandler {
-
-		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			if (isTeacherView){
-				actionPanel.setVisible(true);
-			}
-		}
-	}
-
-	/**
-	 * 
-	 * To hide the ResourceMetaDataInfo Edit,Copy and Remove buttons
-	 */
-	private class ActionPanelOut implements MouseOutHandler {
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if (isTeacherView){
-				actionPanel.setVisible(false);
-			}
-		}
-	}
-
-	/**
-	 * @param url of the image
-	 *            
-	 */
-	public void setUrl(String url) {
-		if (url == null || url.endsWith(NULL)) {
-			collectionImage.setUrl(DEFULT_IMAGE);
-		} else {
-			collectionImage.setUrl(StringUtil.formThumbnailName(url,
-					"-160x120."));
-		}
-		collectionImage.setAltText(resourceDo.getTitle());
-		collectionImage.setTitle(resourceDo.getTitle());
-	}
-	/**
-	 * Method to return drag handle widget
-	 */
-	@Override
-	public Widget getDragHandle() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * Method to return initDraggableMirage
-	 */
-	@Override
-	public IsDraggableMirage initDraggableMirage() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * To handle drag events on blur handler.
-	 */
-	@Override
-	public void onDragBlur() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * To get Drag Id.
-	 */
-	@Override
-	public String getDragId() {
-		throw new RuntimeException("Not implemented");
-	}
-    /**
-     * To get Drag Type.
-     */
-	@Override
-	public DRAG_TYPE getDragType() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * To get DragTopCorrection
-	 */
-	@Override
-	public int getDragTopCorrection() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * To get DragLeftCorrection
-	 */
-	@Override
-	public int getDragLeftCorrection() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * To hide the Wait Popup.
-	 */
-	@Override
-	public void hideWaitPopup() {
-		if(waitConfirmVc != null){
-			waitConfirmVc.hide();
-			Window.enableScrolling(true);
-	        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		}
 		
-
 	}
+	private class CollectionEditEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			getCollectionFolders();
+		};
+	}
+	private class CollectionSummaryEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			String collectionId = classpageItemDo.getCollectionId();
+			
+			Map<String,String> params = new HashMap<String,String>();
+			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			params.put("pageSize", pageSize);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pageNum);
+			params.put("pos", pos);
+			params.put("analyticsId", collectionId);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			EditClasspageView.setAnalyticsData();
+		};
+	}
+	private class monitorProgressEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			String collectionId = classpageItemDo.getCollectionId();
+			
+			Map<String,String> params = new HashMap<String,String>();
+			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			params.put("pageSize", pageSize);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pageNum);
+			params.put("pos", pos);
+			params.put("monitorid", collectionId);
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			EditClasspageView.setAnalyticsMonitoringData();
+		};
+	}
+	
+	private class ResetEditContentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			resetEditContent();
+		}
+	}
+	
+	private class UpdateEditedDueDateEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(editToolBarView!=null){
+				hideButtons(true);
+				if(editToolBarView.dateBoxUc!=null&&editToolBarView.dateBoxUc.getValue()!=null&&!editToolBarView.dateBoxUc.getDateBox().getValue().equals("")&&editToolBarView.dateBoxUc.getDate()!=null&&!editToolBarView.dateBoxUc.getDate().trim().equals("")){
+					updateClasspageItem(null,editToolBarView.dateBoxUc.getDate());
+				}else{
+					//TODO display error message when direction.
+					resetEditContent();
+				}
+			}
+		}
+	}
+	private void hideButtons(boolean hideButtons){
+		editToolBarView.cancelButton.setVisible(!hideButtons);
+		editToolBarView.saveButton.setVisible(!hideButtons);
+		editToolBarView.savingText.setVisible(hideButtons);
+	}
+	private void showButtons(){
+		editButtonsToolBar.setVisible(false);
+		editToolBarView=new EditToolBarView(true);
+		editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
+		editToolBarView.saveButton.addClickHandler(new UpdateEditedDueDateEvent());
+	}
+	private class UpdateEditedContentEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(directionTextArea!=null){
+				final String directionTextAreaText=directionTextArea.getText().trim().equals(GL1389)?"":directionTextArea.getText().trim();
+				if(directionTextAreaText.length()>=400){
+					directionErrorLabel.setText(GL0143);
+				}else{
+					hideButtons(true);
+					directionErrorLabel.setText("");
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", directionTextAreaText);
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+						@Override
+						public void onSuccess(Boolean isFound) {
+							if(isFound){
+								directionErrorLabel.setText(GL0554);
+								hideButtons(false);
+							}else{
+								directionErrorLabel.setText("");
+								updateClasspageItem(directionTextAreaText,null);
+							}
+						}		
+					});
+				}
+			}else{
+				resetEditContent();
+			}
+		}
+	}
+	public void updateClasspageItem(String directionText,String dueDate){
+		getPresenter().updateClasspageItem(classpageItemDo.getCollectionItemId(), directionText, dueDate);
+	}
+	@Override
+	public void updateDirection(String directionText) {
+		this.directionText=directionText;
+		classpageItemDo.setDirection(directionText);
+		resetEditContent();
+	}
+	@Override
+	public void updateDueDate(String dueDate) {
+		classpageItemDo.setPlannedEndDate(dueDate);
+		setDueDate();
+		resetEditContent();
+		
+	}
+	public void editDirection(){
+		directionContentPanel.clear();
+		directionTextArea =new TextArea();
+		directionTextArea.getElement().setAttribute("maxlength", "400");
+		directionTextArea.setStyleName(CollectionsCBundle.INSTANCE.css().classpageTextarea());
+		if(directionText!=null&&!directionText.equals("")&&!directionText.equals("null")){
+			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+			directionTextArea.setText(directionText);
+		}else{
+			directionTextArea.setText(GL1389);
+			directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+		}
+		directionTextArea.addFocusHandler(new DirectonFoucsEvent());
+		directionTextArea.addBlurHandler(new DirectionBlurEvent());
+		directionTextArea.addKeyUpHandler(new DirectionKeypressEvent());
+		directionErrorLabel.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentDirectiomErrorMessage());
+		directionContentPanel.clear();
+		directionErrorLabel.setText("");
+		directionContentPanel.add(directionTextArea);
+		directionContentPanel.add(directionErrorLabel);
+	}
+	
+	public void resetEditContent(){
+		directionContentPanel.clear();
+		setDirection(directionText);
+		Widget widget=classpageItemContainer.getWidget(0);
+		if(widget instanceof EditToolBarView){
+			classpageItemContainer.remove(0);
+		}
+		editButtonsToolBar.setVisible(true);
+	}
+	private void setDirection(String directionText){
+		directionContentPanel.clear();
+		HTML directionContent=new HTML();
+		directionContent.setStyleName("");
+		if(directionText==null||directionText.equals("")||directionText.equals("null")){
+			directionContent.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
+			directionText=GL1374;
+		}
+		directionContent.setHTML(directionText);
+		directionContentPanel.add(directionContent);
+	}
+	public void removeClasspageItemWidget(){
+		removeConfirmBox.hide();
+		removeConfirmBox.hideButtons(true);
+		this.removeFromParent();
+		resetPagination();
+	}
+	public void hidePopup(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target)
+        	{
+        		dropdownPanel.setVisible(false);
+        		dropdownPanelAnalyticsButton.setVisible(false);
+        	}
+    	}
+     }
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return dropdownPanel.getElement().isOrHasChild(Element.as(target))||editClassItemButton.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
+	}
+
+	public void resetPagination(){
+		
+	}
+	
+/*	@UiHandler("viewClassItemAnalyticsButton")
+	public void clickOnAnalyticsBtn(ClickEvent clickEvent){
+		 MixpanelUtil.mixpanelEvent("Classpage_With_Analytics");
+		new CollectionAnalyticsUc(classpageItemDo.getCollectionId(), classpageItemDo.getCollectionTitle(),null) {
+			
+			@Override
+			public void setDefaultTab() {
+				
+			}
+		};
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
+	}*/
+	
+	public void getCollectionFolders(){
+		AppClientFactory.getInjector().getClasspageService().getCollectionParentFolders(classpageItemDo.getCollectionId(), new SimpleAsyncCallback<ArrayList<String>>() {
+			@Override
+			public void onSuccess(ArrayList<String> foldersList) {
+				if(foldersList!=null){
+					Map<String,String> parametesMap=new HashMap<String,String>();
+					parametesMap.put("id", classpageItemDo.getCollectionId());
+					if(foldersList.size()>0){
+						for(int i=0;i<foldersList.size();i++){
+							parametesMap.put("o"+(i+1), foldersList.get(i));
+						}
+					}
+					AppClientFactory.getPlaceManager().revealPlace(true, AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, parametesMap));
+				}
+			}
+		});
+	}
+	
+	private class DirectonFoucsEvent implements FocusHandler{
+		@Override
+		public void onFocus(FocusEvent event) {
+			String directionText=directionTextArea.getText().trim();
+			if(directionText.equalsIgnoreCase(GL1389)){
+				directionTextArea.setText("");
+			}
+			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+		}
+	}
+	
+	private class DirectionBlurEvent implements BlurHandler{
+		@Override
+		public void onBlur(BlurEvent event) {
+			String directionText=directionTextArea.getText().trim();
+			if(!directionText.equalsIgnoreCase(GL1389)&&directionText.length()>0){
+				if(directionText.length()>=400){
+					directionErrorLabel.setText(GL0143);
+					
+				}else{
+					directionErrorLabel.setText("");
+					showButtons();
+				}
+			}else{
+				directionTextArea.setText(GL1389);
+				directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+			}
+		}
+	}
+	private class DirectionKeypressEvent implements KeyUpHandler{
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			String directionText=directionTextArea.getText().trim();
+			if(directionText.length()>=400){
+				directionErrorLabel.setText(GL0143);
+				//event.preventDefault();
+				}else{
+				directionErrorLabel.setText("");
+			}
+		}
+	}
+	
+	/**
+	 * Updating the Collection Data (Title, Description)
+	 * by using UpdateSocialShareMetaDataHandler.
+	 */
+	UpdateSocialShareMetaDataHandler setHeader = new UpdateSocialShareMetaDataHandler() {
+		@Override
+		public void updateSocialShareMetaData(String title,
+				String description1, String imageUrl) {
+			classpageItemDo.setCollectionTitle(title);
+			classpageItemDo.setGoal(description1);
+		}
+	};
 }

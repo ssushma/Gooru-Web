@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,23 +35,13 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : ThankYouToolTip.java
- *
- * @description : This class is used to display the thank you popup.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class ThankYouToolTip extends PopupPanel {
+
+public class ThankYouToolTip extends PopupPanel implements MessageProperties {
 
 	private static ThankYouToolTipUiBinder uiBinder = GWT
 			.create(ThankYouToolTipUiBinder.class);
@@ -59,12 +50,15 @@ public class ThankYouToolTip extends PopupPanel {
 	}
 	@UiField
 	HTMLEventPanel closeButton;
-	@UiField
-	Image popUpCloseButton;
+	
+	@UiField Image popUpCloseButton;
+	
 	@UiField Button okButton;
-	/**
-	 * Class constructor.
-	 */
+	
+	@UiField Label successPopupTitle,emailIdLbl,emailConfirmationText;
+	@UiField Label successPopupMessage;
+	@UiField HTMLPanel emailPopupThanksmsg;
+	
 	public ThankYouToolTip() {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
@@ -72,21 +66,33 @@ public class ThankYouToolTip extends PopupPanel {
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
 		FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().ensureInjected();
-		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
-				.closeFlagPopUpImages());
+		successPopupTitle.setText(GL0600);
+		popUpCloseButton.setAltText(GL1050);
+		successPopupMessage.setText(GL0615);
+		emailConfirmationText.setText(GL0648);
+		okButton.setText(GL0190);
+		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
+		okButton.getElement().setAttribute("id","okButton");
+		successPopupMessage.setVisible(true);
+		emailPopupThanksmsg.setVisible(false);
 	}
-	/**
-	 * Handles the ok button click event.
-	 */
+	
+	
+	public void setTitleData(String title, String emailId) {
+		successPopupTitle.setText(title);
+		successPopupMessage.setVisible(false);
+		emailPopupThanksmsg.setVisible(true);
+		emailIdLbl.setText(emailId);
+
+	}
+	
 	@UiHandler("okButton")
 	public void onClickOfOkButton(ClickEvent event) {
 		Window.enableScrolling(true);
 		this.hide();
 				
 	}
-	/**
-	 * Handles the close button click event.
-	 */
+
 	@UiHandler("closeButton")
 	public void onClickOfcloseButton(ClickEvent event) {
 		Window.enableScrolling(true);

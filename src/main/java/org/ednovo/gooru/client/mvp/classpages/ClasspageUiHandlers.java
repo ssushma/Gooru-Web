@@ -35,13 +35,14 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 /**
  * @fileName : ClasspageUiHandlers.java
  *
- * @description : The interface for view classes that handles all the UI-related code for a ClasspagePresenter
+ * @description : 
+ *
  *
  * @version : 1.0
  *
  * @date: Apr 17, 2013
  *
- * @Author Anil Kumar T
+ * @Author Gooru Team
  *
  * @Reviewer: 
  */

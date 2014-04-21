@@ -22,26 +22,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetHeaderZIndexEvent.java
- *
- * @description : This is the event to set ZIndex for Header.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SetHeaderZIndexEvent extends GwtEvent<SetHeaderZIndexHandler> {
 
@@ -56,16 +47,12 @@ public class SetHeaderZIndexEvent extends GwtEvent<SetHeaderZIndexHandler> {
 		this.value = value;
 		this.isClearZIndex = isClearZIndex;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SetHeaderZIndexHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SetHeaderZIndexHandler handler) {
 		handler.setHeaderZIndex(value, isClearZIndex);

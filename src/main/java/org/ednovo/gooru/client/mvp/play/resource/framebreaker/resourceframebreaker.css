@@ -1,16 +1,15 @@
 @CHARSET "UTF-8";
 
 .framebreaker-container{
-	background: black;
+	background: #515151;
 	position:relative;
 }
 
 .framebreaker-wrapper{
 	margin: 0 auto;
-	width: 800px;
-	background-image: url("images/framebreaker-background.png");
-	position: relative;
 	min-height:550px;
+	text-align: center;
+	/* padding: 90px; */
 }
 
 .framebreaker-resource-container{
@@ -66,7 +65,7 @@
 
 .framebreaker-resource-url-content{
 	font-size: 17px;
-	margin-top: 30px;
+	/* margin-top: 30px; */
 }
 .framebreaker-resource-url{
 	text-decoration: none !important;
@@ -78,6 +77,47 @@
 }
 
 
+.framebreaker-image{
+	margin-bottom: 60px;
+}
+
+.textColorWhite{
+	color: white;
+}
+
+.margin20Px{
+	margin-bottom: 20px;
+}
 
 
-
+.margin40Px{
+	margin-bottom: 40px;
+}
+.supportTip{
+	background: #515151;
+	width: 100%;
+	text-align: right;
+}
+.resourceCategoryImage{
+	position: relative;
+	right: 90px;
+	display: inline-block;
+}
+.resourceImage{
+	margin-top: 106px;
+	display: inline-block;
+	width: 80px;
+	height: 60px;
+}
+.resourceComeBack{
+	font-size: 14px;
+	width: 275px;
+	text-align: center;
+	margin: 0 auto;
+	color: white;
+}
+.learnMoreLbl{
+	color: #1076BB;
+	display: inline;
+	cursor: pointer;
+}

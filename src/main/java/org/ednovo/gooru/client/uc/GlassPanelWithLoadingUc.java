@@ -27,18 +27,10 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 /**
- * @fileName : GlassPanelWithLoadingUc.java
+ * @author Search Team
  *
- * @description : This class is used to display the glass panel with loading image.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class GlassPanelWithLoadingUc extends FlowPanel {
 

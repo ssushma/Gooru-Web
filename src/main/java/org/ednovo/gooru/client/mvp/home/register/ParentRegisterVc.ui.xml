@@ -3,17 +3,17 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.home.register.RegisterCBundle" field="res" />
 	<g:FlowPanel styleName="{res.css.registerContentDiv}">
-		<g:Label styleName="{res.css.registerLabelAlign}" text="Looks like you’re going to need your parent or guardian’s help to sign up. Please enter your parent or guardian’s email, and we’ll get you set up soon! "/>
+		<g:Label styleName="{res.css.registerLabelAlign}" ui:field="setUpText"/>
 		
 		<g:FlowPanel styleName="{res.css.registerEmailDiv}">
-			<g:Label styleName="{res.css.emailIdParent}" text="Parent/Guardian’s Email"/>
+			<g:Label styleName="{res.css.emailIdParent}" ui:field="emailtext"/>
 			<g:TextBox styleName="{res.css.guardianEmailId}" ui:field="parentEmailIdTxtBox"/>
 			<gg:ErrorLabelUc ui:field="emailValidationUc"/>
 		</g:FlowPanel>
 		
 		<g:FlowPanel styleName="{res.css.parentFormButtonDiv}">
-			<gg:BlueButtonUc  text="Send" ui:field="almostDoneRegisterationUc" styleName = "{res.css.overRideBlueButton}"/>
-			<g:Anchor ui:field="guardianCancelAnr" text="Cancel" styleName="{res.css.collectionFormCancelButton}"/>
+			<gg:BlueButtonUc ui:field="almostDoneRegisterationUc" styleName = "{res.css.overRideBlueButton}"/>
+			<g:Anchor ui:field="guardianCancelAnr" styleName="{res.css.collectionFormCancelButton}"/>
 		</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

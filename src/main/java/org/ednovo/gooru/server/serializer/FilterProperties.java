@@ -26,20 +26,13 @@
  * 
  */
 package org.ednovo.gooru.server.serializer;
+
 /**
- * 
- * @fileName : FilterProperties.java
- *
- * @description : Defines filter maps containing the inclusions and exclusions needed to be
+ * Defines filter maps containing the inclusions and exclusions needed to be
  * made while serializing
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @author Search Team
+ * 
  */
 public interface FilterProperties extends Properties {
 

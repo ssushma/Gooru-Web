@@ -38,18 +38,10 @@ import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+
 /**
- * @fileName : TextBoxWithPlaceholder.java
- *
- * @description : This class is used to display the text box with place holder.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author SearchTeam
+ * 
  */
 public class TextBoxWithPlaceholder extends TextBox {
 
@@ -94,9 +86,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 		super(element);
 		setupHandlers();
 	}
-	/**
-	 * get the text.
-	 */
+
 	@Override
 	public String getText() {
 		if (isPlaceHolderVisible) {
@@ -105,9 +95,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 			return super.getText();
 		}
 	}
-	/**
-	 *sets the text.
-	 */
+
 	@Override
 	public void setText(String text) {
 		super.setText(text);
@@ -123,9 +111,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 	public String getPlaceholder() {
 		return placeholder;
 	}
-	/**
-	 * sets the place holder
-	 */
+
 	public void setPlaceholder(String value) {
 		if (isPlaceHolderVisible && value != null && !value.equals(placeholder)) {
 			// clear the text so the new placeholder will be displayed
@@ -135,9 +121,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 		placeholder = value;
 		showPlaceholder();
 	}
-	/**
-	 * It will set the handlers.
-	 */
+
 	private void setupHandlers() {
 		addFocusHandler(new FocusHandler() {
 			public void onFocus(FocusEvent event) {
@@ -151,9 +135,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 			}
 		});
 	}
-	/**
-	 * shows the place holder
-	 */
+
 	private void showPlaceholder() {
 		if (super.getText().equals("") && getPlaceholder() != null) {
 			addStyleName(UcCBundle.INSTANCE.css().textBoxWithPlaceholderText());
@@ -164,9 +146,7 @@ public class TextBoxWithPlaceholder extends TextBox {
 			}
 		}
 	}
-	/**
-	 * hides the place holder
-	 */
+
 	private void hidePlaceholder(String newText) {
 		if (isPlaceHolderVisible) {
 			removeStyleName(UcCBundle.INSTANCE.css().textBoxWithPlaceholderText());

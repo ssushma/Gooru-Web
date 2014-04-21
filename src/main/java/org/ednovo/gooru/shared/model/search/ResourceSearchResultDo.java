@@ -30,24 +30,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.shared.model.content.LicenseDo;
+import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-/**
- * @fileName : ResourceSearchResultDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class ResourceSearchResultDo implements Serializable {
 
 	/**
@@ -113,12 +101,18 @@ public class ResourceSearchResultDo implements Serializable {
 	
 	private ResourceSourceDo  resourceSource;
 	
+	private SearchResourceFormatDO resourceFormat;
+	
 	private String questionType;
 	
 	private String mediaType;
 	
 	private int noOfResources;
+	
+	private String folder;
 
+	private String gooruUId;
+	
 	/** 
 	 * This method is to get the mediaType
 	 */
@@ -137,440 +131,295 @@ public class ResourceSearchResultDo implements Serializable {
 
 	}
 
-	/** 
-	 * This method is to get the gooruOid
-	 */
-	public String getGooruOid() {
-		return gooruOid;
-	}
-
-	/** 
-	 * This method is to set the gooruOid
-	 */
-	public void setGooruOid(String gooruOid) {
-		this.gooruOid = gooruOid;
-	}
-
-	/** 
-	 * This method is to get the entryId
-	 */
-	public long getEntryId() {
-		return entryId;
-	}
-
-	/** 
-	 * This method is to set the entryId
-	 */
-	public void setEntryId(long entryId) {
-		this.entryId = entryId;
-	}
-
-	/** 
-	 * This method is to get the url
-	 */
-	public String getUrl() {
-		return url;
-	}
-
-	/** 
-	 * This method is to set the url
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	/** 
-	 * This method is to get the resourceTitle
-	 */
-	public String getResourceTitle() {
-		return resourceTitle;
-	}
-
-	/** 
-	 * This method is to set the resourceTitle
-	 */
-	public void setResourceTitle(String resourceTitle) {
-		this.resourceTitle = resourceTitle;
-	}
-
-	/** 
-	 * This method is to get the resourceTypeString
-	 */
-	public String getResourceTypeString() {
-		return resourceTypeString;
-	}
-
-	/** 
-	 * This method is to set the resourceTypeString
-	 */
-	public void setResourceTypeString(String resourceTypeString) {
-		this.resourceTypeString = resourceTypeString;
-	}
-
-	/** 
-	 * This method is to get the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-	/** 
-	 * This method is to set the category
-	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	/** 
-	 * This method is to get the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/** 
-	 * This method is to set the description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/** 
-	 * This method is to get the totalViews
-	 */
 	public int getTotalViews() {
 		return totalViews;
 	}
 
-	/** 
-	 * This method is to set the totalViews
-	 */
 	public void setTotalViews(int totalViews) {
 		this.totalViews = totalViews;
 	}
 
-	/** 
-	 * This method is to get the subjectNames
-	 */
-	public List<String> getSubjectNames() {
-		return subjectNames;
+	public String getResourceTitle() {
+		return resourceTitle;
 	}
 
-	/** 
-	 * This method is to set the subjectNames
-	 */
-	public void setSubjectNames(List<String> subjectNames) {
-		this.subjectNames = subjectNames;
+	public void setResourceTitle(String resourceTitle) {
+		this.resourceTitle = resourceTitle;
 	}
 
-	/** 
-	 * This method is to get the courseNames
-	 */
-	public List<String> getCourseNames() {
-		return courseNames;
+	public String getResourceTypeString() {
+		return resourceTypeString;
 	}
 
-	/** 
-	 * This method is to set the courseNames
-	 */
-	public void setCourseNames(List<String> courseNames) {
-		this.courseNames = courseNames;
+	public void setResourceTypeString(String resourceType) {
+		this.resourceTypeString = resourceType;
 	}
 
-	/** 
-	 * This method is to get the unitNames
-	 */
-	public List<String> getUnitNames() {
-		return unitNames;
+	public String getDescription() {
+		return description;
 	}
 
-	/** 
-	 * This method is to set the unitNames
-	 */
-	public void setUnitNames(List<String> unitNames) {
-		this.unitNames = unitNames;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	/** 
-	 * This method is to get the topicNames
-	 */
-	public List<String> getTopicNames() {
-		return topicNames;
+	public String getUrl() {
+		return url;
 	}
 
-	/** 
-	 * This method is to set the topicNames
-	 */
-	public void setTopicNames(List<String> topicNames) {
-		this.topicNames = topicNames;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	/** 
-	 * This method is to get the lessonNames
-	 */
-	public List<String> getLessonNames() {
-		return lessonNames;
+	public String getGooruOid() {
+		return gooruOid;
 	}
 
-	/** 
-	 * This method is to set the lessonNames
-	 */
-	public void setLessonNames(List<String> lessonNames) {
-		this.lessonNames = lessonNames;
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
 	}
 
-	/** 
-	 * This method is to get the owner
-	 */
+	public long getEntryId() {
+		return entryId;
+	}
+
+	public void setEntryId(long entryId) {
+		this.entryId = entryId;
+	}
+
+	public void setOwner(UserDo creatorDo) {
+		this.owner = creatorDo;
+	}
+
 	public UserDo getOwner() {
 		return owner;
 	}
 
-	/** 
-	 * This method is to set the owner
-	 */
-	public void setOwner(UserDo owner) {
-		this.owner = owner;
+	/*public void setStandards(List<Map<String, String>> standards) {
+		this.standards = standards;
 	}
 
-	/** 
-	 * This method is to get the attribution
-	 */
+	public List<Map<String, String>> getStandards() {
+		return standards;
+	}
+*/
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
 	public String getAttribution() {
 		return attribution;
 	}
 
-	/** 
-	 * This method is to set the attribution
-	 */
 	public void setAttribution(String attribution) {
 		this.attribution = attribution;
 	}
 
-	/** 
-	 * This method is to get the standards
-	 */
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public String getAverageTime() {
+		return averageTime;
+	}
+
+	public void setAverageTime(String averageTime) {
+		this.averageTime = averageTime;
+	}
+
+	public int getSharedCount() {
+		return sharedCount;
+	}
+
+	public void setSharedCount(int sharedCount) {
+		this.sharedCount = sharedCount;
+	}
+
+	public String getNumOfPages() {
+		return numOfPages;
+	}
+
+	public void setNumOfPages(String numOfPages) {
+		this.numOfPages = numOfPages;
+	}
+
+	public String getDurationInSec() {
+		return durationInSec;
+	}
+
+	public void setDurationInSec(String durationInSec) {
+		this.durationInSec = durationInSec;
+	}
+
+	public List<String> getSubjectNames() {
+		return subjectNames;
+	}
+
+	public void setSubjectNames(List<String> subjectNames) {
+		this.subjectNames = subjectNames;
+	}
+
+	public List<String> getCourseNames() {
+		return courseNames;
+	}
+
+	public void setCourseNames(List<String> courseNames) {
+		this.courseNames = courseNames;
+	}
+
+	public List<String> getUnitNames() {
+		return unitNames;
+	}
+
+	public void setUnitNames(List<String> unitNames) {
+		this.unitNames = unitNames;
+	}
+
+	public List<String> getTopicNames() {
+		return topicNames;
+	}
+
+	public void setTopicNames(List<String> topicNames) {
+		this.topicNames = topicNames;
+	}
+
+	public List<String> getLessonNames() {
+		return lessonNames;
+	}
+
+	public void setLessonNames(List<String> lessonNames) {
+		this.lessonNames = lessonNames;
+	}
+
+	public void setLicense(LicenseDo license) {
+		this.license = license;
+	}
+
+	public LicenseDo getLicense() {
+		return license;
+	}
+
+	public Integer getVotesUp() {
+		return votesUp;
+	}
+
+	public void setVotesUp(Integer votesUp) {
+		this.votesUp = votesUp;
+	}
+
+	public Integer getVotesDown() {
+		return votesDown;
+	}
+
+	public void setVotesDown(Integer votesDown) {
+		this.votesDown = votesDown;
+	}
+
+	public void setTagSet(Set<TagDo> tagSet) {
+		this.tagSet = tagSet;
+	}
+
+	public Set<TagDo> getTagSet() {
+		return tagSet;
+	}
+
+	public String getAssetURI() {
+		return assetURI;
+	}
+
+	public void setAssetURI(String assetURI) {
+		this.assetURI = assetURI;
+	}
+
+	public void setResourceType(ResourceTypeDo resourceTypeDo) {
+		this.resourceType = resourceTypeDo;
+	}
+
+	public ResourceTypeDo getResourceType() {
+		return resourceType;
+	}
+
+	public void setResourceSource(ResourceSourceDo resourceSourceDo) {
+		this.resourceSource = resourceSourceDo;
+	}
+
+	public ResourceSourceDo getResourceSource() {
+		return resourceSource;
+	}
+
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
+	}
+
+	public String getQuestionType() {
+		return questionType;
+	}
+
+	public int getNoOfResources() {
+		return noOfResources;
+	}
+
+	public void setNoOfResources(int noOfResources) {
+		this.noOfResources = noOfResources;
+	}
+	
 	public List<Map<String, String>> getStandards() {
 		return standards;
 	}
 
-	/** 
-	 * This method is to set the standards
-	 */
 	public void setStandards(List<Map<String, String>> standards) {
 		this.standards = standards;
 	}
 
 	/** 
-	 * This method is to get the grade
+	 * This method is to get the folder
 	 */
-	public String getGrade() {
-		return grade;
+	public String getFolder() {
+		return folder;
 	}
 
 	/** 
-	 * This method is to set the grade
+	 * This method is to set the folder
 	 */
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public void setFolder(String folder) {
+		this.folder = folder;
+	}
+
+	public SearchResourceFormatDO getResourceFormat() {
+		return resourceFormat;
+	}
+
+	public void setResourceFormat(SearchResourceFormatDO resourceFormat) {
+		this.resourceFormat = resourceFormat;
 	}
 
 	/** 
-	 * This method is to get the tags
+	 * This method is to get the gooruUId
 	 */
-	public String getTags() {
-		return tags;
+	public String getGooruUId() {
+		return gooruUId;
 	}
 
 	/** 
-	 * This method is to set the tags
+	 * This method is to set the gooruUId
 	 */
-	public void setTags(String tags) {
-		this.tags = tags;
+	public void setGooruUId(String gooruUId) {
+		this.gooruUId = gooruUId;
 	}
-
-	/** 
-	 * This method is to get the averageTime
-	 */
-	public String getAverageTime() {
-		return averageTime;
-	}
-
-	/** 
-	 * This method is to set the averageTime
-	 */
-	public void setAverageTime(String averageTime) {
-		this.averageTime = averageTime;
-	}
-
-	/** 
-	 * This method is to get the sharedCount
-	 */
-	public int getSharedCount() {
-		return sharedCount;
-	}
-
-	/** 
-	 * This method is to set the sharedCount
-	 */
-	public void setSharedCount(int sharedCount) {
-		this.sharedCount = sharedCount;
-	}
-
-	/** 
-	 * This method is to get the numOfPages
-	 */
-	public String getNumOfPages() {
-		return numOfPages;
-	}
-
-	/** 
-	 * This method is to set the numOfPages
-	 */
-	public void setNumOfPages(String numOfPages) {
-		this.numOfPages = numOfPages;
-	}
-
-	/** 
-	 * This method is to get the durationInSec
-	 */
-	public String getDurationInSec() {
-		return durationInSec;
-	}
-
-	/** 
-	 * This method is to set the durationInSec
-	 */
-	public void setDurationInSec(String durationInSec) {
-		this.durationInSec = durationInSec;
-	}
-
-	/** 
-	 * This method is to get the license
-	 */
-	public LicenseDo getLicense() {
-		return license;
-	}
-
-	/** 
-	 * This method is to set the license
-	 */
-	public void setLicense(LicenseDo license) {
-		this.license = license;
-	}
-
-	/** 
-	 * This method is to get the votesUp
-	 */
-	public Integer getVotesUp() {
-		return votesUp;
-	}
-
-	/** 
-	 * This method is to set the votesUp
-	 */
-	public void setVotesUp(Integer votesUp) {
-		this.votesUp = votesUp;
-	}
-
-	/** 
-	 * This method is to get the votesDown
-	 */
-	public Integer getVotesDown() {
-		return votesDown;
-	}
-
-	/** 
-	 * This method is to set the votesDown
-	 */
-	public void setVotesDown(Integer votesDown) {
-		this.votesDown = votesDown;
-	}
-
-	/** 
-	 * This method is to get the tagSet
-	 */
-	public Set<TagDo> getTagSet() {
-		return tagSet;
-	}
-
-	/** 
-	 * This method is to set the tagSet
-	 */
-	public void setTagSet(Set<TagDo> tagSet) {
-		this.tagSet = tagSet;
-	}
-
-	/** 
-	 * This method is to get the assetURI
-	 */
-	public String getAssetURI() {
-		return assetURI;
-	}
-
-	/** 
-	 * This method is to set the assetURI
-	 */
-	public void setAssetURI(String assetURI) {
-		this.assetURI = assetURI;
-	}
-
-	/** 
-	 * This method is to get the resourceType
-	 */
-	public ResourceTypeDo getResourceType() {
-		return resourceType;
-	}
-
-	/** 
-	 * This method is to set the resourceType
-	 */
-	public void setResourceType(ResourceTypeDo resourceType) {
-		this.resourceType = resourceType;
-	}
-
-	/** 
-	 * This method is to get the resourceSource
-	 */
-	public ResourceSourceDo getResourceSource() {
-		return resourceSource;
-	}
-
-	/** 
-	 * This method is to set the resourceSource
-	 */
-	public void setResourceSource(ResourceSourceDo resourceSource) {
-		this.resourceSource = resourceSource;
-	}
-
-	/** 
-	 * This method is to get the questionType
-	 */
-	public String getQuestionType() {
-		return questionType;
-	}
-
-	/** 
-	 * This method is to set the questionType
-	 */
-	public void setQuestionType(String questionType) {
-		this.questionType = questionType;
-	}
-
-	/** 
-	 * This method is to get the noOfResources
-	 */
-	public int getNoOfResources() {
-		return noOfResources;
-	}
-
-	/** 
-	 * This method is to set the noOfResources
-	 */
-	public void setNoOfResources(int noOfResources) {
-		this.noOfResources = noOfResources;
-	}
-
-
-
 }

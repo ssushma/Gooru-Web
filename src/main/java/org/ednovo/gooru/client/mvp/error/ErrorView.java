@@ -25,31 +25,28 @@
 package org.ednovo.gooru.client.mvp.error;
 
 import org.ednovo.gooru.client.gin.BaseView;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
+
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ErrorView.java
+ * @author Search Team
  *
- * @description : THis file is used to set the error widget.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ErrorView extends BaseView implements IsErrorView {
-
+public class ErrorView extends BaseView implements IsErrorView,MessageProperties {
 	/**
 	 * Class constructor
 	 */
 	public ErrorView() {
-		setWidget(new HTML("<font size='3px' color='#800000'>The requested view doesn't exist or you don't have permission to access the page</font>"));
+		setWidget(new HTML("<body><div class='errorMessageMaindiv'><div class='errorMessageContent'><div class='errorMessageContentBg'><div class='errorMessageHeading'>"+GL1391+"</div></div><div class='errorMessageDiv'>"+GL1392+"<button type='button' class='detective'>"+GL1393+"</button></div></div></div></body>"));
 	}
 
 }

@@ -29,7 +29,6 @@ import java.util.Map;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
-import org.ednovo.gooru.shared.model.user.ProfileV2Do;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
@@ -53,6 +52,8 @@ public interface UserServiceAsync extends BaseServiceAsync {
     void getRegistredUserDetails(String gooruUid, AsyncCallback<UserDo> callback);
     
     void getUserProfileDetails(String gooruUid, AsyncCallback<SettingDo> callback);
+    
+    void getV2UserProfileDetails(String gooruUid, AsyncCallback<V2UserDo> callback);
     
     void updateUserDetails(String gooruUid, String token, Map<String, String> params, AsyncCallback<ProfileDo> callback);
     
@@ -83,6 +84,10 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void updateNewEmailStatus(String emailId, boolean isEmailConfirmed,
 		AsyncCallback<Void> callback);
    
-   void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,AsyncCallback<V2UserDo> callback);
+   void updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biographyString ,String password,String userName, String gender, boolean isSendConfirmEmail, AsyncCallback<V2UserDo> callback);
+   
+   void sendWelcomeMail(String gooruUId, String emailType, AsyncCallback<Object> callback);
+   
+   void updatePartyCustomField(String gooruUid,String optionKey,String optionValue,AsyncCallback<Void> callback);
 
 }

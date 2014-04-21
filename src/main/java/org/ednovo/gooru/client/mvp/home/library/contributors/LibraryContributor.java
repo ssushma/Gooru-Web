@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.shared.StringUtil;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,51 +44,38 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : LibraryContributor.java
- *
- * @description : This class is used to display the library contributors.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class LibraryContributor extends Composite {
+
+public class LibraryContributor extends Composite implements MessageProperties {
 
 	@UiField Image educatorPhoto;
 	@UiField Label educatorName, userName;
 	@UiField HTMLPanel courses;
 	@UiField LibraryStyleBundle libraryStyleUc;
 
-	private static final String COURSE_PAGE_URL = "#discover&page=course-page&subject={0}&courseId={1}";
+	private static final String COURSE_PAGE_URL = "#{0}&page=course-page&subject={1}&courseId={2}";
 	
 	private static final String PNG = ".png";
 	
 	private static LibraryContributorUiBinder uiBinder = GWT.create(LibraryContributorUiBinder.class);
 
 	interface LibraryContributorUiBinder extends UiBinder<Widget, LibraryContributor> {}
-	/**
-	 * Class constructor.
-	 * @param libraryUserDo
-	 */
-	public LibraryContributor(LibraryUserDo libraryUserDo) {
+	
+	public LibraryContributor(LibraryUserDo libraryUserDo, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setEducatorData(libraryUserDo);
-		educatorPhoto.setHeight("165px");
+		setEducatorData(libraryUserDo,placeToken);
+		educatorPhoto.setHeight("185px");
 		educatorPhoto.setWidth("185px");
 	}
 	
 	/**
 	 * 
+	 * @param placeToken 
 	 * @function setEducatorData 
 	 * 
 	 * @created_date : 05-Dec-2013
 	 * 
-	 * @description : This method is used to set the educator data.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : 
 	 * 
@@ -96,8 +84,7 @@ public class LibraryContributor extends Composite {
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	private void setEducatorData(LibraryUserDo libraryUserDo) {
-		
+	private void setEducatorData(LibraryUserDo libraryUserDo, String placeToken) {		
 		educatorPhoto.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + libraryUserDo.getGooruUId()+PNG);
 		educatorPhoto.addErrorHandler(new ErrorHandler() {
 			@Override
@@ -105,23 +92,22 @@ public class LibraryContributor extends Composite {
 				educatorPhoto.setUrl("../images/settings/setting-user-image.png");
 			}
 		});
-		educatorPhoto.setAltText(libraryUserDo.getFirstName()+"'s photo");
+		educatorPhoto.setAltText(libraryUserDo.getFirstName()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1181);
 		educatorName.setText(libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
 		userName.setText(libraryUserDo.getUsername());
-		Label authorCoursesLbl = new Label(libraryUserDo.getUsername()+"'s Courses");
+		Label authorCoursesLbl = new Label(libraryUserDo.getUsername()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1180);
+		//
 		authorCoursesLbl.setStyleName(libraryStyleUc.header());
 		courses.add(authorCoursesLbl);
 		for(int i=0;i<libraryUserDo.getCourses().size();i++) {
 			Anchor authorCourseAnr = new Anchor(libraryUserDo.getCourses().get(i).getLabel());
 			authorCourseAnr.setStyleName(libraryStyleUc.course());
-			authorCourseAnr.setHref(StringUtil.generateMessage(COURSE_PAGE_URL, libraryUserDo.getCourses().get(i).getParentId(), ""+libraryUserDo.getCourses().get(i).getCodeId()));
+			authorCourseAnr.setHref(StringUtil.generateMessage(COURSE_PAGE_URL, placeToken, libraryUserDo.getCourses().get(i).getParentId(), ""+libraryUserDo.getCourses().get(i).getCodeId()));
 			authorCourseAnr.addClickHandler(new MixpanelEventHandler());
 			courses.add(authorCourseAnr);
 		}
 	}
-	/**
-	 * This inner class will handle the click event on the library page.
-	 */
+	
 	private class MixpanelEventHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {

@@ -43,16 +43,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : SettingLastNameEditLabelUC.java
- *
- * @description : This class is used to change last name in setting page.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
+ * 
+ * @description :This class is used to change last name in setting page.
+ * 
+ * 
+ * @version : 5.9
+ * 
+ * @date: Sep 23, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
 public class SettingLastNameEditLabelUC extends Composite implements MessageProperties,HasValue<String>{
 
@@ -74,13 +75,10 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 	@UiField
 	protected FocusPanel focusPanel;
 	protected String text;
-	private static final String LNAME = "lastname";
+	private static final String LNAME = GL1048;
 	
 	@UiField(provided = true)
 	UcCBundle res;
-	/**
-	 * Class constructor.
-	 */
 	public SettingLastNameEditLabelUC() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));

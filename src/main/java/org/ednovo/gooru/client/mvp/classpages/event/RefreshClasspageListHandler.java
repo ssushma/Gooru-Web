@@ -29,16 +29,16 @@ import com.google.gwt.event.shared.EventHandler;
  * 
  * @fileName : RefreshClasspageListHandler.java
  *
- * @description : This file is used to refresh classpage list event handlers.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Aug 21, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface RefreshClasspageListHandler extends EventHandler {
 
@@ -48,7 +48,7 @@ public interface RefreshClasspageListHandler extends EventHandler {
 	 * 
 	 * @created_date : Aug 21, 2013
 	 * 
-	 * @description : This is used to refresh class page.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 

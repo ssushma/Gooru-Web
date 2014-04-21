@@ -23,6 +23,10 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.share;
+
+/**
+ * 
+ */
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.service.ClasspageService;
 
@@ -32,13 +36,14 @@ import org.ednovo.gooru.client.service.ClasspageService;
  *
  * @description : This is a presenter class for ShareTabView.java 
  *
+ *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class ShareTabPresenter extends ChildPresenter<ShareTabPresenter, IsShareTabView> {
 

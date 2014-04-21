@@ -28,5 +28,12 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
+	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
+
+	public void createReaction(String resourceId,String reactionText, String gooruReactionId, String collectionId, String createStudyPlayerReaction);
+
+	public void deleteReaction(String gooruReactionId);   
+	
+	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
 }

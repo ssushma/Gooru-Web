@@ -24,32 +24,29 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.assignments;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-
-import com.gwtplatform.mvp.client.PopupView;
 /**
- * 
- * @fileName : IsAddAssignmentContainerView.java
- *
- * @description : This file is responsible for UI Handlers.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public interface IsAddAssignmentContainerView extends PopupView, IsViewWithHandlers<AddAssignmentContainerUiHandlers>{
-	
-	void setClasspageId(String classpageId);
+* @fileName : IsAddResourceView.java 
+*
+* @description :This file is responsible for UI Handlers.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
-	void setAssignmentData(CollectionItemDo result);
-	
-	void resetAllFields();
-	
-	void resetClicked();
+import com.google.gwt.user.client.ui.TreeItem;
+import com.gwtplatform.mvp.client.PopupView;
+
+public interface IsAddAssignmentContainerView extends PopupView, IsViewWithHandlers<AddAssignmentContainerUiHandlers>{
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel);
+	public void clearShelfData();
+	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
+	public void hideAddCollectionPopup(String collectionTitle);
 }

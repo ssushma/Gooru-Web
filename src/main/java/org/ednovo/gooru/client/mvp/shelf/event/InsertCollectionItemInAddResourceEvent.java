@@ -30,19 +30,10 @@ package org.ednovo.gooru.client.mvp.shelf.event;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : InsertCollectionItemInAddResourceEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user insert collection item in add resource.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class InsertCollectionItemInAddResourceEvent extends GwtEvent<InsertCollectionItemInAddResourceHandler> {
 

@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,26 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.RegisterTabDndEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionAndItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemInFoldersEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.DeleteFolderInShelfViewEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.DisableDraggableEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.DragOverOpenFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertFolderInShelfViewEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
@@ -48,44 +61,43 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfOpenClickEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.ResourceDragOverShelfEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UserInfoMsgShelfEvent;
+import org.ednovo.gooru.client.service.FolderServiceAsync;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 /**
- * 
- * @fileName : ShelfListPresenter.java
+ * @author Search Team
  *
- * @description : It gives  details of all the handlers which are being added  and used
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ShelfListPresenter extends PresenterWidget<IsShelfListView> implements ShelfListUiHandlers {
 
 	@Inject
 	private ResourceServiceAsync resourceService;
 
+	@Inject
+	private FolderServiceAsync folderService;
+
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
+	
+	private SimpleAsyncCallback<CollectionDo> saveDraggedCollectionAsyncCallback;
 
 	private SimpleAsyncCallback<CollectionItemDo> saveCollectionItemAsyncCallback;
 
-	private SimpleAsyncCallback<List<CollectionDo>> userCollectionAsyncCallback;
+	private SimpleAsyncCallback<FolderListDo> userCollectionAsyncCallback;
 	
 	private boolean clrPanel=false;
 
@@ -99,6 +111,8 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 
 	private static String IPAD_NOT_FRIENDLY  = "not_ipad_friendly";
 
+	private List<FolderDo> searchResult = new ArrayList<FolderDo>();
+	
 	/**
 	 * Class Constructor
 	 * @param eventBus {@link EventBus}
@@ -124,7 +138,17 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(RefreshUserShelfCollectionsEvent.TYPE, this);
 		addRegisteredHandler(RequestShelfOpenClickEvent.TYPE, this);
 		addRegisteredHandler(UserInfoMsgShelfEvent.TYPE, this);
-
+		addRegisteredHandler(ResourceDragOverShelfEvent.TYPE, this);
+		addRegisteredHandler(CopyDraggedCollectionEvent.TYPE, this);
+		addRegisteredHandler(RefreshFolderItemEvent.TYPE, this);
+		addRegisteredHandler(ChangeShelfPanelActiveStyleEvent.TYPE, this);
+		addRegisteredHandler(UpdateShelfFolderNameEvent.TYPE, this);
+		addRegisteredHandler(RemoveMovedCollectionFolderEvent.TYPE, this); 
+		addRegisteredHandler(DragOverOpenFolderEvent.TYPE, this); 
+		addRegisteredHandler(InsertMovedCollectionEvent.TYPE, this); 
+		addRegisteredHandler(SetCollectionMovedStyleEvent.TYPE, this); 
+		addRegisteredHandler(SetFolderCollectionStyleEvent.TYPE, this); 
+		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
 	}
 
 	@Override
@@ -135,70 +159,54 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.FOLDERS)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_FOLDERS)){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
 			getView().collectionListScrollpanel(false);
 		}else{
 			getView().collectionListScrollpanel(true);
 		}
+		getView().setBackToSearch();
 		getView().onLoad();
 	}
-/**
- * @description: It redirects to another page
- */
+
 	@Override
 	public void onReset() {
 		super.onReset();
 		getView().resetDragImage();
 		if (version == null || (version != null && !version.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getToken()))) {
 			getView().reset();
-			getResourceService().getUserCollectionList(20,ShelfListView.getpageNumber(),false,getUserCollectionAsyncCallback(true));
+			getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
 			version = AppClientFactory.getLoggedInUser().getToken();
 		}
 		getView().setNewCollectionPanel();
 		Document doc = Document.get();
 		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 	}
-	/**
-	 * @description: It doesn't display and hides the content
-	 */
+	
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().onUnload();
 	}
-	/**
-	 * @description: It creates the collection
-	 */
 
 	@Override
 	public void initCreateCollection() {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
 	}
-	/**
-	 * @description:It copy the collection
-	 */
 
 	@Override
-	public void copyCollection(String collectionUid) {
+	public void copyCollection(CollectionDo collectionDo,String codeId) {
 		MixpanelUtil.Drag_Collection_FromSearchResultToFolder();
-		CollectionDo collection = new CollectionDo();
-		collection.setGooruOid(collectionUid);
-		getResourceService().copyCollection(collection, "true", null, getSaveCollectionAsyncCallback());
+		getResourceService().copyCollection(collectionDo, "true", codeId, getSaveCollectionAsyncCallback());
 	}
-/**
- *@description: It create collection items
- */
+
 	@Override
 	public void createCollectionItem(String collectionUid, String resourceUid) {
 		MixpanelUtil.Drag_Resource_FromSearchResultToCollection();
 		getResourceService().createCollectionItem(collectionUid, resourceUid, getSaveCollectionItemAsyncCallback());
 	}
-/**
-  *@description: It create collection and also items
 
- */
 	@Override
-	public void createCollectionAndItem(String resourceUid) { 
+	public void createCollectionAndItem(String resourceUid) {
 		MixpanelUtil.Drag_Resource_FromSearchResultToNewCollection();
 		
 		Map<String, String> params = new HashMap<String, String>();
@@ -213,103 +221,67 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION, params);
 	}
-	/**
-	  *@description: It create collection items in folders
-
-	 */
+	
 	@Override
 	public void createCollectionItemInFolders(String collectionUid,
 			String resourceUid, String folderLevel) {
-		this.folderLevel = folderLevel;
-		getResourceService().createCollectionItem(collectionUid, resourceUid, getSaveCollectionItemInFoldersAsyncCallback());
+		
 	}
-/**
- * @description: It request the shelf view
- */
+
 	@Override
 	public void requestShelfView(String collectionId) {
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", collectionId });
+		if(collectionId==null) {
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		} else {
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", collectionId });
+		}
 	}
-	/**
-	 * @description:It register and controllers
-	 */
 	
 	@Override
 	public void registerDndControllers() {
 		getView().registerDropControllers();
 	}
-/**
- * @description: It reqwuest shelf collections
- */
+
 	@Override
 	public void requestShelfCollections() {
 		if (getView().isFireConsumeShelfCollectionEvent() && !AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)) {
 			AppClientFactory.fireEvent(new ConsumeShelfCollectionsEvent(getView().getShelfCollections()));
 		}
 	}
-/**
- * @description: It refresh collection in shelf list
- */
+
 	@Override
 	public void refreshCollectionInShelfList(CollectionDo collection, RefreshType refreshType) {
 		getView().refreshCollectionInShelfList(collection, refreshType);
 	}
-	/**
-	 * @description: It refresh level folder in shelf list
-	 */
-	@Override
-	public void refreshLevelFolderInShelfList(String collectionId,	RefreshType refreshType, String folderLevel , int sequence,boolean flag) {
-		getView().refreshLevelFolderInShelfList(collectionId, refreshType, folderLevel,sequence,flag);
-	}
-	/**
-	 * @description: it inserts folder in shelf view
-	 */
 	
 	@Override
-	public void insertFolderInShelfView(CollectionItemDo collectionItemDo,
-			RefreshType refreshType, String folderLevel) {
-		getView().insertFolderInShelfView(collectionItemDo, refreshType, folderLevel);
+	public void refreshLevelFolderInShelfList(String collectionId,	RefreshType refreshType, String folderLevel , int sequence,boolean flag) {
+		
 	}
-	/**
-	 * @description: It deletes folder in shelf view
-	 */
+	
+	@Override
+	public void insertFolderInShelfView(CollectionItemDo collectionItemDo, RefreshType refreshType, String folderLevel) {
+		
+	}
+	
 	@Override
 	public void deleteFolderInShelfView(CollectionItemDo collectionItemDo,
 			RefreshType refreshType, String folderLevel) {
 			
 	}
-	/**
-	 * @description:It disables the draggable event
-	 */
+	
 	@Override
 	public void disableDraggableEvent(String folderLevel,
 			String folderObjectType) {
 		getView().disableDraggableEvent(folderLevel, folderObjectType);
 	}
-/**
- * @description:It refresh collection item in shelf list
- */
+
 	@Override
 	public void refreshCollectionItemInShelfList(CollectionItemDo collectionItem, RefreshType refreshType) {
 		getView().refreshCollectionItemInShelfList(collectionItem, refreshType);
 
 	}
-/**
- * 
- * @function getSaveCollectionItemAsyncCallback 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :Api calling
- * 
- * 
- * @parm(s) : @return
- * 
- * @return : SimpleAsyncCallback<CollectionItemDo>
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public SimpleAsyncCallback<CollectionItemDo> getSaveCollectionItemAsyncCallback() {
 		if (saveCollectionItemAsyncCallback == null) {
 			saveCollectionItemAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
@@ -322,67 +294,15 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		}
 		return saveCollectionItemAsyncCallback;
 	}
-/**
- * 
- * @function getSaveCollectionItemInFoldersAsyncCallback 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :Api calling for insertFolderInShelfView
- * 
- * 
- * @parm(s) : @return
- * 
- * @return : SimpleAsyncCallback<CollectionItemDo>
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	public SimpleAsyncCallback<CollectionItemDo> getSaveCollectionItemInFoldersAsyncCallback() {
-		if (saveCollectionItemAsyncCallback == null) {
-			saveCollectionItemAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
 
-				@Override
-				public void onSuccess(CollectionItemDo result) {
-					getView().insertFolderInShelfView(result, RefreshType.INSERT, folderLevel);
-				}
-			};
-		}
-		return saveCollectionItemAsyncCallback;
-	}
-	/**
-	 * 
-	 * @function getUserCollectionAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :Api calling to get user collections
-	 * 
-	 * 
-	 * @parm(s) : @param clearShelfPanel
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<List<CollectionDo>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	public SimpleAsyncCallback<List<CollectionDo>> getUserCollectionAsyncCallback(boolean clearShelfPanel) {
-		
-		
+	public SimpleAsyncCallback<FolderListDo> getUserCollectionAsyncCallback(boolean clearShelfPanel) {
 		clrPanel=clearShelfPanel;
 		if (userCollectionAsyncCallback == null) {
-			userCollectionAsyncCallback = new SimpleAsyncCallback<List<CollectionDo>>() {
+			userCollectionAsyncCallback = new SimpleAsyncCallback<FolderListDo>() {
 
 				@Override
-				public void onSuccess(List<CollectionDo> result) {
-					getView().setUserShelfData(result,clrPanel);
-					String collectionId = AppClientFactory.getPlaceManager().getRequestParameter("id", "INVALID");
-					if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) && !collectionId.equals("INVALID")) {
-						getView().openShelfCollection(collectionId);
-					} else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) && collectionId.equals("INVALID")) {
-						AppClientFactory.fireEvent(new RequestShelfEvent(result.get(0).getGooruOid()));
-					}
+				public void onSuccess(FolderListDo result) {
+					getView().setUserShelfData(result.getSearchResult(),clrPanel);
 				}
 			};
 		}
@@ -404,76 +324,185 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		}
 		return saveCollectionAsyncCallback;
 	}
+	
+	
+	public SimpleAsyncCallback<CollectionDo> SaveDraggedCollectionAsyncCallback() {
+		if (saveDraggedCollectionAsyncCallback == null) {
+			saveDraggedCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+//					getView().insertDraggedCollectionInShelfList(result);
+				}
+			};
+		}
+		return saveDraggedCollectionAsyncCallback;
+	}
 
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
-/**
- * @description: It refresh user shelf collection
- */
+
+	public FolderServiceAsync getFolderService() {
+		return folderService;
+	}
+	
 	@Override
 	public void refreshUserShelfCollections() {
 		ShelfListView.setPageNumber(1);
-		getResourceService().getUserCollectionList(20,ShelfListView.getpageNumber(),false,getUserCollectionAsyncCallback(true));
+		getResourceService().getFolderWorkspace((ShelfListView.getpageNumber()-1)*20, 20,null,null,getUserCollectionAsyncCallback(true));
 	}
-/**
- * @description:It gets self collection list items
- */
+
 	@Override
 	public void getSelfCollectionListItems(int pageSize, Integer pageNumber,boolean clearShelfPanel) {
-			getResourceService().getUserCollectionList(pageSize,pageNumber,false,getUserCollectionAsyncCallback(clearShelfPanel));
+			getResourceService().getFolderWorkspace((pageNumber-1)*pageSize,pageSize,null,null,getUserCollectionAsyncCallback(clearShelfPanel));
 	}
-	/**
-	 * 
-	 * @function disableFolderCollectionPanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :It disables the folder collection panel
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void disableFolderCollectionPanel() {
 		getView().disableFolderCollectionPanel();
 	}
-/**
- * 
- * @function enableFolderCollectionPanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :It enables the folder collection panel
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void enableFolderCollectionPanel() {
 		getView().enableFolderCollectionPanel();
 	}
-/**
- * @description:It requests to open shelf
- */
+
 	@Override
 	public void requestShelfOpenClick(String collectionId) {
 		getView().setOpenCollectionId(collectionId);
 	}
-/**
- * @description:It sets the user informatiin message
- */
+
 	@Override
 	public void setUserInfoMsg(String userMsg) {
 		getView().setUserShelfMsg(userMsg);
 	}
 
+	@Override
+	public void getChildFolderItems(final String folderId, final boolean isDataCalled) {
+		if(isDataCalled) {
+			getView().getChildFolderItems(null);
+		} else {
+			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,new AsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					searchResult.addAll(result.getSearchResult());
+					if(result.getSearchResult().size()==20) {
+						getView().setChildPageNumber(getView().getChildPageNumber()+1);
+						setPaginatedChildFolders(folderId, isDataCalled);
+					} else {
+						getView().setChildPageNumber(1);
+						getView().getChildFolderItems(searchResult);
+						searchResult.clear();
+					}
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+			});
+		}
+	}
+
+	private void setPaginatedChildFolders(String folderId, boolean isDataCalled) {
+		getChildFolderItems(folderId, isDataCalled);
+	}
+	
+	@Override
+	public void getCollectionItems(String collectionOid,boolean collectionOpenedStatus) {
+		if(collectionOpenedStatus) {
+			getView().getCollectionItems(null);
+		} else {
+			
+			/** Changed to new API call for fetching resources in a order **/
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(collectionOid,null, null, new AsyncCallback<FolderListDo>(){
+				@Override
+				public void onSuccess(FolderListDo result) {
+					getView().getCollectionItems(result.getSearchResult());
+					
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+    		});
+		}
+	}
+
+	@Override
+	public void getCollectionItems(String collectionId) {
+		getView().getAllCollectionItems(collectionId);
+	}
+
+	@Override
+	public void copyDraggedCollection(CollectionDo collectionDo,String collectionId,final String parentId) { 
+		AppClientFactory.getInjector().getfolderService().copyDraggedCollectionIntoFolder(collectionDo,collectionId,parentId,false,new SimpleAsyncCallback<CollectionDo>() { 
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().insertDraggedCollectionInShelfList(result,parentId);
+			}
+		});
+	}
+
+	@Override
+	public void refreshFolderItem(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		getView().refreshFolderItemData(folderDo, refreshFolderType, params);
+	}
+
+	@Override
+	public void createFolderInParent(String parentName, final String parentId, final HashMap<String,String> params) {
+			boolean addToShelf = false;
+			if(parentId.isEmpty()) {
+				addToShelf = true;
+			}
+			AppClientFactory.getInjector().getfolderService().createFolder(parentName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
+				@Override
+				public void onSuccess(FolderDo result) {
+					AppClientFactory.fireEvent(new UpdateFolderItemEvent(result, parentId, params));
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+			});
+	}
+	
+	@Override
+	public void changeShelfPanelActiveStyle() {
+		getView().changeShelfPanelActiveStyle();
+	}
+	
+	@Override
+	public void updateShelfFolderName(String folderName) {
+		getView().updateShelfFolderName(folderName);
+	}
+
+	@Override
+	public void removeMovedCollectionFromShelf(String sourceId) {
+		getView().removeMovedCollFolder(sourceId);
+	}
+
+	@Override
+	public void onDragOverOpenFolder(String folderId,boolean showcollectionFormView) {
+		getView().onDragOverOpenFolder(folderId,showcollectionFormView);
+	}
+
+	@Override
+	public void insertMovedCollection(FolderDo folderDo,RefreshFolderType refreshFolderType, HashMap<String, String> params) {
+		getView().insertMovedCollection(folderDo, refreshFolderType, params);
+	}
+
+	@Override
+	public void setCollectionMovedStyle(String gooruOId) {
+		getView().setMovedCollectionStyle(gooruOId);
+		
+	}
+
+	@Override
+	public void setChildFolderCollectionStyle(HashMap<String, String> params, String clickType) {
+		getView().setChildFolderCollectionStyle(params, clickType);
+	}
+
+	@Override
+	public void openParentFolderEvent() {
+		getView().openParentFolderEvent();
+	}
 }

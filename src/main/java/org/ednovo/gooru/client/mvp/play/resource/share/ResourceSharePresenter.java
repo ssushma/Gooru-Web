@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.play.resource.share;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -51,7 +53,10 @@ public class ResourceSharePresenter extends PresenterWidget<IsResourceShareView>
 				getView().setResourceShareData();
 			}else{
 				this.resourceId=collectionItemDo.getResource().getGooruOid();
-				AppClientFactory.getInjector().getPlayerAppService().getShortenShareUrl(resourceId, new SimpleAsyncCallback<Map<String,String>>() {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("type", PlaceTokens.RESOURCE_SEARCH);
+				params.put("shareType", "");
+				AppClientFactory.getInjector().getSearchService().getShortenShareUrl(resourceId,params, new SimpleAsyncCallback<Map<String,String>>() {
 						@Override
 						public void onSuccess(Map<String, String> result) {
 							getView().setResourceShareData(result);

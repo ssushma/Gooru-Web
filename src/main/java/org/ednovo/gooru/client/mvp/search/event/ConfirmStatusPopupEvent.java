@@ -31,19 +31,8 @@ package org.ednovo.gooru.client.mvp.search.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ConfirmStatusPopupEvent.java
- *
- * @description : This is related to Confirm Status PopupEvent.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ConfirmStatusPopupEvent extends GwtEvent<ConfirmStatusPopupHandler> {
 
@@ -56,16 +45,12 @@ public class ConfirmStatusPopupEvent extends GwtEvent<ConfirmStatusPopupHandler>
 	public ConfirmStatusPopupEvent(boolean value) {
 		this.value = value;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<ConfirmStatusPopupHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(ConfirmStatusPopupHandler handler) {
 		handler.setVisibility(value);

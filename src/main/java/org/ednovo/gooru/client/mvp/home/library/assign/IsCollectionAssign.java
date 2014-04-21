@@ -28,19 +28,8 @@ import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 
 /**
- * 
- * @fileName : IsCollectionAssign.java
+ * @author Search Team
  *
- * @description : This is the interface for AssignCollection View.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionAssign extends IsChildView<AssignCollectionPresenter>, IsDraggable
 {

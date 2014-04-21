@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -45,21 +46,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : CollectionUploadImageUc.java
+ * @author Search Team
  *
- * @description : This file is used to set image url for collection Image.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class CollectionUploadImageUc extends Composite {
+public class CollectionUploadImageUc extends Composite implements MessageProperties {
 
 	@UiField
 	Image collectionImg;
@@ -79,6 +69,7 @@ public class CollectionUploadImageUc extends Composite {
 	 */
 	public CollectionUploadImageUc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		changeImgLbl.setText(GL0800);
 		changeImgLbl.getElement().setId("lblChangeImg");
 		collectionImg.addErrorHandler(new ErrorHandler() {
 
@@ -119,21 +110,7 @@ public class CollectionUploadImageUc extends Composite {
 		return collectionImg;
 	}
 
-	/**
-	 * 
-	 * @fileName : CollectionUploadImageUc.java
-	 *
-	 * @description : This is used to show the Upload Image Button.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class ShowUploadImageButton implements MouseOverHandler{
 
 		@Override
@@ -142,21 +119,6 @@ public class CollectionUploadImageUc extends Composite {
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : CollectionUploadImageUc.java
-	 *
-	 * @description : This is used to hide the Upload Image Button.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class HideUploadImageButton implements MouseOutHandler{
 
 		@Override

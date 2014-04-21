@@ -24,8 +24,27 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+/**
+ * Copyright 2011 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.ednovo.gooru.client.PlaceTokens;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -48,25 +67,20 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.SetPlaceTitleHandler;
 import com.gwtplatform.mvp.client.proxy.TokenFormatException;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
+
 /**
- * 
- * @fileName : GooruPlaceManagerImpl.java
+ * This is the default implementation of the {@link PlaceManager}.
  *
- * @description : This is the default implementation of the {@link PlaceManager}.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Philippe Beaudoin
+ * @author Christian Goudreau
  */
 public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements PlaceManager,
     ValueChangeHandler<String>, ClosingHandler {
 
   private final EventBus eventBus;
   private String currentHistoryToken = "";
+  private PlaceRequest previousRequestUrl;
+  private PlaceRequest previousPlayerRequestUrl;
 
   private boolean internalError;
   private String onLeaveQuestion;
@@ -77,27 +91,19 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
   private HandlerRegistration windowClosingHandlerRegistration;
   private boolean locked;
   private Command defferedNavigation;
-	/**
-	 * Parameterized constructor for two intlization.
-	 * @param eventBus
-	 * @param tokenFormatter
-	 */
+
   public GooruPlaceManagerImpl(EventBus eventBus, TokenFormatter tokenFormatter) {
 	  super(eventBus,tokenFormatter);
     this.eventBus = eventBus;
     this.tokenFormatter = tokenFormatter;
     registerTowardsHistory();
   }
-  /**
-   * This method is used to build the history token.
-   */
+
   @Override
   public String buildHistoryToken(PlaceRequest request) {
     return tokenFormatter.toPlaceToken(request);
   }
-  /**
-   * This method is used to build the Relative history token based on the passed level.
-   */
+
   @Override
   public String buildRelativeHistoryToken(int level) {
     List<PlaceRequest> placeHierarchyCopy = truncatePlaceHierarchy(level);
@@ -106,16 +112,12 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
     }
     return tokenFormatter.toHistoryToken(placeHierarchyCopy);
   }
-  /**
-   * This method is used to build the Relative history token based on the passed Place Request.
-   */
+
   @Override
   public String buildRelativeHistoryToken(PlaceRequest request) {
     return buildRelativeHistoryToken(request, 0);
   }
-  /**
-   * This method is used to build the Relative history token based on the passed Place Request and level.
-   */
+
   @Override
   public String buildRelativeHistoryToken(PlaceRequest request, int level) {
     List<PlaceRequest> placeHierarchyCopy = truncatePlaceHierarchy(level);
@@ -179,29 +181,21 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
     revealErrorPlace(invalidHistoryToken);
     stopError();
   }
-  /**
-   * This method is used to fire the Gwt events.
-   */
+
   @Override
   public void fireEvent(GwtEvent<?> event) {
     getEventBus().fireEventFromSource(event, this);
   }
-  /**
-   * This method is used to get the browser history token.
-   */
+
   String getBrowserHistoryToken() {
     return History.getToken();
   }
-  /**
-   * This method is used to get all the current Place Hierarchy.
-   */
+
   @Override
   public List<PlaceRequest> getCurrentPlaceHierarchy() {
     return placeHierarchy;
   }
-  /**
-   * This method is used to get the current Place Request.
-   */
+
   @Override
   public PlaceRequest getCurrentPlaceRequest() {
     if (placeHierarchy.size() > 0) {
@@ -210,23 +204,17 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       return new PlaceRequest();
     }
   }
-  /**
-   * This method is used to get the current title.
-   */
+
   @Override
   public void getCurrentTitle(SetPlaceTitleHandler handler) {
     getTitle(placeHierarchy.size() - 1, handler);
   }
-  /**
-   * This method is used to get the Event bus.
-   */
+
   @Override
   public EventBus getEventBus() {
     return eventBus;
   }
-  /**
-   * This method is used to get the Hierarchy Depth.
-   */
+
   @Override
   public int getHierarchyDepth() {
     return placeHierarchy.size();
@@ -249,9 +237,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
     lock();
     return true;
   }
-  /**
-   * This method is used to get the title.
-   */
+
   @Override
   public void getTitle(int index, SetPlaceTitleHandler handler)
       throws IndexOutOfBoundsException {
@@ -263,9 +249,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       handler.onSetPlaceTitle(null);
     }
   }
-  /**
-   * This method is used to check the navigation status.
-   */
+
   @Override
   public boolean hasPendingNavigation() {
     return defferedNavigation != null;
@@ -291,9 +275,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       LockInteractionEvent.fire(this, true);
     }
   }
-  /**
-   * This method is used to navigate to back form the current place.
-   */
+
   @Override
   public void navigateBack() {
     History.back();
@@ -324,6 +306,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       } else {
     	  historyToken=modifyNameToken(historyToken);
         placeHierarchy = tokenFormatter.toPlaceRequestHierarchy(historyToken);
+        setPreviousRequestUrl(getCurrentPlaceRequest());
         doRevealPlace(getCurrentPlaceRequest(), true);
       }
     } catch (TokenFormatException e) {
@@ -360,36 +343,26 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
 
     event.setMessage(onLeaveQuestion);
   }
-  /**
-   * This method is used to register towards history.
-   */
+
   void registerTowardsHistory() {
     History.addValueChangeHandler(this);
   }
-  /**
-   * This method is used to load the current place again.
-   */
+
   @Override
   public void revealCurrentPlace() {
     History.fireCurrentHistoryState();
   }
-  /**
-   * This method is used to redirect default palce.
-   */
+
   @Override
   public void revealErrorPlace(String invalidHistoryToken) {
     revealDefaultPlace();
   }
-  /**
-   * This method is used to redirect to passed  Palce request.
-   */
+
   @Override
   public void revealPlace(final PlaceRequest request) {
     revealPlace(request, true);
   }
-  /**
-   *   Programmatically reveals the specified place.
-   */
+
   @Override
   public void revealPlace(final PlaceRequest request, final boolean updateBrowserUrl) {
     if (locked) {
@@ -406,11 +379,10 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
     }
     placeHierarchy.clear();
     placeHierarchy.add(request);
+    setPreviousRequestUrl(request);
     doRevealPlace(request, updateBrowserUrl);
   }
-  /**
-   *   Programmatically reveals the specified hierarchy of places place, updating the browser URL in the process.
-   */
+
   @Override
   public void revealPlaceHierarchy(
       final List<PlaceRequest> placeRequestHierarchy) {
@@ -434,9 +406,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       doRevealPlace(getCurrentPlaceRequest(), true);
     }
   }
-	/**
-	 *    Programmatically reveals the specified place from the current place hierarchy.
-	 */
+
   @Override
   public void revealRelativePlace(final int level) {
     if (locked) {
@@ -461,16 +431,12 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       doRevealPlace(request, true);
     }
   }
-  /**
-   *    Programmatically reveals the specified place as a child of the current place hierarchy.
-   */
+
   @Override
   public void revealRelativePlace(PlaceRequest request) {
     revealRelativePlace(request, 0);
   }
-  /**
-   *   Programmatically reveals the specified place relative to the other places in the current place hierarchy.
-   */
+
   @Override
   public void revealRelativePlace(final PlaceRequest request, final int level) {
     if (locked) {
@@ -489,9 +455,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
     placeHierarchy.add(request);
     doRevealPlace(request, true);
   }
-	/**
-	 *     Reveals the place to display when a user has been refused the access to a specific place.
-	 */
+
   @Override
   public void revealUnauthorizedPlace(String unauthorizedHistoryToken) {
     revealErrorPlace(unauthorizedHistoryToken);
@@ -506,17 +470,11 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
   private void saveHistoryToken(String historyToken) {
     currentHistoryToken = historyToken;
   }
-	/**
-	 *This mehtod is used to set the Browset history tokens.
-	 */
+
   void setBrowserHistoryToken(String historyToken, boolean issueEvent) {
     History.newItem(historyToken, issueEvent);
   }
-  /**
-   * Sets the question that will be displayed whenever the user tries to navigate away from the current page. 
-   * Navigating away can happen either occur by changing the program state (the history token), by entering an external URL or by closing the window. 
-   * All cases will be handled.
-   */
+
   @Override
   public void setOnLeaveConfirmation(String question) {
     if (question == null && onLeaveQuestion == null) {
@@ -556,9 +514,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
   private void stopError() {
     internalError = false;
   }
-  /**
-   *  Resets the navigation lock if it is currently set.
-   */
+
   @Override
   public void unlock() {
     if (locked) {
@@ -571,9 +527,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
       }
     }
   }
-  /**
-   *  Updates History without firing a ValueChangeEvent.
-   */
+
   @Override
   public void updateHistory(PlaceRequest request, boolean updateBrowserUrl) {
     try {
@@ -621,9 +575,7 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
     }
     return new ArrayList<PlaceRequest>(placeHierarchy);
   }
-  /*
-   * This method is used to modify the name tokens.
-   */
+  
   public String modifyNameToken(String historyToken){
 	  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
 	  if(unescapedHistoryToken.startsWith("!")){
@@ -631,4 +583,45 @@ public abstract class GooruPlaceManagerImpl extends PlaceManagerImpl implements 
 	  }	  
 	  return unescapedHistoryToken;
   }
+
+/**
+ * @return the previousRequestUrl
+ */
+	public PlaceRequest getPreviousRequestUrl() {
+		return previousRequestUrl;
+	}
+	
+	/**
+	 * @param previousRequestUrl the previousRequestUrl to set
+	 */
+	public void setPreviousRequestUrl(PlaceRequest previousRequestUrl) {
+		String viewToken=previousRequestUrl.getNameToken();
+		if(viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY)||viewToken.equals(PlaceTokens.COLLECTION)){
+			String previousViewToken=this.previousRequestUrl!=null?this.previousRequestUrl.getNameToken():"";
+			if(!previousViewToken.equals(PlaceTokens.PREVIEW_PLAY)&&!previousViewToken.equals(PlaceTokens.COLLECTION_PLAY)&&!previousViewToken.equals(PlaceTokens.RESOURCE_PLAY)){
+				setPreviousPlayerRequestUrl(getPreviousRequestUrl());
+			}
+			this.previousRequestUrl = previousRequestUrl;
+		}else{
+			this.previousRequestUrl = previousRequestUrl;
+		}
+	}
+	
+	/**
+	 * @return the previousPlayerRequestUrl
+	 */
+	public PlaceRequest getPreviousPlayerRequestUrl() {
+		return previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+	}
+	
+	/**
+	 * @param previousPlayerRequestUrl the previousPlayerRequestUrl to set
+	 */
+	public void setPreviousPlayerRequestUrl(PlaceRequest previousPlayerRequestUrl) {
+		this.previousPlayerRequestUrl = previousPlayerRequestUrl;
+	}
+	
+	public PlaceRequest getDefaultPlayerPlaceRequest(){
+		return new PlaceRequest(PlaceTokens.HOME);
+	}
 }

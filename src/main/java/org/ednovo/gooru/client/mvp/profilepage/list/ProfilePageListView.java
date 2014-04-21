@@ -42,19 +42,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : ProfilePageListView.java
- *
- * @description : This file deals with ProfilePageList.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiHandlers> implements IsProfilePageListView {
 
@@ -105,9 +94,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 	}
-	/**
-	 * This is used to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -115,9 +102,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		SHELF_COLLECTIONS.clear();
 		myShelfVerPanel.clear();
 	}
-	/**
-	 * This is used to set user shelf data.
-	 */
+
 	@Override
 	public void setUserShelfData(List<CollectionItemDo> collectionItems,
 			boolean clearShelfPanel) {
@@ -140,23 +125,17 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 			myShelfVerPanel.add(new ProfilePageCollection(collectionItemDo));
 		}
 	}
-	/**
-	 * This method is called immediately after a widget becomes attached to the browser's document.
-	 */
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
 	}
-	/**
-	 * This method is called immediately before a widget will be detached from the browser's document.
-	 */
+
 	@Override
 	public void onUnload() {
 		super.onUnload();
 	}
-	/**
-	 * This is used to refresh profile list
-	 */
+
 	@Override
 	public void refreshProfileList(String collectionId, String folderLevel) {
 		try {
@@ -222,26 +201,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		} catch (Exception e) {
 		}
 	}
-	/**
-	 * 
-	 * @function getProfilePageCollection 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to get profile page collections based on id.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * @parm(s) : @return
-	 * 
-	 * @return : ProfilePageCollection
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private ProfilePageCollection getProfilePageCollection(String collectionId) {
 		Iterator<Widget> widgets = myShelfVerPanel.iterator();
 		while (widgets.hasNext()) {
@@ -254,27 +214,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		}
 		return null;
 	}
-	/**
-	 * 
-	 * @function getProfilePageCollectionFolder 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to get profile page collection folders.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * @parm(s) : @param selectedProfilePageCollection
-	 * @parm(s) : @return
-	 * 
-	 * @return : ProfilePageCollectionFolder
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private ProfilePageCollectionFolder getProfilePageCollectionFolder(String collectionId, VerticalPanel selectedProfilePageCollection) { 
 		Iterator<Widget> widgets = selectedProfilePageCollection.iterator();
 		while (widgets.hasNext()) {
@@ -285,27 +225,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		}
 		return null;
 	}
-	/**
-	 * 
-	 * @function getProfilePageCollectionFolder 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to get profile page collection folders Child.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * @parm(s) : @param selectedProfilePageCollection
-	 * @parm(s) : @return
-	 * 
-	 * @return : ProfilePageCollectionFolder
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private ProfilePageCollectionFolderChild getProfilePageCollectionFolderChild(String collectionId) {
 		Iterator<Widget> widgets = selectedProfilePageCollectionFolder.getContentVerPanel().iterator();
 		while (widgets.hasNext()) {
@@ -318,27 +238,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 		}
 		return null;
 	}
-	/**
-	 * 
-	 * @function getProfilePageCollectionFolder 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to get profile page collection Child.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * @parm(s) : @param selectedProfilePageCollection
-	 * @parm(s) : @return
-	 * 
-	 * @return : ProfilePageCollectionFolder
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private ProfilePageCollectionChild getProfilePageCollectionChild(String collectionId) {
 		Iterator<Widget> widgets = selectedProfilePageCollectionFolder.getContentVerPanel().iterator();
 		while (widgets.hasNext()) {
@@ -361,9 +261,7 @@ public class ProfilePageListView extends BaseViewWithHandlers<ProfilePageListUiH
 			.setHeight(Window.getClientHeight() - 182, Unit.PX);
 		}
 	}*/
-	/**
-	 * This is used to clear myShelfVerPanel.
-	 */
+	
 	@Override
 	public void clearMyShelfVerPanel() {
 		myShelfVerPanel.clear();

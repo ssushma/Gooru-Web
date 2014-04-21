@@ -43,21 +43,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : CollectionShareAlertPopup.java
- *
- * @description : This file is related to Collection Share AlertPopup.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public abstract class CollectionShareAlertPopup extends PopupPanel implements MessageProperties{
 
 	@UiField Label shareMsgTitle, shareMsgTxt, shareMsgLbl, privateResourceLbl;
@@ -78,33 +64,17 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 	interface CollectionShareAlertPopupUiBinder extends
 			UiBinder<Widget, CollectionShareAlertPopup> {
 	}
-	/**
-	 * Class Constructor.
-	 */
+
 	public CollectionShareAlertPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
+		gooruPublicShare.setUrl("images/gooru-public-share-popup.png");
+		privateResourceLbl.setText(GL0840);
+		goBackBtn.setText(GL0841);
+		okButton.setText(GL0190);
 		okButton.getElement().setId("btnOk");
 		goBackBtn.getElement().setId("btnGoBack");
 	}
-	/**
-	 * 
-	 * @function onClickOkBtn 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :okButton UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("okButton")
 	public void onClickOkBtn(ClickEvent clickEvent) {
 		Window.enableScrolling(true);
@@ -113,49 +83,13 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 			setPublicFromAlert();
 		}
 	}
-			/**
-			 * 
-			 * @function onClickGoBackBtn 
-			 * 
-			 * @created_date : 02-Jan-2014
-			 * 
-			 * @description :This is used to hide Collection Share AlertPopup. 
-			 * 
-			 * 
-			 * @parm(s) : @param clickEvent
-			 * 
-			 * @return : void
-			 *
-			 * @throws : <Mentioned if any exceptions>
-			 *
-			 * 
-			 *
-			 *
-			 */
+	
 	@UiHandler("goBackBtn")
 	public void onClickGoBackBtn(ClickEvent clickEvent) {
 		Window.enableScrolling(true);
 		this.hide();
 	}
-	/**
-	 * 
-	 * @function setPublicMsgData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set share message data
-	 * 
-	 * 
-	 * @parm(s) : @param collection
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setPublicMsgData(CollectionDo collection) {
 		isPrivateResource = false;
 		for(int i = 0; i < collection.getCollectionItems().size(); i++) {
@@ -166,112 +100,39 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		}
 		if(isPrivateResource) {
 			setVisibilityData(true, false);
-			shareMsgTitle.setText(MessageProperties.GL0363);
-			shareMsgTxt.setText(MessageProperties.GL0364);
-			shareMsgLbl.setText(MessageProperties.GL0365);
+			shareMsgTitle.setText(GL0363);
+			shareMsgTxt.setText(GL0364);
+			shareMsgLbl.setText(GL0365);
 			alertSuccessTitleTxt.setVisible(true);
 		} else {
 			setPublicMsgData();
 			setPublicFromAlert();
 		}
 	}
-	/**
-	 * 
-	 * @function setPublicMsgData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set the share data as public.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setPublicMsgData() {
 		isPrivateResource = true;
 		setVisibilityData(false, true);
-		shareMsgTitle.setText(MessageProperties.GL0362 + "now Public!");
+		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
 		gooruPublicShare.setVisible(true);
 		alertSuccessTxt.setVisible(false);
 		alertSuccessTitleTxt.setVisible(false);
 	}
-	/**
-	 * 
-	 * @function setPrivateMsgData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set the share data as private.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setPrivateMsgData() {
 		setVisibilityData(false, false);
-		shareMsgTitle.setText(MessageProperties.GL0362 + "private!");
-		shareMsgTxt.setText(MessageProperties.GL0362 + "now private!");
-		shareMsgLbl.setText(MessageProperties.GL0366);
+		shareMsgTitle.setText(GL0362 + GL0700);
+		shareMsgTxt.setText(GL0688 + GL0687 + GL0333 +GL0686);
+		shareMsgLbl.setText(GL0366);
 	}
-	/**
-	 * 
-	 * @function setShareableMsgData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set the shareble data.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setShareableMsgData() {
 		setVisibilityData(false, false);
-		shareMsgTitle.setText(MessageProperties.GL0362 + "shareable!");
-		shareMsgTxt.setText(MessageProperties.GL0362 + "now shareable!");
-		shareMsgLbl.setText(MessageProperties.GL0367);
+		shareMsgTitle.setText(GL0362 + GL0701);
+		shareMsgTxt.setText(GL0689 + GL0687 + GL0331 + GL0686);
+		shareMsgLbl.setText(GL0367);
 	}
-	/**
-	 * 
-	 * @function setVisibilityData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to display alert popup data.
-	 * 
-	 * 
-	 * @parm(s) : @param isVisible
-	 * @parm(s) : @param isPublicResource
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setVisibilityData(boolean isVisible, boolean isPublicResource) {
 		if(isVisible==false) {
 			shareAlertPopup.setWidth("350px");
@@ -292,25 +153,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		goBackBtn.setVisible(isVisible);
 		showPopup();
 	}
-	/**
-	 * 
-	 * @function setPopupMargins 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set margins for popup.
-	 * 
-	 * 
-	 * @parm(s) : @param isZero
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void setPopupMargins(boolean isZero) {
 		if(isZero==true) {
 			alertBodyStyle.getElement().getStyle().setMargin(0, Unit.PX);
@@ -324,25 +167,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 			alertBodyStyle.getElement().getStyle().setPaddingLeft(30, Unit.PX);
 		}
 	}
-	/**
-	 * 
-	 * @function showPopup 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to show popup.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void showPopup() {
 		this.setGlassEnabled(true);
         Window.enableScrolling(false);
@@ -357,6 +182,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
         	this.center();
         }
         this.show();
+        
 	}
 	
 	public abstract void setPublicFromAlert();

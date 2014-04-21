@@ -37,8 +37,7 @@
 					<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContainer}">
 						<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormContent}"
 							ui:field="listQuestionType">
-							<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormTitle}">Question
-								Type</g:HTMLPanel>
+							<g:HTMLPanel styleName="{editQuestionStyle.addResourceFormTitle}" ui:field="typeLbl"></g:HTMLPanel>
 							<g:HTMLPanel styleName="{editQuestionStyle.addResourceCategoryDiv}">
 								<g:ListBox styleName="{editQuestionStyle.addResourceCategoryInputDiv}"
 									ui:field="questionTypeListBox">

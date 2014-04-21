@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication.uc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -33,12 +34,15 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
+import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,11 +58,10 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.dom.client.Style.Float;;
 
-public class SignUpGradeCourseView extends PopupPanel {
+public class SignUpGradeCourseView extends PopupPanel implements MessageProperties{
 
-	@UiField HTMLPanel signupBgPanel, metaDataSelectionPanel, courseContainer;
+	@UiField HTMLPanel signupBgPanel, metaDataSelectionPanel, courseContainer,congratsLbl,accountCreatedText;
 	
 	@UiField Label lblTitle, lblCancel, lblErrorMessage;
 	
@@ -67,6 +70,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	@UiField HTMLEventPanel mathCourseLbl, scienceCourseLbl, elaCourseLbl, socialCourseLbl;
 	
 	@UiField Button skipBtn, submitBtn;
+	
 	
 	HTMLPanel mathCourseContainer, scienceCourseContainer, elaCourseContainer, socialCourseContainer;
 	
@@ -86,9 +90,11 @@ public class SignUpGradeCourseView extends PopupPanel {
 	
 	private static final String TECH_ENGEE = "Technology & Engineering";
 	
+	private static final String REGISTER_USER_LEVEL = "settings";
+	
 	@UiField Image imgLoading;
 	
-	
+	List<ProfileCodeDo> selectedCoureses=new ArrayList<ProfileCodeDo>();
 	
 	UserDo userDo= null;
 	
@@ -98,19 +104,14 @@ public class SignUpGradeCourseView extends PopupPanel {
 	interface SignUpGradeCourseViewUiBinder extends
 			UiBinder<Widget, SignUpGradeCourseView> {
 	}
-    /**
-     * constructor
-     * @param userDo
-     */
+
 	public SignUpGradeCourseView(UserDo userDo) {
 		this.userDo = userDo;
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		signupBgPanel.setWidth("700px");
 		metaDataSelectionPanel.getElement().getStyle().setPadding(15, Unit.PX);
-	
-		lblTitle.setText(MessageProperties.GL0186 + MessageProperties.GL_SPL_EXCLAMATION);
-
+		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
 		scienceCourseContainer = new HTMLPanel("");
 		mathCourseContainer = new HTMLPanel("");
 		socialCourseContainer = new HTMLPanel("");
@@ -127,20 +128,57 @@ public class SignUpGradeCourseView extends PopupPanel {
 		setRegisterCourseList();
 		
 		lblErrorMessage.setVisible(false);
-		lblErrorMessage.setText(MessageProperties.GL0500);
+		lblErrorMessage.setText(GL0500);
 		lblErrorMessage.getElement().getStyle().clearMarginLeft();
 		lblErrorMessage.getElement().getStyle().clearWidth();
 		lblErrorMessage.getElement().getStyle().setFloat(Float.RIGHT);
 		lblErrorMessage.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		lblErrorMessage.getElement().getStyle().setWidth(205, Unit.PX);
-
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
         this.setGlassEnabled(true);
         this.removeStyleName("gwt-PopupPanel");
-        this.getElement().getStyle().setZIndex(99999);
+       // this.getElement().getStyle().setZIndex(99999);
+        this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+        this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
         this.show();
         this.center();
+        congratsLbl.getElement().setInnerHTML(GL1159+GL_SPL_EXCLAMATION);
+        accountCreatedText.getElement().setInnerHTML(GL1160);
+        imgLoading.setAltText(GL0110);
+        imgLoading.setTitle(GL0110);
+        skipBtn.setText(GL1004);
+        submitBtn.setText(GL0486);
+	}
+	/**
+	 * 
+	 * @function senEmail 
+	 * 
+	 * @created_date : Jan 15, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void senEmail(){
+	       //If account type is 2 (student) then call API to send Welcome Email
+//        if (userDo.getAccountTypeId() == 2){
+        	AppClientFactory.getInjector().getUserService().sendWelcomeMail(userDo.getGooruUId(), "welcome", new SimpleAsyncCallback<Object>() {
+
+				@Override
+				public void onSuccess(Object result) {
+					// Do nothing....
+				}
+			});
+//        }
 	}
 	
 	/**
@@ -149,7 +187,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description : This method is used to open Thanks Popup.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -170,29 +208,12 @@ public class SignUpGradeCourseView extends PopupPanel {
 //			OpenThanksPopup();
 //		}else{
 			AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
+			senEmail();
 			OpenThanksPopup();
 //		}
 		
 	}
-	/**
-	 * 
-	 * @function OpenThanksPopup 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to open Thanks Popup.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void OpenThanksPopup(){
 		this.hide();
 		ThanksPopupUc thanks = new ThanksPopupUc();
@@ -209,7 +230,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description  : This method is used to set the RegisterGradeList
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -236,7 +257,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description   :  This method is used to set the RegisterCourseList
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -290,14 +311,21 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 *
 	 */
 	private void setCourseData(LibraryCodeDo libraryCodeDo, String courseLabel) {
+		selectedCoureses.clear();
 		List<LibraryCodeDo> liCodeDo = libraryCodeDo.getNode();
 		for(int i = 0; i < liCodeDo.size(); i++) {
+			final int codeID=liCodeDo.get(i).getCodeId();
 			SignupCourseLabel signupCourseLabel = new SignupCourseLabel(liCodeDo.get(i).getCodeId(), liCodeDo.get(i).getLabel().trim(), new ProfileDo(), "images/course/"+courseLabel.trim().toLowerCase().replaceAll(" ", "_")+"/"+liCodeDo.get(i).getLabel().trim().replaceAll(" ", "_")+".png", courseLabel) {
 					@Override
 					public int selectCourseLabel(boolean isSelected) {
 							if(isSelected == true) {
-								if(selectedCourseCount<=5) {
+								if(selectedCourseCount<5) {
 									selectedCourseCount++;
+									ProfileCodeDo profileCodeDo = new ProfileCodeDo();
+									CodeDo codeDo = new CodeDo();
+									codeDo.setCodeId(codeID);
+									profileCodeDo.setCode(codeDo);
+									selectedCoureses.add(profileCodeDo);
 								}
 							} else {
 								selectedCourseCount--;
@@ -308,6 +336,11 @@ public class SignUpGradeCourseView extends PopupPanel {
 					@Override
 					public void showErrorMessage(boolean value) {
 						lblErrorMessage.setVisible(value);
+					}
+
+					@Override
+					public int getCourseCount() {
+						return selectedCourseCount;
 					}
 			};
 			
@@ -350,7 +383,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description   : This UiHandler will set the science CourseContainer data when scienceCourseLbl clicked.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param event
@@ -378,7 +411,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description  :  This UiHandler will set the math CourseContainer data when mathCourseLbl clicked.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param event
@@ -406,7 +439,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	  * 
 	  * @created_date : Nov 8, 2013
 	  * 
-	  * @description   :  This UiHandler will set the social CourseContainer data when socialCourseLbl clicked.
+	  * @description
 	  * 
 	  * 
 	  * @parm(s) : @param event
@@ -434,7 +467,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description  :  This UiHandler will set the ela CourseContainer data when elaCourseLbl clicked.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param event
@@ -525,6 +558,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	@UiHandler("lblCancel")
 	public void onCancelClick(ClickEvent clickEvent) {
 		closeSignUpGradeCourseView();
+		
 	}
 	/**
 	 * 
@@ -532,7 +566,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description  : This UiHandler is used to skip signup  grade course. 
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param clickEvent
@@ -547,6 +581,15 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 */
 	@UiHandler("skipBtn")
 	public void onSkipClick(ClickEvent clickEvent) {
+		if(selectedCoureses.size()>0){
+			for(int i=0;i<selectedCoureses.size();i++){
+				AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(selectedCoureses.get(i).getCode(), REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
+					@Override
+					public void onSuccess(Void result) {
+					}
+				});
+			}
+		}
 		MixpanelUtil.skip_grade_course();
 		closeSignUpGradeCourseView();
 	}
@@ -556,7 +599,7 @@ public class SignUpGradeCourseView extends PopupPanel {
 	 * 
 	 * @created_date : Nov 8, 2013
 	 * 
-	 * @description  :  This UiHandler is used to submit signup  grade course. 
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param clickEvent

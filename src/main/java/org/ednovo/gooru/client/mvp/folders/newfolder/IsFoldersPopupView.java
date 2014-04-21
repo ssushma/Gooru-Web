@@ -33,18 +33,20 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
- * @fileName : IsFoldersPopupView.java
- *
- * @description :  Acts as a bridge between the Presenter and view.
- *
+ * @fileName : IsFoldersView.java
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
+ * 
+ * @date: Apr 17, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
+
 public interface IsFoldersPopupView extends PopupView,
 		IsViewWithHandlers<FoldersPopupUiHandlers> {
 	/**

@@ -25,19 +25,8 @@
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * @fileName : StudentAssignmentUiHandlers.java
- *
- * @description : The interface for view classes that handles all the UI-related code for a StudentAssignmentPresenter.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+
 public interface StudentAssignmentUiHandlers extends BaseUiHandlers {
 	
 	public static final Object SLOT_assignment=new Object();
@@ -45,5 +34,9 @@ public interface StudentAssignmentUiHandlers extends BaseUiHandlers {
 	void asyMethodCall();
 	
 	void getAssignmentsList(String pageNum,String pageSize);
+	
+	public void getNextClasspageItems(Integer offset,Integer limit);
+
+	void removeUserFromClass(ClasspageDo classpageDo, String emailId);
 
 }

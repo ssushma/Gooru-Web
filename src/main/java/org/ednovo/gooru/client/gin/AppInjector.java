@@ -22,12 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompleteProfilePresenter;
 import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
@@ -39,7 +41,15 @@ import org.ednovo.gooru.client.mvp.folders.newfolder.FolderFormViewPresenter;
 import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
 import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
@@ -53,7 +63,9 @@ import org.ednovo.gooru.client.mvp.settings.UserSettingsPresenter;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
@@ -64,21 +76,10 @@ import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.inject.Provider;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
+
 /**
+ * @author Search Team
  * 
- * @fileName : AppInjector.java
- *
- * @description :  Analogous to Guice's {@code Injector}, this type can be used to bootstrap injection. Unlike
-*                 Guice, however, this is not a type that you create, but rather a type that you extend.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @GinModules({ AppModule.class, ServiceModule.class })
 public interface AppInjector extends ServiceInjector {
@@ -158,4 +159,27 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<ResourcePlayerPresenter> getResourcePlayerPresenter();
 	
 	AsyncProvider<SignUpCompleteProfilePresenter> getSignUpCompleteProfilePresenter();
+	
+	AsyncProvider<RusdPresenter> getRusdPresenter();
+	
+	AsyncProvider<PreviewPlayerPresenter> getPreviewPlayerPresenter();
+	
+	AsyncProvider<CollectionCollaboratorsTabPresenter> getCollectionCollaboratorsTabPresenter();
+
+	AsyncProvider<FolderItemTabPresenter> getFolderItemTabPresenter();
+	
+	AsyncProvider<ClassListPresenter> getclassListPresenter();
+	
+	AsyncProvider<FteLibraryPresenter> getFteLibraryPresenter();
+
+	AsyncProvider<AutodeskLibraryPresenter> getAutodeskLibraryPresenter();
+
+	AsyncProvider<OnrLibraryPresenter> getOnrLibraryPresenter();
+
+	AsyncProvider<LessonopolyLibraryPresenter> getLessonopolyLibraryPresenter();
+
+	AsyncProvider<NgcLibraryPresenter> getNgcLibraryPresenter();
+
+	AsyncProvider<WspwhLibraryPresenter> getWspwhLibraryPresenter();
+
 }

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -33,20 +34,12 @@ import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.SuggestBox;
+
 /**
- * @fileName : AppSuggestBox.java
+ * @author Search Team
  *
- * @description : This class is used as a auto suggested box.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, KeyDownHandler,HasClickHandlers {
+public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, KeyDownHandler,HasClickHandlers,MessageProperties {
 
 	private boolean validation = true;
 
@@ -69,12 +62,12 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 //		this.getTextBox().getElement().setAttribute("placeholder", "e.g. CCSS.M.8.F.A.3");
 		if (AppClientFactory.getLoggedInUser().getUsername()!=null){
 			if(AppClientFactory.getLoggedInUser().getUsername().equalsIgnoreCase("TexasTeacher")) {
-				this.getTextBox().getElement().setAttribute("placeholder", "e.g. TEKS.M.HS.G.7");
+				this.getTextBox().getElement().setAttribute("placeholder", GL1502);
 			}else{
-				this.getTextBox().getElement().setAttribute("placeholder", "e.g. CCSS.M.8.F.A.3");
+				this.getTextBox().getElement().setAttribute("placeholder", GL1503);
 			}
 		}else{
-			this.getTextBox().getElement().setAttribute("placeholder", "e.g. CCSS.M.8.F.A.3");
+			this.getTextBox().getElement().setAttribute("placeholder", GL1503);
 		}
 		this.getValueBox().addKeyUpHandler(this);
 		this.getValueBox().addKeyDownHandler(this);
@@ -91,9 +84,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 		this.getSuggestionOrcl().clear();
 		this.getSuggestionOrcl().addAll(suggestions);
 	}*/
-	/**
-	 * This method is used for validation.
-	 */
+
 	public final boolean validate() {
 		if (getSuggestionOrcl().getList().size() != 0 && getSuggestionOrcl().getList().contains(this.getText())) {
 			return true;
@@ -101,18 +92,14 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 		this.setText("");
 		return false;
 	}
-	/**
-	 * This method is used to get the suggested value.
-	 */
+
 	public final String getSuggestionValue() {
 		if (validate()) {
 			return this.getText();
 		}
 		return null;
 	}
-	/**
-	 * This will fire when the keyboard key is pressed.
-	 */
+
 	@Override
 	public final void onKeyDown(KeyDownEvent event) {
 		int keyCode = event.getNativeKeyCode();
@@ -123,9 +110,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 			}
 		}
 	}
-	/**
-	 * This will fire when the keyboard key is released.
-	 */
+
 	@Override
 	public final void onKeyUp(KeyUpEvent event) {
 		int keyCode = event.getNativeKeyCode();
@@ -134,9 +119,7 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 			keyAction(text);
 		}
 	}
-	/**
-	 * This will fire when the keyboard key is pressed.
-	 */
+
 	public void keyDownAction(String text) {
 		if (text.equals("") || !this.validate()) {
 			this.getValueBox().cancelKey();
@@ -144,15 +127,11 @@ public abstract class AppSuggestBox extends SuggestBox implements KeyUpHandler, 
 	}
 
 	public abstract void keyAction(String text);
-	/**
-	 * This will return the suggestion orcl.
-	 */
+
 	public final AppMultiWordSuggestOracle getSuggestionOrcl() {
 		return suggestionOrcl;
 	}
-	/**
-	 * This will set the validation.
-	 */
+
 	public final void setValidation(boolean validation) {
 		this.validation = validation;
 	}

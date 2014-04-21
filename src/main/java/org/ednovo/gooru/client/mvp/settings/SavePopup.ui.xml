@@ -13,15 +13,15 @@
 <g:HTMLPanel styleName="{Settings.settingsSuccessPopUpContainer}">
 	<g:HTMLPanel styleName="{Settings.settingsSuccessHeaderTitleDiv}">
     <!-- <g:HTMLPanel styleName="{Settings.successHeaderText}">Success!</g:HTMLPanel> -->
-      <g:HTMLPanel styleName="{Settings.successHeaderText}">Please confirm your email</g:HTMLPanel>
+      <g:HTMLPanel styleName="{Settings.successHeaderText}" ui:field="confirmEmail"></g:HTMLPanel>
     </g:HTMLPanel>
 	<g:HTMLPanel styleName="{Settings.successMessageDiv}">
 	   <!--  <g:HTMLPanel styleName="{Settings.settingsSuccessText}">You get a gold star for updating your profile information.</g:HTMLPanel> -->
-		<g:HTMLPanel styleName="{Settings.settingsSuccessText}">Please go and check your email to confirm your new email address. </g:HTMLPanel>
+		<g:HTMLPanel styleName="{Settings.settingsSuccessText}" ui:field="checkMailLbl"></g:HTMLPanel>
 	</g:HTMLPanel>
 	
 	<g:HTMLPanel styleName="{Settings.successFormButtonDiv}">
-		<g:Label styleName="{Settings.settingsSucessOkButton}" ui:field="lbOk">OK</g:Label>
+		<g:Label styleName="{Settings.settingsSucessOkButton}" ui:field="lbOk"></g:Label>
 	</g:HTMLPanel>
 </g:HTMLPanel>
 </g:HTMLPanel>       </g:HTMLPanel>

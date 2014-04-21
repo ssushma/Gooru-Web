@@ -29,18 +29,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 /**
- * @fileName : ServiceURL.java
+ * @author Search Team
  *
- * @description : This annotation will specify the service url.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

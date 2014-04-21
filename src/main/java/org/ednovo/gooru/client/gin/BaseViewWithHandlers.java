@@ -28,45 +28,25 @@
 package org.ednovo.gooru.client.gin;
 
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.HasUiHandlers;
-import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+
 /**
+ * @author Search Team
  * 
- * @fileName : BaseViewWithHandlers.java
- *
- * @description :  Base class for a {@link View} that implements the {@link HasUiHandlers}  interface.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class BaseViewWithHandlers<H extends BaseUiHandlers> extends ViewWithUiHandlers<H> implements IsViewWithHandlers<H> {
 
 	private Widget widget;
-	/**
-	 * Gets as a widget.
-	 * @return {@link Widget}
-	 */
+	
 	@Override
 	public Widget asWidget() {
 		return widget;
 	}
-	/**
-	 * Gets the widget.
-	 * @return {@link Widget}
-	 */
+
 	public Widget getWidget() {
 		return widget;
 	}
-	/**
-	 * Sets the widget.
-	 * @param {@link Widget}
-	 */
+
 	public void setWidget(Widget widget) {
 		this.widget = widget;
 	}

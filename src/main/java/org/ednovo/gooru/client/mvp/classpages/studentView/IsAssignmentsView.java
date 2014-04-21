@@ -27,19 +27,10 @@ package org.ednovo.gooru.client.mvp.classpages.studentView;
 import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+
 /**
- * 
- * @fileName : IsAssignmentsView.java
+ * @author 
  *
- * @description :  Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsAssignmentsView extends IsChildView<AssignmentsPresenter>, IsDraggable {
 

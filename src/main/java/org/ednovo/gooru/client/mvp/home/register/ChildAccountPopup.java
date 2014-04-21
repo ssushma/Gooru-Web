@@ -26,29 +26,20 @@ package org.ednovo.gooru.client.mvp.home.register;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ChildAccountPopup.java
+ * @author Search Team
  *
- * @description : Related to ChildAccountPopup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ChildAccountPopup extends Composite {
+public class ChildAccountPopup extends Composite implements MessageProperties {
 	private AppPopUp appPopUp;
 	private static ChildAccountPopupUiBinder uiBinder = GWT.create(ChildAccountPopupUiBinder.class);
 
@@ -57,8 +48,9 @@ public class ChildAccountPopup extends Composite {
 
 	@UiField
 	BlueButtonUc confirmationBtnUc;
+	@UiField Label congrtstext,excitedText;
 	
-	private static final String CHILD_SUCCESS_TEXT = "Child account successfully created";
+	private static final String CHILD_SUCCESS_TEXT = GL1214;
 
 	/**
 	 * Class constructor
@@ -70,6 +62,9 @@ public class ChildAccountPopup extends Composite {
 		appPopUp.setContent(CHILD_SUCCESS_TEXT, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
+		congrtstext.setText(GL1212);
+		excitedText.setText(GL1213);
+		confirmationBtnUc.setText(GL0190);
 		confirmationBtnUc.getElement().setId("btnConfirmation");
 	}
 

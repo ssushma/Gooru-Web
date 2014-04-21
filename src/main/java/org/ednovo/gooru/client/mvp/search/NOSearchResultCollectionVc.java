@@ -34,14 +34,18 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -52,7 +56,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : NOSearchResultCollectionVc.java
  * 
- * @description : This is used to set and get collections data.
+ * @description :
  * 
  * 
  * @version : 5.9
@@ -61,9 +65,9 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Author Gooru Team
  * 
- * @Reviewer:Gooru Team
+ * @Reviewer:
  */
-public class NOSearchResultCollectionVc extends Composite {
+public class NOSearchResultCollectionVc extends Composite implements MessageProperties {
 
 	private static NOSearchResultCollectionVcUiBinder uiBinder = GWT
 			.create(NOSearchResultCollectionVcUiBinder.class);
@@ -72,9 +76,11 @@ public class NOSearchResultCollectionVc extends Composite {
 			UiBinder<Widget, NOSearchResultCollectionVc> {
 	}
 	
-	@UiField Label suggestedCollectionCountLbl;
+	@UiField Label suggestedCollectionCountLbl,didnotFindText,orText,tryTipsText,removeFiltersText,checkSpellingText,differentKeywordText,changeToggleText,suggestedCollectionsText;
 	
 	@UiField HTMLPanel suggestedCollectionContainer;
+	
+	@UiField Button btnLibrary;
 	
 	@UiField NoSearchResultBundle noResultStyle;
 	int totalItem=0;
@@ -82,33 +88,23 @@ public class NOSearchResultCollectionVc extends Composite {
 	private final String FEATURED_TAB = "featured";
 	
 	private String DEFAULT_COLLECTION_IMAGE = "images/default-collection-image-160x120.png";
-	/**
-	 * Class Constructor.
-	 */
+	
 	public NOSearchResultCollectionVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		suggestedCollectionContainer.setVisible(false);
+		btnLibrary.setText(GL0506);
+		btnLibrary.getElement().getStyle().setMarginLeft(180, Unit.PX);
+		didnotFindText.setText(GL0704);
+		orText.setText(GL0209.toUpperCase());
+		tryTipsText.setText(GL0705);
+		removeFiltersText.setText(GL0706);
+		checkSpellingText.setText(GL0707);
+		differentKeywordText.setText(GL0708);
+		changeToggleText.setText(GL0709);
+		suggestedCollectionsText.setText(GL0710);
 		//getCollectionData();
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set collection data.
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setData(List<FeaturedCollectionContentDo> searchDo)
 	{
 		for(int i=0;i<searchDo.size();i++) 
@@ -162,7 +158,7 @@ public class NOSearchResultCollectionVc extends Composite {
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id",collectionThumbnail.getElement().getId());
 						com.google.gwt.user.client.Window.scrollTo(0, 0);
-						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
 					}
 				});
 			}
@@ -170,25 +166,14 @@ public class NOSearchResultCollectionVc extends Composite {
 		}
 		}
 	}
-	/**
-	 * 
-	 * @function getCollectionData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to get collection data.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	
+	@UiHandler("btnLibrary")
+	public void onClickOnLibrary(ClickEvent clickEvent){
+		MixpanelUtil.mixpanelEvent("Search_noresults_browse_library");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	}
+
 	public void getCollectionData()
 	{
 		

@@ -34,6 +34,7 @@ import org.ednovo.gooru.server.ArrayListSorter;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -41,26 +42,17 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-/**
- * @fileName : FolderServiceImpl.java
- *
- * @description : This is the implementation of the folder service.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Service("folderService")
 @ServiceURL("/folderService")
 public class FolderServiceImpl extends BaseServiceImpl implements FolderService {
@@ -76,7 +68,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	private static final String PARENT_ID = "parentId";
 	private static final String WORKSPACE_PAGE_SIZE = "50";
 	private static final String ORDER_BY="sequence";
-
+	private static final String TITLE = "title";
+	private static final String SOURCE_ID = "sourceId";
+	private static final String TARGET_ID = "targetId";
 	
 	private String parentId = "";
 	
@@ -84,9 +78,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	private static final String FALSE = "false";
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
-	/**
-	 * This method is used to create a new folder.
-	 */
+
 	@Override
 	public CollectionDo createFolder(CollectionDo collectionDo) {
 		JsonRepresentation jsonRep = null;
@@ -109,15 +101,13 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 
 		
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
-		
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 
 	}
-	/**
-	 * This method is used to create a new folder in the parent folder. 
-	 */
+	
 	@Override
 	public CollectionDo createFolderToParentFolder(CollectionDo collectionDo,
 			String parentId) throws GwtException {
@@ -142,26 +132,12 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		form.add(PARENT_ID, this.parentId);
 
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 	}
-	/**
-	 * @function deserializeCollection 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to deserialize the collection.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -173,36 +149,19 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return new CollectionDo();
 	}
-	/**
-	 * This method is used to get the all folders. 
-	 */
+
 	@Override
 	public List<CollectionItemDo> getAllFolders() throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.LIST_MY_FOLDERS, getLoggedInSessionToken(), WORKSPACE_PAGE_SIZE, ORDER_BY);
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		List<CollectionItemDo> collectionItemDo = deserializeWorkspace(jsonRep);
 		
 		Collections.sort(collectionItemDo, new ArrayListSorter("itemSequence", true));
 		return collectionItemDo;
 	}
-	/**
-	 * @function deserializeWorkspace 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to deserialize the work spaces.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<CollectionItemDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public List<CollectionItemDo> deserializeWorkspace(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -214,9 +173,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return new ArrayList<CollectionItemDo>();
 	}
-	/**
-	 * This method is used to delete the folder.
-	 */
+
 	@Override
 	public void deleteFolder(String collectionId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_COLLECTION, collectionId, getLoggedInSessionToken());
@@ -230,33 +187,17 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		return deserializeFoldersAndCollections(jsonRep);
 	}*/
-	/**
-	 * This method is used to get the folder information.
-	 */
+
 	@Override
 	public CollectionDo getFolderInformation(String folderId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_A_FOLDER_INFORMATION, folderId, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 	}
-	/**
-	 * @function deserializeFoldersAndCollections 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to deserialize the folders and collections.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<CollectionDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public List<CollectionDo> deserializeFoldersAndCollections(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -268,32 +209,16 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		}
 		return new ArrayList<CollectionDo>();
 	}
-	/**
-	 * This method is used to get the folders.
-	 */
+
 	@Override
 	public List<CollectionItemDo> getFolders(String collectionId) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.LIST_MY_FOLDER_LEVELS, collectionId, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItems(jsonRep);
 	}
-	/**
-	 * @function deserializeCollectionItems 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to deserialize the collection items.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<CollectionItemDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public List<CollectionItemDo> deserializeCollectionItems(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -306,4 +231,182 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		return new ArrayList<CollectionItemDo>();
 	}
 
+	@Override
+	public FolderListDo getChildFolders(int offset, int limit, String parentId,String sharingType, String collectionType) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken=getLoggedInSessionToken();
+		if(sharingType!=null){
+			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		if(collectionType!=null){
+			sessionToken=sessionToken+"&collectionType="+collectionType;
+		}
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFolderList(jsonRep);
+	}
+
+	public FolderListDo deserializeFolderList(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderListDo>() {});
+			}
+		} catch (Exception e) {}
+		return new FolderListDo();
+	}
+
+	@Override
+	public FolderDo createFolder(String folderName, String parentId, boolean addToShelf) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		FolderDo folderDo = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_FOLDER, getLoggedInSessionToken());
+		JSONObject folderObject=new JSONObject();
+		try {
+			folderObject.put(TITLE, folderName);
+			if(!parentId.isEmpty()) {
+				folderObject.put(PARENT_ID, parentId);
+			}
+			if(addToShelf) {
+				folderObject.put(ADD_TO_SHELF, addToShelf);
+			}
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),folderObject.toString());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			folderDo = deserializeCreatedFolder(jsonRep);
+		} catch (JSONException e) {
+		} catch (Exception e) {
+		}
+		return folderDo;
+	}
+
+	public FolderDo deserializeCreatedFolder(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<FolderDo>() {});
+			}
+		} catch (Exception e) {}
+		return new FolderDo();
+	}
+
+	@Override
+	public void deleteCollectionsFolder(String folderId) throws GwtException {
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_FOLDER, folderId, getLoggedInSessionToken());
+		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+	}
+
+	@Override
+	public void moveCollectionIntoFolder(String sourceId, String targetId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_MOVE_COLLECTION, getLoggedInSessionToken());
+		JSONObject folderObject=new JSONObject();
+		try {
+			folderObject.put(SOURCE_ID, sourceId);
+			if(targetId!=null && !targetId.equalsIgnoreCase("")){
+				folderObject.put(TARGET_ID, targetId);
+			}
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+
+	@Override
+	public CollectionDo createCollectionInParent(CollectionDo data,String courseCodeId, String folderId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		CollectionDo collectionDo = null;
+		JSONObject collectionDataObject=new JSONObject();
+		JSONObject FolderDataObject=new JSONObject();
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
+		try {
+			collectionDataObject.put("collectionType", "collection");
+			collectionDataObject.put("title", data.getTitle());
+			collectionDataObject.put("sharing", data.getSharing());
+			collectionDataObject.put("grade", data.getGrade());
+			collectionDataObject.put("mediaType", data.getMediaType());
+			if (courseCodeId != null) {
+				collectionDataObject.put("taxonomyCode", courseCodeId);
+
+			}
+			FolderDataObject.put("collection", collectionDataObject);
+			FolderDataObject.put("parentId", folderId);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.post(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			collectionDo = deserializeCreatedCollInFolder(jsonRep);
+		} catch (Exception e) {
+		}
+		return collectionDo;
+	}
+	
+	public CollectionDo deserializeCreatedCollInFolder(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), new TypeReference<CollectionDo>() {});
+			}
+		} catch (Exception e) {}
+		return new CollectionDo();
+	}
+
+	@Override
+	public void updateFolder(String folderId, String title) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_FOLDER_METADATA, folderId, getLoggedInSessionToken());
+		JSONObject folderObject=new JSONObject();
+		try {
+			folderObject.put(TITLE, title);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
+		} catch (Exception e) {}
+	}
+
+	@Override
+	public CollectionDo copyDraggedCollectionIntoFolder(CollectionDo data,String courseCodeId,String parentId,boolean addToShelf) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		CollectionDo collectionDo = null;
+		JSONObject collectionDataObject=new JSONObject();
+		JSONObject FolderDataObject=new JSONObject();
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_COPY_COLLECTION_IN_FOLDER,data.getGooruOid(), getLoggedInSessionToken()); 
+		try {
+			collectionDataObject.put("collectionType", "collection");
+			collectionDataObject.put("title", data.getTitle());
+			collectionDataObject.put("sharing", data.getSharing());
+			collectionDataObject.put("grade", data.getGrade());
+			collectionDataObject.put("mediaType", data.getMediaType());
+			if (courseCodeId != null) {
+				collectionDataObject.put("taxonomyCode", courseCodeId);
+
+			}
+			FolderDataObject.put("collection", collectionDataObject);
+			FolderDataObject.put("parentId", parentId);
+			FolderDataObject.put("addToShelf", addToShelf);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),FolderDataObject.toString());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			collectionDo = deserializeCreatedCollInFolder(jsonRep);
+		} catch (Exception e) {
+		}
+		return collectionDo;
+	}
+
+	@Override
+	public FolderListDo getCollectionResources(String parentId,	String sharingType, String collectionType) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken=getLoggedInSessionToken();
+		if(sharingType!=null){
+			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		if(collectionType!=null){
+			sessionToken=sessionToken+"&collectionType="+collectionType;
+		}
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION_RESOURCE_LIST, parentId, sessionToken);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFolderList(jsonRep);
+	}
 }

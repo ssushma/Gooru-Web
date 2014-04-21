@@ -32,20 +32,11 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
+import com.google.gwt.user.client.ui.FlowPanel;
+
 /**
- * 
- * @fileName : IsCollectionInfoTabView.java
+ * @author Search Team
  *
- * @description : This is the interface file for CollectionInfoTabView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionInfoTabUiHandlers> {
 	
@@ -80,5 +71,13 @@ public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionIn
 	void onPostStandardUpdate(CollectionDo collectionDo);
 
 	void closeAllOpenedPopUp();
+	
+	FlowPanel getStandardContainer();
+	
+	void getUserStandardPrefCodeId(List<String> list);
+	
+/*	void displayErrorMsgTeacherTip();
+
+	void setExistingTeacherTip(CollectionDo collectionDo);*/
 	
 }

@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
 <ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle" field="res" />
 	<g:HTMLPanel styleName="{res.css.featuredContentContainer} {res.css.featuredWrapperContainer}">
-		<h3 class="{res.css.searchInfoHeader}">This Week's Featured Collections</h3>
+		<h3 class="{res.css.searchInfoHeader}"><g:Label ui:field="featuredLbl"></g:Label></h3>
 		<div class="{res.css.featuredBaseContainer}">
 			<g:FlowPanel styleName="{res.css.featuredLeftContainer}" ui:field="featuredContentTitleFloPanel"/>
 			<g:FlowPanel styleName="{res.css.featuredSlide}">

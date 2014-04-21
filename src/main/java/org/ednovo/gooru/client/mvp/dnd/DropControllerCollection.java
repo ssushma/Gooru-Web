@@ -54,20 +54,6 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @fileName : DropControllerCollection.java
- *
- * @description : This class is used to handle the drop controller.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-
-/**
  * Package private helper implementation class for {@link AbstractDragController} to track all
  * relevant {@link DropController DropControllers}.
  */
@@ -88,96 +74,36 @@ class DropControllerCollection {
       }
       targetArea = new WidgetArea(target, null);
     }
-    /**
-     * This method is used to compare the elements.
-     */
+
     @Override
     public int compareTo(Candidate other) {
       Element myElement = getDropTarget().getElement();
       Element otherElement = other.getDropTarget().getElement();
       return compareElement(myElement, otherElement);
     }
-    /**
-     * This method will check the whether the given objects or equal or not.
-     */
+
     @Override
     public boolean equals(Object other) {
       throw new RuntimeException("hash code not implemented");
     }
-    /**
-     * This method will return the hash code.
-     */
+
     @Override
     public int hashCode() {
       throw new RuntimeException("hash code not implemented");
     }
-    /**
-     * @function getDropController 
-     * 
-     * @created_date : 27-Dec-2013
-     * 
-     * @description : This method will return the drop controller.
-     * 
-     * @parm(s) : @return
-     * 
-     * @return : DropController
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     */
+
     DropController getDropController() {
       return dropController;
     }
-    /**
-     * @function getDropTarget 
-     * 
-     * @created_date : 27-Dec-2013
-     * 
-     * @description : This method will return the drop traget.
-     * 
-     * @parm(s) : @return
-     * 
-     * @return : Widget
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     */
+
     Widget getDropTarget() {
       return dropController.getDropTarget();
     }
-    /**
-     * @function getTargetArea 
-     * 
-     * @created_date : 27-Dec-2013
-     * 
-     * @description : This method will return the drop traget area.
-     * 
-     * @parm(s) : @return
-     * 
-     * @return : Area
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     */
+
     Area getTargetArea() {
       return targetArea;
     }
-    /**
-     * @function compareElement 
-     * 
-     * @created_date : 27-Dec-2013
-     * 
-     * @description : This method will compare the passed elements and returns the integer value.
-     * 
-     * @parm(s) : @param myElement
-     * @parm(s) : @param otherElement
-     * @parm(s) : @return
-     * 
-     * @return : int
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     */
+
     private int compareElement(Element myElement, Element otherElement) {
       if (myElement == otherElement) {
         return 0;

@@ -28,18 +28,10 @@
 package org.ednovo.gooru.client.uc;
 
 import com.google.gwt.user.client.ui.HTML;
+
 /**
- * @fileName : SeparatorUc.java
- *
- * @description : This class is used to generate the separator.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SeparatorUc extends HTML {
 

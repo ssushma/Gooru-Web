@@ -58,18 +58,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : FolderItemChildView.java
- *
- * @description :  This class is used to set the view for folder child items.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Gooru Team
+ * 
  */
 public class FolderItemChildView extends ChildView<FolderItemChildPresenter> implements IsFolderItemView, MessageProperties {
 
@@ -164,20 +156,6 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 			myFolderPageGoals.setStyleName(res.css().myCollectionPageGoals());
 		}
 	}
-	/**
-	 * @function OnClickOnConfirmDeleteLbl 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the confirm delete label.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("confirmDeleteLbl")
 	public void OnClickOnConfirmDeleteLbl(ClickEvent event)
 	{
@@ -195,20 +173,7 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 			}
 		};
 	}
-	/**
-	 * @function OnClickOpenFolderPage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the folder to open the folder.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("openFolderpageLbl")
 	public void OnClickOpenFolderPage(ClickEvent event){
 		String currentCollectionlevel="";
@@ -252,16 +217,12 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 			}
 			}
 	}
-	/**
-	 * This method is used to get the drag handler.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		return null;
 	}
-	/**
-	 * This method is used to get the draggable item.
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		return new ResourceDragUc(collectionItemDo.getResource().getResourceType().getName(),
@@ -272,37 +233,26 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 	public void onDragBlur() {
 
 	}
-	/**
-	 * This method will return the dragged element/widget id.
-	 */
+
 	@Override
 	public String getDragId() {
 		return collectionItemDo.getCollectionItemId();
 	}
-	/**
-	 * This method will return the drag type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		return DRAG_TYPE.COLLECTION_ITEM;
 	}
-	/**
-	 * This method will return the drag top position.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		return 5;
 	}
-	/**
-	 * This method will return the drag left position.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		return 225;
 	}
-	/**
-	 * This method is used to set the folder data after deleting the folder.
-	 */
 	@Override
 	public void onPostFolderDelete() {
 		CollectionDo collectionDo = new CollectionDo();
@@ -320,9 +270,7 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 				AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.DELETE));
 		}
 	}
-	/**
-	 * This method is used to reorder the folder items.
-	 */
+	
 	public void reorderFolderItem(int newSequence) { 
 		collectionItemDo.setItemSequence(newSequence);
 		getPresenter().reorderCollectionItem(collectionItemDo);
@@ -335,9 +283,6 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 		}.schedule(2000);
 		
 	}
-	/**
-	 * This method is used to reorder the folder items.
-	 */
 	@Override
 	public void onPostReorder(CollectionItemDo collectionItem) {
 		collectionItem.setCollection(this.collectionItemDo.getCollection());

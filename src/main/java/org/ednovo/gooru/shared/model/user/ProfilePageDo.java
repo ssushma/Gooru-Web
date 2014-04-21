@@ -25,61 +25,40 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : ProfilePageDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(Include.NON_NULL)
 public class ProfilePageDo implements Serializable {
 	private static final long serialVersionUID = -2570709586812060758L;
 	
 	private String optionalValue;
 	private String category;
 	private String optionalKey;
-	/** 
-	 * This method is to get the optionalValue
-	 */
+	
+	public ProfilePageDo(){}
+		
 	public String getOptionalValue() {
 		return optionalValue;
 	}
-	/** 
-	 * This method is to set the optionalValue
-	 */
 	public void setOptionalValue(String optionalValue) {
 		this.optionalValue = optionalValue;
 	}
-	/** 
-	 * This method is to get the category
-	 */
 	public String getCategory() {
 		return category;
 	}
-	/** 
-	 * This method is to set the category
-	 */
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	/** 
-	 * This method is to get the optionalKey
-	 */
 	public String getOptionalKey() {
 		return optionalKey;
 	}
-	/** 
-	 * This method is to set the optionalKey
-	 */
 	public void setOptionalKey(String optionalKey) {
 		this.optionalKey = optionalKey;
 	}
+	
+	
+	
+	
+	
 }

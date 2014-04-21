@@ -25,18 +25,21 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
+
 /**
+ * 
  * @fileName : BitlyUrlDo.java
  *
- * @description : This class is used as data object.
+ * @description : 
+ *	This class is used as data object.
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Jul 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 
 public class BitlyUrlDo implements Serializable {
@@ -48,6 +51,7 @@ public class BitlyUrlDo implements Serializable {
 
 	private String fullUrl;
 
+	public BitlyUrlDo(){}
 	/** 
 	 * This method is to get the fullUrl
 	 */

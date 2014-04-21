@@ -26,21 +26,7 @@ package org.ednovo.gooru.client.mvp.folders.edit.tab.content;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshCollectionInFolderLevelListHandler;
-/**
- * 
- * @fileName : FolderContentTabUiHandlers.java
- *
- * @description : This is the UIHandler file.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface FolderContentTabUiHandlers  extends BaseUiHandlers, RefreshCollectionInFolderLevelListHandler {
 
 	void getSecondThirdLevelFolders();

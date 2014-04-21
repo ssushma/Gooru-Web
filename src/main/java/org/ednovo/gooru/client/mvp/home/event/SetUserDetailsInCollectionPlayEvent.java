@@ -25,20 +25,7 @@
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.GwtEvent;
-/**
- * @fileName : SetUserDetailsInCollectionPlayEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event is fired , it will read and set the sessionToken and gooruUserId value from the event. 
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SetUserDetailsInCollectionPlayEvent extends	GwtEvent<SetUserDetailsInCollectionPlayEventHandler> {
 
 	public static final Type<SetUserDetailsInCollectionPlayEventHandler> TYPE = new Type<SetUserDetailsInCollectionPlayEventHandler>();

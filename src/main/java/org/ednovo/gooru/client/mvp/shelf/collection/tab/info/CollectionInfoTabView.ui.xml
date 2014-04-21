@@ -15,9 +15,9 @@
 		<g:HTMLPanel ui:field="mainInfoPanel">
 			<g:FlowPanel styleName="{res.css.gradeInfoContainer}">
 				<g:FlowPanel styleName="{res.css.gradeInfoTitleContainer}">
-					<g:Label styleName="{res.css.shelfGradeInfoTitle}" text="GRADE" />
+					<g:Label styleName="{res.css.shelfGradeInfoTitle}" ui:field="gradeLbl" />
 				</g:FlowPanel>
-				<g:Label styleName="{res.css.shelfGradeInfoBottom}" text="Select grade(s) for this collection." />
+				<g:Label styleName="{res.css.shelfGradeInfoBottom}" ui:field="selectGradeLbl" />
 				<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}"
 					ui:field="KinderGarten" />
 				<g:FlowPanel styleName="{res.css.gradeListCont}">
@@ -33,40 +33,49 @@
 					<g:Label ui:field="courseLabel" styleName="{res.css.shelfGradeInfoTitle}" />
 				</g:FlowPanel>
 				<g:Label styleName="{res.css.shelfGradeSelectResources}"
-					text="Select a course for this collection." />
+					 ui:field="selectCourseLbl"/>
 				<g:FlowPanel styleName="{res.css.floatLeftCollectionInputBox}"
 					ui:field="courseData">
 					<g:Label styleName="{res.css.addedCoursesList}" ui:field="courseLbl" />
 				</g:FlowPanel>
-				<g:Button styleName="secondary" text="Add a Course"
+				<g:Button styleName="secondary" 
 						ui:field="addCourseBtn" />	
-				<g:Button styleName="secondary" text="Remove Course"
+				<g:Button styleName="secondary" 
 					ui:field="removeCourseBtn" />
 			</g:FlowPanel>
 
-			<!-- <g:Label styleName="{res.css.shelfVocabulary}" text="VOCABULARY"/> 
-				<g:FlowPanel styleName="{res.css.shelfCourseSubject}"> <g:FlowPanel styleName="{res.css.shelfNameCourse}"> 
-				<g:FlowPanel styleName="{res.css.standardsCont}"> <g:ListBox styleName= "{res.css.infoTextBox}"/> 
-				<g:Button styleName = "{res.css.infoAddButton}" text="Add"/> </g:FlowPanel> 
-				</g:FlowPanel> </g:FlowPanel> -->
-			<g:Label styleName="{res.css.shelfVocabularyStandard}" text="STANDARDS"
+<!-- 	
+Uncomment them if Teacher Tip option needs to be resumed
+		<g:Label styleName="{res.css.shelfTeacherTip}" text="Teacher Tips"/> 
+			<g:Label styleName="{res.css.shelfGradeTeacherTipTextTitle}" ui:field="teacherTipTextLabel"></g:Label>
+			<g:TextArea styleName="{res.css.shelfGradeTeacherTipTextbox}" ui:field="teacherTipTextarea"></g:TextArea>
+			<g:Label styleName="{res.css.shelfGradeTeacherTipError}" ui:field="errorLabelForTeacherTip"></g:Label>
+			<g:HTMLPanel styleName="{res.css.shelfGradeTeacherTipButtonsContainer}">
+			<g:Button styleName="primary {res.css.shelfTeacherTipButtons}" text="Save"
+						ui:field="addTeacherTip" />	
+				<g:Button styleName="secondary {res.css.shelfTeacherTipButtonsCancel}" text="Cancel"
+					ui:field="cancelTeacherTip" /> 
+					</g:HTMLPanel> 
+					
+					-->
+			<g:FlowPanel ui:field="standardContainer">
+			<g:Label styleName="{res.css.shelfVocabularyStandard}" 
 				ui:field="standardLabel" />
-			<g:Label styleName="{res.css.shelfGradeInfoBottom}">Type and select Common Core Standard(s)
-				for math or California Science Curriculum Standard(s) for this
-				collection.</g:Label>
+			
+			<g:Label styleName="{res.css.shelfGradeInfoBottom}" ui:field="standardsDefaultText"></g:Label>
 			<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
 				<g:FlowPanel styleName="{res.css.shelfNameCourse}">
 					<g:FlowPanel styleName="{res.css.standardsCont}">
 						<uc:AppSuggestBox ui:field="standardSgstBox"
-							width="323px" height="19px" />
-						<g:Button styleName="{res.css.infoAddButton}" text="Add"
+							width="277px" height="19px" />
+						<g:Button styleName="{res.css.infoAddButton}" 
 							ui:field="addStandardBtn" />
-						<g:Label styleName="{res.css.standardMaxHide}" text="sorry, you can only add 15 standards!"
+						<g:Label styleName="{res.css.standardMaxHide}" 
 							ui:field="standardMaxMsg" />
-						<g:FlowPanel ui:field="standardsPanel" width="780px"
-							height="120px" styleName="{res.css.collectionStandardsMargin}" />
+						<g:FlowPanel ui:field="standardsPanel" styleName="{res.css.collectionStandardsMargin}" />
 					</g:FlowPanel>
 				</g:FlowPanel>
+			</g:FlowPanel>
 			</g:FlowPanel>
 			<!-- <g:HTMLPanel styleName="{res.css.shelfInfoMobileSupportedMain}"> 
 				<g:Label styleName="{res.css.shelfInfoMobileSupported}" text="MOBILE OPTIMIZED 

@@ -30,21 +30,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : CollectionProfileItemDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CollectionProfileItemDo implements Serializable {
 
@@ -66,147 +52,8 @@ public class CollectionProfileItemDo implements Serializable {
 	private Integer totalHitCount;
 	
 	private List<Map<String, String>> standards;
-
-	/** 
-	 * This method is to get the collectionItemId
-	 */
-	public String getCollectionItemId() {
-		return collectionItemId;
-	}
-
-	/** 
-	 * This method is to set the collectionItemId
-	 */
-	public void setCollectionItemId(String collectionItemId) {
-		this.collectionItemId = collectionItemId;
-	}
-
-	/** 
-	 * This method is to get the collection
-	 */
-	public CollectionDo getCollection() {
-		return collection;
-	}
-
-	/** 
-	 * This method is to set the collection
-	 */
-	public void setCollection(CollectionDo collection) {
-		this.collection = collection;
-	}
-
-	/** 
-	 * This method is to get the resource
-	 */
-	public ResourceDo getResource() {
-		return resource;
-	}
-
-	/** 
-	 * This method is to set the resource
-	 */
-	public void setResource(ResourceDo resource) {
-		this.resource = resource;
-	}
-
-	/** 
-	 * This method is to get the collectionQuestionItemDo
-	 */
-	public CollectionQuestionItemDo getCollectionQuestionItemDo() {
-		return collectionQuestionItemDo;
-	}
-
-	/** 
-	 * This method is to set the collectionQuestionItemDo
-	 */
-	public void setCollectionQuestionItemDo(
-			CollectionQuestionItemDo collectionQuestionItemDo) {
-		this.collectionQuestionItemDo = collectionQuestionItemDo;
-	}
-
-	/** 
-	 * This method is to get the itemType
-	 */
-	public String getItemType() {
-		return itemType;
-	}
-
-	/** 
-	 * This method is to set the itemType
-	 */
-	public void setItemType(String itemType) {
-		this.itemType = itemType;
-	}
-
-	/** 
-	 * This method is to get the itemSequence
-	 */
-	public Integer getItemSequence() {
-		return itemSequence;
-	}
-
-	/** 
-	 * This method is to set the itemSequence
-	 */
-	public void setItemSequence(Integer itemSequence) {
-		this.itemSequence = itemSequence;
-	}
-
-	/** 
-	 * This method is to get the narration
-	 */
-	public String getNarration() {
-		return narration;
-	}
-
-	/** 
-	 * This method is to set the narration
-	 */
-	public void setNarration(String narration) {
-		this.narration = narration;
-	}
-
-	/** 
-	 * This method is to get the narrationType
-	 */
-	public String getNarrationType() {
-		return narrationType;
-	}
-
-	/** 
-	 * This method is to set the narrationType
-	 */
-	public void setNarrationType(String narrationType) {
-		this.narrationType = narrationType;
-	}
-
-	/** 
-	 * This method is to get the start
-	 */
-	public String getStart() {
-		return start;
-	}
-
-	/** 
-	 * This method is to set the start
-	 */
-	public void setStart(String start) {
-		this.start = start;
-	}
-
-	/** 
-	 * This method is to get the stop
-	 */
-	public String getStop() {
-		return stop;
-	}
-
-	/** 
-	 * This method is to set the stop
-	 */
-	public void setStop(String stop) {
-		this.stop = stop;
-	}
+	
+	public CollectionProfileItemDo(){}
 
 	/** 
 	 * This method is to get the totalHitCount
@@ -222,16 +69,90 @@ public class CollectionProfileItemDo implements Serializable {
 		this.totalHitCount = totalHitCount;
 	}
 
-	/** 
-	 * This method is to get the standards
-	 */
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
+
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
+
+	public CollectionDo getCollection() {
+		return collection;
+	}
+
+	public void setCollection(CollectionDo collectionDo) {
+		this.collection = collectionDo;
+	}
+
+	public ResourceDo getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceDo resourceDo) {
+		this.resource = resourceDo;
+	}
+
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+
+	public Integer getItemSequence() {
+		return itemSequence;
+	}
+
+	public void setItemSequence(Integer itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+
+	public String getNarration() {
+		return narration;
+	}
+
+	public void setNarration(String narration) {
+		this.narration = narration;
+	}
+
+	public String getNarrationType() {
+		return narrationType;
+	}
+
+	public void setNarrationType(String narrationType) {
+		this.narrationType = narrationType;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String getStop() {
+		return stop;
+	}
+
+	public void setStop(String stop) {
+		this.stop = stop;
+	}
+
+	public CollectionQuestionItemDo getCollectionQuestionItemDo() {
+		return collectionQuestionItemDo;
+	}
+
+	public void setCollectionQuestionItemDo(CollectionQuestionItemDo collectionQuestionItemDo) {
+		this.collectionQuestionItemDo = collectionQuestionItemDo;
+	}
+
 	public List<Map<String, String>> getStandards() {
 		return standards;
 	}
 
-	/** 
-	 * This method is to set the standards
-	 */
 	public void setStandards(List<Map<String, String>> standards) {
 		this.standards = standards;
 	}

@@ -12,30 +12,29 @@
 			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel" />
 
 			<g:HTMLPanel styleName="{res.css.popupContent}">
-				<g:HTMLPanel styleName="{res.css.h1}">One More Step!</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.subheader}">Please fill out your role,
-					username and password so you can access Gooru directly.</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.h1}" ui:field="oneMoreStepText"></g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.subheader}" ui:field="fillText"></g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.userInfoContainer}">
 					<!-- <g:HTMLPanel styleName="{res.css.ssoEmail}">Your email: user@goorulearning.org</g:HTMLPanel> -->
 					<g:HTMLPanel styleName="{res.css.role}">
 						<g:HTMLPanel styleName="{res.css.roleOption} {res.css.teacherRole}">
 							<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
-							Teacher
+							<g:Label ui:field="teachLbl"></g:Label>
 							<g:HTMLPanel ui:field="teacherRg"></g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{res.css.roleOption} {res.css.studentRole}">
 							<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
-							Student
+							<g:Label ui:field="studentLbl"></g:Label>
 							<g:HTMLPanel ui:field="studentRg"></g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{res.css.roleOption} {res.css.parentRole}">
 							<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
-							Parent
+							<g:Label ui:field="parentLbl"></g:Label>
 							<g:HTMLPanel ui:field="parentRg"></g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{res.css.roleOption} {res.css.otherRole}">
 							<g:HTMLPanel styleName="{res.css.roleOptionImage}"></g:HTMLPanel>
-							Other
+							<g:Label ui:field="otherLbl"></g:Label>
 							<g:HTMLPanel ui:field="otherRg"></g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{res.css.chooseUsername}">
@@ -43,7 +42,7 @@
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:Button ui:field="submitRegistration" styleName="primary">Submit</g:Button>
+				<g:Button ui:field="submitRegistration" styleName="primary"></g:Button>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>

@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf;
 
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -34,21 +37,10 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
- * 
- * @fileName : ShelfUiHandlers.java
+ * @author Search Team
  *
- * @description : This interface is UIHandler file for ShelfView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHandler,UpdateResourceCountEventHandler{
+public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHandler,UpdateResourceCountEventHandler, SetFolderParentNameHandler{
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();
@@ -61,7 +53,13 @@ public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHa
 	
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_ASSIGN_INFO_TAB = new Type<RevealContentHandler<?>>();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_COLLABORATOR_TAB = new Type<RevealContentHandler<?>>();
 
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+	
 	void deleteCollection(String collectionId);
 
 	void revealTab(Type<RevealContentHandler<?>> tabType, CollectionDo collectionDo);
@@ -72,6 +70,10 @@ public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHa
 
 	void updateCollectionInfo(String collectionId, String title, String description);
 	
-	void copyCollection(String collectionUid);
+	void copyCollection(String collectionUid, boolean addToShelf);
+	
+	void setFoldersSlot(String parentId);
+
+	void moveCollection(String gooruOid, String parentId, String folderName, HashMap<String, String> params);   
 
 }

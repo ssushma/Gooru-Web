@@ -29,21 +29,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : AssignmentsListDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class AssignmentsListDo implements Serializable {
 
@@ -62,7 +48,7 @@ public class AssignmentsListDo implements Serializable {
 	
 	private String classpageId;
 	
-	
+	public AssignmentsListDo(){}
 	
 	/** 
 	 * This method is to get the pageNum

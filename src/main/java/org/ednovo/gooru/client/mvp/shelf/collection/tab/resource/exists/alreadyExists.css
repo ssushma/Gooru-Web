@@ -179,28 +179,28 @@ input[type="text"] {
 .resourceExistsResourceTypeSpriteVideo {
 	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: 0px -20px;
+	background-position: 0px 1px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteInteractive {
 	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: -60px 0px;
+	background-position: 0px -27px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteWebsite {
 	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: 0px 0px;
+	background-position: 0px -223px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteSlide {
 	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: -30px 0px;
+	background-position: -0px -225px;
 	width: 28px;
 	height: 22px;
 }
@@ -228,7 +228,7 @@ input[type="text"] {
 .resourceExistsResourceTypeSpriteQuestion {
 	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
-	background-position: -30px -20px;
+	background-position: 0px -139px;
 	width: 28px;
 	height: 22px;
 }
@@ -239,3 +239,32 @@ input[type="text"] {
 	width: 28px;
 	height: 22px;
 }
+.resourceExistsResourceTypeSpriteAudio {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: 0px -297px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteImage {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: 0px -251px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteOther {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: -0px -307px;
+	width: 28px;
+	height: 22px;
+}
+.resourceExistsResourceTypeSpriteText {
+	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	
+	background-position: -0px -55px;
+	width: 28px;
+	height: 22px;
+}
+

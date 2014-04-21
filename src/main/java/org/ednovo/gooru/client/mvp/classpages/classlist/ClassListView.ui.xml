@@ -1,0 +1,111 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc"
+	xmlns:panel="urn:import:org.ednovo.gooru.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.classpages.classlist.ClasslistpageCBundle"
+		field="res" />
+	<g:FlowPanel styleName="{res.css.teachContainer}">
+		<g:HTMLPanel styleName="{res.css.teachContent}">
+			<g:HTMLPanel styleName="{res.css.teachTitle}" ui:field="assignHeader"></g:HTMLPanel>
+			<g:HTMLPanel styleName="toggle {res.css.publicPrivate}">
+				<g:SimpleCheckBox ui:field="checkbox" styleName="{res.css.checkboxStyle}"></g:SimpleCheckBox>
+				<g:HTMLPanel styleName="toggleSpanMainDiv">
+					<g:Label styleName="" ui:field="inviteOnlyTxt"></g:Label>
+					<g:Label styleName="" ui:field="publicTitleTxt"></g:Label>
+				</g:HTMLPanel>
+				<g:Anchor></g:Anchor>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.teachDesc}" ui:field="privateMsgPanel">
+					<g:InlineHTML ui:field="privateMsgDesc"></g:InlineHTML>
+				<g:HTMLPanel styleName="{res.css.teachItalic}" ui:field="invite"></g:HTMLPanel>
+				<g:InlineHTML ui:field="inviteTextDesc"></g:InlineHTML>
+				<g:HTMLPanel styleName="{res.css.teachBold}" ui:field="publicClassTxt"></g:HTMLPanel>
+				<g:InlineHTML ui:field="publicDescTxt"></g:InlineHTML>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.teachDesc}" ui:field="publicMsgPanel">
+				<g:InlineHTML ui:field="publicTxtDesc"></g:InlineHTML>
+					<g:HTMLPanel styleName="{res.css.teachBold}" ui:field="publicTxt"></g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.teachItalic}" ui:field="inviteTxt"></g:HTMLPanel>
+				<g:InlineHTML ui:field="inviteDesc"></g:InlineHTML>
+			</g:HTMLPanel>
+
+			<g:HTMLPanel styleName="{res.css.assignDiv}">
+                 <g:Button styleName="{res.css.emailButton} {res.css.emailStyle}" ui:field="emailShareBtn"></g:Button>
+				<g:HTMLPanel styleName="{res.css.assignTitle}" ui:field="assignSubHeader"></g:HTMLPanel>
+				<g:HTMLPanel ui:field="privateAssignContainer" styleName="{res.css.subBody}">
+					<g:HTMLPanel styleName="{res.css.subTitle}" ui:field="titleTxt"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.titleBold}" ui:field="emailTxt"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.buttonContainer}">
+						<g:HTMLPanel ui:field="panelSuggestBox"></g:HTMLPanel>
+						<g:HTMLPanel ui:field="panelActions" styleName="">
+							<g:Button styleName="primary" ui:field="btnInvite" />
+							<!-- Tooltips -->
+							<g:HTMLPanel styleName="{res.css.tooltipContainer}"
+								ui:field="panelCode">
+								<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel>
+								<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
+								<g:Label styleName="{res.css.tooltipContent}" ui:field="lblText"></g:Label>
+							</g:HTMLPanel>
+							<g:Label ui:field="lblPleaseWait" styleName="{res.css.pleaseWait}" />
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:Label ui:field="lblErrorMessage" styleName="errorMessage {res.css.error}" />
+				</g:HTMLPanel>
+				<g:HTMLPanel ui:field="publicAssignContainer">
+					<g:HTMLPanel styleName="{res.css.assignSec}">
+						<g:HTMLPanel styleName="{res.css.assignSecTitle}" ui:field="shareTxt"></g:HTMLPanel>
+						<g:InlineHTML ui:field="shareTxtDesc"></g:InlineHTML>
+						<g:TextBox styleName="{res.css.input1} {res.css.shareTextboxLink}"
+							ui:field="txtClasspageCodeShare" />
+						<!-- <g:Button styleName="secondary" ui:field="classCodeBtn">Send via E-mail</g:Button> -->
+					</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.assignSec}">
+						<g:HTMLPanel styleName="{res.css.assignSecTitle}" ui:field="shareTitle"></g:HTMLPanel>
+						<g:InlineHTML ui:field="shareDesc"></g:InlineHTML>
+						<g:TextBox
+							styleName="{res.css.input1} {res.css.inputWidth} {res.css.shareTextboxLink}"
+							ui:field="txtClasspageLinkShare" />
+						<!-- <g:Button styleName="secondary" ui:field="webLinkBtn">Send
+							via E-mail</g:Button> -->
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<!-- Loading -->
+				<g:HTMLPanel ui:field="panelLoading">
+					<g:Label styleName="loadingpanelImage" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+			<!-- Display this panel if no member are list in this class -->
+				<g:HTMLPanel styleName="{res.css.teachContentView}"
+					ui:field="panelNoMembers">
+					<g:HTMLPanel styleName="{res.css.title}" ui:field="joinTxt"></g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.twoActions}">
+						<g:HTMLPanel styleName="{res.css.manage}" ui:field="manageTxt">  </g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.progress}" ui:field="trackTxt">
+					
+						</g:HTMLPanel>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+			<!-- Display this panel if there are member available in this class -->
+			<g:HTMLPanel styleName="{res.css.membersList}" ui:field="panelMembersList">
+				<g:HTMLPanel styleName="{res.css.pendingContainer}" ui:field="panelPendingMembersContainer">
+					<g:Label styleName="{res.css.pendingMembers}" ui:field="lblPendingMembers"></g:Label>
+					<g:VerticalPanel styleName="" ui:field="panelPendingMembersList">
+
+					</g:VerticalPanel>
+					<g:Anchor ui:field="ancPendingListSeeMore" styleName="{res.css.seeMorePending}"/>
+					<g:Label ui:field="lblPendingPleaseWait" styleName="systemMessage {res.css.pleaseWait}"/>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.activeContainer}" ui:field="panelActiveMembersContainter">
+					<g:Label styleName="{res.css.activeMembers}" ui:field="lblActiveMembers"></g:Label>
+					<g:Label styleName="{res.css.activeMembersDesc}" ui:field="lblActiveMembersDesc"></g:Label>
+					<g:VerticalPanel styleName="" ui:field="panelActiveMembersList">
+
+					</g:VerticalPanel>
+	 				<g:Anchor ui:field="ancActiveListSeeMore" styleName="{res.css.seeMoreActive}"/>
+	 				<g:Label ui:field="lblActivePleaseWait" styleName="systemMessage {res.css.pleaseWait}"/>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

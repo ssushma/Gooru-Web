@@ -23,23 +23,25 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists;
+/**
+* @fileName : ExistsResourceUiHandlers.java 
+*
+* @description :This file is responsible for UI Handlers.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResourceImageHandler;
 
 import com.google.gwt.event.shared.EventHandler;
-/**
- * @fileName : ExistsResourceUiHandlers.java
- *
- * @description : This file is responsible for UI Handlers.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface ExistsResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 	
 

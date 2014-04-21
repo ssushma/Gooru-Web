@@ -27,21 +27,7 @@ package org.ednovo.gooru.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : GooruCBundle.java
- *
- * @description : This interface helps to add css styles. 
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface GooruCBundle extends ClientBundle {
 	
 	static final GooruCBundle INSTANCE = GWT.create(GooruCBundle.class);
@@ -158,6 +144,16 @@ public interface GooruCBundle extends ClientBundle {
 		String profileImageActive();
 		
 		String profileImageContainer();
+		
+		String displayFlagPopup();
+		
+		String goorulandingFooterContainerNew();
+		
+		String discoverDropDown();
+		
+		String discoverDropDownBorder();
+		
+		String discoverTextStyle();
 		
 	}
 	@Source("Gooru.css")

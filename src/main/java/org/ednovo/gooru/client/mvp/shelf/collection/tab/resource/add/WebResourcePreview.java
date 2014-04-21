@@ -27,6 +27,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -40,20 +42,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : WebResourcePreview.java
- *
- * @description : This class is used to display user web resource preview.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class WebResourcePreview extends PopupPanel {
+
+public abstract class WebResourcePreview extends PopupPanel implements MessageProperties {
 	
 	@UiField BlueButtonUc okButton, goBackBtn;
 	
@@ -63,45 +53,38 @@ public abstract class WebResourcePreview extends PopupPanel {
 	@UiField
 	public Image setThumbnailImage;
 	
-	@UiField HTMLPanel actionPanel;
+	@UiField HTMLPanel actionPanel,areYouSureText;
 	
-	@UiField Label lblConfirmAdding;
+	@UiField Label lblConfirmAdding,messageText,titleText,categoryText;
 	
 	private static WebResourcePreviewUiBinder uiBinder = GWT.create(WebResourcePreviewUiBinder.class);
 
 	interface WebResourcePreviewUiBinder extends UiBinder<Widget, WebResourcePreview> {
 	}
 	
-	/**
-	 * Class constructor.
-	 */
+	
 	public WebResourcePreview() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		lblConfirmAdding.getElement().getStyle().setDisplay(Display.NONE);
 		actionPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		setGlassEnabled(true);
+		areYouSureText.getElement().setInnerHTML(GL0363);
+		messageText.setText(GL0930);
+		titleText.setText(GL0318);
+		descriptionTxtLbl.setText(GL0904);
+		categoryText.setText(GL0906);
+		thumbnailLbl.setText(GL0911);
+		goBackBtn.setText(GL0841);
+		okButton.setText(GL_GRR_YES);
+		lblConfirmAdding.setText(GL0591.toLowerCase());
 		setWidth("508px");
 		setHeight("481px");
 		center();
 	}
 	
 	
-	/**
-	 * @function onClickClosePreviewBtn 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on the preview close button.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("previewCloseButton")
 	public void onClickClosePreviewBtn(ClickEvent event){
 		Window.enableScrolling(true);
@@ -109,43 +92,16 @@ public abstract class WebResourcePreview extends PopupPanel {
 		hide();
 		closeAppPopUp();
 	}
-	/**
-	 * @function hidePop 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : this will handle the click event on the go back button.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("goBackBtn")
 	public void hidePop(ClickEvent event){
 		showAddResourcePopup();
 	}
 	
-	/**
-	 * @function onAddResourceClick 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on the ok button.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("okButton")
 	public void onAddResourceClick(ClickEvent event){
+		MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
 		addWebResource();
 	}
 	

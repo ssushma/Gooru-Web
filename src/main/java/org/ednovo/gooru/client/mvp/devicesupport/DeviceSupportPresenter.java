@@ -39,19 +39,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
 /**
- * 
- * @fileName : DeviceSupportPresenter.java
+ * @author Search Team
  *
- * @description : This is presenter class for DeviceSupportView.java
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class DeviceSupportPresenter extends Presenter<IsDeviceSupportView, DeviceSupportPresenter.IsDeviceSupportProxy>{
     
@@ -76,33 +65,12 @@ public class DeviceSupportPresenter extends Presenter<IsDeviceSupportView, Devic
             }
         });
     }
-	/**
-	 * The presenter's revealInParent() is call ant it asks to be set in one of its parent slot by firing a RevealContentEvent
-	 */
+
     @Override
     protected void revealInParent() {
         RevealRootContentEvent.fire(this, this);
     }
-    /**
-     * 
-     * @function getDeviceDetails 
-     * 
-     * @created_date : 27-Dec-2013
-     * 
-     * @description : This method is used to get the device details.
-     * 
-     * 
-     * @parm(s) : @param device
-     * @parm(s) : @param size
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+    
     public void getDeviceDetails(String device, String size){
         
         getView().writeToConsole("device : "+device);

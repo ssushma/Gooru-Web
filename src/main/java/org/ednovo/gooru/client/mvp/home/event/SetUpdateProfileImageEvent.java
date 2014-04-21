@@ -28,19 +28,10 @@
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : SetUpdateProfileImageEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event is fired , it will read and set the imageUrl value from the event. 
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SetUpdateProfileImageEvent extends GwtEvent<SetUpdateProfileImageEventHandler> {
 

@@ -27,59 +27,45 @@
  */
 package org.ednovo.gooru.shared.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.ednovo.gooru.client.gin.AppClientFactory;
+
+
 /**
- * @fileName : StringUtil.java
- *
- * @description : This class contains all the string operations.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class StringUtil {
 	
 	 public static final int INDEX_NOT_FOUND = -1;
 	 
 	 public static final String EMPTY = "";
-	 /**
-	  * This method will check the given string is valid string or not.
-	  */
+
 	public static boolean hasValidString(String string) {
 		return string != null && string.length() > 0 && !string.equalsIgnoreCase("null");
 	}
-	/**
-	 * This method will the return the valid string.
-	 */
+
 	public static String getValidString(String string, String defaultString) {
 		return hasValidString(string) ? string : defaultString;
 	}
-	/**
-	 * This method will return the valid string with prefix.
-	 */
+
 	public static String getValidStringWithPrefix(String string, String defaultString, String prefix) {
 		return hasValidString(string) ? prefix + string : prefix + defaultString;
 	}
-	/**
-	 * This method will return the valid string with the suffix.
-	 */
+
 	public static String getValidStringWithSuffix(String string, String defaultString, String suffix) {
 		return hasValidString(string) ? string + suffix : defaultString + suffix;
 	}
-	/**
-	 * This method will truncate the text based on the passed max character length.
-	 */
+
 	public static String truncateText(String text, int maxCharLength) {
 		return truncateText(text, maxCharLength, "...");
 	}
-	/**
-	 * This will truncate the text.
-	 */
+
 	public static String truncateText(String text, int maxCharLength, String suffix) {	
 		 if (text != null && text.trim().length() > maxCharLength && !text.equalsIgnoreCase("multiple sources"))
 		 {
@@ -88,15 +74,9 @@ public class StringUtil {
 		return text != null ? text : "";
 
 	}
-	/**
-	 * This method will check is passed string is empty or not.
-	 */
 	public static boolean isEmpty(String str) {
         return str == null || str.length() == 0;
     }
-	/**
-	 * This will convert the string to time.
-	 */
 	public static String stringToTime(String data) {
 		if (StringUtil.hasValidString(data) && data.length() > 0 && !data.equalsIgnoreCase("0")) {
 			long totalSecs = Long.valueOf(data);
@@ -108,9 +88,7 @@ public class StringUtil {
 			return null;
 		}
 	}
-	/**
-	 * This will return the question type.
-	 */
+	
 	public static String getQuestionType(String type){
 		//MULTIPLE_CHOICE("MC", 1), SHORT_ANSWER("SA", 2), TRUE_OR_FALSE("T/F", 3), FILL_IN_BLANKS("FIB", 4);
 		if(type.equalsIgnoreCase("MC")){
@@ -124,9 +102,7 @@ public class StringUtil {
 		}
 		return "";
 	}
-	/**
-	 * This will generate the message.
-	 */
+	
 	public static String generateMessage(String text, String... params) {
 		if (params != null) {
 			for (int index = 0; index < params.length; index++) {
@@ -135,9 +111,7 @@ public class StringUtil {
 		}
 		return  text;
 	}
-	/**
-	 * This will generate the message.
-	 */
+	
 	public static String generateMessage(String text, Map<String, String> params) {
 		if (params != null) {
 			for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -146,9 +120,7 @@ public class StringUtil {
 		}
 		return  text;
 	}
-	/**
-	 * This will give the substring before the last position.
-	 */
+	
 	public static String substringBeforeLast(String str, String separator) {
         if (isEmpty(str) || isEmpty(separator)) {
             return str;
@@ -159,9 +131,6 @@ public class StringUtil {
         }
         return str.substring(0, pos);
     }
-	/**
-	 * This will return the substring after the last.
-	 */
 	public static String substringAfterLast(String str, String separator) {
         if (isEmpty(str)) {
             return str;
@@ -175,9 +144,6 @@ public class StringUtil {
         }
         return str.substring(pos + separator.length());
     }
-	/**
-	 * This method will return the thumbnail name.
-	 */
 	public static String formThumbnailName(String thumbnailName, String thumbnailSuffix){
 		String  thumbnailFilename = null;
     	if (thumbnailName != null) {
@@ -194,7 +160,8 @@ public class StringUtil {
 	 * 
 	 * @created_date : Dec 5, 2013
 	 * 
-	 * @description: This method will give all the query parameters in the passed url.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param url
 	 * @parm(s) : @return
@@ -202,6 +169,10 @@ public class StringUtil {
 	 * @return : Map<String,String>
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static Map<String, String> splitQuery(String url)  {
 	    Map<String, String> query_pairs = new LinkedHashMap<String, String>();
@@ -226,4 +197,49 @@ public class StringUtil {
 //		return sdf.format(resultdate);
 //	}
 	
+	public static String getRefinedQuestionText(String questionTxt) {
+		questionTxt = questionTxt.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		return questionTxt;
+	}
+	
+	public static List<String> getUserTaxPreferences() {
+		String taxonomyPrefStr = AppClientFactory.getLoggedInUser().getSettings().getTaxonomyPreferences();
+		
+		List<String> preferences = new ArrayList<String>();
+		if(AppClientFactory.isAnonymous()) {
+			preferences.add("CC");
+			preferences.add("CA");
+		} else {
+			
+		}
+		return preferences;
+	}
+	
+	public static boolean isPartnerUser(String userName) {
+		boolean isPartner = false;
+		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
+				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
+				|| userName.equalsIgnoreCase("ONR") ) {
+			isPartner = true;
+		}
+		return isPartner;
+	}
+
+	public static String getPartnerName(String partnerName) {
+		if(partnerName.equalsIgnoreCase("Autodesk")) {
+			partnerName = "Autodesk®";
+		} else if(partnerName.equalsIgnoreCase("Lessonopoly")) {
+			partnerName = "SVEF's Lessonopoly";
+		} else if(partnerName.equalsIgnoreCase("FTE")) {
+			partnerName = "Foundation for Teaching Economics (FTE)";
+		} else if(partnerName.equalsIgnoreCase("WSPWH")) {
+			partnerName = "What So Proudly We Hail";
+		} else if(partnerName.equalsIgnoreCase("NGC")) {
+			partnerName = "New Global Citizens (NGC)";
+		} else if(partnerName.equalsIgnoreCase("ONR")) {
+			partnerName = "Office of Naval Research (ONR)";
+		}
+		return partnerName;
+	}
+
 }

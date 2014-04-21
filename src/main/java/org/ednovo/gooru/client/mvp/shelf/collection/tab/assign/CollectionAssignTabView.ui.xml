@@ -35,7 +35,7 @@
 							</g:ScrollPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
+<!-- 					<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
 						<g:Label ui:field="lblAssignments" styleName="{res.css.labelText}"></g:Label>
 						<g:Label ui:field="lblNoAssignments" styleName="{res.css.noAssignments}"></g:Label>
 						<g:HTMLPanel styleName="{res.css.dropdownContainer}"
@@ -49,10 +49,33 @@
 							</g:ScrollPanel>
 							<g:Label styleName="{res.css.errorMessage}" ui:field="lblAssignmentErrorMsg"></g:Label>
 						</g:HTMLPanel>
-					</g:HTMLPanel>
-					
+					</g:HTMLPanel> -->
+
+							<g:HTMLPanel styleName="{res.css.duedateContainer}">
+							<g:HTMLPanel>
+								<g:Label ui:field="lblDuedate" styleName="{res.css.labelText}"></g:Label>
+							</g:HTMLPanel>
+							<g:HTMLPanel ui:field="duedateContainer">
+								</g:HTMLPanel>
+						</g:HTMLPanel>
+
+						
 				</g:HTMLPanel>
-				<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>
+				
+										
+						<g:HTMLPanel styleName="{res.css.assignmentsContainer}">
+						<g:HTMLPanel>
+						<g:Label ui:field="lblDirections" styleName="{res.css.labelText}"></g:Label>
+						</g:HTMLPanel>
+							<g:HTMLPanel>
+							<g:TextArea ui:field="textAreaVal" styleName="{res.css.directionsTextArea}"></g:TextArea>
+							</g:HTMLPanel>
+							<g:Label ui:field="directionsErrorLength" styleName="errorMessage"></g:Label>
+							<g:Label ui:field="directionsErrorLbl" styleName="{res.css.directionsErrorLbl}"></g:Label>
+							<uc:BlueButtonUc ui:field="btnAssign"></uc:BlueButtonUc>
+						</g:HTMLPanel>
+				
+		
 			</uc:HTMLEventPanel>
 		</g:HTMLPanel>
 	</g:FlowPanel>

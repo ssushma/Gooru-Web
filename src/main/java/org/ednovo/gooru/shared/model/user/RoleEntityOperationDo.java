@@ -25,21 +25,7 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : RoleEntityOperationDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class RoleEntityOperationDo implements Serializable {
 
 	/**
@@ -48,18 +34,15 @@ public class RoleEntityOperationDo implements Serializable {
 	private static final long serialVersionUID = -3533952210240570427L;
 
 	private EntityOperationDo entityOperation;
+	
+	public RoleEntityOperationDo(){}
 
-	/** 
-	 * This method is to get the entityOperation
-	 */
 	public EntityOperationDo getEntityOperation() {
 		return entityOperation;
 	}
 
-	/** 
-	 * This method is to set the entityOperation
-	 */
 	public void setEntityOperation(EntityOperationDo entityOperation) {
 		this.entityOperation = entityOperation;
 	}
+
 }

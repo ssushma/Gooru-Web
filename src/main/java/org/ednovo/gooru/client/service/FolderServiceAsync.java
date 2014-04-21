@@ -26,18 +26,19 @@ package org.ednovo.gooru.client.service;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface FolderServiceAsync extends BaseServiceAsync {
 
-	void createFolder(CollectionDo collectionDo,
-			AsyncCallback<CollectionDo> callback);
+	void createFolder(CollectionDo collectionDo, AsyncCallback<CollectionDo> callback);
 	
-	void createFolderToParentFolder(CollectionDo collectionDo, String parentId,
-			AsyncCallback<CollectionDo> callback);
+	void createFolderToParentFolder(CollectionDo collectionDo, String parentId, AsyncCallback<CollectionDo> callback);
 
 	void getAllFolders(AsyncCallback<List<CollectionItemDo>> callback);
 	
@@ -50,4 +51,21 @@ public interface FolderServiceAsync extends BaseServiceAsync {
 	void getFolderInformation(String folderId, AsyncCallback<CollectionDo> callback);
 
 //	void updateFolderMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String action, AsyncCallback<CollectionDo> callback);
+
+	//New APIs for 6.0
+	void getChildFolders(int offset, int limit,String parentId,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
+	
+	void deleteCollectionsFolder(String folderId, AsyncCallback<Void> callback);
+
+	void createFolder(String folderName, String parentId, boolean addToShelf, AsyncCallback<FolderDo> callback);
+
+	void moveCollectionIntoFolder(String sourceId, String targetId,AsyncCallback<Void> callback);
+
+	void createCollectionInParent(CollectionDo data, String courseCodeId,String folderId,AsyncCallback<CollectionDo> simpleAsyncCallback);
+	
+	void updateFolder(String folderId, String title, AsyncCallback<Void> simpleAsyncCallback);
+
+	void copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf, AsyncCallback<CollectionDo> simpleAsyncCallback);
+
+	void getCollectionResources(String parentId,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
 }

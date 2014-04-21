@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.folders.event;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : InsertMetaDataInNewFolderHandler.java
- *
- * @description : This is the UIHandler file.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface InsertMetaDataInNewFolderHandler extends EventHandler {
 

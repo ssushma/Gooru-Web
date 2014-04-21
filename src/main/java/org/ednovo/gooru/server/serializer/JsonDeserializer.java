@@ -28,18 +28,10 @@
 package org.ednovo.gooru.server.serializer;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+
 /**
- * @fileName : JsonDeserializer.java
- *
- * @description : This class is used for dserializing. 
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class JsonDeserializer extends JsonProcessor {
 

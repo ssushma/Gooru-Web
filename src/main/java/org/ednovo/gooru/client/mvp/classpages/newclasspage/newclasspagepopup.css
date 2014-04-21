@@ -44,8 +44,10 @@
 }
 
 .popupButtinContainer {
-	width: 110px;
-	margin: auto;
+	width: 100%;
+	margin: 0px auto;
+	text-align: center;
+	padding-bottom: 10px;
 }
 
 .popupOkButton {
@@ -135,4 +137,8 @@
 	float: left;
 	font-style: italic;
 	color:#999;
+}
+
+#btnAdd{
+	margin-left:10px;
 }

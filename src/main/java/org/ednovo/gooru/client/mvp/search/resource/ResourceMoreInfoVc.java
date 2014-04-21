@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import java.util.List;
@@ -37,26 +39,15 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceMoreInfoVc.java
- *
- * @description : This is used to get wheather the resource is used in any other collection.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo, CollectionSearchResultDo> implements MessageProperties {
 	
-	private static final String RESOURCE_NOT_IN_COLLECTION = "Like this resource? ";
+	private static final String RESOURCE_NOT_IN_COLLECTION = GL1469+" ";
 	
 //	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = "This resource is used in";
-	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = "Top Collections that Use this Resource:";
+	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = GL1470+GL_SPL_SEMICOLON;
 	/**
 	 * Class constructor
 	 * @param searchDragController instance of {@link ResourceDragController}
@@ -64,16 +55,12 @@ public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo,
 	public ResourceMoreInfoVc(ResourceDragController searchDragController) {
 		super(searchDragController,true);
 	}
-	/**
-	 * This is used to render the used in resource.
-	 */
+
 	@Override
 	public void renderUsedInResource(CollectionSearchResultDo childResource) {
 		getUsedInResourcesPanel().addDraggable(new SimpleCollectionVc(childResource));
 	}
-	/**
-	 * This is used to set the resource status wheather it is used in any of the collection.
-	 */
+
 	@Override
 	public void setUsedInResources(List<CollectionSearchResultDo> childResources) {
 		resourceSearchRightsFieldVc = new MoreInfoFieldVc();
@@ -94,9 +81,7 @@ public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo,
 		
 		super.setUsedInResources(childResources);
 	}
-	/**
-	 * This is used to get wheather the resource is used in any other collection.
-	 */
+
 	@Override
 	public void requestUsedInResources() {
 		try {

@@ -4,7 +4,7 @@
 	<ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res" />
 	<g:HTMLPanel styleName="{res.css.container}">
 	    <g:HTMLPanel styleName="{res.css.standardsHeader}">
-			<g:HTMLPanel styleName="{res.css.standardsTitle}">Standards</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.standardsTitle}" ui:field="standardsText"></g:HTMLPanel>
 			<g:Label ui:field="cancelButton"
 				styleName="{res.css.standardsCloseMarker} {res.css.standardsSprite} {res.css.standardsCloseMark}"></g:Label>
 		</g:HTMLPanel>

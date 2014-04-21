@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,28 +40,16 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : SearchBoxToolTip.java
- *
- * @description : This class is used to display the search text box tooltip.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class SearchBoxToolTip extends Composite{
+
+public class SearchBoxToolTip extends Composite implements MessageProperties{
 	
 	@UiField 
 	Anchor solarLbl,exponentsLbl,oceansLbl,cellsLbl;
 	@UiField
 	HTMLPanel mainPanel;
-	
+	@UiField Label enterSubjectText,examplesText;
 	Map<String, String> hm;
 	
 	public interface SearchBoxToolTipUiBinder extends UiBinder<Widget, SearchBoxToolTip>{
@@ -74,6 +63,12 @@ public class SearchBoxToolTip extends Composite{
 	public SearchBoxToolTip(){
 		MixpanelUtil.Loading_ToolTip();
 		initWidget(searchBoxToolTipUiBinder.createAndBindUi(this));
+		enterSubjectText.setText(GL1068);
+		examplesText.setText(GL1069);
+		solarLbl.setText(GL1070);
+		exponentsLbl.setText(GL1071);
+		oceansLbl.setText(GL1072);
+		cellsLbl.setText(GL1073);
 		solarLbl.getElement().setId("lnkSolar");
 		exponentsLbl.getElement().setId("lnkExponents");
 		oceansLbl.getElement().setId("lnkOceans");

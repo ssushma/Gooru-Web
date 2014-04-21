@@ -29,21 +29,10 @@ package org.ednovo.gooru.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-	/**
-	 * 
-	 * @fileName : ActivateSearchBarEvent.java
-	 *
-	 * @description : This file is used to get the associated type and to activate the SearchBar.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * @author Search Team
+ * 
+ */
 public class ActivateSearchBarEvent extends GwtEvent<ActivateSearchBarHandler> {
 
 	public static final Type<ActivateSearchBarHandler> TYPE = new Type<ActivateSearchBarHandler>();
@@ -56,16 +45,12 @@ public class ActivateSearchBarEvent extends GwtEvent<ActivateSearchBarHandler> {
 	public ActivateSearchBarEvent(boolean activate) {
 		this.activate = activate;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<ActivateSearchBarHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 *This method will be  called by HandlerManager and it will activate the SearchBar.
-	 */
+
 	@Override
 	protected void dispatch(ActivateSearchBarHandler handler) {
 		handler.activateSearchBar(activate);

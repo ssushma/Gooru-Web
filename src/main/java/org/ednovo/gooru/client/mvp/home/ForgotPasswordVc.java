@@ -42,26 +42,15 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ForgotPasswordVc.java
+ * @author Search Team
  *
- * @description : This file will Send a mail to user to update their password through forgot password link if user exists show new pop up
- * that tells the password reset mail has been sent else through validation error
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 
@@ -81,8 +70,10 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 	@UiField(provided = true)
 	LoginPopUpCBundle res;
 	
-	@UiField Label lblLoginHeading,lblDisplayTextMessage,lblTextMessageInfomation,errorMessage;
+	@UiField Label lblLoginHeading,lblDisplayTextMessage,lblTextMessageInfomation,errorMessage,
+	queriesText;
 
+	@UiField InlineLabel pleaseContactLbl;
 
 	//private AppPopUp appPopUp;
 
@@ -104,45 +95,31 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
   		forgotEmailIdTxtBox.getElement().setId("tbUsername");
 		sendMailBtnUc.getElement().setId("btnSubmit");
 		supportLink.getElement().setId("lnkSupport");
+		sendMailBtnUc.setText(GL0486);
+		queriesText.setText(GL1139+GL_GRR_COMMA);
+		supportLink.setText(GL0299);
+		supportLink.setHref("mailto:support@goorulearning.org");
+		pleaseContactLbl.setText(GL1145);
 		this.center();
 		this.setSize("502px", "390px");
 		lblLoginHeading.setHeight("16px");
-		lblLoginHeading.setText(MessageProperties.GL0063);
-		lblDisplayTextMessage.setText(MessageProperties.GL0436);
+		lblLoginHeading.setText(GL0063);
+		lblDisplayTextMessage.setText(GL0436);
 		lblTextMessageInfomation.getElement().setAttribute("style", "font-size: 13px !important");
-		lblTextMessageInfomation.setText(MessageProperties.GL0435);
+		lblTextMessageInfomation.setText(GL0435);
 		forgotEmailIdTxtBox.setWidth("341px");
-		forgotEmailIdTxtBox.getElement().setAttribute("placeholder", MessageProperties.GL0434);
+		forgotEmailIdTxtBox.getElement().setAttribute("placeholder",GL0434);
 		forgotEmailIdTxtBox.setFocus(true);
 		errorMessage.setVisible(false);
 	    
 		
 	}
-	/**
-	 * 
-	 * @function onCloseClick 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :UIHandler for cancelButton.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("cancelButton")
 	public void onCloseClick(ClickEvent clickEvent)
 	{
 		this.hide();	
 		  
-        if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) ||
+        if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY) ||
 				AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
 		}else{
 			//appPopUp.hide();
@@ -194,7 +171,7 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 							 alertForgetContentUc.center();
 							 alertForgetContentUc.getElement().getStyle().setZIndex(999999);
 						}else{
-							errorMessage.setText(MessageProperties.GL0438);
+							errorMessage.setText(GL0438);
 							errorMessage.setVisible(true);
 							//new AlertContentUc("Oops!", (String) result.get("error"));
 						}
@@ -216,7 +193,7 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 		{
 			
 			errorMessage.setVisible(true);
-			errorMessage.setText(MessageProperties.GL0439);
+			errorMessage.setText(GL0439);
 		//new AlertContentUc(GL0064, PROVIDE_EMAIL_OR_USERNAME);
 		}
 		}

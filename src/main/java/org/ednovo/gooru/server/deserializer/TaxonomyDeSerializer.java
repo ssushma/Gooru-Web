@@ -36,19 +36,10 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+
 /**
- * @fileName : TaxonomyDeSerializer.java
+ * @author Search Team
  *
- * @description : This class is used to deserialize taxonomy.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @Component
 public class TaxonomyDeSerializer extends DeSerializer {

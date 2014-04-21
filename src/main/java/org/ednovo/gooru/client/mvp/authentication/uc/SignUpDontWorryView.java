@@ -39,25 +39,12 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : SignUpDontWorryView.java
- *
- * @description : This method is used to display DontWorry popup.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class SignUpDontWorryView extends PopupPanel {
+
+public class SignUpDontWorryView extends PopupPanel implements MessageProperties {
 
 	private static SignUpDontWorryViewUiBinder uiBinder = GWT
 			.create(SignUpDontWorryViewUiBinder.class);
@@ -68,12 +55,11 @@ public class SignUpDontWorryView extends PopupPanel {
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading;
+	Label lblCancel, lblTitle, lblHeading, lblSubHeading,quriesText;
 	@UiField
 	Button btnGoToSetting, btnOk;
-	/**
-	 * Default constructor.
-	 */
+	@UiField InlineLabel pleaseContactText;
+	@UiField Anchor supportLink;
 	public SignUpDontWorryView() {
 		super(false);
 		this.res = SignUpCBundle.INSTANCE;
@@ -84,113 +70,55 @@ public class SignUpDontWorryView extends PopupPanel {
 		this.setSize("502px", "352px");
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		this.getElement().getStyle().setBackgroundColor("transparent");
+		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+	
+		//this.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 	}
-    /**
-     * 
-     * @function setUiAndIds 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to set the data in DOn'tworry popup.
-     * 
-     * 
-     * @parm(s) : 
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	public void setUiAndIds() {
-		lblTitle.setText(MessageProperties.GL0481
-				+ MessageProperties.GL_SPL_EXCLAMATION);
-		lblHeading.setText(MessageProperties.GL0482);
+		lblTitle.setText(GL0481
+				+ GL_SPL_EXCLAMATION);
+		lblHeading.setText(GL0482);
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-		lblSubHeading.setText(MessageProperties.GL0496);
+		lblSubHeading.setText(GL0496);
 		btnGoToSetting.getElement().setId("btnGoToSetting");
 		btnOk.getElement().setId("btnOk");
-		btnOk.setText(MessageProperties.GL0190);
-		btnGoToSetting.setText(MessageProperties.GL0497);
+		btnOk.setText(GL0190);
+		btnGoToSetting.setText(GL0497);
 		btnOk.getElement().setAttribute("style", "margin-left: 10px");
-		
+		quriesText.setText(GL1139+GL_GRR_COMMA);
+		pleaseContactText.setText(GL1145);
+		supportLink.setText(GL0299);
+		supportLink.setHref(GL1055);
 	}
-    /**
-     * 
-     * @function onClickLblCancel 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This uihandler is used to hide Don'tworry popup.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
 		MixpanelUtil.close_signUp();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		this.hide();
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
+		
 	}
-    /**
-     * 
-     * @function onClickButtonLeave 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This UI handler is used to close signup popup on ok button click.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("btnOk")
 	public void onClickButtonLeave(ClickEvent event) {
 		MixpanelUtil.close_signUp();
 		this.hide();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
 
 	}
-	/**
-	 * 
-	 * @function onClickbtnGoToSetting 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This ui handler is used to close popup and it goes to settings.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("btnGoToSetting")
 	public void onClickbtnGoToSetting(ClickEvent event) {
 		this.hide();

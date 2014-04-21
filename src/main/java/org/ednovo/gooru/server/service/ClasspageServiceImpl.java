@@ -30,12 +30,16 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -45,17 +49,23 @@ import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.PermissionsDO;
+import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.BitlyUrlDo;
+import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.StringRepresentation;
@@ -63,19 +73,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-/**
- * @fileName : ClasspageServiceImpl.java
- *
- * @description : This is the implementation of the class page service 
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Service("classpageService")
 @ServiceURL("/classpageService")
 public class ClasspageServiceImpl extends BaseServiceImpl implements
@@ -94,79 +92,86 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 
 	private static final String ASSIGNMENT = "assignment";
 	
-//	private static final String COLLECTIONITEM = "collectionItem";
+	private static final String COLLECTIONTYPE = "collectionType";
+	
+	private static final String TITLE="title";
 	
 	private static final String TASKRESOURCEASSOC = "taskResourceAssoc";
 	
-//	private static final String ITEMTYPE = "itemType";
+	private static final String COLLECTIONITEM="collectionItem";
 	
-//	private static final String TASK = "task";
+	private static final String ITEMTYPE = "itemType";
+	
+	private static final String NARRATION="narration";
+	
+	private static final String PLANNEDENDDATE="plannedEndDate";
+	
+	private static final String COLLECTIONID="collectionId";
+	
+	private static final String SEARCHRESULTS="searchResults";
+	private static final String GOALS="goals";
+	private static final String THUMBNAIL="thumbnails";
+	private static final String THUMBNAILURL="url";
+	private static final String TOTALHITCOUNT="totalHitCount";
+	private static final String RESOURCE="resource";
+	private static final String COLLECTIONITEMID="collectionItemId";
+	private static final String ADDED="added";
+	private static final String GOORUOID="gooruOid";
+	private static final String CREATOR="creator";
+	private static final String UID="gooruUId";
+	private static final String USERNAME="username";
+	private static final String PROFILEIMAGE="profileImageUrl";	
+	private static final String CLASSPAGECODE="classpageCode";
+	private static final String META="meta";
+	private static final String PERMISSIONS="permissions";
+	private static final String COLLECTION="collection";
+	private static final String SHARING="sharing";
+	private static final String STATUS="status";
+	private static final String USERNAMEWDISPLAY="usernameDisplay";
+	private static final String PROFILEIMAGEURL="profileImageUrl";
+	private static final String USER="user";
+
+	
 
 	@Autowired
 	ResourceDeserializer resourceDeserializer;
 	/**
-	 * Create new Classpage
-	 * @param collectionDo instance of {@link CollectionDo} has collection meta info
-	 * @return serialized created {@link CollectionDo}
-	 * @throws GwtException
+	 * This method is deprecated and  use instead versoion2 createClasspage(String classPageTitle);
 	 */
+	@Deprecated
 	@Override
 	public CollectionDo createClasspage(CollectionDo collectionDo) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.CREATE_CLASSPAGE, getLoggedInSessionToken());
-		
 		Form form = ResourceFormFactory.generateDataForm(collectionDo,
 				CLASSPAGE);
 		form.add(ADD_TO_USER_CLASSPAGE, TRUE);
-
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), form);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 
 	}
-	/**
-	 * @function deserializeCollection 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to deserialize collection.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
-						.toString(), CollectionDo.class);
+				JSONObject mainObj = jsonRep.getJsonObject();
+				if(!mainObj.isNull(META)){
+					if(!mainObj.getJSONObject(META).isNull(STATUS)){
+						mainObj.put("status", mainObj.getJSONObject(META).getString(STATUS));	
+						//classpageDo.setStatus(classpageJsonObject.getJSONObject(META).getString(STATUS));
+					}
+				}
+				return JsonDeserializer.deserialize(mainObj.toString(), CollectionDo.class);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 		return new CollectionDo();
 	}
-	/**
-	 * @function deserializeAssignmentsCollection 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the assignments.
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public CollectionDo deserializeAssignmentsCollection(
 			JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -194,22 +199,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 		return deserializeClasspage(jsonRep);
 	}*/
-	/**
-	 * @function deserializeClasspage 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to seserialize class pages.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public CollectionDo deserializeClasspage(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -242,21 +231,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return deserializeCollections(jsonRep);
 	}
 */
-	/**
-	 * @function deserializeCollections 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will deserialize the collections.
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<CollectionDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public List<CollectionDo> deserializeCollections(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -269,20 +243,19 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new ArrayList<CollectionDo>();
 	}
-	/**
-	 * This method is usedt create assignment.
-	 */
-	@Override
+
+	/*@Override
 	public CollectionDo createAssignment(CollectionDo collectionDo, String gooruContentId, String dueDate) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_ASSIGNMENT, getLoggedInSessionToken(), gooruContentId, dueDate);
 		Form form = ResourceFormFactory.generateDataForm(collectionDo,ASSIGNMENT);
 		form.add(ADD_TO_USER_CLASSPAGE, TRUE);
 
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		
 		return deserializeAssignmentsCollection(jsonRep);
-	}
+	}*/
 //	Version 1 API
 	/*@Override
 	public void deleteAssignment(String assignmentId) throws GwtException {
@@ -331,22 +304,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		return deserializeCollectionItem(jsonRep);
 	}*/
-	/**
-	 * @function deserializeCollectionItem 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize collection items.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionItemDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public CollectionItemDo deserializeCollectionItem(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -392,22 +349,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		return deserializeAssignmentsList(jsonRep);
 	}	*/
-		/**
-		 * @function deserializeAssignmentsList 
-		 * 
-		 * @created_date : 31-Dec-2013
-		 * 
-		 * @description : This method is used to deserialize assignments list.
-		 * 
-		 * 
-		 * @parm(s) : @param jsonRep
-		 * @parm(s) : @return
-		 * 
-		 * @return : AssignmentsListDo
-		 *
-		 * @throws : <Mentioned if any exceptions>
-		 *
-		 */
+		
 	public AssignmentsListDo deserializeAssignmentsList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -450,9 +392,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	 * Version 2 Api Implementation...
 	 * 
 	 */
-	/**
-	 * This method is used to create class page.
-	 */
+	
 	@Override
 	public CollectionDo v2CreateClasspage(CollectionDo collectionDo) {
 		JsonRepresentation jsonRep = null;
@@ -461,78 +401,72 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageDo classpageDo = new ClasspageDo();
 		classpageDo.setCollectionType(collectionDo.getCollectionType());
 		classpageDo.setTitle(collectionDo.getTitle());
-		classpageDo.setTaxonomySet(null);
+		//classpageDo.setTaxonomySet(null);
 		
 		String formData = ResourceFormFactory.generateStringDataForm(classpageDo,
 				CLASSPAGE);
 
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeCollection(jsonRep);
 
 	}
-	/**
-	 * This method is used to update the class page by id.
-	 */
+	
 	@Override
 	public CollectionDo v2UpdateClassPageByid(String classpageId,
-			String CollectionType, String title) throws GwtException {
+			String CollectionType, String title, String shareType) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_CLASSPAGE, classpageId,getLoggedInSessionToken());
-
 		ClasspageDo classpageDo = new ClasspageDo();
 		classpageDo.setCollectionType(CollectionType);
-		classpageDo.setTitle(title);
-		classpageDo.setTaxonomySet(null);
+		if(title==null || title.equals("")){
+			title=classpageDo.getTitle();
+		}else{
+			classpageDo.setTitle(title);
+		}
+		if(shareType==null || shareType.equals("")){
+			shareType=classpageDo.getSharing();
+		}else{
+			classpageDo.setSharing(shareType);
+		}
 		
-		String formData = ResourceFormFactory.generateStringDataForm(classpageDo,
-				CLASSPAGE);
-
-		jsonRep = ServiceProcessor.put(url, getRestUsername(),
-				getRestPassword(), formData);
+		//classpageDo.setTaxonomySet(null);
+		try{
+			JSONObject jsonObject=new JSONObject();
+			JSONObject titleJsonObject= new JSONObject();
+			titleJsonObject.put(TITLE, title);
+			titleJsonObject.put(SHARING, shareType);
+			jsonObject.put(CLASSPAGE, titleJsonObject);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(), jsonObject.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+		}catch(Exception e){
+			
+		}
 		return deserializeCollection(jsonRep);
 	}
-	/**
-	 * This method is used to get the assignments by class page id.
-	 */
+	
 	@Override
 	public AssignmentsListDo v2GetAssignemtsByClasspageId(String classpageId,String pageSize, String pageNum)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_ASSIGNMENTS, classpageId, getLoggedInSessionToken(), pageSize, pageNum);
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeV2AssignmentsList(jsonRep);
 	}
-	/**
-	 * This method is used to get all class pages.
-	 */
+	
 	@Override
 	public ClasspageListDo v2GetAllClasspages(String limit, String offSet) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_LIST_MY_CLASSPAGES, getLoggedInSessionToken(), limit, offSet);
-		jsonRep = ServiceProcessor.get(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
-
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeClasspageList(jsonRep);
 	}
-	/**
-	 * @function deserializeClasspageList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize class page list.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : ClasspageListDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public ClasspageListDo deserializeClasspageList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -552,9 +486,19 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new ClasspageListDo();
 	}
-	/**
-	 * this method is used to delete the class page.
-	 */
+	
+	@Override
+	public ClasspageListDo v2GetUserClasses(String limit, String offSet) throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_GET_LISTCLASSES, getLoggedInSessionToken(), limit, offSet);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
+	
 	@Override
 	public void deleteClasspage(String classpageId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -562,34 +506,18 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				getLoggedInSessionToken());
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
-	/**
-	 * This method is used to create assignment.
-	 */
+
 	@Override
 	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_ASSIGNMENT, getLoggedInSessionToken());
 		String formData = ResourceFormFactory.generateStringDataForm(assignmentDo,null);
 		
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeAssignments(jsonRep);
 	}
-	/**
-	 * @function deserializeAssignments 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize assignments.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : AssignmentDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public AssignmentDo deserializeAssignments(
 			JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -603,9 +531,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new AssignmentDo();
 	}
-	/**
-	 * This method is used to get class page by id.
-	 */
 	@Override
 	public CollectionDo v2GetClasspageById(String classpageId)
 			throws GwtException {
@@ -614,14 +539,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
-		
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeV2Classpage(jsonRep);
 	}
-	/**
-	 * This method is used to get collection page by id.
-	 */
+	
 	@Override
 	public CollectionDo getSCollIdClasspageById(String classpageId)
 			throws GwtException {
@@ -632,8 +555,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				getLoggedInSessionToken());
 		
 		try{
-		jsonRep = ServiceProcessor.get(url, getRestUsername(),
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
+		    jsonRep =jsonResponseRep.getJsonRepresentation();
 		}
 		catch(Exception e)
 		{
@@ -642,22 +566,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 		return deserializeV2Classpage(jsonRep);
 	}
-	/**
-	 * @function deserializeV2Classpage 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize class pages.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public CollectionDo deserializeV2Classpage(JsonRepresentation jsonRep) {
 		CollectionDo collectionDo = new CollectionDo();
 		try {
@@ -675,22 +584,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return collectionDo;
 	}
 
-	/**
-	 * @function deserializeV2AssignmentsList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize assignments list.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : AssignmentsListDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public AssignmentsListDo deserializeV2AssignmentsList(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -714,9 +608,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new AssignmentsListDo();
 	}
-	/**
-	 * This method is used to set the social share email.
-	 */
+	
 	@Override
 	public void socialShareEmail(String fromTxt, String toTxt,String cfm, String subTxt,
 		String msgTxt) throws GwtException {
@@ -724,7 +616,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SOCIAL_SHARE, getLoggedInSessionToken());
 		SocialShareDo socialShareDo = new SocialShareDo();
 		socialShareDo.setTo(toTxt);
-		socialShareDo.setFrom(fromTxt);
+		socialShareDo.setFromDisplayName(fromTxt);
 		socialShareDo.setCfm(cfm);
 		socialShareDo.setSubject(subTxt);
 		socialShareDo.setMessage(msgTxt);
@@ -737,38 +629,22 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		
 		
 		String formData = ResourceFormFactory.generateStringDataForm(socialShareDo, null);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),	getRestPassword(), formData);
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),	getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 	}
-	/**
-	 * This method is used to update the assignments.
-	 */
+
 	@Override
 	public TaskDo v2UpdateAssignment(AssignmentDo assignmentDo, String assignmentId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_UPDATE_ASSIGNMENT, assignmentId, getLoggedInSessionToken());
 		String formData = ResourceFormFactory.generateStringDataForm(assignmentDo,null);
-		jsonRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(), formData);
-		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(),getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeTask(jsonRep);
 		
 	}
-	/**
-	 * @function deserializeTask 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the task.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : TaskDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public TaskDo deserializeTask(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -782,9 +658,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new TaskDo();
 	}
-	/**
-	 * This method is used to delete the assignment.
-	 */
+
 	@Override
 	public void v2DeleteAssignment(String assignmentId) throws GwtException {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
@@ -792,34 +666,17 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				getLoggedInSessionToken());
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
-	/**
-	 * This method is used to add the collection to assignments.
-	 */
+
 	@Override
 	public TaskResourceAssocDo v2AddCollectionToAssignment(String assignmentId,
 			TaskResourceAssocDo taskResourceAssocDo) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_ADD_COLLECTIONS_TO_ASSIGNMENT, assignmentId, getLoggedInSessionToken());
 		String formData = ResourceFormFactory.generateStringDataForm(taskResourceAssocDo, TASKRESOURCEASSOC);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializeTaskResourceAssoc(jsonRep);
 	}
-	/**
-	 * @function deserializeTaskResourceAssoc 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the task resource.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : TaskResourceAssocDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public TaskResourceAssocDo deserializeTaskResourceAssoc(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -833,31 +690,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new TaskResourceAssocDo();
 	}
-	/**
-	 * This method is used to get the assignment collection by id.
-	 */
+
 	@Override
 	public List<ResourceDo> v2GetAssignmentCollectionsById(String assignmentId)
 			throws GwtException {
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_ASSIGNMENT_COLLECTIONS, assignmentId, getLoggedInSessionToken());
-		return deserializeTaskResourceSearch(ServiceProcessor.get(url, getRestUsername(), getRestPassword()));
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeTaskResourceSearch(jsonRep);
 	}
-	/**
-	 * @function deserializeTaskResourceSearch 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the task resoruce.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<ResourceDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public List<ResourceDo> deserializeTaskResourceSearch(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -871,9 +713,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new  ArrayList<ResourceDo>();
 	}
-	/**
-	 * This method is used to remove the collections form the assignment.
-	 */
+	
 	@Override
 	public void v2RemoveCollectionFromAssignment(String collectionId, String assignmentId)
 			throws GwtException {
@@ -881,21 +721,20 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 				getLoggedInSessionToken());
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
-	/**
-	 * This method is used to get the class oage by code.
-	 */
+
 	@Override
 	public CollectionDo v2getClasspageByCode(String classpageCode) throws GwtException{
-		
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_BY_CODE, classpageCode, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		
-		return deserializeCollection(jsonRep);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if(jsonRep!=null && jsonRep.getSize()!=1){	
+			return deserializeCollection(jsonRep);
+		}else{
+			CollectionDo obj=new CollectionDo();
+			return obj;
+		}
 	}
-	/**
-	 * This method is used get shoten url.
-	 */
 	@Override
 	public List<String> ShotenUrl(String url){
 		
@@ -928,22 +767,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		/*return strRep.getText().toString();*/
 		return listUrl;
 	}
-	/**
-	 * @function deserializeBitlyDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the bitly.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : BitlyUrlDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public BitlyUrlDo deserializeBitlyDo(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -955,70 +778,39 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return new BitlyUrlDo();
 	}
-	/**
-	 * This method is used to check the permissions for class oage.
-	 */
-	@Override
-	public PermissionsDO checkPermissionsForClasspage(String classpageId)
+
+/*	@Override
+	public MetaDO checkPermissionsForClasspage(String classpageId)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_CLASSPAGE_PERMISSIONS_BY_ID, classpageId, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		return deserializePermissions(jsonRep);
 	}
-	/**
-	 * @function deserializePermissions 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the permissions.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : PermissionsDO
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	private PermissionsDO deserializePermissions(JsonRepresentation jsonRep) {
+*/
+	private MetaDO deserializePermissions(JsonRepresentation jsonRep) {
 		if (jsonRep !=null && jsonRep.getSize() != -1){
 			try{
-				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), PermissionsDO.class);
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), MetaDO.class);
 			}catch(JSONException e){
 				
 			}
 		}
-		return new PermissionsDO();
+		return new MetaDO();
 	}
 	
-	/**
-	 * This method is used to get the collection class pages.
-	 */
+	
 	@Override
 	public List<ClassPageCollectionDo> getCollectionClasspageAssoc(String collectionId)
 			throws GwtException {
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CLASSPAGE_TITLES, collectionId, getLoggedInSessionToken());
-		return deserializeClasses(ServiceProcessor.get(url, getRestUsername(), getRestPassword()));
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasses(jsonRep);
 	}
-	/**
-	 * @function deserializeClasses 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to deserialize the classes.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<ClassPageCollectionDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public List<ClassPageCollectionDo> deserializeClasses(JsonRepresentation jsonRep) {
 		try {
 			if (jsonRep != null && jsonRep.getSize() != -1) {
@@ -1031,9 +823,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		} 
 		return new ArrayList<ClassPageCollectionDo>();
 	}
-	/**
-	 * This method is used to delete the collection associated assignments.
-	 */
+
 	@Override
 	public void deleteCollectionAssocInAssignment(String collectionId)
 			throws GwtException {
@@ -1042,4 +832,542 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 	}
 	
+	public ArrayList<ClasspageDo> getMyClassPages(String limit, String offset){
+		JsonRepresentation jsonRep = null;
+		ClasspageDo classpageDo=null;
+		ArrayList<ClasspageDo> classPagesList=new ArrayList<ClasspageDo>();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_MY_CLASSPAGES, getLoggedInSessionToken(), limit, offset);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==200){
+			classPagesList=deserializeClassPages(jsonRep);
+		}else{
+			 classpageDo=new ClasspageDo();
+			 classpageDo.setStatusCode(jsonResponseRep.getStatusCode());
+			 classPagesList.add(classpageDo);
+		}
+		return classPagesList;
+	}
+	public CollectionDo createClassPage(String classPageTitle){
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_V2, getLoggedInSessionToken());
+		JSONObject classPageJsonObject=new JSONObject();
+		JSONObject collectionTypeJsonObject=new JSONObject();
+		try {
+			collectionTypeJsonObject.put(COLLECTIONTYPE, CLASSPAGE);
+			collectionTypeJsonObject.put(TITLE, classPageTitle);
+			classPageJsonObject.put(CLASSPAGE, collectionTypeJsonObject);
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageJsonObject.toString());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return deserializeCollection(jsonRep);
+	}
+	public ClasspageDo getClasspage(String classpageId){
+		JsonRepresentation jsonRep = null;
+		ClasspageDo classPageDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
+		System.out.println("get url::::::::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+			try {
+				if(jsonRep.getText()!=null){
+					if(jsonRep.getText().trim() != null && !jsonRep.getText().trim().equals("null")&&!jsonRep.getText().trim().equals(""))
+					{
+					classPageDo=deserializeClassPage(jsonRep.getJsonObject());
+					}
+					else {
+						classPageDo=new ClasspageDo();
+					}
+				} else {
+					classPageDo=new ClasspageDo();
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			 classPageDo=new ClasspageDo();
+		}
+		classPageDo.setStatusCode(jsonResponseRep.getStatusCode());
+		return classPageDo;
+	}
+	
+	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
+		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
+		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
+		if(jsonResponseRep.getStatusCode()==200){
+			try{
+				classpageItemDo=deserializeClassPageItem(jsonResponseRep.getJsonRepresentation().getJsonObject(),RESOURCE);
+			}catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return classpageItemDo;
+	}
+	
+	
+	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit){
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,getLoggedInSessionToken(),offset,limit);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			return deserializeClassPageItems(jsonRep);
+		}else{
+			return new ArrayList<ClasspageItemDo>();
+		}
+	}
+	
+	public String updateClasspageItem(String classpageItemId,String direction,String dueDate){
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_CLASSPAGE_ITEMS_V2, classpageItemId,getLoggedInSessionToken());
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate);
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
+		return jsonResponseRep.getStatusCode().toString();
+	}
+	
+	public String deleteClassPageItem(String collectionId){
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.DELETE_CLASSPAGE_ITEMS_V2, collectionId,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		return jsonResponseRep.getStatusCode().toString();
+	}
+	
+	public ArrayList<String> getCollectionParentFolders(String collectionId){
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_COLLECTION_PARENT_FOLDERS, collectionId,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			JsonRepresentation jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			try{
+				ArrayList<String> folderList=new ArrayList<String>();
+				JSONArray foldersArray=jsonRepresentation.getJsonArray();
+				if(foldersArray!=null&&foldersArray.length()>0){
+					for(int i=0;i<foldersArray.length();i++){
+						folderList.add(foldersArray.getString(i));
+					}
+				}
+				return folderList;
+			}catch(Exception e){
+				
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public ClasspageItemDo getClassPageItem(String classItemId) {
+		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_COLL_DETAILS, classItemId,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			try{
+				classpageItemDo=deserializeClassPageItem(jsonResponseRep.getJsonRepresentation().getJsonObject(),RESOURCE);
+				JSONObject classPageJsonObject=jsonResponseRep.getJsonRepresentation().getJsonObject().isNull(COLLECTION)?null:jsonResponseRep.getJsonRepresentation().getJsonObject().getJSONObject(COLLECTION);
+				if(classPageJsonObject!=null){
+					classpageItemDo.setTitle(classPageJsonObject.isNull(TITLE)?"":classPageJsonObject.getString(TITLE));
+					classpageItemDo.setClasspageId(classPageJsonObject.isNull(GOORUOID)?"":classPageJsonObject.getString(GOORUOID));
+					JSONObject userJsonObject=classPageJsonObject.isNull(USER)?null:classPageJsonObject.getJSONObject(USER);
+					if(userJsonObject!=null){
+						classpageItemDo.setUserNameDispaly(userJsonObject.isNull(USERNAMEWDISPLAY)?"":userJsonObject.getString(USERNAMEWDISPLAY));
+						classpageItemDo.setProfileImageUrl(userJsonObject.isNull(PROFILEIMAGEURL)?"":userJsonObject.getString(PROFILEIMAGEURL));
+					}
+				}
+			}catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return classpageItemDo;
+	}
+	
+	protected JSONObject createClasspageJsonObject(String collectionId,String direction,String dueDate){
+		JSONObject classPageItemJsonObject=new JSONObject();
+		JSONObject collectionJsonObject=new JSONObject();
+		try {
+			collectionJsonObject.put(ITEMTYPE, ADDED);
+			if(direction!=null){
+				collectionJsonObject.put(NARRATION, direction);
+			}
+			if(dueDate!=null){
+				collectionJsonObject.put(PLANNEDENDDATE, dueDate);
+			}
+			classPageItemJsonObject.put(COLLECTIONITEM, collectionJsonObject);
+			if(collectionId!=null){
+				classPageItemJsonObject.put(COLLECTIONID, collectionId);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return classPageItemJsonObject;
+	}
+	protected ArrayList<ClasspageDo> deserializeClassPages(JsonRepresentation jsonRep){
+		ArrayList<ClasspageDo> classpagesList=new ArrayList<ClasspageDo>();
+		try {
+			if(jsonRep!=null&&jsonRep.getJsonObject()!=null){
+				JSONObject classpagesJsonObj=jsonRep.getJsonObject();
+				int totalHitCount=classpagesJsonObj.getInt(TOTALHITCOUNT);
+				JSONArray classPagesArray=classpagesJsonObj.getJSONArray(SEARCHRESULTS);
+				if(classPagesArray!=null&&classPagesArray.length()>0){
+					for(int i=0;i<classPagesArray.length();i++){
+						ClasspageDo classpageDo=deserializeClassPage(classPagesArray.getJSONObject(i));
+						classpageDo.setStatusCode(200);
+						classpageDo.setTotalHitCount(totalHitCount);
+						classpagesList.add(classpageDo);
+					}
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return classpagesList;
+	}
+	protected ClasspageDo deserializeClassPage(JSONObject classpageJsonObject){
+		ClasspageDo classpageDo=new ClasspageDo();
+			try {
+				if(classpageJsonObject!=null){
+					classpageDo.setClasspageId(classpageJsonObject.getString(GOORUOID));
+					classpageDo.setClasspageCode(classpageJsonObject.getString(CLASSPAGECODE));
+					classpageDo.setTitle(classpageJsonObject.getString(TITLE));
+					classpageDo.setThumbnailUrl(classpageJsonObject.getJSONObject(THUMBNAIL)!=null?classpageJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
+					ArrayList<String> permissionList=new ArrayList<String>();
+					if(!classpageJsonObject.isNull(CREATOR)){
+						if(!classpageJsonObject.getJSONObject(CREATOR).isNull(UID)){
+							classpageDo.setCreatorId(classpageJsonObject.getJSONObject(CREATOR).getString(UID));
+						}
+						if(!classpageJsonObject.getJSONObject(CREATOR).isNull(USERNAME)){
+							classpageDo.setCreatorUsername(classpageJsonObject.getJSONObject(CREATOR).getString(USERNAME));
+						}
+						if(!classpageJsonObject.getJSONObject(CREATOR).isNull(PROFILEIMAGE)){
+							classpageDo.setCreatorProfileImage(classpageJsonObject.getJSONObject(CREATOR).getString(PROFILEIMAGE)+"?p="+UUID.randomUUID());
+						}
+					}
+					if(!classpageJsonObject.isNull(META)){
+						if(!classpageJsonObject.getJSONObject(META).isNull(STATUS)){
+							classpageDo.setStatus(classpageJsonObject.getJSONObject(META).getString(STATUS));
+						}
+						if(!classpageJsonObject.getJSONObject(META).isNull(PERMISSIONS)){
+							JSONArray permissionsArray=classpageJsonObject.getJSONObject(META).getJSONArray(PERMISSIONS);
+							if(permissionsArray!=null&&permissionsArray.length()>0){
+								for(int i=0;i<permissionsArray.length();i++){
+									permissionList.add(permissionsArray.getString(i));
+								}
+							}
+						}
+					}
+					classpageDo.setSharing(classpageJsonObject.getString(SHARING));
+					classpageDo.setPermissions(permissionList);
+				}
+			} catch (JSONException e) {
+				classpageDo=new ClasspageDo();
+			}
+		return classpageDo;
+		
+	}
+	protected ArrayList<ClasspageItemDo> deserializeClassPageItems(JsonRepresentation jsonRep){
+		ArrayList<ClasspageItemDo> classpageItemsList=new ArrayList<ClasspageItemDo>();
+			try {
+				if(jsonRep!=null){
+					JSONObject classPageJsonObject=jsonRep.getJsonObject();
+					if(classPageJsonObject!=null){
+						JSONArray classpageItemsArray=classPageJsonObject.getJSONArray(SEARCHRESULTS);
+						int totalHitCount=classPageJsonObject.getInt(TOTALHITCOUNT);
+						if(classpageItemsArray!=null&&classpageItemsArray.length()>0){
+							for(int i=0;i<classpageItemsArray.length();i++){
+								JSONObject classpageItemJsonObject=classpageItemsArray.getJSONObject(i);
+								ClasspageItemDo classpageItemDo=deserializeClassPageItem(classpageItemJsonObject,RESOURCE);
+								classpageItemDo.setTotalHitCount(totalHitCount);
+								classpageItemsList.add(classpageItemDo);
+							}
+						}
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		return classpageItemsList;
+	}
+	public ClasspageItemDo deserializeClassPageItem(JSONObject classpageItemJsonObject,String resourceType){
+		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
+		try{
+			classpageItemDo.setCollectionItemId(classpageItemJsonObject.getString(COLLECTIONITEMID));
+			classpageItemDo.setDirection(classpageItemJsonObject.isNull(NARRATION)?null:classpageItemJsonObject.getString(NARRATION));
+			classpageItemDo.setPlannedEndDate(convertMilliSecondsToDate(classpageItemJsonObject.isNull(PLANNEDENDDATE)?null:classpageItemJsonObject.getLong(PLANNEDENDDATE)));
+			JSONObject resourceJsonObject=classpageItemJsonObject.isNull(resourceType)?null:classpageItemJsonObject.getJSONObject(resourceType);
+			if(resourceJsonObject!=null){
+				classpageItemDo.setCollectionTitle(resourceJsonObject.getString(TITLE));
+				classpageItemDo.setGoal(resourceJsonObject.isNull(GOALS)?null:resourceJsonObject.getString(GOALS));
+				classpageItemDo.setCollectionId(resourceJsonObject.getString(GOORUOID));
+				classpageItemDo.setThumbnailUrl(resourceJsonObject.getJSONObject(THUMBNAIL)!=null?resourceJsonObject.getJSONObject(THUMBNAIL).getString(THUMBNAILURL):"");
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return classpageItemDo;
+	}
+	public String convertMilliSecondsToDate(Long milliseconds){
+		if(milliseconds!=null&&milliseconds!=0){
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			Date resultdate = new Date(milliseconds);
+			return sdf.format(resultdate);
+		}else{
+			return null;
+		}
+	}
+	/**
+	 * 
+	 */
+	@Override
+	public ArrayList<ClassPageCollectionDo> getClasspagesListByCollectionId(String collectionId, String collabUId){
+		JsonRepresentation jsonRep = null;
+		ArrayList<ClassPageCollectionDo> lstClasspageTitle=new  ArrayList<ClassPageCollectionDo>();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_LIST_CLASSPAGES_BY_USER_ID,collectionId, collabUId, getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==200){
+			lstClasspageTitle=deserializeClassPagesList(jsonRep);
+		}else{
+			
+		}
+		return lstClasspageTitle;
+	}
+
+	protected ArrayList<ClassPageCollectionDo> deserializeClassPagesList(JsonRepresentation jsonRep){
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference< ArrayList<ClassPageCollectionDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new  ArrayList<ClassPageCollectionDo>();
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#getCollectionUsedCount(java.lang.String)
+	 */
+	@Override
+	public Integer getCollectionUsedCount(String collectionId){
+		int count=0;
+		JsonResponseRepresentation jsonResponseRep = null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_COLLECTION_USED_COUNT, collectionId,
+				getLoggedInSessionToken());
+		jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+		if (jsonResponseRep.getStatusCode()==200){
+			try{
+				count = Integer.parseInt(jsonRep.getText().trim());
+			}catch(Exception e){
+				count=0;
+			}
+		}
+		
+		return count;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#inviteStudentToClass(java.lang.String)
+	 */
+	@Override
+	public ArrayList<CollaboratorsDo> inviteStudentToClass(String classId, List<String> lstEmailId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_INVITE_STUDENT_TO_CLASS, classId, getLoggedInSessionToken());
+		String formData = lstEmailId.toString();
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
+				getRestPassword(), formData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeMembers(jsonRep);
+	}
+	/**
+	 * 
+	 * @function deserializeCollaboratorsList 
+	 * 
+	 * @created_date : Jan 27, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param jsonRep
+	 * @return
+	 * 
+	 * @return : ArrayList<CollaboratorsDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public  ArrayList<CollaboratorsDo> deserializeMembers(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<ArrayList<CollaboratorsDo>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<CollaboratorsDo>();
+	}
+	@Override
+	public StudentsAssociatedListDo getAssociatedStudentListByCode(String classCode,  int offSet, int pageSize, String statusType)
+			throws GwtException {
+		
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+		return deserializeStudentsList(jsonRep);
+	}
+	
+	@Override
+	public void removeStudentFromClass(String classCode, String type, String emailIds)
+			throws GwtException {
+
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_DELETE_MEMBER_FROM_CLASS_BY_CODE, classCode, getLoggedInSessionToken());
+		String formData = emailIds;
+		url = url + "&data=" + formData;
+		ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		
+//		JsonRepresentation jsonRepGetClass = null;
+//		String urlGetClass = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken());
+//		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlGetClass, getRestUsername(), getRestPassword());
+//		jsonRepGetClass =jsonResponseRep.getJsonRepresentation();
+		
+//		return deserializeMembersList(jsonRepGetClass);
+	}
+	/**
+	 * 
+	 * @function deserializeCollaborators 
+	 * 
+	 * @created_date : Jan 27, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param jsonRep
+	 * @return
+	 * 
+	 * @return : Map<String,ArrayList<CollaboratorsDo>>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public Map<String, ArrayList<CollaboratorsDo>> deserializeMembersList(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
+						.toString(), new TypeReference<Map<String, ArrayList<CollaboratorsDo>>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new HashMap<String, ArrayList<CollaboratorsDo>>();
+	}
+	
+	public StudentsAssociatedListDo deserializeStudentsList(JsonRepresentation jsonRep){
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonObject()
+						.toString(), new TypeReference< StudentsAssociatedListDo>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new StudentsAssociatedListDo();
+	}
+
+	@Override
+	public ClasspageDo studentJoinIntoClass(String classCode, String emailId )
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		ClasspageDo classpageDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_JOIN_CLASS, classCode, getLoggedInSessionToken());
+		ArrayList<String> listOfEmail= new ArrayList<String>();
+		try {
+			listOfEmail.add("\"" + emailId + "\"");
+			JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),listOfEmail.toString());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return classpageDo;
+	}
+	
+	@Override
+	public List<String> getSuggestionByName(String emailId){
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_SUGGEST_MEMBER, emailId, getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeSuggestList(jsonRep);
+	}
+	
+	
+	public  List<String> deserializeSuggestList(JsonRepresentation jsonRep) {
+		try {
+			if (jsonRep != null && jsonRep.getSize() != -1) {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<List<String>>() {
+				});
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<String>();
+	}
+	
+	@Override
+	public ProfilePageDo v2GetClassPartyCustomField(String gooruUid) throws GwtException {
+		ProfilePageDo profilePageDo = null;
+		String userUid = getLoggedInUserUid();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSPARTY_CUSTOMFIELD, userUid, getLoggedInSessionToken());
+		JsonRepresentation jsonRep = null;
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} 
+		return profilePageDo;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.service.ClasspageService#getActiveAssociatedStudentListByCode(java.lang.String, int, int, java.lang.String)
+	 */
+	@Override
+	public StudentsAssociatedListDo getActiveAssociatedStudentListByCode(
+			String classCode, int offSet, int pageSize, String statusType)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_MEMBER_LIST_BY_CODE, classCode, getLoggedInSessionToken(), statusType, ""+pageSize, offSet+"");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		
+		return deserializeStudentsList(jsonRep);
+	}
+	
 }
+

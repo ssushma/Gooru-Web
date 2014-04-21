@@ -24,6 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -32,12 +36,16 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -61,6 +69,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -70,7 +80,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AddUserOwnResourceView extends Composite {
+public abstract class AddUserOwnResourceView extends Composite implements MessageProperties{
 	public interface AddUserOwnResourceViewUiBinder extends UiBinder<Widget,AddUserOwnResourceView> {
 		
 	}
@@ -100,20 +110,19 @@ public abstract class AddUserOwnResourceView extends Composite {
 	public Image setThumbnailImage;
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel panelContentRights,resourceTitleContainer,filePathContainer;
+	HTMLPanel panelContentRights,resourceTitleContainer,filePathContainer,thumbnailImageText;
 
 	@UiField
-	public HTMLPanel loadingPanel,imageContainer;
+	public HTMLPanel loadingPanel,imageContainer,fileSizeLimit,titleText,descriptionText,categoryPanelText,imageText,textsPanelLabel;
 
 	@UiField
-	HTMLPanel categorypanel, handout,lesson,slide,rightsContent,
-			textbook;
+	HTMLPanel categorypanel,texts,image;
 
 	@UiField
 	HTMLPanel resourceTypePanel, resourceDescriptionContainer,panelAction;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl;
+	Label resoureDropDownLbl, resourceCategoryLabel,rightsLbl,agreeText,andText,additionalText,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 	
 	@UiField
 	Anchor copyRightAnr;
@@ -151,7 +160,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	}
 	public boolean resoureDropDownLblOpen = false;
 	
-	private boolean isValidImageSize=true;
+	private boolean isValidImageSize=true,isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
 	String originalFileName=null;
 	
@@ -165,7 +174,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 	String filePath,resourceTitle,resourceDesc,resourceCategory;
 	
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:jpg|jpeg|pdf))$)";
-	private static final String RESOURCE_FILE_SUPPORT_MSG = "Oops! We only support PDF and JPG files.";
+	private static final String RESOURCE_FILE_SUPPORT_MSG = GL0955;
 	
 	private static final String IMAGE_UPLOAD_URL = "/v2/media?sessionToken={0}";
 	
@@ -180,6 +189,27 @@ public abstract class AddUserOwnResourceView extends Composite {
 	public AddUserOwnResourceView(CollectionDo collectionDo){ 
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		fileSizeLimit.getElement().setInnerHTML(" "+GL0901);
+		browseResourceBtn.setText(GL0902);
+		titleText.getElement().setInnerHTML(GL0318);
+		descriptionText.getElement().setInnerHTML(GL0904);
+		categoryPanelText.getElement().setInnerHTML(GL0906);
+		textsPanelLabel.getElement().setInnerHTML(GL1044);
+		imageText.getElement().setInnerHTML(GL1046);
+		
+		thumbnailImageText.getElement().setInnerHTML(GL0911);
+		uploadImageLbl.setText(GL0912);
+		rightsLbl.setText(GL0869);
+		agreeText.setText(GL0870);
+		commuGuideLinesAnr.setText(GL0871);
+		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		privacyAnr.setText(" "+GL0873);
+		andText.setText(" "+GL_GRR_AND+" ");
+		copyRightAnr.setText(" "+GL0875);
+		additionalText.setText(GL0874);
+		cancelResourcePopupBtnLbl.setText(GL0142);
+		addResourceBtnLbl.setText(GL0590);
+		lblAdding.setText(GL0591.toLowerCase());
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
@@ -193,13 +223,13 @@ public abstract class AddUserOwnResourceView extends Composite {
 		resourcePathTextBox.getElement().setId("tbUrl");
 		titleTextBox.getElement().setId("tbTitle");	
 		descriptionTxtAera.getElement().setId("taDescription");
-		descriptionTxtAera.getElement().setAttribute("placeholder", MessageProperties.GL0359);
+		descriptionTxtAera.getElement().setAttribute("placeholder", GL0359);
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
-		resourceCategoryLabel.setText(MessageProperties.GL0360);
+		resourceCategoryLabel.setText(GL0360);
 		resourceContentChkLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
 		descCharcterLimit.setVisible(false);
@@ -276,20 +306,22 @@ public abstract class AddUserOwnResourceView extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/entries/24471116-Gooru-Community-Guidelines","_blank",""); 
+				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 			}
 		});
 		
 		
 		
-		resourceCategoryLabel.setText("Handout");
-		categorypanel.setStyleName(handout.getStyleName());
+		resourceCategoryLabel.setText(GL1044);
+		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		
 		
 		lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 		panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
+		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
+		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
 	}
 	
 	/**
@@ -305,7 +337,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 			double sizeOfImage=Double.parseDouble(size);
 			if(sizeOfImage>5){
 				isValidImageSize=false;
-				resourceContentChkLbl.setText("Oops! We only support files under 5MB.");
+				resourceContentChkLbl.setText(GL0913);
 				resourceContentChkLbl.setVisible(true);
 				fileuploadForm.reset();
 				if(!resourcePathTextBox.getText().equalsIgnoreCase("")){
@@ -320,6 +352,8 @@ public abstract class AddUserOwnResourceView extends Composite {
 			@Override
 			public void onChange(ChangeEvent event) {
 				filePathContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControl());
+				resourcePathTextBox.getElement().getStyle().setBorderColor("#dddddd");
+
 				 if(hasValidateResource()){
 					 isValidImageSize=true;
 					 resourceContentChkLbl.setVisible(false);
@@ -354,7 +388,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 		titleTextBox.setText("");
 		descriptionTxtAera.setText("");
 		setThumbnailImage.setUrl("");
-		resourceCategoryLabel.setText("Choose a resource category");
+		resourceCategoryLabel.setText(GL0360);
 		categorypanel.setStyleName("");
 		mandatoryTitleLbl.setVisible(false);
 		resourceContentChkLbl.setVisible(false);
@@ -366,71 +400,102 @@ public abstract class AddUserOwnResourceView extends Composite {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(ClickEvent event) {
-			
-			lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
-			panelAction.getElement().getStyle().setDisplay(Display.NONE);
-			
-			filePath = resourcePathTextBox.getText().trim();
-			resourceTitle = titleTextBox.getText().trim();
-			resourceDesc = descriptionTxtAera.getText().trim();
-			resourceCategory = resourceCategoryLabel.getText();
-			boolean isValidate = true;
-			if(filePath==null || filePath.equals("")){
-				 isValidate = false;
-				 filePathContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControlForErrors());
-				 resourceContentChkLbl.setText("Please add a file.");
-				 resourceContentChkLbl.setVisible(true);
-			}
-			if(resourceTitle==null || resourceTitle.equals("")){
-				isValidate = false;
-				resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
-				mandatoryTitleLbl.setText("Please add a title.");
-				mandatoryTitleLbl.setVisible(true);
-				
-			}
-			if(resourceDesc==null || resourceDesc.equals("")){
-				isValidate = false;
-				resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
-				resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
-			
-				descCharcterLimit.setText("Please add a description.");
-				descCharcterLimit.setVisible(true);
-			}
-			if(resourceCategory==null || resourceCategory.equals("-1") || resourceCategory.equalsIgnoreCase("Choose a resource category") ){ 
-				isValidate = false;
-			}
-			if(!rightsChkBox.getValue()){
-				rightsLbl.getElement().getStyle().setColor("orange");
-				isValidate = false;
-			}
-			if(isValidate){
-				fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
-				fileuploadForm.addFormHandler(new FormHandler() {
-					
-					public void onSubmitComplete(FormSubmitCompleteEvent event) {
-						if(isValidImageSize){
-							if(collectionDo.getSharing().equalsIgnoreCase("public")){
-								parseUploadFileDetails(event.getResults(),true);
-							}
-							else{
-								parseUploadFileDetails(event.getResults(),false);
-							}
+			addResourceBtnLbl.setEnabled(false);
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", titleTextBox.getValue());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						isHavingBadWordsInTextbox = value;
+						if(value){
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
+							addResourceBtnLbl.setEnabled(true);
+						}else{
+							parms.put("text", descriptionTxtAera.getText());
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+								
+								@Override
+								public void onSuccess(Boolean result) {
+									isHavingBadWordsInRichText=result;
+									if(result){
+										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
+										addResourceBtnLbl.setEnabled(true);
+									}else{	
+										MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+										
+										lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
+										panelAction.getElement().getStyle().setDisplay(Display.NONE);
+										
+										filePath = resourcePathTextBox.getText().trim();
+										resourceTitle = titleTextBox.getText().trim();
+										resourceDesc = descriptionTxtAera.getText().trim();
+										resourceCategory = resourceCategoryLabel.getText();
+										boolean isValidate = true;
+										if(filePath==null || filePath.equals("")){
+											 isValidate = false;
+											 resourcePathTextBox.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControlForErrors());
+											 resourceContentChkLbl.setText(GL0914);
+											 resourceContentChkLbl.setVisible(true);
+										}
+										if(resourceTitle==null || resourceTitle.equals("")){
+											isValidate = false;
+											resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
+											mandatoryTitleLbl.setText(GL0903);
+											mandatoryTitleLbl.setVisible(true);
+											
+										}
+										if(resourceDesc==null || resourceDesc.equals("")){
+											isValidate = false;
+											resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
+											resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
+										
+											descCharcterLimit.setText(GL0905);
+											descCharcterLimit.setVisible(true);
+										}
+										if(resourceCategory==null || resourceCategory.equals("-1") || resourceCategory.equalsIgnoreCase("Choose a resource format") ){ 
+											isValidate = false;
+										}
+										if(!rightsChkBox.getValue()){
+											rightsLbl.getElement().getStyle().setColor("orange");
+											isValidate = false;
+										}
+										if(isValidate){
+											fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
+											fileuploadForm.addFormHandler(new FormHandler() {
+												
+												public void onSubmitComplete(FormSubmitCompleteEvent event) {
+													if(isValidImageSize){
+														if(collectionDo.getSharing().equalsIgnoreCase("public")){
+															parseUploadFileDetails(event.getResults(),true);
+														}
+														else{
+															parseUploadFileDetails(event.getResults(),false);
+														}
+													}
+												}
+												
+												@Override
+												public void onSubmit(FormSubmitEvent event) {
+												}
+											});
+											
+											fileuploadForm.submit();
+											
+											/*
+											 String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/f310515f-2908-4bb4-83a5-e4626b72d7dd.pdf\",\"imageValidationMsg\":null,\"name\":\"f310515f-2908-4bb4-83a5-e4626b72d7dd.pdf\",\"originalFilename\":\"gwtb_html5_a_web_develops_dream.pdf\",\"size\":462358,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://westrepository.goorulearning.org/prod1/uploaded-media/f310515f-2908-4bb4-83a5-e4626b72d7dd.pdf\"}";
+							                 parseUploadFileDetails(str,true);*/
+											
+										}else{
+											lblAdding.getElement().getStyle().setDisplay(Display.NONE);
+											panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
+											addResourceBtnLbl.setEnabled(true);
+										}
+									}
+								}
+							});
 						}
-					}
-					
-					@Override
-					public void onSubmit(FormSubmitEvent event) {
-					}
-				});
-				
-				fileuploadForm.submit();
-//				 String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/0deeb890-8a4b-468e-87c0-5615d69e856e.jpg\",\"imageValidationMsg\":null,\"name\":\"07d5e417-0c0d-418a-b9fc-d1b6ec4ef557.pdf\",\"originalFilename\":\"gwtb_html5_a_web_develops_dream.pdf\",\"size\":462358,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://devrepo.goorulearning.org/qalive/uploaded-media/0deeb890-8a4b-468e-87c0-5615d69e856e.jpg\"}";
-//                 parseUploadFileDetails(str,true);
-				
-			}else{
-				lblAdding.getElement().getStyle().setDisplay(Display.NONE);
-				panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
-			}
+				}
+			});
 		}
 
 		protected void parseUploadFileDetails(String jsonString,boolean showPreview) { 
@@ -441,10 +506,19 @@ public abstract class AddUserOwnResourceView extends Composite {
 				String mediaFileName=jsonMediaFileValue.isString().toString().replaceAll("^\"|\"$", "");
 				JSONValue jsonOriginalFileValue=jsonObject.get("originalFilename");
 				String originalFileName=jsonOriginalFileValue.isString().toString().replaceAll("^\"|\"$", "");
+				if(resourceCategory.equalsIgnoreCase("Images")||resourceCategory.equalsIgnoreCase("Texts"))
+				{
+					resourceCategory=resourceCategory.substring(0, resourceCategory.length()-1);
+					 if(resourceCategory.equalsIgnoreCase("Image")){
+						 resourceCategory="Slide";
+					 }
+				}
 				if(showPreview){
 					showResourcePreview(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory);
+					addResourceBtnLbl.setEnabled(true);
 				}else{
 					addUserResource(filePath,mediaFileName,originalFileName,resourceTitle,resourceDesc,resourceCategory);
+					addResourceBtnLbl.setEnabled(true);
 				}
 				
 			}
@@ -499,7 +573,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 			mandatoryTitleLbl.setVisible(false);
 			resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			if (titleTextBox.getText().length() >= 50) {
-				mandatoryTitleLbl.setText("Character limit reached.");
+				mandatoryTitleLbl.setText(GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
@@ -513,7 +587,7 @@ public abstract class AddUserOwnResourceView extends Composite {
 			resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
 			if (descriptionTxtAera.getText().length() >= 300) {
 //				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0, 300));
-				descCharcterLimit.setText("Character limit reached.");
+				descCharcterLimit.setText(GL0143);
 				descCharcterLimit.setVisible(true);
 			}
 
@@ -522,37 +596,39 @@ public abstract class AddUserOwnResourceView extends Composite {
 	
 	
 
-	@UiHandler("slideResourcePanel")
+	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Slide");
-		categorypanel.setStyleName(slide.getStyleName());
+		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
+		resourceCategoryLabel.setText(GL1046);
+		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 	}
 
-	@UiHandler("handoutResourcePanel")
+	@UiHandler("textsResourcePanel")
 	void handoutResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Handout");
-		categorypanel.setStyleName(handout.getStyleName());
+		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
+		resourceCategoryLabel.setText(GL1044);
+		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 	}
 
-	@UiHandler("textbookResourcePanel")
+	/*@UiHandler("textbookResourcePanel")
 	void textbookResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Textbook");
+		resourceCategoryLabel.setText(GL0909);
 		categorypanel.setStyleName(textbook.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-	}
+	}*/
 
-	@UiHandler("lessonResourcePanel")
+	/*@UiHandler("lessonResourcePanel")
 	void lessonResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Lesson");
+		resourceCategoryLabel.setText(GL0910);
 		categorypanel.setStyleName(lesson.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
-	}
+	}*/
 
 
 	@UiHandler("resoureDropDownLbl")
@@ -615,6 +691,40 @@ public abstract class AddUserOwnResourceView extends Composite {
 		}
 		return fileSize.toString();
 	}-*/;
-	
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private TextArea textArea;
+		public CheckProfanityInOnBlur(TextBox textBox,TextArea textArea,Label label){
+			this.textBox=textBox;
+			this.label=label;
+			this.textArea=textArea;
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+			Map<String, String> parms = new HashMap<String, String>();
+			if(textBox!=null){
+				parms.put("text", textBox.getValue());
+			}else{
+				parms.put("text", textArea.getText());
+			}
+			addResourceBtnLbl.setEnabled(false);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					addResourceBtnLbl.setEnabled(true);
+					if(textBox!=null){
+						isHavingBadWordsInTextbox = value;
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+					}else{
+						isHavingBadWordsInRichText=value;
+						SetStyleForProfanity.SetStyleForProfanityForTextArea(textArea, label, value);
+					}
+					
+				}
+			});
+		}
+	}
 
 }

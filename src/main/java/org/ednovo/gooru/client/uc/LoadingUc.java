@@ -24,23 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : LoadingUc.java
+ * @author Search Team
  *
- * @description : This class is used to display the loading image.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class LoadingUc extends FlowPanel {
+public class LoadingUc extends FlowPanel implements MessageProperties {
 
 	private Image loadingImage;
 	
@@ -56,8 +50,8 @@ public class LoadingUc extends FlowPanel {
 		loadingImage =  new Image();
 		loadingMessage = new Label();
 		loadingImage.setUrl(LOADER_IMAGE);
-		loadingImage.setAltText("Loading");
-		loadingImage.setTitle("Loading");
+		loadingImage.setAltText(GL0110);
+		loadingImage.setTitle(GL0110);
 //		loadingMessage.setText("please wait...");
 		this.add(loadingImage);
 //		this.add(loadingMessage);

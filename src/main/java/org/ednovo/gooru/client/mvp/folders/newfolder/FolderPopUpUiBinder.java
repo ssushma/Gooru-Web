@@ -61,19 +61,13 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
+
 /**
- * @fileName : FolderPopUpUiBinder.java
+ * 
+ * @author BLR Team.
  *
- * @description : This class is used to display the create new folder popup view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
+
 public class FolderPopUpUiBinder extends
 		BasePopupViewWithHandlers<FoldersPopupUiHandlers> implements
 		IsFoldersPopupView {
@@ -265,23 +259,17 @@ public class FolderPopUpUiBinder extends
 			}
 		});
 	}
-	/**
-	 * This method is used to get the default view.
-	 */
+
 	@Override
 	protected String getDefaultView() {
 		return PlaceTokens.FOLDERS;
 	}
-	/**
-	 * Which is responsible for returning the widget corresponding to that view
-	 */
+
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
 	}
-	/**
-	 * This method is used to get the collection data.
-	 */
+
 	@Override
 	public CollectionDo getData() {
 		CollectionDo collection = new CollectionDo();
@@ -294,10 +282,7 @@ public class FolderPopUpUiBinder extends
 
 		return collection;
 	}
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+
 	@Override
 	public void reset() {
 		okBtnUc.setEnabled(true);
@@ -311,9 +296,7 @@ public class FolderPopUpUiBinder extends
 		groupSimPanel.setWidget(courseLisBox);
 		dropDownList.setSelectedIndex(0);
 	}
-	/**
-	 * This method is used to set the collection data.
-	 */
+
 	@Override
 	public CollectionDo setData(CollectionDo collection) {
 		this.collectionDo = collection;
@@ -321,20 +304,7 @@ public class FolderPopUpUiBinder extends
 		setCourseData();
 		return collection;
 	}
-	/**
-	 * @function setCourseData 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the cource data.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private void setCourseData() {
 		if (this.collectionDo != null
 				&& this.collectionDo.getTaxonomySet() != null
@@ -347,9 +317,7 @@ public class FolderPopUpUiBinder extends
 			}
 		}
 	}
-	/**
-	 * This method is used to set the library codes.
-	 */
+
 	@Override
 	public void setLibraryCodes(List<LibraryCodeDo> libraryCode) {
 		courseLisBox.addItem("- Select a course -", "-1");
@@ -380,9 +348,7 @@ public class FolderPopUpUiBinder extends
 		}
 		return errorList;
 	}
-	/**
-	 * This method is used to get the course code id.
-	 */
+
 	@Override
 	public String getCourseCodeId() {
 		if (!courseLisBox.getValue().equals("-1")) {
@@ -394,9 +360,7 @@ public class FolderPopUpUiBinder extends
 		}
 		return null;
 	}
-	/**
-	 * This method is used to close the popup panel.
-	 */
+
 	@Override
 	public void closePopupPanel() {
 

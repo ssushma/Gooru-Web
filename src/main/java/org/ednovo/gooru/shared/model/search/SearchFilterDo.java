@@ -30,18 +30,10 @@ package org.ednovo.gooru.shared.model.search;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
 /**
- * @fileName : SearchFilterDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SearchFilterDo implements Serializable {
 
@@ -55,45 +47,29 @@ public class SearchFilterDo implements Serializable {
 	private List<String> subjects;
 
 	private Map<String, String> gradeLevels;
+	
+	public SearchFilterDo(){}
 
-	/** 
-	 * This method is to get the categories
-	 */
 	public Map<String, String> getCategories() {
 		return categories;
 	}
 
-	/** 
-	 * This method is to set the categories
-	 */
 	public void setCategories(Map<String, String> categories) {
 		this.categories = categories;
 	}
 
-	/** 
-	 * This method is to get the subjects
-	 */
-	public List<String> getSubjects() {
-		return subjects;
-	}
-
-	/** 
-	 * This method is to set the subjects
-	 */
 	public void setSubjects(List<String> subjects) {
 		this.subjects = subjects;
 	}
 
-	/** 
-	 * This method is to get the gradeLevels
-	 */
+	public List<String> getSubjects() {
+		return subjects;
+	}
+
 	public Map<String, String> getGradeLevels() {
 		return gradeLevels;
 	}
 
-	/** 
-	 * This method is to set the gradeLevels
-	 */
 	public void setGradeLevels(Map<String, String> gradeLevels) {
 		this.gradeLevels = gradeLevels;
 	}

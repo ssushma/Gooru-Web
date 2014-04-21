@@ -25,73 +25,36 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : CityDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CityDo implements Serializable {
 	private static final long serialVersionUID = -8432891303013620430L;
 	private String cityId;
 	private String name;
 	private CountryDo country;
 	private ProvinceDo province;
-	/** 
-	 * This method is to get the cityId
-	 */
+	public CityDo(){}
 	public String getCityId() {
 		return cityId;
 	}
-	/** 
-	 * This method is to set the cityId
-	 */
 	public void setCityId(String cityId) {
 		this.cityId = cityId;
 	}
-	/** 
-	 * This method is to get the name
-	 */
 	public String getName() {
 		return name;
 	}
-	/** 
-	 * This method is to set the name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	/** 
-	 * This method is to get the country
-	 */
 	public CountryDo getCountry() {
 		return country;
 	}
-	/** 
-	 * This method is to set the country
-	 */
 	public void setCountry(CountryDo country) {
 		this.country = country;
 	}
-	/** 
-	 * This method is to get the province
-	 */
 	public ProvinceDo getProvince() {
 		return province;
 	}
-	/** 
-	 * This method is to set the province
-	 */
 	public void setProvince(ProvinceDo province) {
 		this.province = province;
 	}
-	
 }

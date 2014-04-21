@@ -27,44 +27,55 @@
  */
 package org.ednovo.gooru.client.uc.tooltip;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.ClasspageListPopupViewCBundle;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
+import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListHandler;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleHandler;
+import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : StudyNowToolTip.java
+ * @author Gooru Team
  *
- * @description : This class is used to display the study now tooltip.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 
@@ -74,19 +85,41 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 	interface StudyNowToolTipUiBinder extends UiBinder<Widget, StudyNowToolTip> {
 	}
 
-	@UiField Label lblTitle;
+	@UiField Label lblTitle,lblLoading;
 
 	@UiField TextBoxWithPlaceholder classCodeTxtBox;
 
-	@UiField Button enterLbl;
+	@UiField Button enterLbl,disabledBtn;
 	
 	@UiField HTMLPanel tooltipPanel;
+	
+	@UiField
+	ScrollPanel spanelCollectionList;
+	
+	@UiField VerticalPanel classStudyList;
 
 	AlertMessageUc alertMessageUc;
 
 	private boolean isValid=true;
+	
+//	ClasspageListDo classpageListDo = null;
+	
+	ClasspageListDo classpageListDo= null;
 
 	HeaderUc headerUc;
+	
+	Map<String, CollectionDo> classpageList = new HashMap<String, CollectionDo>();
+	ArrayList<String> listClasspage = new ArrayList<String>();
+	
+	ClasspageListPopupViewCBundle res;
+	
+	private int limit = 10;
+	private int offSet = 0;
+	private boolean toClear = false;
+	private int tmpOffSet = 0;
+	private boolean isApiCalling = false;
+	private int resultSize = 0;
+	private int totalHitCount=0;
 
 	/**
 	 * Because this class has a default constructor, it can
@@ -102,13 +135,66 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 	public StudyNowToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
 //		lblTitle.getElement().getStyle().setMarginTop(14, Unit.PX);
+		this.res = ClasspageListPopupViewCBundle.INSTANCE;
+		res.css().ensureInjected();
 		tooltipPanel.getElement().getStyle().setTop(14, Unit.PX);
-		lblTitle.setText(MessageProperties.GL0474);
+		enterLbl.setText(GL1065);
+		lblTitle.setText(GL0474);
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
-		classCodeTxtBox.setPlaceholder(MessageProperties.GL0184);
+		classCodeTxtBox.setPlaceholder(GL0184);
+//		lblLoading.setText(GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
 		
+		if(!AppClientFactory.isAnonymous()) {
+			toClear=true;
+			getStudyClassList(String.valueOf(offSet));
+			lblTitle.setVisible(false);
+		}else{
+			lblTitle.setVisible(true);
+		}
+		SetSelectedClasspageListHandler setSelectedHandler = new SetSelectedClasspageListHandler() {
+			@Override
+			public void setClasspageTitle(String classpageId) {
+				setClasspageSetSelected(classpageId);
+			}
+		};
+		
+		UpdateClasspageTitleHandler updateTitleHandler = new UpdateClasspageTitleHandler() {
+			
+			@Override
+			public void updateClasspageTitle(String classpageId, String classpageTitle) {
+				updateTitle(classpageId, classpageTitle);
+			}
+		};
+		
+       RefreshClasspageListHandler refreshHandler = new RefreshClasspageListHandler() {
+			
+			@Override
+			public void refreshClasspage() {
+				toClear= true;
+				offSet = 0;
+				getStudyClassList(String.valueOf(offSet));
+			}
+		};
+        spanelCollectionList.addScrollHandler(new ScrollHandler() {
+			
+			@Override
+			public void onScroll(ScrollEvent event) {
+				offSet+=limit;
+				if (spanelCollectionList.getVerticalScrollPosition() == spanelCollectionList.getMaximumVerticalScrollPosition() && !isApiCalling && totalHitCount >=offSet){
+					tmpOffSet = offSet;
+					classStudyList.add(createClasspageTitleLabel("Loading...", "lblLoading", true));
+					isApiCalling = true;
+					getStudyClassList(String.valueOf(offSet));
+				}
+			}
+		});
+		AppClientFactory.getEventBus().addHandler(SetSelectedClasspageListEvent.TYPE, setSelectedHandler);
+		AppClientFactory.getEventBus().addHandler(RefreshClasspageListEvent.TYPE, refreshHandler);
+		AppClientFactory.getEventBus().addHandler(UpdateClasspageTitleEvent.TYPE, updateTitleHandler);
+		
+		enterLbl.addClickHandler(new OnEnterClassCodeClick());
 		ClickHandler rootHandler=new ClickHandler() {
 
 			@Override
@@ -119,90 +205,557 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 				}
 			}
 		};
+		disabledBtn.setText(GL1065);
+		disabledBtn.setVisible(false);
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 
 	}
+	
+	public class OnEnterClassCodeClick implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setEnterLblVisbility(true);
+			if (classCodeTxtBox.getText().trim().equalsIgnoreCase("") || classCodeTxtBox.getText().trim() == null){
+				alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0243));
+				ClickHandler alertHandler=new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						isValid=false;
+						setEnterLblVisbility(false);
+					}
+				};
+				alertMessageUc.appPopUp.addDomHandler(alertHandler, ClickEvent.getType());
+				
+				alertMessageUc.okButton.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						isValid=false;
+						setEnterLblVisbility(false);
+					}
+				});
+				return;
+			}
+			
+			MixpanelUtil.ClickOnStudyNow();
+			AppClientFactory.getInjector().getClasspageService().v2getClasspageByCode(classCodeTxtBox.getText().trim(), new SimpleAsyncCallback<CollectionDo>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					setEnterLblVisbility(false);
+				}
+				
+				@Override
+				public void onSuccess(CollectionDo result) {
+					 setEnterLblVisbility(false);
+					 if(result.getGooruOid()==null){
+						 Window.enableScrolling(false);
+						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+						alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0244));
+						ClickHandler alertHandler=new ClickHandler() {
+
+							@Override
+							public void onClick(ClickEvent event) {
+								isValid=false;
+								
+							}
+						};
+						alertMessageUc.appPopUp.addDomHandler(alertHandler, ClickEvent.getType());
+						
+						alertMessageUc.okButton.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								isValid=false;
+							}
+						});
+					}else if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+					{
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+							MixpanelUtil.Click_Study_LandingPage();
+						}
+						
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("id",result.getGooruOid());
+						params.put("pageSize", "10");
+						params.put("pageNum", "0");
+						params.put("pos", "1");
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+						classCodeTxtBox.setText("");
+						hide();
+						if(alertMessageUc!=null)
+						alertMessageUc.hide();
+					}				 
+					 else if(result.getSharing().equalsIgnoreCase("private")){
+					
+						if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+						{
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+								MixpanelUtil.Click_Study_LandingPage();
+							}
+							
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("id",result.getGooruOid());
+							params.put("pageSize", "10");
+							params.put("pageNum", "0");
+							params.put("pos", "1");
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							classCodeTxtBox.setText("");
+							hide();
+							if(alertMessageUc!=null)
+							alertMessageUc.hide();
+							
+							StudentAssignmentView.setPrivatePage();
+
+						}
+						else if(result.getStatus().equalsIgnoreCase("active"))
+						{
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+								MixpanelUtil.Click_Study_LandingPage();
+							}
+							
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("id",result.getGooruOid());
+							params.put("pageSize", "10");
+							params.put("pageNum", "0");
+							params.put("pos", "1");
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							classCodeTxtBox.setText("");
+							hide();
+							if(alertMessageUc!=null)
+							alertMessageUc.hide();
+							
+							StudentAssignmentView.setPrivatePageActive();
+
+						}
+						else if(result.getStatus().equalsIgnoreCase("pending")) 
+						{
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+								MixpanelUtil.Click_Study_LandingPage();
+							}
+							
+							Map<String, String> params = new HashMap<String, String>();
+							params.put("id",result.getGooruOid());
+							params.put("pageSize", "10");
+							params.put("pageNum", "0");
+							params.put("pos", "1");
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+							classCodeTxtBox.setText("");
+							hide();
+							if(alertMessageUc!=null)
+							alertMessageUc.hide();
+							
+							StudentAssignmentView.setPrivatePagePending();
+
+						}
+						else 
+						{
+							       if(AppClientFactory.isAnonymous()){
+							    	   new SentEmailSuccessVc(GL1177, GL1535);
+							       }else{
+							    	   new SentEmailSuccessVc(GL1177, GL1535_1);
+							       }
+						}
+						
+					}
+					else
+					{	
+						toClear=true;
+						getStudyClassList(String.valueOf(0));
+						showClasspageList();
+						if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)) {
+							MixpanelUtil.Click_Study_LandingPage();
+						}
+						
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("id",result.getGooruOid());
+						params.put("pageSize", "10");
+						params.put("pageNum", "0");
+						params.put("pos", "1");
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
+						classCodeTxtBox.setText("");
+						hide();
+						if(alertMessageUc!=null)
+						alertMessageUc.hide();
+						
+							if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+							{
+								StudentAssignmentView.setPublicPage();
+							}
+							else if(result.getStatus().equalsIgnoreCase("active"))
+							{
+								StudentAssignmentView.setPublicPageActive();
+							}
+							else 
+							{
+								StudentAssignmentView.setPublicPagePending();
+							}	
+						
+				}
+					 setEnterLblVisbility(false);
+			}
+
+			});
+		}
+	}
+
+	public void getStudyClassList(String offSet) {
+		setStudyClassList(null);
+		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(String.valueOf(limit), offSet,
+				new SimpleAsyncCallback<ClasspageListDo >() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+						classpageListDo = result;
+						setStudyClassList(result);
+						totalHitCount=result.getTotalHitCount();
+					}
+				});
+	}
+	
+	private void setStudyClassList(ClasspageListDo classList) {
+		lblLoading.setVisible(false);
+		isApiCalling = false;
+		if(classList!=null){
+			resultSize=classpageListDo.getSearchResults()!=null?classpageListDo.getSearchResults().size():0;
+		}else{
+			resultSize =0;
+		}
+		if(resultSize>0) {
+			lblTitle.setVisible(false);
+			classStudyList.setVisible(true);
+			spanelCollectionList.setVisible(true);
+			if (toClear) {
+				classStudyList.clear();
+				toClear = false;
+				classpageList.clear();
+				listClasspage.clear();
+			}
+			for(int i = 0; i<resultSize;i++) {
+//				Label className = new Label("classList "+i);
+				String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
+				classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
+				listClasspage.add(classpageId);
+				/*className.setStyleName("studyNowToolTipLbl");
+				if(i==0) {
+					className.getElement().getStyle().setMarginTop(2, Unit.PX);
+				}
+				className.addClickHandler(new OnEnterClassCodeClick());
+				classStudyList.add(className);*/
+			}
+			generateClasspageList();
+		} else {
+			/*offSet = tmpOffSet;
+			Element element=Document.get().getElementById("lblLoading");
+			if(element!=null){
+				element.removeFromParent();
+			}*/
+//			lblTitle.setVisible(true);
+		}
+	}
+	
+	public void generateClasspageList(){
+		classStudyList.clear();
+		for (int i=0;i<listClasspage.size();i++){
+			String classpageTitle = classpageList.get(listClasspage.get(i)).getTitle();
+			classStudyList.add(createClasspageTitleLabel(
+				classpageTitle, listClasspage.get(i), false));
+		}
+	}
+	
+	
 	/**
 	 * 
-	 * @function onEnterClassCodeClick 
+	 * @function createClasspageTitleLabel
 	 * 
-	 * @created_date : 31-Dec-2013
+	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description : This will handle the click event on the enter label.
+	 * @description
 	 * 
 	 * 
-	 * @parm(s) : @param clickEvent
+	 * @parm(s) : @param classpageTitle
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @return
+	 * 
+	 * @return : Label
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	private Label createClasspageTitleLabel(String classpageTitle,
+			final String classpageId, boolean isStatic) {
+		Label titleLabel = null;
+		
+		if (classpageTitle.length() >=30){
+			titleLabel = new Label(classpageTitle.substring(0, 30));
+		}else{
+			titleLabel = new Label(classpageTitle);
+		}
+		titleLabel.getElement().setAttribute("id", classpageId);
+		if (!isStatic){
+			titleLabel.setStyleName(ClasspageListPopupViewCBundle.INSTANCE.css().classpageTitleStudyHeader());
+		}else{
+			titleLabel.setStyleName(ClasspageListPopupViewCBundle.INSTANCE.css().classpageLoadingOnPagination());
+		}
+		// Set Click event for title
+		titleLabel.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				 OpenClasspageEdit(classpageId);
+				 hide();
+			}
+		});
+		return titleLabel;
+	}
+	
+	
+	/**
+	 * 
+	 * @function OpenClasspageEdit
+	 * 
+	 * @created_date : Aug 15, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param gooruOId
+	 * 
+	 * @return : void
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	private void OpenClasspageEdit(String gooruOId) {
+		setClassapageItemSeleted(gooruOId);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", gooruOId);
+		params.put("pageNum", "0");
+		params.put("pageSize", "10");
+		params.put("pos", "1");
+		AppClientFactory.getPlaceManager().revealPlace(
+				PlaceTokens.STUDENT, params);
+		classCodeTxtBox.setText("");
+	}
+	
+	/**
+	 * 
+	 * @function setClassapageItemSeleted
+	 * 
+	 * @created_date : Aug 15, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * 
+	 * @return : void
+	 * 
+	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	private void setClassapageItemSeleted(String classpageId) {
+		
+		for (int i = 0; i < listClasspage.size(); i++) {
+			Element element=Document.get().getElementById(listClasspage.get(i));
+			if(element!=null){
+				element.setClassName(res.css().classpageTitleHeader());
+			}
+		}
+		if(classpageId!=null && !classpageId.equalsIgnoreCase("")){
+			Element element=Document.get().getElementById(classpageId);
+			if(element!=null){
+				element.setClassName(res.css().classpageTitleHeaderActive());
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @function setClasspageSetSelected 
+	 * 
+	 * @created_date : Mar 27, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
+	 * 
+	 *
+	 *
 	 */
-	@UiHandler("enterLbl")
-	public void onEnterClassCodeClick(ClickEvent clickEvent){
-
-		if (classCodeTxtBox.getText().trim().equalsIgnoreCase("") || classCodeTxtBox.getText().trim() == null){
-			alertMessageUc=new AlertMessageUc(MessageProperties.GL0061, new Label(MessageProperties.GL0243));
-			ClickHandler alertHandler=new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					isValid=false;
+	private void setClasspageSetSelected(String classpageId){
+		Iterator<Widget> widgets = classStudyList.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget.getElement().getId().equalsIgnoreCase(classpageId)){
+				widget.getElement().setClassName(res.css().classpageTitleHeaderActive());
+			}else{
+				widget.getElement().setClassName(res.css().classpageTitleHeader());
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @function removeClasspageItem 
+	 * 
+	 * @created_date : Mar 28, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void removeClasspageItem(String classpageId) {
+		String nextClasspageId = null;
+		int listCount = listClasspage.size();
+		for (int i=0; i<listClasspage.size(); i++){			
+			if (listClasspage.get(i).equalsIgnoreCase(classpageId)){
+				if (i==(listCount-1)){
+					if ((listCount-1) >0 ){
+						nextClasspageId =  listClasspage.get(i-1);
+					}else{
+						nextClasspageId = null;
+					}
 					
+				}else{
+					nextClasspageId =  listClasspage.get(i+1);
 				}
-			};
-			alertMessageUc.appPopUp.addDomHandler(alertHandler, ClickEvent.getType());
-			
-			alertMessageUc.okButton.addClickHandler(new ClickHandler() {
-				
-				@Override
-				public void onClick(ClickEvent event) {
-					isValid=false;
-				}
-			});
-			return;
+				listClasspage.remove(i);
+				classpageList.remove(classpageId);
+			}else{
+				nextClasspageId=listClasspage.get(0);
+			}
+		}
+		classStudyList.clear();
+		generateClasspageList();
+		if (nextClasspageId!=null){
+			OpenClasspageEdit(nextClasspageId);
+		}else{
+			showNoClasspages();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+	}
+	
+	/**
+	 * 
+	 * @function showNoClasspages 
+	 * 
+	 * @created_date : Mar 28, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	private void showNoClasspages() {
+//		lblLoading.setVisible(false);
+		classStudyList.setVisible(true);
+		spanelCollectionList.setVisible(false);
+	}
+	
+	private void showClasspageList() {
+//		lblLoading.setVisible(false);
+		classStudyList.setVisible(false);
+		spanelCollectionList.setVisible(true);
+		classStudyList.clear();
+	}
+	
+	/**
+	 * 
+	 * @function updateTitle 
+	 * 
+	 * @created_date : Apr 02, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param classpageTitle
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	
+	private void updateTitle(String classpageId, String classpageTitle){
+		Iterator<Widget> widgets = classStudyList.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget.getElement().getId().equalsIgnoreCase(classpageId)){
+				widget.getElement().setInnerHTML(classpageTitle);
+			}
 		}
 		
-		MixpanelUtil.ClickOnStudyNow();
+		// Update the ClasspageObject inside StudyClasspageList object.
 		
-		AppClientFactory.getInjector().getClasspageService().v2getClasspageByCode(classCodeTxtBox.getText(), new SimpleAsyncCallback<CollectionDo>(){
-
-			@Override
-			public void onSuccess(CollectionDo result) {
-
-				if(result.getGooruOid()==null){
-					alertMessageUc=new AlertMessageUc(MessageProperties.GL0061, new Label(MessageProperties.GL0244));
-					ClickHandler alertHandler=new ClickHandler() {
-
-						@Override
-						public void onClick(ClickEvent event) {
-							isValid=false;
-							
-						}
-					};
-					alertMessageUc.appPopUp.addDomHandler(alertHandler, ClickEvent.getType());
-					
-					alertMessageUc.okButton.addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							isValid=false;
-						}
-					});
-				}else{
-
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("id",result.getGooruOid());
-					params.put("pageSize", "10");
-					params.put("pageNum", "0");
-					params.put("pos", "1");
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
-					classCodeTxtBox.setText("");
-					hide();
-					alertMessageUc.hide();
-				}
-			}
-
-		});
+		CollectionDo classpageDo =  classpageList.get(classpageId);
+		classpageDo.setTitle(classpageTitle);
+		classpageList.put(classpageId, classpageDo);
+		
 	}
+
+	/**
+	 * @return the classStudyList
+	 */
+	public VerticalPanel getClassStudyList() {
+		return classStudyList;
+	}
+
+	/**
+	 * @return the lblTitle
+	 */
+	public Label getLblTitle() {
+		return lblTitle;
+	}
+  
+	public void setEnterLblVisbility(boolean isVisible) {
+		enterLbl.setVisible(!isVisible);
+		disabledBtn.setVisible(isVisible);
+	}
+
+	/**
+	 * @return the classCodeTxtBox
+	 */
+	public TextBoxWithPlaceholder getClassCodeTxtBox() {
+		return classCodeTxtBox;
+	}
+	
+	
 }

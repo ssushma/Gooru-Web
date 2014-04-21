@@ -35,13 +35,14 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
  * 
  * @fileName : IsAssignmentsTabView.java
  *
- * @description : Acts as a bridge between the Presenter and view.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
  * @date:  Apr 17, 2013
  *
- * @Author Anil Kumar T
+ * @Author Gooru Team
  *
  * @Reviewer:
  */

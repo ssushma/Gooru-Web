@@ -22,25 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchEvent.java
- *
- * @description : To register search event.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SearchEvent extends GwtEvent<SearchHandler> {
 
@@ -54,45 +45,21 @@ public class SearchEvent extends GwtEvent<SearchHandler> {
 	public SearchEvent(String query) {
 		setQuery(query);
 	}
-	/**
-	 *  Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SearchHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SearchHandler handler) {
 		handler.onSearch(getQuery());
 	}
-	/**
-	 * 
-	 * @function getQuery 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns query
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public String getQuery() {
 		return query;
 	}
-	/**
-	 * To set query.
-	 */
+
 	public void setQuery(String query) {
 		this.query = query;
 	}

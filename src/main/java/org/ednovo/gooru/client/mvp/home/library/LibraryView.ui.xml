@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 	<ui:style field="libraryStyle" src="library.css"/>
 	<ui:style field="libraryStyleUc" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
 
@@ -12,20 +13,24 @@
 		
 		<g:HTMLPanel ui:field="container">
 		   
-		   <g:Label styleName="{libraryStyle.pageTitle} {libraryStyle.h2}" ui:field="featuredCousesLbl">Featured Courses</g:Label>
+		   <g:Label styleName="{libraryStyle.pageTitle} {libraryStyle.h2}" ui:field="featuredCousesLbl"></g:Label>
 		   
 		   <g:HTMLPanel ui:field="featuredCourseTabs" styleName="tabs">
 		   			<g:HTMLPanel ui:field="featuredCourses"/>
 		   </g:HTMLPanel>
 		   
 		   <g:HTMLPanel ui:field="courseBanner">
+		       <g:HTMLPanel ui:field="partnerLogo" styleName="{libraryStyle.partnerLogo}"/>
 		       <g:Image ui:field="courseImage"/>
 		       <g:Label styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
 		   </g:HTMLPanel>
 		   
 		   <g:HTMLPanel ui:field="featuredEducator">
-		    <g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
-				<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label><g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}">See all featured contributors.</g:Anchor>
+		    	<g:Image styleName="{libraryStyle.educatorPhoto} {libraryStyle.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
+				<g:Label ui:field="featuredContributor" styleName="{libraryStyle.courseContributorAlign}"></g:Label>
+				<g:Anchor ui:field="featuredContributorsLink" styleName="{libraryStyle.courseContributorAlign}"></g:Anchor>
+	
+		<!--  <g:Button styleName="secondary" ui:field="viewStandardButton"></g:Button> -->
 		   </g:HTMLPanel>
 		   
 		   <g:HTMLPanel ui:field="leftNav"/>
@@ -38,7 +43,7 @@
 		</g:HTMLPanel>
 		
 		<g:HTMLPanel ui:field="contributorsContainer"/>
-	
+		<sg:FooterUc />
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

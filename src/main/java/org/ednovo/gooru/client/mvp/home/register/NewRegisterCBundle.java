@@ -28,21 +28,7 @@ package org.ednovo.gooru.client.mvp.home.register;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : NewRegisterCBundle.java
- *
- * @description : This file is used to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface NewRegisterCBundle extends ClientBundle{
 	
 	static final NewRegisterCBundle INSTANCE = GWT.create(NewRegisterCBundle.class);

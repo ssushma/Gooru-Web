@@ -25,19 +25,7 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * @fileName : FilterSettings.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FilterSettings implements Serializable {
 
 	/**
@@ -68,85 +56,71 @@ public class FilterSettings implements Serializable {
 	private String dataApiKey;
 
 	private String gooruReleaseVersion;
-	/**
-	 * This method is used to get the api key point.
-	 */
+	
+	private String docViewerHome;
+	
+	private String facebookAppId;
+	
+	private String facebookFeedUrl;
+	
+	private String taxonomyPreferences;
+	
+	private String analyticsEndPoint;
+	
+	public FilterSettings(){}
+	
 	public String getApiKeyPoint() {
 		return apiKeyPoint;
 	}
-	/**
-	 * This method is used to set the api key point.
-	 */
+
 	public void setApiKeyPoint(String apiKeyPoint) {
 		this.apiKeyPoint = apiKeyPoint;
 	}
-	/**
-	 * This method is used to get GoogleAnalticsAdditionalAccounts.
-	 */
+
 	public String getGoogleAnalticsAdditionalAccounts() {
 		return googleAnalticsAdditionalAccounts;
 	}
-	/**
-	 * This method is used to set the rest end point.
-	 */
+
 	public void setRestEndPoint(String restEndPoint) {
 		this.restEndPoint = restEndPoint;
 	}
-	/**
-	 * This method is used to get the rest end point.
-	 */
+
 	public String getRestEndPoint() {
 		return restEndPoint;
 	}
 
-	/** 
-	 * This method is to get the homeEndPoint
-	 */
-	public String getHomeEndPoint() {
-		return homeEndPoint;
-	}
-	/** 
-	 * This method is to set the homeEndPoint
-	 */
 	public void setHomeEndPoint(String homeEndPoint) {
 		this.homeEndPoint = homeEndPoint;
 	}
-	/** 
-	 * This method is to get the domainName
-	 */
-	public String getDomainName() {
-		return domainName;
+
+	public String getHomeEndPoint() {
+		return homeEndPoint;
 	}
-	/** 
-	 * This method is to set the domainName
-	 */
+
 	public void setDomainName(String domainName) {
 		this.domainName = domainName;
 	}
-	/** 
-	 * This method is to get the classicEndPoint
-	 */
-	public String getClassicEndPoint() {
-		return classicEndPoint;
+
+	public String getDomainName() {
+		return domainName;
 	}
-	/** 
-	 * This method is to set the classicEndPoint
-	 */
+
 	public void setClassicEndPoint(String classicEndPoint) {
 		this.classicEndPoint = classicEndPoint;
 	}
-	/** 
-	 * This method is to get the docViewerPoint
-	 */
-	public String getDocViewerPoint() {
-		return docViewerPoint;
+
+	public String getClassicEndPoint() {
+		return classicEndPoint;
 	}
-	/** 
-	 * This method is to set the docViewerPoint
-	 */
+
 	public void setDocViewerPoint(String docViewerPoint) {
 		this.docViewerPoint = docViewerPoint;
 	}
+
+	public String getDocViewerPoint() {
+		return docViewerPoint;
+	}
+
 	public String getGoogleAnalticsExtraAccounts() {
 		return googleAnalticsAdditionalAccounts;
 	}
@@ -211,6 +185,52 @@ public class FilterSettings implements Serializable {
 	 */
 	public void setGooruReleaseVersion(String gooruReleaseVersion) {
 		this.gooruReleaseVersion = gooruReleaseVersion;
+	}
+
+	/** 
+	 * This method is to get the docViewerHome
+	 */
+	public String getDocViewerHome() {
+		return docViewerHome;
+	}
+
+	/** 
+	 * This method is to set the docViewerHome
+	 */
+	public void setDocViewerHome(String docViewerHome) {
+		this.docViewerHome = docViewerHome;
+	}
+
+	public String getFacebookAppId() {
+		return facebookAppId;
+	}
+
+	public void setFacebookAppId(String facebookAppId) {
+		this.facebookAppId = facebookAppId;
+	}
+
+	public String getFacebookFeedUrl() {
+		return facebookFeedUrl;
+	}
+
+	public void setFacebookFeedUrl(String facebookFeedUrl) {
+		this.facebookFeedUrl = facebookFeedUrl;
+	}
+
+	public String getTaxonomyPreferences() {
+		return taxonomyPreferences;
+	}
+
+	public void setTaxonomyPreferences(String taxonomyPreferences) {
+		this.taxonomyPreferences = taxonomyPreferences;
+	}
+
+	public String getAnalyticsEndPoint() {
+		return analyticsEndPoint;
+	}
+
+	public void setAnalyticsEndPoint(String analyticsEndPoint) {
+		this.analyticsEndPoint = analyticsEndPoint;
 	}
 	
 }

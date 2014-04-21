@@ -22,25 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchPaginationEvent.java
- *
- * @description : This is the event for search pagination.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SearchPaginationEvent extends GwtEvent<SearchPaginationHandler> {
 
@@ -54,61 +45,21 @@ public class SearchPaginationEvent extends GwtEvent<SearchPaginationHandler> {
 	public SearchPaginationEvent(int pageNum) {
 		setPageNum(pageNum);
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SearchPaginationHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SearchPaginationHandler handler) {
 		handler.paginateSearch(getPageNum());
 	}
-	/**
-	 * 
-	 * @function getPageNum 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns pageNumber.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public int getPageNum() {
 		return pageNum;
 	}
-	/**
-	 * 
-	 * @function setPageNum 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :To initialize pageNumber.
-	 * 
-	 * 
-	 * @parm(s) : @param pageNum
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 	}

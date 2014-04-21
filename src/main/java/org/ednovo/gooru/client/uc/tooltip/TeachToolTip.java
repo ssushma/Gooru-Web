@@ -24,28 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : TeachToolTip.java
- *
- * @description : This class is used to display the teach tooltip.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class TeachToolTip extends Composite{
-	
+
+public class TeachToolTip extends Composite implements MessageProperties{
+	@UiField HTMLPanel assignToSTudentsText,teachText;
 	
 	public TeachToolTip(){
 		initWidget(teachToolTipUiBinder.createAndBindUi(this));
+		teachText.getElement().setInnerHTML(GL0181);
+		assignToSTudentsText.getElement().setInnerHTML(GL1067);
 	}
 	
 	public interface TeachToolTipUiBinder extends UiBinder<Widget, TeachToolTip>{

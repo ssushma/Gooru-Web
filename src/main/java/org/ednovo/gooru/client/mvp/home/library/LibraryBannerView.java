@@ -27,28 +27,44 @@
 */
 package org.ednovo.gooru.client.mvp.home.library;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
+
 /**
  * @fileName : LibraryBannerView.java
  *
- * @description : This class is used to display the view for the library banner.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: 02-Dec-2013
  *
- * @Author Gooru Team
+ * @Author IBC
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
-public class LibraryBannerView extends Composite {
+public class LibraryBannerView extends Composite implements MessageProperties{
 
-	@UiField HTMLPanel landingBannerInner;
+	@UiField HTMLPanel partnerLogo, landingBannerInner, findLbl, shareLbl, measureLbl, contributeLbl, fourSteps;
+	@UiField Label headerTag;
+	@UiField Label subHeaderTag;
+	@UiField LibraryStyleBundle libraryStyle;
+
 	
 	private static LibraryBannerViewUiBinder uiBinder = GWT
 			.create(LibraryBannerViewUiBinder.class);
@@ -56,17 +72,58 @@ public class LibraryBannerView extends Composite {
 	interface LibraryBannerViewUiBinder extends
 			UiBinder<Widget, LibraryBannerView> {
 	}
-	/**
-	 * Class constructor.
-	 */
-	public LibraryBannerView() {
+
+	public LibraryBannerView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
+		getLandingBannerText(placeToken);
 	}
-	/**
-	 * This method will call at the time of loading and it will set the id.
-	 */
+
 	@Override
 	public void onLoad() {
 		landingBannerInner.getElement().setId("landingBannerInner");
 	}
+	
+	private void getLandingBannerText(String placeToken) {
+		if(placeToken.contains(PlaceTokens.HOME)) {
+			setLandingBannerText(GL0522,GL0523,GL0524,GL0525,GL0526,GL0527,GL0528,GL0529,GL0530,GL0531);
+			partnerLogo.setVisible(false);
+		} else if(placeToken.contains(PlaceTokens.RUSD_LIBRARY)) {
+			setLandingBannerText(GL0532,GL0533,GL0534,GL0535,GL0536,GL0537,GL0538,GL0539,GL0540,GL0541);
+			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			partnerLogo.setVisible(true);
+		}
+	
+	}
+	
+	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String findInlineMsg, String findMsg, String shareInlineMsg, String shareMsg, 
+			String measureInlineMsg, String measureMsg, String contributeInlineMsg, String contributeMsg) {
+			headerTag.setText(headerMsg);
+			subHeaderTag.setText(subHeaderMsg);
+			
+			InlineLabel findInlineLbl = new InlineLabel(findInlineMsg);
+			InlineLabel shareInlineLbl = new InlineLabel(shareInlineMsg);
+			InlineLabel measureInlineLbl = new InlineLabel(measureInlineMsg);
+			InlineLabel contributeInlineLbl = new InlineLabel(contributeInlineMsg);
+			
+			Label findLblMsg = new Label(findMsg);
+			Label shareLblMsg = new Label(shareMsg);
+			Label measureLblMsg = new Label(measureMsg);
+			Label contributeLblMsg = new Label(contributeMsg);
+			findLblMsg.setStyleName(libraryStyle.bannerSpanBlock());
+			shareLblMsg.setStyleName(libraryStyle.bannerSpanBlock());
+			measureLblMsg.setStyleName(libraryStyle.bannerSpanBlock());
+			contributeLblMsg.setStyleName(libraryStyle.bannerSpanBlock());
+			
+			findLbl.add(findInlineLbl);
+			findLbl.add(findLblMsg);
+			
+			shareLbl.add(shareInlineLbl);
+			shareLbl.add(shareLblMsg);
+			
+			measureLbl.add(measureInlineLbl);
+			measureLbl.add(measureLblMsg);
+			
+			contributeLbl.add(contributeInlineLbl);
+			contributeLbl.add(contributeLblMsg);
+	}	
 }

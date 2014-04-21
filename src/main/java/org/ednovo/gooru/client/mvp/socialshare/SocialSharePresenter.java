@@ -24,21 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.socialshare;
 
-import org.ednovo.gooru.client.child.ChildPresenter;
 /**
  * 
- * @fileName : SocialSharePresenter.java
- *
- * @description : The class <code>SocialSharePresenter</code> will preview a resource info. The GWT server async services will be initialized 
- *  and the API calls to fetch the resource info data from Gooru will be done from here. 
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author: Gooru Team
- *
- * @Reviewer: Gooru Team
+ */
+import org.ednovo.gooru.client.child.ChildPresenter;
+
+/**
+ * @author Gooru Team
+ * 
  */
 public class SocialSharePresenter extends ChildPresenter<SocialSharePresenter, IsSocialShareView> {
 
@@ -52,6 +45,9 @@ public class SocialSharePresenter extends ChildPresenter<SocialSharePresenter, I
 		super(childView);
 	}
 	
+
+
+	
 	private void onBind() {
 		throw new RuntimeException("Not implemented");
 	}
@@ -60,4 +56,8 @@ public class SocialSharePresenter extends ChildPresenter<SocialSharePresenter, I
 	private void onLoad() {
 		throw new RuntimeException("Not implemented");
 	}
+	
+	
+	 
 	}
+

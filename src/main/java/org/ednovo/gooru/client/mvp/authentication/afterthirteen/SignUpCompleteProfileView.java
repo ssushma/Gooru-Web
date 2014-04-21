@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.authentication.uc.SignUpDontWorryView;
@@ -47,6 +48,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -56,23 +58,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewCloseHandler;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
-/**
- * 
- * @fileName : SignUpCompleteProfileView.java
- *
- * @description : This is the view for Signup complete popup.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SignUpCompleteProfileView extends
 		PopupViewWithUiHandlers<SignUpCompleteProfileUiHandler> implements
-		IsSignUpCompleteProfile {
+		IsSignUpCompleteProfile,MessageProperties {
 
 	private static SignUpCompleteProfileViewUiBinder uiBinder = GWT
 			.create(SignUpCompleteProfileViewUiBinder.class);
@@ -85,9 +74,10 @@ public class SignUpCompleteProfileView extends
 	SignUpCBundle res;
 	@UiField
 	Label lblCancel, lblTitle, lblHeading, lblSubHeading, lblchangePassword,
-			userName,lblUpdating;
+			userName,lblUpdating,quriesText,pleaseContactText;
 	@UiField
 	Image profileImage;
+	@UiField Anchor supportLink;
 	@UiField
 	TextBoxWithPlaceholder txtFirstName, txtlastName, txtPassword,
 			txtConfirmPassword;
@@ -101,74 +91,65 @@ public class SignUpCompleteProfileView extends
 	ErrorLabelUc lastNameValidUc, firstNameValidUc, passwordValidUc;
 	private AppPopUp appPopUp;
 	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
-	/**
-	 * Parameterized constructor for injecting the css and other resources.
-	 * @param eventBus
-	 */
+
 	@Inject
 	public SignUpCompleteProfileView(EventBus eventBus) {
 		super(eventBus);
 		this.res = SignUpCBundle.INSTANCE;
 		res.css().ensureInjected();
 	}
-	/**
-	 * This method is used to display the ppopup
-	 */
+
 	@Override
 	public void displayView() {
-		appPopUp = new AppPopUp("NoHeader");
+		appPopUp = new AppPopUp(GL0697);
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
-		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
+		/*appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
 				.registerPopupStyle());
-
+*/
 		appPopUp.setGlassEnabled(true);
-		appPopUp.setAutoHideOnHistoryEventsEnabled(false);
+		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		//appPopUp.setAutoHideOnHistoryEventsEnabled(false);
 
-		appPopUp.getElement().getStyle().setZIndex(99);
+		//appPopUp.getElement().getStyle().setZIndex(99);
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		appPopUp.getElement().getStyle().setBackgroundColor("transparent");
+	//	appPopUp.getElement().getStyle().setBackgroundColor("transparent");
+		
+		
 		setUiAndIds();
 		appPopUp.center();
 	}
-	/**
-	 * 
-	 * @function setUiAndIds 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This will set the images and ID's for the fields.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setUiAndIds() {
-		lblTitle.setText(MessageProperties.GL0481
-				+ MessageProperties.GL_SPL_EXCLAMATION);
-		lblHeading.setText(MessageProperties.GL0492
-				+ MessageProperties.GL_SPL_EXCLAMATION);
-		lblSubHeading.setText(MessageProperties.GL0493);
+		lblTitle.setText(GL0481
+				+ GL_SPL_EXCLAMATION);
+		lblHeading.setText(GL0492
+				+ GL_SPL_EXCLAMATION);
+		lblSubHeading.setText(GL0493);
 		profileImage.setUrl("images/signup/user.png");
-		lblchangePassword.setText(MessageProperties.GL0494);
-		txtFirstName.setPlaceholder("First name (optional)");
-		txtlastName.setPlaceholder("Last name (optional)");
+		lblchangePassword.setText(GL0494);
+		txtFirstName.setPlaceholder(GL1140);
+		txtlastName.setPlaceholder(GL1141);
 		txtAreaAbout.getElement().setAttribute("placeholder",
-				"Tell us more about yourself! (optional)");
-		txtPassword.setPlaceholder("New password (optional)");
-		txtConfirmPassword.setPlaceholder("Confirm New password");
-		btnUpdateProfileLater.setText(MessageProperties.GL0495);
-		btnSubmit.setText(MessageProperties.GL0486);
+				GL1142);
+		txtPassword.setPlaceholder(GL1143);
+		txtConfirmPassword.setPlaceholder(GL1144);
+		btnUpdateProfileLater.setText(GL0495);
+		btnSubmit.setText(GL0486);
 		btnSubmit.getElement().setId("btnSubmit");
 		btnUpdateProfileLater.getElement().setId("btnUpdateProfileLater");
 		passwordContainer.setVisible(false);
-		btnEditImage.setText(MessageProperties.GL0138);
+		btnEditImage.setText(GL0138);
 		btnEditImage.getElement().setId("btnEditImage");
 		btnSubmit.getElement().setAttribute("style", "margin-left: 10px");
 		userName.setText(AppClientFactory.getLoggedInUser().getUsername());
+		quriesText.setText(GL1139+GL_GRR_COMMA);
+		pleaseContactText.setText(GL1145);
+		pleaseContactText.getElement().setAttribute("style", "width: 80%;position: absolute;");
+		supportLink.setText(GL0299);
+		supportLink.setHref(GL1055);
+		supportLink.getElement().setAttribute("style","margin-left:100px;");
 		passwordValidUc.setVisible(false);
 		lblUpdating.setVisible(false);
 		profileImage.setWidth("96px");
@@ -178,83 +159,36 @@ public class SignUpCompleteProfileView extends
 		txtlastName.addKeyUpHandler(new OnKeyUpHandler());
 		txtConfirmPassword.addKeyUpHandler(new OnKeyUpHandler());
 	}
-	/**
-	 * @function onClickLblCancel 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event of cancel.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
 		MixpanelUtil.close_signUp();
 		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		appPopUp.hide();
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
 		
 	}
-	/**
-	 * 
-	 * @function onClicklblchangePassword 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event of change password.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	@UiHandler("lblchangePassword")
 	public void onClicklblchangePassword(ClickEvent event) {
 		passwordContainer.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function onClicklblchangePassword 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event of edit image.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	@UiHandler("btnEditImage")
 	public void onClickbtnEditImage(ClickEvent event) {
 		getUiHandlers().showUploadProfileImageWidget();
 	}
-	/**
-	 * 
-	 * @function onClicklblchangePassword 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event of submit button.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	@UiHandler("btnSubmit")
 	public void onClickbtnSubmit(ClickEvent event) {
 		if (validateUserInput()) {
 			MixpanelUtil.Registration_turns13_submit_profile();
 			appPopUp.hide();
+			lblUpdating.setText(GL1138);
 			lblUpdating.setVisible(true);
 			btnSubmit.setVisible(false);
 			getUiHandlers().updateProfile(txtFirstName.getText(),
@@ -263,20 +197,7 @@ public class SignUpCompleteProfileView extends
 			
 		}
 	}
-	/**
-	 * 
-	 * @function onClicklblchangePassword 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event of Update Profile Later button.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	@UiHandler("btnUpdateProfileLater")
 	public void onClickbtnUpdateProfileLater(ClickEvent event) {
 		appPopUp.hide();
@@ -284,9 +205,7 @@ public class SignUpCompleteProfileView extends
 		signUpDontWorryView.show();
 		
 	}
-	/**
-	 * Which is responsible for returning the widget corresponding to that view
-	 */
+
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
@@ -294,66 +213,76 @@ public class SignUpCompleteProfileView extends
 
 	@Override
 	public void center() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void hide() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setAutoHideOnNavigationEventEnabled(boolean autoHide) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setCloseHandler(PopupViewCloseHandler popupViewCloseHandler) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setPosition(int left, int top) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void show() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void addToSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void removeFromSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void reset() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLoad() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUnload() {
+		// TODO Auto-generated method stub
 
 	}
-	/**
-	 * This method is used to set the updated user profile i
-	 */
+
 	@Override
 	public void setUpdateProfileImage(String imageUrl) {
 		profileImage.setUrl(imageUrl + "?" + Math.random());
@@ -366,21 +295,7 @@ public class SignUpCompleteProfileView extends
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function validateUserInput 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used for validations.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public boolean validateUserInput() {
 		String firstName = txtFirstName.getText().trim();
 		String lastName = txtlastName.getText().trim();
@@ -394,21 +309,21 @@ public class SignUpCompleteProfileView extends
 			if (!password.equalsIgnoreCase("") && password.length() < 5) {
 				txtPassword.addStyleName(res.css().errorMsgDisplay());
 				passwordValidUc.setText(StringUtil.generateMessage(
-						MessageProperties.GL0071, "Password", "5"));
+						GL0071, "Password", "5"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
 			if (!password.equalsIgnoreCase("") && password.length() >= 14) {
 				txtPassword.addStyleName(res.css().errorMsgDisplay());
 				passwordValidUc.setText(StringUtil.generateMessage(
-						MessageProperties.GL0072, "Password", "<= 14"));
+						GL0072, "Password", "<= 14"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
 			 if (password.equalsIgnoreCase("PASSWORD")) {
 			  txtPassword.addStyleName(res.css().errorMsgDisplay());
 			  passwordValidUc
-			  .setText(StringUtil.generateMessage(MessageProperties.GL0076,
+			  .setText(StringUtil.generateMessage(GL0076,
 			  "Password"));
 			  passwordValidUc.setVisible(true); 
 			  isValid = false;
@@ -420,7 +335,7 @@ public class SignUpCompleteProfileView extends
 					&& !password.equalsIgnoreCase("PASSWORD")) {
 				txtPassword.addStyleName(res.css().errorMsgDisplay());
 				passwordValidUc.setText(StringUtil.generateMessage(
-						MessageProperties.GL0073, "Password"));
+						GL0073, "Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
@@ -430,7 +345,7 @@ public class SignUpCompleteProfileView extends
 		if (firstName.length() > 20) {
 			txtFirstName.getElement().addClassName(res.css().errorMsgDisplay());
 			firstNameValidUc.setText(StringUtil.generateMessage(
-					MessageProperties.GL0072, "First name", "<=20"));
+					GL0072, "First name", "<=20"));
 			firstNameValidUc.setVisible(true);
 			isValid = false;
 		}
@@ -438,7 +353,7 @@ public class SignUpCompleteProfileView extends
 		 if (lastName.length() > 20) {
 			txtlastName.getElement().addClassName(res.css().errorMsgDisplay());
 			lastNameValidUc.setText(StringUtil.generateMessage(
-					MessageProperties.GL0072, "Last name", "<= 20"));
+					GL0072, "Last name", "<= 20"));
 			lastNameValidUc.setVisible(true);
 			isValid = false;
 		}
@@ -446,41 +361,24 @@ public class SignUpCompleteProfileView extends
 		 if (!password.equalsIgnoreCase(confirmPassword)) {
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			txtPassword.addStyleName(res.css().errorMsgDisplay());
-			passwordValidUc.setText(MessageProperties.GL0446);
+			passwordValidUc.setText(GL0446);
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
 		 if (!reg.test(password) && password.length() >= 5
 				&& password.length() <= 14) {
 			passwordValidUc.setText(StringUtil.generateMessage(
-					MessageProperties.GL0073, "Password"));
+					GL0073, "Password"));
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
 		 return isValid;
 	}
-	/**
-	 * This method is used to get the update label.
-	 */
+
 	@Override
 	public Label getUpdateButton() {
 		return lblUpdating;
 	}
-	/**
-	 * 
-	 * @fileName : SignUpCompleteProfileView.java
-	 *
-	 * @description : This inner class is used to handle the keyup handlers.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override

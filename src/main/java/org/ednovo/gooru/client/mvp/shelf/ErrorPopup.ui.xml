@@ -8,18 +8,19 @@
 	<g:HTMLPanel>
 		<div class="{res.css.errorPopupInnerdiv}">
 			<div class="{res.css.errorPopupHeaderBg}">
-				<div class="{res.css.errorPopupHeaderTitle}">Oops!</div>
-				<div class="{res.css.errorPopupCloseBtnContainer}">
+				<g:Label styleName="{res.css.errorPopupHeaderTitle}" ui:field="errorpopupHeaderTitle"></g:Label>
+				<!-- <div class="{res.css.errorPopupCloseBtnContainer}">
 					<panel:HTMLEventPanel ui:field="cancelButton"
 						styleName="{res.css.errorPopupBtnSprite} {res.css.errorPopupCloseBtn}"></panel:HTMLEventPanel>
-				</div>
+				</div> -->
 			</div>
 			<g:Label styleName="{res.css.loginPopupErrorMsg}" ui:field="errorMessage" />
 			<div class="{res.css.errorPopupCheckBoxContainer}">
+			    <g:Button styleName="primary" ui:field="btnOk"></g:Button>
 <!-- 				<div class="{res.css.errorPopupCheckBoxControl}">
 				</div> -->
-				<div class="{res.css.errorPopupCheckBoxDescText}">Questions? Email</div>
-				<div class="{res.css.supportMailID}">support@goorulearning.org</div>
+				<g:Label styleName="{res.css.errorPopupCheckBoxDescText}" ui:field="questionsEmailText"></g:Label>
+				<g:Label styleName="{res.css.supportMailID}" ui:field="emailId"></g:Label>
 			</div>
 			<div class="{res.css.clear}"></div>
 		</div>

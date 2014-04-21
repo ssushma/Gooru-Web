@@ -37,14 +37,7 @@ public class DragDropAnimation extends Animation {
 	int endLeft;
 	int endTop;
 	
-	/**
-	 * This is the Constructor to set drag widget positions.
-	 * @param widget
-	 * @param startLeft
-	 * @param startTop
-	 * @param endLeft
-	 * @param endTop
-	 */
+	
 	public DragDropAnimation(Widget widget,int startLeft, int startTop,int endLeft, int endTop){
 		
 		this.dragWidget=widget;
@@ -53,9 +46,7 @@ public class DragDropAnimation extends Animation {
 		this.endLeft = endLeft;
 		this.endTop = endTop;
 	}
-	/**
-	 * This method is Called immediately before the animation starts.
-	 */
+	
 	protected void onStart() {
 		super.onStart();
 		if(dragWidget.getElement().getStyle().getProperty("display").equals("none")){
@@ -66,9 +57,7 @@ public class DragDropAnimation extends Animation {
 			showWidget="block";
 		}
 	}
-	/**
-	 *This method is Called when the animation should be updated.
-	 */
+
 	@Override
 	protected void onUpdate(double progress) {
 		double left = extractProportionalLeft(progress) ;
@@ -78,66 +67,28 @@ public class DragDropAnimation extends Animation {
 		dragWidget.getElement().getStyle().setProperty("top", top,Unit.PX);
 	}
 	
-	/**
-	 * 
-	 * @function extractProportionalLeft 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns ProportionalLeft.
-	 * 
-	 * 
-	 * @parm(s) : @param progress
-	 * @parm(s) : @return
-	 * 
-	 * @return : double
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	 private double extractProportionalLeft(double progress) {
          double proportionalLeft = startLeft - (startLeft - endLeft) * progress; 
          
          return proportionalLeft;
 	 }
-	 /**
-	  * 
-	  * @function extractProportionalRight 
-	  * 
-	  * @created_date : 02-Jan-2014
-	  * 
-	  * @description : returns proportionalRight.
-	  * 
-	  * 
-	  * @parm(s) : @param progress
-	  * @parm(s) : @return
-	  * 
-	  * @return : double
-	  *
-	  * @throws : <Mentioned if any exceptions>
-	  *
-	  * 
-	  *
-	  *
-	  */
+	 
+	 
+	 
 	 private double extractProportionalRight(double progress) {
          double proportionalRight = startTop - (startTop - endTop) * progress; 
          
          return proportionalRight;
 	 }
-	 /**
-	  * Interpolate the linear progress into a more natural easing function.
-	  */
+	 
+
 	protected double interpolate(double progress) {
 		return (Math.sin((progress + 0.5) * Math.PI)) / 2 + 0.5;
 	}
 	
-	/**
-	 *This method is Called immediately after the animation completes.
-	 */
+	
+	
 	protected void onComplete() {
 		dragWidget.getElement().getStyle().clearHeight();
 		

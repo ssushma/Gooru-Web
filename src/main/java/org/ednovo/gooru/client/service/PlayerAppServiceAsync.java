@@ -25,21 +25,29 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.ArrayList;
+
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
+import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.player.CommentsDo;
+import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface PlayerAppServiceAsync extends BaseServiceAsync {
 
 	
-	public void getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabView,AsyncCallback<CollectionDo> callback);
+	public void getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabView,String rootNodeId,AsyncCallback<CollectionDo> callback);
 	
-	public void getSimpleCollectionDetils(String apikey,String simpleCollectionId,String resourceId,String tabView,AsyncCallback<CollectionDo> callback);
+	public void getSimpleCollectionDetils(String apikey,String simpleCollectionId,String resourceId,String tabView,String rootNodeId,AsyncCallback<CollectionDo> callback);
 	
 	public void getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize,AsyncCallback<ResoruceCollectionDo> callback);
 	
@@ -61,7 +69,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult,AsyncCallback<String> callback);
 	
-	public void createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String attemptAnswerResult,AsyncCallback<String> callback);
+	public void createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId,String answerId, String attemptStatus,String attemptAnswerResult,AsyncCallback<String> callback);
 	
 	public void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message,AsyncCallback<String> callback);
 	
@@ -74,5 +82,33 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void getWorkspaceCollections(String userId,String offset,String limit,AsyncCallback<ArrayList<CollectionItemsList>> callback);
 	
 	public void updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing,AsyncCallback<String> callback);
+	
+	public void getContentReport(String associatedGooruOid,String gooruUid,AsyncCallback<ArrayList<ContentReportDo>> callback);
+	
+	public void createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids,AsyncCallback<ContentReportDo> callback);
+	
+	public void deleteContentReport(String associatedGooruOid,AsyncCallback<Void> callback);
+	
+	public void createCommentForCollection(String gooruCollectionId, String userCommentsEntered,AsyncCallback<CommentsDo> callback);
+	
+	public void getCollectionCommentsList(String gooruOid, String offset, String pageLimit,AsyncCallback<CommentsListDo> callback);
+	
+	public void deleteCollectionCommentbyCommentUid(String commentUid,AsyncCallback<Void> callback);
+	
+	public void updateCollectionCommentbyCommentUid(String commentUid, String commentsUpdatedByUser, AsyncCallback<CommentsDo> callback);
+
+	public void createReaction(String resourceId, String reactionText, String gooruReactionId, String collectionId, String createStudyPlayerReaction, AsyncCallback<ReactionDo> callback); 
+
+	public void getResourceReaction(String gooruOid, String gooruUid,AsyncCallback<ArrayList<ReactionDo>> callback); 
+	
+	public void generatePdf(String innerHtml,String completedDateTime,AsyncCallback<String> callback);
+	
+	void sendEmailWithPdf(String toAddress, String fromAddress, String cfm, String subject, String message, String Url, String FileName, AsyncCallback<String> callback);
+
+	public void getFeaturedContent(AsyncCallback<ArrayList<FeaturedContentDo>> callback);
+
+	public void deleteReaction(String gooruReactionId,AsyncCallback<Void> callback);
+
+	
 	
 }

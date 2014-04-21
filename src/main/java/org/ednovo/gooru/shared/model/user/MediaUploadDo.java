@@ -25,21 +25,7 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : MediaUploadDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class MediaUploadDo implements Serializable {
 
 	/**
@@ -55,112 +41,62 @@ public class MediaUploadDo implements Serializable {
 	private Integer statusCode;
 	private String uploadImageSource;
 	private String url;
-	/** 
-	 * This method is to get the deleteType
-	 */
+	
+	public MediaUploadDo(){}
+	
 	public String getDeleteType() {
 		return deleteType;
 	}
-	/** 
-	 * This method is to set the deleteType
-	 */
 	public void setDeleteType(String deleteType) {
 		this.deleteType = deleteType;
 	}
-	/** 
-	 * This method is to get the deleteUrl
-	 */
 	public String getDeleteUrl() {
 		return deleteUrl;
 	}
-	/** 
-	 * This method is to set the deleteUrl
-	 */
 	public void setDeleteUrl(String deleteUrl) {
 		this.deleteUrl = deleteUrl;
 	}
-	/** 
-	 * This method is to get the imageValidationMsg
-	 */
 	public String getImageValidationMsg() {
 		return imageValidationMsg;
 	}
-	/** 
-	 * This method is to set the imageValidationMsg
-	 */
 	public void setImageValidationMsg(String imageValidationMsg) {
 		this.imageValidationMsg = imageValidationMsg;
 	}
-	/** 
-	 * This method is to get the name
-	 */
 	public String getName() {
 		return name;
 	}
-	/** 
-	 * This method is to set the name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	/** 
-	 * This method is to get the originalFilename
-	 */
 	public String getOriginalFilename() {
 		return originalFilename;
 	}
-	/** 
-	 * This method is to set the originalFilename
-	 */
 	public void setOriginalFilename(String originalFilename) {
 		this.originalFilename = originalFilename;
 	}
-	/** 
-	 * This method is to get the size
-	 */
 	public Long getSize() {
 		return size;
 	}
-	/** 
-	 * This method is to set the size
-	 */
 	public void setSize(Long size) {
 		this.size = size;
 	}
-	/** 
-	 * This method is to get the statusCode
-	 */
 	public Integer getStatusCode() {
 		return statusCode;
 	}
-	/** 
-	 * This method is to set the statusCode
-	 */
 	public void setStatusCode(Integer statusCode) {
 		this.statusCode = statusCode;
 	}
-	/** 
-	 * This method is to get the uploadImageSource
-	 */
 	public String getUploadImageSource() {
 		return uploadImageSource;
 	}
-	/** 
-	 * This method is to set the uploadImageSource
-	 */
 	public void setUploadImageSource(String uploadImageSource) {
 		this.uploadImageSource = uploadImageSource;
 	}
-	/** 
-	 * This method is to get the url
-	 */
 	public String getUrl() {
 		return url;
 	}
-	/** 
-	 * This method is to set the url
-	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
 }

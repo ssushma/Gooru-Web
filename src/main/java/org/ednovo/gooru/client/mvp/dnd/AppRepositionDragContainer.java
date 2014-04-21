@@ -29,25 +29,15 @@ package org.ednovo.gooru.client.mvp.dnd;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AppRepositionDragContainer.java
- *
- * @description : This class will handle the Drag container. 
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public abstract class AppRepositionDragContainer extends VerticalPanel implements DropBox {
 
 	private AppPickupDragController dragController;
-	/**
-	 * Class constructor.
-	 */
+
 	public AppRepositionDragContainer() {
 		super();
 		// Add an emtpy widget for repositioning
@@ -70,9 +60,7 @@ public abstract class AppRepositionDragContainer extends VerticalPanel implement
 		}
 		super.insert(w, getWidgetCount() - 1);
 	}
-	/**
-	 * This method will insert the widget before the given index.
-	 */
+
 	@Override
 	public void insert(Widget w, int beforeIndex) {
 		if (beforeIndex >= getWidgetCount()) {
@@ -92,40 +80,13 @@ public abstract class AppRepositionDragContainer extends VerticalPanel implement
 		dragController.makeDraggable(draggable);
 		super.insert(draggable, getWidgetCount() - 1);
 	}
-	/**
-	 * @function addDraggable 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will make draggable to the widget and wiln insert the widget before the given index.
-	 * 
-	 * @parm(s) : @param w
-	 * @parm(s) : @param beforeIndex
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void addDraggable(IsDraggable w, int beforeIndex) {
 		Draggable draggable = createDraggable(w);
 		dragController.makeDraggable(draggable);
 		insert(draggable, beforeIndex);
 	}
-	/**
-	 * @function makeChildrenDraggable 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will make the child widget's as draggable.
-	 * 
-	 * @parm(s) : @param draggable
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void makeChildrenDraggable(boolean draggable) {
 		for (Widget widget : this) {
 			if (widget instanceof Draggable) {
@@ -137,21 +98,7 @@ public abstract class AppRepositionDragContainer extends VerticalPanel implement
 			}
 		}
 	}
-	/**
-	 * @function createDraggable 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will add draggable to the widget.
-	 * 
-	 * @parm(s) : @param isDraggable
-	 * @parm(s) : @return
-	 * 
-	 * @return : Draggable
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public Draggable createDraggable(IsDraggable isDraggable) {
 		return new Draggable(isDraggable);
 	}

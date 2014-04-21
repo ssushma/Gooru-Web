@@ -30,19 +30,8 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import com.gwtplatform.mvp.client.PopupView;
 
 /**
- * 
- * @fileName : IsUserRegistrationView.java
+ * @author Search Team
  *
- * @description : This is the interface for UserRegistrationView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsUserRegistrationView extends PopupView, IsViewWithHandlers<UserRegistrationUiHandlers> {
  

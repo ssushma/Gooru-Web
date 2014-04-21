@@ -24,44 +24,33 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-/**
- * 
- * @fileName : IsStudentAssignmentView.java
- *
- * @description :  Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssignmentUiHandlers>  {
 
 	
-	public HTMLPanel getContentpanel();
 	
-	public Label getMainTitleLbl();
 	
 	public Button getBackToEditPanel();
 
-	public void setData(CollectionDo result);
 
-	void metaData(String classPageId,String pageNum,String pageSize, String source, String pos);
 	
-	void noAssignments();
 
 	void clearAll();
 	
-	void listAssignments(AssignmentsListDo assignmentsList);
+	
+	void setClasspageData( ClasspageDo classpageDo);
+	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList);
+
 			
 }

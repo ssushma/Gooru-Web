@@ -10,7 +10,7 @@
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
 						<g:Label styleName="{res.css.myFolderCollectionTitle}"
-							ui:field="titleLbl">Add a resource</g:Label>
+							ui:field="titleLbl"></g:Label>
 						<g:HTMLPanel styleName="{res.css.addResourceCloseButtonContainer}">
 							<g:Label styleName="{res.css.addResourceCloseButton}"
 								ui:field="addResourceCloseButton"></g:Label>
@@ -20,17 +20,17 @@
 					
 					    <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="urlTabButton">
-							<g:Anchor  ui:field="fromweb" styleName="{res.css.myFolderCollectionUrlbgTitle}">From Web</g:Anchor>
+							<g:Anchor  ui:field="fromweb" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="myComputerTabButton">
-							<g:Anchor ui:field="fromfile" styleName="{res.css.myFolderCollectionUrlbgTitle}">From File</g:Anchor>
+							<g:Anchor ui:field="fromfile" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="searchTabButton">
-							<g:Anchor ui:field="fromwsearch" styleName="{res.css.myFolderCollectionUrlbgTitle}">From Search</g:Anchor>
+							<g:Anchor ui:field="fromwsearch" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						
 						
@@ -39,7 +39,7 @@
 							ui:field="questionTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="multipleChoiceRadioButton"
 								checked="true" styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor ui:field="multiplechoice" styleName="{res.css.myFolderCollectionUrlbgTitle}">Multiple Choice</g:Anchor>
+							<g:Anchor ui:field="multiplechoice" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						
 						<!-- <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
@@ -52,19 +52,19 @@
 							ui:field="trueOrFlaseButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="trueOrFalseRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor ui:field="truefalase" styleName="{res.css.myFolderCollectionUrlbgTitle}">True/False</g:Anchor>
+							<g:Anchor ui:field="truefalase" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="fillInTheBlankTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="fillInTheBlankRadioButton"
 									styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}">Fill in the Blank</g:Anchor>
+							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}" ui:field="truefalseText"></g:Anchor>
 						</uc:HTMLEventPanel>
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="openEndedButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="openEndedRadioButton"
 								styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor  ui:field="openended" styleName="{res.css.myFolderCollectionUrlbgTitle}">Open-Ended</g:Anchor>
+							<g:Anchor  ui:field="openended" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel ui:field="tabViewContainer">

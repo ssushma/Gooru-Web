@@ -41,18 +41,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+
 /**
- * @fileName : FolderInfoTabPresenter.java
+ * @author Search Team
  *
- * @description : This class is used to display the folder info tab.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView> implements FolderInfoTabUiHandlers {
 
@@ -82,9 +74,7 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This LifeCycle method is called when the binding the object. And it will set the folder meta data and collection data.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -95,10 +85,7 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 			}
 		});
 	}
-	/**
-	 * Lifecycle method called whenever this presenter is about to be
-	 * revealed.
-	 */
+	
 	@Override
 	public void onReveal() {
 		
@@ -117,38 +104,20 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 			});
 		}
 	}
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+	
 	@Override
 	protected void onReset() {
 		// TODO Auto-generated method stub
 		super.onReset();
 		setParentCollectionData();
 	}
-	/**
-	 * This method is used to hide.
-	 */
+
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().onUnload();
 	}
-	/**
-	 * @function setParentCollectionData 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the data for collection data.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setParentCollectionData(){
 		String parentid = AppClientFactory.getPlaceManager().getRequestParameter("parentid");
 		if(parentid!=null) {
@@ -207,9 +176,7 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 		}
 		return standardSuggestionAsyncCallback;
 	}
-	/**
-	 * This method is used to request standards and suggestions.
-	 */
+
 	@Override
 	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
 
@@ -217,26 +184,11 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 	}
 
 	
-	/**
-	 * @function getTaxonomyService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get the taxonomy service.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : TaxonomyServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public TaxonomyServiceAsync getTaxonomyService() {
 		return taxonomyService;
 	}
-	/**
-	 * This method is used to update course.
-	 */
+
 	@Override
 	public void updateCourse(String collectionId, String courseCode, String action) {
 
@@ -249,9 +201,7 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 			
 		});
 	}
-	/**
-	 * This method is used to update standards.
-	 */
+
 	@Override
 	public void updateStandard(String collectionId, String taxonomyCodeId, String action) {
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, taxonomyCodeId, "false", null, action, new SimpleAsyncCallback<CollectionDo>() {
@@ -263,37 +213,11 @@ public class FolderInfoTabPresenter extends PresenterWidget<IsFolderInfoTabView>
 		});
 		
 	}
-	/**
-	 * @function getSearchService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get the search serivce.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
-	/**
-	 * @function setSearchService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the search service.
-	 * 
-	 * @parm(s) : @param searchService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
 	}

@@ -32,19 +32,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ClasspageResourceItemCBundle.java
- *
- * @description : This file is used to set css styles for ClasspageResourceItems.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ClasspageResourceItemCBundle extends ClientBundle {
 

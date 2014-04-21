@@ -37,21 +37,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : AboutViewVc.java
+ * @author Search Team
  *
- * @description : This file is Information about suppoters.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class AboutViewVc extends Composite {
+public class AboutViewVc extends Composite implements MessageProperties {
 
 	private static final String CDN_END_POINT = AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint();
 
@@ -64,7 +53,7 @@ public class AboutViewVc extends Composite {
 	@UiField(provided=true)
 	HomeCBundle res;
 
-	@UiField Label lblWonderfulSupporters;
+	@UiField Label lblWonderfulSupporters,nonProfitLbl,sectionText;
 
 	@UiField Anchor backto,about;
 
@@ -77,30 +66,38 @@ public class AboutViewVc extends Composite {
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		lblWonderfulSupporters.setText(MessageProperties.GL0245);
+		lblWonderfulSupporters.setText(GL0245);
+		backto.setText(GL1260);
+		ciscoImg.setTitle(GL1267);
+		ciscoImg.setAltText(GL1267);
+		gatesImg.setTitle(GL1268);
+		gatesImg.setAltText(GL1268);
+		onrImg.setTitle(GL1269);
+		onrImg.setAltText(GL1269);
+		googleImg.setTitle(GL1270);
+		googleImg.setAltText(GL1270);
+		nglcImg.setTitle(GL1271);
+		nglcImg.setAltText(GL1271);
+		pearsonImg.setTitle(GL1272);
+		pearsonImg.setAltText(GL1272);
+		hewlettImg.setTitle(GL1273);
+		hewlettImg.setAltText(GL1273);
+		scefdnImg.setTitle(GL1274);
+		scefdnImg.setAltText(GL1274);
+		fenwickImg.setTitle(GL1275);
+		fenwickImg.setAltText(GL1275);
+		ramImg.setTitle(GL1276);
+		ramImg.setAltText(GL1276);
+		nonProfitLbl.setText(GL1277);
+		about.setText(GL1242);
+		about.setHref("http://about.goorulearning.org");
+		sectionText.setText(" "+GL1278);
+		//
 		backto.getElement().setId("lnkBackTo");
 		about.getElement().setId("lnkAbout");
 		setSupportImages();
 	}
-	/**
-	 * 
-	 * @function setSupportImages 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will set the images for supporters UI
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setSupportImages() {
 		ciscoImg.setUrl(CDN_END_POINT+"/images/landing-page/supporters/cisco.png");
 		gatesImg.setUrl(CDN_END_POINT+"/images/landing-page/supporters/gates.png");

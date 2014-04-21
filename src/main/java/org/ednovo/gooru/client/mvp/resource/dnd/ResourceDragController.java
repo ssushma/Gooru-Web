@@ -31,7 +31,6 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.AppPickupDragController;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
-import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
 import com.allen_sauer.gwt.dnd.client.util.DOMUtil;
@@ -39,23 +38,13 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceDragController.java
- *
- * @description : Related to dragevents for resource.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceDragController extends AppPickupDragController {
 
 	private boolean deleteOnFalseDrop = true;
+	int mouseX,mouseY;
 
 	/**
 	 * Class constructor with one parameter
@@ -89,9 +78,7 @@ public class ResourceDragController extends AppPickupDragController {
 		setBehaviorDragStartSensitivity(1);
 		setDeleteOnFalseDrop(deleteOnFalseDrop);
 	}
-	/**
-	 * dragMove to be called (deferred) after the move finished
-	 */
+
 	@Override
 	public void dragMove() {
 		super.dragMove();
@@ -99,9 +86,7 @@ public class ResourceDragController extends AppPickupDragController {
 			DOM.scrollIntoView(context.draggable.getElement());
 		}
 	}
-	/**
-	 * This method will hit when the drag event is fired.
-	 */
+
 	@Override
 	public void dragStart() {
 		super.dragStart();
@@ -112,9 +97,7 @@ public class ResourceDragController extends AppPickupDragController {
 		}
 		DOMUtil.fastSetElementPosition(context.draggable.getElement(), context.mouseX - context.draggable.getAbsoluteLeft() - adjustLeft, context.mouseY - context.draggable.getAbsoluteTop() - adjustTop);
 	}
-	/**
-	 * This method will give the preview of the drag.
-	 */
+
 	@Override
 	public void previewDragStart() throws VetoDragException {
 		if (context.draggable instanceof Draggable) {
@@ -123,9 +106,7 @@ public class ResourceDragController extends AppPickupDragController {
 		}
 		super.previewDragStart();
 	}
-	/**
-	 * This method will fire when the drag ended.
-	 */
+
 	public void dragEnd() {
 
 		super.dragEnd();
@@ -133,9 +114,7 @@ public class ResourceDragController extends AppPickupDragController {
 			((Draggable) context.draggable).getDraggableMirageUc().onEnd();
 		}
 	}
-	/**
-	 * This is used to restore the selected widget location.
-	 */
+
 	@Override
 	protected void restoreSelectedWidgetsLocation() {
 		if (isDeleteOnFalseDrop()) {

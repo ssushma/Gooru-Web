@@ -31,19 +31,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiChild;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : LeftToolTipWidgetUc.java
+ * @author Search Team
  *
- * @description : This is left tooltip popup widget.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class LeftToolTipWidgetUc extends FocusPanel implements MouseOverHandler, MouseOutHandler {
 

@@ -25,33 +25,47 @@
 package org.ednovo.gooru.client.mvp.play.collection.header;
 
 
-
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollectionPlayerHeaderView extends Composite{
+public class CollectionPlayerHeaderView extends Composite implements MessageProperties{
 	
 	@UiField HTML resourceTitle;
 	
-	@UiField Button infoButton,shareButton,narrationButton,navigationButton,addButton;
+	@UiField Button infoButton,shareButton,narrationButton,navigationButton,addButton,flagButton;
 	
-	@UiField Label closeButtonForCollection,thumbsDownButton,thumbsUpButton;
+	@UiField Label closeButtonForCollection/*,thumbsDownButton,thumbsUpButton*/;
+	
+	@UiField Anchor studentViewButton;
 	
 	
 	private boolean isInfoButtonEnabled=false;
 	private boolean isShareButtonEnabled=false;
 	private boolean isNarrationButtonEnabled=false;
-	private boolean isNavigationButtonEnabled=false;
+	private static boolean isNavigationButtonEnabledClass=false;
 	private boolean isAddButtonEnabled=false;
+	private boolean isFlagButtonEnabled=false;
+	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	
 	
 	private static CollectionPlayerHeaderViewUiBinder uiBinder = GWT.create(CollectionPlayerHeaderViewUiBinder.class);
 
@@ -60,9 +74,17 @@ public class CollectionPlayerHeaderView extends Composite{
 	
 	public CollectionPlayerHeaderView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		navigationButton.getElement().setId("navigationButton");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		studentViewButton.setText(GL0139);
+		studentViewButton.addMouseOverHandler(new OnStudentViewButtonMouseOver());
+		studentViewButton.addMouseOutHandler(new OnStudentViewButtonMouseOut());
+		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
+		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
+		addButton.getElement().setId("addButton");
+		
 	}
-
+	
 	public void setResourceTitle(String title){
 		resourceTitle.setHTML(title);
 	}
@@ -85,16 +107,20 @@ public class CollectionPlayerHeaderView extends Composite{
 	public Button getAddButton() {
 		return addButton;
 	}
+	public Anchor getStudentViewButton() {
+		return studentViewButton;
+	}
 	
-	public Label getThumbsDownButton(){
+	
+	/*public Label getThumbsDownButton(){
 		return thumbsDownButton;
 	}
 	
 	public Label getThumbsUpButton(){
 		return thumbsUpButton;
-	}
+	}*/
 	
-	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive){
+	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive){
 		if(makeAddButtonActive){
 			makeAddButtonActive();
 		}
@@ -107,13 +133,17 @@ public class CollectionPlayerHeaderView extends Composite{
 		}else if(makeNavigationButtonActive){
 			makeNavigationButtonActive();
 		}
+		else if(makeFlagButtonActive){
+			makeFlagButtonActive();
+		}
 	}
-	public void enableButtons(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable){
+	public void enableButtons(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable, boolean isNarrationButtonEnable, boolean isNavigationButtonEnable,boolean isFlagButtonEnable){
 		enableAddButton(isAddButtonEnable);
 		enableInfoButton(isInfoButtonEnable);
 		enableShareButton(isShareButtonEnable);
 		enableNarrationButton(isNarrationButtonEnable);
 		enableNavigationButton(isNavigationButtonEnable);
+		enableFlagButton(isFlagButtonEnable);
 	}
 
 	public void enableAddButton(boolean isAddButtonEnable){
@@ -154,6 +184,7 @@ public class CollectionPlayerHeaderView extends Composite{
 			getShareButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().shareButtonActive());
 			getShareButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().shareButtonNormal());
 			getShareButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().shareButtonDisabled());
+		
 		}		
 	}
 	public void enableNarrationButton(boolean isNarrationButtonEnable){
@@ -183,7 +214,24 @@ public class CollectionPlayerHeaderView extends Composite{
 			getNavigationButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().navigationButtonDisabled());
 		}		
 	}
-	
+	public void enableFlagButton(boolean isFlagButtonEnable)
+	{
+		setFlagButtonEnabled(isFlagButtonEnable);
+		getFlagButton().getElement().removeAttribute("button");
+		if(isFlagButtonEnable){
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonDisable());
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonActive());
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive());
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange());
+			getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonNormal());
+		}else{
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonActive());
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().navigationButtonNormal());
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive());
+			getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange());
+			getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonDisable());
+		}
+	}
 	public void makeAddButtonActive(){
 		String button=getAddButton().getElement().getAttribute("button");
 		if(button!=null&&button.equalsIgnoreCase("active")){
@@ -245,8 +293,35 @@ public class CollectionPlayerHeaderView extends Composite{
 			getNavigationButton().getElement().setAttribute("button","active");
 		}	
 	}
-	
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton){
+	public void makeFlagButtonActive(){
+		String button=getFlagButton().getElement().getAttribute("button");
+		if(button!=null&&button.equalsIgnoreCase("active")){
+			if(getFlagButton().getStyleName().contains(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive())){
+				getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive());
+				getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange());
+			}else{
+				getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonActive());
+				getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonNormal());
+			}
+			getFlagButton().getElement().removeAttribute("button");
+		}else{
+			if(getFlagButton().getStyleName().contains(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange())){
+				getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange());
+				getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive());
+			}else{
+				getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonNormal());
+				getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonActive());
+			}
+			getFlagButton().getElement().setAttribute("button","active");
+		}	
+	}
+	public void makeFlagButtonOrange(){
+		getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonActive());
+		getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonNormal());
+		getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonDisable());
+		getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange());
+	}
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton){
 		if(deselectAddButton){
 			deselectAddButton();
 		}
@@ -262,7 +337,9 @@ public class CollectionPlayerHeaderView extends Composite{
 		if(deselectNavigationButton){
 			deselectNavigationButton();
 		}
-		
+		if(deselectFlagButton){
+			deselectFlagButton();
+		}
 	}
 	public void deselectAddButton(){
 		String button=getAddButton().getElement().getAttribute("button");
@@ -304,6 +381,31 @@ public class CollectionPlayerHeaderView extends Composite{
 			getNavigationButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().navigationButtonNormal());
 			getNavigationButton().getElement().removeAttribute("button");
 		}
+	
+	}
+	public void deselectFlagButton(){
+		String flagButtonVal=getFlagButton().getElement().getAttribute("button");
+		if(flagButtonVal!=null&&flagButtonVal.equalsIgnoreCase("active")&&isFlagButtonEnabled()){
+			if(getFlagButton().getStyleName().contains(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive())||
+				getFlagButton().getStyleName().contains(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange())){
+				getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrangeActive());
+				getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonOrange());
+			}else{
+				getFlagButton().removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonActive());
+				getFlagButton().addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().flagButtonNormal());
+			}
+			getFlagButton().getElement().removeAttribute("button");
+		}
+	}
+	/**
+	 * allows user to preview student view of a collection
+	 * 
+	 * @param event
+	 *            {@link ClickEvent} instance
+	 */
+	@UiHandler("studentViewButton")
+	public void collectionPlay(ClickEvent event) {
+	//MixpanelUtil.Preview_Collection_From_CollectionEdit();
 	}
 	public boolean isInfoButtonEnabled() {
 		return isInfoButtonEnabled;
@@ -329,11 +431,11 @@ public class CollectionPlayerHeaderView extends Composite{
 	}
 
 	public boolean isNavigationButtonEnabled() {
-		return isNavigationButtonEnabled;
+		return isNavigationButtonEnabledClass;
 	}
 
-	public void setNavigationButtonEnabled(boolean isNavigationButtonEnabled) {
-		this.isNavigationButtonEnabled = isNavigationButtonEnabled;
+	public static void setNavigationButtonEnabled(boolean isNavigationButtonEnabled) {
+		isNavigationButtonEnabledClass = isNavigationButtonEnabled;
 	}
 	
 	public Label getCloseButton(){
@@ -346,4 +448,72 @@ public class CollectionPlayerHeaderView extends Composite{
 	public void setAddButtonEnabled(boolean isAddButtonEnabled) {
 		this.isAddButtonEnabled = isAddButtonEnabled;
 	}
+	public Button getFlagButton()
+	{
+		return flagButton;
+	}
+	public boolean isFlagButtonEnabled() {
+		return isFlagButtonEnabled;
+	}
+	public void setFlagButtonEnabled(boolean isFlagButtonEnabled) {
+		this.isFlagButtonEnabled = isFlagButtonEnabled;
+	}
+	public static void setNavigationFlag()
+	{
+		setNavigationButtonEnabled(false); 
+	}
+	
+	public class OnStudentViewButtonMouseOver implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0668,true));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(studentViewButton.getElement().getAbsoluteLeft()-35, studentViewButton.getElement().getAbsoluteTop()+4);
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();
+			toolTipPopupPanel.getElement().getStyle().setMarginLeft(57, Unit.PX);
+		}
+		
+	}
+	
+	public class OnStudentViewButtonMouseOut implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanel.hide();
+		}
+
+		
+		
+	}
+	public class ShareButtonMouseOver implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			if(!isShareButtonEnabled){
+			toolTipPopupPanel.clear();
+			toolTipPopupPanel.setWidget(new GlobalToolTip(GL0679));
+			toolTipPopupPanel.setStyleName("");
+			toolTipPopupPanel.setPopupPosition(shareButton.getElement().getAbsoluteLeft()+7, shareButton.getElement().getAbsoluteTop()+21);
+			toolTipPopupPanel.getElement().getStyle().clearMarginLeft();
+			toolTipPopupPanel.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanel.show();
+			}
+		}
+		
+	}
+	
+	public class ShareButtonMouseOut implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanel.hide();
+		}
+
+		
+		
+	}
+	
 }

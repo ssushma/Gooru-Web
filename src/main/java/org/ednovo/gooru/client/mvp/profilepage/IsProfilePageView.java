@@ -36,19 +36,18 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 
 /**
- * 
  * @fileName : IsProfilePageView.java
- *
- * @description : This file is the interface for ProfilePageView.java
- *
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: July 12, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 
 public interface IsProfilePageView extends IsViewWithHandlers<ProfilePageUiHandlers> {

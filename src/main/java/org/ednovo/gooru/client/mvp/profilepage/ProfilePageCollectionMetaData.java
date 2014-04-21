@@ -34,19 +34,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : ProfilePageCollectionMetaData.java
- *
- * @description : This file is used to set the collection metadata for folders.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageCollectionMetaData extends Composite {
 
@@ -58,33 +47,12 @@ public class ProfilePageCollectionMetaData extends Composite {
 
 	interface ProfilePageCollectionMetaDataUiBinder extends UiBinder<Widget, ProfilePageCollectionMetaData> {
 	}
-	/**
-	 * This method is to call setdata method by passing {@link CollectionItemDo}  as arugument.
-	 * @param collectionItemDo
-	 */
+
 	public ProfilePageCollectionMetaData(final CollectionItemDo collectionItemDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(collectionItemDo);
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set the collection metadata to folders.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setData(CollectionItemDo collectionItemDo) {
 		folderTitle.setText(collectionItemDo.getCollection().getTitle());
 		folderDescription.setText(collectionItemDo.getCollection().getGoals());

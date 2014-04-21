@@ -30,19 +30,10 @@ package org.ednovo.gooru.client.mvp.folders.item;
 import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
 /**
+ * @author SearchTeam
  * 
- * @fileName : IsFolderItemView.java
- *
- * @description :  Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsFolderItemView extends IsChildView<FolderItemChildPresenter>, IsDraggable {
 	void onPostFolderDelete();

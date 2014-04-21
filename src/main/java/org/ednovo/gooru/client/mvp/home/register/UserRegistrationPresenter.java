@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -47,21 +48,10 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 /**
- * 
- * @fileName : UserRegistrationPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for UserRegistrationView.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistrationView> implements UserRegistrationUiHandlers {
+public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistrationView> implements UserRegistrationUiHandlers,MessageProperties {
 
 	private static final String GOORU_UID = "gooruuid";
 	private static final String SESSION_Id = "sessionid";
@@ -94,7 +84,7 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 	
 	private static final String PARENT = "Parent";
 	
-	private static final String OH_NO_TEXT = "Oh! No...";
+	private static final String OH_NO_TEXT = GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
 	
 	private static final String ACCOUNT_TYPE = "accountType";
 	
@@ -126,9 +116,7 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -201,27 +189,21 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 			}
 		});	
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
 		getView().setRegisteredUserDetails(getUser(), getAccountType());
 	}
 
-	/**
-	 * This method is used to update user details.
-	 */
+	
 	@Override
 	public void updateUserDetails(Map<String, String> params) {
 		params.put(ACCOUNT_TYPE, getView().getRegistrationType());
 		params.put(REGISTRATION_TYPE, getView().getRegistrationType());
 		this.getUserService().updateUserDetails(AppClientFactory.getPlaceManager().getRequestParameter(GOORU_UID), AppClientFactory.getPlaceManager().getRequestParameter(SESSION_Id), params, getUpdateUserAsyncCallback());
 	}
-	/**
-	 * This methos is used to register child user account.
-	 */
+
 	@Override
 	public void registerChildUserAccount(Map<String, String> params) {
 		params.put(FIRST_NAME, getView().getFirstName());
@@ -262,318 +244,63 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 			}
 		});*/
 	}
-	/**
-	 * 
-	 * @function setUserService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for userService
-	 * 
-	 * 
-	 * @parm(s) : @param userService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setUserService(UserServiceAsync userService) {
 		this.userService = userService;
 	}
-	/**
-	 * 
-	 * @function getUserService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns userService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public UserServiceAsync getUserService() {
 		return userService;
 	}
-	/**
-	 * 
-	 * @function setUser 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for user.
-	 * 
-	 * 
-	 * @parm(s) : @param user
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUser(UserDo user) {
 		this.user = user;
 	}
-	/**
-	 * 
-	 * @function getUser 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns user.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public UserDo getUser() {
 		return user;
 	}
-	/**
-	 * 
-	 * @function setUpdateUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for updateUserAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param updateUserAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUpdateUserAsyncCallback(AsyncCallback<ProfileDo> updateUserAsyncCallback) {
 		this.updateUserAsyncCallback = updateUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getUpdateUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns updateUserAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : AsyncCallback<ProfileDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public AsyncCallback<ProfileDo> getUpdateUserAsyncCallback() {
 		return updateUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setAccountType 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for accountType.
-	 * 
-	 * 
-	 * @parm(s) : @param accountType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
-	/**
-	 * 
-	 * @function getAccountType 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns accountType.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public String getAccountType() {
 		return accountType;
 	}
-	/**
-	 * 
-	 * @function getCheckUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns checkUserAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<UserDo> getCheckUserAsyncCallback() {
 		return checkUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setCheckUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for checkUserAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param checkUserAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setCheckUserAsyncCallback(SimpleAsyncCallback<UserDo> checkUserAsyncCallback) {
 		this.checkUserAsyncCallback = checkUserAsyncCallback;
 	}
-	/**
-	 * This will check user availability.
-	 */
+
 	@Override
 	public void checkUserAvailability(String userName, String type) {
 		this.getUserService().getEmailId(userName, type, getCheckUserAsyncCallback());
 	}
-	/**
-	 * 
-	 * @function getCreateChildUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns createChildUserAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<UserDo> getCreateChildUserAsyncCallback() {
 		return createChildUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setCreateChildUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for createChildUserAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param createChildUserAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setCreateChildUserAsyncCallback(SimpleAsyncCallback<UserDo> createChildUserAsyncCallback) {
 		this.createChildUserAsyncCallback = createChildUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUpdateFlagAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for updateFlagAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param updateFlagAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUpdateFlagAsyncCallback(SimpleAsyncCallback<UserDo> updateFlagAsyncCallback) {
 		this.updateFlagAsyncCallback = updateFlagAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getUpdateFlagAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns updateFlagAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<UserDo> getUpdateFlagAsyncCallback() {
 		return updateFlagAsyncCallback;
 	}

@@ -57,7 +57,7 @@ public class ResourcePlayPresenter extends BasePlacePresenter<IsResourcePlayView
 	private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.RESOURCE_PLAY)
+	@NameToken(PlaceTokens.RESOURCE_PLAY_OLD)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsResourcePlayProxy extends ProxyPlace<ResourcePlayPresenter> {
 	}

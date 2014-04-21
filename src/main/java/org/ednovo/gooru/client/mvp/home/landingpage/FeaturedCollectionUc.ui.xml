@@ -11,14 +11,14 @@
 		            <g:HTMLPanel styleName="{landingPageStyle.collectionMetadata}">
 		            	<g:HTML ui:field="featuredCollectionDescription" styleName="{landingPageStyle.hoverCollectionContainer}"></g:HTML>
 		               <g:Label styleName="{landingPageStyle.collectionTitle}" ui:field="collectionTitle"></g:Label>
-		               <g:HTMLPanel styleName="{landingPageStyle.collectionAuthor}" ui:field="creatorText">Created by <g:Anchor ui:field="collectionAuthor"/></g:HTMLPanel>
+		               <g:HTMLPanel styleName="{landingPageStyle.collectionAuthor}" ui:field="creatorText"><g:Label ui:field="createdByText"></g:Label><g:Anchor ui:field="collectionAuthor"/></g:HTMLPanel>
 		               <g:HTMLPanel styleName="{landingPageStyle.collectionGrades}" ui:field="collectionGrades">
-		                  Grades<br/>
+		                  <g:Label ui:field="gradesText"></g:Label><br/>
 		                  <g:Label styleName="{landingPageStyle.gradeTag}" ui:field="gradeTag1"></g:Label>
 		                  <g:Label styleName="{landingPageStyle.gradeTag}" ui:field="gradeTag2"></g:Label>
 		               </g:HTMLPanel>
 		               <g:HTMLPanel styleName="{landingPageStyle.collectionStandards}" ui:field="collectionStandards">
-		                  Standards<br/>
+		                  <g:Label ui:field="standardsText"></g:Label><br/>
 		                  <g:HTMLPanel styleName="{landingPageStyle.standardsTag}" ui:field="standardsTab"></g:HTMLPanel>
 		               </g:HTMLPanel>
 		            </g:HTMLPanel>

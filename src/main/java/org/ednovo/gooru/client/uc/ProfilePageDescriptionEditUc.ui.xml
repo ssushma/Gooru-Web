@@ -9,6 +9,7 @@
 			<g:TextArea styleName="{res.css.profilePageTextAreaDecsription}" ui:field="editTextBox" />
 		</g:DeckPanel>
 	</g:FocusPanel>
-	<g:Label ui:field="errorLabel" styleName="{res.css.errorValidation}">Shouldn't be empty!</g:Label>
+	<g:Label  ui:field="errorLabelForEditText"></g:Label>
+	<g:Label ui:field="errorLabel" styleName="{res.css.errorValidation}"></g:Label>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -35,18 +35,21 @@ import org.ednovo.gooru.client.mvp.shelf.event.AssignmentHandler;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
+
 /**
- * @fileName : EditClasspageUiHandlers.java
+ * @fileName : ClasspageUiHandlers.java
  *
- * @description : The interface for view classes that handles all the UI-related code for a EditClasspagePresenter.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandler,RefreshAssignmentsListEventHandler,UpdateClasspageImageEventHandler {
 	
@@ -64,5 +67,7 @@ public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandl
 	void updateClassPageInfo(String classPageId,String collectionType, String title);
 	
 	void showImageUploadWidget();
+	
+	void getNextClasspageItems(Integer offset,Integer limit);
 
 }

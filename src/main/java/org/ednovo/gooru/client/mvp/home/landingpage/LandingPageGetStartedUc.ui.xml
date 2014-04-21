@@ -4,23 +4,23 @@
 	xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="landingPageStyle" src="../landing-page.css" />
 	<g:HTMLPanel styleName="{landingPageStyle.pageSection} {landingPageStyle.getStarted}">
-		<h2>How to Get Started</h2>
-		<g:Anchor ui:field="backto" href="#" styleName="{landingPageStyle.returnToTop}">back to the top</g:Anchor>
+		<h2><g:Label ui:field="howToStartText"></g:Label></h2>
+		<g:Anchor ui:field="backto" href="#" styleName="{landingPageStyle.returnToTop}"></g:Anchor>
 		<g:HTMLPanel styleName="{landingPageStyle.contentBlock}">
 		   <panel:HTMLEventPanel styleName="{landingPageStyle.getStartedOption} {landingPageStyle.search}" ui:field="discoverLink">
 		      <g:HTMLPanel styleName="{landingPageStyle.image}"></g:HTMLPanel>
-		      <h3>Search</h3>
-		      <g:HTMLPanel styleName="{landingPageStyle.description}">Begin by searching for collections or resources, and filter by grade, subject or teaching standard.</g:HTMLPanel>
+		      <h3><g:Label ui:field="searchLbl"></g:Label></h3>
+		      <g:HTMLPanel styleName="{landingPageStyle.description}" ui:field="searchDescLbl"></g:HTMLPanel>
 		   </panel:HTMLEventPanel>
 		   <panel:HTMLEventPanel styleName="{landingPageStyle.getStartedOption} {landingPageStyle.create}" ui:field="organizeLink">
 		      <g:HTMLPanel styleName="{landingPageStyle.image}"></g:HTMLPanel>
-		      <h3>Create</h3>
-		      <g:HTMLPanel styleName="{landingPageStyle.description}">Start your own collection of resources on a particular subject, or personalize an existing collection for the way you like to teach.</g:HTMLPanel>
+		      <h3><g:Label ui:field="createText"></g:Label></h3>
+		      <g:HTMLPanel styleName="{landingPageStyle.description}" ui:field="startCollectionLbl"></g:HTMLPanel>
 		   </panel:HTMLEventPanel>
 		   <panel:HTMLEventPanel styleName="{landingPageStyle.getStartedOption} {landingPageStyle.signup}" ui:field="signUpLink">
 		      <g:HTMLPanel styleName="{landingPageStyle.image}"></g:HTMLPanel>
-		      <h3>Sign Up</h3>
-		      <g:HTMLPanel styleName="{landingPageStyle.description}">Start saving, creating and sharing the cool resources and collections you find. Get started today!</g:HTMLPanel>
+		      <h3><g:Label ui:field="signUpLbl"></g:Label></h3>
+		      <g:HTMLPanel styleName="{landingPageStyle.description}" ui:field="shareLbl"></g:HTMLPanel>
 		   </panel:HTMLEventPanel>
 		   <g:HTMLPanel styleName="{landingPageStyle.clearfix}"></g:HTMLPanel>
 		</g:HTMLPanel>

@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.service.AppServiceAsync;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.client.service.CollaboratorsServiceAsync;
 import org.ednovo.gooru.client.service.FolderServiceAsync;
 import org.ednovo.gooru.client.service.HomeServiceAsync;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
@@ -39,21 +40,10 @@ import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 
 import com.google.gwt.inject.client.Ginjector;
+
 /**
+ * @author Search Team
  * 
- * @fileName : ServiceInjector.java
- *
- * @description : Analogous to Guice's {@code Injector}, this type can be used to bootstrap injection. Unlike
-*                 Guice, however, this is not a type that you create, but rather a type that you extend.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ServiceInjector extends Ginjector {
 
@@ -82,5 +72,7 @@ public interface ServiceInjector extends Ginjector {
 	PlayerAppServiceAsync getPlayerAppService();
 
 	LibraryServiceAsync getLibraryService();
+	
+	CollaboratorsServiceAsync getCollaboratorsService();
 
 }

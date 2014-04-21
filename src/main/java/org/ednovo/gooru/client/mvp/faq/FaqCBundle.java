@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.mvp.faq;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
- * @fileName : FaqCBundle.java
- *
- * @description : This interface is used to set the css in the FAQ popup.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface FaqCBundle extends ClientBundle {
 

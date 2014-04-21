@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
@@ -30,19 +32,8 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RegisterSearchDropEvent.java
- *
- * @description : This is to register search drop event.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RegisterSearchDropEvent extends GwtEvent<RegisterSearchDropHandler> {
 
@@ -53,30 +44,12 @@ public class RegisterSearchDropEvent extends GwtEvent<RegisterSearchDropHandler>
 		String areaName;
 
 		/**
-		 * To initilaize areaName.
+		 * 
 		 */
 		private DROP_AREA(String areaName) {
 			this.areaName = areaName;
 		}
-	/**
-	 * 
-	 * @function getAreaName 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To get Areaname.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 		public String getAreaName() {
 			return areaName;
 		}
@@ -95,16 +68,12 @@ public class RegisterSearchDropEvent extends GwtEvent<RegisterSearchDropHandler>
 		this.dropController = searchDropController;
 		this.type = dropType;
 	}
-	/**
-	 * 	Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RegisterSearchDropHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(RegisterSearchDropHandler handler) {
 		handler.registerDropController(dropController, type);

@@ -27,26 +27,16 @@
  */
 package org.ednovo.gooru.server.request;
 
-import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
- * @fileName : ServiceRequest.java
- *
- * @description :  This class used in making API calls using rest-let frame work.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public abstract class ServiceRequest {
 
@@ -60,18 +50,16 @@ public abstract class ServiceRequest {
 
 	protected ServiceRequest() {
 	}
-	/**
-	 * @function name: execute
-	 * 
-	 * @return {@link StringRepresentation}
-	 */
-	public JsonRepresentation execute() {
+
+	public JsonResponseRepresentation execute() {
 		try {
 			return run();
 		} catch (ResourceException exception) {
 			logger.error(ERROR, exception);
 			//throw new RuntimeException(exception.getMessage());
-			return new JsonRepresentation("");
+			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
+			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
+			return jsonResponseRepresentation;
 		} catch (Exception exception) {
 			logger.error(ERROR, exception);
 			throw new RuntimeException(exception.getMessage());
@@ -80,12 +68,8 @@ public abstract class ServiceRequest {
 		}
 	}
 
-	public abstract JsonRepresentation run() throws Exception;
-	/**
-	 * @function name: executeString 
-	 * 
-	 * @return {@link StringRepresentation}
-	 */
+	public abstract JsonResponseRepresentation run() throws Exception;
+
 	public StringRepresentation executeString() {
 		try {
 			return runString();
@@ -100,18 +84,14 @@ public abstract class ServiceRequest {
 			releaseClientResources();
 		}
 	}
-	/**
-	 * @return {@link StringRepresentation}
-	 * @throws Exception
-	 */
+
 	public StringRepresentation runString() throws Exception{
 		return new StringRepresentation("");
 	}
 	
 	
-	/**
-	 * release/closes the client resources
-	 */
+	
+	
 	protected void releaseClientResources() {
 		try {
 			if (clientResource != null) {
@@ -126,40 +106,27 @@ public abstract class ServiceRequest {
 			getLogger().error(e.getMessage());
 		}
 	}
-	/**
-	 * @return the {@link ClientResource}
-	 */
+
 	public ClientResource getClientResource() {
 		return clientResource;
 	}
-	/**
-	 * @param clientResource the clientResource to set
-	 */
+
 	public void setClientResource(ClientResource clientResource) {
 		this.clientResource = clientResource;
 	}
 
-	/**
-	 * @return the {@link Representation}
-	 */
 	public Representation getRepresentation() {
 		return representation;
 	}
-	/**
-	 * @param representation the representation to set
-	 */
+
 	public void setRepresentation(Representation representation) {
 		this.representation = representation;
 	}
-	/**
-	 * @return the {@link logger}
-	 */
+
 	public static Logger getLogger() {
 		return logger;
 	}
-	/**
-	 * @throws RuntimeException
-	 */
+	
 	public void setBody() {
 		throw new RuntimeException("Not implemented");
 	}

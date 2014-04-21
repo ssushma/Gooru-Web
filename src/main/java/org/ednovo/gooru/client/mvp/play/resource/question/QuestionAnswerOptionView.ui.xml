@@ -5,9 +5,7 @@
 	<g:FlowPanel styleName="{oeStyle.resourcesQuizzessAnswersOptionsContainer}">
      	<g:Label styleName="{oeStyle.quizAnswerChoiceOption}" ui:field="answerChoiceResult"></g:Label>
      	<g:Label ui:field="radioButton"></g:Label>
-     	<g:Label styleName="{oeStyle.answerOptionSerialNum}" ui:field="optionAlpahabeticSerialNo"></g:Label>
-        <g:HTMLPanel styleName="{oeStyle.answerOptionContent}" ui:field="answerOptionText"></g:HTMLPanel>
+        <g:HTML styleName="{oeStyle.answerOptionContent}" ui:field="answerOptionText"></g:HTML>
         <g:RadioButton name="answerOptions" ui:field="answerOptionRadioButton" styleName="{oeStyle.hideButton}"></g:RadioButton>
-        <g:CheckBox name="answerCheckBoxes" ui:field="answerOptionCheckBoxButton" styleName="{oeStyle.hideButton}"></g:CheckBox>
     </g:FlowPanel>
 </ui:UiBinder> 

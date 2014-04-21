@@ -26,18 +26,10 @@ package org.ednovo.gooru.shared.exception;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * @fileName : GwtException.java
- *
- * @description : This will handle the gwt exception at run time.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class GwtException extends RuntimeException {
 
@@ -47,9 +39,7 @@ public class GwtException extends RuntimeException {
 	private static final long serialVersionUID = -8131503840164251388L;
 
 	private List<String> errors;
-	/**
-	 * This will get the gwt exception.
-	 */
+
 	public GwtException() {
 		errors = new ArrayList<String>();
 	}
@@ -57,39 +47,27 @@ public class GwtException extends RuntimeException {
 	public GwtException(String message) {
 		super(message);
 	}
-	/**
-	 * This will add the error.
-	 */
+
 	public void addError(String error) {
 		errors.add(error);
 	}
-	/**
-	 * This will add errors.
-	 */
+
 	public void addErrors(List<String> errors) {
 		this.errors.addAll(errors);
 	}
-	/**
-	 * This will return the all errors.
-	 */
+
 	public List<String> getErrors() {
 		return errors;
 	}
-	/**
-	 * This will set the all errors.
-	 */
+
 	public void setErrors(List<String> errors) {
 		this.errors = errors;
 	}
-	/**
-	 * This will clear the all errors.
-	 */
+
 	public void clearErrors() {
 		errors.clear();
 	}
-	/**
-	 * This will get the message.
-	 */
+
 	@Override
 	public String getMessage() {
 		if (errors != null && errors.size() > 0) {

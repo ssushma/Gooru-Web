@@ -29,6 +29,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -42,38 +43,26 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : SocialShareLinksView.java
- *
- * @description : This class will shows the social share links
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class SocialShareLinksView extends Composite {
+
+public class SocialShareLinksView extends Composite implements MessageProperties {
 
 	@UiField
 	TextArea shareLinkTxtBox;
 	
 	@UiField
-	FlowPanel shareLinkFlwPl;
+	FlowPanel shareLinkFlwPl,shareLinkContainer;
 
 	@UiField Label swithUrlLbl, swithToEmbedLbl, shareLbl;
 	
-	private static final String SWITCH_FULL_URL = "Switch to full URL";
+	private static final String SWITCH_FULL_URL =GL0643;
 	
-	private static final String SWITCH_EMBED_CODE = "Switch to embed code";
+	private static final String SWITCH_EMBED_CODE = GL0640;
 
-	private static final String SWITCH_BITLY = "Switch to Bit.ly";
+	private static final String SWITCH_BITLY =GL0639;
 	
-	private static final String SWITCH_URL_LABEL = "swithUrlLbl";
+	private static final String SWITCH_URL_LABEL = GL0641;
 
-	private static final String SWITCH_TO_EMBED_LABEL = "swithToEmbedLbl";
+	private static final String SWITCH_TO_EMBED_LABEL = GL0642;
 
 	private String bitlyLink, decodeRawUrl, embedBitlyLink;
 	
@@ -85,32 +74,19 @@ public class SocialShareLinksView extends Composite {
 	interface SocialShareLinksViewUiBinder extends
 			UiBinder<Widget, SocialShareLinksView> {
 	}
-	/**
-	 * class constructor.
-	 */
+
 	public SocialShareLinksView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		shareLinkFlwPl.getElement().getStyle().clearPaddingTop();
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
+		swithUrlLbl.setText(GL0639);
+		swithToEmbedLbl.setText(GL0640);
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
+		shareLbl.setText(GL0512);
 	}
-	/**
-	 * @function setData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the data.
-	 * 
-	 * 
-	 * @parm(s) : @param shortenUrl
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setData(Map<String, String> shortenUrl) {
 		if (shortenUrl != null && shortenUrl.containsKey("shortenUrl")) {
 			//shareLinkTxtBox.setText(shortenUrl.get("shortenUrl"));
@@ -146,6 +122,10 @@ public class SocialShareLinksView extends Composite {
 	public FlowPanel getShareLinkFlwPl() {
 		return shareLinkFlwPl;
 	}
+	
+	public FlowPanel getShareLinkContainer() {
+		return shareLinkContainer;
+	}
 
 	/**
 	 * Switching between Url and Bitly link
@@ -168,22 +148,7 @@ public class SocialShareLinksView extends Composite {
 			changeShareUrlEvents(SWITCH_TO_EMBED_LABEL);
 		}
 	}
-	/**
-	 * 
-	 * @function changeShareUrlEvents 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to change the share url events.
-	 * 
-	 * 
-	 * @parm(s) : @param buttonType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void changeShareUrlEvents(String buttonType) {
 		if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
@@ -251,74 +216,29 @@ public class SocialShareLinksView extends Composite {
 			}
 		}
 	}
-	/**
-	 * @function getIframeText 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to get the iframe text.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private String getIframeText() {
 		String iframeText;
 		if(embedBitlyLink==null){
 		embedBitlyLink=shareLinkTxtBox.getText();
 		}
-		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+		if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
 			 iframeText = "<iframe width=\"500px\" height=\"208px\" src=\"" + embedBitlyLink + "\" frameborder=\"0\" ></iframe>";
 		}else{
 			 iframeText = "<iframe width=\"1024px\" height=\"768px\" src=\"" + embedBitlyLink + "\" frameborder=\"0\" ></iframe>";
 		}
 		return iframeText;
 	}
-	/**
-	 * 
-	 * @function setIsPrivate 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set private or not.
-	 * 
-	 * 
-	 * @parm(s) : @param isPrivate
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setIsPrivate(boolean isPrivate) {
 		this.isPrivate = isPrivate;
 		setSwitchButtonStyles();
 	}
-	/**
-	 * This will return the boolean value.
-	 */
+	
 	private boolean getIsPrivate() {
 		return isPrivate;
 	}
-	/**
-	 * @function setSwitchButtonStyles 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will set the switch buttons styles.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setSwitchButtonStyles() {
 		if(getIsPrivate()) {
 			swithToEmbedLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);

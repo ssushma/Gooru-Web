@@ -50,7 +50,7 @@ xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 		<div class="{style.searchBoxContainer}">
 		<uc:AppSuggestBox width="475px" ui:field="searchTxtBox" styleName="{style.searchInputBox}"/>
 			<!-- <uc:TextBoxWithPlaceholder width="475px" ui:field="searchTxtBox" styleName="{style.searchInputBox}" placeholder="Discover your favorite Science, Math and Social Sciences topic..." />
-		 -->	<g:Button ui:field="searchBtn" text="Search" styleName="primary {style.overRideBlueButton}"/>
+		 -->	<g:Button ui:field="searchBtn"  styleName="primary {style.overRideBlueButton}"/>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

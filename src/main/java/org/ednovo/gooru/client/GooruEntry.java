@@ -22,6 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client;
 
 import java.util.HashMap;
@@ -45,22 +46,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-/**
- * 
- * @fileName : GooruEntry.java
- *
- * @description : To allow a class to act as a module entry point and entry point method, called automatically by loading a module that
- *			 	 declares an implementing class as an entry point.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class GooruEntry implements EntryPoint {
 
 	private final AppInjector appInjector = GWT.create(AppInjector.class);
@@ -68,9 +54,7 @@ public class GooruEntry implements EntryPoint {
 	private HandlerRegistration nativePreviewHandlerRegistration;
 	
 	private static final String GOORU_USER_INACTIVE = "in-active";
-	/**
-	 * On application loads this method is called automatically.
-	 */
+	
 	public void onModuleLoad() {
 
 		DelayedBindRegistry.bind(appInjector);
@@ -106,27 +90,17 @@ public class GooruEntry implements EntryPoint {
 			AppClientFactory.setAppGinjector(appInjector);
 		}
 	}
-	/**
+	
+	/* 
+	 * Registering the native events.
 	 * 
-	 * @function registerWindowEvents 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description:Registering the native events.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : 
-	 *
-	 */
+	 * */
+	
 	private void registerWindowEvents(){
 		nativePreviewHandlerRegistration = Event.addNativePreviewHandler(new NativePreviewHandler() {
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
 				if(event.getTypeInt()==Event.ONMOUSEOVER){
-					if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
-						
+					if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY))){
 					}
 					else if((AppClientFactory.getUserStatus()==null || AppClientFactory.getUserStatus().trim().equals(GOORU_USER_INACTIVE)) &&  AppClientFactory.isUserflag() && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_PLAY)){
 						
@@ -147,22 +121,12 @@ public class GooruEntry implements EntryPoint {
 		});
 	}
 	
-	/**
-	 * 
-	 * @function userLoggedOutheader 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description: If user logged out by staying on Discover or Study page on any one of the tab,
+	/* 
+	 * If user logged out by staying on Discover or Study page on any one of the tab,
 	 * this method will be called and header will reset on other tabs. 
 	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	 * */
+	
 	private void userLoggedOutheader(){
 		appInjector.getAppService().getLoggedInUser(new AsyncCallback<UserDo>() {
 			@Override
@@ -180,23 +144,14 @@ public class GooruEntry implements EntryPoint {
 		});
 	}
 	
-	/**
-	 * 
-	 * @function redirectToLandingPage 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description: If user logged out on any one of the tab,
-	 *  this method will be called to redirect to landing page on other tabs 
+	
+	/* 
+	 * If user logged out on any one of the tab,
+	 * this method will be called to redirect to landing page on other tabs 
 	 *  and Log-in pop up will be invoked.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	 *  
+	 * */
+	
 	private void redirectToLandingPage(){
 		appInjector.getAppService().getLoggedInUser(new AsyncCallback<UserDo>() {
 			@Override
@@ -205,9 +160,13 @@ public class GooruEntry implements EntryPoint {
 				UcCBundle.INSTANCE.css().ensureInjected();
 				HomeCBundle.INSTANCE.css().ensureInjected();
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
-				Map<String, String> params = new HashMap<String,String>();
-                params.put("loginEvent", "true");
-                appInjector.getPlaceManager().revealPlace(PlaceTokens.HOME, params);
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+					
+				}else{
+					Map<String, String> params = new HashMap<String,String>();
+					params.put("loginEvent", "true");
+					appInjector.getPlaceManager().revealPlace(PlaceTokens.HOME, params);
+				}
                 //	appInjector.getPlaceManager().redirectPlace(PlaceTokens.HOME); 
 //				loginPopupTimer.schedule(LOGIN_POPUP_DELAY_TIME);
 			}
@@ -222,41 +181,15 @@ public class GooruEntry implements EntryPoint {
 	Timer loginPopupTimer = new Timer() {
 		@Override
 		public void run() {
+			
 //			Window.Location.reload();
 		}
 	};
-	/**
-	 * 
-	 * @function getHttpOrHttpsProtocol 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description: This method is used to get the type of protocol.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public String getHttpOrHttpsProtocol() {
 		return Window.Location.getProtocol();
 	}
-	/**
-	 * 
-	 * @function loadCssJsFiles 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description: This method is used to load css js files.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+	
 	private void loadCssJsFiles() {
 		String cdnEndPoint = AppClientFactory.getLoggedInUser().getSettings().getCdnEndPoint();
 		BrowserAgent.loadCssFile(cdnEndPoint+"/css/gooru.css?r=59","css");

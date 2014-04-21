@@ -25,74 +25,46 @@
 package org.ednovo.gooru.shared.model.search;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : CollectionItemSearchResultDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CollectionItemSearchResultDo extends ResourceSearchResultDo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private String collectionItemId;
+	private String collectionId;
 	private Integer itemSequence;
 	private String itemType;
-	private String narration;
-	/** 
-	 * This method is to get the collectionItemId
-	 */
+	private String narration;	
+	public CollectionItemSearchResultDo(){}
 	public String getCollectionItemId() {
 		return collectionItemId;
 	}
-	/** 
-	 * This method is to set the collectionItemId
-	 */
-	public void setCollectionItemId(String collectionItemId) {
-		this.collectionItemId = collectionItemId;
-	}
-	/** 
-	 * This method is to get the itemSequence
-	 */
 	public Integer getItemSequence() {
 		return itemSequence;
 	}
-	/** 
-	 * This method is to set the itemSequence
-	 */
-	public void setItemSequence(Integer itemSequence) {
-		this.itemSequence = itemSequence;
-	}
-	/** 
-	 * This method is to get the itemType
-	 */
 	public String getItemType() {
 		return itemType;
 	}
-	/** 
-	 * This method is to set the itemType
-	 */
-	public void setItemType(String itemType) {
-		this.itemType = itemType;
-	}
-	/** 
-	 * This method is to get the narration
-	 */
 	public String getNarration() {
 		return narration;
 	}
-	/** 
-	 * This method is to set the narration
-	 */
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
+	public void setItemSequence(Integer itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
 	public void setNarration(String narration) {
 		this.narration = narration;
-	}	
+	}
+	public String getCollectionId() {
+		return collectionId;
+	}
+	public void setCollectionId(String collectionId) {
+		this.collectionId = collectionId;
+	}
+	
 }

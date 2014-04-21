@@ -48,23 +48,13 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ResetPasswordVc.java
+ * @author Search Team
  *
- * @description : Related to reset password popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResetPasswordVc extends Composite implements MessageProperties {
 	
@@ -91,10 +81,15 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 
 	@UiField
 	ErrorLabelUc newPwdValidationUc;
+	
+	@UiField
+	Label newPasswordText,newPwdLbl,confirmPwdLbl;
 
 	private String resetToken;
 
 	private AppPopUp appPopUp;
+	
+	private boolean isDigiSpclChars=false;
 	
 	private static final String PASSWORD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
 
@@ -104,11 +99,19 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 	 */
 	public ResetPasswordVc(String resetToken) {
 		appPopUp = new AppPopUp();
+		
+		if(!appPopUp.isShowing())
+		{
 		this.resetToken = resetToken;
 		appPopUp.setContent(GL0062, uiBinder.createAndBindUi(this));
 		//appPopUp.addStyleName(HomeCBundle.INSTANCE.css().resetPasswordPopup());
 		appPopUp.show();
 		appPopUp.center();
+		newPasswordText.setText(GL1254);
+		newPwdLbl.setText(GL1255);
+		confirmPwdLbl.setText(GL0427);
+		sendMailBtnUc.setText(GL0141);
+		resetPwdCancelAnr.setText(GL0142);
 		resetConfirmPwdTxtBox.getElement().setPropertyString("type", "password");
 		resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
 		resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
@@ -127,6 +130,7 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 		resetConfirmPwdTxtBox.addFocusHandler(new OnConfirmPasswordFocus());
 		Window.enableScrolling(false);
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
+		}
 	}
 
 	/**
@@ -140,15 +144,28 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 
 				@Override
 				public void onSuccess(Map<String, Object> result) {
-		
-					if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
+					if(result != null && result.containsKey("statusCode")&& Integer.parseInt(result.get("statusCode").toString())==400){ 
+						resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
+						newPwdValidationUc.setText(StringUtil.generateMessage(GL0078,"Password"));
+						newPwdValidationUc.setVisible(true);
+					}else if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
+						appPopUp.hide();
+						new AlertContentUc(GL1089, StringUtil.generateMessage(GL0100, ""));
+					}else if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
+						appPopUp.hide();
+						new ResetPwdSuccessVc(result.get("username").toString());
+						
+					}else{
+						appPopUp.hide();
+					}
+					/*if (result != null && result.containsKey("username") && result.get("username").toString().length() > 0) {
 						new ResetPwdSuccessVc(result.get("username").toString());
 						
 					}
 					if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
-						new AlertContentUc("Oops", StringUtil.generateMessage(GL0100, ""));
-					}
-					appPopUp.hide();
+						new AlertContentUc(GL1089, StringUtil.generateMessage(GL0100, ""));
+					}*/
+//					appPopUp.hide();
 					Window.enableScrolling(true);
 					AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(0, true));
 				}
@@ -195,9 +212,10 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 		String confirmPassword = resetConfirmPwdTxtBox.getText();
 		boolean isValid = true;
 		try {
-			RegExp reg = RegExp.compile(PASSWORD_PATTERN, "gi");
-			boolean pwdChck =reg.test(newPassword);
-
+			/*RegExp reg = RegExp.compile(PASSWORD_PATTERN, "gi");
+			boolean pwdChck =reg.test(newPassword);*/
+			
+			boolean pwdChck =checkPassword(newPassword);
 			if ((newPassword == null || (newPassword != null && newPassword
 					.isEmpty()))) {
 				newPwdValidationUc.setVisible(true);
@@ -236,11 +254,20 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 			}
 
 			
-			else if (!pwdChck) {
-				resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
-						.resetPwdTextError());
-				newPwdValidationUc.setText(StringUtil.generateMessage(GL0073,"Password"));
-				newPwdValidationUc.setVisible(true);
+			else if (!pwdChck) { 
+				if(isDigiSpclChars){
+					isDigiSpclChars=false;
+					resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
+							.resetPwdTextError());
+					newPwdValidationUc.setText(StringUtil.generateMessage(GL0073,"Password"));
+					newPwdValidationUc.setVisible(true);
+				}else{
+					resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
+							.resetPwdTextError());
+					newPwdValidationUc.setText(StringUtil.generateMessage(GL0073,"Password"));
+					newPwdValidationUc.setVisible(true);
+				}
+				
 				isValid = false;
 			}
 			
@@ -309,6 +336,48 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 						.resetPwdTextError());
 			}
 		}
+	}
+	
+	private  boolean checkPassword(String pwd) {
+		boolean isLetterIncluded=false,isDigiIncluded=false,isSpecialCharIncluded=false,isValidPwd=false; 
+		
+		
+		boolean isLetters=false,isDigits=false,isSpclChars=false;
+		String digiOnly="";
+		String letterOnly="";
+		String spclCharsOnly="";
+		
+		
+		for(int i=0;i<pwd.length();i++)
+		{
+			if(Character.isLetter(pwd.charAt(i))){
+				isLetterIncluded=true;
+				letterOnly+=pwd.charAt(i);
+			}
+			if(!Character.isLetterOrDigit(pwd.charAt(i))){
+				isSpecialCharIncluded=true;
+			}
+			if(Character.isDigit(pwd.charAt(i))){
+				isDigiIncluded=true;
+				digiOnly+=pwd.charAt(i);
+			}
+		}
+		
+
+		if(isLetterIncluded){
+			if(isDigiIncluded){
+				isValidPwd=true;
+				isDigiIncluded=false;
+				isSpecialCharIncluded=false;
+			}else{
+				isValidPwd=false;
+			}
+		}else{
+			isValidPwd=false;
+			isDigiSpclChars=true;
+		}
+
+		return isValidPwd;
 	}
 
 }

@@ -33,19 +33,8 @@ import org.ednovo.gooru.client.mvp.search.event.PostSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.PreSearchHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchRootUiHandlers.java
- *
- * @description : UIHandler file for SearchRootView.java.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SearchRootUiHandlers extends BaseUiHandlers, PreSearchHandler, PostSearchHandler,GetSearchKeyWordHandler {
 

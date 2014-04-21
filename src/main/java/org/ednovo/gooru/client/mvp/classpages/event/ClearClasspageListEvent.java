@@ -26,21 +26,21 @@ package org.ednovo.gooru.client.mvp.classpages.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-	/**
-	 * 
-	 * @fileName : ClearClasspageListEvent.java
-	 *
-	 * @description : This file deals with ClasspageListEvents.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : ClearClasspageListEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Aug 20, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class ClearClasspageListEvent extends GwtEvent<ClearClasspageListHandler> {
 
 	public static final Type<ClearClasspageListHandler> TYPE = new Type<ClearClasspageListHandler>();
@@ -52,16 +52,12 @@ public class ClearClasspageListEvent extends GwtEvent<ClearClasspageListHandler>
 	public ClearClasspageListEvent() {
 		
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<ClearClasspageListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke lregisterogin handler event.
-	 */
+
 	@Override
 	protected void dispatch(ClearClasspageListHandler handler) {
 		handler.clearClasspage();

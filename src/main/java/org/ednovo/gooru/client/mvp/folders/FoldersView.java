@@ -49,21 +49,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-/**
- * 
- * @fileName : FoldersView.java
- *
- * @description : This is the view file for folders.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> implements IsFoldersView,ClickHandler {
 
 	@UiField(provided = true)
@@ -100,9 +86,7 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 	interface FoldersViewUiBinder extends UiBinder<Widget, FoldersView> {
 
 	}
-	/**
-	 * Constructor.
-	 */
+
 	@Inject
 	public FoldersView() {
 		res = ShelfCBundle.INSTANCE;
@@ -114,25 +98,7 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 		backToSearchFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 		backToSearchHtml.addClickHandler(this);
 	}
-	/**
-	 * 
-	 * @function OnClickNewFolder 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is the uihandler will get folder collection size and if it not exceeds the max limit it will allow you to create new folder.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("newFolderUIHandler")
 	public void OnClickNewFolder(ClickEvent event) {
 		if(checkFolderCollectionSize()) {
@@ -147,25 +113,6 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 			getUiHandlers().initFolderRedirect();
 	}
 */	
-	/**
-	 * 
-	 * @function OnClickNewCollection 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is the uihandler will get folder collection size and if it not exceeds the max limit it will allow you to create a new collection.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("newCollectionUIHandler")
 	public void OnClickNewCollection(ClickEvent event) {
 		if(checkFolderCollectionSize()) {
@@ -174,9 +121,7 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 			getUiHandlers().initCreateCollection();
 		}
 	}
-	/**
-	 * This will add the widget to panel.
-	 */
+		
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -185,9 +130,7 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 			}
 		}
 	}
-	/**
-	 * This method is used to add the folder.
-	 */
+
 	@Override
 	public void addFolder(CollectionItemDo collectionItemDo) {
 		Label label = new Label("");
@@ -200,25 +143,19 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 		workspaceFoldersList.add(folderItemChildView);
 		foldersPanelVc.addDraggable(folderItemChildView,collectionItemDo.getItemSequence());
 	}
-	/**
-	 * This method is used to remove the folder.
-	 */
+
 	@Override
 	public void removeFolder(CollectionItemDo collectionItemDo,
 			ClasspageResourceItemChildView classpageChildView) {
 	}
-	/**
-	 * This method is used to remove some ui stuff.
-	 */
+
 	@Override
 	public void disablenoWorkspaceLbl() {
 		noWorkspaceLbl.getElement().getStyle().setDisplay(Display.NONE);
 		noFoldersLeftPanelmsg.getElement().getStyle().setDisplay(Display.NONE);
 		welcomeWorkspaceMsg.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * This method is used to enable some ui stuff.
-	 */
+
 	@Override
 	public void enablenoWorkspaceLbl() {
 		if(!(workspaceFoldersList.getWidgetCount()>0)){
@@ -229,17 +166,13 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 			welcomeWorkspaceMsg.add(new FoldersWelcomePage());
 		}
 	}
-	/**
-	 * This is used to clear folders list.
-	 */
+
 	@Override
 	public void clearWorkspaceFoldersListPanel() {
 		workspaceFoldersList.clear();
 		foldersPanelVc.clear();
 	}
-	/**
-	 * This method is used to refresh the collection items in folders.
-	 */
+
 	@Override
 	public void refreshCollectionInFolderList(CollectionItemDo collectionItemDo,
 			RefreshFolderType refreshType) {
@@ -247,9 +180,7 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 		workspaceFoldersList.insert(folderItemChildView, 0);
 		foldersPanelVc.addDraggable(folderItemChildView,0);
 	}
-	/**
-	 * This method is used to set back to search module.
-	 */
+
 	@Override
 	public void setBackToSearch() {
 		boolean visible = false;
@@ -282,9 +213,7 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 		}
 		return false;
 	}
-	/**
-	 * This method is used to make the reveal place to false it contains search
-	 */
+	
 	@Override
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();

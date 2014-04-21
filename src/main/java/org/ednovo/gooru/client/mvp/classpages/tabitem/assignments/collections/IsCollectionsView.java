@@ -25,27 +25,26 @@
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
 import org.ednovo.gooru.client.child.IsChildView;
-import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 
 /**
  * 
  * @fileName : IsCollectionsView.java
  *
- * @description : This file is used to close the Wait Popup.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team 
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
-public interface IsCollectionsView extends IsChildView<CollectionsPresenter>, IsDraggable {
-	/**
-	 * Close the Wait Popup.
-	 */
-	void hideWaitPopup();
+public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
+	public void updateDirection(String directionText);
+	public void updateDueDate(String dueDate);
+	public void removeClasspageItemWidget();
+	
 }
 

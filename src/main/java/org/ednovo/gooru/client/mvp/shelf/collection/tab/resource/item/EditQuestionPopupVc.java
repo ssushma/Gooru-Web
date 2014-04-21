@@ -67,21 +67,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : EditQuestionPopupVc.java
- *
- * @description : This class is used to display the edit question popup.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class EditQuestionPopupVc extends AppPopUp {
+
+public abstract class EditQuestionPopupVc extends AppPopUp implements MessageProperties{
 
 	@UiField
 	ListBox questionTypeListBox;
@@ -96,7 +83,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 	
 	@UiField
 	HTMLPanel addQuestionHintsContainer, questionTextRichTextboxContainer,
-			questionExplantionRichTextboxContainer, listQuestionType, answerchoiceTitleContainer, panelPleaseWait,panelControls;
+			questionExplantionRichTextboxContainer, listQuestionType, answerchoiceTitleContainer, panelPleaseWait,panelControls,typeLbl;
 
 	@UiField
 	Button btnSave, btnCancel;
@@ -112,15 +99,11 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 
 	RemoveToolTipUc removeToolTip = null;
 	boolean isSaveButtonClicked = false;
-	/**
-	 * This method will return the add question label.
-	 */
+
 	public Label getAddQuestion() {
 		return lblAddQuestion;
 	}
-	/**
-	 * This method will set the add question label.
-	 */
+
 	public void setAddQuestion(Label lblAddQuestion) {
 		this.lblAddQuestion = lblAddQuestion;
 	}
@@ -130,27 +113,19 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 
 	@UiField
 	UpdateQuestionImageView updateQuestionImageView;
-	/**
-	 * This method will return the question image container.
-	 */
+
 	public HTMLPanel getQuestionImageContainer() {
 		return questionImageContainer;
 	}
-	/**
-	 * This method will return the update question image container.
-	 */
+
 	public UpdateQuestionImageView getUpdateQuestionImageView() {
 		return updateQuestionImageView;
 	}
-	/**
-	 * This method will set the update question image container.
-	 */
+
 	public void setQuestionImageContainer(HTMLPanel questionImageContainer) {
 		this.questionImageContainer = questionImageContainer;
 	}
-	/**
-	 * This method will set update question image view.
-	 */
+
 	public void setUpdateQuestionImageView(
 			UpdateQuestionImageView updateQuestionImageView) {
 		this.updateQuestionImageView = updateQuestionImageView;
@@ -168,11 +143,11 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 
 //	String[] hintsChoiceArray = new String[] { "1", "2", "3", "4", "5" };
 
-	private static final String ERROR_MSG_QUESTION = MessageProperties.GL0310;
+	private static final String ERROR_MSG_QUESTION = GL0310;
 
-	private static final String ERROR_MSG_ANSWER = MessageProperties.GL0311;
+	private static final String ERROR_MSG_ANSWER = GL0311;
 
-	private static final String ERROR_MSG_ANSWER_SELECTED = MessageProperties.GL0312;
+	private static final String ERROR_MSG_ANSWER_SELECTED = GL0312;
 
 //	private static final String ERROR_MSG_HINTS_LENGTH = MessageProperties.GL0143;
 
@@ -182,7 +157,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 
 //	private static final String ERROR_MSG_QUESTION_LENGTH = MessageProperties.GL0143;
 
-	private static final String ERROR_MSG_CHAR_LIMIT = MessageProperties.GL0143;
+	private static final String ERROR_MSG_CHAR_LIMIT = GL0143;
 
 //	private static final int ANSWER_CHOICE_HINTS_TEXT_LENGTH = 150;
 
@@ -201,10 +176,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 	interface EditQuestionPopupVcUiBinder extends
 			UiBinder<Widget, EditQuestionPopupVc> {
 	}
-	/**
-	 * class constructor.
-	 * @param collectionItemDo
-	 */
+
 	public EditQuestionPopupVc(CollectionItemDo collectionItemDo) {
 		super();
 		this.getElement().getStyle().setWidth(640, Unit.PX);
@@ -222,9 +194,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		 displayQuestionResource();
 
 	}
-	/**
-	 * This method will call at the time of loading and it will set the rich text box.
-	 */
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
@@ -243,20 +213,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		});
 
 	}
-	/**
-	 * @function displayQuestionResource 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display question resources.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void displayQuestionResource() {
 
 		String tumbnailUrl;
@@ -330,59 +287,32 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		
 		center();
 	}
-	/**
-	 * @function setLabelAndIds 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set labels id's.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setLabelAndIds(){
-		btnSave.setText(MessageProperties.GL0141);
-		btnCancel.setText(MessageProperties.GL0142);
+		typeLbl.getElement().setInnerText(GL1499);
+		btnSave.setText(GL0141);
+		btnCancel.setText(GL0142);
 		
-		lblEditQuestionTitle.setText(MessageProperties.GL0304);
-		ancMultipleChoice.setText(MessageProperties.GL0305);
-		ancTrueOfFalse.setText(MessageProperties.GL0306);
-		ancOpenEnded.setText(MessageProperties.GL0307);
-		lblQuestion.setText(MessageProperties.GL0308 + MessageProperties.GL_SPL_STAR);
-		lblAddQuestion.setText(MessageProperties.GL_SPL_PLUS + " " + MessageProperties.GL0309);
-		lblChoices.setText(MessageProperties.GL0313 + MessageProperties.GL_SPL_STAR);
-		lblCorrect.setText(MessageProperties.GL0314);
-		lblAddAnswerChoice.setText(MessageProperties.GL_SPL_PLUS + " " + MessageProperties.GL0315);
-		lblExplanation.setText(MessageProperties.GL0316);
-		lblAddHints.setText(MessageProperties.GL_SPL_PLUS + " " + MessageProperties.GL0317);
+		lblEditQuestionTitle.setText(GL0304);
+		ancMultipleChoice.setText(GL0305);
+		ancTrueOfFalse.setText(GL0306);
+		ancOpenEnded.setText(GL0307);
+		lblQuestion.setText(GL0308 + GL_SPL_STAR);
+		lblAddQuestion.setText(GL_SPL_PLUS + " " + GL0309);
+		lblChoices.setText(GL0313 + GL_SPL_STAR);
+		lblCorrect.setText(GL0314);
+		lblAddAnswerChoice.setText(GL_SPL_PLUS + " " +GL0315);
+		lblExplanation.setText(GL0316);
+		lblAddHints.setText(GL_SPL_PLUS + " " + GL0317);
 		
-		lblPleaseWait.setText(MessageProperties.GL0339);
+		lblPleaseWait.setText(GL0339);
 		panelPleaseWait.setVisible(false);
 		panelControls.setVisible(true);
 		
 		btnSave.getElement().setId("btnSave");
 		btnCancel.getElement().setId("btnCancel");
 	}
-	/**
-	 * @function onChangeQuestionType 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the change event on the type list box.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("questionTypeListBox")
 	public void onChangeQuestionType(ChangeEvent event) {
 		String questionTypeValue = questionTypeListBox
@@ -406,21 +336,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 
 		}
 	}
-	/**
-	 * @function setTrueOrFalseFields 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set trur or flase to the fields.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setTrueOrFalseFields() {
 		questionAnswerChoiceContainer.clear();
 		lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -453,21 +369,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			questionAnswerChoiceContainer.add(updateQuestionAnswerChoice);
 		}
 	}
-	/**
-	 * @function setMultipleChoiceAnswerFields 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set multiple choice answers fields.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setMultipleChoiceAnswerFields() {
 		questionAnswerChoiceContainer.clear();
 		for (int i = 0; i < 2; i++) {
@@ -521,21 +423,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 	// }
 	//
 	// }
-	/**
-	 * @function clearErrorMessages 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to clear error messages.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void clearErrorMessages() {
 		errorMessageForQuestion.setText("");
 		lblErrorMessageForExplanation.setText("");
@@ -546,21 +434,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			updateQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
 		}
 	}
-	/**
-	 * @function addAnswerChoices 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to add answer choices.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void addAnswerChoices() {
 		questionAnswerChoiceContainer.clear();
 		TreeSet<QuestionAnswerDo> answerChoicesSet = collectionItemDo
@@ -614,21 +488,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	/**
-	 * @function showRemoveToolTip 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to show remove tool tip.
-	 * 
-	 * 
-	 * @parm(s) : @param deleteButton
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void showRemoveToolTip(final Label deleteButton) {
 
 		deleteButton.addMouseOverHandler(new MouseOverHandler() {
@@ -650,21 +510,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			}
 		});
 	}
-	/**
-	 * @function selectOrDeselectOption 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set select or deselect options.
-	 * 
-	 * 
-	 * @parm(s) : @param updateQuestionAnswerChoice
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void selectOrDeselectOption(
 			UpdateQuestionAnswerChoice updateQuestionAnswerChoice) {
 		ansChoiceErrMsg.setText("");
@@ -679,21 +525,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 					.setStyleName(editQuestionStyle.answerDeselected());
 		}
 	}
-	/**
-	 * @function removeSelectedOption 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to remove selected option.
-	 * 
-	 * 
-	 * @parm(s) : @param selectedAnswerChoice
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void removeSelectedOption(
 			UpdateQuestionAnswerChoice selectedAnswerChoice) {
 		for (int i = 0; i < questionAnswerChoiceContainer.getWidgetCount(); i++) {
@@ -711,21 +543,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			}
 		}
 	}
-	/**
-	 * @function cancelPopUp 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on cancel label.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("btnCancel")
 	public void cancelPopUp(ClickEvent clickEvent) {
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, true));
@@ -757,21 +575,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 	// }
 	//
 	// }
-	/**
-	 * @function addHints 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click events on add hints.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("lblAddHints")
 	public void addHints(ClickEvent clickEvent) {
 
@@ -788,21 +592,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		showRemoveToolTip(updateQuestionHints.hintDelLbl);
 
 	}
-	/**
-	 * @function refreshHintNumber 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to refresh hints numbers.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	protected void refreshHintNumber() {
 		int hintWidgetsCount = addQuestionHintsContainer.getWidgetCount();
 		for (int i = 0; i < hintWidgetsCount; i++) {
@@ -815,21 +605,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		}
 
 	}
-	/**
-	 * @function addEventsToHints 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to add events to hints.
-	 * 
-	 * 
-	 * @parm(s) : @param updateQuestionHints
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void addEventsToHints(final UpdateQuestionHints updateQuestionHints) {
 		updateQuestionHints.hintDelLbl.addClickHandler(new ClickHandler() {
 
@@ -863,21 +639,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		});
 
 	}
-	/**
-	 * @function updateResourceQuestion 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will handle the click event on save button.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("btnSave")
 	public void updateResourceQuestion(ClickEvent clickEvent) {
 		boolean fieldValidationStaus = true;
@@ -986,21 +748,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 
 	public abstract void updateQuestionResource(String collectionItemId,
 			CollectionQuestionItemDo collectionQuestionItemDo);
-	/**
-	 * @function isAnswerChoiceSelected 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method will check is answer choice is selected or not.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private boolean isAnswerChoiceSelected() {
 
 		boolean isAnswerChoiceSelected = false;
@@ -1016,21 +764,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		return isAnswerChoiceSelected;
 
 	}
-	/**
-	 * @function isAnswerChoiceEmpty 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to check is answer choice is empty or not.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public boolean isAnswerChoiceEmpty() {
 		boolean isAnswerChoiceSelected = false;
 		for (int i = 0; i < questionAnswerChoiceContainer.getWidgetCount(); i++) {
@@ -1057,9 +791,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		}
 		return isAnswerChoiceSelected;
 	}
-	/**
-	 * This will handle the click event on answer choice button.
-	 */
+
 	@UiHandler("lblAddAnswerChoice")
 	public void addClickButton(ClickEvent clickEvent) {
 		int widgetCount = questionAnswerChoiceContainer.getWidgetCount();
@@ -1083,21 +815,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	/**
-	 * @function refreshOptionNames 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to refresh option names.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void refreshOptionNames() {
 		for (int i = 0; i < questionAnswerChoiceContainer.getWidgetCount(); i++) {
 			UpdateQuestionAnswerChoice updateQuestionAnswerChoice = (UpdateQuestionAnswerChoice) questionAnswerChoiceContainer
@@ -1108,21 +826,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
-	/**
-	 * @function addMouseOverToAnswerWidget 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :
-	 * 
-	 * 
-	 * @parm(s) : @param updateQuestionAnswerChoice
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void addMouseOverToAnswerWidget(
 			final UpdateQuestionAnswerChoice updateQuestionAnswerChoice) {
 		updateQuestionAnswerChoice.ansChoiceDeleteButton
@@ -1169,21 +873,7 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 //	public static boolean isIEBrowser() {
 //		return getBrowserName().toLowerCase().contains("msie");
 //	}
-	/**
-	 * @function showMulipleAnswerChoice 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to display multiple answer choice.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void showMulipleAnswerChoice(){
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1203,21 +893,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			clearErrorMessages();
 		}		
 	}
-	/**
-	 * @function showTrueOrFalseAnswerChoice 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display true or false answer choices.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void showTrueOrFalseAnswerChoice(){
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1235,21 +910,6 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 			clearErrorMessages();
 		}
 	}
-	/**
-	 * @function showOpenEndedQuestion 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display open ended questions.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void showOpenEndedQuestion(){
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		lblAddAnswerChoice.getElement().getStyle().setDisplay(Display.NONE);
@@ -1263,23 +923,17 @@ public abstract class EditQuestionPopupVc extends AppPopUp {
 		
 		clearErrorMessages();
 	}
-	/**
-	 * This will handle the click event on question tab button.
-	 */
+	
 	@UiHandler("questionTabButton")
 	public void showMultipleChoise(ClickEvent event){
 		showMulipleAnswerChoice();
 	}
-	/**
-	 * This will handle the click event on true or false button.
-	 */
+	
 	@UiHandler("trueOrFlaseButton")
 	public void showTrueOrFalse(ClickEvent event){
 		showTrueOrFalseAnswerChoice();
 	}
-	/**
-	 * This will handle the click event on ended button.
-	 */
+	
 	@UiHandler("openEndedButton")
 	public void showOpenEnded(ClickEvent event){
 		showOpenEndedQuestion();

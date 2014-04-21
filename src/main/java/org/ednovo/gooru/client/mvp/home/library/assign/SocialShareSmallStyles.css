@@ -1,5 +1,4 @@
 .classPageShareContainer {
-	width: 110px;
 	float: left;
 	margin-top: 6px;
 	padding: 0px 20px 10px 0px;
@@ -8,6 +7,8 @@
 .classPageShareButtonsContainer {
 	float: left;
 	padding: 0px 0px 0px 0px;
+	width: 115px;
+	text-align: center;
 }
 
 .classPageShareButtonsOuterDiv {

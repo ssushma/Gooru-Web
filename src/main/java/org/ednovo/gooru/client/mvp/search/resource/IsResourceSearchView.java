@@ -22,26 +22,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 /**
+ * @author Search Team
  * 
- * @fileName : IsResourceSearchView.java
- *
- * @description : This is the interface for ResourceSearchView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsResourceSearchView extends IsSearchView<ResourceSearchResultDo> {
 

@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.authentication.uc;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -37,26 +38,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-	/**
-	 * 
-	 * @fileName : ThankPopUpForUpdateProfile.java
-	 *
-	 * @description : This file deals with Thanks Popup for update profile.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-public class ThankPopUpForUpdateProfile extends PopupPanel {
+
+public class ThankPopUpForUpdateProfile extends PopupPanel implements MessageProperties {
 
 	private static ThankPopUpForUpdateProfileUiBinder uiBinder = GWT
 			.create(ThankPopUpForUpdateProfileUiBinder.class);
@@ -67,12 +56,11 @@ public class ThankPopUpForUpdateProfile extends PopupPanel {
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading;
+	Label lblCancel, lblTitle, lblHeading, lblSubHeading,queriesText;
 	@UiField
 	Button btnOk;
-	/**
-	 * Default constructor.
-	 */
+	@UiField InlineLabel contactText;
+	@UiField Anchor supportLink;
 	public ThankPopUpForUpdateProfile() {
 		super(false);
 		this.res = SignUpCBundle.INSTANCE;
@@ -83,90 +71,48 @@ public class ThankPopUpForUpdateProfile extends PopupPanel {
 		this.setSize("502px", "352px");
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		this.getElement().getStyle().setBackgroundColor("transparent");
+		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		//this.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 	}
-	/**
-	 * 
-	 * @function setUiAndIds 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This will set the ui for thanks popup and appends data to it.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setUiAndIds() {
-		lblTitle.setText(MessageProperties.GL0481
-				+ MessageProperties.GL_SPL_EXCLAMATION);
-		lblHeading.setText(MessageProperties.GL0498+MessageProperties.GL_SPL_EXCLAMATION);
+		lblTitle.setText(GL0481
+				+GL_SPL_EXCLAMATION);
+		lblHeading.setText(GL0498+GL_SPL_EXCLAMATION);
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-		lblSubHeading.setText(MessageProperties.GL0499);
+		lblSubHeading.setText(GL0499);
 		
 		btnOk.getElement().setId("btnOk");
-		btnOk.setText(MessageProperties.GL0190);
-				
+		btnOk.setText(GL0190);
+		queriesText.setText(GL1139+GL_GRR_COMMA+" ");
+		contactText.setText(GL1145);
+		supportLink.setText(GL0299);
+		supportLink.setHref(GL1055);		
 	}
-    /**
-     * 
-     * @function onClickLblCancel 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This will close thanks popup on cancel button click.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
 		MixpanelUtil.close_signUp();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
 		this.hide();
 	}
-    /**
-     * 
-     * @function onClickButtonLeave 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description :This will go to close signup.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("btnOk")
 	public void onClickButtonLeave(ClickEvent event) {
 		MixpanelUtil.close_signUp();
 		this.hide();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		}
 
 	}
 

@@ -23,7 +23,11 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.faq;
+
+
+
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -33,25 +37,20 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : DiscoverVc.java
- *
- * @description : This class is used for Discover.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class DiscoverVc extends Composite {
 
-	@UiField HTMLPanel gooruGuideImage;
+public class DiscoverVc extends Composite implements MessageProperties{
+
+	@UiField HTMLPanel gooruGuideImage,discoverText,discoverDescLbl,gooruGuideStyle_One,gooruGuideStyle_Two,gooruGuideStyle_Three,
+	gooruGuideStyle_Four,gooruGuideStyle_Five,Style_One_Desc,Style_Two_Desc,Style_Three_Desc,Style_Four_Desc,Style_Five_Desc;
+	
+	@UiField Label needHelpLbl;
+	
+	@UiField Anchor supportCenterLbl;
 	
 	private static DiscoverUiBinder uiBinder = GWT.create(DiscoverUiBinder.class);
 
@@ -72,8 +71,21 @@ public class DiscoverVc extends Composite {
 		thirdId.getElement().setId("three");
 		fourthId.getElement().setId("four");
 		fifthId.getElement().setId("five");
-		
-		
+		discoverText.getElement().setInnerText(GL1342);
+		discoverDescLbl.getElement().setInnerText(GL1343+GL_SPL_FULLSTOP);
+		gooruGuideStyle_One.getElement().setInnerText(GL_GRR_NUMERIC_ONE);
+		Style_One_Desc.getElement().setInnerText(GL1344+GL_SPL_FULLSTOP);
+		gooruGuideStyle_Two.getElement().setInnerText(GL_GRR_NUMERIC_TWO);
+		Style_Two_Desc.getElement().setInnerText(GL1345+GL_SPL_FULLSTOP);
+		gooruGuideStyle_Three.getElement().setInnerText(GL_GRR_NUMERIC_THREE);
+		Style_Three_Desc.getElement().setInnerText(GL1346+GL_SPL_FULLSTOP);
+		gooruGuideStyle_Four.getElement().setInnerText(GL_GRR_NUMERIC_FOUR);
+		Style_Four_Desc.getElement().setInnerText(GL1347+GL_SPL_FULLSTOP);
+		gooruGuideStyle_Five.getElement().setInnerText(GL_GRR_NUMERIC_FIVE);
+		Style_Five_Desc.getElement().setInnerText(GL1348+GL_SPL_FULLSTOP);
+		needHelpLbl.setText(GL1349);
+		supportCenterLbl.setText(GL1307+GL_SPL_FULLSTOP);
+		supportCenterLbl.setHref("http://support.goorulearning.org/anonymous_requests/new");
 		firstId.addMouseOverHandler(new HideOtherNumbers("1"));
 		firstId.addMouseOutHandler(new ResetNumbers());
 		
@@ -92,9 +104,7 @@ public class DiscoverVc extends Composite {
 		
 		
 	} 
-	/**
-	 * This inner class is used to hide other numbers.
-	 */
+	
 	private class HideOtherNumbers implements MouseOverHandler {
 		String tipNo;
 		public HideOtherNumbers(String tipNo) {
@@ -138,9 +148,7 @@ public class DiscoverVc extends Composite {
 		}
 		
 	}
-	/**
-	 * This inner class is used to reset numbers.
-	 */
+	
 	private class ResetNumbers implements MouseOutHandler {
 
 		@Override

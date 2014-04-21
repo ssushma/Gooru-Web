@@ -6,49 +6,48 @@
 	<g:FlowPanel ui:field="mainFlowPanel">
 		<g:HTMLPanel styleName="{res.css.teachWrapper}">
 			<g:HTMLPanel styleName="{res.css.myClassPageImageText}">
-				<g:HTMLPanel styleName="{res.css.mainClassPageTextTitle}">Classpages</g:HTMLPanel>
-				<g:Button text="Add Classpage" ui:field="btnNewClasspage" styleName="primary" />
+				<g:HTMLPanel styleName="{res.css.mainClassPageTextTitle}" ui:field="classPageLbl"></g:HTMLPanel>
+				<g:Button ui:field="btnNewClasspage" styleName="primary" />
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.classpageContainer}"
 				ui:field="placeHolderForEmptyTeach">
-				<g:HTMLPanel styleName="{res.css.classpageText}">Teach with Classpages!</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.teachNoClasspageDesc}">A Classpage allows you to assign collections with direction and due dates for your class. Create and manage assignments for your students all in one place.</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.classpageText}" ui:field="teachLbl"></g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.teachNoClasspageDesc}" ui:field="assignLbl"></g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.classpageTextOptions}">
 					<g:HTMLPanel styleName="{res.css.firstDiv}">
 						<g:HTMLPanel styleName="{res.css.imgTextContainer}">
-							<g:Image title="Rounded One" altText="Rounded One" styleName="{res.css.imageCss}" height="35"
-								url="images/rounded-one.png" width="35" />
-							<g:HTMLPanel styleName="{res.css.classpageTitleText}">Create</g:HTMLPanel>
+							<g:Image styleName="{res.css.imageCss}" height="35"
+								width="35" ui:field="roundOneLbl"/>
+							<g:HTMLPanel styleName="{res.css.classpageTitleText}" ui:field="createLbl"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.classpageCreateDesc}">Create a Classpage for your
-							class</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classpageCreateDesc}" ui:field="createClasspageLbl"></g:HTMLPanel>
 						<g:HTMLPanel styleName="{res.css.classpageResourceThumbnail}">
-						    <g:Image title="Add Classpage" altText="Add Classpage" styleName="{res.css.classpageImg}" url="images/Classpage/classpage-image.png" />
+						    <g:Image styleName="{res.css.classpageImg}" ui:field="addClassPageLbl"/>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.secondDiv}">
 						<g:HTMLPanel styleName="{res.css.imgTextContainerCustomize}">
-							<g:Image title="Rounded Two" altText="Rounded Two" styleName="{res.css.imageCss}" height="35"
-								url="images/rounded-two.png" width="35" />
-							<g:HTMLPanel styleName="{res.css.classpageTitleText}">Add Assignment</g:HTMLPanel>
+							<g:Image styleName="{res.css.imageCss}" height="35"
+								 width="35" ui:field="roundTwoLbl"/>
+							<g:HTMLPanel styleName="{res.css.classpageTitleText}" ui:field="assignLblClassPage"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.classpageDesc}">Add collections, due dates and direction to assignments you create.</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.classpageResourceThumbnail}"><g:Image title="Add Assignment" altText="Add Assignment" url="images/Classpage/add-assignment-image.png" /></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classpageDesc}" ui:field="addToAssignLbl"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classpageResourceThumbnail}"><g:Image ui:field="addAssignImgLbl"/></g:HTMLPanel>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.thirdDiv}">
 						<g:HTMLPanel styleName="{res.css.imgTextContainer}">
-							<g:Image title="Rounded Three" altText="Rounded Three" styleName="{res.css.imageCss}" height="35"
-								url="images/rounded-three.png" width="35" />
-							<g:HTMLPanel styleName="{res.css.classpageTitleText}">Share</g:HTMLPanel>
+							<g:Image styleName="{res.css.imageCss}" height="35"
+								 width="35" ui:field="roundThreeLbl"/>
+							<g:HTMLPanel styleName="{res.css.classpageTitleText}" ui:field="shareLbl"></g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.classpageShareDesc}">Share the Classpage with your students using the link or class code.</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.classpageResourceThumbnail}"><g:Image title="Share" altText="Share"  styleName="{res.css.shareImg}" url="images/Classpage/share-image.png" /></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classpageShareDesc}" ui:field="shareClassPageText"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classpageResourceThumbnail}"><g:Image ui:field="shareImageLbl" styleName="{res.css.shareImg}"/></g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.classpageTextSupport}">
 				    <g:HTMLPanel styleName="{res.css.classpageFooterTextContainer}">
-						<g:HTMLPanel styleName="{}">Need some more help? Visit our 
-						    <g:Anchor styleName="{res.css.supportLink}" href="http://support.goorulearning.org/forums" target="_blank">support center</g:Anchor>.
+						<g:HTMLPanel styleName="{}"><g:Label ui:field="needHelpText"></g:Label>
+						    <g:Anchor styleName="{res.css.supportLink}" target="_blank" ui:field="supportCenterLbl"></g:Anchor>.
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>

@@ -23,21 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client;
-/**
- * 
- * @fileName : PlaceTokens.java
- *
- * @description : This interface helps to add place tokens.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface PlaceTokens {
 	String HOME = "discover";
 	String RESOURCE_SEARCH = "resource-search";
@@ -48,6 +34,7 @@ public interface PlaceTokens {
 	String RESOURCE_PLAY_OLD = "resource-play-old";
 	String COLLECTION_PLAY = "collection-play";
 	String COLLECTION_PLAY_OLD = "collection-play-old";
+	String PREVIEW_PLAY = "preview-play";
 	String RESOURCE_PLAY="resource-play";
 	String TEACH = "no-teach";		//This is not used...
 	String FOLDERS = "organizee";
@@ -59,6 +46,14 @@ public interface PlaceTokens {
 	String STUDENT = "students-view";
 	String STUDY = "study";
 	String PROFILE_PAGE = "profilepage";
+	String RUSD_LIBRARY = "rusd";
 	
 	String DEVICE_NOT_SUPPORTED = "not-supported";
+	
+	String FTE = "FTE";
+	String ONR = "ONR";
+	String AUTODESK = "Autodesk";
+	String LESSONOPOLY = "Lessonopoly";
+	String NGC = "NGC";
+	String WSPWH = "WSPWH";
 }

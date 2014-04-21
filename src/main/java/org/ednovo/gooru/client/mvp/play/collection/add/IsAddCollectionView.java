@@ -31,6 +31,6 @@ import com.google.gwt.user.client.ui.Label;
 public interface IsAddCollectionView extends IsViewWithHandlers<AddCollectionUiHandlers>{
 	public Label getAddResourceViewButton();
 	public void setCollectionData(String collectionTitle,String collectionId,String collectionImageUrl);
-	public void setCollectionThumbnail();
 	public void showSuccessMessageWidget(String collectionId);
+	
 }

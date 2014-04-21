@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.home;
 
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +33,19 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
-import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
-import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
+import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
+import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInPlayEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoginStatusEvent;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.SetPlayerLoginStatusEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.ShowPreviewTabWidgetEvent;
+import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEvent;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.events.SetCommentsOptionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -74,24 +80,14 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
+ * @author BLR Team
  * 
- * @fileName : LoginPopupUc.java
- *
- * @description : Related to Login Popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class LoginPopupUc extends PopupPanel {
+public class LoginPopupUc extends PopupPanel implements MessageProperties {
  
 	@UiField
 	TextBoxWithPlaceholder loginTxtBox;
@@ -119,11 +115,11 @@ public class LoginPopupUc extends PopupPanel {
 
 	private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
 
-	private static final String LOGIN_ERROR = MessageProperties.GL0347;
+	private static final String LOGIN_ERROR = GL0347;
 
-	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = MessageProperties.GL0348;
+	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = GL0348;
 
-	private static final String OOPS = MessageProperties.GL0061;
+	private static final String OOPS = GL0061;
 	
 	private String nameToken = "";
 	
@@ -149,7 +145,6 @@ public class LoginPopupUc extends PopupPanel {
 	 * Class constructor , to create Login Popup. 
 	 */
 	
-	
 	public LoginPopupUc(){
 		super(false);
         this.res = LoginPopUpCBundle.INSTANCE;
@@ -167,10 +162,7 @@ public class LoginPopupUc extends PopupPanel {
         
 		this.center();
 	}
-	/**
-	 * Parameterized Constructor to initialize email id.
-	 * @param emailId
-	 */
+	
 	public LoginPopupUc(String emailId){
 		this();
 		this.emailId = emailId;
@@ -189,7 +181,8 @@ public class LoginPopupUc extends PopupPanel {
 		this.headerUc = headerUc;
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-
+		this.setGlassStyleName(LoginPopUpCBundle.INSTANCE.css().loginPopupGlassStyle());
+		this.getElement().getStyle().setZIndex(99999);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 //        lblKeepMeLogedIn.getElement().setId("chkLogin");
@@ -206,7 +199,7 @@ public class LoginPopupUc extends PopupPanel {
 	 * 
 	 * @created_date : 15-09-2013
 	 * 
-	 * @description : To set Handlers.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -248,22 +241,22 @@ public class LoginPopupUc extends PopupPanel {
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(MessageProperties.GL0187);
-		gmailButton.setText(MessageProperties.GL0203);
+		lblLoginHeading.setText(GL0187);
+		gmailButton.setText(GL0203);
 		gmailButton.getElement().setId("btnGmail");
 		forgotPwd.getElement().setId("lnkForgotPwd");
-        loginTxtBox.setPlaceholder(MessageProperties.GL0202);
-        loginTxtBox.getElement().setAttribute("placeholder", MessageProperties.GL0202);
+        loginTxtBox.setPlaceholder(GL0202);
+        loginTxtBox.getElement().setAttribute("placeholder", GL0202);
 		loginTxtBox.setFocus(true);
-        passwordTxtBox.setPlaceholder(MessageProperties.GL0204);
-        forgotPwd.setText(MessageProperties.GL0205);
-//        lblKeepMeLogedIn.setText(MessageProperties.GL0206);
-        loginButton.setText(MessageProperties.GL0187);
-        ancRegisterHere.setText(MessageProperties.GL0207);
+        passwordTxtBox.setPlaceholder(GL0204);
+        forgotPwd.setText(GL0205);
+//        lblKeepMeLogedIn.setText(GL0206);
+        loginButton.setText(GL0187);
+        ancRegisterHere.setText(GL0207+GL_SPL_EXCLAMATION);
         ancRegisterHere.getElement().setId("lnkRegisterHere");
-        lblDoYouHaveAccount.setText(MessageProperties.GL0208);
-        lblOr.setText(MessageProperties.GL0209);
-        lblPleaseWait.setText(MessageProperties.GL0242);
+        lblDoYouHaveAccount.setText(GL0208);
+        lblOr.setText(GL0209);
+        lblPleaseWait.setText(GL0242);
         
         loginTxtBox.getElement().setId("tbLoginUsername");
         passwordTxtBox.getElement().setId("tbLoginPassword");
@@ -271,8 +264,8 @@ public class LoginPopupUc extends PopupPanel {
         
         lblPleaseWait.setVisible(false);
         
-        lblWelcomeBack.setText(MessageProperties.GL0345);
-        lblLoginWithGooru.setText(MessageProperties.GL0346);;
+        lblWelcomeBack.setText(GL0345);
+        lblLoginWithGooru.setText(GL0346);;
 	}
 
 	
@@ -344,6 +337,10 @@ public class LoginPopupUc extends PopupPanel {
 						AppClientFactory.setLoggedInUser(result);
 						AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
 						AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
+						//to Set the Options butts visibility in Player for comments.
+						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+							AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
+						}
 						if(getWidgetMode()!=null){
 							//AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
 						}
@@ -352,20 +349,40 @@ public class LoginPopupUc extends PopupPanel {
 					    AppClientFactory.fireEvent(new SetHeaderEvent(result));
 						//AppClientFactory.resetPlace();
 					    
-					    if(result.getUsername().equalsIgnoreCase("TexasTeacher")) {
+/*					    if(result.getUsername().equalsIgnoreCase("TexasTeacher")) {
 							AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
 							AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
 						}else{
 							AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
 							AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
 						}
-					    
+*/					    
 					    AppClientFactory.setUserflag(true);
+						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
 					    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
-					    	//AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
+					    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
+					    }
+					    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
+					    	AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), false));
+					    }
+					    
+					    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
+					    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
 					    } 
 					    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
-					    	//AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
+					    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
+						}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+							AppClientFactory.resetPlace();
+							Window.enableScrolling(true);
+							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+							AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
+							String id = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+							if (id != null) {
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", id });
+							}else{
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+							}
+							//Call shelf api to load the first collection.
 						}else{
 							AppClientFactory.resetPlace();
 							Window.enableScrolling(true);
@@ -380,19 +397,37 @@ public class LoginPopupUc extends PopupPanel {
 					    if(nameToken.equals(PlaceTokens.TEACH)) {
 					    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
 					    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-							AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
-				                public void onSuccess(List<CollectionDo> result) {				                	
-			                    	for (CollectionDo collection : result) {
-			                			if (!collection.getCollectionType().toString().trim().equalsIgnoreCase("folder")){
-		                    				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", collection.getGooruOid() });
-			                				break;
-			                			}
-			                		}
-				                }
-				            });
+							getCollectionFirstItem();
 					    }
-					  
+					    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+					    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
+					    }
+					    if(result.getOrganizationName()!=null) {
+						    if (result.getOrganizationName().contains("rusd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY))){
+						    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RUSD_LIBRARY);
+						    }
+					    }
+					    
+					    /*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
+					    	String newMailId = AppClientFactory.getPlaceManager()
+									.getRequestParameter("newMailId");
+							String userId = AppClientFactory.getPlaceManager().getRequestParameter(
+									"userId");
+							String confirmStatus = AppClientFactory.getPlaceManager()
+									.getRequestParameter("confirmStatus");
+							if(newMailId!=null && userId!=null && confirmStatus!=null){
+								System.out.println("login");
+								Map<String, String> params = new HashMap<String, String>();
+								params.put("confirmStatus", confirmStatus);
+								params.put("newMailId", newMailId);
+								params.put("userId", userId);
+								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SETTINGS, params);
+								AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
+							}
+					    }*/
 					}
+
+					
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -409,10 +444,22 @@ public class LoginPopupUc extends PopupPanel {
 		} else  { 
 			loginButton.setVisible(true);
 			lblPleaseWait.setVisible(false);
-			new AlertMessageUc("Aww!", new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+			new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
 		}
 	}
 
+	private void getCollectionFirstItem() {
+		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
+            public void onSuccess(List<CollectionDo> result) {				                	
+            	for (CollectionDo collection : result) {
+        			if (!collection.getCollectionType().toString().trim().equalsIgnoreCase("folder")){
+        				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", collection.getGooruOid() });
+        				break;
+        			}
+        		}
+            }
+        });
+	}
 	/**
 	 * Added click handler to hide the login popup.
 	 * 
@@ -421,7 +468,7 @@ public class LoginPopupUc extends PopupPanel {
 	 */
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
-		
+		StudentAssignmentView.islogin = false;
 		/*
 		 * Checks for parameter value if it is true then it will remove the parameter, so that it will avoid 
 		 * invoking login popup multiple times on refresh.
@@ -430,14 +477,33 @@ public class LoginPopupUc extends PopupPanel {
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 		}
+		if( AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
+			AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), true));
+		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
 	    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), true));
 	    } 
 	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
-	    	//AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), true));
-		}else{
+	    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), true));
+		}
+	    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT))
+	    {
+	    	if(!StudentAssignmentView.getMainContainerStatus())
+	    	{
+	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    	}
+	    }/*else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SETTINGS)){
+	    	if(AppClientFactory.getPlaceManager().getRequestParameter("newMailId")!=null){
+	    		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+	    	}
+	    }*/
+	    else{
 			Window.enableScrolling(true);
 			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF) && AppClientFactory.getPlaceManager().getRequestParameter("id") != null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("")){
+				hide();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+			}
 		}
         hide();
 	}
@@ -453,16 +519,36 @@ public class LoginPopupUc extends PopupPanel {
 		MixpanelUtil.Arrive_Register_popup();
 		DataLogEvents.signUp(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "");
 		
-		Map<String, String> params = new HashMap<String, String>();
+//		Map<String, String> params = new HashMap<String, String>();
+//		params.put("callback", "signup");
+//		params.put("type", "1");
+//		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME, params );
+		 PlaceRequest checkTabvalue = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+         String tabValue = checkTabvalue.getParameter("tab", null);
+		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		if(params.containsKey("query"))
+		{
+			String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+			params.put("query", queryVal);
+		}
+		if(params.containsKey("flt.subjectName"))
+		{
+			String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+			params.put("flt.subjectName", subjectNameVal);
+		}
 		params.put("callback", "signup");
 		params.put("type", "1");
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME, params );
+		if(tabValue!=null){
+		params.remove("tab");
+		}
+		this.hide();
+		
+		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 		
 		/*RegisterVc registerVc = new RegisterVc();
 		registerVc.center();
 		registerVc.show();*/
 		
-		this.hide();
 	}
 
 	/**
@@ -521,41 +607,12 @@ public class LoginPopupUc extends PopupPanel {
 						AppClientFactory.setLoggedInUser(user);
 					}
 				});
-			} else if((flag == 2||flag == 5||flag==1) && !AppClientFactory.isAnonymous()){
-				new ImprovedGooruPopUpView();
-
-				AppClientFactory.getInjector().getUserService().updateUserViewFlag(user.getGooruUId(), 6, new SimpleAsyncCallback<UserDo>() {
-					@Override
-					public void onSuccess(UserDo newUser) {
-						UserDo user = AppClientFactory.getLoggedInUser();
-						user.setViewFlag(newUser.getViewFlag());
-						AppClientFactory.setLoggedInUser(user);
-					}
-				});
-				
-				
+			} else if((flag == 2||flag == 6||flag==1) && !AppClientFactory.isAnonymous()){
+//				new ImprovedGooruPopUpView();				
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function isCookieEnabled 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Native method to check cookie is enabled or not.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private static native boolean isCookieEnabled() /*-{
 		return navigator.cookieEnabled;
 	 }-*/;
@@ -576,76 +633,20 @@ public class LoginPopupUc extends PopupPanel {
 	public void setSignedInDataAsyncCallback(SimpleAsyncCallback<UserDo> signedInDataAsyncCallback) {
 		this.signedInDataAsyncCallback = signedInDataAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setNameToken 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : To set NameToken.
-	 * 
-	 * 
-	 * @parm(s) : @param nameToken
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setNameToken(String nameToken) { 
 		this.nameToken=nameToken;
 	}
-	/**
-	 * 
-	 * @function setMixPanelEvent 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To initialize eventType.
-	 * 
-	 * 
-	 * @parm(s) : @param eventType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setMixPanelEvent(String eventType) {
 		this.eventType = eventType;
 	}
-	/**
-	 * 
-	 * @function getMixPanelEvent 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : To get eventType.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public String getMixPanelEvent() {
 		return eventType;
 		
 	}
-	/**
-	 * onLoad
-	 */
+	
 	public void onLoad(){
 		super.onLoad();
 		Scheduler.get().scheduleDeferred(new  ScheduledCommand(){
@@ -657,26 +658,7 @@ public class LoginPopupUc extends PopupPanel {
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function getAge 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : To get Age based on DOB.
-	 * 
-	 * 
-	 * @parm(s) : @param birthDate
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private int getAge(Date birthDate) {
 		if (birthDate != null) {
 			long ageInMillis = new Date().getTime() - birthDate.getTime();
@@ -686,50 +668,15 @@ public class LoginPopupUc extends PopupPanel {
 			return 0;
 		}
 	}
-	/**
-	 * 
-	 * @function getWidgetMode 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : getter for widgetMode.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public String getWidgetMode() {
 		return widgetMode;
 	}
-	/**
-	 * 
-	 * @function setWidgetMode 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter for widgetMode.
-	 * 
-	 * 
-	 * @parm(s) : @param widgetMode
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setWidgetMode(String widgetMode) {
 		this.widgetMode = widgetMode;
 
 	}
+	
 }
 

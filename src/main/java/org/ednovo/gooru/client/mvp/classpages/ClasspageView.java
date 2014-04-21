@@ -37,32 +37,38 @@ import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView
 import org.ednovo.gooru.client.mvp.classpages.resource.item.ClasspageResourceItemChildView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+
 /**
  * @fileName : ClasspageView.java
  *
- * @description : Top-level view for Class page.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 26-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
-public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> implements IsClasspageView{
+public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> implements IsClasspageView,MessageProperties{
 
 	
 	@UiField(provided = true)
@@ -75,13 +81,19 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 
 	@UiField Button btnNewClasspage;
 	
-	@UiField HTMLPanel classpageListPanel;
+	@UiField HTMLPanel classpageListPanel,classPageLbl,teachLbl,assignLbl,createLbl;
 	
-	@UiField HTMLPanel placeHolderForEmptyTeach;
+	@UiField HTMLPanel placeHolderForEmptyTeach,createClasspageLbl,assignLblClassPage;
 	
-	@UiField HTMLPanel loadingPanel;
+	@UiField HTMLPanel loadingPanel,addToAssignLbl,shareLbl,shareClassPageText;
 	
 	@UiField ScrollPanel classPageScrollPanel;
+	
+	@UiField Image roundOneLbl,addClassPageLbl,roundTwoLbl,addAssignImgLbl,roundThreeLbl,shareImageLbl;
+	
+	@UiField Label needHelpText;
+	
+	@UiField Anchor supportCenterLbl;
 	
 	/** 
 	 * This method is to get the loadingPanel
@@ -110,7 +122,10 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	 * Show/Hide placeHolderForEmptyTeach
 	 */
 	public void showPlaceHolderForEmptyTeach(boolean visibility){
+		
 		placeHolderForEmptyTeach.setVisible(true);
+	
+		
 	}
 
 
@@ -118,35 +133,50 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 	interface ClasspageViewUiBinder extends UiBinder<Widget, ClasspageView>{
 		
 	}
-	/**
-	 * class constructor.
-	 */
 	@Inject
 	public ClasspageView(){
 		this.res = ClasspageCBundle.INSTANCE;
 		res.css().ensureInjected();
 		
 		setWidget(uiBinder.createAndBindUi(this));
+		classPageLbl.getElement().setInnerText(GL1397);
+		teachLbl.getElement().setInnerText(GL1382+GL_SPL_EXCLAMATION);
+		assignLbl.getElement().setInnerText(GL1383);
+		roundOneLbl.setTitle(GL1398);
+		roundOneLbl.setAltText(GL1398);
+		roundOneLbl.setUrl("images/rounded-one.png");
+		createLbl.getElement().setInnerText(GL1335);
+		createClasspageLbl.getElement().setInnerText(GL1399);
+		addClassPageLbl.setTitle(GL1381);
+		addClassPageLbl.setAltText(GL1381);
+		addClassPageLbl.setUrl("images/Classpage/classpage-image.png");
+		roundTwoLbl.setTitle(GL1400);
+		roundTwoLbl.setAltText(GL1400);
+		roundTwoLbl.setUrl("images/rounded-two.png");
+		assignLblClassPage.getElement().setInnerText(GL1401);
+		addToAssignLbl.getElement().setInnerText(GL1402);
+		addAssignImgLbl.setTitle(GL1401);
+		addAssignImgLbl.setAltText(GL1401);
+		addAssignImgLbl.setUrl("images/Classpage/add-assignment-image.png");
+		roundThreeLbl.setTitle(GL1403);
+		roundThreeLbl.setAltText(GL1403);
+		roundThreeLbl.setUrl("images/rounded-three.png");
+		shareLbl.getElement().setInnerText(GL0536);
+		shareClassPageText.getElement().setInnerText(GL1404);
+		shareImageLbl.setTitle(GL0526);
+		shareImageLbl.setAltText(GL0526);
+		shareImageLbl.setUrl("images/Classpage/share-image.png");
+		needHelpText.setText(GL1405);
+		supportCenterLbl.setText(GL1406);
+		supportCenterLbl.setHref("http://support.goorulearning.org/forums");
 		loadingPanel.setVisible(false);		
 		classPageScrollPanel.setVisible(false);
 		placeHolderForEmptyTeach.setVisible(true);
+		btnNewClasspage.setText(GL1381);
 		btnNewClasspage.getElement().setId("btnNewClasspage");
 	}
 	
-	/**
-	 * @function OnClickNewClasspage 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This will hanlde the click event for the NewClasspage button.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("btnNewClasspage")
 	public void OnClickNewClasspage(ClickEvent event){
 		MixpanelUtil.Click_Add_NewClasspage();
@@ -162,9 +192,6 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 			}
 		};
 	}
-	/**
-	 * This method is used to open a class page in edit mode.
-	 */
 	@Override
 	public void OpenClasspageEdit(String gooruOId) {
 		Map<String, String> params = new HashMap<String, String>();
@@ -175,30 +202,22 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 		AppClientFactory.getPlaceManager().revealPlace(
 				PlaceTokens.EDIT_CLASSPAGE, params);
 	}
-	/**
-	 * This method is used to insert class page.
-	 */
 	@Override
 	public void insertClasspage(CollectionDo collectionDo, boolean newFlag) {
 		
 		ClasspageResourceItemChildView classpageResourceItemChildView = new ClasspageResourceItemChildView(collectionDo);
 		classpageListPanel.add(classpageResourceItemChildView);
 	}
-	/**
-	 * This method is used to get the class page scroll panel.
-	 */
+
+
 	public ScrollPanel getClassPageScrollPanel() {
 		return classPageScrollPanel;
 	}
-	/**
-	 * This method is used to set the class page scroll panel.
-	 */
+
 	public void setClassPageScrollPanel(ScrollPanel classPageScrollPanel) {
 		this.classPageScrollPanel = classPageScrollPanel;
 	}
-	/**
-	 * This method is used to get the list of class pages.
-	 */
+
 	@Override
 	public HTMLPanel getClasspageListPanel() {
 		return classpageListPanel;

@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -32,18 +32,17 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class MultipleAnswersQuestionView extends Composite{
+public class MultipleAnswersQuestionView extends Composite implements MessageProperties{
 	
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer;
 	@UiField QuestionStyleResource oeStyle;
 	@UiField Label messageBodyText;
-	private static final String MULTI_ANSWER_BODY_TEXT="Please select at least one correct answer.";
-	private CollectionItemDo collectionItemDo;
-	private int hintsLength=0;
+	@UiField HTMLPanel answerText;
 	
 	private static MultipleAnswersQuestionViewUiBinder uiBinder = GWT.create(MultipleAnswersQuestionViewUiBinder.class);
 
@@ -53,6 +52,8 @@ public class MultipleAnswersQuestionView extends Composite{
 	
 	public MultipleAnswersQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		answerText.getElement().setInnerHTML(GL0665);
+		checkAnswer.setText(GL0666);
 	}
 	
 	

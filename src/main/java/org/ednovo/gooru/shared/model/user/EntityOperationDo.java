@@ -25,20 +25,7 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : EntityOperationDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class EntityOperationDo implements Serializable {
 
 	/**
@@ -48,41 +35,31 @@ public class EntityOperationDo implements Serializable {
 	private Integer entityOperationId;
 	private String entityName;
 	private String operationName;
-	/** 
-	 * This method is to get the entityOperationId
-	 */
-	public Integer getEntityOperationId() {
-		return entityOperationId;
-	}
-	/** 
-	 * This method is to set the entityOperationId
-	 */
-	public void setEntityOperationId(Integer entityOperationId) {
-		this.entityOperationId = entityOperationId;
-	}
-	/** 
-	 * This method is to get the entityName
-	 */
-	public String getEntityName() {
-		return entityName;
-	}
-	/** 
-	 * This method is to set the entityName
-	 */
-	public void setEntityName(String entityName) {
-		this.entityName = entityName;
-	}
-	/** 
-	 * This method is to get the operationName
-	 */
+	
+	public EntityOperationDo(){}
+
 	public String getOperationName() {
 		return operationName;
 	}
-	/** 
-	 * This method is to set the operationName
-	 */
+
 	public void setOperationName(String operationName) {
 		this.operationName = operationName;
+	}
+
+	public String getEntityName() {
+		return this.entityName;
+	}
+
+	public void setEntityName(final String entityName) {
+		this.entityName = entityName;
+	}
+
+	public Integer getEntityOperationId() {
+		return entityOperationId;
+	}
+
+	public void setEntityOperationId(Integer entityOperationId) {
+		this.entityOperationId = entityOperationId;
 	}
 
 }

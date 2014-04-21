@@ -43,21 +43,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : AddQuestionAnswerChoice.java
- *
- * description :This class is used to Add Answer choice for Question.  
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
 	
 	public interface AddQuestionAnswerChoiceUiBinder extends UiBinder<Widget, AddQuestionAnswerChoice>{
@@ -75,11 +61,10 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	private String richTextData=null;
 	public AddQuestionAnswerChoice(){
 		initWidget(uiBinder.createAndBindUi(this));
+		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
+		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
+		deleteButtonContainer.add(ansChoiceDeleteButton);
 	}
-	/**
-	 * This Constructor is used to Add Answer Choice .
-	 * @param labelName
-	 */
 	public AddQuestionAnswerChoice(String labelName){
 		initWidget(uiBinder.createAndBindUi(this));
 		labelChoice.setText(labelName);
@@ -87,11 +72,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
 	}
-	/**
-	 * This Constructor is used to Add Answer Choice . 
-	 * @param labelName
-	 * @param richTextData
-	 */
 	public AddQuestionAnswerChoice(String labelName,String richTextData){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.richTextData=richTextData;
@@ -100,9 +80,6 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
 	}
-	/**
-	 * This method is used to Execute onloading..
-	 */
 	@Override
 	public void onLoad(){
 		super.onLoad();
@@ -113,59 +90,19 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 				}
 	       });
 	}
-	/**
-	 * 
-	 * @function setRichTextData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Set Rich Text.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	 public void setRichTextData(){
 		   if(richTextData!=null){
 			   answerTextBox.setText(richTextData);
 		   }	   
 	   }
-	 /**
-	  * 
-	  * @function setLabelName 
-	  * 
-	  * @created_date : 02-Jan-2014
-	  * 
-	  * @description :This method is used to set label name.
-	  * 
-	  * 
-	  * @parm(s) : @param labelName
-	  * 
-	  * @return : void
-	  *
-	  * @throws : <Mentioned if any exceptions>
-	  *
-	  */
 	public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
 	}
-	
-	/**
-	 * This method is used to Execute on Mouse over
-	 */
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	
-	/**
-	 * This method is used to Execute Mouse Out..
-	 */
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		// TODO Auto-generated method stub

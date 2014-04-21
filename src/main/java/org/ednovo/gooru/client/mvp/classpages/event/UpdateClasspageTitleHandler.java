@@ -30,20 +30,40 @@ import com.google.gwt.event.shared.EventHandler;
  * 
  * @fileName : UpdateClasspageTitleHandler.java
  *
- * @description : This file deals with Update Classpage Title Handlers.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Aug 21, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 
 public interface UpdateClasspageTitleHandler extends EventHandler {
-
+	
+	/**
+	 * 
+	 * @function updateClasspageTitle 
+	 * 
+	 * @created_date : Aug 21, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * @parm(s) : @param classpageTitle
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void updateClasspageTitle(String classpageId, String classpageTitle);
 
 }

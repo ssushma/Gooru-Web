@@ -10,8 +10,8 @@
 			<g:Label styleName="{res.css.closeButton}" ui:field="lblCancel"></g:Label>
 			<g:HTMLPanel styleName="{res.css.popupContent} {res.css.metadataSelection}" ui:field="metaDataSelectionPanel">
 			   <g:HTMLPanel styleName="{res.css.congratsTop}">
-			      <g:HTMLPanel styleName="{res.css.header}">Congratulations!</g:HTMLPanel>
-			      <g:HTMLPanel styleName="{res.css.subheader}">Your Gooru account has been created. Tell us more about your favorite course(s) and grade(s). We’ll use this information to personalize your Gooru experience or skip to finish.</g:HTMLPanel>
+			      <g:HTMLPanel styleName="{res.css.header}" ui:field="congratsLbl"></g:HTMLPanel>
+			      <g:HTMLPanel styleName="{res.css.subheader}" ui:field="accountCreatedText"></g:HTMLPanel>
 			   </g:HTMLPanel>
 			   <g:HTMLPanel styleName="{res.css.userInfoContainer}">
 			      <g:HTMLPanel styleName="{res.css.selectGrades}">
@@ -27,7 +27,7 @@
 			            <eventPanel:HTMLEventPanel styleName="{res.css.subjectOption}" ui:field="technologyAndEngineeringLbl"></eventPanel:HTMLEventPanel> -->
 			         </g:HTMLPanel>
 			         <g:HTMLPanel styleName="{res.css.courseContainer}" ui:field="courseContainer">
-			             <g:Image altText="Loading" title="Loading" ui:field="imgLoading" styleName="{res.css.loadingImage}"></g:Image>
+			             <g:Image ui:field="imgLoading" styleName="{res.css.loadingImage}"></g:Image>
 			         </g:HTMLPanel>
 			      </g:HTMLPanel>
 			   </g:HTMLPanel>
@@ -35,7 +35,7 @@
 			       <g:Label styleName="{res.css.error}" ui:field="lblErrorMessage" />
 			   </g:HTMLPanel>
 			   <g:HTMLPanel styleName="{res.css.skipSubmit}">
-			      <g:Button styleName="primary" ui:field="skipBtn">Skip</g:Button><g:Button styleName="primary" ui:field="submitBtn">Submit</g:Button>
+			      <g:Button styleName="primary" ui:field="skipBtn"></g:Button><g:Button styleName="primary" ui:field="submitBtn"></g:Button>
 			   </g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

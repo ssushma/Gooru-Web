@@ -56,21 +56,17 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : SocialShareSmallView.java
- *
- * @description : This file used to share the user data by using 
- *                     social web-sites or through email.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+* @fileName : SocialShareView.java
+*
+* @description : This file used to share the user data by using 
+*                     social web-sites or through email.
+* 
+* @version : 5.4
+*
+* @date:  August, 2013.
+*
+
+*/
 
 public class SocialShareSmallView extends ChildView<SocialShareSmallPresenter> implements
 IsSocialShareSmallView, MessageProperties {
@@ -86,7 +82,7 @@ IsSocialShareSmallView, MessageProperties {
 	HTMLEventPanel fbPanel,twitterPanel,emailPanel,fbIconPanel,twIconPanel,emailIconPanel;
 
 	@UiField
-	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,panelTwitter,panelEmail,socialShareContainer;
+	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,panelTwitter,panelEmail,socialShareContainer,faceBookLbl,twitterLbl,emailLbl;
 
 	private SocialShareDo socialDo;
 
@@ -113,15 +109,13 @@ IsSocialShareSmallView, MessageProperties {
 
 	private static final String DEFULT_WIMAGE = "images/default-website.png";
 
-	private static final String DEFULT_TIMAGE = "images/default-textbook.png";
-
-	private static final String DEFULT_EIMAGE = "images/default-exam.png";
-
-	private static final String DEFULT_SIMAGE = "images/default-slide.png";
-
-	private static final String DEFULT_HIMAGE = "images/default-handout.png";
-
-	private static final String DEFULT_LIMAGE = "images/default-lesson.png";
+	private static final String DEFULT_AIMAGE ="images/default-audio.png";
+	
+	private static final String DEFULT_ITYPEIMAGE ="images/default-image.png";
+	
+	private static final String DEFULT_OIMAGE ="images/default-other.png";
+	
+	private static final String DEFULT_TEXTIMAGE ="images/default-text.png";
 
 	private boolean isProfilePageView = false;
 
@@ -153,7 +147,9 @@ IsSocialShareSmallView, MessageProperties {
 
 		setPresenter(new SocialShareSmallPresenter(this));
 		//		shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-
+		faceBookLbl.getElement().setInnerHTML(GL0646);
+		twitterLbl.getElement().setInnerHTML(GL0647);
+		emailLbl.getElement().setInnerHTML(GL0426);
 		try {
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
@@ -226,18 +222,16 @@ IsSocialShareSmallView, MessageProperties {
 						categoryImage.setUrl(DEFULT_QIMAGE);
 					} else if (category.equalsIgnoreCase("interactive")) {
 						categoryImage.setUrl(DEFULT_IIMAGE);
-					} else if (category.equalsIgnoreCase("website")) {
+					} else if (category.equalsIgnoreCase("website")||category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("webpage")) {
 						categoryImage.setUrl(DEFULT_WIMAGE);
-					} else if (category.equalsIgnoreCase("slide")) {
-						categoryImage.setUrl(DEFULT_SIMAGE);
-					} else if (category.equalsIgnoreCase("textbook")) {
-						categoryImage.setUrl(DEFULT_TIMAGE);
-					} else if (category.equalsIgnoreCase("handout")) {
-						categoryImage.setUrl(DEFULT_HIMAGE);
-					} else if (category.equalsIgnoreCase("lesson")) {
-						categoryImage.setUrl(DEFULT_LIMAGE);
-					} else if (category.equalsIgnoreCase("exam")) {
-						categoryImage.setUrl(DEFULT_EIMAGE);
+					} else if (category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")){
+						categoryImage.setUrl(DEFULT_ITYPEIMAGE);
+					} else if (category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("handout")||category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("text")) {
+						categoryImage.setUrl(DEFULT_TEXTIMAGE);
+					} else if (category.equalsIgnoreCase("audio")) {
+						categoryImage.setUrl(DEFULT_AIMAGE);
+					} else if (category.equalsIgnoreCase("other")) {
+						categoryImage.setUrl(DEFULT_OIMAGE);
 					}
 				}
 				socialDo.setThumbnailurl(categoryImage.getUrl());
@@ -255,25 +249,6 @@ IsSocialShareSmallView, MessageProperties {
 		 */
 		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
 	}
-	/**
-	 * 
-	 * @function setSocialShareContainerId 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is used to set socialShareId.
-	 * 
-	 * 
-	 * @parm(s) : @param socialShareId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setSocialShareContainerId(String socialShareId) {
 		socialShareContainer.getElement().setId(socialShareId);
 	}
@@ -300,7 +275,7 @@ IsSocialShareSmallView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -322,7 +297,7 @@ IsSocialShareSmallView, MessageProperties {
 				MixpanelUtil.Click_Facebook_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Facebook_FromCollection();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -348,7 +323,7 @@ IsSocialShareSmallView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Email_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -371,7 +346,7 @@ IsSocialShareSmallView, MessageProperties {
 				MixpanelUtil.Click_Email_FromCollection();
 
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -395,7 +370,7 @@ IsSocialShareSmallView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -418,7 +393,7 @@ IsSocialShareSmallView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 
-			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -501,118 +476,50 @@ IsSocialShareSmallView, MessageProperties {
 			popup.center();
 		}
 	}
-	/**
-	 * Returns Widget.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		return null;
 	}
-	/**
-	 * Returns IsDraggableMirage.
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		return null;
 	}
-	/**
-	 * Executes on Blur handler of DragEvent.
-	 */
+
 	@Override
 	public void onDragBlur() {
 		// TODO Auto-generated method stub
 	}
-	/**
-	 * This is used to get the Drag Id.
-	 */
+
 	@Override
 	public String getDragId() {
 		return null;
 	}
-	/**
-	 * This is used to get the Drag Type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		return null;
 	}
-	/**
-	 * This is used to get the Drag Top Correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		return 0;
 	}
-	/**
-	 * This is used to get the Drag Left Correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		return 0;
 	}
-	/**
-	 * 
-	 * @function setUserProfileAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for userProfileAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param userProfileAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserProfileAsyncCallback(SimpleAsyncCallback<SettingDo> userProfileAsyncCallback) {
 		this.userProfileAsyncCallback = userProfileAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getUserService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns userService
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public UserServiceAsync getUserService() {
 		return userService;
-}
-/**
-	 * 
-	 * @function getUserprofileAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns userProfileAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<SettingDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	}
+
 	public SimpleAsyncCallback<SettingDo> getUserprofileAsyncCallback() {
 		return userProfileAsyncCallback;
 	}

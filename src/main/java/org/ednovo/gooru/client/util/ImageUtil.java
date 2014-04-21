@@ -31,18 +31,10 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : ImageUtil.java
- *
- * @description : This class is used for images.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author SearchTeam
+ * 
  */
 public class ImageUtil {
 	
@@ -73,39 +65,52 @@ public class ImageUtil {
 	public static final String LESSON = "lesson";
 	
 	public static final String CHALLENGE = "challenge";
+	
+	public static final String IMAGE = "image";
+	
+	public static final String OTHER = "other";
+	
+	public static final String AUDIO = "audio";
 
+	public static final String WEBPAGE = "webpage";
+	
+	public static final String TEXT = "text";
+	
 	public static void renderResourceImage(Widget widget, String category) {
+		category=category.toLowerCase();
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		if (category == null || category.equalsIgnoreCase(QUESTION) || category.startsWith(ASSESSMENT)) {
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().questionSmall());
 		} else if (category.equalsIgnoreCase(EXAM)) {
-			widget.setStyleName(ShelfCBundle.INSTANCE.css().examSmall());
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().websiteSmall());
 		} else if (category.equalsIgnoreCase(HANDOUT)) {
-			widget.setStyleName(ShelfCBundle.INSTANCE.css().handoutSmall());
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().textbookSmall());
 		} else if (category.equalsIgnoreCase(SLIDE)) {
-			widget.setStyleName(ShelfCBundle.INSTANCE.css().slideSmall());
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().imageSmall());
 		} else if (category.equalsIgnoreCase(INTERACTIVE)) {
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().interactiveSmall());
-		} else if (category.equalsIgnoreCase(WEBSITE)) {
+		} else if (category.equalsIgnoreCase(WEBSITE) || category.equalsIgnoreCase(WEBPAGE)) {
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().websiteSmall());
-		} else if (category.equalsIgnoreCase(TEXTBOOK)) {
+		} else if (category.equalsIgnoreCase(TEXTBOOK)|| category.equalsIgnoreCase(TEXT)) {
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().textbookSmall());
 		} else if (category.equalsIgnoreCase(LESSON)) {
-			widget.setStyleName(ShelfCBundle.INSTANCE.css().lessonSmall());
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().textbookSmall());
 		} else if (category.equalsIgnoreCase(VIDEO)) {
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().videoSmall());
 		}else if (category.equalsIgnoreCase(CHALLENGE)) {
-			widget.setStyleName(ShelfCBundle.INSTANCE.css().challengeSmall());
-		} 
-		else if (category.equalsIgnoreCase(DRAG_TYPE.COLLECTION.getName())) {
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().websiteSmall());
+		} else if (category.equalsIgnoreCase(IMAGE)) {
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().imageSmall());
+		} else if (category.equalsIgnoreCase(OTHER)) {
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().otherSmall());
+		} else if (category.equalsIgnoreCase(AUDIO)) {
+			widget.setStyleName(ShelfCBundle.INSTANCE.css().audioSmall());
+		} else if (category.equalsIgnoreCase(DRAG_TYPE.COLLECTION.getName())) {
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().collectionSmall());
-		}
-		else if(category.equalsIgnoreCase(FOLDER)){
+		} else if(category.equalsIgnoreCase(FOLDER)){
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().myFoldersIcon());
-		}
-		else if(category.equalsIgnoreCase(COLLECTION)){
+		} else if(category.equalsIgnoreCase(COLLECTION)){
 			widget.setStyleName(ShelfCBundle.INSTANCE.css().myScollectionsIcon());
 		}
-		
 	}
 }

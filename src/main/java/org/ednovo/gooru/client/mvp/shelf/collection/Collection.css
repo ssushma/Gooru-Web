@@ -102,8 +102,9 @@
 .collectionThumbnail {
 	float: left;
 	height: 120px;
-	padding: 10px;
+	padding: 20px;
 	width: 170px;
+	padding-right:10px;
 }
 
 .collectionThumbnails {
@@ -162,14 +163,17 @@
 }
 
 .infoContainer {
-	padding: 20px;
+	/* padding: 20px; */
 	float: left;
 	width: 96%;
+	padding-left:40px;
+	padding-top: 20px;
 }
 
 .gradeInfoContainer {
 	float: left;
-	margin-right: 60px;
+	margin-right: 45px;
+	margin-bottom: 50px;
 	width: 42%;
 }
 
@@ -180,9 +184,53 @@
 .shelfGradeInfoBottom {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;
-	float: left;
+	width: 277px;
+}
+
+.shelfGradeTeacherTipTextTitle {
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	float: right;
+	clear: both;
+	width: 277px;
+	margin-right:67px;
+}
+.shelfGradeTeacherTipError {
+	color: red;
+	float: right;
 	clear: both;
 	width: 332px;
+	margin-right:67px;
+}
+.shelfTeacherTipButtons
+{
+		float: right;
+	clear: both;
+	margin-right: 67px;
+	
+
+}
+.shelfGradeTeacherTipButtonsContainer
+{
+	width:332px;
+	float: right;
+clear: both;
+}
+.shelfTeacherTipButtonsCancel
+{
+	clear: both;
+	left: 150px;
+position: relative;
+}
+.shelfGradeTeacherTipTextbox{
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	float: right;
+	clear: both;
+	width: 277px;
+	margin-right:67px;
+	height:140px;
+	resize:none;
 }
 
 .shelfGradeSelectResources {
@@ -260,6 +308,7 @@
 
 .standardsCont {
 	float: left;
+	position: relative;
 }
 
 .gradeListCont {
@@ -306,6 +355,14 @@
 	width: 42%;
 	border-bottom: 1px solid #ccc;
 }
+.shelfTeacherTip {
+	color: #cccccc;
+	font-size: 16px;
+	margin-right: 67px;
+	width: 42%;
+	float:right;
+	border-bottom: 1px solid #ccc;
+}
 
 .shelfVocabularyStandard {
 	color: #cccccc;
@@ -313,17 +370,12 @@
 	margin-right: 60px;
 	width: 42%;
 	border-bottom: 1px solid #ccc;
-	float: left;
-	margin-top: 30px;
-	clear: both;
 }
 
 .shelfCourseSubject {
 	width: 100%;
-	float: left;
 	/*Mobile purpose added */
 	max-width: 332px;
-    clear: both;
 }
 
 .shelfCourseAdded {
@@ -346,10 +398,11 @@
 }
 
 .floatLeftCollectionInputBox {
-	display: inline-block;
-	/* float: left;
+	/*display: inline-block;
+	float: left;
 	width: 323px; */
-	font-size: 14px;		
+	font-size: 14px;	
+	margin-bottom:10px;	
 }
 
 .collectionCourseLstPanel {
@@ -588,16 +641,18 @@
 
 .kinderGartenGrade {
 	font-size: 16px;
-	margin-left: 90px;
+	margin-left: 85px;
 	text-align: center;
-	width: 120px;
+	width: 110px;
+	padding: 5px 0px;
 }
 
 .higherEducationGrade {
 	font-size: 16px;
-	margin-left: 80px;
+	margin-left: 68px;
 	text-align: center;
 	width: 140px;
+	padding: 5px 0px;
 }
 
 .collectionStandardsMargin {
@@ -612,7 +667,15 @@
 	text-align: right;
 	position: relative;
 }
-
+.mandatoryLabelError {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 16px;
+	color: rgb(250, 176, 58);
+	text-align: right;
+	position: relative;
+	font-style: italic;
+}
 .gwtGlassPanel{
 	z-index:99999;
 	background-color:#000;
@@ -1038,4 +1101,20 @@ float: left;
 	margin-top: 30px;
 	clear: both;
 	margin-bottom: 10px;
+}
+
+.searchRenameCollProfanityErrLbl {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 16px;
+	color: rgb(250, 176, 58);
+	text-align: right;
+	position: relative;
+	float:left;
+}
+.createCollContentAlignInputs {
+	border: 1px solid #CCCCCC;
+	height: 28px;
+	padding-left: 2px;
+	width: 298px;
 }

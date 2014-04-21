@@ -33,18 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.ContextLoader;
+
 /**
- * @fileName : AppSessionHolder.java
- *
- * @description : This class will hold the session on server side.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author SearchTeam
+ * 
  */
 public class AppSessionHolder implements Serializable {
 
@@ -63,34 +55,24 @@ public class AppSessionHolder implements Serializable {
 
 	protected ThreadLocal<HttpServletRequest> perThreadRequest;
 	protected ThreadLocal<HttpServletResponse> perThreadResponse;
-	/**
-	 * This is used to hold the application session.
-	 */
+
 	public static AppSessionHolder getInstance() {
 		AppSessionHolder appSessionHolder = (AppSessionHolder) ContextLoader.getCurrentWebApplicationContext().getBean("appSessionHolder");
 		return appSessionHolder;
 	}
-	/**
-	 * This method will set the request.
-	 */
+
 	public void setRequest(HttpServletRequest request) {
 		perThreadRequest.set(request);
 	}
-	/**
-	 * This method will get the request.
-	 */
+
 	public HttpServletRequest getRequest() {
 		return perThreadRequest.get();
 	}
-	/**
-	 * This method will set the response.
-	 */
+
 	public void setResponse(HttpServletResponse response) {
 		perThreadResponse.set(response);
 	}
-	/**
-	 * This method will get the response.
-	 */
+
 	public HttpServletResponse getResponse() {
 		return perThreadResponse.get();
 	}

@@ -4,7 +4,7 @@
 	<ui:style>
 		.wrapper {
 			position: relative;
-			min-width: 1200px;
+			min-width: 1024px;
 			height: auto !important;
 		}
 		.wrapperContent {
@@ -12,10 +12,10 @@
 			min-height: 450px;
 		}
 	</ui:style>
-	<g:HTMLPanel styleName="{style.wrapper}">
+	<g:HTMLPanel styleName="{style.wrapper}" ui:field="panelWrapper">
 		<sg:HeaderUc ui:field="headerUc"/>
 		<g:SimplePanel ui:field="wrapperPanel" styleName="{style.wrapperContent}" />
-		<sg:FooterUc />
+		<!-- <sg:FooterUc /> -->
 	</g:HTMLPanel>
 
 </ui:UiBinder> 

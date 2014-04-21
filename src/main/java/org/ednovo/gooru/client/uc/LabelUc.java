@@ -25,18 +25,10 @@
 package org.ednovo.gooru.client.uc;
 
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : LabelUc.java
+ * @author Search Team
  *
- * @description : This is class is used to display the label.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class LabelUc extends Label {
 	

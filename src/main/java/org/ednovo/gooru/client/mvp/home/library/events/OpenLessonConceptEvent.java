@@ -27,33 +27,41 @@ package org.ednovo.gooru.client.mvp.home.library.events;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
+ * 
  * @fileName : OpenLessonConceptEvent.java
  *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user fire this event it will set he concept and topics. 
- * 
+ * @description : 
+ *
+ *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Dec 4, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class OpenLessonConceptEvent extends GwtEvent<OpenLessonConceptHandler> {
 
 	private ConceptDo conceptDo;
 	private Integer topicId;
+	private String lessonId;
+	private String lessonLabel;
+	private String lessonCode;
 	
 	public static final Type<OpenLessonConceptHandler> TYPE = new Type<OpenLessonConceptHandler>();
 	
 	/**
-	 * class constructor.
+	 * 
 	 */
-	public OpenLessonConceptEvent(ConceptDo conceptDo, Integer topicId) {
+	public OpenLessonConceptEvent(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
 		setConceptDo(conceptDo);
 		setTopicId(topicId);
+		setLessonId(lessonId);
+		setLessonLabel(lessonLabel);
+		setLessonCode(lessonCode);
 	}
 
 	@Override
@@ -63,7 +71,7 @@ public class OpenLessonConceptEvent extends GwtEvent<OpenLessonConceptHandler> {
 
 	@Override
 	protected void dispatch(OpenLessonConceptHandler handler) {
-		handler.openLessonConcept(getConceptDo(),getTopicId());
+		handler.openLessonConcept(getConceptDo(),getTopicId(),getLessonId(),getLessonLabel(),getLessonCode());
 	}
 
 	/** 
@@ -94,4 +102,43 @@ public class OpenLessonConceptEvent extends GwtEvent<OpenLessonConceptHandler> {
 		this.topicId = topicId;
 	}
 
+	/** 
+	 * This method is to get the lessonId
+	 */
+	public String getLessonId() {
+		return lessonId;
+	}
+
+	/** 
+	 * This method is to set the lessonId
+	 */
+	public void setLessonId(String lessonId) {
+		this.lessonId = lessonId;
+	}
+
+	/** 
+	 * This method is to get the lessonLabel
+	 */
+	public String getLessonLabel() {
+		return lessonLabel;
+	}
+
+	/** 
+	 * This method is to set the lessonLabel
+	 */
+	public void setLessonLabel(String lessonLabel) {
+		this.lessonLabel = lessonLabel;
+	}
+
+	public String getLessonCode() {
+		return lessonCode;
+	}
+
+	public void setLessonCode(String lessonCode) {
+		this.lessonCode = lessonCode;
+	}
+	
+	
+	
+	
 }

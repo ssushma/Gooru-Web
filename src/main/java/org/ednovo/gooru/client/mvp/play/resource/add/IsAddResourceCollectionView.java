@@ -29,13 +29,19 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TreeItem;
 
 public interface IsAddResourceCollectionView extends IsViewWithHandlers<AddResourceCollectionUiHandlers>{
+
 	public Label getAddCollectionViewButton();
 	public void setCollectionItemData(String collectionId,CollectionItemDo collectionItemDo);
 	public void updateWorkSpaceLink(String collectionId);
 	public void addCollectionItems(ArrayList<CollectionItemsList> userCollectionsList,boolean isClearPanel);
-	public Label getAddNewCollectionButton();
+	public Label getAddNewCollectionLabel();
+	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel);
+	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
+	public void resetSelectionData();
 }

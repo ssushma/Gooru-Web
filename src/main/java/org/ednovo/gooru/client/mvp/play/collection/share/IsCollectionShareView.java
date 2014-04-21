@@ -23,27 +23,31 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.share;
-
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 public interface IsCollectionShareView extends IsViewWithHandlers<CollectionShareUiHandlers>{
+   public void setIframeText(Map<String, String> embedLink);
+   
+   public void setData(CollectionDo collectionDo);
+   
+   public void hideSendEmailPopup(String toEmail);
+   
+   public void showShareView(boolean isResourceView);
+   
+   public void setCollectionShareData(Map<String, String> shareUrlsList);
+   
+   public void setResourceShareData(Map<String, String> shareUrlsList);
+   
+   public void setCollectionShareData();
+   
+   public void setResourceShareData();
+   
+   public void setEmbedurl(String embedurl);
 
-	public void setIframeText(Map<String, String> embedLink);
-	
-	public void setData(CollectionDo collectionDo);
-	
-	public void hideSendEmailPopup(String toEmail);
-	
-	public void showShareView(boolean isResourceView);
-	
-	public void setCollectionShareData(Map<String, String> shareUrlsList);
-	
-	public void setResourceShareData(Map<String, String> shareUrlsList);
-	
-	public void setCollectionShareData();
-	
-	public void setResourceShareData();
+   public void showResourceData(CollectionItemDo collectionItemDo);
+   
+   public void setEmbededIframeURL(String embededIframeURL);
 }

@@ -5,21 +5,76 @@
 	min-height: 250px;
 }
 .labelText{
-	font-family:Arial, Helvetica, sans-serif;
+	 font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
 	line-height:120%;
 	color:rgb(81,81,81);
 	text-align:left;
-	padding-bottom: 30px;
+	padding-bottom: 20px;
 	padding-top: 8px;	
 	width: 50%;
-	float: left;
+	float: left; 
 	font-weight:normal;
+	
+}
+.directionsDiv{
+	width: 20%;
+	float: left;
+	padding-top: 4px; 
+
+	
+}
+.directionsDivLabel{
+	 font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	font-weight:normal;
+	
+}
+.duedateDiv{
+	width: 22%;
+	float: left; 
+
+	
+}
+.duedateDivLabel{
+	 font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(81,81,81);
+	text-align:left;
+	font-weight:normal;
+	
 }
 
+.directionsTextAreaContainer{
+
+}
+.directionsTextArea{
+	width: 302px;
+	resize:none;
+	padding: 4px;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	margin-right: 22px;
+}
+
+.labelTextSucees{
+	line-height:120%;
+	color:rgb(81,81,81);
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:normal;
+	display: inline-block;
+	font-size: 12px;
+}
+.buttonWidth{
+	width:100%;
+}
 .processing{
 	text-align: center;
-	width: 95%;
 	color: #999 !important;
 	font-style: italic;
 	padding: 10px;
@@ -27,7 +82,14 @@
 	font-size: 12px;
 }
 
-
+.txtboxerrorColor {
+	font-weight: normal;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	color:red;
+}
 .dropdownContainer{
 	background-color:rgb(255,255,255);
 	width:310px;
@@ -42,7 +104,7 @@
 	border-radius:1px;
 	border-style:solid;
 	position: absolute;
-	margin-left: 100px;
+	margin-left: 98px;
 }
 .classpageContainerFont{
 	font-family:Arial, Helvetica, sans-serif;
@@ -52,7 +114,8 @@
 
 .controlsContainer{
 	float:left;
-	margin-top:30px;
+	margin-bottom:10px;
+	margin-left:25px;
 }
 
 .labelTitlePrivateText{
@@ -70,7 +133,6 @@
 	line-height:120%;
 	color:rgb(81,81,81);
 	text-align: center;
-	padding-top: 8px;
 	width: 445px;
 }
 
@@ -105,6 +167,13 @@
 
 .assignmentsContainer{
 	float : left;
+	width:100%;
+	margin-top:10px;
+}
+
+.duedateContainer{
+	float : left;
+	width:100%;
 }
 
 .buttonAssignContainer{
@@ -344,7 +413,7 @@ padding-bottom: 18%;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:600px;
+	height:530px;
 }
 .assignContentLoginCustomize {
 	background-color: transparent;
@@ -635,14 +704,14 @@ button.LoginText {
 }
 .contentBorder {
 	text-align: center;
-	margin-top: 25px;
-	margin-bottom: 15px;
+	margin-top: -13px;
+	margin-bottom: 5px;
 	border-bottom: 1px solid rgb(221,221,221);
 }
 .inputBlockOuter {
 	width: 300px;
 	margin: 0 auto;
-	padding-top: 20px;
+	padding-top: 10px;
 	padding-left: 35px;
 }
 .inputBlock {
@@ -748,8 +817,13 @@ button.LoginText {
 }
 
 .cpSuccessMsg {
-	width: 100%;
+
 	text-align: center;
+
+	/* width: 100%;
+	text-align: left;
+	margin-left: 21px; */
+
 }
 .loadingImageMainDiv {
 	width: 100%;
@@ -783,7 +857,30 @@ button.LoginText {
 	z-index: 5;
 	margin-left: 31%;
 }
-
+.assignmentLabel{
+	color:#1076bb;
+	font-family:Arial, Helvetica, sans-serif;
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 8px;
+	text-align:left;
+	padding-bottom: 30px;
+	font-weight:normal;
+	cursor: pointer;
+	font-size:12px;
+	min-width: 35px;
+}
+.directionsErrorLbl{
+	float: right;
+	right: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 16px;
+	color: #fab03a;
+	text-align: right;
+	position: relative;
+	font-style: italic;
+}
 /*End Success popup */
 
 

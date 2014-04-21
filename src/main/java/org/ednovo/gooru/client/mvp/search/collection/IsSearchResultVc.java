@@ -28,19 +28,8 @@
 package org.ednovo.gooru.client.mvp.search.collection;
 
 /**
- * 
- * @fileName : IsSearchResultVc.java
+ * @author SearchTeam
  *
- * @description : This is the interface for SearchResultVc
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsSearchResultVc {
 	

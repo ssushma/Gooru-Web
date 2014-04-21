@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -41,23 +42,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : FlaggingPopUp.java
- *
- * @description : This class is used to set the flagging popup.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class FlaggingPopUp extends PopupPanel {
+
+public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 
 	private static FlaggingPopUpUiBinder uiBinder = GWT
 			.create(FlaggingPopUpUiBinder.class);
@@ -72,6 +62,7 @@ public class FlaggingPopUp extends PopupPanel {
 	@UiField TextArea descriptionTextArea;
 	@UiField CheckBox checkBox1,checkBox2,checkBox3,checkBox4;
 	@UiField HTML titleText;
+	@UiField Label flagText,inappropriateText,unavailableText,inaccurateText,otherReasonText,provideMoretext;
 	int formateSize=0;
 	String gooruOid="";
 	String formatting1="";
@@ -80,9 +71,6 @@ public class FlaggingPopUp extends PopupPanel {
 	String formatting4="";
 	ArrayList<String> gooruOidList=new ArrayList<String>();
 	String idStr;
-	/**
-	 * Class constructor.
-	 */
 	public FlaggingPopUp(String idStr,String resourceTitle)
 	{
 		super(false);
@@ -93,7 +81,17 @@ public class FlaggingPopUp extends PopupPanel {
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML("I would like to report \" " +resourceTitle+" \" because");
+		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
+		flagText.setText(GL0600);
+		inappropriateText.setText(GL0612);
+		unavailableText.setText(GL0613);
+		inaccurateText.setText(GL0614);
+		otherReasonText.setText(GL0606);
+		provideMoretext.setText(GL0607);
+		cancelButton.setText(GL0608);
+		submitButton.setText(GL0486);
+		submitButtonGray.setText(GL0486);
+		popUpCloseButton.setAltText(GL1050);
 		cancelButton.getElement().setAttribute("id", "cancelButton");
 		submitButton.getElement().setAttribute("id", "SubmitButton");
 		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
@@ -126,18 +124,12 @@ public class FlaggingPopUp extends PopupPanel {
 
 	
 	}
-	/**
-	 * This will handle the click event on the close button.
-	 */
 	@UiHandler("closeButton")
 	public void onClickOfcloseButton(ClickEvent event)
 	{
 	Window.enableScrolling(true);
 	this.hide();
 	}
-	/**
-	 * This will handle the click event on the cancel button.
-	 */
 	@UiHandler("cancelButton")
 	public void onClickOfCancelButton(ClickEvent event)
 	{
@@ -149,9 +141,6 @@ public class FlaggingPopUp extends PopupPanel {
 	submitButtonGray.setVisible(true);
 	submitButton.setVisible(false);
 	}
-	/**
-	 * This will handle the click event on the check box button.
-	 */
 	@UiHandler("checkBox1")
 	public void onClickOfcheckBox1(ClickEvent event)
 	{
@@ -167,9 +156,6 @@ public class FlaggingPopUp extends PopupPanel {
 		}
 		
 	}
-	/**
-	 * This will handle the click event on the check box2 button.
-	 */
 	@UiHandler("checkBox2")
 	public void onClickOfcheckBox2(ClickEvent event)
 	{
@@ -185,9 +171,6 @@ public class FlaggingPopUp extends PopupPanel {
 		}
 		
 	}
-	/**
-	 * This will handle the click event on the check box3 button.
-	 */
 	@UiHandler("checkBox3")
 	public void onClickOfcheckBox3(ClickEvent event)
 	{
@@ -203,9 +186,7 @@ public class FlaggingPopUp extends PopupPanel {
 		}
 		
 	}
-	/**
-	 * This will handle the click event on the check box4 button.
-	 */
+	
 	@UiHandler("checkBox4")
 	public void onClickOfcheckBox4(ClickEvent event)
 	{
@@ -221,9 +202,6 @@ public class FlaggingPopUp extends PopupPanel {
 		}
 	
 	}
-	/**
-	 * This will handle the click event on the submit button.
-	 */
 	@UiHandler("submitButton")
 	public void onClicksubmitButton(ClickEvent event)
 	{
@@ -301,9 +279,7 @@ public class FlaggingPopUp extends PopupPanel {
 	}
 	getThankYouPopUp();
 	}
-	/**
-	 * This method is used to display the thank you popup.
-	 */
+		
 	public void getThankYouPopUp()
 	{
 	this.hide();

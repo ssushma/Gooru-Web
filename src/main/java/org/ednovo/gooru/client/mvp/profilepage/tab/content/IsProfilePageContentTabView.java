@@ -29,21 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-/**
- * 
- * @fileName : IsProfilePageContentTabView.java
- *
- * @description : This file is the interface for ProfilePageContentTabView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsProfilePageContentTabView extends IsViewWithHandlers<ProfilePageContentTabUiHandlers>{
 
 	void setContentItemData(List<CollectionItemDo> collectionItemDo);

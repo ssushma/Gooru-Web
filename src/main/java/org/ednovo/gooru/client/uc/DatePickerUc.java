@@ -28,6 +28,7 @@ import java.util.Date;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -36,20 +37,12 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
+
 /**
- * @fileName : DatePickerUc.java
+ * @author Search Team
  *
- * @description : This is date picker class.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class DatePickerUc extends PopupPanel {
+public class DatePickerUc extends PopupPanel implements MessageProperties{
 	
 	private DatePicker datePicker;
 
@@ -98,8 +91,8 @@ public class DatePickerUc extends PopupPanel {
 		
 		datePicker = new DatePicker();
 		buttonContainer = new FlowPanel();
-		todayButton = new Button("Today");
-		doneButton = new Button("Done");
+		todayButton = new Button(GL1506);
+		doneButton = new Button(GL0745);
 		datePickerBox = new FlowPanel();
 		monthYearContainer.setStyleName(UcCBundle.INSTANCE.css()
 				.monthYearContainer());
@@ -123,6 +116,7 @@ public class DatePickerUc extends PopupPanel {
 		this.setStyleName(UcCBundle.INSTANCE.css().datePickerContainer());
 		this.setWidget(datePickerBox);
 		this.setAutoHideEnabled(true);
+
 		listYear.addChangeHandler(new OnYearChange());
 		listMonths.addChangeHandler(new OnMonthChange());
 		
@@ -144,7 +138,7 @@ public class DatePickerUc extends PopupPanel {
 			setMonth(true); 
 
 		}		
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) ||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
         	this.getElement().getStyle().setZIndex(9999999);
         }else{
         	this.getElement().getStyle().clearZIndex();
@@ -159,8 +153,8 @@ public class DatePickerUc extends PopupPanel {
 	 * Set year in date picker
 	 */
 	public void setYear() {
-		int currentYear = Integer.parseInt(year);
-		
+//		int currentYear = Integer.parseInt(year);
+		int currentYear =(date.getYear()+1900);
 		date.getMonth();
 		listYear.clear();
 		int yearCount = 10;
@@ -177,7 +171,7 @@ public class DatePickerUc extends PopupPanel {
 		//listYear.setSelectedIndex(listYear.getItemCount() - 1);
 			listYear.setSelectedIndex(selectedYearIndex-1);
 		}else{
-			yearCount = 113;
+			yearCount = currentYear-1900;
 			for (int i=0; i<10; i++){
 				listYear.addItem(String.valueOf(currentYear+i),
 						String.valueOf(yearCount++));
@@ -201,15 +195,14 @@ public class DatePickerUc extends PopupPanel {
 				
 				if (count <= totalMonth) {
 					listMonths.addItem(monthString, String.valueOf(count++));
-					
 				}	
 			}
 			
-			if(isCurrentYear){
+			/*if(isCurrentYear){
 				listMonths.setSelectedIndex(date.getMonth());
 				datePicker.setCurrentMonth(new Date());
 				datePicker.setValue(new Date());
-			}
+			}*/
 		}else{
 			int totalMonth = isCurrentYear ? date.getMonth() : 11;
 			int startMonth = isCurrentYear ? date.getMonth() : 0;
@@ -226,9 +219,7 @@ public class DatePickerUc extends PopupPanel {
 			}
 		}
 	}
-	/**
-	 * This will handle the change event on the year change.
-	 */
+	
 	private class OnYearChange implements ChangeHandler {
 		@Override
 		public void onChange(ChangeEvent event) {
@@ -236,7 +227,6 @@ public class DatePickerUc extends PopupPanel {
 					.getValue(listYear.getSelectedIndex());
 			String selectedMonth = listMonths.getValue(listMonths
 					.getSelectedIndex());
-			
 			
 			Date yearDate = new Date();
 			if(datePicker.getValue()==null){
@@ -272,15 +262,12 @@ public class DatePickerUc extends PopupPanel {
 			
 		}
 	}
-	/**
-	 * This will handle the change event on the month change.
-	 */
+
 	private class OnMonthChange implements ChangeHandler {
 		@Override
 		public void onChange(ChangeEvent event) {
 			String selectedMonth = listMonths.getValue(listMonths
 					.getSelectedIndex());
-			
 			String selectedYear = listYear
 					.getValue(listYear.getSelectedIndex());
 			
@@ -311,9 +298,8 @@ public class DatePickerUc extends PopupPanel {
 		return datePicker;
 	}
 
-	/**
-	 * This method will reset the data.
-	 */
+	
+
 	public void reset() {
 		setYear();
 		if(isRegistration){

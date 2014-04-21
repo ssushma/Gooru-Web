@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -79,24 +80,13 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author BLR Team
  * 
- * @fileName : AssignPopupVc.java
- *
- * @description : Related to AssignmentPopup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public abstract class AssignPopupVc extends PopupPanel {
+public abstract class AssignPopupVc extends PopupPanel implements MessageProperties {
 
 	@UiField
-	HTMLPanel socialSharePanel,loadingImageLabel,popupContentAssign;
+	HTMLPanel loadingImageLabel,popupContentAssign,signUpStyles;
 
 	@UiField
 	HTMLEventPanel htmlEvenPanelContainer;
@@ -119,18 +109,18 @@ public abstract class AssignPopupVc extends PopupPanel {
 	Anchor forgotPwd,ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl;
+	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
 
 	private boolean isPrivate = false;
-	private static final String SWITCH_FULL_URL = "Switch to full URL";
-	private static final String SWITCH_EMBED_CODE = "Switch to embed code";
-	private static final String SWITCH_BITLY = "Switch to Bit.ly";
+	private static final String SWITCH_FULL_URL = GL0643;
+	private static final String SWITCH_EMBED_CODE = GL0640;
+	private static final String SWITCH_BITLY = GL0639;
 	private static final String SWITCH_URL_LABEL = "swithUrlLbl";
 	private static final String SWITCH_TO_EMBED_LABEL = "swithToEmbedLbl";
 	private String bitlyLink, decodeRawUrl, embedBitlyLink, rawUrl;
-	private static final String OOPS = MessageProperties.GL0061;
-	private static final String LOGIN_ERROR = MessageProperties.GL0347;
-	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = MessageProperties.GL0348;
+	private static final String OOPS =GL0061;
+	private static final String LOGIN_ERROR = GL0347;
+	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = GL0348;
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
 	private ClasspageServiceAsync classpageService;
 	private SimpleAsyncCallback<ClasspageListDo> getClasspageList;
@@ -173,9 +163,9 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 
 	/**
-	 * Constructor
+	 * 
 	 */
-	public AssignPopupVc(String collectionIdVal) {
+	public AssignPopupVc(String collectionIdVal, String collectionTitle, String collectionDescription) {
 		super(false);
 		
 	
@@ -183,7 +173,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		
+		swithUrlLbl.setText(GL0639);
+		swithToEmbedLbl.setText(GL0640);
 		AppClientFactory.getEventBus().addHandler(SetLoginStatusEvent.TYPE, setLoginStatusHandler);
 
 		setLabelsAndIds();
@@ -208,19 +199,10 @@ public abstract class AssignPopupVc extends PopupPanel {
 			@Override
 			public void onSuccess(CollectionDo result) {
 	
-				String collectionId = "";
 
-
+				toAssignStr = result.getGooruOid();
 
 				if (result.getGooruOid() != null) {
-					collectionId = result.getGooruOid();
-				} else {
-					collectionId = "4b4bb39d-2892-4dd6-bd7f-5fd1227751de";
-				}
-
-				toAssignStr = collectionId;
-
-				if (collectionId != null) {
 
 					collectionDoGlobal = result;
 
@@ -231,7 +213,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 						loadListContainers();
 
 					}
-					generateShareLink(toAssignStr);
+		
 
 				}
 
@@ -243,54 +225,25 @@ public abstract class AssignPopupVc extends PopupPanel {
 			
 			}
 		});
-		
+		generateShareLink(collectionIdVal,collectionTitle,collectionDescription);
+		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String,String>>() {
+			
+			@Override
+			public void onSuccess(Map<String, String> result) {
+				embedBitlyLink=result.get("decodeRawUrl");
+			}
+		});
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		this.center();	
 	}
-	/**
-	 * 
-	 * @function hideContainers 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will hide htmlEvenPanelContainer and enable htmlLoginPanel.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void hideContainers() {
 		htmlEvenPanelContainer.setVisible(false);
 		htmlLoginPanel.setVisible(true);
 
 	}
-	/**
-	 * 
-	 * @function loadListContainers 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :
-	 * 
-	 * 
-	 * @parm(s) : To hide the Popup.
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void loadListContainers() {
 
 		AssignCollectionView assignWidget = new AssignCollectionView(
@@ -343,15 +296,15 @@ public abstract class AssignPopupVc extends PopupPanel {
 	public void setLabelsAndIds() {
 
 		forgotPwd.getElement().setId("lnkForgotPwd");
-		loginTxtBox.setPlaceholder(MessageProperties.GL0202);
+		loginTxtBox.setPlaceholder(GL0202);
 		loginTxtBox.getElement().setAttribute("placeholder",
-				MessageProperties.GL0202);
+				GL0202);
 		loginTxtBox.setFocus(true);
-		passwordTxtBox.setPlaceholder(MessageProperties.GL0204);
-		forgotPwd.setText(MessageProperties.GL0205);
-		loginButton.setText(MessageProperties.GL0187);
+		passwordTxtBox.setPlaceholder(GL0204);
+		forgotPwd.setText(GL0205);
+		loginButton.setText(GL0187);
 
-		lblPleaseWait.setText(MessageProperties.GL0242);
+		lblPleaseWait.setText(GL0242);
 
 		loginTxtBox.getElement().setId("tbLoginUsername");
 		passwordTxtBox.getElement().setId("tbLoginPassword");
@@ -361,97 +314,36 @@ public abstract class AssignPopupVc extends PopupPanel {
 
 		shareLinkTxtBox.setReadOnly(true);
 		shareLinkTxtBox.addClickHandler(new OnClickShareHandler());
+		assignDes.setText(GL0513);
+		lblAssignPopDes.setText(GL0514);
+		lblAssignTitle.setText(GL0518);
+		lblpopupTitle.setText(GL0519);
+		lblLoginPopupTitle.setText(GL0520);
+		loginButton.setText(GL0187);
+		donothaveAC.setText(GL0634+" ");
+		ancSignUp.setText(GL0207+GL_SPL_EXCLAMATION);
+		signUpStyles.getElement().setAttribute("style", "display: inline-block;");
+		ancSignUp.getElement().setAttribute("style", "float: left;");
+		donothaveAC.getElement().setAttribute("style", "float: left;padding:0;");
 
 	}
-	/**
-	 * 
-	 * @function onClickSwithUrl 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will deals with share url's.
-	 * 
-	 * 
-	 * @parm(s) : @param clickevent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("swithUrlLbl")
 	public void onClickSwithUrl(ClickEvent clickevent) {
 		if (!getIsPrivate()) {
 			changeShareUrlEvents(SWITCH_BITLY);
 		}
 	}
-	/**
-	 * 
-	 * @function getIsPrivate 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns isPrivate.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public boolean getIsPrivate() {
 		return isPrivate;
 	}
-	/**
-	 * 
-	 * @function setPrivate 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To initialize isPrivate.
-	 * 
-	 * 
-	 * @parm(s) : @param isPrivate
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setPrivate(boolean isPrivate) {
 		this.isPrivate = isPrivate;
 		setSwitchButtonStyles();
 	}
-	/**
-	 * 
-	 * @function setSwitchButtonStyles 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to set styles to Switch button.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSwitchButtonStyles() {
 		if (getIsPrivate()) {
 			swithToEmbedLbl.getElement().getStyle().setCursor(Cursor.DEFAULT);
@@ -461,25 +353,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 			swithUrlLbl.getElement().getStyle().setCursor(Cursor.POINTER);
 		}
 	}
-	/**
-	 * 
-	 * @function changeShareUrlEvents 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to change share url events.
-	 * 
-	 * 
-	 * @parm(s) : @param buttonType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void changeShareUrlEvents(String buttonType) {
 		if (swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)
 				&& swithUrlLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)) {
@@ -565,33 +439,14 @@ public abstract class AssignPopupVc extends PopupPanel {
 		 * MixpanelUtil.Share_direct_collection_edit(); }
 		 */
 	}
-	/**
-	 * 
-	 * @function getIframeText 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is used to get the iframe text.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private String getIframeText() {
 		String iframeText = null;
 		if (embedBitlyLink == null) {
 			embedBitlyLink = shareLinkTxtBox.getText();
 		}
 		iframeText = "<iframe width=\"1024px\" height=\"768px\" src=\""
-				+ bitlyLink + "\" frameborder=\"0\" ></iframe>";
-		
+				+ decodeRawUrl + "\" frameborder=\"0\" ></iframe>";
 		return iframeText;
 	}
 
@@ -607,80 +462,26 @@ public abstract class AssignPopupVc extends PopupPanel {
 			changeShareUrlEvents(SWITCH_TO_EMBED_LABEL);
 		}
 	}
-	/**
-	 * 
-	 * @function setShareUrlGenerationAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To set shareUrlGenerationAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param shareShortenUrlAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setShareUrlGenerationAsyncCallback(
 			SimpleAsyncCallback<Map<String, String>> shareShortenUrlAsyncCallback) {
 		this.shareUrlGenerationAsyncCallback = shareShortenUrlAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getShareShortenUrlAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns shareUrlGenerationAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Map<String,String>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<Map<String, String>> getShareShortenUrlAsyncCallback() {
 		return shareUrlGenerationAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function generateShareLink 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This ethod is used to generate share link.
-	 * 
-	 * 
-	 * @parm(s) : @param classpageId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void generateShareLink(String classpageId) {
 
-		Map<String, String> params = new HashMap<String, String>();
+	public void generateShareLink(final String classpageId, final String collectionTitle, final String collectionDesc) {
+
+		final Map<String, String> params = new HashMap<String, String>();
 		params.put("type", "");
 		params.put("shareType", "");
-
+		//AppClientFactory.getInjector().getSearchService().getShortenShareUrl(classpageId, params, getShareShortenUrlAsyncCallback());
 		AppClientFactory
 				.getInjector()
 				.getSearchService()
-				.getShortenShareUrl(classpageId, params,
+				.getShortenShareUrlforAssign(classpageId, params,
 						new AsyncCallback<Map<String, String>>() {
 
 							@Override
@@ -695,43 +496,19 @@ public abstract class AssignPopupVc extends PopupPanel {
 								bitlyLink = result.get("shortenUrl");
 								rawUrl = result.get("rawUrl");
 								addShareWidgetInPlay(decodeRawUrl, rawUrl,
-										collectionDoGlobal.getTitle(),
-										collectionDoGlobal.getDescription(),
+										collectionTitle,
+										collectionDesc,
 										bitlyLink, "",
-										collectionDoGlobal.getSharing());
+										"public");
 								// addShareWidgetInPlay(decodeRawUrl,rawUrl,
 								// "","",bitlyLink,"","");
-
 							}
 
 						});
 
+
 	}
-	/**
-	 * 
-	 * @function addShareWidgetInPlay 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to add the share widget in play.
-	 * 
-	 * 
-	 * @parm(s) : @param link
-	 * @parm(s) : @param rawUrl
-	 * @parm(s) : @param title
-	 * @parm(s) : @param desc
-	 * @parm(s) : @param shortenUrl
-	 * @parm(s) : @param type
-	 * @parm(s) : @param shareType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void addShareWidgetInPlay(String link, String rawUrl, String title,
 			String desc, String shortenUrl, String type, String shareType) {
 		try {
@@ -744,10 +521,11 @@ public abstract class AssignPopupVc extends PopupPanel {
 			shareDo.setCategoryType(type);
 			shareDo.setOnlyIcon(false);
 			shareDo.setShareType(shareType);
-			SocialShareSmallView socialView = new SocialShareSmallView(shareDo);
-			ftmPanel.add(socialView);
-			socialSharePanel.add(ftmPanel);
-		} catch (Exception ex) {
+			shareDo.setDecodeRawUrl(link);
+			//SocialShareSmallView socialView = new SocialShareSmallView(shareDo);
+/*			ftmPanel.add(socialView);
+			socialSharePanel.add(ftmPanel);*/
+			} catch (Exception ex) {
 
 		}
 	}
@@ -817,7 +595,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		} else {
 			loginButton.setVisible(true);
 			lblPleaseWait.setVisible(false);
-			new AlertMessageUc("Aww!", new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+			new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
 		}
 
 	}
@@ -836,25 +614,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 
 	}
-	/**
-	 * 
-	 * @function setHandlers 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is used to set the Handlers.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setHandlers() {
 
 		this.setSize("515px", "547px");
@@ -862,25 +622,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
-	/**
-	 * 
-	 * @function onForgotPwdClicked 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to show Forgot Password popup.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("forgotPwd")
 	public void onForgotPwdClicked(ClickEvent clickEvent) {
 
@@ -890,50 +632,28 @@ public abstract class AssignPopupVc extends PopupPanel {
 		forgotPasswordVc.center();
 		closePoup();
 	}
-	/**
-	 * 
-	 * @function onSignUp 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :ancSignUp UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("ancSignUp")
 	public void onSignUp(ClickEvent clickEvent) {
 		MixpanelUtil.mixpanelEvent("Library_Assign_Signup");
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		if(params.containsKey("query"))
+		{
+			String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+			params.put("query", queryVal);
+		}
+		if(params.containsKey("flt.subjectName"))
+		{
+			String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+			params.put("flt.subjectName", subjectNameVal);
+		}
 		params.put("callback", "signup");
 		params.put("type", "1");
 		AppClientFactory.getPlaceManager().revealPlace(
 				AppClientFactory.getCurrentPlaceToken(), params);
 		closePoup();
 	}
-	/**
-	 * 
-	 * @fileName : AssignPopupVc.java
-	 *
-	 * @description : On click of this UIHandler this will enable  focus in shareLinkTxtBox.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class OnClickShareHandler implements ClickHandler {
 
 		@Override
@@ -943,9 +663,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 		}
 
 	}
-	/**
-	 * To load ListContainers.
-	 */
+	
 	SetLoginStatusHandler setLoginStatusHandler = new SetLoginStatusHandler() {
 		@Override
 		public void setLoginStatusHandler(boolean isLoggedIn) {
@@ -954,25 +672,7 @@ public abstract class AssignPopupVc extends PopupPanel {
 			}
 		}
 	};
-	/**
-	 * 
-	 * @function isCookieEnabled 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To check wheather the cookie is enabled or not.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private static native boolean isCookieEnabled() /*-{
 													return navigator.cookieEnabled;
 													}-*/;

@@ -54,17 +54,20 @@
 					<g:HTMLPanel styleName="{res.css.buttonContainer}">
 						<g:Button ui:field="btnUpdateProfileLater" styleName="secondary"></g:Button>
 						<g:Button ui:field="btnSubmit" styleName="primary"></g:Button>
-						<g:Label ui:field="lblUpdating">submitting...</g:Label>
+						<g:Label ui:field="lblUpdating"></g:Label>
 					</g:HTMLPanel>
 
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.popupFooter}">
 					<g:HTMLPanel styleName="{res.css.popupFooterText}">
-						If you have any questions,
-						<br />
-						please contact
-						<g:Anchor ui:field="supportLink" href="mailto:support@goorulearning.org"
-							target="_blank">support@goorulearning.org</g:Anchor>
+						
+						<g:Label ui:field="quriesText"></g:Label>
+						<div>						
+							<g:Label ui:field="pleaseContactText"></g:Label>
+							<g:Anchor ui:field="supportLink" 
+							target="_blank"></g:Anchor>
+						</div>
+							
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>

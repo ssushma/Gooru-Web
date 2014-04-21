@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -42,19 +43,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 /**
- * 
- * @fileName : CollectionInfoTabPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for CollectionInfoTabView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfoTabView> implements CollectionInfoTabUiHandlers {
 
@@ -65,6 +55,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	private SearchServiceAsync searchService;
 
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionAsyncCallback;
+	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionByFilterAsyncCallback;
+	
+	private static final String USER_META_ACTIVE_FLAG = "0";
 
 	/**
 	 * Class constructor
@@ -77,16 +70,14 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+	
+	
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
@@ -99,18 +90,33 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 					getView().setCourseList(result);
 				}
 			});
+			AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+
+				@Override
+				public void onSuccess(ProfileDo profileObj) {
+				if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+						if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+							getView().getStandardContainer().setVisible(false);
+							
+						}else
+						{
+							getView().getUserStandardPrefCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+							getView().getStandardContainer().setVisible(true);
+						}
+					}else{
+						getView().getStandardContainer().setVisible(false);
+					}
+				}
+
+			});
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+	
 	@Override
 	protected void onReset() {
 		// TODO Auto-generated method stub
 		super.onReset();
 	}
-	/**
-	 * This method is used to close the popup's and to call the unload
-	 */
+
 	@Override
 	protected void onHide() {
 		super.onHide();
@@ -138,82 +144,45 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		}
 		return standardSuggestionAsyncCallback;
 	}
+
 	/**
-	 * This method is used to get the standards suggestions.
+	 * @return suggestion standards for the collection as map string
 	 */
+	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionByFilterCourseIdAsyncCallback() {
+		if (standardSuggestionByFilterAsyncCallback == null) {
+			standardSuggestionByFilterAsyncCallback = new SearchAsyncCallback<SearchDo<CodeDo>>() {
+
+				@Override
+				protected void run(SearchDo<CodeDo> searchDo) {
+					getSearchService().getSuggestStandardByFilterCourseId(searchDo, this);
+				}
+
+				@Override
+				public void onCallSuccess(SearchDo<CodeDo> result) {
+					getView().setStandardSuggestions(result);
+				}
+			};
+		}
+		return standardSuggestionByFilterAsyncCallback;
+	}
+
 	@Override
 	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
-		getStandardSuggestionAsyncCallback().execute(searchDo);
+		getStandardSuggestionByFilterCourseIdAsyncCallback().execute(searchDo);
 	}
-	/**
-	 * 
-	 * @function setSearchService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to set searchService.
-	 * 
-	 * 
-	 * @parm(s) : @param searchService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchService(SearchServiceAsync searchService) {
 		this.searchService = searchService;
 	}
-	/**
-	 * 
-	 * @function getSearchService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns searchService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
-	/**
-	 * 
-	 * @function getTaxonomyService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns taxonomyService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : TaxonomyServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public TaxonomyServiceAsync getTaxonomyService() {
 		return taxonomyService;
 	}
-	/**
-	 * This method is used to update course.
-	 */
+
 	@Override
 	public void updateCourse(String collectionId, String courseCode, String action) {
 		  	
@@ -225,9 +194,53 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 			}
 		});
 	}
-	/**
-	 * This method is used to update standard.
-	 */
+	
+/*	@Override
+	public void updateCollectionTeacherTipInfo(CollectionDo collectionDo, String teacherTip) {
+		if(teacherTip.length()>0)
+		{
+		AppClientFactory.getInjector().getResourceService().updateCollectionInfo(collectionDo, teacherTip, new AsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().setExistingTeacherTip(result);
+				//getView().onPostCourseUpdate(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		}
+		else
+		{
+			getView().displayErrorMsgTeacherTip();
+		}
+
+	}*/
+	
+/*	@Override
+	public void getCollectionTeacherTipInfo(String collectionId) {
+
+		AppClientFactory.getInjector().getResourceService().getCollectionInfoV2API(collectionId, new AsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				getView().setExistingTeacherTip(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+
+	}*/
+
 	@Override
 	public void updateStandard(String collectionId, String taxonomyCodeId, String action) {
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, taxonomyCodeId, "false", null,action, new SimpleAsyncCallback<CollectionDo>() {
@@ -240,7 +253,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		
 	}
 	
-/**
+/* 
  *  This method used to update the mediaType value of the collection
  *  @param collectionId of the collection
  *  @param mediaType of the collection which is being updated
@@ -256,4 +269,6 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 		});
 		
 	}
+
+
 }

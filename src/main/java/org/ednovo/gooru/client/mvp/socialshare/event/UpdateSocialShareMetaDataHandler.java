@@ -28,18 +28,10 @@
 package org.ednovo.gooru.client.mvp.socialshare.event;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : UpdateSocialShareMetaDataHandler.java
- *
- * @description : Handler for {@link UpdateSocialShareMetaDataEvent}.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Gooru Team
+ * 
  */
 public interface UpdateSocialShareMetaDataHandler extends EventHandler {
 

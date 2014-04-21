@@ -29,15 +29,11 @@ package org.ednovo.gooru.client.effects;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Timer;
-/**
- * @fileName : BackgroundColorEffect.java
- * @description : This file is used to apply BackgroundColorEffects elements.
- * @version : 1.0
- * @date: 26-Dec-2013
- * @Author : Gooru Team
- * @Reviewer: Gooru Team
- */
 
+/**
+ * @author Search Team
+ * 
+ */
 public class BackgroundColorEffect extends Timer {
 
 	private Element element;
@@ -59,9 +55,7 @@ public class BackgroundColorEffect extends Timer {
 		this.schedule(time);
 	}
 	
-	/**
-	 * This method is used to set the  widget end color.
-	 */
+
 	@Override
 	public void run() {
 		element.getStyle().setBackgroundColor(endColor);

@@ -28,20 +28,10 @@
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
+ * @author Search Team
  * 
- * @fileName : SetDiscoverLinkEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user click on the discover tab it will be processed by presenters that are responsible for displaying related views.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SetDiscoverLinkEvent extends GwtEvent<SetDiscoverLinkHandler> {
 
@@ -55,9 +45,7 @@ public class SetDiscoverLinkEvent extends GwtEvent<SetDiscoverLinkHandler> {
 	public SetDiscoverLinkEvent(String discoverLink) {
 		this.discoverLink = discoverLink;
 	}
-	/**
-	 * This method is used to get the discover link.
-	 */
+
 	@Override
 	public Type<SetDiscoverLinkHandler> getAssociatedType() {
 		return TYPE;

@@ -22,9 +22,6 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
 package org.ednovo.gooru.client.mvp.authentication;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
@@ -35,16 +32,16 @@ import com.gwtplatform.mvp.client.PopupView;
  * 
  * @fileName : IsSignUpView.java
  *
- * @description : This file is used to display popup's and toggle buttons.
- *
+ * @description : 
+ *		
  *
  * @version : 1.0
  *
- * @date: 26-Dec-2013
+ * @date: 20-09-2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface IsSignUpView extends PopupView, IsViewWithHandlers<SignUpUiHandlers> {
  

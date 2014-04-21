@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.uc.CollectionImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -46,23 +47,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : PPPCollectionResult.java
- *
- * @description :  Set PPP collection meta info such as collection title, image, creator, etc..
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class PPPCollectionResult extends Composite {
+
+public class PPPCollectionResult extends Composite implements MessageProperties {
 	
 	private static PPPCollectionResultUiBinder uiBinder = GWT.create(PPPCollectionResultUiBinder.class);
 
@@ -89,13 +81,13 @@ public class PPPCollectionResult extends Composite {
 
 	private CollectionItemDo collectionItemDo;
 	
-	private static final String VIEWS = " Views";
+	private static final String VIEWS =" "+GL1099;
 	
 //	private static final String CREATED_BY = "Created by ";
 	
-	private static final String RESOURCES = " Resources";
+	private static final String RESOURCES =GL0174;
 	
-	private static final String RESOURCE = " Resource";
+	private static final String RESOURCE = " "+GL1110;
 	
 	/**
 	 * Class constructor, creates new instance of PPPCollectionSearchResultWrapperVc and call collection search result setData method
@@ -134,13 +126,13 @@ public class PPPCollectionResult extends Composite {
 			resourceCountLbl.setText(collectionItemDo.getResourceCount() + RESOURCE);
 		}
 		else{
-		resourceCountLbl.setText(collectionItemDo.getResourceCount() + RESOURCES);
+		resourceCountLbl.setText(collectionItemDo.getResourceCount() +" "+RESOURCES);
 		}
 		SearchUiUtil.renderStandards(standardsFloPanel, collectionItemDo);
 	
 	}
 
-	/**
+	/*
 	 * opens the More Info Disclosure panel.
 	 */
 	public void openDisclosurePanel() {
@@ -158,7 +150,8 @@ public class PPPCollectionResult extends Composite {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionItemDo.getResource().getGooruOid());
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 	
 	/**

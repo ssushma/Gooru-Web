@@ -62,7 +62,7 @@
 		
 	</ui:style>
 	<g:FlowPanel styleName="{style.embedContainer}">
-		<g:Label styleName="{style.embedLineText}">Embed this code into your website</g:Label>
+		<g:Label styleName="{style.embedLineText}" ui:field="embedlineText"></g:Label>
 		<g:TextArea styleName="{style.embedTextArea}" readOnly="true" ui:field="txtAreaEmbed"/>
 		<!-- <g:Label styleName="{style.embedTextArea}" ui:field="lblAreaEmbed"/> -->
 	</g:FlowPanel>

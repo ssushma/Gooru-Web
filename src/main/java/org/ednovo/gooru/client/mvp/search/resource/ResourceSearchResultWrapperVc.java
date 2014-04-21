@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
@@ -35,19 +37,8 @@ import com.google.gwt.uibinder.client.UiChild;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceSearchResultWrapperVc.java
- *
- * @description : This file deals with resource search results more info panel.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceSearchResultWrapperVc extends SearchResultWrapperVc<ResourceSearchResultDo, CollectionSearchResultDo> {
 
@@ -63,9 +54,7 @@ public class ResourceSearchResultWrapperVc extends SearchResultWrapperVc<Resourc
 		super();
 		this.searchDragController = searchDragController;
 	}
-	/**
-	 * Returns search moreInfo.
-	 */
+
 	@Override
 	protected SearchMoreInfoVc<ResourceSearchResultDo, CollectionSearchResultDo> getSearchMoreInfoVc() { 
 		if(moreInfoVc == null) {
@@ -73,9 +62,7 @@ public class ResourceSearchResultWrapperVc extends SearchResultWrapperVc<Resourc
 		}
 		return moreInfoVc;
 	}
-	/**
-	 * This is used to set the content.
-	 */
+	
 	@UiChild(tagname="content")
 	protected void setContent(Widget widget) {
 		super.setContent(widget);

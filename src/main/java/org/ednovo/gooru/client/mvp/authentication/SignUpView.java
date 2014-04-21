@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.authentication;
 import java.util.Date;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -44,6 +45,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -55,22 +57,23 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-	/**
-	 * 
-	 * @fileName : SignUpView.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : SignUpView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Aug 30, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implements IsSignUpView, MessageProperties {
 
 	private static SignUpViewUiBinder uiBinder = GWT.create(SignUpViewUiBinder.class);
@@ -105,19 +108,25 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		super(eventBus);
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 
-	}
-	/**
-	 * This method is used to display popup
-	 * 
-	 */
-	public void displayPopUp(int displayScreen){
-		appPopUp = new AppPopUp("NoHeader");
+		appPopUp = new AppPopUp(GL0697);
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
+		
+		
+		
+	}
+	
+	public void displayPopUp(int displayScreen){
+/*		appPopUp = new AppPopUp("NoHeader");
+		appPopUp.setContent(uiBinder.createAndBindUi(this));*/
 		
 		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
 		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		
+		
+		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+
 		
 		appPopUp.center();
 		
@@ -129,60 +138,32 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		childUserName = AppClientFactory.getPlaceManager().getRequestParameter("userName") !=null ? AppClientFactory.getPlaceManager().getRequestParameter("userName")  :  null ;
 		
 	}
-    /**
-     * 
-     * @function setUiAndIds 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description :This method is used to set the UI and  id's.
-     * 
-     * 
-     * @parm(s) : 
-     * 
-     * @return : void
-     *
-     *
-     */
+
 	private void setUiAndIds(){
-		lblTitle.setText(MessageProperties.GL0186 + MessageProperties.GL_SPL_EXCLAMATION);
-		lblJoinGooruCommunity.setText(MessageProperties.GL0400);
-		lblDescription.setText(MessageProperties.GL0401);
+		lblTitle.setText(GL0186 +GL_SPL_EXCLAMATION);
+		lblJoinGooruCommunity.setText(GL0400);
+		lblDescription.setText(GL0401);
 		lblParentInfo.setVisible(false);
-		lblParentInfo.setText(MessageProperties.GL0470);
+		lblParentInfo.setText(GL0470);
 		
-		btnSignUpWithGoogle.setText(MessageProperties.GL0402);
+		btnSignUpWithGoogle.setText(GL0402);
 		
-		lblWhyWithGoogle.setText(MessageProperties.GL0403);
-		lblQuestionMark.setText(MessageProperties.GL_SPL_QUESTION);
-		lblPopupWhyWithGoogle.setText(MessageProperties.GL0403 + MessageProperties.GL_SPL_QUESTION);
+		lblWhyWithGoogle.setText(GL0403);
+		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblPopupWhyWithGoogle.setText(GL0403 + GL_SPL_QUESTION);
 	
-		lblPopupWhyWithGoogleDesc.setText(MessageProperties.GL0404);
-		lblOr.setText(MessageProperties.GL0209);
-		lblDontHaveGoogleAccount.setText(MessageProperties.GL0405 + MessageProperties.GL_SPL_QUESTION);
-		lblAlreadyHaveAccount.setText(MessageProperties.GL0407 + MessageProperties.GL_SPL_QUESTION);
+		lblPopupWhyWithGoogleDesc.setText(GL0404);
+		lblOr.setText(GL0209);
+		lblDontHaveGoogleAccount.setText(GL0405 +GL_SPL_QUESTION);
+		lblAlreadyHaveAccount.setText(GL0407 + GL_SPL_QUESTION);
 		
-		achSignUpWithEmail.setText(MessageProperties.GL0406);
-		achClickToLogin.setText(MessageProperties.GL0408);
+		achSignUpWithEmail.setText(GL0406);
+		achClickToLogin.setText(GL0408);
 		
 		btnSignUpWithGoogle.getElement().setId("btnSignUpWithGoogle");
 	}
 	
-	/**
-	 * 
-	 * @function showPanelById 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to show the user info if the id is 2 and it will show signup panel if id is 1 || 3.
-	 * 
-	 * 
-	 * @parm(s) : @param id
-	 * 
-	 * @return : void
-	 *
-	 *
-	 */
+	
 	private void showPanelById(int id){
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
@@ -213,19 +194,60 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		MixpanelUtil.close_signUp();
 		
 		if (AppClientFactory.getPlaceManager().getRequestParameter("type") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("type").equalsIgnoreCase("1")){
-			LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc("parent","","","");
+			LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(GL0074.toLowerCase(),"","","");
 			leaveRegistrationPopUpUc.show();
 		}else{
 			Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+			if(map.containsKey("query"))
+			{
+				String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+				queryVal = queryVal.replace("+", " ");
+				map.put("query", queryVal);
+			}
+			if(map.containsKey("flt.subjectName"))
+			{
+				String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+				/*String subjectNameVal = map.get("flt.subjectName");
+				subjectNameVal = subjectNameVal.replaceAll("%5C1", "&");
+				try
+				{
+					subjectNameVal = URL.decodeQueryString(subjectNameVal);
+				}
+				catch(Exception ex)
+				{
+					
+				}*/
+				subjectNameVal = subjectNameVal.replace("+", " ");
+				map.put("flt.subjectName", subjectNameVal);
+			}
 			map.remove("callback");
 			map.remove("type");
-			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
-			Window.enableScrolling(true);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));	
+			map.remove("rp");
+			
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)||
+					AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+				
+			} else {
+				map.remove("id");
+			}
+			
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)||AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+				PlaceRequest placeRequest = new PlaceRequest(AppClientFactory.getCurrentPlaceToken()); 
+				if (map != null) {
+					for (String key : map.keySet()) {
+						placeRequest = placeRequest.with(key, map.get(key));
+					}
+				}
+				AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			}
 		}
 		appPopUp.hide();
 	}
-    
+
 	@UiHandler("btnSignUpWithGoogle")
 	public void onClickBtnGoogle(ClickEvent clickEvent){
 		String callBack = Window.Location.getHref();
@@ -233,6 +255,8 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		if (!callBack.contains("parent")){
 			mapParms.remove("callback");
 			mapParms.remove("type");
+			mapParms.remove("rp");
+			mapParms.remove("id");
 		}else{
 			mapParms.put("callback", "registerChild");
 		}
@@ -249,11 +273,35 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	@UiHandler("achClickToLogin")
 	public void onClickAlreadyHaveAccount(ClickEvent clickEvent){
 		Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+		if(map.containsKey("query"))
+		{
+			String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+			map.put("query", queryVal);
+		}
+		if(map.containsKey("flt.subjectName"))
+		{
+			String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+			map.put("flt.subjectName", subjectNameVal);
+		}
 		map.remove("callback");
 		map.remove("type");
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), map);
 		appPopUp.hide();
-		AppClientFactory.fireEvent(new InvokeLoginEvent());
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab",null);
+		if(tabView != null)
+		{
+		if((viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY))&&
+				(tabView!=null)&&(tabView.equals("add")||tabView.equals("flag"))){
+			
+		}else{
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		}
+		}
+		else
+		{
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		}
 	}
 	
 	@UiHandler("achSignUpWithEmail")
@@ -261,6 +309,16 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		MixpanelUtil.sign_up_with_your_email();
 		hide();
 		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		if(params.containsKey("query"))
+		{
+			String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+			params.put("query", queryVal);
+		}
+		if(params.containsKey("flt.subjectName"))
+		{
+			String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+			params.put("flt.subjectName", subjectNameVal);
+		}
 		params.put("type", "2");
 		params.put("callback", "signup");
 		if (account!=null && lblParentInfo.isVisible()){
@@ -274,20 +332,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		}
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 	}
-    /**
-     * 
-     * @function openCreateUser 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method deals with terms of use,privacy policy and copy right.
-     * 
-     * 
-     * @parm(s) : 
-     * 
-     * @return : void
-     *
-     */
+
 	private void openCreateUser(){
 		createAccount = new CreateAccountUc() {
 			
@@ -312,6 +357,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				termsAndPolicyVc.show();
 				termsAndPolicyVc.setSize("902px", "300px");
 				termsAndPolicyVc.center();
+				termsAndPolicyVc.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}
 			
 			@Override
@@ -331,6 +377,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				copyRightPolicy.show();
 				copyRightPolicy.setSize("902px", "300px");
 				copyRightPolicy.center();	
+				copyRightPolicy.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			}
 			@Override
 			public void OpenPrivacy() {
@@ -350,6 +397,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 				termsOfUse.show();
 				termsOfUse.setSize("902px", "300px");
 				termsOfUse.center();
+				termsOfUse.getElement().getStyle().setZIndex(99999);//To display the view in collection player.
 			
 			}
 			//Send data to create user.
@@ -357,15 +405,14 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 			public void CreateUser(String data, String loginData) {
 				getUiHandlers().CreateUser(data, loginData);
 			}
-            /**
-             * This method is used to close the popup.
-             */
+
 			@Override
 			public void closePoup() {
 				appPopUp.hide();
 				
 			}
 		};
+		panelUserInfo.clear();
 		panelUserInfo.add(createAccount);
 		
 	}
@@ -374,9 +421,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	public void toggleButtons(){
 		createAccount.toggleButtons();
 	}
-	/**
-	 * It will return the representation of a view as the widget
-	 */
+	
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
@@ -385,34 +430,17 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	@Override
 	public void reset() {
 	}
-    
+
 	@Override
 	public void onLoad() {
 		// TODO Auto-generated method stub
 	}
-    /**
-     * 
-     */
+
 	@Override
 	public void onUnload() {
 		// TODO Auto-generated method stub
 
 	}
-	/**
-	 * 
-	 * @function getAge 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to get the age based on birthdate.
-	 * 
-	 * 
-	 * @parm(s) : @param birthDate
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 */
 	private int getAge(Date birthDate){
 		if(birthDate!=null) {
 			long ageInMillis = new Date().getTime() - birthDate.getTime();

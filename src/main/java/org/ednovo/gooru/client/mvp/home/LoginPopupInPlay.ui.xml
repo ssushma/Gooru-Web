@@ -4,30 +4,29 @@
 xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 <ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle" field="res" />
     <g:HTMLPanel>
-        <div class="{res.css.loginTop}">
-            Log in!
-        </div>
+        <g:Label styleName="{res.css.loginTop}" ui:field="loginLbl">
+        </g:Label>
         <div aligh="left" class="{res.css.loginBorderPanel}" ui:field="loginBorderPanel">
             <div class="{res.css.loginGooruLogoContainer}">
                 <div class="{res.css.loginGooruLabel}"></div>
-                <div class="{res.css.loginGooruLabelSubText}">beta</div>
+                <g:Label styleName="{res.css.loginGooruLabelSubText}" ui:field="betaText"></g:Label>
             </div>
-            <g:Label text="Please log in to create and save your favorite resources!" styleName="{res.css.loginBlackText}" />
+            <g:Label ui:field="loginToCreateteLbl" styleName="{res.css.loginBlackText}"/>
             <div align="left" class="{res.css.textBoxesField}">
-                <gg:TextBoxWithPlaceholder ui:field="loginTxtBox" placeholder="Email or Username"/>
-                <gg:TextBoxWithPlaceholder ui:field="passwordTxtBox" placeholder="Password" password="true"/>
-                <g:Label text="Forgot password?" styleName="{res.css.loginHyplink}" ui:field="forgotPwd"/>
+                <gg:TextBoxWithPlaceholder ui:field="loginTxtBox"/>
+                <gg:TextBoxWithPlaceholder ui:field="passwordTxtBox"  password="true"/>
+                <g:Label styleName="{res.css.loginHyplink}" ui:field="forgotPwd"/>
                 <div align="center" class="{res.css.loginCkbox}">
-                    <g:CheckBox text="Keep me logged in"></g:CheckBox>
+                    <g:CheckBox ui:field="keepMeLoginLbl"></g:CheckBox>
                 </div>
             </div>
             <div class="{res.css.loginCancelButton}">        
-                <g:Button ui:field="loginButton" text="Log In" styleName="{res.css.loginBtn}" />                
-                <g:Anchor  ui:field="cancelButton"  text="Cancel" styleName="{res.css.cancelBtn}" />
+                <g:Button ui:field="loginButton" styleName="{res.css.loginBtn}"/>                
+                <g:Anchor ui:field="cancelButton" styleName="{res.css.cancelBtn}"/>
             </div>
             <div class="{res.css.register}">
-                <g:Label text="Don't have an account?" styleName="{res.css.registerLinkQ}" />
-                <g:Label text="Register here!" styleName="{res.css.registerLink}" ui:field="registerHereLbl"/>
+                <g:Label ui:field="doNotHaveAcLbl" styleName="{res.css.registerLinkQ}" />
+                <g:Label styleName="{res.css.registerLink}" ui:field="registerHereLbl"/>
             </div>
         </div>
     </g:HTMLPanel>

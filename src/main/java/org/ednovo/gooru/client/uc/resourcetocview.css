@@ -1,7 +1,7 @@
 .resource-container{
 	float: left;
 	height: 90px;
-	padding: 10px;
+	padding: 6px;
 	margin: 5px;
 	width: 80px;
 	margin-bottom: 10px;
@@ -9,7 +9,7 @@
 	cursor: pointer;
 }
 .resource-container:hover,.collection-home-container:hover{
-	background-color: #DDD;
+	background-color: #414141;
 }
 .resource-thumbnail{
 	float: left;
@@ -23,8 +23,9 @@
 }
 .resource-type{
 	position: relative;
-	top: -23px;
+	top: -19px;
 	z-index: 10;
+	margin-left: 0 !important;
 }
 .nav-resource-title{
 	display: block;
@@ -78,4 +79,7 @@
 	margin-left: 20px;
 	margin-top: 30px;
 	font-weight: bold;
+}
+.collection-top-homeContainer{
+	float:left;
 }

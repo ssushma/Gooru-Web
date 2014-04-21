@@ -73,23 +73,15 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 /**
+ * @author Search Team
  * 
- * @fileName : UserRegistrationView.java
- *
- * @description : This file deals with user registration.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrationUiHandlers> implements IsUserRegistrationView, MessageProperties {
+public class UserRegistrationView extends
+		PopupViewWithUiHandlers<UserRegistrationUiHandlers> implements
+		IsUserRegistrationView, MessageProperties {
 
-	private static UserRegistrationViewUiBinder uiBinder = GWT.create(UserRegistrationViewUiBinder.class);
+	private static UserRegistrationViewUiBinder uiBinder = GWT
+			.create(UserRegistrationViewUiBinder.class);
 
 	@UiField
 	Anchor cancelAnr;
@@ -110,7 +102,8 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 	PasswordTextBox passwordFieldTxtBox, confirmPasswordFieldTxtBox;
 
 	@UiField
-	ErrorLabelUc passwordValidUc, confirmPasswordValidUc, genderValidUc, userNameValidUc, dateValidationUc;
+	ErrorLabelUc passwordValidUc, confirmPasswordValidUc, genderValidUc,
+			userNameValidUc, dateValidationUc;
 
 	@UiField
 	FocusPanel genderFocusFocPanel;
@@ -119,50 +112,56 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 	HTML welcomeMessageHtml;
 
 	@UiField
-	Label accountTypeFieldLbl, accountInformationLbl, userEmailFieldLbl;
+	Label accountTypeFieldLbl, accountInformationLbl, userEmailFieldLbl,fName,lName,uName,pWord,cPword,
+			bdLbl,emailText,genderText,aboutMe,conditionsText,andText,gooruText;
 
 	@UiField
-	FlowPanel birthdayFloPanel, firstnameFloPanel, lastnameFloPanel, userCategoryFloPanel, termsAndConditionFloPanel, userRegisterFloPanel, genderFieldsFloPanel;
+	FlowPanel birthdayFloPanel, firstnameFloPanel, lastnameFloPanel,
+			userCategoryFloPanel, termsAndConditionFloPanel,
+			userRegisterFloPanel, genderFieldsFloPanel;
 
 	@UiField
 	SimplePanel dateSimPanel;
-	
-	@UiField GenderRadioButton female,male,other,donot;
+
+	@UiField
+	GenderRadioButton female, male, other, donot;
 
 	private DateBoxUc dateBoxUc;
 
 	protected AppPopUp appPopUp;
 
 	private String registartionType;
-	
-	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
-	
-	private static final String IS_ALREADY_AVAILABLE = " is already available";
-	
-	private static final String PARENT_GUARDIAN_INFO = "Parent/Guardian Information";
-	
-	private static final String PARENT_GUARDIAN_ACCOUNT = "Parent/Guardian Account";
-	
-	private static final String CHILD_INFO = "Child Information";
-	
-	private static final String CHILD_ACCOUNT = "Child Account";
-	
-	private static final String REGISTER_LOGIN = "Register / Log in";
 
-	
-	@UiField Anchor termsAndConditionsAnr, copyRightPolicyAnr;
-	
+	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
+
+	private static final String IS_ALREADY_AVAILABLE = " "+GL1204;
+
+	private static final String PARENT_GUARDIAN_INFO = GL1205+" "+GL1198;
+
+	private static final String PARENT_GUARDIAN_ACCOUNT = GL1205+" "+GL0807;
+
+	private static final String CHILD_INFO =GL1206+" "+GL1198;
+
+	private static final String CHILD_ACCOUNT =GL1206+" "+GL0807;
+
+	private static final String REGISTER_LOGIN = GL1207;
+
+	@UiField
+	Anchor termsAndConditionsAnr, copyRightPolicyAnr;
+
 	private TermsAndPolicyVc termsAndPolicyVc;
-	
+
 	private CopyRightPolicyVc copyRightPolicy;
-	
-	
-	interface UserRegistrationViewUiBinder extends UiBinder<Widget, UserRegistrationView> {
+
+	interface UserRegistrationViewUiBinder extends
+			UiBinder<Widget, UserRegistrationView> {
 	}
 
 	/**
 	 * Class constructor, creates popup , focus and blur events
-	 * @param eventBus {@link EventBus}
+	 * 
+	 * @param eventBus
+	 *            {@link EventBus}
 	 */
 	@Inject
 	public UserRegistrationView(EventBus eventBus) {
@@ -172,19 +171,47 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css().registerPopup());
 		appPopUp.setContent(REGISTER_LOGIN, uiBinder.createAndBindUi(this));
-		appPopUp.setGlassStyleName(RegisterCBundle.INSTANCE.css().registerPopupGlassPanel());
+		appPopUp.setGlassStyleName(RegisterCBundle.INSTANCE.css()
+				.registerPopupGlassPanel());
+		accountTypeFieldLbl.setText(GL0807);
+		accountInformationLbl.setText(GL1198);
+		fName.setText(GL0424);
+		lName.setText(GL0425);
+		uName.setText(GL1035);
+		pWord.setText(GL0204);
+		cPword.setText(GL0427);
+		bdLbl.setText(GL0211);
+		emailText.setText(GL0212);
+		genderText.setText(GL0809);
+		female.setText(GL0811);
+		male.setText(GL0810);
+		other.setText(GL1047);
+		donot.setText(GL1199);
+		aboutMe.setText(GL1200);
+		conditionsText.setText(GL1201+" ");
+		termsAndConditionsAnr.setText(GL0297+" "+GL_GRR_AND+" "+GL0452);
+		andText.setText("  "+GL_GRR_AND+"  ");
+		copyRightPolicyAnr.setText(GL0421);
+		gooruText.setText(" "+GL_GRR_OF+" "+GL1202);
+		updateUserDetailsUc.setText(GL1203);
+		cancelAnr.setText(GL0142);
+		welcomeMessageHtml.setHTML(GL1211);
 		passwordFieldTxtBox.addFocusHandler(new OnPasswordFocus());
-		dateBoxUc = new DateBoxUc(true,false,false);
+		dateBoxUc = new DateBoxUc(true, false, false);
 		dateSimPanel.add(dateBoxUc);
 		confirmPasswordValidUc.setVisible(false);
 		passwordValidUc.setVisible(false);
 		dateValidationUc.setVisible(false);
-		dateValidationUc.setStyleName(RegisterCBundle.INSTANCE.css().rightErrorLabel());
+		dateValidationUc.setStyleName(RegisterCBundle.INSTANCE.css()
+				.rightErrorLabel());
 		genderValidUc.setVisible(false);
-		genderValidUc.setStyleName(RegisterCBundle.INSTANCE.css().rightErrorLabel());
+		genderValidUc.setStyleName(RegisterCBundle.INSTANCE.css()
+				.rightErrorLabel());
 		dateBoxUc.setStyleName(UcCBundle.INSTANCE.css().parentDateBox());
-		dateBoxUc.getDateBox().setStyleName(UcCBundle.INSTANCE.css().parentDateText());
-		dateBoxUc.getDatePickerUc().setStyleName(UcCBundle.INSTANCE.css().parentDatePickerContainer());
+		dateBoxUc.getDateBox().setStyleName(
+				UcCBundle.INSTANCE.css().parentDateText());
+		dateBoxUc.getDatePickerUc().setStyleName(
+				UcCBundle.INSTANCE.css().parentDatePickerContainer());
 		dateBoxUc.addDomHandler(new OnDateFocus(), FocusEvent.getType());
 		dateBoxUc.getDateBox().addFocusHandler(new OnDateFocus());
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
@@ -208,36 +235,38 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 		updateUserDetailsUc.getElement().setId("btnRegister");
 		cancelAnr.getElement().setId("lnkCancel");
 		termsAndPolicyVc = new TermsAndPolicyVc(false) {
-			
+
 			@Override
 			public void openParentPopup() {
 				appPopUp.show();
 			}
 		};
-		
+
 		copyRightPolicy = new CopyRightPolicyVc() {
-			
+
 			@Override
 			public void openParentPopup() {
 				appPopUp.show();
 			}
 		};
-		
+
 		/**
-		 * Added click handler for showing Terms ans Policy popup in footer 
+		 * Added click handler for showing Terms ans Policy popup in footer
 		 **/
 		termsAndConditionsAnr.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				
+
 				hide();
-				if (termsAndPolicyVc==null){
+				if (termsAndPolicyVc == null) {
 					termsAndPolicyVc = new TermsAndPolicyVc(false) {
-						
+
 						@Override
 						public void openParentPopup() {
 							Window.enableScrolling(false);
-							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+							AppClientFactory
+									.fireEvent(new SetHeaderZIndexEvent(98,
+											false));
 							appPopUp.show();
 						}
 					};
@@ -248,25 +277,27 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 				termsAndPolicyVc.center();
 			}
 		});
-		
-		
+
 		copyRightPolicyAnr.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-//				appPopUp.show();
+				// appPopUp.show();
 				hide();
 				Window.enableScrolling(false);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));	
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 				copyRightPolicy.show();
 				copyRightPolicy.setSize("600px", "300px");
 				copyRightPolicy.center();
 			}
 		});
 	}
+
 	/**
 	 * Hide the popup and redirect to home page while clicking cancel
-	 * @param clickEvent instance of {@link ClickEvent}
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
 	 */
 	@UiHandler("cancelAnr")
 	public void onCancelClick(ClickEvent clickEvent) {
@@ -275,138 +306,75 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 	}
 
 	/**
-	 * Calls update user method 
-	 * @param clickEvent instance of {@link ClickEvent}
-	 */ 
+	 * Calls update user method
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
+	 */
 	@UiHandler("updateUserDetailsUc")
 	public void onUpdateUserClick(ClickEvent clickEvent) {
 		updateUserData();
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : Focus Handler for username.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class OnUserNameFocus implements FocusHandler {
 
 		@Override
 		public void onFocus(FocusEvent event) {
 			if (userNameValidUc.isVisible()) {
 				userNameValidUc.setVisible(false);
-				userNameFieldTxtBox.removeStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
+				userNameFieldTxtBox.removeStyleName(RegisterCBundle.INSTANCE
+						.css().userRegistrationError());
 			}
 		}
 
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : Focus Handler for Datevalidations.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
 			if (dateValidationUc.isVisible()) {
-				dateBoxUc.setStyleName(UcCBundle.INSTANCE.css().parentDateBox());
-				dateBoxUc.getDateBox().setStyleName(UcCBundle.INSTANCE.css().parentDateText());
+				dateBoxUc
+						.setStyleName(UcCBundle.INSTANCE.css().parentDateBox());
+				dateBoxUc.getDateBox().setStyleName(
+						UcCBundle.INSTANCE.css().parentDateText());
 				dateValidationUc.setVisible(false);
 			}
 		}
 
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : Datevalidations for Done Button click.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
-			if (dateBoxUc.dateValidation()){
+			if (dateBoxUc.dateValidation()) {
 				if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
 						.getText().isEmpty())
 						&& dateBoxUc.hasValidateDate()) {
-				Date date = dateBoxUc.getValue();
-				
+					Date date = dateBoxUc.getValue();
+
 				} else {
 					dateBoxUc.getDatePickerUc().hide();
 				}
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : Date Validations on blur handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
-			dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
+			dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE
+					.css().gooruDateBoxError());
 			dateBoxUc.getDateBox().removeStyleName(
 					AddAssignmentContainerCBundle.INSTANCE.css()
 							.gooruDateError());
 		}
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : To check the username availability.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnUserNameBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
-			getUiHandlers().checkUserAvailability(userNameFieldTxtBox.getText(), "byUsername");
+			getUiHandlers().checkUserAvailability(
+					userNameFieldTxtBox.getText(), "username");
 		}
 	}
 
@@ -419,13 +387,14 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 			if (!getRegistartionType().equalsIgnoreCase("Child")) {
 				params.put("firstName", firstNameFieldUc.getUserText());
 				params.put("lastName", lastNameFieldUc.getUserText());
-				params.put("userrole", userCategoryLisBox.getValue(userCategoryLisBox.getSelectedIndex()));
+				params.put("userrole", userCategoryLisBox
+						.getValue(userCategoryLisBox.getSelectedIndex()));
 			} else if (getRegistartionType().equalsIgnoreCase("Parent")) {
 				params.put("dateOfBirth", dateBoxUc.getDateBox().getText());
 			}
-//			if (getRegistartionType().equalsIgnoreCase("Child")) {
-//				params.put("dateOfBirth", "00/00/0000");
-//			}
+			// if (getRegistartionType().equalsIgnoreCase("Child")) {
+			// params.put("dateOfBirth", "00/00/0000");
+			// }
 			params.put("username", userNameFieldTxtBox.getText());
 			params.put("password", passwordFieldTxtBox.getText());
 			params.put("gender", getSelectedGender(genderFieldsFloPanel));
@@ -439,48 +408,24 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : Focus Handler for password.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnPasswordFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
-			if (passwordValidUc.isVisible() || confirmPasswordValidUc.isVisible()) {
-				passwordFieldTxtBox.removeStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-				confirmPasswordFieldTxtBox.removeStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
+			if (passwordValidUc.isVisible()
+					|| confirmPasswordValidUc.isVisible()) {
+				passwordFieldTxtBox.removeStyleName(RegisterCBundle.INSTANCE
+						.css().userRegistrationError());
+				confirmPasswordFieldTxtBox
+						.removeStyleName(RegisterCBundle.INSTANCE.css()
+								.userRegistrationError());
 
 				confirmPasswordValidUc.setVisible(false);
 				passwordValidUc.setVisible(false);
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : UserRegistrationView.java
-	 *
-	 * @description : Focus Handler for Gender.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnGenderFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -491,7 +436,8 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 	}
 
 	/**
-	 * @return true if password, userName, firstName,gender etc.. are satisfied the required condition else false   
+	 * @return true if password, userName, firstName,gender etc.. are satisfied
+	 *         the required condition else false
 	 */
 	private boolean hasValidateData() {
 		String firstName = firstNameFieldUc.getUserText();
@@ -506,102 +452,151 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 		try {
 			RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
 			if (password == null || (password != null && password.isEmpty())) {
-				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0070, "Password"));
+				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+						.userRegistrationError());
+				passwordValidUc.setText(StringUtil.generateMessage(GL0070,
+						"Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
 			if (password != null && password.length() < 5) {
-				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0071, "Password", "5"));
+				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+						.userRegistrationError());
+				passwordValidUc.setText(StringUtil.generateMessage(GL0071,
+						"Password", "5"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
 			if (password != null && password.length() >= 14) {
-				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0072, "Password", "<= 14"));
+				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+						.userRegistrationError());
+				passwordValidUc.setText(StringUtil.generateMessage(GL0072,
+						"Password", "<= 14"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
 			if (password.equalsIgnoreCase("PASSWORD")) {
-				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0076, "Password"));
+				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+						.userRegistrationError());
+				passwordValidUc.setText(StringUtil.generateMessage(GL0076,
+						"Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
-			if ((password != null && !password.isEmpty()) && !reg.test(password) && password.length() > 5 && password.length() <= 14 && !password.equalsIgnoreCase("PASSWORD")) {
-				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-				passwordValidUc.setText(StringUtil.generateMessage(GL0073, "Password"));
+			if ((password != null && !password.isEmpty())
+					&& !reg.test(password) && password.length() > 5
+					&& password.length() <= 14
+					&& !password.equalsIgnoreCase("PASSWORD")) {
+				passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+						.userRegistrationError());
+				passwordValidUc.setText(StringUtil.generateMessage(GL0073,
+						"Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
 		} catch (Exception e) {
 		}
 
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType().equalsIgnoreCase(GL0077)) && (firstName == null || (firstName != null && firstName.isEmpty()))) {
-			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0067, "First name"));
+		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
+				.equalsIgnoreCase(GL0077))
+				&& (firstName == null || (firstName != null && firstName
+						.isEmpty()))) {
+			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+					"First name"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType().equalsIgnoreCase(GL0077)) && (firstName.length() > 20)) {
-			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0072, "First name", "<=20"));
+		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
+				.equalsIgnoreCase(GL0077)) && (firstName.length() > 20)) {
+			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+					"First name", "<=20"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType().equalsIgnoreCase(GL0077)) && (lastName == null || (lastName != null && lastName.isEmpty()))) {
-			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0067, "Last Name"));
+		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
+				.equalsIgnoreCase(GL0077))
+				&& (lastName == null || (lastName != null && lastName.isEmpty()))) {
+			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+					"Last Name"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType().equalsIgnoreCase(GL0077)) && (lastName.length() > 20)) {
-			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0072, "Last name", "<= 20"));
+		if ((getRegistartionType().equalsIgnoreCase(GL0074) || getRegistartionType()
+				.equalsIgnoreCase(GL0077)) && (lastName.length() > 20)) {
+			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+					"Last name", "<= 20"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		
-		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType().equalsIgnoreCase("child")) && (firstName == null || (firstName != null && firstName.isEmpty()))) {
-			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0067, "First name"));
+
+		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType()
+				.equalsIgnoreCase("child"))
+				&& (firstName == null || (firstName != null && firstName
+						.isEmpty()))) {
+			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+					"First name"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType().equalsIgnoreCase("child")) && (firstName.length() > 20)) {
-			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0072, "First name", "<=20"));
+		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType()
+				.equalsIgnoreCase("child")) && (firstName.length() > 20)) {
+			firstNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			firstNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+					"First name", "<=20"));
 			firstNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType().equalsIgnoreCase("child")) && (lastName == null || (lastName != null && lastName.isEmpty()))) {
-			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0067, "Last Name"));
+		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType()
+				.equalsIgnoreCase("child"))
+				&& (lastName == null || (lastName != null && lastName.isEmpty()))) {
+			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0067,
+					"Last Name"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
-		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType().equalsIgnoreCase("child")) && (lastName.length() > 20)) {
-			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0072, "Last name", "<= 20"));
+		if ((getRegistartionType().equalsIgnoreCase("child") || getRegistartionType()
+				.equalsIgnoreCase("child")) && (lastName.length() > 20)) {
+			lastNameFieldUc.addTextStyle(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			lastNameFieldUc.setErrText(StringUtil.generateMessage(GL0072,
+					"Last name", "<= 20"));
 			lastNameFieldUc.setErrorVisible(true);
 			isValid = false;
 		}
 		if (userName == null || (userName != null && userName.isEmpty())) {
-			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			userNameValidUc.setText(StringUtil.generateMessage(GL0070, "Username"));
+			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			userNameValidUc.setText(StringUtil.generateMessage(GL0070,
+					"Username"));
 			userNameValidUc.setVisible(true);
 			isValid = false;
 		}
 		if (userName.length() < 5) {
-			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			userNameValidUc.setText(StringUtil.generateMessage(GL0071, "Username", "5"));
+			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			userNameValidUc.setText(StringUtil.generateMessage(GL0071,
+					"Username", "5"));
 			userNameValidUc.setVisible(true);
 			isValid = false;
 		}
 		if (userName.length() > 20) {
-			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			userNameValidUc.setText(StringUtil.generateMessage(GL0072, "Username", "<=20"));
+			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
+			userNameValidUc.setText(StringUtil.generateMessage(GL0072,
+					"Username", "<=20"));
 			userNameValidUc.setVisible(true);
 			isValid = false;
 		}
@@ -610,87 +605,91 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 			genderValidUc.setVisible(true);
 			isValid = false;
 		}
-		if (confirmPassword == null || (confirmPassword != null && confirmPassword.isEmpty())) {
-			confirmPasswordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			confirmPasswordValidUc.setText(StringUtil.generateMessage(GL0070, "Confirm password"));
+		if (confirmPassword == null
+				|| (confirmPassword != null && confirmPassword.isEmpty())) {
+			confirmPasswordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE
+					.css().userRegistrationError());
+			confirmPasswordValidUc.setText(StringUtil.generateMessage(GL0070,
+					"Confirm password"));
 			confirmPasswordValidUc.setVisible(true);
 			isValid = false;
 		}
 		if (!password.equalsIgnoreCase(confirmPassword)) {
-			confirmPasswordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
-			confirmPasswordValidUc.setText(StringUtil.generateMessage(GL0069, "Password"));
+			confirmPasswordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE
+					.css().userRegistrationError());
+			confirmPasswordValidUc.setText(StringUtil.generateMessage(GL0069,
+					"Password"));
 			confirmPasswordValidUc.setVisible(true);
 			isValid = false;
 		}
 		if (password.equalsIgnoreCase(userName)) {
-			passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
+			passwordFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
 			passwordValidUc.setText(GL0078);
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
 
-		if ((getRegistartionType().equalsIgnoreCase("parent")) && (dob == null || (dob != null && dob.isEmpty()))) {
-			dateBoxUc.addStyleName(RegisterCBundle.INSTANCE.css().parentDateBoxError());
-			dateBoxUc.getDateBox().setStyleName(RegisterCBundle.INSTANCE.css().parentDateTextError());
-			dateValidationUc.setText(StringUtil.generateMessage(GL0082, "birthday."));
+		if ((getRegistartionType().equalsIgnoreCase("parent"))
+				&& (dob == null || (dob != null && dob.isEmpty()))) {
+			dateBoxUc.addStyleName(RegisterCBundle.INSTANCE.css()
+					.parentDateBoxError());
+			dateBoxUc.getDateBox().setStyleName(
+					RegisterCBundle.INSTANCE.css().parentDateTextError());
+			dateValidationUc.setText(StringUtil.generateMessage(GL0082,
+					"birthday."));
 			dateValidationUc.setVisible(true);
 			isValid = false;
 		}
-		
+
 		if ((getRegistartionType().equalsIgnoreCase("parent")) && age < 13) {
-			dateBoxUc.addStyleName(RegisterCBundle.INSTANCE.css().parentDateBoxError());
-			dateBoxUc.getDateBox().setStyleName(RegisterCBundle.INSTANCE.css().parentDateTextError());
+			dateBoxUc.addStyleName(RegisterCBundle.INSTANCE.css()
+					.parentDateBoxError());
+			dateBoxUc.getDateBox().setStyleName(
+					RegisterCBundle.INSTANCE.css().parentDateTextError());
 			dateValidationUc.setText(StringUtil.generateMessage(GL0079));
 			dateValidationUc.setVisible(true);
 			isValid = false;
 		}
-		
+
 		return isValid;
 	}
-	/**
-	 * It will return the representation of a view as the widget
-	 */
+
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
 	}
-	/**
-	 * Reset method.
-	 */
+
 	@Override
 	public void reset() {
 	}
-	/**
-	 * This method is called immediately after a widget becomes attached to the browser's document.
-	 */
+
 	@Override
 	public void onLoad() {
 		// TODO Auto-generated method stub
 	}
-	/**
-	 * This method is called immediately before a widget will be detached from the browser's document.
-	 */
+
 	@Override
 	public void onUnload() {
 		// TODO Auto-generated method stub
 
 	}
-	/**
-	 * This method is used to set the Register User Details.
-	 */
+
 	@Override
 	public void setRegisteredUserDetails(UserDo user, String accountType) {
 		userEmailFieldLbl.setText(user.getEmailId());
-		userCategoryLisBox.addItem("Student");
-		userCategoryLisBox.addItem("Teacher");
-		userCategoryLisBox.addItem("Parent");
-		userCategoryLisBox.addItem("Other");
+		userCategoryLisBox.addItem(GL0417);
+		userCategoryLisBox.addItem(GL0416);
+		userCategoryLisBox.addItem(GL0418);
+		userCategoryLisBox.addItem(GL0419);
 		userCategoryLisBox.setVisibleItemCount(1);
-		if (user.getConfirmStatus() == 1 && accountType.equalsIgnoreCase("Parent")) {
+		if (user.getConfirmStatus() == 1
+				&& accountType.equalsIgnoreCase("Parent")) {
 			renderChildAccount();
 		} else if (accountType.equalsIgnoreCase("Parent")) {
 			setRegistartionType(accountType);
-			welcomeMessageHtml.setHTML("<p>Thanks for confirming your email! Please register <b>yourself</b> below before you create an account for your child.</p>");
+			welcomeMessageHtml
+					.setHTML(GL1208);
 			accountTypeFieldLbl.setText(PARENT_GUARDIAN_ACCOUNT);
 			accountInformationLbl.setText(PARENT_GUARDIAN_INFO);
 			birthdayFloPanel.setVisible(true);
@@ -702,9 +701,11 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 	}
 
 	/**
-	 * Get user's gender while register 
-	 * @param genderFlowPanel instance of {@link FlowPanel} which contains gender details  
-	 * @return gender value 
+	 * Get user's gender while register
+	 * 
+	 * @param genderFlowPanel
+	 *            instance of {@link FlowPanel} which contains gender details
+	 * @return gender value
 	 */
 	private String getSelectedGender(FlowPanel genderFlowPanel) {
 		String gender = null;
@@ -721,8 +722,10 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 	}
 
 	/**
-	 * Clear the selected gender 
-	 * @param genderFlowPanel instance of {@link FlowPanel} which contains gender details 
+	 * Clear the selected gender
+	 * 
+	 * @param genderFlowPanel
+	 *            instance of {@link FlowPanel} which contains gender details
 	 * @return gender
 	 */
 	private String clearSelectedGender(FlowPanel genderFlowPanel) {
@@ -734,9 +737,7 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 		}
 		return gender;
 	}
-	/**
-	 * To close register popup.
-	 */
+
 	@Override
 	public void closeRegisterPopup() {
 		appPopUp.hide();
@@ -751,26 +752,24 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 
 	/**
 	 * Assign registration type
+	 * 
 	 * @param registartionType
 	 */
 	public void setRegistartionType(String registartionType) {
 		this.registartionType = registartionType;
 	}
-	/**
-	 * To get registration type.
-	 */
+
 	@Override
 	public String getRegistrationType() {
 		return getRegistartionType();
 	}
-	/**
-	 * To render the child account.
-	 */
+
 	@Override
 	public void renderChildAccount() {
 		setRegistartionType("Child");
-		welcomeMessageHtml.setHTML("<p>Fill in the following information to create an account for your child.</p>");
-		appPopUp.setViewTitle("Create a child account");
+		welcomeMessageHtml
+				.setHTML(GL1209);
+		appPopUp.setViewTitle(GL1210);
 		userCategoryFloPanel.setVisible(false);
 		lastnameFloPanel.setVisible(true);
 		firstnameFloPanel.setVisible(true);
@@ -785,59 +784,35 @@ public class UserRegistrationView extends PopupViewWithUiHandlers<UserRegistrati
 		accountInformationLbl.setText(CHILD_INFO);
 		termsAndConditionFloPanel.setVisible(false);
 	}
-	/**
-	 * To check user name availability.
-	 */
+
 	@Override
 	public void checkUserNameAvailability(UserDo user) {
-		if (user != null && user.isAvailability() && userNameFieldTxtBox.getText() != null) {
-			userNameValidUc.setText("Oops ! " + userNameFieldTxtBox.getText() + IS_ALREADY_AVAILABLE);
+		if (user != null && user.isAvailability()
+				&& userNameFieldTxtBox.getText() != null) {
+			userNameValidUc.setText(GL0061+" " + userNameFieldTxtBox.getText()
+					+ IS_ALREADY_AVAILABLE);
 			userNameValidUc.setVisible(true);
-			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().userRegistrationError());
+			userNameFieldTxtBox.addStyleName(RegisterCBundle.INSTANCE.css()
+					.userRegistrationError());
 		}
 	}
-	/**
-	 * 
-	 * @function getAge 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To get Age Based on DOB calculation.
-	 * 
-	 * 
-	 * @parm(s) : @param birthDate
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	private int getAge(Date birthDate){
-		if(birthDate!=null) {
+
+	private int getAge(Date birthDate) {
+		if (birthDate != null) {
 			long ageInMillis = new Date().getTime() - birthDate.getTime();
 			Date age = new Date(ageInMillis);
-			return age.getYear()- 70;
+			return age.getYear() - 70;
 		} else {
 			return 0;
 		}
 	}
-	/**
-	 * To get firstname.
-	 */
-	public String getFirstName()
-	{	
+
+	public String getFirstName() {
 		return firstNameFieldUc.getUserText();
-		
+
 	}
-	/**
-	 * To get LastName.
-	 */
-	public String getLastName()
-	{
+
+	public String getLastName() {
 		return lastNameFieldUc.getUserText();
 	}
 

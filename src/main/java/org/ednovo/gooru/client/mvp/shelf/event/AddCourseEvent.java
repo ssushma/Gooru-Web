@@ -25,21 +25,11 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
-/**
- * @fileName : AddCourseEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user add the course it will get the course name and course id.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+import com.google.gwt.event.shared.EventHandler;
+import java.lang.String;
+import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.event.shared.GwtEvent.Type;
+
 public class AddCourseEvent extends GwtEvent<AddCourseHandler> {
 
 	public static Type<AddCourseHandler> TYPE = new Type<AddCourseHandler>();

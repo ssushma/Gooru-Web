@@ -35,19 +35,8 @@ import org.ednovo.gooru.client.uc.DownToolTipUc;
 import com.google.gwt.event.dom.client.ClickEvent;
 
 /**
+ * @author SearchTeam
  * 
- * @fileName : FilterLabelVc.java
- *
- * @description : This file is related to FilterLabels
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class FilterLabelVc extends CloseLabel {
 
@@ -62,17 +51,11 @@ public class FilterLabelVc extends CloseLabel {
 	public FilterLabelVc(String text) {
 		super(text);
 	}
-	/**
-	 * Constructor to initialize isSourceText.
-	 */
-	
 	public FilterLabelVc(String text,boolean isSourceText) {
 		super(text);
 		this.isSourceText =isSourceText;
 	}
-	/**
-	 * This event is to fire search keyword event
-	 */
+
 	@Override
 	public void onCloseLabelClick(ClickEvent event) {
 		

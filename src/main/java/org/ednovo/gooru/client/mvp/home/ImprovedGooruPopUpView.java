@@ -24,6 +24,21 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+/**
+ * @fileName : ImprovedGooruPopUpView.java
+ *
+ * @description : This file is a UiBinder for ImprovedGooruPopUpView.ui.xml and updates the GWT view components. 
+ *   After every new release old user should get this popup for first time login after release.
+ * 
+ * 
+ * @version : 1.0
+ *
+ * @date: 
+ *
+ * @Author: Gooru Team
+ * 
+ * @Reviewer: Gooru Team
+ */
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -31,6 +46,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -42,28 +58,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : ImprovedGooruPopUpView.java
- *
- * @description : This file is a UiBinder for ImprovedGooruPopUpView.ui.xml and updates the GWT view components. 
- *   After every new release old user should get this popup for first time login after release.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-    public class ImprovedGooruPopUpView extends PopupPanel {
+
+public class ImprovedGooruPopUpView extends PopupPanel implements
+		MessageProperties {
 	private static ImprovedGooruPopUpViewUiBinder uiBinder = GWT
 			.create(ImprovedGooruPopUpViewUiBinder.class);
 
@@ -75,141 +76,98 @@ import com.google.gwt.user.client.ui.Widget;
 	HTMLEventPanel closeButton;
 
 	@UiField
-	Anchor lblSupportLink,mobileLearnMore,termsofuselearnmore;
-	
+	Anchor lblSupportLink, mobileLearnMore, termsofuselearnmore, descLinkThree, descLinkFive;
+
+	@UiField
+	InlineLabel contenttextlbl, termsofusetxt, aboutThree, aboutFour, aboutFive;
+
 	@UiField
 	HTMLPanel GooruLinkOutercontainer;
-	@UiField 
-	Label headertext,subtext,goorutext,headersubtext,contenttext,termsofuselbl;
-	
-	@UiField HTML questiontxt,termsofusetxt; 
-	@UiField InlineLabel contenttextlbl,contenttextlbl1;
-	@UiField Image mIcon;
-	
+	@UiField
+	Label headertext, subtext, goorutext, headersubtext, contenttext,
+			termsofuselbl, lblTitleThree, lblTitleFour, lblTitleFive;
+
+	@UiField
+	HTML questiontxt;
+	// @UiField InlineLabel /*,contenttextlbl1*/;
+	// @UiField Image mIcon;
+
 	private TermsAndPolicyVc termsAndPolicyVc;
-	/**
-	 * 	Constructor.
-	 */
+	
+	String version = "6.0";
+
 	public ImprovedGooruPopUpView() {
 		super(false);
-        setWidget(uiBinder.createAndBindUi(this));
-        this.setSize("690px", "347px");
+		setWidget(uiBinder.createAndBindUi(this));
+		// this.setSize("704px", " ");
+		this.setStyleName(HomeCBundle.INSTANCE.css().setAsCenterPopup());
 		this.setGlassEnabled(true);
-	    this.show();
-	    this.center();
-	    Window.enableScrolling(false);
-        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
-        MixpanelUtil.New_in_Gooru_5_10_Views();
-//        lblSupportLink.setHref("http://support.goorulearning.org/anonymous_requests/new");
-        lblSupportLink.getElement().getStyle().setColor("#4d9645");
-        headertext.setText(MessageProperties.GL0285);
-        //subtext.setText(MessageProperties.GL0286);
-        goorutext.setText(MessageProperties.GL0287);
-        headersubtext.setText(MessageProperties.GL0288);
-        //questiontypetext.setText(MessageProperties.GL0289);
-        //questiontypetextdesc.setHTML(MessageProperties.GL0290);
-        //questiontypelearnmore.setText(MessageProperties.GL0291);
-        contenttext.setText(MessageProperties.GL0292);
-        contenttextlbl.setText(MessageProperties.GL0293);
-        mobileLearnMore.setText(MessageProperties.GL0294);
-        questiontxt.setHTML(MessageProperties.GL0298);
-        lblSupportLink.setText(MessageProperties.GL0299);
-        termsofuselbl.setText(MessageProperties.GL0295);
-        termsofusetxt.setText(MessageProperties.GL0296);
-        termsofuselearnmore.setText(MessageProperties.GL0294);
-        termsofuselearnmore.getElement().setId("lnkLearnMore");
-        lblSupportLink.getElement().setId("lnkSupports");
-        mobileLearnMore.getElement().setId("lnkContent");
-        mIcon.setUrl("images/mos/ipadFriendly.png");
-        contenttextlbl1.setText(MessageProperties.GL0293_1);
-        
-        AppClientFactory.getInjector().getHomeService().whatsNewFibLink(new SimpleAsyncCallback<String>() {
+		this.show();
+		this.center();
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+//		MixpanelUtil.New_in_Gooru_5_10_Views();
+		
+		MixpanelUtil.mixpanelEvent("New_In_Gooru_"+version);
 
-			@Override
-			public void onSuccess(String result) {
-				termsofuselearnmore.setHref(result);
-			}
-		});
-        
-        AppClientFactory.getInjector().getHomeService().whatsNewMosLink(new SimpleAsyncCallback<String>() {
+		lblSupportLink.getElement().getStyle().setColor("#4d9645");
+		headertext.setText(GL0285);
 
-			@Override
-			public void onSuccess(String result) {
-				mobileLearnMore.setHref(result);
-			}
-		});
+		goorutext.setText(GL0287);
+		headersubtext.setText(GL0288);
+
+		contenttext.setText(GL0292);
+		contenttextlbl.setText(GL0293);
+		
+		mobileLearnMore.setText(GL1239);
+		mobileLearnMore.getElement().setId("lnkContent");
+		mobileLearnMore.setHref("http://support.goorulearning.org/hc/en-us/articles/201896353");
+		
+		
+		
+		termsofuselbl.setText(GL0295);
+		termsofusetxt.setText(GL0296);
+		termsofuselearnmore.setText(GL1239);
+		termsofuselearnmore.getElement().setId("lnkLearnMore");
+		termsofuselearnmore.setHref("http://support.goorulearning.org/hc/en-us/articles/201480617");
+		
+		
+		
+		lblTitleThree.setText(GL0629);
+		aboutThree.setText(GL0625);
+		descLinkThree.setText(GL1239);
+		descLinkThree.setHref("http://support.goorulearning.org/hc/en-us/articles/201897547");
+		
+		
+		lblTitleFour.setText(GL0630);
+		aboutFour.setText(GL0627);
+		
+//		lblTitleFive.setText(GL0630_1);
+//		aboutFive.setText(GL0627_1);
+//		descLinkFive.setText(GL1239);
+//		descLinkFive.setHref("http://support.goorulearning.org/hc/en-us/articles/200688096");
+		
+		questiontxt.setHTML(GL0298);
+		lblSupportLink.setText(GL0299);
+		lblSupportLink.getElement().setId("lnkSupports");
+		lblSupportLink.setHref("mailto:support@goorulearning.org");
+		
 	}
-	/**
-	 * 
-	 * @function oncloseButton 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandler for closeButton.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("closeButton")
 	public void oncloseButton(ClickEvent clickEvent) {
 		MixpanelUtil.New_in_Gooru_x();
+		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 9, new SimpleAsyncCallback<UserDo>() {
+			@Override
+			public void onSuccess(UserDo newUser) {
+				UserDo user = AppClientFactory.getLoggedInUser();
+				user.setViewFlag(newUser.getViewFlag());
+				AppClientFactory.setLoggedInUser(user);
+			}
+		});
+		
 		this.removeFromParent();
 		Window.enableScrolling(true);
-        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-	}
-	/**
-	 * 
-	 * @function ontermsofuselearnmore 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :termsofuselearnmore UIHandlers.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("termsofuselearnmore")
-	public void ontermsofuselearnmore(ClickEvent clickEvent) {
-		MixpanelUtil.New_in_Gooru_FIB_link();
-	}
-	/**
-	 * 
-	 * @function oncontentlearnmore 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :mobileLearnMore UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("mobileLearnMore")
-	public void oncontentlearnmore(ClickEvent clickEvent) {
-		MixpanelUtil.New_in_Gooru_MOS_link();
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 }
-

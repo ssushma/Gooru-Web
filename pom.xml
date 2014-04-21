@@ -33,21 +33,23 @@
 		<webapp.container.home>${env.CATALINA_HOME}</webapp.container.home>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
-	<repositories>
-		<repository>
-			<id>sonatype-snapshots</id>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots><enabled>true</enabled></snapshots>
-			<releases><enabled>false</enabled></releases>
-		</repository>
-		<!-- Repository for gquery plugins -->
-		<repository>
-			<id>gwtquery-plugins</id>
-			<url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo</url>
-		</repository>
-	</repositories>
+	  <repositories>
+	    <repository>
+	      <id>sonatype-snapshots</id>
+	      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+	      <snapshots><enabled>true</enabled></snapshots>
+	      <releases><enabled>false</enabled></releases>
+	    </repository>
+	    <!-- Repository for gquery plugins -->
+    <repository>
+      <id>gwtquery-plugins</id>
+      <url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo</url>
+    </repository>
+	  </repositories>
 	<dependencies>
+
 		<!-- Spring dependencies -->
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
@@ -383,16 +385,65 @@
 	</dependencies>
 	<profiles>
 		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+		</profile>
+		<profile>
 			<id>concept</id>
 			<properties>
 				<env>concept</env>
 			</properties>
 		</profile>
+		<profile>
+			<id>devl</id>
+			<properties>
+				<env>devl</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<env>prod</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<env>local</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>qagenx</id>
+			<properties>
+				<env>qagenx</env>
+			</properties>
+		</profile>
+		
+	 <profile>
+                        <id>qa</id>
+                        <properties>
+                                <env>qa</env>
+                        </properties>
+                </profile>
+	<profile>
+			<id>elbprod</id>
+			<properties>
+				<env>elbprod</env>
+			</properties>
+		</profile>
+
+  <profile>
+                        <id>www2</id>
+                        <properties>
+                                <env>www2</env>
+                        </properties>
+                </profile>
 	</profiles>
 	<build>
 		<filters>
 			<filter>build/filter-${env}.properties</filter>
-			<filter>collection/filter-collection.properties</filter>
 		</filters>
 		<finalName>${artifactId}</finalName>
 

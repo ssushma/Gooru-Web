@@ -28,21 +28,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ClasspageListDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ClasspageListDo extends ResourceDo {
 
@@ -59,6 +45,8 @@ public class ClasspageListDo extends ResourceDo {
 	private Integer pageSize;
 	
 	private String classpageId;
+	
+	public ClasspageListDo(){}
 	
 	/** 
 	 * This method is to get the pageNum

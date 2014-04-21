@@ -26,8 +26,10 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 public interface IsQuestionResourceView extends IsViewWithHandlers<QuestionResourceUiHandlers>{
-	public void showQuestionPreview(CollectionItemDo collectionItemDo);
+	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo);
 	public void resetQuestionView();
+	public void createSessionAttemptTryWhenNavigation(int questionType);
 }

@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.authentication.uc;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -40,12 +41,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LeaveRegistrationPopUpUc extends PopupPanel {
+public class LeaveRegistrationPopUpUc extends PopupPanel implements MessageProperties {
 
 	private static LeaveRegistrationPopUpUcUiBinder uiBinder = GWT
 			.create(LeaveRegistrationPopUpUcUiBinder.class);
@@ -57,20 +60,16 @@ public class LeaveRegistrationPopUpUc extends PopupPanel {
 	@UiField(provided = true)
 	SignUpCBundle res;
 	@UiField
-	Label lblCancel, lblTitle, lblHeading, lblSubHeading;
+	Label lblCancel, lblTitle, lblHeading, lblSubHeading,quriesText;
 	@UiField
 	Button btnLeave, btnContinue;
+	@UiField InlineLabel pleaseContactText;
+	@UiField Anchor supportLink;
 	String accountType = "";
 	String childDob = "";
 	String parentEmailId = "";
 	String childUsername = "";
-    /**
-     * This method is used to dispaly LeaveRegistrationPopUp
-     * @param type
-     * @param emailId
-     * @param username
-     * @param dob
-     */
+
 	public LeaveRegistrationPopUpUc(String type,String emailId,String username,String dob) {
 		super(false);
 		this.res = SignUpCBundle.INSTANCE;
@@ -85,113 +84,83 @@ public class LeaveRegistrationPopUpUc extends PopupPanel {
 		this.setSize("502px", "352px");
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		this.getElement().getStyle().setBackgroundColor("transparent");
+		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+	    this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+		
 		setUiAndIds();
 	}
-    /**
-     * 
-     * @function setUiAndIds 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to set the data in LeaveRegistrationPopUp
-     * 
-     * 
-     * @parm(s) : 
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	public void setUiAndIds() {
-		lblTitle.setText(MessageProperties.GL0480
-				+ MessageProperties.GL_SPL_QUESTION);
-		lblHeading.setText(MessageProperties.GL0477);
+		lblTitle.setText(GL0480
+				+ GL_SPL_QUESTION);
+		lblHeading.setText(GL0477);
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
-		lblSubHeading.setText(MessageProperties.GL0478);
+		lblSubHeading.setText(GL0478);
 		btnLeave.getElement().setId("btnLeave");
 		btnContinue.getElement().setId("btnContinue");
-		btnLeave.setText(MessageProperties.GL0480);
-		btnContinue.setText(MessageProperties.GL0479);
+		btnLeave.setText(GL0480);
+		btnContinue.setText(GL0479);
 		btnContinue.getElement().setAttribute("style", "margin-left: 20px");
-		
+		quriesText.setText(GL1139+GL_GRR_COMMA);
+		pleaseContactText.setText(GL1145);
+		supportLink.setText(GL0299);
+		supportLink.setHref(GL1055);
 	}
-    /**
-     * 
-     * @function onClickLblCancel 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to close the popup.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
 		MixpanelUtil.close_signUp();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			String callBack = Window.Location.getHref();
+			Map<String, String> mapParms = StringUtil.splitQuery(callBack);
+			if(mapParms.containsKey("query"))
+			{
+				String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+				mapParms.put("query", queryVal);
+			}
+			if(mapParms.containsKey("flt.subjectName"))
+			{
+				String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+				mapParms.put("flt.subjectName", subjectNameVal);
+			}
+			mapParms.remove("callback");
+			mapParms.remove("type");
+			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
+		}
 		this.hide();
 	}
-    /**
-     * 
-     * @function onClickButtonLeave 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This button is used to close signup on click of leave button.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("btnLeave")
 	public void onClickButtonLeave(ClickEvent event) {
 		MixpanelUtil.close_signUp();
 		this.hide();
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			
+		}else{
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			String callBack = Window.Location.getHref();
+			Map<String, String> mapParms = StringUtil.splitQuery(callBack);
+			if(mapParms.containsKey("query"))
+			{
+				String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+				mapParms.put("query", queryVal);
+			}
+			if(mapParms.containsKey("flt.subjectName"))
+			{
+				String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+				mapParms.put("flt.subjectName", subjectNameVal);
+			}
+			mapParms.remove("callback");
+			mapParms.remove("type");
+			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), mapParms );
+		}
 	}
-    /**
-     * 
-     * @function onClickBtnContinue 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to continue registration on Continue button click.
-     * 
-     * 
-     * @parm(s) : @param event
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	@UiHandler("btnContinue")
 	public void onClickBtnContinue(ClickEvent event) {
 		MixpanelUtil.continue_registration();
@@ -199,6 +168,16 @@ public class LeaveRegistrationPopUpUc extends PopupPanel {
 		{
 			
 			Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+			if(params.containsKey("query"))
+			{
+				String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+				params.put("query", queryVal);
+			}
+			if(params.containsKey("flt.subjectName"))
+			{
+				String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+				params.put("flt.subjectName", subjectNameVal);
+			}
 			params.put("type", "2");
 			params.put("callback", "signup");
 			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
@@ -207,6 +186,16 @@ public class LeaveRegistrationPopUpUc extends PopupPanel {
 		if(accountType=="registerChild")
 		{
 			Map<String, String> params = new HashMap<String, String>();
+			if(params.containsKey("query"))
+			{
+				String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+				params.put("query", queryVal);
+			}
+			if(params.containsKey("flt.subjectName"))
+			{
+				String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+				params.put("flt.subjectName", subjectNameVal);
+			}
 			params.put("callback", "registerChild");
 			params.put("type", "4");
 			

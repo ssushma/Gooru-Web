@@ -7,12 +7,13 @@
 	    <g:FlowPanel styleName="{toolTip.searchorganizePopupTextContainer}">
 	        <g:FlowPanel styleName="{toolTip.searchOrganizeTextContainer}">
 	        	<!-- <g:HTMLPanel styleName="{toolTip.organizeText}">Discover</g:HTMLPanel> -->
-	            <g:HTMLPanel styleName="{toolTip.searchOrganizeRemainigText}">Enter any Science, Math, Social Sciences, or English Language Arts keyword or topic you would like to discover.
-	            <br/><br/>Examples:<br/>
-	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="solarLbl">Solar system</g:Anchor>,
-	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="exponentsLbl">exponents</g:Anchor>,
-	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="oceansLbl">oceans</g:Anchor>,
-	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="cellsLbl">cells</g:Anchor>
+	            <g:HTMLPanel styleName="{toolTip.searchOrganizeRemainigText}">
+	            <g:Label ui:field="enterSubjectText"></g:Label>
+	            <br/><br/><g:Label ui:field="examplesText"></g:Label><br/>
+	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="solarLbl"></g:Anchor>,
+	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="exponentsLbl"></g:Anchor>,
+	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="oceansLbl"></g:Anchor>,
+	              <g:Anchor styleName="{toolTip.searchOrganizeLinkText}" ui:field="cellsLbl"></g:Anchor>
 	            </g:HTMLPanel>
 	           
 	        </g:FlowPanel>

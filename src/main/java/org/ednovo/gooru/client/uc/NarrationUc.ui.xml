@@ -1,0 +1,172 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		/* Add CSS here. See the GWT docs on UI Binder for more details */
+	.popup {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 12px;
+			background-color: rgb(240, 240, 240);
+			width: 550px;
+			border-color: rgb(153, 153, 153);
+			border-width: 1px;
+			border-style: solid;
+			border-radius: 4px;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			margin: 0 auto;
+		}
+		
+		.popupInner {
+			text-align: center;
+			padding: 0px 10px;
+			padding-bottom: 20px;
+		}
+		
+		.popupHeader {
+			padding: 10px 0px;
+			color: #FFF;
+			margin: 0px 10px;
+			border-bottom: 1px solid rgb(221, 221, 221);
+			display: inline-block;
+			vertical-align: top;
+			width: 98%;
+		}
+		
+		.popupHeaderTitle {
+			color: rgb(81, 81, 81);
+			display: inline-block;
+			float: left;
+			margin-top: 5px;
+		}
+		
+		.popupContent {
+			text-align: center;
+			padding: 15px;
+		}
+		
+		.circleBlock {
+			color: rgb(153, 153, 153);
+			padding: 0px 160px;
+		}
+		
+		.circleBg {
+			width: 80px;
+			height: 80px;
+			margin: 0 auto;
+			margin-bottom: 5px;
+			border-radius: 65px;
+			-moz-border-radius: 65px;
+			-webkit-border-radius: 65px;
+			background-color: rgb(81, 81, 81);
+		}
+		
+		.contentTitle {
+			font-size: 20px;
+			line-height: 300%;
+			color: rgb(81, 81, 81);
+		}
+
+		.visibilityHidden{
+			visibility: hidden;
+		}
+		
+		.contentDesc {
+			font-size: 16px;
+			line-height: 120%;
+			text-align: left;
+			color: rgb(81, 81, 81);
+		}
+		
+		.btn {
+			width: 115px;
+			margin: auto;
+			margin-bottom: 15px;
+		}
+		
+		.close-button {
+			display: inline-block;
+			vertical-align: top;
+			float: right;
+			right: 0PX;
+			padding-right: 5PX;
+			width: 16px;
+			height: 17px;
+			background: url(images/closebutton.png) no-repeat;
+		}
+		
+		.close-button:hover {
+			cursor: pointer;
+		}
+		
+		.popupDesc {
+			font-weight: normal;
+			font-size: 12px;
+			text-align: center;
+			padding: 0px 130px;
+		}
+		
+		.buttonBlock {
+			padding: 10px 20px;
+			font-size: 12px;
+			color: #fff;
+			outline: 0;
+			border: none;
+			font-weight: normal;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			background-image: -moz-linear-gradient(43% -2% -90deg, rgb(76, 152, 204)
+				0%, rgb(16, 118, 187) 100%);
+			/* safari v4.0+ and by Chrome v3.0+ */
+			background-image: -webkit-gradient(linear, 43% -2%, 43% 113%, color-stop(0, rgb(76, 152,
+				204)), color-stop(1, rgb(16, 118, 187)));
+			/* Chrome v10.0+ and by safari nightly build*/
+			background-image: -webkit-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+				rgb(16, 118, 187) 100%);
+			/* Opera v11.10+ */
+			background-image: -o-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+				rgb(16, 118, 187) 100%);
+			/* IE v10+ */
+			background-image: -ms-linear-gradient(-90deg, rgb(76, 152, 204) 0%,
+				rgb(16, 118, 187) 100%);
+			-ms-filter:
+				"progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
+		}
+		
+		.buttonBlock:hover {
+			background: #1076BB;
+			cursor: pointer;
+		}
+		.popupDisplay {
+		background: url(../images/bg.png) repeat; <!--
+		min-height: 372px;
+		-->
+	}
+	</ui:style>
+	<g:HTMLPanel>
+		<!-- Add GWT widgets here. Enter < and hit Ctrl-Space to auto-complete 
+			widget names. The ui:field attribute binds an element to a field in the owner 
+			class. See the GWT docs on UI Binder for more details. -->
+		<g:HTMLPanel styleName="{style.popupDisplay}">
+			<g:HTMLPanel styleName="{style.popup}">
+				<g:HTMLPanel styleName="{style.popupHeader}">
+					<g:Label styleName="{style.popupHeaderTitle}" ui:field="lblResourceTitle"></g:Label>
+					<g:Label styleName="{style.close-button}" ui:field="lblClose"></g:Label>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{style.popupInner}">
+					<g:HTMLPanel styleName="{style.popupContent}">
+						<g:HTMLPanel styleName="{style.circleBlock}">
+							<g:Image styleName="{style.circleBg}" ui:field="userImage"></g:Image>
+							<g:Label ui:field="lblUserName"></g:Label>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.contentTitle}"></g:HTMLPanel>
+ 						<g:HTMLPanel styleName="{style.contentTitle} {style.visibilityHidden}"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{style.contentDesc}" ui:field="lblAboutAuthor"></g:HTMLPanel>
+					</g:HTMLPanel>
+					<g:Button styleName="primary" ui:field="btnOk"/>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

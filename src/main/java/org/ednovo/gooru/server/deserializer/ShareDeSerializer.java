@@ -33,19 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
+
 /**
- * @fileName : ShareDeSerializer.java
+ * @author Search Team
  *
- * @description : This class is used to deserialize share.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @Component
 public class ShareDeSerializer extends DeSerializer {

@@ -30,15 +30,14 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.ShareViewUc;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -47,7 +46,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -60,7 +58,7 @@ import com.google.inject.Inject;
  */
 public class ResourcePlayView extends
 		BasePopupViewWithHandlers<ResourcePlayUiHandlers> implements
-		IsResourcePlayView {
+		IsResourcePlayView,MessageProperties {
 
 	private ResourcePlayWidget gooruResourcePlayer;
 
@@ -179,7 +177,7 @@ public class ResourcePlayView extends
 											@Override
 											public void onFailure(
 													Throwable caught) {
-												new AlertContentUc("Oops!",
+												new AlertContentUc(GL0061,
 														caught.getMessage());
 											}
 										});
@@ -290,7 +288,7 @@ public class ResourcePlayView extends
 		shareDo.setCategoryType(type);
 		shareDo.setOnlyIcon(false);
 		shareDo.setShareType(shareType);
-		
+		shareDo.setDecodeRawUrl(link);
 		SocialShareView socialView = new SocialShareView(shareDo);
 
 		gooruResourcePlayer.setFTMWidget(socialView);

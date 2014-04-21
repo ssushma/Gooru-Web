@@ -71,7 +71,7 @@
 	   </g:HTMLPanel>
 	      <g:HTMLPanel styleName="{style.alertBodyStyle}" ui:field="alertBodyStyle">
 	         <g:HTMLPanel styleName="{style.alertSuccessMsgTxt}">
-	             <g:Image styleName="{style.gooruPublicShare}" ui:field="gooruPublicShare" url="images/gooru-public-share-popup.png"/>
+	             <g:Image styleName="{style.gooruPublicShare}" ui:field="gooruPublicShare"/>
 	         </g:HTMLPanel> 
 	         <g:HTMLPanel styleName="{style.alertSuccessTitleTxt}" ui:field="alertSuccessTitleTxt">
 	            <g:Label styleName="{style.alertSuccessMsgTxt}" ui:field="shareMsgTxt"/>
@@ -79,13 +79,13 @@
 	         <g:HTMLPanel styleName="{style.alertSuccessTxt}" ui:field="alertSuccessTxt">
 	            <g:Label styleName="{style.alertSuccessMsgTxt}" ui:field="shareMsgLbl"/>
 	         </g:HTMLPanel>
-	         <g:Label styleName="{style.privateMsgTxt}" ui:field="privateResourceLbl">Your private resource(s)</g:Label>
+	         <g:Label styleName="{style.privateMsgTxt}" ui:field="privateResourceLbl"></g:Label>
 	         <g:ScrollPanel styleName="{style.resourceHeaderPanel}" ui:field="resourceHeaderPanel">
 	         	<g:HTMLPanel ui:field="privateResourcePanel"></g:HTMLPanel>
 	         </g:ScrollPanel>
 	         <g:HTMLPanel styleName="{style.okSuccessBtn}" ui:field="buttonContainer">
-	         	<gg:BlueButtonUc text="Go Back" ui:field="goBackBtn" styleName="secondary {style.marginRight}" />
-	         	<gg:BlueButtonUc text="Ok" ui:field="okButton" styleName="primary" />
+	         	<gg:BlueButtonUc ui:field="goBackBtn" styleName="secondary {style.marginRight}" />
+	         	<gg:BlueButtonUc ui:field="okButton" styleName="primary" />
 	         </g:HTMLPanel>
 	      </g:HTMLPanel>
 	</g:HTMLPanel>

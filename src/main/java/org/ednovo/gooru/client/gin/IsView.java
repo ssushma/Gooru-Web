@@ -27,21 +27,11 @@
  */
 package org.ednovo.gooru.client.gin;
 
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
+
 /**
+ * @author Search Team
  * 
- * @fileName : IsView.java
- *
- * @description :  The interface for view classes that handles all the UI-related code for a{@link Presenter}.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsView extends View {
 

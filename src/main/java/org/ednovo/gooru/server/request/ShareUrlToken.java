@@ -26,24 +26,18 @@
  * 
  */
 package org.ednovo.gooru.server.request;
+
 /**
- * @fileName : ShareUrlToken.java
- *
- * @description : This is an enumaration used to create share Url's for API calls.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public enum ShareUrlToken {
 
 	RESOURCE_PLAY_URL("%23resource-play%26id={0}%26pn={1}"),
 
 	COLLECTION_PLAY_URL("%23collection-play%26id={0}"),
+	
+	COLLECTION_PLAY_URLAssign("%23collection-play%26id={0}"),
 	
 	COLLECTION_PLAY_EMBEDED_URL("embed/collection.htm?id={0}"),
 	

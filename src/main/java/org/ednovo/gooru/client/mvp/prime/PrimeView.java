@@ -31,22 +31,19 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * This file is used to set prime panel to widget.
+ * @author Search Team
+ * 
  */
 public class PrimeView extends BaseView implements IsPrimeView {
 
 	protected SimplePanel primePanel;
-	/**
-	 * Constructor.
-	 */
+
 	public PrimeView() {
 		UcCBundle.INSTANCE.css().ensureInjected();
 		primePanel = new SimplePanel();
 		setWidget(primePanel);
 	}
-/**
- * This is a method used by GWTP in it's lifecycle to set the widget hierarchy that has to be shown to the user. Each time setInSlot is called, it will replace the previous presenter that was assigned to that slot
- */
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (slot == PrimePresenter.TYPE_VIEW) {

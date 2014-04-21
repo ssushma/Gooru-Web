@@ -32,19 +32,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetFooterHandler.java
- *
- * @description : This is the event handler to set footer.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SetFooterHandler extends EventHandler, BaseUiHandlers {
 

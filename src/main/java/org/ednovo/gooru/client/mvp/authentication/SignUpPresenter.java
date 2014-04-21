@@ -37,21 +37,21 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
-	/**
-	 * 
-	 * @fileName : SignUpPresenter.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : SignUpPresenter.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 25-09-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements SignUpUiHandlers {
 	@Inject
 	private UserServiceAsync userService;
@@ -69,112 +69,33 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 *  This method is called when the presenter is instantiated
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
 	}
-	/**
-	 *  This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
 	}
-	/**
-	 * 
-	 * @function setUserService 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :This method is used to set the userService.
-	 * 
-	 * 
-	 * @parm(s) : @param userService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setUserService(UserServiceAsync userService) {
 		this.userService = userService;
 	}
-	/**
-	 * 
-	 * @function getUserService 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used get the user service.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserServiceAsync
-	 *
-	 * @throws : 
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public UserServiceAsync getUserService() {
 		return userService;
 	}
-    /**
-     * 
-     * @function setUser 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description :This method is used to set the user details.
-     * 
-     * 
-     * @parm(s) : @param user
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	public void setUser(UserDo user) {
 		this.user = user;
 	}
-	/**
-	 * 
-	 * @function getUser 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to get the user details.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 
 	public UserDo getUser() {
 		return user;
 	}
-    /**
-     * This method is used to create the user.
-     */
+
 	@Override
 	public void CreateUser(String postData, final String loginData) {
 		AppClientFactory.getInjector().getUserService().createUser(postData, new SimpleAsyncCallback<UserDo>() {
@@ -183,7 +104,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 			public void onSuccess(UserDo result) {
 				if (result!=null){
 					if (result.getCode() !=null &&  result.getCode() >399){
-						new AlertContentUc("Oops!", result.getStatus());
+						new AlertContentUc(GL0061, result.getStatus());
 						getView().toggleButtons();
 					}else if (result.getGooruUId() !=null && !result.getGooruUId().equalsIgnoreCase("")){
 						AppClientFactory.getInjector().getAppService().v2Signin(loginData, new SimpleAsyncCallback<UserDo>() {
@@ -202,25 +123,7 @@ public class SignUpPresenter extends PresenterWidget<IsSignUpView> implements Si
 			}
 		});
 	}
-    /**
-     * 
-     * @function displayPopup 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to dispaly popup.
-     * 
-     * 
-     * @parm(s) : @param displayScreen
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	public void displayPopup(int displayScreen) {
 		getView().displayPopUp(displayScreen);
 	}

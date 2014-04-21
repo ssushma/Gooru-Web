@@ -20,6 +20,6 @@
 	</ui:style>
 	<g:FlowPanel styleName="{style.container}">
 		<g:FlowPanel ui:field="contentPanel" />
-		<g:Label styleName="{style.moreStandards}" text="see 10 more" />
+		<g:Label styleName="{style.moreStandards}" ui:field="seeMoreText"/>
 	</g:FlowPanel>
 </ui:UiBinder> 

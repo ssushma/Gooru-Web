@@ -28,18 +28,18 @@ import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * 
- * @fileName : RefreshClasspageListEvent.java
+ * @fileName : DeleteClasspageListEvent.java
  *
- * @description : This file is used to refresh classpage list events.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Aug 17, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class RefreshClasspageListEvent extends GwtEvent<RefreshClasspageListHandler> {
 
@@ -52,16 +52,12 @@ public class RefreshClasspageListEvent extends GwtEvent<RefreshClasspageListHand
 	public RefreshClasspageListEvent() {
 		
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RefreshClasspageListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke lregisterogin handler event.
-	 */
+
 	@Override
 	protected void dispatch(RefreshClasspageListHandler handler) {
 		handler.refreshClasspage();

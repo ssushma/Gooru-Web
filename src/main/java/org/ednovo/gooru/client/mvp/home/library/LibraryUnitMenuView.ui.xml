@@ -2,5 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="libraryStyle" src="library.css"/>
+	<ui:style field="libraryStyleUc" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
       <g:Label styleName="{libraryStyle.unitLi}" ui:field="unitMenuItem"></g:Label>
 </ui:UiBinder>

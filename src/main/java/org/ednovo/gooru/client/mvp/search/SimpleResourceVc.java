@@ -53,29 +53,21 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
- * 
- * @fileName : SimpleResourceVc.java
+ * @author Search Team
  *
- * @description : This file is to set resource meta data info such as title, image, views, etc..
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class SimpleResourceVc extends Composite implements IsDraggable {
+public class SimpleResourceVc extends Composite implements IsDraggable,MessageProperties {
 
 	private static SimpleResourceVcUiBinder uiBinder = GWT.create(SimpleResourceVcUiBinder.class);
 
@@ -84,6 +76,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 
 	@UiField
 	HTML resourceTitleLbl;
+	
+	@UiField HTMLPanel resourceTitleContainer;
 
 	@UiField
 	ResourceImageUc resourceImageUc;
@@ -100,7 +94,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	
 	private ResourceSearchResultDo resourceSearchResultDo;
 	
-	private static final String PLAYER_NAME = "resource";
+	private CollectionItemSearchResultDo collectionItemSearchResultDo;
 	
 	private static final String VIEWS_PREFIX_NAME = "Views";  
 
@@ -112,6 +106,9 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	public SimpleResourceVc(CollectionItemSearchResultDo resourceSearchResultDo, int position) {
 		initWidget(uiBinder.createAndBindUi(this));
 		positionLbl.setText(position + "");
+		imgNotFriendly.setTitle(GL0737);
+		imgNotFriendly.setAltText(GL0737);
+		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		setData(resourceSearchResultDo);
 	}
 
@@ -119,11 +116,14 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 	 * Set resource meta data info such as title, image, views, etc..
 	 * @param resourceSearchResultDo instance of {@link ResourceSearchResultDo}
 	 */
-	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
+	public void setData(CollectionItemSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
+		this.collectionItemSearchResultDo = resourceSearchResultDo;
 		/*resourceTitleLbl.setText(StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 30));*/
 		resourceTitleLbl.setHTML(resourceSearchResultDo.getResourceTitle());
-		final String gooruOid = resourceSearchResultDo.getGooruOid();
+		setResourcePlayLink();
+		final String gooruOid = resourceSearchResultDo.getCollectionItemId();
+		final String collectionId = resourceSearchResultDo.getCollectionId();
 		resourceTitleLbl.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -133,17 +133,15 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 				} else {
 					MixpanelUtil.Preview_Resource_From_Search("resourceTitleLbl");
 				}
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("id", gooruOid);
-				params.put("pn", PLAYER_NAME);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
+				AppClientFactory.getPlaceManager().setRefreshPlace(false);
 			}
 		});
 		
 		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), 30);
-		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME); 
-		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME,resourceSearchResultDo.getResourceTitle(), false);
+		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + "", " " + VIEWS_PREFIX_NAME);  
+//		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), PLAYER_NAME,resourceSearchResultDo.getResourceTitle(), false,collectionId);
 		
+		resourceImageUc.renderSearch(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getCollectionItemId(), resourceSearchResultDo.getResourceTitle(), false, resourceSearchResultDo.getNarration(),collectionItemSearchResultDo.getCollectionId());
 		String mediaType = resourceSearchResultDo.getMediaType();
 		
 		boolean setVisibility = mediaType !=null ?  mediaType.equalsIgnoreCase("not_iPad_friendly") ? true : false : false;
@@ -161,10 +159,10 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				
-				toolTip = new ToolTip(MessageProperties.GL0454);
+				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(150+22), imgNotFriendly.getAbsoluteTop()+22);
+				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
 				toolTip.show();
 			}
 		});
@@ -184,50 +182,56 @@ public class SimpleResourceVc extends Composite implements IsDraggable {
 		imgNotFriendly.setVisible(setVisibility);
 		
 	}
-	/**
-	 * To get drag id.
-	 */
+	
+	public void setResourcePlayLink(){
+		Anchor resourceAnchor=new Anchor();
+		resourceAnchor.setHref(getResourceLink());
+		resourceAnchor.setStyleName("");
+		resourceAnchor.getElement().appendChild(resourceTitleLbl.getElement());
+		resourceTitleContainer.add(resourceAnchor);
+	}
+	
+	public String getResourceLink(){
+		String collectionId=collectionItemSearchResultDo.getCollectionId();
+		if(collectionItemSearchResultDo.getNarration()!=null&&!collectionItemSearchResultDo.getNarration().trim().equals("")){
+			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId()+"&tab=narration";
+			return resourceLink;
+		}else{
+			String resourceLink="#"+PlaceTokens.PREVIEW_PLAY+"&id="+collectionId+"&rid="+collectionItemSearchResultDo.getCollectionItemId();
+			return resourceLink;
+		}
+	}
+
+
 	@Override
 	public String getDragId() {
 		return resourceSearchResultDo.getGooruOid();
 	}
-	/**
-	 * To get drag type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		return DRAG_TYPE.RESOURCE;
 	}
-	/**
-	 * returns IsDraggableMirage.
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		return new ResourceDragWithImgUc(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getResourceTitle());
 	}
-	/**
-	 * Blur handler on drag.
-	 */
+
 	@Override
 	public void onDragBlur() {
 	}
-	/**
-	 * To get Drag handle.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		return null;
 	}
-	/**
-	 * To get Drag Top Correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		return 7;
 	}
-	/**
-	 * To get Drag Left Correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		return 11;

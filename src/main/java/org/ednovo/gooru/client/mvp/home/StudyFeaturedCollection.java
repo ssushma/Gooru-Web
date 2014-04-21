@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -32,24 +33,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : StudyFeaturedCollection.java
+ * @author Search Team
  *
- * @description : To Set the featured collection image
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class StudyFeaturedCollection extends Composite  {
+public class StudyFeaturedCollection extends Composite implements MessageProperties {
 
 	@UiField
 	FlowPanel contentImageFloPanel;
@@ -59,6 +50,9 @@ public class StudyFeaturedCollection extends Composite  {
 	
 	@UiField
 	FlowPanel featuredStartStudyFloPanel;
+	
+	@UiField
+	Label studyFeaturedCollectionButton;
 	
 	private static StudyFeaturedCollectionUiBinder uiBinder = GWT
 			.create(StudyFeaturedCollectionUiBinder.class);
@@ -73,6 +67,7 @@ public class StudyFeaturedCollection extends Composite  {
 	public StudyFeaturedCollection() {
 		initWidget(uiBinder.createAndBindUi(this));
 		featuredStartStudyFloPanel.setVisible(false);
+		studyFeaturedCollectionButton.setText(GL0182);
 	}
 
 	/**
@@ -82,25 +77,7 @@ public class StudyFeaturedCollection extends Composite  {
 	public void setFeaturedCollectionImageUrl(String url){
 		contentUrlImg.setUrl(StringUtil.formThumbnailName(url, "-280x215."));
 	}
-	/**
-	 * 
-	 * @function getContentUrlImg 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : getter for contentUrlImg.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Image
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public Image getContentUrlImg() {
 		return contentUrlImg;
 	}

@@ -31,19 +31,8 @@ package org.ednovo.gooru.client.mvp.search.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetDeviceDetailsEvent.java
- *
- * @description : This is used to set the device details.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SetDeviceDetailsEvent extends GwtEvent<SetDeviceDetailsHandler> {
 
@@ -58,16 +47,12 @@ public class SetDeviceDetailsEvent extends GwtEvent<SetDeviceDetailsHandler> {
 		this.device = device;
 		this.size = size;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SetDeviceDetailsHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SetDeviceDetailsHandler handler) {
 		handler.setDeviceDetails(device, size);

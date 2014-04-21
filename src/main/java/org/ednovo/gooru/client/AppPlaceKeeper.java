@@ -24,9 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client;
 
-import org.ednovo.gooru.client.gin.IsPlaceManager;
-
-import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;

@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.settings;
 
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : UserSettingStyle.java
- *
- * @description : This file is used to apply css styles for UserSettingsView
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface UserSettingStyle extends CssResource {
 
 	String settingPageRadioButtonHolder();
@@ -61,5 +47,6 @@ public interface UserSettingStyle extends CssResource {
 	String profileHigherEducationGrade();
 	String defaultTextcss();
 	String deafaultCourse();
+	String standardsCheckBox();
 	
 }

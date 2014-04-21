@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 
@@ -31,19 +33,8 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetHeaderEvent.java
- *
- * @description : This event is to set Header.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SetHeaderEvent extends GwtEvent<SetHeaderHandler> {
 
@@ -56,16 +47,12 @@ public class SetHeaderEvent extends GwtEvent<SetHeaderHandler> {
 	public SetHeaderEvent(UserDo userDo) {
 		this.userDo = userDo;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SetHeaderHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SetHeaderHandler handler) {
 		handler.setHeaderEvent(userDo);

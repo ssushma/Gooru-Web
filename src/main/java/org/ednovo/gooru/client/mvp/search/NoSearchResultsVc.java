@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -50,28 +51,27 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
  * @fileName : NoSearchResultsVc.java
- *
- * @description : This method is to set the data for resources.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @description :
+ * 
+ * 
+ * @version : 5.9
+ * 
+ * @date: Sep 25, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
-public class NoSearchResultsVc extends Composite {
+public class NoSearchResultsVc extends Composite implements MessageProperties{
 
 	private static NoSearchResultsVcUiBinder uiBinder = GWT.create(NoSearchResultsVcUiBinder.class);
 
 	interface NoSearchResultsVcUiBinder extends UiBinder<Widget, NoSearchResultsVc> {
 	}
 	
-	@UiField Label resourcesCount;
+	@UiField Label resourcesCount,didnotFindText,tryText,removeFiltersText,checkSpellingText,differentKeywordText,changeToggleText,suggestedresourcesText;
 	
 	@UiField NoSearchResultBundle noResultStyle;
 	
@@ -99,27 +99,16 @@ public class NoSearchResultsVc extends Composite {
 	 */
 	public NoSearchResultsVc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		didnotFindText.setText(GL0711);
+		tryText.setText(GL0712);
+		removeFiltersText.setText(GL0713);
+		checkSpellingText.setText(GL0714);
+		differentKeywordText.setText(GL0715);
+		changeToggleText.setText(GL0716);
+		suggestedresourcesText.setText(GL0717);
 		getSearchData();
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set data for resources.
-	 * 
-	 * 
-	 * @parm(s) : @param searchInput
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setData(SearchDo<ResourceSearchResultDo> searchInput)
 	{
 		//resourcesCount.setText("There are "+searchInput.getSearchHits()+" suggested resources for you!");
@@ -180,26 +169,7 @@ public class NoSearchResultsVc extends Composite {
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function getResourceCategoryIcon 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to get resource category icons.
-	 * 
-	 * 
-	 * @parm(s) : @param categoryType
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private String getResourceCategoryIcon(String categoryType) {
 		String resourceCategoryCss = "";
 		if(categoryType.equalsIgnoreCase("video")) {
@@ -221,26 +191,7 @@ public class NoSearchResultsVc extends Composite {
 		}
 		return resourceCategoryCss;
 	}
-	/**
-	 * 
-	 * @function setDefaultResourceThumbnail 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set default resource thumbnails.
-	 * 
-	 * 
-	 * @parm(s) : @param category
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private String setDefaultResourceThumbnail(String category){
 		String resourceImage = "";
 		if (category.equalsIgnoreCase("video")) {
@@ -264,25 +215,7 @@ public class NoSearchResultsVc extends Composite {
 		}
 		return resourceImage;
 	}
-	/**
-	 * 
-	 * @function getSearchData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to get search data
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getSearchData()
 	{
 		SearchDo<ResourceSearchResultDo> searchInput=new SearchDo<ResourceSearchResultDo>();

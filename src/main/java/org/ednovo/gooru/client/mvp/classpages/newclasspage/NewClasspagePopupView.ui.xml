@@ -6,25 +6,22 @@
 		field="res" />
 		<g:HTMLPanel styleName="{res.css.popupOuter}">
 			<g:HTMLPanel styleName="{res.css.popupInner}">
-				<g:HTMLPanel styleName="{res.css.popupHeader}">
-					Title your Classpage!
-				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.popupHeader}" ui:field="headerPanel" />
 				<g:HTMLPanel styleName="{res.css.popupContent}">
-					<g:HTMLPanel styleName="{res.css.popupTitle}">
-						Title*
+					<g:HTMLPanel styleName="{res.css.popupTitle}" ui:field="titlePanel">
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.popupInputBoxContainer}">
 						<g:TextBox styleName="{res.css.popupInputBox}" ui:field="classpageTitleTxt" />
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.popupMandatoryContainer}">
 						<g:Label styleName="{res.css.popupMandatoryTitleText}"
-							ui:field="mandatoryClasspageTitleLbl">Please enter title.</g:Label>
+							ui:field="mandatoryClasspageTitleLbl"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:Label styleName="{res.css.creating}" ui:field="panelLoading"></g:Label>
 				<g:HTMLPanel styleName="{res.css.popupButtinContainer}" ui:field="panelControls">
-					<g:Label ui:field="addBtnLbl" styleName="{res.css.popupOkButton}">OK</g:Label>
-					<g:Label ui:field="cancelPopupBtnLbl" styleName="{res.css.popupOkCancel}">Cancel</g:Label>
+					<g:Button ui:field="btnCancel" styleName="secondary"/>
+					<g:Button ui:field="btnAdd" styleName="primary"/>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

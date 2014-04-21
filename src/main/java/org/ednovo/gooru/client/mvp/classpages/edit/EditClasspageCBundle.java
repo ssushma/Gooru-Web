@@ -27,20 +27,13 @@ package org.ednovo.gooru.client.mvp.classpages.edit;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
+
+
+
 /**
- * 
- * @fileName : EditClasspageCBundle.java
+ * @author Search Team
  *
- * @description : This interface is used to set the css in the Edit class page.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface EditClasspageCBundle extends ClientBundle{
 	
@@ -162,7 +155,21 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String classpageImage();
 		
 		String classpageCodeShareOr();
+		
+		String teachTab();
+        String deselect();
+        String select();
+        String selected();
+        String classpageHoverTitle();
+        String classpageHover();
+        String headerContainer();
+        String iframeBorder();
+        
+        String monitorButton();
+        
+        String backArrowButton();
 	}
+	@NotStrict
 	@Source("editclasspage.css")
 	EditClasspageCss css();
 

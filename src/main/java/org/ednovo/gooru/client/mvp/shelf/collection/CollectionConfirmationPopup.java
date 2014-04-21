@@ -39,21 +39,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : CollectionConfirmationPopup.java
- *
- * @description : This file is related to Collection Confirmation Popup.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public  class CollectionConfirmationPopup extends PopupPanel implements MessageProperties{
 
 	@UiField Label shareMsgTitle, shareMsgTxt, shareMsgLbl, closeButton,classPageNames;
@@ -69,16 +55,16 @@ public  class CollectionConfirmationPopup extends PopupPanel implements MessageP
 	interface CollectionConfirmationPopupUiBinder extends
 			UiBinder<Widget, CollectionConfirmationPopup> {
 	}
-	/**
-	 * Class Constructor.
-	 */
+
 	public CollectionConfirmationPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		shareMsgTitle.setText("This collection is in use!");
-		shareMsgTxt.setText("This collection is currently being used in the ");
-		shareMsgLbl.setText("If you would like to make this collection private, the collection will be removed and no longer be available in the classpage(s).");
+		shareMsgTitle.setText(GL0836);
+		shareMsgTxt.setText(GL0837);
+		shareMsgLbl.setText(GL0838);
 		okButton.getElement().getStyle().setMarginLeft(7, Unit.PX);
+		goBackBtn.setText(GL0834);
+		okButton.setText(GL0835);
 		goBackBtn.getElement().setId("btnGoBack");
 		okButton.getElement().setId("btnOk");
 		this.setGlassEnabled(true);
@@ -98,61 +84,26 @@ public  class CollectionConfirmationPopup extends PopupPanel implements MessageP
         
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 	}
-	/**
-	 * 
-	 * @function onClickCloseBtn 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This UIHandler is used to close the popup.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+	
 	@UiHandler("closeButton")
 	public void onClickCloseBtn(ClickEvent clickEvent) {
 		Window.enableScrolling(true);
 		this.hide();
 	}
-	/**
-	 * 
-	 * @function onClickGoBackBtn 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This is used to close the popup.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("goBackBtn")
 	public void onClickGoBackBtn(ClickEvent clickEvent) {
 		Window.enableScrolling(true);
 		this.hide();
 	}
-	/**
+	/*
 	 * return OkButton 
 	 */
 	public BlueButtonUc getOkButtonMethod(){
 		return okButton;
 	}
-	/**
+	/*
 	 * return classPageNames Label
 	 */
 	public Label getClassPageNames(){

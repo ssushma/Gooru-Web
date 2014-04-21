@@ -28,20 +28,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
+
+
 /**
- * 
- * @fileName : CollectionCBundle.java
+ * @author Search Team
  *
- * @description : This is the interface for CollectionCollaboratorTabVc and to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionCBundle extends ClientBundle{
 	
@@ -274,6 +265,16 @@ public interface CollectionCBundle extends ClientBundle{
 		String mobileSupportPanel();
 		String questionMark();
 		String shelfInfoMobileSupported();
+		String mandatoryLabelError();
+		String shelfTeacherTip();
+		String shelfGradeTeacherTipTextTitle();
+		String shelfGradeTeacherTipError();
+		String shelfGradeTeacherTipTextbox();
+		String shelfTeacherTipButtons();
+		String shelfTeacherTipButtonsCancel();
+		String shelfGradeTeacherTipButtonsContainer();
+		String searchRenameCollProfanityErrLbl();
+		String createCollContentAlignInputs();
 	}
 	@Source("Collection.css")
 	CollectionCss css();

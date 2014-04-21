@@ -23,20 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
-/**
- * @fileName : BrowserAgent.java
- *
- * @description : This class is used to get the user agent.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class BrowserAgent {
 
 	public static native String returnFormFactorView() /*-{
@@ -98,16 +85,7 @@ public class BrowserAgent {
 	}-;*/
 	
 	public static native String getWebBrowserClient() /*-{
-		var ieClient;
-		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-			 var ieversion=new Number(RegExp.$1)
-			 if (ieversion>=9) {
-			 	ieClient = "ie";
-			 } else {
-			 	ieClient = "none";
-			 }
-			}
-		return ieClient+"";
+		return navigator.userAgent.toLowerCase();
 	}-*/;
 
 	public static native String loadCssFile(String filename, String fileType) /*-{

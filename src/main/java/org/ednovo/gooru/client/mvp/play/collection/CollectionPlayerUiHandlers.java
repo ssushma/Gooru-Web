@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.collection;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.play.collection.event.ClosePreviewPlayerHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidgetEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdateCollectionViewCountEventHandler;
@@ -35,4 +36,6 @@ public interface CollectionPlayerUiHandlers extends BaseUiHandlers,ShowResourceV
 	public void updateResourceThumbsRating(int userThumbsRataing);
 	public void showLoginPopupWidget(String widgetMode);
 	public void resetCollectionPlayer();
-}
+	public void getReportData(String associatedGooruOid);
+	public void revealTeachOrStudypage(String page);
+	}

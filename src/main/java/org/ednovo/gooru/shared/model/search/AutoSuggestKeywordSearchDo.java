@@ -25,20 +25,7 @@
 package org.ednovo.gooru.shared.model.search;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : AutoSuggestKeywordSearchDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class AutoSuggestKeywordSearchDo implements Serializable {
 
 	/**
@@ -46,16 +33,12 @@ public class AutoSuggestKeywordSearchDo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String keyword;
-	/** 
-	 * This method is to get the keyword
-	 */
+	public AutoSuggestKeywordSearchDo(){}
 	public String getKeyword() {
 		return keyword;
 	}
-	/** 
-	 * This method is to set the keyword
-	 */
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+	
 }

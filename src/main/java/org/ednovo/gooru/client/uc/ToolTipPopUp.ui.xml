@@ -3,12 +3,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="ToolTip.css"></ui:style>
 	<g:FlowPanel styleName="{style.organizeContainer}">
-	    
-	    <g:FlowPanel styleName="{style.organizePopupTextContainer}">
-	        <g:FlowPanel styleName="{style.organizeTextContainer}">
-	       		<g:HTMLPanel ui:field="popupArrow" styleName="{style.PopupArrow}"></g:HTMLPanel>
-	        	<g:SimplePanel styleName="{style.content}" ui:field="contentPanel" />
-	        </g:FlowPanel>
-	     </g:FlowPanel>
+      	<g:HTMLPanel ui:field="popupArrow" styleName="{style.PopupArrow}"></g:HTMLPanel>
+       	<g:SimplePanel styleName="{style.content}" ui:field="contentPanel" />
+       	<g:HTMLPanel ui:field="downPopupArrow" ></g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

@@ -25,75 +25,60 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : ProfileV2Do.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class ProfileV2Do implements Serializable{
 	private static final long serialVersionUID = -2570709586812060758L;
 	private String aboutMe;
 	private String subject;
 	private String grade;
 	private UserDo user;
-	/** 
-	 * This method is to get the aboutMe
-	 */
-	public String getAboutMe() {
-		return aboutMe;
-	}
-	/** 
-	 * This method is to set the aboutMe
-	 */
-	public void setAboutMe(String aboutMe) {
-		this.aboutMe = aboutMe;
-	}
-	/** 
-	 * This method is to get the subject
-	 */
-	public String getSubject() {
-		return subject;
-	}
-	/** 
-	 * This method is to set the subject
-	 */
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	/** 
-	 * This method is to get the grade
-	 */
+	private GenderDo gender;
+	
+	public ProfileV2Do(){}
+	
 	public String getGrade() {
 		return grade;
 	}
-	/** 
-	 * This method is to set the grade
-	 */
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-	/** 
-	 * This method is to get the user
-	 */
+	public String getAboutMe() {
+		return aboutMe;
+	}
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 	public UserDo getUser() {
 		return user;
 	}
-	/** 
-	 * This method is to set the user
-	 */
 	public void setUser(UserDo user) {
 		this.user = user;
 	}
+
+	/** 
+	 * This method is to get the gender
+	 */
+	public GenderDo getGender() {
+		return gender;
+	}
+
+	/** 
+	 * This method is to set the gender
+	 */
+	public void setGender(GenderDo gender) {
+		this.gender = gender;
+	}
+	
+	
 	
 }

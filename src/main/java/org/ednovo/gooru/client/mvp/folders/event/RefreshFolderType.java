@@ -28,19 +28,8 @@
 package org.ednovo.gooru.client.mvp.folders.event;
 
 /**
+ * @author SearchTeam
  * 
- * @fileName : RefreshFolderType.java
- *
- * @description : This file is used to refresh folder type.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public enum RefreshFolderType {
 

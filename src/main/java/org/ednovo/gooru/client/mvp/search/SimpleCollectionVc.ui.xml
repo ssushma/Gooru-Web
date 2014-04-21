@@ -100,8 +100,7 @@ width: 497px;*//
 		.collectionGradesPanel {
 			float: right;
 			height: 68px;
-			max-width: 100px;
-			margin-right: 20px;
+			width: 105px;
 			margin-top: 20px;
 		}
 		

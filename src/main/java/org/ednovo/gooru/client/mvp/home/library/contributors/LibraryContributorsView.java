@@ -23,12 +23,27 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library.contributors;
+/**
+ * 
+ * @fileName : LibraryContributorsView.java
+ *
+ * @description : 
+ *
+ * @version : 1.0
+ *
+ * @date: 03-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 
 import java.util.ArrayList;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -37,22 +52,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : LibraryContributorsView.java
- *
- * @description : This class will display the library contributors.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class LibraryContributorsView extends Composite {
 
-	@UiField HTMLPanel container;
+public class LibraryContributorsView extends Composite implements MessageProperties {
+
+	@UiField HTMLPanel container,contributorsText;
 	@UiField HTMLPanel featuredEducatorsPanel;
 	
 	private static LibraryContributorsViewUiBinder uiBinder = GWT
@@ -61,33 +64,38 @@ public class LibraryContributorsView extends Composite {
 	interface LibraryContributorsViewUiBinder extends
 			UiBinder<Widget, LibraryContributorsView> {
 	}
-	/**
-	 * Class constructor.
-	 */
-	public LibraryContributorsView() {
+
+	public LibraryContributorsView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
-		getFeaturedUsers();
+		contributorsText.getElement().setInnerText(GL1182);
+		getFeaturedUsers(placeToken);
 	}
 	
 	/**
 	 * 
+	 * @param placeToken 
 	 * @function getFeaturedUsers 
 	 * 
 	 * @created_date : 06-Dec-2013
 	 * 
-	 * @description : This method is used to get the featured users.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : 
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
-	private void getFeaturedUsers() {
-		AppClientFactory.getInjector().getLibraryService().getLibraryFeaturedUsers(new AsyncCallback<ArrayList<LibraryUserDo>>() {
+	private void getFeaturedUsers(final String placeToken) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryFeaturedUsers(placeToken, new AsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> userDoList) {
-				setFeaturedUsers(userDoList);
+				setFeaturedUsers(userDoList,placeToken);
 			}
 			@Override
 			public void onFailure(Throwable caught) {
@@ -97,23 +105,29 @@ public class LibraryContributorsView extends Composite {
 	
 	/**
 	 * 
+	 * @param placeToken 
 	 * @function setFeaturedUsers 
 	 * 
 	 * @created_date : 06-Dec-2013
 	 * 
-	 * @description : This method is used to set the featured users.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param userDoList
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
-	private void setFeaturedUsers(ArrayList<LibraryUserDo> userDoList) {
+	private void setFeaturedUsers(ArrayList<LibraryUserDo> userDoList, String placeToken) {
 		MixpanelUtil.mixpanelEvent("View_ContributorsPage");
 		container.getElement().setId("container");
 		for(int i=0; i<userDoList.size();i++) {
-			featuredEducatorsPanel.add(new LibraryContributor(userDoList.get(i)));
+			featuredEducatorsPanel.add(new LibraryContributor(userDoList.get(i),placeToken));
 		}
 	}
 }

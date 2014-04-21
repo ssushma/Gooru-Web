@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.settings;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -33,39 +34,28 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : SavePopup.java
- *
- * @description : This file is related to SavePopup.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class SavePopup extends PopupPanel {
+
+public class SavePopup extends PopupPanel implements MessageProperties{
 	
 	
 	@UiField Label lbOk;
+	@UiField HTMLPanel confirmEmail,checkMailLbl;
 
 	private static SavePopupUiBinder uiBinder = GWT.create(SavePopupUiBinder.class);
 	
 	interface SavePopupUiBinder extends UiBinder<Widget, SavePopup> {
 	}
-	/**
-	 * Constructor to show the SavePopup.
-	 */
+	
 	public SavePopup(){
 		super();
 		setWidget(uiBinder.createAndBindUi(this));
+		confirmEmail.getElement().setInnerText(GL1483);
+		checkMailLbl.getElement().setInnerText(GL1484);
+		lbOk.setText(GL1386);
 		setGlassEnabled(true);
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
@@ -73,25 +63,7 @@ public class SavePopup extends PopupPanel {
 		this.center();
 		
 	}
-	/**
-	 * 
-	 * @function OnClickOkButton 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to hide the save popup.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("lbOk")
 	public void OnClickOkButton(ClickEvent event){
 		Window.enableScrolling(true);

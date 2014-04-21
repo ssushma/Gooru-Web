@@ -1158,6 +1158,11 @@
 .actionField {
 	text-align: center;
 	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+.okButtonmargin{
+	margin-left: 5px;
 }
 
 .actionFieldOne {
@@ -1831,8 +1836,15 @@ font-size:12px;
 .loginPopupGlassStyle{
 	z-index:99999;
 	background-color: black;
-opacity: 0.3;
-filter: alpha(opacity=30);
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+
+.playerAddToolTipGlassStyle{
+	z-index:999999;
+	background-color: black;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
 }
 .userMenuBottomLine
 {
@@ -1935,6 +1947,14 @@ filter: alpha(opacity=30);
 	cursor: pointer;
 }
 
+.setAsCenterPopup {
+	left: 0 !important;
+	right: 0 !important;
+	top: 56px !important;
+	margin: auto;
+	z-index: 999;
+}
+
 .noClasspageYet{
 	margin-bottom: 20px;	
 }
@@ -1956,4 +1976,6 @@ filter: alpha(opacity=30);
 }
 .gwtSuggestBoxPopup{
 	width: 318px;
+}
+.removingText{
 }

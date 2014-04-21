@@ -192,24 +192,24 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:HTML styleName="{style.faqOuterContainer}" >
-			<p class="{style.captionFaq}">Can I organize multiple resources into a playlist?</p>
-			<p class="{style.captionDescp}">Yes, a collection is a playlist of resources, and you can easily create a collection from resources that you have found.</p>
+			<p class="{style.captionFaq}"><g:Label ui:field="organizeText"></g:Label></p>
+			<p class="{style.captionDescp}"><g:Label ui:field="createCollectionText"></g:Label></p>
 			
-				<p class="{style.captionFaq}">Once I've added multiple resources to my collection, can I edit or reorganize them?</p>
-				<p class="{style.captionDescp}">Yes, to edit your collection in greater detail, hover on an open collecion and click the Edit Collection button that appears. In Edit mode, you can rearrange resources, write a description for the collection, tag it with relevant vocabulary and phrases to make it easy to find, add collaborarators, and edit its privacy settings.</p>
-				<p class="{style.captionFaq}">Can I share an individual resource with my students?</p>
-				<p class="{style.captionDescp}">Of course! Hover your mouse over the resource you want to share, and click Share. We'll click Share. We'll provide you with a link that you can send to your students.</p>
+				<p class="{style.captionFaq}"><g:Label ui:field="reOrganizeText"></g:Label></p>
+				<p class="{style.captionDescp}"><g:Label ui:field="editCollectionText"></g:Label></p>
+				<p class="{style.captionFaq}"><g:Label ui:field="shareResourceLbl"></g:Label></p>
+				<p class="{style.captionDescp}"><g:Label ui:field="shareResourceText"></g:Label></p>
 				
 		</g:HTML>
 		<g:HTMLPanel styleName="{style.moreInformationRightContainer}">
 		<g:FlowPanel styleName="{style.moreInformationFaq}">
-			<g:Label styleName="{style.faqPanelText}" text="Need more help?"/>
+			<g:Label styleName="{style.faqPanelText}" ui:field="needHelpLbl"/>
 		</g:FlowPanel>	
 			
-		<g:Anchor styleName="{style.blueButtonTextBig}" text="Support Forums" href="http://support.goorulearning.org/forums" target="_blank" />	
+		<g:Anchor styleName="{style.blueButtonTextBig}" ui:field="supportLbl" target="_blank" />	
 		<g:HTMLPanel styleName="{style.faqContactUsTextContainer}">
-			Go to our support forums to get more answers or
-			<g:Anchor href="http://support.goorulearning.org/anonymous_requests/new" target="_blank" styleName="{style.contactUsText}">contact us</g:Anchor> if you need any additional help!
+			<g:Label ui:field="moreAnsweretext"></g:Label>
+			<g:Anchor target="_blank" styleName="{style.contactUsText}" ui:field="contactUsText"></g:Anchor> <g:Label ui:field="helpText"></g:Label>
 		</g:HTMLPanel>
 			<!-- <g:Label styleName="{style.faqpanelSupport}" text="Go to our support center to get"/>
 			<g:Label styleName="{style.faqpanelSupports}" text="more answers or"/>

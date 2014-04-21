@@ -24,38 +24,33 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : StandardSuggestionsVc.java
+ * @author Search Team
  *
- * @description : This is the interface for StandardSuggestions.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class StandardSuggestionsVc extends Composite {
+public class StandardSuggestionsVc extends Composite implements MessageProperties{
 
 	private static StandardSuggestionsUiBinder uiBinder = GWT.create(StandardSuggestionsUiBinder.class);
 
 	interface StandardSuggestionsUiBinder extends UiBinder<Widget, StandardSuggestionsVc> {
 	}
 
+	@UiField Label seeMoreText;
 	/**
 	 * Class constructor
 	 */
 	public StandardSuggestionsVc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		seeMoreText.setText(GL0739);
 	}
 
 }

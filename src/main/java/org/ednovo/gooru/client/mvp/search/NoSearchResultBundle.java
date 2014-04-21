@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.search;
 
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : NoSearchResultBundle.java
- *
- * @description : This file is to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface NoSearchResultBundle extends CssResource{
 	String collectionContainer();
 	String collectionThambnailBlueBar();

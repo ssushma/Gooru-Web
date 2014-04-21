@@ -27,20 +27,7 @@ package org.ednovo.gooru.client.mvp.home.library.events;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 
 import com.google.gwt.event.shared.EventHandler;
-/**
- * 
- * @fileName : SetSubjectDoHandler.java
- *
- * @description : Handler for {@link SetSubjectDoEvent}.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface SetSubjectDoHandler extends EventHandler {
 	void setSubjectDo(String subjectCode, SubjectDo subjectDo);
 }

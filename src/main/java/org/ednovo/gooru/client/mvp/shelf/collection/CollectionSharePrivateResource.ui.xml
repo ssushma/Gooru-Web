@@ -39,7 +39,6 @@
 			float: left;
 			width: 265px;
 		}
-
 		.resourceTitle {
 			color: #515151;
 			font-size: 12px;
@@ -49,7 +48,10 @@
 			white-space: nowrap;
 			padding-bottom: 3px;
 		}
-		.resourceCategory {
+		.resourceTitle span.AM img {
+		max-height: 25px !important;
+		}		
+	.resourceCategory {
 			padding-bottom: 3px;
 		}
 	</ui:style>
@@ -59,7 +61,7 @@
 			<g:HTMLPanel ui:field="resourceCategoryIcon"></g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{style.resourceHeaderTextPanel}">
-			<g:HTML styleName="{style.resourceTitle}" ui:field="resourceTitle"/>
+			<g:HTML styleName="resourceTitle" ui:field="resourceTitle"/>
 			<g:HTMLPanel>
 				<g:Label ui:field="resourceCategory" styleName="{style.resourceCategory}"/>
 				<g:HTML ui:field="resourceDescription"/>

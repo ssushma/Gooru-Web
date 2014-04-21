@@ -9,33 +9,30 @@
 		<g:HTMLPanel styleName="{res.css.assignmentContentContainer}">
 			<g:HTMLPanel styleName="{res.css.assignmentControlsContainer}">
 				<g:Label styleName="{res.css.assignmentTitleLabel}"
-					ui:field="assignmentTitleLabel" text="Assignment Title*"></g:Label>
+					ui:field="assignmentTitleLabel"></g:Label>
 				<g:HTMLPanel styleName="{res.css.assignmentTextBoxContainer}">
 					<g:TextBox styleName="{res.css.assignmentTextBox}"
 						ui:field="assignmentTitleTxt"></g:TextBox>
 				</g:HTMLPanel>
-				<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryTitleLabel"
-					text="Please enter a title."></g:Label>
+				<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryTitleLabel"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentControlsContainer}">
 				<g:Label styleName="{res.css.assignmentTitleLabel}"
-					ui:field="assignmentDueDateLabel" text="Due Date"></g:Label>
+					ui:field="assignmentDueDateLabel"></g:Label>
 				<g:HTMLPanel>
 					<g:SimplePanel ui:field = "dateSimPanel"/>
 					<gg:ErrorLabelUc ui:field="dateValidationUc"/>
-					<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryDueDateLabel"
-					text="Please select a due date."></g:Label>
+					<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryDueDateLabel"></g:Label>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentDirectionsContainer}">
 				<g:Label styleName="{res.css.assignmentTitleLabel}"
-					ui:field="assignmentDirectionLabel" text="Assignment Directions"></g:Label>
+					ui:field="assignmentDirectionLabel"></g:Label>
 				<g:HTMLPanel styleName="{res.css.assignmentDirectionContainer}">
 					<g:TextArea styleName="{res.css.assignmentDirectionTxtArea}"
 						ui:field="assignmentDirectionsTxtArea"></g:TextArea>
 				</g:HTMLPanel>
-				<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryDirectionLabel"
-					text="Please enter directions."></g:Label>
+				<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryDirectionLabel"></g:Label>
 			</g:HTMLPanel>
 			<!-- <g:HTMLPanel styleName="{res.css.assignmentCollectionsContainer}">
 				<g:Label styleName="{res.css.assignmentTitleLabel}"
@@ -53,10 +50,9 @@
 		<g:HTMLPanel styleName="{res.css.assignmentButtonsContainer}">
 			<g:HTMLPanel styleName="{res.css.assessmentAddContainer}"
 				ui:field="addResourceBtnPanel">
-				<g:Label styleName="{res.css.addButtonTitle}" text="Add"
-					ui:field="addResourceBtnLbl" />
+				<g:Label styleName="{res.css.addButtonTitle}" ui:field="addResourceBtnLbl" />
 			</g:HTMLPanel>
-			<g:Label styleName="{res.css.assignmentsCancel}" text="Cancel"
+			<g:Label styleName="{res.css.assignmentsCancel}"
 				ui:field="cancelResourcePopupBtnLbl" />
 		</g:HTMLPanel>
 	</g:HTMLPanel>

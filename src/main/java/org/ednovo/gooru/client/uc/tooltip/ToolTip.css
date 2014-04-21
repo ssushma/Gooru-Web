@@ -221,13 +221,11 @@
 
 /*GlobalToolTip css */
 .resourceRightsPopupContainer {
-	width: 219px;
+	width: 174px;
 	position: absolute;
 	top: 28px;
-	left: -94px;
+	left: -64px;
 	z-index: 999;
-}
-
 }
 .arrowShadow {
 	background-color: transparent;
@@ -279,6 +277,22 @@
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
+.resourceRightsInnerAddPopup {
+	clear: both;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	width:188px;
+}
 
 .resourceRightsPopupTitle {
 	font-weight: bold;
@@ -287,7 +301,6 @@
 
 /* ToolTip css*/
 .tooltipContainer {
-	width: 150px;
 	position: absolute;
 }
 
@@ -312,6 +325,8 @@
 	top: -9px;
 	border-top: none;
 	z-index: 100;
+	left:0;
+	right:0;
 }
 
 .tooltipContent {
@@ -344,7 +359,132 @@
 	background-color: #FFF !important;
 	font-size: 12px !important;
 	outline: 0;
+	display: inline-block;
 	padding: 6px;
 	font-family: Tahoma, sans-serif !important;
 	text-transform: uppercase;
+	height: 17px;
+}
+.discoverTooltipLabel{
+	padding: 6px;
+    cursor: pointer;
+    padding-left: 12px;
+}
+.discoverTooltipLabel:HOVER{
+	background-color: #cfe3f1;
+}
+.discoverTooltipContent{
+	/* text-align: center; */
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-moz-border-radius: 4px;
+	position: fixed;
+	top: 50px;
+	width: 139px;
+}
+.globalTooltipButtonMargin{
+	margin: 10px 0px 0px 63px;
+}
+
+
+/* Search Drag ToolTip */
+
+.searchDragPopupContainer {
+	width: 174px;
+	position: absolute;
+	top: 28px;
+	left: -64px;
+	z-index: 999;
+}
+
+.searchDragInnerPopup {
+	clear: both;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	/* padding: 10px; */
+	background-color: white;
+}
+
+.searchDragDescContainer{
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	height: 23px;
+	vertical-align: top;
+	margin-top: -28px;
+	margin-left: 3%;
+}
+
+.searchDragDesc{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 5px;
+	margin-left: 24px;
+}
+
+.studyTooltipContent {
+	text-align: left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	border-radius: 0px 0px 4px 4px;
+	-moz-border-radius: 0px 0px 4px 4px;
+	-webkit-border-radius: 0px 0px 4px 4px;
+	position: relative;
+	top: -10px;
+	width: 204px;
+	float: left;
+}
+
+.inputContainer{
+	padding: 8px;
+}
+
+.partnerLibraryContainer {
+	background: white;
+	margin-left: 141px;
+	margin-top: 50px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-moz-border-radius: 4px;
+	position: relative;
+	width: 100%;
+}
+.headerStyle{
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.studtPlayerLogOutContainer {
+	width: 174px;
+	position: absolute;
+	top: 28px;
+	left: -64px;
+	z-index: 999;
+}
+
+.partnerDropDownArrow {
+	width: 4px;
+	height: 8px;
+	background: url(images/library/partners/partner_library_icon.png) no-repeat;
+	float: right;
+	margin-top: -16px;
+	margin-right: 10px;
 }

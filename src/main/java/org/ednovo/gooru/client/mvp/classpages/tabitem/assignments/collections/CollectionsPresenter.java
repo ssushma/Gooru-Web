@@ -24,16 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
+/**
+ * 
+ */
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-import com.google.gwt.dom.client.Style.Display;
 
-
-/**
+/*
  * 
  * @fileName : CollectionsPresenter.java
  *
@@ -42,50 +43,21 @@ import com.google.gwt.dom.client.Style.Display;
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, IsCollectionsView> implements CollectionsUiHandlers {
 
 	CollectionItemDo collectionItemDo = null;
 	ClasspageService classpageService=null;
 		
-	/**
-	 * Class constructor
-	 * 
-	 * @param childView 
-	 */
 	public CollectionsPresenter(IsCollectionsView childView) {
 		super(childView);
 	}
 
-	/**
-	 * @description : this is used to remove collection from assignments.
-	 * @param : collectionId
-	 * @param : assignmentId
-	 * 
-	 * @return : onSuccess removing the collection from an Assignment
-	 */
-	public void RemoveCollectionFormAssignemnt(String collectionId, String assignmentId){
-		AppClientFactory.getInjector().getClasspageService().v2RemoveCollectionFromAssignment(collectionId, assignmentId, new SimpleAsyncCallback<Void>() {
-
-			@Override
-			public void onSuccess(Void result) {
-				if(getView().asWidget().getParent().getElement().getChildCount()-1>=10){
-					getView().asWidget().getParent().getParent().getParent().getElement().getFirstChildElement().getStyle().setDisplay(Display.NONE);
-				}else{
-					getView().asWidget().getParent().getParent().getParent().getElement().getFirstChildElement().getStyle().setDisplay(Display.BLOCK);
-				}
-				getView().asWidget().removeFromParent();
-				getView().hideWaitPopup();
-				
-			}
-		});
-	}
-	
 	
 	/** 
 	 * This method is to get the classpageService
@@ -101,51 +73,30 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 	public void setClasspageService(ClasspageService classpageService) {
 		this.classpageService = classpageService;
 	}
-	/**
-	 * 
-	 * @function onBind 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is called when the presenter is instantiated.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	private void onBind() {
-		throw new RuntimeException("Not implemented");
-	}
-	/**
-	 * 
-	 * @function onLoad 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is called immediately before a widget will be detached from the browser's document.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	
-	private void onLoad() {
-		throw new RuntimeException("Not implemented");
+	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate){
+		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,new SimpleAsyncCallback<String>() {
+			@Override
+			public void onSuccess(String result) {
+				if(directionText!=null){
+					getView().updateDirection(directionText);
+				}else{
+					getView().updateDueDate(dueDate);
+				}
+			}
+		});
 	}
+	
+	public void deleteClasspageItem(String classpageItemId){
+		AppClientFactory.getInjector().getClasspageService().deleteClassPageItem(classpageItemId, new SimpleAsyncCallback<String>() {
+			@Override
+			public void onSuccess(String result) {
+				getView().removeClasspageItemWidget();
+			}
+		});
+	}
+	
+	
 
 
 }

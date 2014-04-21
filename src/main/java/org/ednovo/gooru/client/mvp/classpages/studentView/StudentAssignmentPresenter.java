@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -33,34 +36,30 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
+import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.ErrorPopup;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-/**
- * 
- * @fileName : StudentAssignmentPresenter.java
- *
- * @description : This is the presenter for the Student Assignment View.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 
 public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssignmentView, IsStudentAssignmentProxy> implements StudentAssignmentUiHandlers {
 
@@ -73,112 +72,63 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;	
 	
 	SignUpPresenter signUpViewPresenter = null;
+	private Integer offset=0;
+	private Integer limit=20;
 	
-	/**
-	 * 
-	 * Manually reveals a presenter. Only use this method if your presenter is configured
-     * to use manual reveal via {@link Presenter#useManualReveal()}. This method should be
-     * called following one or more asynchronous server calls in
-     * {@link Presenter#prepareFromRequest(PlaceRequest)}.
-	 *
-	 */
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT)
 	public interface IsStudentAssignmentProxy extends ProxyPlace<StudentAssignmentPresenter> {
 	}
 	
 	//IndirectProvider<AssignmentPresenter> assignmentFactory;
-	/**
-	 * Class constructor and registering the handlers.
-	 * @param view
-	 * @param proxy
-	 * @param signUpViewPresenter
-	 */
+	
 	@Inject
 	public StudentAssignmentPresenter(IsStudentAssignmentView view,IsStudentAssignmentProxy proxy,SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		this.signUpViewPresenter = signUpViewPresenter;
-		//this.assignmentFactory= new StandardProvider<AssignmentPresenter>(assignmentFactory);
 		getView().setUiHandlers(this);	
 		
 	}
-	/**
-	 * This LifeCycle method is called when the binding the object. And it will set the collection data.
-	 */
+	
 	@Override
 	public void onBind() {
 		super.onBind();
-		getView().clearAll();
-		setcollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
-			@Override
-			public void onSuccess(final CollectionDo result) {
-				if(result!=null){
-					getView().setData(result);
-				}
-//				else{
-//					getView().getMainTitleLbl().setText(result.getTitle());
-//					getView().noAssignments();
-//				}
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				super.onFailure(caught);
-			}
-		});
-		
-		setAssignmentsListAsyncCallback(new SimpleAsyncCallback<AssignmentsListDo>() {
-
-			@Override
-			public void onSuccess(AssignmentsListDo result) {
-				if(result.getSearchResults().size()!=0){
-				getView().listAssignments(result);
-				}else{
-					//getView().getMainTitleLbl().setText(result.);
-        			getView().noAssignments();
-				}
-			}
-		});
-		
-		
 	}	
 	
-	/**
-	 * Lifecycle method called whenever this presenter is about to be
-	 * revealed.
-	 */
+	
 	@Override
 	protected void onReveal() {
 		super.onReveal();
-		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
+		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
 //		if (!AppClientFactory.isAnonymous()){
 //			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);
 //			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 //		}
+		
 		if(AppClientFactory.getPlaceManager().getRequestParameter("b") != null){
 			if (AppClientFactory.getPlaceManager().getRequestParameter("b").equalsIgnoreCase("true")){
 				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);
 				getView().getBackToEditPanel().setVisible(true);
+				AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 			}else{
 				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
 				getView().getBackToEditPanel().setVisible(false);
+				AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
 			}
 		}else{
 			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
 			getView().getBackToEditPanel().setVisible(false);
+			AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
 		}
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 	}
-	/**
-	 * This will allow the callback to reveal the presenter when the callback happens and it will call the initParam() method.
-	 */
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
@@ -186,40 +136,70 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			initParam();
 		}
 	}
-	/**
-	 * @function initParam 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to get the read the all the paremeters passed in the URL.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	private void initParam() {
-		String classPageId= getPlaceManager().getRequestParameter("id");
-		String pageSize = getPlaceManager().getRequestParameter("pageSize");
-		String pageNum = getPlaceManager().getRequestParameter("pageNum");
-		String source = getPlaceManager().getRequestParameter("source");
-		String pos = getPlaceManager().getRequestParameter("pos");
-		
-		//getView().setClasspageId(classPageId);
-		//getView().getClasspageById(classPageId, pageSize, pageNum);
 		getView().clearAll();
-		getView().metaData(classPageId, pageNum, pageSize, source,pos);
+		getClasspage();
+	}
+	public void getClasspage(){
+		String classpageId=getPlaceManager().getRequestParameter("id");
+		this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
+			@Override
+			public void onSuccess(ClasspageDo classpageDo) {
+				if(classpageDo!=null && classpageDo.getClasspageId() != null){
+						offset=0;
+						limit=20;
+						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString());
+						getView().setClasspageData(classpageDo);
+						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
+						
+				}else{
+					ErrorPopup error = new ErrorPopup(GL1632);
+					error.center();
+					error.show();
+				}
+			}
+		});
+	}
+	public void getClasspageItems(String classpageId,String offset,String limit){
+		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
+				if(classpageItemsList!=null){
+					getView().showClasspageItems(classpageItemsList);
+				}
+			}
+		});
+	}
+	@Override
+	public void getNextClasspageItems(Integer offset,Integer limit) {
+		String classpageId=getPlaceManager().getRequestParameter("id");
+		getClasspageItems( classpageId,offset.toString(),limit.toString());
 	}
 
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+
 	@Override
 	protected void onReset() {
 		super.onReset();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("b") != null){
+			if (AppClientFactory.getPlaceManager().getRequestParameter("b").equalsIgnoreCase("true")){
+				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);
+				getView().getBackToEditPanel().setVisible(true);
+				AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
+				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
+			}else{
+				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
+				getView().getBackToEditPanel().setVisible(false);
+				AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
+				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+			}
+		}else{
+			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
+			getView().getBackToEditPanel().setVisible(false);
+			AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
+			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+		}
+		//Call Event for Setting Confirm popup
+		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		
 		if (getPlaceManager().getRequestParameter("callback") != null && getPlaceManager().getRequestParameter("callback").equalsIgnoreCase("signup")) {
@@ -233,28 +213,12 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		}
 		
 	}
-	/**
-	 * This method is used to get the view token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.STUDENT;
 	}
-	/**
-	 * @function setcollectionAsyncCallback 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to set the collection details.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setcollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
@@ -265,36 +229,54 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public SimpleAsyncCallback<CollectionDo> getcollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
-	/** 
-	 * This method is to get the ClasspageServiceAsync
-	 */
+	
 	public ClasspageServiceAsync getclasspageServiceAsync() {
 		return classpageServiceAsync;
 	}
-	/**
-	 * This method is used to get the class page by id.
-	 */
+	
 	public void asyMethodCall(){
 		this.getclasspageServiceAsync().v2GetClasspageById(AppClientFactory.getPlaceManager().getRequestParameter("id"), getcollectionAsyncCallback());
 		
 	}
-	/**
-	 * This method is used to get the assignments by class page Id.
-	 */
 	public void getAssignmentsList(String pageNum,String pageSize){
 		this.getclasspageServiceAsync().v2GetAssignemtsByClasspageId(AppClientFactory.getPlaceManager().getRequestParameter("id"), pageSize, pageNum, getAssignmentsListAsyncCallback());
 	}
-	/** 
-	 * This method is to get the assignmentsListAsyncCallback
-	 */
+
 	public SimpleAsyncCallback<AssignmentsListDo> getAssignmentsListAsyncCallback() {
 		return assignmentsListAsyncCallback;
 	}
-	/** 
-	 * This method is to set the assignmentsListAsyncCallback
-	 */
+
 	public void setAssignmentsListAsyncCallback(
 			SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback) {
 		this.assignmentsListAsyncCallback = assignmentsListAsyncCallback;
 	}
+
+	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
+		JSONObject classpageDataLog=new JSONObject();
+		String classpageEventId=GwtUUIDGenerator.uuid();
+		AppClientFactory.getPlaceManager().setClasspageEventId(classpageEventId);
+		classpageDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(classpageEventId));
+		classpageDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.CLASSPAGE_VIEW));
+		classpageDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(null));
+		classpageDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		classpageDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(System.currentTimeMillis()));
+		classpageDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(System.currentTimeMillis()));
+		classpageDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(classpageId, "", "", "", "","",null,classpageId,"study"));
+		classpageDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
+		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
+		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
+	}
+	@Override
+	public void removeUserFromClass(ClasspageDo classpageDo, String emailId){
+		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId, new SimpleAsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				
+			}
+		});
+		
+	}
+
 }

@@ -29,6 +29,7 @@ import java.util.List;
 import org.ednovo.gooru.client.service.HomeService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.FeaturedContentDeSerializer;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -42,20 +43,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gwt.core.shared.GWT;
-/**
- * @fileName : HomeServiceImpl.java
- *
- * @description : This is the implementation of the home serivice.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Service("homeService")
 @ServiceURL("/homeService")
 public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
@@ -73,26 +61,25 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		JsonRepresentation jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		return featuredContentDeSerializer.deSerializer(jsonRep);
 	}*/
-	/**
-	 * This method is used to get the featured theme collections.
-	 */
+	
 	@Override
 	public List<FeaturedCollectionContentDo> getFeaturedThemeCollection(String themeType) {
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_FEATURED_THEME_COLLECTIONS, themeType, getLoggedInSessionToken());
-		JsonRepresentation jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return featuredContentDeSerializer.deSerializer(jsonRep);
 	}
-	/**
-	 * This method is used to update the user details.
-	 */
+	
 	@Override
 	public void updateUserDetails(String userNameValue, String userRoleValue)throws GwtException {
-		
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_USER,getLoggedInUserUid(),getLoggedInSessionToken());
 		Form form = new Form();
 		form.add("username", userNameValue);
 		form.add("userrole", userRoleValue);
-		JsonRepresentation jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 //		try {
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
@@ -110,22 +97,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		}
 		return featuredList;
 	}*/
-	/**
-	 * @function deserializeCollection 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to deserialize the collection.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public CollectionDo deserializeCollection(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -148,5 +120,9 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 	
 	public String mosLink(){
 		return getMosLink();
+	}
+	
+	public String getClientIpAddress(){
+		return getIpAddress();
 	}
 }

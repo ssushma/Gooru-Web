@@ -32,19 +32,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionSearchResultCBundle.java
- *
- * @description : This file is used to aplly css for CollectionSearchResult..
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionSearchResultCBundle  extends ClientBundle {
 	
@@ -82,6 +71,8 @@ public interface CollectionSearchResultCBundle  extends ClientBundle {
 		String collectionThumbnail();
 		
 		String authorContainer();
+		
+		String collaboratorStyle();
 	}
 
 	@Source("CollectionSearchResult.css")

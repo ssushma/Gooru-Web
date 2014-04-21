@@ -30,18 +30,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : DownToolTipUc.java
+ * @author Search Team
  *
- * @description : This class will return the down tooltip.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class DownToolTipUc extends PopupPanel {
 

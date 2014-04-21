@@ -25,19 +25,7 @@
 package org.ednovo.gooru.shared.util;
 
 import java.io.Serializable;
-/**
- * @fileName : AttemptedAnswersDo.java
- *
- * @description : This class is used to set and get data of AttemptedAnswersDo model type.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class AttemptedAnswersDo implements Serializable{
 	
 	private static final long serialVersionUID = 4393225749052874789L;
@@ -46,53 +34,43 @@ public class AttemptedAnswersDo implements Serializable{
 	private boolean attemptResult;
 	private String answersText;
 	private int answerId;
-	/** 
-	 * This method is to get the questionType
-	 */
+	private String[] fibAnswersList;
+	
 	public int getQuestionType() {
 		return questionType;
 	}
-	/** 
-	 * This method is to set the questionType
-	 */
 	public void setQuestionType(int questionType) {
 		this.questionType = questionType;
 	}
-	/** 
-	 * This method is to get the attemptResult
-	 */
 	public boolean isAttemptResult() {
 		return attemptResult;
 	}
-	/** 
-	 * This method is to set the attemptResult
-	 */
 	public void setAttemptResult(boolean attemptResult) {
 		this.attemptResult = attemptResult;
 	}
-	/** 
-	 * This method is to get the answersText
-	 */
 	public String getAnswersText() {
 		return answersText;
 	}
-	/** 
-	 * This method is to set the answersText
-	 */
 	public void setAnswersText(String answersText) {
 		this.answersText = answersText;
 	}
-	/** 
-	 * This method is to get the answerId
-	 */
 	public int getAnswerId() {
 		return answerId;
 	}
-	/** 
-	 * This method is to set the answerId
-	 */
 	public void setAnswerId(int answerId) {
 		this.answerId = answerId;
+	}
+	/**
+	 * @return the fibAnswersList
+	 */
+	public String[] getFibAnswersList() {
+		return fibAnswersList;
+	}
+	/**
+	 * @param fibAnswersList the fibAnswersList to set
+	 */
+	public void setFibAnswersList(String[] fibAnswersList) {
+		this.fibAnswersList = fibAnswersList;
 	}
 
 }

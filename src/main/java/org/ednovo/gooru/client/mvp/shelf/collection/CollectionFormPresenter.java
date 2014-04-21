@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +38,26 @@ import org.ednovo.gooru.client.mvp.folders.event.RefreshCollectionInFolderLevelL
 import org.ednovo.gooru.client.mvp.folders.event.RefreshCollectionInFolderListEvent;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter.IsCollectionFormProxy;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertFolderInShelfViewEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.service.ShelfServiceAsync;
 import org.ednovo.gooru.client.service.TaxonomyServiceAsync;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
@@ -59,19 +69,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
 /**
- * 
- * @fileName : CollectionFormPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for CollectionFormView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionFormView, IsCollectionFormProxy> implements CollectionFormUiHandlers {
 
@@ -89,7 +88,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 
 	private SimpleAsyncCallback<List<LibraryCodeDo>> courseAsyncCallback;
-
+	
 	private String resourceUid;
 
 	private String mediaType;
@@ -107,6 +106,12 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 	private String FOLDER_LEVEL_TWO = "2";
 
 	private String FOLDER_LEVEL_THREE = "3";
+	
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
 
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.COLLECTION)
@@ -124,9 +129,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 		super(view, proxy);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -198,18 +201,54 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			}
 		});
 	}
-	/**
-	 * This method is used to save the collection data.
-	 */
+
 	@Override
-	public void saveCollection(String folderId) {
+	public void saveCollection(String folderId,final String o1,final String o2, final String o3) {	
 		CollectionDo collection = getView().getData();
 		if (collection.getGooruOid() == null) {
 			if (resourceUid == null) {
 				if(folderId==null) {
 					getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
 				} else {
-					getResourceService().createCollectionInParent(getView().getData(), getView().getCourseCodeId(), folderId, getSaveCollectionAsyncCallback());
+					AppClientFactory.getInjector().getfolderService().createCollectionInParent(getView().getData(), getView().getCourseCodeId(), folderId,new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							String placeToken = AppClientFactory.getCurrentPlaceToken();
+							if(placeToken.equals(PlaceTokens.SHELF)) {
+								MixpanelUtil.mixpanelEvent("Organize_add_collection_to_folder");	
+							} else if(placeToken.equals(PlaceTokens.RESOURCE_SEARCH) || placeToken.equals(PlaceTokens.COLLECTION_SEARCH)) {
+								MixpanelUtil.mixpanelEvent("Search_add_collection_to_folder");
+							}
+							
+							FolderDo folderDo = getFolderDo(result);
+							getView().hide();
+							HashMap<String, String> params = new HashMap<String, String>();
+							if(o3!=null) {
+								params.put(O1_LEVEL, o1);
+								params.put(O2_LEVEL, o2);
+								params.put(O3_LEVEL, o3);
+								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params)); 
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+								AppClientFactory.fireEvent(new OpenParentFolderEvent());
+							} else if(o2!=null) {
+								params.put(O1_LEVEL, o1);
+								params.put(O2_LEVEL, o2);
+								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params)); 
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+								AppClientFactory.fireEvent(new OpenParentFolderEvent());
+							} else if(o1!=null){
+								params.put(O1_LEVEL, o1);
+								AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params)); 
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+								AppClientFactory.fireEvent(new OpenParentFolderEvent());
+							} else {
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+							}
+//							fireEvent(new CreateCollectionInFolder(result));
+							
+						}
+					});
+					
 				}
 			} else {
 				try{
@@ -226,18 +265,14 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			getResourceService().copyCollection(collection, "true", getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
 		}
 	}
-	/**
-	 *  This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
 		this.getTaxonomyService().getCourse(getCourseAsyncCallback());
 		getView().getAccountTypeId();
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -253,269 +288,112 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			getResourceService().getCollection(collectionUid, true, getCollectionAsyncCallback());
 		}
 	}
-	/**
-	 * This method is used to hide the popup's
-	 */
+	
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().closeAllopenedPopUp();
 	}
-	/**
-	 * This is used to fire RevealRootPopupContentEvent
-	 */
+
 	@Override
 	protected final void revealInParent() {
 		RevealRootPopupContentEvent.fire(this, this);
 	}
-	/**
-	 * 
-	 * @function getShelfService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns shelfService
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ShelfServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public ShelfServiceAsync getShelfService() {
 		return shelfService;
 	}
-	/**
-	 * 
-	 * @function getResourceService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns resourceService
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ResourceServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
-	/**
-	 * 
-	 * @function setResourceService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To set resourceService
-	 * 
-	 * 
-	 * @parm(s) : @param resourceService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	/**
-	 * 
-	 * @function getTaxonomyService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns taxonomyService
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : TaxonomyServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public TaxonomyServiceAsync getTaxonomyService() {
 		return taxonomyService;
 	}
-	/**
-	 * 
-	 * @function setTaxonomyService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To set taxonomyService
-	 * 
-	 * 
-	 * @parm(s) : @param taxonomyService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setTaxonomyService(TaxonomyServiceAsync taxonomyService) {
 		this.taxonomyService = taxonomyService;
 	}
-	/**
-	 * 
-	 * @function getSaveCollectionAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns saveCollectionAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<CollectionDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<CollectionDo> getSaveCollectionAsyncCallback() {
 		return saveCollectionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setSaveCollectionAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To set saveCollectionAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param saveCollectionAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSaveCollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback) {
 		this.saveCollectionAsyncCallback = saveCollectionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getCollectionAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns collectionAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<CollectionDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<CollectionDo> getCollectionAsyncCallback() {
 		return collectionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setCollectionAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To set collectionAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param collectionAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setCollectionAsyncCallback(SimpleAsyncCallback<CollectionDo> collectionAsyncCallback) {
 		this.collectionAsyncCallback = collectionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getCourseAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns courseAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<List<LibraryCodeDo>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<List<LibraryCodeDo>> getCourseAsyncCallback() {
 		return courseAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setCourseAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns courseAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param courseAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setCourseAsyncCallback(SimpleAsyncCallback<List<LibraryCodeDo>> courseAsyncCallback) {
 		this.courseAsyncCallback = courseAsyncCallback;
 	}
-	/**
-	 * To get the place token
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.COLLECTION;
 	}
+
+	@Override
+	public void copyCollection(String collectionTitle, String collectionId) {  
+		CollectionDo collectionDo = getView().getData();
+		collectionDo.setTitle(collectionTitle);
+		collectionDo.setGooruOid(collectionId);
+		AppClientFactory.fireEvent(new CopyCollectionEvent(collectionDo,getView().getCourseCodeId()));   
+		getView().hide();
+	}
+	
+	@Override
+	public void copyDraggedCollection(String collectionTitle, String collectionId,String selectedFolderId) {   
+		CollectionDo collectionDo = getView().getData();
+		collectionDo.setSharing("anyonewithlink");
+		collectionDo.setTitle(collectionTitle);
+		collectionDo.setGooruOid(collectionId);
+//		AppClientFactory.fireEvent(new CopyCollectionEvent(collectionDo,getView().getCourseCodeId()));   
+		AppClientFactory.fireEvent(new CopyDraggedCollectionEvent(collectionDo,getView().getCourseCodeId(),selectedFolderId));   
+		getView().hide();
+	}
+	
+	public FolderDo getFolderDo(CollectionDo collectionDo) {
+		FolderDo folderDo = new FolderDo();
+		folderDo.setGooruOid(collectionDo.getGooruOid());
+		folderDo.setTitle(collectionDo.getTitle());
+		folderDo.setType(collectionDo.getCollectionType());
+		folderDo.setSharing(collectionDo.getSharing());
+		ThumbnailDo thumbnailDo = new ThumbnailDo();
+		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
+		folderDo.setThumbnails(thumbnailDo);
+		List<FolderItemDo> folderItems = new ArrayList<FolderItemDo>();
+		if(collectionDo.getCollectionItems()!=null) {
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++) {
+				CollectionItemDo collectionItemDo = collectionDo.getCollectionItems().get(i);
+				FolderItemDo folderItemDo = new FolderItemDo();
+				folderItemDo.setGooruOid(collectionItemDo.getGooruOid());
+				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
+				folderItemDo.setType(collectionItemDo.getItemType());
+				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
+				resourceFormatDo.setValue(collectionItemDo.getCategory());
+				folderItems.add(folderItemDo);
+			}
+			folderDo.setCollectionItems(folderItems);
+		}
+		return folderDo;
+	}
+	
 	
 }

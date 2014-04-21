@@ -1,0 +1,6 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="libraryStyleUc" src="../../home/library/library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
+	<g:HTMLPanel ui:field="partnerPanel"/>
+</ui:UiBinder>

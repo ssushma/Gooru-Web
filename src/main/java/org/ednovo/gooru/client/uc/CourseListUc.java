@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
@@ -53,20 +54,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : CourseListUc.java
- *
- * @description : This class is used to set the courses list.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class CourseListUc extends PopupPanel {
+
+public class CourseListUc extends PopupPanel implements MessageProperties {
 
 	private static CourseListUcUiBinder uiBinder = GWT
 			.create(CourseListUcUiBinder.class);
@@ -88,6 +77,8 @@ public class CourseListUc extends PopupPanel {
 	
 	@UiField BlueButtonUc addCourseBtnLbl;
 	
+	@UiField Label titleLbl;
+	
 	private int courseCode;
 	
 	HTMLEventPanel subjectWidget;
@@ -106,9 +97,7 @@ public class CourseListUc extends PopupPanel {
 	
 	
 	@UiField CollectionEditResourceCBundle res;
-	/**
-	 * Class constructor.
-	 */
+	
 	public CourseListUc(CollectionDo collectionDo ) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.collectionDo=collectionDo;
@@ -120,6 +109,9 @@ public class CourseListUc extends PopupPanel {
 		isSelected=false;
 		this.center();
 		this.show();
+		titleLbl.setText(GL0847);
+		cancelCourseBtn.setText(GL0142);
+		addCourseBtnLbl.setText(GL0590);
 		loadingPanel.setVisible(true);
 		setCourseData();
 		collectionId=collectionDo.getGooruOid();
@@ -127,20 +119,7 @@ public class CourseListUc extends PopupPanel {
 	}
 	
 	
-	/**
-	 * @function setCourseData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the course data.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void setCourseData() {
 		AppClientFactory.getInjector().getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
 
@@ -153,20 +132,7 @@ public class CourseListUc extends PopupPanel {
 	}
 
 
-	/**
-	 * @function setCourseList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the course list.
-	 * 
-	 * @parm(s) : @param libraryCode
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setCourseList(final List<LibraryCodeDo> libraryCode) {
 		this.libraryCode=libraryCode;
 		Map<String,Integer> subjectList = new HashMap<String, Integer>();
@@ -209,21 +175,7 @@ public class CourseListUc extends PopupPanel {
 			}
 		}
 	}
-	/**
-	 * @function setCourseData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the course data.
-	 * 
-	 * 
-	 * @parm(s) : @param libraryCodeDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void setCourseData(final List<LibraryCodeDo> libraryCodeDo) {
 		final HTMLPanel panel=new HTMLPanel("");
 		panel.clear();
@@ -265,20 +217,7 @@ public class CourseListUc extends PopupPanel {
 		}
 
 	}
-	/**
-	 * @function setDefaultCourseData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the default course data.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setDefaultCourseData(){
 		collectionId=collectionDo.getGooruOid();
 		isSelected=false;
@@ -296,82 +235,40 @@ public class CourseListUc extends PopupPanel {
 			}
 	}
 	
-	/**
-	 * @function onClickClose 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the cancel button.
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("cancelCourseBtn")
 	public void onClickClose(ClickEvent clickEvent){
 		hide();
 		Window.enableScrolling(true);
 	}
-	/**
-	 * @function onAddCourseBtnClick 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the add course label.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("addCourseBtnLbl")
 	public void onAddCourseBtnClick(ClickEvent clickEvent){
 		MixpanelUtil.mixpanelEvent("Organize_Add_Course");
 		String oldCourseId = "";
 		String courseId= Integer.toString(courseCode);
 		if(isSelected){
-			System.out.println("ininininin");
 			collectionId=collectionDo.getGooruOid();
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if(code.getDepth()==2){
 					oldCourseId=Integer.toString(code.getCodeId());
-					updateCourse(collectionId, oldCourseId, "delete");
-				}
+					updateCourse(collectionId, oldCourseId,"delete");				}
 				
 			}
-			updateCourse(collectionId, courseId, "add");
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
+				MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+			}
+			updateCourse(collectionId, courseId,"add");
 			AppClientFactory.fireEvent(new AddCourseEvent(courseName,courseId));
 			hide();
 			Window.enableScrolling(true);
 		}else{
-			new AlertContentUc(MessageProperties.GL0061, "Please select course.");
+			new AlertContentUc(GL0061,GL1022);
 		}
 		
 		
 	}
-	/**
-	 * @function updateCourse 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to update the course details.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * @parm(s) : @param courseCode
-	 * @parm(s) : @param action
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void updateCourse(String collectionId, String courseCode, String action) {
 	  	
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionId, null, null, null, null, null, courseCode, null, null, action, new SimpleAsyncCallback<CollectionDo>() {

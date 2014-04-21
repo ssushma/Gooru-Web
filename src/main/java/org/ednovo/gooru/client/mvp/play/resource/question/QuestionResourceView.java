@@ -25,12 +25,14 @@
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,15 +48,20 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceUiHandlers> implements IsQuestionResourceView{
+public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceUiHandlers> implements IsQuestionResourceView,MessageProperties{
 	
-	@UiField HTMLPanel openEndedQuestionText,explanationContainer;
+	@UiField HTMLPanel explanationContainer,questiontext;
 	@UiField Image openEndedQuestionImage;
 	@UiField Button hintsButton,explanaionButton;
-	@UiField FlowPanel hintsContainer,answerOptionsContainer,questionContainer;
+	@UiField FlowPanel hintsContainer,questionContainer;
+	@UiField HTML openEndedQuestionText;
 	@UiField QuestionStyleResource oeStyle;
 	private CollectionItemDo collectionItemDo;
 	private int hintsLength=0;
+	
+	private MultipleChoicesQuestionWidget multipleChoicesQuestionWidget=null;
+	private OpendEndedQuestionWidget opendEndedQuestionWidget=null;
+	private FillInTheBlankQuestionWidget fillInTheBlankQuestionWidget=null;
 	
 	private static QuestionResourceViewUiBinder uiBinder = GWT.create(QuestionResourceViewUiBinder.class);
 
@@ -65,20 +72,23 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	@Inject
 	public QuestionResourceView(){
 		setWidget(uiBinder.createAndBindUi(this));
+		questiontext.getElement().setInnerHTML(GL0308);
+		hintsButton.setText(GL0667);
+		explanaionButton.setText(GL0316);
 	}
 	
 	@Override
-	public void showQuestionPreview(CollectionItemDo collectionItemDo){
+	public void showQuestionPreview(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		this.collectionItemDo=collectionItemDo;
 		renderQuestionView();
-		renderAnswerView();
+		renderAnswerView(attemptedAnswerDo);
 	}
 	
 	private void renderQuestionView(){
 		hintsLength=0;
-		openEndedQuestionText.add(getHTML(collectionItemDo.getResource().getQuestionText()));
+		openEndedQuestionText.setHTML(removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		if(collectionItemDo.getResource().getHints().size()>0){
-			hintsButton.setText("Hints ("+collectionItemDo.getResource().getHints().size()+" Left)");
+			hintsButton.setText(" "+GL0317+" ("+collectionItemDo.getResource().getHints().size()+" Left)");
 		}else{
 			hintsButton.setStyleName(oeStyle.hintsInActiveButton());
 		}
@@ -87,17 +97,30 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		else{
 			explanaionButton.setStyleName(oeStyle.hintsInActiveButton());
 		}
-		openEndedQuestionImage.setUrl(getQuestionImage());
+		if(getQuestionImage()!=null && !getQuestionImage().equals("")){
+			openEndedQuestionImage.setUrl(getQuestionImage());
+		}
+		
 	}
-	private void renderAnswerView(){
-		answerOptionsContainer.clear();
+	private void renderAnswerView(AttemptedAnswersDo attemptedAnswerDo){
+		//answerOptionsContainer.clear();
+		clearAnswerOptionsContainer();
 		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
-			answerOptionsContainer.add(new MultipleChoicesQuestionWidget(collectionItemDo));
+			multipleChoicesQuestionWidget=new MultipleChoicesQuestionWidget(collectionItemDo,attemptedAnswerDo);
+			questionContainer.add(multipleChoicesQuestionWidget);
 		}else if(collectionItemDo.getResource().getType()==6){
-			answerOptionsContainer.add(new OpendEndedQuestionWidget());
+			opendEndedQuestionWidget=new OpendEndedQuestionWidget(collectionItemDo,attemptedAnswerDo);
+			questionContainer.add(opendEndedQuestionWidget);
 		}
 		else if(collectionItemDo.getResource().getType()==4){
-			answerOptionsContainer.add(new FillIntheBlankQuestionView(collectionItemDo));
+			fillInTheBlankQuestionWidget=new FillInTheBlankQuestionWidget(collectionItemDo,attemptedAnswerDo);
+			questionContainer.add(fillInTheBlankQuestionWidget);
+		}
+	}
+	private void clearAnswerOptionsContainer(){
+		int widgetCount=questionContainer.getWidgetCount();
+		if(widgetCount>1){
+			questionContainer.getWidget(widgetCount-1).removeFromParent();
 		}
 	}
 	@UiHandler("hintsButton")
@@ -106,7 +129,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			if(collectionItemDo.getResource().getHints().size()>hintsLength){
 				startHintDataLogEvent(getQuestionHintsDo(hintsLength).getHintId());
 				hintsContainer.add(getHTML(getQuestionHintsDo(hintsLength).getHintText(),oeStyle.hintsText()));
-				hintsButton.setText("Hints ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
+				hintsButton.setText(""+GL0317+" ("+((collectionItemDo.getResource().getHints().size()-hintsLength)-1)+" Left)");
 				hintsLength++;
 				if(collectionItemDo.getResource().getHints().size()==hintsLength){
 					hintsButton.setStyleName(oeStyle.hintsInActiveButton());
@@ -122,8 +145,8 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		int i = 0;
 		QuestionHintsDo currentQuestionHintsDo= null;
 		while(it.hasNext()) {
+			currentQuestionHintsDo = it.next();
 			if(i==hintPosition){
-				currentQuestionHintsDo = it.next();
 				return currentQuestionHintsDo;
 			}
 		   i++;
@@ -136,7 +159,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			explanationContainer.add(getHTML(collectionItemDo.getResource().getExplanation()));
 			explanationContainer.addStyleName(oeStyle.explanationTextBorder());
 			explanaionButton.setStyleName(oeStyle.hintsInActiveButton());
-			startExplanationDataLogEvent();
+			startExplanationDataLogEvent(collectionItemDo.getResource().getExplanation());
 		}
 	}
 	@UiHandler("openEndedQuestionImage")
@@ -156,16 +179,22 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		return contentHtml;
 	}
 	
+	public String removeHtmlTags(String htmlText){
+		htmlText = htmlText.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		return htmlText;
+	}
+	
 	@Override
 	public void resetQuestionView() {
-		openEndedQuestionText.clear();
-		hintsButton.setText("Hints (0 Left)");
+		openEndedQuestionText.setHTML("");
+		hintsButton.setText(GL0667);
 		hintsButton.setStyleName(oeStyle.hintsActiveButton());
 		explanaionButton.setStyleName(oeStyle.hintsActiveButton());
 		explanationContainer.removeStyleName(oeStyle.explanationTextBorder());
 		hintsContainer.clear();
 		explanationContainer.clear();
-		answerOptionsContainer.clear();
+		//answerOptionsContainer.clear();
+		clearAnswerOptionsContainer();
 		openEndedQuestionImage.getElement().removeAttribute("src");
 	}
 	private String getQuestionImage(){
@@ -186,16 +215,19 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	
 	public void startHintDataLogEvent(int hintId) {
 		getUiHandlers().startHintDataLogEvent(hintId);
+		getUiHandlers().setHintIdWithTime(hintId);
 	}
 
-	public void startExplanationDataLogEvent() {
+	public void startExplanationDataLogEvent(String explanation) {
 		getUiHandlers().startExplanationDataLogEvent();
+		getUiHandlers().setExplanationIdWithTime(explanation);
 	}
 	
 	public class MultipleChoicesQuestionWidget extends MultipleChoicesQuestionView{
-		
-		public MultipleChoicesQuestionWidget(CollectionItemDo collectionItemDo){
-			super(collectionItemDo);
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public MultipleChoicesQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
+			this.attemptedAnswerDo=attemptedAnswerDo;
 		}
 		@Override
 		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
@@ -207,14 +239,27 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId) {
 			getUiHandlers().setAnswerAttemptSequence(attemptSequence, attemptStatus, answerId);
 		}
+		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,1);
+		}
+		public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+			getUiHandlers().setAnswerIdWithTime(answerId, answerStatus, answerSequence);
+			if(isFirstTry&&attemptedAnswerDo==null){
+				getUiHandlers().setResourceScore(score);
+			}
+		}
+		public void increaseUserAttemptCount(){
+			getUiHandlers().increaseUserAttemptCount();
+		}
 	}
 	
 	public class OpendEndedQuestionWidget extends OpendEndedQuestionView{
-		public OpendEndedQuestionWidget(){
-			super();
+		public OpendEndedQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
 		}
-		public void createSesstionItemAttemptOe(String answerText){
-			getUiHandlers().createSesstionItemAttemptOe(answerText);
+		@Override
+		public void createSesstionItemAttemptOe(String answerId,String answerText){
+			getUiHandlers().createSesstionItemAttemptOe(answerId, "pending",answerText);
 		}
 		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
 			attemptAnswerDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -225,6 +270,82 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		public void saveOeQuestionAnswerDataLogEvent() {
 			getUiHandlers().saveOeQuestionAnswerDataLogEvent();
+		}
+		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,6);
+		}
+		public void triggerSaveOeAnswerTextDataEvent(){
+			getUiHandlers().triggerSaveOeAnswerTextDataEvent();
+		}
+		public void increaseUserAttemptCount(){
+			getUiHandlers().increaseUserAttemptCount();
+		}
+	}
+	
+	public class FillInTheBlankQuestionWidget extends FillIntheBlankQuestionView{
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public FillInTheBlankQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
+			this.attemptedAnswerDo=attemptedAnswerDo;
+		}
+		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
+			attemptAnswerDo.setQuestionType(collectionItemDo.getResource().getType());
+			getUiHandlers().setAttemptStatus(collectionItemDo.getCollectionItemId(), attemptAnswerDo);
+		}
+		public void increaseUserAttemptCount(){
+			getUiHandlers().increaseUserAttemptCount();
+		}
+		@Override
+		public void createSesstionItemAttemptOe(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus){
+			String attemptedAnswers="";
+			String answerId="";
+			for(int i=0;i<userAttemptedAnswers.size();i++){
+				attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
+				try{
+					answerId=answerId+(answerIds.get(i).toString());
+				}catch(Exception e){
+					
+				}
+				if((i+1)!=userAttemptedAnswers.size()){
+					attemptedAnswers=attemptedAnswers+",";
+					answerId=answerId+",";
+				}
+			}
+			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
+		}
+		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,4);
+		}
+		public void setFibAnswerIdsWithTime(List<Integer> attemptAnswerIds,List<Integer> attemptTrySequenceArray,List<Integer> attemptStatusArray,Integer score,boolean isFirstAttempt,List<String> attemptedAnswersList){
+			String attemptedAnswersText="";
+			for(int i=0;i<attemptedAnswersList.size();i++){
+				attemptedAnswersText=attemptedAnswersText+"["+attemptedAnswersList.get(i)+"]";
+				if((i+1)!=attemptedAnswersList.size()){
+					attemptedAnswersText=attemptedAnswersText+",";
+				}
+			}
+			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);
+			getUiHandlers().setFibAnswerIdsWithTime(attemptAnswerIds,attemptTrySequenceArray,attemptStatusArray);
+			if(isFirstAttempt&&attemptedAnswerDo==null){
+				getUiHandlers().setResourceScore(score);
+			}
+		}
+	}
+
+	@Override
+	public void createSessionAttemptTryWhenNavigation(int questionType) {
+		if(questionType==1){
+			if(multipleChoicesQuestionWidget!=null){
+				//multipleChoicesQuestionWidget.createSessionItemAttemptWhenNavigation();
+			}
+		}else if(questionType==4){
+			if(fillInTheBlankQuestionWidget!=null){
+				//fillInTheBlankQuestionWidget.createSesstionItemAttemptOeWhenNavigation();
+			}
+		}else if(questionType==6){
+			if(opendEndedQuestionWidget!=null){
+				//opendEndedQuestionWidget.createSesstionItemAttemptOeWhenNavigation();
+			}
 		}
 	}
 }

@@ -24,17 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
+import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.PermissionsDO;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.StudentsAssociatedListDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
+import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
@@ -65,16 +71,18 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void deleteClasspage(String classpageId, AsyncCallback<Void> callback);
 	
-	void createAssignment(CollectionDo collectionDo, String gooruContentId,  String dueDate, AsyncCallback<CollectionDo> callback);
+	/*void createAssignment(CollectionDo collectionDo, String gooruContentId,  String dueDate, AsyncCallback<CollectionDo> callback);*/
 	
 //	Version 2 APIs
 	void v2CreateClasspage(CollectionDo collectionDo, AsyncCallback<CollectionDo> callback);
 	
-	void v2UpdateClassPageByid(String classpageId, String CollectionType, String title, AsyncCallback<CollectionDo> callback);
+	void v2UpdateClassPageByid(String classpageId, String CollectionType, String title, String shareType, AsyncCallback<CollectionDo> callback);
 	
 	void v2GetAssignemtsByClasspageId(String classpageId, String pageSize, String pageNum, AsyncCallback<AssignmentsListDo> callback);
 	
 	void v2GetAllClasspages(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
+	
+	void v2GetUserClasses(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 
 	void v2CreateAssignment(AssignmentDo assignmentDo,AsyncCallback<AssignmentDo> callback);
 	
@@ -98,9 +106,69 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	void ShotenUrl(String url, AsyncCallback<List<String>> callback);
 	
-	void checkPermissionsForClasspage(String classpageId, AsyncCallback<PermissionsDO> callback);
+	/*void checkPermissionsForClasspage(String classpageId, AsyncCallback<MetaDO> callback);*/
 	
 	void getCollectionClasspageAssoc(String collectionId, AsyncCallback<List<ClassPageCollectionDo>> callback);
 	
 	void deleteCollectionAssocInAssignment(String collectionId, AsyncCallback<Void> callback);
+	
+	public void getMyClassPages(String limit, String offset, AsyncCallback<ArrayList<ClasspageDo> > callback);
+	
+	public void createClassPage(String classPageTitle, AsyncCallback<CollectionDo> callback);
+	
+	public void getClasspage(String classpageId, AsyncCallback<ClasspageDo> callback);
+	
+	public void createClassPageItem(String classpageId,String collectionId,String dueDate,String direction, AsyncCallback<ClasspageItemDo> callback);
+	
+	public void getClassPageItems(String classpageId,String offset,String limit, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
+	
+	public void updateClasspageItem(String classpageItemId,String direction,String dueDate, AsyncCallback<String> callback);
+	
+	public void deleteClassPageItem(String collectionId, AsyncCallback<String> callback);
+	
+	public void getCollectionUsedCount(String collectionId, AsyncCallback<Integer> callback);
+	
+	/**
+	 * @function getClasspagesListByCollectionId 
+	 * 
+	 * @created_date : Feb 4, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param gooruOid
+	 * @param gooruOid2
+	 * @param simpleAsyncCallback
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getClasspagesListByCollectionId(
+			String collectionId,
+			String collabUId,
+			AsyncCallback<ArrayList<ClassPageCollectionDo>> simpleAsyncCallback);
+	public void  getCollectionParentFolders(String collectionId,AsyncCallback<ArrayList<String>> simpleAsyncCallback);
+
+	
+	public void inviteStudentToClass(String classId,List<String> lstEmailId, AsyncCallback<ArrayList<CollaboratorsDo>> simpleAsyncCallback);
+
+	public void getAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType, AsyncCallback<StudentsAssociatedListDo> simpleAsyncCallback);
+	
+	public void removeStudentFromClass(String classCode, String type, String emailIds, AsyncCallback<Void> simpleAsyncCallback);
+	
+	public void studentJoinIntoClass(String classCode, String emailId, AsyncCallback<ClasspageDo> simpleAsyncCallback);
+	
+	public void getSuggestionByName(String emailId, AsyncCallback<List<String>> simpleAsyncCallback);
+	
+	public void getClassPageItem(String classItemId, AsyncCallback<ClasspageItemDo> simpleAsyncCallback);
+	
+	public void v2GetClassPartyCustomField(String gooruUid, AsyncCallback<ProfilePageDo> simpleAsyncCallback);
+	
+	public void getActiveAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType, AsyncCallback<StudentsAssociatedListDo> simpleAsyncCallback);
 }

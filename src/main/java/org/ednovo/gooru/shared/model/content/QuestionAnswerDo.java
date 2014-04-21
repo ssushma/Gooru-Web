@@ -28,21 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : QuestionAnswerDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class QuestionAnswerDo implements Serializable,Comparable {
 	/**
@@ -54,51 +40,30 @@ public class QuestionAnswerDo implements Serializable,Comparable {
 	private int sequence;
 	private boolean isCorrect;
 	private Integer answerId;
-	/** 
-	 * This method is to get the answer text
-	 */
+	
+	public QuestionAnswerDo(){}
+	
 	public String getAnswerText() {
 		return answerText;
 	}
-	/** 
-	 * This method is to get the answer type
-	 */
 	public String getAnswerType() {
 		return answerType;
 	}
-	/** 
-	 * This method is to get the answer sequence
-	 */
 	public int getSequence() {
 		return sequence;
 	}
-	/** 
-	 * This method will check is correct or not
-	 */
 	public boolean isIsCorrect() {
 		return isCorrect;
 	}
-	/** 
-	 * This method is to set the answer text
-	 */
 	public void setAnswerText(String answerText) {
 		this.answerText = answerText;
 	}
-	/** 
-	 * This method is to set the answer type
-	 */
 	public void setAnswerType(String answerType) {
 		this.answerType = answerType;
 	}
-	/** 
-	 * This method is to set the sequence
-	 */
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
 	}
-	/** 
-	 * This method is to set the boolean value
-	 */
 	public void setIsCorrect(boolean isCorrect) {
 		this.isCorrect = isCorrect;
 	}
@@ -114,15 +79,9 @@ public class QuestionAnswerDo implements Serializable,Comparable {
 	       else
 	           return -1;
 	}
-	/** 
-	 * This method is to get the answer id
-	 */
 	public Integer getAnswerId() {
 		return answerId;
 	}
-	/** 
-	 * This method is to set the answer id
-	 */
 	public void setAnswerId(Integer answerId) {
 		this.answerId = answerId;
 	}

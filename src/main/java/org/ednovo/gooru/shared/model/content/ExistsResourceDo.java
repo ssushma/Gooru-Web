@@ -28,21 +28,7 @@ import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ExistsResourceDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ExistsResourceDo extends ContentDo {
 
@@ -62,217 +48,96 @@ public class ExistsResourceDo extends ContentDo {
     private String label;        //Some api's give title in label key
     private String nativeurl;    //Some api's give url in nativeUrl key
     private String id;
+    
+    public ExistsResourceDo(){}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNativeurl() {
+        return nativeurl;
+    }
+
+    public void setNativeurl(String nativeurl) {
+        this.nativeurl = nativeurl;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public ResourceTypeDo getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(ResourceTypeDo resourceType) {
+        this.resourceType = resourceType;
+    }
+
     private String url;
 
-    /** 
-	 * This method is to get the assetURI
-	 */
-	public String getAssetURI() {
-		return assetURI;
-	}
+    public String getAssetURI() {
+        return assetURI;
+    }
 
+    public void setAssetURI(String assertURI) {
+        this.assetURI = assertURI;
+    }
 
-	/** 
-	 * This method is to set the assetURI
-	 */
-	public void setAssetURI(String assetURI) {
-		this.assetURI = assetURI;
-	}
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/** 
-	 * This method is to get the title
-	 */
-	public String getTitle() {
-		return title;
-	}
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/** 
-	 * This method is to set the title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getFolder() {
+        return folder;
+    }
 
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
 
-	/** 
-	 * This method is to get the description
-	 */
-	public String getDescription() {
-		return description;
-	}
+    public void setThumbnails(ThumbnailDo thumbnails) {
+        this.thumbnails = thumbnails;
+    }
 
+    public ThumbnailDo getThumbnails() {
+        return thumbnails;
+    }
 
-	/** 
-	 * This method is to set the description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
+    public String getCategory() {
+        return category;
+    }
 
-	/** 
-	 * This method is to get the folder
-	 */
-	public String getFolder() {
-		return folder;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-
-	/** 
-	 * This method is to set the folder
-	 */
-	public void setFolder(String folder) {
-		this.folder = folder;
-	}
-
-
-	/** 
-	 * This method is to get the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-
-	/** 
-	 * This method is to set the category
-	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-
-	/** 
-	 * This method is to get the explanation
-	 */
-	public String getExplanation() {
-		return explanation;
-	}
-
-
-	/** 
-	 * This method is to set the explanation
-	 */
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-
-
-	/** 
-	 * This method is to get the thumbnails
-	 */
-	public ThumbnailDo getThumbnails() {
-		return thumbnails;
-	}
-
-
-	/** 
-	 * This method is to set the thumbnails
-	 */
-	public void setThumbnails(ThumbnailDo thumbnails) {
-		this.thumbnails = thumbnails;
-	}
-
-
-	/** 
-	 * This method is to get the resourceType
-	 */
-	public ResourceTypeDo getResourceType() {
-		return resourceType;
-	}
-
-
-	/** 
-	 * This method is to set the resourceType
-	 */
-	public void setResourceType(ResourceTypeDo resourceType) {
-		this.resourceType = resourceType;
-	}
-
-
-	/** 
-	 * This method is to get the shortenedUrlStatus
-	 */
-	public String getShortenedUrlStatus() {
-		return shortenedUrlStatus;
-	}
-
-
-	/** 
-	 * This method is to set the shortenedUrlStatus
-	 */
-	public void setShortenedUrlStatus(String shortenedUrlStatus) {
-		this.shortenedUrlStatus = shortenedUrlStatus;
-	}
-
-
-	/** 
-	 * This method is to get the label
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-
-	/** 
-	 * This method is to set the label
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-
-	/** 
-	 * This method is to get the nativeurl
-	 */
-	public String getNativeurl() {
-		return nativeurl;
-	}
-
-
-	/** 
-	 * This method is to set the nativeurl
-	 */
-	public void setNativeurl(String nativeurl) {
-		this.nativeurl = nativeurl;
-	}
-
-
-	/** 
-	 * This method is to get the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-
-	/** 
-	 * This method is to set the id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-
-	/** 
-	 * This method is to get the url
-	 */
-	public String getUrl() {
-		return url;
-	}
-
-
-	/** 
-	 * This method is to set the url
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-
-	public String getThumbnailUrl() {
+    public String getThumbnailUrl() {
         if (getCategory() != null && getCategory().equalsIgnoreCase("Video")) {
             return ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(getUrl()));
         } else if (getThumbnails() != null) {
@@ -280,4 +145,24 @@ public class ExistsResourceDo extends ContentDo {
         }
         return null;
     }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
+	public String getShortenedUrlStatus() {
+		return shortenedUrlStatus;
+	}
+
+	public void setShortenedUrlStatus(String shortenedUrlStatus) {
+		this.shortenedUrlStatus = shortenedUrlStatus;
+	}
 }    

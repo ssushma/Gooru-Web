@@ -72,18 +72,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : CollectionResourceTabView.java
- *
- * @description : This class is used to display the collection resources tab.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class CollectionResourceTabView extends
 		BaseViewWithHandlers<CollectionResourceTabUiHandlers> implements
@@ -111,7 +103,7 @@ public class CollectionResourceTabView extends
 
 	@UiField
 	Label noResourceLineOneLabel, noResourceLineTwoLabel,
-			noResourceLineThreeLabel, noResourceLineFourLabel;
+			noResourceLineThreeLabel, noResourceLineFourLabel,noResourceLineFiveLabel,noResourceLineSixLabel;
 
 	@UiField
 	HTMLPanel panelNoResourceContainer,panelLoading,contentPanel;
@@ -143,14 +135,25 @@ public class CollectionResourceTabView extends
 	private String clickType;
 	private PopupPanel toolTipPopupPanel = new PopupPanel();
 
-	private static final String MESSAGE_HEADER = "Are you sure?";
-	private static final String MESSAGE_CONTENT = "Are you sure you want to remove the question image?";
+	private static final String MESSAGE_HEADER = GL0748;
+	private static final String MESSAGE_CONTENT = GL0891;
 
 	/**
 	 * Class constructor
 	 */
 	public CollectionResourceTabView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		buttonContainer.setText(GL0851);
+		buttonContainerAddGray.setText(GL0851);
+		buttonContainerForQuestion.setText(GL0852);
+		buttonContainerForQuestionGreay.setText(GL0852);
+		dragAndDropLabel.setText(GL0853);
+		noResourceLineOneLabel.setText(GL0854);
+		noResourceLineTwoLabel.setText(GL0855);
+		noResourceLineThreeLabel.setText(" "+GL0856);
+		noResourceLineSixLabel.setText(" "+GL0209+" ");
+		noResourceLineFiveLabel.setText(" "+GL0857);
+		noResourceLineFourLabel.setText(" "+GL0858);
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		css = CollectionEditResourceCBundle.INSTANCE.css();
 
@@ -170,12 +173,10 @@ public class CollectionResourceTabView extends
 		contentPanel.setVisible(false);
 		panelLoading.getElement().getStyle().setDisplay(Display.BLOCK);
 		// downArrowPanel.addClickHandler(new ShowPopupClickHandler());
+		collectionResourcePanelVc.getElement().setId("editPanelShelf");
 
 	}
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -183,9 +184,7 @@ public class CollectionResourceTabView extends
 		sequenceVerPanel.clear();
 		collectionResourcePanelVc.clear();
 	}
-	/**
-	 *This method is used to set the data.
-	 */
+
 	@Override
 	public void setData(CollectionDo collectionDo) {
 		if (this.collectionDo == null) {
@@ -308,21 +307,7 @@ public class CollectionResourceTabView extends
 		panelLoading.getElement().getStyle().setDisplay(Display.NONE);
 		contentPanel.setVisible(true);
 	}
-	/**
-	 * @function modifyExistingCollectionItemWidget 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to modify existing collection widget.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void modifyExistingCollectionItemWidget(final CollectionItemDo collectionItemDo){
 		collectionItemDo.setCollection(collectionDo);
 		shelfCollectionResourceVc = new ShelfCollectionResourceChildView(this, collectionItemDo);
@@ -342,9 +327,7 @@ public class CollectionResourceTabView extends
 		//sequenceVerPanel.remove(collectionItemDo.getItemSequence()-1);
 		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());	
 	}
-	/**
-	 * This method is used to insert collection item.
-	 */
+
 	@Override
 	public void insertColectionItem(final CollectionItemDo collectionItemDo,boolean newFlag) {
 		this.collectionItemDo = collectionItemDo;
@@ -511,8 +494,16 @@ public class CollectionResourceTabView extends
 										description = desc;
 										category = categoryStr;
 										thumbnailUrl = thumbnailUrlStr;
+										if(category.contains("Images")||category.contains("Texts"))
+										{
+											category=category.substring(0, category.length()-1);
+											 if(category.contains("Image")||category.contains("Images")){
+												 category="Slide";
+											 }
+										}
 										
 										JSONObject jsonObject = setEditUserResourceJsonObject(resOriginalFileName,resMediaFileName, title, desc, category, thumbnailUrlStr);
+									
 										getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 //										getUiHandlers().getUserResourceMediaFileName(resourceFilePath);
 									}
@@ -555,20 +546,7 @@ public class CollectionResourceTabView extends
 			setNewResourcePanel(collectionItemDo);
 		}
 	}*/
-	/**
-	 * @function setNewResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set the new resource panel.
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setNewResourcePanel(final CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 		// Refresh on adding : Shelf refreshes but the code below throws an
@@ -688,9 +666,7 @@ public class CollectionResourceTabView extends
 				});
 		collectionResourcePanelVc.addDraggable(shelfCollectionResourceVc,collectionItemDo.getItemSequence());
 	}
-	/**
-	 * This inner class is used to display edit question popup.
-	 */
+
 	public class EditQuestionPopupWidget extends EditQuestionPopupVc {
 		private String collectionItemId;
 
@@ -700,17 +676,13 @@ public class CollectionResourceTabView extends
 					.getGooruOid();
 			AppClientFactory.fireEvent(new GetEditPageHeightEvent(this, false));
 		}
-		/**
-		 * This method will position the popup.
-		 */
+
 		public void show() {
 			super.show();
 			this.center();
 			// this.getElement().getStyle().setTop(100, Unit.PX);
 		}
-		/**
-		 * This method will update question resource.
-		 */
+
 		@Override
 		public void updateQuestionResource(String collectionItemId,
 				CollectionQuestionItemDo collectionQuestionItemDo) {
@@ -742,9 +714,7 @@ public class CollectionResourceTabView extends
 		}
 
 	}
-	/**
-	 * This method will remove the collection item.
-	 */
+
 	@Override
 	public void removeCollectionItem(CollectionItemDo collectionItemDo,
 			ShelfCollectionResourceChildView resourceChildView) {
@@ -862,9 +832,7 @@ public class CollectionResourceTabView extends
 			}
 		}
 	}
-	/**
-	 * This method will set the mode as edit mode.
-	 */
+
 	@Override
 	public void setEditMode(boolean editMode, Widget resourceWidget) {
 		Widget sequenceWidget = sequenceVerPanel
@@ -975,31 +943,25 @@ public class CollectionResourceTabView extends
 	 * if(popupPanel.isVisible()) { popupPanel.setVisible(false); } else {
 	 * popupPanel.setVisible(true); } } }
 	 */
-	/**
-	 * This will display the maximum collection items popup.
-	 */
+
 	public void showMaximumCollectionItemsPopup() {
 
 		AlertContentUc alertContentUc = new AlertContentUc(
-				MessageProperties.GL0061,
-				MessageProperties.GL0302);
+				GL0061,
+				GL0302);
 
 	}
 
 	/*public int getCollectionItemSize() {
 		return collectionDo.getCollectionItems().size();
 	}*/
-	/**
-	 * This method will display the new resource popup.
-	 */
+
 	@Override
 	public void displayNewResourcePopup() {
 		getUiHandlers().addResourcePopup(collectionDo, clickType);
 	}
 
-	/**
-	 * This method will insert the data.
-	 */
+
 	@Override
 	public void insertData(CollectionItemDo collectionItem) {
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(
@@ -1007,9 +969,6 @@ public class CollectionResourceTabView extends
 		AppClientFactory.fireEvent(new InsertCollectionItemInAddResourceEvent(
 				collectionItem, RefreshType.INSERT));
 	}
-	/**
-	 * This method will update the collection item data.
-	 */
 	@Override
 	public void updateCollectionItem(CollectionItemDo collectionItem) {
 		AppClientFactory.fireEvent(new RefreshCollectionItemInShelfListEvent(collectionItem, RefreshType.UPDATE));
@@ -1022,9 +981,7 @@ public class CollectionResourceTabView extends
 		$wnd.location.reload();
 	}-*/;
 
-	/**
-	 * This method is used to hide update resource popup.
-	 */
+
 	@Override
 	public void hideUpdateResourcePopup() {
 		
@@ -1036,9 +993,7 @@ public class CollectionResourceTabView extends
 		
 
 	}
-	/**
-	 * This method is used to hide update own resource popup.
-	 */
+	
 	@Override
 	public void hideUpdateOwnResourcePopup() {
 		
@@ -1050,9 +1005,7 @@ public class CollectionResourceTabView extends
 		
 
 	}
-	/**
-	 * This method is used to hide the resource question popup.
-	 */
+
 	@Override
 	public void hideUpdateResourceQuestionPopup() {
 			AppClientFactory.fireEvent(new GetEditPageHeightEvent(editQuestionPopupWidget, true));
@@ -1064,9 +1017,7 @@ public class CollectionResourceTabView extends
 		
 
 	}
-	/**
-	 * This will update the collectiom item images.
-	 */
+
 	@Override
 	public void updateCollectionItemImage(String imageUrl,
 			String fileNameWithOutRepository) {
@@ -1083,22 +1034,7 @@ public class CollectionResourceTabView extends
 		}
 
 	}
-	/**
-	 * @function displayUpdateQuestionView 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This will display the update question view.
-	 * 
-	 * 
-	 * @parm(s) : @param imageUrl
-	 * @parm(s) : @param fileNameWithOutRepository
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void displayUpdateQuestionView(String imageUrl,
 			String fileNameWithOutRepository) {
 		UpdateQuestionImageView updateQuestionImage = new UpdateQuestionImageView();
@@ -1147,9 +1083,7 @@ public class CollectionResourceTabView extends
 					}
 				});
 	}
-	/**
-	 * This method will remove update question view.
-	 */
+
 	@Override
 	public void removeUpdateQuestionView() {
 		deleteConfirmationPopupVc.hide();
@@ -1162,9 +1096,7 @@ public class CollectionResourceTabView extends
 		editQuestionPopupWidget.getAddQuestion().getElement().getStyle()
 				.setDisplay(Display.BLOCK);
 	}
-	/**
-	 * This method will update the resoruce items images.
-	 */
+
 	@Override
 	public void updateResouceItemImage(String imageUrl,String fileNameWithOutRespUrl, boolean isEditUserOwnResourceImage) {
 		if(isEditUserOwnResourceImage){
@@ -1179,9 +1111,7 @@ public class CollectionResourceTabView extends
 		}
 		
 	}
-	/**
-	 * This method is used to hide the no resoruce message.
-	 */
+
 	@Override
 	public void hideNoResourceMsg() {
 		if (this.collectionDo.getCollectionItems().size() > 0) {
@@ -1192,9 +1122,7 @@ public class CollectionResourceTabView extends
 			noResourceLineFourLabel.setVisible(false);
 		}
 	}
-	/**
-	 * This method is used to insert the collection item in add resource.
-	 */
+
 	@Override
 	public void insertCollectionItemInAddResource(
 			CollectionItemDo collectionItem, RefreshType refreshType) {
@@ -1211,9 +1139,7 @@ public class CollectionResourceTabView extends
 			insertColectionItem(collectionItem, false);
 		}
 	}
-	/**
-	 * This method is used to close all opened popups.
-	 */
+
 	@Override
 	public void closeAllOpenedPopUp() {
 		if(editResoruce!=null && editResoruce.isShowing()){
@@ -1224,36 +1150,14 @@ public class CollectionResourceTabView extends
 			editQuestionPopupWidget.hide();
 		}
 	}
-	/**
-	 * This method is used to upload resource.
-	 */
+
 	@Override
 	public void uploadResource(MediaUploadDo result) {
 		JSONObject jsonObject = setEditUserResourceJsonObject(result.getOriginalFilename(),result.getName(), title, description, category, thumbnailUrl);
 		getUiHandlers().editUserOwnResource(jsonObject.toString(),collectionItemDo.getResource().getGooruOid());
 		
 	}
-	/**
-	 * @function setEditUserResourceJsonObject 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method will set the edit user resource object.
-	 * 
-	 * 
-	 * @parm(s) : @param originalFilename
-	 * @parm(s) : @param mediaFileName
-	 * @parm(s) : @param Editedtitle
-	 * @parm(s) : @param Editeddescription
-	 * @parm(s) : @param Editedcategory
-	 * @parm(s) : @param EditedthumbnailUrl
-	 * @parm(s) : @return
-	 * 
-	 * @return : JSONObject
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private JSONObject setEditUserResourceJsonObject(String originalFilename,String mediaFileName, String Editedtitle, String Editeddescription, String Editedcategory,String EditedthumbnailUrl) {
 		JSONObject file = new JSONObject();
 		 if(originalFilename!=null && mediaFileName!=null){

@@ -26,18 +26,20 @@ package org.ednovo.gooru.client.mvp.folders.newfolder;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+
 /**
- * @fileName : FoldersPopupUiHandlers.java
+ * @fileName : FoldersUiHandlers.java
  *
- * @description : The interface for view classes that handles all the UI-related code for a FolderFormViewPresenter.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public interface FoldersPopupUiHandlers extends BaseUiHandlers{
 	

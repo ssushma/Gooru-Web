@@ -29,18 +29,10 @@ package org.ednovo.gooru.client.mvp.home.event;
 
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : SetUserProfileImageEventHandler.java
- *
- * @description :  Handler for {@link SetUserProfileImageEvent}.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface SetUserProfileImageEventHandler extends EventHandler {
 

@@ -24,6 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+/**
+ * Copyright 2011 ArcBees Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
+
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
@@ -36,10 +53,7 @@ import com.gwtplatform.mvp.client.proxy.NavigationEvent;
 import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 
 /**
- * 
- * @fileName : GoogleAnalyticsNavigationTracker.java
- *
- * @description : This class let's you register every navigation event to a Google Analytics
+ * This class let's you register every navigation event to a Google Analytics
  * account. To use it, you must bind GoogleAnalytics as eager singleton in your
  * gin module and also bind the annotation {@link GaAccount} to your Google
  * Analytics account number:
@@ -49,24 +63,11 @@ import com.gwtplatform.mvp.client.proxy.NavigationHandler;
  * <p />
  * If you want to log custom events, see {@link GoogleAnalytics}.
  *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Christian Goudreau
  */
 public class GoogleAnalyticsNavigationTracker implements NavigationHandler {
   private final GoogleAnalytics analytics;
 
-  /**
-   * This method is used to track the Google Analytics navigation.
-   * @param gaAccount
-   * @param eventBus
-   * @param analytics
-   */
   @Inject
   public GoogleAnalyticsNavigationTracker(@GaAccount final String gaAccount,
       final EventBus eventBus, final GoogleAnalytics analytics) {
@@ -83,9 +84,7 @@ public class GoogleAnalyticsNavigationTracker implements NavigationHandler {
       });
     }
   }
-  /**
-   * This method is used to track the navigations.
-   */
+
   @Override
   public void onNavigation(NavigationEvent navigationEvent) {
 	  analytics.trackPageview(navigationEvent.getRequest().getNameToken());

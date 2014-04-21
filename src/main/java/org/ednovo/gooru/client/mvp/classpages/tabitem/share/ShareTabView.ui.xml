@@ -8,24 +8,22 @@
 	<g:HTMLPanel styleName="{res.css.mainContainer}">
 		<g:HTMLPanel styleName="{res.css.container}">
 			<g:Label styleName="{res.css.myAssigntmentSharePageTextGray}"
-				text="Web Link" />
+				ui:field="webLinkLbl"/>
 			<g:HTMLPanel styleName="{res.css.textContainer}">
 				<g:TextBox ui:field="shortenUrlTxtBox"
 					styleName="{res.css.myAssigntmentSharePageInputContainerTextGray}" />
 			</g:HTMLPanel>
-			<g:Label styleName="{res.css.shareDesc}"
-				text="This link takes students directly to this Classpage." />
+			<g:Label styleName="{res.css.shareDesc}" ui:field="linkToClasspage"/>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.container}">
 			<g:Label styleName="{res.css.myAssigntmentSharePageTextGray}"
-				text="Class Code" />
+				ui:field="classCodeLbl"/>
 			<g:HTMLPanel styleName="{res.css.textContainer}">
 				<g:TextBox ui:field="classcodeTxtBox"
 					styleName="{res.css.myAssigntmentSharePageInputContainerTextGray}" />
 			</g:HTMLPanel>
-			<g:Label styleName="{res.css.shareDesc}"
-				text="Ask students to enter in this code in the Study tab to view this Classpage." />
+			<g:Label styleName="{res.css.shareDesc}" ui:field="enterCodetext" />
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

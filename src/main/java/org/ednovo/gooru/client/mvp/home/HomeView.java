@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
@@ -32,26 +34,19 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+
 /**
- * 
- * @fileName : HomeView.java
- *
- * @description : This file is to reset password and to show registration popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+` * 
  */
 public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, MessageProperties {
 
-	@UiField LibraryView libraryView;
+	@UiField HTMLPanel gooruPanel;
+	
+	LibraryView libraryView = null;
 	
 	private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 
@@ -63,31 +58,40 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 	 */
 	public HomeView() {		
 		setWidget(uiBinder.createAndBindUi(this));
+		libraryView = new LibraryView(PlaceTokens.HOME);
+		gooruPanel.getElement().setId("gooruPanel");
+		gooruPanel.add(libraryView);
+		
+
 	}
-	/**
-	 * To reset password.
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.gin.BaseViewWithHandlers#onLoad()
 	 */
+	@Override
+	public void onLoad() {
+				
+	}
+	
 	@Override
 	public void resetPassword(String resetToken) {
 		new ResetPasswordVc(resetToken);
 		
 	}
-	/**
-	 * To show register popup.
-	 */
+	
 	@Override
 	public void registerPopup() {
 		RegisterVc registerVc = new RegisterVc();
 		registerVc.show();
 		registerVc.center();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.home.IsHomeView#loadFeaturedContributors()
 	 */
 	@Override
-	public void loadFeaturedContributors(String callBack) {
-		libraryView.loadContributorsPage(callBack);
+	public void loadFeaturedContributors(String callBack, String placeToken) {
+		libraryView.loadContributorsPage(callBack,placeToken);
 	}
 
 }

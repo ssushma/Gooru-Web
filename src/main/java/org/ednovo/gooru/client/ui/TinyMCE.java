@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionResourceView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.BodyElement;
@@ -54,20 +56,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-/**
- * @fileName : TinyMCE.java
- *
- * @description : This class is used as a Rich text box editor.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class TinyMCE extends Composite {
+
+public class TinyMCE extends Composite implements MessageProperties{
 	private static List<String> richTextsList=new ArrayList<String>();
 	private static String lastButtonId="";
     private TextArea tinyMceTextArea=null;
@@ -78,7 +68,7 @@ public class TinyMCE extends Composite {
     private Label errorMessageLabel=null; 
     private HandlerRegistration nativePreviewHandlerRegistration=null;
     private int characterLimit=500;
-    private String ERROR_MESSAGE="Chracter limit reached";
+    private String ERROR_MESSAGE=GL0143;
     public  class OpenRichTextToolBar implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -90,7 +80,7 @@ public class TinyMCE extends Composite {
         super();
         TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().ensureInjected();
         FlowPanel timymceWrapper=new FlowPanel();
-        toolBarOpenButton=new Button("A");
+        toolBarOpenButton=new Button(GL_GRR_ALPHABET_A);
         errorMessageLabel=new Label();
         markAsBlankPanel=new HTMLPanel("");
         toolBarOpenButton.addClickHandler(new OpenRichTextToolBar());
@@ -195,7 +185,7 @@ public class TinyMCE extends Composite {
     public void setMarkAsBlankLabel(){
     	Element markAsBlankElement=getFibButton();
         if(markAsBlankElement.hasChildNodes()){
-        	markAsBlankElement.getFirstChildElement().setInnerText("Mark as a blank");
+        	markAsBlankElement.getFirstChildElement().setInnerText(GL1507);
         }
         markAsBlankPanel.getElement().appendChild(markAsBlankElement);
     }
@@ -385,7 +375,7 @@ public class TinyMCE extends Composite {
       				var content=this.getContent({format : 'raw'});
       				var noOfCharacters=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::countCharcters(Ljava/lang/String;Ljava/lang/String;)(content,ed.id);
       				var charLim=tinymce.@org.ednovo.gooru.client.ui.TinyMCE::getHiddenValue(Ljava/lang/String;)(ed.id);
-      				if(noOfCharacters>parseInt(charLim)){
+      				if(noOfCharacters>=parseInt(charLim)){
       				 	 event.preventDefault();
 					}		
       				});
@@ -485,13 +475,14 @@ public class TinyMCE extends Composite {
 	}
 	public int countCharcters(String content,String tinyMceId){
 		AddQuestionResourceView.errorMessageForQuestion.setText("");
-		
-		if(content.length()>Integer.parseInt(getHiddenValue(tinyMceId))){
+		//This regex is used to get text count with out html tags
+		String noHTMLString = content.replaceAll("\\<.*?>","");
+		if(noHTMLString.length()>Integer.parseInt(getHiddenValue(tinyMceId))){
 			setErrorMessage(ERROR_MESSAGE,tinyMceId);
 		}else{
 			clearErrorMessage(tinyMceId);
 		}
-		return content.length();
+		return noHTMLString.length();
 	}
 	public void clearErrorMessage(String tinyMceId){
 		try{

@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
@@ -62,23 +63,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
-/**
- * 
- * @fileName : SignUpTurnsAfterThirteenView.java
- *
- * @description : This is the view for sign up popup after 13 years. 
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SignUpTurnsAfterThirteenView extends
 PopupViewWithUiHandlers<SignUpAfterThirteenUiHandler> implements
-IsAfterThirteen {
+IsAfterThirteen,MessageProperties {
 
 	private static SignUpTurnsAfterThirteenUiBinder uiBinder = GWT
 			.create(SignUpTurnsAfterThirteenUiBinder.class);
@@ -113,10 +101,6 @@ IsAfterThirteen {
 	boolean isValidEmailId = true;
 	boolean isValid = true;
 	private AppPopUp appPopUp;
-	/**
-	 * Parameterized constructor for injecting the css and other resources.
-	 * @param eventBus
-	 */
 	@Inject
 	public SignUpTurnsAfterThirteenView(EventBus eventBus) {
 		super(eventBus);
@@ -125,102 +109,64 @@ IsAfterThirteen {
 		
 		
 	}
-	/**
-	 * This method is used to display the ppopup
-	 */
 	@Override
 	public void displayView() {
-		appPopUp = new AppPopUp("NoHeader");
+		appPopUp = new AppPopUp(GL0697);
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
-		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
+		/*appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
 				.registerPopupStyle());
 
-		appPopUp.setGlassEnabled(true);
-		appPopUp.setAutoHideOnHistoryEventsEnabled(false);
+	*/	appPopUp.setGlassEnabled(true);
+		appPopUp.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		appPopUp.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+
+		/*appPopUp.setAutoHideOnHistoryEventsEnabled(false);
 
 		appPopUp.getElement().getStyle().setZIndex(99);
-		Window.enableScrolling(false);
+	*/	Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		appPopUp.getElement().getStyle().setBackgroundColor("transparent");
+		//appPopUp.getElement().getStyle().setBackgroundColor("transparent");
 		setUiAndIds();
 		appPopUp.center();
 	}
-	/**
-	 * 
-	 * @function setUiAndIds 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This will set the images and ID's for the fields.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private void setUiAndIds() {
-		lblTitle.setText(MessageProperties.GL0481
-				+ MessageProperties.GL_SPL_EXCLAMATION);
-		lblStuDes.setText(MessageProperties.GL0483
-				+ MessageProperties.GL_SPL_EXCLAMATION);
-		lblStuDesDetails.setText(MessageProperties.GL0484);
-		lblStuDesDetails2.setText(MessageProperties.GL0485);
-		lblQuestionMark.setText(MessageProperties.GL_SPL_QUESTION);
+		lblTitle.setText(GL0481+GL_SPL_EXCLAMATION);
+		lblStuDes.setText(GL0483+ GL_SPL_EXCLAMATION);
+		lblStuDesDetails.setText(GL0484);
+		lblStuDesDetails2.setText(GL0485);
+		lblQuestionMark.setText(GL_SPL_QUESTION);
 		emailValidUc.setVisible(false);
-		txtEmailId.setPlaceholder(MessageProperties.GL0426);
+		txtEmailId.setPlaceholder(GL0426);
 		btnEnterLater.getElement().setId("btnEnterLater");
 		btnSubmit.getElement().setId("btnSubmit");
-		btnEnterLater.setText(MessageProperties.GL0487);
-		btnSubmit.setText(MessageProperties.GL0486);
-		lblfeaturesTitle.setText(MessageProperties.GL0488
-				+ MessageProperties.GL_SPL_QUESTION);
-		lblfeaturesTitleDes1.setText(MessageProperties.GL0489);
-		lblfeaturesTitleDes2.setText(MessageProperties.GL0490);
-		lblfeaturesTitleDes3.setText(MessageProperties.GL0491);
+		btnEnterLater.setText(GL0487);
+		btnSubmit.setText(GL0486);
+		lblfeaturesTitle.setText(GL0488+GL_SPL_QUESTION);
+		lblfeaturesTitleDes1.setText(GL0489);
+		lblfeaturesTitleDes2.setText(GL0490);
+		lblfeaturesTitleDes3.setText(GL0491);
 		tooltipContent.getElement().setAttribute("style", "width:193px");
 		btnSubmit.getElement().setAttribute("style", "margin-left: 10px");
-		txtEmailId.addBlurHandler(new OnBlurHandler());
+		//txtEmailId.addBlurHandler(new OnBlurHandler());
 		txtEmailId.addKeyUpHandler(new OnKeyUpHandler());
 		lblUpdating.setVisible(false);
 		btnSubmit.getElement().addClassName("disabled");
 		btnSubmit.setEnabled(false);
 		
 	}
-	/**
-	 * @function onClickLblCancel 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event of cancel.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event) {
-		Window.enableScrolling(true);
-		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		this.hide();
+			this.hide();
+			if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+				
+			}else{
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			}
 	}
-	/**
-	 * @function sendConfirmationMail 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to send the confirmation mail to the user.
-	 * 
-	 * @parm(s) : @param params
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+
 	
 	private void sendConfirmationMail(Map<String, String> params) {
 
@@ -235,19 +181,6 @@ IsAfterThirteen {
 							}
 						});
 	}
-	/**
-	 * @function onClickbtnEnterLater 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :It will hanlde the click event on the enter button.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
 	@UiHandler("btnEnterLater")
 	public void onClickbtnEnterLater(ClickEvent event) {
 		this.hide();
@@ -255,21 +188,8 @@ IsAfterThirteen {
 		signUpDontWorryView.show();
 
 	}
-	/**
-	 * @fileName : SignUpTurnsAfterThirteenView.java
-	 *
-	 * @description : This inner class is used to handle the Blur event. 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-	private class OnBlurHandler implements BlurHandler {
+
+	/*private class OnBlurHandler implements BlurHandler {
 
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -292,7 +212,7 @@ IsAfterThirteen {
 			}
 
 		}
-	}
+	}*/
 	/**
 	 * Checks the availability of user name, entered by User.
 	 * 
@@ -313,7 +233,7 @@ IsAfterThirteen {
 							txtEmailId.addStyleName(res.css()
 									.errorMsgDisplay());
 							emailValidUc.addStyleName(res.css().errorLbl());
-							emailValidUc.setText(MessageProperties.GL0447);
+							emailValidUc.setText(GL0447);
 							emailValidUc.setVisible(true);
 							isValid = false;
 						}else 
@@ -332,19 +252,6 @@ IsAfterThirteen {
 		
 		return isValid;
 	}
-	/**
-	 * @fileName : SignUpTurnsAfterThirteenView.java
-	 *
-	 * @description : This inner class is used to hanlde the key up hanlder.
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
@@ -353,21 +260,25 @@ IsAfterThirteen {
 			 txtEmailId.removeStyleName(res.css().errorMsgDisplay());
 			emailValidUc.setVisible(false);
 		 }
+		 if (event.getSource() == txtEmailId && txtEmailId.getText() != null
+					&& !txtEmailId.getText().equalsIgnoreCase("")) {
+				boolean isValidFrom = txtEmailId.getText().matches(EMAIL_REGEX);
+				if (isValidFrom) {
+					checkUserAvailability(
+							txtEmailId.getText(), "emailId");
+					emailValidUc.setVisible(false);
+					txtEmailId.removeStyleName(res.css().errorMsgDisplay());
+				} else {
+					btnSubmit.getElement().addClassName("disabled");
+					btnSubmit.setEnabled(false);
+					txtEmailId.addStyleName(res.css().errorMsgDisplay());
+					emailValidUc.addStyleName(res.css().errorLbl());
+					emailValidUc.setText(GL0464);
+					emailValidUc.setVisible(true);
+				}
+			}
 		}
 	}
-	/**
-	 * @function validateUserInput 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to validated the user input.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
 	public boolean validateUserInput(){
 		String emilId = txtEmailId.getText().trim();
 		if (emilId.equalsIgnoreCase("") || emilId == null) {
@@ -380,21 +291,6 @@ IsAfterThirteen {
 		} 
 		return isValid;
 	}
-	/**
-	 * @function onClickbtnSubmit 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : It will handle the click event on the Submit button.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("btnSubmit")
 	public void onClickbtnSubmit(ClickEvent event) {
 		if(validateUserInput() && !isValidEmailId)
@@ -402,8 +298,9 @@ IsAfterThirteen {
 		MixpanelUtil.Registration_turns13_submit_email();
 		btnSubmit.setVisible(false);
 		btnEnterLater.setVisible(false);
+		lblUpdating.setText(GL1138);
 		lblUpdating.setVisible(true);
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo(txtEmailId.getText(), "nonParent", "", "", "","", new AsyncCallback<V2UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo(txtEmailId.getText(), "nonParent", "", "", "","","","",true, new AsyncCallback<V2UserDo>() {
 			
 			@Override
 			public void onSuccess(V2UserDo result) {
@@ -422,19 +319,21 @@ IsAfterThirteen {
 				params.put(GOORU_UID, AppClientFactory.getGooruUid());
 				params.put(ACCOUNT_TYPE, "nonParent");
 				sendConfirmationMail(params);
+				
+								
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 				
 			}
 		});
 		
+		
 		}
 	}
-	/**
-	 * Which is responsible for returning the widget corresponding to that view
-	 */
+
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
@@ -442,16 +341,19 @@ IsAfterThirteen {
 
 	@Override
 	public void reset() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onLoad() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onUnload() {
+		// TODO Auto-generated method stub
 		
 	}
 

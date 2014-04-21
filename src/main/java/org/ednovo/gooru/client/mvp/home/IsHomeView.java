@@ -32,19 +32,8 @@ import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributors
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
 
 /**
+ * @author Search Team
  * 
- * @fileName : IsHomeView.java
- *
- * @description : This is the interface for HomeView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 		
@@ -62,7 +51,8 @@ public interface IsHomeView extends IsViewWithHandlers<HomeUiHandlers> {
 	/**
 	 * Load featured contributors {@link LibraryContributorsView}
 	 * @param callBack
+	 * @param placeToken 
 	 */
-	void loadFeaturedContributors(String callBack);
+	void loadFeaturedContributors(String callBack, String placeToken);
 	
 }

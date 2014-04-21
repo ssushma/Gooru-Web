@@ -1,12 +1,85 @@
 .nav-toc-container{
-	padding: 5px;
-	min-height: 127px;
-	float:left;
+
+	margin:0 auto;
+	background-color: #515151;
+	height: 114px;
+overflow: hidden;
+white-space: nowrap;
+display: inline-block;
+vertical-align: middle;
+}
+.nav-toc-wrapperContainerMain{
+
+	margin:0 auto;
+	background-color: #515151;
+width:960px;
+
 }
 
 .nav-toc-wrapper{
-	width:960px;
-	margin:0 auto;
-	overflow-x: auto;
-	background-color: #F0F0F0;
+width:900px;
+	height: 121px;
+overflow: hidden;
+white-space: nowrap;
+display: inline-block;
+vertical-align: middle;
+margin-left: -10px;
+}
+.nav-toc-wrapperContainer{
+	width:100%;
+	margin-top:50px;
+	background-color: #515151;
+}
+
+ .leftArrow {
+    width: 0px;
+    height: 0px;
+    border:15px solid transparent;
+    border-right:15px solid #ddd;
+    display:inline-block;
+    margin-right:10px;
+    margin-left:-15px;
+    vertical-align:middle;
+}
+
+/*  .leftArrow:hover {
+    border-right:15px solid #999;
+    cursor:pointer;
+}
+
+ .rightArrow:hover {
+    border-left:15px solid #999;
+    cursor:pointer;
+}
+ */
+.rightArrow {
+    width: 0px;
+    height: 0px;
+    border:15px solid transparent;
+    border-left:15px solid #ddd;
+    display:inline-block;
+    margin-left:10px;
+    margin-right:-15px;
+    vertical-align:middle;
+}
+.resource-info-bottomImageContainer{
+	text-align: center;
+	padding-top: 10px;
+	cursor: pointer;
+	padding-bottom:5px;
+	width: 45px;
+	margin: 0 auto;
+}
+.resource-info-hideImage{
+	display: inline-block;
+	background-image: url("images/hide_arrow.png");
+	width: 10px;
+	color: #fff;
+	height:6px;
+}
+.resource-info-hideText{
+	display: inline-block;
+	vertical-align: top;
+	color: #fff;
+	margin-left: 4px;
 }

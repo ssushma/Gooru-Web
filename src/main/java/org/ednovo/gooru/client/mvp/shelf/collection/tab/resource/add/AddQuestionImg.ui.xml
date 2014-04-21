@@ -9,13 +9,13 @@
 	
 	
 	 <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimgContainer}">
-            <g:Label text="Question Image" ui:field="displayQuestLbl" styleName="{addWebResourceStyle.addResourceThumbimgHeading}"/> 
+            <g:Label ui:field="displayQuestLbl" styleName="{addWebResourceStyle.addResourceThumbimgHeading}"/> 
             <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimg}">
              <g:Image styleName="{addWebResourceStyle.questionimage}" ui:field="questionImageContainer"></g:Image>
             </g:HTMLPanel>	
             <g:HTMLPanel styleName="{addWebResourceStyle.addResourceThumbimgLeftContent}">
-              <g:Label text="Change Image" ui:field="changeImgLbl" styleName="{addWebResourceStyle.addResourceThumbimgLeft}"/> 
-              <g:Label text="Remove Image" ui:field="removeImgLbl" styleName="{addWebResourceStyle.addResourceThumbimgLeft}"/> 
+              <g:Label  ui:field="changeImgLbl" styleName="{addWebResourceStyle.addResourceThumbimgLeft}"/> 
+              <g:Label  ui:field="removeImgLbl" styleName="{addWebResourceStyle.addResourceThumbimgLeft}"/> 
             </g:HTMLPanel>
      </g:HTMLPanel>
           
