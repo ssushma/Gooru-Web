@@ -28,19 +28,10 @@
 package org.ednovo.gooru.client.gin;
 
 import com.gwtplatform.mvp.client.HasUiHandlers;
+
 /**
+ * @author Search Team
  * 
- * @fileName : IsViewWithHandlers.java
- *
- * @description : The interface for view classes that handles all the UI-related code for a presenter
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsViewWithHandlers<H extends BaseUiHandlers> extends IsView, HasUiHandlers<H> {
 

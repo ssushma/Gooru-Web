@@ -24,33 +24,29 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.gin;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.http.client.URL;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.client.proxy.PlaceManagerImpl;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
+
 /**
+ * @author Search Team
  * 
- * @fileName : AppPlaceManager.java
- *
- * @description :  This is the default implementation of the {@link PlaceManager}.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @Singleton
-public class AppPlaceManager extends GooruPlaceManagerImpl implements IsPlaceManager {
+public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager {
 
 	private PlaceRequest defaultPlaceRequest;
 
@@ -61,6 +57,16 @@ public class AppPlaceManager extends GooruPlaceManagerImpl implements IsPlaceMan
 	private PlaceRequest playerBackRequest=null;
 
 	private boolean refreshPlace = true;
+	
+	private PlaceRequest previousRequestUrl;
+	
+	private PlaceRequest previousPlayerRequestUrl;
+	
+	private PlaceRequest searchMovedPlaceRequest=null;
+	
+	private String beforePlayerOpenSeoToken="";
+	
+	private String classpageEventId="";
 
 	@Inject
 	public AppPlaceManager(EventBus eventBus, TokenFormatter tokenFormatter, @AppDefaultPlace String place) {
@@ -86,11 +92,22 @@ public class AppPlaceManager extends GooruPlaceManagerImpl implements IsPlaceMan
 	
 	@Override
 	public void revealPlace(boolean refresh, PlaceRequest place,boolean isPlayerRequest) {
-		if (previousRequest != null || !previousRequest.equals(place)) {
-			playerBackRequest=previousRequest;
-		}
+//		if (previousRequest != null && !previousRequest.equals(place)) {
+//			playerBackRequest=previousRequest;
+//		}
 		setRefreshPlace(refresh);
 		super.revealPlace(place);
+	}
+	
+	@Override
+	public PlaceRequest preparePlaceRequest(String viewToken, Map<String,String> params) {
+		PlaceRequest placeRequest = new PlaceRequest(viewToken); 
+		if (params != null) {
+			for (String key : params.keySet()) {
+				placeRequest = placeRequest.with(key, params.get(key));
+			}
+		}
+		return placeRequest;
 	}
 
 	@Override
@@ -186,7 +203,7 @@ public class AppPlaceManager extends GooruPlaceManagerImpl implements IsPlaceMan
 		return refreshPlace;
 	}
 
-	protected void setRefreshPlace(boolean refreshPlace) {
+	public void setRefreshPlace(boolean refreshPlace) {
 		this.refreshPlace = refreshPlace;
 	}
 
@@ -228,11 +245,233 @@ public class AppPlaceManager extends GooruPlaceManagerImpl implements IsPlaceMan
 			revealPlace(defaultViewToken);
 		}
 	}
+	
+	public void revealClosePlayer(){
+		revealPlace(false, getPreviousPlayerRequestUrl());
+	}
 
 	@Override
 	public void redirectPlace(String viewToken) {
 		setRefreshPlace(true);
 		super.revealPlace(new PlaceRequest(viewToken));
 	}
+	
+	 @Override
+	  public void revealPlace(final PlaceRequest request, final boolean updateBrowserUrl) {
+		 setPreviousRequestUrl(request);
+		 super.revealPlace(request, updateBrowserUrl);
+	  }
+	
+	@Override
+	 public PlaceRequest getCurrentPlaceRequest() {
+	    if (getCurrentPlaceHierarchy().size() > 0) {
+	    	PlaceRequest placeRequest=getCurrentPlaceHierarchy().get(getCurrentPlaceHierarchy().size() - 1);
+	    	if(placeRequest.getNameToken().contains("!")){
+	    		placeRequest=getModifiedPlaceRequest(placeRequest);
+	    		getCurrentPlaceHierarchy().set(getCurrentPlaceHierarchy().size() - 1, placeRequest);
+	    		return placeRequest;
+	    	}
+	    	setPreviousRequestUrl(placeRequest);
+	        return placeRequest;
+	    } else {
+	      return new PlaceRequest();
+	    }
+	  }
+	
+	public PlaceRequest getModifiedPlaceRequest(PlaceRequest placeRequest){
+		PlaceRequest newPlaceRequest=new PlaceRequest(modifyNameToken(placeRequest.getNameToken()));
+		Set<String> parameters=placeRequest.getParameterNames();
+		Iterator<String> parmsItr= parameters.iterator();
+		while (parmsItr.hasNext()) {
+			String paramName=parmsItr.next();
+			newPlaceRequest.with(paramName, placeRequest.getParameter(paramName, ""));
+		}
+		return newPlaceRequest;
+		
+	}
+	public String modifyNameToken(String historyToken){
+		  String unescapedHistoryToken = URL.decodeQueryString(historyToken);
+		  if(unescapedHistoryToken.startsWith("!")){
+			  unescapedHistoryToken=unescapedHistoryToken.substring(1);
+		  }	  
+		  return unescapedHistoryToken;
+	  }
+
+	/**
+	 * @return the previousRequestUrl
+	 */
+		public PlaceRequest getPreviousRequestUrl() {
+			return previousRequestUrl;
+		}
+		
+		/**
+		 * @param previousRequestUrl the previousRequestUrl to set
+		 */
+		public void setPreviousRequestUrl(PlaceRequest previousRequestUrl) {
+			String viewToken=previousRequestUrl.getNameToken();
+			if(viewToken.equals(PlaceTokens.PREVIEW_PLAY)||viewToken.equals(PlaceTokens.COLLECTION_PLAY)||viewToken.equals(PlaceTokens.RESOURCE_PLAY)||viewToken.equals(PlaceTokens.COLLECTION)){
+				String previousViewToken=this.previousRequestUrl!=null?this.previousRequestUrl.getNameToken():"";
+				if(!previousViewToken.equals(PlaceTokens.PREVIEW_PLAY)&&!previousViewToken.equals(PlaceTokens.COLLECTION_PLAY)&&!previousViewToken.equals(PlaceTokens.RESOURCE_PLAY)){
+					setPreviousPlayerRequestUrl(getPreviousRequestUrl());
+					setBeforePlayerOpenSeoToken(Window.getTitle());
+				}
+				this.previousRequestUrl = previousRequestUrl;
+			}else{
+				this.previousRequestUrl = previousRequestUrl;
+			}
+		}
+		
+		/**
+		 * @return the previousPlayerRequestUrl
+		 */
+		public PlaceRequest getPreviousPlayerRequestUrl() {
+			return previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+		}
+		
+		public String getPageLocation(){
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+				if(getSearchMovedPlaceRequest()!=null){
+					if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)){
+						pageLocation="home-search";
+					}else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+						pageLocation="shelf-search";
+					}
+					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
+						pageLocation="profile-search";					
+					}
+					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
+						pageLocation="teach-search";			
+					}
+					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
+						pageLocation="study-search";			
+					}
+					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT)){
+						pageLocation="study-search";			
+					}
+				}else{
+					pageLocation="home-search";
+				}
+			}else{
+				if(pageLocation.equals(PlaceTokens.HOME)){
+					String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
+					if(page!=null){
+						if(page.equals("teach")){
+							pageLocation="teach";
+						}else if(page.equals("study")){
+							pageLocation="study";
+						}else{
+							pageLocation="home";
+						}
+					}else{
+						pageLocation="home";
+					}
+				}else if(pageLocation.equals(PlaceTokens.RUSD_LIBRARY)){
+					pageLocation="home";
+				}else if(pageLocation.equals(PlaceTokens.SHELF)){
+					pageLocation="shelf";
+				}else if(pageLocation.equals(PlaceTokens.PROFILE_PAGE)){
+					pageLocation="profile";
+				}else if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+					pageLocation="teach";
+				}else if(pageLocation.equals(PlaceTokens.STUDENT)){
+					pageLocation="study";
+				}else{
+					pageLocation="home";
+				}
+			}
+			return pageLocation;
+		}
+		public String getPlayerMode(){
+			String mode=PlayerDataLogEvents.PREVIEW;
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
+				 mode=PlayerDataLogEvents.STUDY;
+			}
+			return mode;
+		}
+		public String getPlayerModeInTeach(){
+			String mode=PlayerDataLogEvents.STUDY;
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				 mode=PlayerDataLogEvents.PREVIEW;
+			}
+			return mode;
+		}
+		public String getFolderIds(){
+			String folderIds="";
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.SHELF)){
+				for(int i=1;i<4;i++){
+					String folderId=placeRequest.getParameter("o"+i, "");
+					if(folderId!=null&&!folderId.equals("")){
+						folderIds=folderIds+folderId+"/";
+					}
+				}
+			}
+			return folderIds;
+		}
+		public String getDataLogClasspageId(){
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			String classpageId="";
+			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				classpageId=placeRequest.getParameter("classpageid", "");
+			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
+				classpageId=placeRequest.getParameter("id", "");
+			}
+			return classpageId;
+		}
+		public String getClasspageEventId(){
+			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			String classpageEventId="";
+			if(pageLocation.equals(PlaceTokens.EDIT_CLASSPAGE)){
+				classpageEventId=this.classpageEventId;
+			}else if(pageLocation.equals(PlaceTokens.STUDENT)){
+				classpageEventId=this.classpageEventId;
+			}
+			return classpageEventId;
+		}
+		public void setClasspageEventId(String classpageEventId){
+			this.classpageEventId=classpageEventId;
+		}
+		/**
+		 * @param previousPlayerRequestUrl the previousPlayerRequestUrl to set
+		 */
+		public void setPreviousPlayerRequestUrl(PlaceRequest previousPlayerRequestUrl) {
+			this.previousPlayerRequestUrl = previousPlayerRequestUrl;
+		}
+		
+		public PlaceRequest getDefaultPlayerPlaceRequest(){
+			return new PlaceRequest(PlaceTokens.HOME);
+		}
+
+		/** 
+		 * This method is to get the beforePlayerOpenSeoToken
+		 */
+		public String getBeforePlayerOpenSeoToken() {
+			return beforePlayerOpenSeoToken;
+		}
+
+		/** 
+		 * This method is to set the beforePlayerOpenSeoToken
+		 */
+		public void setBeforePlayerOpenSeoToken(String beforePlayerOpenSeoToken) {
+			this.beforePlayerOpenSeoToken = beforePlayerOpenSeoToken;
+		}
+
+		public PlaceRequest getSearchMovedPlaceRequest() {
+			return searchMovedPlaceRequest;
+		}
+
+		public void setSearchMovedPlaceRequest(PlaceRequest searchMovedPlaceRequest) {
+			this.searchMovedPlaceRequest = searchMovedPlaceRequest;
+		}
+
 
 }

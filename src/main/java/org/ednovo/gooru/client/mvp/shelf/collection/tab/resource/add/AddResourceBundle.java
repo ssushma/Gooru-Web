@@ -24,21 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : AddResourceBundle.java
- *
- * @description : This Class is used to Add Resource
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface AddResourceBundle extends CssResource {
 	
 	String answerDeselected();

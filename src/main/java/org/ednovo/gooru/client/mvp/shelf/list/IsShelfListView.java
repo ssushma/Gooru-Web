@@ -24,28 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+
+import com.google.gwt.event.dom.client.ClickEvent;
 
 /**
- * 
- * @fileName : IsShelfListView.java
+ * @author Search Team
  *
- * @description : This is used to view the items in the shelf 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>, DropBox {
 
@@ -53,7 +47,7 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	 * Set user shelf data
 	 * @param collection instance of {@link CollectionDo} as List
 	 */
-	void setUserShelfData(List<CollectionDo> collection,boolean clearShelfPanel);
+	void setUserShelfData(List<FolderDo> collection,boolean clearShelfPanel);
 
 	/**
 	 * Create dropped collection 
@@ -66,24 +60,6 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	 * @param refreshType instance of {@link RefreshType}
 	 */
 	void refreshCollectionInShelfList(CollectionDo collection, RefreshType refreshType);
-
-	/**
-	 * Refresh folder list in user shelf
-	 * @param folder instance of {@link collectionId} 
-	 * @param refreshType instance of {@link RefreshType}
-	 * @param String instance of {@link String}
-	 */
-	void refreshLevelFolderInShelfList(String collectionId,	RefreshType refreshType, String folderLevel, int sequence,boolean flag);
-	
-	
-	/**
-	 * Insert folder list in user shelf
-	 * @param folder instance of {@link CollectionItemDo}
-	 * @param refreshType instance of {@link RefreshType}
-	 * @param String instance of {@link String}
-	 */
-
-	void insertFolderInShelfView(CollectionItemDo collectionItemDo, RefreshType refreshType, String folderLevel);
 
 	/**
 	 * Delete folder list in user shelf
@@ -104,7 +80,7 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	 * Get user collection list
 	 * @return instance of {@link CollectionDo} as List
 	 */
-	List<CollectionDo> getShelfCollections();
+	List<FolderDo> getShelfCollections();
 	
 	/**
 	 * @return get collection if true else false
@@ -149,5 +125,38 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	void setOpenCollectionId(String collectionId);
 
 	void setUserShelfMsg(String userMsg);
+	
+	void getChildFolderItems(List<FolderDo> folderListDo);
 
+	void getCollectionItems(List<FolderDo> searchResult);
+
+	void getAllCollectionItems(String collectionId);
+
+	void insertDraggedCollectionInShelfList(CollectionDo result, String parentId);   
+	
+	void refreshFolderItemData(FolderDo folderDo, RefreshFolderType refreshFolderType, HashMap<String,String> params);
+	
+	void changeShelfPanelActiveStyle();
+	
+	void updateShelfFolderName(String folderName);
+
+	void setBackToSearch();
+
+	void onClick(ClickEvent event);
+
+	void removeMovedCollFolder(String sourceId);
+
+	void onDragOverOpenFolder(String folderId,boolean showcollectionFormView);
+
+	void insertMovedCollection(FolderDo folderDo,RefreshFolderType refreshFolderType, HashMap<String, String> params);
+
+	void setMovedCollectionStyle(String gooruOId);
+
+	void setChildFolderCollectionStyle(HashMap<String, String> params, String clickType);
+
+	void openParentFolderEvent(); 
+	
+	Integer getChildPageNumber();
+
+	void setChildPageNumber(Integer childPageNumber);
 }

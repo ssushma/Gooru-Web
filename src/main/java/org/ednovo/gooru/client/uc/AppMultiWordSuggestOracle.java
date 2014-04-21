@@ -28,19 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+
 /**
- * @fileName : AppMultiWordSuggestOracle.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class AppMultiWordSuggestOracle extends MultiWordSuggestOracle {
 

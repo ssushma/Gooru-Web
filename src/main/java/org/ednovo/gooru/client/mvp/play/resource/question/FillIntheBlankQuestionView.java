@@ -34,12 +34,14 @@ import java.util.TreeSet;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
@@ -53,18 +55,24 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FillIntheBlankQuestionView extends Composite{
+public class FillIntheBlankQuestionView extends Composite implements MessageProperties{
 	
 	@UiField Button checkAnswer;
 	@UiField FlowPanel optionsContainer,resultPanel;
 	@UiField QuestionStyleResource oeStyle;
 	@UiField Label messageBodyText;
+	@UiField HTMLPanel answerText;
 
 	private List<TextBox> textBoxArray=new ArrayList<TextBox>();
+	private String[] enteredAnswerText=new String[3];
 	private CollectionItemDo collectionItemDo=null;
-	private boolean isCheckButtonEnabled=true;
-	private static final String FIB_BODY_TEXT="Please type your answer(s) in the blank(s) provided";
+	private boolean isCheckButtonEnabled=false;
+	private static final String FIB_BODY_TEXT=GL1454;
 	private static final String FIB_SEPARATOR = "_______";
+	
+	private boolean isFirstTry=false;
+	
+	private AttemptedAnswersDo attemptedAnswerDo=null;
 	
 	private static OpendEndedQuestionViewUiBinder uiBinder = GWT.create(OpendEndedQuestionViewUiBinder.class);
 
@@ -75,15 +83,20 @@ public class FillIntheBlankQuestionView extends Composite{
 	public FillIntheBlankQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		setQuestionTypeCaption();
+		answerText.getElement().setInnerHTML(GL0665);
+		checkAnswer.setText(GL0666);
 		renderFibQuestion();
 	}
 	
 	@UiConstructor
-	public FillIntheBlankQuestionView(CollectionItemDo collectionItemDo){
+	public FillIntheBlankQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
+		this.attemptedAnswerDo=attemptedAnswerDo;
 		setQuestionTypeCaption();
 		renderFibQuestion();
+		answerText.getElement().setInnerHTML(GL0665);
+		checkAnswer.setText(GL0666);
 	}
 	
 	public void setQuestionTypeCaption(){
@@ -97,6 +110,10 @@ public class FillIntheBlankQuestionView extends Composite{
 		HTML fibText=new HTML();
 		fibText.setStyleName(oeStyle.answerTextContainer());
 		for(int i = 0; i < fibArray.length; i++) {
+/*			if(fibQuestionTxt.length()>0)
+			{
+			fibQuestionTxt = fibQuestionTxt.replaceAll("\\<.*?\\>", "");
+			}*/
 			fibQuestionTxt = fibQuestionTxt + fibArray[i];
 			if(i<answerArraySize) {
 				fibQuestionTxt = fibQuestionTxt + "<span id=\"fib"+i+"\"></span>";
@@ -112,11 +129,20 @@ public class FillIntheBlankQuestionView extends Composite{
 		int answerArraySize = this.collectionItemDo.getResource().getAnswers().size();
 		for(int i = 0; i < answerArraySize; i++) {
 			TextBox answerText = new TextBox();
-			answerText.addKeyPressHandler(new AnswerTextBoxKeypressEvent());
+			answerText.addKeyUpHandler(new AnswerTextBoxKeypressEvent());
 			answerText.setStyleName(oeStyle.answerTextBox());
 			optionsContainer.add(answerText);
 			textBoxArray.add(answerText);
 			Document.get().getElementById("fib"+i).appendChild(answerText.getElement());
+		}
+		showPreviousAttemptedResult();
+	}
+	public void showPreviousAttemptedResult(){
+		if(attemptedAnswerDo!=null){
+			String[] previoustAttemptedResult=attemptedAnswerDo.getFibAnswersList();
+			for(int i=0;i<textBoxArray.size();i++){
+				textBoxArray.get(i).setText(previoustAttemptedResult[i]);
+			}
 		}
 	}
 	private void enableCheckAnswerButton(){
@@ -129,6 +155,8 @@ public class FillIntheBlankQuestionView extends Composite{
 	public void checkAnswerButtonEvent(ClickEvent event){
 		if(isCheckButtonEnabled){
 			highlightTextBoxes();
+			increaseUserAttemptCount();
+			setEnteredFibAnswersData(enteredAnswerText);
 			isCheckButtonEnabled=false;
 			checkAnswer.removeStyleName(oeStyle.openEndedQuestionSubmitButton());
 			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
@@ -139,44 +167,120 @@ public class FillIntheBlankQuestionView extends Composite{
 		TreeSet<QuestionAnswerDo> answersList=this.collectionItemDo.getResource().getAnswers();
 		Iterator<QuestionAnswerDo> answersIterator=answersList.iterator();
 		int i=0;
+		boolean isFibStatus=true;
+		List<String> attemptedAnswersList=new ArrayList<String>();
+		List<Integer> attemptAnswerIds=new ArrayList<Integer>();
+		List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
+		List<Integer> attemptStatusArray=new ArrayList<Integer>();
 		while(answersIterator.hasNext()){
 			QuestionAnswerDo questionAnswerDo=answersIterator.next();
-			if(questionAnswerDo.getAnswerText().equalsIgnoreCase(textBoxArray.get(i).getText())){
+			String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText().trim();
+		  	String 	textBoxAnswerDoAnswerText	=	textBoxArray.get(i).getText().trim();
+		  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
+		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
+		  	attemptTrySequenceArray.add(i+1);
+			if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
+				if(isFibStatus){
+					isFibStatus=true;
+				}
 				textBoxArray.get(i).addStyleName(oeStyle.answerCorrectTextBox());
+				//attemptStatusArray.add(1);
 			}else{
+				isFibStatus=false;
 				textBoxArray.get(i).addStyleName(oeStyle.answerWrongTextBox());
 				showResultPanel(i,questionAnswerDo.getAnswerText());
+				//attemptStatusArray.add(0);
 			}
 			textBoxArray.get(i).setReadOnly(true);
 			i++;
 		}
+		attemptStatusArray.add(isFibStatus?1:0);
+		int score=0;
+		boolean isFirstAttempt=false;
+		if(!isFirstTry){
+			isFirstTry=true;
+			isFirstAttempt=true;
+			score=isFibStatus?1:0;
+		}
+		String attemptStatus=isFibStatus==true?"correct":"wrong";
+		createSesstionItemAttemptOe(attemptAnswerIds,attemptedAnswersList,attemptStatus);
+		setFibAnswerIdsWithTime(attemptAnswerIds,attemptTrySequenceArray,attemptStatusArray,score,isFirstAttempt,attemptedAnswersList);
+		
 	}
-	
-	public class AnswerTextBoxKeypressEvent implements KeyPressHandler{
+	public void createSesstionItemAttemptOeWhenNavigation(){
+		TreeSet<QuestionAnswerDo> answersList=this.collectionItemDo.getResource().getAnswers();
+		Iterator<QuestionAnswerDo> answersIterator=answersList.iterator();
+		int i=0;
+		boolean isFibStatus=true;
+		List<String> attemptedAnswersList=new ArrayList<String>();
+		List<Integer> attemptAnswerIds=new ArrayList<Integer>();
+		while(answersIterator.hasNext()){
+			QuestionAnswerDo questionAnswerDo=answersIterator.next();
+			String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText().trim();
+		  	String 	textBoxAnswerDoAnswerText	=	textBoxArray.get(i).getText().trim();
+		  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
+		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
+			if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
+				if(isFibStatus){
+					isFibStatus=true;
+				}
+			}else{
+				isFibStatus=false;
+				//showResultPanel(i,questionAnswerDo.getAnswerText());
+			}
+			i++;
+		}
+		String attemptStatus=isFibStatus==true?"correct":"wrong";
+		createSesstionItemAttemptOe(attemptAnswerIds,attemptedAnswersList,attemptStatus);
+	}
+	public class AnswerTextBoxKeypressEvent implements KeyUpHandler{
 		@Override
-		public void onKeyPress(KeyPressEvent event) {
+		public void onKeyUp(KeyUpEvent event) {
 			for(int i=0;i<textBoxArray.size();i++){
 				if(textBoxArray.get(i).getText().length()>0){
 					enableCheckAnswerButton();
 				}
+				enteredAnswerText[i]=textBoxArray.get(i).getText().trim();
 			}
+			isUserAnswerAttempted(true);
 		}
 	}
 	
 	private void showResultPanel(int blankNum,String correctAnswer){
 		FlowPanel resultContianer=new FlowPanel();
 		resultContianer.setStyleName(oeStyle.resultPanelConatiner());
-		HTMLPanel blankHtml=new HTMLPanel("Blank "+(blankNum+1)+":");
+		HTMLPanel blankHtml=new HTMLPanel(GL1455+" "+(blankNum+1)+GL_SPL_SEMICOLON);
 		blankHtml.setStyleName(oeStyle.resultPanelText());
 		Label answerWrongImagePanel=new Label();
 		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 		answerWrongImagePanel.addStyleName(oeStyle.resultPanelAnswerImage());
-		HTMLPanel answerOptiontext=new HTMLPanel("correct answer: "+correctAnswer);
+		HTMLPanel answerOptiontext=new HTMLPanel(GL1456+GL_SPL_SEMICOLON+" "+correctAnswer);
 		answerOptiontext.setStyleName(oeStyle.resultPanelText());
 		resultContianer.add(blankHtml);
 		resultContianer.add(answerWrongImagePanel);
 		resultContianer.add(answerOptiontext);
 		resultPanel.add(resultContianer);
 		resultPanel.setStyleName(oeStyle.resultPanel());
+	}
+	
+	public void setEnteredFibAnswersData(String[] enteredFibAnswersData){
+		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
+		attempteAnswersDo.setFibAnswersList(enteredFibAnswersData);
+		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
+		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+	}
+	public void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo){
+		
+	}
+	public void createSesstionItemAttemptOe(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus){
+		
+	}
+	public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+	}
+	public void setFibAnswerIdsWithTime(List<Integer> attemptAnswerIds,List<Integer> attemptTrySequenceArray,List<Integer> attemptStatusArray,Integer score,boolean isFirstAttempt,List<String> attemptedAnswersList){
+		
+	}
+	public void increaseUserAttemptCount(){
+		
 	}
 }

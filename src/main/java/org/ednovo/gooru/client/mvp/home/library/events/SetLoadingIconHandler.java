@@ -26,17 +26,19 @@ package org.ednovo.gooru.client.mvp.home.library.events;
 
 import com.google.gwt.event.shared.EventHandler;
 /**
- * @fileName : SetLoadingIconHandler.java
+ * 
+ * @fileName : OpenLessonConceptHandler.java
  *
- * @description :  Handler for {@link SetLoadingIconEvent}.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Dec 4, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 
 public interface SetLoadingIconHandler extends EventHandler {

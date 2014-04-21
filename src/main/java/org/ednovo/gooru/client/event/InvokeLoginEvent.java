@@ -32,34 +32,19 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : InvokeLoginEvent.java
- *
- * @description : This method is used to invoke login handler event.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class InvokeLoginEvent extends GwtEvent<InvokeLoginHandler> {
 
 	public static final Type<InvokeLoginHandler> TYPE = new Type<InvokeLoginHandler>();
 
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<InvokeLoginHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 *This method will be  called by HandlerManager and it will be used to invoke login handler event.
-	 */
+
 	@Override
 	protected void dispatch(InvokeLoginHandler handler) {
 		handler.invokeLogin();

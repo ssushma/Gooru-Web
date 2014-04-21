@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
@@ -34,7 +37,9 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -63,22 +68,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : AddWebResourceView.java
- *
- * @description :This class is used to add web resources view. 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class AddWebResourceView extends Composite {
+
+public abstract class AddWebResourceView extends Composite implements MessageProperties{
 
 	public interface AddWebResourceViewUiBinder extends
 			UiBinder<Widget, AddWebResourceView> {
@@ -89,7 +80,7 @@ public abstract class AddWebResourceView extends Composite {
 			.create(AddWebResourceViewUiBinder.class);
 
 	@UiField
-	public Label cancelResourcePopupBtnLbl, generateImageLbl;
+	public Label cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -115,20 +106,19 @@ public abstract class AddWebResourceView extends Composite {
 	public Image setThumbnailImage;
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel descCharcterLimit,contentPanel,panelContentRights;
+	HTMLPanel descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,orText,refreshText;
 
 	@UiField
-	public HTMLPanel addResourceBtnPanel,loadingPanel;
+	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText;//otherText
 
 	@UiField
-	HTMLPanel categorypanel, video, interactive, website, slide, handout,
-			textbook, lesson, exam;
+	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image;//other
 
 	@UiField
 	HTMLPanel resourceTypePanel, resourceDescriptionContainer,buttonsPanel;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel, loadingTextLbl;
+	Label resoureDropDownLbl, resourceCategoryLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 	
 	@UiField
 	CheckBox rightsChkBox;
@@ -152,18 +142,46 @@ public abstract class AddWebResourceView extends Composite {
 	public boolean resoureDropDownLblOpen = false;
 	
 	private boolean isShortenedUrl;
+	
+	boolean isValidate = true;
 
 	int activeImageIndex = 0;
 	protected List<String> thumbnailImages;
 	String thumbnailUrlStr = null;
 	CollectionDo collectionDo;
-	/**
-	 * constructor
-	 * @param collectionDo
-	 */
+	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
+	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:mp3))$)";
+		
 	public AddWebResourceView(CollectionDo collectionDo) { 
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		urlTitle.getElement().setInnerHTML(GL0915);
+		titleText.getElement().setInnerHTML(GL0318+GL_SPL_STAR);
+		descriptionLabel.getElement().setInnerHTML(GL0904);
+		categoryTitle.getElement().setInnerHTML(GL0906);
+		videoLabel.getElement().setInnerHTML(GL0918);
+		interactiveText.getElement().setInnerHTML(GL0919);
+		websiteText.getElement().setInnerHTML(GL1396);
+		/*slideText.getElement().setInnerHTML(GL0908);
+		handoutText.getElement().setInnerHTML(GL0907);
+		textbookLabel.getElement().setInnerHTML(GL0909);
+		lessonText.getElement().setInnerHTML(GL0910);
+		examText.getElement().setInnerHTML(GL0921);*/
+		textsText.getElement().setInnerHTML(GL1044);
+		audioText.getElement().setInnerHTML(GL1045);
+		imagesText.getElement().setInnerHTML(GL1046);
+//		otherText.getElement().setInnerHTML(GL1047);
+		
+		
+		thumbnailText.getElement().setInnerHTML(GL0911);
+		generateImageLbl.setText(GL0922);
+		orText.getElement().setInnerHTML(GL_GRR_Hyphen+GL0209+GL_GRR_Hyphen);
+		uploadImageLbl.setText(GL0912);
+		refreshText.getElement().setInnerHTML(GL0923);
+		rightsLbl.setText(GL0869);
+		addResourceBtnLbl.setText(GL0590);
+		cancelResourcePopupBtnLbl.setText(GL0142);
+		loadingTextLbl.setText(GL0591.toLowerCase());
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
@@ -173,18 +191,28 @@ public abstract class AddWebResourceView extends Composite {
 		titleTextBox.getElement().setId("tbTitle");
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
-		descriptionTxtAera.getElement().setAttribute("placeholder", "Please describe what the resource is about.");
+		descriptionTxtAera.getElement().setAttribute("placeholder", GL0359);
 		urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
 		urlTextBox.addBlurHandler(new UrlBlurHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
-		resourceCategoryLabel.setText("Choose a resource category");
+		resourceCategoryLabel.setText(GL0360);
 		mandatoryUrlLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
+		mandatoryTitleLblForSwareWords.setVisible(false);
+		mandatoryDescLblForSwareWords.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
+		descCharcterLimit.getElement().setInnerText(GL0143);
 		descCharcterLimit.setVisible(false);
+		agreeText.setText(GL0870);
+		commuGuideLinesAnr.setText(GL0871);
+		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		privacyAnr.setText(" "+GL0873);
+		andText.setText(" "+GL_GRR_AND+" ");
+		copyRightAnr.setText(" "+GL0875);
+		additionalText.setText(GL0874);
 		leftArrowLbl.setVisible(false);
 		rightArrowLbl.setVisible(false);
 		setThumbnailImage.setVisible(false);
@@ -257,11 +285,11 @@ public abstract class AddWebResourceView extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("http://support.goorulearning.org/entries/24471116-Gooru-Community-Guidelines","_blank",""); 
+				Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 			}
 		});
-		
-		
+		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
+		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
 	}
 
 	public void onLoad() {
@@ -272,21 +300,7 @@ public abstract class AddWebResourceView extends Composite {
 		// tinyMce=new TinyMCE();
 		// resourceDescriptionContainer.add(tinyMce);
 	}
-/**
- * 
- * @fileName : AddWebResourceView.java
- *
- * @description : This method is used to close on click
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 	private class CloseClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -312,21 +326,6 @@ public abstract class AddWebResourceView extends Composite {
 			resourceImageUpload();
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AddWebResourceView.java
-	 *
-	 * @description : This method is used to add resources 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	  private class rightsChecked implements ClickHandler {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -340,225 +339,274 @@ public abstract class AddWebResourceView extends Composite {
 			}
 	}
 	public abstract void resourceImageUpload();
-/**
- * This inner class will handle the click event.
- */
+
 	private class AddClickHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-		
-			boolean isValidate = true;
+			addResourceBtnLbl.setEnabled(false);
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", titleTextBox.getValue());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						isHavingBadWordsInTextbox = value;
+						if(value){
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
+							addResourceBtnLbl.setEnabled(true);
+						}else{
+							parms.put("text", descriptionTxtAera.getText());
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+								
+								@Override
+								public void onSuccess(Boolean result) {
+									isValidate = true;
+									isHavingBadWordsInRichText=result;
+									if(result){
+										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
+										addResourceBtnLbl.setEnabled(true);
+									}else{
+										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
+											
+											String urlStr = urlTextBox.getText();
+											urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
+											urlStr = urlStr.replaceAll("feature=player_embedded&", "");
+											urlStr = URL.encode(urlStr);
+											urlStr = urlStr.replaceAll("#", "%23");
+											String youTubeId = getYoutubeVideoId(urlStr);
+											System.out.println("youTubeId :"+youTubeId);
+											if (urlStr.endsWith("/")) {
+												urlStr = urlStr.substring(0, urlStr.length() - 1);
+											}
 
-			String urlStr = urlTextBox.getText();
-			urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
-			urlStr = urlStr.replaceAll("feature=player_embedded&", "");
-			urlStr = URL.encode(urlStr);
-			urlStr = urlStr.replaceAll("#", "%23");
-			String youTubeId = getYoutubeVideoId(urlStr);
-			if (urlStr.endsWith("/")) {
-				urlStr = urlStr.substring(0, urlStr.length() - 1);
-			}
+											String descriptionStr = descriptionTxtAera.getText().trim(); // tinyMce.getText().trim();
+											String titleStr = titleTextBox.getText().trim();
+											String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
+											String idStr = "";
 
-			String descriptionStr = descriptionTxtAera.getText().trim(); // tinyMce.getText().trim();
-			String titleStr = titleTextBox.getText().trim();
-			String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
-			String idStr = "";
+											if (urlStr.contains("goorulearning.org")) {
+												if (urlStr.contains("support.goorulearning.org")
+														|| urlStr.contains("about.goorulearning.org")) {
+													isValidate = true;
+												} else {
+													mandatoryUrlLbl
+															.setText(GL0924);
+													mandatoryUrlLbl.setVisible(true);
+													isValidate = false;
+												}
+											}
+											if(!rightsChkBox.getValue()){
+												rightsLbl.getElement().getStyle().setColor("orange");
+												isValidate = false;
+											}
+											if (urlStr == null || urlStr.equalsIgnoreCase("")) {
+												mandatoryUrlLbl.setText(GL0916);
+												mandatoryUrlLbl.setVisible(true);
+												isValidate = false;
+											} else {
+												boolean isStartWithHttp = urlStr.matches("^(http|https)://.*$");
+												if (!isStartWithHttp) {
+													urlStr = "http://" + urlStr;
+													urlTextBox.setText(urlStr);
+												}
+											}
 
-			if (urlStr.contains("goorulearning.org")) {
-				if (urlStr.contains("support.goorulearning.org")
-						|| urlStr.contains("about.goorulearning.org")) {
-					isValidate = true;
-				} else {
-					mandatoryUrlLbl
-							.setText("Oops! You can't add a Gooru URL as a resource.");
-					mandatoryUrlLbl.setVisible(true);
-					isValidate = false;
-				}
-			}
-			if(!rightsChkBox.getValue()){
-				rightsLbl.getElement().getStyle().setColor("orange");
-				isValidate = false;
-			}
-			if (urlStr == null || urlStr.equalsIgnoreCase("")) {
-				mandatoryUrlLbl.setText("Please enter a URL.");
-				mandatoryUrlLbl.setVisible(true);
-				isValidate = false;
-			} else {
-				boolean isStartWithHttp = urlStr.matches("^(http|https)://.*$");
-				if (!isStartWithHttp) {
-					urlStr = "http://" + urlStr;
-					urlTextBox.setText(urlStr);
-				}
-			}
+											if (titleStr.toLowerCase().contains("www.")
+													|| titleStr.toLowerCase().contains("http://")
+													|| titleStr.toLowerCase().contains("https://")
+													|| titleStr.toLowerCase().contains("ftp://")) {
+												mandatoryTitleLbl.setText(GL0323);
+												mandatoryTitleLbl.setVisible(true);
+												isValidate = false;
+											}
 
-			if (titleStr.toLowerCase().contains("www.")
-					|| titleStr.toLowerCase().contains("http://")
-					|| titleStr.toLowerCase().contains("https://")
-					|| titleStr.toLowerCase().contains("ftp://")) {
-				mandatoryTitleLbl.setText("Title cannot be a URL.");
-				mandatoryTitleLbl.setVisible(true);
-				isValidate = false;
-			}
+											if (titleStr == null || titleStr.equalsIgnoreCase("")) {
+												mandatoryTitleLbl.setText(GL0173);
+												mandatoryTitleLbl.setVisible(true);
+												isValidate = false;
+											}
+											if (descriptionStr.length() >300) {
+												descCharcterLimit.setVisible(true);
+												isValidate = false;
+											}
+											if (categoryStr == null
+													|| categoryStr.equalsIgnoreCase("-1")
+													|| categoryStr
+															.equalsIgnoreCase("Choose a resource format")) {
+												mandatoryCategoryLbl.setText(GL0917);
+												mandatoryCategoryLbl.setVisible(true);
+												isValidate = false;
+											}
 
-			if (titleStr == null || titleStr.equalsIgnoreCase("")) {
-				mandatoryTitleLbl.setText("Please enter a title.");
-				mandatoryTitleLbl.setVisible(true);
-				isValidate = false;
-			}
-			if (categoryStr == null
-					|| categoryStr.equalsIgnoreCase("-1")
-					|| categoryStr
-							.equalsIgnoreCase("Choose a resource category")) {
-				mandatoryCategoryLbl.setText("Please choose a category.");
-				mandatoryCategoryLbl.setVisible(true);
-				isValidate = false;
-			}
+											if (!isValidYoutubeUrlFlag && categoryStr.equalsIgnoreCase("Video")) {
+												mandatoryCategoryLbl
+														.setText(GL0925);
+												mandatoryCategoryLbl.setVisible(true);
+												isValidate = false;
 
-			if (!isValidYoutubeUrlFlag && categoryStr.equalsIgnoreCase("Video")) {
-				mandatoryCategoryLbl
-						.setText("Thats a Playlist/Channel. Please choose another category.");
-				mandatoryCategoryLbl.setVisible(true);
-				isValidate = false;
+											}
 
-			}
-
-			if (!isValidUrl(urlStr, true)) {
-				mandatoryUrlLbl.setText("Please enter a valid URL.");
-				mandatoryUrlLbl.setVisible(true);
-				isValidate = false;
-			}
-			if(urlStr.indexOf("youtube")!=-1){
-				if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
-					if(!categoryStr.equalsIgnoreCase("Website")){
-						mandatoryCategoryLbl.setText("Looks like this is a Playlist not a video! Please select Website.");
-						mandatoryCategoryLbl.setVisible(true);
-						isValidate = false;
-					}
-				}
-			}
-			
-			//AreYouSurceToolTip AreYouSurceToolTip=new AreYouSurceToolTip();
-			if (isValidate && !isShortenedUrl()) {
-				MixpanelUtil.Create_NewResource();
-				// getUiHandlers().addResource(idStr, urlStr, titleStr,
-				// descriptionStr, categoryStr, thumbnailUrlStr);
-				loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
-				buttonsPanel.getElement().getStyle().setDisplay(Display.NONE);
-				descriptionStr = descriptionTxtAera.getText().trim();
-				// String descriptionStr ="";
-				urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
-				urlStr = urlStr.replaceAll("feature=player_embedded&", "");
-				if(collectionDo.getSharing().equalsIgnoreCase("public")){
-					
-					addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true);
-					/*WebResourcePreview webResourcePreview = new WebResourcePreview() {
-						
-						@Override
-						public void showAddResourcePopup() {
-							
+											if (!isValidUrl(urlStr, true)) {
+												mandatoryUrlLbl.setText(GL0926);
+												mandatoryUrlLbl.setVisible(true);
+												isValidate = false;
+											}
+											if(urlStr.indexOf("youtube")!=-1){
+												if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
+													if(!categoryStr.equalsIgnoreCase("Webpage")){
+														mandatoryCategoryLbl.setText(GL0927);
+														mandatoryCategoryLbl.setVisible(true);
+														isValidate = false;
+													}else{
+														isValidate = true;
+													}
+												}
+											}
+											if(categoryStr.equalsIgnoreCase("Audio") && !hasValidateResource())
+											{
+												mandatoryUrlLbl.setText(GL1161);
+												mandatoryUrlLbl.setVisible(true);
+												isValidate = false;
+											}
+											
+											//AreYouSurceToolTip AreYouSurceToolTip=new AreYouSurceToolTip();
+											if (isValidate && !isShortenedUrl()) {
+												MixpanelUtil.Create_NewResource();
+												// getUiHandlers().addResource(idStr, urlStr, titleStr,
+												// descriptionStr, categoryStr, thumbnailUrlStr);
+												loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
+												buttonsPanel.getElement().getStyle().setDisplay(Display.NONE);
+												descriptionStr = descriptionTxtAera.getText().trim();
+												// String descriptionStr ="";
+												urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
+												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
+												if(collectionDo.getSharing().equalsIgnoreCase("public")){
+													
+													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true);
+													addResourceBtnLbl.setEnabled(true);
+													/*WebResourcePreview webResourcePreview = new WebResourcePreview() {
+														
+														@Override
+														public void showAddResourcePopup() {
+															
+														}
+														
+														@Override
+														public void closeAppPopUp() {
+															
+														}
+														
+														@Override
+														public void addWebResource() {
+															
+														}
+													};
+													webResourcePreview.filePathValueLbl.setText(urlStr);
+													webResourcePreview.resourceTitleValueLbl.setText(titleStr);
+													webResourcePreview.descriptionTxtValueLbl.setText(descriptionStr);
+													webResourcePreview.categoryValueLbl.setText(categoryStr);
+													if(thumbnailUrlStr!=null){
+														webResourcePreview.setThumbnailImage.setUrl(thumbnailUrlStr);
+													}else{
+														webResourcePreview.setThumbnailImage.setVisible(false);
+														webResourcePreview.thumbnailLbl.setVisible(false);
+													}
+													webResourcePreview.setGlassEnabled(true);
+													webResourcePreview.show();
+													webResourcePreview.center();*/
+													
+													
+												}
+												else{
+													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false);
+													addResourceBtnLbl.setEnabled(true);
+												}
+												
+											}
+											addResourceBtnLbl.setEnabled(true);
+										}
+									}
+								}
+							});
 						}
-						
-						@Override
-						public void closeAppPopUp() {
-							
-						}
-						
-						@Override
-						public void addWebResource() {
-							
-						}
-					};
-					webResourcePreview.filePathValueLbl.setText(urlStr);
-					webResourcePreview.resourceTitleValueLbl.setText(titleStr);
-					webResourcePreview.descriptionTxtValueLbl.setText(descriptionStr);
-					webResourcePreview.categoryValueLbl.setText(categoryStr);
-					if(thumbnailUrlStr!=null){
-						webResourcePreview.setThumbnailImage.setUrl(thumbnailUrlStr);
-					}else{
-						webResourcePreview.setThumbnailImage.setVisible(false);
-						webResourcePreview.thumbnailLbl.setVisible(false);
-					}
-					webResourcePreview.setGlassEnabled(true);
-					webResourcePreview.show();
-					webResourcePreview.center();*/
-					
-						
-					
 				}
-				else{
-					addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false);
-				}
-				
-			}
+			});
 		}
 	}
 
-	
 	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
-	/**
-	 * This inner class will handle the blur event.
-	 */
+
 	private class UrlBlurHandler implements BlurHandler {
 
 		@Override
 		public void onBlur(BlurEvent event) {
-			addResourceBtnLbl.setVisible(true);
-			addResourceBtnPanel.setVisible(true);
-			String userUrlStr = urlTextBox.getText().trim();
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", urlTextBox.getText().trim());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-			if (userUrlStr.contains("goorulearning.org")) {
-				if (userUrlStr.contains("support.goorulearning.org")
-						|| userUrlStr.contains("about.goorulearning.org")) {
+				@Override
+				public void onSuccess(Boolean value) {
+					if(!value){
+						addResourceBtnLbl.setVisible(true);
+						addResourceBtnPanel.setVisible(true);
+						String userUrlStr = urlTextBox.getText().trim();
+						System.out.println("domain : "+Window.Location.getHost());
+						System.out.println("domain : "+Window.Location.getHostName());
+						if (userUrlStr.contains("goorulearning.org")) {
+							if (userUrlStr.contains("support.goorulearning.org")
+									|| userUrlStr.contains("about.goorulearning.org")) {
 
-				} else {
-					mandatoryUrlLbl
-							.setText("Oops! You can't add a Gooru URL as a resource.");
-					mandatoryUrlLbl.setVisible(true);
-					return;
+							} else {
+								mandatoryUrlLbl
+										.setText(GL0924);
+								mandatoryUrlLbl.setVisible(true);
+								return;
+							}
+						}
+
+						if (userUrlStr.endsWith("/")) {
+							userUrlStr = userUrlStr.substring(0, userUrlStr.length() - 1);
+						}
+						if (!userUrlStr.equalsIgnoreCase("")) {
+
+							boolean isStartWithHttp = userUrlStr
+									.matches("^(http|https)://.*$");
+							if (!isStartWithHttp) {
+								userUrlStr = "http://" + userUrlStr;
+								urlTextBox.setText(userUrlStr);
+							}
+
+							if (isValidUrl(userUrlStr, true)) {
+								userUrlStr = URL.encode(userUrlStr);
+								userUrlStr = userUrlStr.replaceAll("#", "%23");
+								String userUrlStr1 = userUrlStr.replaceAll(
+										"feature=player_detailpage&", "");
+								userUrlStr1 = userUrlStr.replaceAll(
+										"feature=player_embedded&", "");
+								// getResourceInfo(userUrlStr1);
+								checkShortenUrl(userUrlStr);
+								loadingPanel.setVisible(true);
+								contentPanel.getElement().getStyle().setOpacity(0.6);
+
+							} else {
+								mandatoryUrlLbl.setText(GL0926);
+								mandatoryUrlLbl.setVisible(true);
+							}
+						}
+					}else{
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(urlTextBox, mandatoryUrlLbl, value);
+					}
 				}
-			}
-
-			if (userUrlStr.endsWith("/")) {
-				userUrlStr = userUrlStr.substring(0, userUrlStr.length() - 1);
-			}
-			if (!userUrlStr.equalsIgnoreCase("")) {
-
-				boolean isStartWithHttp = userUrlStr
-						.matches("^(http|https)://.*$");
-				if (!isStartWithHttp) {
-					userUrlStr = "http://" + userUrlStr;
-					urlTextBox.setText(userUrlStr);
-				}
-
-				if (isValidUrl(userUrlStr, true)) {
-					userUrlStr = URL.encode(userUrlStr);
-					userUrlStr = userUrlStr.replaceAll("#", "%23");
-					String userUrlStr1 = userUrlStr.replaceAll(
-							"feature=player_detailpage&", "");
-					userUrlStr1 = userUrlStr.replaceAll(
-							"feature=player_embedded&", "");
-					// getResourceInfo(userUrlStr1);
-					checkShortenUrl(userUrlStr);
-					loadingPanel.setVisible(true);
-					contentPanel.getElement().getStyle().setOpacity(0.6);
-
-				} else {
-					mandatoryUrlLbl.setText("Please enter a valid URL.");
-					mandatoryUrlLbl.setVisible(true);
-				}
-			}
+			});
 		}
 	}
 
 	public abstract void getResourceInfo(String userUrlStr);
 
 	public abstract void checkShortenUrl(String userUrlStr);
-	/**
-	 * This inner class will handle the Key up event.
-	 */
+
 	private class UrlKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
@@ -566,26 +614,22 @@ public abstract class AddWebResourceView extends Composite {
 			mandatoryUrlLbl.setVisible(false);
 		}
 	}
-	/**
-	 * This inner class will handle the key up event.
-	 */
+
 	private class TitleKeyUpHandler implements KeyUpHandler {
 
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
-				mandatoryTitleLbl.setText("Character limit reached.");
+				mandatoryTitleLbl.setText(GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
 	}
-	/**
-	 * This inner class will handle the key up event.
-	 */
+
 	private class DescriptionKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
 			descCharcterLimit.setVisible(false);
-			if (descriptionTxtAera.getText().length() >= 300) {
+			if (descriptionTxtAera.getText().length() >=300) {
 				descriptionTxtAera.setText(descriptionTxtAera.getText().trim()
 						.substring(0, 300));
 				descCharcterLimit.setVisible(true);
@@ -593,216 +637,88 @@ public abstract class AddWebResourceView extends Composite {
 
 		}
 	}
-/**
- * 
- * @function leftArrowClick 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click on left arrow
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@UiHandler("leftArrowLbl")
 	void leftArrowClick(ClickEvent event) {
 		activeImageIndex--;
 		setImageThumbnail();
 	}
-/**
- * 
- * @function rightArrowClick 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :@description :this will handle the click on right arrow
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@UiHandler("rightArrowLbl")
 	void rightArrowClick(ClickEvent event) {
 		activeImageIndex++;
 		setImageThumbnail();
 	}
-/**
- * 
- * @function videoResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on video resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@UiHandler("videoResourcePanel")
 	void videoResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Video");
+		MixpanelUtil.mixpanelEvent("organize_add_resource_video_selected");
+		resourceCategoryLabel.setText(GL0918);
 		categorypanel.setStyleName(video.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
 	}
-/**
- * 
- * @function interactiveResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on interactive resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Interactive");
+		MixpanelUtil.mixpanelEvent("organize_add_resource_interactive_selected");
+		resourceCategoryLabel.setText(GL0919);
 		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
 	}
-/**
- * 
- * @function websiteResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on web site resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Website");
+		MixpanelUtil.mixpanelEvent("organize_add_resource_website_selected");
+		resourceCategoryLabel.setText(GL1396);
 		categorypanel.setStyleName(website.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
 	}
-/**
- * 
- * @function slideResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on slide resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	@UiHandler("slideResourcePanel")
+
+	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Slide");
-		categorypanel.setStyleName(slide.getStyleName());
+		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
+		resourceCategoryLabel.setText(GL1046);
+		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
 	}
-/**
- * 
- * @function handoutResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on hand out resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	@UiHandler("handoutResourcePanel")
+
+	@UiHandler("textResourcePanel")
 	void handoutResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Handout");
-		categorypanel.setStyleName(handout.getStyleName());
+		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
+		resourceCategoryLabel.setText(GL1044);
+		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
 	}
-/**
- * 
- * @function textbookResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on text book resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	@UiHandler("textbookResourcePanel")
+
+	@UiHandler("audioResourcePanel")
 	void textbookResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Textbook");
-		categorypanel.setStyleName(textbook.getStyleName());
+		MixpanelUtil.mixpanelEvent("organize_add_resource_audio_selected");
+		resourceCategoryLabel.setText(GL1045);
+		categorypanel.setStyleName(audio.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
 	}
-/**
- * 
- * @function lessonResourcePanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on lesson resource panel
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	@UiHandler("lessonResourcePanel")
-	void lessonResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Lesson");
-		categorypanel.setStyleName(lesson.getStyleName());
-		resourceTypePanel.setVisible(false);
-		resoureDropDownLblOpen = false;
-		mandatoryCategoryLbl.setVisible(false);
-	}
+
+//	@UiHandler("otherResourcePanel")
+//	void lessonResourcePanel(ClickEvent event) {
+//		MixpanelUtil.mixpanelEvent("organize_add_resource_other_selected");
+//		resourceCategoryLabel.setText(GL1047);
+//		categorypanel.setStyleName(other.getStyleName());
+//		resourceTypePanel.setVisible(false);
+//		resoureDropDownLblOpen = false;
+//		mandatoryCategoryLbl.setVisible(false);
+//	}
 
 	// @UiHandler("questionResourcePanel")
 	// void questionResourcePanel(ClickEvent event){
@@ -812,46 +728,15 @@ public abstract class AddWebResourceView extends Composite {
 	// resoureDropDownLblOpen=false;
 	// mandatoryCategoryLbl.setVisible(false);
 	// }
-	/**
-	 * 
-	 * @function examResourcePanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :this will handle the click event on exam resource panel
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	@UiHandler("examResourcePanel")
+	/*@UiHandler("examResourcePanel")
 	void examResourcePanel(ClickEvent event) {
-		resourceCategoryLabel.setText("Exam");
-		categorypanel.setStyleName(exam.getStyleName());
+		resourceCategoryLabel.setText(GL0921);
+		//categorypanel.setStyleName(exam.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
 		mandatoryCategoryLbl.setVisible(false);
-	}
-/**
- * 
- * @function dropDownClick 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on  resource drop down
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+	}*/
+
 	@UiHandler("resoureDropDownLbl")
 	public void dropDownClick(ClickEvent event) {
 		if (resoureDropDownLblOpen == false) {
@@ -864,22 +749,7 @@ public abstract class AddWebResourceView extends Composite {
 		}
 
 	}
-/**
- * 
- * @function setImageThumbnail 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method will set thumbnail image
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setImageThumbnail() {
 		if( thumbnailImages.size()>0){
 		if (activeImageIndex == 0) {
@@ -902,22 +772,7 @@ public abstract class AddWebResourceView extends Composite {
 		}
 		}
 		}
-/**
- * 
- * @function refreshClick 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this will handle the click event on refresh label
- * 
- * 
- * @parm(s) : @param event
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@UiHandler("refreshLbl")
 	void refreshClick(ClickEvent event) {
 		String userUrlStr = urlTextBox.getText().trim();
@@ -932,22 +787,6 @@ public abstract class AddWebResourceView extends Composite {
 	 * String userUrlStr = urlTextBox.getText().trim(); if
 	 * (userUrlStr.indexOf("youtube")==-1){ activeImageIndex=0;
 	 * setImageThumbnail(); } }
-	 */
-	/**
-	 * 
-	 * @function clearFields 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :this method will clear the fields
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
 	 */
 	public void clearFields() {
 		urlTextBox.setText("");
@@ -970,7 +809,7 @@ public abstract class AddWebResourceView extends Composite {
 		if (thumbnailImages != null) {
 			thumbnailImages.clear();
 		}
-		resourceCategoryLabel.setText("Choose a resource category");
+		resourceCategoryLabel.setText(GL0360);
 		categorypanel.setStyleName("");
 
 		mandatoryCategoryLbl.setVisible(false);
@@ -985,9 +824,7 @@ public abstract class AddWebResourceView extends Composite {
 	}
 
 
-/**
- * This method will set the visibility
- */
+
 	public void setVisible(boolean visible) {
 		addResourceBtnLbl.setVisible(visible);
 		addResourceBtnPanel.setVisible(visible);
@@ -995,24 +832,7 @@ public abstract class AddWebResourceView extends Composite {
 
 	private RegExp urlValidator;
 	private RegExp urlPlusTldValidator;
-/**
- * 
- * @function isValidUrl 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method will check for valid url
- * 
- * 
- * @parm(s) : @param url
- * @parm(s) : @param topLevelDomainRequired
- * @parm(s) : @return
- * 
- * @return : boolean
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public boolean isValidUrl(String url, boolean topLevelDomainRequired) {
 		if (urlValidator == null || urlPlusTldValidator == null) {
 			urlValidator = RegExp
@@ -1023,23 +843,7 @@ public abstract class AddWebResourceView extends Composite {
 		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
 				.exec(url) != null;
 	}
-	/**
-	 * 
-	 * @function getYoutubeVideoId 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method will return You tube id
-	 * 
-	 * 
-	 * @parm(s) : @param youtubeUrl
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public String getYoutubeVideoId(String youtubeUrl) {
 
 		youtubeUrl=youtubeUrl.replaceAll("feature=player_detailpage&", "");
@@ -1060,15 +864,11 @@ public abstract class AddWebResourceView extends Composite {
 	}
 	
 	
-	/** 
-	 * This method is to get the shorten url
-	 */
+
 	public boolean isShortenedUrl() {
 		return isShortenedUrl;
 	}
-	/** 
-	 * This method is to set the shorten url
-	 */
+
 	public void setShortenedUrl(boolean isShortenedUrl) {
 		this.isShortenedUrl = isShortenedUrl;
 	}
@@ -1086,4 +886,55 @@ public abstract class AddWebResourceView extends Composite {
 	public void setVideoDuration(Integer videoDuration) {
 		this.videoDuration = videoDuration;
 	}
+	
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private TextArea textArea;
+		public CheckProfanityInOnBlur(TextBox textBox,TextArea textArea,Label label){
+			this.textBox=textBox;
+			this.label=label;
+			this.textArea=textArea;
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+			Map<String, String> parms = new HashMap<String, String>();
+			if(textBox!=null){
+				parms.put("text", textBox.getValue());
+			}else{
+				descCharcterLimit.setVisible(false);
+				parms.put("text", textArea.getText());
+			}
+			addResourceBtnLbl.setEnabled(false);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					addResourceBtnLbl.setEnabled(true);
+					if(textBox!=null){
+						isHavingBadWordsInTextbox = value;
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+					}else{
+						isHavingBadWordsInRichText=value;
+						SetStyleForProfanity.SetStyleForProfanityForTextArea(textArea, label, value);
+					}
+					
+				}
+			});
+		}
+	}
+	public boolean hasValidateResource(){
+		String userUrlStr = urlTextBox.getText().trim();
+		boolean isValid;
+		if(userUrlStr.endsWith(".mp3"))
+		{
+			return isValid = false;	
+		}
+		else
+		{
+			return isValid = true;		
+		}
+		
+	}
+	
 }

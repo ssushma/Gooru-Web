@@ -33,21 +33,9 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RefreshCollectionInFolderListHandler.java
- *
- * @description : Event handlers for RefreshCollectionInFolderListHandler
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-
 public interface RefreshCollectionInFolderListHandler extends EventHandler {
 
 	/**

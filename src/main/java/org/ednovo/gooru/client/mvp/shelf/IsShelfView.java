@@ -24,25 +24,19 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf;
 
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
- * 
- * @fileName : IsShelfView.java
+ * @author Search Team
  *
- * @description : This is the interface for ShelfView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsShelfView extends IsViewWithHandlers<ShelfUiHandlers> {
 
@@ -98,4 +92,59 @@ public interface IsShelfView extends IsViewWithHandlers<ShelfUiHandlers> {
 	void setFocusCollectionTitle();
 
 	void hideAllOpenedPopUp();
+	/*
+	 * Set the visibility for Collection Analytics
+	 */
+	void setCollectionAnalyticsVisibility(String shareValue);
+	
+	void setCollabCountByType(String type, int count);
+	
+	void setPersistantTabFlag(String flag);
+	
+	public SimplePanel getFolderListPanel();
+
+	void CollMovedSucessFully(String sourceId,String targetId, String folderName, HashMap<String, String> params);  
+
+	/**
+	 * @function setOnlyNoDataCollection 
+	 * 
+	 * @created_date : Feb 23, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setOnlyNoDataCollection();
+
+	FolderDo getFolderDo(CollectionDo result);
+
+	/**
+	 * @function getLoadingImageLabel 
+	 * 
+	 * @created_date : Feb 27, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : HTMLPanel
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	HTMLPanel getLoadingImageLabel();  
 }

@@ -27,25 +27,19 @@
  */
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : CloseLabel.java
- *
- * @description : This class is used to display the close label.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
-public abstract class CloseLabel extends FlowPanel implements ClickHandler {
+public abstract class CloseLabel extends FlowPanel implements ClickHandler,MessageProperties {
 
 	private Label label;
 
@@ -58,7 +52,7 @@ public abstract class CloseLabel extends FlowPanel implements ClickHandler {
 	public CloseLabel(String text) {
 		removeLabel = new Label();
 		removeLabel.setStyleName(UcCBundle.INSTANCE.css().closeLabelRemove());
-		removeLabel.setText("X ");
+		removeLabel.setText(GL_GRR_Close+" ");
 		label = new Label();
 		label.setStyleName(UcCBundle.INSTANCE.css().closeLabelText());
 		label.setText(text);

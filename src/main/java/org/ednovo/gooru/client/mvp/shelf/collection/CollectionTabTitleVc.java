@@ -37,19 +37,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : CollectionTabTitleVc.java
+ * @author Search Team
  *
- * @description : THis file is used  to  decides to add or remove activeClass style to CollectionTabTitle
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionTabTitleVc extends FocusPanel {
 
@@ -90,8 +79,8 @@ public class CollectionTabTitleVc extends FocusPanel {
 		activeCss = ShelfCBundle.INSTANCE.css().collectionMetaDataTabTitleActive();
 		if (title.equalsIgnoreCase("share")){
 			wrapperFloPanel.getElement().getStyle().setPaddingTop(9.0, Unit.PX);
-			wrapperFloPanel.getElement().getStyle().setPaddingRight(5.4, Unit.PCT);
-			wrapperFloPanel.getElement().getStyle().setPaddingBottom(9.0, Unit.PX);
+/*			wrapperFloPanel.getElement().getStyle().setPaddingRight(5.4, Unit.PCT);
+*/			wrapperFloPanel.getElement().getStyle().setPaddingBottom(9.0, Unit.PX);
 		}
 		
 		if (enable) {
@@ -101,25 +90,7 @@ public class CollectionTabTitleVc extends FocusPanel {
 		}
 		selectedTabTitleVc = this;
 	}
-	/**
-	 * 
-	 * @function setEnabled 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This is to enable the ShelfCBundle css for  wrapperFloPanel if it is enabled.
-	 * 
-	 * 
-	 * @parm(s) : @param enabled
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setEnabled(boolean enabled) {
 		if(enabled) {
 			wrapperFloPanel.setStyleName(ShelfCBundle.INSTANCE.css().collectionMetaDataTabTitle());
@@ -133,32 +104,14 @@ public class CollectionTabTitleVc extends FocusPanel {
 	 */
 	public void setLabel(String label) {
 		title = label;
-		if (title.equalsIgnoreCase("share")){
+		if (title !=null &&  (title.equalsIgnoreCase("share") || title.contains("Collaborator"))){
 			wrapperFloPanel.getElement().getStyle().setPaddingTop(9.0, Unit.PX);
-			wrapperFloPanel.getElement().getStyle().setPaddingRight(5.4, Unit.PCT);
-			wrapperFloPanel.getElement().getStyle().setPaddingBottom(9.0, Unit.PX);
+/*			wrapperFloPanel.getElement().getStyle().setPaddingRight(5.4, Unit.PCT);
+*/			wrapperFloPanel.getElement().getStyle().setPaddingBottom(9.0, Unit.PX);
 		}
 		labelLbl.setText(label);
 	}
-	/**
-	 * 
-	 * @function getWrapperFloPanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns wrapperFloPanel.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : FlowPanel
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public FlowPanel getWrapperFloPanel() {
 		return wrapperFloPanel;
 	}

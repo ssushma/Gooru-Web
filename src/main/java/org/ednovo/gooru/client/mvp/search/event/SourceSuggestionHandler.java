@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.shared.model.search.SearchDo;
@@ -30,19 +32,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SourceSuggestionHandler.java
- *
- * @description : This is used to Get suggest source.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SourceSuggestionHandler extends EventHandler {
 

@@ -31,21 +31,7 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ResoruceCollectionDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ResoruceCollectionDo implements Serializable{
 	
@@ -56,33 +42,21 @@ public class ResoruceCollectionDo implements Serializable{
 	
 	private Integer totalHitCount;
 	
+	public ResoruceCollectionDo(){}
+	
 	private List<ResourceSearchResultDo>  searchResults;
-
-	/** 
-	 * This method is to get the totalHitCount
-	 */
+	
 	public Integer getTotalHitCount() {
 		return totalHitCount;
 	}
-
-	/** 
-	 * This method is to set the totalHitCount
-	 */
 	public void setTotalHitCount(Integer totalHitCount) {
 		this.totalHitCount = totalHitCount;
 	}
-
-	/** 
-	 * This method is to get the searchResults
-	 */
 	public List<ResourceSearchResultDo> getSearchResults() {
 		return searchResults;
 	}
-
-	/** 
-	 * This method is to set the searchResults
-	 */
 	public void setSearchResults(List<ResourceSearchResultDo> searchResults) {
 		this.searchResults = searchResults;
 	}
+	
 }

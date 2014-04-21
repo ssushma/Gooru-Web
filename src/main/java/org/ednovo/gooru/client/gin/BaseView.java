@@ -30,51 +30,29 @@ package org.ednovo.gooru.client.gin;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
 
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.ViewImpl;
+
 /**
+ * @author Search Team
  * 
- * @fileName : BaseView.java
- *
- * @description :  Handles all the UI-related code for a {@link Presenter}.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class BaseView extends ViewImpl implements IsView {
 
 	private Widget widget;
-	/**
-	 * Gets as a widget.
-	 * @return {@link Widget}
-	 */
+
 	@Override
 	public Widget asWidget() {
 		return widget;
 	}
-	/**
-	 * Gets the widget.
-	 * @return {@link Widget}
-	 */
+
 	public Widget getWidget() {
 		return widget;
 	}
-	/**
-	 * Sets the widget.
-	 * @param {@link Widget}
-	 */
+
 	public void setWidget(Widget widget) {
 		this.widget = widget;
 	}
-	/**
-	 * Resets
-	 */
+
 	@Override
 	public void reset() {
 	}
@@ -90,20 +68,7 @@ public class BaseView extends ViewImpl implements IsView {
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * 
-	 * @function getSettings 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method will check the is the user logged in or not.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : FilterSettings
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 */
+	
 	protected FilterSettings getSettings() {
 		return AppClientFactory.getLoggedInUser() != null ? AppClientFactory.getLoggedInUser().getSettings() : null;
 	}

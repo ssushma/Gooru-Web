@@ -42,12 +42,14 @@ import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Clear;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -76,25 +78,27 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-	/**
-	 * 
-	 * @fileName : CreateAccountUc.java
-	 *
-	 * @description : 
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : CreateAccountUc.java
+ * 
+ * @description :
+ * 
+ * 
+ * @version : 1.0
+ * 
+ * @date: Sep 26, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
+ */
 public abstract class CreateAccountUc extends PopupPanel implements MessageProperties{
 
 	@UiField(provided = true)
@@ -128,7 +132,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	Button btnSignUp;
 
 	@UiField
-	HTMLPanel rdTeacher, rdStudent, rdParent, rdOther, panelOther, panelTeacher, panelStudent, panelParent;
+	HTMLPanel rdTeacher, rdStudent, rdParent, rdOther, panelOther, panelTeacher, panelStudent, panelParent,emailFieldContainer;
 
 	@UiField
 	HTMLPanel panelUserNamePopUp, panelPublic, panelEmail, panelPassword;
@@ -157,11 +161,11 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	@UiField
 	Label lblMyParentDontHaveAccount;
 	@UiField
-	Label lblGetCorrectEmail;
+	Label lblGetCorrectEmail,errorLblForUsername,errorLblForFirstName,errorLblForLastName;
 	@UiField
 	Anchor ancParentRegister;
 	@UiField
-	InlineLabel lblAgree;
+	InlineLabel lblAgree,andText;
 
 	ParentRegisterVc parentRegisterVc = null;
 
@@ -184,7 +188,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 
 	/*boolean isEmailAvailable = true;*/
 
-	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = MessageProperties.GL0214;
+	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = GL0214;
 
 	private static final String PWD_PATTERN = "[0-9]|[$@!#*%^/[/]}{()_&-+=.,<>;\\|]";
 
@@ -223,7 +227,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	String account = null;
 
 	boolean isValidEmailId = false;
-	boolean isValidUserName = false;
+	boolean isValidUserName = false,isHavingBadWordsUserName,isHavingBadWordsFirstName,isHavingBadWordsLastName;
 	
 	String privateGooruUId = null;
 
@@ -267,9 +271,15 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		userNameValidUc.setVisible(false);
 		emailValidUc.setVisible(false);
 
+		errorLblForUsername.setVisible(false);
+		errorLblForFirstName.setVisible(false);
+	
+		//errorLblForLastName.getElement().setAttribute("style", "position: absolute;left: 32px;bottom: -6px;");
+		errorLblForLastName.setVisible(false);
+		
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-
+		
 		AppClientFactory.getInjector().getSearchService()
 				.getHomeEndPointUrl(new SimpleAsyncCallback<String>() {
 
@@ -280,6 +290,18 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 				});
 		
 		RootPanel.get().addDomHandler(new DateValueChange(), ClickEvent.getType());
+		txtChooseUsername.addBlurHandler(new CheckProfanityInOnBlur(txtChooseUsername,null, errorLblForUsername, isHavingBadWordsUserName));
+		txtFirstName.addBlurHandler(new CheckProfanityInOnBlur(txtFirstName,null, errorLblForFirstName, isHavingBadWordsFirstName));
+		txtLastName.addBlurHandler(new CheckProfanityInOnBlur(txtLastName, null,errorLblForLastName, isHavingBadWordsLastName));
+		
+		
+		if(AppClientFactory.getPlaceManager().getRequestParameter("type")!=null && AppClientFactory.getPlaceManager().getRequestParameter("email")!=null 
+			&& !AppClientFactory.getPlaceManager().getRequestParameter("email").equals(""))
+				{
+			txtChooseEmail.setText(AppClientFactory.getPlaceManager().getRequestParameter("email"));
+			isValidEmailId = checkUserAvailability(
+					txtChooseEmail.getText(), "emailId");
+		}
 	}
 
 	public abstract void OpenTermsPrivacy();
@@ -293,33 +315,27 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	/**
 	 * 
 	 * @function toggleButtons 
-	 * This method is used to hide pleasewait label and to show signup button.
-	 * @created_date : 26-Dec-2013
 	 * 
-	 * @description :
+	 * @created_date : Dec 10, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
 	 * @parm(s) : 
 	 * 
 	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	public void toggleButtons(){
 		lblPleaseWait.setVisible(false);
 		btnSignUp.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function onClickParentRegister 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to pass parameters to home on clicking of ParentRegister.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 */
+	
 	@UiHandler("ancParentRegister")
 	public void onClickParentRegister(ClickEvent event) {
 		MixpanelUtil.register_as_a_parent();
@@ -369,134 +385,118 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	public void onClickCopyRight(ClickEvent event) {
 		OpenCopyRight();
 	}
-	/**
-	 * 
-	 * @function onClickancPrivacy 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :Added click handler for showing privacy policy popup in footer
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("ancPrivacy")
 	public void onClickancPrivacy(ClickEvent event) {
 		OpenTermsPrivacy();
 	}
-	/**
-	 * 
-	 * @function onClickSignUp 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :This method is to get all the data when signup button is clicked.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 *
-	 */
+
 	@UiHandler("btnSignUp")
 	public void onClickSignUp(ClickEvent event) {
-
-		String userName = txtChooseUsername.getText().trim();
-		String firstName = txtFirstName.getText().trim();
-		String lastName = txtLastName.getText().trim();
-		String emilId = txtChooseEmail.getText().trim();
-		String password = txtChoosePassword.getText().trim();
-		String confirmPassword = txtConfirmPassword.getText().trim();
-		String dob = dateBoxUc.getDateBox().getValue().trim();
-		String parentEmailId = txtParentEmailId.getText().trim();
-
+		final Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", txtChooseUsername.getValue());
 		lblPleaseWait.setVisible(true);
 		btnSignUp.setVisible(false);
-		if (validateUserInput()) {
-			lblPleaseWait.setVisible(true);
-			btnSignUp.setVisible(false);
-			if (!underThirtheen) {
-				MixpanelUtil.sign_up_over_Thrteen();
-				JSONObject userCreate = new JSONObject();
-				JSONObject user = new JSONObject();
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-				user.put(FIRST_NAME, new JSONString(firstName));
-				user.put(LAST_NAME, new JSONString(lastName));
-				user.put(USER_NAME, new JSONString(userName));
-				user.put(EMAIL_ID, new JSONString(emilId));
+			@Override
+			public void onSuccess(Boolean value) {
+				if(value){
+					SetStyleForProfanity.SetStyleForProfanityForTextBox(txtChooseUsername, errorLblForUsername, value);
+				}else{
+					parms.put("text", txtFirstName.getValue());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-				JSONObject organization = new JSONObject();
-				organization.put(ORGANIZATION_CODE, new JSONString(GOORU));
-				user.put("organization", organization);
+						@Override
+						public void onSuccess(Boolean value) {
+							if(value){
+								SetStyleForProfanity.SetStyleForProfanityForTextBox(txtFirstName, errorLblForFirstName, value);
+							}else{
+								parms.put("text", txtLastName.getValue());
+								AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
-				// userCreate.put("gender", new JSONString("Male"));
-				userCreate.put(PASSWORD, new JSONString(password));
-				userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint));
-				userCreate.put("role", new JSONString(selectedRole));
-				userCreate.put("dateOfBirth", new JSONString(dob));
+									@Override
+									public void onSuccess(Boolean value) {
+										if(value){
+											SetStyleForProfanity.SetStyleForProfanityForTextBox(txtLastName, errorLblForLastName, value);
+										}else{
+											String userName = txtChooseUsername.getText().trim();
+											String firstName = txtFirstName.getText().trim();
+											String lastName = txtLastName.getText().trim();
+											String emilId = txtChooseEmail.getText().trim();
+											String password = txtChoosePassword.getText().trim();
+											String confirmPassword = txtConfirmPassword.getText().trim();
+											String dob = dateBoxUc.getDateBox().getValue().trim();
+											String parentEmailId = txtParentEmailId.getText().trim();
+											
+											if (validateUserInput()) {
+												lblPleaseWait.setVisible(true);
+												btnSignUp.setVisible(false);
+												if (!underThirtheen) {
+													MixpanelUtil.sign_up_over_Thrteen();
+													JSONObject userCreate = new JSONObject();
+													JSONObject user = new JSONObject();
 
-				userCreate.put("user", user);
+													user.put(FIRST_NAME, new JSONString(firstName));
+													user.put(LAST_NAME, new JSONString(lastName));
+													user.put(USER_NAME, new JSONString(userName));
+													user.put(EMAIL_ID, new JSONString(emilId));
 
-				JSONObject login = new JSONObject();
-				login.put("username", new JSONString(userName));
-				login.put("password", new JSONString(password));
+													JSONObject organization = new JSONObject();
+													organization.put(ORGANIZATION_CODE, new JSONString(GOORU));
+													user.put("organization", organization);
 
-				CreateUser(userCreate.toString(), login.toString());
-			} else {
-				MixpanelUtil.continue_Child_registration();
-				closePoup();
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("callback", "registerChild");
-				params.put("type", "4");
-				params.put("privateGooruUId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
-				
-				if (dob != null) {
-					params.put("dob", dob);
+													// userCreate.put("gender", new JSONString("Male"));
+													userCreate.put(PASSWORD, new JSONString(password));
+													userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint +"#discover"));
+													userCreate.put("role", new JSONString(selectedRole));
+													userCreate.put("dateOfBirth", new JSONString(dob));
+
+													userCreate.put("user", user);
+
+													JSONObject login = new JSONObject();
+													login.put("username", new JSONString(userName));
+													login.put("password", new JSONString(password));
+
+													CreateUser(userCreate.toString(), login.toString());
+												} else {
+													MixpanelUtil.continue_Child_registration();
+													closePoup();
+													Map<String, String> params = new HashMap<String, String>();
+													params.put("callback", "registerChild");
+													params.put("type", "4");
+													params.put("privateGooruUId", AppClientFactory.isAnonymous() ? privateGooruUId : AppClientFactory.getLoggedInUser().getGooruUId());
+													
+													if (dob != null) {
+														params.put("dob", dob);
+													}
+													if (userName != null) {
+														params.put("userName", userName);
+													}
+													if(parentEmailId!=null){
+														params.put("emailId",parentEmailId);
+													}
+													AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
+												}
+											} else {
+												toggleButtons();
+											}
+										}
+									}
+								});
+							}
+						}
+					});
 				}
-				if (userName != null) {
-					params.put("userName", userName);
-				}
-				if(parentEmailId!=null){
-					params.put("emailId",parentEmailId);
-				}
-				AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 			}
-		} else {
-			toggleButtons();
-		}
+		});
 	}
-	/**
-	 * 
-	 * @function validateUserInput 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to validate the user input data.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public boolean validateUserInput() {
 		boolean isValid = true;
 		lblPleaseWait.setVisible(true);
 		btnSignUp.setVisible(false);
+
 
 		String userName = txtChooseUsername.getText().trim();
 		String dob = dateBoxUc.getDateBox().getValue().trim();
@@ -579,7 +579,9 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			if (firstName.length() > 20) {
 				txtFirstName.getElement().addClassName(res.css().errorMsgDisplay());
 				firstNameValidUc.setText(StringUtil.generateMessage(GL0072, "First name", "<=20"));
+				firstNameValidUc.getElement().removeAttribute("style");
 				firstNameValidUc.setVisible(true);
+	
 				isValid = false;
 			}
 			
@@ -591,7 +593,9 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			if (lastName.length() > 20) {
 				lastNameValidUc.getElement().addClassName(res.css().errorMsgDisplay());
 				lastNameValidUc.setText(StringUtil.generateMessage(GL0072, "Last name", "<= 20"));
+				lastNameValidUc.getElement().removeAttribute("style");
 				lastNameValidUc.setVisible(true);
+
 				isValid = false;
 			}
 			
@@ -616,7 +620,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			if (!password.equalsIgnoreCase(confirmPassword)) {
 				txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 				txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
-				passwordValidUc.setText(MessageProperties.GL0446);
+				passwordValidUc.setText(GL0446);
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
@@ -646,7 +650,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			if (!reg.test(password) && password.length() >= 5
 					&& password.length() <= 14) {
 				passwordValidUc.setText(StringUtil.generateMessage(
-						MessageProperties.GL0073, "Password"));
+						GL0073, "Password"));
 				passwordValidUc.setVisible(true);
 				isValid = false;
 			}
@@ -659,7 +663,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 
 			if (parentEmailId.equalsIgnoreCase("") || parentEmailId == null) {
 				txtParentEmailId.addStyleName(res.css().errorMsgDisplay());
-				parentEmailValidUc.setText(MessageProperties.GL0463);
+				parentEmailValidUc.setText(GL0463);
 
 				isValid = false;
 			}
@@ -678,7 +682,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 						// Found user is not registered user in gooru
 						txtParentEmailId.addStyleName(res.css()
 								.errorMsgDisplay());
-						parentEmailValidUc.setText(MessageProperties.GL0465);
+						parentEmailValidUc.setText(GL0465);
 						parentEmailValidUc.getElement().getStyle().setWidth(340, Unit.PX);
 						parentEmailValidUc.getElement().getStyle().setMarginLeft(0, Unit.PX);
 						parentEmailValidUc.setVisible(true);
@@ -688,7 +692,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 				} else {
 					// lblGetCorrectEmail.setVisible(false);
 					txtParentEmailId.addStyleName(res.css().errorMsgDisplay());
-					parentEmailValidUc.setText(MessageProperties.GL0464);
+					parentEmailValidUc.setText(GL0464);
 					isValid = false;
 				}
 			}
@@ -707,59 +711,41 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		}
 		return isValid;
 	}
-    /**
-     * 
-     * @function setUiAndIds 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to set the data in popup by hetting the data from message properties file.
-     * 
-     * 
-     * @parm(s) : 
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	private void setUiAndIds() {
 		if (account != null) {
-			lblPleaseFill.setText(MessageProperties.GL0471);
+			lblPleaseFill.setText(GL0471);
 			lblPleaseFill.getElement().getStyle().setColor("#000000");
 			lblPleaseFill.getElement().getStyle().setFontSize(18, Unit.PX);
 		} else {
-			lblPleaseFill.setText(MessageProperties.GL0409);
+			lblPleaseFill.setText(GL0409);
 			lblPleaseFill.getElement().getStyle().clearColor();
 			lblPleaseFill.getElement().getStyle().clearFontSize();
 		}
-		lblPickWisely.setText(MessageProperties.GL0410);
-		lblQuestionMark.setText(MessageProperties.GL_SPL_QUESTION);
-		lblWhyEnterBirthday.setText(MessageProperties.GL0411
-				+ MessageProperties.GL_SPL_QUESTION);
-		lblWhyEnterBirthdayDesc.setText(MessageProperties.GL0412);
-		lblNameTooltipContent.setText(MessageProperties.GL0413);
-		lblEmailTooltipContent.setText(MessageProperties.GL0414);
-		lblPasswordTooltipContent.setText(MessageProperties.GL0415);
-		lblPleaseWait.setText(MessageProperties.GL0339);
+		lblPickWisely.setText(GL0410);
+		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblWhyEnterBirthday.setText(GL0411
+				+GL_SPL_QUESTION);
+		lblWhyEnterBirthdayDesc.setText(GL0412);
+		lblNameTooltipContent.setText(GL0413);
+		lblEmailTooltipContent.setText(GL0414);
+		lblPasswordTooltipContent.setText(GL0415);
+		lblPleaseWait.setText(GL0339);
 
-		lblTeacher.setText(MessageProperties.GL0416);
-		lblStudent.setText(MessageProperties.GL0417);
-		lblParent.setText(MessageProperties.GL0418);
-		lblOther.setText(MessageProperties.GL0419);
-		lblAgree.setText(MessageProperties.GL0420);
+		lblTeacher.setText(GL0416);
+		lblStudent.setText(GL0417);
+		lblParent.setText(GL0418);
+		lblOther.setText(GL0419);
+		lblAgree.setText(GL0420);
 
-		txtChooseUsername.setPlaceholder(MessageProperties.GL0423);
+		txtChooseUsername.setPlaceholder(GL0423);
 		txtChooseUsername.setMaxLength(20);
-		txtFirstName.setPlaceholder(MessageProperties.GL0424);
-		txtLastName.setPlaceholder(MessageProperties.GL0425);
-		txtChooseEmail.setPlaceholder(MessageProperties.GL0426);
-		txtChoosePassword.setPlaceholder(MessageProperties.GL0204);
+		txtFirstName.setPlaceholder(GL0424);
+		txtLastName.setPlaceholder(GL0425);
+		txtChooseEmail.setPlaceholder(GL0426);
+		txtChoosePassword.setPlaceholder(GL0204);
 		txtChoosePassword.setMaxLength(14);
-		txtConfirmPassword.setPlaceholder(MessageProperties.GL0427);
+		txtConfirmPassword.setPlaceholder(GL0427);
 		txtConfirmPassword.setMaxLength(14);
 
 		txtChooseUsername.addKeyUpHandler(new OnKeyUpHandler());
@@ -801,25 +787,25 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		panelPassword.setVisible(false);
 		lblPleaseWait.setVisible(false);
 
-		ancCopyRight.setText(MessageProperties.GL0421 + ",");
-		ancTermsAndPrivacy.setText(MessageProperties.GL0422);
-		ancPrivacy.setText(MessageProperties.GL0452);
-		btnSignUp.setText(MessageProperties.GL0186);
+		ancCopyRight.setText(GL0421 + ",");
+		ancTermsAndPrivacy.setText(GL0422);
+		ancPrivacy.setText(GL0452);
+		btnSignUp.setText(GL0186);
 		btnSignUp.getElement().setId("btnSignUp");
 		btnSignUp.setEnabled(false);
 		btnSignUp.getElement().addClassName("disabled");
 
-		lblNeedParentsAccount.setText(MessageProperties.GL0455);
-		lblMyParentHasGooruAccount.setText(MessageProperties.GL0456);
-		txtParentEmailId.setPlaceholder(MessageProperties.GL0457);
-		lblOr.setText(MessageProperties.GL0466);
-		lblMyParentDontHaveAccount.setText(MessageProperties.GL0458);
-		ancParentRegister.setText(MessageProperties.GL0459);
+		lblNeedParentsAccount.setText(GL0455);
+		lblMyParentHasGooruAccount.setText(GL0456);
+		txtParentEmailId.setPlaceholder(GL0457);
+		lblOr.setText(GL0466);
+		lblMyParentDontHaveAccount.setText(GL0458);
+		ancParentRegister.setText(GL0459);
 		lblQuestionMarkNeedParentAccount
-				.setText(MessageProperties.GL_SPL_QUESTION);
-		lblWhyNeedParentDesc.setText(MessageProperties.GL0461);
-		lblWhyNeedParent.setText(MessageProperties.GL0462
-				+ MessageProperties.GL_SPL_QUESTION);
+				.setText(GL_SPL_QUESTION);
+		lblWhyNeedParentDesc.setText(GL0461);
+		lblWhyNeedParent.setText(GL0462
+				+ GL_SPL_QUESTION);
 		tootltipContainer.getElement().setAttribute("style", "left:311px");
 
 		panelBelowThirteen.setVisible(false);
@@ -829,8 +815,9 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		lblGetCorrectEmail.setVisible(false);
 
 		dateValidationUc.setText(StringUtil.generateMessage(
-				MessageProperties.GL0082, BIRTH_DAY));
-
+			GL0082, BIRTH_DAY));
+		lblSelectRole.setText(GL1146);
+		andText.setText(GL_GRR_AND);
 		rbTeacher = new RadioButton("roleOption", "");
 		rbStudent = new RadioButton("roleOption", "");
 		rbParent = new RadioButton("roleOption", "");
@@ -923,21 +910,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		}
 
 	}
-	  /**
-	   * 
-	   * @fileName : CreateAccountUc.java
-	   *
-	   * @description : This method is used to show panel's based on username/DOB/Password on Mouse Over
-	   *
-	   *
-	   * @version : 1.0
-	   *
-	   * @date: 26-Dec-2013
-	   *
-	   * @Author : Gooru Team
-	   *
-	   * @Reviewer: Gooru Team
-	   */
+
 	private class OnMouseOver implements MouseOverHandler {
 
 		@Override
@@ -957,21 +930,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			}
 		}
 	}
-    /**
-     * 
-     * @fileName : CreateAccountUc.java
-     *
-     * @description : This method is used to hide panel's based on  on Mouse Out handler.
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class OnMouseOut implements MouseOutHandler {
 
 		@Override
@@ -983,21 +942,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		}
 
 	}
-    /**
-     * 
-     * @fileName : CreateAccountUc.java
-     *
-     * @description : This method is used to display validation if we enter the wrong data on Blur handler
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class OnBlurHandler implements BlurHandler {
 
 		@Override
@@ -1011,58 +956,70 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 				boolean isValidFrom = txtChooseEmail.getText().matches(EMAIL_REGEX);
 				if (isValidFrom) {
 					isValidEmailId = checkUserAvailability(
-							txtChooseEmail.getText(), "byEmailid");
+							txtChooseEmail.getText(), "emailId");
 					emailValidUc.setVisible(false);
 					txtChooseEmail.removeStyleName(res.css().errorMsgDisplay());
 				} else {
 					txtChooseEmail.addStyleName(res.css().errorMsgDisplay());
 					emailValidUc.addStyleName(res.css().errorLbl());
-					emailValidUc.setText(MessageProperties.GL0464);
+					emailValidUc.setText(GL0464);
 					emailValidUc.setVisible(true);
 				}
 			} else if (event.getSource() == txtChooseUsername
-					&& txtChooseUsername.getText() != null
+					&& txtChooseUsername.getText().trim() != null
 					&& !txtChooseUsername.getText().equalsIgnoreCase("")) {
-					if (txtChooseUsername.getText().length() <=4 || txtChooseUsername.getText().length() >=20){
-						userNameValidUc.addStyleName(res.css().errorLbl());
-						userNameValidUc.setText(MessageProperties.GL0473);
-						userNameValidUc.setVisible(true);
-						isValidUserName = false;
-					}
-					else{
-						isValidUserName = checkUserAvailability(
-							txtChooseUsername.getText(), "byUsername");
-					}
-					Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
-					if(!userNameValidate){
-						userNameValidUc.addStyleName(res.css().errorLbl());
-						userNameValidUc.setText(MessageProperties.GL0475);
-						userNameValidUc.setVisible(true);
-						isValidUserName = false;	
-					}
+					/*
+					//Check for Bad Words
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", txtChooseUsername.getText().trim());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+		
+						@Override
+						public void onSuccess(Boolean value) {
+							boolean isHavingBadWords = value;
+							if (value){
+								txtChooseUsername.getElement().getStyle().setBorderColor("orange");
+								userNameValidUc.setText(GL0554);
+								userNameValidUc.setVisible(true);
+								isValidUserName = false;
+							}else{
+								txtChooseUsername.getElement().getStyle().clearBackgroundColor();
+								txtChooseUsername.getElement().getStyle().setBorderColor("#ddd");
+								userNameValidUc.setVisible(false);*/
+								
+								/// Words are clear then continue the next steps
+								
+								if (txtChooseUsername.getText().length() < 4 || txtChooseUsername.getText().length() > 20){
+									userNameValidUc.addStyleName(res.css().errorLbl());
+									userNameValidUc.setText(GL0473);
+									userNameValidUc.setVisible(true);
+									isValidUserName = false;
+								}
+								else{
+									isValidUserName = checkUserAvailability(
+										txtChooseUsername.getText(), "username");
+								}
+								Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
+								if(!userNameValidate){
+									userNameValidUc.addStyleName(res.css().errorLbl());
+									userNameValidUc.setText(GL0475);
+									userNameValidUc.setVisible(true);
+									isValidUserName = false;	
+								}
+								
+								/*}
+						}
+					});*/
+					
 			} else if (event.getSource() == txtParentEmailId
 					&& txtParentEmailId.getText() != null
 					&& !txtParentEmailId.getText().equalsIgnoreCase("")) {
 				isValidEmailId = checkUserRegisteredWithGooru(
-						txtParentEmailId.getText(), "byEmailid");
+						txtParentEmailId.getText(), "emailId");
 			}
 		}
 	}
-    /**
-     * 
-     * @fileName : CreateAccountUc.java
-     *
-     * @description : This method is used to display validation if we enter the wrong data on key up handler
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
@@ -1070,6 +1027,8 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			passwordValidUc.setVisible(false);
 			if (event.getSource() == txtChooseUsername) {
 				txtChooseUsername.removeStyleName(res.css().errorMsgDisplay());
+				txtChooseUsername.getElement().getStyle().clearBackgroundColor();
+				txtChooseUsername.getElement().getStyle().setBorderColor("#ddd");
 				userNameValidUc.setText("");
 				userNameValidUc.setVisible(false);
 			} else if (event.getSource() == txtFirstName) {
@@ -1105,25 +1064,25 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 					@Override
 					public void onSuccess(UserDo result) {
 						isAvailable = result.isAvailability();
-						if (type.equalsIgnoreCase("byEmailid") && isAvailable) {
+						if (type.equalsIgnoreCase("emailId") && isAvailable) {
 							privateGooruUId = result.getGooruUId();
 							isValidEmailId = result.isAvailability();
 							txtChooseEmail.addStyleName(res.css()
 									.errorMsgDisplay());
 							emailValidUc.addStyleName(res.css().errorLbl());
-							emailValidUc.setText(MessageProperties.GL0447);
+							emailValidUc.setText(GL0447);
 							emailValidUc.setVisible(true);
-						}else if (type.equalsIgnoreCase("byEmailid") && !isAvailable){
+						}else if (type.equalsIgnoreCase("emailId") && !isAvailable){
 							isValidEmailId = result.isAvailability();
 						}
-						if (type.equalsIgnoreCase("byUsername") && isAvailable) {
+						if (type.equalsIgnoreCase("username") && isAvailable) {
 							isValidUserName = result.isAvailability();
 							txtChooseUsername.addStyleName(res.css()
 									.errorMsgDisplay());
 							userNameValidUc.addStyleName(res.css().errorLbl());
-							userNameValidUc.setText(MessageProperties.GL0444);
+							userNameValidUc.setText(GL0444);
 							userNameValidUc.setVisible(true);
-						}else if (type.equalsIgnoreCase("byUsername") && !isAvailable) {
+						}else if (type.equalsIgnoreCase("username") && !isAvailable) {
 							isValidUserName = result.isAvailability();
 						}
 						if (isValidEmailId==false && isValidUserName==false){
@@ -1177,7 +1136,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 							txtParentEmailId.addStyleName(res.css()
 									.errorMsgDisplay());
 							parentEmailValidUc
-									.setText(MessageProperties.GL0465);
+									.setText(GL0465);
 							parentEmailValidUc.setVisible(true);
 							lblGetCorrectEmail.setVisible(false);
 						}
@@ -1185,21 +1144,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 				});
 			return isValidEmailId;
 	}
-    /**
-     * 
-     * @fileName : CreateAccountUc.java
-     *
-     * @description : This method is used to get age on DOB calucation and if age is lessthan 13 it will enable  panelBelowThirteen and disable panelAboveThirteen. 
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class DateValueChange implements ClickHandler{
 
 		@Override
@@ -1217,7 +1162,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 					underThirtheen = true;
 					panelBelowThirteen.setVisible(true);
 					if (panelAboveThirteen.isVisible()) {
-						btnSignUp.setText(MessageProperties.GL0460);
+						btnSignUp.setText(GL0460);
 					}
 					panelAboveThirteen.setVisible(false);
 				}
@@ -1227,21 +1172,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : CreateAccountUc.java
-	 *
-	 * @description : This method is used to hide the date validations on focus.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -1255,21 +1186,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 
 		}
 	}
-    /**
-     * 
-     * @fileName : CreateAccountUc.java
-     *
-     * @description : Based on age it will dispaly Date validations
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1282,7 +1199,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 						int age = getAge(date);
 						if (age < 13) {
 							if (account != null && !underThirtheen){
-								dateValidationUc.setText(MessageProperties.GL0503);
+								dateValidationUc.setText(GL0503);
 								dateValidationUc.setVisible(true);
 								isValidUserName = false;
 							}else{
@@ -1292,7 +1209,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 								underThirtheen = true;
 								panelBelowThirteen.setVisible(true);
 								if (panelAboveThirteen.isVisible()) {
-									btnSignUp.setText(MessageProperties.GL0460);
+									btnSignUp.setText(GL0460);
 								}
 								panelAboveThirteen.setVisible(false);
 							}
@@ -1304,21 +1221,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : CreateAccountUc.java
-	 *
-	 * @description : Based on age it will dispaly Date validations on mose blur handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -1331,7 +1234,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 				int age = getAge(date);
 				if (age < 13) {
 					if (account != null && !underThirtheen){
-						dateValidationUc.setText(MessageProperties.GL0503);
+						dateValidationUc.setText(GL0503);
 						dateValidationUc.setVisible(true);
 						isValidUserName = false;
 					}else{
@@ -1341,7 +1244,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 						underThirtheen = true;
 						panelBelowThirteen.setVisible(true);
 						if (panelAboveThirteen.isVisible()) {
-							btnSignUp.setText(MessageProperties.GL0460);
+							btnSignUp.setText(GL0460);
 						}
 						panelAboveThirteen.setVisible(false);
 					}
@@ -1349,26 +1252,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			}
 		}
 	}
-    /**
-     * 
-     * @function getAge 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to calculate age on DOB.
-     * 
-     * 
-     * @parm(s) : @param birthDate
-     * @parm(s) : @return
-     * 
-     * @return : int
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	private int getAge(Date birthDate) {
 		if (birthDate != null) {
 			long ageInMillis = new Date().getTime() - birthDate.getTime();
@@ -1435,12 +1319,12 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			params.put(GOORU_UID, user.getGooruUId());
 			params.put(ACCOUNT_TYPE, accountType);
 			sendConfirmationMail(params);
-			new AlertContentUc(MessageProperties.GL0065,
-					MessageProperties.GL0092);
+			new AlertContentUc(GL0065,
+					GL0092);
 
 		} else if (user.isAvailability() && user.getConfirmStatus() == 1) {
 			if (!accountType.equalsIgnoreCase(PARENT)) {
-				new AlertContentUc(MessageProperties.GL0065,
+				new AlertContentUc(GL0065,
 						LOGIN_YOUR_EXISTING_ACCOUNT);
 			} else {
 				Map<String, String> params = new HashMap<String, String>();
@@ -1479,4 +1363,66 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	}
 
 	public abstract void closePoup();
+	
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private RichTextArea richTextArea;
+		private boolean isHavingBadWords;
+		public CheckProfanityInOnBlur(TextBox textBox,RichTextArea richTextArea,Label label,boolean isHavingBadWords){
+			this.textBox=textBox;
+			this.label=label;
+			this.richTextArea=richTextArea;
+			this.isHavingBadWords=isHavingBadWords;
+		
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+
+			
+			Map<String, String> parms = new HashMap<String, String>();
+			if(textBox!=null){
+				parms.put("text", textBox.getValue());
+			}else{
+				parms.put("text", richTextArea.getText());
+			}
+			btnSignUp.setEnabled(false);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					btnSignUp.setEnabled(true);
+					SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+					if(textBox!=null){
+						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
+						label.getElement().getStyle().setWidth(87, Unit.PCT);
+						errorLblForFirstName.getElement().getStyle().setTop(-3, Unit.PX);
+					}
+					
+					if(userNameValidUc.isVisible() && errorLblForUsername.isVisible())
+					{
+						userNameValidUc.setVisible(false);
+						label.getElement().getStyle().clearPosition();
+					}
+					else
+					{
+						label.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					}
+			
+					if(errorLblForLastName.isVisible()|| errorLblForFirstName.isVisible())
+					{
+						emailFieldContainer.getElement().setAttribute("style", "margin-top:30px;");
+					}			 
+					else
+					{
+						emailFieldContainer.getElement().removeAttribute("style");
+					}
+					if(errorLblForUsername.isVisible()){
+						errorLblForUsername.getElement().getStyle().setTop(-8, Unit.PX);
+						errorLblForUsername.getElement().getStyle().setLeft(16,  Unit.PX);
+					}
+				}
+			});
+		}
+	}
 }

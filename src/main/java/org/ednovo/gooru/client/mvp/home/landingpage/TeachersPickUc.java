@@ -77,9 +77,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 
 	interface TeachersPickUcUiBinder extends UiBinder<Widget, TeachersPickUc> {
 	}
-	/**
-	 * Constructor
-	 */
+
 	public TeachersPickUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		mathTab.addStyleName(landingPageStyle.courseTabsLiActive());
@@ -89,17 +87,20 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 		socialContent = new HTMLPanel("");
 		languageContent = new HTMLPanel("");
 		loadingImage = new HTMLPanel("");
+		mathTab.getElement().setInnerText(GL1001);
+		scienceTab.getElement().setInnerText(GL1000);
+		socialTab.getElement().setInnerText(GL1002);
+		languageTab.getElement().setInnerText(GL1003);
+		featuredTab.getElement().setInnerText(GL1009);
 		loadingImage.setStyleName(landingPageStyle.loadingImage());
 		featuredContainer.add(loadingImage);
-		teachersPickPanelLabel = new Label(MessageProperties.GL0198);
+		teachersPickPanelLabel = new Label(GL0198);
 		teachersPickPanel.add(teachersPickPanelLabel);//new DownToolTipWidgetUc(teachersPickPanelLabel, TEACHERS_PICK_DESCRIPTION));
 		getTeacherPickCollections(MATH_TAB);
 		AppClientFactory.getEventBus().addHandler(SetTexasAccountEvent.TYPE,setTexasAccountHandler);
 		panelTeachersPick.getElement().setId("panelTeachersPick");
 	}
-	/**
-	 * This will insert particular FEATURED_TAB data into featuredContent based on landingPageStyles.
-	 */
+	
 	SetTexasAccountHandler setTexasAccountHandler=new SetTexasAccountHandler(){
 		@Override
 		public void setTexasAccountEvent(String loggedInStatus) {
@@ -124,25 +125,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			}
 		}
 	};
-	/**
-	 * 
-	 * @function getTeacherPickCollections 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Based on filterTab it will set the data into TeacherPickCollections.
-	 * 
-	 * 
-	 * @parm(s) : @param filterTab
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void getTeacherPickCollections(final String filterTab) {
 		loadingImage.setVisible(true);
 		AppClientFactory.getInjector().getHomeService().getFeaturedThemeCollection(filterTab, new SimpleAsyncCallback<List<FeaturedCollectionContentDo>>() {
@@ -152,9 +135,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			}
 		});
 	}
-	/**
-	 * This will insert particular data into featuredContent based on filterTab.
-	 */
+	
 	private void setTeacherPickCollections(final List<FeaturedCollectionContentDo> collectionList, String filterTab) {
 		if(filterTab.equalsIgnoreCase(FEATURED_TAB)) {
 			for(int i = 0; i < collectionList.size(); i++) {
@@ -199,25 +180,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 		}
 		loadingImage.setVisible(false);
 	}
-	/**
-	 * 
-	 * @function displayContent 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will dispaly content based on filter tab.
-	 * 
-	 * 
-	 * @parm(s) : @param filterTab
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void displayContent(String filterTab) {
 		if(filterTab.equalsIgnoreCase(FEATURED_TAB)) {
 			featuredContent.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -251,25 +214,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			languageContent.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
-	/**
-	 * 
-	 * @function onClickFeaturedTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will enable the css styles of all the tabs(featuredTab,mathTab,scienceTab,loggedStatus)
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("featuredTab")
 	void onClickFeaturedTab(ClickEvent event) {
 		if(!featuredTab.getStyleName().contains(landingPageStyle.courseTabsLiActive())) {
@@ -285,25 +230,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			languageTab.removeStyleName(landingPageStyle.courseTabsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickFeaturedTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will enable the css styles of mathTab
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("mathTab")
 	void onClickMathTab(ClickEvent event) {
 		if(!mathTab.getStyleName().contains(landingPageStyle.courseTabsLiActive())) {
@@ -319,25 +246,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			languageTab.removeStyleName(landingPageStyle.courseTabsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickFeaturedTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will enable the css styles of scienceTab
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("scienceTab")
 	void onClickScienceTab(ClickEvent event) {
 		if(!scienceTab.getStyleName().contains(landingPageStyle.courseTabsLiActive())) {
@@ -353,25 +262,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			languageTab.removeStyleName(landingPageStyle.courseTabsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickFeaturedTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will enable the css styles of socialTab
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("socialTab")
 	void onClickSocialTab(ClickEvent event) {
 		if(!socialTab.getStyleName().contains(landingPageStyle.courseTabsLiActive())) {
@@ -387,25 +278,7 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 			languageTab.removeStyleName(landingPageStyle.courseTabsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickFeaturedTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will enable the css styles of languageTab
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("languageTab")
 	void onClickLanguageTab(ClickEvent event) {
 		if(!languageTab.getStyleName().contains(landingPageStyle.courseTabsLiActive())) {

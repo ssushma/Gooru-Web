@@ -30,19 +30,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-/**
- * @fileName : DeSerializer.java
- *
- * @description : This is the deserializer class.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public abstract class DeSerializer {
 	
 	private static String INTEGER_EQ = ".*\\d.*";

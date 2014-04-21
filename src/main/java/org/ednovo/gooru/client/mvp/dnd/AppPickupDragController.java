@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.mvp.dnd;
 import com.allen_sauer.gwt.dnd.client.VetoDragException;
 import com.allen_sauer.gwt.dnd.client.util.DragClientBundle;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+
 /**
- * @fileName : AppPickupDragController.java
- *
- * @description : This class will handle the pick drag controller.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AppPickupDragController extends PickupDragController {
 
@@ -52,24 +44,18 @@ public class AppPickupDragController extends PickupDragController {
 	public AppPickupDragController(AbsolutePanel boundaryPanel, boolean allowDroppingOnBoundaryPanel) {
 		super(boundaryPanel, allowDroppingOnBoundaryPanel);
 	}
-	/**
-	 * This method will hit when the drag event is fired.
-	 */
+
 	@Override
 	public void dragStart() {
 		super.dragStart();
 		context.draggable.removeStyleName(DragClientBundle.INSTANCE.css().dragging());
 	}
-	/**
-	 * This method will give the preview of the drag.
-	 */
+
 	@Override
 	public void previewDragStart() throws VetoDragException {
 		super.previewDragStart();
 	}
-	/**
-	 * This method will fire when the drag ended.
-	 */
+
 	@Override
 	public void dragEnd() {
 		super.dragEnd();

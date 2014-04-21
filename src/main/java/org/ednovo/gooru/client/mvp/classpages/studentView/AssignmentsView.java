@@ -52,18 +52,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AssignmentsView.java
- *
- * @description : This is view of the Assignment.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author
+ * 
  */
 public class AssignmentsView extends
 		ChildView<AssignmentsPresenter> implements
@@ -143,9 +135,10 @@ public class AssignmentsView extends
 		assignmentId = assignmentsSearchDo.getTask().getGooruOid();
 		titleLb.setText(taskTitle);
 		descLbl.setText(description);
+		expandLbl.setText(GL0241);
 		expandLbl.getElement().setId("lblexpand");
 		if (dueDate!=null && !dueDate.equalsIgnoreCase("")){
-			dueLbl.setText("Due Date: "+dueDate);
+			dueLbl.setText(GL0238+GL_SPL_SEMICOLON+" "+dueDate);
 		}else{
 			dueLbl.setText(" ");
 		}
@@ -167,9 +160,7 @@ public class AssignmentsView extends
 		
 		
 	}
-	/**
-	 * This inner class is used to handle the mouse over.
-	 */
+		
 	private class OnMouseOver implements MouseOverHandler{
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -179,9 +170,7 @@ public class AssignmentsView extends
 		}
 		
 	}
-	/**
-	 * This inner class is used to handle the mouse out.
-	 */
+	
 	private class OnMouseOut implements MouseOutHandler{
 		
 		@Override
@@ -189,9 +178,7 @@ public class AssignmentsView extends
 			expandLbl.setVisible(false);
 		}
 	}
-	/**
-	 * This inner class is used to handle the click event when clicked on the titile.
-	 */
+	
 	private class OnTitleClick implements ClickHandler{
 
 		@Override
@@ -210,70 +197,53 @@ public class AssignmentsView extends
 		}
 		
 	}
-	/**
-	 * This method is used to insert the Assignment .
-	 */
 	public void insertCollectionToAssignment(ResourceDo resourceDo){
-		CollectionsView cv = new CollectionsView(resourceDo, false, assignmentId);
+		CollectionsView cv = new CollectionsView();
+		
 		colletionPanel.add(cv);
+
 	}
 	
-	/**
-	 * This method is used to when empty assignments found.
-	 */
+	
 	@Override
 	public void emptyAssignment() {
 		
 		if((descLbl.getText()==null || descLbl.getText().equalsIgnoreCase(""))){
-			emptyAssignmentLbl.setText("This assignment is empty.");
+			emptyAssignmentLbl.setText(GL1129);
 		}
 	}
 
-	/**
-	 * This will handle the Drag handler.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will check the IsDraggableMirage.
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will handle the on drag blur.
-	 */
+
 	@Override
 	public void onDragBlur() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will used to get the drag id.
-	 */
+
 	@Override
 	public String getDragId() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will used to get the drag type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will used to get the drag top correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will used to get the drag left correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		throw new RuntimeException("Not implemented");

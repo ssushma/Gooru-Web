@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -33,19 +34,23 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * This file is related to AppPopUp
+ * @author Search Team
+ *
  */
-public class AleartPopupVc extends Composite {
+public class AleartPopupVc extends Composite implements MessageProperties {
 
 	private AppPopUp appPopUp;
 
 	@UiField
 	BlueButtonUc okBtnUc;
 	
-	private static final String IS_COLLECTIONS = "Ooops...";
+	@UiField Label storeResourcesText;
+	
+	private static final String IS_COLLECTIONS = GL1089+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
 
 	private static AleartPopupVcUiBinder uiBinder = GWT.create(AleartPopupVcUiBinder.class);
 
@@ -62,6 +67,8 @@ public class AleartPopupVc extends Composite {
 		appPopUp.setContent(IS_COLLECTIONS, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
+		okBtnUc.setText(GL0190);
+		storeResourcesText.setText(GL1237);
 	}
 
 	/**

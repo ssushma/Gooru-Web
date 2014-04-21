@@ -30,13 +30,10 @@ package org.ednovo.gooru.client.effects;
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.dom.client.Element;
+
 /**
- * @fileName : FadeInAndOut.java
- * @description : This file is used to apply fade in and fade out effects to elements.
- * @version : 1.0
- * @date: 26-Dec-2013
- * @Author : Gooru Team
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class FadeInAndOut extends Animation {
 
@@ -54,6 +51,7 @@ public class FadeInAndOut extends Animation {
 	public FadeInAndOut(Element element, int duration) {
 		this(element, duration, 0);
 	}
+	
 	/**
 	 * Class constructor
 	 * @param element instance of {@link Element}
@@ -63,6 +61,8 @@ public class FadeInAndOut extends Animation {
 		this(element, duration, 0);
 		this.fadeIn=isFadeIn;
 	}
+
+
 	/**
 	 * Class constructor
 	 * @param element Instance of {@link Element}
@@ -75,25 +75,17 @@ public class FadeInAndOut extends Animation {
 		this.sleepInBeween = sleepInBeween;
 		fade(duration, Duration.currentTimeMillis());
 	}
-	/**
-	 * This method is called when the animation should be updated. The value of progress is between 0.0 and 1.
-	 * @param progress
-	 */
+
 	@Override
 	protected void onUpdate(double progress) {
 		element.getStyle().setOpacity((fadeIn ? 0.0 : 1.0) - (progress * opacityIncrement));
 	}
-	/**
-	 * By using this  interpolate(double) method you can provide a wider range of values
-	 * @param progress
-	 */
+
 	@Override
 	protected double interpolate(double progress) {
 		return super.interpolate(progress);
 	}
-	/**
-	 *This method is Called immediately after the animation completes.
-	 */
+
 	@Override
 	protected void onComplete() {
 		super.onComplete();
@@ -105,14 +97,7 @@ public class FadeInAndOut extends Animation {
 			element.getStyle().setOpacity(0.0);
 		}
 	}
-	/**
-	 * 
-	 * @function fade 
-	 * @description : This method is used to change  the opacities.
-	 * @parm(s) : @param duration
-	 * @parm(s) : @param startTime
-	 * @return : void
-	 */
+
 	protected void fade(int duration, double startTime) {
 		opacityIncrement = (fadeIn ? 0.0 : 1.0) - (fadeIn ? 1.0 : 0.0);
 		run(duration, startTime);

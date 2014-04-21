@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.mvp.home.event;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : SetTexasPlaceHolderHandler.java
- *
- * @description : Handler for {@link SetTexasPlaceHolderEvent}.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface SetTexasPlaceHolderHandler extends EventHandler, BaseUiHandlers {
 

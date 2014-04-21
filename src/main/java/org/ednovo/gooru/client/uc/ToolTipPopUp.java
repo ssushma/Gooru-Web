@@ -28,26 +28,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @fileName : ToolTipPopUp.java
- *
- * @description : This class is used to display the tooltip popup.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class ToolTipPopUp extends PopupPanel {
 
 	private static ToolTipPopUpUiBinder uiBinder = GWT
@@ -58,12 +46,11 @@ public class ToolTipPopUp extends PopupPanel {
 	
 	HTML text = new HTML();
 	
-	@UiField
-	HTMLPanel popupArrow;
+	@UiField HTMLPanel popupArrow,downPopupArrow;
 	
 	@UiField
 	SimplePanel contentPanel;
-
+	
 
 	@UiConstructor
 	public ToolTipPopUp(String description, int leftPos, int rightPos) { 
@@ -73,12 +60,7 @@ public class ToolTipPopUp extends PopupPanel {
 		setPopupPosition(leftPos, rightPos);
 	}
 	
-	/**
-	 * Class construcot.
-	 * @param description
-	 * @param leftPos
-	 * @param rightPos
-	 */
+	
 
 	public ToolTipPopUp(Widget widget, int leftPos, int rightPos) {
 		setWidget(uiBinder.createAndBindUi(this));

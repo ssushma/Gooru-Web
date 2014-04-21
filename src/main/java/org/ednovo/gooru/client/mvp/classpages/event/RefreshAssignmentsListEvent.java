@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.classpages.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Classpages Team
  * 
- * @fileName : RefreshAssignmentsListEvent.java
- *
- * @description : This file is used to refresh AssignmentsListEvents.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RefreshAssignmentsListEvent extends GwtEvent<RefreshAssignmentsListEventHandler> {
 
@@ -56,23 +45,15 @@ public class RefreshAssignmentsListEvent extends GwtEvent<RefreshAssignmentsList
 	public RefreshAssignmentsListEvent() {
 		
 	}
-	/**
-	 * Parameterised constructor is to intialize isPostDeleteAssignment.
-	 * @param isPostDeleteAssignment
-	 */
 	public RefreshAssignmentsListEvent(boolean isPostDeleteAssignment) {
 		this.isPostDeleteAssignment=isPostDeleteAssignment;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RefreshAssignmentsListEventHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke lregisterogin handler event.
-	 */
+
 	@Override
 	protected void dispatch(RefreshAssignmentsListEventHandler handler) {
 		

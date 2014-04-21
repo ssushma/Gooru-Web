@@ -31,25 +31,15 @@ import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionValidationException;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+
 /**
- * @fileName : GwtUrlHandlerMapping.java
- *
- * @description : This will allow developer to specify the mapping of URL pattern and handlers explicitly.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class GwtUrlHandlerMapping extends SimpleUrlHandlerMapping {
 	
 	private static final String MISSING_BEAN_NAME= "Missing ServiceURL annotation for bean name ";
-	/**
-	 * This will initialize the application context.
-	 */
+
 	@Override
 	public void initApplicationContext() throws BeansException {
 		

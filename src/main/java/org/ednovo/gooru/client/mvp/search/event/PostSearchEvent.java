@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : PostSearchEvent.java
- *
- * @description : Post Search Event
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class PostSearchEvent extends GwtEvent<PostSearchHandler> {
 
@@ -59,61 +48,21 @@ public class PostSearchEvent extends GwtEvent<PostSearchHandler> {
 	public PostSearchEvent(SearchDo<? extends ResourceSearchResultDo> searchDo) {
 		setSearchDo(searchDo);
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<PostSearchHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(PostSearchHandler handler) {
 		handler.postSearch(getSearchDo());
 	}
-	/**
-	 * 
-	 * @function getSearchDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns searchdo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchDo<? extends ResourceSearchResultDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchDo<? extends ResourceSearchResultDo> getSearchDo() {
 		return searchDo;
 	}
-	/**
-	 * 
-	 * @function setSearchDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :To set searchDo.
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchDo(SearchDo<? extends ResourceSearchResultDo> searchDo) {
 		this.searchDo = searchDo;
 	}

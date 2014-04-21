@@ -26,19 +26,10 @@
  * 
  */
 package org.ednovo.gooru.client.mvp.shelf.event;
+
 /**
- * @fileName : RefreshType.java
- *
- * @description : This interface is used to get the refresh types.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author SearchTeam
+ * 
  */
 public enum RefreshType {
 

@@ -62,5 +62,26 @@ public interface HomeService extends BaseService {
 	String whatsNewFibLink() throws GwtException;
 	
 	String mosLink() throws GwtException;
+	/**
+	 * 
+	 * @function getClientIpAddress 
+	 * 
+	 * @created_date : Mar 5, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * @throws GwtException
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	String getClientIpAddress() throws GwtException;
 
 }

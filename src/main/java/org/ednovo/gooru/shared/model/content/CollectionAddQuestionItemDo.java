@@ -28,21 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : CollectionAddQuestionItemDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CollectionAddQuestionItemDo implements Serializable {
 
@@ -50,27 +36,18 @@ public class CollectionAddQuestionItemDo implements Serializable {
 	
 	private CollectionQuestionItemDo question;
 	private String mediaFileName;
-	/** 
-	 * This method is to get the question
-	 */
+	
+	public CollectionAddQuestionItemDo(){}
+	
 	public CollectionQuestionItemDo getQuestion() {
 		return question;
 	}
-	/** 
-	 * This method is to set the question
-	 */
 	public void setQuestion(CollectionQuestionItemDo question) {
 		this.question = question;
 	}
-	/** 
-	 * This method is to get the mediaFileName
-	 */
 	public String getMediaFileName() {
 		return mediaFileName;
 	}
-	/** 
-	 * This method is to set the mediaFileName
-	 */
 	public void setMediaFileName(String mediaFileName) {
 		this.mediaFileName = mediaFileName;
 	}

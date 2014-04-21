@@ -31,18 +31,18 @@ import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * 
- * @fileName : SetSelectedClasspageListEvent.java
+ * @fileName : RefreshClasspageListEvent.java
  *
- * @description : This class is used for setting classpage title to "bold" in Teach Header.
- *
+ * @description : 
+ *		This class is used for setting classpage title to "bold" in Teach Header.
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Aug 15, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class SetSelectedClasspageListEvent extends GwtEvent<SetSelectedClasspageListHandler> {
 
@@ -57,16 +57,12 @@ public class SetSelectedClasspageListEvent extends GwtEvent<SetSelectedClasspage
 		
 		this.classpageId = classpageId;
 	}
-	/**
-	 *  Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<SetSelectedClasspageListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(SetSelectedClasspageListHandler handler) {
 		handler.setClasspageTitle(classpageId);

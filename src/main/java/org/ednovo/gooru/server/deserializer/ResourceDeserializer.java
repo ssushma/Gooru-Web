@@ -38,20 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
-/**
- * @fileName : ResourceDeserializer.java
- *
- * @description : This class is used to deserialize resources.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Component
 public class ResourceDeserializer extends DeSerializer {
 
@@ -174,15 +161,19 @@ public class ResourceDeserializer extends DeSerializer {
 	 * @param jsonRep instance of {@link JsonRepresentation}
 	 * @return forgotPassword
 	 */
-	public Map<String, Object> resetPassword(JsonRepresentation jsonRep) {
+	public Map<String, Object> resetPassword(JsonRepresentation jsonRep,int code) {
 		JSONObject jsonObject;
 		Map<String, Object> resetPassword = new HashMap();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
-				jsonObject = jsonRep.getJsonObject();
-				resetPassword.put(TOKEN_EXPIRED, (getJsonString(jsonObject, TOKEN_EXPIRED)));
-				JSONObject userJsonObject = jsonObject.getJSONObject(USER);
-				resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
+				if(code==400){
+					resetPassword.put("statusCode", 400);
+				}else{
+					jsonObject = jsonRep.getJsonObject();
+					resetPassword.put(TOKEN_EXPIRED, (getJsonString(jsonObject, TOKEN_EXPIRED)));
+					JSONObject userJsonObject = jsonObject.getJSONObject(USER);
+					resetPassword.put(USER_NAME, (getJsonString(userJsonObject, USER_NAME)));
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

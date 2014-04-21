@@ -28,19 +28,21 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : CollectionAssignShareHandler.java
+ * 
+ * @fileName : CollectionEditShareHandler.java
  *
- * @description : Handler for {@link CollectionAssignShareEvent}.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: Aug 8, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface CollectionAssignShareHandler extends EventHandler {
 	

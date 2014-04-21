@@ -3,15 +3,15 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc" >
 	<ui:with type="org.ednovo.gooru.client.mvp.home.register.RegisterCBundle" field="res" />
 	<g:FlowPanel styleName="{res.css.shelfItemContentDiv}" height="200px">
-		<g:Label styleName="{res.css.registerMessageDiv}" text="Thanks! You’re almost there..."/>
-		<g:Label styleName="{res.css.registerSuccessMessage}" text="We sent you a confirmation email with instructions on how to complete your Gooru registration. Please check your email account."/>
+		<g:Label styleName="{res.css.registerMessageDiv}" ui:field="almostHereText"/>
+		<g:Label styleName="{res.css.registerSuccessMessage}" ui:field="sentConformationText"/>
 		<g:FlowPanel styleName="{res.css.registerContactMessage}">
-			<g:Label text="Didn’t receive a confirmation email?"/>
-			<g:Label styleName="{res.css.contactUsText}" text="Please contact us at"/>
-			<g:Label styleName="{res.css.supportTextMsg}" text="&nbsp; support@goorulearning.org"/>
+			<g:Label ui:field="didnotReceiveText"/>
+			<g:Label styleName="{res.css.contactUsText}" ui:field="contactText"/>
+			<g:Label styleName="{res.css.supportTextMsg}" ui:field="supportText"/>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{res.css.registerFormButtonDiv}">
-			<gg:BlueButtonUc  text="Ok" ui:field="confirmRegisterUc" />
+			<gg:BlueButtonUc ui:field="confirmRegisterUc"/>
 		</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

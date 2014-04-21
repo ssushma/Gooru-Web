@@ -28,7 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.bcel.generic.GETSTATIC;
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -47,16 +49,16 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.FontStyle;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -64,15 +66,16 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.query.client.css.HeightProperty;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -83,30 +86,26 @@ import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
 
 /**
- * 
  * @fileName : CollectionFormView.java
- *
- * @description :  This class is used to create new collection
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @description : This class is used to create new collection
+ * 
+ * 
+ * @version : 5.5
+ * 
+ * @date: Apr 17, 2013
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
 public class CollectionFormView extends
 		BasePopupViewWithHandlers<CollectionFormUiHandlers> implements
-		IsCollectionFormView {
+		IsCollectionFormView,MessageProperties {
 
 	@UiField
 	TextBoxWithPlaceholder collectionTitleTxtBox;
 
-	/*
-	 * @UiField TextBoxWithPlaceholder collectionGradeTxtBox;
-	 */
 	GroupedListBox courseLisBox;
 
 	@UiField
@@ -115,36 +114,36 @@ public class CollectionFormView extends
 	@UiField
 	FlowPanel buttonFloPanel;
 
+	/*@UiField
+	Anchor cancelAnr;*/
+	
 	@UiField
-	Anchor cancelAnr;
+	Button cancelAnr;
 
-	@UiField
-	BlueButtonUc btnOk;
+	
 
+	/*@UiField
+	BlueButtonUc btnOk;*/
+	
 	@UiField
-	FlowPanel validationErrorFloPanel;
-
+	Button btnOk;
+	
 	@UiField
-	Label validationErrorLbl, mandatoryErrorLbl, lblDontWorry, lblVisibility,lblPublic,lblAllow,lblShareable,lblShareableDesc,lblPrivate, lblPrivateDesc;
+	Label mandatoryErrorLbl, lblVisibility,lblPublic,lblAllow,lblShareable,lblShareableDesc,lblPrivate, lblPrivateDesc;
 
 	@UiField
 	FlowPanel  linkShareFloPanel, privateShareFloPanel;
 	
-	@UiField Label lblTitle/*mobileTxtLbl*/;
-
-	// @UiField FocusPanel publicImageTooltipFocPanel;
-
 	@UiField
 	HTMLPanel publicRadioButtonPanel, shareRadioButtonPanel,
-			privateRadioButtonPanel,buttonMainContainer;
+			privateRadioButtonPanel,buttonMainContainer,visibilitySection,courseContainer,gradeContainer,shelfItemContent;
 
 	@UiField
-	Label gradeHelpIcon, courseHelpIcon, lblGrade, lblCourse,loadingTextLbl/*checkMobileSupport*/;
+	Label loadingTextLbl,collPopUpMainheading,collPopUpSubheading,collTitleLbl,gradeLbl,courseLbl;
 	
 	@UiField
-	HTMLEventPanel gradeToolTip, courseToolTip, publicShareFloPanel;
+	HTMLEventPanel publicShareFloPanel;
 	
-//	@UiField Image imgQuestionImage;
 	
 	RadioButton radioButtonPublic = new RadioButton("", "");
 	RadioButton radioButtonShare = new RadioButton("", "");
@@ -159,9 +158,6 @@ public class CollectionFormView extends
 
 	private NewCollectionInfoPopup newCollectionInfoPopup;
 
-	@UiField(provided = true)
-	CollectionCBundle res;
-
 	private AppPopUp appPopUp;
 	
 	ToolTip toolTip = null;
@@ -169,18 +165,28 @@ public class CollectionFormView extends
 	private CollectionDo collectionDo;
 	
 	private  boolean isCheckedValue;
-
-//	public static final String GRADE_INFO = MessageProperties.GL0320;
-
-//	public static final String COURSE_INFO = MessageProperties.GL0321;
-
-	private static final String TITLE_THIS_COLLECTION = MessageProperties.GL0322;
 	
-	private static String CONFIRM_MESSAGE = "You need to confirm your account before you can make collections public!";
+	boolean isHavingBadWords;
+
+	private static String TITLE_THIS_COLLECTION = GL0322;
+
+	
+	private static String CONFIRM_MESSAGE =GL1490+GL_SPL_EXCLAMATION;
+	
+	private static String REQ_COLLECTION_TITLE="collectionTitle";
+	
+	private static String DRAGGED_COLLECTION_TITLE="draggedCollectionTitle";
 
 	private DownToolTipUc gradetooltipPopUpUc;
 	
 	private DownToolTipUc coursetooltipPopUpUc;
+	
+
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
@@ -201,71 +207,110 @@ public class CollectionFormView extends
 	public CollectionFormView(EventBus eventBus) {
 		super(eventBus);
 		hideFromPopup(true);
-		this.res = CollectionCBundle.INSTANCE;
-		res.css().ensureInjected();
 		appPopUp = new AppPopUp();
 		appPopUp.setContent(TITLE_THIS_COLLECTION,uiBinder.createAndBindUi(this));
 		getAccountTypeId();
-		buttonFloPanel.add(validationErrorFloPanel);
-		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
-		//buttonFloPanel.add(buttonMainContainer);
-		//buttonFloPanel.add(cancelAnr);
 		isCheckedValue=false;
 		publicShareFloPanel.setVisible(false);
+		loadingTextLbl.setText(GL0591.toLowerCase());
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
-		collectionTitleTxtBox.getElement().setAttribute("placeholder", MessageProperties.GL0319);
-		collectionTitleTxtBox.getElement().setAttribute("style", "width:180px !important");
+//		collectionTitleTxtBox.getElement().setAttribute("placeholder", MessageProperties.GL0319);
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
 		radioButtonPrivate.getElement().setId("rdPrivate");
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
-		appPopUp.setTitle("New Collection");
-		appPopUp.getElement().getStyle().setWidth(538, Unit.PX);
-		/*loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
-		loadingTextLbl.getElement().getStyle().setDisplay(Display.NONE);
-		mobileTxtLbl.getElement().getStyle().setPaddingTop(6, Unit.PX);*/
-		/*imgQuestionImage.getElement().getStyle().setPaddingTop(16, Unit.PX);
-		imgQuestionImage.addMouseOverHandler(new MouseOverHandler() {
+		appPopUp.setTitle(GL0993);
+		
+		collectionTitleTxtBox.addBlurHandler(new BlurHandler() {
 			
 			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip();
-				
-				toolTip.getElement().getStyle().setBackgroundColor("transparent");
-				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				toolTip.getElement().getStyle().setZIndex(999);	
-				toolTip.setPopupPosition(imgQuestionImage.getAbsoluteLeft()-(150+22), imgQuestionImage.getAbsoluteTop()+31);
-				toolTip.show();
+			public void onBlur(BlurEvent event) {
+				if (collectionTitleTxtBox.getText().length() > 0){
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", collectionTitleTxtBox.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+	
+						@Override
+						public void onSuccess(Boolean value) {
+							btnOk.getElement().removeClassName("disabled");
+							if (value){
+								collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
+								mandatoryErrorLbl.setText(GL0554);
+								mandatoryErrorLbl.setVisible(true);
+								mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
+							}else{
+								collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
+								collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
+								mandatoryErrorLbl.setVisible(false);
+							}
+						}
+					});
+				}
 			}
 		});
-		imgQuestionImage.addMouseOutHandler(new MouseOutHandler() {
+		
+		collectionTitleTxtBox.addKeyPressHandler(new KeyPressHandler() {
 			
 			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				
-				EventTarget target = event.getRelatedTarget();
-				  if (Element.is(target)) {
-					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
-						  toolTip.hide();
-					  }
-				  }
+			public void onKeyPress(KeyPressEvent event) {
+				collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
+				collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
+				mandatoryErrorLbl.setVisible(false);
 			}
-		});*/
+		});
+		
+		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(460, Unit.PX);
 		
 		btnOk.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (validateCollectionForm().size() == 0) {
-					MixpanelUtil.Create_EmptyCollection();
-					String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
-					btnOk.setEnabled(false);
-					buttonMainContainer.setVisible(false);
-					loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK);
-					getUiHandlers().saveCollection(folderId);
-					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-					toolTipPopupPanel.hide();
-				}
+				btnOk.setEnabled(false);
+				btnOk.getElement().addClassName("disabled");
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", collectionTitleTxtBox.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						isHavingBadWords = value;
+//						btnOk.getElement().addClassName("disabled");
+						if (value){
+							collectionTitleTxtBox.getElement().getStyle().setBorderColor("orange");
+							mandatoryErrorLbl.setText(GL0554);
+							mandatoryErrorLbl.setVisible(true);
+							mandatoryErrorLbl.getElement().getStyle().setMarginRight(63,Unit.PX);
+							btnOk.setEnabled(true);
+							btnOk.getElement().removeClassName("disabled");
+						}else{
+							collectionTitleTxtBox.getElement().getStyle().clearBackgroundColor();
+							collectionTitleTxtBox.getElement().getStyle().setBorderColor("#ccc");
+							mandatoryErrorLbl.setVisible(false);
+							if (validateCollectionForm().size() == 0) {
+								MixpanelUtil.Create_EmptyCollection();
+								String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderId");
+								final String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+								final String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+								final String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+								btnOk.setEnabled(false);
+//								btnOk.getElement().addClassName("disabled");
+								buttonMainContainer.setVisible(false);
+								loadingTextLbl.getElement().getStyle().setDisplay(Display.BLOCK); 
+								if(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE).equalsIgnoreCase("")){
+									getUiHandlers().copyCollection(collectionTitleTxtBox.getText().trim(),AppClientFactory.getPlaceManager().getRequestParameter("collectionId"));
+								}else if(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE).equalsIgnoreCase("")){
+									getUiHandlers().copyDraggedCollection(collectionTitleTxtBox.getText().trim(),AppClientFactory.getPlaceManager().getRequestParameter("collectionId"),AppClientFactory.getPlaceManager().getRequestParameter("selectedFolderId"));
+								}else{
+									getUiHandlers().saveCollection(folderId,o1,o2,o3); 
+								}
+								
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+								toolTipPopupPanel.hide();
+							}
+						}
+					}
+				});
 			}
 		});
 		cancelAnr.addClickHandler(new ClickHandler() {
@@ -335,60 +380,32 @@ public class CollectionFormView extends
 
 		});
 		setTextAndIds();
-		
 	}
-	/**
-	 * 
-	 * @function setTextAndIds 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set the UI.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setTextAndIds(){
-		lblDontWorry.setText(MessageProperties.GL0303);
-		lblTitle.setText(MessageProperties.GL0318 + MessageProperties.GL_SPL_STAR);
-		collectionTitleTxtBox.setPlaceholder(MessageProperties.GL0319);
-		mandatoryErrorLbl.setText(MessageProperties.GL0173);
-		lblGrade.setText(MessageProperties.GL0325);
-		gradeHelpIcon.setText(MessageProperties.GL_SPL_QUESTION);
-		lblCourse.setText(MessageProperties.GL0326);
-		courseHelpIcon.setText(MessageProperties.GL_SPL_QUESTION);
-		validationErrorLbl.setText(MessageProperties.GL0327);
-		lblVisibility.setText(MessageProperties.GL0328);
-		lblPublic.setText(MessageProperties.GL0329);
-		lblAllow.setText(MessageProperties.GL0330);
-		lblShareable.setText(MessageProperties.GL0331);
-		lblShareableDesc.setText(MessageProperties.GL0332);
-		lblPrivate.setText(MessageProperties.GL0333);
-		lblPrivateDesc.setText(MessageProperties.GL0334);
+		collectionTitleTxtBox.setPlaceholder(GL0319);
+		mandatoryErrorLbl.setText(GL0173);
+		lblVisibility.setText(GL0328);
+		lblPublic.setText(GL0329);
+		lblAllow.setText(GL0330);
+		lblShareable.setText(GL0331);
+		lblShareableDesc.setText(GL0332);
+		lblPrivate.setText(GL0333);
+		lblPrivateDesc.setText(GL0334);
 		
-		btnOk.setText(MessageProperties.GL0190);
+		gradeLbl.setText(GL0325+GL_SPL_SEMICOLON);
+		courseLbl.setText(GL0326+GL_SPL_SEMICOLON);
 		btnOk.getElement().setId("btnOk");
 		cancelAnr.getElement().setId("lnkCancel");
-		
-		cancelAnr.setText(MessageProperties.GL0142);
+		/*btnOk.setText(GL0636);
+		cancelAnr.setText(MessageProperties.GL0142);*/
 	}
 
 	/**
 	 * This method is used to get GrageList
 	 */
 	public void getGradeList() {
-
-		gradeDropDownList.setStyleName(CollectionCBundle.INSTANCE.css()
-				.contentAlignInputs());
-
+		gradeDropDownList.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		for (int i = 0; i < list.length; i++) {
 			gradeDropDownList.addItem(list[i]);
 		}
@@ -411,16 +428,18 @@ public class CollectionFormView extends
 
 		public void onKeyUp(KeyUpEvent event) {
 			mandatoryErrorLbl.setVisible(false);
+			btnOk.setEnabled(true);
+			btnOk.getElement().removeClassName("disabled");
 			if (collectionTitleTxtBox.getText().length() >= 50) {
-				mandatoryErrorLbl.setText(MessageProperties.GL0143);
+				mandatoryErrorLbl.setText(GL0143);
 				mandatoryErrorLbl.setVisible(true);
 			}
 		}
 	}
-/**
- * This method is used to get collection data
- * @return collection
- */
+	/**
+	 * This method is used to get collection data
+	 * @return collection
+	 */
 	@Override
 	public CollectionDo getData() {
 
@@ -450,89 +469,73 @@ public class CollectionFormView extends
 		}
 		return collection;
 	}
-/**
- * This method is used to generate grade
- * @param gradeTxt
- * @return tmpGradeTxt
- */
-	/*private String generateGrade(String gradeTxt) {
-		String tmpGradeTxt = "";
-		gradeTxt = gradeTxt.replaceAll(" ", "");
-		if (gradeTxt.indexOf("-") > 0) {
-			if (gradeTxt.indexOf(",") == -1) {
-				tmpGradeTxt = generateGradeIfHypen(gradeTxt);
-			} else {
-				String gradeList[];
-				gradeList = gradeTxt.split(",");
-				for (int k = 0; k < gradeList.length; k++) {
-					if (gradeList[k].indexOf("-") > 0) {
-						if (k == gradeList.length) {
-							tmpGradeTxt = tmpGradeTxt
-									+ generateGradeIfHypen(gradeList[k]);
-						} else {
-							tmpGradeTxt = tmpGradeTxt
-									+ generateGradeIfHypen(gradeList[k]) + ",";
-						}
-					} else {
-						if (k == gradeList.length - 1) {
-							tmpGradeTxt = tmpGradeTxt + gradeList[k];
-						} else {
-							tmpGradeTxt = tmpGradeTxt + gradeList[k] + ",";
-						}
-					}
-				}
-			}
-		} else {
-			tmpGradeTxt = gradeTxt;
-		}
-		return tmpGradeTxt;
-	}*/
 
-	/*private String generateGradeIfHypen(String grade) {
-		String gradeList[];
-		StringBuilder gradeStr = new StringBuilder();
-		gradeList = grade.split("-");
-		if (gradeList.length >= 2) {
-			int start = Integer.parseInt(gradeList[0].trim());
-			int end = Integer.parseInt(gradeList[1].trim());
-			if (start < end) {
-				for (int i = start; i <= end; i++) {
-					if (i == end) {
-						gradeStr.append(i);
-					} else {
-						gradeStr.append(i).append(",");
-					}
-				}
-			}
-		} else {
-			gradeStr.append(Integer.parseInt(gradeList[0].trim()));
-		}
-		return gradeStr.toString();
-	}*/
-	/**
-	 * It will return the representation of a view as the widget
-	 */
 	@Override
 	public Widget asWidget() {
 		collectionTitleTxtBox.setFocus(true);
 		return appPopUp;
 	}
-	/**
-	 * This method is used to reset data
-	 * @see org.ednovo.gooru.client.gin.BasePopupViewWithHandlers#reset()
-	 */
+/**
+ * This method is used to reset data
+ * @see org.ednovo.gooru.client.gin.BasePopupViewWithHandlers#reset()
+ */
 	@Override
 	public void reset() {
 		btnOk.setEnabled(true);
+		btnOk.getElement().removeClassName("disabled");
+		collectionTitleTxtBox.getElement().getStyle().setBorderColor("#cccccc");
+		cancelAnr.getElement().getStyle().setMarginRight(10, Unit.PX);
 		buttonMainContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
 		collectionDo = null;
 		collectionTitleTxtBox.setText("");
-		validationErrorLbl.setVisible(false);
+		removePopUpStyle();
+		
+		
+		if(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE).equalsIgnoreCase("")){
+			collPopUpMainheading.setText(GL1421);
+			collPopUpSubheading.setText(GL1365);
+			collTitleLbl.setText(GL0553);
+			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(REQ_COLLECTION_TITLE));
+			btnOk.setText(GL0636);
+			cancelAnr.setText(GL0142);
+			appPopUp.setViewTitle(GL1421);
+			setPopUpStyle();
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE)!=null&&!AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE).equalsIgnoreCase("")){
+			collPopUpMainheading.setText(GL1421);
+			collPopUpSubheading.setText(GL1365);
+			collTitleLbl.setText(GL0553);
+			collectionTitleTxtBox.setText(AppClientFactory.getPlaceManager().getRequestParameter(DRAGGED_COLLECTION_TITLE));
+			btnOk.setText(GL0636);
+			cancelAnr.setText(GL0142);
+			appPopUp.setViewTitle(GL1421);
+			setPopUpStyle();
+		}else{
+			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF)){
+				collPopUpMainheading.setText(GL0993);
+				collPopUpSubheading.setText(GL1033);
+				collTitleLbl.setText(GL0993+GL_SPL_SEMICOLON);
+				btnOk.setText(GL0141);
+				cancelAnr.setText(GL0142);
+				appPopUp.setViewTitle(GL0322);
+			}else{
+				collPopUpMainheading.setText(GL0993);
+				collPopUpSubheading.setText(GL1033);
+				collTitleLbl.setText(GL0651);
+				btnOk.setText(GL0636);
+				cancelAnr.setText(GL0142);
+				appPopUp.setViewTitle(GL0322);
+			}
+			
+		}
+		
+		if(AppClientFactory.getPlaceManager().getRequestParameter("resourceId")!=null&&!AppClientFactory.getPlaceManager().getRequestParameter("resourceId").equalsIgnoreCase("")){
+			appPopUp.setViewTitle(GL0322);
+		}
+//		validationErrorLbl.setVisible(false);
 		mandatoryErrorLbl.setVisible(false);
 		courseLisBox = new GroupedListBox();
-		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css()
-				.contentAlignInputs());
+		courseLisBox.setStyleName(CollectionCBundle.INSTANCE.css().createCollContentAlignInputs());
 		groupSimPanel.setWidget(courseLisBox);
 		gradeDropDownList.setSelectedIndex(0);
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
@@ -548,40 +551,30 @@ public class CollectionFormView extends
 		}
 		
 	}
-	/**
-	 * This method is used to create the  mobile support collection
-	 *//*
-	@UiHandler("checkMobileSupport")
-	public void oncheckMobileSupportEvent(ClickEvent event) {
-
-		if (isCheckedValue) {
-			MixpanelUtil.MOS_New_Collection_Checkbox("Unselected");
-			checkMobileSupport.setStyleName(res.css().classPageEmailCheckBoxBgHoverSprite());
-			isCheckedValue = false;
-		} else {
-			MixpanelUtil.MOS_New_Collection_Checkbox("Selected");
-			checkMobileSupport.setStyleName(res.css().classPageEmailCheckBoxBgHover());
-			isCheckedValue = true;
-		}
-	}
-	*/
-	/*@Override
-	public void updateCollectionFormCheckBox(boolean check) {
-		if(check) {
-			MixpanelUtil.MOS_New_Collection_Checkbox("UnSelected");
-			checkMobileSupport.setStyleName(res.css().classPageEmailCheckBoxBgHoverSprite());
-			isCheckedValue = false;
-		} else {
-			MixpanelUtil.MOS_New_Collection_Checkbox("Selected");
-			checkMobileSupport.setStyleName(res.css().classPageEmailCheckBoxBgHover());
-			isCheckedValue = true;
-		}
-	}*/
 	
-	/**
-	 * This method is used to set collection data
-	 * @return collection
-	 */
+	private void setPopUpStyle() {
+		visibilitySection.getElement().getStyle().setDisplay(Display.NONE);
+		lblVisibility.getElement().getStyle().setDisplay(Display.NONE);
+		gradeContainer.getElement().getStyle().setDisplay(Display.NONE);
+		courseContainer.getElement().getStyle().setDisplay(Display.NONE);
+		appPopUp.getElement().getStyle().setHeight(200, Unit.PX);
+		appPopUp.getElement().getStyle().setTop(195, Unit.PX);
+		shelfItemContent.getElement().setAttribute("style", "min-height: 200px");	
+	}
+	
+	private void removePopUpStyle() {
+		visibilitySection.getElement().getStyle().setDisplay(Display.BLOCK);
+		lblVisibility.getElement().getStyle().setDisplay(Display.BLOCK);
+		gradeContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		courseContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		appPopUp.getElement().getStyle().setHeight(460, Unit.PX);
+		shelfItemContent.getElement().setAttribute("style", "min-height: 400px");	
+	}
+
+/**
+ * This method is used to set collection data
+ * @return collection
+ */
 	@Override
 	public CollectionDo setData(CollectionDo collection) {
 		this.collectionDo = collection;
@@ -593,9 +586,9 @@ public class CollectionFormView extends
 		setCourseData();
 		return collection;
 	}
-	/**
-	 * This method is used to set course data
-	 */
+/**
+ * This method is used to set course data
+ */
 	private void setCourseData() {
 		if (this.collectionDo != null
 				&& this.collectionDo.getTaxonomySet() != null
@@ -639,13 +632,18 @@ public class CollectionFormView extends
 				|| tiltle.toLowerCase().contains("http://")
 				|| tiltle.toLowerCase().contains("https://")
 				|| tiltle.toLowerCase().contains("ftp://")) {
-			mandatoryErrorLbl.setText(MessageProperties.GL0323);
+			mandatoryErrorLbl.setText(GL0323);
 			mandatoryErrorLbl.setVisible(true);
-			errorList.put("title", MessageProperties.GL0323.toLowerCase());
+			errorList.put("title", GL0323.toLowerCase());
 		} else if (tiltle.trim().equals("")
-				|| tiltle.equalsIgnoreCase(MessageProperties.GL0319)) {
-			errorList.put("title", MessageProperties.GL0324);
-			mandatoryErrorLbl.setText(MessageProperties.GL0173);
+				|| tiltle.equalsIgnoreCase(GL0319)) {
+			errorList.put("title", GL0324);
+			mandatoryErrorLbl.setText(GL0173);
+			mandatoryErrorLbl.setVisible(true);
+			mandatoryErrorLbl.getElement().getStyle().setMarginRight(62,Unit.PX);
+		}else if (isHavingBadWords){
+			errorList.put("title", GL0554);
+			mandatoryErrorLbl.setText(GL0554);
 			mandatoryErrorLbl.setVisible(true);
 		}
 		return errorList;
@@ -656,141 +654,68 @@ public class CollectionFormView extends
 	 */
 	@Override
 	public String getCourseCodeId() {
-		if (!courseLisBox.getValue().equals("-1")) {
-			String selectedValue = courseLisBox.getValue(courseLisBox
-					.getSelectedIndex());
-			if (!selectedValue.equals("-1")) {
-				return selectedValue;
+		try {
+			if (!courseLisBox.getValue().equals("-1")) {
+				String selectedValue = courseLisBox.getValue(courseLisBox
+						.getSelectedIndex());
+				if (!selectedValue.equals("-1")) {
+					return selectedValue;
+				}
 			}
-		}
-		return null;
+			return null;
+		} catch (Exception e) {
+			return null;}
 	}
-	/**
-	 * This method is for default page view 
-	 * @return COLLECTION_SEARCH Token
-	 */
+/**
+ * This method is for default page view 
+ * @return COLLECTION_SEARCH Token
+ */
 	@Override
 	protected String getDefaultView() {
 		return PlaceTokens.COLLECTION_SEARCH;
 	}
 
-	/*private void showGradePopup(int left, int top) {
-		if (!newCollectionInfoPopup.isShowing()) {
-			newCollectionInfoPopup.show();
-			newCollectionInfoPopup.center();
-			newCollectionInfoPopup.setPopupPosition(left, top);
-		}
-	}*/
-	/**
-	 * 
-	 * @function onGradeHelpiconClicked 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This UIHandler is used to display gradeToolTip on gradeHelpIcon click
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("gradeHelpIcon")
-	public void onGradeHelpiconClicked(ClickEvent event) {
-		if(!(gradeToolTip.getWidgetCount()>0)) {
-			gradetooltipPopUpUc = new DownToolTipUc();
-			gradetooltipPopUpUc.getElement().setAttribute("style", "line-height: 1.2 !important;");
-			gradetooltipPopUpUc.setContent(new HTML(MessageProperties.GL0300));
-			gradeToolTip.add(gradetooltipPopUpUc);
-		}
-		if(gradeToolTip.isVisible()) {
-			gradeToolTip.setVisible(false);
-		} else {
-			gradeToolTip.setVisible(true);
-			courseToolTip.setVisible(false);
+	@Override
+	public void onUnload() {
+		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.HOME)){
+			AppClientFactory.getPlaceManager().revealPlayerPreviousPlace(false, getDefaultView());
 		}
 	}
-	/**
-	 * 
-	 * @function onCourseHelpiconClicked 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This UIHandler is used to display courseToolTip on courseHelpIcon click
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("courseHelpIcon")
-	public void onCourseHelpiconClicked(ClickEvent event) {
-		if(!(courseToolTip.getWidgetCount()>0)) {
-			coursetooltipPopUpUc = new DownToolTipUc();
-			coursetooltipPopUpUc.getElement().setAttribute("style", "line-height: 1.2 !important;");
-			coursetooltipPopUpUc.setContent(new HTML(MessageProperties.GL0301));
-			courseToolTip.add(coursetooltipPopUpUc);
-		}
-		if(courseToolTip.isVisible()) {
-			courseToolTip.setVisible(false);
-		} else {
-			courseToolTip.setVisible(true);
-			gradeToolTip.setVisible(false);
-		}
-	}
-	/**
-	 * This is used to close the popup's
-	 */
+
 	@Override
 	public void closeAllopenedPopUp() {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		hide();
 	}
-	/**
-	 * This is used to get the account type id.
-	 */
+	
 	public void getAccountTypeId()
 	{
-	AppClientFactory
-				.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
-					
-					@Override
-					public void onSuccess(SettingDo result) {
-						if(result.getUser().getAccountTypeId()!=null)
-						{
-							if(result.getUser().getAccountTypeId()==2)
-							{
-								radioButtonShare.setChecked(true);
-								publicShareFloPanel.setVisible(false);
-							}
-							else
-							{
-								publicShareFloPanel.setVisible(true);
-							}
-						}
-						else
-						{
-							publicShareFloPanel.setVisible(true);	
-						}
-						
-					}
+		AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
+			@Override
+			public void onSuccess(SettingDo result) {
+				if(result.getUser().getAccountTypeId()!=null)
+				{
+					if(result.getUser().getAccountTypeId()==2)
+					{
+						radioButtonShare.setChecked(true);
+						publicShareFloPanel.setVisible(false);
 					}
-					
-				});
-		
+					else
+					{
+						publicShareFloPanel.setVisible(true);
+					}
+				}
+				else
+				{
+					publicShareFloPanel.setVisible(true);	
+				}
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+		});
+
 	}
 }

@@ -143,7 +143,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffdddddd, endCo
 }
 .addResourceFormRightOuterDiv {
 	float: left;
-	width: 389px;
+	width: 72.5%;
 	padding: 0px 0px 0px 10px;
 	border-left: 1px solid rgb(221,221,221);
 	background-color:white;
@@ -639,7 +639,7 @@ width: 100%;
 	color: rgb(16,118,186);
 	text-align: right;
 	padding: 0px 0px 0px 0px;
-	margin:5px 73px 0px 0px;
+	margin:11px 73px 0px 0px;
 }
 .addResourceBottmTitleAlign {
 }

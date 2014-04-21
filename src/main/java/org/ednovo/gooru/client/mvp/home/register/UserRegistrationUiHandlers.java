@@ -31,19 +31,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
- * 
- * @fileName : UserRegistrationUiHandlers.java
+ * @author Search Team
  *
- * @description : THis is the UIHandler file.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface UserRegistrationUiHandlers extends BaseUiHandlers, EventHandler {
     

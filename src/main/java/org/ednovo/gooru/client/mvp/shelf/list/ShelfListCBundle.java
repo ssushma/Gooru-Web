@@ -29,19 +29,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
- * 
- * @fileName : ShelfListCBundle.java
+ * @author Search Team
  *
- * @description :It give details of shelflistCbundle
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ShelfListCBundle extends ClientBundle{
 	

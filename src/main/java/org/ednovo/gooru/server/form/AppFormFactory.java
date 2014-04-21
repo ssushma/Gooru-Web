@@ -28,18 +28,10 @@
 package org.ednovo.gooru.server.form;
 
 import org.restlet.data.Form;
+
 /**
- * @fileName : AppFormFactory.java
- *
- * @description : This class is used to set the from data.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AppFormFactory {
 

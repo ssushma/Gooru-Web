@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : PreSearchEvent.java
- *
- * @description : Event handler for PreSearch.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class PreSearchEvent extends GwtEvent<PreSearchHandler> {
 
@@ -59,61 +48,21 @@ public class PreSearchEvent extends GwtEvent<PreSearchHandler> {
 	public PreSearchEvent(SearchDo<? extends ResourceSearchResultDo> searchDo) {
 		setSearchDo(searchDo);
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<PreSearchHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(PreSearchHandler handler) {
 		handler.preSearch(getSearchDo());
 	}
-	/**
-	 * 
-	 * @function getSearchDo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns searchDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchDo<? extends ResourceSearchResultDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchDo<? extends ResourceSearchResultDo> getSearchDo() {
 		return searchDo;
 	}
-	/**
-	 * 
-	 * @function setSearchDo 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To initialize searchDo.
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchDo(SearchDo<? extends ResourceSearchResultDo> searchDo) {
 		this.searchDo = searchDo;
 	}

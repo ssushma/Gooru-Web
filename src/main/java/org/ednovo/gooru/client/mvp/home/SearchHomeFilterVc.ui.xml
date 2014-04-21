@@ -5,11 +5,10 @@
 		<div class="{res.css.filterContainer} grid_16">
 			<div class="{res.css.filterArrow}"></div>
 			<div class="{res.css.filterInnerContent}">
-				<h3 class="{res.css.filterHeader}">FILTER OPTIONS</h3>
+				<h3 class="{res.css.filterHeader}"><g:Label ui:field="filterOptionsLbl"></g:Label></h3>
 				<g:FlowPanel styleName="{res.css.filterSection}" ui:field="filterGradeFloPanel"/>
-					
 				<div class="{res.css.filterSectionTextbox}">
-					<label class="{res.css.filterSubHeader}">STANDARD</label>
+					<g:Label styleName="{res.css.filterSubHeader}" ui:field="standardText"></g:Label>
 					<g:SuggestBox text="" styleName="{res.css.filterSuggestBox}" ui:field="filterStandard"></g:SuggestBox>
 				</div>
 				<g:FlowPanel>
@@ -20,7 +19,7 @@
 				</g:FlowPanel>
 
 				<div class="{res.css.filterSectionTextbox}">
-					<label class="{res.css.filterSubHeader}">SOURCE</label>
+					<g:Label styleName="{res.css.filterSubHeader}" ui:field="sourceLbl"></g:Label>
 					<g:SuggestBox text="" styleName="{res.css.filterSuggestBox}" ui:field="filterSource"></g:SuggestBox>
 				</div>
 				<g:FlowPanel styleName="{res.css.filterSection}" ui:field="filterSubjectFloPanel"/>

@@ -90,33 +90,33 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	</ui:style>
 	<g:FlowPanel styleName="{style.searchFilterVcContainer}" ui:field="myCollectionSearch">
 		<g:FlowPanel>
-			<g:Label text="Filters" styleName="{style.titleText}" />
+			<g:Label styleName="{style.titleText}" ui:field="filtersText"/>
 		</g:FlowPanel>
 		
 		<g:FlowPanel styleName="{style.PageNotify}" ui:field="flowpanel">
 			<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
-			<g:Anchor text="Resources" styleName="{style.notifyLink}" ui:field="resourceLinkLbl" />
-			<g:Label text="|" styleName="{style.notifyLinks}" />
-			<g:Anchor text="Collections" styleName="{style.notifyLink}" ui:field="collectionLinkLbl" />
+			<g:Anchor  styleName="{style.notifyLink}" ui:field="resourceLinkLbl" />
+			<g:Label  styleName="{style.notifyLinks}" ui:field="notifyText"/>
+			<g:Anchor  styleName="{style.notifyLink}" ui:field="collectionLinkLbl" />
 		</g:FlowPanel>
 		
 		<g:HTMLPanel ui:field="panelNotMobileFriendly"></g:HTMLPanel>
 		
-		<uc:DisclosurePanelUc headerTitle="Category" ui:field="categoryPanelUc" />
+		<uc:DisclosurePanelUc  ui:field="categoryPanelUc" />
 		
 		
-		<uc:DisclosurePanelUc headerTitle="Source" ui:field="sourcePanelUc" visible="false">
+		<uc:DisclosurePanelUc  ui:field="sourcePanelUc" visible="false">
 			<uc:add>
 				<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
 			</uc:add>
 			<uc:add>
-			 	<g:Label text="?" styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
+			 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
 			</uc:add>
 			<uc:add>
 			 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
 			</uc:add>
 			<uc:add>
-				<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl" text="no match found" />
+				<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
 			</uc:add>
 			<uc:add>
 				<g:FlowPanel ui:field="sourceContainerFloPanel" />
@@ -124,7 +124,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</uc:DisclosurePanelUc>
 		
 		
-		<uc:DisclosurePanelUc headerTitle="Author" ui:field="authorPanelUc" visible="false">
+		<uc:DisclosurePanelUc  ui:field="authorPanelUc" visible="false">
 			<uc:add>
 				<g:TextBox ui:field="authorTxtBox" width="130px" />
 			</uc:add>
@@ -134,30 +134,30 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</uc:DisclosurePanelUc>
 		
 		
-		<uc:DisclosurePanelUc headerTitle="Standard" ui:field="standardPanelUc">
+		<uc:DisclosurePanelUc  ui:field="standardPanelUc">
 			<uc:add>
 				<uc:AppSuggestBox ui:field="standardSgstBox" width="130px" />
 			</uc:add>
 			<uc:add>
-			 	<g:Label text="?" styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
+			 	<g:Label styleName="{style.helpIconBtn}" ui:field="standardHelpicon" visible="false"/>
 			</uc:add>
 			<uc:add>
 			 	<panel:HTMLEventPanel ui:field="standardToolTip" visible="false" styleName="{style.sourceToolTip}"/>
 			</uc:add>
 			<uc:add>
-				<g:Label styleName="{style.notFound}" ui:field="standardsNotFoundLbl" text="no match found" />
+				<g:Label styleName="{style.notFound}" ui:field="standardsNotFoundLbl" />
 			</uc:add>
 			<uc:add>
 				<g:FlowPanel ui:field="standardContainerFloPanel" />
 			</uc:add>
 		</uc:DisclosurePanelUc>
 		
-		<uc:DisclosurePanelUc headerTitle="Subject" ui:field="subjectPanelUc" />
+		<uc:DisclosurePanelUc  ui:field="subjectPanelUc" />
 		
-		<uc:DisclosurePanelUc headerTitle="Grade Level" ui:field="gradePanelUc" />
+		<uc:DisclosurePanelUc  ui:field="gradePanelUc" />
 		
 		<g:FlowPanel>
-			<g:Label text="Clear All" styleName="{style.clearAll}" ui:field="clearAll" />
+			<g:Label  styleName="{style.clearAll}" ui:field="clearAll" />
 		</g:FlowPanel>
 		
 	</g:FlowPanel>

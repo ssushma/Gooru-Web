@@ -35,16 +35,16 @@ import com.google.gwt.event.shared.EventHandler;
  * 
  * @fileName : ConfirmStatusPopupHandler.java
  *
- * @description : This is the event handler for ConfirmStatusPopup
+ * @description : 
  *
  *
  * @version : 1.0
  *
  * @date: Dec 5, 2013
  *
- * @Author :Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer:Gooru Team
+ * @Reviewer:
  */
 public interface ConfirmStatusPopupHandler extends EventHandler, BaseUiHandlers {
 

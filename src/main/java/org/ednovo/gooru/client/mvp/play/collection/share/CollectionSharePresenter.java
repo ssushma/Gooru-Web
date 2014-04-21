@@ -23,21 +23,22 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.share;
-
-
+import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-
 public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareView> implements CollectionShareUiHandlers{
 
 	private String collectionId=null, resourceId=null;
+	private boolean isResourceView;
 	
 	@Inject
 	public CollectionSharePresenter(EventBus eventBus, IsCollectionShareView view) {
@@ -46,20 +47,38 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 	}
 	
 	public void showShareView(boolean isResourceView){
+		this.isResourceView=isResourceView;
 		getView().showShareView(isResourceView);
 	}
-	
+	public void showResourceData(CollectionItemDo collectionItemDo){
+		if(isResourceView)
+		getView().showResourceData(collectionItemDo);
+	}
 	
 	public void setCollectionShareData(final CollectionDo collectionDo) {
+		
 		if(collectionId!=null&&this.collectionId.equalsIgnoreCase(collectionDo.getGooruOid())){
 			getView().setCollectionShareData();
 		}else{
 		 collectionId=collectionDo.getGooruOid();
-		 AppClientFactory.getInjector().getPlayerAppService().getShortenShareUrl(collectionId, new SimpleAsyncCallback<Map<String,String>>() {
+		 final Map<String, String> params = new HashMap<String, String>();
+			params.put("type", AppClientFactory.getPlaceManager()
+					.getCurrentPlaceRequest().getNameToken());
+			params.put("shareType", "share");
+			AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collectionId,params, new SimpleAsyncCallback<Map<String,String>>() {
 				@Override
-				public void onSuccess(Map<String, String> result) {
-					getView().setCollectionShareData(result);
+				public void onSuccess(final Map<String, String> collectionShareMap) {
+					String shareUrl=collectionShareMap.get("decodeRawUrl");
 					getView().setData(collectionDo);
+					getView().setEmbedurl(shareUrl);
+					params.put("shareType", "embed");
+					AppClientFactory.getInjector().getSearchService().getShortenShareUrl(collectionDo.getGooruOid(),params, new SimpleAsyncCallback<Map<String,String>>() {
+						@Override
+						public void onSuccess(Map<String, String> result) {
+							collectionShareMap.put("embedUrlRawUrl", result.get("decodeRawUrl"));
+							getView().setCollectionShareData(collectionShareMap);
+						}
+					});
 				}
 			});
 		}
@@ -71,7 +90,11 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 				getView().setResourceShareData();
 			}else{
 				this.resourceId=resourceId;
-				AppClientFactory.getInjector().getPlayerAppService().getShortenShareUrl(resourceId, new SimpleAsyncCallback<Map<String,String>>() {
+				this.collectionId=null;
+				 Map<String, String> params = new HashMap<String, String>();
+					params.put("type", PlaceTokens.RESOURCE_SEARCH);
+					params.put("shareType", "share");
+				AppClientFactory.getInjector().getSearchService().getShortenShareUrl(resourceId,params, new SimpleAsyncCallback<Map<String,String>>() {
 						@Override
 						public void onSuccess(Map<String, String> result) {
 							getView().setResourceShareData(result);
@@ -80,6 +103,7 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 			}
 		}
 	}
+	
 	
 	@Override
 	protected void onBind() {

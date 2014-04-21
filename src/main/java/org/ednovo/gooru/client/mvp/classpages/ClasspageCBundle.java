@@ -27,18 +27,12 @@ package org.ednovo.gooru.client.mvp.classpages;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
+
+
 /**
- * @fileName : ClasspageCBundle.java
+ * @author Search Team
  *
- * @description : This interface is used to set the Css in the class pages.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ClasspageCBundle extends ClientBundle{
 	

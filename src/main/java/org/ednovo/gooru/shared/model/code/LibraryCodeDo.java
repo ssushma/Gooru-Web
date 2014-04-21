@@ -26,22 +26,12 @@ package org.ednovo.gooru.shared.model.code;
 
 import java.io.Serializable;
 import java.util.List;
-/**
- * 
- * @fileName : LibraryCodeDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class LibraryCodeDo implements Serializable {
 	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 2411080367742513414L;
 	private Integer codeId;
 	private String label;
@@ -51,100 +41,69 @@ public class LibraryCodeDo implements Serializable {
 	private Integer firstUnitId;
 	private String type;
 	private Integer depth;
-	/** 
-	 * This method is to get the codeId
-	 */
+	public LibraryCodeDo(){}
 	public Integer getCodeId() {
 		return codeId;
 	}
-	/** 
-	 * This method is to set the codeId
-	 */
+
 	public void setCodeId(Integer codeId) {
 		this.codeId = codeId;
 	}
-	/** 
-	 * This method is to get the label
-	 */
+
 	public String getLabel() {
 		return label;
 	}
-	/** 
-	 * This method is to set the label
-	 */
+
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	/** 
-	 * This method is to get the parentId
-	 */
+
 	public Integer getParentId() {
 		return parentId;
 	}
-	/** 
-	 * This method is to set the parentId
-	 */
+
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
-	/** 
-	 * This method is to get the node
-	 */
-	public List<LibraryCodeDo> getNode() {
-		return node;
-	}
-	/** 
-	 * This method is to set the node
-	 */
-	public void setNode(List<LibraryCodeDo> node) {
-		this.node = node;
-	}
-	/** 
-	 * This method is to get the grade
-	 */
+
 	public Integer getGrade() {
 		return grade;
 	}
-	/** 
-	 * This method is to set the grade
-	 */
+
 	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
-	/** 
-	 * This method is to get the firstUnitId
-	 */
-	public Integer getFirstUnitId() {
-		return firstUnitId;
+
+	public void setNode(List<LibraryCodeDo> node) {
+		this.node = node;
 	}
-	/** 
-	 * This method is to set the firstUnitId
-	 */
+
+	public List<LibraryCodeDo> getNode() {
+		return node;
+	}
+
 	public void setFirstUnitId(Integer firstUnitId) {
 		this.firstUnitId = firstUnitId;
 	}
-	/** 
-	 * This method is to get the type
-	 */
-	public String getType() {
-		return type;
+
+	public Integer getFirstUnitId() {
+		return firstUnitId;
 	}
-	/** 
-	 * This method is to set the type
-	 */
+
 	public void setType(String type) {
 		this.type = type;
 	}
-	/** 
-	 * This method is to get the depth
-	 */
-	public Integer getDepth() {
-		return depth;
+
+	public String getType() {
+		return type;
 	}
-	/** 
-	 * This method is to set the depth
-	 */
+
 	public void setDepth(Integer depth) {
 		this.depth = depth;
 	}
+
+	public Integer getDepth() {
+		return depth;
+	}
+
 }

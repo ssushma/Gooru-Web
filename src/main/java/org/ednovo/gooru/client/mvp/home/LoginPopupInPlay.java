@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,27 +48,19 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-	/**
-	 * 
-	 * @fileName : LoginPopupInPlay.java
-	 *
-	 * @description : Relates to Login.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-public class LoginPopupInPlay extends PopupPanel {
+/**
+ * @author Search Team
+ * 
+ */
+public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
 
     @UiField
     TextBoxWithPlaceholder loginTxtBox;
@@ -76,8 +69,14 @@ public class LoginPopupInPlay extends PopupPanel {
     TextBoxWithPlaceholder passwordTxtBox;
 
     @UiField
-    Label registerHereLbl;
+    Label registerHereLbl,loginLbl,betaText,loginToCreateteLbl,forgotPwd,doNotHaveAcLbl;
 
+    @UiField CheckBox keepMeLoginLbl;
+    
+    @UiField Button loginButton;
+    
+    @UiField Anchor cancelButton;
+    
     @UiField(provided = true)
     HomeCBundle res;
 
@@ -87,20 +86,18 @@ public class LoginPopupInPlay extends PopupPanel {
 
     private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
 
-    private static final String LOGIN_ERROR = "Please double-check your email address and password, and then try logging in again.";
+    private static final String LOGIN_ERROR =GL0347;
 
-    private static final String LOGIN_COOKIE_DISABLE_MESSAGE = "Your browser's cookies seem to be turned off. Please turn them on to continue! Don't know how ? <a href=\"http://support.google.com/accounts/bin/answer.py?hl=en&amp;p=mail&amp;ctx=ch_ServiceLoginAuth&amp;answer=61416\" target=\"_blank\" style=\"text-decoration: none;\">This might help you!</a>";
+    private static final String LOGIN_COOKIE_DISABLE_MESSAGE =GL0348;
 
-    private static final String OOPS = "Oops!";
+    private static final String OOPS = GL0061;
 
     interface Binder extends UiBinder<Widget, LoginPopupInPlay> {
 
     }
 
     private static final Binder binder = GWT.create(Binder.class);
-	/**
-	 * Constructor.
-	 */
+
     public LoginPopupInPlay() {
         super(true);
         this.res = HomeCBundle.INSTANCE;
@@ -108,6 +105,17 @@ public class LoginPopupInPlay extends PopupPanel {
         this.getElement().getStyle().setZIndex(999999);
         this.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
         add(binder.createAndBindUi(this));
+        loginLbl.setText(GL0187+GL_SPL_EXCLAMATION);
+        betaText.setText(GL0178);
+        loginToCreateteLbl.setText(GL1251+GL_SPL_EXCLAMATION);
+        loginTxtBox.setPlaceholder(GL0434);
+        passwordTxtBox.setPlaceholder(GL0204);
+        forgotPwd.setText(GL0063+GL_SPL_QUESTION);
+        keepMeLoginLbl.setText(GL1252);
+        loginButton.setText(GL0187);
+        cancelButton.setText(GL0142);
+        doNotHaveAcLbl.setText(GL0208);
+        registerHereLbl.setText(GL1253);
         loginTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         passwordTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
@@ -126,6 +134,17 @@ public class LoginPopupInPlay extends PopupPanel {
         res.css().ensureInjected();
         this.headerUc = headerUc;
         add(binder.createAndBindUi(this));
+        loginLbl.setText(GL0187+GL_SPL_EXCLAMATION);
+        betaText.setText(GL0178);
+        loginToCreateteLbl.setText(GL1251+GL_SPL_EXCLAMATION);
+        loginTxtBox.setPlaceholder(GL0434);
+        passwordTxtBox.setPlaceholder(GL0204);
+        forgotPwd.setText(GL0063+GL_SPL_QUESTION);
+        keepMeLoginLbl.setText(GL1252);
+        loginButton.setText(GL0187);
+        cancelButton.setText(GL0142);
+        doNotHaveAcLbl.setText(GL0208);
+        registerHereLbl.setText(GL1253);
         loginTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         passwordTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
@@ -168,7 +187,7 @@ public class LoginPopupInPlay extends PopupPanel {
                 new AlertContentUc(OOPS, LOGIN_ERROR);
             }
         } else  { 
-            new AlertMessageUc("Aww!", new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+            new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
         }
     }
 
@@ -213,7 +232,7 @@ public class LoginPopupInPlay extends PopupPanel {
     }
 
     /**
-     * Keyup handler.
+     * @author Search Team
      * 
      */
     public class LoginKeyupHandler implements KeyUpHandler {
@@ -250,69 +269,15 @@ public class LoginPopupInPlay extends PopupPanel {
             }
         }
     }
-    /**
-     * 
-     * @function isCookieEnabled 
-     * 
-     * @created_date : 30-Dec-2013
-     * 
-     * @description : To check wheather isCookieEnabled or not.
-     * 
-     * 
-     * @parm(s) : @return
-     * 
-     * @return : boolean
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+    
     private static native boolean isCookieEnabled() /*-{
         return navigator.cookieEnabled;
      }-*/;
-	/**
-	 * 
-	 * @function getSignedInDataAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :returns signedInDataAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return signedInDataAsyncCallback
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	    public SimpleAsyncCallback<UserDo> getSignedInDataAsyncCallback() {
+
+    public SimpleAsyncCallback<UserDo> getSignedInDataAsyncCallback() {
         return signedInDataAsyncCallback;
     }
-	/**
-	 * 
-	 * @function setSignedInDataAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : To initialize signedInDataAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param signedInDataAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
     public void setSignedInDataAsyncCallback(SimpleAsyncCallback<UserDo> signedInDataAsyncCallback) {
         this.signedInDataAsyncCallback = signedInDataAsyncCallback;
     }

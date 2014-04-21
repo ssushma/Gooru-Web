@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Classpages Team
  * 
- * @fileName : RefreshClasspageResourceItemListEvent.java
- *
- * @description : This file deals with Refresh Classpage ResourceItem List Events.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RefreshClasspageResourceItemListEvent extends GwtEvent<RefreshClasspageResourceItemListHandler> {
 
@@ -63,16 +52,12 @@ public class RefreshClasspageResourceItemListEvent extends GwtEvent<RefreshClass
 		this.collection = collection;
 		this.refreshType = refreshType;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RefreshClasspageResourceItemListHandler> getAssociatedType() {
 		return TYPE;
 	}
-    /**
-     * 	This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-     */
+
 	@Override
 	protected void dispatch(RefreshClasspageResourceItemListHandler handler) {
 		

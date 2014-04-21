@@ -26,25 +26,15 @@ package org.ednovo.gooru.shared.model.library;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.shared.model.content.CollectionMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * @fileName : ConceptDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ConceptDo implements Serializable {
 	
@@ -52,43 +42,29 @@ public class ConceptDo implements Serializable {
 	private String goals;
 	private String title;
 	private String gooruOid;
+	private String id;
 	private ArrayList<LibraryCollectionItemDo> collectionItems;
 	private LibraryUserDo user;
 	private ThumbnailDo thumbnails;
 	private CollectionMetaInfoDo metaInfo;
-	/** 
-	 * This method is to get goals
-	 */
+	private List<Map<String, String>> standards;
+	public ConceptDo(){}
+	
 	public String getGoals() {
 		return goals;
 	}
-	/** 
-	 * This method is to set goals
-	 */
 	public void setGoals(String goals) {
 		this.goals = goals;
 	}
-	/** 
-	 * This method is to get title
-	 */
 	public String getTitle() {
 		return title;
 	}
-	/** 
-	 * This method is to set title
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	/** 
-	 * This method is to get gooruOid
-	 */
 	public String getGooruOid() {
 		return gooruOid;
 	}
-	/** 
-	 * This method is to set gooruOid.
-	 */
 	public void setGooruOid(String gooruOid) {
 		this.gooruOid = gooruOid;
 	}
@@ -139,5 +115,23 @@ public class ConceptDo implements Serializable {
 	 */
 	public void setMetaInfo(CollectionMetaInfoDo metaInfo) {
 		this.metaInfo = metaInfo;
-	}	
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	
+
+	public List<Map<String, String>> getStandards() {
+		return standards;
+	}
+
+	public void setStandards(List<Map<String, String>> standards) {
+		this.standards = standards;
+	}		
 }

@@ -4,8 +4,8 @@
 <ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
 	
 	<g:HTMLPanel styleName="{res.css.resourceDragCursorPosition}" >
-		<g:AbsolutePanel ui:field="container" width="242px" height="45px">
-			<g:Label styleName="{res.css.plusImage}" ui:field="dragImage" />
+		<g:AbsolutePanel ui:field="container" width="252px" height="45px">
+			<g:Label  ui:field="dragImage" />
 			<g:FlowPanel styleName="{res.css.resourceDragWithImg}" ui:field="labelPanel">
 				<g:Label styleName="{res.css.resourceDragImage}" ui:field="dragResourceImage"/>
 				<g:HTML styleName="{res.css.resourceDragTitle} resourceDragCollectionTitle" ui:field="dragresourceTitle" />

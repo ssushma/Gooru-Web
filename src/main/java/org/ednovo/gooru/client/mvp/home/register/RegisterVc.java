@@ -63,19 +63,8 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : RegisterVc.java
+ * @author Search Team
  *
- * @description : Related to Validations for email,Date.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RegisterVc extends PopupPanel implements MessageProperties {
 	
@@ -113,7 +102,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 
 	private String dob;
 	
-	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = MessageProperties.GL0214;
+	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = GL0214;
 	
 	private static final String PARENT = "Parent";
 	
@@ -169,7 +158,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		add(binder.createAndBindUi(this));
 //		this.setStyleName(Register1CBundle.INSTANCE.css().registerPopupStyle());
 //		this.addStyleName("gwt-PopupPanel");
-		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
+		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY.toString()) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY.toString())|| AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY.toString())){
         	this.getElement().getStyle().setZIndex(999999);
         }else{
         	this.getElement().getStyle().clearZIndex();
@@ -198,38 +187,20 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		gmailButton.getElement().setId("btnGmail");
 	    dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		
-	    lblSignUp.setText(MessageProperties.GL0186 + MessageProperties.GL_SPL_EXCLAMATION);
-	    lblAsBetauser.setText(MessageProperties.GL0210);
-	    lblSignWithGoogle.setText(MessageProperties.GL0203);
+	    lblSignUp.setText(GL0186+GL_SPL_EXCLAMATION);
+	    lblAsBetauser.setText(GL0210);
+	    lblSignWithGoogle.setText(GL0203);
 	    lblSignWithGoogle.getElement().setId("lblSignWithGoogle");
-	    lblOr.setText(MessageProperties.GL0209);
-	    lblBirthday.setText(MessageProperties.GL0211);
-	    lblEmail.setText(MessageProperties.GL0212);
-	    goBtnUc.setText(MessageProperties.GL0213);
+	    lblOr.setText(GL0209);
+	    lblBirthday.setText(GL0211);
+	    lblEmail.setText(GL0212);
+	    goBtnUc.setText(GL0213);
 	    
 		emailValidationUc.setVisible(false);
 		dateValidationUc.setVisible(false);
 		this.setGlassEnabled(true);
 	}
-	/**
-	 * 
-	 * @function onCancelClicked 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :UIHandler for cancelButton.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 		//this.setVisible(false);
@@ -238,7 +209,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		hide();
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);*/
 		String currentPlaceToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY) || currentPlaceToken.equals(PlaceTokens.RESOURCE_PLAY) ||
+		if (currentPlaceToken.equals(PlaceTokens.COLLECTION_PLAY)||currentPlaceToken.equals(PlaceTokens.PREVIEW_PLAY) || currentPlaceToken.equals(PlaceTokens.RESOURCE_PLAY) ||
 			currentPlaceToken.equals(PlaceTokens.COLLECTION_SEARCH) || currentPlaceToken.equals(PlaceTokens.RESOURCE_SEARCH) ){
 			
 		}else{
@@ -250,25 +221,8 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		hide();
 
 	}
-	/**
-	 * 
-	 * @function onGmailButtonClicked 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :gmailButton UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"home",System.currentTimeMillis(),System.currentTimeMillis(), "",AppClientFactory.getLoggedInUser().getToken());
@@ -503,21 +457,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		}
 		return isValid;
 	}
-	/**
-	 * 
-	 * @fileName : RegisterVc.java
-	 *
-	 * @description : Vaidation for Date on Focus Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -529,21 +469,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterVc.java
-	 *
-	 * @description : Vaidation for Date on Button CLick Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -575,21 +501,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterVc.java
-	 *
-	 * @description : Vaidation for Date on Blur Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -597,21 +509,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 			dateBoxUc.getDateBox().removeStyleName(NewRegisterCBundle.INSTANCE.css().gooruDateError());
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterVc.java
-	 *
-	 * @description : Vaidation for email on Focus Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnEmailFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -621,21 +519,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 			emailIdTxtBox.removeStyleName(NewRegisterCBundle.INSTANCE.css().errorBoxStyle());
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterVc.java
-	 *
-	 * @description : Vaidation for Email on Blur Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnEmailBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -649,47 +533,11 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 	public UserDo getUserDo() {
 		return userDo;
 	}
-	/**
-	 * 
-	 * @function getRegisterAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns registerAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<UserDo> getRegisterAsyncCallback() {
 		return registerAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setRegisterAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter for registerAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param registerAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setRegisterAsyncCallback(
 			SimpleAsyncCallback<UserDo> registerAsyncCallback) {
 		this.registerAsyncCallback = registerAsyncCallback;
@@ -705,25 +553,7 @@ public class RegisterVc extends PopupPanel implements MessageProperties {
 		Date age = new Date(ageInMillis);
 		return age.getYear()- 70;
 	}
-	/**
-	 * 
-	 * @function setMixPanelEvent 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will ask to signup based on event type.
-	 * 
-	 * 
-	 * @parm(s) : @param eventType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setMixPanelEvent(String eventType){
 	if(eventType.equalsIgnoreCase("dragresource")) {
 	MixpanelUtil.ClickSignupDraggingResouerceFromSearchResults();
@@ -735,7 +565,7 @@ else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RES
 	MixpanelUtil.ClickSignUpFromResourcePlayer();
 	}
 }
-else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
  if (eventType.equalsIgnoreCase("add")){
 	MixpanelUtil.ClickSignUpFromCollectionPlayer();
 	 }

@@ -12,34 +12,34 @@
 	<g:HTMLPanel styleName="{res.css.myWebResourceContainer}">
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
 		
-		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="uploadName"> Upload a file </g:HTMLPanel>
+		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="uploadName"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.ownResourceFormInputControl}" ui:field="uploadContainer"> 
             <g:TextBox ui:field="resourcePathTextBox" styleName="{res.css.ownResourceFormInputTextBox}" readOnly="true"/> 
-            <g:Button ui:field="browseResourceBtn" styleName="{res.css.ownResourceFormBrowse} {res.css.ownResourceFormBrowsePosition}">Browse</g:Button>
+            <g:Button ui:field="browseResourceBtn" styleName="{res.css.ownResourceFormBrowse} {res.css.ownResourceFormBrowsePosition}"></g:Button>
              <g:FormPanel ui:field="fileuploadForm" encoding="multipart/form-data" method="post">
            		 <g:FileUpload ui:field="chooseResourceBtn" name="resourceUpload" styleName="{res.css.resourceUploadEditPosition}"/>
             </g:FormPanel>
-            <g:Anchor styleName="{res.css.rollBackToPaperClipPos}" text="Or keep the current File." ui:field="rollBackToPaperClip" /> 
+            <g:Anchor styleName="{res.css.rollBackToPaperClipPos}" ui:field="rollBackToPaperClip"/> 
          </g:HTMLPanel>
          
 			<g:HTMLPanel ui:field="defaultFileTxtContainer" styleName="{res.css.fileContainer}">
-			    <g:Image url="images/paperclip.png" styleName="{res.css.paperClip}"></g:Image>
+			    <g:Image styleName="{res.css.paperClip}" ui:field="clipImage"></g:Image>
 				<g:Label ui:field="fileTextLbl" styleName="{res.css.fileUplodDefultLbl}" />
-				<g:Button styleName="primary {res.css.changeFileBtnPosition}" text="Change the File" ui:field="changeFileBtn"/> 
+				<g:Button styleName="primary {res.css.changeFileBtnPosition}" ui:field="changeFileBtn"/> 
 			</g:HTMLPanel>
 			
 			<g:Label styleName="{res.css.myFolderCollectionFormInputBottomText}" ui:field="resourceContentChkLbl"></g:Label>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}"> File Title </g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="fileTitleText" ></g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormInputControl}">
 				<g:TextBox ui:field="titleTextBox" styleName="{res.css.inputTextBox}" />
 			</g:HTMLPanel>
 			<g:Label styleName="{res.css.myFolderCollectionFormInputBottomText}"
-				ui:field="mandatoryTitleLbl">Please enter a title.</g:Label>
+				ui:field="mandatoryTitleLbl"></g:Label>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}"> Description </g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="descriptionText"></g:HTMLPanel>
 			<g:HTMLPanel
 				styleName="{res.css.myFolderCollectionFormInputControl} {res.css.myFolderCollectionFormTextarea} editResourceDescriptionContainer">
 					<g:TextArea styleName="{res.css.inputTextBox} {res.css.newPopupTextAreaEdit}" ui:field="descriptionTxtAera" />
@@ -49,7 +49,7 @@
 				ui:field="descCharcterLimit"></g:Label>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}"> Category* </g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="categoryLabel"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
@@ -64,11 +64,54 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			<g:Label styleName="{res.css.addNewResourceMandatoryCategory}"
-					ui:field="mandatoryCategoryLbl">Please choose a category.</g:Label>
+					ui:field="mandatoryCategoryLbl"></g:Label>
 			</g:HTMLPanel>
-		 <g:HTMLPanel styleName="" ui:field="resourceTypePanel">
-			<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderUpdateDropdown}">
+	   <g:HTMLPanel styleName="{res.css.reorderLabelContainer}" ui:field="resourceTypePanel">
+			<g:HTMLPanel styleName="{res.css.myshelfCollectionresourceDropdown}">
+				<!-- <uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="videoResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteVideo}" ui:field="video">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="videoLabel"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel> -->
+				<!-- <uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="websiteResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteWebsite}" ui:field="website">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="websiteText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="interactiveResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteInteractive}" ui:field="interactive">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="interactiveText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
+				 -->
+				<!-- <uc:HTMLEventPanel
 					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
 					ui:field="slideResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
@@ -79,7 +122,7 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}">Slide</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="slideText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel
@@ -93,10 +136,10 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}">Handout</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="handoutText"></g:HTMLPanel>
 					</g:HTMLPanel>
-				</uc:HTMLEventPanel>
-				<uc:HTMLEventPanel
+				</uc:HTMLEventPanel> -->
+				<!-- <uc:HTMLEventPanel
 					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
 					ui:field="textbookResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
@@ -107,10 +150,10 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}">TextBook</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="textbookLabel"></g:HTMLPanel>
 					</g:HTMLPanel>
-				</uc:HTMLEventPanel>
-				<uc:HTMLEventPanel
+				</uc:HTMLEventPanel> -->
+				<!-- <uc:HTMLEventPanel
 					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
 					ui:field="lessonResourcePanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
@@ -121,28 +164,113 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}">Lesson</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="lessonText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel> -->
+				<!-- <uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="questionResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteQuestion}" ui:field="question">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}">Question</g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel> -->
+				<!-- <uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="examResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteExam}" ui:field="exam">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="examText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel> -->
+				<uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="imageResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteImage}" ui:field="image">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="imagesText"></g:HTMLPanel>
 					</g:HTMLPanel>
 				</uc:HTMLEventPanel>
+					<uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="textResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteText}" ui:field="texts">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="textsText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
+					<!-- <uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="audioResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteAudio}" ui:field="audio">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="audioText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel>
+					<uc:HTMLEventPanel
+					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
+					ui:field="otherResourcePanel">
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoInnerdiv}">
+							<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContent}">
+								<g:HTMLPanel
+									styleName="{res.css.myFolderCollectionFolderspriteNew} {res.css.myFolderCollectionFolderspriteOther}" ui:field="other">
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoTitle}" ui:field="otherText"></g:HTMLPanel>
+					</g:HTMLPanel>
+				</uc:HTMLEventPanel> -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+		
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.myFolderCollectionThumbImageContainer}">
-          <g:HTMLPanel styleName="{res.css.myFolderCollectionThumbImageDesc}">Thumbnail Image</g:HTMLPanel>
+          <g:HTMLPanel styleName="{res.css.myFolderCollectionThumbImageDesc}" ui:field="thumbnailImageText"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRect}" ui:field="imageContainer">
             <g:HTMLPanel styleName="{res.css.myFolderCollectionThumbRectDesc}">
                 <g:Image url="" ui:field="setThumbnailImage" styleName="{res.css.resourceThumbnailImage}"></g:Image>
             </g:HTMLPanel>
           </g:HTMLPanel>
         <!--   <g:Button styleName="{res.css.ownResourceFormUpload}" ui:field="uploadImageLbl">Upload Image</g:Button> -->
-        <g:Label styleName="{res.css.myFolderCollectionThumbUploadImagetext}" ui:field="uploadImageLbl">Upload Image</g:Label>
+        <g:Label styleName="{res.css.myFolderCollectionThumbUploadImagetext}" ui:field="uploadImageLbl"></g:Label>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionRefresh}"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
         </g:HTMLPanel>
         
          <g:HTMLPanel styleName="{res.css.resourceRightsContainerWeb}">
-        	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" ></g:CheckBox>
-        	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}">I agree to Gooru's copyright policy.</g:Label> 
+        	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
+        	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label> 
      <uc:HTMLEventPanel ui:field="lblContentRights" styleName="{res.css.ownResourceFormRightsContent}">
 	        	<g:HTMLPanel styleName="{res.css.resourceRightsPopupContainer}" ui:field="panelContentRights">
 					<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>
@@ -150,11 +278,17 @@
 					<g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.resourceRightsInnerPopup}">
 						<!-- <g:HTMLPanel ui:field="htmlContentRightsDesc"></g:HTMLPanel> -->
-						<g:HTMLPanel ui:field="rightsContent">
+						<!-- <g:HTMLPanel ui:field="rightsContent">
      						I agree that I either own this copyrighted content or have permission by the copyright holder to use this content. Further, I will use this material for educational uses only. Please refer to the 
      						<g:Anchor styleName="{res.css.anchorText}" text="Community Guidelines" ui:field="commuGuideLinesAnr"/>, <g:Anchor styleName="{res.css.customAnchorText}" text=" Terms," ui:field="termsAndPolicyAnr"/>
      						<g:Anchor styleName="{res.css.customAnchorText}" text=" Privacy" ui:field="privacyAnr"/>
      		 				and <g:Anchor styleName="{res.css.anchorText}" text=" Copyright" ui:field="copyRightAnr"/> for additional information.
+    	 				</g:HTMLPanel> -->
+    	 					<g:HTMLPanel ui:field="rightsContent">
+							<g:Label ui:field="agreeText"/>
+     						<g:Anchor styleName="{res.css.anchorText}" ui:field="commuGuideLinesAnr"/>,<g:Anchor styleName="{res.css.customAnchorText}" ui:field="termsAndPolicyAnr"/>
+     						<g:Anchor styleName="{res.css.customAnchorText}" ui:field="privacyAnr"/>
+     		 			<g:Label ui:field="andText" styleName="{res.css.andText}" ></g:Label> <g:Anchor styleName="{res.css.anchorText}" ui:field="copyRightAnr"/><g:Label ui:field="additionalText" styleName="{res.css.additionalText}"/>
     	 				</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -162,9 +296,9 @@
          </g:HTMLPanel>
 		
 		<g:HTMLPanel styleName="{res.css.fileActionPanelEditFile}" ui:field="panelAction">
-			<g:Anchor styleName="{res.css.myFolderCollectionCancel}" text="Cancel" ui:field="cancelResourcePopupBtnLbl" />
-			<g:Button styleName="primary" text="Save" ui:field="addResourceBtn" />
+			<g:Anchor styleName="{res.css.myFolderCollectionCancel}" ui:field="cancelResourcePopupBtnLbl" />
+			<g:Button styleName="primary" ui:field="addResourceBtn"/>
 		</g:HTMLPanel>
-		 <g:Label styleName="{res.css.fileEditAdding}" ui:field="lblAdding">adding...</g:Label>
+		 <g:Label styleName="{res.css.fileEditAdding}" ui:field="lblAdding"></g:Label>
 	</g:HTMLPanel>
 </ui:UiBinder>

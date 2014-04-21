@@ -28,20 +28,10 @@
 package org.ednovo.gooru.client.mvp.classpages.event;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
+ * @author Classpages Team
  * 
- * @fileName : RefreshAssignmentsListEventHandler.java
- *
- * @description : This file deals with refreshing AssignmentsList Event handlers.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface RefreshAssignmentsListEventHandler extends EventHandler {
 

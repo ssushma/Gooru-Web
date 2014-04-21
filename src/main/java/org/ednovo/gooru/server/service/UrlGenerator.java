@@ -32,19 +32,8 @@ import java.util.Map;
 import org.ednovo.gooru.server.request.UrlToken;
 
 /**
+ * @author Search Team
  * 
- * @fileName : UrlGenerator.java
- *
- * @description : This class is used to Generate Url..
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class UrlGenerator {
 
@@ -57,25 +46,7 @@ public class UrlGenerator {
 		}
 		return url;
 	}
-/**
- * 
- * @function generateUrl 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Generate url .
- * 
- * 
- * @parm(s) : @param endpoint
- * @parm(s) : @param token
- * @parm(s) : @param params
- * @parm(s) : @return
- * 
- * @return : String
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public static String generateUrl(String endpoint, UrlToken token, String... params) {
 		String url = token.getUrl();
 		return endpoint + generateUrl(url, params);

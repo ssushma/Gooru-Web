@@ -25,7 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.collection;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.model.content.ContentReportDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.PopupView;
@@ -34,9 +34,22 @@ public interface IsCollectionPlayerView extends PopupView, IsViewWithHandlers<Co
 	public FlowPanel getPlayerBodyContainer();
 	public void setResourceTitle(String resourceTitle);
 	public FlowPanel getNavigationContainer();
-	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,boolean isShareButtonEnable, boolean isNarrationButtonEnable,boolean isNavigationButtonEnable);
-	public void makeButtonActive(boolean makeAddButtionActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive);
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton);
+	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable,boolean isShareButtonEnable, boolean isNarrationButtonEnable,boolean isNavigationButtonEnable,boolean isFlagButtonActive);
+	public void makeButtonActive(boolean makeAddButtionActive,boolean makeInfoButtionActive, boolean  makeShareButtonActive, boolean makeNarrationButtonActive, boolean makeNavigationButtonActive,boolean makeFlagButtonActive);
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectNarrationButton,boolean deselectNavigationButton,boolean deselectFlagButton);
 	public void updateThumbsRatingView(int userThumbRating);
 	public void resetThumbsButtons();
+	public void defaultReportView();
+	public void flaggedReportView(ContentReportDo contentReportDo,String FlagId);
+	public void hideFlagButton(boolean hideButton);
+	public void removeStudentViewButton();
+	public void setTabPlaceRequest(String string, boolean b, boolean c);
+	public void showAddToolTip();
+	public void closePreviewPlayer();
+	public void makeFlagButtonOrange();
+	public void hidePlayerButtons(boolean isHidePlayerButtons,String collectionId);
+	public void scrollStudyPage();
+	public void showClasspage();
+	public void showClasspage(String classpageId,String page);
+	public void updateAuthorDetails();
 }

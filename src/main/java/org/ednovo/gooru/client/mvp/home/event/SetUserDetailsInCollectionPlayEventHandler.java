@@ -28,19 +28,7 @@
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.EventHandler;
-/**
- * @fileName : SetUserDetailsInCollectionPlayEventHandler.java
- *
- * @description : Handler for {@link SetUserDetailsInCollectionPlayEvent}.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface SetUserDetailsInCollectionPlayEventHandler extends EventHandler{
 	
 	void setUserLoginDetails(String sessionToken,String gooruUserId);

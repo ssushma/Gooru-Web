@@ -22,6 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client.gin;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
@@ -43,6 +44,9 @@ import org.ednovo.gooru.client.mvp.classpages.IsClasspageView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerPresenter;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerView;
 import org.ednovo.gooru.client.mvp.classpages.assignments.IsAddAssignmentContainerView;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView;
+import org.ednovo.gooru.client.mvp.classpages.classlist.IsClassListView;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
@@ -91,6 +95,37 @@ import org.ednovo.gooru.client.mvp.home.register.UserRegistrationView;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadView;
 import org.ednovo.gooru.client.mvp.image.upload.IsImageUploadView;
+import org.ednovo.gooru.client.mvp.library.partner.IsPartnerLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.PartnerLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter.IsAutodeskLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.autodesk.IsAutodeskLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter.IsFteLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.fte.IsFteLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.IsLessonopolyLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter.IsLessonopolyLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.ngc.IsNgcLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter.IsNgcLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.onr.IsOnrLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter.IsOnrLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryView;
+import org.ednovo.gooru.client.mvp.library.rusd.IsRusdView;
+import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
+import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter.IsRusdProxy;
+import org.ednovo.gooru.client.mvp.library.rusd.RusdView;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter.IsCollectionPlayerProxy;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerView;
@@ -104,9 +139,25 @@ import org.ednovo.gooru.client.mvp.play.collection.body.IsCollectionPlayerMetada
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndView;
 import org.ednovo.gooru.client.mvp.play.collection.end.IsCollectionEndView;
+import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagView;
+import org.ednovo.gooru.client.mvp.play.collection.flag.IsCollectionFlagView;
 import org.ednovo.gooru.client.mvp.play.collection.info.IsResourceInfoView;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.IsPreviewPlayerView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter.IsPreviewPlayerProxy;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.end.IsPreviewEndView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.IsPreviewHomeView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomePresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.IsPreviewPlayerMetadataView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.PreviewPlayerMetadataPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.PreviewPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionSharePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionShareView;
 import org.ednovo.gooru.client.mvp.play.collection.share.IsCollectionShareView;
@@ -123,6 +174,9 @@ import org.ednovo.gooru.client.mvp.play.resource.add.IsAddResourceCollectionView
 import org.ednovo.gooru.client.mvp.play.resource.body.IsResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
+import org.ednovo.gooru.client.mvp.play.resource.flag.IsResourceFlag;
+import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagView;
 import org.ednovo.gooru.client.mvp.play.resource.narration.IsResourceNarrationView;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.narration.ResourceNarrationView;
@@ -185,9 +239,15 @@ import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormPresenter.IsCo
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormView;
 import org.ednovo.gooru.client.mvp.shelf.collection.IsCollectionFormInPlayView;
 import org.ednovo.gooru.client.mvp.shelf.collection.IsCollectionFormView;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabView;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.IsFolderItemTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.IsCollectionAssignTab;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.IsCollectionCollaboratorsTab;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.IsCollectionInfoTabView;
@@ -214,24 +274,15 @@ import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalytics;
 import com.gwtplatform.mvp.client.googleanalytics.GoogleAnalyticsImpl;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.TokenFormatter;
+
 /**
+ * @author Search Team
  * 
- * @fileName : AppModule.java
- *
- * @description : All presenter class will be bind.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class AppModule extends AppPresenterModule {
 
 	public static final String GA_ACCOUNT = "UA-20089789-1";
+	public static final String GA_ACCOUNT_HEWLETT = "UA-5033010-1";
 
 	@Override
 	protected void configure() {
@@ -339,17 +390,19 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(UserRegistrationPresenter.class,
 				IsUserRegistrationView.class, UserRegistrationView.class);
 
-		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class).in(
-				Singleton.class);
+		bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class);
+		
 		bindConstant().annotatedWith(GaAccount.class).to(GA_ACCOUNT);
 		bind(GoogleAnalyticsNavigationTracker.class).asEagerSingleton();
+		
+//		bind(GoogleAnalyticsHpNavigationTracker.class).asEagerSingleton();
+		
 		bindPresenterWidget(CollectionFormInPlayPresenter.class,
 				IsCollectionFormInPlayView.class,
 				CollectionFormInPlayView.class);
 
 		bindPresenterWidget(CollectionAssignTabPresenter.class,
 				IsCollectionAssignTab.class, CollectionAssignTabView.class);
-
 		bindPresenterWidget(SignUpPresenter.class, IsSignUpView.class,SignUpView.class);
 		bindPresenter(CollectionPlayerPresenter.class, IsCollectionPlayerView.class, CollectionPlayerView.class,IsCollectionPlayerProxy.class);
 		bindPresenter(ResourcePlayerPresenter.class, IsResourcePlayerView.class, ResourcePlayerView.class,IsResourcePlayerProxy.class);
@@ -366,7 +419,29 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(AddCollectionPresenter.class, IsAddCollectionView.class, AddCollectionView.class);
 		bindPresenterWidget(SignUpCompleteProfilePresenter.class,IsSignUpCompleteProfile.class,SignUpCompleteProfileView.class);
 		bindPresenterWidget(SignUpAfterThirteenPresenter.class,IsAfterThirteen.class,SignUpTurnsAfterThirteenView.class);
-	}
+		
+		bindPresenter(RusdPresenter.class, IsRusdView.class, RusdView.class,IsRusdProxy.class);
+		bindPresenter(PreviewPlayerPresenter.class,IsPreviewPlayerView.class,PreviewPlayerView.class,IsPreviewPlayerProxy.class);
+		bindPresenterWidget(PreviewPlayerMetadataPresenter.class,IsPreviewPlayerMetadataView.class,PreviewPlayerMetadataView.class);
+		bindPresenterWidget(PreviewHomePresenter.class,IsPreviewHomeView.class,PreviewHomeView.class);
+		bindPresenterWidget(PreviewEndPresenter.class,IsPreviewEndView.class,PreviewEndView.class);
+		bindPresenterWidget(CollectionFlagPresenter.class,IsCollectionFlagView.class,CollectionFlagView.class);
+		bindPresenterWidget(ResourceFlagPresenter.class,IsResourceFlag.class,ResourceFlagView.class);
+		
+		bindPresenterWidget(CollectionCollaboratorsTabPresenter.class,
+				IsCollectionCollaboratorsTab.class, CollectionCollaboratorsTabView.class);
 	
+		bindPresenterWidget(FolderItemTabPresenter.class,IsFolderItemTabView.class, FolderItemTabView.class);
+		
+		bindPresenterWidget(ClassListPresenter.class, IsClassListView.class, ClassListView.class);
+		
+		bindPresenter(FteLibraryPresenter.class, IsFteLibraryView.class, FteLibraryView.class,IsFteLibraryProxy.class);
+		bindPresenter(AutodeskLibraryPresenter.class, IsAutodeskLibraryView.class, AutodeskLibraryView.class,IsAutodeskLibraryProxy.class);
+		bindPresenter(OnrLibraryPresenter.class, IsOnrLibraryView.class, OnrLibraryView.class,IsOnrLibraryProxy.class);
+		bindPresenter(LessonopolyLibraryPresenter.class, IsLessonopolyLibraryView.class, LessonopolyLibraryView.class,IsLessonopolyLibraryProxy.class);
+		bindPresenter(NgcLibraryPresenter.class, IsNgcLibraryView.class, NgcLibraryView.class,IsNgcLibraryProxy.class);
+		bindPresenter(WspwhLibraryPresenter.class, IsWspwhLibraryView.class, WspwhLibraryView.class,IsWspwhLibraryProxy.class);
+		bindPresenterWidget(PartnerLibraryPresenter.class, IsPartnerLibraryView.class, PartnerLibraryView.class);
 
+	}
 }

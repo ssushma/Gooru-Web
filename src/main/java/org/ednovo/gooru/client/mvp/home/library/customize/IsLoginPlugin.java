@@ -28,19 +28,8 @@ import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 
 /**
- * 
- * @fileName : IsLoginPlugin.java
+ * @author Search Team
  *
- * @description : This is the interface for LoginPluginView.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsLoginPlugin extends IsChildView<LoginPluginPresenter>
 {

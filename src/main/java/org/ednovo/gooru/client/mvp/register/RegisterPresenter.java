@@ -44,19 +44,8 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
 /**
- * 
- * @fileName : RegisterPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for RegisterView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RegisterPresenter extends BasePlacePresenter<IsRegisterView, IsRegisterProxy> implements RegisterUiHandlers {
 
@@ -80,25 +69,20 @@ public class RegisterPresenter extends BasePlacePresenter<IsRegisterView, IsRegi
 	}
 	
 	@Inject PlaceManager placeManager;
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
 		getView().clearAll();
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
 		getView().clearAll();
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -107,16 +91,12 @@ public class RegisterPresenter extends BasePlacePresenter<IsRegisterView, IsRegi
 		params.put("callback","register");
 		getPlaceManager().revealPlace(request, params);
 	}
-	/**
-	 * To fire RevealRootPopupContentEvent
-	 */
+	
 	@Override
 	protected final void revealInParent() {
 		RevealRootPopupContentEvent.fire(this, this);
 	}
-	/**
-	 * To get the place token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.REGISTER;

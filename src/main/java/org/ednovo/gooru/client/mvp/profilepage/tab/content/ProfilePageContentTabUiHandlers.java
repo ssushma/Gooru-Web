@@ -29,21 +29,7 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-/**
- * 
- * @fileName : ProfilePageContentTabUiHandlers.java
- *
- * @description : UIHandler file for ProfilePageContentTabView
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface ProfilePageContentTabUiHandlers  extends BaseUiHandlers {
 	
 	@ContentSlot

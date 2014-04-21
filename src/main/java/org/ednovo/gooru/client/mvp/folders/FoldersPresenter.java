@@ -52,19 +52,18 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
- * 
  * @fileName : FoldersPresenter.java
- *
- * @description : This is the presenter class for FoldersView.java
- *
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: Apr 17, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 public class FoldersPresenter extends BasePlacePresenter<IsFoldersView, IsFoldersProxy> implements FoldersUiHandlers {
 	@Inject
@@ -91,16 +90,12 @@ public class FoldersPresenter extends BasePlacePresenter<IsFoldersView, IsFolder
 	@NameToken(PlaceTokens.FOLDERS)
 	public interface IsFoldersProxy extends ProxyPlace<FoldersPresenter> {
 	}
-	/**
-	 * This method is used to get the view token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 *This method  is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -110,9 +105,7 @@ public class FoldersPresenter extends BasePlacePresenter<IsFoldersView, IsFolder
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		getView().setBackToSearch();
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+	
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -134,27 +127,21 @@ public class FoldersPresenter extends BasePlacePresenter<IsFoldersView, IsFolder
 			}
 		});
 	}
-	/**
-	 * This is used to change the place to CREATEFOLDER.
-	 */
+
 	@Override
 	public void initCreateFolder() {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));	
 		AppClientFactory.getPlaceManager()
 				.revealPlace(PlaceTokens.CREATEFOLDER);
 	}
-	/**
-	 * This is used to change the place to COLLECTION.
-	 */
+
 	@Override
 	public void initCreateCollection() {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));	
 		AppClientFactory.getPlaceManager()
 				.revealPlace(PlaceTokens.COLLECTION);
 	}
-	/**
-	 * This is used to change the place to FOLDERS.
-	 */
+	
 	@Override
 	public void initFolderRedirect() {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));	
@@ -207,26 +194,19 @@ public class FoldersPresenter extends BasePlacePresenter<IsFoldersView, IsFolder
 			SimpleAsyncCallback<List<CollectionItemDo>> getAllFoldersAsyncCallback) {
 		this.getAllFoldersAsyncCallback = getAllFoldersAsyncCallback;
 	}
-	/**
-	 *This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
-	
+
 	@Override
 	protected void onReset() {
 		super.onReset();
 		setInSlot(TYPE_FOLDERS_SHELF_VIEW, shelfListPresenter);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 	}
-	/**
-	 * This method is used to get the details of all the folders.
-	 */
+
 	@Override
 	public void getFirstLevelWorkspaceFolders() {
 		getFolderService().getAllFolders(getGetAllFoldersAsyncCallback());
 	}
-	/**
-	 * This method is used to refresh the collection in folders list.
-	 */
+
 	@Override
 	public void refreshCollectionInFolderList(CollectionDo collectionDo,
 			RefreshFolderType refreshFolderType) {

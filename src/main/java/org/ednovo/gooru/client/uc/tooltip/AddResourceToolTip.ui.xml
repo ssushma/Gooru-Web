@@ -9,7 +9,7 @@
 	             <!-- <g:HTMLPanel styleName="{toolTip.comingSoonText}">Coming soon!</g:HTMLPanel> -->
 	              <g:FlowPanel styleName="{toolTip.messageTextContainer}">
 		        	<!-- <g:HTMLPanel styleName="{toolTip.organizeText}">Teach</g:HTMLPanel> -->
-		            <g:HTMLPanel styleName="{toolTip.EditPageRemainigText}">This collection has reached its limit!</g:HTMLPanel>
+		            <g:HTMLPanel styleName="{toolTip.EditPageRemainigText}" ui:field="collectionLimit"></g:HTMLPanel>
 		            
 		           </g:FlowPanel>
 	        </g:FlowPanel>

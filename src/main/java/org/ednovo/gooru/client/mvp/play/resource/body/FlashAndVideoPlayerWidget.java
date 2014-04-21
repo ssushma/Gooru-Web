@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -36,16 +38,22 @@ public class FlashAndVideoPlayerWidget extends Composite {
 		int startTimeInSeconds = 0;
 		int endTimeInSeconds = 0;
 		String startTimeEndTime="";
+		if(videoStartTime==null && videoEndTime==null)
+		{
+			startTimeEndTime="start=0&end=0;";
+		}
 		if(videoStartTime!=null){
 			startTimeInSeconds=getStartOrEndTime(videoStartTime);
 			startTimeEndTime="start=" + startTimeInSeconds;
 		}
 		if(videoEndTime!=null){
 			endTimeInSeconds = getStartOrEndTime(videoEndTime);
-			startTimeEndTime=startTimeEndTime+"&end"+endTimeInSeconds+";";
+			startTimeEndTime=startTimeEndTime+"&end="+endTimeInSeconds+";";
 		}
+		String tabView=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
+		int autoPlay=tabView!=null&&tabView.equalsIgnoreCase("narration")?0:1;
 		String embeddableHtmlString = "<embed id=\"playerid\" type=\"application/x-shockwave-flash\" src=\""+getProtocal()+"//www.youtube.com/v/"
-				+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay=1&amp;start=1\""
+				+ resourceUrl+"?" +startTimeEndTime +"rel=0&amp;enablejsapi=1&amp;version=3&amp;autoplay="+autoPlay+"&amp;start=1\""
 				+ " width=\"100%\" height=\"100%\" quality=\"high\" allowfullscreen=\"true\" allowscriptaccess=\"always\" autoplay=\"1\" wmode=\"transparent\">";
 
 		HTMLPanel resourcePreviewPanel = new HTMLPanel(embeddableHtmlString);
@@ -56,7 +64,6 @@ public class FlashAndVideoPlayerWidget extends Composite {
 
 	}
 
-	
 	private int getStartOrEndTime(String resStart) {
 		String startParam = resStart;
 		int start=0;

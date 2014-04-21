@@ -29,6 +29,7 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,44 +38,50 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+
 /**
  * @fileName : AlertForgetContentUc.java
  *
- * @description : This is customized alert forget content class.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 31-Dec-2013
+ * @date: 06-Jun-2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
-public class AlertForgetContentUc extends PopupPanel {
+public class AlertForgetContentUc extends PopupPanel implements MessageProperties {
 	
 	@UiField HTMLEventPanel cancelButton,gmailButton;
 	
 	@UiField(provided = true)
 	ForgetPopUpCBundle res;
 		
-	private static final String FORGET_ERROR ="Looks like this email is tied with Google!";
+	private static final String FORGET_ERROR =GL1011;
 	
-	private static final String LOGIN_MESSAGE="Sign in through this link";
+	private static final String LOGIN_MESSAGE=GL1012;
 	
-	@UiField Label suggestionMessage,errorMessage;
+	@UiField Label suggestionMessage,errorMessage,forgetPopupHeaderText;
+	@UiField HTMLPanel signinGoogleText;
+	@UiField InlineLabel questionEmailText;
+	@UiField Anchor supportText;
 	
 	@UiTemplate("AlertForgetContentUc.ui.xml")
 	interface Binder extends UiBinder<Widget, AlertForgetContentUc> {
 
 	}	
 	private static final Binder binder = GWT.create(Binder.class);
-	/**
-	 * Class constructor.
-	 */
+
 	public AlertForgetContentUc(){
 		
 		this.res = ForgetPopUpCBundle.INSTANCE;
@@ -83,45 +90,23 @@ public class AlertForgetContentUc extends PopupPanel {
 		this.setGlassEnabled(true);
 		this.setSize("475px", "225px");
 		this.center();
+		forgetPopupHeaderText.setText(GL0061);
+		signinGoogleText.getElement().setInnerHTML(GL1010);
+		questionEmailText.setText(GL0298);
+		supportText.setText(GL0299);
+		supportText.setHref("mailto:support@goorulearning.org");
 		suggestionMessage.setText(LOGIN_MESSAGE);
 		errorMessage.setText(FORGET_ERROR);
 		
 		
 	}
-	/**
-	 * @function onCancelClicked 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will hanle the click event on the cancel button.
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 		//this.setVisible(false);
 		hide();
 
 	}
-	/**
-	 * @function onGmailButtonClicked 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the gmail button click.
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("gmailButton")
 	public void onGmailButtonClicked(ClickEvent clickEvent)
 	{

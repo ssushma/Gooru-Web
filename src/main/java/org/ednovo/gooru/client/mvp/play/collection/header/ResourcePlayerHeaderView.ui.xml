@@ -7,9 +7,10 @@
 	<g:FlowPanel styleName="{headerStyle.header}">
 		<g:FlowPanel styleName="{headerStyle.header-inner}">
 			<g:HTML styleName="{headerStyle.player-resource-title}" ui:field="resourceTitle"></g:HTML>
-			<g:Label styleName="{palyerBundle.getPlayerStyle.thumbsDownNormal}" ui:field="thumbsDownButton"></g:Label>
-			<g:Label styleName="{palyerBundle.getPlayerStyle.thumbsUpNormal}" ui:field="thumbsUpButton"></g:Label>
+			<!-- <g:Label styleName="{palyerBundle.getPlayerStyle.thumbsDownNormal}" ui:field="thumbsDownButton"></g:Label>
+			<g:Label styleName="{palyerBundle.getPlayerStyle.thumbsUpNormal}" ui:field="thumbsUpButton"></g:Label> -->
 			<g:FlowPanel styleName="{headerStyle.tabs} {headerStyle.player_buttons}">
+			    <g:Button styleName="{palyerBundle.getPlayerStyle.flagButtonDisable} {headerStyle.tabs}" ui:field="flagButton"></g:Button>
 				<g:Button styleName="{palyerBundle.getPlayerStyle.addButtonDisabled} {headerStyle.tabs}" ui:field="addButton"></g:Button>
 				<g:Button styleName="{palyerBundle.getPlayerStyle.infoButtonDisabled} {headerStyle.tabs}" ui:field="infoButton"></g:Button>
 				<g:Button styleName="{palyerBundle.getPlayerStyle.shareButtonDisabled} {headerStyle.tabs}" ui:field="shareButton"></g:Button>

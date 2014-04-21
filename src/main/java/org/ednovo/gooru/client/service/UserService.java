@@ -33,7 +33,6 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
-import org.ednovo.gooru.shared.model.user.ProfileV2Do;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
@@ -136,6 +135,13 @@ public interface UserService extends BaseService {
 	 * @throws GwtException
 	 */
 	SettingDo getUserProfileDetails(String gooruUid) throws GwtException;
+	
+	/**
+	 * Get User profile details for settings page
+	 * @return serialized {@link SettingDo}
+	 * @throws GwtException
+	 */
+	V2UserDo getV2UserProfileDetails(String gooruUid) throws GwtException;
 
 	/**
 	 * Update user profile details
@@ -197,5 +203,9 @@ public interface UserService extends BaseService {
 	
 	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException;
 	
-	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password);
+	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail);
+	
+	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException;
+	
+	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException;
 }

@@ -6,14 +6,18 @@
 		<div class="{flagPopUpstyle.thankyoupopupwrapper}">
 	<div class="{flagPopUpstyle.thankyoupopupinnerwrapper}">
     	<div class="{flagPopUpstyle.playerflagpopupheader}">
-        	<div class="{flagPopUpstyle.playerflagpopupheadertitle}">Flag</div>
+        	<g:Label styleName="{flagPopUpstyle.playerflagpopupheadertitle}" ui:field="successPopupTitle"/>
             <panel:HTMLEventPanel ui:field="closeButton" styleName="{flagPopUpstyle.playerflagpopupheaderCloseBtn}">
-        	    <g:Image altText="Close" ui:field="popUpCloseButton"/>
+        	    <g:Image ui:field="popUpCloseButton"/>
         	</panel:HTMLEventPanel> 
         </div>
-        <div class="{flagPopUpstyle.playerflagcontentcontainer}">
-        	<div class="{flagPopUpstyle.playerflagcontentthankyou}">Thank you for submitting!</div>
-             <g:Button styleName="{flagPopUpstyle.playerflagbuttonOk}" text="Ok" ui:field="okButton"/> 
+        <div class="{flagPopUpstyle.playerflagcontentcontainerThankYou}">
+        	<g:Label styleName="{flagPopUpstyle.playerflagcontentthankyou}" ui:field="successPopupMessage"/>
+        	<g:HTMLPanel ui:field="emailPopupThanksmsg">
+        	     <g:Label styleName="{flagPopUpstyle.emailThankYouLbl}" ui:field="emailConfirmationText"></g:Label>
+        	      <g:Label styleName="{flagPopUpstyle.emailIdLbl}" ui:field="emailIdLbl"></g:Label>
+        	 </g:HTMLPanel>
+            <g:Button styleName="{flagPopUpstyle.playerflagbuttonOk}" ui:field="okButton"/> 
            </div>
 </div>
 </div>

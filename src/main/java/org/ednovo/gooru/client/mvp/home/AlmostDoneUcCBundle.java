@@ -28,21 +28,11 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-	/**
-	 * 
-	 * @fileName : AlmostDoneUcCBundle.java
-	 *
-	 * @description : This file is used to apply css styles.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**'
+ * 
+ * @author BLR Team
+ *
+ */
 
 public interface AlmostDoneUcCBundle  extends ClientBundle {
 	

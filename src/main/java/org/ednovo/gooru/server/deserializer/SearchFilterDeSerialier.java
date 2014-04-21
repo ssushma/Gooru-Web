@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.deserializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -37,21 +38,14 @@ import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
- * @fileName : SearchFilterDeSerialier.java
+ * @author Search Team
  *
- * @description : This class is used to deserialize search filters.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @Component
 public class SearchFilterDeSerialier extends DeSerializer {
@@ -59,6 +53,8 @@ public class SearchFilterDeSerialier extends DeSerializer {
 	private static final String GRADE_LEVEL = "gradeLevels";
 	private static final String SUBJECT = "subjects";
 	private static final String RESOURCE = "resource";
+	private static final String RESOURCE_FORMAT = "resourceFormat";
+	
 
 	private static Map<String, String> COLLECTION_CATEGORIES = new LinkedHashMap<String, String>();
 
@@ -70,14 +66,13 @@ public class SearchFilterDeSerialier extends DeSerializer {
 		//COLLECTION_CATEGORIES.put("all", "Mixed (both Quizzes and___)");
 
 		RESOURCE_CATEGORIES.put("Video", "Videos");
-		RESOURCE_CATEGORIES.put("Website", "Websites");
+		RESOURCE_CATEGORIES.put("Webpage", "Webpage");
 		RESOURCE_CATEGORIES.put("Interactive", "Interactives");
 		RESOURCE_CATEGORIES.put("Question", "Questions");
-		RESOURCE_CATEGORIES.put("Slide", "Slides");
-		RESOURCE_CATEGORIES.put("Textbook", "Textbooks");
-		RESOURCE_CATEGORIES.put("Handout", "Handouts");
-		RESOURCE_CATEGORIES.put("Lesson", "Lessons");
-		RESOURCE_CATEGORIES.put("Exam", "Exams");
+		RESOURCE_CATEGORIES.put("Image", "Images");
+		RESOURCE_CATEGORIES.put("Text", "Texts");
+		RESOURCE_CATEGORIES.put("Audio", "Audio");
+		/*RESOURCE_CATEGORIES.put("Other", "Other");*/
 	}
 
 	/**
@@ -113,7 +108,7 @@ public class SearchFilterDeSerialier extends DeSerializer {
 			} else {
 				filterDo.setCategories(COLLECTION_CATEGORIES);
 			}
-
+				
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

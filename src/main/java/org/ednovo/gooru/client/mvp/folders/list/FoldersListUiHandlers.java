@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.folders.list;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * 
- * @fileName : FoldersListUiHandlers.java
- *
- * @description : UIHandler file for FoldersListView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface FoldersListUiHandlers extends BaseUiHandlers{
 
 }

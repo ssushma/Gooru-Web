@@ -27,7 +27,7 @@
 			</g:customHeader>
 			<g:FocusPanel ui:field="wrapperFocPanel"
 				styleName="{res.css.shelfContentWrapperPanelFolderResource}">
-				<uc:LabelGlassPanel glassText="Edit this Collection"
+				<uc:LabelGlassPanel 
 					glassStyleName="{res.css.shelfGlassPanel}" topStyleName="{res.css.shelfGlassTopPanel}"
 					ui:field="glassContainer">
 					<uc:glassContent>

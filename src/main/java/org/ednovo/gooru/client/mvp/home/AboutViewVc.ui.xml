@@ -4,41 +4,42 @@
 	<ui:style field="landingPageStyle" src="landing-page.css" />
 
 	<g:HTMLPanel styleName="{landingPageStyle.pageSection}">
-			<g:Anchor ui:field="backto" href="#" styleName="{landingPageStyle.returnToTop}">back to the top</g:Anchor> 
+			<g:Anchor ui:field="backto" href="#" styleName="{landingPageStyle.returnToTop}"></g:Anchor> 
 			<g:HTMLPanel styleName="{landingPageStyle.supportersContentBlock} {landingPageStyle.contentBlock}">
 			    <g:HTMLPanel styleName="{landingPageStyle.aboutBlurb}">
 			        <g:HTMLPanel styleName="{landingPageStyle.aboutGooruLogo}"></g:HTMLPanel>
-			        Gooru is a non-profit organization dedicated to honoring the human right to education. Learn more about our work by visiting the <g:Anchor ui:field="about" href="http://about.goorulearning.org" target="_blank">About</g:Anchor>  section of our site.
+			        <g:Label ui:field="nonProfitLbl"></g:Label>
+			        <g:Anchor ui:field="about" target="_blank"></g:Anchor><g:Label ui:field="sectionText"></g:Label>  
 			    </g:HTMLPanel>
 				<g:Label styleName="{landingPageStyle.supportersText}" ui:field="lblWonderfulSupporters" />
 				<a href="http://csr.cisco.com/pages/cisco-foundation" target="_blank">
-					<g:Image title="Cisco" altText="Cisco" styleName="{landingPageStyle.supportersImg}" ui:field="ciscoImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="ciscoImg"/>
 				</a>
 				<a href="http://www.gatesfoundation.org/" target="_blank">
-					<g:Image title="The Gates Foundation" altText="The Gates Foundation" styleName="{landingPageStyle.supportersImg}" ui:field="gatesImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="gatesImg"/>
 				</a>
 				<a href="http://www.onr.navy.mil" target="_blank">
-					<g:Image title="ONR" altText="ONR" styleName="{landingPageStyle.supportersImg}" ui:field="onrImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="onrImg"/>
 				</a>
 				<a href="http://www.google.org" target="_blank">
-					<g:Image title="Google" altText="Google" styleName="{landingPageStyle.supportersImg}" ui:field="googleImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="googleImg"/>
 				</a>
 				<a href="http://nextgenlearning.org/" target="_blank">
-					<g:Image title="NGLC" altText="NGLC" styleName="{landingPageStyle.supportersImg}" ui:field="nglcImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="nglcImg"/>
 				</a>
 				<a href="http://www.pearson.com/" target="_blank">
-					 <g:Image title="Pearson" altText="Pearson" styleName="{landingPageStyle.supportersImg}" ui:field="pearsonImg"/>
+					 <g:Image styleName="{landingPageStyle.supportersImg}" ui:field="pearsonImg"/>
 				</a>
 				<a href=" http://www.hewlett.org/" target="_blank">
-					<g:Image title="The Hewlett Foundation" altText="The Hewlett Foundation" styleName="{landingPageStyle.supportersImg}" ui:field="hewlettImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="hewlettImg"/>
 				</a>
 				<a href="http://www.scefdn.org/" target="_blank">
-					<g:Image title="SCE" altText="SCE" styleName="{landingPageStyle.supportersImg}" ui:field="scefdnImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="scefdnImg"/>
 				</a>
 				<a href="http://www.fenwick.com/services/practices/Pages/technology-transactions.aspx" target="_blank">
-					<g:Image title="Fenwick" altText="Fenwick" styleName="{landingPageStyle.supportersImg}" ui:field="fenwickImg"/>
+					<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="fenwickImg"/>
 				</a>
-				<g:Image title="Ram Shriram" altText="Ram Shriram" styleName="{landingPageStyle.supportersImg}" ui:field="ramImg"/>
+				<g:Image styleName="{landingPageStyle.supportersImg}" ui:field="ramImg"/>
 			</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

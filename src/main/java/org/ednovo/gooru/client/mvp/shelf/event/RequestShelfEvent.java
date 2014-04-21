@@ -28,18 +28,10 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : RequestShelfEvent.java
- *
- * @description :  This event is sent to the {@link com.gwtplatform.mvp.client.EventBus}.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class RequestShelfEvent extends GwtEvent<RequestShelfHandler> {
 

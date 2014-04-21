@@ -29,19 +29,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.Date;
-/**
- * @fileName : ArrayListSorter.java
- *
- * @description : This class is used to sort the array elements.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @SuppressWarnings("rawtypes")
 public final class ArrayListSorter implements Comparator, Serializable {    
 	private static final long serialVersionUID = -2293914106471884607L;	
@@ -61,40 +49,26 @@ public final class ArrayListSorter implements Comparator, Serializable {
 	// generic comparator attributes
 	private String targetMethod;
 	private boolean sortAscending;
-	/**
-	 * This method will sort the array list.
-	 * @param sortField
-	 * @param sortAscending
-	 */
+	
 	public ArrayListSorter(boolean sortAscending) {
 		super();
 		this.targetMethod = null;
 		this.sortAscending = sortAscending;
 	}
-	/**
-	 * This method will sort the array list.
-	 * @param sortField
-	 * @param sortAscending
-	 */
+	
 	public ArrayListSorter(String sortField) {
 		super();
 		this.targetMethod = prepareTargetMethod(sortField);
 		this.sortAscending = true;
 	}
-	/**
-	 * This method will sort the array list.
-	 * @param sortField
-	 * @param sortAscending
-	 */
+
 	public ArrayListSorter(String sortField, boolean sortAscending) {
 		super();
 		this.targetMethod = prepareTargetMethod(sortField);
 		this.sortAscending = sortAscending;
 	}
 
-	/**
-	 * This method is used to compare two objects.
-	 */
+	
 	public int compare(Object o1, Object o2) {
 		int response = LESSER;
 		try {
@@ -114,22 +88,7 @@ public final class ArrayListSorter implements Comparator, Serializable {
 		}
 		return response;
 	}
-	/**
-	 * @function compareAlternate 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to compare the alternatives.
-	 * 
-	 * 
-	 * @parm(s) : @param cm
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private int compareAlternate(CompareMode cm) {
 		int compareState = LESSER;
 		switch(cm) {
@@ -145,24 +104,7 @@ public final class ArrayListSorter implements Comparator, Serializable {
 		}
 		return compareState;
 	}	
-	/**
-	 * 
-	 * @function compareActual 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to compare the value.
-	 * 
-	 * @parm(s) : @param v1
-	 * @parm(s) : @param v2
-	 * @parm(s) : @param returnType
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private int compareActual(Object v1, Object v2, String returnType) {
 		int acutal = LESSER;
 		if (returnType.equals(DATATYPE_INTEGER)) {
@@ -195,15 +137,11 @@ public final class ArrayListSorter implements Comparator, Serializable {
 	private final static Object invoke(Method method, Object obj) throws InvocationTargetException, IllegalAccessException {		
 		return method.invoke(obj, null);
 	}
-	/**
-	 * This method is used to get the value.
-	 */
+	
 	private Object getValue(Object obj) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
 		return invoke(getMethod(obj), obj);
 	}
-	/**
-	 * This method is used to find the compare mode.
-	 */
+	
 	private CompareMode findCompareMode(Object o1, Object o2) {
 		CompareMode cm = CompareMode.LESS_THAN;
 		
@@ -219,9 +157,7 @@ public final class ArrayListSorter implements Comparator, Serializable {
 		
 		return cm;		
 	}	 
-	/**
-	 * This method is used to determine the position.
-	 */
+
 	private int determinePosition() {
 		return sortAscending ? GREATER : LESSER;
 	}

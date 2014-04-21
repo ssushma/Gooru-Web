@@ -27,19 +27,21 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.share;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
  * 
  * @fileName : ShareTabViewCBundle.java
  *
- * @description : This interface is used to set the css styles for share tab.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
- * @Author Gooru Team
+ * @Author Gooru Team 
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface ShareTabViewCBundle extends ClientBundle {
 

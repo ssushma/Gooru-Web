@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +34,13 @@ import org.ednovo.gooru.client.service.UserService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.ResourceDeserializer;
 import org.ednovo.gooru.server.form.ResourceFormFactory;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.ProfileV2Do;
@@ -45,24 +48,14 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * @author Search Team
  * 
- * @fileName : UserServiceImpl.java
- *
- * @description : This Class is used for User Service implementation 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 @Service("userService")
 @ServiceURL("/userService")
@@ -73,11 +66,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	private static final long serialVersionUID = -7268580337769405632L;
 	
-	private static final String BY_EMAIL_ID = "byEmailid";
+	private static final String BY_EMAIL_ID = "emailId";
 	
 	private static final String GOORU_CLASSIC_URL = "gooruClassicUrl";
 	
 	private static final String REGISTRATION_TYPE = "registrationType";
+	
+	private static final String GOORU_BASE_URL = "gooruBaseUrl";
 	
 	private static final String CHILD = "Child";
 	private static final String OPTIONALVALUE="optionalValue";
@@ -85,67 +80,19 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	private static final String PROFILE = "profile";
 	
 	private static final String USER_META_ACTIVE_FLAG = "&userMetaActiveFlag=1";
-	/**
-	 * This method is used to get email id.
-	 */
+
 	@Override
 	public UserDo getEmailId(String emailId) {
 		return getEmailId(emailId, BY_EMAIL_ID);
 	}
-	/**
-	 * This method is used to get email id.
-	 */
+
 	@Override
 	public UserDo getEmailId(String emailId, String type) {
-		UserDo userDo = null;
+	  	UserDo userDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_AVAILABILITY, type, emailId, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		try {
-			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return userDo;
-	}
-	/**
-	 * This method is used to get register user.
-	 */
-	@Override
-	public void registerUser(Map<String, String> params) {
-		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
-		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.REGISTER_USER, params, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-		try {
-			JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} 
-	}
-/**
- * 
- * @function getRegistredUserDetails 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Get Registration User Details. 
- * 
- * 
- * @parm(s) : @param gooruUid
- * @parm(s) : @return
- * 
- * @return : UserDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	@Override
-	public UserDo getRegistredUserDetails(String gooruUid) {
-		UserDo userDo = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_REGISTERED_USER_DETAILS, gooruUid, getLoggedInSessionToken());
-		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_USER_AVAILABILITY, type,getLoggedInSessionToken(), emailId);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
@@ -154,31 +101,43 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return userDo;
 	}
 
-	/**
-	 * 
-	 * @function getUserProfileDetails 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Get User profiles Details.
-	 * 
-	 * 
-	 * @parm(s) : @param gooruUid
-	 * @parm(s) : @return
-	 * 
-	 * @return : SettingDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	@Override
+	public void registerUser(Map<String, String> params) {
+		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.REGISTER_USER, params, getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} 
+	}
+
+	@Override
+	public UserDo getRegistredUserDetails(String gooruUid) {
+		UserDo userDo = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_REGISTERED_USER_DETAILS, gooruUid, getLoggedInSessionToken());
+		JsonRepresentation jsonRep = null;
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return userDo;
+	}
+
 	@Override
 	public SettingDo getUserProfileDetails(String gooruUid) {
 		SettingDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
 		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			settingeDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), SettingDo.class);
 		} catch (JSONException e) {
@@ -186,31 +145,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} 
 		return settingeDo;
 	}
-/**
- * 
- * @function updateUserDetails 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description : This method is used to Update user details.
- * 
- * 
- * @parm(s) : @param gooruUid
- * @parm(s) : @param token
- * @parm(s) : @param params
- * @parm(s) : @return
- * 
- * @return : ProfileDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+	
+	@Override
+	public V2UserDo getV2UserProfileDetails(String gooruUid) {
+		V2UserDo settingeDo = null;
+		String userUid = getLoggedInUserUid();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
+		JsonRepresentation jsonRep = null;
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			settingeDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} 
+		return settingeDo;
+	}
+
 	@Override
 	public ProfileDo updateUserDetails(String gooruUid, String token, Map<String, String> params) {
 		ProfileDo profileDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_REGISTER_USER, gooruUid, getLoggedInSessionToken());
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		String text = null;
 		try {
 			text = jsonRep.getText();
@@ -226,25 +184,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return profileDo;
 	}
-/**
- * 
- * @function resendConfirmationMail 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Re send confirmation mail.
- * 
- * 
- * @parm(s) : @param params
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public void resendConfirmationMail(Map<String, String> params) {
-		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint()));
+		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SEND_CONFIRMATION_MAIL, params, getLoggedInSessionToken());
 		ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 	}
@@ -253,82 +196,39 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public UserDo getUser(String userUid) {
 		return getUserInfo(userUid);
 	}*/
-/**
- * 
- * @function forgotPassword 
- * 
- * @created_date : 02-Jan-2014
- * 
- *@description : This method is used for the purpose of Forgot Password.
- * 
- * 
- * @parm(s) : @param emailId
- * @parm(s) : @return
- * 
- * @return : Map<String,Object>
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public Map<String, Object> forgotPassword(String emailId) {
 		JsonRepresentation jsonRep = null;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(GOORU_CLASSIC_URL, URLEncoder.encode(getHomeEndPoint() + "#" + PlaceTokens.HOME));
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.FORGOT_PASSWORD, params, getLoggedInSessionToken(), emailId);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return resourceDeserializer.forgotPassword(jsonRep);
 	}
-/**
- * 
- * @function resetCredential 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description : This method is used to Reset Credentials.
- * 
- * 
- * @parm(s) : @param password
- * @parm(s) : @param token
- * @parm(s) : @return
- * 
- * @return : Map<String,Object>
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public Map<String, Object> resetCredential(String password, String token) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESET_CREDENTIAL, getLoggedInSessionToken(), password, token);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-		return resourceDeserializer.resetPassword(jsonRep);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		if(jsonResponseRep.getStatusCode()==400){
+			return resourceDeserializer.resetPassword(jsonRep,400); 
+		}else{
+			return resourceDeserializer.resetPassword(jsonRep,0);
+		}
+		
 	}
-/**
- * 
- * @function updateUserViewFlag 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to UpdaTE user view Flag .
- * 
- * 
- * @parm(s) : @param gooruUid
- * @parm(s) : @param viewFlag
- * @parm(s) : @return
- * @parm(s) : @throws GwtException
- * 
- * @return : UserDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public UserDo updateUserViewFlag(String gooruUid, Integer viewFlag) throws GwtException {
 		UserDo userDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_VIEW, gooruUid,getLoggedInSessionToken(), String.valueOf(viewFlag));
 		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
@@ -336,25 +236,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		return userDo;
 	}
-	/**
-	 * 
-	 * @function updateProfileSettings 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Update profile settings.
-	 * 
-	 * 
-	 * @parm(s) : @param gooruUid
-	 * @parm(s) : @param params
-	 * @parm(s) : @return
-	 * @parm(s) : @throws GwtException
-	 * 
-	 * @return : SettingDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 
 	@Override
 	public SettingDo updateProfileSettings(String gooruUid,	 Map<String, String> params) throws GwtException {
@@ -363,7 +244,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
 		
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), generateFormFromParamters(params));
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		String text="";
 		try {
 			text = jsonRep.getText();
@@ -374,23 +256,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return settingDo;
 	}
 
-	/**
-	 * 
-	 * @function deserializeProfilePage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Deserialize profile page.
-	 * 
-	 * 
-	 * @parm(s) : @param jsonRep
-	 * @parm(s) : @return
-	 * 
-	 * @return : ProfilePageDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public ProfilePageDo deserializeProfilePage(JsonRepresentation jsonRep) {
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
@@ -405,25 +271,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return new ProfilePageDo();
 	}
 	
-	/**
-	 * 
-	 * @function updateUserProfileVisibility 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Update user profile visibility
-	 * 
-	 * 
-	 * @parm(s) : @param gooruUid
-	 * @parm(s) : @param optionalValue
-	 * @parm(s) : @return
-	 * @parm(s) : @throws GwtException
-	 * 
-	 * @return : ProfilePageDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@Override
 	public ProfilePageDo updateUserProfileVisibility(String gooruUid,
 		String optionalValue) throws GwtException {
@@ -435,36 +283,21 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_PROFILE_VISIBILTY, getLoggedInUserUid(), getLoggedInSessionToken());
 		String formData = ResourceFormFactory.generateStringDataForm(profilePageDo,PARTY_CUSTOM_FIELD);
 		
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		//return deserializeProfilePage(jsonRep);
 		return profilePageDo;
 		
 	}
-/** 
- * 
- * @function getUserProfilePage 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Get User Profile.
- * 
- * 
- * @parm(s) : @param gooruUid
- * @parm(s) : @return
- * @parm(s) : @throws GwtException
- * 
- * @return : ProfilePageDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public ProfilePageDo getUserProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, userUid, getLoggedInSessionToken());
 		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
 		} catch (JSONException e) {
@@ -472,60 +305,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} 
 		return profilePageDo;
 	}
-/**
- * 
- * @function getUserPublicProfilePage 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Get User Public Profile Page.
- * 
- * 
- * @parm(s) : @param gooruUid
- * @parm(s) : @return
- * @parm(s) : @throws GwtException
- * 
- * @return : ProfilePageDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, gooruUid, getLoggedInSessionToken());
 		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
-			profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
+			if(jsonRep.getText()!=null&&!jsonRep.getText().equals("null")&&!jsonRep.getText().equals("")){
+				profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
+			}
 		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		} 
 		return profilePageDo;
 	}
-	/**
-	 * 
-	 * @function updateProfileBiography 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to  Update profile Biography
-	 * 
-	 * 
-	 * @parm(s) : @param gooruUid
-	 * @parm(s) : @param biography
-	 * @parm(s) : @param role
-	 * @parm(s) : @param firstName
-	 * @parm(s) : @param lastName
-	 * @parm(s) : @param gender
-	 * @parm(s) : @return
-	 * @parm(s) : @throws GwtException
-	 * 
-	 * @return : BiographyDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@Override
 	public BiographyDo updateProfileBiography(String gooruUid,String biography,String role,String firstName,String lastName,String gender) throws GwtException {
 		JsonRepresentation jsonRep = null;
@@ -537,28 +336,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		biographyDo.setLastName(lastName);
 		biographyDo.setGenderId(gender);
 		String formData = ResourceFormFactory.generateStringDataForm(biographyDo,PROFILE);
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return biographyDo;
 	}
-/**
- * 
- * @function getUserProfileV2Details 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Get User profiles details.
- * 
- * 
- * @parm(s) : @param gooruUid
- * @parm(s) : @param userMetaActiveFlag
- * @parm(s) : @return
- * @parm(s) : @throws GwtException
- * 
- * @return : ProfileDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 
 	@Override
 	public ProfileDo getUserProfileV2Details(String gooruUid, String userMetaActiveFlag)
@@ -566,14 +348,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		ProfileDo profileDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_V2_DETAILS, gooruUid, getLoggedInSessionToken());
-		
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
 		
 		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			profileDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfileDo.class);
 		} catch (JSONException e) {
@@ -581,31 +362,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} 
 		return profileDo;
 	}
-/**
- * 
- * @function createUser 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description : This method is used to Create User
- * 
- * 
- * @parm(s) : @param postData
- * @parm(s) : @return
- * @parm(s) : @throws GwtException
- * 
- * @return : UserDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
 	public UserDo createUser(String postData) throws GwtException {
 		UserDo userDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_USER, getLoggedInSessionToken());
 		JsonRepresentation jsonRep = null;
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),postData);
-		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),postData);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			userDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 		} catch (JSONException e) {
@@ -613,59 +377,27 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		} 
 		return userDo;
 	}
-/**
- * 
- * @function updateNewEmailStatus 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description : This method is used to update new emai status .
- * 
- * 
- * @parm(s) : @param emailId
- * @parm(s) : @param isEmailConfirmation
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void updateNewEmailStatus(String emailId, boolean isEmailConfirmation) {
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_USER_BIOGRAPHY, getLoggedInUserUid(), getLoggedInSessionToken());
 		String formData = "";
 		formData = "{\"profile\": {\"user\": {\"emailId\":\""+emailId+"\"}},\"emailConfirmStatus\":"+isEmailConfirmation+"}";
-		JsonRepresentation jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 	}
-/**
- * 
- * @function updateV2ProfileDo 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to update v2 profile.
- * 
- * 
- * @parm(s) : @param EmailId
- * @parm(s) : @param accountType
- * @parm(s) : @param firstName
- * @parm(s) : @param lastName
- * @parm(s) : @param biography
- * @parm(s) : @param password
- * @parm(s) : @return
- * 
- * @return : V2UserDo
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	@Override
-	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password) {
+	public V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_USER_PROFILE, getLoggedInUserUid(), getLoggedInSessionToken());
 		V2UserDo userv2Do = new V2UserDo();
 		ProfileV2Do profileV2Do = new ProfileV2Do();
 		UserDo user = new UserDo();
 		
+		if (!userName.equalsIgnoreCase("")){
+			user.setUsername(userName);
+		}
 		if(!firstName.equalsIgnoreCase("")){
 			user.setFirstName(firstName);
 		}
@@ -675,21 +407,36 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(!EmailId.equalsIgnoreCase("")){
 			user.setEmailId(EmailId);
 		}
-		user.setAccountTypeId(3);
+		if (accountType.equalsIgnoreCase("")){
+			user.setAccountTypeId(3);
+		}
 		profileV2Do.setUser(user);
 		if(!biography.equalsIgnoreCase("")){
 			profileV2Do.setAboutMe(biography);
 		}
 		userv2Do.setProfile(profileV2Do);
 		userv2Do.setAccountType(accountType);
+		
+		if (!gender.equalsIgnoreCase("")){
+			GenderDo genderDo = new GenderDo();
+			genderDo.setGenderId(gender);
+			profileV2Do.setGender(genderDo);
+		}
+		
 		if(!password.equalsIgnoreCase("")){
 			userv2Do.setPassword(password);
 		}
-		userv2Do.setEmailConfirmStatus("true");
-		user.setConfirmStatus(0);
+		if (isSendConfirmEmail){
+			userv2Do.setEmailConfirmStatus("true");
+			user.setConfirmStatus(0);
+		}else{
+			userv2Do.setEmailConfirmStatus("false");
+			user.setConfirmStatus(1);
+		}
 	
 		String formData = ResourceFormFactory.generateStringDataForm(userv2Do,null);
-		jsonRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), formData);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try{
 			userv2Do = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
 		}
@@ -712,7 +459,32 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 	*/
 	
-	
+	@Override
+	public void sendWelcomeMail(String gooruUId, String emailType) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put(GOORU_BASE_URL, getHomeEndPoint() + "/#discover");
+		params.put("type", emailType);
+		String formData = ResourceFormFactory.generateStringDataForm(params,null);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SEND_WELCOME_MAIL, gooruUId, getLoggedInSessionToken());
+		ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
+	}
 
+	@Override
+	public void updatePartyCustomField(String gooruUid, String optionKey,
+			String optionValue) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_PARTY_CUSTOM_FIELD, getLoggedInUserUid(), getLoggedInSessionToken());
+		try{
+			JSONObject updateCustomFieldObj=new JSONObject();
+			JSONObject optionObject=new JSONObject();
+			optionObject.put("optionalValue", optionValue);
+			optionObject.put("optionalKey", optionKey);
+			updateCustomFieldObj.put("partyCustomField", optionObject);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), updateCustomFieldObj.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+		}
+		catch(Exception ex){}
+		
+	}
 
 }

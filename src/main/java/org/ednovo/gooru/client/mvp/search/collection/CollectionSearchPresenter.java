@@ -52,19 +52,8 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionSearchPresenter.java
- *
- * @description : This file is used to get collection search results.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionSearchPresenter extends AbstractSearchPresenter<CollectionSearchResultDo, ResourceSearchResultDo, IsCollectionSearchView, CollectionSearchPresenter.IsCollectionSearchProxy> implements SearchUiHandlers {
 
@@ -98,9 +87,6 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 	}
 */	
-	/**
-	 * This file is used to read parameters from url.
-	 */
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
@@ -119,16 +105,12 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		}
 		return filters;
 	}
-	/**
-	 * This is to get the place token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.COLLECTION_SEARCH;
 	}
-	/**
-	 * This is to get collection search results.
-	 */
+
 	@Override
 	protected void requestSearch(SearchDo<CollectionSearchResultDo> searchDo, SearchAsyncCallback<SearchDo<CollectionSearchResultDo>> searchAsyncCallback) {
 		getSearchService().getCollectionSearchResults(searchDo, searchAsyncCallback);

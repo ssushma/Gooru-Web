@@ -25,21 +25,7 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : LicenseDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class LicenseDo implements Serializable{
 	
 	/**
@@ -52,76 +38,54 @@ public class LicenseDo implements Serializable{
 	private String definition;
 	private String url;
 	private String tag;
-	/** 
-	 * This method is to get the name
-	 */
-	public String getName() {
-		return name;
-	}
-	/** 
-	 * This method is to set the name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/** 
-	 * This method is to get the code
-	 */
-	public String getCode() {
-		return code;
-	}
-	/** 
-	 * This method is to set the code
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
-	/** 
-	 * This method is to get the icon
-	 */
-	public String getIcon() {
-		return icon;
-	}
-	/** 
-	 * This method is to set the icon
-	 */
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-	/** 
-	 * This method is to get the definition
-	 */
-	public String getDefinition() {
-		return definition;
-	}
-	/** 
-	 * This method is to set the definition
-	 */
+	
+	public LicenseDo(){}
+
 	public void setDefinition(String definition) {
 		this.definition = definition;
 	}
-	/** 
-	 * This method is to get the url
-	 */
-	public String getUrl() {
-		return url;
+
+	public String getDefinition() {
+		return definition;
 	}
-	/** 
-	 * This method is to set the url
-	 */
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	/** 
-	 * This method is to get the tag
-	 */
-	public String getTag() {
-		return tag;
+
+	public String getUrl() {
+		return url;
 	}
-	/** 
-	 * This method is to set the tag
-	 */
+
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	public String getTag() {
+		return tag;
 	}
 }

@@ -22,25 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchHandler.java
- *
- * @description : Handler for search event.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SearchHandler extends EventHandler {
 

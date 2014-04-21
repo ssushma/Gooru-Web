@@ -28,19 +28,10 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : AddResouceImageEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever user add the resource image it will handle event.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AddResouceImageEvent extends GwtEvent<AddResourceImageHandler> {
 

@@ -39,26 +39,16 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
-	/**
-	 * 
-	 * @fileName : SignupCourseLabel.java
-	 *
-	 * @description : This file deals with the course data.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * @author DOTS
+ *
+ */
 public abstract class SignupCourseLabel extends FlowPanel implements ClickHandler {
 	
 	private static final String REGISTER_USER_LEVEL = "settings";
@@ -126,25 +116,7 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		
 		setCodeDo(codeId);
 	}
-    /**
-     * 
-     * @function setCodeDo 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to set the code id to codeDO.
-     * 
-     * 
-     * @parm(s) : @param codeId
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	private void setCodeDo(int codeId) {
 		profileCodeDoSet = new HashSet<ProfileCodeDo>();
 		ProfileCodeDo profileCodeDo = new ProfileCodeDo();
@@ -153,42 +125,27 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 		profileCodeDo.setCode(codeDo);
 		profileCodeDoSet.add(profileCodeDo);
 	}
-	//ui handler
+	
 	@Override
 	public void onClick(ClickEvent event) {
 		if(this.getStyleName().toString().contains("selected")){
 			deleteCourse(codeDo);
 			this.removeStyleName(SignUpCBundle.INSTANCE.css().selected());
 			selectCourseLabel(false);
+			showErrorMessage(false);
 		} else {
-			int selectedCount = selectCourseLabel(true);
-			if(selectedCount<=5) {
+			if(getCourseCount()<5) {
+				selectCourseLabel(true);
 				addCourse(profileCodeDoSet);
 				this.addStyleName(SignUpCBundle.INSTANCE.css().selected());
+				showErrorMessage(false);
 			} else {
 				showErrorMessage(true);
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function addCourse 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to add the course.
-	 * 
-	 * 
-	 * @parm(s) : @param profileCodeDoSet
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+
 	public void addCourse(Set<ProfileCodeDo> profileCodeDoSet) {
 		AppClientFactory.getInjector().getProfilePageService().addCourseUserProfile(profileCodeDoSet, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override
@@ -196,25 +153,7 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 			}
 		});
 	}
-    /**
-     * 
-     * @function deleteCourse 
-     * 
-     * @created_date : 26-Dec-2013
-     * 
-     * @description : This method is used to delete the course.
-     * 
-     * 
-     * @parm(s) : @param codeDo
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	public void deleteCourse(CodeDo codeDo) {
 		AppClientFactory.getInjector().getProfilePageService().deleteCourseUserProfile(codeDo, REGISTER_USER_LEVEL, new SimpleAsyncCallback<Void>(){
 			@Override
@@ -224,6 +163,8 @@ public abstract class SignupCourseLabel extends FlowPanel implements ClickHandle
 	}
 
 	public abstract int selectCourseLabel(boolean isSelected);
+	
+	public abstract int getCourseCount();
 	
 	public abstract void showErrorMessage(boolean value);
 	

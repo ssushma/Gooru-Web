@@ -33,21 +33,7 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : CollectionItemDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CollectionItemDo extends ResourceSearchResultDo implements Serializable {
 
@@ -69,203 +55,15 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 	private String stop;
 	private List<String> course;
 	private Integer totalHitCount;
+	private Integer statusCode;
 	
 	private List<Map<String, String>> standards;
 	
 	private RatingDo rating;
-
-	/** 
-	 * This method is to get the collectionItemId
-	 */
-	public String getCollectionItemId() {
-		return collectionItemId;
+	
+	public CollectionItemDo(){
+		
 	}
-
-
-	/** 
-	 * This method is to set the collectionItemId
-	 */
-	public void setCollectionItemId(String collectionItemId) {
-		this.collectionItemId = collectionItemId;
-	}
-
-
-	/** 
-	 * This method is to get the collection
-	 */
-	public CollectionDo getCollection() {
-		return collection;
-	}
-
-
-	/** 
-	 * This method is to set the collection
-	 */
-	public void setCollection(CollectionDo collection) {
-		this.collection = collection;
-	}
-
-
-	/** 
-	 * This method is to get the resource
-	 */
-	public ResourceDo getResource() {
-		return resource;
-	}
-
-
-	/** 
-	 * This method is to set the resource
-	 */
-	public void setResource(ResourceDo resource) {
-		this.resource = resource;
-	}
-
-
-	/** 
-	 * This method is to get the resourceCount
-	 */
-	public int getResourceCount() {
-		return resourceCount;
-	}
-
-
-	/** 
-	 * This method is to set the resourceCount
-	 */
-	public void setResourceCount(int resourceCount) {
-		this.resourceCount = resourceCount;
-	}
-
-
-	/** 
-	 * This method is to get the collectionQuestionItemDo
-	 */
-	public CollectionQuestionItemDo getCollectionQuestionItemDo() {
-		return collectionQuestionItemDo;
-	}
-
-
-	/** 
-	 * This method is to set the collectionQuestionItemDo
-	 */
-	public void setCollectionQuestionItemDo(
-			CollectionQuestionItemDo collectionQuestionItemDo) {
-		this.collectionQuestionItemDo = collectionQuestionItemDo;
-	}
-
-
-	/** 
-	 * This method is to get the itemType
-	 */
-	public String getItemType() {
-		return itemType;
-	}
-
-
-	/** 
-	 * This method is to set the itemType
-	 */
-	public void setItemType(String itemType) {
-		this.itemType = itemType;
-	}
-
-
-	/** 
-	 * This method is to get the itemSequence
-	 */
-	public Integer getItemSequence() {
-		return itemSequence;
-	}
-
-
-	/** 
-	 * This method is to set the itemSequence
-	 */
-	public void setItemSequence(Integer itemSequence) {
-		this.itemSequence = itemSequence;
-	}
-
-
-	/** 
-	 * This method is to get the narration
-	 */
-	public String getNarration() {
-		return narration;
-	}
-
-
-	/** 
-	 * This method is to set the narration
-	 */
-	public void setNarration(String narration) {
-		this.narration = narration;
-	}
-
-
-	/** 
-	 * This method is to get the narrationType
-	 */
-	public String getNarrationType() {
-		return narrationType;
-	}
-
-
-	/** 
-	 * This method is to set the narrationType
-	 */
-	public void setNarrationType(String narrationType) {
-		this.narrationType = narrationType;
-	}
-
-
-	/** 
-	 * This method is to get the start
-	 */
-	public String getStart() {
-		return start;
-	}
-
-
-	/** 
-	 * This method is to set the start
-	 */
-	public void setStart(String start) {
-		this.start = start;
-	}
-
-
-	/** 
-	 * This method is to get the stop
-	 */
-	public String getStop() {
-		return stop;
-	}
-
-
-	/** 
-	 * This method is to set the stop
-	 */
-	public void setStop(String stop) {
-		this.stop = stop;
-	}
-
-
-	/** 
-	 * This method is to get the course
-	 */
-	public List<String> getCourse() {
-		return course;
-	}
-
-
-	/** 
-	 * This method is to set the course
-	 */
-	public void setCourse(List<String> course) {
-		this.course = course;
-	}
-
 
 	/** 
 	 * This method is to get the totalHitCount
@@ -274,7 +72,6 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 		return totalHitCount;
 	}
 
-
 	/** 
 	 * This method is to set the totalHitCount
 	 */
@@ -282,39 +79,93 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 		this.totalHitCount = totalHitCount;
 	}
 
+	public String getCollectionItemId() {
+		return collectionItemId;
+	}
 
-	/** 
-	 * This method is to get the standards
-	 */
+	public void setCollectionItemId(String collectionItemId) {
+		this.collectionItemId = collectionItemId;
+	}
+
+	public CollectionDo getCollection() {
+		return collection;
+	}
+
+	public void setCollection(CollectionDo collectionDo) {
+		this.collection = collectionDo;
+	}
+
+	public ResourceDo getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceDo resourceDo) {
+		this.resource = resourceDo;
+	}
+
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+
+	public Integer getItemSequence() {
+		return itemSequence;
+	}
+
+	public void setItemSequence(Integer itemSequence) {
+		this.itemSequence = itemSequence;
+	}
+
+	public String getNarration() {
+		return narration;
+	}
+
+	public void setNarration(String narration) {
+		this.narration = narration;
+	}
+
+	public String getNarrationType() {
+		return narrationType;
+	}
+
+	public void setNarrationType(String narrationType) {
+		this.narrationType = narrationType;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String getStop() {
+		return stop;
+	}
+
+	public void setStop(String stop) {
+		this.stop = stop;
+	}
+
+	public CollectionQuestionItemDo getCollectionQuestionItemDo() {
+		return collectionQuestionItemDo;
+	}
+
+	public void setCollectionQuestionItemDo(CollectionQuestionItemDo collectionQuestionItemDo) {
+		this.collectionQuestionItemDo = collectionQuestionItemDo;
+	}
+
 	public List<Map<String, String>> getStandards() {
 		return standards;
 	}
 
-
-	/** 
-	 * This method is to set the standards
-	 */
 	public void setStandards(List<Map<String, String>> standards) {
 		this.standards = standards;
 	}
-
-
-	/** 
-	 * This method is to get the rating
-	 */
-	public RatingDo getRating() {
-		return rating;
-	}
-
-
-	/** 
-	 * This method is to set the rating
-	 */
-	public void setRating(RatingDo rating) {
-		this.rating = rating;
-	}
-
-
 	@Override
 	public String getGooruOid() {
 		return getResource().getGooruOid();
@@ -357,5 +208,37 @@ public class CollectionItemDo extends ResourceSearchResultDo implements Serializ
 		return getResource().getGrade();
 	}
 
+	public List<String> getCourse() {
+		return course;
+	}
 
+	public void setCourse(List<String> course) {
+		this.course = course;
+	}
+
+	public int getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(int resourceCount) {
+		this.resourceCount = resourceCount;
+	}
+
+	public RatingDo getRating() {
+		return rating;
+	}
+
+	public void setRating(RatingDo rating) {
+		this.rating = rating;
+	}
+
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	
 }

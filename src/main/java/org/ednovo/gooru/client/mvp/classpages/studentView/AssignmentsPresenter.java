@@ -24,6 +24,9 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
+/**
+ * 
+ */
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -32,18 +35,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+
 /**
- * @fileName : AssignmentsPresenter.java
- *
- * @description :  This is the presenter of the Assignments.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AssignmentsPresenter extends ChildPresenter<AssignmentsPresenter, IsAssignmentsView> {
 
@@ -84,20 +79,7 @@ public class AssignmentsPresenter extends ChildPresenter<AssignmentsPresenter, I
 	private void onLoad() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * @function getResourceService 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to get the resource.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ResourceServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public ResourceServiceAsync getResourceService() {
 		
 		return AppClientFactory.getInjector().getResourceService();
@@ -121,22 +103,7 @@ public class AssignmentsPresenter extends ChildPresenter<AssignmentsPresenter, I
 		}
 		return getMyUserCollectionsAsyncCallback;
 	}*/
-	 /**
-	  * 
-	  * @function getAssignmentCollections 
-	  * 
-	  * @created_date : 27-Dec-2013
-	  * 
-	  * @description : This method is used to get Assignment collections based on the assignmentId.
-	  * 
-	  * 
-	  * @parm(s) : @param assignmentId
-	  * 
-	  * @return : void
-	  *
-	  * @throws : <Mentioned if any exceptions>
-	  *
-	  */
+	 
 	public void getAssignmentCollections(String assignmentId) {
 		AppClientFactory.getInjector().getClasspageService().v2GetAssignmentCollectionsById(assignmentId, new SimpleAsyncCallback<List<ResourceDo>>() {
 

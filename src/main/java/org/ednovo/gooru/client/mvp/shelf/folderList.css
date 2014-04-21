@@ -1,0 +1,840 @@
+.shelfFolderPanel{
+	/**
+	background-color:white; 
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    border:1px solid #ddd;
+	**/
+    width:274px;
+    height:100%;
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /* float:right; */
+    position:relative;
+}
+
+.folderPanel {
+    background-color:white;
+    width: 270px;
+    height:100%;
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border:1px solid #ddd;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    /* float:right; */
+    position:relative;
+    right: 0 !important;
+	margin-left: 15px;
+}
+
+.folderPanel .dropbox {
+    border: 2px dashed #ccc;
+    margin: 50px 0px 10px 0px;
+    color:#999;
+    text-align: center;
+    padding:15px;
+    margin:15px;
+}
+
+.folderPanel .dropbox:after {
+    content:"";
+    display:block;
+    position:absolute;
+    left:0px;
+    top:141px;
+    height:1px;
+    width:280px;
+    background-color:#ddd;
+}
+
+.folderPanel.empty .dropbox:after {
+    display:none;
+}
+
+.folderPanel .dropbox.active {
+    border: 2px dashed #A6CAA2;
+    background-color:#E1F0D1;
+}
+
+.folderPanel .emptyMessage {
+    padding:170px 15px 0px 15px;
+    color:#999;
+    text-align:center;
+}
+
+.folderPanel .emptyMessage.resources {
+    background: white url('../images/folders/panel/empty-on-resources.png') no-repeat center top;
+}
+
+.folderPanel .emptyMessage.collections {
+    background: white url('../images/folders/panel/empty-on-collections.png') no-repeat center top;
+}
+
+.folderPanel .emptyMessage .h6 {
+    margin-bottom:10px;
+}
+
+.folderLevel {
+    background-color:#f0f0f0;
+    border-top:1px solid white;
+    border-bottom:1px solid #ddd;
+    height: 50px;
+    line-height: 50px;
+    padding-right:15px;
+    position:relative;
+	/* width: 280px; */
+	/* width: 176px; */
+}
+
+.folderLevel.justAdded {
+    background-color:#E1F0D1 !important;
+}
+
+.folderLevel .title {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.2em;
+    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent !important;
+}
+
+.folderLevel { /* grandparent level - default */
+    padding-left:80px;
+}
+
+.folderLevel.parent {
+    padding-left:108px;
+}
+
+.folderLevel.child {
+    padding-left:136px;
+}
+
+.folderLevel.collectionChild {
+    padding-left:164px;
+}
+
+/*////////////////////// positioning with folder icon ///////////////////*/
+
+
+.folderLevel { /* grandparent level - default */
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 33px 13px;
+}
+
+.folderLevel.parent {
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 61px 13px;
+}
+
+.folderLevel.child {
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 89px 13px;
+}
+
+.folderLevel.collectionChild {
+    background: #f0f0f0 url('../images/folders/panel/folder-icon.png') no-repeat 117px 13px;
+}
+
+/*////////////////////// other images ///////////////////*/
+
+
+.folderLevel.open {
+    background-image: url('../images/folders/panel/folder-icon-open.png');
+}
+
+.folderLevel.collection {
+    background-image: url('../images/folders/panel/collection-icon.png');
+}
+
+.folderLevel.publicIcon.collection {
+    background-image: url('../images/folders/panel/collection-icon-public.png');
+}
+
+.contents > .collection{
+	
+	white-space: nowrap;	
+	text-overflow: ellipsis;
+	
+}
+.contents > .collection:hover {
+	opacity: 0.6;
+}
+/*////////////////////////////////////////////////////////*/
+
+.folderLevel .arrow {
+    width:25px;
+    height:25px;
+    border-radius:2px;
+    position:absolute;
+    top:12px;
+    background: url('../images/folders/panel/arrow-closed.png') no-repeat center;
+    display:none;
+}
+
+.folderLevel .arrow:hover {
+    background-color:#f0f0f0;
+    cursor:pointer;
+}
+
+.folderLevel.open .arrow {
+    background-image: url('../images/folders/panel/arrow-open.png');
+    display:block;
+}
+
+.folderLevel .arrow { /* grandparent level - default */
+    left:5px;
+}
+
+.folderLevel.parent .arrow {
+    left:33px;
+}
+
+.folderLevel.child .arrow {
+    left:61px;
+}
+
+.folderLevel.collectionChild .arrow {
+    left:88px;
+}
+
+.folderLevel .editButton {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 12px 12px 12px 75px;
+    line-height: normal;
+    display:none;
+    background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(255,255,255,0) 1%, rgba(255,255,255,1) 51%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(1%,rgba(255,255,255,0)), color-stop(51%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+.folderLevel:hover {
+    background-color:white;
+    cursor:pointer;
+}
+
+.folderLevel:hover .arrow {
+    display:block;
+}
+
+.folderLevel:hover .editButton {
+    display:none;
+    height:26px;
+}
+
+/*/////////////////////////////////////// dragging states ////////////////////////////////*/
+
+.draggedResource, .draggedCollection {
+    padding: 5px;
+    margin: 10px;
+    background-color: white;
+    width: 230px;
+    border:1px solid #ddd;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    position:absolute;
+    z-index:1000;
+    top:200px; /* only used for demo purposes. will be mute when actually dragged. */
+    left:780px; /* only used for demo purposes. will be mute when actually dragged. */
+    vertical-align:center;
+}
+
+.draggedResource.dropYes {
+    top:250px; /* only used for demo purposes. will be mute when actually dragged. */
+    left:840px; /* only used for demo purposes. will be mute when actually dragged. */
+}
+
+.draggedCollection {
+    top:250px; /* only used for demo purposes. will be mute when actually dragged. */
+    left:840px; /* only used for demo purposes. will be mute when actually dragged. */
+}
+
+.draggedCollection .collectionIcon, .draggedResource .typeIcon {
+    background-image: url('../images/folders/panel/collection-icon-small.png');
+    width:27px;
+    height:20px;
+    display:inline-block;
+    vertical-align: middle;
+    margin-right:5px;
+}
+
+.draggedResource .typeIcon {
+    background: url(../images/folders/panel/resource-type-icons.png) no-repeat scroll;
+}
+
+.draggedCollection .collectionTitle, .draggedResource .resourceTitle {
+    display:inline-block;
+}
+
+.draggedResource.dropYes .dropIndicator, .draggedCollection.dropYes .dropIndicator {
+    display:block;
+    position:absolute;
+    top: -15px;
+    left: -9px;
+    height:25px;
+    width:25px;
+    line-height:25px;
+    background: white url('../images/folders/panel/plus.png') no-repeat left center;
+    border-radius: 25px;
+    border:1px solid #ddd;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.draggedResource .dropIndicator .message, .draggedCollection .dropIndicator .message {
+    display:none;
+}
+
+.draggedResource.dropNo .dropIndicator .message, .draggedCollection.dropNo .dropIndicator .message {
+    display:inline;
+}
+
+.draggedResource.dropNo .dropIndicator, .draggedCollection.dropNo .dropIndicator {
+    display:inline-block;
+    position:absolute;
+    top: -15px;
+    left: -9px;
+    padding: 0px 5px 0px 30px;
+    height:25px;
+    line-height:25px;
+    background: white url('../images/folders/panel/minus.png') no-repeat left center;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border:1px solid #ddd;
+    color:#999;
+    font-style:italic;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.resourceContainer {
+    line-height:2.2em;
+    border-bottom:1px solid #ddd;
+    position: relative;
+    left: -136px;
+    top:1px;
+    width: 280px;
+    cursor:default !important;
+}
+
+.resourceContainer .resource {
+    padding:0px 10px 0px 100px;
+    cursor:pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.resourceContainer .resource.justAdded {
+    background-color:#E1F0D1;
+}
+
+.resourceContainer .resource .typeIcon {
+    width:27px;
+    height:20px;
+    background: url(../images/folders/panel/resource-type-icons.png) no-repeat;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:10px;
+}
+
+.folderLevel.draggingInto {
+    background-color:#E1F0D1;
+}
+
+.folderLevel.draggingInto .editButton {
+        display:none;
+}
+
+.folderLevel.draggingInto .resourceContainer {
+    background-color:#E1F0D1;
+}
+
+
+/************* Organize ***************/
+.scrollContainer {
+    height: 100%;
+    width: 300px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+   	position: fixed;
+    float: left;
+    /*  left: -14px;
+   left: 126px; */
+}
+
+.folderPanel.organize {
+    position: absolute;
+    overflow:visible;
+    left: 0px;
+    background:none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow:none;
+    box-shadow: none;
+    border:none;
+}
+
+.folderLevel.root {
+    background-image:none;
+    padding: 0px 10px 0px 32px;
+    overflow: visible;
+}
+
+.folderLevel.root .title {
+    font-size:16px;
+    background-image:none;
+    padding-top: 15px;
+    display: block;
+    width: 100px;
+    float: left;
+}
+
+.folderLevel.root .dropdownButtonContainer {
+    float: right;
+    margin-top: 11px;
+    height: 10px;
+    line-height: 1;
+    position:relative;
+}
+
+.folderLevel.root .dropdownButton {
+    font-size:20px;
+    font-weight:bold;
+    padding: 2px 39px 1px 8px;
+}
+
+
+.folderLevel.root .dropdownButtonContainer .dropdown {
+    right:0px;
+}
+
+
+.folderPanel .organizeButtons {
+    padding: 25px 10px 15px 10px;
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display:block;
+/*     width:273px; */
+    overflow:hidden;
+    border-bottom:1px solid #ddd;
+    margin-top:50px;
+}
+
+.folderPanel .organizeButtons .dropdownButtonContainer {
+    float:right;
+}
+
+.folderLevel.active {
+	background-color: white;
+	border-left: 8px solid #515151;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-radius: 4px;
+	margin-left: -7px;
+    z-index:10;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+/*/////////////////////////////////////////////////////////*/
+.editPanelContent {
+/*     background-color:#f0f0f0; */
+	/* width: 733px; height:100%;  DO-3355*/
+/* 	width: 724px;
+    box-sizing:border-box; */
+/*     border:1px solid #ddd;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1); */
+/*     float:right;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position:relative; */
+}
+
+
+.editPanel {
+    background-color:#f0f0f0;
+	/* width: 733px; height:100%;  DO-3355*/
+	width: 700px;
+/* 	width: 688px; */
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border:1px solid #ddd;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1); 
+    float:right;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    position:relative;
+    min-height: 638px;
+}
+
+.editPanel > div:first-child {
+    overflow:auto;  /*used to fix a floating margin issue for the editPanel and footer. */
+}
+
+.editPanelContent .titleSection {
+    background-color:white;
+    border-bottom:1px solid #ddd;
+    overflow:auto;
+    padding: 25px 30px 15px 30px;
+    margin-top:50px;
+}
+
+.editPanelContent .titleSection .title {
+    font-size:20px;
+    font-weight:bold;
+    width:440px;
+    float:left;
+    height:30px;
+    line-height:30px;
+}
+
+.editPanelContent .titleSection .folder.title {
+    padding-left:60px;
+    background: url('../images/folders/panel/folder-icon-organize-title.png') no-repeat left center;
+}
+
+.editPanelContent .titleSection .dropdownButtonContainer {
+    float:right;
+    width:76px;
+}
+
+.editPanelContent .mainSection {
+    border-top:1px solid white;
+    padding:5px 30px;
+    background: #f0f0f0;
+}
+
+.editPanelContent .mainSection .addButtons {
+    overflow:auto;
+}
+
+.editPanelContent .mainSection .addButtons button {
+    float:right;
+}
+
+.editPanelContent .mainSection .addButtons button:first-child {
+    margin-left:0px;
+    margin-right:0px;
+}
+
+.editPanelContent .mainSection table {
+    width:100%;
+}
+
+.contentBlock {
+    background:white;
+    border:1px solid #ddd;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    border-radius:4px;
+    overflow:hidden;
+    margin:10px 0px;
+    height:176px;
+    /* width: 669px; */
+}
+
+.contentBlock:hover {
+    cursor:pointer;
+    -moz-box-shadow: 0 0 10px #4c98cc;
+    -webkit-box-shadow: 0 0 10px #4c98cc;
+    box-shadow: 0 0 10px #4c98cc;
+}
+
+.contentBlock .info, .contentBlock .contents {
+    height:100%;
+    padding:20px;
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;    
+}
+
+.contentBlock .info {
+    width:227px;
+    float:left;
+    text-align:center;
+}
+
+.contentBlock.collection .info img {
+    border-left:8px solid #1076BB;
+    margin-bottom:8px;
+}
+
+.contentBlock.folder .info .image {
+    width:146px;
+    height:90px;
+    background: url('../images/folders/panel/folder-image.png') no-repeat bottom center;
+    display:inline-block;
+    margin-bottom:8px;
+}
+
+.contentBlock.folder:hover .info .image {
+    background: url('../images/folders/panel/folder-image-open.png') no-repeat bottom center;
+}
+
+.contentBlock .contents {
+    width:390px;
+    border-left:1px solid #ddd;
+    float:left;
+    background: -moz-linear-gradient(left, rgba(245,245,245,1) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(245,245,245,1)), color-stop(60%,rgba(255,255,255,0)), color-stop(61%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* IE10+ */
+    background: linear-gradient(to right, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+.contentBlock.folder .contents.empty {
+    background: url('../images/folders/panel/empty-folder.png') no-repeat center, -moz-linear-gradient(left, rgba(245,245,245,1) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%); /* FF3.6+ */
+    background: url('../images/folders/panel/empty-folder.png') no-repeat center, -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(245,245,245,1)), color-stop(60%,rgba(255,255,255,0)), color-stop(61%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: url('../images/folders/panel/empty-folder.png') no-repeat center, -webkit-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Chrome10+,Safari5.1+ */
+    background: url('../images/folders/panel/empty-folder.png') no-repeat center, -o-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Opera 11.10+ */
+    background: url('../images/folders/panel/empty-folder.png') no-repeat center, -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* IE10+ */
+    background: url('../images/folders/panel/empty-folder.png') no-repeat center, linear-gradient(to right, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* W3C */
+    background-image: url('../images/folders/panel/empty-folder.png');
+	  background-repeat: no-repeat;
+	  background-position:center;
+	  background-color: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+.contentBlock.collection .contents.empty {
+    background: url('../images/folders/panel/empty-collection.png') no-repeat center, -moz-linear-gradient(left, rgba(245,245,245,1) 0%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%); /* FF3.6+ */
+    background: url('../images/folders/panel/empty-collection.png') no-repeat center, -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(245,245,245,1)), color-stop(60%,rgba(255,255,255,0)), color-stop(61%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: url('../images/folders/panel/empty-collection.png') no-repeat center, -webkit-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Chrome10+,Safari5.1+ */
+    background: url('../images/folders/panel/empty-collection.png') no-repeat center, -o-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* Opera 11.10+ */
+    background: url('../images/folders/panel/empty-collection.png') no-repeat center, -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* IE10+ */
+    background: url('../images/folders/panel/empty-collection.png') no-repeat center, linear-gradient(to right, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%); /* W3C */
+     background-image: url('../images/folders/panel/empty-collection.png');
+	  background-repeat: no-repeat;
+	  background-position:center;
+	  background-color: -ms-linear-gradient(left, rgba(245,245,245,1) 0%,rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+.contentBlock .contents .resource {
+    margin-bottom:7px;
+}
+
+
+
+.contentBlock .contents .collection, .contentBlock .contents .folder {
+    margin-bottom: 7px;
+    height: 20px;
+    padding-left:31px;
+    line-height:20px;
+}
+
+.contentBlock .contents .collection {
+    background: url(../images/folders/panel/collection-icon-small.png) no-repeat left center;
+}
+
+.contentBlock .contents .folder {
+    background: url(../images/folders/panel/folder-icon-small.png) no-repeat left center;
+}
+
+.contentBlock .contents .folder:hover {
+    background: url(../images/folders/panel/folder-icon-small-open.png) no-repeat left center;
+}
+
+.resource .typeIcon {
+    background: url(../images/folders/panel/resource-type-icons.png) no-repeat scroll;
+    width:27px;
+    height:20px;
+    display:inline-block;
+    vertical-align: middle;
+    margin-right:5px;
+}
+
+.editPanel .titleSection input[type="text"] {
+    width: 440px;
+    height: 17px;
+    padding: 5px;
+    border: 1px solid #DDD;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    vertical-align:top;
+}
+
+.editPanelContent .titleSection .saveCancelContainer {
+    width:125px;
+    float:right;
+    text-align:right;
+}
+
+.editPanelContent .titleSection .saveCancelContainer button:first-child {
+    
+}
+
+.buttonContainerWidth {
+	width: 90px;
+}
+
+.shelfFolderItemTitle{
+	padding-top: 3px;
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.shelfFolderItemTitle span.AM img{
+	max-height:25px !important;
+}
+.folderLevel .myShelfEditButtonContainer {
+    position: absolute;
+	top: 0px;
+    right: 0px;
+    padding: 12px 12px 12px 75px;
+    line-height: normal;
+}
+
+.folderLevel .myShelfEditButtonContainer:hover {
+height: 26px;
+background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 1%, rgba(255,255,255,1) 51%, rgba(255,255,255,1) 100%);
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(1%,rgba(255,255,255,0)), color-stop(51%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1)));
+background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
+background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
+background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
+background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 51%,rgba(255,255,255,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=1 );
+}
+
+.editPanelContent .mainSection.emptyFolder {
+    height:80%;
+    background: url(../images/folders/panel/empty-folder-large.png) no-repeat center;
+}
+.buttonMargins {
+	margin: 10px 0px 0px 10px;	
+}
+
+.folderTitleElipses{
+	white-space: nowrap !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+/* Tooltip css */
+
+.tooltipContainer {
+	width: 150px;
+	position: absolute;
+	left:-20px;
+    top:20px;
+	z-index:9999;
+	margin-top: 0px;
+    opacity: 0;
+	visibility: hidden;
+    -webkit-transition: visibility 0.2s linear, opacity 0.2s linear;
+    -moz-transition: visibility 0.2s linear, opacity 0.2s linear;
+    -o-transition: visibility 0.2s linear, opacity 0.2s linear;
+    //transition: visibility 0 linear 0.2s, opacity 0.2s linear;
+}
+
+.tooltipContainer .arrowBorder {
+ 	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+    left:20px;
+	border-top: none;
+}
+
+.tooltipContainer .arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: -9px;
+    left:20px;
+	border-top: none;
+	z-index: 100;
+    display:block !important; /* to override folder level arrow */
+    background:none; /* to override folder level arrow */
+}
+
+.tooltipContent {
+	text-align:left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 10px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 130px;
+	float:left;
+    line-height:1.2em;
+    cursor:default;
+    white-space: normal;
+}
+
+.emptyHoverContainer {
+    position: absolute;
+    top: 24px;
+    left: 50px;
+}
+
+.emptyHover {
+    width: 21px;
+    height: 20px;
+}
+
+.emptyHover:hover + .tooltipContainer  {
+	visibility:visible;
+    opacity:1;
+}
+
+.folderLevel.parent .emptyHoverContainer {
+    left:77px;
+}
+
+.folderLevel.child .emptyHoverContainer {
+    left:105px;
+}
+
+/* //////////////////////////////////// overrides ////////////////////////////////////////*/
+
+.tooltipContainer .arrow:hover {
+    background:none; /* to override folder level arrow */
+    cursor:default; /* to override folder level arrow */
+}
+
+.folderLevel.child .tooltipContainer .arrow, .folderLevel.parent .tooltipContainer .arrow {
+    left:20px; /* to override folder level arrow */
+}
+
+
+.collectionButton{
+	margin-left: 10px !important;
+}

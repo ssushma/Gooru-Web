@@ -26,22 +26,15 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AppPopUp.java
+ * @author Search Team
  *
- * @description : This is the top-level popup panel.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class AppPopUp extends PopupPanel {
 
@@ -81,6 +74,20 @@ public class AppPopUp extends PopupPanel {
 	 */
 	public AppPopUp(String type){
 		super(false);
+			ShelfCBundle.INSTANCE.css().ensureInjected();
+			this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
+			content = new FlowPanel();
+			this.setWidget(content);
+			setGlassEnabled(true);
+		
+	}
+	
+	/**
+	 * Class constructor with one parameter
+	 * @param type 
+	 */
+	public AppPopUp(String type,boolean isAutoHide){
+		super(isAutoHide);
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		this.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemPopUp());
 		content = new FlowPanel();
@@ -106,27 +113,19 @@ public class AppPopUp extends PopupPanel {
 		content.add(widget);
 		setViewTitle(title);
 	}
-	/**
-	 * This will return the header panel.
-	 */
+
 	public FlowPanel getHeaderPanel() {
 		return headerPanel;
 	}
-	/**
-	 * This will set the header panel.
-	 */
+
 	public void setHeaderPanel(FlowPanel headerPanel) {
 		this.headerPanel = headerPanel;
 	}
-	/**
-	 * This will set the content.
-	 */
+
 	public void setContent(Widget content) {
 		this.content.add(content);
 	}
-	/**
-	 * This will set the title.
-	 */
+	
 	public void setViewTitle(String title) {
 		labletitle.setText(title);
 	}

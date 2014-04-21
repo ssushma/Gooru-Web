@@ -27,20 +27,6 @@ package org.ednovo.gooru.client.mvp.home.library.events;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 
 import com.google.gwt.event.shared.GwtEvent;
-/**
- * @fileName : SetSubjectDoEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event fires, it will set the subjects.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 public class SetSubjectDoEvent extends GwtEvent<SetSubjectDoHandler> {
 
 	private String subjectCode;
@@ -49,7 +35,7 @@ public class SetSubjectDoEvent extends GwtEvent<SetSubjectDoHandler> {
 	public static final Type<SetSubjectDoHandler> TYPE = new Type<SetSubjectDoHandler>();
 	
 	/**
-	 * Class constructor
+	 * 
 	 */
 	public SetSubjectDoEvent(String subjectCode, SubjectDo subjectDo) {
 		this.subjectCode = subjectCode;

@@ -29,19 +29,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
- * 
- * @fileName : ShelfCBundle.java
+ * @author Search Team
  *
- * @description : This file is used to apply css styles for ShelfView
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ShelfCBundle extends ClientBundle{
 	
@@ -134,6 +123,8 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String websiteSmall();
 		
+		String webpageSmall();
+		
 		String textbookSmall();
 		
 		String handoutSmall();
@@ -141,6 +132,12 @@ public interface ShelfCBundle extends ClientBundle{
 		String lessonSmall();
 		
 		String slideSmall();
+		
+		String imageSmall();
+		
+		String audioSmall();
+		
+		String otherSmall();
 		
 		String collectionSmall();
 		
@@ -276,6 +273,10 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String panelAlignRight();
 		
+		String deleteIcon();
+		
+		String inputText();
+		
 		/* Comming soon popup */
 		String hoverPopupContainer();
 		
@@ -376,9 +377,19 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String privateVisibleIconBottom();
 		
+		String folderBorderColor();
+		
 		String objectFloat();
 		String friendlyDiv();
-		String objectFontType();
+		String objectFontType();		
+		String analyticsStyle();
+		String lastEditedBy();
+		String deleteDiv();
+		
+		String shareLink2();
+		String deleteOkayButton();
+		
+		String aleartDescText();
 	}
 	
 	@Source("Shelf.css")

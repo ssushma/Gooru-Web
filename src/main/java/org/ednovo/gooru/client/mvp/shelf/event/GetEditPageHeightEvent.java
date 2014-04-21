@@ -26,20 +26,6 @@ package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.user.client.ui.PopupPanel;
-/**
- * @fileName : GetEditPageHeightEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * and it will check the edit page height is cleared or not.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 	public class GetEditPageHeightEvent extends GwtEvent<GetEditPageHeightEventHandler> {
 		public static final Type<GetEditPageHeightEventHandler> TYPE = new Type<GetEditPageHeightEventHandler>();
 		private PopupPanel editQuestionPopupPanel;

@@ -49,19 +49,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : ProfilePageCollection.java
- *
- * @description : This file deals with collection data in profile page collection.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 
@@ -111,25 +100,7 @@ public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 		wrapperFocPanel.addClickHandler(this);
 		titleFocPanel.setStyleName(res.css().foldersLi());
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set Data.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setData(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 		titleLbl.setHTML(this.collectionItemDo.getResource().getTitle());
@@ -139,69 +110,15 @@ public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 			folderIcon.removeFromParent();
 		}
 	}
-	/**
-	 * 
-	 * @function setOpen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is to set disPanel to open
-	 * 
-	 * 
-	 * @parm(s) : @param isOpen
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setOpen(boolean isOpen) {
 		disPanel.setOpen(isOpen);
 	}
-	/**
-	 * 
-	 * @function isOpen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns disPanel.isOpen()
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public boolean isOpen() {
 		return disPanel.isOpen();
 	}
-	/**
-	 * 
-	 * @function setOpenFolderStyle 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set OpenFolder Style
-	 * 
-	 * 
-	 * @parm(s) : @param isOpen
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setOpenFolderStyle(boolean isOpen) {
 		if(isOpen) {
 			titleFocPanel.removeStyleName(res.css().foldersLi());
@@ -211,9 +128,7 @@ public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 			titleFocPanel.setStyleName(res.css().foldersLi());
 		}
 	}
-	/**
-	 * This is used to get folder and collection's data based on id's.
-	 */
+	
 	@Override
 	public void onClick(ClickEvent event) {
 		if (event.getSource().equals(titleFocPanel))
@@ -239,25 +154,7 @@ public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 		} else if (event.getSource().equals(wrapperFocPanel)) {
 		}
 	}
-	/**
-	 * 
-	 * @function setInnerFolderContent 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set inner folder content.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setInnerFolderContent() {
 	 AppClientFactory.getInjector().getProfilePageService().getFolders(this.collectionItemDo.getResource().getGooruOid(), new AsyncCallback<List<CollectionItemDo>>() {
 	 	 @Override
@@ -274,69 +171,15 @@ public class ProfilePageCollection extends FocusPanel implements ClickHandler {
 	 });
 	setOpen();
 	}
-	/**
-	 * 
-	 * @function getCollectionItemDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : returns collectionItemDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionItemDo
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public CollectionItemDo getCollectionItemDo() {
 		return collectionItemDo;
 	}
-	/**
-	 * 
-	 * @function getContentVerPanel 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : returns contentVerPanel.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : VerticalPanel
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public VerticalPanel getContentVerPanel() {
 		return contentVerPanel;
 	}
-	/**
-	 * 
-	 * @function setOpen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set shelf collection open.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setOpen() { 
 		if (shelfCollection == null || !shelfCollection.equals(this)) {
 			if (shelfCollection != null) {

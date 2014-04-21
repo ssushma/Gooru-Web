@@ -81,13 +81,13 @@
 		
 	</ui:style>
 	<g:FlowPanel styleName="{style.container}">
-		<g:Label ui:field="alertMessageHeaderField" styleName="{style.title}" text="Do you want to save your results?"/>	
+		<g:Label ui:field="alertMessageHeaderField" styleName="{style.title}"/>	
 		<g:FlowPanel ui:field="contentPanel" styleName="{style.content}">
-			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField" text="Looks like you answered some questions! Do you want to save your answers?"/>
-			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField1" text="If you close this collection without printing or emailing your results, you will lose your work."/>
+			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField"/>
+			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField1"/>
 			<g:FlowPanel styleName="{style.okButton}">
-				<g:Button text = "Leave this page" ui:field="leaveBtn" styleName="{style.leaveBtn}"/>
-				<g:Button text = "Stay on this page" ui:field="stayBtn" styleName="{style.stayBtn}"/>
+				<g:Button ui:field="leaveBtn" styleName="{style.leaveBtn}"/>
+				<g:Button ui:field="stayBtn" styleName="{style.stayBtn}"/>
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:FlowPanel>

@@ -8,13 +8,13 @@
 			styleName="{res.css.featuredRightContainerContent} {res.css.featuredContainer}">
 			<g:FlowPanel styleName="{res.css.featuredContentImageContainer}"
 				ui:field="contentImageFloPanel">
-				<g:Image width="280px" height="215px" ui:field="contentUrlImg" />
+				<g:Image width="280px" height="215px" ui:field="contentUrlImg"/>
 			</g:FlowPanel>
 		</g:FlowPanel>
 		<g:FlowPanel>
 			<g:FlowPanel ui:field="featuredStartStudyFloPanel"
 				styleName="{res.css.homePageFeaturedStartStudy}">
-				<g:Label text="Study" styleName="{res.css.studyFeaturedCollectionButton}"
+				<g:Label styleName="{res.css.studyFeaturedCollectionButton}"
 					ui:field="studyFeaturedCollectionButton"></g:Label>
 				<g:FlowPanel styleName="{res.css.studyFeaturedCollectionArrow}"></g:FlowPanel>
 			</g:FlowPanel>

@@ -22,40 +22,22 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
 package org.ednovo.gooru.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 /**
+ * @author Search Team
  * 
- * @fileName : InvokeRegisterEvent.java
- *
- * @description : This method is used to invoke the register event.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class InvokeRegisterEvent extends GwtEvent<InvokeRegisterHandler>{
 	
 	public static final Type<InvokeRegisterHandler> TYPE = new Type<InvokeRegisterHandler>();
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<InvokeRegisterHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 *This method will be  called by HandlerManager and it will be used to invoke lregisterogin handler event.
-	 */
+
 	@Override
 	protected void dispatch(InvokeRegisterHandler handler) {
 		handler.invokeRegister();		

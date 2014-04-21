@@ -74,27 +74,25 @@
 	</ui:style>
 	<g:FlowPanel styleName="{style.imageCropContainer}"
 		ui:field="imagCropContainer">
-		<g:Label styleName="{style.backPageLink}" ui:field="backPageLinkLbl"
-			text="« Back to upload"></g:Label>
+		<g:Label styleName="{style.backPageLink}" ui:field="backPageLinkLbl"></g:Label>
 		<g:HTMLPanel>
-			<h2>Crop this picture</h2>
-			<p>You can drag the box to select the crop area, and use the handle
-				to resize it.</p>
+			<g:HTML ui:field="cropText"></g:HTML>
+			<g:HTML ui:field="dragText"></g:HTML>
 		</g:HTMLPanel>
 		<g:FlowPanel ui:field="cropImageWidgetFloPanel" styleName="{style.cropImageWidget}">
 			 <g:FlowPanel styleName="{style.cropImageWidgetLoading}">
 				<g:VerticalPanel styleName="{style.cropImageLoadingPanel}"
 					ui:field="cropImageLoadingVerPanel">
-					<gg:LoadingUc loadingText="Preparing for cropping..."
+					<gg:LoadingUc 
 						ui:field="cropImageLoading" />
 				</g:VerticalPanel> 
 			</g:FlowPanel>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
-			<gg:BlueButtonUc text="Crop" ui:field="cropImageBtn" />
-			<g:Anchor text="Cancel" ui:field="cancelButtonAnr"
+			<gg:BlueButtonUc ui:field="cropImageBtn"/>
+			<g:Anchor ui:field="cancelButtonAnr"
 				styleName="{style.collectionFormCancelButton}" />
 		</g:FlowPanel>
-		 <g:Label  styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl" text="cropping..."></g:Label>
+		 <g:Label  styleName="{style.loadingTxtStyle}" ui:field="loadingTextLbl"></g:Label>
 	</g:FlowPanel>
 </ui:UiBinder> 

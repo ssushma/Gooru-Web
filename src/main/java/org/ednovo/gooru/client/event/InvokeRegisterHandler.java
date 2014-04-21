@@ -22,27 +22,13 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
 package org.ednovo.gooru.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
 
 /**
- * 
- * @fileName : InvokeRegisterHandler.java
+ * @author Search Team
  *
- * @description : This file is used to invoke register event.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface InvokeRegisterHandler extends EventHandler {
 	

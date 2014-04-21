@@ -27,18 +27,21 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-/**
+
+/*
+ * 
  * @fileName : AssignmentsTabViewCBundle.java
  *
- * @description : This class is used to set the CSS representation. 
+ * @description : this class is used to set the CSS representation. 
+ *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Jul 10, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface AssignmentsTabViewCBundle extends ClientBundle {
 

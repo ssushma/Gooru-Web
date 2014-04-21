@@ -56,7 +56,7 @@
 		<g:FlowPanel ui:field="contentPanel" styleName="{style.content}">
 			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField"/>
 		<g:FlowPanel styleName="{style.okButton}">
-			<g:Button text = "OK" ui:field="okButton" styleName="{style.alterOkButtonBlue}"/>
+			<g:Button ui:field="okButton" styleName="{style.alterOkButtonBlue}"/>
 		</g:FlowPanel>
 		</g:FlowPanel>
 	</g:FlowPanel>

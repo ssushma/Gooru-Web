@@ -11,7 +11,7 @@
 			<panel:HTMLEventPanel  ui:field="assignmentPanel">
 				<g:HTMLPanel styleName="{StudentStyle.classPageRoundedHeadingContainer}">
 					<g:Label styleName="{StudentStyle.classPageRoundedHeading}" ui:field="titleLb"></g:Label>
-					<g:Label styleName="{StudentStyle.classPageRoundedMiddleText}" visible="false" ui:field="expandLbl" text="click to expand"></g:Label>
+					<g:Label styleName="{StudentStyle.classPageRoundedMiddleText}" visible="false" ui:field="expandLbl"></g:Label>
 					<g:HTMLPanel styleName="{StudentStyle.classPageRoundedDate}"><g:Label ui:field="dueLbl"/> </g:HTMLPanel>
 				</g:HTMLPanel>
 				</panel:HTMLEventPanel>

@@ -29,21 +29,7 @@ import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-/**
- * 
- * @fileName : IsFolderContentTabView.java
- *
- * @description : This file is the interface for FolderContentTabView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsFolderContentTabView extends IsViewWithHandlers<FolderContentTabUiHandlers>{
 
 	void addFolder(CollectionItemDo collectionItemDo);

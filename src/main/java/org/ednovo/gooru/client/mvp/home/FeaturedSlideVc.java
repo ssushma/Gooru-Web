@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.featured.FeaturedContentDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -48,24 +49,14 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Hidden;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : FeaturedSlideVc.java
+ * @author Search Team
  *
- * @description : This file is used to set the featured collection info and to play them.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class FeaturedSlideVc extends Composite {
+public class FeaturedSlideVc extends Composite implements MessageProperties{
 
 	private static FeaturedSlideVcUiBinder uiBinder = GWT.create(FeaturedSlideVcUiBinder.class);
 
@@ -84,6 +75,8 @@ public class FeaturedSlideVc extends Composite {
 	@UiField
 	Hidden collectionGooruOid;
 	
+	@UiField Label didYouKnowText;
+	
 	@UiField
 	StudyFeaturedCollection studyFeaturedCollection;
 	
@@ -98,6 +91,7 @@ public class FeaturedSlideVc extends Composite {
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		didYouKnowText.setText(GL1241);
 		this.setData(featuredContentDo);
 		collectionStudyButtonFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			
@@ -151,6 +145,6 @@ public class FeaturedSlideVc extends Composite {
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.collectionGooruOid.getValue());
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
 	}
 }

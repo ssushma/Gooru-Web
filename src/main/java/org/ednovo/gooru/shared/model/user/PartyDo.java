@@ -22,25 +22,12 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
 import java.util.Date;
-/**
- * 
- * @fileName : PartyDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class PartyDo implements Serializable {
 
 	/**
@@ -54,6 +41,8 @@ public class PartyDo implements Serializable {
 	private Date lastModifiedOn;
 	private String userUid;
 	private String lastModifiedUserUid;
+	
+	public PartyDo(){}
 
 	public static enum TYPE {
 
@@ -70,102 +59,60 @@ public class PartyDo implements Serializable {
 		}
 	}
 
-	/** 
-	 * This method is to get the partyUid
-	 */
-	public String getPartyUid() {
-		return partyUid;
-	}
-
-	/** 
-	 * This method is to set the partyUid
-	 */
-	public void setPartyUid(String partyUid) {
-		this.partyUid = partyUid;
-	}
-
-	/** 
-	 * This method is to get the partyName
-	 */
 	public String getPartyName() {
 		return partyName;
 	}
 
-	/** 
-	 * This method is to set the partyName
-	 */
 	public void setPartyName(String partyName) {
 		this.partyName = partyName;
 	}
 
-	/** 
-	 * This method is to get the partyType
-	 */
-	public String getPartyType() {
-		return partyType;
-	}
-
-	/** 
-	 * This method is to set the partyType
-	 */
-	public void setPartyType(String partyType) {
-		this.partyType = partyType;
-	}
-
-	/** 
-	 * This method is to get the createdOn
-	 */
 	public Date getCreatedOn() {
 		return createdOn;
 	}
 
-	/** 
-	 * This method is to set the createdOn
-	 */
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	/** 
-	 * This method is to get the lastModifiedOn
-	 */
 	public Date getLastModifiedOn() {
 		return lastModifiedOn;
 	}
 
-	/** 
-	 * This method is to set the lastModifiedOn
-	 */
 	public void setLastModifiedOn(Date lastModifiedOn) {
 		this.lastModifiedOn = lastModifiedOn;
 	}
 
-	/** 
-	 * This method is to get the userUid
-	 */
-	public String getUserUid() {
-		return userUid;
+	public String getPartyType() {
+		return partyType;
 	}
 
-	/** 
-	 * This method is to set the userUid
-	 */
-	public void setUserUid(String userUid) {
-		this.userUid = userUid;
+	public void setPartyType(String partyType) {
+		this.partyType = partyType;
 	}
 
-	/** 
-	 * This method is to get the lastModifiedUserUid
-	 */
 	public String getLastModifiedUserUid() {
 		return lastModifiedUserUid;
 	}
 
-	/** 
-	 * This method is to set the lastModifiedUserUid
-	 */
 	public void setLastModifiedUserUid(String lastModifiedUserUid) {
 		this.lastModifiedUserUid = lastModifiedUserUid;
+	}
+
+	public String getUserUid() {
+		return userUid;
+	}
+
+	public void setUserUid(String userUid) {
+		this.userUid = userUid;
+	}
+
+	public String getPartyUid() {
+		return partyUid;
+	}
+
+	public void setPartyUid(String partyUid) {
+		this.partyUid = partyUid;
 	}
 
 }

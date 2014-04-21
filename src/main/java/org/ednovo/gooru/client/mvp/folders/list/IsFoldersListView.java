@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.folders.list;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-/**
- * 
- * @fileName : IsFoldersListView.java
- *
- * @description : This is the interface for FoldersListView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsFoldersListView extends IsViewWithHandlers<FoldersListUiHandlers>{
 
 }

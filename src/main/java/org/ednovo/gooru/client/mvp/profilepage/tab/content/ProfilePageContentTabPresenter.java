@@ -38,19 +38,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
 /**
- * 
- * @fileName : ProfilePageContentTabPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter class for ProfilePageContentTabView.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePageContentTabView> implements ProfilePageContentTabUiHandlers {
 
@@ -76,9 +65,7 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -96,9 +83,7 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 			}
 		});
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+	
 	@Override
 	public void onReveal() {
 		super.onReveal();
@@ -107,16 +92,12 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 			setInSlot(TYPE_PUBLIC_SHELF_VIEW, getProfilePageListPresenter());
 		}
 	}
-	/**
-	 * This method is used to hide.
-	 */
+	
 	@Override
 	protected void onHide() {
 		super.onHide();
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset(){
 		getView().clearContentItemData();
@@ -128,47 +109,11 @@ public class ProfilePageContentTabPresenter extends PresenterWidget<IsProfilePag
 			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
 		}
 	}
-	/**
-	 * 
-	 * @function setProfilePageListPresenter 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is to set profilePageListPresenter
-	 * 
-	 * 
-	 * @parm(s) : @param profilePageListPresenter
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setProfilePageListPresenter(ProfilePageListPresenter profilePageListPresenter){
 		this.profilePageListPresenter = profilePageListPresenter;
 	}
-	/**
-	 * 
-	 * @function getProfilePageListPresenter 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns profilePageListPresenter
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ProfilePageListPresenter
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public ProfilePageListPresenter getProfilePageListPresenter() {
 		return profilePageListPresenter;
 	}

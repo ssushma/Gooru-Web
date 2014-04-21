@@ -31,20 +31,7 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : TopicDo.java
- *
- * @description :  This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class TopicDo implements Serializable {
 	
@@ -53,52 +40,37 @@ public class TopicDo implements Serializable {
 	private String label;
 	private ThumbnailDo thumbnails;
 	private ArrayList<LessonDo> lesson;
-	/** 
-	 * This method is to get the codeId
-	 */
+	private ArrayList<ConceptDo> collection;
+	public TopicDo(){}
+	
 	public Integer getCodeId() {
 		return codeId;
 	}
-	/** 
-	 * This method is to set the codeId
-	 */
 	public void setCodeId(Integer codeId) {
 		this.codeId = codeId;
 	}
-	/** 
-	 * This method is to get the label
-	 */
 	public String getLabel() {
 		return label;
 	}
-	/** 
-	 * This method is to set the label
-	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	/** 
-	 * This method is to get the thumbnails
-	 */
 	public ThumbnailDo getThumbnails() {
 		return thumbnails;
 	}
-	/** 
-	 * This method is to set the thumbnails
-	 */
 	public void setThumbnails(ThumbnailDo thumbnails) {
 		this.thumbnails = thumbnails;
 	}
-	/** 
-	 * This method is to get the lesson
-	 */
 	public ArrayList<LessonDo> getLesson() {
 		return lesson;
 	}
-	/** 
-	 * This method is to set the lesson
-	 */
 	public void setLesson(ArrayList<LessonDo> lesson) {
 		this.lesson = lesson;
+	}
+	public ArrayList<ConceptDo> getCollection() {
+		return collection;
+	}
+	public void setCollection(ArrayList<ConceptDo> collection) {
+		this.collection = collection;
 	}
 }

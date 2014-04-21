@@ -47,16 +47,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 /**
  * @fileName : SettingEmailEditLabelUc.java
- *
- * @description : This class is used to change email in settingPage.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
+ * 
+ * @description :This class is used to change email in settingPage.
+ * 
+ * 
+ * @version : 5.9
+ * 
+ * @date: Sep 20, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
 public class SettingEmailEditLabelUc extends Composite implements MessageProperties,HasValue<String> {
 
@@ -66,6 +67,9 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	interface SettingEmailEditLabelUcUiBinder extends
 			UiBinder<Widget, SettingEmailEditLabelUc> {
 	}
+	
+	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+	
 	@UiField
 	protected Label editLabel,errorLabel;
 
@@ -79,12 +83,9 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	protected FocusPanel focusPanel;
 	boolean emailAvailable;
 	protected String text;
-	private static final String EMAIL = "email";
+	private static final String EMAIL = GL0212.toLowerCase();
 	@UiField(provided = true)
 	UcCBundle res;
-	/**
-	 * Class constructor.
-	 */
 	public SettingEmailEditLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
@@ -122,6 +123,7 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	 * Change to label
 	 */
 	public void switchToLabel() {
+
 		if (hasValidateData()) {
 			try {
 				AppClientFactory
@@ -248,13 +250,15 @@ public class SettingEmailEditLabelUc extends Composite implements MessagePropert
 	public boolean hasValidateData() {
 		boolean isValid = true;
 		
-		if ((editTextBox.getText() != null && !editTextBox.getText().isEmpty()) && !editTextBox.getText().contains("@")) {
+		Boolean hasvalidData = editTextBox.getText().matches(EMAIL_REGEX);
+		
+		if ((editTextBox.getText() != null && !editTextBox.getText().isEmpty()) && !hasvalidData) {
 			errorLabel.setText(StringUtil.generateMessage(GL0067, EMAIL));
 			errorLabel.setVisible(true);
 			isValid = false;
 		}	
-		if (editTextBox.getText() == null && editTextBox.getText().isEmpty())
-		 {
+		if (editTextBox.getText() == null || editTextBox.getText().isEmpty() || editTextBox.getText().trim().equals(""))
+		 { 
 			errorLabel.setText(StringUtil.generateMessage(GL0082, EMAIL));
 			errorLabel.setVisible(true);
 			editTextBox.addStyleName(RegisterCBundle.INSTANCE.css().errorBoxStyle());

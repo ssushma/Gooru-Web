@@ -24,26 +24,26 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.faq;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : CustomizeVc.java
- *
- * @description : This class is used for customize.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class CustomizeVc extends Composite {
 
+/**
+ * @author Search Team
+ *
+ */
+public class CustomizeVc extends Composite implements MessageProperties{
+
+	@UiField Anchor watchVideoText,watchVideoImage;
+	@UiField Label guideStudentsText;
+	
+	
 	private static customizeUiBinder uiBinder = GWT
 			.create(customizeUiBinder.class);
 
@@ -55,6 +55,10 @@ public class CustomizeVc extends Composite {
 	 */
 	public CustomizeVc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		watchVideoText.setText(GL1340);
+		watchVideoText.setHref("http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources");
+		watchVideoImage.setHref("http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources");
+		guideStudentsText.setText(GL1341+GL_SPL_FULLSTOP);
 	}
 
 }

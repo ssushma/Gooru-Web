@@ -28,18 +28,10 @@
 package org.ednovo.gooru.shared.model.search;
 
 import java.util.Map;
+
 /**
- * @fileName : MapSearchDo.java
- *
- * @description : This class is used for serach map do.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class MapSearchDo<K, V> extends AbstractSearchDo<Map<K, V>> {
 

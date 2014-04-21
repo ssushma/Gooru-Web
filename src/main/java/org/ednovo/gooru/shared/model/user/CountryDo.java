@@ -25,49 +25,26 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : CountryDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CountryDo implements Serializable {
 
 	private static final long serialVersionUID = 5884693288921720922L;
 	private String countryId;
 	private String name;
-	/** 
-	 * This method is to get the countryId
-	 */
+	
+	public CountryDo(){}
+	
 	public String getCountryId() {
 		return countryId;
 	}
-	/** 
-	 * This method is to set the countryId
-	 */
 	public void setCountryId(String countryId) {
 		this.countryId = countryId;
 	}
-	/** 
-	 * This method is to get the name
-	 */
 	public String getName() {
 		return name;
 	}
-	/** 
-	 * This method is to set the name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 
 }

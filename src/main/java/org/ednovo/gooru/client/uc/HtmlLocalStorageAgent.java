@@ -31,7 +31,7 @@
  *
  * @date: 10-Dec-2013
  *
- * @Author Chandra Veluru
+ * @Author Gooru Team
  *
  * @Reviewer: 
  */
@@ -45,20 +45,7 @@ import org.ednovo.gooru.shared.model.library.CourseDo;
 import com.seanchenxi.gwt.storage.client.StorageExt;
 import com.seanchenxi.gwt.storage.client.StorageKey;
 import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
-/**
- * @fileName : HtmlLocalStorageAgent.java
- *
- * @description : This class is used to html5 local storage.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class HtmlLocalStorageAgent {
     StorageExt localStorage = StorageExt.getLocalStorage();
     StorageKey<HashMap<String, ArrayList<CourseDo>>> libraryStorageObject = StorageKeyFactory.objectKey("libraryStorageObject");

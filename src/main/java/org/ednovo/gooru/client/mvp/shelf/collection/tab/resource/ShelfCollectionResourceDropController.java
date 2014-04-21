@@ -40,18 +40,10 @@ import com.allen_sauer.gwt.dnd.client.util.LocationWidgetComparator;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : ShelfCollectionResourceDropController.java
- *
- * @description : This class is used to add drop controller for the shelf.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class ShelfCollectionResourceDropController extends AppVerticalPanelDropController {
 
@@ -97,9 +89,7 @@ public class ShelfCollectionResourceDropController extends AppVerticalPanelDropC
 			}
 		};
 	}
-	/**
-	 * This will hit when the draggable widget enters on the drop controller area.
-	 */
+
 	@Override
 	public void onEnter(DragContext context) {
 		super.onEnter(context);
@@ -109,9 +99,7 @@ public class ShelfCollectionResourceDropController extends AppVerticalPanelDropC
 			dropTarget.insert(positioner, 2);
 		}
 	}
-	/**
-	 * This method will hit when the draggable element is moved.
-	 */
+
 	@Override
 	public void onMove(DragContext context) {
 		int targetIndex = DOMUtil.findIntersect(dropTarget, new CoordinateLocation(context.mouseX, context.mouseY), getMoveLocationWidgetComparator());
@@ -130,9 +118,7 @@ public class ShelfCollectionResourceDropController extends AppVerticalPanelDropC
 			}
 		}
 	}
-	/**
-	 * This method will hit when the element / widget is leaved.
-	 */
+
 	@Override
 	public void onLeave(DragContext context) {
 		positioner.removeFromParent();

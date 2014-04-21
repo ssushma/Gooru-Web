@@ -26,19 +26,10 @@ package org.ednovo.gooru.client.mvp.socialshare;
 
 import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
+
 /**
- * 
- * @fileName : IsSocialShareView.java
+ * @author Gooru Team
  *
- * @description : Acts as a bridge between Presenter and View.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsSocialShareView extends IsChildView<SocialSharePresenter>, IsDraggable {
 

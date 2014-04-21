@@ -544,93 +544,88 @@
 					<div class="{style.landingHelpPopupContainer}">
 						<div class="{style.landingPageHeaderContainer}">
 							<div class="{style.quickHelpTextContainer}">
-								<div class="{style.quickHelpText}">Quick Help:</div>
+								<g:Label styleName="{style.quickHelpText}" ui:field="quickHelpText"></g:Label>
 								<div class="{style.GettingStarted}">
-									"<g:Anchor styleName="{style.textDecor}" ui:field="gettingAnchr" text="Getting Started" />"
+									"<g:Anchor styleName="{style.textDecor}" ui:field="gettingAnchr"/>"
 								</div>
 							</div>
-							<div class="{style.landingHelpPopupTitle}">What can I do on Gooru?</div>
+							<g:Label styleName="{style.landingHelpPopupTitle}" ui:field="whatText"></g:Label>
 							<panel:HTMLEventPanel styleName="{style.landingPageCloseButton}"
 								ui:field="closeButton">
-								<g:Image title="Close" altText="Close" url="images/close-button.png" width="15"
-									height="15" />
+								<g:Image width="15" height="15" ui:field="closeButtonText"/>
 							</panel:HTMLEventPanel>
 						</div>
 						<div class="{style.landingPageHelpDotsTotalContainer}">
 							<div class="{style.landingPageHelpDotsContainer}">
-								<div class="{style.landingPageDotsTitle}">Discover</div>
+								<g:Label styleName="{style.landingPageDotsTitle}" ui:field="discoverText"></g:Label>
 								<div class="{style.landingPageHelpDiscoverSearchBoxContainer}">
 									<input type="text" class="{style.landingPageHelpDiscoverSearchBox}"
 										readonly="readonly" />
 								</div>
-								<div class="{style.ladningPageHelpSearchButton}">Search</div>
+								<g:Label styleName="{style.ladningPageHelpSearchButton}" ui:field="searchText"></g:Label>
 								<div class="{style.landingDiscoverIconContainer}">
-									<g:Image url="images/02_help.png" height="40" />
+									<g:Image height="40" ui:field="helpImage"/>
 								</div>
 								<div class="{style.landingPageHelpDotsFirstText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/23254041"
-											target="_blank" text="How do I search for resources on Gooru?" />
+											target="_blank" ui:field="howDoISearchText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/23254171"
-											target="_blank" text="What types of resources does Gooru have?" />
+											target="_blank" ui:field="whichTypeText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/23269257"
 											target="_blank"
-											text="How do I use search filters to narrow down my results?" />
+											 ui:field="filtersText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpSeeMoreORG}">
 									<g:Anchor styleName="{style.textDecor}"
-										href="http://support.goorulearning.org/forums/22070013-Discover"
-										target="_blank" text="See more" />
+										target="_blank" ui:field="seeMoreLbl"/>
 								</div>
 							</div>
 							<div class="{style.landingPageHelpDotsContainer}">
-								<div class="{style.landingPageDotsTitle}">Organize</div>
+								<g:Label styleName="{style.landingPageDotsTitle}" ui:field="organizeText"></g:Label>
 								<div class="{style.landingPageHelpOrganizeImageContainer}">
 									<div class="{style.landingPageHelpOrganizeBigIconContainer}">
 										<div class="{style.landingPageHelpOrganizeBigIconContainer}">
 											<div class="{style.landingPageHelpOrganizeBigIconHolder}">
-												<g:Image url="images/video-big-icon.png" width="45"
-													height="37" />
-												<g:Image url="images/plus-icon.png" width="18"
-													height="18" styleName="{style.landingPageHelpOrganizePlusIcon}" />
+												<g:Image width="45"
+													height="37" ui:field="videoBigIconImage"/>
+												<g:Image width="18"
+													height="18" styleName="{style.landingPageHelpOrganizePlusIcon}" ui:field="plusIconImage" />
 											</div>
 										</div>
 										<div class="{style.landingPageHelpOrganizeBigIconContainerTwo}">
 											<div class="{style.landingPageHelpOrganizeBigIconHolder}">
-												<g:Image url="images/text-book-big-icon.png" width="45"
-													height="37" />
-												<g:Image url="images/plus-icon.png" width="18"
-													height="18" styleName="{style.landingPageHelpOrganizePlusIcon}" />
+												<g:Image width="45"
+													height="37" ui:field="textBookBigIconImage"/>
+												<g:Image width="18"
+													height="18" styleName="{style.landingPageHelpOrganizePlusIcon}" ui:field="plusImage"/>
 											</div>
 										</div>
 										<div class="{style.landingPageHelpOrganizeLessionTotlatContainer}">
 											<div class="{style.landingPageHelpOrganizeTopArrow}">
-												<g:Image url="images/top-arrow.png" width="46"
-													height="26" />
+												<g:Image width="46"
+													height="26" ui:field="topArrowImage"/>
 											</div>
 											<div class="{style.landingPageHelpOrganizeDownArrow}">
-												<g:Image url="images/small-arrow.png" width="25"
-													height="19" />
+												<g:Image width="25"
+													height="19" ui:field="smalllArrowImage"/>
 											</div>
 										</div>
 									</div>
 									<div class="{style.landingPageHelpDottedBoxContainer}">
-										<div class="{style.landingPageLessionSmallTitle}">lesson 1</div>
+										<g:Label styleName="{style.landingPageLessionSmallTitle}" ui:field="lessonText"></g:Label>
 										<div class="{style.borderStyle}"></div>
 									</div>
 								</div>
@@ -638,91 +633,82 @@
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/23277268"
 											target="_blank"
-											text="How do I save a resource I’ve found on Gooru to a collection?" />
+											 ui:field="saveResourceText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/23277558"
-											target="_blank" text="How do I add narration to a resource?" />
+											target="_blank" ui:field="narrationText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/23277568"
-											target="_blank" text="Can I share a collection with others?" />
+											target="_blank" ui:field="collectionShareText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpSeeMore}">
 									<g:Anchor styleName="{style.textDecor}"
-										href="http://support.goorulearning.org/forums/22084787-Organize"
-										target="_blank" text="See more" />
+										target="_blank" ui:field="seeMoreLabel"/>
 								</div>
 							</div>
 							<div class="{style.landingPageHelpDotsContainer}">
-								<div class="{style.landingPageDotsTitle}">Teach</div>
+								<g:Label styleName="{style.landingPageDotsTitle}" ui:field="teachLbl"></g:Label>
 								<div class="{style.landingPageLessionTitle}">
-									<div class="{style.lessionTitle}">lesson 1</div>
+									<g:Label styleName="{style.lessionTitle}" ui:field="teachLessonTitle"></g:Label>
 								</div>
 								<div class="{style.landingPageHelpTeachLessoinContainer}">
-									<div class="{style.landingPageHelpTeachLessoinNumberActive}">1</div>
+									<g:Label styleName="{style.landingPageHelpTeachLessoinNumberActive}" ui:field="tLNo_ONE"></g:Label>
 									<div class="{style.landingPageHelpTeachLessoinHintActive}"></div>
-									<div class="{style.landingPageHelpTeachLessoinTextActive}">As you watch, think about</div>
+									<g:Label styleName="{style.landingPageHelpTeachLessoinTextActive}" ui:field="thinkAboutText"></g:Label>
 								</div>
 								<div class="{style.landingPageHelpTeachLessoinContainer}">
-									<div class="{style.landingPageHelpTeachLessoinNumber}">2</div>
+									<g:Label styleName="{style.landingPageHelpTeachLessoinNumber}" ui:field="tLNo_TWO"></g:Label>
 									<div class="{style.landingPageHelpTeachLessoinHint}"></div>
-									<div class="{style.landingPageHelpTeachLessoinText}">Answer this question</div>
+									<g:Label styleName="{style.landingPageHelpTeachLessoinText}" ui:field="answerThisText"></g:Label>
 								</div>
 								<div class="{style.landingPageHelpDotsFirstText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/24075976"
-											target="_blank" text="How do I teach using Gooru?" />
+											target="_blank" ui:field="howtoTeachText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/24061522"
-											target="_blank" text="What is a classpage and how do I create one?" />
+											target="_blank" ui:field="classPageText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/24064511"
-											target="_blank" text="How do I share a classpage with my students?" />
+											target="_blank"  ui:field="shareClasspageText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpSeeMoreTeach}">
 									<g:Anchor styleName="{style.textDecor}"
-										href="http://support.goorulearning.org/forums/22161812"
-										target="_blank" text="See more" />
+										target="_blank" ui:field="seeMoreTeachLbl"/>
 								</div>
 							</div>
 							<div class="{style.landingPageHelpDotsContainerLast}">
-								<div class="{style.landingPageDotsStudyTitle}">Study</div>
+								<g:Label styleName="{style.landingPageDotsStudyTitle}" ui:field="studyLbl"></g:Label>
 								<div class="{style.studyImage}">
-									<g:Image url="images/study-image.png" width="202"
-										height="107" />
+									<g:Image width="202"
+										height="107" ui:field="studyImage"/>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
 									<div class="{style.singleText}">></div>
 									<div class="{style.landingPageHelpDotsHints}">
 										<g:Anchor styleName="{style.textDecor}"
-											href="http://support.goorulearning.org/entries/24076673"
 											target="_blank"
-											text="How do I begin an assignment that my teacher has shared with me?" />
+											 ui:field="startAssignmentText"/>
 									</div>
 								</div>
 								<div class="{style.landingPageHelpDotsText}">
@@ -732,23 +718,20 @@
 								</div>
 								<div class="{style.landingPageHelpSeeMoreStudy}">
 									<g:Anchor styleName="{style.textDecor}"
-										href="http://support.goorulearning.org/forums/22157603"
-										target="_blank" text="See more" />
+										target="_blank" ui:field="seemoreStudyLbl"/>
 								</div>
 							</div>
 						</div>
 
 						<div class="{style.supportLinkContainer}">
 
-							<div class="{style.supportLinkVist}">
-								More Questions? Visit Our
-
-							</div>
+							<g:Label styleName="{style.supportLinkVist}" ui:field="visitText">
+							</g:Label>
 							<div class="{style.supportLink}">
 
 								<g:Anchor styleName="{style.textDecor}"
-									href="http://support.goorulearning.org/forums" target="_blank"
-									text="Support Center" />
+									 target="_blank"
+									 ui:field="supportCenterLbl" />
 							</div>
 						</div>
 					</div>

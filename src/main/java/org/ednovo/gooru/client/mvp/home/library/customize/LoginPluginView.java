@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,28 +54,28 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
  * 
- * @fileName : LoginPluginView.java
- *
+ * @fileName : CollectionAssignViewTab.java
+ * 
  * @description : This class is used to set the Editing collection to Assignment
  *              under Classpages.
- *
- *
+ * 
  * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: Jul 30, 2013
+ * 
+ * 
+ * @Reviewer:
  */
 public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> implements
 		IsLoginPlugin, MessageProperties {
@@ -95,7 +96,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription;
+	Label lblPleaseWait, collectionDescription,donotHaveAcount;
+	
+	@UiField HTMLPanel hangOnText,signUpPanel;
 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -104,9 +107,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	CollectionDo collectionObject = new CollectionDo();
 
-	private static final String OOPS = MessageProperties.GL0061;
-	private static final String LOGIN_ERROR = MessageProperties.GL0347;
-	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = MessageProperties.GL0348;
+	private static final String OOPS =GL0061;
+	private static final String LOGIN_ERROR =GL0347;
+	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =GL0348;
 
 	private static LoginPluginUiBinder uiBinder = GWT
 			.create(LoginPluginUiBinder.class);
@@ -148,19 +151,22 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	 * 
 	 */
 	public void setLabelsAndIds() {
-
-		collectionDescription.setText(MessageProperties.GL0476);
+		hangOnText.getElement().setInnerText(GL0740);
+		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
+		donotHaveAcount.setText(GL0634);
+		donotHaveAcount.getElement().setAttribute("style", "float: left;");
+		ancSignUp.getElement().setAttribute("style", "float: left;padding: 0;margin-left: 5px;");
+		ancSignUp.setText(GL0207);
+		collectionDescription.setText(GL0476);
 		forgotPwd.getElement().setId("lnkForgotPwd");
-		loginTxtBox.setPlaceholder(MessageProperties.GL0202);
-		loginTxtBox.getElement().setAttribute("placeholder",
-				MessageProperties.GL0202);
+		loginTxtBox.setPlaceholder(GL0202);
+		loginTxtBox.getElement().setAttribute("placeholder",GL0202);
 		loginTxtBox.setFocus(true);
-		passwordTxtBox.setPlaceholder(MessageProperties.GL0204);
-		forgotPwd.setText(MessageProperties.GL0205);
-		loginButton.setText(MessageProperties.GL0187);
-
-		lblPleaseWait.setText(MessageProperties.GL0242);
-
+		passwordTxtBox.setPlaceholder(GL0204);
+		forgotPwd.setText(GL0205);
+		loginButton.setText(GL0187);
+		lblPleaseWait.setText(GL0242);
+		loginButton.setText(GL1185);
 		loginTxtBox.getElement().setId("tbLoginUsername");
 		passwordTxtBox.getElement().setId("tbLoginPassword");
 		loginButton.getElement().setId("btnLogin");
@@ -201,7 +207,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										lblPleaseWait.setText(MessageProperties.GL0505);
+										lblPleaseWait.setText(GL0505);
 										AppClientFactory
 												.setLoggedInUser(result);
 										AppClientFactory
@@ -239,34 +245,15 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		} else {
 			loginButton.setVisible(true);
 			lblPleaseWait.setVisible(false);
-			new AlertMessageUc("Aww!", new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+			new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
 		}
 		
 		
 	}
-	/**
-	 * 
-	 * @function setHandlers 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is used to set the Handlers.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setHandlers() {
 
 		this.setSize("515px", "547px");
-
 		loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 		passwordTxtBox.addKeyUpHandler(new LoginKeyupHandler());
 	}
@@ -285,53 +272,26 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		}
 
 	}
-	/**
-	 * 
-	 * @function onSignUp 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to set the callback parameters and passing them to service as parameters.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("ancSignUp")
 	public void onSignUp(ClickEvent clickEvent){
-		
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
+		if(params.containsKey("query"))
+		{
+			String queryVal = AppClientFactory.getPlaceManager().getRequestParameter("query");
+			params.put("query", queryVal);
+		}
+		if(params.containsKey("flt.subjectName"))
+		{
+			String subjectNameVal = AppClientFactory.getPlaceManager().getRequestParameter("flt.subjectName");
+			params.put("flt.subjectName", subjectNameVal);
+		}
 		params.put("callback", "signup");
 		params.put("type", "1");
 		AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 		closePoupfromChild();
 	}
-	/**
-	 * 
-	 * @function onForgotPwdClicked 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to open forgotPwd popup.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("forgotPwd")
 	public void onForgotPwdClicked(ClickEvent clickEvent) {
 		
@@ -343,47 +303,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		// this.hide();
 
 	}
-	/**
-	 * 
-	 * @function getResourceService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Returns resourceService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ResourceServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
-	/**
-	 * 
-	 * @function setResourceService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :setter method for resourceService.
-	 * 
-	 * 
-	 * @parm(s) : @param resourceService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
@@ -403,25 +327,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		}
 		return saveCollectionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function isCookieEnabled 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To check the cookie statuus wheather it is enabled/disabled.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private static native boolean isCookieEnabled() /*-{
 													return navigator.cookieEnabled;
 													}-*/;

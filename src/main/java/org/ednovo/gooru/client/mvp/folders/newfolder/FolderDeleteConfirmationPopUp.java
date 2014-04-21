@@ -43,19 +43,13 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : FolderDeleteConfirmationPopUp.java
+ * 
+ * @author BLR Team
  *
- * @description : This is the confirmation delete popup.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
+
 public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 	@UiField
 	Anchor cancelAnr;

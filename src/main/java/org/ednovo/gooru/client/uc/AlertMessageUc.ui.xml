@@ -27,7 +27,7 @@
 				<g:FlowPanel ui:field="content" />
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="Ok" ui:field="okButton" styleName="overRideBlueButton" />
+				<gg:BlueButtonUc ui:field="okButton" styleName="overRideBlueButton" />
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

@@ -27,9 +27,11 @@ package org.ednovo.gooru.server.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.service.AppService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.form.AppFormFactory;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -38,18 +40,10 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
+
 /**
- * @fileName : AppServiceImpl.java
- *
- * @description : This is the implementation of the AppService.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 @Service("appService")
 @ServiceURL("/appService")
@@ -59,11 +53,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 	 * 
 	 */
 	private static final long serialVersionUID = -6736852011457993775L;
-	/**
-	 * Get LoggedIn user details
-	 * @return serialized to {@link UserDo} has loggedIn user details
-	 * @throws GwtException
-	 */
+
 	@Override
 	public UserDo getLoggedInUser() {
 		UserDo user = null;
@@ -71,29 +61,23 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		if (!isLoggedInUserAnonymous()) {
 			user = getUserInfo(userUid);
 			user.setToken(getLoggedInSessionToken());
-			user.setEmailId(getLoggedInEmailId());
+//			user.setEmailId(getLoggedInEmailId());
 		}
 		if (user == null) {
 //			user = guestSignIn();
 			user = v2GuestSignIn();
 		}
 		setUserFilterProperties(user);
-		setCollectionFilterProperties(user);
 		return user;
 	}
-	/**
-	 * User signin
-	 * @param username of the user account for signin
-	 * @param password of the user account
-	 * @return serialized to {@link UserDo} loggedIn user details 
-	 * @throws GwtException
-	 */
+
 	@Override
 	public UserDo signin(String username, String password) {
 		UserDo user = null;
-
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNIN, getApiKey(), getLoggedInSessionToken());
-		JsonRepresentation jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), AppFormFactory.getSigninForm(username, password));
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), AppFormFactory.getSigninForm(username, password));
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		String content = null;
 		try {
 			content = jsonRep.getText();
@@ -110,7 +94,6 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				}
 				
 				setUserFilterProperties(user);
-				setCollectionFilterProperties(user);
 				deleteLoggedInInfo();
 				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId());
 				return user;
@@ -127,11 +110,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		}
 		throw new GwtException(content);
 	}
-	/**
-	 * signout from the account
-	 * @return serialized anonymous {@link UserDo}
-	 * @throws GwtException
-	 */
+
 	@Override
 	public UserDo signout() {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.SIGNOUT, getLoggedInSessionToken());
@@ -139,25 +118,20 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		deleteLoggedInInfo();
 		UserDo user = guestSignIn();
 		setUserFilterProperties(user);
-		setCollectionFilterProperties(user);
 		return user;
 	}
 
 	
 	/// V2 Apis
-	/**
-	 * Get LoggedIn user details
-	 * @return serialized to {@link UserDo} has loggedIn user details
-	 * @throws GwtException
-	 */
 	@Override
 	public UserDo v2Signin(String postData) {
 		UserDo user = null;
 		V2UserDo v2UserDo = null;
-
+		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
 		
-		JsonRepresentation jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 		String content = null;
 		try {
 			content = jsonRep.getText();
@@ -180,9 +154,9 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				}
 				
 				setUserFilterProperties(user);
-				setCollectionFilterProperties(user);
 				deleteLoggedInInfo();
 				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId());
+				AppClientFactory.setLoggedInUser(user);
 				return user;
 			}
 		} catch (Exception e) {
@@ -198,11 +172,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		throw new GwtException(content);
 	}
 	
-	/**
-	 * signout from the account
-	 * @return serialized anonymous {@link UserDo}
-	 * @throws GwtException
-	 */
+	
 	@Override
 	public UserDo v2Signout() {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNOUT, getLoggedInSessionToken());
@@ -210,7 +180,15 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		deleteLoggedInInfo();
 		UserDo user = v2GuestSignIn();
 		setUserFilterProperties(user);
-		setCollectionFilterProperties(user);
 		return user;
 	}
+	
+	
+	@Override
+	public String getAnalyticsURL(String type, String id) {
+		
+		String analyticsUrl = getAnalyticsEndPoint() +"dashboard/#/" + type +"/"+id+"?session_token="+getLoggedInSessionToken();		
+		return analyticsUrl;
+	}
+	
 }

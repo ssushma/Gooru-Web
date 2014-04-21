@@ -27,25 +27,11 @@
  */
 package org.ednovo.gooru.client.gin;
 
-import com.gwtplatform.mvp.client.Presenter;
-import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.UiHandlers;
-import com.gwtplatform.mvp.client.View;
+
 /**
+ * @author Search Team
  * 
- * @fileName : BaseUiHandlers.java
- *
- * @description : Use this interface on classes that implement the controls required by
- * a {@link View} to communicate back with its {@link Presenter} or
- * {@link PresenterWidget}.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface BaseUiHandlers extends UiHandlers {
 	

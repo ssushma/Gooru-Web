@@ -9,7 +9,7 @@
 	<g:FlowPanel ui:field="popUpCopyCollection"
 		styleName="{res.css.addCollectionToAssignPopUpBorder}">
 		<g:HTMLPanel styleName="{res.css.copyPopupResourcesUserInputTwo}">
-			<g:HTMLPanel styleName="{res.css.copyPopupleftAndWidth}">Choose a Collection*</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.copyPopupleftAndWidth}" ui:field="chooseCollectionsLbl"></g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.copyPopupResourcesListPanel}">
 				<g:Label ui:field="collectionFirstElement"
 					styleName="{res.css.copyPopUpResourceListBoxTextTop}"></g:Label>
@@ -33,17 +33,17 @@
 				<g:HTMLPanel styleName="{res.css.copyPopupSettingPageAddBtn}"
 					ui:field="addLabel">
 					<g:Label styleName="{res.css.copyPopupSettingPageChangePasswordText}"
-						ui:field="btnAdd">Add</g:Label>
+						ui:field="btnAdd"></g:Label>
 				</g:HTMLPanel>
 				<g:Label styleName="{res.css.copyPopupResourcesCancelButton}"
-					ui:field="btnCancel">Cancel</g:Label>
+					ui:field="btnCancel"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.clear}" />
 			<g:HTMLPanel ui:field="loadingPanel"
 				styleName="{res.css.noCollectionMsgForAddPopUp}">
-				<g:Label text="Loading..." />
+				<g:Label ui:field="loadingLbl"/>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.cantFindCollectionInfo}">Can’t find a Collection on the list? Make sure that those Collections are shareable with others in Collection Edit.</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.cantFindCollectionInfo}" ui:field="cannotFindLbl"></g:HTMLPanel>
 		</uc:HTMLEventPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

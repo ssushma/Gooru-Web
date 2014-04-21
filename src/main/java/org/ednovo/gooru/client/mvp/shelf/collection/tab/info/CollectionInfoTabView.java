@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -48,10 +49,14 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -67,25 +72,16 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
+import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionInfoTabView.java
- *
- * @description : This file is related to Collection Information Tab View.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTabUiHandlers> implements IsCollectionInfoTabView, SelectionHandler<SuggestOracle.Suggestion> {
+public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTabUiHandlers> implements IsCollectionInfoTabView, SelectionHandler<SuggestOracle.Suggestion>,MessageProperties {
 
 	/*@UiField
 	FlowPanel collectionCourseLstPanel;
@@ -94,13 +90,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	Button addCourseBtn, addStandardBtn,removeCourseBtn;
 
 	@UiField
-	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation;
+	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl;
+	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl;
 	
 	@UiField
 	HTMLPanel panelLoading,mainInfoPanel;
+	
+/*	@UiField TextArea teacherTipTextarea;*/
 	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
@@ -124,11 +122,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	private AlertContentUc alertContentUc;
 	
-	private static final String ADD_COURSE="Add a Course";
+	private static final String ADD_COURSE=GL0847;
 	
-	private static final String CHANGE_COURSE="Change Course";
+	private static final String CHANGE_COURSE=GL1496;
+	
+	private static final String FLT_CODE_ID = "id";
 	
 	CourseListUc courseListUc;
+	
+	List<String> standardPreflist=null;
 	
 	private static CollectionInfoTabViewUiBinder uiBinder = GWT.create(CollectionInfoTabViewUiBinder.class);
 
@@ -139,19 +141,61 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	 * Class constructor
 	 */
 	public CollectionInfoTabView() {
-		
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
+		
+		/*if(standardPreflist!=null){
+		for (String istandardPreflistcodeId : standardPreflist) {
+			standardcodeIdPref=istandardPreflistcodeId;
+		}
+		}*/
+		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-
+			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 			@Override
 			public void keyAction(String text) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+						}
+						
+						
+					}
+					if(standardsPrefDisplayPopup){
+						standardsPreferenceOrganizeToolTip.hide();
+						getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+					}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+	
+						//standardSuggestOracle.add(GL1613);
+						
+					}
+					}
 					
-					getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-				}
+				
 			}
 
 			@Override
@@ -165,6 +209,30 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		gradeLbl.setText(GL1076.toUpperCase());
+		selectGradeLbl.setText(GL0820);
+		selectCourseLbl.setText(GL0846);
+		addCourseBtn.setText(GL0847);
+		removeCourseBtn.setText(GL0848);
+		standardLabel.setText(GL0575.toUpperCase());
+		addStandardBtn.setText(GL0590);
+		standardMaxMsg.setText(GL0849);
+		
+		AppClientFactory.getEventBus().addHandler(AddCourseEvent.TYPE, addCourseHandler);
+/*		addTeacherTip.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(teacherTipTextarea.getText().length()>0)
+				{
+				errorLabelForTeacherTip.setVisible(false);
+				}
+				
+			}
+		});
+		
+		teacherTipTextLabel.setText(MessageProperties.GL0750);*/
+		standardsDefaultText.setText(GL0749);
 		addStandardBtn.setVisible(false);
 		panelLoading.setVisible(true);
 		mainInfoPanel.setVisible(false);
@@ -173,13 +241,9 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		removeCourseBtn.getElement().getStyle().setDisplay(Display.INLINE_BLOCK);
 		removeCourseBtn.setVisible(false);
 		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
-//		courseLbl.getElement().getStyle().setMarginLeft(4, Unit.PX);
-		AppClientFactory.getEventBus().addHandler(AddCourseEvent.TYPE, addCourseHandler);
 		
 	}
-	/**
-	 * This method is used to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -199,13 +263,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		removeCourseBtn.setVisible(false);
 		
 	}
-	/**
-	 * This method is used to set the data.
-	 */
+
 	@Override
 	public void setData(CollectionDo collectionDo) {
 		if (this.collectionDo == null) {
 			this.collectionDo = collectionDo;
+			
+		//	getUiHandlers().getCollectionTeacherTipInfo(collectionDo.getGooruOid());
+			
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if (code.getDepth() == 2) {
 					courseLbl.setText(code.getLabel());
@@ -235,9 +300,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}*/
 		}
 	}
-	/**
-	 * This method is used to set the course list.
-	 */
+
 	@Override
 	public void setCourseList(List<LibraryCodeDo> libraryCode) {
 		collectionCourseLst = new GroupedListBox();
@@ -300,6 +363,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		Window.enableScrolling(false);
 	}
+	
+	
+	
+
 	/**
 	 * to display message if course exceeds more than five
 	 */
@@ -318,6 +385,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		addCourseBtn.setStyleName(CollectionCBundle.INSTANCE.css().infoAddButton());
 //		courseMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().courseMaxMsg());
 	}
+
 	/**
 	 * to display message if standard exceeds more than fifteen
 	 */
@@ -328,6 +396,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
 		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
 	}
+
 	/**
 	 * to hide message if standard less than fifteen
 	 *//*
@@ -356,18 +425,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			}
 		}
 	}
-	/**
-	 * This method is used to clear standardSgstBox.
-	 */
+
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
 	}
-	/**
-	 * This method is used to set the standard suggestions.
-	 */
+
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -382,6 +447,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		}
 		standardSgstBox.showSuggestionList();
 	}
+
 	/**
 	 * get the standards are added for collection
 	 * 
@@ -398,30 +464,30 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		}
 		return suggestions;
 	}
+
 	/**
 	 * set the standard text with count while adding and removing the standard
 	 */
 	private void resetStandardCount() {
 		if (standardsPanel.getWidgetCount() > 0) {
-			standardLabel.setText("STANDARDS" + " (" + standardsPanel.getWidgetCount() + ")");
+			standardLabel.setText(GL0575.toUpperCase() + " (" + standardsPanel.getWidgetCount() + ")");
 		} else {
-			standardLabel.setText("STANDARDS");
+			standardLabel.setText(GL0575.toUpperCase());
 		}
 	}
+
 	/**
 	 * set the course text with count while adding and removing the course
 	 */
 	private void resetCourseCount() {		
-		courseLabel.setText("COURSE");
+		courseLabel.setText(GL0574.toUpperCase());
 		/*if (coursesPanel.getWidgetCount() > 0) {
 			courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");
 		} else {
 			courseLabel.setText("COURSE");
 		}*/
 	}
-	/**
-	 * This is used to add the course handler.
-	 */
+	
 	AddCourseHandler addCourseHandler=new AddCourseHandler() {
 		@Override
 		public void onAddCourse(String courseName, String courseId) {
@@ -432,32 +498,30 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			courseCode=courseId;
 		}
 	};
-	/**
-	 * 
-	 * @function onClickRemoveCourseBtn 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to updateCourse.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+	
 	@UiHandler("removeCourseBtn")
 	public void onClickRemoveCourseBtn(ClickEvent clickEvent){
 		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
 		addCourseBtn.setText(ADD_COURSE);
 		removeCourseBtn.setVisible(false);
 		getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+		courseCode="";
 	}
+	
+/*	@UiHandler("addTeacherTip")
+	public void onClickAddTeacherTip(ClickEvent clickEvent){
+		getUiHandlers().updateCollectionTeacherTipInfo(collectionDo, teacherTipTextarea.getText());
+		
+		
+	}*/
+
+/*	public void displayErrorMsgTeacherTip(){
+
+		errorLabelForTeacherTip.setVisible(true);
+		errorLabelForTeacherTip.setText(MessageProperties.GL1116);
+		
+	}*/
 	/**
 	 * @param clickEvent
 	 *            instance of {@link ClickEvent}
@@ -466,27 +530,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public void onAddStandardsClick(ClickEvent clickEvent) {
 		addStandard(standardSgstBox.getText(), getCodeIdByCode(standardSgstBox.getText(), standardSearchDo.getSearchResults()));
 	}
-	/**
-	 * 
-	 * @function getCodeIdByCode 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to get the CodeId By Code.
-	 * 
-	 * 
-	 * @parm(s) : @param code
-	 * @parm(s) : @param codes
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private static String getCodeIdByCode(String code, List<CodeDo> codes) {
 		if (codes != null) {
 			for (CodeDo codeDo : codes) {
@@ -497,6 +541,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		}
 		return null;
 	}
+
 	/**
 	 * Adding new standard for the collection , will check it has more than
 	 * fifteen standards
@@ -516,6 +561,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			standardSgstBox.setText("");
 		}
 	}
+
 	/**
 	 * new label is created for the standard which needs to be added
 	 * 
@@ -536,30 +582,49 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		};
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
-	/**
-	 * This is to set the collectionDo onPostCourseUpdate.
-	 */
+
 	@Override
 	public void onPostCourseUpdate(CollectionDo collectionDo) {
 //		collectionCourseLst.setSelectedIndex(0);
 		this.collectionDo = collectionDo;
 		//resetCourseCount();
 	}
-	/**
-	 *  This is to set the collectionDo onPostStandardUpdate.
-	 */
+
+/*	@Override
+	public void setExistingTeacherTip(CollectionDo collectionDo) {
+		this.collectionDo = collectionDo;
+		teacherTipTextarea.setText(collectionDo.getKeyPoints());
+	}*/
+	
 	@Override
 	public void onPostStandardUpdate(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 	}
-	/**
-	 * This method is used to close the opened popup's.
-	 */
+
 	@Override
 	public void closeAllOpenedPopUp() {
 		if(alertContentUc!=null){
 			alertContentUc.getAlertBox().hide();
 		}
 	}
+
+	@Override
+	public FlowPanel getStandardContainer() {
+		return standardContainer;
+	}
+
+	@Override
+	public void getUserStandardPrefCodeId(List<String> list) {
+		if(list!=null){
+		standardPreflist=new ArrayList<String>();
+		for (String code : list) {
+			standardPreflist.add(code);
+			standardPreflist.add(code.substring(0, 2));
+		 }
+		}
+		
+	}
+
+	
 
 }

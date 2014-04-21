@@ -23,10 +23,25 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library;
+/**
+ * @fileName : FeaturedCourseListView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 02-Dec-2013
+ *
+ * @Author IBC
+ *
+ * @Reviewer: 
+ */
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.library.CourseDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -39,20 +54,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @fileName : FeaturedCourseListView.java
- *
- * @description : This class is used to display the view for featured courses.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class FeaturedCourseListView extends Composite {
+public class FeaturedCourseListView extends Composite implements MessageProperties {
 	
 	@UiField HTMLEventPanel featuredCourse;
 	@UiField Label courseTitle;
@@ -69,9 +71,9 @@ public class FeaturedCourseListView extends Composite {
 	
 	private static final String PNG = ".png";
 	
-	private final static String MR = "By Mr. ";
+	private final static String MR =GL_GRR_BYMR+" ";
 	
-	private final static String MS = "By Ms. ";
+	private final static String MS =GL_GRR_BYMS+" ";
 
 	private final static String FEMALE = "female";
 
@@ -95,13 +97,18 @@ public class FeaturedCourseListView extends Composite {
 	 * 
 	 * @created_date : 11-Dec-2013
 	 * 
-	 * @description : This method is used to set the course data.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param courseDo
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	private void setData(CourseDo courseDo) {
 		courseTitle.setText(courseDo.getLabel());
@@ -121,15 +128,43 @@ public class FeaturedCourseListView extends Composite {
 		if(courseDo.getCreator()!=null) {
 			courseAuthor.setVisible(true);
 			String authorName = "";
-			if(courseDo.getCreator().getGender()!=null) {
+			String contributorProfileImage = "";
+			/// In User Object is null
+			if (courseDo.getUser()!=null &&  courseDo.getUser().size()>0){
+				int j=0;
+				for (int i=0;i<courseDo.getUser().size();i++){
+					j = i;
+					if (courseDo.getUser().get(i).getIsOwner() !=null &&  courseDo.getUser().get(i).getIsOwner().equalsIgnoreCase("1")){
+						break;
+					}
+				}
+				
+				if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
+					authorName = MR+courseDo.getUser().get(j).getLastName();
+				} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
+			 	    authorName = MS+courseDo.getUser().get(j).getLastName();
+				} else {
+					authorName = courseDo.getUser().get(j).getLastName();
+				}
+				
+				if (courseDo.getUser().size()>1){
+					courseAuthor.setText(authorName +" "+GL_GRR_AND+" "+GL1117);
+				}else{
+					courseAuthor.setText(authorName);
+				}
+				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
+			}else{
 				if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
 					authorName = MR+courseDo.getCreator().getLastName();
 				} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
 					authorName = MS+courseDo.getCreator().getLastName();
+				} else {
+					authorName = courseDo.getCreator().getLastName();
 				}
+				courseAuthor.setText(authorName);
+				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 			}
-			courseAuthor.setText(authorName);
-			contributorImage.setUrl(AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG);
+			contributorImage.setUrl(contributorProfileImage);			
 			contributorImage.addErrorHandler(new ErrorHandler() {
 				@Override
 				public void onError(ErrorEvent event) {
@@ -142,21 +177,15 @@ public class FeaturedCourseListView extends Composite {
 		}
 		setCourseId(courseDo.getCodeId());
 	}
-	/**
-	 * This method is used to return featured course panel.
-	 */
+	
 	public HTMLEventPanel getfeaturedCoursePanel() {
 		return featuredCourse;
 	}
-	/**
-	 * This method is used to get course id.
-	 */
+
 	public Integer getCourseId() {
 		return courseId;
 	}
-	/**
-	 * This method is used to set course id.
-	 */
+
 	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
 	}

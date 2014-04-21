@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.mvp.folders.item;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
- * @fileName : FolderItemCBundle.java
- *
- * @description : This interface is used to set the css styles for folder items.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface FolderItemCBundle extends ClientBundle {
 

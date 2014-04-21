@@ -33,20 +33,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
 /**
- * 
- * @fileName : JsonSerializer.java
- *
- * @description : Provides support to serialize an Object into JSON. Uses Jackson serializer
+ * Provides support to serialize an Object into JSON. Uses Jackson serializer
  * for serializing the object.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @author Search Team
+ * @see FilterSetting
  */
 public class JsonSerializer {
 

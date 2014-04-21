@@ -29,18 +29,10 @@ package org.ednovo.gooru.client.mvp.dnd;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : IsDraggable.java
- *
- * @description : This interface is used to set the drag type.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface IsDraggable extends IsWidget {
 

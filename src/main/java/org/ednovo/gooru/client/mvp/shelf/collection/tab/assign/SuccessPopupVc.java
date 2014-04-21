@@ -24,8 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.assign;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -34,29 +40,26 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author BLR Team
  * 
- * @fileName : SuccessPopupVc.java
- *
- * @description : This file is related to SuccessPopup.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public abstract class SuccessPopupVc extends PopupPanel {
+public abstract class SuccessPopupVc extends PopupPanel implements MessageProperties {
  
 	
-	@UiField Label lblAssignmentTitle, lblCollectionTitle, lblClasspageTitle; 
+	@UiField InlineLabel assignMoreCpLbl,ancClasspageTitle;
+	
+	@UiField HTMLPanel assignMoreCpContainer,successPopUpHeader;
+	
+	@UiField Button classPageDoneBtn;
 	
 	@UiField(provided = true)
 	CollectionAssignCBundle res;
@@ -69,9 +72,9 @@ public abstract class SuccessPopupVc extends PopupPanel {
 	private static final Binder binder = GWT.create(Binder.class);
 	
 	/**
-	 * Constructor
+	 * 
 	 */
-	public SuccessPopupVc(String assignmentTitle, String collectionTitle, String classpageTitle) {
+	public SuccessPopupVc(String classpageId, String collectionTitle, String classpageTitle) {
 		super(false);
 		this.res = CollectionAssignCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -81,14 +84,20 @@ public abstract class SuccessPopupVc extends PopupPanel {
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
         
+        successPopUpHeader.getElement().setInnerHTML(GL1183);
+        
+    	assignMoreCpLbl.setText(GL0521);
+		ancClasspageTitle.setText(classpageTitle);
+		
+		classPageDoneBtn.setText(GL0190);
+		
+		
+		ancClasspageTitle.getElement().setAttribute("classpageId", classpageId);
+        
 		this.center();
-		lblAssignmentTitle.setText(assignmentTitle);
-		lblCollectionTitle.setText(collectionTitle);
-		lblClasspageTitle.setText(classpageTitle +":");
+
 	}
-	/**
-	 * Abstract method to close the popup.
-	 */
+
 	public abstract void closePoup();
 	
 	
@@ -102,4 +111,33 @@ public abstract class SuccessPopupVc extends PopupPanel {
 	public void onCancelClicked(ClickEvent clickEvent) {
 		closePoup();
 	}
+	
+	/**
+	 * Added click handler to hide the login popup.
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
+	 */
+	@UiHandler("classPageDoneBtn")
+	public void onclassPageDoneClicked(ClickEvent clickEvent) {
+		closePoup();
+	}
+	
+	
+	@UiHandler("ancClasspageTitle")
+	public void onClickAncClasspageTitle(ClickEvent clickevent) {
+
+		String classpageId = clickevent.getRelativeElement().getAttribute("classpageId");
+		
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("classpageid", classpageId);
+		params.put("pageSize", "10");
+		params.put("pageNum", "0");
+		params.put("pos", "1");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE,params);
+		AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
+		closePoup();
+	}
+	
+	
 }

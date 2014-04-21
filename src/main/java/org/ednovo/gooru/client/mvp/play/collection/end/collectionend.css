@@ -377,9 +377,8 @@ color: #FFF;
 }
 
 .cpIconsContainer {
-	width: 200px;
+	width: 378px;
 	float: right;
-	margin-right: 100px;
 }
 
 .cpSummaryText {
@@ -499,6 +498,14 @@ color: #FFF;
 .collection-print-icon:hover,.collection-email-icon:hover{
 	opacity:0.7;
 	cursor:pointer;
+}
+
+.replayButtonNormal {
+	background: url("images/player_images.png") no-repeat;
+	background-position: -254px -37px;
+	width: 26px;
+	height: 25px;
+	display: inline-block;
 }
 
 

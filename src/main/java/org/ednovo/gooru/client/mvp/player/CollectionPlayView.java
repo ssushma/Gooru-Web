@@ -25,25 +25,20 @@
 package org.ednovo.gooru.client.mvp.player;
 
 import java.util.Date;
-import java.util.List;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
-import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.ShareViewUc;
-import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -53,7 +48,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -65,13 +59,11 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author Search Team
  * 
  */
-public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlayUiHandlers> implements	IsCollectionPlayView {
+public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlayUiHandlers> implements	IsCollectionPlayView,MessageProperties {
 
 	//private CollectionOverviewPopupImpl gooruCollectionPlayer;
 	
 	private CollectionPlayWidget gooruCollectionPlayer;
-	
-	private SimpleAsyncCallback<List<CollectionDo>> userCollectionAsyncCallback = null;
 	
 	ShareViewUc shareContainer;  
 	
@@ -79,7 +71,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 
 	Document doc = Document.get();
 
-	private static final String OOPS = "Oops!";
+	private static final String OOPS = GL0061;
 
 	String reloadUrl = null;
 
@@ -237,7 +229,6 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 							AppClientFactory.fireEvent(new RefreshUserShelfCollectionsEvent());
 						}
 
-						// AppClientFactory.getInjector().getResourceService().getUserCollection(getUserCollectionAsyncCallback());
 						//
 						//AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 
@@ -261,19 +252,6 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 	@Override
 	protected String getDefaultView() {
 		return PlaceTokens.HOME;
-	}
-
-	public SimpleAsyncCallback<List<CollectionDo>> getUserCollectionAsyncCallback() {
-		if (userCollectionAsyncCallback == null) {
-			userCollectionAsyncCallback = new SimpleAsyncCallback<List<CollectionDo>>() {
-				@Override
-				public void onSuccess(List<CollectionDo> result) {
-					AppClientFactory
-							.fireEvent(new ConsumeShelfCollectionsEvent(result));
-				}
-			};
-		}
-		return userCollectionAsyncCallback;
 	}
 
 	native void redirect(String url)
@@ -314,6 +292,7 @@ public class CollectionPlayView extends BasePopupViewWithHandlers<CollectionPlay
 		shareDo.setCategoryType(type);
 		shareDo.setOnlyIcon(false);
 		shareDo.setShareType(shareType);
+		shareDo.setDecodeRawUrl(link);
 		SocialShareView socialView=new SocialShareView(shareDo);
 		gooruCollectionPlayer.setFTMWidget(socialView);
 	}

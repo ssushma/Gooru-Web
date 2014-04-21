@@ -28,21 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : CollectionItemsListDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CollectionItemsListDo implements Serializable {
 	/**
@@ -52,39 +38,25 @@ public class CollectionItemsListDo implements Serializable {
 	private String myCollectionTitle;
 	private String myCollectionGid;
 	private String myCollectionType;
-	/** 
-	 * This method is to get the myCollectionTitle
-	 */
+	
+	
+	public CollectionItemsListDo(){}
+	
 	public String getMyCollectionTitle() {
 		return myCollectionTitle;
 	}
-	/** 
-	 * This method is to set the myCollectionTitle
-	 */
 	public void setMyCollectionTitle(String myCollectionTitle) {
 		this.myCollectionTitle = myCollectionTitle;
 	}
-	/** 
-	 * This method is to get the myCollectionGid
-	 */
 	public String getMyCollectionGid() {
 		return myCollectionGid;
 	}
-	/** 
-	 * This method is to set the myCollectionGid
-	 */
 	public void setMyCollectionGid(String myCollectionGid) {
 		this.myCollectionGid = myCollectionGid;
 	}
-	/** 
-	 * This method is to get the myCollectionType
-	 */
 	public String getMyCollectionType() {
 		return myCollectionType;
 	}
-	/** 
-	 * This method is to set the myCollectionType
-	 */
 	public void setMyCollectionType(String myCollectionType) {
 		this.myCollectionType = myCollectionType;
 	}

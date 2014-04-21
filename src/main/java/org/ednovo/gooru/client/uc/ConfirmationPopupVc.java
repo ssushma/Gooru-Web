@@ -26,38 +26,31 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : ConfirmationPopupVc.java
+ * @author Search Team
  *
- * @description : This class is used to display the confirmation popup view.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public abstract class ConfirmationPopupVc extends Composite {
+public abstract class ConfirmationPopupVc extends Composite implements MessageProperties {
 
 	private AppPopUp appPopUp;
 	private boolean isEditQuestion=false;
 	@UiField
-	Anchor cancelButton;
+	Button cancelButton;
 
 	@UiField
 	BlueButtonUc okButton;
@@ -86,26 +79,16 @@ public abstract class ConfirmationPopupVc extends Composite {
 		contentText.setText(messageContent);
 		appPopUp.show();
 		appPopUp.center();
+		cancelButton.setText(GL0142);
+		okButton.setText(GL0190);
 		okButton.getElement().setId("btnOk");
+		loadingTextLbl.setText(GL1021);
 		cancelButton.getElement().setId("lnkCancel");
 		loadingTextLbl.setVisible(false);
         buttonContainer.setVisible(true);
+		cancelButton.getElement().getStyle().setMarginRight(10, Unit.PX);
 	}
-	/**
-	 * @function onCancelClick 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the cancel button.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("cancelButton")
 	public void onCancelClick(ClickEvent clickEvent) {
 		hide();
@@ -116,21 +99,7 @@ public abstract class ConfirmationPopupVc extends Composite {
 	        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
         }
 	}
-	/**
-	 * @function hide 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to hide the popup.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void hide() {
 		appPopUp.hide();
 		if(isEditQuestion){
@@ -142,60 +111,18 @@ public abstract class ConfirmationPopupVc extends Composite {
 		
 
 	}
-	/**
-	 * @function setGlassZindex 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the z- index.
-	 * 
-	 * 
-	 * @parm(s) : @param index
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setGlassZindex(int index){
 		if(appPopUp!=null){
 			appPopUp.setGlassZindex(index);
 		}
 	}
-	/**
-	 * @function setPopupZindex 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the z-index.
-	 * 
-	 * 
-	 * @parm(s) : @param index
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void setPopupZindex(int index){
 		if(appPopUp!=null){
 			appPopUp.setPopupZindex(index);
 		}
 	}
-	/**
-	 * @function onClickDelete 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the ok button.
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("okButton")
 	public void onClickDelete(ClickEvent clickEvent){
 		loadingTextLbl.setVisible(true);
@@ -209,4 +136,8 @@ public abstract class ConfirmationPopupVc extends Composite {
 		isEditQuestion=true;
 	}
 
+	public void setDeleteData(String deleteMsg, String deleteBtnTxt) {
+		loadingTextLbl.setText(deleteMsg);
+		okButton.setText(deleteBtnTxt);
+	}
 }

@@ -22,22 +22,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.dnd;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AppMirageDragContainer.java
- *
- * @description : This class will handle the Drag container in the application.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AppMirageDragContainer extends VerticalPanel {
 
@@ -98,37 +93,11 @@ public class AppMirageDragContainer extends VerticalPanel {
 		}
 		return super.remove(w);
 	}
-	/**
-	 * @function isClonnable 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will return whether is clonnable or not.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public boolean isClonnable() {
 		return clonnable;
 	}
-	/**
-	 * @function setClonnable 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method set the clonnable.
-	 * 
-	 * @parm(s) : @param duplicate
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setClonnable(boolean duplicate) {
 		this.clonnable = duplicate;
 	}

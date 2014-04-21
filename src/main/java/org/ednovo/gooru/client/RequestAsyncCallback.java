@@ -22,36 +22,17 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.gwtplatform.mvp.client.View;
-/**
- * 
- * @fileName : RequestAsyncCallback.java
- *
- * @description : This class requests GWT async API calls.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public abstract class RequestAsyncCallback<T, I, V extends HasError> extends SimpleAsyncCallback<T> {
 
 	private V view;
 
-	/**
-	 * class constructor.
-	 * 
-	 * @param view {@link View}
-	 */
 	public RequestAsyncCallback(V view) {
 		super();
 		this.view = view;
@@ -60,9 +41,7 @@ public abstract class RequestAsyncCallback<T, I, V extends HasError> extends Sim
 	public void makeCall(I inputData) {
 		asyncCall(this, inputData);
 	}
-	/**
-	 * On API call failure sets respective error message.
-	 */
+
 	@Override
 	public final void onFailure(Throwable caught) {
 		if (caught instanceof GwtException && ((GwtException) caught).getErrors().size() > 0) {

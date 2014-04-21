@@ -42,19 +42,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : UpdateQuestionAnswerChoice.java
- *
- * @description : This class is used to update question answer choice.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class UpdateQuestionAnswerChoice extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
    public interface UpdateQuestionAnswerChoiceUiBinder extends UiBinder<Widget, UpdateQuestionAnswerChoice>{
 	   
@@ -72,15 +60,9 @@ public class UpdateQuestionAnswerChoice extends Composite implements HasMouseOut
  
    @UiField UpdateResourceBundle editQuestionStyle;
    public Label ansChoiceDeleteButton=new Label();
-   /**
-    * Class constructor.
-    */
    public UpdateQuestionAnswerChoice(){
 	   initWidget(uiBinder.createAndBindUi(this));
    }
-   /**
-    * Class constructor.
-    */
    public UpdateQuestionAnswerChoice(String labelname){
 	   initWidget(uiBinder.createAndBindUi(this));
 		labelChoice.setText(labelname);
@@ -88,9 +70,7 @@ public class UpdateQuestionAnswerChoice extends Composite implements HasMouseOut
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
    }
-   /**
-    * Class constructor.
-    */
+   
    public  UpdateQuestionAnswerChoice(int childWidgetCount,String richTextValue,int isMultipleChoiceQuestion){
 	   initWidget(uiBinder.createAndBindUi(this));
 	   this.richTextValue=richTextValue;
@@ -113,55 +93,21 @@ public class UpdateQuestionAnswerChoice extends Composite implements HasMouseOut
 			}
        });
    }
-   /**
-    * @function setRichTextData 
-    * 
-    * @created_date : 02-Jan-2014
-    * 
-    * @description :This will set the rich text data.
-    * 
-    * 
-    * @parm(s) : 
-    * 
-    * @return : void
-    *
-    * @throws : <Mentioned if any exceptions>
-    *
-    */
    public void setRichTextData(){
 	   if(richTextValue!=null){
 		   answerTextBox.setText(richTextValue);
 	   }	   
    }
-   /**
-    * @function setLabelName 
-    * 
-    * @created_date : 02-Jan-2014
-    * 
-    * @description : this will set the label name.
-    * 
-    * 
-    * @parm(s) : @param labelName
-    * 
-    * @return : void
-    *
-    * @throws : <Mentioned if any exceptions>
-    *
-    */
    public void setLabelName(String labelName){
 		labelChoice.setText(labelName);
 	}
-   /**
-	   * Adding the mouse over event.
-	   */
    public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-   /**
-	   * Adding the mouse out event.
-	   */
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 	

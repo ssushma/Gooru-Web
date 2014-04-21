@@ -6,12 +6,12 @@
 			<g:FocusPanel ui:field="headerPanel">
 				<g:FlowPanel styleName="{res.css.disclosurePanelUcHeader}">
 					<g:SimplePanel width="10px" ui:field="imagePanel" styleName="floatLeft" >
-						<g:Image altText="Dropdown Arrow" url="images/Collection-Search/dropdown-arrow-active.png" styleName="{res.css.disclosurePanelUcHeaderImgOpen}" ui:field="titleImg" />
+						<g:Image styleName="{res.css.disclosurePanelUcHeaderImgOpen}" ui:field="titleImg" />
 					</g:SimplePanel>
 					<g:Label styleName="{res.css.disclosurePanelUcHeaderText}" ui:field="titleLbl" />
 				</g:FlowPanel>
 			</g:FocusPanel>
 		</g:customHeader>
-		<g:FlowPanel ui:field="contentPanel" />
+		<g:FlowPanel ui:field="contentPanel"/>
 	</g:DisclosurePanel>
 </ui:UiBinder> 

@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -55,26 +56,12 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : FeaturedCollectionUc.java
- *
- * @description : Related to featured collections information.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class FeaturedCollectionUc extends Composite {
+
+public class FeaturedCollectionUc extends Composite implements MessageProperties{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
-	@UiField Label courseTitle, collectionTitle, gradeTag1, gradeTag2;
+	@UiField Label courseTitle, collectionTitle, gradeTag1, gradeTag2,createdByText,gradesText,standardsText;
 	
 	@UiField Anchor collectionAuthor;
 	
@@ -100,10 +87,7 @@ public class FeaturedCollectionUc extends Composite {
 	interface FeaturedCollectionUcUiBinder extends
 			UiBinder<Widget, FeaturedCollectionUc> {
 	}
-	/**
-	 * Constructor.
-	 * @param collectionDo
-	 */
+
 	public FeaturedCollectionUc(CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		collectionAuthor.setStyleName(landingPageStyle.userNamePPPdisabled());
@@ -111,21 +95,7 @@ public class FeaturedCollectionUc extends Composite {
 		featuredCollectionHoverEvent.addMouseOutHandler(new HideHoverCollectionContainer());
 		setCollectionData(collectionDo);
 	}
-	/**
-	 * 
-	 * @fileName : FeaturedCollectionUc.java
-	 *
-	 * @description : Hides the Collection Data on Mouse Over.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	private class ShowHoverCollectionContainer implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -141,21 +111,7 @@ public class FeaturedCollectionUc extends Composite {
 			featuredCollectionDescription.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : FeaturedCollectionUc.java
-	 *
-	 * @description : Enables the collection data on MouseOut.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class HideHoverCollectionContainer implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
@@ -171,26 +127,11 @@ public class FeaturedCollectionUc extends Composite {
 			featuredCollectionDescription.getElement().getStyle().clearDisplay();
 		}
 	}
-	/**
-	 * 
-	 * @function setCollectionData 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set collection data.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setCollectionData(final CollectionDo collectionDo) {
+			createdByText.setText(GL0622);
+			gradesText.setText(GL1320_1);
+			standardsText.setText(GL0575);
 			collectionTitle.setText(collectionDo.getTitle());
 			collectionAuthor.setText(collectionDo.getUser().getUsernameDisplay());
 			collectionAuthor.setStyleName(landingPageStyle.userNamePPPdisabled());
@@ -232,7 +173,7 @@ public class FeaturedCollectionUc extends Composite {
 					MixpanelUtil.ClickTheCollectionsFromLandingPage();
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionDo.getGooruOid());
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
 				}
 			});
 			

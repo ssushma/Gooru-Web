@@ -23,21 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.user;
-/**
- * 
- * @fileName : UserRoleType.java
- *
- * @description : This enum is used to declare the type of roles.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public enum UserRoleType{
 	TEACHER("Teacher"),
 	STUDENT("Student"),

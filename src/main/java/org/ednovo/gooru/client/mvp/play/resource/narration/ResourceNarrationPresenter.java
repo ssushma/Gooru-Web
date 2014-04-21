@@ -39,8 +39,12 @@ public class ResourceNarrationPresenter extends PresenterWidget<IsResourceNarrat
 	public ResourceNarrationPresenter(EventBus eventBus, IsResourceNarrationView view) {
 		super(eventBus, view);
 	}
-	public void setNarrationMetadata(CollectionItemDo collectionItemDo){
-		getView().setNarrationMetadata(collectionItemDo);
+	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid){
+		getView().setNarrationMetadata(collectionItemDo,userName,gooruUid);
+	}
+	
+	public void showAddToolTip(){
+		getView().showAddToolTip();
 	}
 
 }

@@ -28,21 +28,7 @@ package org.ednovo.gooru.client.mvp.profilepage.content;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : PPPCollectionResultCBundle.java
- *
- * @description : This is used to set css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface PPPCollectionResultCBundle extends ClientBundle {
 	
 	static final PPPCollectionResultCBundle INSTANCE = GWT.create(PPPCollectionResultCBundle.class);

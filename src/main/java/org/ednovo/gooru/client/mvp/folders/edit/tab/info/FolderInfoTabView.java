@@ -60,18 +60,10 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
+
 /**
- * @fileName : FolderInfoTabView.java
- *
- * @description : This class is used to display the folder info tab view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandlers> implements IsFolderInfoTabView, SelectionHandler<SuggestOracle.Suggestion> {
 
@@ -144,10 +136,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		addStandardBtn.setVisible(false);
 	}
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -163,9 +152,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		standardSuggestOracle.clear();
 		standardCodesMap.clear();
 	}
-	/**
-	 * This method is used to set the collection data.
-	 */
+
 	@Override
 	public void setData(CollectionDo collectionDo) {
 		
@@ -174,21 +161,10 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 			if(folderLevel.equals("1")){
 				setMetaData(collectionDo);
 			}
+			
+			
 	}
-	/**
-	 * @function setMetaData 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set meta data.
-	 * 
-	 * @parm(s) : @param collectionDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setMetaData(CollectionDo collectionDo) {
 		for (CodeDo code : collectionDo.getTaxonomySet()) {
 			if (code.getDepth() == 2) {
@@ -205,9 +181,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		setGradeList();
 	}
 	
-	/**
-	 * This method is used to set parent data.
-	 */
+	
 	@Override
 	public void setParentData(CollectionDo collectionDo) {
 			this.collectionDo = collectionDo;
@@ -227,9 +201,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 			resetCourseCount();
 			//setGradeList();
 	}
-	/**
-	 * This method is used to set the course list.
-	 */
+
 	@Override
 	public void setCourseList(List<LibraryCodeDo> libraryCode) {
 		collectionCourseLst.clear();
@@ -387,18 +359,14 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 			}
 		}
 	}
-	/**
-	 * This method is used to handle the on selection event.
-	 */
+
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
 	}
-	/**
-	 * This method is used to set the standard suggestions.
-	 */
+
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
 		standardSuggestOracle.clear();
 		this.standardSearchDo = standardSearchDo;
@@ -523,36 +491,18 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		}
 		return new DownToolTipWidgetUc(closeLabel, description);
 	}
-	/**
-	 * This method is used to set the course updates.
-	 */
+
 	@Override
 	public void onPostCourseUpdate(CollectionDo collectionDo) {
 		collectionCourseLst.setSelectedIndex(0);
 		this.collectionDo = collectionDo;
 	}
-	/**
-	 * This method is used to update the standards.
-	 */
+
 	@Override
 	public void onPostStandardUpdate(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 	}
-	/**
-	 * @function generateGrade 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to generate grades.
-	 * 
-	 * @parm(s) : @param gradeTxt
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String generateGrade(String gradeTxt){
 		String tmpGradeTxt = "";
 		if (gradeTxt.indexOf("-") > 0){
@@ -580,22 +530,7 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		}
 		return tmpGradeTxt;
 	}
-	/**
-	 * @function generateGradeIfHypen 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to generate grades hypen.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private String generateGradeIfHypen(String grade){
 		String gradeList[];
 		StringBuilder gradeStr = new StringBuilder();

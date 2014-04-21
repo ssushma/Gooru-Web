@@ -24,7 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -37,22 +47,25 @@ import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
  * @fileName : EditableTextAreaUc.java
- *
- * @description : This class will return the editable text area.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
+ * 
+ * @description :
+ * 
+ * 
+ * @version : 5.5
+ * 
+ * @date: June 17, 2013
+ * 
  * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @Reviewer:
  */
-public class EditableTextAreaUc extends Composite implements HasValue<String> {
+public class EditableTextAreaUc extends Composite implements HasValue<String>,MessageProperties {
 
 	private static EditableLabelUiBinder uiBinder = GWT
 			.create(EditableLabelUiBinder.class);
@@ -77,6 +90,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 
 	protected String text;
 
+	@UiField Label lblErrorMessage;
+	
 	@UiField(provided = true)
 	UcCBundle res;
 
@@ -87,33 +102,37 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
-		/*
-		 * focusPanel.addClickHandler(new ClickHandler() {
-		 * 
-		 * @Override public void onClick(ClickEvent event) { switchToEdit(); }
-		 * });
-		 * 
-		 * html.addClickHandler(new ClickHandler() {
-		 * 
-		 * @Override public void onClick(ClickEvent event) { switchToEdit(); }
-		 * });
-		 * 
-		 * textArea.addBlurHandler(new BlurHandler() {
-		 * 
-		 * @Override public void onBlur(BlurEvent event) { switchToLabel(); }
-		 * });
-		 */
+		
+		lblErrorMessage.setVisible(false);
+		lblErrorMessage.getElement().getStyle().setFloat(Float.LEFT);
 
-		/*
-		 * textArea.addKeyPressHandler(new KeyPressHandler() {
-		 * 
-		 * @Override public void onKeyPress(KeyPressEvent event) {
-		 * 
-		 * if (event.getCharCode() == KeyCodes.KEY_ENTER) { switchToLabel(); }
-		 * else if (event.getCharCode() == KeyCodes.KEY_ESCAPE) {
-		 * textArea.setText(html.getText()); // reset to the original value } }
-		 * });
-		 */
+		textArea.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", textArea.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						boolean isHavingBadWords = value;
+						if (value){
+							textArea.getElement().getStyle().setBorderColor("orange");
+							lblErrorMessage.setText(GL0554);
+							lblErrorMessage.setVisible(true);
+							showProfanityError(true);
+						}else{
+							showProfanityError(false);
+							textArea.getElement().getStyle().clearBackgroundColor();
+							textArea.getElement().getStyle().setBorderColor("#ccc");
+							lblErrorMessage.setVisible(false);
+						}
+					}
+				});
+			}
+		});
+	
 		textArea.addKeyUpHandler(new ValidateConfirmText());
 	}
 
@@ -121,6 +140,9 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
+			textArea.getElement().getStyle().clearBackgroundColor();
+			textArea.getElement().getStyle().setBorderColor("#ccc");
+			lblErrorMessage.setVisible(false);
 			checkCharacterLimit(textArea.getText());
 		}
 	}
@@ -129,11 +151,13 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	 * Change to edit view
 	 */
 	public void switchToEdit() {
-
+		textArea.getElement().getStyle().clearBackgroundColor();
+		textArea.getElement().getStyle().setBorderColor("#ccc");
+		
 		if (deckPanel.getVisibleWidget() == 1)
 			return;
-		 textArea.setText(html.getHTML().equals(getPlaceholder()) ? "" :
-		  html.getHTML());
+		textArea.setText(html.getHTML().equals(getPlaceholder()) ? "" :
+		html.getHTML());
 		deckPanel.showWidget(1);
 		textArea.setFocus(true);
 		textArea.addStyleName("shelfEditDesc");
@@ -146,19 +170,37 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	public void switchToLabel() {
 		if (deckPanel.getVisibleWidget() == 0)
 			return;
-		// setValue(textArea.getText(), true);
-		setValue(textArea.getText().trim().length() == 0 ? getPlaceholder()
-				: textArea.getText(), true); // fires events, too
-		deckPanel.showWidget(0);
-		String text = getValue();
+		
+		
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", textArea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean value) {
+				boolean isHavingBadWords = value;
+				if (value){
+					textArea.getElement().getStyle().setBorderColor("orange");
+					lblErrorMessage.setText(GL0554);
+					lblErrorMessage.setVisible(true);
+					showProfanityError(true);
+				}else{
+					showProfanityError(false);
+					textArea.getElement().getStyle().clearBackgroundColor();
+					textArea.getElement().getStyle().setBorderColor("#ccc");
+					lblErrorMessage.setVisible(false);
+					
+					setValue(textArea.getText().trim().length() == 0 ? getPlaceholder() : textArea.getText(), true); // fires events, too
+					deckPanel.showWidget(0);
+					String text = getValue();
 
-		if ((textArea.getText() != null || text.trim().length() > 0)) {
-			// if ((textArea.getText() != null || text.trim().length() > 0) &&
-			// !getText().equals(text)) {
-
-			setText(text);
-			onEditDisabled(getValue());
-		}
+					if ((textArea.getText() != null || text.trim().length() > 0)) {
+						setText(text);
+						onEditDisabled(getValue());
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -166,6 +208,9 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	 */
 	public void switchToDesCancelLabel() {
 		deckPanel.showWidget(0);
+		textArea.getElement().getStyle().clearBackgroundColor();
+		textArea.getElement().getStyle().setBorderColor("#ccc");
+		lblErrorMessage.setVisible(false);
 	}
 
 	// Override this method to catch on blur
@@ -183,17 +228,19 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	public void checkCharacterLimit(String text) {
 
 	}
+	
 	/**
-	 * This will add the click event.
+	 * @param text
 	 */
+	public void showProfanityError(boolean value) {
+	}
+
 	@Override
 	public HandlerRegistration addValueChangeHandler(
 			ValueChangeHandler<String> handler) {
 		return addHandler(handler, ValueChangeEvent.getType());
 	}
-	/**
-	 * This will return the value.
-	 */
+
 	@Override
 	public String getValue() {
 		// return textArea.getText().trim().equals(getPlaceholder()) ? "" :
@@ -201,9 +248,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 
 		return textArea.getText().trim();
 	}
-	/**
-	 * This will set the value.
-	 */
+
 	@Override
 	public void setValue(String value) {
 		if (value == null || value.trim().length() == 0) {
@@ -220,34 +265,28 @@ public class EditableTextAreaUc extends Composite implements HasValue<String> {
 	public void setExtraTextAreaStyleName(String style) {
 		textArea.addStyleName(style);
 	}
-	/**
-	 * This will return the placeholder.
-	 */
+
 	public String getPlaceholder() {
 		return placeholder;
 	}
-	/**
-	 * This will set the placeholder.
-	 */
+
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
-	/**
-	 * This will return the text.
-	 */
+
 	public String getText() {
 		return text;
 	}
-	/**
-	 * This will set the text.
-	 */
+
 	public void setText(String text) {
 		this.text = text;
 		setValue(text);
 	}
-	/**
-	 * This will set  the value.
-	 */
+	
+	public Label getLblErrorMessage() {
+		return lblErrorMessage;
+	}
+
 	@Override
 	public void setValue(String value, boolean fireEvents) {
 		if (fireEvents)

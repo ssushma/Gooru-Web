@@ -24,27 +24,28 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.settings;
 
+/**
+ * @fileName : UserSettingsUiHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Apr 18, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
+
 import java.util.Set;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEventHandler;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
-/**
- * 
- * @fileName : UserSettingsUiHandlers.java
- *
- * @description : This interface is the UIHandler file for UserSettingsView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileImageEventHandler{
 
 	void saveSettingsInformation();
@@ -60,5 +61,7 @@ public interface UserSettingsUiHandlers extends BaseUiHandlers,SetUserProfileIma
 	void addCourse(Set<ProfileCodeDo> profileCodeDo);
 	
 	void saveEmail(boolean isEmailConfirmed);
+	
+	void updatePartyCustomField(String optionKey,String optionValue);
 	
 }

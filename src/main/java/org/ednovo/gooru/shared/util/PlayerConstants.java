@@ -23,20 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.shared.util;
-/**
- * 
- * @fileName : PlayerConstants.java
- *
- * @description : This interface is used to set the player constants.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface PlayerConstants {
 	
 	public static final String COLLECTION_CONTEXT="#collection-play&id=";

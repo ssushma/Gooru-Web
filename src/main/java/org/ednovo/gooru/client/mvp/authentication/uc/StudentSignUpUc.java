@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -71,18 +72,18 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @fileName : StudentSignUpUc.java
  *
- * @description : This file deals with student signup.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 26-Dec-2013
+ * @date: Dec 9, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
-public class StudentSignUpUc extends PopupPanel {
+public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 
 	private static StudentSignUpUcUiBinder uiBinder = GWT
 			.create(StudentSignUpUcUiBinder.class);
@@ -103,7 +104,7 @@ public class StudentSignUpUc extends PopupPanel {
 	@UiField Button btnSignUp;
 	@UiField Anchor ancCopyRight, ancTermsAndPrivacy,ancPrivacy;
 	@UiField HTMLEventPanel panelDataOfBirth;
-	@UiField InlineLabel lblAgree;
+	@UiField InlineLabel lblAgree,andText;
 	
 	private String privateGooruUId = null;
 	
@@ -157,7 +158,10 @@ public class StudentSignUpUc extends PopupPanel {
 		this.center();
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-		this.getElement().getStyle().setBackgroundColor("transparent");
+		this.addStyleName(SignUpCBundle.INSTANCE.css().popupBackground());
+		this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
+	
+		//this.getElement().getStyle().setBackgroundColor("transparent");
 		lblTitle.getElement().setAttribute("style", "height: 17px");
 		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
 		txtChooseUsername.setText(username);
@@ -176,29 +180,10 @@ public class StudentSignUpUc extends PopupPanel {
 		});
 		
 	}
-	/**
-	 * 
-	 * @function onClickLblCancel 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :This is used to show leave registration popup.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("lblCancel")
 	public void onClickLblCancel(ClickEvent event){
 		this.hide();
-		LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc("registerChild",lblParentEmailId.getText(),txtChooseUsername.getValue(),dateBoxUc.getDateBox().getText());
+		LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(GL1394,lblParentEmailId.getText(),txtChooseUsername.getValue(),dateBoxUc.getDateBox().getText());
 		leaveRegistrationPopUpUc.show();
 	}
 	/**
@@ -207,7 +192,7 @@ public class StudentSignUpUc extends PopupPanel {
 	 * 
 	 * @created_date : Dec 9, 2013
 	 * 
-	 * @description : This is used to set the Ui.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param dob
@@ -221,42 +206,44 @@ public class StudentSignUpUc extends PopupPanel {
 	 *
 	 */
 	private void setUiAndIds(String dob){
-		lblStuDes.setText(MessageProperties.GL0467);
-		lblTitle.setText(MessageProperties.GL0186 + MessageProperties.GL_SPL_EXCLAMATION);
+		lblStuDes.setText(GL0467);
+		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
 		
-		lblTxtParent.setText(MessageProperties.GL0468);
+		lblTxtParent.setText(GL0468);
 		
 		dateBoxUc = new DateBoxUc(true, true,true);
 		sPanelDateOfBirth.add(dateBoxUc);
 		dateBoxUc.getDateBox().setText(dob);
 		panelUserNamePopUp.setVisible(false);
 		panelPassword.setVisible(false);
-		lblPickWisely.setText(MessageProperties.GL0410);
-		txtChoosePassword.setPlaceholder(MessageProperties.GL0204);
-		txtConfirmPassword.setPlaceholder(MessageProperties.GL0427);
-		lblQuestionMark.setText(MessageProperties.GL_SPL_QUESTION);
-		lblWhyEnterBirthday.setText(MessageProperties.GL0411 + MessageProperties.GL_SPL_QUESTION);
-		lblWhyEnterBirthdayDesc.setText(MessageProperties.GL0412);
-		lblTeacher.setText(MessageProperties.GL0416);
-		lblStudent.setText(MessageProperties.GL0417);
-		lblParent.setText(MessageProperties.GL0418);
-		lblOther.setText(MessageProperties.GL0419);
+		lblPickWisely.setText(GL0410);
+		txtChoosePassword.setPlaceholder(GL0204);
+		txtConfirmPassword.setPlaceholder(GL0427);
+		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblWhyEnterBirthday.setText(GL0411 + GL_SPL_QUESTION);
+		lblWhyEnterBirthdayDesc.setText(GL0412);
+		lblTeacher.setText(GL0416);
+		lblStudent.setText(GL0417);
+		lblParent.setText(GL0418);
+		lblOther.setText(GL0419);
 		rbTeacher = new RadioButton("roleOption","");
 		rbStudent = new RadioButton("roleOption","");
 		rbParent = new RadioButton("roleOption","");
 		rbOther = new RadioButton("roleOption","");
-		btnSignUp.setText(MessageProperties.GL0186);
+		btnSignUp.setText(GL0186);
 		btnSignUp.getElement().setId("btnSignUp");
-		lblAgree.setText(MessageProperties.GL0420);
-		ancCopyRight.setText(MessageProperties.GL0421+",");
-		ancTermsAndPrivacy.setText(MessageProperties.GL0422);
-		ancPrivacy.setText(MessageProperties.GL0452);
-		lblPasswordTooltipContent.setText(MessageProperties.GL0415);
+		lblAgree.setText(GL0420);
+		ancCopyRight.setText(GL0421+",");
+		ancTermsAndPrivacy.setText(GL0422);
+		ancPrivacy.setText(GL0452);
+		lblPasswordTooltipContent.setText(GL0415);
 		rbStudent.setChecked(true);
 		MixpanelUtil.select_student();
+		lblSelectRole.setText(GL1146);
+		andText.setText(GL_GRR_AND);
 		lblSelectRole.setVisible(false);
 		
-		lblPleaseWait.setText(MessageProperties.GL0469);
+		lblPleaseWait.setText(GL0469);
 		
 		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
 		txtChoosePassword.addMouseOverHandler(new OnMouseOver());
@@ -284,25 +271,7 @@ public class StudentSignUpUc extends PopupPanel {
 	private CopyRightPolicyVc copyRightPolicy;
 	private TermsOfUse termsOfUse;
 
-	/**
-	 * 
-	 * @function onClickTrems 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description :This is used to display terms of use.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("ancTermsAndPrivacy")
 	public void onClickTrems(ClickEvent event){
 		Window.enableScrolling(false);
@@ -367,21 +336,7 @@ public class StudentSignUpUc extends PopupPanel {
 		copyRightPolicy.center();
 		copyRightPolicy.getElement().getStyle().setZIndex(999);
 	}
-	/**
-	 * 
-	 * @fileName : StudentSignUpUc.java
-	 *
-	 * @description : This will display username panel or password anel popup's on mouse oer.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	private class OnMouseOver implements MouseOverHandler{
 
 		@Override
@@ -393,21 +348,6 @@ public class StudentSignUpUc extends PopupPanel {
 			}	
 		}
 	}
-	/**
-	 * 
-	 * @fileName : StudentSignUpUc.java
-	 *
-	 * @description : This is used to hide panel popup's on mouse out.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class OnMouseOut implements MouseOutHandler{
 
 		@Override
@@ -423,7 +363,7 @@ public class StudentSignUpUc extends PopupPanel {
 	 * 
 	 * @created_date : Dec 9, 2013
 	 * 
-	 * @description  :  This is used to validate user input.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @return
@@ -459,7 +399,7 @@ public class StudentSignUpUc extends PopupPanel {
 		if (!password.equalsIgnoreCase(confirmPassword)){
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
-			passwordValidUc.setText(MessageProperties.GL0446);
+			passwordValidUc.setText(GL0446);
 			passwordValidUc.setVisible(true);
 			isValid= false;
 		}
@@ -467,28 +407,13 @@ public class StudentSignUpUc extends PopupPanel {
 		RegExp reg = RegExp.compile(PWD_PATTERN, "gi");
 		boolean validatePwd=reg.test(password);
 		if (!validatePwd && password.length() >= 5 && password.length() <= 14){
-			passwordValidUc.setText(StringUtil.generateMessage(MessageProperties.GL0073, "Password"));
+			passwordValidUc.setText(StringUtil.generateMessage(GL0073, "Password"));
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}
 		return isValid;
 
 	}
-	/**
-	 * 
-	 * @fileName : StudentSignUpUc.java
-	 *
-	 * @description : This is used to display panel popup's on keyup handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
@@ -501,25 +426,6 @@ public class StudentSignUpUc extends PopupPanel {
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function onClickSignUp 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This is used to hide and show ui buttons on signup button click.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("btnSignUp")
 	public void onClickSignUp(ClickEvent event){
 		lblPleaseWait.setVisible(true);
@@ -537,7 +443,7 @@ public class StudentSignUpUc extends PopupPanel {
 	 * 
 	 * @created_date : Dec 9, 2013
 	 * 
-	 * @description  : It will check username availability.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -573,7 +479,7 @@ public class StudentSignUpUc extends PopupPanel {
 		user.put(LAST_NAME, new JSONString("User"));
 //			userCreate.put("gender", new JSONString("Male"));
 		userCreate.put(PASSWORD, new JSONString(password));
-		userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint));
+		userCreate.put("gooruBaseUrl", new JSONString(homeEndPoint + "#discover"));
 		userCreate.put("role", new JSONString(userRole));
 		userCreate.put("dateOfBirth", new JSONString(dateBoxUc.getDateBox().getText()));
 		userCreate.put("accountType", new JSONString("Child"));

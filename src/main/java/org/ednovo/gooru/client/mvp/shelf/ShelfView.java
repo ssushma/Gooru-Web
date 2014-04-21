@@ -24,10 +24,18 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCollaboratorTabVc;
@@ -35,17 +43,29 @@ import org.ednovo.gooru.client.mvp.shelf.collection.CollectionShareTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionStatisticsTabVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionTabTitleVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionUploadImageUc;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCollectionFolderEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.DeleteFolderSuccessView;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.uc.BalloonPopupVc;
+import org.ednovo.gooru.client.uc.CollectionAnalyticsUc;
 import org.ednovo.gooru.client.uc.EditableLabelUc;
 import org.ednovo.gooru.client.uc.EditableTextAreaUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
+import org.ednovo.gooru.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -81,22 +101,21 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 
 /**
- * 
  * @fileName : ShelfView.java
- *
- * @description : This file deals with collections in shelf.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @description :
+ * 
+ * 
+ * @version : 5.5
+ * 
+ * @date: June 17, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
-		IsShelfView, ClickHandler {
+		IsShelfView, ClickHandler,MessageProperties{
 
 	@UiField(provided = true)
 	EditableLabelUc collectionTitleUc;
@@ -105,24 +124,30 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	EditableTextAreaUc collectionDescriptionUc;
 
 	@UiField
-	SimplePanel collectionMetaDataSimPanel;
+	SimplePanel collectionMetaDataSimPanel, folderListPanel;
 
 	@UiField
-	Label copyCollectionLbl, deleteUserCollectionLbl, collectionEditImageLbl,
-			simplePencilPanel,collectionDescriptionTitle;
+	Label copyCollectionLbl, deleteUserCollectionLbl,lblDeleting, collectionEditImageLbl,
+			simplePencilPanel,collectionDescriptionTitle, lblLastEditedBy,moveCollectionLbl;
 
 	@UiField
 	SimplePanel shelfTabSimPanel;
 
+	@UiField HTMLPanel panelActionItems;
+	
 	@UiField
 	CollectionTabTitleVc infoTabVc, resourceTabVc, collaboratorTabVc,
-			shareTabVc, statisticsTabVc, assignTabVc;
+			shareTabVc, assignTabVc;
+	
+	@UiField Label statisticsTabVc;
 
+	@UiField FooterOrganizeUc panelFoooter;
+	
 	@UiField
 	HTML backToSearchHtml, backToSearchPreHtml;
 
 	@UiField
-	FlowPanel backToSearchFloPanel, noCollectionResetPanel, collectionFloPanel;
+	FlowPanel backToSearchFloPanel, noCollectionResetPanel, collectionFloPanel, scrollContainer;
 
 	@UiField(provided = true)
 	ShelfCBundle res;
@@ -137,7 +162,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 * @UiField FocusPanel simplePencilFocPanel;
 	 */
 	@UiField
-	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly;
+	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel;
 
 	@UiField
 	FlowPanel shelfViewMainContainer;
@@ -151,6 +176,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	ToolTip toolTip=null;
 	
+	DeletePopupViewVc delete = null;
+	
 	@UiField Image imgFriendly;
 	
 	@UiField Label lblFriendly;
@@ -158,14 +185,18 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	boolean collectionItemsNotFriendly = false;
 
 	private DeleteConfirmPopupVc deleteConfirmPopup;
+	
+	private FolderPopupUc folderPopupUc;
 
 	private CollectionCollaboratorTabVc collectionCollaboratorTabVc;
 
 	private CollectionShareTabVc collectionShareTabVc;
 	
 	private CollectionStatisticsTabVc collectionStatisticsTabVc;
+	
+	private String deleteCollectionId="";
 
-	private static CollectionDo collectionDo = null;
+	private static CollectionDo collectionDo = null; 
 
 	private PlaceRequest searchRequest = null;
 	
@@ -176,6 +207,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	private boolean isShowTitlePencil=true;
 	
 	private boolean isShowDescPencil=true;
+	
+	private static final String COLLECTION_MOVE = "collectionMove";
+	
+	private static final String COLLECTION_MOVE_MP_EVENT ="Organize_move_collection";
 
 	/* HTML5 Storage implementation for tab persistance */
 	private Storage stockStore = null;
@@ -190,19 +225,37 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	private Timer tooltipTimer = null;
 	
-	boolean refresh = false;
-
-	private static final String WHAT_IS_THIS_COLLECTION_ABOUT = "Add a learning objective for your collection...";
-
-	private static final String PRE_SEARCH_LINK = "Back To Search \"";
+	boolean refresh = true;
 	
-	private static final String PRE_CLASSPAGE_LINK="Back To ClassPage";
+	int currentCollabCount =0;
+	
+	int defaultCollabCount = 5;
+	
+	boolean isOwnerUsedInOwnCollection = false;
+	
+	boolean isCollabUsedThisCollection = false;
 
-	private static final String DELETE_COLLECTION = "Delete";
+	private static final String WHAT_IS_THIS_COLLECTION_ABOUT = GL1485+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
 
-	private static final String NO_COLLECTION_MESSAGE = "You have no collections!";
+	private static final String PRE_SEARCH_LINK = GL1487;
+	
+	private static final String PRE_CLASSPAGE_LINK= GL1486;
+
+	private static final String DELETE_COLLECTION = GL0558;
+
+	private static final String NO_COLLECTION_MESSAGE = GL0995;
 
 	private static final int TOOLTIP_DELAY_TIME = 1000;
+	
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
+	
+	List<ClassPageCollectionDo> classpageTitles=null;
 
 	private static ShelfViewUiBinder uiBinder = GWT
 			.create(ShelfViewUiBinder.class);
@@ -253,6 +306,17 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							.removeStyleName("titleAlertMessageActive");
 				}
 			}
+			
+			@Override
+			public void showProfanityError(boolean value) {
+				if(value){
+					if(!editSelfCollectionDescSaveButton.isVisible()){
+						getLblErrorMessage().setVisible(false);
+					}
+				}else{
+					
+				}
+			}
 		};
 		/**
 		 * this method is used to save collection title after update
@@ -278,6 +342,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			@Override
 			public void checkCharacterLimit(String text) {
 				if (text.length() >= 50) {
+					titleAlertMessageLbl.setText(GL0143);
 					titleAlertMessageLbl
 							.addStyleName("titleAlertMessageActive");
 					titleAlertMessageLbl
@@ -289,15 +354,52 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 							.removeStyleName("titleAlertMessageActive");
 				}
 			}
+			
+			@Override
+			public void showProfanityError(boolean value) {
+				if (value) {
+					if(editSelfCollectionSaveButton.isVisible()){
+						titleAlertMessageLbl.setText(GL0554);
+						titleAlertMessageLbl
+								.addStyleName("titleAlertMessageActive");
+						titleAlertMessageLbl
+								.removeStyleName("titleAlertMessageDeActive");
+					}
+					
+				} else {
+					titleAlertMessageLbl
+							.addStyleName("titleAlertMessageDeActive");
+					titleAlertMessageLbl
+							.removeStyleName("titleAlertMessageActive");
+				}
+			}
 		};
 		
-
 		collectionDescriptionUc.setPlaceholder(WHAT_IS_THIS_COLLECTION_ABOUT);
 		// collectionDescriptionUc.getElement().setAttribute("placeholder",
 		// WHAT_IS_THIS_COLLECTION_ABOUT);
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		editSelfCollectionSaveButtonCancel.setText(GL0142);
+		editSelfCollectionSaveButton.setText(GL0141);
+		titleAlertMessageLbl.setText(GL0143);
+		collectionDescriptionTitle.setText(GL0618);
+		editSelfCollectionDescSaveButtonCancel.setText(GL0142);
+		editSelfCollectionDescSaveButton.setText(GL0141);
+		descriptionAlertMessageLbl.setText(GL0143);
+		collectionPreviewBtn.setText(GL0633);
+		copyCollectionLbl.setText(GL0827);
+		moveCollectionLbl.setText(GL1261);
+		imgNotFriendly.setTitle(GL0732);
+		imgNotFriendly.setAltText(GL0732);
+		imgNotFriendly.setUrl("images/mos/questionmark.png");
+		infoTabVc.setLabel(GL0828);
+		resourceTabVc.setLabel(GL0829);
+		shareTabVc.setLabel(GL0526);
+		assignTabVc.setLabel(GL0519);
+		collaboratorTabVc.setLabel(GL0830);
+		statisticsTabVc.setText(GL0831);
 		editSelfCollectionDescSaveButtonCancel.getElement().setId("btnEditDescCancel");
 		editSelfCollectionSaveButtonCancel.getElement().setId("btnEditCancel");
 		editSelfCollectionDescSaveButton.getElement().setId("btnEditDescSave");
@@ -307,10 +409,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		infoTabVc.addClickHandler(this);
 		resourceTabVc.addClickHandler(this);
 		shareTabVc.addClickHandler(this);
+		//By default not visible.
+		lblLastEditedBy.setVisible(false);
+		
 		/* Disabled */
-		collaboratorTabVc.addStyleName("deactivated");
+//		collaboratorTabVc.addStyleName("deactivated");
 //		assignTabVc.addStyleName("deactivated");
-		statisticsTabVc.addStyleName("deactivated");
+//		statisticsTabVc.addStyleName("deactivated");
 		
 		collectionEditImageLbl.setVisible(false);
 		editSelfCollectionDescSaveButton.getElement().setId("btnEditDescSave");
@@ -323,6 +428,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionPreviewBtn.getElement().setId("btnCollectionPreview");
 		copyCollectionLbl.getElement().setId("lblCopyCollection");
 		deleteUserCollectionLbl.getElement().setId("lblDeleteUserCollection");
+		moveCollectionLbl.getElement().setId("moveCollectionLbl");
 		editSelfCollectionDescSaveButtonCancel.getElement().setAttribute(
 				"style", "margin-top:3px");
 		editSelfCollectionSaveButton.getElement().getStyle()
@@ -347,8 +453,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionTitleContainer.addMouseOutHandler(new showEditPencil());
 
 		assignTabVc.addClickHandler(this);
-		// collaboratorTab.addClickHandler(this);
-		// statisticsTab.addClickHandler(this);
+		collaboratorTabVc.addClickHandler(this);
+
 		handelChangeImageEvent();
 		// simplePencilFocPanel.addMouseOverHandler(new hideEditPencil());
 		// simplePencilFocPanel.addMouseOutHandler(new showEditPencil());
@@ -367,26 +473,26 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				event.stopPropagation();
 			}
 		}, ClickEvent.getType());
-		collaboratorTabVc.addMouseOverHandler(new MouseOverHandler() {
-
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				tooltipTimer = new Timer() {
-					public void run() {
-						collPopup.setVisible(true);
-					}
-				};
-				tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
-			}
-		});
-		collaboratorTabVc.addMouseOutHandler(new MouseOutHandler() {
-
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				tooltipTimer.cancel();
-				collPopup.setVisible(false);
-			}
-		});
+//		collaboratorTabVc.addMouseOverHandler(new MouseOverHandler() {
+//
+//			@Override
+//			public void onMouseOver(MouseOverEvent event) {
+//				tooltipTimer = new Timer() {
+//					public void run() {
+//						collPopup.setVisible(true);
+//					}
+//				};
+//				tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//			}
+//		});
+//		collaboratorTabVc.addMouseOutHandler(new MouseOutHandler() {
+//
+//			@Override
+//			public void onMouseOut(MouseOutEvent event) {
+//				tooltipTimer.cancel();
+//				collPopup.setVisible(false);
+//			}
+//		});
 		statisticsTabVc.addMouseOverHandler(new MouseOverHandler() {
 
 			@Override
@@ -394,7 +500,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 				tooltipTimer = new Timer() {
 					public void run() {
-						statPopup.setVisible(true);
+						if (collectionDo.getSharing() != null && collectionDo.getSharing().equalsIgnoreCase("private")){
+							statPopup.setVisible(true);
+						}
 					}
 				};
 				tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
@@ -414,11 +522,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip();
-				
+				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(150+22), imgNotFriendly.getAbsoluteTop()+22);
+				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
 				toolTip.show();
 			}
 		});
@@ -439,7 +546,26 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
 		collPopup.setVisible(false);
 		statPopup.setVisible(false);
+		statisticsTabVc.addClickHandler(new AnalyticsClickEvent());
+		
+		lblDeleting.setVisible(false);
+		lblDeleting.setText(GL0560);
+		
+		classpageTitles = new ArrayList<ClassPageCollectionDo>();
+		loadingImageLabel.getElement().setId("loadingImageLabel");
+		
+		panelFoooter.setVisible(true);
+		
+//		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
+//			shelfViewMainContainer.getElement().getStyle().clearMarginTop();
+//		}else{
+//			shelfViewMainContainer.getElement().getStyle().setMarginTop(-28, Unit.PX);
+//		}
+//		
+		
 	}
+	
+	
 	/**
 	 * This class is used to edit collection description
 	 */
@@ -463,22 +589,49 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			collectionDescriptionUc.switchToEdit();
 		}
 	}
-	/**
-	 * This method is used to get collection title
-	 * @return collection title
-	 */
+/**
+ * This method is used to get collection title
+ * @return collection title
+ */
 	public static String getCollectionTitle() {
 		return collectionDo.getTitle();
 	}
-	/**
-	 * To Set collection meta data info
-	 */
+
 	@Override
 	public void setCollection(CollectionDo collection) {
 		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
 		this.collectionDo = collection;
+		panelFoooter.setVisible(true);
+		editPanel.getElement().getStyle().setBackgroundColor("white");
+		collectionFloPanel.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
+		if(collection != null) {
+			if (collection.getMeta()!=null && collection.getMeta().getCollaboratorCount() > 0 && collection.getLastModifiedUser() != null){
+				String lastModifiedDate = collection.getLastModified().toString() != null ? getTimeStamp(collection.getLastModified().getTime()+"") : "";
+				String lastModifiedUser = collection.getLastModifiedUser().getUsername() != null ?  collection.getLastModifiedUser().getUsername() : "";
+				lblLastEditedBy.setText(StringUtil.generateMessage(GL1112, lastModifiedDate, lastModifiedUser));
+				lblLastEditedBy.setVisible(lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("") ? true : false);
+				if (lastModifiedUser!=null && !lastModifiedUser.equalsIgnoreCase("")){
+					panelActionItems.getElement().getStyle().setTop(111, Unit.PX);
+				}else{
+					panelActionItems.getElement().getStyle().clearTop();
+				}
+			}
+			else{
+				lblLastEditedBy.setVisible(false);
+				panelActionItems.getElement().getStyle().clearTop();
+			}
+		} else {
+			lblLastEditedBy.setVisible(false);
+			panelActionItems.getElement().getStyle().clearTop();
+		}
+		
 		getUiHandlers().clearTabSlot();
-
+		if (collectionDo.getSharing() != null){
+			setCollectionAnalyticsVisibility(collectionDo.getSharing());
+		}
+		currentCollabCount = collectionDo.getMeta()!=null&&collectionDo.getMeta().getCollaboratorCount()!=null?collectionDo.getMeta().getCollaboratorCount():0 ;
+		setCollabCount(currentCollabCount);
+		
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
 		collectionDescriptionUc.setText(collection.getGoals());
@@ -486,29 +639,87 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());
 		collectionFloPanel.setVisible(true);
-		if (AppClientFactory.isContentAdmin()
-				|| collectionDo
-						.getUser()
-						.getGooruUId()
-						.equals(AppClientFactory.getLoggedInUser()
-								.getGooruUId())) {
-			deleteUserCollectionLbl.setText(DELETE_COLLECTION);
+		deleteUserCollectionLbl.setText(DELETE_COLLECTION);
+		
+		if (AppClientFactory.isContentAdmin() || collectionDo
+				.getUser().getGooruUId().equals(AppClientFactory.getLoggedInUser()
+						.getGooruUId())){
+				deleteUserCollectionLbl.setVisible(true);			
+		}else{
+			deleteUserCollectionLbl.setVisible(false);
+		}
+		
+		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0 && lblLastEditedBy.isVisible()){
+			editPanel.getElement().getStyle().setMarginTop(39, Unit.PX);
+		}else if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0){
+			editPanel.getElement().getStyle().setMarginTop(23, Unit.PX);
+		}else{
+			editPanel.getElement().getStyle().clearMarginTop();
 		}
 	}
+	public void setCollabCount(int count){
+		//	Set the count of Collaborators;
+			String strColl = GL0830 + " (" + count + ")" ;
+			collaboratorTabVc.setLabel(strColl);
+	}
+	@Override
+	public void setCollabCountByType(String type, int count){
+		if (type.equalsIgnoreCase("incrementBy")){
+			currentCollabCount = currentCollabCount + count;
+			setCollabCount(currentCollabCount);
+		}else{
+			if (currentCollabCount < count){
+				setCollabCount(0);
+			}else{
+				currentCollabCount = currentCollabCount - count;
+				setCollabCount(currentCollabCount);
+			}
+		}
+		collectionDo.getMeta().setCollaboratorCount(currentCollabCount);
+	}
 	/**
-	 * setInSlot() is a method used by GWTP in it's lifecycle to set the widget hierarchy that has to be shown to the user. Each time setInSlot is called, it will replace the previous presenter that was assigned to that slot
-	 */
+	 * @function setCollectionAnalyticsVisibility 
+	 * 
+	 * @created_date : Jan 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public void setCollectionAnalyticsVisibility(String shareValue) {
+		//Check whether the Collection is public or not.
+		collectionDo.setSharing(shareValue);
+		//Enable this if we enable the statistics tab.
+		if (shareValue != null && shareValue.equalsIgnoreCase("private")){
+			//Set the deactivated style
+			statisticsTabVc.addStyleName("deactivated");
+//			statisticsTabVc.setEnabled(false);
+		}else{
+			statisticsTabVc.removeStyleName("deactivated");
+//			statisticsTabVc.setEnabled(true);
+		}
+	}
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			if (slot == ShelfUiHandlers.TYPE_SHELF_TAB) {
 				shelfTabSimPanel.setWidget(content);
+			} else if(slot == ShelfUiHandlers.TYPE_FOLDERS_SLOT) {
+				folderListPanel.setWidget(content);
 			}
 		}
 	}
-	/**
-	 * This method is used if we want to add multiple widgets to the same presenter.
-	 */
+
 	@Override
 	public void addToSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -521,16 +732,14 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 						resourcesCount = collectionDo.getCollectionItems()
 								.size();
 					}
-					resourceTabVc.setLabel("Content (" + resourcesCount + ")");
+					resourceTabVc.setLabel(""+GL0829+" (" + resourcesCount + ")");
 				}
-			} else if (slot == ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB || slot == ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB ) {
+			} else if (slot == ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB || slot == ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB || slot == ShelfUiHandlers.TYPE_COLLABORATOR_TAB ) {
 				collectionMetaDataSimPanel.setWidget(content);
 			}
 		}
 	}
-	/**
-	 * This method is used to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -553,47 +762,23 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			.setDisplay(Display.NONE);
 	        collectionDescriptionUc.switchToDesCancelLabel();
 		}
+		titleAlertMessageLbl
+		.addStyleName("titleAlertMessageDeActive");
+		titleAlertMessageLbl
+		.removeStyleName("titleAlertMessageActive");
+		titleAlertMessageLbl.setVisible(false);
 		collectionDescriptionUc.setValue(WHAT_IS_THIS_COLLECTION_ABOUT);
 		collectionDescriptionUc.getElement().setId("tatCollectionDescription");
 		isEditCopy=false;
+		scrollContainer.getElement().getStyle().setHeight(Window.getClientHeight() - 3, Unit.PX);
 	}
-	/**
-	 * Back to search view
-	 */
+
 	@Override
 	public void setBackToSearch() {
 		boolean visible = false;
 		
 		try{
 			searchRequest = AppClientFactory.getPlaceManager().getPreviousRequest();
-			/*String sercReq = null;
-			String clsPageId=null;
-			if(searchRequest!=null){
-				 sercReq = searchRequest.getParameter("query", null);
-				 clsPageId =searchRequest.getParameter("classpageid", null);
-			}
-			
-			if(sercReq!=null || clsPageId!=null){
-				oldSearchRequest=searchRequest;
-			}
-			if((searchRequest!=null) && oldSearchRequest!=null){ 
-				String oldSearchReq = searchRequest.getParameter("query", null);
-				String newSearchReq = oldSearchRequest.getParameter("query", null);
-
-				if(oldSearchReq!=null && newSearchReq!=null){
-					if(oldSearchReq!=newSearchReq){
-						refresh=false;
-					}
-				}
-
-			}
-
-			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)&&!refresh){
-				oldSearchRequest=searchRequest;
-				refresh=true;
-			}*/
-			
-			
 			if (searchRequest != null) {
 				String query = searchRequest.getParameter("query", null);
 				String classpageId=searchRequest.getParameter("classpageid", null);
@@ -606,7 +791,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					} else {
 						backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
 					}
-
 				}
 				
 				backToSearchPreHtml.setVisible(visible);
@@ -623,9 +807,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 
 	}
-	/**
-	 * This is used to go back to search.
-	 */
+
 	@Override
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();
@@ -634,7 +816,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			if(backToSearchHtml.getText().equalsIgnoreCase("Back To ClassPage")){
 				AppClientFactory.getPlaceManager().revealPlace(true, searchRequest);
 			} else {
-				AppClientFactory.getPlaceManager().revealPlace(false, searchRequest);
+				AppClientFactory.getPlaceManager().revealPlace(true, searchRequest);
 			}
 			
 		} else {
@@ -649,72 +831,70 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 *            which needs to be viewed
 	 */
 	public void setTab(Object tab) {
-
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		panelFriendly.setVisible(false);
-		if (tab.equals(infoTabVc)) {
-			MixpanelUtil.Click_Info_CollectionEdit();
-			setPersistantTabFlag("infoTab");
-			infoTabVc.setSelected(true);
-			getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB,
-					collectionDo);
-		} else if (tab.equals(resourceTabVc)) {
-			MixpanelUtil.Click_Resource_CollectionEdit();
-			setPersistantTabFlag("resourceTab");
-			resourceTabVc.setSelected(true);
-			panelFriendly.setVisible(true);
-			
-			setIpadFriendly();
-			
-			getUiHandlers().revealTab(
-					ShelfUiHandlers.TYPE_COLLECTION_RESOURCE_TAB, collectionDo);
-		} else if (tab.equals(statisticsTabVc)) {
-			setPersistantTabFlag("statisticsTab");
-			statisticsTabVc.setSelected(true);
-			collectionMetaDataSimPanel
-					.setWidget(getCollectionStatisticsTabVc());
-		} else if (tab.equals(collaboratorTabVc)) {
-			setPersistantTabFlag("collaboratorTab");
-			collaboratorTabVc.setSelected(true);
-			collectionMetaDataSimPanel
-					.setWidget(getCollectionCollaboratorTabVc());
+		setIpadFriendly();
+//		panelFriendly.setVisible(false);
+		if(tab!=null){
+			if (tab.equals(infoTabVc)) {
+				MixpanelUtil.Click_Info_CollectionEdit();
+				setPersistantTabFlag("infoTab");
+				infoTabVc.setSelected(true);
+				getUiHandlers().revealTab(ShelfUiHandlers.TYPE_COLLECTION_INFO_TAB,
+						collectionDo);
+				collectionMetaDataSimPanel.getElement().removeAttribute("style");
+				
+			} else if (tab.equals(resourceTabVc)) {
+				MixpanelUtil.Click_Resource_CollectionEdit();
+				setPersistantTabFlag("resourceTab");
+				resourceTabVc.setSelected(true);
+				collectionMetaDataSimPanel.getElement().removeAttribute("style");
+				
+				
+				getUiHandlers().revealTab(
+						ShelfUiHandlers.TYPE_COLLECTION_RESOURCE_TAB, collectionDo);
+			} else if (tab.equals(collaboratorTabVc)) {
+				collectionMetaDataSimPanel.clear();
+				MixpanelUtil.mixpanelEvent("Click_Collaborators_CollectionEdit");
+				setPersistantTabFlag("collaboratorTab");
+				collaboratorTabVc.setSelected(true);
+				collectionMetaDataSimPanel.getElement().removeAttribute("style");
+				
+//				collectionMetaDataSimPanel.setWidget(getCollectionCollaboratorTabVc());
+				getUiHandlers().revealTab(
+						ShelfUiHandlers.TYPE_COLLABORATOR_TAB, collectionDo);
+				
+			}
+			else if (tab.equals(assignTabVc)) {
+				MixpanelUtil.Click_Assign_CollectionEdit();
+				collectionMetaDataSimPanel.getElement().setAttribute("style", "min-height:0px;");
+				setPersistantTabFlag("assignTab");
+				assignTabVc.setSelected(true);
+				collectionMetaDataSimPanel.clear();
+				getUiHandlers().revealTab(
+							ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
+			}
+			else if (tab.equals(shareTabVc)) {
+				MixpanelUtil.Click_Share_CollectionEdit();
+				setPersistantTabFlag("shareTab");
+				shareTabVc.setSelected(true);
+				collectionMetaDataSimPanel.setWidget(getCollectionShareTabVc());
+				collectionShareTabVc.onReveal();
+				collectionMetaDataSimPanel.getElement().removeAttribute("style");
+			}
+		}else{
+			collectionMetaDataSimPanel.getElement().removeAttribute("style");
+			if(refresh){
+				analyticsClickEvent();
+				setPersistantTabFlag("resourceTab");
+			}else{
+				setPersistantTabFlag("resourceTab");
+				setTab(getPersistantTabObjectUsingTabFlag());
+			}
 		}
-		else if (tab.equals(assignTabVc)) {
-			MixpanelUtil.Click_Assign_CollectionEdit();
-			setPersistantTabFlag("assignTab");
-			assignTabVc.setSelected(true);
-			collectionMetaDataSimPanel.clear();
-			getUiHandlers().revealTab(
-						ShelfUiHandlers.TYPE_ASSIGN_INFO_TAB, collectionDo);
-		}
-		else if (tab.equals(shareTabVc)) {
-			MixpanelUtil.Click_Share_CollectionEdit();
-			setPersistantTabFlag("shareTab");
-			shareTabVc.setSelected(true);
-			collectionMetaDataSimPanel.setWidget(getCollectionShareTabVc());
-			collectionShareTabVc.onReveal();
-		}
+		
 	}
-	/**
-	 * 
-	 * @function setIpadFriendly 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set ipad friendly data.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setIpadFriendly() {
 		int notFriendlyCount = 0;
 		for (CollectionItemDo collectionItemDo : collectionDo.getCollectionItems()){
@@ -722,14 +902,20 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				notFriendlyCount++;
 			}
 		}
+		imgFriendly.setVisible(true);
+		lblFriendly.setVisible(true);
 		if (notFriendlyCount>0){
 			imgFriendly.getElement().getStyle().clearWidth();
+			imgFriendly.setAltText(GL0737);
+			imgFriendly.setTitle(GL0737);
 			imgFriendly.setUrl("images/mos/ipadFriendly.png");
-			lblFriendly.setText(StringUtil.generateMessage( MessageProperties.GL0449, String.valueOf(notFriendlyCount), notFriendlyCount>1 ? MessageProperties.GL_GRR_ARE : MessageProperties.GL_GRR_IS));
+			lblFriendly.setText(StringUtil.generateMessage(GL0449, String.valueOf(notFriendlyCount), notFriendlyCount>1 ? GL_GRR_ARE : GL_GRR_IS));
 		}else{
 			imgFriendly.getElement().getStyle().setWidth(25, Unit.PX);
 			imgFriendly.setUrl("images/mos/friendlyResource.png");
-			lblFriendly.setText(MessageProperties.GL0453);
+			imgFriendly.setAltText(GL0865);
+			imgFriendly.setTitle(GL0865);
+			lblFriendly.setText(GL0453);
 		}
 	}
 
@@ -740,7 +926,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 * @return instance of {@link CollectionTabTitleVc}
 	 */
 	public CollectionTabTitleVc getPersistantTabObjectUsingTabFlag() {
-
 		CollectionTabTitleVc objectToReturn = resourceTabVc;
 		stockStore = Storage.getLocalStorageIfSupported();
 		if (stockStore != null) {
@@ -753,12 +938,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					objectToReturn = infoTabVc;
 
 				} else if (tabFlag.equalsIgnoreCase("resourceTab")) {
-
+                    
 					objectToReturn = resourceTabVc;
 
 				} else if (tabFlag.equalsIgnoreCase("statisticsTab")) {
-
-					objectToReturn = statisticsTabVc;
+					
+					objectToReturn = null;
 
 				} else if (tabFlag.equalsIgnoreCase("collaboratorTab")) {
 
@@ -790,7 +975,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 *            generated when tabs are being switched
 	 */
 	public void setPersistantTabFlag(String flag) {
-
 		stockStore = Storage.getLocalStorageIfSupported();
 		if (stockStore != null) {
 			stockStore.setItem("tabKey", flag);
@@ -844,23 +1028,214 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 */
 	@UiHandler("deleteUserCollectionLbl")
 	public void deleteCollectionPopup(ClickEvent clickEvent) {
+		deleteCollectionId = collectionDo.getGooruOid();
 		/*collectionEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);
 		
 */		MixpanelUtil.Organize_Click_Collection_Delete();
-		deleteConfirmPopup = new DeleteConfirmPopupVc("Are you sure?", "\""
-				+ collectionDo.getTitle() + "\"" + " Collection.") {
 
+//		deleteUserCollectionLbl.setVisible(false);
+//		lblDeleting.setVisible(true);
+		//Verify whether creator has added the collection in classpage
+		AppClientFactory.getInjector().getClasspageService().getClasspagesListByCollectionId(collectionDo.getGooruOid(), collectionDo.getUser().getGooruUId(), new SimpleAsyncCallback<ArrayList<ClassPageCollectionDo>>() {
+			
 			@Override
-			public void onTextConfirmed() {
+			public void onSuccess(ArrayList<ClassPageCollectionDo> result) {
+				classpageTitles = result;
+				//This collection has been added by classpage.
+				isOwnerUsedInOwnCollection = false;
+				if (classpageTitles.size() > 0){
+					isOwnerUsedInOwnCollection = true;
+//					showCollectionIsUsedByOwner();
+				}
+				//This collection is not added by Creator But verify whether this collection is added by some other collaborators.
+				AppClientFactory.getInjector().getClasspageService().getCollectionUsedCount(collectionDo.getGooruOid(), new SimpleAsyncCallback<Integer>() {
+
+					@Override
+					public void onSuccess(Integer count) {
+						isCollabUsedThisCollection = false;
+						if (count>0){
+							isCollabUsedThisCollection = true;
+//								showCollectionIsUserByCollab();
+						}
+						if (isOwnerUsedInOwnCollection && isCollabUsedThisCollection){
+							showCollectionIsByBoth(count);
+						}else if (isOwnerUsedInOwnCollection){
+							showCollectionIsUsedByOwner();
+						}else if (isCollabUsedThisCollection){
+//							showCollectionIsUserByCollab();
+							showCollectionIsByBoth(count);
+						}else{
+							showDeletePopup();
+						}
+					}
+				});
+				
+			}
+			
+		});
+	}
+	
+	private void showDeletePopup() {
+		if (delete!=null){
+			delete = null;
+		}
+		delete = new DeletePopupViewVc() {
+			
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				deleteUserCollectionLbl.setVisible(false);
+				lblDeleting.setVisible(true);
 				getUiHandlers().deleteCollection(collectionDo.getGooruOid());
-
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
+			}
+			
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				showNotInProgress();
+				delete.hide();
 			}
 		};
+		delete.setPopupTitle(GL0748);
+		delete.setNotes(StringUtil.generateMessage(GL1020, collectionDo.getTitle()));
+		delete.setDescText(GL1238);
+		delete.setDeleteValidate("delete");
+		delete.setPositiveButtonText(GL0190);
+		delete.setNegitiveButtonText(GL0142);
+		delete.setPleaseWaitText(GL0339);
+		delete.center();
+		delete.show();
 	}
+	
+	public void showCollectionIsByBoth(int collabCount){
+
+		if (delete!=null){
+			delete = null;
+		}
+		delete = new DeletePopupViewVc() {
+			
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				deleteUserCollectionLbl.setVisible(false);
+				lblDeleting.setVisible(true);
+				getUiHandlers().deleteCollection(collectionDo.getGooruOid());
+			}
+			
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				showNotInProgress();
+				delete.hide();
+			}
+		};
+		delete.setPopupTitle(GL1163);
+		if(collabCount==0 || collabCount>1)
+		{
+		delete.setNotes(GL1338);
+		}
+		else
+		{
+		delete.setNotes(GL1495);	
+		}
+		delete.setDescText(GL1339);
+		delete.setDeleteValidate("delete");
+		delete.setPositiveButtonText(GL0190);
+		delete.setNegitiveButtonText(GL0142);
+		delete.setPleaseWaitText(GL0339);
+		delete.center();
+		delete.show();
+	
+	}
+	
+	public void showCollectionIsUserByCollab(){
+
+		if (delete!=null){
+			delete = null;
+		}
+		delete = new DeletePopupViewVc() {
+			
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				getUiHandlers().deleteCollection(collectionDo.getGooruOid());
+				deleteUserCollectionLbl.setVisible(false);
+				lblDeleting.setVisible(true);
+			}
+			
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				showNotInProgress();
+				delete.hide();
+			}
+		};
+		delete.setPopupTitle(GL0748);
+		delete.setNotes(StringUtil.generateMessage(GL1020, collectionDo.getTitle()));
+		delete.setDescText(GL1238);
+		delete.setDeleteValidate("delete");
+		delete.setPositiveButtonText(GL0190);
+		delete.setNegitiveButtonText(GL0142);
+		delete.setPleaseWaitText(GL0339);
+		delete.center();
+		delete.show();
+	
+	}
+	
+	public void showCollectionIsUsedByOwner(){
+
+		delete = new DeletePopupViewVc() {
+			
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				deleteUserCollectionLbl.setVisible(false);
+				lblDeleting.setVisible(true);
+				getUiHandlers().deleteCollection(collectionDo.getGooruOid());
+			}
+			
+			@Override
+			public void onClickNegitiveButton(ClickEvent event) {
+				showNotInProgress();
+				delete.hide();
+			}
+		};
+		delete.setPopupTitle(GL1163);
+		
+		StringBuffer sb = new StringBuffer();
+		String anchString = "<a href=\"{0}\" target=\"_blank\">{1}</a>";
+		String classpageUrl = "#teach&pageSize=10&classpageid={0}&pageNum=0&pos=1";
+		int count = classpageTitles.size() >= defaultCollabCount ? defaultCollabCount : classpageTitles.size(); 
+		for (int i=0; i<count;i++){
+			String url = StringUtil.generateMessage(classpageUrl, classpageTitles.get(i).getClasspageId());
+			if (classpageTitles.size()==1){
+				sb.append(StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()));
+			}else{
+				if (i == (count-1)){
+					sb.append(GL_GRR_AND+" "+StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()));
+				}else{
+					sb.append(StringUtil.generateMessage(anchString, url,classpageTitles.get(i).getTitle()) + ", ");
+				}
+			}
+		}
+		String remaining;
+		if (classpageTitles.size()>defaultCollabCount){
+			remaining = "+"+(classpageTitles.size() - count) +" "+ GL1153;
+		}else{
+			if (classpageTitles.size()==1){
+				remaining = (" "+GL1155);
+			}else{
+				remaining = (" "+GL1154+GL_SPL_EXCLAMATION);
+			}
+		}
+		delete.setNotes(GL1156+" "+sb.toString()+" "+remaining);
+			
+		delete.setDescText(GL1187);
+		delete.setDeleteValidate("delete");
+		delete.setPositiveButtonText(GL0190);
+		delete.setNegitiveButtonText(GL0142);
+		delete.setPleaseWaitText(GL0339);
+		
+		delete.center();
+		delete.show();
+	
+	}
+	
+	
 	/*@UiHandler("PreviewBtn")
 	public void clickOnPreviewBtn(ClickEvent clickEvent)
 	{
@@ -883,12 +1258,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 */
 	@UiHandler("collectionPreviewBtn")
 	public void collectionPlay(ClickEvent event) {
-	/*	collectionEditButtonContainer.getElement().getStyle()
-		.setVisibility(Visibility.HIDDEN);
-	*/	MixpanelUtil.Preview_Collection_From_CollectionEdit();
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.COLLECTION_PLAY,
-				new String[] { "id", collectionDo.getGooruOid() });
+		MixpanelUtil.Preview_Collection_From_CollectionEdit();
+		HashMap<String,String> params = new HashMap<String,String>();
+		params.put("id", collectionDo.getGooruOid());
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 
 	/**
@@ -900,8 +1274,30 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	/*	collectionEditButtonContainer.getElement().getStyle()
 		.setVisibility(Visibility.HIDDEN);
 */		MixpanelUtil.Organize_Click_Collection_Copy();
+        boolean addToShelf=AppClientFactory.getPlaceManager().getRequestParameter("o1")==null ? true : false;
 		getLoadingImageVisible();
-		getUiHandlers().copyCollection(collectionDo.getGooruOid());
+		getUiHandlers().copyCollection(collectionDo.getGooruOid(), addToShelf);
+		if (collectionDo.getMeta().isIsCollaborator()){
+			MixpanelUtil.mixpanelEvent("Collaborator_copies_collection");
+		}
+	}
+	
+	
+	@UiHandler("moveCollectionLbl")
+	public void onMoveCollectionClick(ClickEvent clickEvent){
+		folderPopupUc = new FolderPopupUc(COLLECTION_MOVE , true) {
+			@Override
+			public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
+				MixpanelUtil.mixpanelEvent(COLLECTION_MOVE_MP_EVENT);
+				getUiHandlers().moveCollection(collectionDo.getGooruOid(),parentId,folderName,params);  
+			}
+		};
+		folderPopupUc.setGlassEnabled(true);
+		folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+		folderPopupUc.setPopupPosition(clickEvent.getRelativeElement().getAbsoluteLeft() - (604), Window.getScrollTop() + 60);
+		Window.enableScrolling(false);
+		/*folderPopupUc.center();*/
+		folderPopupUc.show();
 	}
 
 	/**
@@ -917,9 +1313,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 					}
 				});
 	}
-	/**
-	 * Image upload for collection
-	 */
+
 	@Override
 	public void onPostCollectionImageUpload(String url) {
 		collectionImageShelfUc.setUrl(url);
@@ -930,38 +1324,43 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				collectionTitleUc.getText(), collectionDescriptionUc.getText(),
 				categoryImage.getUrl()));
 	}
-	/**
-	 * Delete the collection
-	 */
+
 	@Override
 	public void onPostCollectionDelete() {
-		deleteConfirmPopup.hide();
-		AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(
-				collectionDo, RefreshType.DELETE));
+//		deleteConfirmPopup.hide();
+		/*AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(
+				collectionDo, RefreshType.DELETE));*/
+		Map<String, String> params = new HashMap<String, String>();
+		if(AppClientFactory.getPlaceManager().getRequestParameter("o3")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			params.put("o3",AppClientFactory.getPlaceManager().getRequestParameter("o3"));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(deleteCollectionId)); 
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o2")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1"));  
+			params.put("o2",AppClientFactory.getPlaceManager().getRequestParameter("o2"));
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(deleteCollectionId)); 
+		}else if(AppClientFactory.getPlaceManager().getRequestParameter("o1")!=null){
+			params.put("o1",AppClientFactory.getPlaceManager().getRequestParameter("o1")); 
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(deleteCollectionId)); 
+		}else{
+			getLoadingImageInvisible();
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(deleteCollectionId)); 
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+		}
+		if (delete!=null)
+			hideDeletePopup(delete);
 	}
-	/**
-	 * Update collection
-	 */
+
 	@Override
 	public void onPostCollectionUpdate() {
 		AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(
 				collectionDo, RefreshType.UPDATE));
 	}
-	/**
-	 * 
-	 * @fileName : ShelfView.java
-	 *
-	 * @description : This is used to hide the edit pencil.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class hideEditPencil implements MouseOverHandler {
 
 		@Override
@@ -971,21 +1370,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 
 	}
-	/**
-	 * 
-	 * @fileName : ShelfView.java
-	 *
-	 * @description : To show the edit pencil.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class showEditPencil implements MouseOutHandler {
 
 		@Override
@@ -994,11 +1379,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 
 	}
-	/**
-	 * This class is used to edit collection title and description on click of pencil image  
-	 *
-	 *
-	 */
+/**
+ * This class is used to edit collection title and description on click of pencil image  
+ *
+ *
+ */
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1042,21 +1427,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void setFocusCollectionTitle() {
 		collectionTitleUc.setFocus();
 	}
-	/**
-	 * 
-	 * @fileName : ShelfView.java
-	 *
-	 * @description : This is used to make the simplePencilPanel visible on MouseOver.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	public class OnCollectionDescriptionClick implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -1064,21 +1435,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			simplePencilPanel.setVisible(true);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ShelfView.java
-	 *
-	 * @description : This is used to hide the simplePencilPanel  on MouseOut.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class OnCollectionDescriptionOut implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
@@ -1091,12 +1448,34 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
  */
 	@UiHandler("editSelfCollectionSaveButton")
 	public void clickedOneditSelfCollectionSaveButton(ClickEvent event) {
-		titleAlertMessageLbl.setVisible(false);
-		collectionTitleUc.switchToLabel();
-		AppClientFactory.fireEvent(new UpdateSocialShareMetaDataEvent(
-				collectionTitleUc.getText(), collectionDescriptionUc.getText(),
-				categoryImage.getUrl()));
-		isShowTitlePencil=true;
+		
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", collectionTitleUc.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean value) {
+				boolean isHavingBadWords = value;
+				if (value){
+					collectionTitleUc.getElement().getStyle().setBorderColor("orange");
+//					mandatoryErrorLbl.setText(MessageProperties.GL0554);
+//					mandatoryErrorLbl.setVisible(true);
+				}else{
+					titleAlertMessageLbl.setVisible(false);
+					collectionTitleUc.switchToLabel();
+					AppClientFactory.fireEvent(new UpdateSocialShareMetaDataEvent(
+							collectionTitleUc.getText(), collectionDescriptionUc.getText(),
+							categoryImage.getUrl()));
+					MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
+					isShowTitlePencil=true;
+					
+					collectionTitleUc.getElement().getStyle().clearBackgroundColor();
+					collectionTitleUc.getElement().getStyle().setBorderColor("#ccc");
+//					mandatoryErrorLbl.setVisible(false);
+				}
+			}
+		});
+		
 	}
 	/**
 	 * This method is used to update and save collection description
@@ -1109,6 +1488,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		AppClientFactory.fireEvent(new UpdateSocialShareMetaDataEvent(
 				collectionTitleUc.getText(), collectionDescriptionUc.getText(),
 				categoryImage.getUrl()));
+		MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
 		 isShowDescPencil=true;
 	}
 	/**
@@ -1125,6 +1505,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editSelfCollectionSaveButtonCancel.getElement().getStyle()
 				.setDisplay(Display.NONE);
 		collectionTitleUc.switchToCancelLabel();
+		collectionTitleUc.setText(collectionTitleUc.getText());
 		isShowTitlePencil=true;
 
 	}
@@ -1145,55 +1526,92 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionDescriptionUc.switchToDesCancelLabel();
 
 	}
-	/**
-	 * Set No Data of the collection
-	 */
+
+	public void analyticsClickEvent(){
+			setPersistantTabFlag("statisticsTab");
+			if(!statisticsTabVc.getStyleName().contains("deactivated")) {
+
+				new CollectionAnalyticsUc(AppClientFactory.getPlaceManager().getRequestParameter("id"), collectionDo.getTitle(), null) {
+
+					@Override
+					public void setDefaultTab() {
+						if(refresh) {
+							setTab(getPersistantTabObjectUsingTabFlag());
+						}
+					}
+				};
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
+		}
+	}
+	
+	public class AnalyticsClickEvent implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			   refresh = false;
+			   MixpanelUtil.mixpanelEvent("Organize_With_Analytics");
+			   analyticsClickEvent();
+			}
+	}
+	
+
 	@Override
 	public void setNoDataCollection() {
-		noCollectionResetPanel.getElement().getStyle()
-				.setDisplay(Display.BLOCK);
+		//temporary fix
+//		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
+		////
 		noCollectionResetPanel.clear();
 		Label noCollectionMessage = new Label(NO_COLLECTION_MESSAGE);
-		noCollectionMessage.getElement().getStyle()
-				.setTextAlign(TextAlign.CENTER);
-		noCollectionMessage.getElement().getStyle()
-				.setMarginBottom(30, Unit.PX);
+		noCollectionMessage.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		noCollectionMessage.getElement().getStyle().setMarginBottom(30, Unit.PX);
 		noCollectionMessage.getElement().getStyle().setMarginTop(30, Unit.PX);
 		noCollectionMessage.getElement().getStyle().setColor("#999999");
-		noCollectionMessage.getElement().getStyle()
-				.setFontStyle(FontStyle.ITALIC);
+		noCollectionMessage.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+		
+		editPanel.getElement().getStyle().setBackgroundColor("white");
+		editPanel.getElement().getStyle().setBackgroundColor("white");
 //		noCollectionResetPanel.add(noCollectionMessage);
 		noCollectionResetPanel.add(new FoldersWelcomePage());
 		getLoadingImageInvisible();
 	}
-	/**
-	 * To set balloon popup.
-	 */
+	
+	@Override
+	public void setOnlyNoDataCollection() {
+		
+//		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
+//		noCollectionResetPanel.clear();
+//		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+//		folderListPanel.getElement().getStyle().setDisplay(Display.NONE);
+//		noCollectionResetPanel.clear();
+//		editPanel.getElement().getStyle().setDisplay(Display.NONE);
+		
+//		noCollectionResetPanel.add(new FoldersWelcomePage());
+//		noCollectionResetPanel.add(new FooterUc());
+//		getLoadingImageInvisible();
+		panelFoooter.setVisible(false);
+	}
+
 	@Override
 	public void setBalloonPopup() {
-		BalloonPopupVc balloonPopup = new BalloonPopupVc("", "Coming soon!");
-		collPopup.add(balloonPopup);
+//		BalloonPopupVc balloonPopup = new BalloonPopupVc("",GL0683+GL_SPL_EXCLAMATION);
+//		collPopup.add(balloonPopup);
 
-		BalloonPopupVc balloonStatsPopup = new BalloonPopupVc("",
-				"Coming soon!");
-		balloonStatsPopup.getPopupContainer().getElement()
-				.removeClassName("hoverCollPopupContainerPos");
-		balloonStatsPopup.getPopupContainer().getElement()
-				.addClassName("hoverStasPopupContainerPos");
+		BalloonPopupVc balloonStatsPopup = new BalloonPopupVc("",GL0682);
+		balloonStatsPopup.getPopupContainer().getElement().removeClassName("hoverCollPopupContainerPos");
+		balloonStatsPopup.getPopupContainer().getElement().addClassName("hoverStasPopupContainerPos");
+		balloonStatsPopup.getPopupDesc().getElement().getStyle().setColor("#515151");
+		balloonStatsPopup.getPopupDesc().getElement().getStyle().setFontSize(12, Unit.PX);
 		statPopup.add(balloonStatsPopup);
 	}
-	/**
-	 * returns shelfViewMainContainer.
-	 */
+
 	public FlowPanel getShelfViewMainContainer() {
 		return shelfViewMainContainer;
 	}
-	/**
-	 * To update the resource count.
-	 */
+
 	public void updateResoureCount(int resourceCount) {
 		com.google.gwt.core.shared.GWT.log("resource count" + resourceCount);
-		resourceTabVc.setLabel("Content (" + resourceCount + ")");
+		resourceTabVc.setLabel(""+GL0829+" (" + resourceCount + ")");
 		
 		setIpadFriendly();
 	}
@@ -1204,6 +1622,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void getLoadingImageInvisible() {
 		backToSearchFloPanel.setVisible(true);
 		loadingImageLabel.setVisible(false);
+		panelFoooter.setVisible(true);
 	}
 	/**
 	 * This method is used to display loading image
@@ -1211,10 +1630,9 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public void getLoadingImageVisible() {
 		backToSearchFloPanel.setVisible(false);
 		loadingImageLabel.setVisible(true);
+		panelFoooter.setVisible(false);
 	}
-	/**
-	 * To close the delete ConfirmPopup.
-	 */
+
 	@Override
 	public void hideAllOpenedPopUp() {
 		if(deleteConfirmPopup!=null && deleteConfirmPopup.isShowing()){
@@ -1222,8 +1640,150 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}
 		
 	}
+	/**
+	 * @function getCreatedTime 
+	 * 
+	 * @created_date : 06-Jan-2014
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param commentCreatedTime
+	 * 
+	 * @return : String
+	 */
+	private String getTimeStamp(String commentCreatedTime) {
+		String createdTime = null;
+		Long currentTime = System.currentTimeMillis();
+		Long commentTime = Long.parseLong(commentCreatedTime);
+		Long elapsedTime = (currentTime - commentTime);
+		
+		int seconds = (int) (elapsedTime / 1000) % 60 ;
+		int minutes = (int) ((elapsedTime / (1000*60)) % 60);
+		int hours   = (int) ((elapsedTime / (1000*60*60)) % 24);
+		int days = (int) (elapsedTime / (1000*60*60*24));
+		
+		if(days>0) {
+			createdTime = days + getTimePrefix(days," "+GL0562, GL0579, GL0580);
+		} else if(hours>0&&hours<24) {
+			createdTime = hours + getTimePrefix(hours," "+GL0563, GL1435, GL1436);
+		} else if(minutes>0&&minutes<60) {
+			createdTime = minutes + getTimePrefix(minutes," "+GL0564, GL1437, GL1438);
+		} else if(seconds<=60) {
+			createdTime = GL0561;
+		}
+		return createdTime;
+	}
+	/**
+	 * @function getTimePrefix 
+	 * 
+	 * @created_date : 06-Jan-2014
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param count
+	 * @parm(s) : @param msg
+	 * @parm(s) : @param regex
+	 * @parm(s) : @param replacement
+	 * 
+	 * @return : String
+	 *
+	 */
+	private String getTimePrefix(int count, String msg, String regex, String replacement) {
+		if(count==1) {
+			msg = msg.replaceAll(regex, replacement);
+		}
+		return msg;
+	}
 
+	@Override
+	public SimplePanel getFolderListPanel() {
+		return folderListPanel;
+	}
 
+	@Override
+	public void CollMovedSucessFully(String sourceId,String targetId,String folderName,HashMap<String, String> urlParams) {
+		folderPopupUc.hide();
+		final FolderDo folderDo = getFolderDo(collectionDo); 
+		final DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(folderName) { 
+			@Override
+			public void onClickPositiveButton(ClickEvent event) {
+				Window.enableScrolling(true);
+				appPopUp.hide();
+				AppClientFactory.fireEvent(new SetCollectionMovedStyleEvent(folderDo.getGooruOid()));  
+			}
+		};
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		
+		if(params.get(O3_LEVEL)!=null){
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(sourceId)); 
+			AppClientFactory.fireEvent(new InsertMovedCollectionEvent(folderDo, RefreshFolderType.INSERT, urlParams)); 
+		}else if(params.get(O2_LEVEL)!=null){
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(sourceId)); 
+			AppClientFactory.fireEvent(new InsertMovedCollectionEvent(folderDo, RefreshFolderType.INSERT, urlParams));
+		}else if(params.get(O1_LEVEL)!=null){
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(sourceId)); 
+			AppClientFactory.fireEvent(new InsertMovedCollectionEvent(folderDo, RefreshFolderType.INSERT, urlParams));
+		}else{
+			AppClientFactory.fireEvent(new RemoveMovedCollectionFolderEvent(sourceId));
+			AppClientFactory.fireEvent(new InsertMovedCollectionEvent(folderDo, RefreshFolderType.INSERT, urlParams));
+			getLoadingImageInvisible();
+		}
+	}
 	
+	
+	public FolderDo getFolderDo(CollectionDo collectionDo) {
+		FolderDo folderDo = new FolderDo();
+		folderDo.setGooruOid(collectionDo.getGooruOid());
+		folderDo.setTitle(collectionDo.getTitle());
+		folderDo.setType(collectionDo.getCollectionType());
+		folderDo.setSharing(collectionDo.getSharing());
+		ThumbnailDo thumbnailDo = new ThumbnailDo();
+		thumbnailDo.setUrl(collectionDo.getThumbnailUrl());
+		folderDo.setThumbnails(thumbnailDo);
+		List<FolderItemDo> folderItems = new ArrayList<FolderItemDo>();
+		if(collectionDo.getCollectionItems()!=null) {
+			for(int i=0;i<collectionDo.getCollectionItems().size();i++) {
+				CollectionItemDo collectionItemDo = collectionDo.getCollectionItems().get(i);
+				FolderItemDo folderItemDo = new FolderItemDo();
+				folderItemDo.setGooruOid(collectionItemDo.getGooruOid());
+				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
+				folderItemDo.setType(collectionItemDo.getItemType());
+				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
+				resourceFormatDo.setValue(collectionItemDo.getCategory());
+				folderItems.add(folderItemDo);
+			}
+			folderDo.setCollectionItems(folderItems);
+		}
+		return folderDo;
+	}
+	
+	
+	public void showNotInProgress(){
+		deleteUserCollectionLbl.setVisible(true);
+		lblDeleting.setVisible(false);
+		
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+	}
+	
+	public void hideDeletePopup(DeletePopupViewVc delete){
+		showNotInProgress();
+		delete.hide();
+	}
+	/** 
+	 * This method is to get the loadingImageLabel
+	 */
+	@Override
+	public HTMLPanel getLoadingImageLabel() {
+		return loadingImageLabel;
+	}
+	
+	public static native void setFolderListHeight() /*-{
+		var element = document.getElementById("wrapper");
+		if (element !=null){
+			alert("test 1");
+			$wnd.element.parentNode.className = "wrapperParent";
+		}
+	}-*/;
 }
-

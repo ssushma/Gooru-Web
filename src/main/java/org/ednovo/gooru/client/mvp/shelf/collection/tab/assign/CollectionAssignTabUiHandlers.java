@@ -30,16 +30,16 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
  * 
  * @fileName : CollectionAssignTabUiHandlers.java
  *
- * @description : This is related to get the class pages and to get assignments based on classpage id.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: Jul 31, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	/**
@@ -48,7 +48,7 @@ public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	 * 
 	 * @created_date : Jul 31, 2013
 	 * 
-	 * @description   : To get the next class pages.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -68,7 +68,7 @@ public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	 * 
 	 * @created_date : Jul 31, 2013
 	 * 
-	 * @description  : To get all the class pages.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param limit
@@ -89,7 +89,7 @@ public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	 * 
 	 * @created_date : Jul 31, 2013
 	 * 
-	 * @description   : To get assignments by classpage id.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param classpageId
@@ -112,7 +112,7 @@ public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	 * 
 	 * @created_date : Jul 31, 2013
 	 * 
-	 * @description   : To get next assignments.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 
@@ -133,7 +133,7 @@ public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	 * 
 	 * @created_date : Aug 1, 2013
 	 * 
-	 * @description   : To set assignment offset.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param assignmentOffSet
@@ -155,7 +155,7 @@ public interface CollectionAssignTabUiHandlers extends BaseUiHandlers {
 	 * 
 	 * @created_date : Aug 9, 2013
 	 * 
-	 * @description   : To set the sharetype.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param shareType

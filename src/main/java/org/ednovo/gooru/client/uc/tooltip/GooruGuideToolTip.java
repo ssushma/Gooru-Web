@@ -24,28 +24,24 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : GooruGuideToolTip.java
- *
- * @description : This class is used to display the gooru guid tooltip.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class GooruGuideToolTip extends Composite{
+
+public class GooruGuideToolTip extends Composite implements MessageProperties{
 	
-	
+	@UiField HTMLPanel newToGooruText,useGoorutext,questionsText,emailSupportText;
 	public GooruGuideToolTip(){
 		initWidget(gooruGuideToolTipUiBinder.createAndBindUi(this));
+		newToGooruText.getElement().setInnerHTML(GL1061);
+		useGoorutext.getElement().setInnerHTML(GL1062);
+		questionsText.getElement().setInnerHTML(GL1029);
+		emailSupportText.getElement().setInnerHTML(GL0212+" "+GL0299);
 	}
 	
 	public interface GooruGuideToolTipUiBinder extends UiBinder<Widget, GooruGuideToolTip>{

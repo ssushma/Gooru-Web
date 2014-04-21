@@ -33,6 +33,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
@@ -43,21 +44,34 @@ import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
+import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
+import org.ednovo.gooru.client.mvp.play.resource.flag.ResourceFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.share.ResourceSharePresenter;
+import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresenter;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
+import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -66,7 +80,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
 
-public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayerView, ResourcePlayerPresenter.IsResourcePlayerProxy> implements ResourcePlayerUiHandlers{
+public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayerView, ResourcePlayerPresenter.IsResourcePlayerProxy> implements ResourcePlayerUiHandlers,MessageProperties{
 	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
@@ -95,6 +109,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
     
     private String resourceDataLogEventId;
     
+    private String resourceNewDataLogEventId;
+    
     private Long resourceStartTime=0L;
     
     private Long hintOrExplanationStartTime=0L;
@@ -113,24 +129,143 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	private List<Integer> answerIds=new ArrayList<Integer>();
 	
+	 private ResourceFlagPresenter resourceFlagPresenter;
+	
 	private String oeQuestionAnswerText="";
 	
 	private int hintId=0;
 	
 	private boolean isExplanationUsed=false;
 	
-    
+	private boolean isUserAttemptedQuestion=false;
+	
+	private int userAttemptedQuestionType=0;
+	
+	private String questionType="RES";
+	
+	private JSONObject answerIdsObject=new JSONObject();
+	
+	private JSONObject hintIdsObject=new JSONObject();
+	
+	private JSONObject explanationIdsObject=new JSONObject();
+	
+	private List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
+	
+	private List<Integer> attemptStatusArray=new ArrayList<Integer>();
+	
+	private Integer resourceScore=0;
+	
+	private Integer attemptCount=0;
+	
+    /**
+	 * @return the answerIdsObject
+	 */
+	public JSONObject getAnswerIdsObject() {
+		return answerIdsObject;
+	}
+
+	/**
+	 * @param answerIdsObject the answerIdsObject to set
+	 */
+	public void setAnswerIdsObject(JSONObject answerIdsObject) {
+		this.answerIdsObject = answerIdsObject;
+	}
+
+	/**
+	 * @return the hintIdsObject
+	 */
+	public JSONObject getHintIdsObject() {
+		return hintIdsObject;
+	}
+
+	/**
+	 * @param hintIdsObject the hintIdsObject to set
+	 */
+	public void setHintIdsObject(JSONObject hintIdsObject) {
+		this.hintIdsObject = hintIdsObject;
+	}
+
+	/**
+	 * @return the explanationIdsObject
+	 */
+	public JSONObject getExplanationIdsObject() {
+		return explanationIdsObject;
+	}
+
+	/**
+	 * @param explanationIdsObject the explanationIdsObject to set
+	 */
+	public void setExplanationIdsObject(JSONObject explanationIdsObject) {
+		this.explanationIdsObject = explanationIdsObject;
+	}
+	
+	/**
+	 * @return the attemptTrySequenceArray
+	 */
+	public List<Integer> getAttemptTrySequenceArray() {
+		return attemptTrySequenceArray;
+	}
+
+	/**
+	 * @param attemptTrySequenceArray the attemptTrySequenceArray to set
+	 */
+	public void setAttemptTrySequenceArray(List<Integer> attemptTrySequenceArray) {
+		this.attemptTrySequenceArray = attemptTrySequenceArray;
+	}
+
+	/**
+	 * @return the attemptStatusArray
+	 */
+	public List<Integer> getAttemptStatusArray() {
+		return attemptStatusArray;
+	}
+
+	/**
+	 * @param attemptStatusArray the attemptStatusArray to set
+	 */
+	public void setAttemptStatusArray(List<Integer> attemptStatusArray) {
+		this.attemptStatusArray = attemptStatusArray;
+	}
+
+	/**
+	 * @return the resourceScore
+	 */
+	public Integer getResourceScore() {
+		return resourceScore;
+	}
+
+	/**
+	 * @param resourceScore the resourceScore to set
+	 */
+	public void setResourceScore(Integer resourceScore) {
+		this.resourceScore = resourceScore;
+	}
+	
+	/**
+	 * @return the attemptCount
+	 */
+	public Integer getAttemptCount() {
+		return attemptCount;
+	}
+
+	/**
+	 * @param attemptCount the attemptCount to set
+	 */
+	public void setAttemptCount(Integer attemptCount) {
+		this.attemptCount = attemptCount;
+	}
+	
     public static final  Object TAB_PRESENTER_SLOT = new Object(); 
     public static final  Object METADATA_PRESENTER_SLOT = new Object();
-    public static final String ADD_WIDGET_MODE="ADD";
+    public static final String ADD_WIDGET_MODE=GL0590.toUpperCase();
     public static final String RESOURCE_THUMBS_WIDGET_MODE="RESOURCE_RATING";
-    public static final String FLAG_WIDGET_MODE="FLAG";
+    public static final String FLAG_WIDGET_MODE=GL0600.toUpperCase();
 	
 	
 	@Inject
 	public ResourcePlayerPresenter(ResourcePlayerMetadataPresenter resoruceMetadataPresenter,ResourceSharePresenter resourceSharePresenter,
 			ResourceInfoPresenter resourceInfoPresenter,EventBus eventBus, CollectionFormInPlayPresenter collectionFormInPlayPresenter,
-			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter) {
+			IsResourcePlayerView view, IsResourcePlayerProxy proxy,AddResourceCollectionPresenter addResourceCollectionPresnter,ResourceFlagPresenter resourceFlagPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.resoruceMetadataPresenter=resoruceMetadataPresenter;
@@ -139,12 +274,14 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		this.addResourceCollectionPresnter=addResourceCollectionPresnter;
 		addResourceCollectionPresnter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
+		this.resourceFlagPresenter=resourceFlagPresenter;
+		resourceFlagPresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
 		resoruceMetadataPresenter.setResourcePlayerPresenter(this, false);
 	}
 
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.RESOURCE_PLAY_OLD)
+	@NameToken(PlaceTokens.RESOURCE_PLAY)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsResourcePlayerProxy extends ProxyPlace<ResourcePlayerPresenter> {
 	}
@@ -159,15 +296,22 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	  super.onBind();
 	  addRegisteredHandler(ShowResourceViewEvent.TYPE, this);
 	  addRegisteredHandler(ShowResourceTabWidgetEvent.TYPE, this);
-	  addRegisteredHandler(RefreshCollectionInShelfListInPlayEvent.TYPE, this);
+	  addRegisteredHandler(RefreshCollectionInShelfListInResourcePlayEvent.TYPE, this);
 	}
 	@Override
 	protected void onReveal() {
 	  super.onReveal();
+	  Document doc=Document.get();
+		Element bodyelement = doc.getBody();
+		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
 	}
 	@Override
 	protected void onReset() {
 		  super.onReset();
+		  Document doc=Document.get();
+			Element bodyelement = doc.getBody();
+			bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
+			
 	}
 	
 	public void prepareFromRequest(PlaceRequest request) {
@@ -185,23 +329,34 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 				  showTabWidget(tabView,resourceId);
 			  }
 		  }else{
-			 // if(apiKey!=null && !apiKey.equalsIgnoreCase("")){
-			      if(resourceId!=null && !resourceId.equalsIgnoreCase("")){
-			    	  this.playerAppService.getResourceCollectionItem(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
-			    			@Override
-			    			public void onSuccess(CollectionItemDo collectionItemDo) {
-			    				showResoruceView(collectionItemDo,resourceId,tabView);
-			    			}
-			    		});
-			      }
-			 // }
-			 // else{
-				  //TODO need to implemente error message if API key is missing or invalid.
-			//	  Window.alert("API KEY IS MISSING");
-			 // }
+		      if(resourceId!=null && !resourceId.equalsIgnoreCase("")){
+		    	  this.playerAppService.getResourceCollectionItem(apiKey,resourceId,tabView, new SimpleAsyncCallback<CollectionItemDo>() {
+		    			@Override
+		    			public void onSuccess(CollectionItemDo collectionItemDo) {
+		    				if(collectionItemDo.getStatusCode() != 200){
+		    					showResourceErrorMessage();
+		    				}else{
+		    					setPageTitle(collectionItemDo);
+		    					showResoruceView(collectionItemDo,resourceId,tabView);
+		    				}
+		    			}
+		    		});
+		      }
 		  }
 	}
 
+	/**
+	 * @function setPageTitle 
+	 *  
+	 * @description : To set the Window Title.
+	 *  
+	 * @parm(s) : @param collectionDo {@link CollectionDo}
+	 * 
+	*/
+	
+	protected void setPageTitle(CollectionItemDo collectionItemDo) {
+		AppClientFactory.setBrowserWindowTitle(SeoTokens.RESOURCE_PLAYER_TITLE+collectionItemDo.getResource().getTitle());
+	}
 	
 	public void showResoruceView(CollectionItemDo collectionItemDo,String resourceId, String tabView){
 		  this.collectionItemDo=collectionItemDo;
@@ -235,7 +390,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			makeButtonActive(tabView);
 			return;
 		}
-		enablePlayerButton(true,true, true);
+		enablePlayerButton(true,true,true,true);
 		makeButtonActive(tabView);
 		resetAnswerLists();
 		createResourceDataLogs();
@@ -244,25 +399,44 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		getView().setResourceTitle(collectionItemDo.getResource().getTitle());
 		updateThumbsRatingView(collectionItemDo.getResource().getUserRating());
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
+		if(!AppClientFactory.isAnonymous()){
+			resoruceMetadataPresenter.setReaction(collectionItemDo);
+			getContentReport(collectionItemDo.getResource().getGooruOid());
+		}
+		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter,false);
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
 			//getView().clearActiveButtion();
 			if(tabView.equalsIgnoreCase("add")){
-				getView().clearActiveButton(false,true, true);
-				getView().makeButtonActive(true,false, false);	
+				ResourcePlayerMetadataView.addPadding();
+				getView().clearActiveButton(false,true, true,true);
+				getView().makeButtonActive(true,false, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("info")){
-				getView().clearActiveButton(true,false, true);
-				getView().makeButtonActive(false,true, false);	
+				ResourcePlayerMetadataView.addPadding();
+				getView().clearActiveButton(true,false, true,true);
+				getView().makeButtonActive(false,true, false,false);	
 			}
 			else if(tabView.equalsIgnoreCase("share")){
-				getView().clearActiveButton(true,true, false);
-				getView().makeButtonActive(false,false, true);
+				ResourcePlayerMetadataView.addPadding();
+				getView().clearActiveButton(true,true, false,true);
+				getView().makeButtonActive(false,false, true,false);
+			}else if(tabView.equalsIgnoreCase("flag")){
+				getView().clearActiveButton(true,true, true,false);
+				getView().makeButtonActive(false,false, false,true);
 			}
 			
 		}
+	}
+	public void createSessionAttemptTryWhenNavigation(){
+		if(isUserAttemptedAnswer()){
+			resoruceMetadataPresenter.createSessionAttemptTryWhenNavigation(getUserAttemptedQuestionType());
+		}
+	}
+	public void increaseUserAttemptCount(){
+		setAttemptCount(getAttemptCount()+1);
 	}
 	@Override
 	public void showResourceView(Integer collectionItemSequence, boolean isForwardDirection) {
@@ -271,10 +445,11 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	public void showTabWidget(String tabView,String resourceId){
 		if(tabView==null||tabView.equals("")){
-			getView().clearActiveButton(true,true,true);
+			getView().clearActiveButton(true,true,true,true);
 			new CustomAnimation(getView().getNavigationContainer()).run(400);
 		}
 		else if(tabView.equals("add")){
+			MixpanelUtil.mixpanelEvent("Player_Click_Add");
 			setAddResourceCollectionView(resourceId);
 		 }
 		else if(tabView.equals("share")){
@@ -282,12 +457,20 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		 }else if(tabView.equals("info")){
 			 setResourceInfoView(resourceId);
 		 }
-		 else{
+		 else if(tabView.equals("flag")){
+			 if(AppClientFactory.isAnonymous()){
+				 clearSlot(TAB_PRESENTER_SLOT);
+				 showLoginPopupWidget(FLAG_WIDGET_MODE);
+			}else{
+				setResourceFlagView(resourceId);
+			 }
+		} else{
 			 getView().getNavigationContainer().clear();
 		 }
 	}
 	public void setAddResourceCollectionView(String resourceId){
 		if(AppClientFactory.isAnonymous()){
+			clearSlot(TAB_PRESENTER_SLOT);
 			showLoginPopupWidget(ADD_WIDGET_MODE);
 		}else{
 			addResourceCollectionPresnter.setCollectionItemData(null, collectionItemDo);
@@ -305,26 +488,32 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		setInSlot(TAB_PRESENTER_SLOT, resourceSharePresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
 	}
-	
+	public void setResourceFlagView(String resourceId){
+		resourceFlagPresenter.setFlagView(collectionItemDo);
+		clearSlot(TAB_PRESENTER_SLOT);
+		addToPopupSlot(resourceFlagPresenter);
+	}
 	public void clearTabSlot(){
 		clearSlot(TAB_PRESENTER_SLOT);
 	}
 	
-	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable){
-		getView().enablePlayerButton(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable);
+	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable,boolean isFlagButtonEnable){
+		getView().enablePlayerButton(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable,isFlagButtonEnable);
 	}
 	
 	public void createResourceDataLogs(){
 		resourceActivityEventId=GwtUUIDGenerator.uuid();
 		startPlayerActivityEvent(resourceActivityEventId, "", PlayerConstants.RESOURCE_PLAYER_EVENT_NAME, "", collectionItemDo.getResource().getGooruOid(), PlayerConstants.RESOURCE_PLAYER_CONTEXT+collectionItemDo.getResource().getGooruOid(), getUserAgent());
 		createSession(collectionItemDo.getResource().getGooruOid());
-		startResourceInsightDataLog();
+		
 	}
 	public void startResourceInsightDataLog(){
 		resourceDataLogEventId=GwtUUIDGenerator.uuid();
 		resourceStartTime=System.currentTimeMillis();
+		resourceNewDataLogEventId=GwtUUIDGenerator.uuid();
 		if(collectionItemDo!=null){
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+				questionType=PlayerDataLogEvents.getQuestionType(collectionItemDo.getResource().getType());
 				if(collectionItemDo.getResource().getType()==6){
 					resourcePlayEventName=PlayerDataLogEvents.QUESTION_RESOURCE_OE_EVENT_NAME;
 				}else{
@@ -336,6 +525,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		}
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, "",collectionItemDo.getResource().getGooruOid(),"", PlayerDataLogEvents.START_EVENT_TYPE, resourceStartTime,
 	                 resourceStartTime, 0L,AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length());
+		triggerCollectionItemNewDataLogStartStopEvent(collectionItemDo.getResource().getGooruOid(), resourceStartTime, resourceStartTime, PlayerDataLogEvents.START_EVENT_TYPE, 0, questionType);
 	}
 	
 	public void stopResourceInsightDataLog(){
@@ -343,9 +533,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		Long resourceEndTime=System.currentTimeMillis();
 		PlayerDataLogEvents.resourcePlayStartStopEvent(resourceDataLogEventId, resourcePlayEventName, "",collectionItemDo.getResource().getGooruOid(),"", PlayerDataLogEvents.STOP_EVENT_TYPE, resourceStartTime,
 				resourceEndTime,resourceEndTime-resourceStartTime,AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid(),attemptTrySequence,attemptStatus, answerIds,oeQuestionAnswerText,oeQuestionAnswerText.length());
+		triggerCollectionItemNewDataLogStartStopEvent(collectionItemDo.getResource().getGooruOid(), resourceStartTime, resourceEndTime, PlayerDataLogEvents.STOP_EVENT_TYPE, getResourceScore(), questionType);
 	}
 	public void stopDataLogEvents(){
-		//TODO need to implement stop datalog events 
+		if(collectionItemDo!=null){
+			stopResourceInsightDataLog();
+			createSessionAttemptTryWhenNavigation();
+			updateSession(sessionId);
+			stopPlayerActivityEvent(resourceActivityEventId, "", PlayerConstants.RESOURCE_PLAYER_EVENT_NAME, "", collectionItemDo.getResource().getGooruOid(), PlayerConstants.RESOURCE_PLAYER_CONTEXT+collectionItemDo.getResource().getGooruOid(), getUserAgent());
+		}
 	}
 	public void startPlayerActivityEvent(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,
 			String context,String userAgent){
@@ -372,6 +568,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			@Override
 			public void onSuccess(String sessionId) {
 				ResourcePlayerPresenter.this.sessionId=sessionId;
+				startResourceInsightDataLog();
 				if(collectionItemDo!=null){
 					createSessionItem(sessionId, collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getGooruOid());
 				}
@@ -395,8 +592,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		});
 	}
 	
-	public void createSessionItemAttemptOe(String attemptAnswerResult){
-		this.playerAppService.createSessionItemAttemptTryForOe(sessionId, sessionItemId, attemptAnswerResult, new SimpleAsyncCallback<String>() {
+	public void createSessionItemAttemptOe(String answerId,String attemptStatus,String attemptAnswerResult){
+		this.playerAppService.createSessionItemAttemptTryForOe(sessionId, sessionItemId, answerId,attemptStatus,attemptAnswerResult, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionItemId) {}
 		});
@@ -435,6 +632,15 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		isExplanationUsed=false;
 		hintId=0;
 		hintOrExplanationEventName=null;
+		questionType="RES";
+		hintIdsObject=new JSONObject();
+		explanationIdsObject=new JSONObject();
+		answerIdsObject=new JSONObject();
+		attemptStatusArray.clear();
+		attemptTrySequenceArray.clear();
+		attemptAnswersMap.clear();
+		setResourceScore(0);
+		setAttemptCount(0);
 	}
 	
 	public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus,int answerId){
@@ -534,6 +740,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			Integer viewsCounts=Integer.parseInt(viewsCount)+1;
 			collectionItemDo.getResource().setViews(viewsCounts.toString());
 			resourceInfoPresenter.updateViewsCount(viewsCounts.toString());
+			      try{
+			    	  	AppClientFactory.fireEvent(new UpdateSearchResultMetaDataEvent(String.valueOf(viewsCounts), collectionItemDo.getResource().getGooruOid(), "views"));
+			         }
+			      catch(Exception ex){}
 		}
 	}
 
@@ -544,13 +754,17 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 
 	@Override
 	public void resetResourcePlayer() {
-		getView().setResourceTitle("");
-		enablePlayerButton(false,false, false);
-		clearTabSlot();
-		this.collectionItemDo=null;
-		this.gooruOid=null;
-		resoruceMetadataPresenter.resetResourceMetaData();
-		resourceInfoPresenter.resetResourceInfo();
+		if(this.collectionItemDo!=null){
+			stopDataLogEvents();
+			getView().setResourceTitle("");
+			enablePlayerButton(false,false, false,false);
+			clearTabSlot();
+			this.collectionItemDo=null;
+			this.gooruOid=null;
+			clearIframeContent();
+			resoruceMetadataPresenter.resetResourceMetaData();
+			resourceInfoPresenter.resetResourceInfo();
+		}
 	}
 	
 	public void showLoginPopupWidget(String widgetMode){
@@ -563,11 +777,14 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	public void showTabWidget(String widgetMode,boolean isLoginRequestCancel) {
 		  String resourceId=getPlaceManager().getRequestParameter("id", null);
 		  if(!isLoginRequestCancel&&widgetMode.equals(ADD_WIDGET_MODE)){
-			  getResource(resourceId);
+			 // getResource(resourceId);
 			  setAddResourceCollectionView(resourceId);
 		  } else if(!isLoginRequestCancel&&widgetMode.equals(RESOURCE_THUMBS_WIDGET_MODE)){
-			  getResource(resourceId);
-		  }else if(isLoginRequestCancel&&widgetMode.equals(ADD_WIDGET_MODE)){
+			  //getResource(resourceId);
+		  }else if(!isLoginRequestCancel&&widgetMode.equals(FLAG_WIDGET_MODE)){
+			  getContentReport(collectionItemDo.getResource().getGooruOid());
+		  } 
+		  else if(isLoginRequestCancel){
 			  PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId);
 		      AppClientFactory.getPlaceManager().revealPlace(false,request,true);
 		  }
@@ -576,11 +793,28 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		this.playerAppService.getResourceCollectionItem(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
-				ResourcePlayerPresenter.this.collectionItemDo=collectionItemDo;
-				updateThumbsRatingView(collectionItemDo.getResource().getUserRating());
+				if(collectionItemDo.getStatusCode()!=200){
+					showResourceErrorMessage();
+				}else{
+					ResourcePlayerPresenter.this.collectionItemDo=collectionItemDo;
+					updateThumbsRatingView(collectionItemDo.getResource().getUserRating());	
+				}
+				
 			}
 		});
 	}
+	
+	/**
+	 * it will display resource not found error view.
+	 */
+	protected void showResourceErrorMessage(){
+		Label errorMessageLabel=new Label();
+		errorMessageLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceErrorStyle());
+		enablePlayerButton(false, false, false,false);
+		getView().getPlayerBodyContainer().clear();
+		getView().getPlayerBodyContainer().add(errorMessageLabel);
+	}
+	
 	public class ShowNewCollectionWidget implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -601,7 +835,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 
 	@Override
 	public void updateResourceThumbsRating(final int userThumbsRataing) {
-		System.out.println("user rating in presenter===>"+userThumbsRataing);
 		String resourceGooruOid=collectionItemDo.getResource().getGooruOid();
 		this.playerAppService.updateContentThumbsRating(resourceGooruOid, userThumbsRataing, new SimpleAsyncCallback<String>() {
 			@Override
@@ -628,6 +861,98 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		resourceInfoPresenter.updateLikesCount(resourceLikes);
 		collectionItemDo.getResource().setUserRating(userThumbsRataing);
 		collectionItemDo.getRating().setVotesUp(resourceLikes);
+	}
+
+	@Override
+	public void getContentReport(String assoGooruId) {
+		playerAppService.getContentReport(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ContentReportDo> result) {
+				String gooruFlagId="";
+				if(result!=null&&result.size()>0){
+					for(int i =0;i<result.size();i++){
+						gooruFlagId = gooruFlagId+result.get(i).getDeleteContentGooruOid();
+						if(result.size()!=(i+1)){
+							gooruFlagId=gooruFlagId+",";
+						}
+					}
+					getView().makeFlagButtonOrange();
+					resourceFlagPresenter.setContentDeleteIds(gooruFlagId);
+				 }
+			}
+		});
+		
+	}
+	public void clearIframeContent(){
+		resoruceMetadataPresenter.clearIfrmaeContent();
+	}
+
+	/**
+	 * @return the isUserAttemptedAnswer
+	 */
+	public boolean isUserAttemptedAnswer() {
+		return isUserAttemptedQuestion;
+	}
+
+	/**
+	 * @param isUserAttemptedAnswer the isUserAttemptedAnswer to set
+	 */
+	public void setUserAttemptedAnswer(boolean isUserAttemptedQuestion) {
+		this.isUserAttemptedQuestion = isUserAttemptedQuestion;
+	}
+	
+   /**
+	 * @return the userAttemptedQuestionType
+	 */
+	public int getUserAttemptedQuestionType() {
+		return userAttemptedQuestionType;
+	}
+
+	/**
+	 * @param userAttemptedQuestionType the userAttemptedQuestionType to set
+	 */
+	public void setUserAttemptedQuestionType(int userAttemptedQuestionType) {
+		this.userAttemptedQuestionType = userAttemptedQuestionType;
+	}
+	
+	public void setUserAttemptedQuestionTypeAndStatus(boolean isUserAttemptedThisQuestion,int questionType){
+		setUserAttemptedAnswer(isUserAttemptedThisQuestion);
+		setUserAttemptedQuestionType(questionType);
+	}
+	public void triggerSaveOeAnswerTextDataEvent(){
+		String oeDataLogEventId=GwtUUIDGenerator.uuid();
+		Long oeStartTime=System.currentTimeMillis();
+		triggerSaveOeAnswerTextDataEvent(oeDataLogEventId,collectionItemDo.getResource().getGooruOid(),oeStartTime,oeStartTime,0);
+	}
+	
+	public void triggerCollectionItemNewDataLogStartStopEvent(String resourceId,Long resourceStartTime,Long resourceEndTime,String eventType,Integer score,String questionType){
+		JSONObject collectionDataLog=new JSONObject(); 
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(resourceNewDataLogEventId));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.RESOURCE_PLAY));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(resourceStartTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(resourceEndTime));
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		String questionTypeString=questionType.equals("RES")?"resource":"question";
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,"", "", eventType, PlayerDataLogEvents.STUDY,questionTypeString,null,resourceId,null));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore()));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount()));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
+		JSONObject collectionDataLog=new JSONObject(); 
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(eventId));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.RESOURCE_SAVE));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(oeStartTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(oeEndTime));
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,"", resourceNewDataLogEventId, "", PlayerDataLogEvents.STUDY,"question",null,resourceId,null));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount()));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	
 }

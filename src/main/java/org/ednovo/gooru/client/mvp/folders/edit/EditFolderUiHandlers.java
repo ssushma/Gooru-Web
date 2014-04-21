@@ -31,20 +31,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-/**
- * 
- * @fileName : EditFolderUiHandlers.java
- *
- * @description : The interface for view classes that handles all the UI-related code for a EditFolderPresenter.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface EditFolderUiHandlers  extends BaseUiHandlers,RequestFolderHandler {
 
 	@ContentSlot

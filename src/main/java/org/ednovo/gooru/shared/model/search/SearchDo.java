@@ -28,18 +28,10 @@
 package org.ednovo.gooru.shared.model.search;
 
 import java.util.List;
+
 /**
- * @fileName : SearchDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SearchDo<M> extends AbstractSearchDo<List<M>> {
 

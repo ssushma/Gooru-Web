@@ -25,14 +25,22 @@
 package org.ednovo.gooru.client.mvp.play.collection.share.email;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.uc.ThankYouToolTip;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
-import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.logical.shared.InitializeEvent;
@@ -41,7 +49,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;
@@ -50,9 +57,9 @@ import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SummaryPageEmailShareUc extends PopupPanel {
+public class SummaryPageEmailShareUc extends PopupPanel implements MessageProperties{
 
-	@UiField Label fromValidation, toValidation, lblEmailFriend, lblFrom, lblTo, lblSendMeCopy, lblSubject, lblMessage, fromLbl, cpAttachmentContainer;
+	@UiField Label fromValidation, toValidation, lblEmailFriend, lblFrom, lblTo, lblSendMeCopy, lblSubject, lblMessage, fromLbl, cpAttachmentContainer,mandatoryErrorLbl,mandatoryErrorRichTextArea;
 	
 	@UiField CheckBox checkCopyEmail;
 	
@@ -70,27 +77,10 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 	
 	private static final String AT_SYMBOL = "@";
 
-	String GL0215 = "Please enter your Email.";
-	String GL0216 = "Please specify at least one recipient.";
-	String GL0217 = "Enter recipient's email";
-	String GL0218 = "Enter your Email";
-	String GL0222 = "Email your Collection Results";
-	String GL0223 = "From";
-	String GL_SPL_SEMICOLON = ":";
-	String GL0224 = "To";
-	String GL0225 = "Send me a copy of this message";
-	String GL0226 = "Subject";
-	String GL0227 = "Message";
-	String GL0228 = "Send";
-	String GL0142 = "Cancel";
-	String GL_EMAIL_SUBJECT = "I've shared my Gooru collection summary with you";
-	String GL0219 = "Hello [Enter your teacher or tutor's name] <div><br/></div><div>I am sharing my collection summary with you.<br/>(PDF attached)</div>" +
-			"<div><br/></div><div>Thank you!</div><div>[Enter your full name]</div>";
-
 	String restEndPoint = "";
 	String session = "";
 	String pdfUrl = "";
-	
+	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	private static SummaryPageEmailShareUcUiBinder uiBinder = GWT
 			.create(SummaryPageEmailShareUcUiBinder.class);
 
@@ -99,18 +89,15 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 	}
 
 
-	public SummaryPageEmailShareUc(String restEndPoint, String session, String fromEmailAddress, String teacherName, String studentName, String pdfUrl) {
+	public SummaryPageEmailShareUc( String fromEmailAddress,String pdfUrl) {
 		setWidget(uiBinder.createAndBindUi(this));
 		this.getElement().getStyle().setZIndex(999999);
 		String[] fileName = pdfUrl.split("/");
-		cpAttachmentContainer.setText(fileName[fileName.length-1]);
-		
-		this.restEndPoint = restEndPoint;
-		this.session = session;
+		cpAttachmentContainer.setText(fileName[fileName.length-1]); 
 		this.pdfUrl = pdfUrl;
 		fromValidation.setText(GL0215);
 		toValidation.setText(GL0216);
-		lblEmailFriend.setText(GL0222);
+		lblEmailFriend.setText(GL1449);
 		lblFrom.setText(GL0223 + GL_SPL_SEMICOLON);
 		lblTo.setText(GL0224 + GL_SPL_SEMICOLON);
 		lblSendMeCopy.setText(GL0225);
@@ -119,25 +106,28 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 		btnSend.setText(GL0228);
 		cancelLbl.setText(GL0142);
 		
+		mandatoryErrorLbl.setVisible(false);
+		mandatoryErrorRichTextArea.setVisible(false);
+		
 		fromValidation.setVisible(false);
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
-		subTxt.setText(GL_EMAIL_SUBJECT);
+		subTxt.setText(GL1443);
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
 		btnSend.getElement().setId("btnSend");
 		if(fromEmailAddress==null || fromEmailAddress.isEmpty()) {
 			fromLbl.setVisible(false);
 			fromTxt.setVisible(true);
-			fromTxt.getElement().setAttribute("placeholder",GL0218);
+			fromTxt.getElement().setAttribute("placeholder",GL1442);
 		} else {
 			fromLbl.setText(fromEmailAddress);
 			fromLbl.setVisible(true);
 			fromTxt.setVisible(false);
 		}
 		toTxt.getElement().setAttribute("placeholder",GL0217);
-		msgTxa.setHTML(GL0219);
+		msgTxa.setHTML(GL1444);
 		isCheckedValue = false;
 		isvalid = true;
 		this.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setGlassPanelStyle());
@@ -152,6 +142,8 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 	                body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
+		subTxt.addBlurHandler(new CheckProfanityInOnBlur(subTxt,null, mandatoryErrorLbl));
+		msgTxa.addBlurHandler(new CheckProfanityInOnBlur(null,msgTxa, mandatoryErrorRichTextArea));
 	}
 	
 	@UiHandler("cancelLbl")
@@ -174,7 +166,7 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 			if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
 					&& !fromTxt.getText().contains(AT_SYMBOL)) {
 
-				fromValidation.setText("Please enter valid email.");
+				fromValidation.setText(GL1027);
 				fromValidation.setVisible(true);
 				isvalid = false;
 			}
@@ -187,17 +179,89 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 		if ((toTxt.getText() != null && !toTxt.getText().isEmpty())
 				&& !toTxt.getText().contains(AT_SYMBOL)) {
 
-			toValidation.setText("Please enter valid email.");
+			toValidation.setText(GL1027);
 			toValidation.setVisible(true);
 			isvalid = false;
 		}
-		if (isvalid) {
+		if(isvalid){
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", subTxt.getValue());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						isHavingBadWordsInTextbox = value;
+						if(value){
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(subTxt, mandatoryErrorLbl,value);
+						}else{
+							parms.put("text", msgTxa.getText());
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+								
+								@Override
+								public void onSuccess(Boolean result) {
+									isHavingBadWordsInRichText=result;
+									if(result){
+										SetStyleForProfanity.SetStyleForProfanityForRichTextArea(msgTxa, mandatoryErrorRichTextArea, result);
+									}else{
+										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
+											String fromEmail = "";
+											if(fromTxt.isVisible()) {
+												fromEmail = fromTxt.getText();
+											} else {
+												fromEmail = fromLbl.getText();
+											}
+											AppClientFactory.getInjector().getPlayerAppService().sendEmailWithPdf(toTxt.getText(),fromEmail,cfm,subTxt.getText(), msgTxa.getHTML(), pdfUrl,cpAttachmentContainer.getText(),new SimpleAsyncCallback<String>(){
+												@Override
+												public void onSuccess(String result) {
+													if(result.equalsIgnoreCase("success")) {
+														closeEmailpanel();
+														ThankYouToolTip thankYouToolTip=new ThankYouToolTip();
+														thankYouToolTip.setTitleData(GL0222, toTxt.getText());
+														thankYouToolTip.setPopupPosition((Window.getClientWidth()-400)/2,(Window.getClientHeight()-165)/2+Window.getScrollTop());
+														thankYouToolTip.show();	
+													}
+												}
+											});
+										}
+									}
+								}
+							});
+						}
+				}
+			});
+		}
+		/*if (isvalid  && !isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 			String fromEmail = "";
 			if(fromTxt.isVisible()) {
 				fromEmail = fromTxt.getText();
 			} else {
 				fromEmail = fromLbl.getText();
 			}
+			
+			AppClientFactory.getInjector().getPlayerAppService().sendEmailWithPdf(toTxt.getText(),fromEmail,cfm,subTxt.getText(), msgTxa.getHTML(), pdfUrl,cpAttachmentContainer.getText(),new SimpleAsyncCallback<String>(){
+
+				@Override
+				public void onSuccess(String result) {
+
+					if(result.equalsIgnoreCase("success")) {
+
+						closeEmailpanel();
+
+						ThankYouToolTip thankYouToolTip=new ThankYouToolTip();
+
+						thankYouToolTip.setTitleData("Email to Friend", toTxt.getText());
+
+						thankYouToolTip.setPopupPosition((Window.getClientWidth()-400)/2,(Window.getClientHeight()-165)/2+Window.getScrollTop());
+
+						thankYouToolTip.show();	
+
+					}
+
+				}
+
+
+
+			});
+			
 //			playerRpcService.sendEmailWithPdf(restEndPoint, session, toTxt.getText(), fromEmail, cfm, subTxt.getText(), msgTxa.getHTML(), pdfUrl, cpAttachmentContainer.getText(), new AsyncCallback<String>() {
 //				@Override
 //				public void onSuccess(String response) {
@@ -213,7 +277,7 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 //				public void onFailure(Throwable arg0) {
 //				}
 //			});
-		}
+		}*/
 	}
 
 	@UiHandler("fromTxt")
@@ -233,6 +297,41 @@ public class SummaryPageEmailShareUc extends PopupPanel {
 			cfm = "yes";
 		} else {
 			cfm = "no";
+		}
+	}
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private RichTextArea richTextArea;
+		public CheckProfanityInOnBlur(TextBox textBox,RichTextArea richTextArea,Label label){
+			this.textBox=textBox;
+			this.label=label;
+			this.richTextArea=richTextArea;
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+			Map<String, String> parms = new HashMap<String, String>();
+			if(textBox!=null){
+				parms.put("text", textBox.getValue());
+			}else{
+				parms.put("text", richTextArea.getText());
+			}
+			btnSend.setEnabled(false);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					btnSend.setEnabled(true);
+					if(textBox!=null){
+						isHavingBadWordsInTextbox = value;
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+					}else{
+						isHavingBadWordsInRichText=value;
+						SetStyleForProfanity.SetStyleForProfanityForRichTextArea(richTextArea, label, value);
+					}
+					
+				}
+			});
 		}
 	}
 }

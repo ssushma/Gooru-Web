@@ -26,22 +26,12 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 
 /**
- * 
- * @fileName : CollectionInfoTabUiHandlers.java
+ * @author Search Team
  *
- * @description : This interface is the UIHandler file for CollectionInfoTabView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 	
@@ -74,5 +64,12 @@ public interface CollectionInfoTabUiHandlers extends BaseUiHandlers {
 	 * @param mediaType of the collection which is being updated
 	 */
 	void updateMediaType(String collectionId, String mediaType);
+/*
+	void updateCollectionTeacherTipInfo(CollectionDo collectionDo,
+			String teacherTip);
+
+	void getCollectionTeacherTipInfo(String collectionId);*/
+	
+	
 
 }

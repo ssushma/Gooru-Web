@@ -123,6 +123,15 @@ public interface SearchService extends BaseService {
 	 */
 	Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) throws GwtException;
 	
+	/**
+	 * Get shorten collection url
+	 * @param contentGooruOid of collection
+	 * @param params set values url,type
+	 * @return shrotenUrl, rawUrl
+	 * @throws GwtException
+	 */
+	Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params) throws GwtException;
+	
 	
 	/*
 	 * get Google Signin API
@@ -172,5 +181,7 @@ public interface SearchService extends BaseService {
 	 *
 	 */
 	String getGoogleSignin(String placeToken, Map<String, String> parms) throws GwtException;
+	
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo);
 
 }

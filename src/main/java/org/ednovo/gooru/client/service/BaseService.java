@@ -28,19 +28,10 @@
 package org.ednovo.gooru.client.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
+
 /**
- * @fileName : BaseService.java
+ * @author Search Team
  *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface BaseService extends RemoteService {
 }

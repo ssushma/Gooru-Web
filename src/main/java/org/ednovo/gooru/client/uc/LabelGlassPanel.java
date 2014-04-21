@@ -30,18 +30,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.client.GlassPanel;
+
 /**
- * @fileName : LabelGlassPanel.java
+ * @author Search Team
  *
- * @description : This class will set the label glass panel.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class LabelGlassPanel extends AbsolutePanel {
 

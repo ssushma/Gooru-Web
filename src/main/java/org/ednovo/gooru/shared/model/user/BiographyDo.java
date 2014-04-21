@@ -25,19 +25,7 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * @fileName : BiographyDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class BiographyDo implements Serializable{
 	
 	private static final long serialVersionUID = -2570709586812060758L;
@@ -49,65 +37,51 @@ public class BiographyDo implements Serializable{
 	private String firstName;
 	private String lastName;
 	private String genderId;
-	/** 
-	 * This method is to get the aboutMe
-	 */
+	
+	public BiographyDo(){}
+	
+
 	public String getAboutMe() {
 		return aboutMe;
 	}
-	/** 
-	 * This method is to set the aboutMe
-	 */
+
 	public void setAboutMe(String aboutMe) {
 		this.aboutMe = aboutMe;
 	}
-	/** 
-	 * This method is to get the subject
-	 */
+
 	public String getSubject() {
 		return subject;
 	}
-	/** 
-	 * This method is to set the subject
-	 */
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	/** 
-	 * This method is to get the firstName
-	 */
+
 	public String getFirstName() {
 		return firstName;
 	}
-	/** 
-	 * This method is to set the firstName
-	 */
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	/** 
-	 * This method is to get the lastName
-	 */
+
 	public String getLastName() {
 		return lastName;
 	}
-	/** 
-	 * This method is to set the lastName
-	 */
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	/** 
-	 * This method is to get the genderId
-	 */
+
 	public String getGenderId() {
 		return genderId;
 	}
-	/** 
-	 * This method is to set the genderId
-	 */
+
 	public void setGenderId(String genderId) {
 		this.genderId = genderId;
 	}
 	
+	
+	
+
 }

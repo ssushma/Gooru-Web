@@ -31,21 +31,40 @@ import com.google.gwt.event.shared.EventHandler;
 
 /**
  * 
- * @fileName : SetSelectedClasspageListHandler.java
+ * @fileName : RefreshClasspageListHandler.java
  *
- * @description : This file is used to set selcted list handlers.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Aug 15, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface SetSelectedClasspageListHandler extends EventHandler {
 
+	/**
+	 * 
+	 * @function setClasspageTitle 
+	 * 
+	 * @created_date : Aug 15, 2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param classpageId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
 	void setClasspageTitle(String classpageId);
 
 }

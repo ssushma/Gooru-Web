@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.error;
 import org.ednovo.gooru.client.gin.IsView;
 
 /**
- * 
- * @fileName : IsErrorView.java
+ * @author Search Team
  *
- * @description : This file is IsErrorView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsErrorView extends IsView {
 

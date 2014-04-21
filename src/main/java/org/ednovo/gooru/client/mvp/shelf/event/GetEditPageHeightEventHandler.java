@@ -26,20 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.ui.PopupPanel;
-/**
- * @fileName : GetEditPageHeightEventHandler.java
- *
- * @description :  Handler for {@link GetEditPageHeightEvent}.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface GetEditPageHeightEventHandler extends EventHandler {
 	public void getEditPageHeight(PopupPanel editQuestionPopupPanel,boolean isHeightClear);
 

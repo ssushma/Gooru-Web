@@ -26,21 +26,7 @@ package org.ednovo.gooru.shared.model.content;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : TaskResourceAssocDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class TaskResourceAssocDo extends TaskDo {
 
@@ -56,6 +42,8 @@ public class TaskResourceAssocDo extends TaskDo {
 	private Integer sequence;
 	private String associationDate;
 	private String taskResourceAssocUid;
+	
+	public TaskResourceAssocDo(){}
 
 	/** 
 	 * This method is to get the resource

@@ -24,27 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : SearchInfoVc.java
+ * @author Search Team
  *
- * @description : This file is related to SearchInfo.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class SearchInfoVc extends Composite {
+public class SearchInfoVc extends Composite implements MessageProperties{
+	
+	@UiField Label searchText,moreTimeText,startSearchText;
 
 	private static SearchInfoVcBinder uiBinder = GWT.create(SearchInfoVcBinder.class);
 
@@ -56,6 +51,9 @@ public class SearchInfoVc extends Composite {
 	 */
 	public SearchInfoVc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		searchText.setText(GL0176.toUpperCase());
+		moreTimeText.setText(GL1312);
+		startSearchText.setText(GL1313);
 	}
 
 }

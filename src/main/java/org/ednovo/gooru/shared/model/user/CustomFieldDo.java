@@ -28,19 +28,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * @fileName : CustomFieldDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CustomFieldDo implements Serializable {
 	
@@ -48,27 +36,18 @@ public class CustomFieldDo implements Serializable {
 
 	private String optionalKey;
 	private String optionalValue;
-	/** 
-	 * This method is to get the optionalKey
-	 */
+	
+	public CustomFieldDo(){}
+	
 	public String getOptionalKey() {
 		return optionalKey;
 	}
-	/** 
-	 * This method is to set the optionalKey
-	 */
 	public void setOptionalKey(String optionalKey) {
 		this.optionalKey = optionalKey;
 	}
-	/** 
-	 * This method is to get the optionalValue
-	 */
 	public String getOptionalValue() {
 		return optionalValue;
 	}
-	/** 
-	 * This method is to set the optionalValue
-	 */
 	public void setOptionalValue(String optionalValue) {
 		this.optionalValue = optionalValue;
 	}

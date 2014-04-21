@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -57,9 +58,12 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * This file is related to open MoreInfoContainer and to set some UI stuff.
+ * @author Search Team
+ * 
+ * @param <T>
+ * @param <C>
  */
-public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo> extends FocusPanel implements MouseOverHandler, MouseOutHandler {
+public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo> extends FocusPanel implements MouseOverHandler, MouseOutHandler,MessageProperties {
 
 	protected static SearchResultWrapperVcUiBinder uiBinder = GWT.create(SearchResultWrapperVcUiBinder.class);
 
@@ -102,9 +106,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiField
 	Label resourcePlayerClickPanel;
 
-	private static String DRAG_TO_ADD = "drag to add";
+	private static String DRAG_TO_ADD = GL0735;
 
-	private static String ADDED = "added";
+	private static String ADDED = GL0736;
 
 	private SearchShareVc searchShareVc;
 
@@ -127,6 +131,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setAddedStatus(null);
+		moreInfoLbl.setText(GL0734);
+		shareLbl.setText(GL0526);
+		
 		moreInfoLbl.getElement().setId("lblMoreInfo");
 		shareLbl.getElement().setId("lblSahre");
 		String browserType = browserAgent.returnFormFactorView();
@@ -149,25 +156,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			addedStatusLbl.setText(DRAG_TO_ADD);
 		}
 	}
-	/**
-	 * 
-	 * @function setResourcePlayerClickPanelMobile 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set position and width to resourcePlayerClickPanel based on collection-search/resource-search.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	void setResourcePlayerClickPanelMobile() {
 		resourcePlayerClickPanel.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		if(rootWebUrl.contains("collection-search")){
@@ -177,9 +166,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		}
 		resourcePlayerClickPanel.getElement().getStyle().setHeight(107, Unit.PX);
 	}
-	/**
-	 * MouseOut Handler to make disclosureHeaderFloPanel visible hidden.
-	 */
+	
 	@Override
 	public void onMouseOut(MouseOutEvent event) {
 		if (!disclosureDisPanel.isOpen()) {
@@ -187,33 +174,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			setAddedStatus(null);
 		}
 	}
-	/**
-	 * This is to enable disclosureHeaderFloPanel on MouseOver handler.
-	 */
+
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
 		disclosureHeaderFloPanel.setVisible(true);
 		setAddedStatus(true);
 	}
-	/**
-	 * 
-	 * @function discloseCollectionMoreInfoTab 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is to call openMoreInfoContainer method.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void discloseCollectionMoreInfoTab() {
 		disclosureHeaderFloPanel.setVisible(true);
 		setAddedStatus(true);
@@ -228,25 +195,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public void onMoreInfoLinkClicked(ClickEvent clickEvent) {
 		openMoreInfoContainer();
 	}
-	/**
-	 * 
-	 * @function openMoreInfoContainer 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is to open MoreInfoContainer.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void openMoreInfoContainer() {
 		if (moreInfoMode == null || !moreInfoMode) {
 			moreInfoMode = true;
@@ -255,7 +204,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchMoreInfoVc());
 			getSearchMoreInfoVc().setData(this.searchResultDo);
-			getSearchMoreInfoVc().reset();
+			getSearchMoreInfoVc().reset(moreInfoMode);
 			onDisclosureOpen();
 			MixpanelUtil.Click_moreInfo();
 		} else {
@@ -324,7 +273,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			if (getDisclosurePanel().isOpen()) {
 				final Timer t = new Timer() {
 					public void run() {
-						getSearchMoreInfoVc().reset();
+						getSearchMoreInfoVc().reset(moreInfoMode);
 					}
 				};
 				t.schedule(2000);

@@ -46,18 +46,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+
 /**
- * @fileName : CollectionItemsResultDeSerializer.java
- *
- * @description : This class is used to deserialize  collection items.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 @Component
 public class CollectionItemsResultDeSerializer extends SearchDeSerializer<CollectionItemSearchResultDo> {
@@ -174,8 +166,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 				JSONObject license = recordJsonObject.getJSONObject(LICENSE);
 				LicenseDo licenseDo=JsonDeserializer.deserialize(license.toString(), LicenseDo.class);
 				collectionItemSearchResultDo.setLicense(licenseDo);
-				
-				if(recordJsonObject.get(TAG_SET) != null && !recordJsonObject.get(TAG_SET).equals("") && !recordJsonObject.get(TAG_SET).equals(null) ){
+				if((!recordJsonObject.isNull(TAG_SET))&& recordJsonObject.get(TAG_SET) != null && !recordJsonObject.get(TAG_SET).equals("") && !recordJsonObject.get(TAG_SET).equals(null) ){
 				JSONArray tagSetArray = (JSONArray) recordJsonObject.get(TAG_SET);
 				Set<TagDo> tagSet= new HashSet<TagDo>();
 				if(tagSetArray !=null){
@@ -185,6 +176,7 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 					collectionItemSearchResultDo.setTagSet(tagSet);
 				}
 				}
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

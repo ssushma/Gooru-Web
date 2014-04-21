@@ -31,14 +31,14 @@ import com.google.gwt.event.shared.EventHandler;
  * 
  * @fileName : OpenSubjectCourseHandler.java
  *
- * @description : Handler for {@link OpenSubjectCourseEvent}.
+ * @description : 
  *
  *
  * @version : 1.0
  *
  * @date: Dec 4, 2013
  *
- * @Author Chandra Veluru
+ * @Author Gooru Team
  *
  * @Reviewer:
  */

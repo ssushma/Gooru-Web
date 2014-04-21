@@ -33,24 +33,14 @@ import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionSearchView.java
- *
- * @description : To get CollectionSearchResults and to refresh results.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionSearchView extends AbstractSearchView<CollectionSearchResultDo> implements IsCollectionSearchView {
 
@@ -60,24 +50,20 @@ public class CollectionSearchView extends AbstractSearchView<CollectionSearchRes
 	public CollectionSearchView() {
 		super(false);
 	}
-	/**
-	 * returns CollectionSearchResults.
-	 */
+
 	@Override
 	public IsDraggable renderSearchResult(CollectionSearchResultDo searchResultDo) {
 		return new CollectionSearchResultVc(searchResultDo, dragController);
 	}
-	/**
-	 * To refresh collections.
-	 */
+
 	@Override
-	protected void refreshShelfCollections(List<CollectionDo> shelfCollections) {
+	protected void refreshShelfCollections(List<FolderDo> shelfCollections) {
 		for (Widget widget : getSearchResultPanel()) {
 			if (widget instanceof Draggable && ((Draggable)widget).getDraggableUc() instanceof CollectionSearchResultVc) {
 				CollectionSearchResultVc searchResultVc = (CollectionSearchResultVc) ((Draggable)widget).getDraggableUc();
 				boolean added = false;
-				for (CollectionDo collection : shelfCollections) {
-					if (collection.getGooruOid().equals(searchResultVc.getCollectionResultDo().getGooruOid())) {
+				for (FolderDo collection : shelfCollections) {
+					if (collection.getType().equals("scollection")&&collection.getGooruOid().equals(searchResultVc.getCollectionResultDo().getGooruOid())) {
 						searchResultVc.setAddedToShelf(true);
 						added = true;
 						break;

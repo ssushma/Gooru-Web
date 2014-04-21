@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -33,22 +35,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : AddQuestionImg.java
- *
- * @description :This method is used to set Question Image.  
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class AddQuestionImg extends Composite
+
+public class AddQuestionImg extends Composite implements MessageProperties
 {
 	@UiField Label changeImgLbl;
 	@UiField Label removeImgLbl;
@@ -65,7 +53,10 @@ public class AddQuestionImg extends Composite
 	public static AddQuestionImageUiBinder addQuestionImageUiBinder = GWT.create(AddQuestionImageUiBinder.class);
 	
 	public AddQuestionImg() {
-		initWidget(addQuestionImageUiBinder.createAndBindUi(this)); 
+		initWidget(addQuestionImageUiBinder.createAndBindUi(this));
+		displayQuestLbl.setText(GL0860);
+		changeImgLbl.setText(GL0861);
+		removeImgLbl.setText(GL0862);
 	}
 	
 	
@@ -73,62 +64,15 @@ public class AddQuestionImg extends Composite
 		questionImageContainer.setUrl(imageUrl);
 	}
 
-/**
- * 
- * @function getFileName 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Get File name.
- * 
- * 
- * @parm(s) : @return
- * 
- * @return : String
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public String getFileName() {
 		return fileName;
 	}
 
-/**
- * 
- * @function setFileName 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Set File Name
- * 
- * 
- * @parm(s) : @param fileName
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	
-	/**
-	 * 
-	 * @function setQuetionDefaultImage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Set Question image Container.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("questionImageContainer")
 	public void setQuetionDefaultImage(ErrorEvent event){
 		questionImageContainer.setUrl(DEFAULT_QUESTION_IMAGE);

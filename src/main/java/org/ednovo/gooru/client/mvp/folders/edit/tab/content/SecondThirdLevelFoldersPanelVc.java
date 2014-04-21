@@ -32,29 +32,13 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : SecondThirdLevelFoldersPanelVc.java
- *
- * @description : This file is used to reposition the folders drop controller.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SecondThirdLevelFoldersPanelVc extends AppRepositionDragContainer {
 	
 	private AppVerticalPanelDropController widgetDropController;
 	
 	private ResourceDragController dragController;
-	/**
-	 * Constructor.
-	 */
+	
 	public SecondThirdLevelFoldersPanelVc(){
 		super();
 		dragController = new ResourceDragController(RootPanel.get(), false, false);
@@ -62,69 +46,49 @@ public class SecondThirdLevelFoldersPanelVc extends AppRepositionDragContainer {
 		dragController.registerDropController(widgetDropController);
 		setDragController(dragController);
 	}
-	/**
-	 * This is used to reorder the folder item by getting the widget index.
-	 */
+
 	@Override
 	public void onDrop(Draggable draggable) {
 		FolderItemChildView folderVc = (FolderItemChildView) draggable.getDraggableUc();
 		folderVc.reorderFolderItem(getWidgetIndex(draggable));
 	}
-	/**
-	 * This is the DragOver event.
-	 */
+
 	@Override
 	public void onDragOver(Draggable draggable) {
 		
 	}
-	/**
-	 * This is the onDragOut event.
-	 */
 
 	@Override
 	public void onDragOut(Draggable draggable) {
 		
 	}
-	/**
-	 * This is use dto get DropTarget.
-	 */
 
 	@Override
 	public Widget getDropTarget() {
 		return null;
 	}
-	/**
-	 * This is used to register the DropController.
-	 */
+
 	@Override
 	public void registerDropController() {
 		dragController.registerDropController(widgetDropController);
 	}
-	/**
-	 * This is used to unregister the DropController.
-	 */
+
 	@Override
 	public void unregisterDropController() {
 		dragController.unregisterDropController(widgetDropController);
 	}
-	/**
-	 * This is used to re register the DropController.
-	 */
+
 	@Override
 	public void reregisterDropController() {
 		
 	}
-	/**
-	 * This method is used to register the drop controller on Load event.
-	 */
+	
 	@Override
 	public void onLoad() {
 		super.onLoad();
 		registerDropController();
 	}
-	/**
-	 * This method is used to unregister the drop controller on UnLoad event.
-	 */
+	
 	@Override
 	public void onUnload() {
 		super.onUnload();

@@ -36,24 +36,15 @@ import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ClasspageResourceItemChildPresenter.java
- *
- * @description : This file deals with deleteClasspageAsyncCallback.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ClasspageResourceItemChildPresenter extends ChildPresenter<ClasspageResourceItemChildPresenter, IsClasspageResourceItemView> {
 	
 	
 	private SimpleAsyncCallback<Void> deleteClasspageAsyncCallback;
+
+	
 	/**
 	 * Class constructor
 	 * 
@@ -62,6 +53,9 @@ public class ClasspageResourceItemChildPresenter extends ChildPresenter<Classpag
 	public ClasspageResourceItemChildPresenter(IsClasspageResourceItemView childView) {
 		super(childView);
 	}
+	
+	
+	
 	/**
 	 *  Delete classpage by classpage id which is mandatory   
 	 * 
@@ -87,6 +81,8 @@ public class ClasspageResourceItemChildPresenter extends ChildPresenter<Classpag
 	 * @return the deleteClasspageAsyncCallback
 	 */
 	public SimpleAsyncCallback<Void> getDeleteClasspageAsyncCallback() {
+		
+		
 		return deleteClasspageAsyncCallback;
 	}
 
@@ -94,28 +90,10 @@ public class ClasspageResourceItemChildPresenter extends ChildPresenter<Classpag
 	 * @param deleteClasspageAsyncCallback the deleteClasspageAsyncCallback to set
 	 */
 	public void setDeleteClasspageAsyncCallback(
-		SimpleAsyncCallback<Void> deleteClasspageAsyncCallback) {
+			SimpleAsyncCallback<Void> deleteClasspageAsyncCallback) {
 		this.deleteClasspageAsyncCallback = deleteClasspageAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getClasspageService 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : returns ClasspageService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ClasspageServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public ClasspageServiceAsync getClasspageService() {
 		return AppClientFactory.getInjector().getClasspageService();
 	}

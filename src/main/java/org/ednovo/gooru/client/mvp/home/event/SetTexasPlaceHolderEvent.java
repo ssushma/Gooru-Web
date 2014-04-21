@@ -24,19 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.event;
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : SetTexasPlaceHolderEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * and it will hold the logged status.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SetTexasPlaceHolderEvent extends GwtEvent<SetTexasPlaceHolderHandler> {
 

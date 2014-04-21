@@ -34,16 +34,16 @@ import com.google.gwt.event.shared.GwtEvent;
  * 
  * @fileName : UpdateSearchResultMetaDataEvent.java
  *
- * @description : This event is to update search results meta data.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: Aug 11, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class UpdateSearchResultMetaDataEvent extends GwtEvent<UpdateSearchResultMetaDataHandler> {
 
@@ -61,16 +61,12 @@ public class UpdateSearchResultMetaDataEvent extends GwtEvent<UpdateSearchResult
 		this.contentId = contentId;
 		this.whatToUpdate = whatToUpdate;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<UpdateSearchResultMetaDataHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(UpdateSearchResultMetaDataHandler handler) {
 		

@@ -37,19 +37,8 @@ import com.google.gwt.uibinder.client.UiChild;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : PPPCollectionSearchResultWrapperVc.java
- *
- * @description : This file deals with PPPCollectionSearchResultWrapper.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class PPPCollectionSearchResultWrapperVc extends SearchResultWrapperVc<CollectionItemDo, CollectionItemSearchResultDo> {
 
@@ -65,14 +54,10 @@ public class PPPCollectionSearchResultWrapperVc extends SearchResultWrapperVc<Co
 		super();
 		this.collectionId=collectionId;
 	}
-	/**
-	 * Default Constructor.
-	 */
+
 	public PPPCollectionSearchResultWrapperVc() {
 	}
-	/**
-	 * To set More Info for search
-	 */
+
 	@Override
 	protected SearchMoreInfoVc<CollectionItemDo, CollectionItemSearchResultDo> getSearchMoreInfoVc() {
 		if(moreInfoVc == null) {
@@ -80,9 +65,7 @@ public class PPPCollectionSearchResultWrapperVc extends SearchResultWrapperVc<Co
 		}
 		return moreInfoVc;
 	}
-	/**
-	 * To set content
-	 */
+	
 	@UiChild(tagname="content")
 	protected void setContent(Widget widget) {
 		super.setContent(widget);

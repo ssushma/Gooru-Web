@@ -6,10 +6,10 @@
 	    <g:HTMLPanel styleName="{toolTip.gooruGuidePopupArrow}"></g:HTMLPanel>
 	    <g:FlowPanel styleName="{toolTip.organizePopupTextContainer}">
 	        <g:FlowPanel styleName="{toolTip.organizeTextContainer}">
-	        	<g:HTMLPanel styleName="{toolTip.organizeText}">New to Gooru?</g:HTMLPanel>
-	            <g:HTMLPanel styleName="{toolTip.gooruguideText}">Use the Gooru Guide to learn how to discover, organize, teach and study on Gooru.</g:HTMLPanel>
-	             <g:HTMLPanel styleName="{toolTip.organizePopupQuestionText}">Questions?</g:HTMLPanel>
-	            <g:HTMLPanel styleName="{toolTip.organizePopupEmailSupport}">Email support@goorulearning.org</g:HTMLPanel>
+	        	<g:HTMLPanel styleName="{toolTip.organizeText}" ui:field="newToGooruText"></g:HTMLPanel>
+	            <g:HTMLPanel styleName="{toolTip.gooruguideText}" ui:field="useGoorutext"></g:HTMLPanel>
+	             <g:HTMLPanel styleName="{toolTip.organizePopupQuestionText}" ui:field="questionsText"></g:HTMLPanel>
+	            <g:HTMLPanel styleName="{toolTip.organizePopupEmailSupport}" ui:field="emailSupportText"></g:HTMLPanel>
 	        </g:FlowPanel>
 	     </g:FlowPanel>
 	</g:FlowPanel>  

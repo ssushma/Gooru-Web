@@ -53,19 +53,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
+ * @author Search Team
  * 
- * @fileName : ClasspageResourceItemChildView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ClasspageResourceItemChildView extends
 		ChildView<ClasspageResourceItemChildPresenter> implements
@@ -109,6 +98,10 @@ public class ClasspageResourceItemChildView extends
 		res = ClasspageResourceItemCBundle.INSTANCE;
 		ClasspageResourceItemCBundle.INSTANCE.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		classpageTitleLbl.setText(GL1409);
+		openClasspageLbl.setText(GL1115);
+		studentViewLbl.setText(GL0139);
+		confirmDeleteLbl.setText(GL0558);
 		this.collectionDo = collection;
 		
 		setData(collection);
@@ -129,7 +122,7 @@ public class ClasspageResourceItemChildView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				deleteConfirmVc = new DeleteConfirmPopupVc("Are you sure?","\""+ collectionDo.getTitle() + "\"" + " Classpage.")  {
+				deleteConfirmVc = new DeleteConfirmPopupVc(GL0748,"\""+ collectionDo.getTitle() + "\"" + " "+GL0102+GL_SPL_FULLSTOP)  {
 					
 					@Override
 					public void onTextConfirmed() {
@@ -142,9 +135,7 @@ public class ClasspageResourceItemChildView extends
 				};
 			}
 		});
-		/**
-		 * This will display Student view teach page on click of studentViewLbl.
-		 */
+		
 		studentViewLbl.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -161,25 +152,7 @@ public class ClasspageResourceItemChildView extends
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function onPostCollectionDelete 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description :This will hide the deleteConfirmVc.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@Override
 	public void onPostCollectionDelete() {
 		deleteConfirmVc.hide();
@@ -223,25 +196,7 @@ public class ClasspageResourceItemChildView extends
 		classpageTitleLbl.setText(collection.getTitle());
 		
 	}
-	/**
-	 * 
-	 * @function OnClickOpenClasspage 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description :This UIHandler is used to open class page.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("openClasspageLbl")
 	public void OnClickOpenClasspage(ClickEvent event){
 		MixpanelUtil.Click_Open_Teachpage();
@@ -253,25 +208,7 @@ public class ClasspageResourceItemChildView extends
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE, params,true);
 	}
 	
-	/**
-	 * 
-	 * @function getDragHandle 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description :Method to return drag handle widget.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : the drag handle widget
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@Override
 	public Widget getDragHandle() {
 		// TODO Auto-generated method stub
@@ -283,121 +220,31 @@ public class ClasspageResourceItemChildView extends
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * 
-	 * @function onDragBlur 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is related to drag events on blur handler.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@Override
 	public void onDragBlur() {
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * 
-	 * @function getDragId 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is used to get drag id.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@Override
 	public String getDragId() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * 
-	 * @function getDragType 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is used to get drag type.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : DRAG_TYPE
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * 
-	 * @function getDragTopCorrection 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is used to get DragTopCorrection.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	/**
-	 * 
-	 * @function getDragLeftCorrection 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This is used to get DragLeftCorrection
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		// TODO Auto-generated method stub

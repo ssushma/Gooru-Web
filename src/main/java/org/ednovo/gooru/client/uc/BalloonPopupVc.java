@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -33,20 +34,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : BalloonPopupVc.java
+ * @author Search Team
  *
- * @description : This class will return the popup.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class BalloonPopupVc extends Composite {
+public class BalloonPopupVc extends Composite implements MessageProperties {
 
 	private static BalloonPopupVcUiBinder uiBinder = GWT.create(BalloonPopupVcUiBinder.class);
 
@@ -70,7 +63,9 @@ public class BalloonPopupVc extends Composite {
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		popupDesc.setText(StringUtil.truncateText(desc,60));
+//		popupDesc.setText(StringUtil.truncateText(desc,60));
+		popupDesc.setText(GL1013);
+		popupDesc.setText(desc);
 	}
 
 	

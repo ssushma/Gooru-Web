@@ -29,21 +29,7 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : LibraryUserDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class LibraryUserDo implements Serializable {
 	
@@ -54,6 +40,12 @@ public class LibraryUserDo implements Serializable {
 	private String lastName;
 	private String gender;
 	private ArrayList<CourseDo> courses;
+    private String isOwner;
+    private String partnerName;
+    private String partnerUrl;
+    private String displayName;
+    
+    public LibraryUserDo(){}
 	
 	/** 
 	 * This method is to get the firstName
@@ -126,5 +118,42 @@ public class LibraryUserDo implements Serializable {
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	/** 
+	 * This method is to get the isOwner
+	 */
+	public String getIsOwner() {
+		return isOwner;
+	}
+	/** 
+	 * This method is to set the isOwner
+	 */
+	public void setIsOwner(String isOwner) {
+		this.isOwner = isOwner;
+	}
+
+	public String getPartnerName() {
+		return partnerName;
+	}
+
+	public void setPartnerName(String partnerName) {
+		this.partnerName = partnerName;
+	}
+
+	public String getPartnerUrl() {
+		return partnerUrl;
+	}
+
+	public void setPartnerUrl(String partnerUrl) {
+		this.partnerUrl = partnerUrl;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

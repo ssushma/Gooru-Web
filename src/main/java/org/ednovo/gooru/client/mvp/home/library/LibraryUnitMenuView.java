@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library;
 
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
 
 import com.google.gwt.core.client.GWT;
@@ -32,24 +33,17 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : LibraryUnitMenuView.java
- *
- * @description : This class will display the library unit data.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class LibraryUnitMenuView extends Composite {
 
 	@UiField Label unitMenuItem;
 	
+	@UiField LibraryStyleBundle libraryStyleUc;
+	
 	private String unitId;
+	
+	private Integer childCount;
+	
 	
 	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
 			.create(LibraryUnitMenuViewUiBinder.class);
@@ -57,64 +51,43 @@ public class LibraryUnitMenuView extends Composite {
 	interface LibraryUnitMenuViewUiBinder extends
 			UiBinder<Widget, LibraryUnitMenuView> {
 	}
-	/**
-	 * Class constructor.
-	 * @param unitDo
-	 */
+
 	public LibraryUnitMenuView(UnitDo unitDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		if(unitDo.getLabel()=="Popular"){
+			unitMenuItem.setStyleName(libraryStyleUc.popularStarImage());
+		}
 		unitMenuItem.setText(unitDo.getLabel());
 		setUnitId(""+unitDo.getCodeId());
+		if(unitDo.getCount()==null) {
+			setChildCount(0);	
+		} else {
+			setChildCount(unitDo.getCount());
+		}
 	}
-	/**
-	 * @function getUnitMenuItemPanel 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will return the unit menu item panel.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Label
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
+	public LibraryUnitMenuView(PartnerFolderDo folderDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		unitMenuItem.setText(folderDo.getTitle());
+		setUnitId(folderDo.getGooruOid());
+	}
+
 	public Label getUnitMenuItemPanel() {
 		return unitMenuItem;
 	}
-	/**
-	 * @function getUnitId 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method will return the unit id.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public String getUnitId() {
 		return unitId;
 	}
-	/**
-	 * @function setUnitId 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method will set the unit id.
-	 * 
-	 * @parm(s) : @param unitId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setUnitId(String unitId) {
 		this.unitId = unitId;
+	}
+	public Integer getChildCount() {
+		return childCount;
+	}
+
+	public void setChildCount(Integer childCount) {
+		this.childCount = childCount;
 	}
 }

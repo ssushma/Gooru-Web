@@ -68,11 +68,11 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:FlowPanel styleName="{style.discoverHeaderText}">
-			<g:Anchor href="http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources" target="_blank" styleName="{style.discoverVideoText}" text="Watch the Video"/>
-			<g:Anchor href="http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources" target="_blank" styleName="{style.discoverVideoImage}"/>
+			<g:Anchor target="_blank" styleName="{style.discoverVideoText}" ui:field="watchVideoText"/>
+			<g:Anchor ui:field="watchVideoImage" target="_blank" styleName="{style.discoverVideoImage}"/>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{style.discoverPanel}">
-			<g:Label styleName="{style.discoverPanelText}" text="Guide your students through each resource by adding narration."/>				
+			<g:Label styleName="{style.discoverPanelText}" ui:field="guideStudentsText"/>				
 		</g:FlowPanel>		
 		<g:FlowPanel styleName="{style.imageContainer}">
 			<g:Label styleName="{style.organizeImageContainer}"/>	

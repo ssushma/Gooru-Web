@@ -24,25 +24,26 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.faq;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * 
- * @fileName : FaqVc.java
+ * @author Search Team
  *
- * @description : This class is used to get the FQA popup as a widget.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class FaqVc extends Composite {
+public class FaqVc extends Composite implements MessageProperties{
+	
+	@UiField Label organizeText,createCollectionText,reOrganizeText,
+	editCollectionText,shareResourceLbl,shareResourceText,needHelpLbl,moreAnsweretext,helpText;
+	
+	@UiField Anchor supportLbl,contactUsText;
 
 	private static faqUiBinder uiBinder = GWT.create(faqUiBinder.class);
 
@@ -54,6 +55,19 @@ public class FaqVc extends Composite {
 	 */
 	public FaqVc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		organizeText.setText(GL1350+GL_SPL_QUESTION);
+		createCollectionText.setText(GL1351+GL_SPL_FULLSTOP);
+		reOrganizeText.setText(GL1352+GL_SPL_QUESTION);
+		editCollectionText.setText(GL1353);
+		shareResourceLbl.setText(GL1354+GL_SPL_QUESTION);
+		shareResourceText.setText(GL1355);
+		needHelpLbl.setText(GL1356+GL_SPL_QUESTION);
+		supportLbl.setText(GL1357);
+		supportLbl.setHref("http://support.goorulearning.org/forums");
+		moreAnsweretext.setText(GL1358);
+		contactUsText.setText(" "+GL1245);
+		contactUsText.setHref("http://support.goorulearning.org/anonymous_requests/new");
+		helpText.setText(" "+GL1359+GL_SPL_EXCLAMATION);
 	}
 
 }

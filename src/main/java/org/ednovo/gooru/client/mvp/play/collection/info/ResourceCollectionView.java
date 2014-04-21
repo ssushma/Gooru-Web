@@ -26,9 +26,13 @@ package org.ednovo.gooru.client.mvp.play.collection.info;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -40,6 +44,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -47,13 +53,17 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ResourceCollectionView extends Composite{
+public class ResourceCollectionView extends Composite implements MessageProperties{
 	
-	@UiField Image collectionThumbnail;
+	@UiField HTMLPanel imageContainer;
 	
-	@UiField Label collectionTitle,userName;
+	@UiField Label userName,createdByText;
+	
+	@UiField Anchor collectionTitle;
 	
 	@UiField HTMLPanel metadataContainer;
+	
+	@UiField Image collectionThumbnail;
 	
 	ToolTipPopUp toolTip ; 
 	
@@ -69,15 +79,36 @@ public class ResourceCollectionView extends Composite{
 	
 	public ResourceCollectionView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		createdByText.setText(GL0622);
 	}
 	
 	@UiConstructor
-	public ResourceCollectionView(ResourceSearchResultDo resourceSearchResultDo){
+	public ResourceCollectionView(final ResourceSearchResultDo resourceSearchResultDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		createdByText.setText(GL0622);
 		this.resourceSearchResultDo=resourceSearchResultDo;
 		setCollectionTitle(resourceSearchResultDo.getResourceTitle());
-		setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+		//This is used for to enable partner names hyperlinks (FTE, Lessonopoly, and Autodesk)
+		
+		String ownerUserName = resourceSearchResultDo.getOwner().getUsername();
+		
+		if(StringUtil.isPartnerUser(ownerUserName)) {
+			AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(resourceSearchResultDo.getGooruOid(), new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean result) {
+					if(result){
+						setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+						setUserProfileName(resourceSearchResultDo.getGooruUId());
+					}else{
+						setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+					}
+				}
+			});
+		}else{
+			setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+		}
 		setCollectionMetadata();
+		setCollectionLink();
 	}
 	
 	public void setCollectionTitle(String collectionTitle){
@@ -95,11 +126,20 @@ public class ResourceCollectionView extends Composite{
 		metadataContainer.add(getSeparator());
 		metadataContainer.add(setResourceCount());
 	}
-	
+	public void setUserProfileName(String gooruUid) {
+		Anchor anchor=new Anchor();
+		String userNameText=userName.getText();
+		anchor.setHref("#"+userNameText);
+		anchor.setText(userNameText);
+		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+		anchor.setTarget("_blank");
+		userName.setText("");
+		userName.getElement().appendChild(anchor.getElement());
+	}	
 	private HTMLPanel getCourseNames(){
 		HTMLPanel cousreContainer=new HTMLPanel("");
 		List<String> coursesList=resourceSearchResultDo.getCourseNames();
-		if(coursesList.size()>0){
+		if(coursesList!=null&&coursesList.size()>0){
 			Label courseName=new Label(coursesList.get(0));
 			courseName.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getCourseTitle());
 			cousreContainer.add(courseName);
@@ -127,7 +167,7 @@ public class ResourceCollectionView extends Composite{
 
 	
 	private Label getViewsLabel(){
-		String views=resourceSearchResultDo.getTotalViews()==1?resourceSearchResultDo.getTotalViews()+" View":resourceSearchResultDo.getTotalViews()+" Views";
+		String views=resourceSearchResultDo.getTotalViews()==1?resourceSearchResultDo.getTotalViews()+" "+GL1428:resourceSearchResultDo.getTotalViews()+" "+GL1099;
 		Label viewsLabel=new Label(views);
 		viewsLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getCourseTitle());
 		return viewsLabel;
@@ -140,7 +180,7 @@ public class ResourceCollectionView extends Composite{
 	}
 	
 	private Label setResourceCount(){
-		String resourcesCount=resourceSearchResultDo.getNoOfResources()==1?resourceSearchResultDo.getNoOfResources()+" Resource":resourceSearchResultDo.getNoOfResources()+" Resources";
+		String resourcesCount=resourceSearchResultDo.getNoOfResources()==1?resourceSearchResultDo.getNoOfResources()+" "+GL1110:resourceSearchResultDo.getNoOfResources()+" "+GL0174;
 		Label resourceCountLabel=new Label(resourcesCount);
 		resourceCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceCount());
 		return resourceCountLabel;
@@ -148,13 +188,32 @@ public class ResourceCollectionView extends Composite{
 
 	@UiHandler("collectionThumbnail")
 	public void setDefaultCollectionThumbnail(ErrorEvent event){
-		collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
+			collectionThumbnail.setUrl("images/default-collection-image-160x120.png");
 	}
-	
 	
 	@Override
 	public void onLoad(){
 		collectionThumbnail.setUrl(resourceSearchResultDo.getUrl());
+	}
+	
+	public void setCollectionLink(){
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(viewToken=="resource-play")
+		{
+			viewToken=viewToken.replaceAll("resource-play","preview-play");
+		}
+		String collectionUrl = "#"+viewToken+"&id="+resourceSearchResultDo.getGooruOid();
+		
+		Anchor imageAnchor = new Anchor();
+		imageAnchor.setHref(collectionUrl);
+		imageAnchor.setTarget("_blank");
+		
+		collectionTitle.setHref(collectionUrl);
+		collectionTitle.setTarget("_blank");
+		
+		imageAnchor.setStyleName("");
+		imageAnchor.getElement().appendChild(collectionThumbnail.getElement());
+		imageContainer.add(imageAnchor);
 	}
 	
 	public class MouseOverShowToolTip implements MouseOverHandler

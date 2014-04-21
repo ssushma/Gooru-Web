@@ -28,19 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-/**
- * @fileName : IsEditFolderView.java
- *
- * @description :   Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsEditFolderView extends IsViewWithHandlers<EditFolderUiHandlers>{
 
 	void setData(List<CollectionDo> collectionDoList);

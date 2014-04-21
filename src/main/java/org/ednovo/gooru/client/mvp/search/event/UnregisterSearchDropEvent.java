@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
@@ -31,19 +33,8 @@ import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent.DROP_ARE
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : UnregisterSearchDropEvent.java
- *
- * @description : This event is used to Remove dropped resource/collection 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class UnregisterSearchDropEvent extends GwtEvent<UnregisterSearchDropHandler> {
 
@@ -60,16 +51,12 @@ public class UnregisterSearchDropEvent extends GwtEvent<UnregisterSearchDropHand
 		this.dropController = searchDropController;
 		this.type = dropType;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<UnregisterSearchDropHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(UnregisterSearchDropHandler handler) {
 		handler.unregisterDropController(dropController, type);

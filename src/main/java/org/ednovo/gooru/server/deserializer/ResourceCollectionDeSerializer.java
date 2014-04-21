@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.RatingDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
@@ -54,19 +55,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+
+import com.google.gwt.dev.jjs.ast.js.JsonObject;
+
 /**
- * @fileName : ResourceCollectionDeSerializer.java
- *
- * @description : This class is used to deserialize resource collections.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 @Component
 public class ResourceCollectionDeSerializer extends DeSerializer{
@@ -84,6 +78,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	private static String SEARCH_RESULTS = "searchResults";
 	private static String SEARCH_HITS = "totalHitCount";
 	public static String RESOURCE_TITLE = "title";
+	public static String FOLDER = "folder";
 	public static String RESOURCE_TYPE = "resourceType";
 	public static String RESOURCE_TYPE_NAME = "name";
 	public static final String CATEGORY="category";
@@ -163,6 +158,10 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	
 	public static final String QUIZQUESTION="quizQuestion";
 	
+	public static final String GOORUUID = "gooruUId";
+	
+	public static final String RESOURCE_FORMAT = "resourceFormat";
+	
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 //		try {
@@ -186,6 +185,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			e.printStackTrace();
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
+		resourceSearchResultDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
 //		if(resourceSearchResultDo.getResourceType().getName().equals(ASSESSMENT_QUESTION)){
 //			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, TIME_TO_COMPLETE_IN_SEC));
@@ -197,7 +197,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		
 		resourceSearchResultDo.setVotesUp(stringtoInteger(recordJsonObject, VOTES_UP, 0));
 		resourceSearchResultDo.setVotesDown(stringtoInteger(recordJsonObject, VOTES_DOWN, 0));
-		resourceSearchResultDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
+		resourceSearchResultDo.setGooruOid(getJsonString(recordJsonObject, "id"));
 		resourceSearchResultDo.setCategory(getJsonString(recordJsonObject, CATEGORY));
 		resourceSearchResultDo.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
 		resourceSearchResultDo.setNumOfPages(getJsonString(recordJsonObject, NO_OF_PAGES));
@@ -241,6 +241,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
 		resourceSearchResultDo.setGrade(getJsonString(recordJsonObject, GRADE));
 		resourceSearchResultDo.setTags(getJsonString(recordJsonObject, TAGS));
+		resourceSearchResultDo.setGooruUId(getJsonString(recordJsonObject, GOORUUID));
 		
 		return resourceSearchResultDo;
 	}
@@ -268,6 +269,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		}
 		
 		resourceDo.setTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
+		resourceDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
 		resourceDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
 		
 		try {
@@ -306,13 +308,18 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		resourceDo.setGrade(getJsonString(recordJsonObject, GRADE));
 		try{
+			resourceDo.setResourceFormat(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RESOURCE_FORMAT).toString(), ResourceFormatDo.class));
+		}catch(Exception e){
+			
+		}
+		try{
 			resourceDo.setHasFrameBreaker(recordJsonObject.isNull(HAS_FRAME_BREAKER)?null:recordJsonObject.getBoolean(HAS_FRAME_BREAKER));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		try{
-			resourceDo.setLicense(JsonDeserializer.deserialize(recordJsonObject.toString(), LicenseDo.class));
+			resourceDo.setLicense(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(LICENSE).toString(), LicenseDo.class));
 		}catch(Exception e){
 			e.printStackTrace();
 		}

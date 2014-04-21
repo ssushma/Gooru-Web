@@ -29,21 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
-/**
- * 
- * @fileName : UserRoleDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonFilter("userRole")
 public class UserRoleDo implements Serializable {
 
@@ -81,66 +67,40 @@ public class UserRoleDo implements Serializable {
 		}
 
 	}
-
+	
 	public UserRoleDo() {
 		this.roleOperations = new HashSet<RoleEntityOperationDo>();
 	}
 
-	/** 
-	 * This method is to get the roleId
-	 */
 	public Short getRoleId() {
 		return roleId;
 	}
 
-	/** 
-	 * This method is to set the roleId
-	 */
 	public void setRoleId(Short roleId) {
 		this.roleId = roleId;
 	}
 
-	/** 
-	 * This method is to get the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/** 
-	 * This method is to set the name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/** 
-	 * This method is to get the description
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/** 
-	 * This method is to set the description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/** 
-	 * This method is to get the roleOperations
-	 */
 	public Set<RoleEntityOperationDo> getRoleOperations() {
 		return roleOperations;
 	}
 
-	/** 
-	 * This method is to set the roleOperations
-	 */
 	public void setRoleOperations(Set<RoleEntityOperationDo> roleOperations) {
 		this.roleOperations = roleOperations;
 	}
-
-	
 }

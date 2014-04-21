@@ -1,5 +1,5 @@
 .cpEmailPopupContainer {
-	width: 454px;
+	width: 459px;
 	float: left;
 	background-color: rgb(255, 255, 255);
 	padding: 3px;
@@ -7,7 +7,7 @@
 
 .cpEmailHeaderContent {
 	height: 38px;
-	width: 454px;
+	width: 459px;
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgb(102, 102,
 		102)), color-stop(1, rgb(81, 81, 81)));
 	background-image: -webkit-linear-gradient(-90deg, rgb(102, 102, 102) 0%,
@@ -33,7 +33,7 @@
 
 .cpEmailHeaderContainer {
 	float: left;
-	width: 407px;
+	width: 412px;
 	padding-bottom: 15px;
 	background-color: rgb(255, 255, 255);
 	border-color: rgb(221, 221, 221);
@@ -46,6 +46,10 @@
 
 .cpEmaiInputContainer {
 	margin-top: 10px;
+}
+
+.txtLeftAlign{
+	margin-left:51px;
 }
 
 .cpEmaiInputText {
@@ -72,7 +76,7 @@
 }
 
 .cpEmailInputControl {
-	width: 300px;
+	width: 305px;
 	height: 30px;
 	font-size: 12px;
 	padding: 3px 0px 0px 5px;
@@ -91,10 +95,8 @@
 	font: 12px arial;
 	color: #fab03a;
 	text-align: right;
-	margin-left: 201px;
 	margin-top: 3px;
 	padding: 3px;
-	width: 198px;
 }
 
 .cpEmailCheckBoxContainer {
@@ -160,9 +162,9 @@
 }
 
 .cpEmailInputNormalControl {
-	width: 300px;
+	width: 305px;
 	height: 30px;
-	max-width: 300px;
+	max-width: 305px;
 	max-height: 30px;
 	font-size: 12px;
 	color: black;

@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.uc;
 
  
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -35,20 +37,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AlertForImageUpload.java
+ * @author Search Team
  *
- * @description : This is customized alert dialog box for Image upload class.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class AlertForImageUpload extends Composite {
+public class AlertForImageUpload extends Composite implements MessageProperties {
 
 	private static AlertContentUcUiBinder uiBinder = GWT.create(AlertContentUcUiBinder.class);
 
@@ -78,6 +72,7 @@ public class AlertForImageUpload extends Composite {
 		alertMessageHeaderField.setText(messageHeader);
 		alertBoxUc.show();
 		alertBoxUc.center();
+		okButton.setText(GL0190);
 	}
 
 	/**

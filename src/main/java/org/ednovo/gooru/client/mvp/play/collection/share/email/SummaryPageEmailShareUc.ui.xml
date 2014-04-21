@@ -29,12 +29,14 @@
 				<g:HTMLPanel>
 					<g:TextBox styleName="{cpEmailStyle.cpEmailInputNormalControl}" ui:field="subTxt" />
 				</g:HTMLPanel>
+				<g:Label ui:field="mandatoryErrorLbl"/>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{cpEmailStyle.cpEmaiInputContainer}">
 				<g:Label styleName="{cpEmailStyle.cpEmaiInputText}" ui:field="lblMessage" />
 				<g:HTMLPanel styleName="{cpEmailStyle.cpEmailInputControlInnerDiv}">
 					<g:RichTextArea	styleName="{cpEmailStyle.cpEmailInputNormalControl} {cpEmailStyle.cpEmailAlign}" ui:field="msgTxa"/>
 				</g:HTMLPanel>
+					<g:Label ui:field="mandatoryErrorRichTextArea"/>
 			</g:HTMLPanel>	
 			<g:Label styleName="{cpEmailStyle.cpAttachmentContainer}" ui:field="cpAttachmentContainer"></g:Label>
 			<g:HTMLPanel styleName="{cpEmailStyle.clear}"></g:HTMLPanel>

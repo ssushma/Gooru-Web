@@ -32,7 +32,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 *
 * @date: Apr 6 2013
    	
-* @Author  Anil Tumbalam, Shiva Linga Reddy
+* @Author  Gooru Team
 * 
 * @Reviewer 
 *
@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -79,15 +80,15 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandlers> implements IsAddResourceView{
+public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandlers> implements IsAddResourceView,MessageProperties{
 
 	private static AddResourcePopupViewUiBinder uiBinder = GWT.create(AddResourcePopupViewUiBinder.class);
 
 	interface AddResourcePopupViewUiBinder extends
 			UiBinder<Widget, AddResourceView> {
 	}
-	private static final String MESSAGE_HEADER = "Are you sure?";
-	private static final String MESSAGE_CONTENT = "Are you sure you want to remove the question image?";
+	private static final String MESSAGE_HEADER = GL0748;
+	private static final String MESSAGE_CONTENT = GL0891;
 	private AddWebResourceWidget addWebResourceWidget;
 	private AddQuestionResourceWidget addQuestionResourceWidget;
 	private AddSearchResourceWidget addSearchResourceWidget;
@@ -108,7 +109,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@UiField HTMLPanel tabViewContainer,addResourceTabContainer;
 	
-	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended;
+	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText;
 
 	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton/*,multipleAnswerTabButton*//*,fillInTheBlankTabButton*/,myComputerTabButton,fillInTheBlankTabButton;
 
@@ -143,6 +144,15 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		appPopUp = new AppPopUp("type");
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
 		tabViewContainer.clear();
+		fromweb.setText(GL0887);
+		fromfile.setText(GL0888);
+		fromwsearch.setText(GL0889);
+		multiplechoice.setText(GL0305);
+		truefalase.setText(GL0306);
+		truefalseText.setText(GL0890);
+		openended.setText(GL0307);
+		
+		//GL0748
 		fromweb.getElement().setId("lnkFromWeb");
 		fromfile.getElement().setId("lnkFromFile");
 		fromwsearch.getElement().setId("lnkFromwSearch");
@@ -217,22 +227,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	public void getResourceMetaInfo(String webUrl){
 		addWebResourceWidget.getResourceInfo(webUrl);
 	}
-	/**
-	 * 
-	 * @function closePopup 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used for add Resource CloseButton
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	@UiHandler("addResourceCloseButton")
 	public void closePopup(ClickEvent event){
 		fillInTheBlankRadioButton.setValue(false);
@@ -250,31 +244,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		questionTabButton.setStyleName(res.css().buttonDeSelected());
 		searchTabButton.setStyleName(res.css().buttonDeSelected());
 	}
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This class is used to Add Web Resource Widget.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	public class AddWebResourceWidget extends AddWebResourceView{
 
 		public AddWebResourceWidget(CollectionDo parentCollectionDetails) {
 			super(parentCollectionDetails);
 		}
 
-/**
- * @description :This method is used to get Resource Information
- * 
- */
+
 		@Override
 		public void getResourceInfo(String userUrlStr) {
 		
@@ -286,17 +263,24 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			getUiHandlers().getResourceMetaInfo(userUrlStr);
 		}
 		
-	/**
-	 * This method is used to add Resource 
-	 */
+	
 		@Override
 		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag) {
 //			this.setVisible(false);
+			
 			 webResourceId = idStr;
 			 webResourceUrl = urlStr;
 			 webResourceTitle = titleStr;
 			 webResourceDescription = descriptionStr;
 			 webResourceCategory = categoryStr;
+			 //Bcaz In the DB the resource category's are singular.
+			 if(webResourceCategory.contains("Videos")||webResourceCategory.contains("Interactives")||webResourceCategory.contains("Images")||webResourceCategory.contains("Texts"))
+			{
+				 webResourceCategory=webResourceCategory.substring(0, webResourceCategory.length()-1);
+				 if(webResourceCategory.contains("Image")||webResourceCategory.contains("Images")){
+					 webResourceCategory="Slide";
+				 }
+			}
 			 webResourceThumbnail = thumbnailUrlStr;
 			 webResourceEnd = endTime; 
 			urlStr=urlStr.replaceAll("feature=player_detailpage&", "");
@@ -351,7 +335,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 				
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, categoryStr, thumbnailUrlStr, endTime);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime);
 			}
 		}
 		
@@ -372,21 +356,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		
 	}
 	
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This class is used to ADD	 Resource Information
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	public class AddQuestionResourceWidget extends AddQuestionResourceView{
 		private CollectionItemDo collectionItemDo;
 		public AddQuestionResourceWidget(){
@@ -428,9 +398,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void uploadQuestionImage() {
 			getUiHandlers().questionImageUpload();	
 		}
-/**
- * This method is used to create Question Resource
- */
+
 		@Override
 		public void createQuestionResource(String mediaFileName, CollectionQuestionItemDo collectionQuestionItemDo) {
 //			hidePopup();
@@ -453,21 +421,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		
 	}
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This method is used to add Resource Information
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	public class AddSearchResourceWidget extends AddSearchResourceView{
 		@Override
 		public void hidePopup() {
@@ -485,21 +439,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			super(collectionDo);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This class is used to get Resource Information
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	public class AddUserOwnResourceWidget extends AddUserOwnResourceView {
 		public AddUserOwnResourceWidget(CollectionDo collectionDo) {
 			super(collectionDo);
@@ -519,9 +459,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void resourceUpload() {
 			getUiHandlers().userOwnResourceUpload();
 		}
-/**
- * This method is used to Show Resource preview
- */
+
 		@Override
 		public void showResourcePreview(final String filePath,String resourceMediaFileName,String resourceOriginalFileName,  String resourceTitle,  String resourceDesc, String resourceCategory) { 
 			title=resourceTitle;
@@ -574,8 +512,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				userOwnResourcePreview.thumbnailLbl.setVisible(false);
 			}
 			userOwnResourcePreview.setGlassEnabled(true);
+			//Window.scrollTo(0, 0);
+			//userOwnResourcePreview.getElement().getParentElement().getParentElement().setAttribute("style", "width:502px;");
+			userOwnResourcePreview.setWidth("502px");
+			userOwnResourcePreview.setHeight("400px");
 			userOwnResourcePreview.show();
 			userOwnResourcePreview.center();
+/*			userOwnResourcePreview.show();
+			userOwnResourcePreview.center();*/
 			
 		}
 
@@ -584,9 +528,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			getUiHandlers().saveUserResource(filePath);
 			
 		}*/
-/**
- * This method is used to add user Resource Information
- */
+
 		@Override
 		public void addUserResource(String filePath,String mediaFileName,String originalFileName, String resourceTitle,String resourceDesc, String resourceCategory) {
 			title=resourceTitle;
@@ -637,22 +579,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	public void setResMetaInfo(ResourceMetaInfoDo resMetaInfo) {
 		this.resMetaInfo = resMetaInfo;
 	}
-	/**
-	 * 	
-	 * @function updateUi 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to Update ui
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+		
 	public void updateUi(){
 		String userUrlStr = addWebResourceWidget.urlTextBox.getText().trim();
 		addWebResourceWidget.generateImageLbl.setVisible(false);
@@ -684,9 +611,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 	}
 	
-	/**
-	 * This method is used to Set Image url
-	 */
+	
 	
 	public void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage,boolean isUserOwnResourceImage){
 		double randNumber = Math.random();
@@ -742,31 +667,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(addWebResourceWidget.thumbnailUrlStr, 18, 14, 80, 60);
 		}
 	}
-	/**
-	 * 
-	 * @function closeAddResourcePopup 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to close add resource pop up 
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void closeAddResourcePopup(){
 		AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, true));
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		appPopUp.hide();
 	}
-/**
- * This method is used to set new Resource pop up data
- */
 	@Override
 	public void setNewResourcePopupData(ResourceMetaInfoDo resMetaInfo) {
 		addWebResourceWidget.loadingPanel.setVisible(false);
@@ -793,14 +700,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addWebResourceWidget.setThumbnailImage.setVisible(false);
 			}
 			//addWebResourceWidget.setThumbnailImage.setUrlAndVisibleRect(resMetaInfo.getImages().get(0), 0, 0, 80, 60);
-			addWebResourceWidget.setThumbnailImage.setUrl(resMetaInfo.getImages().get(0));
+			addWebResourceWidget.setThumbnailImage.setUrl(resMetaInfo.getImages().size() >0 ? resMetaInfo.getImages().get(0) : "");
 			addWebResourceWidget.setThumbnailImage.setHeight("60px");
 			addWebResourceWidget.setThumbnailImage.setWidth("80px");
 		}
 	}
-	/**
-	 * This method is used to set existing resources data.
-	 */
 	@Override
 	public void setExistingResourceData(ExistsResourceDo resourceDo, CollectionDo collectionDo){
 		this.hide();
@@ -814,12 +718,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		existsResource.center();
 		
 	}
-	/**
-	 * This method is used to set  shorten url alert message
-	 */
+	
 	@Override
 	public void setShortenUrlAlertMsg(){
-		addWebResourceWidget.mandatoryUrlLbl.setText("Oops! You can't add a shortened URL as a resource.");
+		addWebResourceWidget.mandatoryUrlLbl.setText(GL0892);
 		addWebResourceWidget.mandatoryUrlLbl.setVisible(true);
 		addWebResourceWidget.setShortenedUrl(true); 
 	}
@@ -833,15 +735,13 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 	}
-	/**
-	 * This method is used to Set pop up .
-	 */
+	
 	@Override
 	public void setPopup(String clickType) {
 		if(clickType.equalsIgnoreCase("Url")){			
 			tabViewContainer.clear();
 			Window.enableScrolling(false);
-			titleLbl.setText("Add a Resource");
+			titleLbl.setText(GL0886);
 			urlTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			searchTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			myComputerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -860,7 +760,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			try{
 				Window.enableScrolling(false);
 				tabViewContainer.clear();
-				titleLbl.setText("Add a Question");
+				titleLbl.setText(GL0893);
 				addQuestionResourceWidget=new AddQuestionResourceWidget();
 				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -870,7 +770,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
-				multipleChoiceRadioButton.setValue(true);
+				setRadioButtonValues();
 				addQuestionResourceWidget.setQuestionType("MC");
 				addQuestionResourceWidget.showMulipleAnswerChoice();
 				tabViewContainer.add(addQuestionResourceWidget);
@@ -890,7 +790,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			try{
 				Window.enableScrolling(false);
 				tabViewContainer.clear();
-				titleLbl.setText("Edit Question");
+				titleLbl.setText(GL0304);
 				addQuestionResourceWidget=new AddQuestionResourceWidget(collectionItemDo);
 				addQuestionResourceWidget.getHideRightsToolTip();
 				questionTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -925,7 +825,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}else if(clickType.equalsIgnoreCase("Search")) {
 			Window.enableScrolling(true);
-			titleLbl.setText("Add a Resource");
+			titleLbl.setText(GL0886);
 			tabViewContainer.clear();
 			addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails());
 			tabViewContainer.add(addSearchResourceWidget);
@@ -940,27 +840,19 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 	}
 
+	private void setRadioButtonValues() {
+		multipleChoiceRadioButton.setValue(true);
+		trueOrFalseRadioButton.setValue(false);
+		fillInTheBlankRadioButton.setValue(false);
+		openEndedRadioButton.setValue(false);
+	}
 	@Override
 	public void closePopUp() {
 		if(appPopUp.isShowing()){
 			appPopUp.hide();
 		}
 	}
-/**
- * 
- * @fileName : AddResourceView.java
- *
- * @description : This class is used to Show multiple choice widget
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 	private class showMultipleChoiceWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
@@ -970,26 +862,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				highlightSelectedTab("MC");
 				addQuestionResourceWidget.setQuestionType("MC");
 				addQuestionResourceWidget.showMulipleAnswerChoice();
-				addQuestionResourceWidget.addResourceFormTitleChoice.setText("Answer Choices *");
+				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This class is used to Show TrueOrFalse widget
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class showTrueOrFalseWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
@@ -998,26 +875,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				highlightSelectedTab("TF");
 				addQuestionResourceWidget.setQuestionType("T/F");
 				addQuestionResourceWidget.showTrueOrFalseAnswerChoice();
-				addQuestionResourceWidget.addResourceFormTitleChoice.setText("Answer Choices *");
+				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
 
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This class is used to Show show Open Ended widget
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class showOpenEndedWidget implements ClickHandler{
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
@@ -1044,21 +906,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		
 	}*/
-	/**
-	 * 
-	 * @fileName : AddResourceView.java
-	 *
-	 * @description : This class is used to Show FillInTheBlank widget
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	private class ShowFillInTheBlanWidget implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1117,7 +964,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 		@Override
 		public void onDelete(ClickEvent clickEvent) {
-			getUiHandlers().removeQuestionImage(collectionItemDo.getCollectionItemId());
+			getUiHandlers().removeQuestionImage(collectionItemDo.getResource().getGooruOid());
 		}
 		public void hide() {
 			 super.hide();
@@ -1127,9 +974,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}
 	}
 
-/**
- * this method is used to upload Resource
- */
+
 	@Override
 	public void uploadResource(MediaUploadDo result) {
 		JSONObject jsonObject = setImageUploadJsonObject(result.getOriginalFilename(),result.getName(), title, desc, category, ownResourceImgUrl);
@@ -1145,33 +990,29 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
         JSONObject attach = new JSONObject();
         attach.put("title", new JSONString(resourceTitle));
         attach.put("description", new JSONString(resourceDesc));
-        attach.put("category", new JSONString(resourceCategory));
+        JSONObject resourceFormat = new JSONObject();
+        if(resourceCategory.equalsIgnoreCase("Text")){
+        	 resourceFormat.put("value", new JSONString("Text"));
+	        attach.put("category", new JSONString("Handout"));
+	     }
+        else
+        {
+           	resourceFormat.put("value", new JSONString("Image"));
+        	attach.put("category", new JSONString("Slide"));	
+        }
+       
+       
+        attach.put("resourceFormat", resourceFormat);
+        
         if(ownResourceImgUrl!=null){
         	 attach.put("thumbnail", new JSONString(ownResourceImgUrl));
         }
         attach.put("attach", file);
         JSONObject resource = new JSONObject();
         resource.put("resource", attach);
-        
-		return resource;
+       	return resource;
 	}
-/**
- * 
- * @function getYoutubeVideoLength 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :this method is used to get youtube video length.
- * 
- * 
- * @parm(s) : @param length
- * @parm(s) : @return
- * 
- * @return : String
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public String getYoutubeVideoLength(Integer length){
 		int totalVideoLength = length;
 		String tolTimeInmin = "";

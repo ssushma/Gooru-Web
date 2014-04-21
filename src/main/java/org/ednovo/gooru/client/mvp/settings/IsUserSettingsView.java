@@ -24,6 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.settings;
 
+/**
+ * @fileName : IsUserSettingsView.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Apr 18, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
 
 
 import java.util.List;
@@ -37,26 +51,14 @@ import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-/**
- * 
- * @fileName : IsUserSettingsView.java
- *
- * @description : This file is the interface for UserSettingsView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+import com.google.gwt.user.client.ui.TextBox;
+
 public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHandlers>{
 
 	
@@ -126,4 +128,94 @@ public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHan
 	public Label getAccountSavingText();
 	
 	public Button getEditButtonAccount();
+	/**
+	 * @function getTxtUserName 
+	 * 
+	 * @created_date : Mar 13, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : TextBox
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	TextBox getTxtUserName();
+	/**
+	 * @function isUserNameChanged 
+	 * 
+	 * @created_date : Mar 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	boolean isUserNameChanged();
+	/**
+	 * @function isValidUserName 
+	 * 
+	 * @created_date : Mar 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : boolean
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	boolean isValidUserName();
+	/**
+	 * @function setData 
+	 * 
+	 * @created_date : Mar 14, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param settingDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setData(V2UserDo v2userDo);
+	
+	void hideuserDetailsContainerOnClickOfTab();
+	
+	void getUserCodeId(List<String> list);
+	Label getStandardSavingTextLabel();
+	HTMLPanel getstandardsSaveCancelButtonContainer();
+	HTMLPanel getuserStandardEditView();
+	Button getstandardsEditButton();
+	HTMLPanel getuserStandardDefaultView();
+	public void hideEmailContainer();
 }

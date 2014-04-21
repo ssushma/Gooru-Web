@@ -22,37 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import java.util.List;
 
-
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchView;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceSearchView.java
- *
- * @description : This file is used to render the resource search results and to refresh the collections in shelf.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultDo> implements IsResourceSearchView {
 
@@ -62,28 +50,24 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	public ResourceSearchView() {
 		super(true);
 	}
-	/**
-	 * This method is used to render the search results.
-	 */
+
 	@Override
 	public IsDraggable renderSearchResult(ResourceSearchResultDo searchResultDo) {
 		
 		return new ResourceSearchResultVc(searchResultDo, dragController);
 	}
-	/**
-	 * This method is used to refresh  collections in shelf.
-	 */
+
 	@Override
-	protected void refreshShelfCollections(List<CollectionDo> shelfCollections) {
+	protected void refreshShelfCollections(List<FolderDo> shelfCollections) {
 		
 		for (Widget widget : getSearchResultPanel()) {
 			if (widget instanceof Draggable && ((Draggable)widget).getDraggableUc() instanceof ResourceSearchResultVc) {
 				ResourceSearchResultVc searchResultVc = (ResourceSearchResultVc) ((Draggable)widget).getDraggableUc();
 				boolean added = false;
-				for (CollectionDo collection : shelfCollections) {
-					if (collection.getCollectionItems() != null) {
-						for (CollectionItemDo collectionItem : collection.getCollectionItems()) {
-							if (collectionItem.getResource().getGooruOid().equals(searchResultVc.getResourceSearchResultDo().getGooruOid())) {
+				for (FolderDo collection : shelfCollections) {
+					if (collection.getType().equals("scollection")&&collection.getCollectionItems() != null) {
+						for (FolderItemDo collectionItem : collection.getCollectionItems()) {
+							if (collectionItem.getGooruOid().equals(searchResultVc.getResourceSearchResultDo().getGooruOid())) {
 								searchResultVc.setAddedToShelf(true);
 								added = true;
 								break;

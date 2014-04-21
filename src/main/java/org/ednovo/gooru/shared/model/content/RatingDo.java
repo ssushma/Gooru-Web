@@ -28,48 +28,25 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : RatingDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class RatingDo implements Serializable {
 	private static final long serialVersionUID = 1849886397443409797L;
 	
 	private Integer votesDown;
 	private Integer votesUp;
-	/** 
-	 * This method is to get the votesDown
-	 */
+	
+	public RatingDo(){}
+	
 	public Integer getVotesDown() {
 		return votesDown;
 	}
-	/** 
-	 * This method is to set the votesDown
-	 */
 	public void setVotesDown(Integer votesDown) {
 		this.votesDown = votesDown;
 	}
-	/** 
-	 * This method is to get the votesUp
-	 */
 	public Integer getVotesUp() {
 		return votesUp;
 	}
-	/** 
-	 * This method is to set the votesUp
-	 */
 	public void setVotesUp(Integer votesUp) {
 		this.votesUp = votesUp;
 	}

@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,21 +38,8 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : ContentConfirmationPopupVc.java
- *
- * @description : This class is used to display the content confirmation popup.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class ContentConfirmationPopupVc  extends Composite {
+
+public abstract class ContentConfirmationPopupVc  extends Composite implements MessageProperties{
 	private AppPopUp appPopUp;
 
 	@UiField
@@ -67,9 +55,7 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
 
 	interface ContentConfirmationPopupVcUiBinder extends UiBinder<Widget, ContentConfirmationPopupVc> {
 	}
-	/**
-	 * Class constructor.
-	 */
+	
 	public ContentConfirmationPopupVc(String messageHeader, String  messageContent) {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
@@ -79,23 +65,12 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
 		appPopUp.getElement().getStyle().setZIndex(9999);
 		appPopUp.show();
 		appPopUp.center();
+		okButton.setText(GL0190);
+		cancelButton.setText(GL0142);
 		okButton.getElement().setId("btnOk");
 		cancelButton.getElement().setId("lnkCancel");
 	}
-	/**
-	 * @function onCancelClick 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the cancel button.
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("cancelButton")
 	public void onCancelClick(ClickEvent clickEvent) {
 		hide();
@@ -104,20 +79,7 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 	}
-	/**
-	 * @function hide 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to hide the popup.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void hide() {
 		appPopUp.hide();
 
@@ -125,41 +87,12 @@ public abstract class ContentConfirmationPopupVc  extends Composite {
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 
 	}
-	/**
-	 * @function setGlassZindex 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the z- index.
-	 * 
-	 * 
-	 * @parm(s) : @param index
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setGlassZindex(int index){
 		if(appPopUp!=null){
 			appPopUp.setGlassZindex(index);
 		}
 	}
-	/**
-	 * @function setPopupZindex 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to set the z-index.
-	 * 
-	 * 
-	 * @parm(s) : @param index
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public void setPopupZindex(int index){
 		if(appPopUp!=null){
 			appPopUp.setPopupZindex(index);

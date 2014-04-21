@@ -29,20 +29,27 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
+import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.player.CommentsDo;
+import org.ednovo.gooru.shared.model.player.CommentsListDo;
+import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("gwt-service/playerService")
 public interface PlayerAppService extends BaseService {
 	
 	
-	public CollectionDo getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabView);
+	public CollectionDo getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabView,String rootNodeId);
 	
-	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId,String resourceId,String tabView);
+	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId,String resourceId,String tabView,String rootNodeId);
 	
 	public ResoruceCollectionDo getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize);
 	
@@ -72,7 +79,7 @@ public interface PlayerAppService extends BaseService {
 	
 	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult);
 	
-	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String attemptAnswerResult);
+	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult);
 	
 	public String sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message);
 	
@@ -86,5 +93,30 @@ public interface PlayerAppService extends BaseService {
 	
 	public String updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing);
 	
+	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid);
+	
+	public ContentReportDo createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids);
+	
+	public void deleteContentReport(String associatedGooruOid);
+	
+	public CommentsDo createCommentForCollection(String gooruCollectionId, String userCommentsEntered);
+	
+	public CommentsListDo getCollectionCommentsList(String gooruOid,String offset, String pageLimit);
+	
+	public void deleteCollectionCommentbyCommentUid(String commentUid);
+	
+	public CommentsDo updateCollectionCommentbyCommentUid(String commentUid, String commentsUpdatedByUser);
+	
+	public ReactionDo createReaction(String resourceId, String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction);
+	
+	public ArrayList<ReactionDo> getResourceReaction(String resourceId, String gooruUid);
+	
+	public String generatePdf(String innerHtml,String completedDateTime);
+	
+	public String sendEmailWithPdf(String toAddress, String fromAddress, String cfm, String subject, String message, String Url, String FileName);
 
+	public ArrayList<FeaturedContentDo> getFeaturedContent();
+	
+	public void deleteReaction(String gooruReactionId);
+	
 }

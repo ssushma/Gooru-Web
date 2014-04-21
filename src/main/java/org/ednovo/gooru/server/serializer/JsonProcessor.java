@@ -30,18 +30,10 @@ package org.ednovo.gooru.server.serializer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
- * @fileName : JsonProcessor.java
+ * @author Search Team
  *
- * @description : This class is used for json processor.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class JsonProcessor {
 	

@@ -65,19 +65,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : PPPCollectionMoreInfoVc.java
- *
- * @description : This file is used to Set PPP meta data and styles for widget
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 
 public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, CollectionItemSearchResultDo> implements MessageProperties {
@@ -86,8 +75,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 
 	interface PPPCollectionMoreInfoVcUiBinder extends UiBinder<Widget, PPPCollectionMoreInfoVc> {
 	}
-	private static final String NO_RESOURCES_IN_THIS_COLLECTION = "There are no resources in this collection.";
-	private static final String RESOURCES_IN_THIS_COLLECTION= "Resources in this Collection";
+	private static final String NO_RESOURCES_IN_THIS_COLLECTION =GL0684;
+	private static final String RESOURCES_IN_THIS_COLLECTION= GL1094;
 	
 	@UiField
 	MoreInfoFieldVc gradeFieldVc, tagsFieldVc, timeFieldVc, rightsFieldVc,
@@ -111,12 +100,12 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 	
 	@UiField Image imgQuestionImage;
 	
-	@UiField Label lblNotFriendly;
+	@UiField Label lblNotFriendly,moreInfotext;
 	
 	@UiField(provided = true)
 	SearchMoreInfoVcCBundle res;
 
-	protected static final String LICENSE_FOLDER = "images/license/";
+	protected static final String LICENSE_FOLDER ="images/license/";
 
 	private SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>> usedInResourcesAsyncCallback;
 
@@ -124,13 +113,13 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 
 	private SearchDo<CollectionItemSearchResultDo> usedInSearchDo;
 
-	protected static final String OER_DESCRIPTION = "The term Open Educational Resources (OER) refers to educational materials that are freely available and licensed in a way that gives users the legal permission to reuse, revise, remix, and redistribute.";
+	protected static final String OER_DESCRIPTION =GL1092;
 
-	protected static final String OER_TITLE = "Open Education Resources";
+	protected static final String OER_TITLE =GL1093;
 
-	private static final String OER_PNG_IMG = "oer.png";
+	private static final String OER_PNG_IMG ="oer.png";
 
-	private static final String OERCOMMONS_ORG = "oercommons.org";
+	private static final String OERCOMMONS_ORG ="oercommons.org";
 
 	private static final String OER = "OER";
 
@@ -149,6 +138,18 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		usedInSearchDo = new SearchDo<CollectionItemSearchResultDo>();
 		usedInSearchDo.setPageSize(20);
 		setWidget(uiBinder.createAndBindUi(this));
+		moreInfotext.setText(GL0726);
+		gradeFieldVc.setToolTip(GL1076);
+		tagsFieldVc.setToolTip(GL0727);
+		timeFieldVc.setToolTip(GL0728);
+		likesFieldVc.setToolTip(GL0729);
+		shareField.setToolTip(GL0526);
+		rightsFieldVc.setToolTip(GL1091);
+		rightsLbl.setText(GL0731);
+		resourceSearchRightsFieldVc.setToolTip(GL0730);
+		imgQuestionImage.setAltText(GL0732);
+		imgQuestionImage.setUrl("images/mos/questionmark.png");
+		resourceSearchGradeFieldVc.setToolTip(GL1076);
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>>() {
 
 			@Override
@@ -193,9 +194,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		});
 		imgQuestionImage.setVisible(false);
 	}
-	/**
-	 * This is used to reset few of the fileds.
-	 */
+	
 	public void reset() {
 		usedInSearchDo.setPageNum(1);
 		usedInSearchDo.setSearchResults(null);
@@ -259,11 +258,11 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			StringBuilder finalGradeStringB = new StringBuilder();
 
 			if (isKindergarten) {
-				finalGradeStringB.append("Kindergarten, ");
+				finalGradeStringB.append(GL0850+GL_GRR_COMMA+" ");
 			}
 
 			List<Integer> gradeListInt = new ArrayList<Integer>();
-			finalGradeStringB.append(gradeListSize > 1 ? "Grades " : "Grade ");
+			finalGradeStringB.append(gradeListSize > 1 ? GL1320_1+" " : GL0325+" ");
 
 			for (String eachGrade1 : gradeList) {
 				if (!eachGrade1.equalsIgnoreCase("Kindergarten")
@@ -311,7 +310,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			}
 
 			if (isHigherEducation) {
-				finalGradeStringB.append(", Higher Education");
+				finalGradeStringB.append(GL_GRR_COMMA+" "+GL0169);
 			}
 
 			grade = finalGradeStringB.toString();
@@ -327,9 +326,9 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		timeFieldVc.setHtmlTxt(StringUtil.getValidString(searchResultDo.getAverageTime(), null));
 		//timeFieldVc.getElement().getStyle().setDisplay(Display.NONE);\
 		if(!likesFieldVc.getElement().toString().contains(" likes")) {
-			likesFieldVc.setHtmlTxt(StringUtil.getValidStringWithSuffix(searchResultDo.getVotesUp() + "", "0", " likes"));
+//			likesFieldVc.setHtmlTxt(StringUtil.getValidStringWithSuffix(searchResultDo.getVotesUp() + "", "0", " likes"));
 		}
-		likesFieldVc.getElement().getStyle().setDisplay(Display.BLOCK);
+//		likesFieldVc.getElement().getStyle().setDisplay(Display.BLOCK);
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& searchResultDo.getLicense().getIcon().isEmpty()) {
 
 			rightsFieldVc.contentFloPanel.setVisible(false);
@@ -338,8 +337,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		}
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& !searchResultDo.getLicense().getIcon().equals(NULL)) {
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
-			image.setAltText("License");
-			image.setTitle("License");
+			image.setAltText(GL0730);
+			image.setTitle(GL0730);
 			StandardSgItemVc standardItem = null;
 			if (searchResultDo.getLicense().getCode() != null&& !searchResultDo.getLicense().getCode().equalsIgnoreCase(NULL)) {
 				standardItem = new StandardSgItemVc(searchResultDo.getLicense().getCode(), searchResultDo.getLicense().getDefinition());
@@ -349,8 +348,8 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			rightsFieldVc.addWidget(widget);
 		} else if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getTag() == OER|| (searchResultDo.getUrl() != null && searchResultDo.getUrl().indexOf(OERCOMMONS_ORG) >= 0)) {
 			Image image = new Image(LICENSE_FOLDER + OER_PNG_IMG);
-			image.setAltText("OER License");
-			image.setTitle("OER License");
+			image.setAltText(GL1098);
+			image.setTitle(GL1098);
 			StandardSgItemVc standardItem = new StandardSgItemVc(OER_TITLE,	OER_DESCRIPTION);
 			standardItem.setHeight("100px");
 			DownToolTipWidgetUc widget = new DownToolTipWidgetUc(image,	standardItem);
@@ -392,26 +391,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		//tagsFieldVc.getElement().getStyle().setDisplay(Display.NONE);
 	}
 	
-	/**
-	 * 
-	 * @function generateGradeIfHypen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to generate the grade.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private String generateGradeIfHypen(String grade) {
 		String gradeList[];
 	 
@@ -437,9 +417,7 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		} catch (Exception e) {}
 		return gradeStr.toString();
 	}
-	/**
-	 * This method is used to sort the list.
-	 */
+
 	public List<Integer> sortList(List<Integer> list) {
 
 		int listSize = list.size();
@@ -479,15 +457,11 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 			}
 		}
 	}
-	/**
-	 * returns usedInResourcesAsyncCallback.
-	 */
+	
 	public SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>> getUsedInResourcesAsyncCallback() {
 		return usedInResourcesAsyncCallback;
 	}
-	/**
-	 * To set usedInResourcesAsyncCallback
-	 */
+
 	public void setUsedInResourcesAsyncCallback(
 			SimpleAsyncCallback<SearchDo<CollectionItemSearchResultDo>> usedInResourcesAsyncCallback) {
 		this.usedInResourcesAsyncCallback = usedInResourcesAsyncCallback;
@@ -545,27 +519,18 @@ public class PPPCollectionMoreInfoVc extends SearchMoreInfoVc<CollectionItemDo, 
 		return likesFieldVc;
 	}
 		
-	/**
-	 * This is used to render userid in resource.
-	 */
+	
 	public void renderUsedInResource(CollectionItemSearchResultDo usedInResource) {
-			profileusedInResourcesPanel.add(new SimpleResourceVc(usedInResource, profileusedInResourcesPanel.getWidgetCount() + 1));
+		usedInResource.setCollectionId(collectionId);
+		profileusedInResourcesPanel.add(new SimpleResourceVc(usedInResource, profileusedInResourcesPanel.getWidgetCount() + 1));
 	}
-	/**
-	 * This method is used to request for used  in resources.
-	 */
+
 	public void requestUsedInResources() {
 		AppClientFactory.getInjector().getSearchService().getCollectionItems(collectionId, getUsedInResourcesAsyncCallback());
 	}
-	/**
-	 * This is used to set notfriendly text.
-	 */
 	public void setNotFriendly(String text){
 		lblNotFriendly.setText(text);
 	}
-	/**
-	 * This is used to show not friendly image.
-	 */
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);
 		imgQuestionImage.setVisible(visibility);

@@ -24,7 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.settings;
 
+/**
+ * @fileName : UserSettingsPresenter.java 
+ *
+ * @description : 
+ *
+ * @version :1.0
+ *
+ * @date: APR 18 2013
 
+ * @Author Gooru Team 
+ * 
+ * Reviewer Gooru Team
+ *
+ */
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +53,11 @@ import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -50,9 +65,13 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
+import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -63,9 +82,7 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-/**
- * This is the presenter class for UserSettingsView.java
- */
+
 public class UserSettingsPresenter
 		extends
 		BasePlacePresenter<IsUserSettingsView, UserSettingsPresenter.IsUserSettingProxy>
@@ -88,6 +105,8 @@ public class UserSettingsPresenter
 	private SimpleAsyncCallback<ProfilePageDo> userProfilePageAsyncCallback;
 
 	private SimpleAsyncCallback<BiographyDo> userProfileBiographyAsyncCallback;
+	
+	private SimpleAsyncCallback<V2UserDo> userV2ProfilePageAsyncCallback;
 
 	Date dob;
 	SettingDo user = null;
@@ -109,6 +128,8 @@ public class UserSettingsPresenter
 	String gender;
 
 	private static final String USER_META_ACTIVE_FLAG = "0";
+	
+	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
 	private String emailId = "";
 
@@ -118,12 +139,7 @@ public class UserSettingsPresenter
 			ProxyPlace<UserSettingsPresenter> {
 
 	}
-	/**
-	 * Class Constructor.
-	 * @param view
-	 * @param proxy
-	 * @param imageUploadPresenter
-	 */
+
 	@Inject
 	public UserSettingsPresenter(final IsUserSettingsView view,
 			final IsUserSettingProxy proxy,
@@ -134,9 +150,7 @@ public class UserSettingsPresenter
 		this.imageUploadPresenter = imageUploadPresenter;
 		addRegisteredHandler(SetUserProfileImageEvent.TYPE, this);
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	public void onReveal() {
 		Window.scrollTo(0, 0);
@@ -195,29 +209,11 @@ public class UserSettingsPresenter
 		}
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(false));
 	}
-	/**
-	 * 
-	 * @function displaySettingsPage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to display settings page.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	void displaySettingsPage() {
-		this.getUserService().getUserProfileDetails(
+		this.getUserService().getV2UserProfileDetails(
 				AppClientFactory.getPlaceManager().getRequestParameter(
-						GOORU_UID), getUserprofileAsyncCallback());
+						GOORU_UID), getUserV2ProfilePageAsyncCallback());
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory
 				.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -226,14 +222,271 @@ public class UserSettingsPresenter
 						GOORU_UID), getUserProfilePageAsyncCallback());
 		getView().setUserProfileImageUrl("EMPTY");
 	}
-	/**
-	 * This method is called when the presenter is instantiated and it deals with user profile settings.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
 
 		getView().clearPanels();
+		//New V2 Api async call for get and updating User details (UserName, First Name, Last Name, Gender)
+		setUserV2ProfilePageAsyncCallback(new SimpleAsyncCallback<V2UserDo>() {
+
+			@Override
+			public void onSuccess(V2UserDo user) {
+
+				// For child account set the edit button visibility false.
+				// for some old account, AccountTypeId is null.
+				getView().getAccountSavingText().setVisible(false);
+				getView().getEditButtonAccount().setVisible(true);
+				if (user.getUser() != null) {
+					if (user.getUser().getAccountTypeId() != null) {
+						getView().getEditEmailButton().setVisible(
+								user.getUser().getAccountTypeId() == 2 ? false
+										: true);
+						getView().setChildAccount(
+								user.getUser().getAccountTypeId() == 2 ? true
+										: false);
+					} else {
+						getView().getEditEmailButton().setVisible(true);
+						getView().setChildAccount(false);
+					}
+					//TODO need to set the issue
+//					getView().setSettingDo(user);
+					// getView().setData(user);
+					//TODO need to convert to date object and this is required to validate child account
+//					dob = user.getDateOfBirth();
+					if(user.getDateOfBirth()!=null){
+					Date date = new Date(Long.parseLong(user.getDateOfBirth()));
+					dob = date;
+					}
+					gooruUid = user.getUser().getGooruUId();
+					userName = user.getUser().getUsername();
+					FilterSettings filterSettings =  AppClientFactory.getLoggedInUser().getSettings();
+					
+					UserDo userDo =  user.getUser();
+					userDo.setSettings(filterSettings);
+					userDo.setMeta(AppClientFactory.getLoggedInUser().getMeta());
+					userDo.setToken(AppClientFactory.getLoggedInUser().getToken());
+					AppClientFactory.setLoggedInUser(userDo);
+					AppClientFactory.fireEvent(new SetHeaderEvent(userDo));
+					if (user.getGender() != null) {
+
+						gender = user.getGender() != null ? user.getGender()
+								.getGenderId() : "";
+						if (gender.equalsIgnoreCase("M")) {
+							getView().getLbMale().setStyleName(
+									getView().getSelectedButton());
+						} else if (gender.equalsIgnoreCase("F")) {
+							getView().getLbFemale().setStyleName(
+									getView().getSelectedButton());
+						} else if (gender.equalsIgnoreCase("O")) {
+							getView().getLbOther().setStyleName(
+									getView().getSelectedButton());
+						} else if (gender.equalsIgnoreCase("X")) {
+							getView().getLbShare().setStyleName(
+									getView().getSelectedButton());
+						}
+
+						if (user.getGender().getName() != null) {
+							String gender = user.getGender().getName()
+									.substring(0, 1).toUpperCase()
+									+ user.getGender().getName().substring(1);
+							if ("Do not wish to share".equalsIgnoreCase(gender)) {
+								String gender1 = gender.replace(
+										GL1199,
+										GL0812);
+								getView().getGenderText().setText(gender1);
+							} else {
+								getView().getGenderText().setText(gender);
+							}
+						} else {
+							getView().getGenderText().setText("");
+						}
+					}
+					// getView().getGenderText().setText(user.getGender().getName().substring(0,1).toUpperCase()+user.getGender().getName().substring(1));
+
+					if (user.getAboutMe() != null) {
+						getView().noAboutUsContainer().setVisible(false);
+						getView().getProfileBiographyEditUC().setText(
+								user.getAboutMe());
+					} else {
+						getView().noAboutUsContainer().setVisible(true);
+					}
+					getView().getLbUName()
+							.setText(user.getUser().getUsername());
+//					getView().getLbUName().setVisible(false);
+					getView().getTxtUserName().setText(user.getUser().getUsername());
+					getView().getTxtUserName().setVisible(false);
+					getView().getTbFirstName().setText(
+							user.getUser().getFirstName());
+					getView().getTbLastName().setText(
+							user.getUser().getLastName());
+					getView().hideuserDetailsContainerOnClickOfTab();
+					if (user.getUser().getLoginType()
+							.equalsIgnoreCase("credential")) {
+						if (dob != null) {
+							getView().getLbUName().getElement()
+									.setAttribute("dob", "" + dob);
+							int age = getAge(dob);
+							getView().getLbUName().getElement()
+									.setAttribute("date", "" + age);
+							if (age < 13) {
+								getView().getLbRole().setText(GL0417);
+							} else {
+								getView().getLbRole().setText(
+										user.getUserType());
+							}
+						} else if (user.getUser().getAccountTypeId() != null) {
+							if (user.getUser().getAccountTypeId() == 2) {
+								getView().getLbRole().setText(GL0417);
+								
+							} else {
+								getView().getLbRole().setText(
+										user.getUserType());
+							}
+						} else {
+							getView().getLbRole().setText(user.getUserType());
+						}
+					} else {
+						getView().getLbRole().setText(
+								user.getUserType() != null ? user.getUserType()
+										: "");
+					}
+
+					if (user.getExternalId() != null) {
+						boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+						if(isValidEmail){
+							getView().getLbEmail().setText(user.getExternalId());
+						}else{
+							getView().hideEmailContainer();
+						}
+						
+					} else {
+						if(user.getUser().getAccountTypeId() != 2){
+							if(user.getUser().getEmailId()!=null){
+								boolean isValidEmail = user.getExternalId().matches(EMAIL_REGEX);
+								if(isValidEmail){
+									getView().getLbEmail().setText(
+											user.getUser().getEmailId());
+									}
+								}else{
+									getView().hideEmailContainer();
+								}
+							}
+						
+					}
+					// getView().getLbEmail().setText(user.getExternalId());
+					getView().getLbName().setText(
+							user.getUser().getFirstName() + " "
+									+ user.getUser().getLastName());
+					getView().getLbUserName().setText(
+							user.getUser().getUsername());
+					if (user.getUser().getLoginType() != null) {
+						if (user.getUser().getLoginType().trim()
+								.equalsIgnoreCase("apps")) {
+							getView().getForgetPassword().setVisible(false);
+							getView().getForgetPasswordMsg().setVisible(true);
+							getView().getEditEmailButton().setVisible(false);
+						} else if (user.getUser().getLoginType().trim()
+								.equalsIgnoreCase("Credential")) {
+							getView().getForgetPassword().setVisible(true);
+							getView().getForgetPasswordMsg().setVisible(false);
+							if(user.getUser().getAccountTypeId() != null && user.getUser().getAccountTypeId() != 2){
+								getView().getEditEmailButton().setVisible(true);
+							}
+						}
+					}
+
+					if (user.getUser().getLoginType()
+							.equalsIgnoreCase("credential")) {
+						if (dob != null) {
+							getView().getLbUName().getElement()
+									.setAttribute("dob", "" + dob);
+							int age = getAge(dob);
+							getView().getLbUName().getElement()
+									.setAttribute("date", "" + age);
+							if (age < 13) {
+								getView().getAboutUsContainer().setVisible(
+										false);
+								setUserUnder13(true);
+							} else {
+								getView().getAboutUsContainer()
+										.setVisible(true);
+								setUserUnder13(false);
+							}
+						} else if (user.getUser().getAccountTypeId() != null) {
+							// All child accounts have account type id is set to
+							// 2.
+							// Based on this will not show PPP for child
+							// account.,
+							// but we need to look when child trun >13.
+							if (user.getUser().getAccountTypeId() == 2) {
+								getView().getAboutUsContainer().setVisible(
+										false);
+								
+								setUserUnder13(true);
+							} else {
+								getView().getAboutUsContainer()
+										.setVisible(true);
+								setUserUnder13(false);
+							}
+						} else {
+							getView().getAboutUsContainer().setVisible(true);
+							setUserUnder13(false);
+						}
+					} else {
+						getView().getAboutUsContainer().setVisible(true);
+						setUserUnder13(false);
+					}
+					getView().setUserProfileImageUrl(
+							AppClientFactory.getLoggedInUser().getSettings()
+									.getProfileImageUrl()
+									+ user.getUser().getGooruUId()
+									+ "-158x158.png");
+
+					getView().setData(user);
+				} else {
+					
+				}
+				/**
+				 * This RPC is to get the User profile Details(grade value)
+				 */
+				AppClientFactory
+						.getInjector()
+						.getUserService()
+						.getUserProfileV2Details(gooruUid,
+								USER_META_ACTIVE_FLAG,
+								new SimpleAsyncCallback<ProfileDo>() {
+
+									@Override
+									public void onSuccess(ProfileDo profileObj) {
+										getView().setProfileData(profileObj);
+										//getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+										AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+									}
+
+								});
+				/**
+				 * This RPC is to get the Courses
+				 */
+				AppClientFactory
+						.getInjector()
+						.getTaxonomyService()
+						.getCourse(
+								new SimpleAsyncCallback<List<LibraryCodeDo>>() {
+									@Override
+									public void onSuccess(
+											List<LibraryCodeDo> result) {
+										getView().setCourseList(result);
+									}
+								});
+
+			
+			}
+		});
+		
+		
+		
 		setUserProfilePageAsyncCallback(new SimpleAsyncCallback<ProfilePageDo>() {
 
 			@Override
@@ -333,8 +586,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										"Do not wish to share",
-										"Prefer not to share");
+										GL1199,
+										GL0812);
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -368,14 +621,14 @@ public class UserSettingsPresenter
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
 							if (age < 13) {
-								getView().getLbRole().setText("Student");
+								getView().getLbRole().setText(GL0417);
 							} else {
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText("Student");
+								getView().getLbRole().setText(GL0417);
 								
 							} else {
 								getView().getLbRole().setText(
@@ -409,10 +662,12 @@ public class UserSettingsPresenter
 								.equalsIgnoreCase("apps")) {
 							getView().getForgetPassword().setVisible(false);
 							getView().getForgetPasswordMsg().setVisible(true);
+							getView().getEditEmailButton().setVisible(false);
 						} else if (user.getUser().getLoginType().trim()
 								.equalsIgnoreCase("Credential")) {
 							getView().getForgetPassword().setVisible(true);
 							getView().getForgetPasswordMsg().setVisible(false);
+							getView().getEditEmailButton().setVisible(true);
 						}
 					}
 
@@ -505,25 +760,6 @@ public class UserSettingsPresenter
 	}
 
 	// Label work like radio button functionality
-	/**
-	 * 
-	 * @function UpdateGender 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to update the gender.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void UpdateGender() {
 		getView().getLbMale().addClickHandler(new ClickHandler() {
 
@@ -575,214 +811,72 @@ public class UserSettingsPresenter
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function getLbMale 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns FocusWidget.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : FocusWidget
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private FocusWidget getLbMale() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * To close the opened popup's 
-	 */
+
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().closeAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 	}
-	/**
-	 * 
-	 * @function setUserProfileAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns userProfileAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param userProfileAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserProfileAsyncCallback(
 			SimpleAsyncCallback<SettingDo> userProfileAsyncCallback) {
 		this.userProfileAsyncCallback = userProfileAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getUserService 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns userService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public UserServiceAsync getUserService() {
 		return userService;
 	}
-	/**
-	 * 
-	 * @function getUserprofileAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns userProfileAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<SettingDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<SettingDo> getUserprofileAsyncCallback() {
 		return userProfileAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getUserProfileBiographyAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns userProfileBiographyAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<BiographyDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<BiographyDo> getUserProfileBiographyAsyncCallback() {
 		return userProfileBiographyAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUserProfileBiographyAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :To set userProfileBiographyAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param userProfileBiographyAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserProfileBiographyAsyncCallback(
 			SimpleAsyncCallback<BiographyDo> userProfileBiographyAsyncCallback) {
 		this.userProfileBiographyAsyncCallback = userProfileBiographyAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getUserProfilePageAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :returns userProfilePageAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<ProfilePageDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<ProfilePageDo> getUserProfilePageAsyncCallback() {
 		return userProfilePageAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUserProfilePageAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :To set userProfilePageAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param userProfilePageAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserProfilePageAsyncCallback(
 			SimpleAsyncCallback<ProfilePageDo> userProfilePageAsyncCallback) {
 		this.userProfilePageAsyncCallback = userProfilePageAsyncCallback;
 	}
-	/**
-	 * To get place token
-	 */
+
 	@Override
 	public String getViewToken() {
 		return null;
 	}
-	/**
-	 * This is used to save settings information.
-	 */
+
 	@Override
 	public void saveSettingsInformation() {
 		// String emailValue="";
 		Map<String, String> updateUserDetails = new HashMap<String, String>();
 		String fnValue = getView().getTbFirstName().getText().trim();
 		String lnValue = getView().getTbLastName().getText().trim();
+		String userName = getView().getTxtUserName().getText().trim();
 
 		updateUserDetails.put("firstName", fnValue);
 		updateUserDetails.put("lastName", lnValue);
+		
+		if (getView().isUserNameChanged()){
+			if (getView().isValidUserName()){
+				updateUserDetails.put("username", userName);
+			}
+		}
+		
 		// updateUserDetails.put("externalId", emailValue);
 		if (getView().getLbRole().getText().equalsIgnoreCase("Student")) {
 			updateUserDetails.put("userType", "Student");
@@ -793,31 +887,36 @@ public class UserSettingsPresenter
 		} else if (getView().getLbRole().getText().equalsIgnoreCase("Other")) {
 			updateUserDetails.put("userType", "Other");
 		}
-
+		String gender="";
 		if (getView().getLbFemale().getStyleName()
 				.equals(getView().getSelectedButton())) {
 			updateUserDetails.put("gender", "F");
+			gender = "F";
 		} else if (getView().getLbMale().getStyleName()
 				.equals(getView().getSelectedButton())) {
 			updateUserDetails.put("gender", "M");
+			gender = "M";
 		} else if (getView().getLbOther().getStyleName()
 				.equals(getView().getSelectedButton())) {
 			updateUserDetails.put("gender", "O");
+			gender = "O";
 		} else if (getView().getLbShare().getStyleName()
 				.equals(getView().getSelectedButton())) {
 			updateUserDetails.put("gender", "X");
+			gender = "X";
 		}
-		updateUserDetails.put("aboutMe", getView().getProfileBiographyEditUC()
-				.getText());
-		this.getUserService().updateProfileSettings(
-				AppClientFactory.getPlaceManager().getRequestParameter(
-						GOORU_UID), updateUserDetails,
-				getUserprofileAsyncCallback());
+		
+//		updateUserDetails.put("aboutMe", getView().getProfileBiographyEditUC()
+//				.getText());
+//		this.getUserService().updateProfileSettings(
+//				AppClientFactory.getPlaceManager().getRequestParameter(
+//						GOORU_UID), updateUserDetails,
+//				getUserprofileAsyncCallback());
+		
+		this.getUserService().updateV2ProfileDo("", "", fnValue, lnValue, "", "", userName,gender, false, getUserV2ProfilePageAsyncCallback());
 
 	}
-	/**
-	 * This is used to update profile visibility settings.
-	 */
+
 	@Override
 	public void updateProfileVisibilitySetting(String optionalValue) {
 		getUserService().updateUserProfileVisibility(
@@ -825,9 +924,7 @@ public class UserSettingsPresenter
 						GOORU_UID), optionalValue,
 				getUserProfilePageAsyncCallback());
 	}
-	/**
-	 * This is used to update user Profile Biography.
-	 */
+
 	@Override
 	public void updateUserBiography(String biography, String role,
 			String firstName, String lastName, String gender) {
@@ -836,34 +933,13 @@ public class UserSettingsPresenter
 						GOORU_UID), biography, role, firstName, lastName,
 				this.gender, getUserProfileBiographyAsyncCallback());
 	}
-	/**
-	 * 
-	 * @function getAge 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : THis is used to get the age based on DOB.
-	 * 
-	 * 
-	 * @parm(s) : @param birthDate
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private int getAge(Date birthDate) {
 		long ageInMillis = new Date().getTime() - birthDate.getTime();
 		Date age = new Date(ageInMillis);
 		return age.getYear() - 70;
 	}
-	/**
-	 * This method is used to show the updated profile images.
-	 */
+
 	public void showUploadProfileImageWidget() {
 		imageUploadPresenter.showUploadTypeWidgets(isUserUnder13());
 		addToPopupSlot(imageUploadPresenter);
@@ -871,9 +947,7 @@ public class UserSettingsPresenter
 		imageUploadPresenter.setCollectionImage(false);
 		imageUploadPresenter.setEditResourceImage(false);
 	}
-	/**
-	 * This method is used to add course.
-	 */
+
 	@Override
 	public void addCourse(Set<ProfileCodeDo> profileCodeDo) {
 		AppClientFactory
@@ -887,9 +961,7 @@ public class UserSettingsPresenter
 							}
 						});
 	}
-	/**
-	 * This method is used to delete course.
-	 */
+
 	@Override
 	public void deleteCourse(CodeDo codeDo) {
 		AppClientFactory
@@ -903,61 +975,21 @@ public class UserSettingsPresenter
 							}
 						});
 	}
-	/**
-	 * This method is used to set the user profile image.
-	 */
+
 	@Override
 	public void setUserProfileImage(String imageUrl) {
 		getView().setUserProfileImageUrl(imageUrl);
 
 	}
-	/**
-	 * 
-	 * @function isUserUnder13 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns isUserUnder13.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public boolean isUserUnder13() {
 		return isUserUnder13;
 	}
-	/**
-	 * 
-	 * @function setUserUnder13 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to set isUserUnder13.
-	 * 
-	 * 
-	 * @parm(s) : @param isUserUnder13
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserUnder13(boolean isUserUnder13) {
 		this.isUserUnder13 = isUserUnder13;
 	}
-	/**
-	 * This method is used to save email.
-	 */
+
 	@Override
 	public void saveEmail(final boolean isEmailConfirmed) {
 		String emailValue = "";
@@ -1002,6 +1034,55 @@ public class UserSettingsPresenter
 							public void onFailure(Throwable caught) {
 							}
 						});
+	}
+
+	/** 
+	 * This method is to get the userV2ProfilePageAsyncCallback
+	 */
+	public SimpleAsyncCallback<V2UserDo> getUserV2ProfilePageAsyncCallback() {
+		return userV2ProfilePageAsyncCallback;
+	}
+
+	/** 
+	 * This method is to set the userV2ProfilePageAsyncCallback
+	 */
+	public void setUserV2ProfilePageAsyncCallback(
+			SimpleAsyncCallback<V2UserDo> userV2ProfilePageAsyncCallback) {
+		this.userV2ProfilePageAsyncCallback = userV2ProfilePageAsyncCallback;
+	}
+
+	@Override
+	public void updatePartyCustomField(String optionKey, String optionValue) {
+		getView().getStandardSavingTextLabel().setText(MessageProperties.GL0808);
+		getView().getstandardsSaveCancelButtonContainer().setVisible(false);
+		getView().getstandardsEditButton().setVisible(false);
+		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+								
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+					getView().getStandardSavingTextLabel().setText("");
+					getView().getuserStandardEditView().setVisible(false);
+					getView().getuserStandardDefaultView().setVisible(true);
+					getView().getstandardsEditButton().setVisible(true);
+					AppClientFactory.getInjector().getUserService().getUserProfileV2Details(gooruUid,
+							USER_META_ACTIVE_FLAG,
+							new SimpleAsyncCallback<ProfileDo>() {
+
+								@Override
+								public void onSuccess(final ProfileDo profileObj) {
+									AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(profileObj.getUser().getMeta().getTaxonomyPreference().getCode()));
+								//	getView().getUserCodeId(profileObj.getUser().getMeta().getTaxonomyPreference().getCode());
+								}
+
+							});
+				}
+		});
+		
 	}
 
 }

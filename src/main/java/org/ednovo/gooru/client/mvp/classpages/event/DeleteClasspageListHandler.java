@@ -28,21 +28,21 @@
 package org.ednovo.gooru.client.mvp.classpages.event;
 
 import com.google.gwt.event.shared.EventHandler;
-	/**
-	 * 
-	 * @fileName : DeleteClasspageListHandler.java
-	 *
-	 * @description : This deals with deletion of ClasspageListHandlers.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 27-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : DeleteClasspageListHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Aug 17, 2013
+ *
+ * @Author ramadevikrishnan
+ *
+ * @Reviewer:
+ */
 public interface DeleteClasspageListHandler extends EventHandler {
 
 	/**
@@ -51,7 +51,7 @@ public interface DeleteClasspageListHandler extends EventHandler {
 	 * 
 	 * @created_date : Aug 17, 2013
 	 * 
-	 * @description  : This method is used to delete the class page by id.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param classpageId

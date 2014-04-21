@@ -27,8 +27,8 @@
 				<g:Label ui:field="contentText" />
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.actionField}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="Ok" ui:field="okButton" styleName="primary" />
-				<g:Anchor text="Cancel" ui:field="cancelButton" styleName="collectionFormCancelButton" />
+				<gg:BlueButtonUc ui:field="okButton" styleName="primary" />
+				<g:Anchor ui:field="cancelButton" styleName="collectionFormCancelButton" />
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

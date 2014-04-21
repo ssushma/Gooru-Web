@@ -41,19 +41,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ResourceDragWithImgUc.java
+ * @author Search Team
  *
- * @description : This is to Set resource meta data such as title and image and to set stles for dragimage if it is dragable.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMirage {
 
@@ -89,7 +78,7 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 		this.res = ShelfCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		container.setWidgetPosition(dragImage, 0, 0);
+		container.setWidgetPosition(dragImage, 226, 0);
 		onDroppable(false);
 		setData(category, title);
 	}
@@ -103,26 +92,21 @@ public class ResourceDragWithImgUc extends FocusPanel implements IsDraggableMira
 		dragresourceTitle.setHTML(title);
 		ImageUtil.renderResourceImage(dragResourceImage, category);
 	}
-	/**
-	 * Adding styles to dragImage if it is droppable
-	 */
+
 	public void onDroppable(Boolean droppable) {
 		if (droppable) {
 			dragImage.setStyleName(res.css().plusImage());
 		} else {
 			dragImage.setStyleName(res.css().minusImage());
+//			dragImage.setStyleName(res.css().minusImage());
 		}
 	}
-	/**
-	 * To add styles to RootPanel
-	 */
+	
 	@Override
 	public void onStart() {
 		RootPanel.get().addStyleName(UcCBundle.INSTANCE.css().userDefaultSelectDisable());
 	}
-	/**
-	 * To remove styles from RootPanel
-	 */
+
 	@Override
 	public void onEnd() {
 		RootPanel.get().removeStyleName(UcCBundle.INSTANCE.css().userDefaultSelectDisable());

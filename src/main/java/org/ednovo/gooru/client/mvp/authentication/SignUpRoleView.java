@@ -48,11 +48,11 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SignUpRoleView extends PopupPanel {
+public class SignUpRoleView extends PopupPanel implements MessageProperties {
 
-	@UiField Label lblTitle, lblCancel;
+	@UiField Label lblTitle, lblCancel,teacherLbl,studentLbl,parentLbl,otherLbl;
 	
-	@UiField HTMLPanel teacherRg, studentRg, parentRg, otherRg;
+	@UiField HTMLPanel teacherRg, studentRg, parentRg, otherRg,oneMoreStepText,pleaseFillLbl;
 	
 	@UiField TextBoxWithPlaceholder loginTxtBox;
 
@@ -70,11 +70,7 @@ public class SignUpRoleView extends PopupPanel {
 
 	interface SignUpRoleViewUiBinder extends UiBinder<Widget, SignUpRoleView> {
 	}
-	/**
-	 * This method is used to display the SignUpRole popup.
-	 * @param email
-	 * @param userDo
-	 */
+
 	public SignUpRoleView(String email, UserDo userDo) {
 		this.res = SignUpCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -88,7 +84,12 @@ public class SignUpRoleView extends PopupPanel {
 		studentRb.addClickHandler(new StudentRbClick());
 		parentRb.addClickHandler(new ParentRbClick());
 		otherRb.addClickHandler(new OtherRbClick());
-		
+		oneMoreStepText.getElement().setInnerText(GL0898+GL_SPL_EXCLAMATION);
+		teacherLbl.setText(GL0416);
+		studentLbl.setText(GL0417);
+		parentLbl.setText(GL0418);
+		otherLbl.setText(GL0419);
+		submitRegistration.setText(GL0486);
 		teacherRg.add(teacherRb);
 		studentRg.add(studentRb);
 		parentRg.add(parentRb);
@@ -96,33 +97,16 @@ public class SignUpRoleView extends PopupPanel {
 		
 		submitRegistration.getElement().setId("submitRegistration");
 		loginTxtBox.addStyleName(res.css().loginTextBoxMargin());
-        loginTxtBox.getElement().setAttribute("placeholder", "Username");
-		lblTitle.setText(MessageProperties.GL0186 + MessageProperties.GL_SPL_EXCLAMATION);
+        loginTxtBox.getElement().setAttribute("placeholder", GL0423);
+        pleaseFillLbl.getElement().setInnerText(GL0953);
+		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
 
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();
 		
 	}
-	/**
-	 * 
-	 * @function onCancelClick 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : This method is used to hide the SignUpRole popup.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("lblCancel")
 	public void onCancelClick(ClickEvent clickEvent) {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
@@ -130,108 +114,38 @@ public class SignUpRoleView extends PopupPanel {
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		this.hide();
 	}
-    /**
-     * 
-     * @fileName : SignUpRoleView.java
-     *
-     * @description : This method will set the user role to teacher
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class TeacherRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			userRole = "Teacher";
 		}
 	}
-	/**
-     * 
-     * @fileName : SignUpRoleView.java
-     *
-     * @description : This method will set the user role to student
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class StudentRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			userRole = "Student";
 		}
 	}
-	/**
-     * 
-     * @fileName : SignUpRoleView.java
-     *
-     * @description : This method will set the user role to parent
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class ParentRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			userRole = "Parent";
 		}
 	}
-	/**
-     * 
-     * @fileName : SignUpRoleView.java
-     *
-     * @description : This method will set the user role to other
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	private class OtherRbClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			userRole = "Other";
 		}
 	}
-	/**
-     * 
-     * @fileName : SignUpRoleView.java
-     *
-     * @description : This method will be used to submit registration based on user role.
-     *
-     *
-     * @version : 1.0
-     *
-     * @date: 26-Dec-2013
-     *
-     * @Author : Gooru Team
-     *
-     * @Reviewer: Gooru Team
-     */
+
 	@UiHandler("submitRegistration")
 	public void onClickSubmitRegistration(ClickEvent event) {
-		checkUserAvailability(loginTxtBox.getText(), "byUsername");
+		checkUserAvailability(loginTxtBox.getText(), "username");
 	}
 	
 	/**

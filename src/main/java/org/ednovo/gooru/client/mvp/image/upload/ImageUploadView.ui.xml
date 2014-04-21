@@ -185,55 +185,69 @@
 		.cancelButtonOnUploadGooruImages:hover{
 			color: #87BADD;
 		}
+		.notWorkingPanel{
+			padding-top: 245px;
+			padding-left: 111px;
+		}
+		.notWorkingLbl {
+			float: left;
+		}
+		.readThisLbl {
+			float: left;
+			color: #1076bb;
+			padding-left: 6px;
+		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.imagePopupContainer}">
 		<g:FlowPanel ui:field="imagUploadFloPanel">
 			<g:FlowPanel styleName="{style.imagePopupLeft}">
-				<g:Label styleName="{style.imageUploadInfo}" text="Choose a picture from:" />
-				<g:Anchor styleName="{style.imageUploadList}" ui:field="imageUploadOnWebLbl" text="On the web" />
-				<g:Anchor styleName="{style.imageUploadList} " ui:field="imageUploadOnComputerLbl" text="My Computer" />
-				<g:Anchor styleName="{style.imageUploadList}" text="Gooru Images" ui:field="uploadGooruImages" />
+				<g:Label styleName="{style.imageUploadInfo}" ui:field="chooseText"/>
+				<g:Anchor styleName="{style.imageUploadList}" ui:field="imageUploadOnWebLbl"/>
+				<g:Anchor styleName="{style.imageUploadList} " ui:field="imageUploadOnComputerLbl"/>
+				<g:Anchor styleName="{style.imageUploadList}" ui:field="uploadGooruImages"/>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.imagePopupRight}">
 				<g:FlowPanel styleName="{style.imageUploadOnWeb}"
 					ui:field="imageUploadOnWebFloPanel">
 					<g:Label styleName="{style.uploadPicstureInfo}"
-						text="Upload a picture from a file on your computer" />
+						ui:field="uploadFromComputer"/>
 					<g:FormPanel ui:field="fileuploadForm" encoding="multipart/form-data" method="post">
 						<g:FileUpload ui:field="fileUpload" name="imageUpload" />
 					</g:FormPanel>
 					<g:Label
-						text="You can upload a JPG,GIF, or PNG file of size smaller than 5MB." />
-					<g:FlowPanel styleName="{style.imageUploadMinHeight}" />
+					ui:field="uploadLimitText"/>
+					<g:FlowPanel styleName="{style.imageUploadMinHeight}">
+					<g:HTMLPanel ui:field="notWorkingPanel" styleName="{style.notWorkingPanel}">
+						<g:Label
+						styleName="{style.notWorkingLbl}" ui:field="notWorkingLblText"/>
+						<g:Anchor target="_blank" ui:field="readThisLbl" styleName="{style.readThisLbl}"/>
+					</g:HTMLPanel>
+					</g:FlowPanel>
 					<g:FlowPanel styleName="{style.imageUploadAlign}">
-						<gg:BlueButtonUc text="Cancel" ui:field="onSystemCancelBtn" />
+						<gg:BlueButtonUc ui:field="onSystemCancelBtn" />
 					</g:FlowPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="{style.imageUploadOnUrl}"
 					ui:field="imageUploadOnUrlFloPanel">
-					<g:Label styleName="{style.uploadPicstureInfo}"
-						text="Upload a picture from a file on the web" />
+					<g:Label styleName="{style.uploadPicstureInfo}" ui:field="uploadFromWebText"/>
 					<g:FlowPanel styleName="{style.fileUploadUrl}">
-						<g:Label styleName="{style.textImageUrl}" text="Image URL" />
+						<g:Label styleName="{style.textImageUrl}" ui:field="imageURLLbl"/>
 						<g:FlowPanel styleName="{style.uploadUrlContainer}">
 							<g:TextBox styleName="{style.textboxonUrl}" ui:field="imageWebUploadUrlTxtBox" />
-							<gg:BlueButtonUc text="Upload" styleName="{style.uploadImageButtonOnWeb}" ui:field="uploadImageButtonOnWeb" />
+							<gg:BlueButtonUc styleName="{style.uploadImageButtonOnWeb}" ui:field="uploadImageButtonOnWeb" />
 							<gg:ErrorLabelUc ui:field="urlValidation"/>	
 						</g:FlowPanel>
 						<g:FlowPanel styleName="{style.imageUploadMinHeightUrl}">
-							<g:Label
-								text="Type the image URL in the text field above. If it's correct, you'll see an image preview here. Please upload images smaller than 5MB. "></g:Label>
+							<g:Label ui:field="typeImageurlText"></g:Label>
 						</g:FlowPanel>
-						<g:Label styleName="{style.infoUrlUpload}"
-							text="Remember, using others' images on the web without their permission may be bad manners or worse, copyright infringement." />
+						<g:Label styleName="{style.infoUrlUpload}" ui:field="infoUrlUploadText"/>
 						<g:FlowPanel styleName="{style.imageUploadAlign}">
-							<gg:BlueButtonUc text="Cancel" ui:field="onWebCancelBtn" />
+							<gg:BlueButtonUc ui:field="onWebCancelBtn" />
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="{style.uploadGooruImagesContainer}" ui:field="uploadGooruImagesContainer">
-					<g:Label styleName="{style.uploadPicstureInfo}"
-						text="Choose an image from the following options:"/>
+					<g:Label styleName="{style.uploadPicstureInfo}" ui:field="chooseFromText"/>
 						<g:FlowPanel styleName="{style.defaultImagesContainer}" ui:field="gooruProfileDefaultImagesContainer">
 							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Arts.png"></defaultImage:GooruImagesView>
 							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Geography.png"></defaultImage:GooruImagesView>
@@ -243,8 +257,8 @@
 							<defaultImage:GooruImagesView imageUrl="./images/profile_default_Images/Sports.png"></defaultImage:GooruImagesView>
 						</g:FlowPanel>
 					<g:FlowPanel>
-						<g:Button styleName="{style.okButtonOnUploadGooruImages}" ui:field="okButtonOnUploadGooruImages">OK</g:Button>
-						<g:Label styleName="{style.cancelButtonOnUploadGooruImages}" ui:field="cancelButtonOnUploadGooruImages">Cancel</g:Label>
+						<g:Button styleName="{style.okButtonOnUploadGooruImages}" ui:field="okButtonOnUploadGooruImages"></g:Button>
+						<g:Label styleName="{style.cancelButtonOnUploadGooruImages}" ui:field="cancelButtonOnUploadGooruImages"></g:Label>
 					</g:FlowPanel>
 				</g:FlowPanel>
 			</g:FlowPanel>

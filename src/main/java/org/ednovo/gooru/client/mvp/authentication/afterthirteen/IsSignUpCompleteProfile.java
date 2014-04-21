@@ -28,20 +28,7 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
 import com.google.gwt.user.client.ui.Label;
 import com.gwtplatform.mvp.client.PopupView;
-/**
- * 
- * @fileName : IsSignUpCompleteProfile.java
- *
- * @description : Acts as a bridge between the Presenter and view.
- * 
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface IsSignUpCompleteProfile extends PopupView, IsViewWithHandlers<SignUpCompleteProfileUiHandler> {
 	public void displayView();
 	public void setUpdateProfileImage(String imageUrl);

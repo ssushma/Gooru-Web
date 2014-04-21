@@ -6,8 +6,8 @@
 	    <g:HTMLPanel styleName="{toolTip.hoverPopupArrow}"></g:HTMLPanel>
 	    <g:FlowPanel styleName="{toolTip.organizePopupTextContainer}">
 	        <g:FlowPanel styleName="{toolTip.organizeTextContainer}">
-	        	<g:HTMLPanel styleName="{toolTip.organizeText}">Organize</g:HTMLPanel>
-	            <g:HTMLPanel styleName="{toolTip.organizeRemainigText}">resources you've discovered into quizzes or collections, which are customizable playlists.</g:HTMLPanel>
+	        	<g:HTMLPanel styleName="{toolTip.organizeText}" ui:field="organizeText"></g:HTMLPanel>
+	            <g:HTMLPanel styleName="{toolTip.organizeRemainigText}" ui:field="customizableText"></g:HTMLPanel>
 	            
 	        </g:FlowPanel>
 	     </g:FlowPanel>

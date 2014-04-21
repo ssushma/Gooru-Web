@@ -29,21 +29,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : ResourceMetaInfoDo.java
- *
- * @description :This class is used as data object. 
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class ResourceMetaInfoDo extends ResourceDo {
 
@@ -57,33 +43,31 @@ public class ResourceMetaInfoDo extends ResourceDo {
 	Integer videoDuration;
 	
 	List<String> images;
+	
+	public ResourceMetaInfoDo(){}
 
-	/** 
-	 * This method is to get the title
-	 */
 	public String getTitle() {
 		return title;
 	}
 
-	/** 
-	 * This method is to set the title
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/** 
-	 * This method is to get the description
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/** 
-	 * This method is to set the description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 	/** 
@@ -100,17 +84,4 @@ public class ResourceMetaInfoDo extends ResourceDo {
 		this.videoDuration = videoDuration;
 	}
 
-	/** 
-	 * This method is to get the images
-	 */
-	public List<String> getImages() {
-		return images;
-	}
-
-	/** 
-	 * This method is to set the images
-	 */
-	public void setImages(List<String> images) {
-		this.images = images;
-	}
 }

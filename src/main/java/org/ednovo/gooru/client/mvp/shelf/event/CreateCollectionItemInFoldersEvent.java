@@ -28,19 +28,10 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : CreateCollectionItemInFoldersEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user clicks on create collection item in the folders it will handle the event.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class CreateCollectionItemInFoldersEvent extends GwtEvent<CreateCollectionItemInFoldersHandler> {
 

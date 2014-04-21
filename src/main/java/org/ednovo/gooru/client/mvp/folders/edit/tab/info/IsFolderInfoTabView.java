@@ -31,18 +31,10 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+
 /**
- * @fileName : IsFolderInfoTabView.java
+ * @author Search Team
  *
- * @description :  Acts as a bridge between the Presenter and view.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsFolderInfoTabView extends IsViewWithHandlers<FolderInfoTabUiHandlers> {
 	

@@ -28,19 +28,8 @@ import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 
 /**
- * 
- * @fileName : IsSocialShareSmallView.java
+ * @author Gooru Team
  *
- * @description : This is the interface for SocialShareSmallView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsSocialShareSmallView extends IsChildView<SocialShareSmallPresenter>, IsDraggable {
 

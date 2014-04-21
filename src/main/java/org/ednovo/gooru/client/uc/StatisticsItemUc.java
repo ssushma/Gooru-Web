@@ -28,19 +28,10 @@ import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
+
 /**
- * @fileName : StatisticsItemUc.java
+ * @author Search Team
  *
- * @description : This class is used to show the statistics items.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class StatisticsItemUc  extends FlowPanel{
 	

@@ -28,27 +28,9 @@ package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-/**
- * 
- * @fileName : SignUpAfterThirteenPresenter.java
- *
- * @description : The class <code>SignUpAfterThirteenPresenter </code> will register the all event handlers and it will display the Popup.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SignUpAfterThirteenPresenter extends PresenterWidget<IsAfterThirteen> implements SignUpAfterThirteenUiHandler{
 	
-	/**
-	 * Parameterized constructor for initialize and setting the ui handlers .
-	 * @param eventBus
-	 * @param view
-	 */
 	@Inject
 	public SignUpAfterThirteenPresenter(
 			EventBus eventBus,IsAfterThirteen view) {
@@ -65,9 +47,7 @@ public class SignUpAfterThirteenPresenter extends PresenterWidget<IsAfterThirtee
 	public void onReveal() {
 		super.onReveal();
 	}
-	/**
-	 * This method is used to get the view.
-	 */
+
 	@Override
 	public void displayView() {
 		getView().displayView();

@@ -32,8 +32,10 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiConstructor;
@@ -46,7 +48,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SummaryQuestionView extends Composite{
+public class SummaryQuestionView extends Composite implements MessageProperties{
 	
 	@UiField HTML questionText,questionExplanation;
 	@UiField HTMLPanel questionAnswerContainer;
@@ -54,6 +56,10 @@ public class SummaryQuestionView extends Composite{
 	@UiField Image questionThumbnail;
 	private CollectionItemDo collectionItemDo=null;
 	private AttemptedAnswersDo attemptedAnswersDo=null;
+	
+	private static final String FIB_SEPARATOR = GL0885;
+	
+	public boolean fibAnsIsCorrect=true;
 	
 	private static SummaryQuestionViewUiBinder uiBinder = GWT.create(SummaryQuestionViewUiBinder.class);
 
@@ -63,6 +69,7 @@ public class SummaryQuestionView extends Composite{
 	
 	public SummaryQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
+	
 	}
 	
 	@UiConstructor
@@ -72,10 +79,22 @@ public class SummaryQuestionView extends Composite{
 		this.collectionItemDo=collectionItemDo;
 		this.attemptedAnswersDo=attemptedAnswersDo;
 		renderSummaryQuestionView();
+		questionThumbnail.setUrl(getQuestionImage());
 	}
 	
 	protected void renderSummaryQuestionView(){
-		questionText.setHTML("Q:"+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+		if(collectionItemDo.getResource().getType()==4){
+			questionSerialNum.setText(""+collectionItemDo.getItemSequence());
+			if(attemptedAnswersDo!=null){	
+				String fibQuest = renderFibQuestion(attemptedAnswersDo);
+				SummaryAnswerView summaryAnwerView=new SummaryAnswerView(fibQuest,fibAnsIsCorrect); 
+				questionAnswerContainer.add(summaryAnwerView);
+			}else{
+				questionText.setHTML(GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
+			}
+			return;
+		}
+		questionText.setHTML(GL0702+removeHtmlTags(collectionItemDo.getResource().getQuestionText()));
 		questionExplanation.setHTML(removeHtmlTags(collectionItemDo.getResource().getExplanation()));
 		questionSerialNum.setText(""+collectionItemDo.getItemSequence());
 		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==3){
@@ -96,37 +115,84 @@ public class SummaryQuestionView extends Composite{
 					sequenceNum++;
 				}
 			}
+		}else if(collectionItemDo.getResource().getType()==6){
+			if(attemptedAnswersDo!=null){
+				if(attemptedAnswersDo.getAnswersText()!=null && !attemptedAnswersDo.getAnswersText().equals("")){
+					SummaryAnswerView summaryAnwerView=new SummaryAnswerView(attemptedAnswersDo); 
+					questionAnswerContainer.add(summaryAnwerView);
+				}
+			}
 		}
+	}
+	
+	public String renderFibQuestion(AttemptedAnswersDo attemptedAnswersDo){ 
+		String[] fibArray = this.collectionItemDo.getResource().getQuestionText().split(FIB_SEPARATOR);
+		String fibQuestionTxt = "";
+		int j=0;
+		int answerArraySize = this.collectionItemDo.getResource().getAnswers().size();
+		for(int i = 0; i < fibArray.length; i++) {
+			fibQuestionTxt = fibQuestionTxt + fibArray[i];
+			if(i<answerArraySize) {
+				String correctAnswer=getQuestionAnswerDo(j)!=null?getQuestionAnswerDo(j).getAnswerText():"";
+				String enteredAnswer=attemptedAnswersDo.getFibAnswersList()[j];
+				if(correctAnswer.equalsIgnoreCase(enteredAnswer)){
+					fibQuestionTxt = fibQuestionTxt + "<span style=\"border-bottom:1px solid #515151\">"+enteredAnswer+"</span>";
+				}else{
+					fibAnsIsCorrect=false;
+					fibQuestionTxt = fibQuestionTxt + "<span style=\"border-bottom:1px solid #515151;text-decoration: line-through;padding-right:10px\">"+enteredAnswer+"</span><span style=\"border-bottom:1px solid #515151\">"+correctAnswer+"</span>";
+				}
+				j++;
+			}
+		}
+		return fibQuestionTxt;
+//		questionText.setHTML(fibQuestionTxt);
 	}
 	
 	@UiHandler("questionThumbnail")
 	public void onErrorResourceImage(ErrorEvent errorEvent){
 		questionThumbnail.setUrl("images/resource_trans.png");
 		questionThumbnail.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().questionResourceDefault());
+		questionThumbnail.getElement().getStyle().setFloat(Float.LEFT);
 	}
 	
 	@Override
 	public void onLoad(){
-		questionThumbnail.setUrl(getQuestionImage());
+		if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
+			questionThumbnail.setUrl(getQuestionImage());
+		}
 	}
 	private String getQuestionImage(){
-		String thumbnailImage="";
+		String thumbnailImage="images/questiondefault.png";
 		String assetName="";
 		try{
 			if(collectionItemDo.getResource().getAssets()!=null&&collectionItemDo.getResource().getAssets().size()>0){
 				assetName=collectionItemDo.getResource().getAssets().get(0).getAsset().getName();
 				thumbnailImage=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+assetName;
 			}else{
+				if(collectionItemDo.getResource().getThumbnails().getUrl()!=null)
 				thumbnailImage=collectionItemDo.getResource().getThumbnails().getUrl();
 			}
 		}catch(Exception e){
-			
 		}
-		return thumbnailImage;
+		return thumbnailImage!=null?thumbnailImage:"images/questiondefault.png";
 	}
 	private String removeHtmlTags(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return html;
 	}
-		
+	
+	private QuestionAnswerDo getQuestionAnswerDo(int index){
+		TreeSet<QuestionAnswerDo> answersList=this.collectionItemDo.getResource().getAnswers();
+		Iterator<QuestionAnswerDo> answersIterator=answersList.iterator();
+		QuestionAnswerDo questionAnswerDo=null;
+		int i=0;
+		while(answersIterator.hasNext()){
+			questionAnswerDo=answersIterator.next();
+			if(index==i){
+				return questionAnswerDo;
+			}
+			i++;
+		}
+		return questionAnswerDo;
+	}
 }

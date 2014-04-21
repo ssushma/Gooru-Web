@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"  xmlns:gui="urn:import:org.ednovo.gooru.client.ui">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsCBundle"
+		field="collaborators" />
+	<g:HTMLPanel ui:field="panelCollaboratorsListContainer" styleName="{collaborators.css.collabListPanel}">
+		<gui:HTMLEventPanel styleName="{collaborators.css.collaboratorYou}" ui:field="panelYou">
+			<g:Image styleName="{collaborators.css.photo}" ui:field="imgYourPhoto" />
+			<g:Label styleName="{collaborators.css.name}" ui:field="lblYou" />
+			<g:Button styleName="secondary {collaborators.css.remove}" ui:field="btnRemoveFromList" />
+		</gui:HTMLEventPanel>
+		<gui:HTMLEventPanel styleName="{collaborators.css.panelCollaborators}" ui:field="panelCollaborators">					
+		    <g:Label styleName="radio-normal-icon {collaborators.css.rdPosition}" ui:field="lblRadioButton"/>
+			<g:Image styleName="{collaborators.css.radioButtonImg}" ui:field="imgProfileImage"/>
+			<g:Label styleName="{collaborators.css.usernameCss}" ui:field="lblUserName" />
+			<g:Label styleName="{collaborators.css.emailIdCss}" ui:field="lblEmailId" />
+			<g:Button styleName="secondary {collaborators.css.btnRemoveCollab}" ui:field="btnRemoveCollab"/>
+		</gui:HTMLEventPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

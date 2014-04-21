@@ -29,18 +29,10 @@ package org.ednovo.gooru.server.form;
 
 import org.ednovo.gooru.server.serializer.JsonSerializer;
 import org.restlet.data.Form;
+
 /**
- * @fileName : ResourceFormFactory.java
+ * @author Search Team
  *
- * @description : This class is used to set the from data.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceFormFactory {
 	
@@ -135,6 +127,33 @@ public class ResourceFormFactory {
 		if(action != null){
 			form.add("action", action);
 		}
+		return form;
+	}
+	
+	/**
+	 * Set collection meta info to {@link Form}
+	 * @param title of the collection
+	 * @param description of the collection
+	 * @param grade of the collection
+	 * @param sharing of the collection
+	 * @param vocabulary of the collection
+	 * @param taxonomyCode of the collection
+	 * @param updateTaxonomyByCode that codeId or code
+	 * @param action add or delete
+	 * @return form
+	 */
+	public static Form updateCollectionInfo(String title, String keyPointsVal) {
+		Form form = new Form();
+
+		
+		String titleName = "title";
+		String keyPointsKey = "keyPoints";
+		String dataObj = "{\""+titleName+"\" : " + title +",\""+keyPointsKey+"\" : " + keyPointsVal +"}";
+		
+		String objectName = "collection";
+		String data = "{\""+objectName+"\" : " + JsonSerializer.serialize(dataObj) +"}";
+		
+		form.add("data", data);
 		return form;
 	}
 	

@@ -26,29 +26,20 @@ package org.ednovo.gooru.client.mvp.home.register;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : RegistrationWelcomePopup.java
+ * @author Search Team
  *
- * @description :  Creates welcome popup after successful registration 
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class RegistrationWelcomePopup extends Composite  {
+public class RegistrationWelcomePopup extends Composite implements MessageProperties {
 
 	private static RegistrationWelcomePopupUiBinder uiBinder = GWT.create(RegistrationWelcomePopupUiBinder.class);
 
@@ -57,9 +48,11 @@ public class RegistrationWelcomePopup extends Composite  {
 	@UiField
 	BlueButtonUc registerWelcomeUc;
 	
+	@UiField Label getStartedText,happyStudyingText;
+	
 	private AppPopUp appPopUp;
 	
-	private static final String READY_TO_USE_GOORU = "You're now ready to use Gooru!";
+	private static final String READY_TO_USE_GOORU = GL1190+GL_SPL_EXCLAMATION;
 
 	/**
 	 * Class constructor, creates welcome popup after successful registration 
@@ -71,10 +64,11 @@ public class RegistrationWelcomePopup extends Composite  {
 		appPopUp.show();
 		appPopUp.center();
 		registerWelcomeUc.getElement().setId("btnRegisterWelcome");
+		getStartedText.setText(GL1188+GL_SPL_SEMICOLON);
+		happyStudyingText.setText(GL1189+GL_SPL_EXCLAMATION);
+		registerWelcomeUc.setText(GL0190);
 	}
-	/**
-	 * It will return the representation of a view as the widget
-	 */
+	
 	@Override
 	public Widget asWidget() {
 		return appPopUp;

@@ -30,19 +30,10 @@ import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.TextBox;
+
 /**
- * @fileName : ValidTextUc.java
+ * @author Search Team
  *
- * @description : This class is used to validate textbox.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ValidTextUc extends FlowPanel {
 	private TextBox textBox;
@@ -62,9 +53,7 @@ public class ValidTextUc extends FlowPanel {
 		this.add(errorLabel);
 		setErrorVisible(false);
 	}
-	/**
-	 * This inner class will hanles the focus event.
-	 */
+
 	private class OnTextBoxFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -72,9 +61,7 @@ public class ValidTextUc extends FlowPanel {
 			addTextStyle(RegisterCBundle.INSTANCE.css().userRegistrationText());
 		}
 	}
-	/**
-	 * This will set the style name.
-	 */
+
 	public void addTextStyle(String textStyle) {
 		textBox.setStyleName(textStyle);
 	}
@@ -82,33 +69,23 @@ public class ValidTextUc extends FlowPanel {
 	/*public void removeTextstyle(String textStyle) {
 		textBox.removeStyleName(textStyle);
 	}*/
-	/**
-	 * This will set the error visiblity
-	 */
+
 	public void setErrorVisible(boolean visible) {
 		errorLabel.setVisible(visible);
 	}
-	/**
-	 * This will get the user text
-	 */
+
 	public String getUserText() {
 		return textBox.getText();
 	}
-	/**
-	 * This will set the user text
-	 */
+
 	public void setUserText(String userText) {
 		this.textBox.setText(userText);
 	}
-	/**
-	 * This will get the error text
-	 */
+
 	public String getErrText() {
 		return errorLabel.getText();
 	}
-	/**
-	 * This will set the error text
-	 */
+
 	public void setErrText(String errText) {
 		this.errorLabel.setText(errText);
 	}

@@ -42,13 +42,13 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
+import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.PostSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.PreSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent.DROP_AREA;
-import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.SearchPaginationEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
@@ -60,13 +60,14 @@ import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
@@ -76,19 +77,12 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : AbstractSearchPresenter.java
- *
- * @description : This is the presenter class for AbstractSearchView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @param <T>
+ * @param <C>
+ * @param <V>
+ * @param <P>
  */
 public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo, V extends IsSearchView<T>, P extends Proxy<?>> extends BasePlacePresenter<IsSearchView<T>, P> implements SearchUiHandlers {
 
@@ -140,16 +134,12 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
 		}
 	}
-	/**
-	 * To fire RevealContentEvent.
-	 */
+
 	@Override
 	protected void revealInParent() {
 		RevealContentEvent.fire(this, SearchRootPresenter.TYPE_VIEW, this);
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -206,9 +196,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			});
 		}
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	protected void onReveal() {	
 		super.onReveal();
@@ -216,9 +204,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -261,9 +247,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.NONE));
 	}
-	/**
-	 * This method is used to read url parameters.
-	 */
+
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
@@ -275,9 +259,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 //			}
 		}
 	}
-	/**
-	 * This method is used to initiate search.
-	 */
+
 	@Override
 	public void initiateSearch() {
 		AppClientFactory.fireEvent(new PreSearchEvent(getSearchDo()));
@@ -288,25 +270,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			getSearchAsyncCallback().execute(getSearchDo());
 		}
 	}
-	/**
-	 * 
-	 * @function setPageTitle 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set page title.
-	 * 
-	 * 
-	 * @parm(s) : @param searchQuery
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setPageTitle(String searchQuery) {
 		String pageToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		if(pageToken.equals(PlaceTokens.COLLECTION_SEARCH)) {
@@ -345,47 +309,11 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		}
 		return filters;
 	}
-	/**
-	 * 
-	 * @function getSearchAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :Returns searchAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchAsyncCallback<SearchDo<T>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchAsyncCallback<SearchDo<T>> getSearchAsyncCallback() {
 		return searchAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setSearchAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : To set searchAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @param searchAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSearchAsyncCallback(SearchAsyncCallback<SearchDo<T>> searchAsyncCallback) {
 		this.searchAsyncCallback = searchAsyncCallback;
 	}
@@ -404,9 +332,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	public void setSearchDo(SearchDo<T> searchDo) {
 		this.searchDo = searchDo;
 	}
-	/**
-	 * @return searchService
-	 */
+
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
@@ -416,27 +342,49 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	 */
 	private void initParam() {
 		getSearchDo().setSearchResults(null);
-		getSearchDo().setQuery(getPlaceManager().getRequestParameter(QUERY));
+		String queryVal = "";
+		if(getPlaceManager().getRequestParameter(QUERY) != null)
+		{
+			queryVal = getPlaceManager().getRequestParameter(QUERY);	
+			queryVal = queryVal.replaceAll("%5C1", "&");
+		}
+		try
+		{
+		queryVal = URL.decodeQueryString(queryVal);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		getSearchDo().setQuery(queryVal);
 		getSearchDo().setPageNum(getPlaceManager().getRequestParameterAsInt(PAGE_NUM));
 		getSearchDo().setPageSize(getPlaceManager().getRequestParameterAsInt(PAGE_SIZE));
-//		getSearchDo().setNotFriendly(getPlaceManager().getRequestParameter(QUERY));
 		getSearchDo().setFilters(getSearchFilters());
 	}
-	/**
-	 * This is used to assign page numbers.
-	 */
+
 	@Override
 	public void paginateSearch(int pageNum) {
-		String query = getPlaceManager().getRequestParameter(QUERY);
+		String queryVal = "";
+		if(getPlaceManager().getRequestParameter(QUERY) != null)
+		{
+			queryVal = getPlaceManager().getRequestParameter(QUERY);	
+			queryVal = queryVal.replaceAll("%5C1", "&");
+		}
+		try
+		{
+		queryVal = URL.decodeQueryString(queryVal);
+		}
+		catch(Exception ex)
+		{
+			
+		}
 		if (getViewToken().equalsIgnoreCase(getCurrentPlaceToken())) {
 			getSearchDo().setPageNum(pageNum);
-			getSearchDo().setQuery(query);
+			getSearchDo().setQuery(queryVal);
 			onSearchRequest(null);
 		}
 	}
-	/**
-	 * This is used to refresh search.
-	 */
+
 	@Override
 	public void refreshSearch(String query) {
 		getSearchDo().setQuery(query);
@@ -444,21 +392,16 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		getSearchDo().setPageSize(null);
 		onSearchRequest(null);
 	}
-	/**
-	 * This is used to switch search.
-	 */
+
 	@Override
 	public void switchSearch(String viewToken,String searchQuery) {
-		String query = getPlaceManager().getRequestParameter(QUERY);
 		getSearchDo().setPageNum(null);
 		getSearchDo().setPageSize(null);
 		getSearchDo().setNotFriendly(null);
 		getSearchDo().setQuery(searchQuery);
 		onSearchRequest(viewToken);
 	}
-	/**
-	 * To assign search query
-	 */
+
 	@Override
 	public void onSearch(String query) {
 		getSearchDo().setPageNum(null);
@@ -510,74 +453,30 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			getPlaceManager().revealPlace(viewToken, params, true);
 		}
 	}
-	/**
-	 * 
-	 * @function getStandardSuggestionAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns standardSuggestionAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchAsyncCallback<SearchDo<CodeDo>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchAsyncCallback<SearchDo<CodeDo>> getStandardSuggestionAsyncCallback() {
 		return standardSuggestionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setStandardSuggestionAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :standardSuggestionAsyncCallback to set.
-	 * 
-	 * 
-	 * @parm(s) : @param standardSuggestionAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setStandardSuggestionAsyncCallback(SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionAsyncCallback) {
 		this.standardSuggestionAsyncCallback = standardSuggestionAsyncCallback;
 	}
-	/**
-	 * returns sourceSuggestionAsyncCallback
-	 */
+
 	public SearchAsyncCallback<SearchDo<String>> getSourceSuggestionAsyncCallback() {
 		return sourceSuggestionAsyncCallback;
 	}
-	/**
-	 * sourceSuggestionAsyncCallback to set
-	 */
+
 	public void setSourceSuggestionAsyncCallback(SearchAsyncCallback<SearchDo<String>> sourceSuggestionAsyncCallback) {
 		this.sourceSuggestionAsyncCallback = sourceSuggestionAsyncCallback;
 	}
-	/**
-	 * To get Standard Suggestion AsyncCallback.
-	 */
+
 	@Override
 	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
 		if (isCurrentView()) {
 			getStandardSuggestionAsyncCallback().execute(searchDo);
 		}
 	}
-	/**
-	 * To get Source Suggestion AsyncCallback.
-	 */
+
 	@Override
 	public void requestSourceSuggestion(SearchDo<String> searchDo) {
 		if (isCurrentView()) {
@@ -586,29 +485,23 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	}
 
 	protected abstract void requestSearch(SearchDo<T> searchDo, SearchAsyncCallback<SearchDo<T>> searchAsyncCallback);
-	/**
-	 * To register drop controller.
-	 */
+
 	@Override
 	public void registerDropController(ResourceDropController dropController, DROP_AREA type) {
 		if (isCurrentView()) {
 			getView().registerDropController(dropController, type);
 		}
 	}
-	/**
-	 * To unregister drop controller.
-	 */
+
 	@Override
 	public void unregisterDropController(ResourceDropController dropController, DROP_AREA dropType) {
 		if (isCurrentView()) {
 			getView().unregisterDropController(dropController, dropType);
 		}
 	}
-	/**
-	 * To get shelf collections
-	 */
+
 	@Override
-	public void consumeShelfCollections(List<CollectionDo> shelfCollections) {
+	public void consumeShelfCollections(List<FolderDo> shelfCollections) {
 		if (isCurrentView()) {
 			getView().setShelfCollections(shelfCollections);
 		}
@@ -628,9 +521,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	public void setStandardSuggestionInfoAsyncCallback(SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionInfoAsyncCallback) {
 		this.standardSuggestionInfoAsyncCallback = standardSuggestionInfoAsyncCallback;
 	}
-	/**
-	 * To get Standard SuggestionInfo AsyncCallback.
-	 */
+
 	@Override
 	public void requestStandardsSuggestionInfo(SearchDo<CodeDo> searchDo) {
 		if (isCurrentView()) {

@@ -41,19 +41,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ResourceDragUc.java
+ * @author Search Team
  *
- * @description : This file is used to call setdata method to set resource title and image and to add and remove styles to RootPanel
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceDragUc extends FocusPanel implements IsDraggableMirage {
 
@@ -101,21 +90,15 @@ public class ResourceDragUc extends FocusPanel implements IsDraggableMirage {
 		dragresourceTitle.setHTML(title);
 		ImageUtil.renderResourceImage(dragResourceImage, category);
 	}
-	/**
-	 * method onDroppable()
-	 */
+
 	public void onDroppable(Boolean droppable) {
 	}
-	/**
-	 * To add styles to RootPanel
-	 */
+
 	@Override
 	public void onStart() {
 		RootPanel.get().addStyleName(UcCBundle.INSTANCE.css().userMoveSelectDisable());
 	}
-	/**
-	 * To remove styles from RootPanel
-	 */
+
 	@Override
 	public void onEnd() {
 		RootPanel.get().removeStyleName(UcCBundle.INSTANCE.css().userMoveSelectDisable());

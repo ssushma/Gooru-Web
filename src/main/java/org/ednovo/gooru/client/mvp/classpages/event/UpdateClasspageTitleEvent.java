@@ -28,18 +28,18 @@ import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * 
- * @fileName : UpdateClasspageTitleEvent.java
+ * @fileName : ClearClasspageListEvent.java
  *
- * @description : This file is used to Update Classpage Title Handler Events.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Aug 20, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class UpdateClasspageTitleEvent extends GwtEvent<UpdateClasspageTitleHandler> {
 
@@ -49,25 +49,17 @@ public class UpdateClasspageTitleEvent extends GwtEvent<UpdateClasspageTitleHand
 	private String classpageId =null;
 	private String classpageTitle= null;
 	
-	/**
-	 * Class Constructor
-	 * @param classpageId
-	 * @param classpageTitle
-	 */
+	
 	public UpdateClasspageTitleEvent(String classpageId, String classpageTitle) {
 		this.classpageId = classpageId;
 		this.classpageTitle = classpageTitle;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<UpdateClasspageTitleHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(UpdateClasspageTitleHandler handler) {
 		handler.updateClasspageTitle(classpageId, classpageTitle);

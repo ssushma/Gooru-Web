@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import org.ednovo.gooru.client.ui.TinyMCE;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -43,22 +44,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : AddHintsView.java
- *
- * @description :This class is used to Add hints view . 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
+
+public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers,MessageProperties{
 
 	@UiField Label hintNumLbl;
 	@UiField TinyMCE hintTextBox;
@@ -80,26 +67,10 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		this.hintText=hintText;
 		showHintsMessage(widgetsCount);
 	}
-/**
- * 
- * @function showHintsMessage 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Show Hints.
- * 
- * 
- * @parm(s) : @param widgetsCount
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
 	public void showHintsMessage(int widgetsCount){
 		if(widgetsCount==1){
 			hintNumLbl.setText(""+widgetsCount);
-			hintsTextLblVal.setText("Hints (hints will show up in this order)");
+			hintsTextLblVal.setText(GL0859);
 		}
 		else{
 			hintNumLbl.setText(""+widgetsCount);
@@ -108,9 +79,6 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 		hintDelLbl.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(hintDelLbl);
 	}
-	/**
-	 * This method is used to Execute onloading..
-	 */
 	@Override
 	public void onLoad(){
 		super.onLoad();
@@ -121,22 +89,6 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 			}
         });
 	}
-/**
- * 
- * @function setHintText 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method is used to Set Hint Text
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
 	 public void setHintText(){
 		  if(hintText!=null){
 			  hintTextBox.setText(hintText);
@@ -148,17 +100,11 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 	}
 	public static Binder obj = GWT.create(Binder.class); 
 	
-	/**
-	 * This method is used to Execute on Mouse over.
-	 */
 	@Override
 	public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
 		// TODO Auto-generated method stub
 		return addDomHandler(handler, MouseOverEvent.getType());
 	}
-	/**
-	 * This method is used to Execute on Mouse out.
-	 */
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		// TODO Auto-generated method stub

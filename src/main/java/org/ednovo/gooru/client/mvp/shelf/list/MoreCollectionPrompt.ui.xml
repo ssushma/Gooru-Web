@@ -21,15 +21,15 @@
 		}
 	</ui:style>
 	<g:FlowPanel>
-		<g:Label styleName="{style.promptMessage}">It looks like there are a lot of resources in this collection!</g:Label>
+		<g:Label styleName="{style.promptMessage}" ui:field="manyResourcesText"></g:Label>
 		<g:FlowPanel styleName="{style.promptImage}"></g:FlowPanel>
 		<g:FlowPanel styleName="{style.promptMessageTip}">
-			<g:Label styleName="{style.promptBoldMessage}">Tip: </g:Label>
-			<g:Label>Try separating your collection into two</g:Label>
+			<g:Label styleName="{style.promptBoldMessage}" ui:field="tipLabelText"></g:Label>
+			<g:Label ui:field="splitCollectionText"></g:Label>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{style.promptButtons}">
-			<gg:BlueButtonUc text="ok" ui:field="okButton" styleName="overRideBlueButton"></gg:BlueButtonUc>
-			<g:Anchor ui:field="cancelButton" text="Cancel" styleName="collectionFormCancelButton"></g:Anchor>
+			<gg:BlueButtonUc ui:field="okButton" styleName="overRideBlueButton"></gg:BlueButtonUc>
+			<g:Anchor ui:field="cancelButton" styleName="collectionFormCancelButton"></g:Anchor>
 		</g:FlowPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 

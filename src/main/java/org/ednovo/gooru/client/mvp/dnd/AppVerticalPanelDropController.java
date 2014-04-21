@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.mvp.dnd;
 import com.allen_sauer.gwt.dnd.client.DragContext;
 import com.allen_sauer.gwt.dnd.client.drop.VerticalPanelDropController;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 /**
- * @fileName : AppVerticalPanelDropController.java
- *
- * @description : This class is used to make the vertical panel with drop controller.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AppVerticalPanelDropController extends VerticalPanelDropController {
 
@@ -52,9 +44,7 @@ public class AppVerticalPanelDropController extends VerticalPanelDropController 
 	public AppVerticalPanelDropController(VerticalPanel dropTarget) {
 		super(dropTarget);
 	}
-	/**
-	 * This method will hit will element/widget or dropped on droppable container.
-	 */
+
 	@Override
 	public void onDrop(DragContext context) {
 		if (context.draggable instanceof Draggable) {

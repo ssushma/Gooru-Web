@@ -5,17 +5,17 @@
 	<g:HTMLPanel>
 		<g:HTMLPanel styleName="{SocialShare.classPageEmailPopupContainer}">
 			<g:HTMLPanel styleName="{SocialShare.classPageEmailHeaderContent}">
-				<g:HTMLPanel styleName="{SocialShare.classPageEmailHeaderDesc}">Email to Friend</g:HTMLPanel>
+				<g:HTMLPanel styleName="{SocialShare.classPageEmailHeaderDesc}" ui:field="emailToFriendText"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{SocialShare.classPageEmailMainContainer}">
-				<g:HTMLPanel styleName="{SocialShare.classPageEmailBlueText}">Thank You! Your email was sent to</g:HTMLPanel>
+				<g:HTMLPanel styleName="{SocialShare.classPageEmailBlueText}" ui:field="emailSentText"></g:HTMLPanel>
 				<g:Label styleName="{SocialShare.classPageEmailDescText}" ui:field="toEmailLbl"></g:Label>
 				<g:HTMLPanel styleName="{SocialShare.clear}"></g:HTMLPanel>
 				<g:HTMLPanel styleName="{SocialShare.classPageEmailButtonOuterDiv}">
 					<g:HTMLPanel styleName="{SocialShare.classPageEmailButtonContainer}">
 						<g:HTMLPanel styleName="{SocialShare.classPageEmailButtonBg}">
 							<g:HTMLPanel styleName="{SocialShare.classPageEmailButtonTitle}">
-								<g:Label styleName="{SocialShare.classPageEmailOktext}" ui:field="okLbl">Ok</g:Label>
+								<g:Label styleName="{SocialShare.classPageEmailOktext}" ui:field="okLbl"></g:Label>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 

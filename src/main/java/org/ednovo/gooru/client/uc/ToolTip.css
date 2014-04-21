@@ -60,3 +60,77 @@ margin: 0 auto;
 	position: relative;
 	top: -4px;
 }
+/* adedd for standard pref */
+.tooltipContainer {
+	position: absolute;
+}
+
+.arrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+	margin: auto;
+	border-top: none;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	top: -9px;
+	border-top: none;
+	z-index: 100;
+	left:0;
+	right:0;
+}
+
+.tooltipContent {
+	text-align: left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 5px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	/* border-radius: 4px; */
+	-moz-border-radius: 4px;
+	/* -webkit-border-radius: 4px; */
+	position: relative;
+	top: -10px;
+	width: 163px;
+	float: left;
+	left: -7px;
+}
+
+.tooltipContentTitle {
+	padding-bottom: 10px;
+}
+.tooltipContentorganize {
+	text-align: left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 5px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	/* border-radius: 4px; */
+	-moz-border-radius: 4px;
+	/* -webkit-border-radius: 4px; */
+	position: relative;
+	top: -6px;
+	width: 277px;
+	float: left;
+	left: -7px;
+}

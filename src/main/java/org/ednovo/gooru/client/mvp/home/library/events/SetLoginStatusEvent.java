@@ -25,19 +25,21 @@
 package org.ednovo.gooru.client.mvp.home.library.events;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
+ * 
  * @fileName : SetLoginStatusEvent.java
  *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event fires, it will set the login status.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: 11-Dec-2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class SetLoginStatusEvent extends GwtEvent<SetLoginStatusHandler> {
 
@@ -45,7 +47,7 @@ public class SetLoginStatusEvent extends GwtEvent<SetLoginStatusHandler> {
 	public static final Type<SetLoginStatusHandler> TYPE = new Type<SetLoginStatusHandler>();
 	
 	/**
-	 * class constructor
+	 * 
 	 */
 	public SetLoginStatusEvent(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;

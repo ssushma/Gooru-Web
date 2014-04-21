@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -49,22 +50,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : GooruClassRoomCollectionUc.java
- *
- * @description : Related to COllection Data
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class GooruClassRoomCollectionUc extends Composite {
+
+public class GooruClassRoomCollectionUc extends Composite implements MessageProperties{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
@@ -98,15 +85,7 @@ public class GooruClassRoomCollectionUc extends Composite {
 	interface GooruClassRoomCollectionUcUiBinder extends
 			UiBinder<Widget, GooruClassRoomCollectionUc> {
 	}
-	/**
-	 * Constructor.
-	 * @param featuredCollectionContentDo
-	 * @param tabfilter
-	 * @param title
-	 * @param useCase
-	 * @param description
-	 * @param collectionId
-	 */
+
 	public GooruClassRoomCollectionUc(FeaturedCollectionContentDo featuredCollectionContentDo, String tabfilter, String title, String useCase, String description, String collectionId) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.Tabfilter=tabfilter;
@@ -115,29 +94,7 @@ public class GooruClassRoomCollectionUc extends Composite {
 		setData(featuredCollectionContentDo, title, useCase, description,collectionId);
 		
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Used to set the data for featured collections.
-	 * 
-	 * 
-	 * @parm(s) : @param featuredCollectionContentDo
-	 * @parm(s) : @param title
-	 * @parm(s) : @param useCase
-	 * @parm(s) : @param description
-	 * @parm(s) : @param collectionId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void setData(final FeaturedCollectionContentDo featuredCollectionContentDo, String title, String useCase, String description, final String collectionId) {
 
 		methodsCollection.setUrl(StringUtil.formThumbnailName(featuredCollectionContentDo.getScollections().get(0).getThumbnailUrl(),"-266x200."));
@@ -152,7 +109,7 @@ public class GooruClassRoomCollectionUc extends Composite {
 				SetTab(Tabfilter);
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", featuredCollectionContentDo.getScollections().get(0).getGooruOid());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
 			}
 		});
 		methodsCollection.addErrorHandler(new ErrorHandler() {
@@ -180,33 +137,16 @@ public class GooruClassRoomCollectionUc extends Composite {
 				public void onClick(ClickEvent event) {
 					Map<String, String> params = new HashMap<String, String>();
 					params.put("id", collectionId);
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
 				}
 			});
 		} else {
 			howToUseDescription.add(new HTML(description));
 		}
+		howToUseTitle.setText(GL1321);
 		howToUseTitle.getElement().getStyle().setMarginBottom(3, Unit.PX);
 	}
-	/**
-	 * 
-	 * @function SetTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Redircet to perticular type of collection based on CLASSROOM_TAB types.
-	 * 
-	 * 
-	 * @parm(s) : @param Tabfilter
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void SetTab(String Tabfilter) {
 		if(Tabfilter.equalsIgnoreCase(CLASSROOM_TAB1)){
 			MixpanelUtil.ClickOnBlendedLearningCollection();

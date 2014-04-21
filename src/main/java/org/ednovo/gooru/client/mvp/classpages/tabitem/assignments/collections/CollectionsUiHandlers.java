@@ -31,19 +31,18 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 
 /**
- * 
  * @fileName : CollectionsUiHandlers.java
  *
- * @description : This is the UiHandlers file for CollectionsView
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public interface CollectionsUiHandlers extends BaseUiHandlers {
 	

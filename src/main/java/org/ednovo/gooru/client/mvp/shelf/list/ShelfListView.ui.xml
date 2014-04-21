@@ -4,6 +4,7 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.list.ShelfListCBundle"
 		field="res" />
+	<ui:style field="folderStyle" src="../folderList.css" type="org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle" />
 	<ui:style>
 		.shelfPanel {
 		float: right;
@@ -44,9 +45,9 @@
 		}
 
 		.collectionScrlPanel {
-		overflow-y: scroll !important;
-		overflow-x: hidden !important;
-		height:590px;
+			overflow-y: auto !important;
+			overflow-x: hidden !important;
+			min-height:590px;
 		}
 
 		.getStartedNewFolder {
@@ -84,36 +85,38 @@
 		color: #1076BB;
 		margin: 24px 9px 22px 9px;
 		}
+		.collectionScrlPanel > div{
+			height: 100%
+		}
 
 	</ui:style>
 	<g:FocusPanel styleName="{style.shelfPanel}" ui:field="shelfFocPanel">
-		<uc:LabelGlassPanel glassText="Save this Collection"
-			styleName="{style.dropPanel}" glassStyleName="{res.css.shelfGlassPanel}"
-			topStyleName="{res.css.shelfGlassTopPanel}" ui:field="shelfDropPanel">
-
-			<uc:glassContent>
-				<g:ScrollPanel ui:field="collectionListScrollpanel"
-					styleName="{style.collectionScrlPanel}">
-					<g:FlowPanel styleName="{style.shelfHeader}">
-						<!-- <sl:ShelfAddCollection ui:field="addCollectionItem" label="+New 
-							Collection" /> -->
-						<g:FlowPanel ui:field="folderCollectionPanel">
-							<sl:ShelfAddCollection ui:field="addCollectionItem" />
-							<sl:ShelfAddCollection ui:field="newCollectionShelf"
-								label="New Collection" />
-						</g:FlowPanel>
-						<g:HTMLPanel styleName="{res.css.myFolderCollectionNavContainerHeading}"
-							ui:field="folderListPanelEvent">
-							<g:Label styleName="{res.css.myFolderCollectionNavContainerHeadingText}">Folders</g:Label>
-						</g:HTMLPanel>
-						<g:Label ui:field="noCollectionMsgLbl"></g:Label>
-						<g:VerticalPanel ui:field="myShelfVerPanel" />
-						<g:SimplePanel ui:field="dragImageSimPanel" />
+			<g:ScrollPanel ui:field="collectionListScrollpanel" styleName="{style.collectionScrlPanel}">
+				<g:FlowPanel styleName="{folderStyle.folderPanel}">
+					<g:FlowPanel ui:field="folderCollectionPanel">
+						<sl:ShelfAddCollection ui:field="addCollectionItem" />
+						<sl:ShelfAddCollection ui:field="newCollectionShelf"/>
 					</g:FlowPanel>
-				</g:ScrollPanel>
-
-			</uc:glassContent>
-
-		</uc:LabelGlassPanel>
+					<g:HTMLPanel styleName="{folderStyle.organizeButtons}" ui:field="organizeButtonPanel">
+					   <g:Button styleName="backArrowButton" ui:field="backArrowButton"></g:Button>
+					   <g:HTMLPanel styleName="dropdownButtonContainer {folderStyle.buttonContainerWidth}">
+					      <g:Button styleName="primary dropdownButton" ui:field="createBtn"></g:Button>
+					      <g:HTMLPanel styleName="dropdown">
+					         <g:Label styleName="option" ui:field="folderLabel"></g:Label>
+					         <g:Label styleName="option" ui:field="collectionLabel"></g:Label>
+					      </g:HTMLPanel>
+					   </g:HTMLPanel>
+					</g:HTMLPanel>
+					<uc:HTMLEventPanel styleName="{folderStyle.folderLevel} {folderStyle.root}" ui:field="organizeRootPnl">
+					     <g:HTMLPanel styleName="{folderStyle.title}" ui:field="organizelbl"></g:HTMLPanel>
+					</uc:HTMLEventPanel>
+					<g:HTMLPanel styleName="{res.css.myFolderCollectionNavContainerHeading}" ui:field="folderListPanelEvent">
+						<g:Label styleName="{res.css.myFolderCollectionNavContainerHeadingText}" ui:field="foldersText"></g:Label>
+					</g:HTMLPanel>
+					<g:Label ui:field="noCollectionMsgLbl"></g:Label>
+					<g:HTMLPanel ui:field="myShelfVerPanelHolder"/>
+					<g:SimplePanel ui:field="dragImageSimPanel"/>
+				</g:FlowPanel>
+			</g:ScrollPanel>
 	</g:FocusPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

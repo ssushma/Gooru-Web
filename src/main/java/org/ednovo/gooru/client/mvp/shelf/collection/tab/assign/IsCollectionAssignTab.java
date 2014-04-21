@@ -30,19 +30,8 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 /**
- * 
- * @fileName : IsCollectionAssignTab.java
+ * @author Search Team
  *
- * @description : This is the interface file for CollectionAssignTabView.java
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsCollectionAssignTab extends IsViewWithHandlers<CollectionAssignTabUiHandlers> {
 
@@ -50,7 +39,6 @@ public interface IsCollectionAssignTab extends IsViewWithHandlers<CollectionAssi
 
 	//void clearPanels();
 
-	void setAssignmentData(AssignmentsListDo result);
 	
 	/**
 	 * 

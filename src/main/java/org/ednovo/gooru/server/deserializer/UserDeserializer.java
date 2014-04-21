@@ -23,19 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.server.deserializer;
-/**
- * @fileName : UserDeserializer.java
- *
- * @description : This class is used to deserialize user.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 
 public class UserDeserializer extends DeSerializer {
 	

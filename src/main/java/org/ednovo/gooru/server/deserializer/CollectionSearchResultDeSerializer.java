@@ -40,18 +40,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+
 /**
- * @fileName : CollectionSearchResultDeSerializer.java
- *
- * @description : This class is used to deserialize collection search results.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 @Component
 public class CollectionSearchResultDeSerializer extends SearchDeSerializer<CollectionSearchResultDo> {
@@ -75,6 +67,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		searchResult.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		searchResult.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		searchResult.setDescription((getJsonString(recordJsonObject, COLLECTION_DESCRIPTION)));
+		searchResult.setCollaboratorCount(stringtoInteger(recordJsonObject, COLLABORATOR_COUNT, 0));
 		UserDo ownerDo = new UserDo();
 		ownerDo.setFirstName(getJsonString(recordJsonObject, OWNER_FIRST_NAME));
 		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));

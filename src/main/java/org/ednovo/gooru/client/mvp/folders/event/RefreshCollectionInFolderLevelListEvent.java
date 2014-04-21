@@ -32,19 +32,8 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RefreshCollectionInFolderLevelListEvent.java
- *
- * @description : This file is used to refresh the collections in folder level list
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RefreshCollectionInFolderLevelListEvent extends GwtEvent<RefreshCollectionInFolderLevelListHandler> {
 
@@ -62,16 +51,12 @@ public class RefreshCollectionInFolderLevelListEvent extends GwtEvent<RefreshCol
 		this.collectionDo = collectionDo;
 		this.refreshFolderType = refreshFolderType;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RefreshCollectionInFolderLevelListHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(RefreshCollectionInFolderLevelListHandler handler) {
 		handler.refreshCollectionInFolderLevelList(collectionDo, refreshFolderType);

@@ -30,45 +30,31 @@ package org.ednovo.gooru.client.mvp.search.event;
 import java.util.List;
 
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ConsumeShelfCollectionsEvent.java
- *
- * @description : Consume Shelf Collections Event
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ConsumeShelfCollectionsEvent extends GwtEvent<ConsumeShelfCollectionsHandler> {
 
 	public static final Type<ConsumeShelfCollectionsHandler> TYPE = new Type<ConsumeShelfCollectionsHandler>();
 
-	private List<CollectionDo> shelfCollections;
+	private List<FolderDo> shelfCollections;
 	/**
 	 * Class constructor
 	 */
-	public ConsumeShelfCollectionsEvent(List<CollectionDo> shelfCollections) {
+	public ConsumeShelfCollectionsEvent(List<FolderDo> shelfCollections) {
 		this.shelfCollections = shelfCollections;
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+	
 	@Override
 	public Type<ConsumeShelfCollectionsHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(ConsumeShelfCollectionsHandler handler) {
 		handler.consumeShelfCollections(shelfCollections);

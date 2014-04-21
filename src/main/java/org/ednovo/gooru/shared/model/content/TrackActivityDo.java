@@ -28,20 +28,21 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
+
+
 /**
- * 
  * @fileName : TrackActivityDo.java
  *
- * @description : This class is used as data object.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 31-Dec-2013
+ * @date: Apr 20, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public class TrackActivityDo  implements Serializable{
 	
@@ -52,6 +53,8 @@ public class TrackActivityDo  implements Serializable{
 	
 	private String endTime;
     private String startTime;
+    
+    public TrackActivityDo(){}
     
     
     

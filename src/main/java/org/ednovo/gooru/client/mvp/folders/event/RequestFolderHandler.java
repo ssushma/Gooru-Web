@@ -32,19 +32,8 @@ import java.util.Map;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RequestFolderHandler.java
- *
- * @description : EventHandlers for RequestFolderHandler.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface RequestFolderHandler extends EventHandler {
 

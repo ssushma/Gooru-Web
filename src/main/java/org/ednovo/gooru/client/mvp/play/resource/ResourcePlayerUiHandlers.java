@@ -27,10 +27,11 @@ package org.ednovo.gooru.client.mvp.play.resource;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEventHandler;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEventHandler;
-import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPlayHandler;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInResourcePlayHandler;
 
-public interface ResourcePlayerUiHandlers extends BaseUiHandlers,ShowResourceViewEventHandler,ShowResourceTabWidgetEventHandler,RefreshCollectionInShelfListInPlayHandler{
+public interface ResourcePlayerUiHandlers extends BaseUiHandlers,ShowResourceViewEventHandler,ShowResourceTabWidgetEventHandler,RefreshCollectionInShelfListInResourcePlayHandler{
 	public void resetResourcePlayer();
 	public void updateResourceThumbsRating(int userThumbsRataing);
 	public void showLoginPopupWidget(String widgetMode);
+	public void getContentReport(String assoGooruId);
 }

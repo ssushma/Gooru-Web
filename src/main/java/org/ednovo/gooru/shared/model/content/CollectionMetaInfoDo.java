@@ -27,21 +27,11 @@ package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
 import java.util.List;
-/**
- * 
- * @fileName : CollectionMetaInfoDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class CollectionMetaInfoDo implements Serializable {
 
 	private static final long serialVersionUID = 8598215298047619076L;
@@ -49,53 +39,45 @@ public class CollectionMetaInfoDo implements Serializable {
 	private List<String> course;
 	private List<String> acknowledgement;
 	private RatingDo rating;
-	/** 
-	 * This method is to get the standards
-	 */
-	public List<StandardFo> getStandards() {
-		return standards;
+	
+	public CollectionMetaInfoDo(){}
+	
+	public RatingDo getRating() {
+		return rating;
 	}
-	/** 
-	 * This method is to set the standards
-	 */
+
+	public void setRating(RatingDo rating) {
+		this.rating = rating;
+	}
+
 	public void setStandards(List<StandardFo> standards) {
 		this.standards = standards;
 	}
-	/** 
-	 * This method is to get the course
+
+	public List<StandardFo> getStandards() {
+		return standards;
+	}
+	/**
+	 * @return the course
 	 */
 	public List<String> getCourse() {
 		return course;
 	}
-	/** 
-	 * This method is to set the course
+
+	/**
+	 * @param course the course to set
 	 */
 	public void setCourse(List<String> course) {
 		this.course = course;
 	}
-	/** 
-	 * This method is to get the acknowledgement
-	 */
+
 	public List<String> getAcknowledgement() {
 		return acknowledgement;
 	}
-	/** 
-	 * This method is to set the acknowledgement
-	 */
+
 	public void setAcknowledgement(List<String> acknowledgement) {
 		this.acknowledgement = acknowledgement;
 	}
-	/** 
-	 * This method is to get the rating
-	 */
-	public RatingDo getRating() {
-		return rating;
-	}
-	/** 
-	 * This method is to set the rating
-	 */
-	public void setRating(RatingDo rating) {
-		this.rating = rating;
-	}
+
 
 }

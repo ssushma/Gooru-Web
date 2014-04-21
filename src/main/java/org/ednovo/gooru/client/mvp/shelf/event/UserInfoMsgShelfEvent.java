@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
-/**
- * @fileName : UserInfoMsgShelfEvent.java
- *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * and it will handle the gwt events on user info message shelf.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class UserInfoMsgShelfEvent extends GwtEvent<UserInfoMsgShelfHandler>  {
 	
 	public static final Type<UserInfoMsgShelfHandler>  TYPE = new Type<UserInfoMsgShelfHandler>();

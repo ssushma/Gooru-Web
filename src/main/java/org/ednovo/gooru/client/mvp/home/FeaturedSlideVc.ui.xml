@@ -13,7 +13,7 @@
 				class="{res.css.featuredLeftContainerContent} {res.css.featuredContainer}">
 				<div class="{res.css.featuredThemeContentContainer}">
 					<div class="{res.css.featuredThemeContent}">
-						<h2>Did you know ?</h2>
+						<h2><g:Label ui:field="didYouKnowText"></g:Label></h2>
 						<p ui:field="contentDisplayTitle"></p>
 					</div>
 				</div>

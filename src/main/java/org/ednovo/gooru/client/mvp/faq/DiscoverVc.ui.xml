@@ -10,36 +10,36 @@
 				<g:HTMLPanel styleName="{GooruGuideStyle.popup-inner}">
 					<g:HTMLPanel styleName="{GooruGuideStyle.popup-content}">
 						<g:HTMLPanel styleName="{GooruGuideStyle.guide-container} {GooruGuideStyle.discover}">
-							<g:HTMLPanel styleName="{GooruGuideStyle.DOTS-header}">Discover the best learning resources on the Web</g:HTMLPanel>
-							<g:HTMLPanel styleName="{GooruGuideStyle.DOTS-description}">Quickly find and save exactly what you need, down to the grade level, resource type, and standard. Gooru has over 10 million resources, and 1 million questions covering all K-12 subjects.</g:HTMLPanel>
+							<g:HTMLPanel styleName="{GooruGuideStyle.DOTS-header}" ui:field="discoverText"></g:HTMLPanel>
+							<g:HTMLPanel styleName="{GooruGuideStyle.DOTS-description}" ui:field="discoverDescLbl"></g:HTMLPanel>
 							<g:HTMLPanel styleName="{GooruGuideStyle.guide-image}" ui:field="gooruGuideImage">
 							
 								<eventpanel:HTMLEventPanel ui:field="firstId" styleName="{GooruGuideStyle.number}">
-									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}">1</g:HTMLPanel>
-									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}">Enter any Science, Math, Social Science, or English Language Arts keyword or topic you would like to discover.</g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}" ui:field="gooruGuideStyle_One"></g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}" ui:field="Style_One_Desc"></g:HTMLPanel>
 								</eventpanel:HTMLEventPanel>
 								
 								<eventpanel:HTMLEventPanel ui:field="secondId" styleName="{GooruGuideStyle.number}">
-									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}">2</g:HTMLPanel>
-									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}">Narrow your search results using subject, grade, standard, and other filters.</g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}" ui:field="gooruGuideStyle_Two"></g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}" ui:field="Style_Two_Desc"></g:HTMLPanel>
 								</eventpanel:HTMLEventPanel>
 								
 								<eventpanel:HTMLEventPanel ui:field="thirdId" styleName="{GooruGuideStyle.number}">
-									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}">3</g:HTMLPanel>
-									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}">Are you looking for a single resource or a collection; a curated playlist of resources? Use this toggle to switch between resources and collections.</g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}" ui:field="gooruGuideStyle_Three"></g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}" ui:field="Style_Three_Desc"></g:HTMLPanel>
 								</eventpanel:HTMLEventPanel>
 								
 								<eventpanel:HTMLEventPanel ui:field="fourthId" styleName="{GooruGuideStyle.number}">
-									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}">4</g:HTMLPanel>
-									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}">Once you've found what you want; drag and drop it into the box in the upper-right corner to create your own collection.</g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}" ui:field="gooruGuideStyle_Four"></g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}" ui:field="Style_Four_Desc"></g:HTMLPanel>
 								</eventpanel:HTMLEventPanel>
 								
 								<eventpanel:HTMLEventPanel ui:field="fifthId" styleName="{GooruGuideStyle.number}">
-									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}">5</g:HTMLPanel>
-									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}">Once you've gathered your resources, click "Edit" to customize your collection.</g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.number-text}" ui:field="gooruGuideStyle_Five"></g:HTMLPanel>
+									<g:HTMLPanel styleName="{GooruGuideStyle.explanation}" ui:field="Style_Five_Desc"></g:HTMLPanel>
 								</eventpanel:HTMLEventPanel>
 							</g:HTMLPanel>
-							<g:HTMLPanel styleName="{GooruGuideStyle.supportDiv}">Need more help? Visit our <g:Anchor href="http://support.goorulearning.org/anonymous_requests/new" target="_blank">Support Center</g:Anchor>.</g:HTMLPanel>
+							<g:HTMLPanel styleName="{GooruGuideStyle.supportDiv}"><g:Label ui:field="needHelpLbl"></g:Label><g:Anchor target="_blank" ui:field="supportCenterLbl"></g:Anchor></g:HTMLPanel>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>

@@ -33,9 +33,11 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,100 +45,78 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 /**
- * 
  * @fileName : ErrorPopup.java
  *
- * @description : Thi sfile is related to ERROR POPUP.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: 07-Jun-2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
-public class ErrorPopup extends PopupPanel {
+public class ErrorPopup extends PopupPanel implements MessageProperties{
       
-	@UiField HTMLEventPanel cancelButton;
+//	@UiField HTMLEventPanel cancelButton;
+	
+	@UiField Button btnOk;
 	
 	@UiField(provided = true)
 	ErrorPopUpCBundle res;
 		
-	@UiField Label errorMessage;
+	@UiField Label errorMessage,errorpopupHeaderTitle,questionsEmailText,emailId;
 	
 	@UiTemplate("ErrorPopup.ui.xml")
 	interface Binder extends UiBinder<Widget, ErrorPopup> {
 
 	}	
 	private static final Binder binder = GWT.create(Binder.class);
-	/**
-	 * Class Constructor.
-	 * @param message
-	 */
+
 	public ErrorPopup(String message){
 		this.res = ErrorPopUpCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		this.setSize("475px", "200px");
+//		this.setSize("475px", "200px");
 		this.center();
+		errorpopupHeaderTitle.setText(GL1177);
+//		questionsEmailText.setText(GL0298);
+//		emailId.setText(GL0299);
+		questionsEmailText.setVisible(false);
+		emailId.setVisible(false);
+		btnOk.setText(GL0190);
 		errorMessage.setText(message);
 	}
-	/**
-	 * 
-	 * @function onCancelClicked 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This UIHandler is used to navigate to either class page or shelf based on place token.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("cancelButton")
-//	public abstract void onClcickClicked(ClickEvent event);
 	
-	public void onCancelClicked(ClickEvent clickEvent) {
+	public void closePopup(){
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF)){
 			navigateShelf();
 		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
 			navigateClasspage();
+		}else if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+			AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.HOME);
 		}
 		hide();
 	}
-	/**
-	 * 
-	 * @function navigateShelf 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to navigate to shelf.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	@UiHandler("btnOk")
+	public void onOkClicked(ClickEvent event){
+		closePopup();
+	}
+	
+//	@UiHandler("cancelButton")
+//	public void onCancelClicked(ClickEvent clickEvent) {
+//		closePopup();
+//	}
+	
 	private void navigateShelf(){
 		AppClientFactory.getInjector().getResourceService().getUserCollection(new SimpleAsyncCallback<List<CollectionDo>>() {
             @Override
@@ -146,28 +126,10 @@ public class ErrorPopup extends PopupPanel {
                 } else {
                     AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
                 }
+                AppClientFactory.fireEvent(new ChangeShelfPanelActiveStyleEvent());
             }
         });
 	}
-	/**
-	 * 
-	 * @function navigateClasspage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to navigate to class page.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	private void navigateClasspage(){
 		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages("1", "0", new SimpleAsyncCallback<ClasspageListDo>() {
 

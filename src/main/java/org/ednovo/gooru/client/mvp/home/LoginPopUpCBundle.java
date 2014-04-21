@@ -30,18 +30,8 @@ import com.google.gwt.resources.client.CssResource;
 
 /**
  * 
- * @fileName : LoginPopUpCBundle.java
+ * @author BLR Team
  *
- * @description : This file is to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 
 public interface LoginPopUpCBundle extends ClientBundle{

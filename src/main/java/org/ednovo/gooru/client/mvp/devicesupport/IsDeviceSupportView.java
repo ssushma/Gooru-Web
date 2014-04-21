@@ -31,16 +31,16 @@ import org.ednovo.gooru.client.gin.IsView;
  * 
  * @fileName : IsDeviceSupportView.java
  *
- * @description : This file is used to set the device and size.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Jul 16, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public interface IsDeviceSupportView extends IsView {
    void setDevice(String device);

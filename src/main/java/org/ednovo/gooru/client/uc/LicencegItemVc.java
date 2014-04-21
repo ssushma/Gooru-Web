@@ -30,20 +30,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : LicencegItemVc.java
- *
- * @description : This class is used to get license item.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class LicencegItemVc extends Composite {
 
 	private static LicencegItemVcUiBinder uiBinder = GWT
@@ -59,11 +46,7 @@ public class LicencegItemVc extends Composite {
 	
 	@UiField(provided = true)
 	UcCBundle res;
-	/**
-	 * Class constructor.
-	 * @param title
-	 * @param desc
-	 */
+
 	public LicencegItemVc(String title, String desc) {
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();

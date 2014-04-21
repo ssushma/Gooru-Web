@@ -83,7 +83,7 @@
 	
 	    <g:FlowPanel  styleName="{res.css.registersaveAndSharePopupTotalContainerNew}"> 
 				<g:FlowPanel ui:field="headerPanel" styleName="{res.css.registerHeaderDiv}">
-					<g:Label text="Sign up for Gooru" styleName="{res.css.registerHeaderText}"/>
+					<g:Label ui:field="signUpGooruText" styleName="{res.css.registerHeaderText}"/>
 				</g:FlowPanel>	
 			<g:FlowPanel styleName="{res.css.registerSaveAndShareContentDiv}">
 		
@@ -92,33 +92,33 @@
  
 					<g:FlowPanel styleName="{res.css.registerInnerContainer}">
 						<g:FlowPanel styleName="{res.css.registerSaveAndShareText}"/>
-							<g:Label styleName="{res.css.registerSaveAndShareHeaderTitle}" text="Want to save and share resources and collections?"/>
-						<g:Label text = "Get an account today and let Gooru work for you!" styleName="{res.css.registerTextAlign2}"/>
+							<g:Label styleName="{res.css.registerSaveAndShareHeaderTitle}" ui:field="wantToSaveAndShareText"/>
+						<g:Label styleName="{res.css.registerTextAlign2}" ui:field="getAnAccountText"/>
 						
 					
 				
 					<g:FlowPanel styleName="{res.css.registerContentAlign}">
-						<g:Label text = "Birthdate" styleName="{res.css.registerSaveAndShareAlignInputs}"/>
+						<g:Label ui:field="birthDateText" styleName="{res.css.registerSaveAndShareAlignInputs}"/>
 						<g:SimplePanel ui:field = "dateSimPanel"/>
 						<gg:ErrorLabelUc ui:field="dateValidationUc"/>
 					</g:FlowPanel>
 					
 					<g:FlowPanel styleName="{res.css.registerContentAlign}">
-						<g:Label text = "Email" styleName="{res.css.registerSaveAndShareAlignInputs}"/>
+						<g:Label ui:field="emailText" styleName="{res.css.registerSaveAndShareAlignInputs}"/>
 						<g:TextBox ui:field="emailIdTxtBox" styleName="{res.css.emailTxtBox}"/>
 						<gg:ErrorLabelUc ui:field="emailValidationUc"/>
 					</g:FlowPanel>
 					
 					<g:FlowPanel styleName="{res.css.resourceRegisterAlign}" ui:field="buttonContainer">
-							<gg:BlueButtonUc text="Sign me up!" ui:field="goBtnUc" styleName="{res.css.overResourceRideBlueButton}"/>
-							<g:Anchor text="Maybe later" ui:field="cancelAnr" styleName="{res.css.collectionFormCancelButton}"/>
+							<gg:BlueButtonUc  ui:field="goBtnUc" styleName="{res.css.overResourceRideBlueButton}"/>
+							<g:Anchor ui:field="cancelAnr" styleName="{res.css.collectionFormCancelButton}"/>
 						</g:FlowPanel>
 						
 						
 						<g:FlowPanel styleName="{res.css.resourceRegisterAlign}" ui:field="loginContainer">
 						
 						</g:FlowPanel>
-						<g:Anchor text="I already have an account." ui:field="iHaveAcc" styleName="{res.css.saveAndShareHaveAnAccountTwo}"/>
+						<g:Anchor  ui:field="iHaveAcc" styleName="{res.css.saveAndShareHaveAnAccountTwo}"/>
 		</g:FlowPanel>
 					
 					

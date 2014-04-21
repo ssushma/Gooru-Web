@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,28 +37,20 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : RegistrationConfirmationVc.java
+ * @author Search Team
  *
- * @description : Creates popup after register and tells to update the details by clicking mail which entered   
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class RegistrationConfirmationVc extends Composite {
+public class RegistrationConfirmationVc extends Composite implements MessageProperties{
 	@UiField
 	BlueButtonUc confirmRegisterUc;
 	
 	private AppPopUp appPopUp;
+	
+	@UiField Label almostHereText,sentConformationText,contactText,supportText,didnotReceiveText;
 	
 	private static final String REGISTRATION_RECEIVED = "Registration Received";
 	
@@ -78,6 +71,12 @@ public class RegistrationConfirmationVc extends Composite {
 		appPopUp.show();
 		appPopUp.center();
 		confirmRegisterUc.getElement().setId("btnConfirmRegister");
+		almostHereText.setText(GL1191);
+		sentConformationText.setText(GL1192);
+		contactText.setText(GL1193);
+		supportText.setText("  "+GL0299);
+		confirmRegisterUc.setText(GL0190);
+		didnotReceiveText.setText(GL1194+GL_SPL_QUESTION);
 	}
 	
 	/**

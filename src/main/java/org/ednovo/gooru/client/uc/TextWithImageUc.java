@@ -37,18 +37,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
+
 /**
- * @fileName : TextWithImageUc.java
+ * @author Search Team
  *
- * @description : This class is used to display text with image.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class TextWithImageUc extends FlowPanel{
 	

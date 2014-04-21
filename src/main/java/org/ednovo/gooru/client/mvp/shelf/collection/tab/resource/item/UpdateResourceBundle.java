@@ -25,20 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import com.google.gwt.resources.client.CssResource;
-/**
- * @fileName : UpdateResourceBundle.java
- *
- * @description :  This interface is used to set the styles for update resources
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 
 public interface UpdateResourceBundle extends CssResource {
 	

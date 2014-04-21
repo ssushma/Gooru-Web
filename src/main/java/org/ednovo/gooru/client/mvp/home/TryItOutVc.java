@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,27 +45,16 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : TryItOutVc.java
+ * @author Search Team
  *
- * @description : Information about TryItOut popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class TryItOutVc extends PopupPanel implements ClickHandler {
+public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProperties {
 
 	@UiField
-	Label closePopUpLbl;
+	Label closePopUpLbl,improveGooruText,celebrationLbl,classicGooruLbl,goBackText;
 
 	@UiField
-	Anchor backToClassicAnr;
+	Anchor backToClassicAnr,learnMoreLbl,tryItOutLbl;
 
 	@UiField
 	FlowPanel tryItOutNewGooruFloPanel;
@@ -85,9 +75,16 @@ public class TryItOutVc extends PopupPanel implements ClickHandler {
 		this.addStyleName(GooruCBundle.INSTANCE.css().tryitoutpopup());
 		this.show();
 		this.center();
+		improveGooruText.setText(GL0285);
+		celebrationLbl.setText(GL1314);
+		learnMoreLbl.setHref("http://support.goorulearning.org/entries/23251492-Why-are-we-retiring-Classic-Gooru-and-transitioning-everyone-over-to-the-new-version-");
+		learnMoreLbl.setText(GL1315);
+		backToClassicAnr.setText(GL1316);
+		classicGooruLbl.setText(GL1317);
+		tryItOutLbl.setText(GL1318);
+		goBackText.setText(GL1319);
 		backToClassicAnr.setHref(AppClientFactory.getLoggedInUser().getSettings().getClassicEndPoint());
 		tryItOutNewGooruFloPanel.addDomHandler(this, ClickEvent.getType());
-
 	}
 
 	/**

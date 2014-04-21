@@ -26,14 +26,27 @@ package org.ednovo.gooru.client.mvp.play.collection.share.email;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.client.uc.EmailShareUc.CheckProfanityInOnBlur;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -47,15 +60,17 @@ import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class CollectionEmailShareView extends PopupPanel {
+public abstract class CollectionEmailShareView extends PopupPanel implements MessageProperties {
 
-	@UiField Label fromValidation, toValidation, lblEmailFriend, lblFrom, lblTo, lblSendMeCopy, lblSubject, lblMessage, fromLbl;
+	@UiField Label fromValidation, toValidation, lblEmailFriend, lblFrom, lblTo, lblSendMeCopy, lblSubject, lblMessage, fromLbl,mandatoryErrorLbl,mandatoryErrorRichTextArea,noteTxt;
 	
 	@UiField CheckBox checkCopyEmail;
 	
 	@UiField Button btnSend, cancelLbl;
 	
-	@UiField TextBox toTxt, fromTxt, subTxt;
+	@UiField TextBoxWithPlaceholder toTxt, fromTxt;
+	
+	@UiField TextBox subTxt;
 
 	@UiField RichTextArea msgTxa;
 
@@ -65,22 +80,10 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 	
 	private static final String AT_SYMBOL = "@";
 
-	String GL0215 = "Please enter your Email.";
-	String GL0216 = "Please specify at least one recipient.";
-	String GL0217 = "Enter recipient's email";
-	String GL0218 = "Enter your Email";
-	String GL0222 = "Email to Friend";
-	String GL0223 = "From";
-	String GL_SPL_SEMICOLON = ":";
-	String GL0224 = "To";
-	String GL0225 = "Send me a copy of this message";
-	String GL0226 = "Subject";
-	String GL0227 = "Message";
-	String GL0228 = "Send";
-	String GL0142 = "Cancel";
-	String GL_EMAIL_SUBJECT = "I've shared my Gooru collection summary with you";
-	String GL0219 = "Hello [Enter your teacher or tutor's name] <div><br/></div><div>I am sharing my collection summary with you.<br/>(PDF attached)</div>" +
-			"<div><br/></div><div>Thank you!</div><div>[Enter your full name]</div>";
+	String GL_EMAIL_SUBJECT = GL1443;
+	String GL0219 = GL1444;
+	
+	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	
 	private static CollectionEmailShareViewUiBinder uiBinder = GWT.create(CollectionEmailShareViewUiBinder.class);
 
@@ -91,8 +94,10 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 
 	public CollectionEmailShareView( String mailSubject, String mailDescription) {
 		setWidget(uiBinder.createAndBindUi(this));
+
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.getElement().getStyle().setZIndex(999999);
+		this.setGlassEnabled(true);
 		fromValidation.setText(GL0215);
 		toValidation.setText(GL0216);
 		lblEmailFriend.setText(GL0222);
@@ -104,6 +109,11 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 		btnSend.setText(GL0228);
 		cancelLbl.setText(GL0142);
 		
+		noteTxt.setText(GL1636);
+		
+		mandatoryErrorLbl.setVisible(false);
+		mandatoryErrorRichTextArea.setVisible(false);
+		fromLbl.setVisible(false);
 		fromValidation.setVisible(false);
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
@@ -112,21 +122,33 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
 		btnSend.getElement().setId("btnSend");
-//		if(fromEmailAddress==null || fromEmailAddress.isEmpty()) {
-			fromLbl.setVisible(false);
+		fromTxt.setMaxLength(50);
+		if(AppClientFactory.isAnonymous()){
+//			fromLbl.setVisible(false);
 			fromTxt.setVisible(true);
-			fromTxt.getElement().setAttribute("placeholder",GL0218);
-//		} else {
-//			fromLbl.setText(fromEmailAddress);
-//			fromLbl.setVisible(true);
-//			fromTxt.setVisible(false);
-//		}
-		toTxt.getElement().setAttribute("placeholder",GL0217);
+//			fromTxt.getElement().setAttribute("placeholder",GL1442);
+			fromTxt.setPlaceholder(GL1442_1);
+		}else{
+//			fromTxt.setText(AppClientFactory.getLoggedInUser().getEmailId());
+			if(AppClientFactory.getLoggedInUser().getFirstName()!=null && AppClientFactory.getLoggedInUser().getLastName()!=null){
+//				fromLbl.setVisible(true);
+				fromTxt.setVisible(true);
+				fromTxt.setText(AppClientFactory.getLoggedInUser().getFirstName() + " " +AppClientFactory.getLoggedInUser().getLastName());
+			}else{
+//				fromLbl.setVisible(false);
+				fromTxt.setVisible(true);
+				fromTxt.setPlaceholder(GL1442_1);
+			}
+		}
+//		toTxt.getElement().setAttribute("placeholder",GL1184_1);
+		toTxt.setPlaceholder(GL1184_1);
 		msgTxa.setHTML(mailDescription);
 		isvalid = true;
 		this.setGlassEnabled(true);
 		this.center();
-		this.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setGlassPanelStyle());
+		this.getGlassElement().getStyle().setZIndex(99999);
+		
+		//this.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setGlassPanelStyle());
 		msgTxa.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -135,6 +157,9 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 	                body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
+		fromTxt.addBlurHandler(new CheckProfanityInOnBlur(fromTxt,null, fromValidation));
+		subTxt.addBlurHandler(new CheckProfanityInOnBlur(subTxt,null, mandatoryErrorLbl));
+		msgTxa.addBlurHandler(new CheckProfanityInOnBlur(null,msgTxa, mandatoryErrorRichTextArea));
 	}
 	
 	@UiHandler("cancelLbl")
@@ -149,39 +174,104 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 	@UiHandler("btnSend")
 	public void onSendBtnClickEvent(ClickEvent event) {
 		isvalid = true;
-		if(fromTxt.isVisible()) {
+/*		if(fromTxt.isVisible()) {
 			if (fromTxt.getText().equals("")) {
+				fromValidation.setText(GL0215);
 				fromValidation.setVisible(true);
 				isvalid = false;
 			}
+			if(fromTxt.getText() != null ||!fromTxt.getText().equals("")){
+				String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+				String strEmails = fromTxt.getText().trim();
+				String emailIds[] = strEmails.split("\\s*,\\s*");
+				if (strEmails.contains(",")){
+					emailIds = strEmails.split("\\s*,\\s*");
+				}else if (strEmails.contains(";")){
+					emailIds = strEmails.split("\\s*;\\s*");
+				}
+				if(emailIds.length > 1 ){
+					fromValidation.setText(GL1027_1);
+					fromValidation.setVisible(true);
+					isvalid = false;
+				}
+			}
 			if ((fromTxt.getText() != null && !fromTxt.getText().isEmpty())
 					&& !fromTxt.getText().contains(AT_SYMBOL)) {
-
-				fromValidation.setText("Please enter valid email.");
+				fromValidation.setText(GL1027);
 				fromValidation.setVisible(true);
 				isvalid = false;
+			}
+		}*/
+		
+		if(!toTxt.getText().trim().equals("")){
+			String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+			String strEmails = toTxt.getText().trim();
+			String emailIds[] = strEmails.split("\\s*,\\s*");
+			if (strEmails.contains(",")){
+				emailIds = strEmails.split("\\s*,\\s*");
+			}else if (strEmails.contains(";")){
+				emailIds = strEmails.split("\\s*;\\s*");
+			}
+			
+			for (int i=0; i<emailIds.length; i++){
+				boolean to = emailIds[i].matches(EMAIL_REGEX);
+				if(to){
+//					isvalid = true;
+				}else{
+					toValidation.setText(StringUtil.generateMessage(GL1019, emailIds[i]));
+					toValidation.setVisible(true);
+					isvalid = false;
+					break;
+				}
 			}
 		}
 
 		if (toTxt.getText().equals("")) {
+			toValidation.setText(GL0216);
 			toValidation.setVisible(true);
 			isvalid = false;
 		}
 		if ((toTxt.getText() != null && !toTxt.getText().isEmpty())
 				&& !toTxt.getText().contains(AT_SYMBOL)) {
 
-			toValidation.setText("Please enter valid email.");
+			toValidation.setText(GL1027);
 			toValidation.setVisible(true);
 			isvalid = false;
 		}
-		if (isvalid) {
-			String fromEmail = "";
-			if(fromTxt.isVisible()) {
-				fromEmail = fromTxt.getText();
-			} else {
-				fromEmail = fromLbl.getText();
-			}
-			sendEmail(fromEmail, toTxt.getText(), cfm, subTxt.getText(), msgTxa.getHTML());
+		if(isvalid){
+			final Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", subTxt.getValue());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						isHavingBadWordsInTextbox = value;
+						if(value){
+							SetStyleForProfanity.SetStyleForProfanityForTextBox(subTxt, mandatoryErrorLbl,value);
+						}else{
+							parms.put("text", msgTxa.getText());
+							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
+								
+								@Override
+								public void onSuccess(Boolean result) {
+									isHavingBadWordsInRichText=result;
+									if(result){
+										SetStyleForProfanity.SetStyleForProfanityForRichTextArea(msgTxa, mandatoryErrorRichTextArea, result);
+									}else{
+										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
+											String fromEmail = "";
+					/*						if(fromTxt.isVisible()) {
+												fromEmail = fromTxt.getText();
+											} else {*/
+												fromEmail = fromTxt.getText();
+										/*	}*/
+											sendEmail(fromEmail, toTxt.getText(), cfm, subTxt.getText(), msgTxa.getHTML());
+										}
+									}
+								}
+							});
+						}
+				}
+			});
 		}
 	}
 
@@ -202,6 +292,52 @@ public abstract class CollectionEmailShareView extends PopupPanel {
 			cfm = "yes";
 		} else {
 			cfm = "no";
+		}
+	}
+	
+	public class CheckProfanityInOnBlur implements BlurHandler{
+		private TextBox textBox;
+		private Label label;
+		private RichTextArea richTextArea;
+		public CheckProfanityInOnBlur(TextBox textBox,RichTextArea richTextArea,Label label){
+			this.textBox=textBox;
+			this.label=label;
+			this.richTextArea=richTextArea;
+		}
+		@Override
+		public void onBlur(BlurEvent event) {
+			Map<String, String> parms = new HashMap<String, String>();
+			if(textBox!=null){
+				parms.put("text", textBox.getValue());
+			}else{
+				parms.put("text", richTextArea.getText());
+			}
+			btnSend.setEnabled(false);
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+				@Override
+				public void onSuccess(Boolean value) {
+					btnSend.setEnabled(true);
+					if(textBox!=null){
+						isHavingBadWordsInTextbox = value;
+						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+					}else{
+						isHavingBadWordsInRichText=value;
+						SetStyleForProfanity.SetStyleForProfanityForRichTextArea(richTextArea, label, value);
+					}
+					
+				}
+			});
+		}
+	}
+	
+	@UiHandler("fromTxt")
+	public void fromTxtKeyUpEvent(KeyUpEvent event){
+		String fromTxtText=fromTxt.getText();
+		if(fromTxtText.length()>=50){
+			//fromLbl.setVisible(true);
+		}else{
+			fromValidation.setVisible(false);
 		}
 	}
 	

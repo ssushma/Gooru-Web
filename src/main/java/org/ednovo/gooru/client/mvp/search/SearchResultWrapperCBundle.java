@@ -30,20 +30,10 @@ package org.ednovo.gooru.client.mvp.search;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
+ * @author Search Team
  * 
- * @fileName : SearchResultWrapperCBundle.java
- *
- * @description : This file is the interface for SearchResultWrapperVc and to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SearchResultWrapperCBundle extends ClientBundle {
 	

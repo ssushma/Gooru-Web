@@ -36,29 +36,11 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
-/**
- * 
- * @fileName : SignUpCompleteProfilePresenter.java
- *
- * @description : This is the presenter of the sign up complete process. 
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpCompleteProfile> implements SignUpCompleteProfileUiHandler {
 	
 	private ImageUploadPresenter imageUploadPresenter;
-	/**
-	 * Parameterized constructor
-	 * @param eventBus
-	 * @param view
-	 * @param imageUploadPresenter
-	 */
+	
 	@Inject
 	public SignUpCompleteProfilePresenter(EventBus eventBus,
 			IsSignUpCompleteProfile view,ImageUploadPresenter imageUploadPresenter) {
@@ -66,24 +48,15 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 			getView().setUiHandlers(this);
 			this.imageUploadPresenter = imageUploadPresenter;
 	}
-	/**
-	 * This method will load at first time , when we call this presenter.
-	 */
 	@Override
 	public void onBind() {
 		super.onBind();
 		addRegisteredHandler(SetUpdateProfileImageEvent.TYPE, this);
 	}
-	/**
-	 * This method will load at first time , when we call this presenter.
-	 */
 	@Override
 	public void onReveal() {
 		super.onReveal();
 	}
-	/**
-	 * This method is used to display the upload image for a profile.
-	 */
 	public void showUploadProfileImageWidget(){
 	imageUploadPresenter.showUploadTypeWidgets(false);
 	addToPopupSlot(imageUploadPresenter);
@@ -92,26 +65,17 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 	imageUploadPresenter.setEditResourceImage(false);
 	imageUploadPresenter.setUdateProfileImage(true);
 	}
-	/**
-	 * This method is used to display the view.
-	 */
 	@Override
 	public void displayView(){
 		getView().displayView();
 	}
-	/**
-	 * This method is used to set the update profile image url.
-	 */
 	@Override
 	public void setUpdateProfileImage(String imageUrl) {
 		getView().setUpdateProfileImage(imageUrl);
 	}
-	/**
-	 * This method is used to update the profile image for a user.
-	 */
 	@Override
 	public void updateProfile(String fname,String lname,String aboutMe,String password) {
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, new AsyncCallback<V2UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, new AsyncCallback<V2UserDo>() {
 			
 			@Override
 			public void onSuccess(V2UserDo result) {
@@ -123,8 +87,16 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
 				
 			}
 		});
+		
+			
+		
+		
 	}
+	
+	
+	
 }

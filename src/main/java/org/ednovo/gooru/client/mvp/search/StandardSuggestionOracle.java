@@ -35,48 +35,29 @@ import com.google.gwt.user.client.ui.SuggestBox.SuggestionDisplay;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 /**
- * 
- * @fileName : StandardSuggestionOracle.java
+ * @author Search Team
  *
- * @description : This file is related to Standard Suggestions.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class StandardSuggestionOracle extends SuggestionDisplay {
-	/**
-	 * To get CurrentSelection.
-	 */
+
 	@Override
 	protected Suggestion getCurrentSelection() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/**
-	 * To hide suggestions..
-	 */
+
 	@Override
 	protected void hideSuggestions() {
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * To move CurrentSelection down.
-	 */
+
 	@Override
 	protected void moveSelectionDown() {
 		// TODO Auto-generated method stub
 		
 	}
-	/**
-	 * To move CurrentSelection up.
-	 */
+
 	@Override
 	protected void moveSelectionUp() {
 		// TODO Auto-generated method stub

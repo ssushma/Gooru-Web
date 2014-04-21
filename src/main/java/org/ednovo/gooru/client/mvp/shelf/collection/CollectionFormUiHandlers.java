@@ -27,25 +27,21 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 /**
- * 
- * @fileName : CollectionFormUiHandlers.java
+ * @author Search Team
  *
- * @description : This interface is used to save the collection data.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionFormUiHandlers extends BaseUiHandlers {
 
 	/**
 	 * Collection save
+	 * @param o3 
+	 * @param o2 
+	 * @param o1 
 	 */
-	void saveCollection(String folderId);
+	void saveCollection(String folderId, String o1, String o2, String o3);
+
+	void copyCollection(String collectionTitle, String collectionId);
+
+	void copyDraggedCollection(String draggedCollectionTitle, String draggedCollectionId,String selectedFolderId);  
 	
 }

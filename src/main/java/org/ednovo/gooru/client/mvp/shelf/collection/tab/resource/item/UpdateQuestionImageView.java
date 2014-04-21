@@ -24,32 +24,24 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : UpdateQuestionImageView.java
- *
- * @description : This will return the update question image view.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class UpdateQuestionImageView extends Composite{
+
+public class UpdateQuestionImageView extends Composite implements MessageProperties{
 	
 	private String thumbnailImageUrl=null;
 	@UiField Image updateQuestionImage;
 	@UiField Label uploadImage;
 	@UiField Label removeImage;
+	@UiField HTMLPanel questionImageText;
 	public interface UpdateQuestionImageViewUiBinder extends UiBinder<Widget, UpdateQuestionImageView>{
 		
 	}
@@ -57,73 +49,58 @@ public class UpdateQuestionImageView extends Composite{
 	private static UpdateQuestionImageViewUiBinder uiBinder=GWT.create(UpdateQuestionImageViewUiBinder.class);
 	
 	
-	/**
-	 * Class constructor.
-	 */
+	
 	public UpdateQuestionImageView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		questionImageText.getElement().setInnerHTML(GL0860);
+		uploadImage.setText(GL0861);
+		removeImage.setText(GL0862);
 	}
 
 
-	/**
-	 * This method is used to get the update question image.
-	 */
+
 	public Image getUpdateQuestionImage() {
 		return updateQuestionImage;
 	}
 
 
-	/**
-	 * This method is used to get the update image.
-	 */
+
 	public Label getUploadImage() {
 		return uploadImage;
 	}
 
 
-	/**
-	 * This method is used to get the remove image.
-	 */
+
 	public Label getRemoveImage() {
 		return removeImage;
 	}
 
 
-	/**
-	 * This method is used to set the update question image.
-	 */
+
 	public void setUpdateQuestionImage(Image updateQuestionImage) {
 		this.updateQuestionImage = updateQuestionImage;
 	}
 
 
-	/**
-	 * This method is used to set the update  image.
-	 */
+
 	public void setUploadImage(Label uploadImage) {
 		this.uploadImage = uploadImage;
 	}
 
 
-	/**
-	 * This method is used to set the remove image.
-	 */
+
 	public void setRemoveImage(Label removeImage) {
 		this.removeImage = removeImage;
 	}
 
 
-	/**
-	 * This method is used to get the thumbnail image url.
-	 */
+
 	public String getThumbnailImageUrl() {
 		return thumbnailImageUrl;
 	}
 
 
-	/**
-	 * This method is used to set the thumbnail image url.
-	 */
+
 	public void setThumbnailImageUrl(String thumbnailImageUrl) {
 		this.thumbnailImageUrl = thumbnailImageUrl;
 	}

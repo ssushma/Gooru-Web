@@ -27,5 +27,4 @@ package org.ednovo.gooru.client.mvp.play.collection.body;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface CollectionPlayerMetadataUiHandlers extends BaseUiHandlers {
-
 }

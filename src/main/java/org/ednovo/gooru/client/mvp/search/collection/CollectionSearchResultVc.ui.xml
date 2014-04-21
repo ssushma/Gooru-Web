@@ -11,6 +11,7 @@
 						<g:HTMLPanel styleName="{res.css.authorContainer}">
 							<g:Label styleName="{res.css.author}" ui:field="creatorNameLbl" />
 							<g:Label styleName="{res.css.authorName}" ui:field="creatorNameLblValue" />
+							<g:FlowPanel ui:field="teamFlowPanel" styleName="{res.css.collaboratorStyle}"></g:FlowPanel>
 							<g:HTMLPanel ui:field="containerPanel"></g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:FlowPanel styleName="{res.css.metaDataPanel}">

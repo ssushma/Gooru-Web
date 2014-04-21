@@ -44,23 +44,13 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ParentRegisterVc.java
+ * @author Search Team
  *
- * @description : creates popup for parent registration.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ParentRegisterVc extends Composite implements MessageProperties {
 
@@ -77,10 +67,12 @@ public class ParentRegisterVc extends Composite implements MessageProperties {
 	
 	@UiField
 	ErrorLabelUc emailValidationUc; 	
+	
+	@UiField Label setUpText,emailtext;
 
 	private AppPopUp appPopUp;
 	
-	private static final String REGISTER_GOORU_BETA_ACCOUNT = "Register for your Gooru Beta account!";
+	private static final String REGISTER_GOORU_BETA_ACCOUNT = GL1197+GL_SPL_EXCLAMATION ;
 	
 	private static final String EMAIL = "email";
 
@@ -96,6 +88,10 @@ public class ParentRegisterVc extends Composite implements MessageProperties {
 		appPopUp.setContent(REGISTER_GOORU_BETA_ACCOUNT, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
+		setUpText.setText(GL1195);
+		emailtext.setText(GL1196);
+		almostDoneRegisterationUc.setText(GL0228);
+		guardianCancelAnr.setText(GL0142);
 		emailValidationUc.setVisible(false);
 		emailValidationUc.setStyleName(RegisterCBundle.INSTANCE.css().parentErrorLabel());
 		parentEmailIdTxtBox.addFocusHandler(new OnEmailFocus());
@@ -106,19 +102,9 @@ public class ParentRegisterVc extends Composite implements MessageProperties {
 	}
 	
 	/**
-	 * 
-	 * @fileName : ParentRegisterVc.java
+	 * @author Search Team
+	 * Focus event on parent email id
 	 *
-	 * @description : Focus event on parent email id
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
 	 */
 	private class OnEmailFocus implements FocusHandler{
 		@Override
@@ -131,19 +117,8 @@ public class ParentRegisterVc extends Composite implements MessageProperties {
 	}
 	
 	/**
-	 * 
-	 * @fileName : ParentRegisterVc.java
-	 *
-	 * @description :  Blur events on parent email id validation
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
+	 * @author Search Team
+	 * Blur events on parent email id validation
 	 */
 	private class OnEmailBlur implements BlurHandler{
 		@Override

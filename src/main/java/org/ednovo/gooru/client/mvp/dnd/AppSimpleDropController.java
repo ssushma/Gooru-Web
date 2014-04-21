@@ -29,18 +29,10 @@ package org.ednovo.gooru.client.mvp.dnd;
 
 import com.allen_sauer.gwt.dnd.client.drop.SimpleDropController;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : AppSimpleDropController.java
- *
- * @description : This class will handle the drop controller.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class AppSimpleDropController extends SimpleDropController {
 

@@ -25,20 +25,7 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : UserRoleAssocDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class UserRoleAssocDo implements Serializable {
 
 	/**
@@ -46,17 +33,14 @@ public class UserRoleAssocDo implements Serializable {
 	 */
 	private static final long serialVersionUID = -3590396802387568306L;
 	private UserRoleDo role;
-	/** 
-	 * This method is to get the role
-	 */
+	
+	public UserRoleAssocDo(){}
+
 	public UserRoleDo getRole() {
 		return role;
 	}
-	/** 
-	 * This method is to set the role
-	 */
+
 	public void setRole(UserRoleDo role) {
 		this.role = role;
 	}
-
 }

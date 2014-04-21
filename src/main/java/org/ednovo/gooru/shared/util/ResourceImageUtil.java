@@ -26,24 +26,10 @@ package org.ednovo.gooru.shared.util;
 
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
-/**
-* @fileName : ResourceImageUtil.java
-*
-* @description : This class is used to get the youtube images.
-*
-* @version : 1.0
-*
-* @date: 30-Dec-2013
-*
-* @Author Gooru Team
-*
-* @Reviewer: Gooru Team
-*/
+
+
 public class ResourceImageUtil {
 	public static String protocol="http";
-	/**
-	 * This method is used to get the youtube id based on the passed youtube url.
-	 */
 	public static String getYoutubeVideoId(String url) { 
 		String pattern = "youtu(?:\\.be|be\\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)";
 		String videoId = null; 
@@ -56,41 +42,12 @@ public class ResourceImageUtil {
 		}
 		return videoId;
 	}
-	/**
-	 * @function youtubeImageLink 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method will return the youtube image url.
-	 * 
-	 * @parm(s) : @param videoId
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public static String  youtubeImageLink(String videoId) {
 		return protocol+"://img.youtube.com/vi/"+videoId+"/1.jpg";
 	}
-	/**
-	 * @function youtubeImageLink 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method will return the youtube image url.
-	 * 
-	 * @parm(s) : @param videoId
-	 * @parm(s) : @param protocol
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public static String youtubeImageLink(String videoId, String protocol) {
-		return protocol+"://img.youtube.com/vi/"+videoId+"/1.jpg";
+		return protocol+"//img.youtube.com/vi/"+videoId+"/1.jpg";
 	}
 }

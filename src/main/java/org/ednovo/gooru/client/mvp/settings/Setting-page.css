@@ -5,7 +5,7 @@
 	margin: 35px 0px 0px 0px;
 	font-size: 38px;
 	font-weight: bold;
-	color: rgba(100,100,100, 0.8);
+	color: rgba(100, 100, 100, 0.8);
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
 }
 
@@ -72,11 +72,10 @@
 
 .settingOneSetOfInputContainer {
 	float: left;
-	width: 395px;
+	width: 695px;
 	height: 30px;
-	/* margin-bottom: 10px; */
+	margin-bottom: 5px;
 }
-
 
 .settingOneSetOfContactInputContainer {
 	float: left;
@@ -93,17 +92,21 @@
 	font-size: 12px;
 	text-align: right;
 	width: 72px;
-	
+	vertical-align: middle;
+	line-height: 30px;
 }
-.settingInfoNameTextContent
-{
+
+.settingInfoNameTextContent {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #515151;
 	font-size: 12px;
 	text-align: right;
 	width: 72px;
+	vertical-align: middle;
+	line-height: 30px;
 }
+
 .settingInfoEmailText {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
@@ -112,11 +115,14 @@
 	text-align: right;
 	width: 72px;
 	margin-top: 15px;
+	vertical-align: middle;
+	line-height: 30px;
 }
 
 .settingOneSetOfInputBoxContainer {
 	/*  float: left; 
 	 width:146px; */
+	
 }
 
 .settingOneSetOfSecurityInputBoxContainer {
@@ -138,30 +144,42 @@
 	width: 303px;
 	height: 30px;
 	padding-left: 4px;
-	color: #999999;
-}
-.settingPageUserNameColorlastName{
-	border: 0px;
-	width: 303px;
-	height: 30px;
-	padding-left: 4px;
-	color: #515151;
+	/* color: #999999; */
+	vertical-align: middle;
+	line-height: 30px;
 }
 
-.settingPageUserNameColorfirstName{
-	border: 0px;
-	/* width: 303px;
- */	height: 30px;
-	color: #515151;
-	float:left;
-}
-.settingPageUserNameColorGender{
+.settingPageUserNameColorlastName {
 	border: 0px;
 	width: 303px;
 	height: 30px;
 	padding-left: 4px;
 	color: #515151;
+	vertical-align: middle;
+	line-height: 30px;
 }
+
+.settingPageUserNameColorfirstName {
+	border: 0px;
+	/* width: 303px;
+ */
+	height: 30px;
+	color: #515151;
+	float: left;
+	vertical-align: middle;
+	line-height: 30px;
+}
+
+.settingPageUserNameColorGender {
+	border: 0px;
+	width: 303px;
+	height: 30px;
+	padding-left: 4px;
+	color: #515151;
+	vertical-align: middle;
+	line-height: 30px;
+}
+
 .radio {
 	background: url(images/settings/radio.png) no-repeat;
 	/* background-position: 0px -34px; */
@@ -267,12 +285,13 @@ input.styled {
 	background-color: #FFF;
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	border-radius: 4px;
+	margin-bottom: 50px;
 }
 
 .settingInfoTitleContainerTwo {
 	float: left;
 	width: 100%;
-	cursor: pointer;
+	/* cursor: pointer; */
 }
 
 .settingPageRadioButtonHolder {
@@ -341,10 +360,12 @@ input.styled {
 	margin-bottom: 13px;
 	float: right;
 }
-.settingsPageSaveProfileButton:hover{
-background: #1076bb;
-cursor: pointer;
+
+.settingsPageSaveProfileButton:hover {
+	background: #1076bb;
+	cursor: pointer;
 }
+
 .settingsPageSaveButtonContainer {
 	float: right;
 	margin-top: -36px;
@@ -383,7 +404,7 @@ cursor: pointer;
 	color: #333;
 	font-size: 12px;
 	width: 1110px;
-	height: 1020px;
+	/* height: 1020px; */
 	margin: 0 auto;
 }
 
@@ -408,7 +429,7 @@ cursor: pointer;
 	margin-left: 15px;
 	padding: 0px 0px 20px 0px;
 	cursor: pointer;
-	color: #1076BB;	
+	color: #1076BB;
 }
 
 .pleaseWait {
@@ -458,16 +479,20 @@ cursor: pointer;
 	padding: 15px 0px 0px 0px;
 	color: rgb(148, 143, 143);
 }
+
 .settingOneSetOfLableEmail {
 	border: 0;
 	float: right;
 	width: 322px;
 	height: 30px;
 	padding: 15px 0px 0px 0px;
+	vertical-align: middle;
+	line-height: 30px;
 }
+
 .settingHtmlPanel {
 	float: left;
-	overflow: hidden;
+	/* overflow: hidden; */
 	width: 690px;
 	margin-top: 10px;
 }
@@ -478,8 +503,9 @@ cursor: pointer;
 
 .settingOneSetOfLabelontainer {
 	border: none;
-	padding: 0px 0px 0px 87px;
+	padding: 0px 0px 0px 10px;
 	color: #515151;
+	float: left;
 }
 
 .settingOneSetOfLabelontainerName {
@@ -488,32 +514,32 @@ cursor: pointer;
 	padding: 10px;
 }
 /* save popup */
- .facebox {
+.facebox {
 	display: table;
 	background: #fff;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	 width: 391px; 
+	width: 391px;
 	top: 150px;
 	left: 503px;
 	width: 360px;
 	z-index: 1001;
-	
-} 
+}
+
 .content {
 	display: table;
 	background: #fff;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	 width: 100%; 
+	width: 100%;
 	top: 150px;
 	left: 503px;
 	/* width: 360px; */
 	z-index: 1001;
-	
 }
+
 .settingsSuccessPopUpContainer {
 	border: 1px solid #CCC;
 	float: left;
@@ -569,20 +595,22 @@ cursor: pointer;
 	text-align: center;
 	margin-left: 60px;
 }
-.settingsSucessOkButton:hover{
+
+.settingsSucessOkButton:hover {
 	background: #1076bb;
 	cursor: pointer;
 }
+
 .facebox {
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 1000;
 	text-align: left;
-	 width: 391px; 
+	width: 391px;
 }
 
-	.popup {
+.popup {
 	position: absolute;
 	border: 3px solid rgba(0, 0, 0, 0);
 	-webkit-border-radius: 5px;
@@ -598,7 +626,7 @@ cursor: pointer;
 	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 0px;
 	position: static;
-	width:100%;
+	width: 100%;
 }
 
 .mandatoryLabel {
@@ -612,6 +640,7 @@ cursor: pointer;
 	float: right;
 	padding: 2px 112px 9px 0px;
 }
+
 .mandatoryNameLabel {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -622,7 +651,6 @@ cursor: pointer;
 	top: 10px; */
 	float: right;
 	padding: 5px 290px 9px 0;
-
 }
 
 /*button center alignment*/
@@ -671,9 +699,9 @@ cursor: pointer;
 }
 
 .publicProfileOnButtonContent button {
-	border-radius:0px;
-	font-weight:normal;
-	color:#515151;
+	border-radius: 0px;
+	font-weight: normal;
+	color: #515151;
 }
 
 .publicProfileOffButtonsDeActive {
@@ -685,15 +713,17 @@ cursor: pointer;
 	cursor: pointer;
 	text-align: center;
 	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
 	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
 	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
 	background: -o-linear-gradient(top, #fdfdfd, #ddd);
 	border: 1px solid #ddd;
-	float:left;
+	float: left;
 }
-.publicProfileOffButtonsActive, .publicProfileOffButtonsActive:hover {
+
+.publicProfileOffButtonsActive,.publicProfileOffButtonsActive:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	color: rgb(81, 81, 81);
 	font-size: 12px;
@@ -708,16 +738,15 @@ cursor: pointer;
 	background: -moz-linear-gradient(top, #bbb, #eee);
 	background: -ms-linear-gradient(top, #bbb, #eee);
 	background: -o-linear-gradient(top, #bbb, #eee);
-	-moz-box-shadow:inset 0px 0px 7px rgba(0,0,0,0.05);
-	-webkit-box-shadow:inset 0px 0px 7px rgba(0,0,0,0.05);
-	box-shadow:inset 0px 0px 7px rgba(0,0,0,0.05);
-	border:1px solid #ddd;
-	border-left:transparent;
+	-moz-box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05);
+	border: 1px solid #ddd;
+	border-left: transparent;
 	float: left;
 }
 
-.publicProfileOnButtonActive, .publicProfileOnButtonActive:hover
-{
+.publicProfileOnButtonActive,.publicProfileOnButtonActive:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	color: rgb(81, 81, 81);
 	font-size: 12px;
@@ -732,19 +761,20 @@ cursor: pointer;
 	background: -moz-linear-gradient(top, #bbb, #eee);
 	background: -ms-linear-gradient(top, #bbb, #eee);
 	background: -o-linear-gradient(top, #bbb, #eee);
-	-moz-box-shadow:inset 0px 0px 7px rgba(0,0,0,0.05);
-	-webkit-box-shadow:inset 0px 0px 7px rgba(0,0,0,0.05);
-	box-shadow:inset 0px 0px 7px rgba(0,0,0,0.05);
-	border:1px solid #ddd;
-	border-right:transparent;
+	-moz-box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05);
+	border: 1px solid #ddd;
+	border-right: transparent;
 	float: left;
 }
 
-.publicProfileOffButtonsActive:hover, .publicProfileOnButtonActive:hover {
-	cursor:default;
+.publicProfileOffButtonsActive:hover,.publicProfileOnButtonActive:hover
+	{
+	cursor: default;
 }
 
-.publicProfileOnButtonDeActive{
+.publicProfileOnButtonDeActive {
 	font-family: Arial, Helvetica, sans-serif;
 	color: rgb(81, 81, 81);
 	font-size: 12px;
@@ -753,7 +783,8 @@ cursor: pointer;
 	cursor: pointer;
 	text-align: center;
 	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
 	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
 	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
@@ -761,9 +792,11 @@ cursor: pointer;
 	border: 1px solid #ddd;
 	float: left;
 }
-.publicProfileOnButtonDeActive:hover, .publicProfileOnTitleActive:hover,.publicProfileOffButtonsDeActive:hover  {
+
+.publicProfileOnButtonDeActive:hover,.publicProfileOnTitleActive:hover,.publicProfileOffButtonsDeActive:hover
+	{
 	cursor: pointer;
-	background:#eee;
+	background: #eee;
 }
 
 .publicProfileDescription {
@@ -877,7 +910,8 @@ cursor: pointer;
 	cursor: pointer;
 	color: white;
 	background: #1076BB;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
 	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
 	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
 	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
@@ -910,7 +944,8 @@ cursor: pointer;
 	float: left;
 	cursor: pointer;
 	color: white;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC),
+		to(#1076BB));
 	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
 	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
 	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
@@ -925,16 +960,16 @@ cursor: pointer;
 	font-weight: bold;
 	margin: 0px 5px 0px 0px;
 	background-color: rgb(16, 118, 187);
-	border:1px solid #1076BB;
+	border: 1px solid #1076BB;
 }
 
 .publicProfileSaveButtonText {
 	padding: 7px 9px;
-	margin-bottom:5px;
+	margin-bottom: 5px;
 }
 
 .publicProfileCancelText {
-	float:left;
+	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 120%;
@@ -942,7 +977,8 @@ cursor: pointer;
 	padding: 7px 9px;
 	cursor: pointer;
 	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
 	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
 	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
@@ -951,12 +987,12 @@ cursor: pointer;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	clear:both;
+	clear: both;
 }
 
 .publicProfileCancelText:hover {
 	cursor: pointer;
-	background:#ddd
+	background: #ddd
 }
 
 .profileEditImage {
@@ -993,15 +1029,17 @@ cursor: pointer;
 }
 
 .uploadProfileImageButton {
-	display:none;
+	display: none;
 	position: relative;
 	text-align: center;
 	height: 15px;
 	top: -44px;
 	background-color: #1076BB;
-	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat scroll 0 0 transparent;
+	background: -moz-linear-gradient(center top, #4C98CC, #1076BB) repeat
+		scroll 0 0 transparent;
 	background: -o-linear-gradient(top, #4C98CC, #1076BB);
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#4C98CC),
+		to(#1076BB));
 	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
 	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
 	background-image: -ms-linear-gradient(top, #4C98CC, #1076BB);
@@ -1016,32 +1054,33 @@ cursor: pointer;
 	color: white;
 	cursor: pointer;
 	font-size: 12px;
-	font-weight:bold;
+	font-weight: bold;
 	padding: 8px 9px;
 	width: 152px;
 	margin-left: 15px;
 	float: left;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC', endColorstr='#1076BB');
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4C98CC',
+		endColorstr='#1076BB');
 }
-.uploadProfileImageButton:hover{
-	background: #1076BB;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB', endColorstr='#1076BB');
-}
-.clearContent{
-	clear: both;
-padding-top: 15px;
-}
- /* Adding Course and Grade feature css */
- 
- 
 
+.uploadProfileImageButton:hover {
+	background: #1076BB;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1076BB',
+		endColorstr='#1076BB');
+}
+
+.clearContent {
+	clear: both;
+	padding-top: 15px;
+}
+/* Adding Course and Grade feature css */
 .userCoursePopup {
 	/* position: absolute; */
-    top: 43px;
-    left: 73px;
-    /* width: 392px; */
-    /* padding: 5px; */
-    background:#fff;
+	top: 43px;
+	left: 73px;
+	/* width: 392px; */
+	/* padding: 5px; */
+	background: #fff;
 	/* background-color:rgb(255,255,255);
 	border-color:rgb(221,221,221);
 	border-width:1px;
@@ -1075,10 +1114,12 @@ padding-top: 15px;
 	border-bottom: 1px solid #CCC;
 	margin-bottom: 12px;
 }
+
 .settingGradeInfoTitle {
 	font-size: 13px;
 	color: #515151;
 }
+
 .settingGradeContentContainer {
 	float: left;
 	width: 250px;
@@ -1086,32 +1127,36 @@ padding-top: 15px;
 	margin-left: 15px;
 }
 
-
 .settingGradeGartenContainer {
 	float: left;
 	width: 250px;
 	opacity: 0.6;
 }
+
 .settingGradeInfoContainer {
 	float: left;
 	margin-left: 10px;
 	margin-top: 10px;
 	width: 315px;
 }
+
 .settingCourseInfoTitle {
 	font-size: 13px;
 	color: #515151;
 }
+
 .addedCoursesList {
 	float: left;
 	width: 321px;
 	/* margin: 5px 0px 10px 2px; */
-	margin-bottom:10px;
+	margin-bottom: 10px;
 }
+
 .coursePoupSaveBtnContainer {
 	width: 125px;
 	margin: 0 auto;
 }
+
 .coursePopupCancelLbl {
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
@@ -1120,34 +1165,38 @@ padding-top: 15px;
 	color: #1076bb;
 	text-align: left;
 	padding: 0 0 0 3px;
-	cursor: pointer;	
+	cursor: pointer;
 	float: left;
 	margin-top: 6px;
 	border-radius: 4px;
 	padding: 7px 9px 8px 9px;
 	display: inline-block;
 	background: #efefef;
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
 	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
 	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
 	background: -o-linear-gradient(top, #fdfdfd, #ddd);
 	border: 1px solid #ddd;
 }
+
 .coursePopupCancelLbl:hover {
-	background:#eee;
+	background: #eee;
 }
-.settingGradeTitleLabel{
+
+.settingGradeTitleLabel {
 	float: left;
-    margin-left: 15px;
+	margin-left: 15px;
 	font-family: arial;
-  	color: #999;
+	color: #999;
 }
-.settingCourseTitleLabel{
+
+.settingCourseTitleLabel {
 	float: left;
-    /* margin-left: 15px; */
+	/* margin-left: 15px; */
 	font-family: arial;
-  	color: #999;
+	color: #999;
 }
 
 /*this following 2 classes copied form collection.css*/
@@ -1161,6 +1210,7 @@ padding-top: 15px;
 	margin-top: 30px;
 	margin-bottom: 12px;
 }
+
 .profileHigherEducationGrade {
 	font-size: 14px;
 	text-align: center;
@@ -1172,94 +1222,146 @@ padding-top: 15px;
 	margin-bottom: 10px;
 }
 /*this class has added for 5.9 sprint*/
-.settingEditButton{
-float: right;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
-margin-right: 6px;
-color: #1076BB;
-padding: 7px 9px;
-border-radius: 4px;
-background: #efefef;
-background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
-background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
-background: -moz-linear-gradient(top, #fdfdfd, #ddd);
-background: -ms-linear-gradient(top, #fdfdfd, #ddd);
-background: -o-linear-gradient(top, #fdfdfd, #ddd);
-border: 1px solid #ddd;
-text-decoration: none;
-margin-top: -34px;
+.settingEditButton {
+	float: right;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-right: 6px;
+	color: #1076BB;
+	padding: 7px 9px;
+	border-radius: 4px;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	text-decoration: none;
+	margin-top: -34px;
 }
+
 .settingEditButton:hover {
 	background: #efefef;
-	cursor:pointer;
+	cursor: pointer;
 }
-.settingCancelButton
-{
-float: right;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
-margin-right: 6px;
-color: #1076bb;
-padding: 7px 9px;
-border-radius: 4px;
-background: #efefef;
-background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd), to(#ddd));
-background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
-background: -moz-linear-gradient(top, #fdfdfd, #ddd);
-background: -ms-linear-gradient(top, #fdfdfd, #ddd);
-background: -o-linear-gradient(top, #fdfdfd, #ddd);
-border: 1px solid #ddd;
-text-decoration: none;
-float:left;
+
+.settingCancelButton {
+	float: right;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-right: 6px;
+	color: #1076bb;
+	padding: 7px 9px;
+	border-radius: 4px;
+	background: #efefef;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fdfdfd),
+		to(#ddd));
+	background: -webkit-linear-gradient(top, #fdfdfd, #ddd);
+	background: -moz-linear-gradient(top, #fdfdfd, #ddd);
+	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
+	background: -o-linear-gradient(top, #fdfdfd, #ddd);
+	border: 1px solid #ddd;
+	text-decoration: none;
+	float: left;
 }
+
 .settingCancelButton:hover {
 	background: #efefef;
-	cursor:pointer;
+	cursor: pointer;
 }
+
 .settingOneSetOfInputContainerLastNameNew {
-float:left;
+	float: left;
+	vertical-align: middle;
+	line-height: 30px;
+	color: #515151;
 }
-.settingInfoText{
-font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
-color: #515151;
-margin: 20px 0 0 2px;
-float: right;
-margin-top:-20px;
+
+.settingInfoText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #515151;
+	margin: 20px 0 0 2px;
+	float: right;
+	margin-top: -20px;
 }
-.emailSecurityText{
-float: left;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
-text-align: right;
-width: 154px;
-color: #999;
-margin-left:74px;
+
+.emailSecurityText {
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-align: right;
+	width: 154px;
+	color: #999;
+	margin-left: 74px;
 }
-.settingOneSetOfInputContainerName
-{
+
+.settingOneSetOfInputContainerName {
 	width: 100%;
 	float: left;
 	height: 30px;
+	margin-bottom: 5px;
 }
-.defaultTextcss
-{
+
+.defaultTextcss {
 	margin-left: 4px;
 	color: #999;
 }
-.deafaultCourse{
-color: white;
-border-radius: 4px;
-padding: 3px 9px;
-cursor: pointer;
-border: none;
-font-family: Arial, sans-serif;
-display: inline-block;
-background-color: #515151;
--moz-border-radius: 3px;
--webkit-border-radius: 3px;
-border-radius: 3px;
-margin: 2px;
-float: left;
+
+.deafaultCourse {
+	color: white;
+	border-radius: 4px;
+	padding: 3px 9px;
+	cursor: pointer;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background-color: #515151;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	margin: 2px;
+	float: left;
+}
+
+.radioTextGeneral {
+	margin-left: 22px;
+	margin-top: -14px;
+}
+.standardsText{
+	text-align: left;
+	/* width: 223px; */
+	font-family: Arial, Helvetica, sans-serif;
+	color: #515151;
+	font-size: 12px;
+}
+.standardsTextDescription{
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #999;
+	font-size: 12px;
+	margin-bottom: 10px;
+	
+}
+.settingOneSetOfStandardInputContainer {
+	float: left;
+	width: 395px;
+	min-height: 30px;
+	margin-bottom: 30px;
+	height: auto;
+}
+.settingOneSetOfStandardInputContainerDefault {
+	float: left;
+	width: 395px;
+	min-height: 30px;
+	margin-bottom: 30px;
+	height: auto;
+	margin-top: 10px;
+}
+.standardsCheckBox{
+	float: left;
+	width: 285px;
+	margin: 2px 14px;
 }

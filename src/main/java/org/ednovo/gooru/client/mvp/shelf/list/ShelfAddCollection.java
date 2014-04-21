@@ -24,10 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.RenameCustomizePopUp;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
@@ -35,28 +41,20 @@ import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionAndItemEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.CustomAnimation;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ShelfAddCollection.java
+ * @author Search Team
  *
- * @description : This is used to add collection to the shelf
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ShelfAddCollection extends FocusPanel implements DropBox {
+public class ShelfAddCollection extends FocusPanel implements DropBox,MessageProperties {
 
 	private ResourceDropController dropController;
 
@@ -86,44 +84,51 @@ public class ShelfAddCollection extends FocusPanel implements DropBox {
 		lbl.setStyleName(ShelfListCBundle.INSTANCE.css().shelfNewCollectionText());
 		this.setWidget(gradientContFloPanel);
 	}
-	/**
-	 * 
-	 * @function getLabel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :Widget contains arbitary text no interpreted as HTML.It uses <div> tag causing  to be displayed with block layout
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Label
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public Label getLabel() {
 		return lbl;
 	}
-/**
- * @description: This is used to drop after dragging the section .
- */
+
 	@Override
 	public void onDrop(Draggable draggable) {
 		if (draggable.getType().equals(DRAG_TYPE.COLLECTION)) { 
 			MixpanelUtil.Drag_Collection();
 			new CustomAnimation(draggable).run(50);
-			this.setLabel("Adding...");
-			AppClientFactory.fireEvent(new CopyCollectionEvent(draggable.getDragId()));
+			this.setLabel(GL0591);
+			/*RenameCustomizePopUp renameCustomizePopUp = new RenameCustomizePopUp(draggable.getDragId()){
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+					this.hide();	
+				}
+				
+			};
+			renameCustomizePopUp.setWidth("450px");
+			renameCustomizePopUp.setHeight("190px");
+			renameCustomizePopUp.show();
+			renameCustomizePopUp.center();*/
+//			AppClientFactory.fireEvent(new CopyCollectionEvent(draggable.getDragId()));
+			
+			AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(draggable.getDragId(), new SimpleAsyncCallback<CollectionDo>(){
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("collectionId", result.getGooruOid());
+					params.put("collectionTitle", result.getTitle());
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION, params);
+				}
+				
+			});
+			
 		} else if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
 			new CustomAnimation(draggable).run(50);
 			MixpanelUtil.Drag_Resource();
+			
 			AppClientFactory.fireEvent(new CreateCollectionAndItemEvent(draggable.getDragId()));
 		}
 	}
-/**
- * @description: this Fires on the target element continuously while the user drags the object over a valid drop target.
- */
+
 	@Override
 	public void onDragOver(Draggable draggable) {
 		if (draggable.getType().equals(DRAG_TYPE.RESOURCE) || draggable.getType().equals(DRAG_TYPE.COLLECTION)) {
@@ -131,9 +136,7 @@ public class ShelfAddCollection extends FocusPanel implements DropBox {
 			this.addStyleName(ShelfListCBundle.INSTANCE.css().blueBorder());
 		}
 	}
-	/**
-	 * @description: This is used to  drag  moved out of a drop point
-	 */
+
 	@Override
 	public void onDragOut(Draggable draggable) {
 		if (draggable.getType().equals(DRAG_TYPE.RESOURCE) || draggable.getType().equals(DRAG_TYPE.COLLECTION)) {
@@ -142,49 +145,34 @@ public class ShelfAddCollection extends FocusPanel implements DropBox {
 		}
 
 	}
-/**
- * @description: this widget gives support for receiving events from browser and add directly to the panels
- */
+
 	@Override
 	public Widget getDropTarget() {
 		return this;
 	}
-/**
- * @description: This method calls  when a widget is attached to the browser document
- */
+
 	@Override
 	protected void onLoad() {
 		super.onLoad();
 		registerDropController();
 	}
-	/**
-	  * @description: This method calls  when a widget is detached from the browser document
-
-	 */
 
 	@Override
 	protected void onUnload() {
 		super.onUnload();
 		unregisterDropController();
 	}
-/**
- * @description: This is used to register when an anonymous user is logged in
- */
+
 	@Override
 	public void registerDropController() {
 		AppClientFactory.fireEvent(new RegisterSearchDropEvent(dropController, RegisterSearchDropEvent.DROP_AREA.SHELF_ADD_COLLECTION));
 	}
-/**
-  * @description: This is used to unregister 
 
- */
 	@Override
 	public void unregisterDropController() {
 		AppClientFactory.fireEvent(new UnregisterSearchDropEvent(dropController, RegisterSearchDropEvent.DROP_AREA.SHELF_ADD_COLLECTION));
 	}
-/**
- * @description: This is used to register  again
- */
+
 	@Override
 	public void reregisterDropController() {
 		unregisterDropController();

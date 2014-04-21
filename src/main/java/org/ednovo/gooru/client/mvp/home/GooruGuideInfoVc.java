@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,29 +37,21 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : GooruGuideInfoVc.java
+ * @author Search Team
  *
- * @description : This will Update the user view flag , which is used to find out the first signin of the user 
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class GooruGuideInfoVc extends PopupPanel {
+public class GooruGuideInfoVc extends PopupPanel implements MessageProperties {
 	
 	
 	@UiField
 	BlueButtonUc guideSlideHomeBtnUc;
+	
+	@UiField Label gooruGuideLbl;
 	
 	private static GooruGuideInfoUiBinder uiBinder = GWT.create(GooruGuideInfoUiBinder.class);
 
@@ -71,6 +64,8 @@ public class GooruGuideInfoVc extends PopupPanel {
 	public GooruGuideInfoVc() {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
+		gooruGuideLbl.setText(GL1247);
+		guideSlideHomeBtnUc.setText(GL0543);
 		guideSlideHomeBtnUc.getElement().setId("btnGuideSlideHome");
 	}
 	

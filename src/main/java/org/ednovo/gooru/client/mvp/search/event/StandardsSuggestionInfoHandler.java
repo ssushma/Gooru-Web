@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : StandardsSuggestionInfoHandler.java
- *
- * @description : THis file is used to  Get suggest standards information.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface StandardsSuggestionInfoHandler extends EventHandler {
 

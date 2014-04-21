@@ -30,19 +30,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : LeftToolTipUc.java
+ * @author Search Team
  *
- * @description : This class is used to display left tooltip.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class LeftToolTipUc extends PopupPanel {
 

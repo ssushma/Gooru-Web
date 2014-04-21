@@ -29,32 +29,21 @@ import java.util.List;
 import org.ednovo.gooru.client.service.TaxonomyService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.deserializer.TaxonomyDeSerializer;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-/**
- * 
- * @fileName : TaxonomyServiceImpl.java
- *
- * @description : This class is used for Taxonomy service .
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Service("taxonomyService")
 @ServiceURL("/taxonomyService")
 public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyService {
 
-	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 6947235468580822129L;
 	
 //	private static final String DEFAULT = "default"; 
@@ -71,13 +60,13 @@ public class TaxonomyServiceImpl extends BaseServiceImpl implements TaxonomyServ
 		JsonRepresentation jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		return taxonomyDeSerializer.getTree(depthLimit, jsonRep);
 	}*/
-/**
- * @description : This method is used to get course.
- */
+
 	@Override
 	public List<LibraryCodeDo> getCourse() {
+		JsonRepresentation jsonRep =null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.TAXONOMY_COURSE, getLoggedInSessionToken());
-		JsonRepresentation jsonRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return taxonomyDeSerializer.getCourse(jsonRep);
 	}
 

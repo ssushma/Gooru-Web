@@ -25,15 +25,17 @@
 package org.ednovo.gooru.client.service;
 
 import java.util.List;
+import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.model.content.PermissionsDO;
+import org.ednovo.gooru.shared.model.content.MetaDO;
+import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
@@ -43,7 +45,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	void createCollection(CollectionDo collectionDo, String codeId, AsyncCallback<CollectionDo> callback);
 	
-	void createCollectionInParent(CollectionDo collectionDo, String codeId, String parentId, AsyncCallback<CollectionDo> callback);
+	/*void createCollectionInParent(CollectionDo collectionDo, String codeId, String parentId, AsyncCallback<CollectionDo> callback);*/
 	
 //	void updateCollection(CollectionDo collectionDo, AsyncCallback<CollectionDo> callback);
 	
@@ -107,7 +109,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void getUserCollectionList(Integer pageSize,Integer pageNum, boolean isSharable, AsyncCallback<List<CollectionDo>> callback);
 	
-	void getPermissions(String CollectionId,AsyncCallback<PermissionsDO> callback);
+	void getPermissions(String CollectionId,AsyncCallback<MetaDO> callback);
 
 	void checkShortenUrl(String url, AsyncCallback<String> asyncCallback);
 
@@ -126,5 +128,15 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void getContentReport(String assocGooruOid,AsyncCallback<GetFlagContentDO> callback);
 	
 	void deleteContentReport(String gooruOid,AsyncCallback<String> callback);
+	
+	void checkProfanity(Map<String, String> parms, AsyncCallback<Boolean> callback);
 
+	void checkProfanityForList(List<ProfanityCheckDo> parms, AsyncCallback<List<ProfanityCheckDo>> callback);
+
+	void getFolderWorkspace(int offset, int limit,String sharingType, String collectionType, AsyncCallback<FolderListDo> callback);
+	
+	void updateCollectionInfo(CollectionDo collectionDo,
+			String teacherTips, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void getCollectionInfoV2API(String collectionId, AsyncCallback<CollectionDo> asyncCallback);
 }

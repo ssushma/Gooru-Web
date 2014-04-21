@@ -20,6 +20,7 @@
   <inherits name='com.google.code.gwt.crop.GWTCropper'/> 
   <inherits name='com.nitrous.gwt.earth.GwtEarthAPI'/>
   <inherits name='br.com.freller.tool.PrintIt'/>
+  <inherits name='com.google.gwt.query.Query'/>
   
   <!--Inherit this class for disabling obfuscation. Remove this line for production-->
   <inherits name='com.google.gwt.resources.Resources'/>
@@ -37,8 +38,34 @@
   <inherits name='com.google.gwt.uibinder.UiBinder'/>
 
   <inherits name="com.seanchenxi.gwt.storage.Storage" />
+  
+   <!-- Include GWTUpload library -->
+    <inherits name="gwtupload.GWTUpload"/>
+    
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.ednovo.gooru.client.GooruEntry'/>
+  
+  
+  <!-- REPLACE GWT CROPPER STYLES WITH GOORU STYLES -->
+  <replace-with class="org.ednovo.gooru.client.mvp.image.upload.StylesDesktopImpl">
+		<when-type-is class="com.google.code.gwt.crop.client.ICropperStyleSource" />
+	</replace-with>
+
+	<replace-with class="org.ednovo.gooru.client.mvp.image.upload.StylesDesktopIEImpl">
+		<when-type-is class="com.google.code.gwt.crop.client.ICropperStyleSource" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+		</any>
+	</replace-with>
+
+	<replace-with class="org.ednovo.gooru.client.mvp.image.upload.StylesTabletImpl">
+		<when-type-is class="com.google.code.gwt.crop.client.ICropperStyleSource" />
+		<any>
+			<when-property-is name="formfactor" value="tablet" />
+			<when-property-is name="formfactor" value="mobile" />
+		</any>
+	</replace-with>
   
   <define-configuration-property name='gin.ginjector' is-multi-valued='false' />
   <set-configuration-property name='gin.ginjector' value='org.ednovo.gooru.client.gin.AppInjector' />

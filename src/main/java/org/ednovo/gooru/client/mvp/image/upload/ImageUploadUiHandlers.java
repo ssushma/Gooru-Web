@@ -27,18 +27,10 @@ package org.ednovo.gooru.client.mvp.image.upload;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : ImageUploadUiHandlers.java
+ * @author Search Team
  *
- * @description : The interface for view classes that handles all the UI-related code for a ImageUploadPresenter.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ImageUploadUiHandlers extends BaseUiHandlers, EventHandler {
 	/**

@@ -25,18 +25,8 @@
 package org.ednovo.gooru.client;
 
 /**
- * 
- * @fileName : CssTokens.java
+ * @author Search Team
  *
- * @description : This interface helps to add css tokens.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CssTokens {
 	

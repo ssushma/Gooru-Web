@@ -34,21 +34,13 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @fileName : WrapView.java
- *
- * @description : This file used to fetch the header for every page and adding child presenter's 
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author: Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class WrapView extends BaseView implements IsWrapView {
 
@@ -63,11 +55,15 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField
 	HeaderUc headerUc;
 
+	@UiField HTMLPanel panelWrapper;
+	
 	/**
 	 * Class constructor 
 	 */
 	public WrapView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		
+		panelWrapper.getElement().setId("wrapper");
 	}
 
 	@Override
@@ -84,10 +80,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			}
 		}
 	}
-	/**
-	 * To view the Classic Button in Header
-	 * @param activate {@link Boolean}
-	 */
+
 	@Override
 	public void activateClassicButton(boolean activate) {
 		headerUc.setClassicButtonEnabled(activate);
@@ -97,23 +90,17 @@ public class WrapView extends BaseView implements IsWrapView {
 	public void invokeLogin() {
 		headerUc.onLinkPopupClicked(null);
 	}
-	/**
-	 * To show the Login data in Header
-	 * @param user {@link UserDo}
-	 */
+
 	@Override
 	public void setLoginData(UserDo user) {
 		headerUc.setLoggedInUser(user);
 	}
-	
+
 	@Override
 	public void invokeRegister() {
 		headerUc.onRegisterPopupClicked(null);
 	}
-	/**
-	 * To Activate the search bar in Header
-	 * @param activate {@link Boolean}
-	 */
+
 	@Override
 	public void activateSearchBar(boolean activate) {
 		headerUc.setSearchBarEnabled(activate);
@@ -130,10 +117,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		gooruGuideInfo.setPopupPosition(left, top);
 		gooruGuideInfo.show();*/
 	}
-	/**
-	 * To manage Menu (DOTS) in Header
-	 * @param tabType {@link HeaderTabType}
-	 */
+
 	public void setDotsPanelSelection(HeaderTabType tabType){
 
 		headerUc.manageDotsMenuSelectionFromEvent(tabType);

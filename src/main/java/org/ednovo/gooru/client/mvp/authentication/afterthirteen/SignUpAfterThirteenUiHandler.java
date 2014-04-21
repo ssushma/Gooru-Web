@@ -27,21 +27,7 @@ package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.EventHandler;
-/**
- * 
- * @fileName : SignUpAfterThirteenUiHandler.java
- *
- * @description : Use this  interface on classes that implement the controls required by
-* a {@link SignUpTurnsAfterThirteenView} to communicate back with its {@link SignUpAfterThirteenPresenter}
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface SignUpAfterThirteenUiHandler  extends BaseUiHandlers,EventHandler {
 	public void displayView();
 }

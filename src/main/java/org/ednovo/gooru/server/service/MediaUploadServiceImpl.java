@@ -26,6 +26,7 @@ package org.ednovo.gooru.server.service;
 
 import org.ednovo.gooru.client.service.MediaUploadService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
@@ -35,18 +36,10 @@ import org.json.JSONException;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
+
 /**
- * @fileName : MediaUploadServiceImpl.java
- *
- * @description : This is the implementation of the Media upload service.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 @Service("mediaUploadService")
 @ServiceURL("/mediaUploadService")
@@ -57,9 +50,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 	 * 
 	 */
 	private static final long serialVersionUID = -8673556966040594979L;
-	/**
-	 * This method is used to upload web image.
-	 */
+
 	@Override
 	public MediaUploadDo imageWebUpload(String imageURL) {
 		MediaUploadDo mediaUploadDo = null;
@@ -67,8 +58,8 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator
 				.generateUrl(getRestEndPoint(), UrlToken.MEDIA_FILE_UPLOAD,
 						getLoggedInSessionToken(), imageURL);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
-				getRestPassword());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			mediaUploadDo = JsonDeserializer.deserialize(jsonRep.getJsonArray()
 					.get(0).toString(), MediaUploadDo.class);
@@ -78,17 +69,16 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		return mediaUploadDo;
 
 	}
-	/**
-	 * This method is used to save image.
-	 */
+
 	@Override
 	public String saveImage(String gooruOid, String fileName) {
 		String filePath = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(),
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			filePath = jsonRep.getText(); 
 		} catch (Exception e) {
@@ -96,9 +86,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		return filePath;
 	}
-	/**
-	 * This method is used to crop images.
-	 */
+
 	@Override
 	public String cropImage(String fileName, String height, String width,
 			String xPosition, String yPosition, String imageUrl) {
@@ -114,9 +102,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 
 	}
-	/**
-	 * This method is used to upload iamge file.
-	 */
+
 	@Override
 	public MediaUploadDo imageFileUpload(String response) {
 		MediaUploadDo mediaUploadDo = null;
@@ -133,16 +119,13 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 
 	// Request
 	// URL:http://www.goorulearning.org/gooruapi/rest/quiz-question/newQuestion/media?sessionToken=f6ded446-a9a9-11e2-ba82-123141016e2a&mediaFileName=bbda9546-cb15-453e-a107-f073b09eccdc.jpg&assetKey=asset-question
-	/**
-	 *This method is used to save question image. 
-	 */
 	public String saveQuestionImage(String collectionItemId, String fileName) {
 		String filePath = null;
 		JsonRepresentation jsonRep = null;
 
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_QUESTION_IMAGE, collectionItemId, getLoggedInSessionToken(), fileName);
-		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
-      
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
 		try {
 			filePath = jsonRep.getText();
 		} catch (Exception e) {
@@ -167,9 +150,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		}
 		return filePath;
 	}*/
-	/**
-	 * This method is used to upload profile image.
-	 */
+
 	@Override
 	public String uploadProfileImage(String fileNameWithOurRespository,String fileName) {
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPLOAD_PROFILE_IMAGE, getLoggedInUserUid(), getLoggedInSessionToken(),fileNameWithOurRespository);

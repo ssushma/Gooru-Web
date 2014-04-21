@@ -4,7 +4,7 @@
 	<ui:style field="libraryStyle" src="../library.css"/>
 
 	<g:HTMLPanel ui:field="container" styleName="{libraryStyle.featuredEducators}">
-			<g:HTMLPanel styleName="{libraryStyle.pageTitle}">Our Contributors</g:HTMLPanel>
+			<g:HTMLPanel styleName="{libraryStyle.pageTitle}" ui:field="contributorsText"></g:HTMLPanel>
 			<g:HTMLPanel ui:field="featuredEducatorsPanel"/>
 	</g:HTMLPanel>
-</ui:UiBinder>
+</ui:UiBinder> 

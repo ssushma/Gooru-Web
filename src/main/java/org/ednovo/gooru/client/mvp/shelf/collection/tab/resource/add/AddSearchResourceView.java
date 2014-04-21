@@ -69,22 +69,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : AddSearchResourceView.java
- *
- * @description : This Class is used to Add Search Resource View
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public abstract class AddSearchResourceView extends Composite{
+
+public abstract class AddSearchResourceView extends Composite implements MessageProperties{
 	
 	private String subjectDoFilter = "";
 	private String gradeDoFilter = "";
@@ -93,7 +79,7 @@ public abstract class AddSearchResourceView extends Composite{
 //	private static final AppConstants CONSTANTS = GWT.create(AppConstants.class);
 	
 	@UiField 
-	Label totalResources;
+	Label totalResources,searchtitleText,serachcontentText,suggestedText;
 	
 	@UiField
 	TextBox searchBox;
@@ -140,24 +126,27 @@ public abstract class AddSearchResourceView extends Composite{
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 	
-	private static final String PNG = ".png";
+	private static final String PNG =GL0899;
 	
-	private static final String SMALL = "Small";
+	private static final String SMALL = GL0900;
+	private String category;
 	
-	public interface AddSearchResourceViewUiBinder extends UiBinder<Widget, AddSearchResourceView>{
+	public interface AddSearchResourceViewUiBinder extends UiBinder<Widget, AddSearchResourceView> {
 		
 	}
 	
 	public static AddSearchResourceViewUiBinder uiBinder=GWT.create(AddSearchResourceViewUiBinder.class);
-	/**
-	 * Constructor
-	 * @param collectionDo
-	 */
+	
 	public AddSearchResourceView(CollectionDo collectionDo){
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		final String collectionTitle = collectionDo.getTitle();
 		this.collectionTitle = collectionTitle;
+		searchtitleText.setText(GL0894);
+		serachcontentText.setText(GL0895);
+		addResourceButton.setText(GL0896);
+		suggestedText.setText(GL0897);
+		//GL0896
 		searchBox.setText(collectionTitle);
 		searchBox.addKeyUpHandler(new SearchKeyUpHandler());
 		suggestedResourcesPanel.addMouseOverHandler(new showSearchButton());
@@ -224,21 +213,7 @@ public abstract class AddSearchResourceView extends Composite{
 			}
 		}
 	}
-/**
- * 
- * @fileName : AddSearchResourceView.java
- *
- * @description : This method is used to show search button
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 	public class showSearchButton implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -246,42 +221,12 @@ public abstract class AddSearchResourceView extends Composite{
 		}
 	}
 	
-	/**
-	 * 
-	 * @fileName : AddSearchResourceView.java
-	 *
-	 * @description : This method is used to Hide search button
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 02-Jan-2014
-	 *
-	 * @Author Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
 	public class hideSearchButton implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			viewAllResourcesBtn.setVisible(false);
 		}
 	}
-	/**
-	 * 	 * @function getResourceSearchResults 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to get Resource Search Results
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	
 	private void getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo) {
 		AppClientFactory.getInjector().getSearchService().getResourceSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<ResourceSearchResultDo>>(){
@@ -291,22 +236,7 @@ public abstract class AddSearchResourceView extends Composite{
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function setFilters 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set Filters
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void setFilters(String grade){
 		boolean isGradeAvailable = false;
 		if(grade.contains("Higher Education")) {
@@ -340,22 +270,7 @@ public abstract class AddSearchResourceView extends Composite{
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function setSubject 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set subject 
-	 * 
-	 * 
-	 * @parm(s) : @param codeDoSet
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setSubject(Set<CodeDo> codeDoSet) {
 		String codeDoFilter = "";
 		for(CodeDo codeDo : codeDoSet) {
@@ -401,33 +316,28 @@ public abstract class AddSearchResourceView extends Composite{
 	}
 	
 	public abstract void hidePopup();
-	/**
-	 * 
-	 * @function setdata
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set data 
-	 * 
-	 * 
-	 * @parm(s) : @param codeDoSet
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private void setData(SearchDo<ResourceSearchResultDo> result) {
 		if(result.getSearchHits()==0) {
 			searchResultspanel.setVisible(false);
 		} else {
 			searchResultspanel.setVisible(true);
-			totalResources.setText(StringUtil.generateMessage(MessageProperties.GL0335, Integer.toString(result.getSearchHits())));
+			totalResources.setText(StringUtil.generateMessage(GL0335, Integer.toString(result.getSearchHits())));
 			final List<ResourceSearchResultDo> searchResults = result.getSearchResults();
 			for(int i = 0; i < 4; i++) {
 				final String thumbnailUrl = searchResults.get(i).getUrl();
-				final String category = searchResults.get(i).getCategory();
-				
+				category = searchResults.get(i).getCategory();
+				if(category!=null){
+				if(category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("handout")){
+					category=category.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
+				}
+				if(category.equalsIgnoreCase("slide")){
+					category=category.replaceAll("slide","image");
+				}
+				if(category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("website") || category.equalsIgnoreCase("challenge")){
+					category=category.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
+				}
+				}
 				HTMLPanel thumbnailContainer = new HTMLPanel("");
 				
 				addResourceThumbnailContent = new HTMLPanel("");
@@ -456,6 +366,7 @@ public abstract class AddSearchResourceView extends Composite{
 				addResourceThumbnailContent.add(thumbnailContainer);
 				addResourceThumbnailContent.add(addResourceImgDesc);
 				suggestedResourcesPanel.add(addResourceThumbnailContent);
+				
 				resourceThumbnail.addErrorHandler(new ErrorHandler(){
 					@Override
 					public void onError(ErrorEvent event) {
@@ -470,22 +381,7 @@ public abstract class AddSearchResourceView extends Composite{
 			viewAllResourcesBtn.getElement().getStyle().setMarginTop(33, Unit.PX);
 		}
 	}
-	/**
-	 * 
-	 * @function redirectSearchFiltersPage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to redirect Search Filter page
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void redirectSearchFiltersPage(){
 		Map<String,String> filterResourceParams = new HashMap<String,String>();
 		filterResourceParams.put("category", "All");
@@ -501,22 +397,7 @@ public abstract class AddSearchResourceView extends Composite{
 		hidePopup();
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_SEARCH, filterResourceParams);
 	}
-/**
- * 
- * @function redirectSearchNoFiltersPage 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description : This method is used to redirect search number of filters page.
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	private void redirectSearchNoFiltersPage() {
 		Map<String,String> noFilterResourceParams = new HashMap<String,String>();
 		noFilterResourceParams.put("query",searchBox.getText());

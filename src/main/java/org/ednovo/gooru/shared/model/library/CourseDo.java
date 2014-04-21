@@ -26,24 +26,13 @@ package org.ednovo.gooru.shared.model.library;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * @fileName : CourseDo.java
- *
- * @description :  This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CourseDo implements Serializable {
 	
@@ -53,6 +42,7 @@ public class CourseDo implements Serializable {
 	private ThumbnailDo thumbnails;
 	private ArrayList<UnitDo> unit;
 	private LibraryUserDo creator;
+	private List<LibraryUserDo> user;
 	private String parentId;
 	
 	public CourseDo(){}
@@ -139,5 +129,18 @@ public class CourseDo implements Serializable {
 	 */
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+	/** 
+	 * This method is to get the user
+	 */
+	public List<LibraryUserDo> getUser() {
+		return user;
+	}
+
+	/** 
+	 * This method is to set the user
+	 */
+	public void setUser(List<LibraryUserDo> user) {
+		this.user = user;
 	}
 }

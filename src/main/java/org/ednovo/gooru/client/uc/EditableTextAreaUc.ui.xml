@@ -4,10 +4,13 @@
 <ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res" />
     <g:HTMLPanel>
     <g:FocusPanel ui:field="focusPanel" styleName="{res.css.editableField}">
-        <g:DeckPanel ui:field="deckPanel">
-            <g:HTML ui:field="html"/>
-            <g:TextArea styleName="edit" ui:field="textArea"/>
-        </g:DeckPanel>
+        <g:HTMLPanel>
+	        <g:DeckPanel ui:field="deckPanel">
+	            <g:HTML ui:field="html"/>
+	            <g:TextArea styleName="edit" ui:field="textArea"/>
+	        </g:DeckPanel>
+	        <g:Label ui:field="lblErrorMessage" styleName="{res.css.errorValidationClassPage}"/>
+        </g:HTMLPanel>
     </g:FocusPanel>
     <g:HTMLPanel ui:field="duplicateTinyMce">
         <g:HTMLPanel styleName="{res.css.displayNone}" ui:field="fakeContent"></g:HTMLPanel>

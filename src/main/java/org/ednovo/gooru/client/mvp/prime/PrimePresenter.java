@@ -36,19 +36,8 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : PrimePresenter.java
- *
- * @description : This is the presenter class for PrimeView.java
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class PrimePresenter extends BasePresenter<IsPrimeView, IsPrimeProxy> {
 

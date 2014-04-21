@@ -42,18 +42,10 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+
 /**
- * @fileName : FolderItemChildPresenter.java
- *
- * @description : This is the presenter for folder child items.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class FolderItemChildPresenter extends ChildPresenter<FolderItemChildPresenter, IsFolderItemView>{
 
@@ -98,21 +90,7 @@ public class FolderItemChildPresenter extends ChildPresenter<FolderItemChildPres
 		return folderService;
 	}
 
-	/**
-	 * @function deleteMyFolder 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to delete the folder.
-	 * 
-	 * @parm(s) : @param collectionId
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void deleteMyFolder(String collectionId, final CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 		AppClientFactory.getInjector().getfolderService().deleteFolder(collectionId, new SimpleAsyncCallback<Void>() {
@@ -140,90 +118,24 @@ public class FolderItemChildPresenter extends ChildPresenter<FolderItemChildPres
 				}
 			});
 	}
-	/**
-	 * @function setDeleteFolderAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the async call back for the delete folder.
-	 * 
-	 * @parm(s) : @param deleteFolderAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setDeleteFolderAsyncCallback(
 			SimpleAsyncCallback<Void> deleteFolderAsyncCallback) {
 		this.deleteFolderAsyncCallback = deleteFolderAsyncCallback;
 	}
-	/**
-	 * @function getfolderService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get the folder service.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : FolderServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public FolderServiceAsync getfolderService() {
 		return AppClientFactory.getInjector().getfolderService();
 	}
-	/**
-	 * @function getDeleteFolderAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get delete folder async call back.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Void>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public SimpleAsyncCallback<Void> getDeleteFolderAsyncCallback() {
 			
 		return deleteFolderAsyncCallback;
 	}
-	/**
-	 * @function reorderCollectionItem 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to reorder collection items.
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void reorderCollectionItem(CollectionItemDo collectionItemDo) { 
 		getResourceService().reorderCollectionItem(collectionItemDo, getReorderFolderItemAsyncCallback());
 	}
-	/**
-	 * @function getReorderFolderItemAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get the reorder folder items async call back.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : AsyncCallback<CollectionItemDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public AsyncCallback<CollectionItemDo> getReorderFolderItemAsyncCallback() {
 		if (reorderFolderItemAsyncCallback == null) {
 			reorderFolderItemAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
@@ -236,25 +148,11 @@ public class FolderItemChildPresenter extends ChildPresenter<FolderItemChildPres
 		}
 		return reorderFolderItemAsyncCallback;
 	}
-	/**
-	 * @function getResourceService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get the resource service async 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ResourceServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	public ResourceServiceAsync getResourceService() {
 		
 		return AppClientFactory.getInjector().getResourceService();
 	}
-	
+
 	public void deleteFolderInShelfView(){
 		
 	}

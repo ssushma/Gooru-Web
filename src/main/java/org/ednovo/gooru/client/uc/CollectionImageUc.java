@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -44,20 +45,13 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hidden;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
 /**
- * @fileName : CollectionImageUc.java
+ * @author Search Team
  *
- * @description : This class is used to display collection image user controller.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class CollectionImageUc extends Composite implements ClickHandler {
+public class CollectionImageUc extends Composite implements ClickHandler,MessageProperties {
 
 	private static CollectionImageUcUiBinder uiBinder = GWT.create(CollectionImageUcUiBinder.class);
 
@@ -141,6 +135,7 @@ public class CollectionImageUc extends Composite implements ClickHandler {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", collectionGooruOid.getValue());
 		com.google.gwt.user.client.Window.scrollTo(0, 0);
-		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, params);
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PREVIEW_PLAY, params);
+		AppClientFactory.getPlaceManager().revealPlace(false,placeRequest,true);
 	}
 }

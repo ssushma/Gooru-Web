@@ -3,43 +3,68 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
-	<ui:style field= "playerStyle" src="collectionplayermetadata.css"/>
-	<g:FlowPanel>
-		<g:HTMLPanel styleName="{playerStyle.collectionPlayerRightContainer}">
-			<g:FlowPanel styleName="{playerStyle.collectionPlayerBackgroundImages}">
-				<g:Image styleName="{playerStyle.collectionPlayerBackgroundImages}" ui:field="collectionThumbnailImage"/> 
-				<g:HTMLPanel styleName="{playerStyle.collectionPlayLeftBarAssess}"></g:HTMLPanel>
+	<ui:style field= "playerStyle" src="collectionplayermetadata.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
+	      <g:FlowPanel styleName="{playerStyle.container} {playerStyle.clearfix}">
+            <g:FlowPanel styleName="{playerStyle.leftPanel}">
+            	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
+               <!--  <g:Label styleName="{playerStyle.hrShadow}"></g:Label> -->
+					
 			</g:FlowPanel>
-			<g:HTMLPanel styleName="{playerStyle.collectionPlayerCoverSocialContainer}">
-				<g:Button styleName="{playerStyle.arrowButton}" ui:field="studyButton">Study</g:Button>
-				<g:FlowPanel styleName="collectionPlayerCoverSocial">
-					<g:FlowPanel styleName="{playerStyle.collectionPlayerCoverSocialViewsImageContainer}">
-						<g:InlineLabel styleName="collectionPlayerCoverOwnerTextBold">Created by:&nbsp;</g:InlineLabel>  
-						<g:InlineLabel ui:field="userNameLabel"></g:InlineLabel>
-					</g:FlowPanel> 
-					<g:FlowPanel styleName="{playerStyle.collectionPlayerCoverSocialViewsImageContainer}">
-						<g:InlineLabel styleName="{playerStyle.coverButtonViews}"></g:InlineLabel> 
-						<g:InlineLabel styleName="collectionPlayerCoverSocialPeopleLike" ui:field="viewsCountLabel"></g:InlineLabel>
-					</g:FlowPanel> 
-					<g:FlowPanel styleName="{playerStyle.collectionPlayerCoverSocialViewsImageContainer}">
-						<g:InlineLabel styleName="{playerStyle.coverButtonLikes}"></g:InlineLabel>
-						<g:InlineLabel styleName="collectionPlayerCoverSocialPeopleLike" ui:field="likesCountLabel"></g:InlineLabel>
-					</g:FlowPanel>
-					<g:FlowPanel styleName="{playerStyle.collectionDescriptionContainer}">
-						<g:Label styleName="collectionPlayerCoverDescription" ui:field="collectionGoalLabel"></g:Label>
-					</g:FlowPanel>
-				</g:FlowPanel> 
-			</g:HTMLPanel>
-		</g:HTMLPanel>
-		<g:FlowPanel styleName="{playerStyle.collectionCoverBottomContainerDiv}">
-				<uc:BottomButtonView ui:field="courseButton" buttonName="Course" buttonStyle="{playerStyle.courseButtonText}" countStyle="{playerStyle.courseButtonCount}" styleName="{playerStyle.courseButtonContainer}"></uc:BottomButtonView>
-				<uc:BottomButtonView ui:field="standardButton" buttonName="Standards" buttonStyle="{playerStyle.courseButtonText}" countStyle="{playerStyle.courseButtonCount}" styleName="{playerStyle.standButtonContainer}"></uc:BottomButtonView>
-				<uc:BottomButtonView ui:field="acknowledgeButton" buttonName="Acknowledgements" buttonStyle="{playerStyle.courseButtonText}" countStyle="{playerStyle.courseButtonCount}" styleName="{playerStyle.acknowButtonContainer}"></uc:BottomButtonView>
-		</g:FlowPanel>
-		<g:FlowPanel styleName="{playerStyle.playerbottomContainer}">
-			<g:FlowPanel ui:field="upArrowImage"></g:FlowPanel>
-			<g:FlowPanel styleName="{playerStyle.playerbottomInnerContainer}" ui:field="bottomContainer"></g:FlowPanel>
-		</g:FlowPanel>
-		
-	</g:FlowPanel>
+            <g:FlowPanel styleName="{playerStyle.rightPanel}">
+                <g:HTMLPanel styleName="{playerStyle.classInfo}" ui:field="teacherContainer"> 
+                    <g:HTMLPanel ui:field="classInfoPanel" styleName="{playerStyle.classInfoRibbon}">
+                     	 <g:Label styleName="{playerStyle.h2}" ui:field="lblClassInfo"></g:Label>
+                    </g:HTMLPanel>
+                    <g:HTMLPanel styleName="{playerStyle.infoSection}">
+                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblclassTitle"></g:Label>
+                        <g:Label styleName="{playerStyle.courseTitle}" ui:field="classTitleValue"></g:Label>
+                    </g:HTMLPanel>
+                    <g:HTMLPanel ui:field="teacherPanel" styleName="{playerStyle.infoSection}">
+                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblTeacher"></g:Label>
+                        <g:HTMLPanel styleName="{playerStyle.userImageContainer}" ui:field="teacherProfileContainer">
+	                    	<!-- <g:Image styleName="{playerStyle.userImage}" ui:field="teacherProfileThumbnailImage"></g:Image> -->
+	                    </g:HTMLPanel>
+	                    <g:Label styleName="{playerStyle.username}" ui:field="teacherNameLabel"></g:Label>
+                    </g:HTMLPanel>
+                    <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="dueDateSection">
+                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbldueDate"></g:Label>
+                        <g:Label ui:field="dueDate"></g:Label>
+                    </g:HTMLPanel>
+                    <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="directionSection">
+                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblDirections"></g:Label>
+                        <g:Label ui:field="lblDirectionsDesc"></g:Label>
+                    </g:HTMLPanel>
+                </g:HTMLPanel>
+                <g:HTMLPanel ui:field="authorPanel" styleName="{playerStyle.infoSection}">
+                    <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblAuthor" />
+                    <g:HTMLPanel styleName="{playerStyle.userImageContainer}">
+                    	<g:Image styleName="{playerStyle.userImage}" ui:field="profileThumbnailImage"></g:Image>
+                    </g:HTMLPanel>
+                    <g:Label styleName="{playerStyle.username}" ui:field="userNameLabel"></g:Label>
+                    <g:FlowPanel ui:field="teamContainer" styleName="{playerStyle.username}"></g:FlowPanel>
+                </g:HTMLPanel>
+                <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="courseSection">
+                    <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblCourse" />
+                    <g:Label styleName="{playerStyle.courseTitle}" ui:field="courseTitle"></g:Label>
+                </g:HTMLPanel>
+                <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="standardSection">
+                    <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblStandards" />
+                   <g:FlowPanel ui:field="standardsContainer" styleName="{playerStyle.standard_section}"></g:FlowPanel>
+                </g:HTMLPanel>
+                <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="viewSection">
+                    <g:Label ui:field="viewsCountLabel" styleName="{playerStyle.views}"/>
+                </g:HTMLPanel>
+                <g:HTMLPanel styleName="{playerStyle.infoSection}">
+                   <g:Anchor ui:field="previewFlagButton"/>
+                </g:HTMLPanel>
+            </g:FlowPanel>
+             <g:FlowPanel styleName="{playerStyle.insightsFrame}" ui:field="dataInsightsPanel">
+             	<g:FlowPanel styleName="{playerStyle.insightsFrameContainer}" ui:field="frameContainer"/>
+                <g:FlowPanel styleName="{playerStyle.messageContainer}" ui:field="messageContainer">
+                	<g:Label styleName="{playerStyle.messageTextHeader}" ui:field="insightsHeaderText"></g:Label>
+                	<g:Label styleName="{playerStyle.messagecontentText}" ui:field="insightsContentText"></g:Label>
+                </g:FlowPanel>
+             </g:FlowPanel>
+             
+        </g:FlowPanel>
 </ui:UiBinder>

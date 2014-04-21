@@ -41,24 +41,28 @@ public class QuestionAnswerOptionView extends Composite{
 	public interface QuestionAnswerOptionViewUiBinder extends UiBinder<Widget,QuestionAnswerOptionView>{
 
 	}
-	@UiField public Label answerChoiceResult,radioButton,optionAlpahabeticSerialNo;
-	@UiField HTMLPanel answerOptionText;
+	@UiField public Label answerChoiceResult,radioButton;
+	@UiField HTML answerOptionText;
 	@UiField public RadioButton answerOptionRadioButton;
-	@UiField public CheckBox answerOptionCheckBoxButton;
+	//@UiField public CheckBox answerOptionCheckBoxButton;
 	private int answerId;
 	private boolean isAnswerCorrect;
 	public static QuestionAnswerOptionViewUiBinder questionAnswerOptionViewUiBinder=GWT.create(QuestionAnswerOptionViewUiBinder.class);
 	
 	public QuestionAnswerOptionView(String questionText,String questionSerialNum){
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
-		optionAlpahabeticSerialNo.setText(questionSerialNum);
-		answerOptionText.add(getHTML(questionText));
+		//optionAlpahabeticSerialNo.setText(questionSerialNum);
+		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
 	}
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		HTML contentHtml=new HTML(html);
 		contentHtml.setStyleName("");
 		return contentHtml;
+	}
+	private String removeHtmlTags(String text){
+		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		return text;
 	}
 	public int getAnswerId() {
 		return answerId;

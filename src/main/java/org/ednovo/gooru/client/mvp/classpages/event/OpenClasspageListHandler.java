@@ -29,14 +29,14 @@ import com.google.gwt.event.shared.EventHandler;
  * 
  * @fileName : OpenClasspageListHandler.java
  *
- * @description : This file deals with ClasspageListHandlers.
+ * @description : 
  *
  *
  * @version : 1.0
  *
  * @date: Aug 18, 2013
  *
- * @Author Anil Kumar
+ * @Author Gooru Team
  *
  * @Reviewer:
  */
@@ -49,7 +49,7 @@ public interface OpenClasspageListHandler extends EventHandler {
 	 * 
 	 * @created_date : Aug 18, 2013
 	 * 
-	 * @description :This is used to open classpage list. 
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 

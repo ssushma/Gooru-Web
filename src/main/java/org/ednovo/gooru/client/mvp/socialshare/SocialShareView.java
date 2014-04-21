@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.socialshare;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
@@ -51,26 +50,27 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : SocialShareView.java
- *
- * @description : This file used to share the user data by using 
- *                     social web-sites or through email.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 
-public class SocialShareView extends ChildView<SocialSharePresenter> implements
+/**
+* @fileName : SocialShareView.java
+*
+* @description : This file used to share the user data by using 
+*                     social web-sites or through email.
+* 
+* @version : 5.4
+*
+* @date:  August, 2013.
+*
+* @Author: Gooru Team
+* 
+* @Reviewer: Gooru Team
+*/
+
+public class SocialShareView extends Composite implements
 IsSocialShareView, MessageProperties {
 
 	private static SocialShareViewUiBinder uiBinder = GWT
@@ -84,7 +84,7 @@ IsSocialShareView, MessageProperties {
 	HTMLEventPanel fbPanel,twitterPanel,emailPanel,fbIconPanel,twIconPanel,emailIconPanel;
 
 	@UiField
-	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,panelTwitter,panelEmail,socialShareContainer;
+	HTMLPanel shareTextPanel,shareIconPanel,panelfbIcon,panelTwIcon, panelEmailIcon,panelTwitter,panelEmail,socialShareContainer,facbookText,twitterText,emailText;
 
 	private SocialShareDo socialDo;
 
@@ -101,25 +101,25 @@ IsSocialShareView, MessageProperties {
 
 	private String description;	
 
-	private static final String DEFULT_IMAGE = "images/default-collection-image.png";
+	public static final String DEFULT_IMAGE ="images/default-collection-image.png";
 
-	private static final String DEFULT_VIMAGE = "images/default-video.png";
+	public static final String DEFULT_VIMAGE ="images/default-video.png";
 
-	private static final String DEFULT_QIMAGE = "images/default-question.png";
+	public static final String DEFULT_QIMAGE ="images/default-question.png";
 
-	private static final String DEFULT_IIMAGE = "images/default-interactive.png";
+	public static final String DEFULT_IIMAGE ="images/default-interactive.png";
 
-	private static final String DEFULT_WIMAGE = "images/default-website.png";
+	public static final String DEFULT_WIMAGE ="images/default-website.png";
 
-	private static final String DEFULT_TIMAGE = "images/default-textbook.png";
-
-	private static final String DEFULT_EIMAGE = "images/default-exam.png";
-
-	private static final String DEFULT_SIMAGE = "images/default-slide.png";
-
-	private static final String DEFULT_HIMAGE = "images/default-handout.png";
-
-	private static final String DEFULT_LIMAGE = "images/default-lesson.png";
+	public static final String DEFULT_AIMAGE ="images/default-audio.png";
+	
+	public static final String DEFULT_ITYPEIMAGE ="images/default-image.png";
+	
+	public static final String DEFULT_OIMAGE ="images/default-other.png";
+	
+	public static final String DEFULT_TEXTIMAGE ="images/default-text.png";
+	
+	public static final String DEFAULT_PROFILEIMAGE="images/profilepage/user-profile-pic.png";
 
 	private boolean isProfilePageView = false;
 
@@ -134,9 +134,10 @@ IsSocialShareView, MessageProperties {
 		this.socialDo=shareDo;
 
 		initWidget(uiBinder.createAndBindUi(this));
-
-		category=socialDo.getCategoryType();
-
+		emailText.getElement().setInnerHTML(GL0212);
+		twitterText.getElement().setInnerHTML(GL0647);
+		facbookText.getElement().setInnerHTML(GL0646);
+		category=socialDo.getCategoryType()!=null?socialDo.getCategoryType():"collection";
 		description=socialDo.getDescription();
 		String title=socialDo.getTitle();
 		if(description==null){
@@ -170,7 +171,7 @@ IsSocialShareView, MessageProperties {
 
 
 		if(title.contains("img")){
-			socialDo.setTitle("Question");
+			socialDo.setTitle(GL0308);
 		}else{
 			if (title.length() > 50) {
 				title = title.substring(0,50)+ "...";
@@ -207,41 +208,41 @@ IsSocialShareView, MessageProperties {
 		}
 		//		}
 
-		categoryImage.addErrorHandler(new ErrorHandler() {
-
-			@Override
-			public void onError(ErrorEvent event) {
-				String url = socialDo.getThumbnailurl();
-				if (url == null || url.endsWith("null") || url.contains("null") || url.endsWith("/")){
-					if(category==null){
-						categoryImage.setUrl(DEFULT_IMAGE);
-					}
-					else if (category.equalsIgnoreCase("collection")) {
-						categoryImage.setUrl(DEFULT_IMAGE);
-					} else if (category.equalsIgnoreCase("video")) {
-						categoryImage.setUrl(DEFULT_VIMAGE);
-					} else if (category.equalsIgnoreCase("question")) {
-						categoryImage.setUrl(DEFULT_QIMAGE);
-					} else if (category.equalsIgnoreCase("interactive")) {
-						categoryImage.setUrl(DEFULT_IIMAGE);
-					} else if (category.equalsIgnoreCase("website")) {
-						categoryImage.setUrl(DEFULT_WIMAGE);
-					} else if (category.equalsIgnoreCase("slide")) {
-						categoryImage.setUrl(DEFULT_SIMAGE);
-					} else if (category.equalsIgnoreCase("textbook")) {
-						categoryImage.setUrl(DEFULT_TIMAGE);
-					} else if (category.equalsIgnoreCase("handout")) {
-						categoryImage.setUrl(DEFULT_HIMAGE);
-					} else if (category.equalsIgnoreCase("lesson")) {
-						categoryImage.setUrl(DEFULT_LIMAGE);
-					} else if (category.equalsIgnoreCase("exam")) {
-						categoryImage.setUrl(DEFULT_EIMAGE);
-					}
-				}
-				socialDo.setThumbnailurl(categoryImage.getUrl());
-			}
-		});
-		setUrl(socialDo.getThumbnailurl());
+//		categoryImage.addErrorHandler(new ErrorHandler() {
+//
+//			@Override
+//			public void onError(ErrorEvent event) {
+//				String url = socialDo.getThumbnailurl();
+//				if (url == null || url.endsWith("null") || url.contains("null") || url.endsWith("/")){
+//					if(category==null){
+//						categoryImage.setUrl(DEFULT_IMAGE);
+//					}
+//					else if (category.equalsIgnoreCase("collection")) {
+//						categoryImage.setUrl(DEFULT_IMAGE);
+//					} else if (category.equalsIgnoreCase("video")) {
+//						categoryImage.setUrl(DEFULT_VIMAGE);
+//					} else if (category.equalsIgnoreCase("question")) {
+//						categoryImage.setUrl(DEFULT_QIMAGE);
+//					} else if (category.equalsIgnoreCase("interactive")) {
+//						categoryImage.setUrl(DEFULT_IIMAGE);
+//					} else if (category.equalsIgnoreCase("website")||category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("webpage")) {
+//						categoryImage.setUrl(DEFULT_WIMAGE);
+//					} else if (category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")){
+//						categoryImage.setUrl(DEFULT_ITYPEIMAGE);
+//					} else if (category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("handout")||category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("text")) {
+//						categoryImage.setUrl(DEFULT_TEXTIMAGE);
+//					} else if (category.equalsIgnoreCase("audio")) {
+//						categoryImage.setUrl(DEFULT_AIMAGE);
+//					} else if (category.equalsIgnoreCase("other")) {
+//						categoryImage.setUrl(DEFULT_OIMAGE);
+//					} else if (category.equalsIgnoreCase("profile")){
+//						categoryImage.setUrl(DEFAULT_PROFILEIMAGE);
+//					}
+//				}
+//				socialDo.setThumbnailurl(categoryImage.getUrl());
+//			}
+//		});
+//		setUrl(socialDo.getThumbnailurl());
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
 			isProfilePageView = true;
 		}
@@ -258,29 +259,48 @@ IsSocialShareView, MessageProperties {
 	}
 
 	/**
-	 * 
-	 * @function setUrl 
-	 * 
-	 * @created_date : 26-Dec-2013
-	 * 
-	 * @description : setting Image url.
-	 * 
-	 * @parm(s) : @param url {@link String}
-	 *
+	 * @param url
+	 *            of the image
 	 */
 	public void setUrl(String url) {
 		categoryImage.setUrl(StringUtil.formThumbnailName(url, "."));	
 		categoryImage.setAltText(socialDo.getTitle());
 		categoryImage.setTitle(socialDo.getTitle());
 	}
+	
+	@Override
+	public void onLoad(){
+		setUrl(socialDo.getThumbnailurl());
+	}
+	
+	@UiHandler("categoryImage")
+	public void setDefaultImage(ErrorEvent event){
+		if (category.equalsIgnoreCase("collection")) {
+			categoryImage.setUrl(DEFULT_IMAGE);
+		} else if (category.equalsIgnoreCase("video")) {
+			categoryImage.setUrl(DEFULT_VIMAGE);
+		} else if (category.equalsIgnoreCase("question")) {
+			categoryImage.setUrl(DEFULT_QIMAGE);
+		} else if (category.equalsIgnoreCase("interactive")) {
+			categoryImage.setUrl(DEFULT_IIMAGE);
+		} else if (category.equalsIgnoreCase("website")||category.equalsIgnoreCase("exam")||category.equalsIgnoreCase("webpage")) {
+			categoryImage.setUrl(DEFULT_WIMAGE);
+		} else if (category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")){
+			categoryImage.setUrl(DEFULT_ITYPEIMAGE);
+		} else if (category.equalsIgnoreCase("textbook")||category.equalsIgnoreCase("handout")||category.equalsIgnoreCase("lesson")||category.equalsIgnoreCase("text")) {
+			categoryImage.setUrl(DEFULT_TEXTIMAGE);
+		} else if (category.equalsIgnoreCase("audio")) {
+			categoryImage.setUrl(DEFULT_AIMAGE);
+		} else if (category.equalsIgnoreCase("other")) {
+			categoryImage.setUrl(DEFULT_OIMAGE);
+		} else if (category.equalsIgnoreCase("profile")){
+			categoryImage.setUrl(DEFAULT_PROFILEIMAGE);
+		}
+	}
 
 	/**
-	 * @function onFbClickEvent 
-	 *  
-	 * @description : Call FaceBook share event
-	 *  
-	 * @parm(s) : @param event {@link ClickEvent}
-	 * 
+	 * Call FaceBook share event
+	 * @param clickEvent instance of {@link ClickEvent}
 	 */
 	@UiHandler("fbPanel")
 	public void onFbClickEvent(ClickEvent event) {
@@ -290,7 +310,7 @@ IsSocialShareView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Facebook_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -302,12 +322,8 @@ IsSocialShareView, MessageProperties {
 		}
 	}
 	/**
-	 * @function onFbIconClickEvent 
-	 *  
-	 * @description : Call FaceBook share event
-	 *  
-	 * @parm(s) : @param event
-	 * 
+	 * Call FaceBook share event
+	 * @param clickEvent instance of {@link ClickEvent}
 	 */
 	@UiHandler("fbIconPanel")
 	public void onFbIconClickEvent(ClickEvent event){
@@ -316,7 +332,7 @@ IsSocialShareView, MessageProperties {
 				MixpanelUtil.Click_Facebook_FromResource();
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Facebook_FromCollection();
-			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickFacebookFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -342,7 +358,7 @@ IsSocialShareView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Email_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -365,7 +381,7 @@ IsSocialShareView, MessageProperties {
 				MixpanelUtil.Click_Email_FromCollection();
 
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickEmailFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -389,7 +405,7 @@ IsSocialShareView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 			}
-			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -412,7 +428,7 @@ IsSocialShareView, MessageProperties {
 			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
 				MixpanelUtil.Click_Twitter_FromCollection();
 
-			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			}	else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY)){
 				if(socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareViewPage")) {
 					MixpanelUtil.ClickTwitterFromShareInCollectionplayer();
 				} else if (socialShareContainer.getElement().getId().equalsIgnoreCase("collectionShareSummaryPage")) {
@@ -431,29 +447,33 @@ IsSocialShareView, MessageProperties {
 		MixpanelUtil.Click_On_FaceBook();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
-				Window.open(
-						"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
-								+ socialDo.getRawUrl() + "&p[images][0]="
-								+ socialDo.getThumbnailurl() + "&p[title]="
-								+ socialDo.getTitle().replaceAll("\\+", "%2B") + "&p[summary]=" + description,
-								"_blank", "width=626,height=436");
+				SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
+//				Window.open(
+//						"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
+//								+ socialDo.getRawUrl() + "&p[images][0]="
+//								+ socialDo.getThumbnailurl() + "&p[title]="
+//								+ socialDo.getTitle().replaceAll("\\+", "%2B") + "&p[summary]=" + description,
+//								"_blank", "width=626,height=436");
 			}
 			else{
-				Window.open(
-						"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
-								+socialDo.getRawUrl() + "&p[images][0]="
-								+ socialDo.getThumbnailurl() + "&p[title]="
-								+ "Check out "+socialDo.getTitle().replaceAll("\\+", "%2B")+" on Gooru" + "&p[summary]=" + description,
-								"_blank", "width=626,height=436");
+				String title=GL1085+socialDo.getTitle()+" "+GL1433;
+				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
+//				Window.open(
+//						"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
+//								+socialDo.getRawUrl() + "&p[images][0]="
+//								+ socialDo.getThumbnailurl() + "&p[title]="
+//								+ "Check out "+socialDo.getTitle().replaceAll("\\+", "%2B")+" on Gooru" + "&p[summary]=" + description,
+//								"_blank", "width=626,height=436");
 			}
 		}
 		else{
-			Window.open(
-					"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
-							+ socialDo.getRawUrl() + "&p[images][0]="
-							+ socialDo.getThumbnailurl() + "&p[title]="
-							+ socialDo.getTitle().replaceAll("\\+", "%2B") + "&p[summary]=" + description,
-							"_blank", "width=626,height=436");
+			SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
+//			Window.open(
+//					"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
+//							+ socialDo.getRawUrl() + "&p[images][0]="
+//							+ socialDo.getThumbnailurl() + "&p[title]="
+//							+ socialDo.getTitle().replaceAll("\\+", "%2B") + "&p[summary]=" + description,
+//							"_blank", "width=626,height=436");
 		}
 	}
 
@@ -567,4 +587,28 @@ IsSocialShareView, MessageProperties {
 			}
 		}
 	};
+	   public static void postOnFacebook(String titleName,String shareLink,String description,String thumbnailUrl){
+		   String faceBookFeedUrl=AppClientFactory.getLoggedInUser().getSettings().getFacebookFeedUrl();
+		   String appId=AppClientFactory.getLoggedInUser().getSettings().getFacebookAppId();
+		   faceBookFeedUrl=faceBookFeedUrl+"?app_id="+appId+"&display=popup&name="+getEncodedUrl(titleName)+"&link="+shareLink
+				   +"&picture="+getEncodedUrl(thumbnailUrl)+"&description="
+				   +getEncodedUrl(description)
+				   +"&redirect_uri="+getEncodedUrl("https://www.facebook.com/");
+				   //+"&actions="+getEncodedUrl(actions);
+		   Window.open(faceBookFeedUrl,"_blank", "width=626,height=436");
+	   }
+	   
+	   public static native String getEncodedUrl(String url)/*-{
+			var encodeurl= $wnd.encodeURIComponent(url);
+			return encodeurl;
+		}-*/;
+	@Override
+	public void setPresenter(SocialSharePresenter childPresenter) {
+		
+	}
+	
+	public void setShareDo(SocialShareDo shareDo){
+		this.socialDo=shareDo;
+		setUrl(socialDo.getThumbnailurl());
+	}
 }

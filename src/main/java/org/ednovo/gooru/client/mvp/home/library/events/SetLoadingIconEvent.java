@@ -25,19 +25,21 @@
 package org.ednovo.gooru.client.mvp.home.library.events;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
+ * 
  * @fileName : SetLoadingIconEvent.java
  *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event fires, it will get and set the topic id and visiblity .
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Dec 4, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class SetLoadingIconEvent extends GwtEvent<SetLoadingIconHandler> {
 
@@ -47,7 +49,6 @@ public class SetLoadingIconEvent extends GwtEvent<SetLoadingIconHandler> {
 	public static final Type<SetLoadingIconHandler> TYPE = new Type<SetLoadingIconHandler>();
 	
 	/**
-	 * class constructor
 	 * @param topicId 
 	 * 
 	 */

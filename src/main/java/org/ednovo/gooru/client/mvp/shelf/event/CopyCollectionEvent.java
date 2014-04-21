@@ -27,32 +27,27 @@
  */
 package org.ednovo.gooru.client.mvp.shelf.event;
 
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : CopyCollectionEvent.java
- *
- * @description :  This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user clicks on copy collection it will handle the event.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class CopyCollectionEvent extends GwtEvent<CopyCollectionHandler> {
 
 	public static final Type<CopyCollectionHandler> TYPE = new Type<CopyCollectionHandler>();
 
-	String collectionUid;
+	CollectionDo collectionDo;
+	String codeId="";
 
 	/**
 	 * Class constructor
 	 */
-	public CopyCollectionEvent(String collectionUid) {
-		this.collectionUid = collectionUid;
+	public CopyCollectionEvent(CollectionDo collectionDo,String codeId) { 
+		this.collectionDo = collectionDo;
+		this.codeId=codeId;
 	}
 
 	@Override
@@ -62,7 +57,7 @@ public class CopyCollectionEvent extends GwtEvent<CopyCollectionHandler> {
 
 	@Override
 	protected void dispatch(CopyCollectionHandler handler) {
-		handler.copyCollection(collectionUid);
+		handler.copyCollection(collectionDo,codeId);
 	}
 
 }

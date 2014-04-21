@@ -32,8 +32,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
-import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -79,7 +77,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @date: Aug 14, 2013
  * 
- * @Author Anil Kumar T
+ * @Author Gooru Team
  * 
  * @Reviewer:
  */
@@ -100,7 +98,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	ScrollPanel spanelCollectionList;
 
 	ClasspageListDo classpageListDo = null;
-
+	
 	Map<String, CollectionDo> classpageList = new HashMap<String, CollectionDo>();
 	ArrayList<String> listClasspage = new ArrayList<String>();
 	
@@ -126,29 +124,18 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	/**
 	 * Class constructor
 	 */
-	public ClasspageListVc() {
+	public ClasspageListVc(boolean isClasspageRefreshed,String deletedClasspageId) {
 		super(true);
 		this.res = ClasspageListPopupViewCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		ancNewClasspage.getElement().setId("lnkNewClasspage");
-//	    inLineLblGooruGuide.getElement().setId("lnkGooruGuide");
 
 		
 		SetSelectedClasspageListHandler setSelectedHandler = new SetSelectedClasspageListHandler() {
-			
 			@Override
 			public void setClasspageTitle(String classpageId) {
-//				setClassapageItemSeleted(classpageId);
 				setClasspageSetSelected(classpageId);
-			}
-		};
-
-		DeleteClasspageListHandler deleteHandler = new DeleteClasspageListHandler() {
-			
-			@Override
-			public void deleteClasspage(String classpageId) {
-				removeClasspageItem(classpageId);
 			}
 		};
 		
@@ -158,7 +145,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			public void refreshClasspage() {
 				toClear= true;
 				offSet = 0;
-				getAllClasspages(String.valueOf(offSet));
+				getAllClasspages(String.valueOf(offSet),false,null);
 			}
 		};
 		
@@ -171,7 +158,6 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		};
 		
 		AppClientFactory.getEventBus().addHandler(SetSelectedClasspageListEvent.TYPE, setSelectedHandler);
-		AppClientFactory.getEventBus().addHandler(DeleteClasspageListEvent.TYPE, deleteHandler);
 		AppClientFactory.getEventBus().addHandler(RefreshClasspageListEvent.TYPE, refreshHandler);
 		AppClientFactory.getEventBus().addHandler(UpdateClasspageTitleEvent.TYPE, updateTitleHandler);
 		
@@ -184,17 +170,14 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 					offSet+=limit;
 					htmlPanelClasspageList.add(createClasspageTitleLabel("Loading...", "lblLoading", true));
 					isApiCalling = true;
-					getAllClasspages(String.valueOf(offSet));
+					getAllClasspages(String.valueOf(offSet),false,null);
 				}
 			}
 		});
-		
-		
-		
 		setLabels();
 		showLoading();
 		toClear= true;
-		getAllClasspages(String.valueOf(offSet));
+		getAllClasspages(String.valueOf(offSet),isClasspageRefreshed,deletedClasspageId);
 	}
 	
 	/**
@@ -205,13 +188,16 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @description
 	 * 
-	 * @parm(s) : @param classpageId
 	 * 
+	 * @parm(s) : @param classpageId
 	 * @parm(s) : @param classpageTitle
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	
@@ -226,9 +212,8 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		
 		// Update the ClasspageObject inside classpageList object.
 		
-		CollectionDo  classpageDo =  classpageList.get(classpageId);
+		CollectionDo classpageDo =  classpageList.get(classpageId);
 		classpageDo.setTitle(classpageTitle);
-		
 		classpageList.put(classpageId, classpageDo);
 		
 	}
@@ -246,6 +231,10 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @return : void
 	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
 	private void showLoading() {
 		lblLoading.setVisible(true);
@@ -258,13 +247,17 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 21, 2013
 	 * 
-	 * @description : This method is used to set visible the class pages list.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : 
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	private void showClasspageList() {
@@ -278,13 +271,18 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 21, 2013
 	 * 
-	 * @description : This method is used to set the visible the no class pages.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : 
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	private void showNoClasspages() {
 		lblLoading.setVisible(false);
@@ -303,13 +301,17 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @return : void
 	 * 
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
 	private void setLabels() {
-		lblLoading.setText(MessageProperties.GL0110);
-		ancNewClasspage.setText(MessageProperties.GL0115);
+		lblLoading.setText(GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		ancNewClasspage.setText(GL0115);
 
-		lblNoClasspageYet.setText(MessageProperties.GL0117);
-		inLineLblCheckOut.setText(MessageProperties.GL0118);
+		lblNoClasspageYet.setText(GL0117);
+		inLineLblCheckOut.setText(GL0118);
 //		inLineLblGooruGuide.setText(MessageProperties.GL0119);
 //		inLineLblCreateOne.setText(MessageProperties.GL0120);
 
@@ -321,23 +323,28 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description : This method is used to get the all the list of class pages.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param offSet
 	 * 
 	 * @return : void
 	 * 
 	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
-	public void getAllClasspages(String offSet) {
+	public void getAllClasspages(String offSet,final boolean isClasspageRefreshed,final String deletedClasspageId) {
 		AppClientFactory.getInjector().getClasspageService().v2GetAllClasspages(String.valueOf(limit), offSet,
-						new SimpleAsyncCallback<ClasspageListDo>() {
-							@Override
-							public void onSuccess(ClasspageListDo result) {
-								classpageListDo = result;
-								listClasspages(result);
-							}
-						});
+			new SimpleAsyncCallback<ClasspageListDo>() {
+				@Override
+				public void onSuccess(ClasspageListDo result) {
+					classpageListDo = result;
+					listClasspages(result,isClasspageRefreshed,deletedClasspageId);
+				}
+			});
 	}
 	/**
 	 * 
@@ -345,15 +352,20 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description: This method will set all the list of class pages in the front end.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param result
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
-	private void listClasspages(ClasspageListDo result) {
+	private void listClasspages(ClasspageListDo result,boolean isClasspageRefershed,String deletedClasspageId) {
 		lblLoading.setVisible(false);
 		isApiCalling = false;
 		if(classpageListDo!=null){
@@ -391,12 +403,10 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			if (whileDeleting){
 				whileDeleting = false;
 				showNoClasspages();
-//				AppClientFactory.getPlaceManager().revealPlace(
-//						PlaceTokens.TEACH);
-//			}else{
-//				AppClientFactory.getPlaceManager().revealPlace(
-//						PlaceTokens.HOME);
 			}
+		}
+		if(isClasspageRefershed){
+			removeClasspageItem(deletedClasspageId);
 		}
 	}
 	/**
@@ -405,13 +415,17 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 18, 2013
 	 * 
-	 * @description: This method is used to generate the class pages list.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : 
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	public void generateClasspageList(){
@@ -430,7 +444,8 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description: This method is used to crate the class page title.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param classpageTitle
 	 * @parm(s) : @param classpageId
@@ -440,11 +455,15 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @throws : <Mentioned if any exceptions>
 	 * 
+	 * 
+	 * 
+	 * 
 	 */
 	private Label createClasspageTitleLabel(String classpageTitle,
 			final String classpageId, boolean isStatic) {
 		Label titleLabel = null;
-		
+		if(classpageTitle != null)
+		{
 		if (classpageTitle.length() >=30){
 			titleLabel = new Label(classpageTitle.substring(0, 30));
 		}else{
@@ -465,6 +484,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 				 hide();
 			}
 		});
+		}
 		return titleLabel;
 	}
 	
@@ -480,13 +500,17 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 21, 2013
 	 * 
-	 * @description: This will handle the click event of the NewClasspage
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param event
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	@UiHandler("ancNewClasspage")
@@ -497,7 +521,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 
 			@Override
 			public void createNewClasspage(String title) {
-				
+
 				MixpanelUtil.Create_NewClasspage();
 				CollectionDo collectionDo = new CollectionDo();
 				collectionDo.setTitle(title);
@@ -505,45 +529,43 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 				AppClientFactory
 						.getInjector()
 						.getClasspageService()
-						.createClasspage(collectionDo,
-								new SimpleAsyncCallback<CollectionDo>() {
-									@Override
-									public void onSuccess(CollectionDo result) {
-										final String classpageId = result.getGooruOid();
-//										final String classpageTitle = result.getTitle();
-										AssignmentDo assignmentDo = new AssignmentDo();
-										assignmentDo.setClasspageId(classpageId);
-										
-										TaskDo taskDo = new TaskDo();
-										taskDo.setTitle(MessageProperties.GL0121);
-										taskDo.setTypeName("assignment");
-										assignmentDo.setTask(taskDo);
-										
-										AttachToDo attachToDo = new AttachToDo();
-										attachToDo.setId(classpageId);
-										attachToDo.setType("classpage");
-										
-										assignmentDo.setAttachTo(attachToDo);
-										listClasspage.add(0, classpageId);
-										
-										classpageList.put(classpageId, result);
-										
-										AppClientFactory.getInjector().getClasspageService().v2CreateAssignment(assignmentDo, new SimpleAsyncCallback<AssignmentDo>() {
+						.createClassPage(collectionDo.getTitle(), new SimpleAsyncCallback<CollectionDo>() {
 
-											@Override
-											public void onSuccess(
-													AssignmentDo result) {
-												// Assig to classpage.
-												htmlPanelClasspageList.clear();
-												generateClasspageList();
-												showClasspageList();
-												OpenClasspageEdit(classpageId);
-												
-												newPopup.ClosePopup();
-											}
-										});
+							@Override
+							public void onSuccess(CollectionDo result) {
+								final String classpageId = result.getGooruOid();
+								AssignmentDo assignmentDo = new AssignmentDo();
+								assignmentDo.setClasspageId(classpageId);
+								
+								TaskDo taskDo = new TaskDo();
+								taskDo.setTitle(GL0121);
+								taskDo.setTypeName("assignment");
+								assignmentDo.setTask(taskDo);
+								
+								AttachToDo attachToDo = new AttachToDo();
+								attachToDo.setId(classpageId);
+								attachToDo.setType("classpage");
+								
+								assignmentDo.setAttachTo(attachToDo);
+								listClasspage.add(0, classpageId);
+								
+								classpageList.put(classpageId, result);
+								
+								AppClientFactory.getInjector().getClasspageService().v2CreateAssignment(assignmentDo, new SimpleAsyncCallback<AssignmentDo>() {
+
+									@Override
+									public void onSuccess(
+											AssignmentDo result) {
+										// Assig to classpage.
+										htmlPanelClasspageList.clear();
+										generateClasspageList();
+										showClasspageList();
+										OpenClasspageEdit(classpageId);
+										newPopup.ClosePopup();
 									}
 								});
+							}
+						});
 			}
 		};
 	}
@@ -554,13 +576,18 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description: This methosd is used to open the class page list in edit mode.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param gooruOId
 	 * 
 	 * @return : void
 	 * 
 	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
 	private void OpenClasspageEdit(String gooruOId) {
 		setClassapageItemSeleted(gooruOId);
@@ -579,13 +606,18 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description: This method is used to set the  selected  class page Item.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param classpageId
 	 * 
 	 * @return : void
 	 * 
 	 * @throws : <Mentioned if any exceptions>
+	 * 
+	 * 
+	 * 
+	 * 
 	 */
 	private void setClassapageItemSeleted(String classpageId) {
 		
@@ -608,13 +640,17 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * @created_date : Aug 21, 2013
 	 * 
-	 * @description : This method is used to set the  selected  class page.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param classpageId
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	private void setClasspageSetSelected(String classpageId){
@@ -628,13 +664,16 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			}
 		}
 	}
+	
+	
 	/**
 	 * 
 	 * @function removeClasspageItem 
 	 * 
 	 * @created_date : Aug 15, 2013
 	 * 
-	 * @description : This method is used to remove the  selected  class page Item.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param classpageId
 	 * 
@@ -642,8 +681,11 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 *
 	 * @throws : <Mentioned if any exceptions>
 	 *
+	 * 
+	 *
+	 *
 	 */
-	private void removeClasspageItem(String classpageId) {
+	public void removeClasspageItem(String classpageId) {
 		String nextClasspageId = null;
 		int listCount = listClasspage.size();
 		for (int i=0; i<listClasspage.size(); i++){			
@@ -660,6 +702,8 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 				}
 				listClasspage.remove(i);
 				classpageList.remove(classpageId);
+			}else{
+				nextClasspageId=listClasspage.get(0);
 			}
 		}
 		htmlPanelClasspageList.clear();
@@ -669,8 +713,8 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		}else{
 			showNoClasspages();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
-//			whileDeleting = true;
-//			getAllClasspages("0");
 		}
 	}
+	
+	
 }

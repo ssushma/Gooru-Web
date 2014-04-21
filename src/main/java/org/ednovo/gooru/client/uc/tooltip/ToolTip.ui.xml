@@ -8,7 +8,7 @@
 		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
 		<g:HTMLPanel styleName="{toolTip.arrow}"></g:HTMLPanel>
 		<g:HTMLPanel styleName="{toolTip.tooltipContent}">
-			<g:Label styleName="{toolTip.tooltipContentTitle}"
+			<g:HTMLPanel styleName="{toolTip.tooltipContentTitle}"
 				ui:field="lblTitle" />
 			<g:Anchor ui:field="lblLink"></g:Anchor>
 		</g:HTMLPanel>

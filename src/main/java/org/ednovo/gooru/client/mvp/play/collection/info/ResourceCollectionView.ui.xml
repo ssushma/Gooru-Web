@@ -6,12 +6,14 @@
 	<ui:style field= "playerStyle" src="resourceinfo.css"/>
 	<g:FlowPanel styleName="{playerStyle.collection-resource-container}">
 		<g:HTMLPanel styleName="{playerStyle.collection-thumbnail-container}">
-			<g:Image styleName="{playerStyle.collection-thumbnail}" ui:field="collectionThumbnail"/>
+		    <g:HTMLPanel ui:field="imageContainer">
+				<g:Image styleName="{playerStyle.collection-thumbnail}" ui:field="collectionThumbnail"/>
+			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:FlowPanel styleName="{playerStyle.collection-metadata-container}">
-			<g:Label styleName="{playerStyle.collection-metadata-title}" ui:field="collectionTitle"></g:Label>
+			<g:Anchor styleName="{playerStyle.collection-metadata-title}" ui:field="collectionTitle"></g:Anchor>
 			<g:HTMLPanel styleName="{playerStyle.collection-author-container}">
-				<g:Label styleName="{playerStyle.collection-author-title}">Created by </g:Label> 
+				<g:Label styleName="{playerStyle.collection-author-title}" ui:field="createdByText"></g:Label> 
 				<g:Label styleName="{playerStyle.collection-author-name}" ui:field="userName"></g:Label> 
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{playerStyle.collection-innermetadata-container}" ui:field="metadataContainer">

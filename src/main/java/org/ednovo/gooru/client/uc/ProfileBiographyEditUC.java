@@ -40,20 +40,7 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : ProfileBiographyEditUC.java
- *
- * @description : This class is used to edit the profile biography .
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class ProfileBiographyEditUC extends Composite implements
 		HasValue<String> {
 
@@ -84,9 +71,7 @@ public class ProfileBiographyEditUC extends Composite implements
 	protected String text;
 	@UiField(provided = true)
 	UcCBundle res;
-	/**
-	 * Class constructor.
-	 */
+
 	public ProfileBiographyEditUC() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
@@ -108,9 +93,7 @@ public class ProfileBiographyEditUC extends Composite implements
 	public InlineLabel getBiographyEditImage() {
 		return biographyEditImage;
 	}
-	/**
-	 * This inner class is used to handle the keyup handler.
-	 */
+	
 	private class ValidateConfirmText implements KeyUpHandler {
 
 		@Override
@@ -197,24 +180,18 @@ public class ProfileBiographyEditUC extends Composite implements
 	public void checkCharacterLimit(String text) {
 
 	}
-	/**
-	 * This is used to add the change hanlder.
-	 */
+
 	@Override
 	public HandlerRegistration addValueChangeHandler(
 			ValueChangeHandler<String> handler) {
 		return addHandler(handler, ValueChangeEvent.getType());
 	}
-	/**
-	 * This will get the value.
-	 */
+
 	@Override
 	public String getValue() {
 		return editTextBox.getText();
 	}
-	/**
-	 * This will set the value.
-	 */
+
 	@Override
 	public void setValue(String value) {
 		biographyLabel.setText(value.length() > 500 ? value.substring(0, 500) + "..."
@@ -230,28 +207,20 @@ public class ProfileBiographyEditUC extends Composite implements
 	public String getPlaceholder() {
 		return placeholder;
 	}
-	/**
-	 * This will set the placeholder.
-	 */
+
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
-	/**
-	 * This will get the text.
-	 */
+
 	public String getText() {
 		return text;
 	}
-	/**
-	 * This will set the text.
-	 */
+
 	public void setText(String text) {
 		this.text = text;
 		setValue(text);
 	}
-	/**
-	 * This will set the value.
-	 */
+
 	@Override
 	public void setValue(String value, boolean fireEvents) {
 
@@ -259,10 +228,13 @@ public class ProfileBiographyEditUC extends Composite implements
 			ValueChangeEvent.fireIfNotEqual(this, getValue(), value);
 		setValue(value);
 	}
-	/**
-	 * This will return the text area.
-	 */
+
 	public TextArea getTextBoxSource() {
 		return editTextBox;
 	}
+
+	
+	
+	
+
 }

@@ -28,19 +28,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.profilepage.event.RefreshProfileListHandler;
 
 /**
- * 
- * @fileName : ProfilePageListUiHandlers.java
+ * @author Search Team
  *
- * @description : UIHandler file for ProfilePageListView.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ProfilePageListUiHandlers extends BaseUiHandlers, RefreshProfileListHandler {
 	

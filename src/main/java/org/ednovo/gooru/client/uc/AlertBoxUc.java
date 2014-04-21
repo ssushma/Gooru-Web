@@ -25,18 +25,11 @@
 package org.ednovo.gooru.client.uc;
 
 import com.google.gwt.user.client.ui.Widget;
+
+
 /**
- * @fileName : AlertBoxUc.java
+ * @author Search Team
  *
- * @description : This is customized dialog box.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class AlertBoxUc extends DialogBoxUc{
 	

@@ -27,22 +27,7 @@ package org.ednovo.gooru.server.service;
 import org.ednovo.gooru.client.service.ShelfService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.springframework.stereotype.Service;
-/**
- * 
- * @fileName : ShelfServiceImpl.java
- *
- * @description : This class is used for Shelf service implementation.
- *
- *
- * @version : 1.0
- * 
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Service("shelfService")
 @ServiceURL("/shelfService")
 public class ShelfServiceImpl extends BaseServiceImpl implements ShelfService {

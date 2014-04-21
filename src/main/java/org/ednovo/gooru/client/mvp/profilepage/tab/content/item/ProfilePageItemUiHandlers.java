@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.item;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * 
- * @fileName : ProfilePageItemUiHandlers.java
- *
- * @description : UIHandler file for ProfilePageItemView
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface ProfilePageItemUiHandlers extends BaseUiHandlers{
 	
 }

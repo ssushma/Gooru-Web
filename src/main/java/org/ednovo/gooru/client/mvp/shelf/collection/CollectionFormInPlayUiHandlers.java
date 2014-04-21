@@ -27,19 +27,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection;
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 /**
- * 
- * @fileName : CollectionFormInPlayUiHandlers.java
+ * @author Search Team
  *
- * @description : This interface is used to save the collection data and to get the course information.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionFormInPlayUiHandlers extends BaseUiHandlers {
 

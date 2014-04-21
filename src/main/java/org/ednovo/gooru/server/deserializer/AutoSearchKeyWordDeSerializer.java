@@ -33,19 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
-/**
- * @fileName : AutoSearchKeyWordDeSerializer.java
- *
- * @description :  This class is used to auto search keyword deserializing.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @Component
 public class AutoSearchKeyWordDeSerializer extends DeSerializer{
 	private static final String KEYWORD = "keyword";

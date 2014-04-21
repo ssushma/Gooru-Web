@@ -24,23 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library.assign;
 
-
+/**
+ * 
+ */
 import org.ednovo.gooru.client.child.ChildPresenter;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : SocialShareSmallPresenter.java
- *
- * @description : This is the presenter class for SocialShareSmallView.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SocialShareSmallPresenter extends ChildPresenter<SocialShareSmallPresenter, IsSocialShareSmallView> {
 
@@ -54,49 +45,19 @@ public class SocialShareSmallPresenter extends ChildPresenter<SocialShareSmallPr
 		super(childView);
 	}
 	
-	/**
-	 * 
-	 * @function onBind 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is called when the presenter is instantiated.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+
+	
 	private void onBind() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * 
-	 * @function onLoad 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This method is called immediately after a widget becomes attached to the browser's document.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	
 	private void onLoad() {
 		throw new RuntimeException("Not implemented");
 	}
+	
+	
+	 
 	}
 

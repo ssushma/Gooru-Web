@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.service;
 
+import java.util.Map;
+
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.UserDo;
 
@@ -65,4 +67,26 @@ public interface AppService extends BaseService {
 	UserDo v2Signin(String postData) throws GwtException;
 
 	UserDo v2Signout() throws GwtException;
+
+	/**
+	 * @function getAnalyticsURL 
+	 * 
+	 * @created_date : Jan 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param parms
+	 * @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	String getAnalyticsURL(String type, String id)  throws GwtException;
 }

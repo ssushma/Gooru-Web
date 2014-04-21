@@ -25,19 +25,10 @@
 package org.ednovo.gooru.client.uc;
 
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : NavigationLinkUc.java
+ * @author Class constructor
  *
- * @description : This class is used to handle the click event on the navigation link.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class NavigationLinkUc extends Label{
 	private String pageNo;

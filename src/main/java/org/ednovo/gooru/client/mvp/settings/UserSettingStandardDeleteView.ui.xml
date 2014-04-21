@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="FolderStyle" src="org/ednovo/gooru/client/mvp/shelf/collection/folders/uc/folderPopup.css"/>
+	    <g:HTMLPanel styleName="{FolderStyle.popup}">
+			 <g:HTMLPanel styleName="{FolderStyle.popupInner}">
+			    <g:Label styleName="{FolderStyle.popupHeader}" ui:field="titleLabel"/>
+				 <g:HTMLPanel styleName="{FolderStyle.popupContent}">
+                    <g:HTMLPanel styleName="{FolderStyle.icon} {FolderStyle.delete}"/>
+                     <g:Label styleName="{FolderStyle.header}" ui:field="headerLabel"/>
+                      <g:Label styleName="{FolderStyle.descriptionText}" ui:field="descriptionLabel"/>
+                 </g:HTMLPanel>
+				 <g:HTMLPanel styleName="{FolderStyle.okCancel}">
+				     <g:Button styleName="secondary" ui:field="cancelButton"/>
+				     <g:Button styleName="primary {FolderStyle.buttonMargins}" ui:field="removeButton"/>
+				</g:HTMLPanel>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+</ui:UiBinder> 

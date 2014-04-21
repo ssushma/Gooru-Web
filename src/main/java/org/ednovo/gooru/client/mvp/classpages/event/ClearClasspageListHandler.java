@@ -36,7 +36,7 @@ import com.google.gwt.event.shared.EventHandler;
  *
  * @date: Aug 20, 2013
  *
- * @Author Anil Kumar T
+ * @Author Gooru Team
  *
  * @Reviewer:
  */
@@ -47,7 +47,7 @@ public interface ClearClasspageListHandler extends EventHandler {
 	 * 
 	 * @created_date : Aug 20, 2013
 	 * 
-	 * @description : This file is used to clear class page.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : 

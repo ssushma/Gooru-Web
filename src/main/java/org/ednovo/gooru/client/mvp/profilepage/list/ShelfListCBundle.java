@@ -29,19 +29,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
- * 
- * @fileName : ShelfListCBundle.java
+ * @author Search Team
  *
- * @description : This file is used to apply css styles for ProfilePage List.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ShelfListCBundle extends ClientBundle{
 	

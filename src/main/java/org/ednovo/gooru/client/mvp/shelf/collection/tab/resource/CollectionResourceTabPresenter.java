@@ -43,18 +43,10 @@ import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+
 /**
- * @fileName : CollectionResourceTabPresenter.java
+ * @author Search Team
  *
- * @description : This is the presenter for collection resource tab presenter.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionResourceTabPresenter extends PresenterWidget<IsCollectionResourceTabView> implements CollectionResourceTabUiHandlers {
 	/**
@@ -73,21 +65,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	private SimpleAsyncCallback<Void> removeImageAsyncCallback;
 	
 	private SimpleAsyncCallback<Void> updateQuestionImageAsyncCallback;
-	/**
-	 * @function getUpdateQuestionImageAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This async call back method is used to update question image.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Void>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public SimpleAsyncCallback<Void> getUpdateQuestionImageAsyncCallback() {
 		if (updateQuestionImageAsyncCallback == null) {
 			updateQuestionImageAsyncCallback = new SimpleAsyncCallback<Void>() {
@@ -100,40 +78,12 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 		}
 		return updateQuestionImageAsyncCallback;
 	}
-	/**
-	 * @function setUpdateQuestionImageAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to set question image async call back.
-	 * 
-	 * 
-	 * @parm(s) : @param updateQuestionImageAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setUpdateQuestionImageAsyncCallback(
 			SimpleAsyncCallback<Void> updateQuestionImageAsyncCallback) {
 		this.updateQuestionImageAsyncCallback = updateQuestionImageAsyncCallback;
 	}
-	/**
-	 * @function getRemoveImageAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to get remove question image async call back.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Void>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public SimpleAsyncCallback<Void> getRemoveImageAsyncCallback() {
 		
 		if (removeImageAsyncCallback == null) {
@@ -148,21 +98,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 		}
 		return removeImageAsyncCallback;
 	}
-	/**
-	 * @function setRemoveImageAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set remove question image async call back.
-	 * 
-	 * 
-	 * @parm(s) : @param removeImageAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setRemoveImageAsyncCallback(
 			SimpleAsyncCallback<Void> removeImageAsyncCallback) {
 		this.removeImageAsyncCallback = removeImageAsyncCallback;
@@ -171,13 +107,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	AddResourcePresenter addResourcePresenter=null;
 	
 	CollectionDo collectionDo;
-	/**
-	 * Class constructor.
-	 * @param eventBus
-	 * @param view
-	 * @param imgUpload
-	 * @param addResourcePresenter
-	 */
+	
 	@Inject
 	public CollectionResourceTabPresenter(EventBus eventBus, IsCollectionResourceTabView view, ImageUploadPresenter imgUpload,AddResourcePresenter addResourcePresenter) {
 		super(eventBus, view);
@@ -188,48 +118,35 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 		addRegisteredHandler(UpdateEditResourceImageEvent.TYPE, this);
 		addRegisteredHandler(InsertCollectionItemInAddResourceEvent.TYPE, this);
 	}
-	/**
-	 * This LifeCycle method is called when the binding the object.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
 		
 	}
-	/**
-	 * Lifecycle method called whenever this presenter is about to be
-	 * revealed.
-	 */
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
 		getView().onLoad();
 		getView().reset();
 	}
-	/**
-	 * Lifecycle method called whenever this presenter is about leave.
-	 */
+
 	@Override
 	protected void onHide() {
 		super.onHide();
 		getView().onUnload();
 		getView().closeAllOpenedPopUp();
 	}
-	/**
-	 * This method is used to get the resource service.
-	 */
+	
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
-	/**
-	 * This method is used to set the resource service.
-	 */
+
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	/**
-	 * This method is used to display the add resoruce popup.
-	 */
+	
     @Override
     public void addResourcePopup(CollectionDo collectionDo, String clickType) {
     	
@@ -238,29 +155,13 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
         addToPopupSlot(addResourcePresenter);
         
     }
-    /**
-     * This method is used to update question resource.
-     */
+
 	@Override
 	public void updateQuestionResource(String questionItemId,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) {
 		//getResourceService().updateQuestionResource(questionItemId, collectionQuestionItemDo,thumbnailUrl, getUpdateQuestionItemResourceAsyncCallback());
 		
 	}
-	/**
-	 * @function getUpdateQuestionItemResourceAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to get update question item resource async call back.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<CollectionItemDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public SimpleAsyncCallback<CollectionItemDo> getUpdateQuestionItemResourceAsyncCallback() {
 		if (updateQuestionItemResourceAsyncCallback == null) {
 			updateQuestionItemResourceAsyncCallback = new SimpleAsyncCallback<CollectionItemDo>() {
@@ -274,36 +175,18 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 		}
 		return updateQuestionItemResourceAsyncCallback;
 	}
-	/**
-	 * @function setUpdateQuestionItemResourceAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to update question item async call back.
-	 * 
-	 * 
-	 * @parm(s) : @param updateQuestionItemResourceAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setUpdateQuestionItemResourceAsyncCallback(
 			SimpleAsyncCallback<CollectionItemDo> updateQuestionItemResourceAsyncCallback) {
 		this.updateQuestionItemResourceAsyncCallback = updateQuestionItemResourceAsyncCallback;
 	}
-	/**
-	 * This method is used to update question image url.
-	 */
+
 	@Override
 	public void setUpdateQuestionImageUrl(String fileName,String fileNameWithOutRepository) {
 	    getView().updateCollectionItemImage(fileName,fileNameWithOutRepository);
 		
 	}
-	/**
-	 * This method is used to update question image.
-	 */
+
 	@Override
 	public void updateQustionImage(String collectionItemId) {
 		addToPopupSlot(imgUploadPresenter);
@@ -313,16 +196,12 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
         imgUploadPresenter.setEditResourceImage(false);
 		
 	}
-	/**
-	 * This method is used to update resoruce info.
-	 */
+
 	@Override
 	public void updateResourceInfo(CollectionItemDo collectionItemDo) {
 		getResourceService().updateResourceInfo(collectionItemDo, getUpdateResourceItemAsyncCallback());
 	}
-	/**
-	 * This method is used to remove question image.
-	 */
+	
 	@Override
 	public void removeQuestionImage(String collectionQuestionId) {
 		getResourceService().removeQuestionImage(collectionQuestionId, getRemoveImageAsyncCallback());
@@ -362,9 +241,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
 	    getView().updateResouceItemImage(fileName, fileNameWithOutRespUrl,isEditUserOwnResourceImage);
 		
 	}
-	/**
-	 * This method is used to display the edit resource popup.
-	 */
+
 	@Override
 	public void imageEditResourceUpload() {
 		 addToPopupSlot(imgUploadPresenter);
@@ -372,9 +249,7 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
          imgUploadPresenter.setCollectionImage(false);
          imgUploadPresenter.setQuestionImage(false);
 	}
-	/**
-	 * This method is used to display the user own resource edit popup.
-	 */
+	
 	@Override
 	public void imageEditUserOwnResourceUpload() {
 		 addToPopupSlot(imgUploadPresenter);
@@ -384,26 +259,20 @@ public class CollectionResourceTabPresenter extends PresenterWidget<IsCollection
          imgUploadPresenter.setQuestionImage(false);
          imgUploadPresenter.getView().isFromEditQuestion(true);
 	}
-	/**
-	 * This method is used to insert collection item in add resource.
-	 */
+
 	@Override
 	public void insertCollectionItemInAddResource(
 			CollectionItemDo collectionItem, RefreshType refreshType) {
 		getView().insertCollectionItemInAddResource(collectionItem, refreshType);
 	}
-	/**
-	 * This method is used to display the edit question popup.
-	 */
+	
 	@Override
 	public void showEditQuestionResourcePopup(CollectionItemDo collectionItemDo) {
 		 addResourcePresenter.setCollectionItemDo(collectionItemDo);
 		 addResourcePresenter.setCollectionDoAndType(null, "QuestionEdit");
 		 addToPopupSlot(addResourcePresenter);
 	}
-	/**
-	 * This method is used to edit user own resource.
-	 */
+
 	@Override
 	public void editUserOwnResource(String jsonString, String gooruOid) {
 		MixpanelUtil.Resource_Edit_Info_Success();

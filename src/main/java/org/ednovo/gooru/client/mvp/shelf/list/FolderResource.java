@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -72,26 +73,10 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : FolderResource.java
- *
- * @description : This is class used for FolderResource
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FolderResource extends FocusPanel implements ClickHandler,
-		MouseOverHandler, DropBox {
-/**
- * @description: class constructor implementing drag and drop methods
- */
+		MouseOverHandler, DropBox,MessageProperties {
+
 	private static FolderResourceUiBinder uiBinder = GWT
 			.create(FolderResourceUiBinder.class);
 
@@ -132,8 +117,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	AlertContentUc alertContentUc;
 
 	private ResourceDropController dropController;
-	private static final String EDIT_THIS_COLLECTION = "Edit this Collection";
-	private static final String ADD_TO_THIS_COLLECTION = "Add to this Collection";
+	private static final String EDIT_THIS_COLLECTION = GL0991;
+	private static final String ADD_TO_THIS_COLLECTION = GL0990;
 
 	private static FolderResource folderResource;
 
@@ -144,6 +129,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		res = ShelfListCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		glassContainer.setGlassText(GL0991);
 		glassContainer.setGlassVisible(false);
 		this.collectionItemDo = collectionItem;
 
@@ -191,54 +177,19 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	 * contentVerPanel.add(htmlPanel); }
 	 * 
 	 * }
-	 * 
 	 */
-/**
- * 
- * @function addCollectionItem 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This method used to add items to the collection
- * 
- * 
- * @parm(s) : @param collectionItem
- * @parm(s) : @param isNew
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void addCollectionItem(CollectionItemDo collectionItem, boolean isNew) {
 		// ShelfResource shelfResource = new ShelfResource(collectionItemDo);
-		ShelfResource shelfResource = new ShelfResource(collectionItem);
+		//ShelfResource shelfResource = new ShelfResource(collectionItem);
 		int widgetCount = contentVerPanel.getWidgetCount();
 		int sequence = collectionItem.getItemSequence() - 1;
-		contentVerPanel.insert(shelfResource,
-				widgetCount > 0 ? sequence >= widgetCount ? widgetCount
-						: sequence : 0);
+		//contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
 		if (isNew) {
 			// shelfResource.glowTitle();
 		}
 
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This is used to set data to the collection
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItem
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 
 	private void setData(CollectionItemDo collectionItem) {
 		if (collectionItem.getResource().getTitle() != null
@@ -270,9 +221,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	public void setCollectionItemDo(CollectionItemDo collectionItemDo) {
 		this.collectionItemDo = collectionItemDo;
 	}
-/**
- * @description: this fires an event when it is clicked by the native users
- */
+
 	@Override
 	public void onClick(ClickEvent event) {
 
@@ -303,7 +252,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 											List<CollectionItemDo> result) {
 										if (result.size() == 0) {
 											htmlPanel = new HTMLPanel(
-													"This folder is empty!");
+													GL0989);
 											htmlPanel
 													.getElement()
 													.getStyle()
@@ -380,22 +329,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			}
 		}
 	}
-/**
- * 
- * @function setL2FoldersData 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is used to set to folders data
- * 
- * 
- * @parm(s) : @param collectionDo
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setL2FoldersData(CollectionDo collectionDo) {
 		if (collectionDo.getCollectionItems().size() > 0) {
 			for (CollectionItemDo collectionItem : collectionDo
@@ -404,9 +338,9 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			}
 		} else {
 			if (collectionDo.getCollectionType().equals("folder")) {
-				htmlPanel = new HTMLPanel("This folder is empty!");
+				htmlPanel = new HTMLPanel(GL0989);
 			} else if (collectionDo.getCollectionType().equals("collection")) {
-				htmlPanel = new HTMLPanel("This collection is empty!");
+				htmlPanel = new HTMLPanel(GL0854);
 			}
 
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -434,22 +368,6 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			contentVerPanel.clear();
 		}
 	}*/
-	/**
-	 * 
-	 * @function addFolderItems 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method used to add items to the folder
-	 * 
-	 * 
-	 * @parm(s) : @param collectionFolderItems
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 
 	protected void addFolderItems(CollectionItemDo collectionFolderItems) {
 		ThirdLevelFolderResource folderResource = new ThirdLevelFolderResource(
@@ -461,22 +379,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						: sequence : 0);
 
 	}
-/**
- * 
- * @function getContentVerPanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is used to lay all of its widgets out in a single vertical column
- * 
- * 
- * @parm(s) : @return
- * 
- * @return : VerticalPanel
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public VerticalPanel getContentVerPanel() {
 		return contentVerPanel;
 	}
@@ -495,105 +398,27 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			folderResource.enableGlassPanel(false);
 		}
 	}
-/**
- * 
- * @function setOpen 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is used to open the folder panel
- * 
- * 
- * @parm(s) : @param isOpen
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setOpen(boolean isOpen) {
 		folderL2DisPanel.setOpen(isOpen);
 	}
-/**
- * 
- * @function isOpen 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is used to check whether folder panel is opened or not
- * 
- * 
- * @parm(s) : @return
- * 
- * @return : boolean
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public boolean isOpen() {
 		return folderL2DisPanel.isOpen();
 	}
-/**
- * 
- * @function enableGlassPanel 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This enables the panel
- * 
- * 
- * @parm(s) : @param enable
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void enableGlassPanel(boolean enable) {
 		glassContainer.setGlassVisible(enable);
 	}
-	/**
-	 * 
-	 * @function getDropController 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This creates a dropContrioller for each drop target on which draggable widgets can be dropped
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : ResourceDropController
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 
 	public ResourceDropController getDropController() {
 		return dropController;
 	}
-/**
- * 
- * @function setDropController 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is used to set the dropController
- * 
- * 
- * @parm(s) : @param dropController
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setDropController(ResourceDropController dropController) {
 		this.dropController = dropController;
 	}
-/**
- * @description : this event occurs when the pointer is moved onto an element.
- */
+
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
 		if (event.getSource().equals(wrapperFocPanel)) {
@@ -608,9 +433,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		}
 
 	}
-/**
- * @description: This is used to pinpoint the moment that a user releases the mouse button at the end of a drag-drop operation, and comes immediately after the ondragend event.
- */
+
 	@Override
 	public void onDrop(Draggable draggable) {
 		this.draggable = draggable;
@@ -635,8 +458,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						draggable.getDragId()));
 			} else {
 				   alertContentUc = new AlertContentUc(
-						"Oops!",
-						"You've reached the limit of resources you can add to a collection!\n\nTip: Try dividing this into two collections.");
+						   GL0061,
+						   GL0302);
 			}
 		} else if (draggable.getType().equals(DRAG_TYPE.COLLECTION)) {
 			AppClientFactory.fireEvent(new CreateCollectionItemInFoldersEvent(
@@ -644,9 +467,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 							.getDragId(), "2"));
 		}
 	}
-/**
- * @description: This is used to run when an element is dragged
- */
+
 	@Override
 	public void onDragOver(Draggable draggable) {
 		this.draggable = draggable;
@@ -670,9 +491,6 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			}
 		}
 	}
-	/**
-	 * @description: This is used to  drag  moved out of a drop point
-	 */
 
 	@Override
 	public void onDragOut(Draggable draggable) {
@@ -687,48 +505,36 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	/*public void disableDraggableOnDrop() {
 		this.draggable.getDraggableMirageUc().onDroppable(false);
 	}*/
-/**
- * @description: It gives support for receiving events from browser and being added directly to the panels
- */
+
 	@Override
 	public Widget getDropTarget() {
 		return this;
 	}
-/**
- * @description: This is used to  register while drop resource if anonymous user is logged in
- */
+
 	@Override
 	public void registerDropController() {
 		AppClientFactory.fireEvent(new RegisterSearchDropEvent(dropController,
 				RegisterSearchDropEvent.DROP_AREA.COLLECTION));
 	}
-/**
- * @description: This is used to call immediately after a widget becomes attached to the browser
- */
+
 	@Override
 	protected void onLoad() {
 		super.onLoad();
 		registerDropController();
 	}
-/**
- * @description:This is used to call immediately after a widget becomes detached  to the browser
- */
+
 	@Override
 	protected void onUnload() {
 		super.onUnload();
 		unregisterDropController();
 	}
-/**
- * @description:This is used to unregister in dropController
- */
+
 	@Override
 	public void unregisterDropController() {
 		AppClientFactory.fireEvent(new UnregisterSearchDropEvent(
 				dropController, RegisterSearchDropEvent.DROP_AREA.COLLECTION));
 	}
-/**
- * @description: This is used to register in dropController
- */
+
 	@Override
 	public void reregisterDropController() {
 		unregisterDropController();

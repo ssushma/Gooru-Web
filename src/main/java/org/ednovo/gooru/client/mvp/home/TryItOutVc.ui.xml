@@ -5,16 +5,14 @@
 		field="res" />
 	<g:HTMLPanel styleName="{res.css.tryItoutContainer}">
 		<g:FlowPanel styleName="{res.css.headerPopUpTitle}">
-			<g:Label styleName="{res.css.popUpTitleContext}" text="We've Improved Gooru!" />
+			<g:Label styleName="{res.css.popUpTitleContext}" ui:field="improveGooruText"/>
 			<g:Label styleName="{res.css.closePopUp}" ui:field="closePopUpLbl" />
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{res.css.innerContainer}">
 			<g:FlowPanel styleName="{res.css.landingPageOuterDiv}">
 				<g:Label styleName="{res.css.landingPageCelebrationText}"
-					text="We've made it easier than ever to find great learning resources and organize them into collections." />
-				<g:Anchor styleName="{res.css.landingPageLearn}" target="_blank"
-					href="http://support.goorulearning.org/entries/23251492-Why-are-we-retiring-Classic-Gooru-and-transitioning-everyone-over-to-the-new-version-"
-					text="Learn more about the changes."></g:Anchor>
+					ui:field="celebrationLbl"/>
+				<g:Anchor styleName="{res.css.landingPageLearn}" target="_blank" ui:field="learnMoreLbl"></g:Anchor>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.celebrations}">
 				<g:Label styleName="{res.css.landingPageCelebration}" />
@@ -23,22 +21,21 @@
 		<g:FlowPanel styleName="{res.css.classicContainer}">
 			<g:FlowPanel styleName="{res.css.backToClassic}">
 				<g:FlowPanel styleName="{res.css.classicInnercontainer}">
-					<g:Anchor styleName="{res.css.fadeblueButtonText}" text="Back to Classic"
+					<g:Anchor styleName="{res.css.fadeblueButtonText}" 
 						href="" target="_blank" ui:field="backToClassicAnr" />
 					<g:Anchor styleName="{res.css.fadeblueArrow}" href=""
 						target="_blank" />
 				</g:FlowPanel>
 				<g:Label styleName="{res.css.classicGooru}"
-					text="Classic gooru has all of your collections." />
+					ui:field="classicGooruLbl"/>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.tryItOut}">
 				<g:FlowPanel styleName="{res.css.classictryItOut}"
 					ui:field="tryItOutNewGooruFloPanel">
-					<g:Anchor styleName="{res.css.blueButtonText}" text="Try it Out" />
+					<g:Anchor styleName="{res.css.blueButtonText}" ui:field="tryItOutLbl"/>
 					<g:Anchor styleName="{res.css.blueArrow}" />
 				</g:FlowPanel>
-				<g:Label styleName="{res.css.tryItOutGooru}"
-					text="You can always go back to classic gooru to see your shelf." />
+				<g:Label styleName="{res.css.tryItOutGooru}" ui:field="goBackText"/>
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

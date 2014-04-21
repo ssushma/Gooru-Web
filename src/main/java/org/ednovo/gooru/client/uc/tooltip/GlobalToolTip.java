@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -34,20 +35,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : GlobalToolTip.java
- *
- * @description : This class is used to display the global tooltips. 
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class GlobalToolTip extends Composite {
+
+public class GlobalToolTip extends Composite implements MessageProperties {
 	
 	@UiField
 	HTMLEventPanel confirmationPanel;
@@ -64,38 +53,26 @@ public class GlobalToolTip extends Composite {
 	
 	public static GlobalToolTipUiBinder toolTipGlobalUiBinder=GWT.create(GlobalToolTipUiBinder.class);{
 	}
-	/**
-	 * class constructor.
-	 */
+	
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+		desLbl.setText(GL1060);
 		setPanelPosition();
 	}
 	
-	/**
-	 * Class constructor.
-	 * @param description
-	 */
+	
     public GlobalToolTip(String description){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(description);
-
 		setPanelPosition();
 	}
-    /**
-     * @function setPanelPosition 
-     * 
-     * @created_date : 31-Dec-2013
-     * 
-     * @description : This method is used to set the panel position.
-     * 
-     * @parm(s) : 
-     * 
-     * @return : void
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     */
+    public GlobalToolTip(String description, boolean isSharePopup){
+		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+		desLbl.setText(description);
+
+		setArrowLeft();
+	}
+    
     public void setPanelPosition(){
     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     	/*if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
@@ -103,6 +80,10 @@ public class GlobalToolTip extends Composite {
 		}else{
 			panelArrow.getElement().getStyle().clearPosition();
 		}*/
+    }
+    public void setArrowLeft(){
+     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
+    //	panelArrow.getElement().getStyle().setLeft(165, Unit.PX);
     }
 	
 }

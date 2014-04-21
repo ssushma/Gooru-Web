@@ -28,21 +28,21 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 import com.google.gwt.event.shared.EventHandler;
 
-	/**
-	 * 
-	 * @fileName : SignUpUiHandlers.java
-	 *
-	 * @description : This file is used to handle signup events.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 26-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * 
+ * @fileName : SignUpUiHandlers.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 25-09-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 public interface SignUpUiHandlers extends BaseUiHandlers, EventHandler {
 
 	void CreateUser(String postData, String loginData);

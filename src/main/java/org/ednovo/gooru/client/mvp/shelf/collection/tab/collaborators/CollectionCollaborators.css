@@ -1,0 +1,391 @@
+.collaboratorContainer {
+	width: 95%;
+	margin: auto;
+	background-color: #fff;
+	margin-top: 10px;
+}
+.collaboratorBg {
+	min-height: 252px;
+	height: auto;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border-style: solid;
+	background-color: rgb(240,240,240);
+}
+.collaboratorContent {
+	padding: 20px;
+}
+.collaboratorTitle {
+	font-size: 16px;
+	line-height: 300%;
+	font-weight: bold;
+	color: rgb(81,81,81);
+	text-align: center;
+	border-bottom: 1px solid rgb(221,221,221);
+}
+.collaboratorSubTitle {
+	font-size: 16px;
+	color: rgb(81,81,81);
+	text-align: left;
+	padding-bottom: 5px;
+}
+.collaboratorHeading {
+	font-size: 12px;
+	line-height: 300%;
+	font-weight: bold;
+	color: rgb(81,81,81);
+}
+.collaboratorDesc {
+	color: #515151;
+	font-size: 12px;
+	padding-bottom: 20px;
+}
+.buttonContainer {
+	width: 100%;
+	display: inline-block;
+}
+.collaboratorInputBox {
+	border: 1px solid #DDD;
+	font-size: 12px;
+	height: 30px;
+	width: 495px;
+	padding-left: 5px;
+	margin-right: 5px;
+}
+.collaboratorContentPanel {
+	margin-top: 15px;
+}
+.collaboratorViewPanel {
+	margin-top: 20px;
+}
+.collaboratorPanelTitle {
+	color: #515151;
+	font-weight: bold;
+	line-height: 20px;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 5px;
+}
+.radioButtonContainer {
+	width: 100%;
+	padding: 15px 0px;
+}
+.panelCollaborators {
+	width: 100%;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border-radius: 5px;
+	background-color: transparent;
+	/* min-height: 55px; */
+	/* display: inline-block; */
+	/* margin-top: 15px; */
+	/* height: 64px; */
+	/* margin: 10px; */
+}
+.panelCollaborators:hover{
+	/* background-color:#F0F0F0; */
+}
+
+.btnRemoveCollab{
+	vertical-align: middle;
+	margin-top: -36px;
+	margin-left: -10px;
+}
+
+.radioButton {
+	width: 19px;
+	height: 17px;
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 15px;
+	background-position: 0 -16px;
+	cursor: pointer;
+	background: url(images/collaborators/radio.png) no-repeat;
+}
+.radioButtonSelected {
+	background: url(images/collaborators/radio.png) no-repeat;
+	width: 19px;
+	height: 17px;
+	display: inline-block;
+	margin-top: 15px;
+	background-position: 0 -51px;
+	cursor: pointer;
+}
+.usernameCss {
+	display: inline-block;
+	width: 30%;
+	vertical-align: top;
+	color: #515151;
+	padding-left: 15px;
+	margin-top: 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.emailIdCss {
+	display: inline-block;
+	width: 42%;
+	vertical-align: top;
+	color: #515151;
+	padding-left: 15px;
+	margin-top: 15px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.radioButtonImg {
+	display: inline-block;
+	border-radius: 30px;
+	-moz-border-radius: 30px;
+	width: 40px;
+	height: 40px;
+	background-color: rgb(240,240,240);
+	border: 3px solid rgb(136,187,221);
+	background: url(images/collaborators/profile.png) no-repeat;
+	margin-left: 10px;
+}
+.collaboratorBtn {
+	margin-top: 30px;
+}
+.collaboratorSectionTitle {
+	font-size: 16px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+}
+.collaboratorBorderBottom {
+	height: 57px;
+	border-bottom: 1px solid rgb(221,221,221);
+}
+.collaboratorYou {
+	background-color: rgb(240,240,240);
+	height: 77px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius: 4px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius: 4px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius: 4px;
+	border-style: solid;
+	margin-top: 20px;
+}
+.collaboratorYou .photo {
+	float: left;
+	border-radius: 30px;
+	-moz-border-radius: 30px;
+	width: 40px;
+	height: 40px;
+	background-color: rgb(240,240,240);
+	border: 3px solid rgb(136,187,221);
+	margin-top: 16px;
+	margin-left: 10px;
+}
+.collaboratorYou .name{
+	float: left;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81,81,81);
+	text-align: left;
+	margin-top: 30px;
+	margin-left: 18px;
+	width: 203px;
+}
+.collaboratorYou .remove {
+	float: left;
+	margin-top: 22px;
+	margin-left: 15px;
+}
+
+.collaborators{
+	min-height: 500px;
+}
+
+.error{
+	text-align: right;
+	width: 500px;
+}
+
+.rdPosition{
+	margin-top: 15px;
+}
+.collabListPanel{
+	vertical-align: middle;
+	border-radius: 5px;
+	padding: 5px 5px;
+	/* background-color:white; */
+}
+
+/* Delete Popup css */
+.popup {
+	background-color:white;
+	width: 450px;
+}
+.popupInner {
+	border: 1px solid #DDD;
+}
+.popupInner {
+    overflow:auto;
+}
+.popupHeader {
+	padding:10px 15px;
+	color:white;
+	background-color:#515151;
+	font-size:16px;
+	/* Safari 4-5, Chrome 1-9 */
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#666), to(#515151));
+
+	/* Safari 5.1, Chrome 10+ */
+	background: -webkit-linear-gradient(top, #666, #515151);
+
+	/* Firefox 3.6+ */
+	background: -moz-linear-gradient(top, #666, #515151);
+
+	/* IE 10 */
+	background: -ms-linear-gradient(top, #666, #515151);
+
+	/* Opera 11.10+ */
+	background: -o-linear-gradient(top, #666, #515151);
+	
+	/* IE 6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndColorStr='#515151');
+}
+.popupContent {
+	padding:15px;
+    text-align:center;
+}
+.popupContent .header {
+	font-size:16px;
+    margin-bottom:10px;
+}
+.popupContent .icon {
+    width:55px;
+    height:55px;
+    margin:10px auto 20px auto;
+}
+
+.popupContent .icon.delete {
+    background: url('images/popup/exclamation-mark.png') no-repeat center;
+}
+.popupContent .icon.complete {
+    background: url('images/popup/checkmark.png') no-repeat center;
+}
+
+.okCancel {
+	width: 100%;
+    text-align:center;
+	margin:auto;
+	margin-bottom:15px;
+	/* margin-top: 25px; */
+}
+#btnNegitive, #btnPositive{
+	margin: 10px 0px 0px 10px;
+}
+.desc{
+	margin-top:25px;
+	font-size: 12px;
+}
+.notes{
+	margin-bottom:10px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #515151;
+}
+
+.pleaseWait{
+	font-style: italic;
+	color: #515151;
+	height: 24px;
+	margin-top: 8px;
+}
+.buttonTooltip{
+	display: inline-block;
+	position: relative;
+}
+
+.tooltipContainer {
+	display: none;
+}
+
+.tooltipContainer {
+	position: absolute;
+	left: -134px;
+	z-index: 97;
+}
+
+.arrowBorder {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent #DDD transparent;
+	position: relative;
+	top: 0px;
+	margin: auto;
+	border-top: none;
+	left: 65px;
+}
+
+.arrow {
+	width: 0px;
+	height: 0px;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	margin: auto;
+	top: -9px;
+	border-top: none;
+	z-index: 97;
+	left: 65px;
+}
+
+.tooltipContent {
+	text-align: left;
+	color: #515151;
+	font-size: 12px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	padding: 15px;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	position: relative;
+	top: -10px;
+	width: 155px;
+	float: left;
+}
+
+/* button[disable]:hover .buttonTooltip:hover .tooltipContainer{
+	display:block;
+} */
+
+button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
+	display:block;
+}
+
+.deleteTextBox {
+	font-size: 12px;
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+.deleteContainer{
+	text-align: center;
+	margin: 10px auto;	
+}
+
+.deleteContainer input[type="text"]{
+	width: 300px;
+	height: 17px;
+	padding: 5px;
+	border: 1px solid #DDD;
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	margin: 10px 3px 0px 3px;
+	background-color: #f9f9f9;
+}

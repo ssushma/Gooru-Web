@@ -8,7 +8,7 @@
 	<g:HTMLPanel styleName="{res.css.assign}">
 		<g:HTMLPanel styleName="{res.css.assignContent}">
 			<g:HTMLPanel styleName="{res.css.assignHeader}">
-				<g:HTMLPanel styleName="{res.css.assignTitle}">Assign this collection</g:HTMLPanel>
+			<g:Label ui:field="lblAssignTitle" styleName="{res.css.assignTitle}"/>
 				<g:Label ui:field="cancelButton"
 					styleName="{res.css.assignCloseMarker} {res.css.assignSprite} {res.css.assignCloseMark}"></g:Label>
 			</g:HTMLPanel>
@@ -17,56 +17,34 @@
 		      <g:Label  styleName="{res.css.loadingImageForSelfEdit}" />
 		   </g:HTMLPanel>
 				  <g:HTMLPanel styleName="{res.css.popupContent}" ui:field="popupContentAssign">
-      <g:HTMLPanel styleName="{res.css.popupTitle}">Assign</g:HTMLPanel>
-      <g:HTMLPanel styleName="{res.css.popupDesc}">Assign this collection to students by copying and pasting this link:</g:HTMLPanel>
-      <g:HTMLPanel styleName="{res.css.popupcornerBg}">
+		<g:Label ui:field="lblpopupTitle" styleName="{res.css.popupTitle}"/>		  
+        <g:Label styleName="{res.css.popupDesc}" ui:field="assignDes"/>
+        <g:HTMLPanel styleName="{res.css.popupcornerBg}">
         <g:TextArea styleName="{res.css.shareTextarea}" ui:field="shareLinkTxtBox">
         
             </g:TextArea>
       </g:HTMLPanel>
-      <g:Label styleName="{res.css.url}" ui:field="swithUrlLbl" text="Switch to Bit.ly"/>
-      <g:Label styleName="{res.css.url}" ui:field="swithToEmbedLbl" text="Switch to embed code"/>
+      <g:Label styleName="{res.css.url}" ui:field="swithUrlLbl"/>
+      <g:Label styleName="{res.css.url}" ui:field="swithToEmbedLbl"/>
       <g:HTMLPanel styleName="{res.css.clear}"></g:HTMLPanel>
-      <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link via </g:HTMLPanel>
+<!--          <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link via </g:HTMLPanel>
       <g:HTMLPanel ui:field="socialSharePanel" styleName="{res.css.socialiconContainer}">
-        <!-- <g:HTMLPanel styleName="{res.css.sociaMediaText}">Share this link via </g:HTMLPanel>
-        <g:HTMLPanel styleName="{res.css.socialiconOuterDiv}">
-          <g:HTMLPanel styleName="{res.css.fbButtonBg}">
-            <g:HTMLPanel styleName="{res.css.btnAlign}">
-              <g:HTMLPanel styleName="{res.css.sprite} {res.css.fb}"></g:HTMLPanel>
-            </g:HTMLPanel>
-          </g:HTMLPanel>
-        </g:HTMLPanel>
-        <g:HTMLPanel  styleName="{res.css.socialiconOuterDiv}">
-          <g:HTMLPanel styleName="{res.css.twitterButtonBg}">
-            <g:HTMLPanel styleName="{res.css.btnAlign}">
-              <g:HTMLPanel styleName="{res.css.sprite} {res.css.twitter}"></g:HTMLPanel>
-            </g:HTMLPanel>
-          </g:HTMLPanel>
-        </g:HTMLPanel>
-        <g:HTMLPanel  styleName="{res.css.socialiconOuterDiv}">
-          <g:HTMLPanel styleName="{res.css.shareButtonBg}">
-            <g:HTMLPanel styleName="{res.css.btnAlign}">
-              <g:HTMLPanel styleName="{res.css.sprite} {res.css.email}"></g:HTMLPanel>
-            </g:HTMLPanel>
-          </g:HTMLPanel>
-        </g:HTMLPanel> -->
-      </g:HTMLPanel>
+       </g:HTMLPanel> -->
       <g:HTMLPanel styleName="{res.css.contentBorder}"></g:HTMLPanel>
       
-     <uc:HTMLEventPanel ui:field="htmlLoginPanel">        
-      <g:HTMLPanel styleName="{res.css.popupTitle}">Log in to Assign to a Class</g:HTMLPanel>
-      <g:HTMLPanel styleName="{res.css.popupDesc}">Assign this to a class and collect class-specific insights</g:HTMLPanel>
-      <g:HTMLPanel styleName="{res.css.inputBlockOuter}">
+     <uc:HTMLEventPanel ui:field="htmlLoginPanel">   
+   	    <g:Label styleName="{res.css.popupTitle}" ui:field="lblLoginPopupTitle"/>  
+        <g:Label styleName="{res.css.popupDesc}" ui:field="lblAssignPopDes"/>
+    	<g:HTMLPanel styleName="{res.css.inputBlockOuter}">
        	<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
 		<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox" password="true" />
         <g:HTMLPanel styleName="{res.css.pwdTxt}"><g:Anchor ui:field="forgotPwd"></g:Anchor></g:HTMLPanel>
       </g:HTMLPanel>
       <g:HTMLPanel styleName="{res.css.btn}">
-        <g:Button ui:field="loginButton" styleName="primary {res.css.LoginText}">Login</g:Button>
+        <g:Button ui:field="loginButton" styleName="primary {res.css.LoginText}"></g:Button>
         <g:Label ui:field="lblPleaseWait" styleName="{res.css.processing}"></g:Label>
       </g:HTMLPanel>
-      <g:HTMLPanel styleName="{res.css.signUp}">Don’t have an account? <g:Anchor ui:field="ancSignUp">Sign Up here</g:Anchor></g:HTMLPanel>
+      <g:HTMLPanel styleName="{res.css.signUp}" ui:field="signUpStyles"><g:Label ui:field="donothaveAC"></g:Label> <g:Anchor ui:field="ancSignUp"></g:Anchor></g:HTMLPanel>
     </uc:HTMLEventPanel>  
       
     	<uc:HTMLEventPanel ui:field="htmlEvenPanelContainer" styleName="{res.css.heightClasspagecontainer}">

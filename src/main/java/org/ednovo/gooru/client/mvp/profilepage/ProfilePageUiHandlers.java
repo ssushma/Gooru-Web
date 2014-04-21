@@ -38,19 +38,18 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
- * 
  * @fileName : ProfilePageUiHandlers.java
- *
- * @description : This is the UIHandler file for ProfilePageView.
- *
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: July 12, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 
 public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpenHandler, RequestCollectionOpenHandler,SetUserPublicProfileImageEventHandler {

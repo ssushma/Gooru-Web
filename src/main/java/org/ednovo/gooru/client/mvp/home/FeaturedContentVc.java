@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -36,24 +38,14 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : FeaturedContentVc.java
+ * @author Search Team
  *
- * @description :This file Shows the current elapsed time in the elapsedLabel widget.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class FeaturedContentVc extends Composite implements MouseOverHandler, MouseOutHandler {
+public class FeaturedContentVc extends Composite implements MouseOverHandler, MouseOutHandler,MessageProperties {
 
 	private static FeaturedContentVcUiBinder uiBinder = GWT.create(FeaturedContentVcUiBinder.class);
 
@@ -74,6 +66,8 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 	
 	 public static Timer elapsedTimer;
 	 private int countOfChild=0;
+	 
+	 @UiField Label featuredLbl;
 		
 	/**
 	 * Class Constructor
@@ -82,6 +76,7 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		featuredLbl.setText(GL1240);
 		 elapsedTimer = new Timer () {
 		      public void run() {
 		    	  if(countOfChild>3){
@@ -187,16 +182,11 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 			 /*String scrollTop = (Integer.parseInt(featuredContentTitle.getElement().getAttribute("slideIndex")) * slideMaxHeight) + "";
 		featuredSlideFloPanel.getElement().setAttribute("style", "margin-top:-" + scrollTop + "px");
 	  */ }
-	  /**
-	   * MouseOut event
-	   */
 	@Override
 	public void onMouseOut(MouseOutEvent event) {
 
 	}
-	/**
-	   * MouseOver event
-	   */
+
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
 		

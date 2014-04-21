@@ -58,18 +58,20 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
- * This file is used to register a new user after check availability and validation  
+ * @author Search Team
+ *
  */
 public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> implements IsRegisterView, MessageProperties {
 
 
-	private static final String REGISTER_HEADER = "Register";
+	private static final String REGISTER_HEADER = GL1203;
 
 	@UiField(provided = true)
 	RegisterCBundle res;
@@ -93,6 +95,8 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 
 	@UiField
 	SimplePanel dateSimPanel;
+	
+	@UiField Label birthdayLbl,emailLbl;
 
 	private DateBoxUc dateBoxUc;
 
@@ -104,7 +108,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 
 	private String dob;
 	
-	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = "The email address specified already exists with in Gooru. Please use sign-in to log in to your existing account.";
+	private static final String LOGIN_YOUR_EXISTING_ACCOUNT = GL0214;
 	
 	private static final String PARENT = "Parent";
 	
@@ -168,7 +172,10 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		appPopUp.setContent(REGISTER_HEADER, uiBinder.createAndBindUi(this));
 		appPopUp.setStyleName(RegisterCBundle.INSTANCE.css().registerPopupStyle());
 		RegisterCBundle.INSTANCE.css().ensureInjected();
-
+		birthdayLbl.setText(GL0211);
+		emailLbl.setText(GL0426);
+		goBtnUc.setText(GL0213);
+		cancelAnr.setText(GL0142);
 		dateBoxUc = new DateBoxUc(true,false,false);
 		dateSimPanel.add(dateBoxUc);
 		dateValidationUc.setStyleName(RegisterCBundle.INSTANCE.css()
@@ -199,16 +206,12 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		RootPanel.get().add(glassPanel,0,0);*/
 	}
 
-	/**
-	 * It will return the representation of a view as the widget
-	 */
+
 	@Override
 	public Widget asWidget() {
 		return appPopUp;
 	}
-	/**
-	 * To get the place tokens.
-	 */
+
 	@Override
 	protected String getDefaultView() {
 		return PlaceTokens.HOME;
@@ -419,21 +422,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		}
 		return isValid;
 	}
-	/**
-	 * 
-	 * @fileName : RegisterView.java
-	 *
-	 * @description : Date Focus handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDateFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -447,21 +436,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterView.java
-	 *
-	 * @description : To validate parentRegisterVc on Done Click handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDoneClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -488,21 +463,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterView.java
-	 *
-	 * @description : Date blur handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnDateBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -512,21 +473,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 					RegisterCBundle.INSTANCE.css().gooruDateError());
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterView.java
-	 *
-	 * @description : Email focus handler
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnEmailFocus implements FocusHandler {
 		@Override
 		public void onFocus(FocusEvent event) {
@@ -537,21 +484,7 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 					.errorBoxStyle());
 		}
 	}
-	/**
-	 * 
-	 * @fileName : RegisterView.java
-	 *
-	 * @description : Email blur handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnEmailBlur implements BlurHandler {
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -565,47 +498,11 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 	public UserDo getUserDo() {
 		return userDo;
 	}
-	/**
-	 * 
-	 * @function getRegisterAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns SimpleAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<UserDo> getRegisterAsyncCallback() {
 		return registerAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setRegisterAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :setter for registerAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param registerAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setRegisterAsyncCallback(
 			SimpleAsyncCallback<UserDo> registerAsyncCallback) {
 		this.registerAsyncCallback = registerAsyncCallback;
@@ -621,9 +518,8 @@ public class RegisterView extends BasePopupViewWithHandlers<RegisterUiHandlers> 
 		Date age = new Date(ageInMillis);
 		return age.getYear()- 70;
 	}
-	/**
-	 * This is used to clear the data.
-	 */
+
+
 	@Override
 	public void clearAll() {
 		emailIdTxtBox.setText(null);	

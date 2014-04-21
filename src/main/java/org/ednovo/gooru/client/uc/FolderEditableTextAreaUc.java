@@ -39,18 +39,10 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : FolderEditableTextAreaUc.java
+ * @author Search Team
  *
- * @description : This class is used to display the folder editable text area.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class FolderEditableTextAreaUc extends Composite implements HasValue<String> {
 

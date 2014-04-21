@@ -30,19 +30,10 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
- * @fileName : CollectionEditResourceCBundle.java
- *
- * @description :  This interface is used to set the styles for collection edit.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface CollectionEditResourceCBundle extends ClientBundle {
 
@@ -105,6 +96,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String fromLbl();
 
 		String shelfResourceDragdropPositioner();
+		
+		String buttonPositionStyle();
 
 		String shelfResourceDragdropSpacer();
 
@@ -271,6 +264,10 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionFolderspriteLesson();
 		String myFolderCollectionFolderspriteQuestion();
 		String myFolderCollectionFolderspriteExam();
+		String myFolderCollectionFolderspriteAudio();
+		String myFolderCollectionFolderspriteImage();
+		String myFolderCollectionFolderspriteText();
+		String myFolderCollectionFolderspriteOther();
 		String myFolderCollectionFolderVideoTitle();
 		String myFolderCollectionFolderDropdown();
 		String myFolderCollectionFolderUpdateDropdown();
@@ -452,6 +449,11 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String collectionInfoCourseList();
 		String collectionInfobuttonSelected();
 		String loginPopupGlassStyle();
+		String updateButton();
+		String andText();
+		String additionalText();
+		String updateTextStyle();
+		String myshelfCollectionresourceDropdown();
 	}
 
 	@Source("CollectionEditResource.css")

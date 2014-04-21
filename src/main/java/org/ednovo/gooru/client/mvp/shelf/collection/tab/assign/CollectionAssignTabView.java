@@ -25,17 +25,26 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.assign;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
+import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
@@ -43,10 +52,16 @@ import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.dom.client.Style.Visibility;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -57,24 +72,25 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * 
- * @fileName : CollectionAssignTabView.java
+ * @fileName : CollectionAssignViewTab.java
  *
- * @description : This class is used to set the Editing collection to Assignment under Classpages.
- *
+ * @description : 
+ *	This class is used to set the Editing collection to Assignment under Classpages.
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: Jul 30, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
-public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssignTabUiHandlers> implements IsCollectionAssignTab {
+public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssignTabUiHandlers> implements IsCollectionAssignTab,MessageProperties {
 
 	@UiField(provided = true)
 	CollectionAssignCBundle res;
@@ -88,6 +104,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	boolean toClearAssignment = true;
 	
 	boolean isAssignmentsEnabled = false;
+	
+	boolean isBadWord = false;
 
 	private CollectionDo collectionDo;
 	
@@ -104,21 +122,25 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 
 	
 	//Labels
-	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblAssignmentsArrow, lblAssignments, lblAssignmentsPlaceHolder, lblNoAssignments;
+	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblDirections,directionsErrorLbl,directionsErrorLength;
 	
-	@UiField Label lblAssignCollectionPrivate, lblAssignmentErrorMsg;
+	@UiField Label lblAssignCollectionPrivate,lblDuedate;
 	
 	@UiField BlueButtonUc btnAssign;
 	
-	@UiField ScrollPanel spanelClasspagesPanel, spanelAssignmentsPanel;
+	@UiField ScrollPanel spanelClasspagesPanel;
 	
-	@UiField HTMLPanel htmlClasspagesListContainer, htmlAssignmentsListContainer;
+	@UiField HTMLPanel htmlClasspagesListContainer,duedateContainer;
 	
 	@UiField HTMLEventPanel htmlEvenPanelContainer;
 	
-	@UiField HTMLPanel panelNoClasspages, panelLoading, panelAssignmentsControls;
+	@UiField HTMLPanel panelNoClasspages, panelLoading;
     @UiField Label lblNoClasspages; 
     @UiField HTML htmlTab, htmlGoto,ancTeach;
+    
+    @UiField TextArea textAreaVal;
+    
+	private DateBoxUc dateBoxUc;
     
 	/**
 	 * Class constructor
@@ -135,6 +157,80 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		
 		hideContainers();
 		
+		btnAssign.getElement().setAttribute("style", "margin-right:25px;");
+		
+		lblDirections.setText(GL1166+" "+GL1167);
+		
+		lblDuedate.setText(GL1168+" "+GL1167);
+		
+		dateBoxUc = new DateBoxUc(false, false,false);
+		duedateContainer.add(dateBoxUc);
+		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
+		textAreaVal.setText(GL1389);
+		textAreaVal.getElement().getStyle().setColor("#999");
+		textAreaVal.getElement().setAttribute("maxlength", "400");
+		directionsErrorLength.setVisible(false);
+		textAreaVal.addFocusHandler(new FocusHandler() {
+			@Override
+			public void onFocus(FocusEvent event) {
+				if(textAreaVal.getText().equalsIgnoreCase(GL1389))
+				{
+					textAreaVal.setText("");
+				}
+				textAreaVal.getElement().getStyle().setColor("black");
+			}
+		});
+		
+		/*textAreaVal.addKeyPressHandler(new KeyPressHandler() {
+			
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				if(textAreaVal.getText().length() > 415)
+				{
+					textAreaVal.cancelKey();
+				}
+			}
+		});*/
+		textAreaVal.addKeyUpHandler(new KeyUpHandler() {
+			
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if(textAreaVal.getText().length() >=400){
+					directionsErrorLength.setText(GL0143);
+					directionsErrorLength.setVisible(true);
+				}else{
+					directionsErrorLength.setVisible(false);
+				}
+				if(directionsErrorLbl.isVisible()){
+					textAreaVal.getElement().getStyle().setBorderColor("#ccc");
+					directionsErrorLbl.setVisible(false);
+				}
+				
+			}
+		});
+		
+		
+		textAreaVal.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(textAreaVal.getText().length() == 0)
+				{
+					textAreaVal.setText(GL1461);
+					textAreaVal.getElement().getStyle().setColor("#999");
+				}
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", textAreaVal.getText());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+					@Override
+					public void onSuccess(Boolean value) {
+						     isBadWord=value;
+							SetStyleForProfanity.SetStyleForProfanityForTextArea(textAreaVal, directionsErrorLbl, value);
+							directionsErrorLbl.setStyleName(res.css().directionsErrorLbl());
+					}
+				});
+			}
+		});
+		
 		spanelClasspagesPanel.addScrollHandler(new ScrollHandler() {
 			@Override
 			public void onScroll(ScrollEvent event) {
@@ -144,21 +240,9 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 				}
 			}
 		});
-		
-		spanelAssignmentsPanel.addScrollHandler(new ScrollHandler() {
-			
-			@Override
-			public void onScroll(ScrollEvent event) {
-				if (spanelAssignmentsPanel.getVerticalScrollPosition() == spanelAssignmentsPanel.getMaximumVerticalScrollPosition()){
-					toClearAssignment = false;
-					getUiHandlers().getNextAssignments();
-				}
-			}
-		});
+
 	}
-	/**
-	 * This method is called immediately before a widget will be detached from the browser's document.
-	 */
+	
 	@Override
 	public void onUnload() {
 		setCollectionDo(null);
@@ -169,17 +253,15 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 		
 		toClear= true;
 		
-		htmlAssignmentsListContainer.clear();
+		//htmlAssignmentsListContainer.clear();
 		htmlClasspagesListContainer.clear();
-		lblAssignmentErrorMsg.setVisible(false);
+		//lblAssignmentErrorMsg.setVisible(false);
 	}
-	/**
-	 * This is used to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
-		lblAssignmentErrorMsg.setVisible(false);
+		//lblAssignmentErrorMsg.setVisible(false);
 	}
 	
 	/**
@@ -203,33 +285,32 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 */
 	public void setLabelsAndIds(){
 		
-		lblAssignCollectionPrivate.setText(MessageProperties.GL0112);
+		lblAssignCollectionPrivate.setText(GL0112);
 		lblAssignCollectionPrivate.setVisible(false);
 		
-		lblAssignCollectionTitle.setText(MessageProperties.GL0101);
-		lblClasspages.setText(MessageProperties.GL0102);
-		lblAssignments.setText(MessageProperties.GL0103);
+		lblAssignCollectionTitle.setText(GL0101);
+		lblClasspages.setText(GL0102);
+		//lblAssignments.setText(GL0103);
 		
-		btnAssign.setText(MessageProperties.GL0104);
+		btnAssign.setText(GL0104);
 		
-		lblClasspagePlaceHolder.setText(MessageProperties.GL0105);
-		lblAssignmentsPlaceHolder.setText(MessageProperties.GL0105);
+		lblClasspagePlaceHolder.setText(GL0105);
+		//lblAssignmentsPlaceHolder.setText(GL0105);
 		
-		lblNoClasspages.setText(MessageProperties.GL0106);
-		htmlGoto.setHTML(MessageProperties.GL0107);
-		ancTeach.setText(MessageProperties.GL0108);
-		htmlTab.setHTML(MessageProperties.GL0109);
+		lblNoClasspages.setText(GL0106);
+//		htmlGoto.setHTML(MessageProperties.GL0107);
+//		ancTeach.setText(MessageProperties.GL0108);
+		htmlTab.setHTML(GL0109);
 		
 		//ancTeach.setHref("#"+PlaceTokens.TEACH);
 		
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
 		btnAssign.setStyleName(res.css().disableAssignButon());
-		btnAssign.getElement().getStyle().setMarginRight(17, Unit.PCT);
+		btnAssign.setText(GL0104);
 		btnAssign.setEnabled(false);
 		btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-		
-		disableAssignemnt();
+
 	}
 	/**
 	 * 
@@ -252,173 +333,23 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 */
 	public void showHideScrollPanel(boolean visible){
 		spanelClasspagesPanel.setVisible(visible);
-		spanelAssignmentsPanel.setVisible(visible);
 	}
 	
 	//UI Handlers
-	/**
-	 * 
-	 * @function OnClickClasspagePlaceHolder 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to Open ClasspageContainer on lblClasspagePlaceHolder clicked.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("lblClasspagePlaceHolder")
 	public void OnClickClasspagePlaceHolder(ClickEvent event){
 		OpenClasspageContainer();
 	}
-	/**
-	 * 
-	 * @function OnClickClasspagePlaceHolder 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to Open ClasspageContainer on lblClasspagesArrow clicked.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("lblClasspagesArrow")
 	public void OnClickClasspageArrow(ClickEvent event){
 		OpenClasspageContainer();
 	}
-	/**
-	 * 
-	 * @function OpenClasspageContainer 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :  This is used to open the classpage container.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void OpenClasspageContainer(){
 		spanelClasspagesPanel.setVisible(!spanelClasspagesPanel.isVisible());
-		if (spanelAssignmentsPanel.isVisible()){
-			spanelAssignmentsPanel.setVisible(false);
-		}
 	}
-	/**
-	 * 
-	 * @function OnClickClasspagePlaceHolder 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to Open AssignmentContainer on lblAssignmentsPlaceHolder clicked.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("lblAssignmentsPlaceHolder")
-	public void ClickOnPlaceHolder(ClickEvent event){
-		OpenAssignmentsContainer();
-	}
-	/**
-	 * 
-	 * @function OnClickClasspagePlaceHolder 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to Open AssignmentContainer on lblAssignmentsArrow clicked.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	@UiHandler("lblAssignmentsArrow")
-	public void ClickOnArrow(ClickEvent event){
-		OpenAssignmentsContainer();
-	}
-	/**
-	 * 
-	 * @function OnClickClasspagePlaceHolder 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to Open AssignmentContainer.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void OpenAssignmentsContainer(){
-		if (isAssignmentsEnabled){
-			spanelAssignmentsPanel.setVisible(!spanelAssignmentsPanel.isVisible());
-			if (spanelClasspagesPanel.isVisible()){
-				spanelClasspagesPanel.setVisible(false);
-			}
-		}
-	}
-	/**
-	 * 
-	 * @function updateShare 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to update the shareType.
-	 * 
-	 * 
-	 * @parm(s) : @param shareType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+
 	public void updateShare(String shareType) {
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collectionDo.getGooruOid(), null, null, null, shareType, null, null, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
 
@@ -429,80 +360,117 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function OnClickAssign 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This UIHandler is used to add Collection To Assignment
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("btnAssign")
 	public void OnClickAssign(ClickEvent event){
-		TaskResourceAssocDo taskResourceAssocDo = new TaskResourceAssocDo();
-		ResourceDo resourceDo = new ResourceDo();
-		resourceDo.setGooruOid(collectionDo.getGooruOid());
-		taskResourceAssocDo.setResource(resourceDo);
-		
-		//Track Mixpanel
-		MixpanelUtil.Click_Assign_Click();
-		// Api call for adding Collection to Assignment
-		
-		if (collectionDo.getSharing().equalsIgnoreCase("private")){
-			updateShare("anyonewithlink");
-			getUiHandlers().setShareType("anyonewithlink");
-			lblAssignCollectionPrivate.setVisible(false);
-			collectionDo.setSharing("anyonewithlink");
-		}else{
-			
-		}
-		
-		
-		AppClientFactory.getInjector().getClasspageService().v2AddCollectionToAssignment(assignmentId,taskResourceAssocDo, new SimpleAsyncCallback<TaskResourceAssocDo>() {
+		btnAssign.setEnabled(false);
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", textAreaVal.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
-			public void onSuccess(TaskResourceAssocDo result) {
-
-				SuccessPopupVc successPopupVc = new SuccessPopupVc(lblAssignmentsPlaceHolder.getText(), collectionDo.getTitle(), lblClasspagePlaceHolder.getText()) {
-					
-					@Override
-					public void closePoup() {
-						clearAssignmentsContainer();
-						
-						lblClasspagePlaceHolder.setText(MessageProperties.GL0105);
-						lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
-						lblAssignCollectionPrivate.setVisible(false);
-						
-						htmlClasspagesListContainer.clear();
-						getUiHandlers().getAllClasspages("10", "0");
-						
-						Window.enableScrolling(true);
-						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-					
-						
-				        this.hide();
-					}
-				};
-				successPopupVc.center();
-				successPopupVc.show();
+			public void onSuccess(Boolean value) {
+				if(value){
+					SetStyleForProfanity.SetStyleForProfanityForTextArea(textAreaVal, directionsErrorLbl, value);
+					directionsErrorLbl.setStyleName(res.css().directionsErrorLbl());
+					btnAssign.setEnabled(true);
+				}
+				else
+				{		
+					btnAssign.getElement().setAttribute("id", "btnAssign");
+					btnAssign.setStyleName(res.css().disableAssignButon());
+					btnAssign.setText(GL1172);
+					//btnAssign.getElement().getStyle().setMarginRight(17, Unit.PCT);
 				
-				//Need to handle if Collection is already added.
-//				{"code":500,"status":"Resource already associated"}
-			}
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				
-//			}
+					btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+					
+					TaskResourceAssocDo taskResourceAssocDo = new TaskResourceAssocDo();
+					ResourceDo resourceDo = new ResourceDo();
+					resourceDo.setGooruOid(collectionDo.getGooruOid());
+					taskResourceAssocDo.setResource(resourceDo);
+					
+					//Track Mixpanel
+					MixpanelUtil.Click_Assign_Click();
+					// Api call for adding Collection to Assignment
+					
+					if (collectionDo.getSharing().equalsIgnoreCase("private")){
+						updateShare("anyonewithlink");
+						getUiHandlers().setShareType("anyonewithlink");
+						lblAssignCollectionPrivate.setVisible(false);
+						collectionDo.setSharing("anyonewithlink");
+					}else{
+						
+					}
+					//Track Mixpanel event if user is Collaborator.
+					if (collectionDo.getMeta()!=null && collectionDo.getMeta().isIsCollaborator()){
+						MixpanelUtil.mixpanelEvent("Collaborator_assigns_collection");
+					}
+					String directionsVal = textAreaVal.getText();
+					if(textAreaVal.getText().equalsIgnoreCase(GL1389))
+					{
+						directionsVal = "";
+					}
+					if(directionsVal.isEmpty())
+					{
+						directionsVal = null;
+					}
+					String dueDateVal = dateBoxUc.getDateBox().getValue();
+					if(dueDateVal.isEmpty())
+					{
+						dueDateVal = null;
+					}
+					
+					
+					AppClientFactory.getInjector().getClasspageService().createClassPageItem(classpageId, collectionDo.getGooruOid() ,dueDateVal, directionsVal, new SimpleAsyncCallback<ClasspageItemDo>() {
+						@Override
+						public void onSuccess(ClasspageItemDo result) {
+							
+							if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)) {
+								AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.INSERT));
+							}
+							
+							btnAssign.setText(GL0104);
+			
+							SuccessPopupVc successPopupVc = new SuccessPopupVc(classpageId, collectionDo.getTitle(), lblClasspagePlaceHolder.getText()) {
+								
+								@Override
+								public void closePoup() {
+						
+									
+									lblClasspagePlaceHolder.setText(GL0105);
+									lblClasspagePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
+									lblAssignCollectionPrivate.setVisible(false);
+									
+									htmlClasspagesListContainer.clear();
+									getUiHandlers().getAllClasspages("10", "0");
+									
+									Window.enableScrolling(true);
+									AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+									
+									textAreaVal.setText("");
+									dateBoxUc.getDateBox().setValue("");
+								
+									btnAssign.getElement().setAttribute("id", "btnAssign");
+									btnAssign.setStyleName(res.css().disableAssignButon());
+									btnAssign.setText(GL0104);
+									btnAssign.setEnabled(false);
+									btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
+									
+							        this.hide();
+								}
+							};
+							successPopupVc.center();
+							successPopupVc.show();
+							
+							//Need to handle if Collection is already added.
+			//				{"code":500,"status":"Resource already associated"}
+						}
+			//			@Override
+			//			public void onFailure(Throwable caught) {
+			//				
+			//			}
+					});
+		}
+		}
 		});
 	}
 	
@@ -512,6 +480,8 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 //		spanelAssignmentsPanel.setVisible(false);
 //		spanelClasspagesPanel.setVisible(false);
 	}
+	
+	
 	/**
 	 * 
 	 * @function setClasspageData 
@@ -559,16 +529,10 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 						
 						classpageId = titleLabel.getElement().getId();
 						
-						toClearAssignment = true;
-						//Call API to get List of Assignment associated to this.
-						getUiHandlers().getAssignmentsByClasspageId(titleLabel.getElement().getId(), "10", "0");
-						
-						
-						clearAssignmentsContainer();
-						
-						lblNoAssignments.setText(MessageProperties.GL0110);
-						lblNoAssignments.getElement().getStyle().setVisibility(Visibility.VISIBLE);
-						panelAssignmentsControls.setVisible(false);
+						btnAssign.setEnabled(true);
+						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
+						//btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().activeAssignButton());
+
 						
 						//Hide the scroll container
 						spanelClasspagesPanel.setVisible(false);
@@ -584,146 +548,24 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function clearAssignmentsContainer 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to clear the AssignmentsContainer.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void clearAssignmentsContainer(){
-		//Clear Assignments data
-		getUiHandlers().setAssignmentOffSet(0);
-		disableAssignemnt();
-		htmlAssignmentsListContainer.clear();
-		lblAssignmentsPlaceHolder.setText(MessageProperties.GL0105);
-		lblAssignmentsPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().placeHolderText());
-		
-		lblAssignmentErrorMsg.setVisible(false);
-		
-		btnAssign.setEnabled(false);
-		btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().disableAssignButon());
-	}
-	/**
-	 * This method is used to set the AssignmentData.
-	 */
-	@Override
-	public void setAssignmentData(AssignmentsListDo result) {
-		int resultSize = result.getSearchResults().size();
-		if (resultSize > 0){
-			enableAssignment();
-			panelAssignmentsControls.setVisible(true);
-			lblNoAssignments.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-			if (toClearAssignment){
-				htmlAssignmentsListContainer.clear();
-				toClearAssignment=false;
-			}
-			for (int i = 0; i < resultSize; i++) {
-				String assignmentTitle = result.getSearchResults().get(i).getTask().getTitle();
-				assignmentId = result.getSearchResults().get(i).getTask().getGooruOid();
-				final Label titleLabel = new Label(assignmentTitle);
-				titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
-				titleLabel.getElement().setAttribute("id", assignmentId);
-				//Set Click event for title
-				titleLabel.addClickHandler(new ClickHandler() {
-					
-					@Override
-					public void onClick(ClickEvent event) {						
-						lblAssignmentsPlaceHolder.setText(titleLabel.getText());
-						lblAssignmentsPlaceHolder.getElement().setId(titleLabel.getElement().getId());
-						lblAssignmentsPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
-						
-						lblAssignmentErrorMsg.setVisible(false);
-						
-						assignmentId = titleLabel.getElement().getId();
-						//Call get all Collections associated to Assigment and then enable the Assign button
-						getAssignmentCollections(assignmentId);
-						
-						//Hide the scroll container
-						spanelAssignmentsPanel.setVisible(false);
-					}
-				});
-				htmlAssignmentsListContainer.add(titleLabel);
-			}
-		}else{
-			//Set if there are not Assignments.
-			if (toClearAssignment){
-				lblNoAssignments.setText(MessageProperties.GL0111);
-				lblNoAssignments.getElement().getStyle().setVisibility(Visibility.VISIBLE);
-				panelAssignmentsControls.setVisible(false);
+	
+	private class OnDoneClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if (dateBoxUc.dateValidation()){
+				if (!(dateBoxUc.getValue() == null || dateBoxUc.getDateBox()
+						.getText().isEmpty())
+						&& dateBoxUc.hasValidateDate()) {
+				Date date = dateBoxUc.getValue();
+				
+				} else {
+					dateBoxUc.getDatePickerUc().hide();
+				}
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function getAssignmentCollections 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to  Get AssignmentCollections by Id.
-	 * 
-	 * 
-	 * @parm(s) : @param assignmentId
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public boolean getAssignmentCollections(String assignmentId){
-		isMoreThanLimit=false;
-		isAdded=false;
-		AppClientFactory.getInjector().getClasspageService().v2GetAssignmentCollectionsById(assignmentId, new SimpleAsyncCallback<List<ResourceDo>>() {
 
-			@Override
-			public void onSuccess(List<ResourceDo> result) {
-				
-				isMoreThanLimit = result.size()>=10 ? true : false;
-//				collectionsList = new ArrayList<String>();
-				collectionsList.clear();
-				for (ResourceDo resourceDo : result){
-					if (collectionDo.getGooruOid().equalsIgnoreCase(resourceDo.getGooruOid().toString())){
-						isAdded = true;
-						break;
-					}
-				}
-				
-				if (!isMoreThanLimit){
-					if (!isAdded){
-						btnAssign.setEnabled(true);
-						btnAssign.setStyleName(CollectionAssignCBundle.INSTANCE.css().activeAssignButton());
-					}else{
-						//You can't add this collection, because this already added
-						lblAssignmentErrorMsg.setVisible(true);
-						lblAssignmentErrorMsg.setText(MessageProperties.GL0114);
-					}
-				}else{
-					// You can't add this collection, because the assignment has 10 collections
-					lblAssignmentErrorMsg.setVisible(true);
-					lblAssignmentErrorMsg.setText(MessageProperties.GL0113);
-					
-				}
-			}
-		});
-		
-		return isMoreThanLimit;
-	}
+	
 	
 	/** 
 	 * This method is to get the toClear
@@ -752,52 +594,22 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	public void setCollectionDo(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 	}
-	/**
-	 * 
-	 * @function disableAssignemnt 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to disable the Assignemnt.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	public void disableAssignemnt(){
-		lblAssignments.setStyleName(CollectionAssignCBundle.INSTANCE.css().labelTextDisable());
-		isAssignmentsEnabled = false;
-	}
+
 	
-	public void enableAssignment(){
-		lblAssignments.setStyleName(CollectionAssignCBundle.INSTANCE.css().labelText());
-		isAssignmentsEnabled = true;
-	}
-	/**
-	 * This method is used to hide the containers.
-	 */
 	@Override
 	public void hideContainers(){
 		htmlClasspagesListContainer.clear();
-		htmlAssignmentsListContainer.clear();
 		htmlEvenPanelContainer.setVisible(false);
 		panelNoClasspages.setVisible(false);
 		panelLoading.setVisible(true);
 	}
-	/**
-	 * This method is used to make lblAssignCollectionPrivate as visible.
-	 */
+	
 	@Override
 	public void setPrivateLableVisibility(boolean visibility) {
 		lblAssignCollectionPrivate.setVisible(visibility);
 	}
+
+
 	
 	
 }

@@ -27,18 +27,12 @@ package org.ednovo.gooru.client.mvp.folders.edit.tab.info;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
+
+
 /**
- * @fileName : FolderCBundle.java
+ * @author Search Team
  *
- * @description : This interface is used to set the css styles for Folders.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface FolderCBundle extends ClientBundle{
 	

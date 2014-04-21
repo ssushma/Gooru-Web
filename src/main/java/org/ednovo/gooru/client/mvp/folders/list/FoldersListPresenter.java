@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.folders.list;
 import com.google.gwt.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
-/**
- * 
- * @fileName : FoldersListPresenter.java
- *
- * @description : This is the presenter class for FoldersListView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class FoldersListPresenter extends PresenterWidget<IsFoldersListView> implements FoldersListUiHandlers {
 
 	public FoldersListPresenter(EventBus eventBus, IsFoldersListView view) {

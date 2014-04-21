@@ -65,18 +65,20 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+
 /**
  * @fileName : EditFolderView.java
  *
- * @description : This class is used to set the view for Edit folder.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Apr 20, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> implements IsEditFolderView,ClickHandler{
 	
@@ -133,9 +135,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 	
 	private static EditFolderViewUiBinder uiBinder = GWT.create(EditFolderViewUiBinder.class);
 	interface EditFolderViewUiBinder extends UiBinder<Widget, EditFolderView>{}
-	/**
-	 * Class constructor.
-	 */
+	
 	@Inject
 	public EditFolderView() {
 		this.res = ShelfCBundle.INSTANCE;
@@ -247,9 +247,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			folderDeleteLabel.setVisible(false);
 		}
 	}
-	/**
-	 * This inner class is used to handle the click event on the back to search html panel.
-	 */
+
 	public class BackToSearchHtmlClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -259,9 +257,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			}
 		}
 	}
-	/**
-	 * This inner class is used to handle the click event on the edit description.
-	 */
+	
 	public class OpenCollectionEditDescription implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -270,45 +266,35 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			editFolderDescSaveButtonCancel.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
-	/**
-	 * This inner class is used to handle the mouse over  event on the edit description.
-	 */
+	
 	public class OnCollectionDescriptionClick implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			simplePencilPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		}
 	}
-	/**
-	 * This inner class is used to handle the mouse out event on the edit description.
-	 */
+
 	public class OnCollectionDescriptionOut implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			simplePencilPanel.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	/**
-	 * This inner class is used to handle the mouse over event on the edit pencil to show the pencil.
-	 */
+
 	public class hideEditPencil implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			collectionEditImageLbl.setVisible(true);
 		}
 	}
-	/**
-	 * This inner class is used to handle the mouse out event on the hide edit to hide the pencil.
-	 */
+
 	public class showEditPencil implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			collectionEditImageLbl.setVisible(false);
 		}
 	}
-	/**
-	 * This inner class is used to handle the click event on the edit image button.
-	 */
+	
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -317,20 +303,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			folderTitle.switchToEdit();
 		}
 	}
-	/**
-	 * @function clickedOnEditFolderSaveButton 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the save button.
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("editFolderSaveButton")
 	public void clickedOnEditFolderSaveButton(ClickEvent event)
 	{
@@ -339,21 +312,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		//editFolderSaveButton.getElement().getStyle().setDisplay(Display.NONE);
 		//editFolderSaveButtonCancel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * @function clickedOneditFolderDescSaveButton 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle  the click event on the folder desc save button.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("editFolderDescSaveButton")
 	public void clickedOneditFolderDescSaveButton(ClickEvent event)
 	{
@@ -362,21 +321,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		//editFolderDescSaveButton.getElement().getStyle().setDisplay(Display.NONE);
 		//editFolderDescSaveButtonCancel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * @function clickedOnEditFolderSaveButtonCancelButton 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the folder save and cancel buttons.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	@UiHandler("editFolderSaveButtonCancel")
 	public void clickedOnEditFolderSaveButtonCancelButton(ClickEvent event)
 	{
@@ -387,21 +332,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		editFolderSaveButton.getElement().getStyle().setDisplay(Display.NONE);
 		editFolderSaveButtonCancel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * @function clickedOnEditFolderDescSaveButtonCancel 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This will handle the click event on the folder desc save and cancel buttons.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	@UiHandler("editFolderDescSaveButtonCancel")
 	public void clickedOnEditFolderDescSaveButtonCancel(ClickEvent event)
 	{
@@ -412,16 +343,12 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		editFolderDescSaveButton.getElement().getStyle().setDisplay(Display.NONE);
 		editFolderDescSaveButtonCancel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * This method is sued to set the data.
-	 */
+
 	@Override
 	public void setData(List<CollectionDo> collectionDoList) {
 		
 	}
-	/**
-	 * GWTP will call setInSlot when a child presenter asks to be added under this view. 
-	 */
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -430,9 +357,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			}
 		}
 	}
-	/**
-	 * This method adds some content in a specific slot of the Presenter. 
-	 */
+	
 	@Override
 	public void addToSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -443,46 +368,26 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			}
 		}
 	}
-	/**
-	 * This method is used to add the folder.
-	 */
+
 	@Override
 	public void addFolder(CollectionDo collectionDo) {
 		
 	}
-	/**
-	 * This method is used to set the folder meta data.
-	 */
+
 	@Override
 	public void setFolderMetaData(CollectionDo collectionDo) {
 		folderTitle.setText(collectionDo.getTitle());
 		folderDescription.setText(collectionDo.getGoals());
 		foldersBreadCrumps.setText("Folders > "+collectionDo.getTitle());
 	}	
-	/**
-	 * This method is used to set the collection.
-	 */
+
 	@Override
 	public void setCollection(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		getUiHandlers().clearTabSlot();
 		setTab(getPersistantTabObjectUsingTabFlag());
 	}
-	/**
-	 * @function setTab 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the tab.
-	 * 
-	 * 
-	 * @parm(s) : @param tab
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setTab(Object tab) {
 		if (tab.equals(infoTabVc)) {
 			setPersistantTabFlag("infoTab");
@@ -494,20 +399,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			getUiHandlers().revealTab(EditFolderUiHandlers.TYPE_FOLDER_CONTENT_TAB, collectionDo);
 		} 
 	}
-	/**
-	 * @function setPersistantTabFlag 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the flag.
-	 * 
-	 * @parm(s) : @param flag
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setPersistantTabFlag(String flag){
 		stockStore = Storage.getLocalStorageIfSupported();
 		if (stockStore != null) {
@@ -515,10 +407,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		}
 		
 	}
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -531,20 +420,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		folderDescription.switchToDescCancelLabel();
 		folderTitle.switchToTitleCancelLabel();
 	}
-	/**
-	 * @function getPersistantTabObjectUsingTabFlag 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used get the collection tab title.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : CollectionTabTitleVc
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private CollectionTabTitleVc getPersistantTabObjectUsingTabFlag() {
 		CollectionTabTitleVc objectToReturn = contentTabVc;
 		stockStore = Storage.getLocalStorageIfSupported();
@@ -567,9 +443,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		}
 		return objectToReturn;
 	}
-	/**
-	 * This  will handle the click event.
-	 */
+
 	@Override
 	public void onClick(ClickEvent event)
 	{
@@ -577,17 +451,13 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		getUiHandlers().clearTabSlot();
 		setTab(source);
 	}
-	/**
-	 * This method is used to update the collection.
-	 */
+
 	@Override
 	public void onPostCollectionUpdate() {
 		AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(collectionDo, RefreshType.UPDATE));
 		
 	}
-	/**
-	 * This method is used to clear the panels.
-	 */
+
 	@Override
 	public void clearPanels() {
 		clearPanel.clear();
@@ -599,11 +469,7 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 			getUiHandlers().initFolderRedirect();
 	}
 
-*/	
-	/**
-	 * This method is used to set data on back to search.
-	 */
-	@Override
+*/	@Override
 	public void setBackToSearch() {
 		boolean visible = false;
 		searchRequest = AppClientFactory.getPlaceManager().getPreviousRequest();

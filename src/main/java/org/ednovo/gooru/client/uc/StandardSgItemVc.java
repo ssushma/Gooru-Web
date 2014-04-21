@@ -31,19 +31,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : StandardSgItemVc.java
+ * @author Search Team
  *
- * @description : This class is used to set the standard item.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class StandardSgItemVc extends Composite {
 

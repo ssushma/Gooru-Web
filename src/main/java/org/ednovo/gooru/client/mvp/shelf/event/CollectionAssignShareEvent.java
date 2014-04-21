@@ -28,20 +28,21 @@
 package org.ednovo.gooru.client.mvp.shelf.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
+ * 
  * @fileName : CollectionAssignShareEvent.java
  *
- * @description :  This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user clicks on the collection assignments share link it will handle the event.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: Aug 8, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class CollectionAssignShareEvent extends GwtEvent<CollectionAssignShareHandler> {
 

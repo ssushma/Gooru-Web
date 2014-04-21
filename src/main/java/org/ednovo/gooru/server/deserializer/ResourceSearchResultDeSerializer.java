@@ -36,6 +36,7 @@ import java.util.Set;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
+import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
@@ -46,18 +47,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+
 /**
- * @fileName : ResourceSearchResultDeSerializer.java
- *
- * @description : This class is used to deserialize resource search results.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 @Component
 public class ResourceSearchResultDeSerializer extends SearchDeSerializer<ResourceSearchResultDo> {
@@ -81,11 +74,17 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			resourceSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));
 			
 			JSONObject resourceSourceJson = recordJsonObject.getJSONObject(RESOURCE_SOURCE);
-			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);;
+			ResourceSourceDo resourceSourceDo=JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);
 			resourceSearchResultDo.setResourceSource(resourceSourceDo);
+			
+			JSONObject resourceFormat = recordJsonObject.getJSONObject(RESOURCE_FORMAT);
+			SearchResourceFormatDO resourceFormatDO =JsonDeserializer.deserialize(resourceFormat.toString(), SearchResourceFormatDO.class);
+			resourceSearchResultDo.setResourceFormat(resourceFormatDO);
+			
 		} catch (JSONException e1) {
-			e1.printStackTrace();
+			
 		}
+		
 		try {
 			if (resourceSearchResultDo.getResourceTypeString() != null && resourceSearchResultDo.getResourceTypeString().equalsIgnoreCase(VIDEO_YOUTUBE)) {
 				resourceSearchResultDo.setUrl(ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(getJsonString(recordJsonObject, URL))));
@@ -93,7 +92,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				resourceSearchResultDo.setUrl(getJsonString(recordJsonObject.getJSONObject(THUMBNAILS), URL));
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
@@ -144,7 +143,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				resourceSearchResultDo.setLessonNames(convertJSONArrayToList((JSONArray) taxonomyDataSet.get(TAXONOMY_LESSON)));
 			}
 		} catch (JSONException e) {
-			e.printStackTrace();
+			
 		}
 		resourceSearchResultDo.setAverageTime(getJsonString(recordJsonObject, AVERAGE_TIME));
 		resourceSearchResultDo.setSharedCount(stringtoInteger(recordJsonObject, SHARED_COUNT, 0));
@@ -154,8 +153,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			JSONObject license = recordJsonObject.getJSONObject(LICENSE);
 			LicenseDo licenseDo=JsonDeserializer.deserialize(license.toString(), LicenseDo.class);
 			resourceSearchResultDo.setLicense(licenseDo);
-			
-			if(recordJsonObject.get(TAG_SET) != null && !recordJsonObject.get(TAG_SET).equals("") && !recordJsonObject.get(TAG_SET).equals(null) ){
+			if((!recordJsonObject.isNull(TAG_SET))&& recordJsonObject.get(TAG_SET) != null && !recordJsonObject.get(TAG_SET).equals("") && !recordJsonObject.get(TAG_SET).equals(null) ){
 			JSONArray tagSetArray = (JSONArray) recordJsonObject.get(TAG_SET);
 			Set<TagDo> tagSet= new HashSet<TagDo>();
 			if(tagSetArray !=null){
@@ -165,8 +163,9 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 				resourceSearchResultDo.setTagSet(tagSet);
 			}
 			}
+			
 		} catch (JSONException e) {
-			e.printStackTrace();
+			
 		}
 
 		return resourceSearchResultDo;

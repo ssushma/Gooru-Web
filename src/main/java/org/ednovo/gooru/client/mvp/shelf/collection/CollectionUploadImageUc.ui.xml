@@ -5,7 +5,7 @@
 	<g:HTMLPanel>
 		<panel:HTMLEventPanel styleName="{res.css.collectionThumbnail}" ui:field="collectionEditImageContainer">
 			<g:Image styleName="{res.css.collectionThumbnails}" ui:field="collectionImg" />
-			<g:Label styleName="{res.css.changeImage}" ui:field="changeImgLbl" text="Edit Image"></g:Label>
+			<g:Label styleName="{res.css.changeImage}" ui:field="changeImgLbl"></g:Label>
 		</panel:HTMLEventPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

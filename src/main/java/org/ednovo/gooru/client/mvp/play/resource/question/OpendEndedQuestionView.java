@@ -26,11 +26,18 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 
 
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -43,17 +50,18 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public abstract class OpendEndedQuestionView extends Composite{
+public abstract class OpendEndedQuestionView extends Composite implements MessageProperties{
 	
-	@UiField HTMLPanel answetTextAfterSubmission;
+	@UiField HTMLPanel answetTextAfterSubmission,answertext;
 	@UiField Button submitButton;
 	@UiField TextArea openEndedAnswerTextArea;
 	@UiField QuestionStyleResource oeStyle;
 	@UiField Label submittedText,errorMessageText,messageBodyText;
-	private static final String ERROR_MESSAGE="Character limit is reached.";
-	private static final String EMPTY_ERROR_MESSAGE="Answer text should not be empty.";
-	private static final String OPEN_ENDED_BODY_TEXT="Please type your answer in the field below, and click the \"Save\" button to save your response when you're done.";
+	private static final String ERROR_MESSAGE=GL1458+GL_SPL_FULLSTOP;
+	private static final String EMPTY_ERROR_MESSAGE=GL1459+GL_SPL_FULLSTOP;
+	private static final String OPEN_ENDED_BODY_TEXT=GL1460;
 	private String answerText="";
+	private CollectionItemDo collectionItemDo;
 	private static OpendEndedQuestionViewUiBinder uiBinder = GWT.create(OpendEndedQuestionViewUiBinder.class);
 
 	interface OpendEndedQuestionViewUiBinder extends UiBinder<Widget, OpendEndedQuestionView> {
@@ -61,17 +69,27 @@ public abstract class OpendEndedQuestionView extends Composite{
 	}
 	
 	@Inject
-	public OpendEndedQuestionView(){
+	public OpendEndedQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
+		this.collectionItemDo=collectionItemDo;
 		setQuestionTypeCaption();
+		answertext.getElement().setInnerHTML(GL0665);
+		submitButton.setText(GL0666);
+		showPreviousAttemptResult(attemptedAnswerDo);
 	}
 	
 	public void setQuestionTypeCaption(){
 		messageBodyText.setText(OPEN_ENDED_BODY_TEXT);
 	}
 	
+	public void showPreviousAttemptResult(AttemptedAnswersDo attemptedAnswerDo){
+		if(attemptedAnswerDo!=null){
+			openEndedAnswerTextArea.setValue(attemptedAnswerDo.getAnswersText());
+		}
+	}
+	
 	@UiHandler("openEndedAnswerTextArea")
-	public void onKeypressTextArea(KeyPressEvent event){
+	public void onKeypressTextArea(KeyUpEvent event){
 		answerText=openEndedAnswerTextArea.getValue();
 		setOeQuestionAnswerText(answerText);
 		 if(answerText!=null){
@@ -82,10 +100,17 @@ public abstract class OpendEndedQuestionView extends Composite{
 				 errorMessageText.setText("");
 			 }
 		 }
+		 isUserAnswerAttempted(true);
 	}
 	
 	@UiHandler("submitButton")
 	public void clickOnSubmitButton(ClickEvent clickEvent){
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
+			MixpanelUtil.ClickOpenEndedQuestionSubmitButtonFromCollectionPlayer();
+		}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			MixpanelUtil.ClickOpenEndedQuestionSubmitButtonFromResourcePlayer();
+		}
+		
 		 answerText=openEndedAnswerTextArea.getValue();
 		 if(answerText!=null&&answerText.trim().length()>0){
 			 if(answerText.trim().length()>1000){
@@ -93,7 +118,7 @@ public abstract class OpendEndedQuestionView extends Composite{
 			 }else{
 				 errorMessageText.setText("");
 				 submitButton.removeFromParent();
-				 submittedText.setText("saving...");
+				 submittedText.setText(GL1138);
 				 //TODO answer submit API
 				 showSubmitedText();
 				 
@@ -105,18 +130,28 @@ public abstract class OpendEndedQuestionView extends Composite{
 	
 	public void showSubmitedText(){
 		submittedText.setText("");
-		openEndedAnswerTextArea.removeFromParent();
 		answetTextAfterSubmission.add(new HTML(openEndedAnswerTextArea.getValue()));
-		createSesstionItemAttemptOe(openEndedAnswerTextArea.getValue());
+		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
 		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 		attempteAnswersDo.setAnswersText(openEndedAnswerTextArea.getValue());
-		setAttemptStatus(null,attempteAnswersDo);
+		openEndedAnswerTextArea.removeFromParent();
+		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
+		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+		increaseUserAttemptCount();
 		saveOeQuestionAnswerDataLogEvent();
+		triggerSaveOeAnswerTextDataEvent();
 	}
-	
-	public abstract void createSesstionItemAttemptOe(String answerText);
+	public void createSesstionItemAttemptOeWhenNavigation(){
+		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
+	}
+	public abstract void createSesstionItemAttemptOe(String answerId,String answerText);
 	public abstract void setAttemptStatus(String collecionItemId, AttemptedAnswersDo attempteAnswersDo);
 	public abstract void setOeQuestionAnswerText(String answerText);
 	public abstract void saveOeQuestionAnswerDataLogEvent();
-	
+	public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+	}
+	public void triggerSaveOeAnswerTextDataEvent(){
+		
+	}
+	public abstract void increaseUserAttemptCount();
 }

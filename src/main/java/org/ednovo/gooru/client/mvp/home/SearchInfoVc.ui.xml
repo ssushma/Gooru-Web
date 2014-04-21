@@ -46,11 +46,11 @@
 		<div class="{res.css.landingStudySearchContainer}">
 			<div class="{res.css.landingSearchIconCont}">
 				<div class="{res.css.landingSearchIcon}"></div>
-				<div class="{res.css.landingStudySearchIcon}"> SEARCH</div>
+				<g:Label styleName="{res.css.landingStudySearchIcon}" ui:field="searchText"></g:Label>
 			</div>
-			<p class="{res.css.searchInfo}">Spend more time learning and less time searching.</p>
+			<p class="{res.css.searchInfo}"><g:Label ui:field="moreTimeText"></g:Label></p>
 			<div class="{res.css.placeholder}"></div>
-			<a class="{style.button}" href="javascript:;">Start Search</a>
+			<a class="{style.button}" href="javascript:;"><g:Label ui:field="startSearchText"></g:Label></a>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -39,21 +39,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : CollectionSharePrivateResource.java
- *
- * @description : This file is used to set the Private Resource data in Collection Share .
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CollectionSharePrivateResource extends Composite {
 
 	@UiField Label resourceCategory;
@@ -71,6 +57,7 @@ public class CollectionSharePrivateResource extends Composite {
 	private static final String PNG = ".png";
 	
 	private static final String SMALL = "Small";
+	private String category;
 	
 	private static CollectionSharePrivateResourceUiBinder uiBinder = GWT
 			.create(CollectionSharePrivateResourceUiBinder.class);
@@ -78,17 +65,40 @@ public class CollectionSharePrivateResource extends Composite {
 	interface CollectionSharePrivateResourceUiBinder extends
 			UiBinder<Widget, CollectionSharePrivateResource> {
 	}
-	/**
-	 * Class Constructor.
-	 * @param collectionItemDo
-	 */
+
 	public CollectionSharePrivateResource(CollectionItemDo collectionItemDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		String resourceHtmlTitle=collectionItemDo.getResourceTitle();
 		resourceHtmlTitle=resourceHtmlTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		resourceTitle.setHTML(resourceHtmlTitle);
-		final String category = collectionItemDo.getResource().getCategory();
-		resourceCategory.setText(category);
+		resourceTitle.setStyleName("resourceTitleShare");
+		category = collectionItemDo.getResource().getCategory();
+		if(category.equalsIgnoreCase("question")){
+			resourceCategory.setText("Question");
+		}else if(category.equalsIgnoreCase("text")){
+			resourceCategory.setText("Text");
+		}
+		else if(category.equalsIgnoreCase("slide")){
+			resourceCategory.setText("Slide");
+		}
+		else if(category.equalsIgnoreCase("webpage")){
+			resourceCategory.setText("Webpage");	
+		}
+		else if(category.equalsIgnoreCase("interactive")){
+			resourceCategory.setText("Interactive");	
+		}
+		else if(category.equalsIgnoreCase("audio")){
+			resourceCategory.setText("Audio");	
+		}
+		else if(category.equalsIgnoreCase("video")){
+			resourceCategory.setText("Video");	
+		}
+		else if(category.equalsIgnoreCase("handout")){
+			resourceCategory.setText("Text");	
+		}
+		else{
+			resourceCategory.setText(category);
+		}
 		resourceCategoryIcon.addStyleName(UcCBundle.INSTANCE.css().resourceName());
 		resourceCategoryIcon.addStyleName(category.toLowerCase() + SMALL);
 		if(!category.equalsIgnoreCase("Question")){
@@ -96,7 +106,20 @@ public class CollectionSharePrivateResource extends Composite {
 			descriptionTxt = descriptionTxt.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 			resourceDescription.setHTML(descriptionTxt);
 		}
-		
+		if(category!=null){
+			if(category.equalsIgnoreCase("Lesson")||category.equalsIgnoreCase("Textbook")||category.equalsIgnoreCase("Handout"))
+			{
+				category=category.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
+			}
+			if(category.equalsIgnoreCase("Slide"))
+			{
+				category=category.replaceAll("Slide","Image").replaceAll("slide","Image");
+			}
+			if(category.equalsIgnoreCase("Exam") || category.equalsIgnoreCase("Challenge")||category.equalsIgnoreCase("Website"))
+			{
+				category=category.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
+			}
+		}
 		final String url = collectionItemDo.getResource().getThumbnails().getUrl();
 		if(url!=null) {
 			resourceImageUc.setUrl(collectionItemDo.getResource().getThumbnails().getUrl());

@@ -32,12 +32,8 @@ import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.user.client.Timer;
 
 /**
- * @fileName : FontWeightEffect.java
- * @description : This method is used to apply font styles to elements.
- * @version : 1.0
- * @date: 26-Dec-2013
- * @Author : Gooru Team
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class FontWeightEffect extends Timer {
 
@@ -54,16 +50,16 @@ public class FontWeightEffect extends Timer {
 	 */
 	public FontWeightEffect(Element element, FontWeight startWeight, FontWeight endWeight, int time) {
 		this.endWeight = endWeight;
+		element.getStyle().setBackgroundColor("#E1F0D1");
 		element.getStyle().setFontWeight(startWeight);
 		this.element = element;
 		this.schedule(time);
 	}
-	/**
-	 * This method is used to set the font weight.
-	 */
+
 	@Override
 	public void run() {
 		element.getStyle().setFontWeight(endWeight);
 		this.cancel();
+		element.getStyle().clearBackgroundColor();
 	}
 }

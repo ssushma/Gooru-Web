@@ -12,11 +12,9 @@
 		<g:FlowPanel ui:field="mainShareContainer">
 			
 			<g:FlowPanel styleName="{res.css.collectionVisibilityMainDiv}">
-				<g:Label styleName="{res.css.collectionVisibilityMain}"
-					text="COLLECTION VISIBILITY" />
+				<g:Label styleName="{res.css.collectionVisibilityMain}" ui:field="visibilityText"/>
 				<g:FlowPanel styleName="{res.css.collectionVisibleShareLineSeparator}"></g:FlowPanel>
-				<g:Label styleName="{res.css.collectionVisibility}"
-					text="Select visibility option for this collection" />
+				<g:Label styleName="{res.css.collectionVisibility}" ui:field="visibilityOptiontext"/>
 			</g:FlowPanel>
 			<uc:HTMLEventPanel ui:field="publicShareFloPanel"
 				styleName="{res.css.showShareInnerDiv}">
@@ -34,14 +32,13 @@
 					styleName="{res.css.privateVisibleIcon} {res.css.privateVisibleIconBottom}" />
 			</uc:HTMLEventPanel>
 			<g:FlowPanel styleName="{res.css.collectionVisibilityMainDiv}">
-				<g:Label styleName="{res.css.collectionVisibilityMain}"
-					text="SHARE THIS COLLECTION" />
+				<g:Label styleName="{res.css.collectionVisibilityMain}" ui:field="shareCollectiontext"/>
 				<g:FlowPanel styleName="{res.css.collectionVisibleShareLineSeparator}"></g:FlowPanel>
 				<g:Label styleName="{res.css.collectionVisibility}" />
 			</g:FlowPanel>
 			<g:FlowPanel ui:field="shareLinkFloPanel" styleName="{res.css.shareLinkContainer}">
 				<g:HTMLPanel styleName="{res.css.shareLink}">
-					<g:HTMLPanel styleName="{res.css.CollectionshareThisLinkVia}">Share this link via</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.CollectionshareThisLinkVia}" ui:field="shareViaText"></g:HTMLPanel>
 					<g:HTMLPanel ui:field="contentpanel"></g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:FlowPanel ui:field="socialShareLinksViewContainer"></g:FlowPanel>

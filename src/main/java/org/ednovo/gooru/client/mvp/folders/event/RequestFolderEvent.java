@@ -31,21 +31,10 @@ import java.util.Map;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-	/**
-	 * 
-	 * @fileName : RequestFolderEvent.java
-	 *
-	 * @description : Events for RequestFolderEvent.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+/**
+ * @author Search Team
+ * 
+ */
 public class RequestFolderEvent extends GwtEvent<RequestFolderHandler> {
 
 	private String collectionId;
@@ -62,39 +51,17 @@ public class RequestFolderEvent extends GwtEvent<RequestFolderHandler> {
 		setParams(params);
 		setRefreshType(refreshType);
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RequestFolderHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 * This method will be  called by HandlerManager and it will be used to invoke register original handler event.
-	 */
+
 	@Override
 	protected void dispatch(RequestFolderHandler handler) {
 		handler.requestFolderView(getCollectionId(), getParams(),getRefreshType());
 	}
-	/**
-	 * 
-	 * @function getCollectionId 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :getters and setters for collectionId,params and refreshType.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public String getCollectionId() {
 		return collectionId;
 	}

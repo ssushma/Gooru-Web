@@ -27,19 +27,21 @@ package org.ednovo.gooru.client.mvp.home.library.events;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : OpenSubjectCourseEvent.java
+ * 
+ * @fileName : OpenLessonConceptEvent.java
  *
- * @description : This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever the user fire this event it will set he subject name  and course . 
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Dec 4, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class OpenSubjectCourseEvent extends GwtEvent<OpenSubjectCourseHandler> {
 
@@ -49,7 +51,7 @@ public class OpenSubjectCourseEvent extends GwtEvent<OpenSubjectCourseHandler> {
 	public static final Type<OpenSubjectCourseHandler> TYPE = new Type<OpenSubjectCourseHandler>();
 	
 	/**
-	 * Class constructor.
+	 * 
 	 */
 	public OpenSubjectCourseEvent(String subjectName, CourseDo courseDo) {
 		this.subjectName = subjectName;

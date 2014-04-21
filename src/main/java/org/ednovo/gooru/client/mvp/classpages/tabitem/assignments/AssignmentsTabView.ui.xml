@@ -28,7 +28,7 @@
 							ui:field="cancelLabel"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:Label text="" ui:field="clickToExpandLabel"
+				<g:Label ui:field="clickToExpandLabel"
 					styleName="{res.css.clickToExpand}"></g:Label>
 			</uc:HTMLEventPanel>
 			<g:HTMLPanel ui:field="inLinePanel" styleName="{res.css.displayNonePanel}">

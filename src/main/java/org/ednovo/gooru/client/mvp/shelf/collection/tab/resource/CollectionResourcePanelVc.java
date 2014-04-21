@@ -32,18 +32,10 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfColle
 
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : CollectionResourcePanelVc.java
+ * @author Search Team
  *
- * @description : This class is used as resource panel in the collections.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionResourcePanelVc extends AppRepositionDragContainer {
 
@@ -61,58 +53,43 @@ public class CollectionResourcePanelVc extends AppRepositionDragContainer {
 		dragController.registerDropController(widgetDropController);
 		setDragController(dragController);
 	}
-	/**
-	 * This method will hit when element/widget dropped.
-	 */
+
 	@Override
 	public void onDrop(Draggable draggable) {
 		ShelfCollectionResourceChildView resourceVc = (ShelfCollectionResourceChildView) draggable.getDraggableUc();
 		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));
 	}
-	/**
-	 * This method will hit on the drag over of element/widget.
-	 */
+
 	@Override
 	public void onDragOver(Draggable draggable) {
 
 	}
-	/**
-	 * This method will hit on the drag out of element/widget.
-	 */
+
 	@Override
 	public void onDragOut(Draggable draggable) {
 	}
-	/**
-	 * This method will return the drop target.
-	 */
+
 	@Override
 	public Widget getDropTarget() {
 		return null;
 	}
-	/**
-	 * This method will register the drop controller.
-	 */
+
 	@Override
 	public void registerDropController() {
 		dragController.registerDropController(widgetDropController);
-	}/**
-	 * This method will unregister the drop controller.
-	 */
+	}
+
 	@Override
 	public void unregisterDropController() {
 		dragController.unregisterDropController(widgetDropController);
 	}
-	/**
-	 * This method will call on loading.
-	 */
+
 	@Override
 	public void onLoad() {
 		super.onLoad();
 		registerDropController();
 	}
-	/**
-	 * This method will call on unloading.
-	 */
+
 	@Override
 	public void onUnload() {
 		super.onUnload();

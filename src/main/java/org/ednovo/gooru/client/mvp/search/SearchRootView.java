@@ -24,13 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.HTML;
@@ -39,19 +43,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchRootView.java
- *
- * @description : This file is related to Loading image and search text.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> implements IsSearchRootView, MessageProperties {
 
@@ -60,9 +53,9 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	interface SearchRootViewUiBinder extends UiBinder<Widget, SearchRootView> {
 	}
 
-	/*public interface Style extends CssResource {
-		String active();
-	}*/
+	public interface Style extends CssResource {
+		String bodyHeight();
+	}
 
 	/*@UiField
 	SearchBarVc searchBarVc;*/
@@ -79,8 +72,8 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	@UiField
     Label lodingImage;
 	
-	/*@UiField
-	Style style;*/
+	@UiField
+	Style style;
 
 	@UiField
 	HTML queriedTextHtml;
@@ -90,16 +83,13 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 	 */
 	public SearchRootView() {
 		setWidget(uiBinder.createAndBindUi(this));
-		
 		/*resourceLinkLbl.getElement().setId("lblResourceLink");
 		collectionLinkLbl.getElement().setId("lblCollectionLink");
 		
 		resourceLinkLbl.setText(MessageProperties.GL0174);
 		collectionLinkLbl.setText(MessageProperties.GL0175);*/
 	}
-	/**
-	 * setInSlot() is a method used by GWTP in it's lifecycle to set the widget hierarchy that has to be shown to the user. Each time setInSlot is called, it will replace the previous presenter that was assigned to that slot
-	 */
+
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -111,9 +101,7 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			}
 		}
 	}
-	/**
-	 * This is used to get the search text.
-	 */
+
 	@Override
 	public String getSearchText() {
 //		return searchBarVc.getSearchText();
@@ -152,17 +140,13 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			AppClientFactory.fireEvent(new SwitchSearchEvent(PlaceTokens.COLLECTION_SEARCH,AppClientFactory.getPlaceManager().getRequestParameter("query")));
 		}
 	}*/
-	/**
-	 * This is used to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
 		queriedTextHtml.setHTML("<p></p>");
 	}
-	/**
-	 * To enable the loading image.
-	 */
+
 	@Override
 	public void preSearch(SearchDo<?> searchDo) {
 		lodingImage.setVisible(true);
@@ -179,27 +163,44 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 			resourceLinkLbl.removeStyleName(style.active());
 		}*/
 	}
-	/**
-	 * This is used to display the search text with three dots when it exceeds more than 50 characters and finally to set the text.
-	 */
+
 	@Override
 	public void postSearch(SearchDo<?> searchDo) {
 //		String searchText = searchBarVc.getSearchText();
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)|| AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
+			Document doc = Document.get();
+			doc.getBody().setClassName(style.bodyHeight());  
+		}
+		
+		int countValue=searchDo.getSearchResults().size();
+		
 		String searchText = AppClientFactory.getPlaceManager().getRequestParameter("query");
+		
 		if (searchText == null) {
 			searchText = "";
+			lodingImage.setVisible(false);
 		} else {
+			if(searchText.contains("252")){
+			searchText=searchText.replaceAll("%"," ").replaceAll("2", "").replaceAll("5", "").replaceAll("B", "");
+			}
+			searchText=searchText.trim();
 			if(searchText.length()>50)
 		     {
+				if(countValue > 0){
+					searchText=searchText.substring(0, 50)+"...";
+					searchText = " "+GL1468+" <b>" + searchText + "</b>";
+				}else{
+					searchText=searchText.substring(0, 50)+"...";
+					searchText = GL0507+" <b>" + searchText + "</b>";
+				}
 				
-				searchText=searchText.substring(0, 50)+"...";
-				searchText = "Search results for <b>" + searchText + "</b>";
 		     }
 		     else{
-		    	 
-		    	 searchText = "Search results for <b>" + searchText + "</b>";
-		    
-			
+		    	 if(countValue > 0){
+		    		 searchText = ""+GL1468+" <b>" + searchText + "</b>";
+		    	 }else{
+		    		 searchText =GL0507+" <b>" + searchText + "</b>";
+		    	 }
 		}
 		
 		queriedTextHtml.setHTML(searchText);

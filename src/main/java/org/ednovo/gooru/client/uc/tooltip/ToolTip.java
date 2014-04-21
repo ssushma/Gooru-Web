@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -37,30 +38,16 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * 
- * @fileName : ToolTip.java
- *
- * @description : This class is used to display the tooltips.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOutHandlers{
 	
 	@UiField
 	HTMLPanel panelCode;
 	
 	@UiField
-	Label lblTitle;
+	HTMLPanel lblTitle;
 	
 	@UiField Anchor lblLink;
 	
@@ -70,15 +57,14 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 	
 	public static ToolTipUiBinder toolTipUiBinder=GWT.create(ToolTipUiBinder.class);{
 	}
-	/**
-	 * Class constructor.
-	 */
+	
 	public ToolTip(){
 		setWidget(toolTipUiBinder.createAndBindUi(this));
-		lblTitle.setText(GL0450);
+	//	lblTitle.setText(GL0450);
+		lblTitle.setTitle(GL0450);
 		lblLink.setText(GL0451);
 		lblLink.setTarget("_blank");
-		
+		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
 		this.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
@@ -94,17 +80,15 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 			}
 		});
 	}
-	/**
-	 * Class constructor.
-	 * @param description
-	 */
+	
 	public ToolTip(String description){
 		
 		setWidget(toolTipUiBinder.createAndBindUi(this));
-		lblTitle.setText(description);
+		lblTitle.getElement().setInnerHTML(description);
 		lblLink.setText(GL0451);
 		lblLink.setTarget("_blank");
-		
+		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
+
 		this.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
@@ -120,9 +104,7 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 			}
 		});
 	}
-	/**
-	 * This will handle the mouse out event.
-	 */
+
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());

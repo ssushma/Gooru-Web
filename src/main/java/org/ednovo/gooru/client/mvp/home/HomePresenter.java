@@ -64,6 +64,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
@@ -81,9 +82,10 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
- * This is the presenter class for HomeView.java
+ * @author Search Team
+ * 
  */
-public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers {
+public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers,MessageProperties {
 
 	@Inject
 	private SearchServiceAsync searchService;
@@ -172,9 +174,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		
 		
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+	
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -186,9 +186,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			}
 		});	
 		}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+	
 	@Override
 	public void onReveal() {
 		super.onReveal();
@@ -208,25 +206,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		doc.getElementById("uvTab").getStyle().setDisplay(Display.BLOCK);
 	}
 	
-	/**
-	 * 
-	 * @function callBackMethods 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :
-	 * 
-	 * 
-	 * @parm(s) : This will read the callback parameter and it will redirect you to perticular presenter.
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void callBackMethods(){
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==0){
@@ -276,8 +256,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			if (AppClientFactory.isAnonymous()){
 				AppClientFactory.fireEvent(new InvokeLoginEvent());
 			}else{
-				signUpAfterThirteenPresenter.displayView();
-				addToPopupSlot(signUpAfterThirteenPresenter);
+				if(!signUpAfterThirteenPresenter.isVisible()) {
+					signUpAfterThirteenPresenter.displayView();
+					addToPopupSlot(signUpAfterThirteenPresenter);
+				}
 			}
 		}
 		else if  (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("confirmUser")){
@@ -319,81 +301,56 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
-		String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
-		
-		if(flag == 0 && !AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(userDo.getGooruUId(), new SimpleAsyncCallback<SettingDo>(){
-
-				@Override
-				public void onSuccess(SettingDo result) {
-					MixpanelUtil.Arrive_AlmostDone_Popup();
-					String email = result.getExternalId();
-					
-//					SignUpRoleView signUpRoleView = new SignUpRoleView(email, userDo);
-//					AlmostDoneUc popup = new AlmostDoneUc(email,userDo);  
-//					popup.setGlassEnabled(true);
-//					popup.show();
-//					popup.center();
-				}				
-			});
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
+//			AppClientFactory.getInjector().getUserService().getUserProfileDetails(userDo.getGooruUId(), new SimpleAsyncCallback<SettingDo>(){
+//
+//				@Override
+//				public void onSuccess(SettingDo result) {
+////					MixpanelUtil.Arrive_AlmostDone_Popup();
+////					String email = result.getExternalId();
+////					AppClientFactory.getLoggedInUser().setEmailId(result.getExternalId());
+////					SignUpRoleView signUpRoleView = new SignUpRoleView(email, userDo);
+////					AlmostDoneUc popup = new AlmostDoneUc(email,userDo);  
+////					popup.setGlassEnabled(true);
+////					popup.show();
+////					popup.center();
+//				}				
+//			});
 			
 		}
-		else if((flag==4||flag==2||flag==1)&& !AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")){
+		else if(flag<=8 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
 		}
-		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
-	
+		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+
 	@Override
 	public void onReset() {
 		super.onReset();
-		callBackMethods();
+		
 	}
-	/**
-	 * 
-	 * @function getIntoLibrarypage 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will load perticular content into library.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void getIntoLibrarypage() {
 		if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-contributors")) {
-			getView().loadFeaturedContributors("featured-contributors");
+			getView().loadFeaturedContributors("featured-contributors",getViewToken());
 		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("course-page")) {
-			getView().loadFeaturedContributors("course-page");
+			getView().loadFeaturedContributors("course-page",getViewToken());
 		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) != null && getPlaceManager().getRequestParameter(LIBRARY_PAGE).equalsIgnoreCase("featured-course")) {
-			getView().loadFeaturedContributors("featured-course");
+			getView().loadFeaturedContributors("featured-course",getViewToken());
 		} else if (getPlaceManager().getRequestParameter(LIBRARY_PAGE) == null) {
-			getView().loadFeaturedContributors("featured-course");
+			getView().loadFeaturedContributors("featured-course",getViewToken());
 		}
 	}
-	/**
-	 * If the url is coming is empty,this will set default value as register in it.
-	 */
+	
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 		request.getParameter("", "register");
+		callBackMethods();
 		getIntoLibrarypage();
 	}
-	/**
-	 * This will clear Map, and sets the collection and resource info in to SearchInfo.
-	 */
+
 	@Override
 	public void homeSearch(Map<String, String> hm) {
 		hm.clear();
@@ -429,113 +386,23 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	public void updateParams(SearchDo<?> searchDo, Map<String, String> params) {
 	
 	}
-	/**
-	 * 
-	 * @function getFilterService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :returns the homeService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : HomeServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public HomeServiceAsync getFilterService() {
 		return homeService;
 	}
-	/**
-	 * 
-	 * @function getSearchService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : returns searchService.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchServiceAsync getSearchService() {
 		return searchService;
 	}
-	/**
-	 * 
-	 * @function setResourceSearchDo 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To initialize resourceSearchDo.
-	 * 
-	 * 
-	 * @parm(s) : @param resourceSearchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setResourceSearchDo(SearchDo<ResourceSearchResultDo> resourceSearchDo) {
 		this.resourceSearchDo = resourceSearchDo;
 	}
-	/**
-	 * 
-	 * @function getResourceSearchDo 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : returns resourceSearchDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchDo<ResourceSearchResultDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchDo<ResourceSearchResultDo> getResourceSearchDo() {
 		return resourceSearchDo;
 	}
-	/**
-	 * 
-	 * @function getCollectionSearchDo 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :returns collectionSearchDo.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SearchDo<CollectionSearchResultDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SearchDo<CollectionSearchResultDo> getCollectionSearchDo() {
 		return collectionSearchDo;
 	}
@@ -547,15 +414,13 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	public void setCollectionSearchDo(SearchDo<CollectionSearchResultDo> collectionSearchDo) {
 		this.collectionSearchDo = collectionSearchDo;
 	}
-	/**
-	 * To initialize the registration view.
-	 */
+
 	@Override
 	public void initilazeRegistrationView(UserDo user) {
 		String userType = getPlaceManager().getRequestParameter(USER_TYPE);
 		if (userType == null || (userType != null && !userType.equalsIgnoreCase("Parent") && !userType.equalsIgnoreCase("NonParent"))) {
 
-			alert("Oh! No...", "Something missing in your mail link. Please contact our support team.");
+			alert(GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP, GL1416);
 
 		} else if (user != null) {
 			if (user.isAvailability()) {
@@ -568,11 +433,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 						addToPopupSlot(userRegistrationPresenter, true); 
 					}
 					else {
-						alert("Aww...", "The email address specified already exists with in gooru.Please login in to your existing account and create child account. ");
+						alert(GL0065+GL_SPL_FULLSTOP, GL1417);
 						
 					}
 				} else if (user.getConfirmStatus() == 1 && !userType.equalsIgnoreCase("Parent")) {
-					alert("Aww...", "The user has already registered successfully. Please use sign-in to log in to your account"); 
+					alert(GL0065+GL_SPL_FULLSTOP, GL1418); 
 				} 
 				else {
 					userRegistrationPresenter.setAccountType(userType);
@@ -580,11 +445,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					addToPopupSlot(userRegistrationPresenter, true);
 				}
 			} else {
-				alert("Aww...", "User Not Found. Please Try to Register");
+				alert(GL0065+GL_SPL_FULLSTOP, GL1419);
 			}
 
 		} else {
-			alert("Oh! No...", "Something Missing.");
+			alert(GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP, GL1420+GL_SPL_FULLSTOP);
 		}
 	}
 
@@ -602,98 +467,24 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			}
 		});
 	}
-	/**
-	 * This method is used to get placeToken.
-	 */
+	
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.HOME;
 	}
-	/**
-	 * 
-	 * @function setRegisterdUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : setter for registerdUserAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param registerdUserAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setRegisterdUserAsyncCallback(SimpleAsyncCallback<UserDo> registerdUserAsyncCallback) {
 		this.registerdUserAsyncCallback = registerdUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getRegisterdUserAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :returns registerdUserAsyncCallback
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<UserDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<UserDo> getRegisterdUserAsyncCallback() {
 		return registerdUserAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUserService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :Setter for userService.
-	 * 
-	 * 
-	 * @parm(s) : @param userService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUserService(UserServiceAsync userService) {
 		this.userService = userService;
 	}
-	/**
-	 * 
-	 * @function getUserService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :returns user service.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : UserServiceAsync
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public UserServiceAsync getUserService() {
 		return userService;
 	}
@@ -718,43 +509,22 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		return standardSuggestionAsyncCallback;
 	}
-	/**
-	 * @return suggestion standards for the collection as map string
-	 */
+
 	@Override
 	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
 		getStandardSuggestionAsyncCallback().execute(searchDo);
 	}
-	/**
-	 * 
-	 * @function showMarketingPopup 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To show marketing popup.
-	 * 
-	 * 
-	 * @parm(s) : @param userDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void showMarketingPopup(UserDo userDo){
-				new ImprovedGooruPopUpView();
-		 AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 5, new SimpleAsyncCallback<UserDo>() {
-				@Override
-				public void onSuccess(UserDo newUser) {
-					UserDo user = AppClientFactory.getLoggedInUser();
-					user.setViewFlag(newUser.getViewFlag());
-					AppClientFactory.setLoggedInUser(user);
-				}
-			});
-		 
+		System.out.println("showMarketingPopup");
+		new ImprovedGooruPopUpView();
+//		 AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 7, new SimpleAsyncCallback<UserDo>() {
+//				@Override
+//				public void onSuccess(UserDo newUser) {
+//					UserDo user = AppClientFactory.getLoggedInUser();
+//					user.setViewFlag(newUser.getViewFlag());
+//					AppClientFactory.setLoggedInUser(user);
+//				}
+//			});
 	}
 
 	/**
@@ -783,9 +553,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		return autoKeyWordSuggestionAsyncCallback;
 	}
-	/**
-	 * @return suggestion standards for the collection as map string
-	 */
+
+	
 	@Override
 	public void requestAutoSuggestKeyword(
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {

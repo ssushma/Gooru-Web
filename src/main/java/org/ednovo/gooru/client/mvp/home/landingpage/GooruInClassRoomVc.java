@@ -45,23 +45,10 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-	/**
-	 * 
-	 * @fileName : GooruInClassRoomVc.java
-	 *
-	 * @description : Based on tab filters it will display tabcontent data by passing respective class room data.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 30-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
-public class GooruInClassRoomVc extends Composite {
+
+public class GooruInClassRoomVc extends Composite implements MessageProperties{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 
@@ -70,6 +57,8 @@ public class GooruInClassRoomVc extends Composite {
 	@UiField HTMLPanel methodsContentContainer, panelGooruClassRoom;
 	
 	@UiField Anchor backto;
+	
+	@UiField Label classroomText,teachingMethodsLbl;
 	
 	private List<String> gooruClassCollectionList = new ArrayList<String>();
 	
@@ -87,35 +76,35 @@ public class GooruInClassRoomVc extends Composite {
 
 	private final String CLASSROOM_TAB5 = "gooruCrTab5";
 	
-	private final String BLENDED_TITLE=MessageProperties.GL0148;
+	private final String BLENDED_TITLE=GL0148;
 
-	private final String BLENDED_USE_CASE=MessageProperties.GL0149;
+	private final String BLENDED_USE_CASE=GL0149;
 
-	private final String BLENDED_DESCRIPTION=MessageProperties.GL0150;
+	private final String BLENDED_DESCRIPTION=GL0150;
 
-	private final String FLIPPED_TITLE=MessageProperties.GL0151;
+	private final String FLIPPED_TITLE=GL0151;
 
-	private final String FLIPPED_USE_CASE=MessageProperties.GL0152;
+	private final String FLIPPED_USE_CASE=GL0152;
 
-	private final String FLIPPED_DESCRIPTION=MessageProperties.GL0153;
+	private final String FLIPPED_DESCRIPTION=GL0153;
 
-	private final String ASSESSMENT_TITLE=MessageProperties.GL0154;
+	private final String ASSESSMENT_TITLE=GL0154;
 
-	private final String ASSESSMENT_USE_CASE=MessageProperties.GL0155;
+	private final String ASSESSMENT_USE_CASE=GL0155;
 
-	private final String ASSESSMENT_DESCRIPTION=MessageProperties.GL0156;
+	private final String ASSESSMENT_DESCRIPTION=GL0156;
 
-	private final String PROJECT_TITLE=MessageProperties.GL0157;
+	private final String PROJECT_TITLE=GL0157;
 
-	private final String PROJECT_USE_CASE=MessageProperties.GL0158;
+	private final String PROJECT_USE_CASE=GL0158;
 
-	private final String PROJECT_DESCRIPTION=MessageProperties.GL0159;
+	private final String PROJECT_DESCRIPTION=GL0159;
 
-	private final String ENRICHED_TITLE=MessageProperties.GL0160;
+	private final String ENRICHED_TITLE=GL0160;
 
-	private final String ENRICHED_USE_CASE=MessageProperties.GL0161;
+	private final String ENRICHED_USE_CASE=GL0161;
 
-	private final String ENRICHED_DESCRIPTION=MessageProperties.GL0162;
+	private final String ENRICHED_DESCRIPTION=GL0162;
 
 	private final String CLASSROOM = "classroom";
 	
@@ -127,11 +116,17 @@ public class GooruInClassRoomVc extends Composite {
 	interface GooruInClassRoomVcUiBinder extends
 			UiBinder<Widget, GooruInClassRoomVc> {
 	}
-	/**
-	 * Constructor.
-	 */
+
 	public GooruInClassRoomVc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		classroomText.setText(GL0200);
+		backto.setText(GL1260);
+		teachingMethodsLbl.setText(GL1322);
+		gooruCrTab1.getElement().setInnerText(GL1323);
+		gooruCrTab2.getElement().setInnerText(GL1324);
+		gooruCrTab3.getElement().setInnerText(GL1325);
+		gooruCrTab4.getElement().setInnerText(GL1326);
+		gooruCrTab5.getElement().setInnerText(GL1327);
 		tabContent1 = new HTMLPanel("");
 		tabContent2 = new HTMLPanel("");
 		tabContent3 = new HTMLPanel("");
@@ -140,33 +135,13 @@ public class GooruInClassRoomVc extends Composite {
 		loadingImage = new HTMLPanel("");
 		loadingImage.setStyleName(landingPageStyle.loadingImage());
 		methodsContentContainer.add(loadingImage);
-		gooruClassCollectionList = Arrays.asList(AppClientFactory.getLoggedInUser().getCollectionFilterProperties().getClassroomUseCases().split(","));
-		gooruClassRoomHowToUse = Arrays.asList(AppClientFactory.getLoggedInUser().getCollectionFilterProperties().getClassroomHowToUse().split(","));
 		gooruCrTab1.addStyleName(landingPageStyle.methodsLiActive());
 		setTabbedContent(CLASSROOM_TAB1);
 		panelGooruClassRoom.getElement().setId("panelGooruClassRoom");
 		backto.getElement().setId("lnkBackTo");
 		
 	}
-	/**
-	 * 
-	 * @function setTabbedContent 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will do service call by cassing CLASSROOM data ,and it will call setData() method by passing the result as a parameter.
-	 * 
-	 * 
-	 * @parm(s) : @param tabFilter
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void setTabbedContent(String tabFilter) {
 		loadingImage.setVisible(true);
 		AppClientFactory.getInjector().getHomeService().getFeaturedThemeCollection(CLASSROOM, new SimpleAsyncCallback<List<FeaturedCollectionContentDo>>() {
@@ -177,25 +152,7 @@ public class GooruInClassRoomVc extends Composite {
 			}
 		});
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will set the classroomContent to respective tabContent.
-	 * 
-	 * 
-	 * @parm(s) : @param classroomContent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setData(List<FeaturedCollectionContentDo> classroomContent) {
 		tabContent1.add(new GooruClassRoomCollectionUc(classroomContent.get(0), CLASSROOM_TAB1, BLENDED_TITLE, BLENDED_USE_CASE, BLENDED_DESCRIPTION, gooruClassRoomHowToUse.get(0)));
 		methodsContentContainer.add(tabContent1);
@@ -210,25 +167,7 @@ public class GooruInClassRoomVc extends Composite {
 		displayContent(CLASSROOM_TAB1);
 		loadingImage.setVisible(false);
 	}
-	/**
-	 * 
-	 * @function displayContent 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This will dispaly content based on tabFilter.
-	 * 
-	 * 
-	 * @parm(s) : @param tabFilter
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void displayContent(String tabFilter) {
 		loadingImage.setVisible(true);
 		if(tabFilter.equalsIgnoreCase(CLASSROOM_TAB1)) {
@@ -264,25 +203,7 @@ public class GooruInClassRoomVc extends Composite {
 		}
 		loadingImage.setVisible(false);
 	}
-	/**
-	 * 
-	 * @function onClickGooruCrTab1 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandlers for gooruCrTab1.It will enable the landing page styles for gooruCrTab1.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("gooruCrTab1")
 	void onClickGooruCrTab1(ClickEvent event) {
 		MixpanelUtil. ClickOnBlendedLearning();
@@ -299,25 +220,7 @@ public class GooruInClassRoomVc extends Composite {
 			gooruCrTab5.removeStyleName(landingPageStyle.methodsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickGooruCrTab1 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandlers for gooruCrTab2.It will enable the landing page styles for gooruCrTab2.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	@UiHandler("gooruCrTab2")
 	void onClickGooruCrTab2(ClickEvent event) {
 		MixpanelUtil.ClickOnFlippedClassRoom();
@@ -334,25 +237,7 @@ public class GooruInClassRoomVc extends Composite {
 			gooruCrTab5.removeStyleName(landingPageStyle.methodsLiActive());
 		}
 	}
-	/**
-	 * 
-	 * @function onClickGooruCrTab1 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandlers for gooruCrTab3.It will enable the landing page styles for gooruCrTab3.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("gooruCrTab3")
 	void onClickGooruCrTab3(ClickEvent event) {
 		MixpanelUtil.ClickOnAssesments();
@@ -369,25 +254,7 @@ public class GooruInClassRoomVc extends Composite {
 			gooruCrTab5.removeStyleName(landingPageStyle.methodsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickGooruCrTab1 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandlers for gooruCrTab4.It will enable the landing page styles for gooruCrTab4.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("gooruCrTab4")
 	void onClickGooruCrTab4(ClickEvent event) {
 		MixpanelUtil.ClickOnProjectBasedLearning();
@@ -404,25 +271,7 @@ public class GooruInClassRoomVc extends Composite {
 			gooruCrTab5.removeStyleName(landingPageStyle.methodsLiActive());		
 		}
 	}
-	/**
-	 * 
-	 * @function onClickGooruCrTab1 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandlers for gooruCrTab5.It will enable the landing page styles for gooruCrTab5.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("gooruCrTab5")
 	void onClickGooruCrTab5(ClickEvent event) {
 		MixpanelUtil.ClickOnEnrichedInstruction();

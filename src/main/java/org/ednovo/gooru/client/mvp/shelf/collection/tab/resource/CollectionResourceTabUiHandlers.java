@@ -31,18 +31,10 @@ import org.ednovo.gooru.client.mvp.shelf.event.UpdateQuestionImageHandler;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
+
 /**
- * @fileName : CollectionResourceTabUiHandlers.java
+ * @author Search Team
  *
- * @description : The interface for view classes that handles all the UI-related code for a CollectionResourceTabPresenter.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionResourceTabUiHandlers extends BaseUiHandlers,UpdateQuestionImageHandler,UpdateEditResourceImageHandler, InsertCollectionItemInAddResourceHandler {
 	

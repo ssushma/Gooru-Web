@@ -39,7 +39,6 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -54,19 +53,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
+ * @author BLR Team
  * 
- * @fileName : LoginCustomizePopUp.java
- *
- * @description : Tis is related to LoginCustomizePopUp.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public abstract class LoginCustomizePopUp extends PopupPanel {
 
@@ -95,7 +83,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 	private static final Binder binder = GWT.create(Binder.class);
 
 	/**
-	 * Constructor
+	 * 
 	 */
 	public LoginCustomizePopUp(String collectionId, final Boolean loginFlag) {
 		super(false);
@@ -127,19 +115,17 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
-					LoginPluginView assignWidget = new LoginPluginView(
-							result) {
-
+				LoginPluginView assignWidget = new LoginPluginView(result) {
+						
 						@Override
 						public void closePoupfromChild() {
 							closePoup();
 						}
 
 						@Override
-						public void showSuccessMsgfromChild(
-								String collectionId) {
+						public void showSuccessMsgfromChild(String collectionId) {
 							showSuccessMsg(collectionId);
-
+							
 						}
 					};
 					loginCustom.add(assignWidget);
@@ -149,10 +135,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 					AppClientFactory
 							.getInjector()
 							.getResourceService()
-							.copyCollection(
-									result,
-									"true",
-									null,
+							.copyCollection(result, "true", null,
 									getSaveCollectionAsyncCallback());
 
 				}
@@ -176,7 +159,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					showSuccessMsg(result.getGooruOid());
-					AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+					AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
 				}
 			};
 		}
@@ -184,53 +167,15 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 	}
 
 	public abstract void closePoup();
-	/**
-	 * Returns resourceService.
-	 */
+
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
-	/**
-	 * 
-	 * @function setResourceService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To set resourceService.
-	 * 
-	 * 
-	 * @parm(s) : @param resourceService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	/**
-	 * 
-	 * @function showSuccessMsg 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This is used to show success message.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void showSuccessMsg(String collectionId) {
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
@@ -248,57 +193,14 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 	public void onCancelClicked(ClickEvent clickEvent) {
 		closePoup();
 	}
-	/**
-	 * 
-	 * @function onbacktoLibrarybuttonClicked 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :To close popup on backtoLibrary button clicked.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("backtoLibrary")
 	public void onbacktoLibrarybuttonClicked(ClickEvent clickEvent) {
 		closePoup();
 	}
-	/**
-	 * 
-	 * @function onEditcollectionbuttonClicked 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description :This UIHandler is used to Editing collection to Assignment
-	 *              under Classpages.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("editCollection")
 	public void onEditcollectionbuttonClicked(ClickEvent clickEvent) {
-		Storage stockStore = Storage.getLocalStorageIfSupported();
-
-		if (stockStore != null) {
-			stockStore.setItem("tabKey", "resourceTab");
-		}
-		
 		AppClientFactory.getPlaceManager().revealPlace(
 				PlaceTokens.SHELF,
 				new String[] {

@@ -8,8 +8,9 @@
 				<g:Label styleName="{res.css.confirmMessageDelete}" text="" ui:field="messageTextLabel"/>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.actionField}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="OK" ui:field="okButtonUc" styleName="deleteCollectionDisabledButton" />
-				<g:Anchor text="Cancel" ui:field="cancelAnr" styleName="collectionFormCancelButton" />
+				<g:Button ui:field="cancelAnr" styleName="secondary"/>
+				<g:Button ui:field="okButtonUc" styleName="primary {res.css.okButtonmargin}"/>
+				<g:Label styleName="{res.css.removingText}" ui:field="removingText"></g:Label>
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>

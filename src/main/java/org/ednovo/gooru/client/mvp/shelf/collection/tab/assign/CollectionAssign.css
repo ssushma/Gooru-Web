@@ -1,8 +1,7 @@
 /* Assign Tab in collection Edit */
 .mainContainer{
-	padding: 10px 0px 0px 16px;
+	/* padding: 10px 0px 0px 16px; */
 	width: 100%;
-	min-height: 250px;
 }
 .labelText{
 	font-family:Arial, Helvetica, sans-serif;
@@ -10,10 +9,7 @@
 	line-height:120%;
 	color:rgb(81,81,81);
 	text-align:left;
-	padding-bottom: 30px;
-	padding-top: 8px;	
-	width: 50%;
-	float: left;
+	width: 100%;
 }
 
 .dropdownContainer{
@@ -30,12 +26,32 @@
 	border-radius:1px;
 	border-style:solid;
 	position: absolute;
-	margin-left: 100px;
 }
-
+.directionsTextArea{
+	width: 302px;
+	resize:none;
+	padding: 4px;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	height: 73px;
+}
+.directionsErrorLbl{
+	float: right;
+	right: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height: 16px;
+	color: #fab03a;
+	text-align: right;
+	position: relative;
+	font-style: italic;
+}
 .controlsContainer{
-	float:left;
 	margin-top:30px;
+	margin-bottom:30px;
+	float: left;
+width: 50%;
 }
 
 .labelTitlePrivateText{
@@ -84,7 +100,13 @@
 
 
 .assignmentsContainer{
-	float : left;
+	float : right;
+	width:50%;
+	margin-top:30px;
+	
+}
+.duedateContainer{
+	margin-top: 12%;
 }
 
 .buttonAssignContainer{
@@ -322,6 +344,23 @@
 	padding: 10px 10px 40px 10px;
 }
 
+.contentSuccess{
+	padding-top:8%;
+}
+.assignClassPageBtn{
+	margin-top:8%;
+}
+
+.assignmentLabel{
+	color:#1076bb;
+	font-family:Arial, Helvetica, sans-serif;
+	display: inline-block;
+	text-align:left;
+	font-weight:normal;
+	cursor: pointer;
+	font-size:12px;
+}
+
 .labelTextDisable{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
@@ -374,8 +413,7 @@
 }
 .container{
 	padding: 10px 0px 0px 16px;
-	min-height: 250px;
-	width: 60%;
+	min-height: 200px;
 }
 .noAssignments{
 	font-family: Arial, Helvetica, sans-serif;

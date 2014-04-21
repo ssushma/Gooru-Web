@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -50,21 +51,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : ProfilePageItemChildView.java
- *
- * @description : This is used to setdata to Refresh ProfileListEvent and to Request CollectionOpenEvent.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPresenter> implements IsProfilePageItemView {
+public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPresenter> implements IsProfilePageItemView,MessageProperties {
 
 	@UiField
 	FlowPanel childItemFolderIcon, actionVerPanel;
@@ -112,28 +102,11 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 			actionVerPanel.setVisible(false);
 		}
 	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to setdata to Refresh ProfileListEvent and to Request CollectionOpenEvent.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionItemDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setData(final CollectionItemDo collectionItemDo) {
 		lblChildItemTitle.setText(collectionItemDo.getResource().getTitle());
 		lblChildItemDescription.setText(collectionItemDo.getResource().getGoals());
+		childItemOpenBtn.setText(GL1115);
 		childItemOpenBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

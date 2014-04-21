@@ -28,18 +28,10 @@
 package org.ednovo.gooru.client.mvp.socialshare.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : UpdateSocialShareMetaDataEvent.java
- *
- * @description : This will handle the updating the social meta data.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Gooru Team
+ * 
  */
 public class UpdateSocialShareMetaDataEvent extends GwtEvent<UpdateSocialShareMetaDataHandler> {
 

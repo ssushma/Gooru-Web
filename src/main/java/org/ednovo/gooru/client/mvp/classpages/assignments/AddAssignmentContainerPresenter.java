@@ -24,18 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.assignments;
 
+
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
-import org.ednovo.gooru.client.service.ClasspageServiceAsync;
-import org.ednovo.gooru.client.uc.AlertContentUc;
-import org.ednovo.gooru.shared.model.content.AssignmentDo;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -56,145 +55,62 @@ import com.gwtplatform.mvp.client.PresenterWidget;
  */
 public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssignmentContainerView> implements AddAssignmentContainerUiHandlers{
 	
-	private String classpageId="";
+	private String classpageId=null;
+	private EditClasspagePresenter editClasspagePresenter=null;
 	
-	private SimpleAsyncCallback<CollectionDo> assignmentAsyncCallback;
-	
-	private SimpleAsyncCallback<AssignmentDo> assignmentV2AsyncCallback;
-	
-	IsCollectionResourceTabView isCollResourceTabView=null;
-	
-	CollectionDo collectionDo;
-	
-	@Inject
-	private ClasspageServiceAsync classpageService;
-	/**
-	 * Constructor
-	 * @param isCollResourceTabView
-	 * @param eventBus
-	 * @param view
-	 */
 	@Inject
 	public AddAssignmentContainerPresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddAssignmentContainerView view) {
 		super(eventBus, view);
-		
 		getView().setUiHandlers(this);		
-		this.isCollResourceTabView = isCollResourceTabView;
 	}
-	/**
-	 * This is called when the presenter is instantiated.
-	 */
+
 	@Override
 	protected void onBind() {
 		super.onBind();
-		setAssignmentAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
-
+	}
+	public void getUserShelfData(){
+		getView().clearShelfData();
+		getWorkspaceData(0,20,true);
+	}
+	public void getWorkspaceData(int offset,int limit, final boolean clearShelfPanel){
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
-			public void onSuccess(CollectionDo result) {
-				//Set the Assignment to classpage
-				if (result.getTitle() != null) {
-					AppClientFactory.fireEvent(new RefreshAssignmentsListEvent(false));
-					getView().resetAllFields();
-
-					Window.enableScrolling(true);
-			        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
-					getView().hide();
-				} else {
-					getView().resetClicked();
-					new AlertContentUc("Oops!",	"Looks like you've selected a date that's already past! Do your students a favor and choose a date in the future.");
-				}
-			}
-		});
-		/** 
-		 * This method is to set the assignmentAsyncCallback
-		 */
-		setAssignmentV2AsyncCallback(new SimpleAsyncCallback<AssignmentDo>() {
-
-			@Override
-			public void onSuccess(AssignmentDo result) {
-				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent(false));
-				getView().resetAllFields();
-
-				Window.enableScrolling(true);
-		        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
-				getView().hide();
-				
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().displayWorkspaceData(folderListDo,clearShelfPanel);
 			}
 		});
 	}
-	
-	/*Setter and getters */
-	/** 
-	 * This method is to get the classpageId
-	 */
-	public String getClasspageId() {
-		return classpageId;
-	}
 
-	/** 
-	 * This method is to set the classpageId
-	 */
-	public void setClasspageId(String classpageId) {
-		getView().setClasspageId(classpageId);
-		this.classpageId = classpageId;
-	}
-	/** 
-	 * This method is to get the assignmentAsyncCallback
-	 */
-	public SimpleAsyncCallback<CollectionDo> getAssignmentAsyncCallback() {
-		return assignmentAsyncCallback;
-	}
-
-	/** 
-	 * This method is to set the assignmentAsyncCallback
-	 */
-	public void setAssignmentAsyncCallback(
-			SimpleAsyncCallback<CollectionDo> assignmentAsyncCallback) {
-		this.assignmentAsyncCallback = assignmentAsyncCallback;
-	}
-	
-	/**
-	 * This method is used to create assignment.
-	 */
-	
 	@Override
-	public void createAssignment(CollectionDo collectionDo, String dueDate) {
-		getClasspageService().createAssignment(collectionDo, getClasspageId(), dueDate, getAssignmentAsyncCallback());
+	public void getFolderItems(final TreeItem item,String parentId) {
+		AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, parentId,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
+			@Override
+			public void onSuccess(FolderListDo folderListDo) {
+				getView().setFolderItems(item,folderListDo);
+			}
+		});
 	}
-	
-	/** 
-	 * This method is to get the classpageService
-	 */
-	public ClasspageServiceAsync getClasspageService() {
-		return classpageService;
+	public void addCollectionToAssign(String collectionId,String direction,String dueDate){
+		AppClientFactory.getInjector().getClasspageService().createClassPageItem(this.classpageId, collectionId, dueDate, direction, new SimpleAsyncCallback<ClasspageItemDo>() {
+			@Override
+			public void onSuccess(ClasspageItemDo classpageItemDo) {
+				getView().hideAddCollectionPopup(classpageItemDo.getCollectionTitle());
+				getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
+			}
+		});
 	}
-	/** 
-	 * This method is to set the classpageService
-	 */
-	public void setClasspageService(ClasspageServiceAsync classpageService) {
-		this.classpageService = classpageService;
-	}
-	
-	@Override
-	public void v2CreateAssignment(AssignmentDo assignmentDo) {
-		getClasspageService().v2CreateAssignment(assignmentDo, getAssignmentV2AsyncCallback());
-	}
-
-	/** 
-	 * This method is to get the assignmentV2AsyncCallback
-	 */
-	public SimpleAsyncCallback<AssignmentDo> getAssignmentV2AsyncCallback() {
-		return assignmentV2AsyncCallback;
+	public void setClasspageId(String classpageId,EditClasspagePresenter editClasspagePresenter){
+		this.classpageId=classpageId;
+		this.setEditClasspagePresenter(editClasspagePresenter);
 	}
 
-	/** 
-	 * This method is to set the assignmentV2AsyncCallback
-	 */
-	public void setAssignmentV2AsyncCallback(
-			SimpleAsyncCallback<AssignmentDo> assignmentV2AsyncCallback) {
-		this.assignmentV2AsyncCallback = assignmentV2AsyncCallback;
+	public EditClasspagePresenter getEditClasspagePresenter() {
+		return editClasspagePresenter;
 	}
+
+	public void setEditClasspagePresenter(EditClasspagePresenter editClasspagePresenter) {
+		this.editClasspagePresenter = editClasspagePresenter;
+	}
+	
 	
 }

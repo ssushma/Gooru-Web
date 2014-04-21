@@ -32,18 +32,21 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+
 /**
+ * 
  * @fileName : DataLogEvents.java
  *
- * @description : This class is used to push the data log to server for Insights.
+ * @description :  This class is used to push the data log to server for Insights.
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Oct 30, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class DataLogEvents {
 	
@@ -62,7 +65,7 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description : This static method is used to create jsni intger array.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param attemptTrySequence
@@ -71,6 +74,10 @@ public class DataLogEvents {
 	 * @return : JSONArray
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static JSONArray createJsniIntArray(List<Integer> attemptTrySequence){
 		JSONArray attemptTrySequenceArray=new JSONArray();
@@ -87,7 +94,8 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description:  This static method is used to create jsni string array.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param attemptTrySequence
 	 * @parm(s) : @return
@@ -95,6 +103,9 @@ public class DataLogEvents {
 	 * @return : JSONArray
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
 	 *
 	 */
 	public static JSONArray createJsniStringArray(List<String> attemptTrySequence){
@@ -112,13 +123,18 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Nov 6, 2013
 	 * 
-	 * @description : This method is used to get API key.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @return
 	 * 
 	 * @return : String
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static String getAPIKey(){		
 		return AppClientFactory.getLoggedInUser().getSettings().getDataApiKey();
@@ -131,7 +147,8 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description : This method is used for to log data on the sign up process.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param eventId
 	 * @parm(s) : @param eventName
@@ -142,6 +159,10 @@ public class DataLogEvents {
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static  void signUp(String eventId,  String eventName, Long startTime, Long endTime, String organizationUid) {
 		JSONObject eventJsonObject=new JSONObject();
@@ -159,7 +180,8 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description : This method is used to log the data on sign in process.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param eventId
 	 * @parm(s) : @param eventName
@@ -170,6 +192,10 @@ public class DataLogEvents {
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static  void signIn(String eventId,  String eventName, Long startTime, Long endTime, String organizationUid, String sessionToken) {
 		JSONObject eventJsonObject=new JSONObject();
@@ -188,7 +214,8 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description : This method is used to log the event when user view the class pages.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param eventId
 	 * @parm(s) : @param eventName
@@ -204,6 +231,10 @@ public class DataLogEvents {
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static  void classpageView(String eventId, String eventName, String contentGooruId, String gooruUId, Long startTime, Long endTime, String organizationUid, Long timeSpentInMs, String sessionToken, String type) {
 		
@@ -227,7 +258,8 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description : This method is used to log the event when the user click on the assignment view.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param eventId
 	 * @parm(s) : @param eventName
@@ -243,6 +275,10 @@ public class DataLogEvents {
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static  void assignmentView(String eventId, String eventName, String contentGooruId, String gooruUId, Long startTime, Long endTime, String organizationUid, Long timeSpentInMs, String sessionToken, String type) {
 		JSONObject eventJsonObject=new JSONObject();
@@ -265,15 +301,20 @@ public class DataLogEvents {
 	 * 
 	 * @created_date : Oct 30, 2013
 	 * 
-	 * @description : This method will trigger the data log calls.
+	 * @description
+	 * 
 	 * 
 	 * @parm(s) : @param eventJsonObject
 	 * 
 	 * @return : void
 	 *
 	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
 	 */
 	public static native void triggerDataLogCall(JSONObject eventJsonObject) /*-{
-			
+			$wnd._et.data.push(eventJsonObject);
  	}-*/;	
 }

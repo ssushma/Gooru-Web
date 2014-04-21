@@ -23,20 +23,23 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home.library;
-import com.google.gwt.resources.client.CssResource;
 /**
  * @fileName : LibraryStyleBundle.java
  *
- * @description : This interface is used to set the styles for the library.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: 02-Dec-2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
+
+import com.google.gwt.resources.client.CssResource;
+
 
 public interface LibraryStyleBundle extends CssResource {
 	String conceptTitle();
@@ -49,4 +52,22 @@ public interface LibraryStyleBundle extends CssResource {
 	String course();
 	String resourceImage();
 	String blueLink();
+
+	String bannerSpanBlock();
+	String partnerLogo();
+	String resourcesInsideSubStyle();
+	String collectionInfoSubStyle();
+	String collectionViewerSubStyle();
+	String tabsLi();
+	String tabsLiInactive();
+	String singleLink();
+	String active();
+	String paginationPanel();
+	String twoColumnContainer();
+	String subDropdown();
+	String unitOption();
+	String popularStarImage();
+	String math();
+	String partnerMenuPadding();
+	
 }

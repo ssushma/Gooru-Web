@@ -36,20 +36,13 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : ShareTabView.java
- *
- * @description : This is the view of the share tab.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author
+ * 
  */
 public class ShareTabView extends
 		ChildView<ShareTabPresenter> implements
@@ -60,6 +53,8 @@ public class ShareTabView extends
 	
 	@UiField
 	TextBox shortenUrlTxtBox, classcodeTxtBox;
+	
+	@UiField Label webLinkLbl,linkToClasspage,classCodeLbl,enterCodetext;
 	
 	private static ShareTabViewUiBinder uiBinder = GWT
 			.create(ShareTabViewUiBinder.class);
@@ -84,7 +79,10 @@ public class ShareTabView extends
 		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		setPresenter(new ShareTabPresenter(this));
-		
+		webLinkLbl.setText(GL0232);
+		linkToClasspage.setText(GL1413);
+		classCodeLbl.setText(GL0184);
+		enterCodetext.setText(GL1414);
 		shortenUrlTxtBox.setText(shareUrl);
 		shortenUrlTxtBox.setEnabled(true);
 		shortenUrlTxtBox.setReadOnly(true);
@@ -118,51 +116,37 @@ public class ShareTabView extends
 
 		}
 	}
-	/**
-	 * This will handle the drag handler.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will check the IsDraggableMirage
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will handle the blur event on the drag element/widget.
-	 */
+
 	@Override
 	public void onDragBlur() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag id.
-	 */
+
 	@Override
 	public String getDragId() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag top correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This will return the drag left correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		throw new RuntimeException("Not implemented");

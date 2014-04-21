@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ReactionDo;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -35,4 +36,8 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void showResourceWidget(CollectionItemDo collectionItemDo);
 	public void showResourceWidget(PlaceRequest previousResourceRequest);
 	public FlowPanel getResourceWidgetContainer();
+	
+	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
+	
+	public void setDefaultReaction();
 }

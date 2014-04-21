@@ -25,21 +25,10 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : ClassPageCollectionDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(Include.NON_NULL)
 public class ClassPageCollectionDo implements Serializable
 {
 	/**
@@ -49,28 +38,35 @@ public class ClassPageCollectionDo implements Serializable
 	
 	private String title;
 	private String classpageId;
-	/** 
-	 * This method is to get the title
-	 */
+	private String gooruOid;
+	
+	public ClassPageCollectionDo(){}
+	
 	public String getTitle() {
 		return title;
 	}
-	/** 
-	 * This method is to set the title
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	/** 
-	 * This method is to get the classpageId
-	 */
 	public String getClasspageId() {
 		return classpageId;
 	}
-	/** 
-	 * This method is to set the classpageId
-	 */
 	public void setClasspageId(String classpageId) {
 		this.classpageId = classpageId;
 	}
+
+	/**
+	 * @return the gooruOid
+	 */
+	public String getGooruOid() {
+		return gooruOid;
+	}
+
+	/**
+	 * @param gooruOid the gooruOid to set
+	 */
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+	
 }

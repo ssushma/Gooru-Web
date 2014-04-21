@@ -5,6 +5,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel>
 		<g:InlineLabel ui:field="buttonName"></g:InlineLabel> 
-		<g:InlineHTML ui:field="courseCount">(0)</g:InlineHTML>
+		<g:InlineHTML ui:field="courseCount"></g:InlineHTML>
 	</g:HTMLPanel>
 </ui:UiBinder>

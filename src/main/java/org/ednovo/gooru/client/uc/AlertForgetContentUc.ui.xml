@@ -6,7 +6,7 @@ xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.edn
 <g:HTMLPanel>
   <div class="{res.css.forgetPopupInnerdiv}">
     <div class="{res.css.forgetPopupHeaderBg}">
-      <div class="{res.css.forgetPopupHeaderTitle}">Oops!</div>
+      <g:Label styleName="{res.css.forgetPopupHeaderTitle}" ui:field="forgetPopupHeaderText"></g:Label>
       <div class="{res.css.forgetPopupCloseBtnContainer}">
         <panel:HTMLEventPanel ui:field="cancelButton" styleName="{res.css.forgetPopupBtnSprite} {res.css.forgetPopupCloseBtn}"></panel:HTMLEventPanel>
       </div>
@@ -18,14 +18,14 @@ xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:panel="urn:import:org.edn
         <g:HTMLPanel styleName="{res.css.forgetPopupGplusOuterdiv}">
           <g:HTMLPanel styleName="{res.css.forgetPopupBtnSprite} {res.css.forgetPopupGplusBtn}"></g:HTMLPanel>
         </g:HTMLPanel>
-        <g:HTMLPanel styleName="{res.css.forgetPopupGplusDesc}">Sign in with Google</g:HTMLPanel>
+        <g:HTMLPanel styleName="{res.css.forgetPopupGplusDesc}" ui:field="signinGoogleText"></g:HTMLPanel>
       </panel:HTMLEventPanel>
     </g:HTMLPanel>
     <div class="{res.css.forgetPopupCheckBoxContainer}">
       <div class="{res.css.forgetPopupCheckBoxControl}">
         </div>
 	       <div class="{res.css.forgetPopupCheckBoxDescText}"></div>
-	       <g:InlineLabel  text="Questions? Email" styleName="{res.css.forgetPopupCheckBoxDescText}" /> <g:Anchor styleName="{res.css.supportMailID}" href="mailto:support@goorulearning.org" target="_blank">support@goorulearning.org</g:Anchor>
+	       <g:InlineLabel styleName="{res.css.forgetPopupCheckBoxDescText}" ui:field="questionEmailText" /> <g:Anchor styleName="{res.css.supportMailID}"  target="_blank" ui:field="supportText"></g:Anchor>
     </div>
     <div class="{res.css.clear}"></div>
   </div>

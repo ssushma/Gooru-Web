@@ -56,21 +56,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
- * 
- * @fileName : SearchBarVc.java
+ * @author Search Team
  *
- * @description : To show the auto suggestion list in search.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class SearchBarVc extends Composite implements SelectionHandler<SuggestOracle.Suggestion>{
+public class SearchBarVc extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 	
 	private SearchDo<AutoSuggestKeywordSearchDo> autoSuggestKeywordDo = new SearchDo<AutoSuggestKeywordSearchDo>();
 	private SearchAsyncCallback<SearchDo<AutoSuggestKeywordSearchDo>> autoKeyWordSuggestionAsyncCallback;
@@ -86,7 +75,7 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 	@UiField Button searchBtn;
 		private AppMultiWordSuggestOracle autokeySuggestOracle;
 		String searchData="";
-		private String GOORU_SEARCH=" -<n> Gooru Search</n>";
+		private String GOORU_SEARCH=GL0146;
 	/**
 	 * Class constructor, crates new {@link KeyUpHandler}
 	 */
@@ -129,30 +118,18 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 		searchTxtBox.setPopupStyleName("SearchVcTextBox");
 		initWidget(uiBinder.createAndBindUi(this));
 //		searchTxtBox.getElement().setAttribute("maxlength","50");
+		
 		searchTxtBox.addKeyUpHandler(new SearchKeyUpHandler());
 		
 		initialSearchQuery = AppClientFactory.getPlaceManager().getRequestParameter(QUERY);
-		searchTxtBox.getTextBox().getElement().setAttribute("placeholder", MessageProperties.GL0448);
+		searchTxtBox.getTextBox().getElement().setAttribute("placeholder",GL0448);
 		Cookies.setCookie("searchvalue", initialSearchQuery);
 		searchTxtBox.getElement().setId("txtSearch");
+		searchBtn.setText(GL0176);
 		searchBtn.getElement().setId("btnSearch");
 	
 	}
-	/**
-	 * 
-	 * @fileName : SearchBarVc.java
-	 *
-	 * @description : Search Keyup Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class SearchKeyUpHandler implements KeyUpHandler {
 
 		@Override
@@ -205,25 +182,7 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 		}
 
 	}
-	/**
-	 * 
-	 * @function setInitialSearchQuery 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set initial search query.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setInitialSearchQuery(){
 		if(!AppClientFactory.getPlaceManager().getRequestParameter(QUERY).equals("")){
 		initialSearchQuery = AppClientFactory.getPlaceManager().getRequestParameter(QUERY);
@@ -234,6 +193,8 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 		}
 		
 	}
+	
+	
 	/**
 	 * @return suggestion standards for the collection as map string
 	 */
@@ -261,48 +222,12 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 		}
 		return autoKeyWordSuggestionAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function requestAutoSuggestKeyword 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to get AutoSuggestion KeyWord AsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param searchDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+	
 	public void requestAutoSuggestKeyword(
 			SearchDo<AutoSuggestKeywordSearchDo> searchDo) {
 			getAutoSuggestionKeyWordAsyncCallback().execute(searchDo);
 	}
-	/**
-	 * 
-	 * @function setAutoKeyWordSuggestions 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :To show the suggestion list.
-	 * 
-	 * 
-	 * @parm(s) : @param autoSuggestKeywordDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void setAutoKeyWordSuggestions(SearchDo<AutoSuggestKeywordSearchDo> autoSuggestKeywordDo)
 	{
 			autokeySuggestOracle.clear();
@@ -317,9 +242,7 @@ public class SearchBarVc extends Composite implements SelectionHandler<SuggestOr
 			searchTxtBox.showSuggestionList();
 			
 		}
-	/**
-	 * This method is used to fire search event.
-	 */
+
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
 		String searchText = searchTxtBox.getText();

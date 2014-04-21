@@ -6,7 +6,7 @@
 		type="org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle"
 		field="res" />
 			<g:HTMLPanel>
-	      	  <g:HTMLPanel styleName="{res.css.popupTitleLogin}">Log in to Customize this collection</g:HTMLPanel>
+	      	  <g:HTMLPanel styleName="{res.css.popupTitleLogin}" ui:field="hangOnText"></g:HTMLPanel>
 		      <g:Label ui:field="collectionDescription" styleName="{res.css.popupDescLogin}"></g:Label>
 		      <g:HTMLPanel styleName="{res.css.inputBlockOuter}">
 		       	<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
@@ -14,9 +14,9 @@
 		        <g:HTMLPanel styleName="{res.css.pwdTxt}"><g:Anchor ui:field="forgotPwd"></g:Anchor></g:HTMLPanel>
 		      </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.btn}">
-		        <g:Button ui:field="loginButton" styleName="primary  {res.css.LoginText}">Login</g:Button>
+		        <g:Button ui:field="loginButton" styleName="primary  {res.css.LoginText}"></g:Button>
 		        <g:Label ui:field="lblPleaseWait" styleName="{res.css.processing}"></g:Label>
 		      </g:HTMLPanel>
-		      <g:HTMLPanel styleName="{res.css.signUp}">Don’t have an account? <g:Anchor ui:field="ancSignUp" href="#">Sign Up here</g:Anchor></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.signUp}" ui:field="signUpPanel"><g:Label ui:field="donotHaveAcount"></g:Label><g:Anchor ui:field="ancSignUp"></g:Anchor></g:HTMLPanel>
 			</g:HTMLPanel>
 </ui:UiBinder> 

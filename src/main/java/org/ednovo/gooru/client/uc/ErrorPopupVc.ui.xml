@@ -6,22 +6,22 @@
 			<g:FlowPanel styleName="{res.css.inlineBorder}">
 				<g:FlowPanel ui:field="captionTitle" styleName="{res.css.captionTitle}">
 					<g:HTMLPanel>
-						<div class="{res.css.headerText}">Oops!</div>
+						<g:Label styleName="{res.css.headerText}" ui:field="errorPopupHeaderText"></g:Label>
 					</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="{res.css.firstTextBox}">
 					<g:HTMLPanel>
-						<div class="{res.css.dragMsg}">Please drag the resource into collection...</div>
+						<g:Label styleName="{res.css.dragMsg}" ui:field="dragText"></g:Label>
 						<div class="{res.css.QCFText}">
-							<div class="{res.css.QuestMsg}">Questions?</div>
-							<div class="{res.css.QuestMsg}">Check the FAQ's</div>
+							<g:Label styleName="{res.css.QuestMsg}" ui:field="questionLabel"></g:Label>
+							<g:Label styleName="{res.css.QuestMsg}" ui:field="faqsText"></g:Label>
 						</div>
 					</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:FlowPanel styleName="{res.css.secondTextBox}">
 					<g:FlowPanel styleName="{res.css.OkCancelDiv}">
-						<g:Label styleName="{res.css.okButton}" text="OK" ui:field="okButton"></g:Label>
-						<g:Label styleName="{res.css.cancelButton}" text="Cancel"></g:Label>
+						<g:Label styleName="{res.css.okButton}" ui:field="okButton"></g:Label>
+						<g:Label styleName="{res.css.cancelButton}" ui:field="cancelButton"></g:Label>
 					</g:FlowPanel>
 				</g:FlowPanel>
 			</g:FlowPanel>

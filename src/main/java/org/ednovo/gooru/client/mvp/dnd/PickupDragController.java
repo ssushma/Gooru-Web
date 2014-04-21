@@ -42,6 +42,7 @@ import java.util.HashMap;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.settings.DragDropAnimation;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 
@@ -63,20 +64,6 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.InsertPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-
-/**
- * @fileName : PickupDragController.java
- *
- * @description : This is the top-level for handling the widgets drag and drop.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 
 /*
  * DragController used for drag-and-drop operations where a draggable widget or drag proxy is
@@ -192,9 +179,7 @@ public class PickupDragController extends AbstractDragController {
 		dropControllerCollection = new DropControllerCollection(
 				dropControllerList);
 	}
-	/**
-	 * This method will hit when the dragging the widget is complete.
-	 */
+
 	@Override
 	public void dragEnd() { 
 		assert context.finalDropController == null == (context.vetoException != null);
@@ -210,21 +195,15 @@ public class PickupDragController extends AbstractDragController {
 				}
 				
 				restoreSelectedWidgetsLocation();
-				/*DOMUtil.fastSetElementPosition(movablePanel.getElement(), draggedElementStartLeft,draggedElementStartTop);
-				new CustomAnimation(movablePanel).run(400);*/
 				new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(750); 
 			}
 		} else {
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
-				/*DOMUtil.fastSetElementPosition(movablePanel.getElement(), draggedElementStartLeft,draggedElementStartTop);
-				new CustomAnimation(movablePanel).run(400);*/
 				new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(750); 
 				
 			}
 			else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){ 
 				MixpanelUtil.Drag_ResourceAction();
-				/*DOMUtil.fastSetElementPosition(movablePanel.getElement(), draggedElementStartLeft,draggedElementStartTop);
-				new CustomAnimation(movablePanel).run(400);*/
 				new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(750);  
 			}
 			context.dropController.onDrop(context);
@@ -236,9 +215,6 @@ public class PickupDragController extends AbstractDragController {
 			restoreSelectedWidgetsStyle();
 		}
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-			/*DOMUtil.fastSetElementPosition(movablePanel.getElement(), draggedElementStartLeft,draggedElementStartTop);
-			new CustomAnimation(movablePanel).run(10000);*/
-			
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000); 
 		}
 		
@@ -246,9 +222,7 @@ public class PickupDragController extends AbstractDragController {
 		movablePanel = null;
 		super.dragEnd();
 	}
-	/**
-	 * This method will hit when moving the draggable widget.
-	 */
+
 	@Override
 	public void dragMove() {
 		// may have changed due to scrollIntoView(), developer driven changes
@@ -293,21 +267,7 @@ public class PickupDragController extends AbstractDragController {
 			context.dropController.onMove(context);
 		}
 	}
-	/**
-	 * @function setMovablePanelDesiredLeft 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will return the movable panel left position.
-	 * 
-	 * @parm(s) : @param desiredLeftPosition
-	 * @parm(s) : @return
-	 * 
-	 * @return : int
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public int setMovablePanelDesiredLeft(int desiredLeftPosition){
 		if(context.mouseX<(Window.getClientWidth())) {
 			desiredLeftPosition = context.mouseX;
@@ -316,9 +276,7 @@ public class PickupDragController extends AbstractDragController {
 		}
 		return desiredLeftPosition;
 	}
-	/**
-	 * This method will hit on the start of the widget dragging.
-	 */
+	
 	@Override
 	public void dragStart() { 
 		super.dragStart();
@@ -549,9 +507,6 @@ public class PickupDragController extends AbstractDragController {
 			}
 		}
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-			/*DOMUtil.fastSetElementPosition(movablePanel.getElement(), draggedElementStartLeft,draggedElementStartTop);
-			new CustomAnimation(movablePanel).run(10000);*/
-			
 			new DragDropAnimation(movablePanel, draggedElementStartLeft, draggedElementStartTop,draggedElementEndLeft,draggedElementEndTop).run(10000);  
 		}
 	}
@@ -606,41 +561,13 @@ public class PickupDragController extends AbstractDragController {
 			savedWidgetInfoMap.put(widget, info);
 		}
 	}
-	/**
-	 * @function calcBoundaryOffset 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will clear the boundary panel offsets.
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private void calcBoundaryOffset() {
 		Location widgetLocation = new WidgetLocation(context.boundaryPanel,	null);
 		boundaryOffsetX = widgetLocation.getLeft()+ DOMUtil.getBorderLeft(context.boundaryPanel.getElement());
 		boundaryOffsetY = widgetLocation.getTop()+ DOMUtil.getBorderTop(context.boundaryPanel.getElement());
 	}
-	/**
-	 * @function checkGWTIssue1813 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will check this particular issue which is there in the gwt drag and drop.
-	 * 
-	 * 
-	 * @parm(s) : @param child
-	 * @parm(s) : @param parent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private void checkGWTIssue1813(Widget child, AbsolutePanel parent) {
 		if (!GWT.isScript()) {
 			if (child.getElement().getOffsetParent() != parent.getElement()
@@ -657,22 +584,7 @@ public class PickupDragController extends AbstractDragController {
 			}
 		}
 	}
-	/**
-	 * @function getIntersectDropController 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method is used to get the intersect drop controller.
-	 * 
-	 * @parm(s) : @param x
-	 * @parm(s) : @param y
-	 * @parm(s) : @return
-	 * 
-	 * @return : DropController
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	private DropController getIntersectDropController(int x, int y) {
 		DropController dropController = dropControllerCollection
 				.getIntersectDropController(x, y);

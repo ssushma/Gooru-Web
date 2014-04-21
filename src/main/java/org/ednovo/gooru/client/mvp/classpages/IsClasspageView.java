@@ -33,19 +33,21 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
+
+
 /**
- * 
  * @fileName : IsClasspageView.java
  *
- * @description : Acts as a bridge between the Presenter and view.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 26-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public interface IsClasspageView extends IsViewWithHandlers<ClasspageUiHandlers>{
 	

@@ -63,6 +63,8 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	
 	void getShortenShareUrl(String contentGooruOid, Map<String, String> params,  AsyncCallback<Map<String, String>> callback);
 	
+	void getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params,  AsyncCallback<Map<String, String>> callback);
+	
 	void getGoogleSignin(String parms, AsyncCallback<String> callback);
 	
 	void getCollectionPlayDirectLink(String params, AsyncCallback<String> callback);
@@ -75,4 +77,6 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 //	void getSuggestedSearchResultForCollectionNoResult(SearchDo<CollectionSearchResultDo> searchInput,AsyncCallback<SearchDo<CollectionSearchResultDo>> callback);
 	
 	void getGoogleSignin(String placeToken, Map<String, String> parms, AsyncCallback<String> callback);
+	
+	public void getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo,AsyncCallback<SearchDo<CodeDo>> callback);
 }

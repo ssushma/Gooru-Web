@@ -30,18 +30,18 @@ import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 /**
- * 
  * @fileName : IsFoldersView.java
- *
- * @description : This file is used to get the ui handlers .
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: Apr 17, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
 
 public interface IsFoldersView extends IsViewWithHandlers<FoldersUiHandlers> {

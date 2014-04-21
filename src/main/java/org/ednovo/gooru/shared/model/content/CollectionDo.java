@@ -24,27 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.content;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+
+import org.ednovo.gooru.shared.model.user.UserDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : CollectionDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
-public class CollectionDo extends ResourceDo {
+public class CollectionDo extends ResourceDo implements Serializable{
 
 	/**
 	 * 
@@ -65,220 +55,143 @@ public class CollectionDo extends ResourceDo {
 	private String estimatedTime;
 	private List<CollectionItemDo> collectionItems;
 	private CollectionMetaInfoDo metaInfo;
-	private PermissionsDO meta;
-	
+	private MetaDO meta;
+	private Integer statusCode;
 	private String classpageCode;
-	
+	private Date lastModified;
+	private UserDo lastModifiedUser;
 	private TrackActivityDo trackActivity;
-
-	/** 
-	 * This method is to get the collectionType
-	 */
-	public String getCollectionType() {
-		return collectionType;
+	private String sharing;
+	private String status;
+	
+	public CollectionDo(){
+		
 	}
 
-	/** 
-	 * This method is to set the collectionType
-	 */
-	public void setCollectionType(String collectionType) {
-		this.collectionType = collectionType;
-	}
-
-	/** 
-	 * This method is to get the narrationLink
-	 */
-	public String getNarrationLink() {
-		return narrationLink;
-	}
-
-	/** 
-	 * This method is to set the narrationLink
-	 */
-	public void setNarrationLink(String narrationLink) {
-		this.narrationLink = narrationLink;
-	}
-
-	/** 
-	 * This method is to get the notes
-	 */
-	public String getNotes() {
-		return notes;
-	}
-
-	/** 
-	 * This method is to set the notes
-	 */
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	/** 
-	 * This method is to get the keyPoints
-	 */
-	public String getKeyPoints() {
-		return keyPoints;
-	}
-
-	/** 
-	 * This method is to set the keyPoints
-	 */
-	public void setKeyPoints(String keyPoints) {
-		this.keyPoints = keyPoints;
-	}
-
-	/** 
-	 * This method is to get the language
-	 */
-	public String getLanguage() {
-		return language;
-	}
-
-	/** 
-	 * This method is to set the language
-	 */
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
-	/** 
-	 * This method is to get the goals
-	 */
-	public String getGoals() {
-		return goals;
-	}
-
-	/** 
-	 * This method is to set the goals
-	 */
-	public void setGoals(String goals) {
-		this.goals = goals;
-	}
-
-	/** 
-	 * This method is to get the grade
-	 */
-	public String getGrade() {
-		return grade;
-	}
-
-	/** 
-	 * This method is to set the grade
-	 */
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	/** 
-	 * This method is to get the adds
-	 */
 	public String getAdds() {
 		return adds;
 	}
 
-	/** 
-	 * This method is to set the adds
-	 */
 	public void setAdds(String adds) {
 		this.adds = adds;
 	}
 
-	/** 
-	 * This method is to get the views
-	 */
 	public String getViews() {
 		return views;
 	}
 
-	/** 
-	 * This method is to set the views
-	 */
 	public void setViews(String views) {
 		this.views = views;
 	}
 
-	/** 
-	 * This method is to get the shares
-	 */
 	public String getShares() {
 		return shares;
 	}
 
-	/** 
-	 * This method is to set the shares
-	 */
 	public void setShares(String shares) {
-		this.shares = shares;
+		this.shares = views;
 	}
 
-	/** 
-	 * This method is to get the likes
-	 */
 	public String getLikes() {
 		return likes;
 	}
 
-	/** 
-	 * This method is to set the likes
-	 */
 	public void setLikes(String likes) {
-		this.likes = likes;
+		this.likes = views;
 	}
 
-	/** 
-	 * This method is to get the estimatedTime
-	 */
+	public String getCollectionType() {
+		return collectionType;
+	}
+
+	public void setCollectionType(String collectionType) {
+		this.collectionType = collectionType;
+	}
+
+	public String getNarrationLink() {
+		return narrationLink;
+	}
+
+	public void setNarrationLink(String narrationLink) {
+		this.narrationLink = narrationLink;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public String getKeyPoints() {
+		return keyPoints;
+	}
+
+	public void setKeyPoints(String keyPoints) {
+		this.keyPoints = keyPoints;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getGoals() {
+		return goals;
+	}
+
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
 	public String getEstimatedTime() {
 		return estimatedTime;
 	}
 
-	/** 
-	 * This method is to set the estimatedTime
-	 */
 	public void setEstimatedTime(String estimatedTime) {
 		this.estimatedTime = estimatedTime;
 	}
 
-	/** 
-	 * This method is to get the collectionItems
-	 */
 	public List<CollectionItemDo> getCollectionItems() {
 		return collectionItems;
 	}
 
-	/** 
-	 * This method is to set the collectionItems
-	 */
 	public void setCollectionItems(List<CollectionItemDo> collectionItems) {
 		this.collectionItems = collectionItems;
 	}
 
-	/** 
-	 * This method is to get the metaInfo
-	 */
 	public CollectionMetaInfoDo getMetaInfo() {
 		return metaInfo;
 	}
 
-	/** 
-	 * This method is to set the metaInfo
-	 */
 	public void setMetaInfo(CollectionMetaInfoDo metaInfo) {
 		this.metaInfo = metaInfo;
 	}
 
 	/** 
-	 * This method is to get the meta
+	 * This method is to get the trackActivity
 	 */
-	public PermissionsDO getMeta() {
-		return meta;
+	public TrackActivityDo getTrackActivity() {
+		return trackActivity;
 	}
 
 	/** 
-	 * This method is to set the meta
+	 * This method is to set the trackActivity
 	 */
-	public void setMeta(PermissionsDO meta) {
-		this.meta = meta;
+	public void setTrackActivity(TrackActivityDo trackActivity) {
+		this.trackActivity = trackActivity;
 	}
 
 	/** 
@@ -296,16 +209,69 @@ public class CollectionDo extends ResourceDo {
 	}
 
 	/** 
-	 * This method is to get the trackActivity
+	 * This method is to get the meta
 	 */
-	public TrackActivityDo getTrackActivity() {
-		return trackActivity;
+	public MetaDO getMeta() {
+		return meta;
 	}
 
 	/** 
-	 * This method is to set the trackActivity
+	 * This method is to set the meta
 	 */
-	public void setTrackActivity(TrackActivityDo trackActivity) {
-		this.trackActivity = trackActivity;
+	public void setMeta(MetaDO meta) {
+		this.meta = meta;
 	}
+
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	/** 
+	 * This method is to get the lastModified
+	 */
+	public Date getLastModified() {
+		return lastModified;
+	}
+
+	/** 
+	 * This method is to set the lastModified
+	 */
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
+	}
+	
+	/** 
+	 * This method is to get the lastModifiedUser
+	 */
+	public UserDo getLastModifiedUser() {
+		return lastModifiedUser;
+	}
+
+	/** 
+	 * This method is to set the lastModifiedUser
+	 */
+	public void setLastModifiedUser(UserDo lastModifiedUser) {
+		this.lastModifiedUser = lastModifiedUser;
+	}
+
+	public String getSharing() {
+		return sharing;
+	}
+
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

@@ -61,7 +61,7 @@
 				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionBlackBg}">
 						<g:Label styleName="{res.css.myFolderCollectionTitle}"
-							ui:field="titleLbl">Add a Course</g:Label>
+							ui:field="titleLbl"></g:Label>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.loadingImageMainDiv}"
 						ui:field="loadingPanel">
@@ -77,9 +77,9 @@
 						ui:field="buttonsPanel">
 						<g:HTMLPanel styleName="{style.collectionAddButton}"
 							ui:field="addCourseBtnPanel">
-							<g:Button styleName="secondary" text="Cancel" ui:field="cancelCourseBtn" />
+							<g:Button styleName="secondary" ui:field="cancelCourseBtn" />
 						</g:HTMLPanel>
-						<uc:BlueButtonUc styleName="primary" text="Add"
+						<uc:BlueButtonUc styleName="primary"
 							ui:field="addCourseBtnLbl" />
 					</g:HTMLPanel>
 				</g:HTMLPanel>

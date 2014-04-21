@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -54,30 +55,20 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Gooru Team
  * 
- * @fileName : AlmostDoneUc.java
- *
- * @description : This file Deals with Almost done popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 
-public class AlmostDoneUc extends PopupPanel {
+
+public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 	
 
 	private UserDo user=null;
 	@UiField TextBox emailTxtBox,userNameTxtBox;
 	@UiField ListBox roleListBox;
 	@UiField HTMLEventPanel cancelButton,okButton;
-	@UiField Label errorMessageForUserNameLbl,errorMessageForRoleLbl;
-	@UiField HTMLPanel buttonContainer;
+	@UiField Label errorMessageForUserNameLbl,errorMessageForRoleLbl,uNameLbl,agreeText,andText,gooruText;
+	@UiField HTMLPanel buttonContainer,almostDoneText,fillOutText,emailText,roleText;
 	/*@UiField Button okButton;*/
 	@UiField
 	Anchor termsAndPolicyAnr;
@@ -92,11 +83,11 @@ public class AlmostDoneUc extends PopupPanel {
 	@UiField(provided = true)
 	AlmostDoneUcCBundle res;
 	
-	private static final String errorMessageForUserName="Please choose a username.";
-	private static final String errorMessageForUserNameTxt="A username must be at least 5 characters long.";
-	private static final String errorMessageForUserRole="Please select a role.";
+	private static final String errorMessageForUserName=GL1284+GL_SPL_FULLSTOP;
+	private static final String errorMessageForUserNameTxt=GL1285+GL_SPL_FULLSTOP;
+	private static final String errorMessageForUserRole=GL1146;
 
-	private static final String IS_ALREADY_AVAILABLE = " is already in use.";
+	private static final String IS_ALREADY_AVAILABLE = ""+GL1286+GL_SPL_FULLSTOP;
 	
 
 	@UiTemplate("AlmostDoneUc.ui.xml")
@@ -120,9 +111,24 @@ public class AlmostDoneUc extends PopupPanel {
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		
 		this.center();
+		almostDoneText.getElement().setInnerText(GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		fillOutText.getElement().setInnerText(GL1280+GL_SPL_SEMICOLON);
 		emailTxtBox.getElement().setId("txtEmail");
+		emailText.getElement().setInnerText(GL0212);
+		uNameLbl.getElement().setInnerText(GL0423);
+		roleText.getElement().setInnerText(GL1281);
+		roleListBox.setItemText(0, GL1282+GL_SPL_QUESTION);
+		roleListBox.setItemText(1, GL0417);
+		roleListBox.setItemText(2, GL0416);
+		roleListBox.setItemText(3, GL0418);
+		roleListBox.setItemText(4, GL0419);
+		agreeText.setText(GL1283);
+		termsAndPolicyAnr.setText(GL0297+" "+GL_GRR_AND+" "+GL0452);
+		andText.setText(GL_GRR_AND+" "+GL_GRR_THE);
+		copyRightAnr.setText(GL0421);
+		gooruText.setText(GL_GRR_OF+" "+GL0733+GL_SPL_FULLSTOP);
+		okButton.getElement().setInnerText(GL0190);
 		userNameTxtBox.getElement().setId("txtUserName");
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
 		copyRightAnr.getElement().setId("lnkCopyRight");
@@ -212,7 +218,7 @@ public class AlmostDoneUc extends PopupPanel {
 			errorMessageForUserNameLbl.setText("");
 		}
 		if(userName.length()==20){
-			errorMessageForUserNameLbl.setText("Your Character Limit Reached");
+			errorMessageForUserNameLbl.setText(GL1097+" "+GL0143);
 			errorMessageForUserNameLbl.setVisible(true);
 		//	fieldValidationStaus=false;
 		}else{
@@ -279,7 +285,7 @@ public class AlmostDoneUc extends PopupPanel {
 			}
 			if(userNameTxtBox.getText().length()>4 && fieldValidationStaus)
 			{
-				checkUserAvailability(userNameTxtBox.getText(), "byUsername");
+				checkUserAvailability(userNameTxtBox.getText(), "username");
 			}
 		}
 	
@@ -311,7 +317,7 @@ public class AlmostDoneUc extends PopupPanel {
 
 	public void checkUserNameAvailability(UserDo result) {
 		if (result != null && result.isAvailability() && userNameTxtBox.getText() != null) {
-			errorMessageForUserNameLbl.setText("Oops ! " + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
+			errorMessageForUserNameLbl.setText(GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
 			errorMessageForUserNameLbl.setVisible(true);
 			
 		}

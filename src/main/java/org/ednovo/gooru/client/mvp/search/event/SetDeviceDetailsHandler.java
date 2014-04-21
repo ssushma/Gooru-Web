@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.event;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
@@ -30,19 +32,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetDeviceDetailsHandler.java
- *
- * @description : THis is the event handler to set device details. 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SetDeviceDetailsHandler extends EventHandler, BaseUiHandlers {
 

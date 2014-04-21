@@ -31,84 +31,64 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : UnitDo.java
- *
- * @description :  This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 @JsonInclude(Include.NON_NULL)
 public class UnitDo implements Serializable {
 	
 	private static final long serialVersionUID = 2411080367742513414L;
 	private Integer codeId;
 	private String label;
+	private Integer count;
 	private ThumbnailDo thumbnails;
 	private ArrayList<TopicDo> topic;
+	private ArrayList<ConceptDo> collection;
 	
 	public UnitDo(){}
 
-	/** 
-	 * This method is to get the codeId
-	 */
 	public Integer getCodeId() {
 		return codeId;
 	}
 
-	/** 
-	 * This method is to set the codeId
-	 */
 	public void setCodeId(Integer codeId) {
 		this.codeId = codeId;
 	}
 
-	/** 
-	 * This method is to get the label
-	 */
 	public String getLabel() {
 		return label;
 	}
 
-	/** 
-	 * This method is to set the label
-	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
-	/** 
-	 * This method is to get the thumbnails
-	 */
 	public ThumbnailDo getThumbnails() {
 		return thumbnails;
 	}
 
-	/** 
-	 * This method is to set the thumbnails
-	 */
 	public void setThumbnails(ThumbnailDo thumbnails) {
 		this.thumbnails = thumbnails;
 	}
 
-	/** 
-	 * This method is to get the topic
-	 */
 	public ArrayList<TopicDo> getTopic() {
 		return topic;
 	}
 
-	/** 
-	 * This method is to set the topic
-	 */
 	public void setTopic(ArrayList<TopicDo> topic) {
 		this.topic = topic;
+	}
+
+	public ArrayList<ConceptDo> getCollection() {
+		return collection;
+	}
+
+	public void setCollection(ArrayList<ConceptDo> collection) {
+		this.collection = collection;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+	
+	public void setCount(Integer count) {
+		this.count = count;
 	}
 }

@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -45,31 +46,33 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
+
+/*
+ * 
  * @fileName : AddCollectionsPopupVc.java
- *
- * @description : This class is used to add collection in assignment.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @description :This class is used to add collection in assignment
+ * 
+ * @version : 5.5
+ * 
+ * @date: Apr 17, 2013
+ * 
+ * @Author :Gooru Team
+ * 
+ * @Reviewer:
  */
-public abstract class AddCollectionsPopupVc extends AppPopUp {
+public abstract class AddCollectionsPopupVc extends AppPopUp implements MessageProperties {
 
 	@UiField
 	Label btnAdd;
 
 	@UiField
-	Label btnCancel, collectionFirstElement;
+	Label btnCancel, collectionFirstElement,loadingLbl;
 	/*
 	 * @UiField ListBox copyPopupListBox;
 	 */
 	@UiField
-	HTMLPanel addLabel, htmlScrollPanel, loadingPanel;
+	HTMLPanel addLabel, htmlScrollPanel, loadingPanel,chooseCollectionsLbl,cannotFindLbl;
 
 	@UiField
 	Label mandatorySelectCollectionLbl;
@@ -132,8 +135,14 @@ public abstract class AddCollectionsPopupVc extends AppPopUp {
 		super();
 		this.getElement().getStyle().setWidth(400, Unit.PX);
 		this.getElement().getStyle().setHeight(231, Unit.PX);
-		setContent("Add a Collection", uiBinder.createAndBindUi(this));
-		nocollectionMsgLabel.setText("You have no collections!");
+		setContent(GL1410, uiBinder.createAndBindUi(this));
+		chooseCollectionsLbl.getElement().setInnerText(GL1411+GL_SPL_STAR);
+		nocollectionMsgLabel.setText(GL0995);
+		btnAdd.setText(GL0590);
+		btnCancel.setText(GL0142);
+		loadingLbl.setText(GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		cannotFindLbl.getElement().setInnerText(GL1412);
+		//
 		nocollectionMsgLabel.setVisible(false);
 		setModal(true);
 		Window.enableScrolling(false);
@@ -151,7 +160,7 @@ public abstract class AddCollectionsPopupVc extends AppPopUp {
 				.setVisibility(Visibility.HIDDEN);
 		collectionFirstElement.getElement().setAttribute("style",
 				"padding-left:5px");
-		collectionFirstElement.setText("Please choose one of the following...");
+		collectionFirstElement.setText(GL1377+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
 		collectionFirstElement.getElement().setAttribute("style", "color:#999");
 		/**
 		 * on click for display list of collection in listbox

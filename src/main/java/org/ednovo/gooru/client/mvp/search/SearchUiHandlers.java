@@ -40,19 +40,8 @@ import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchUiHandlers.java
- *
- * @description : This is to search page view.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler {
 	

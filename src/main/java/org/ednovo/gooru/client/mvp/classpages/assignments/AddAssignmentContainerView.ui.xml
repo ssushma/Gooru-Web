@@ -1,26 +1,52 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle"
 		field="res"></ui:with>
-	<g:PopupPanel glassEnabled="true" autoHideEnabled="true">
-		<g:HTMLPanel styleName="{res.css.assignmentContainerMainPanel}">
-			<g:HTMLPanel styleName="{res.css.assignmentContainer}">
-				<g:HTMLPanel styleName="{res.css.myFolderCollectionPopup}">
-					<g:HTMLPanel styleName="{res.css.assignmentTitleBlackBg}">
-						<g:HTMLPanel styleName="{res.css.assignmentTitle}">Add an Assignment</g:HTMLPanel>
+		<g:FlowPanel styleName="{res.css.popupContent}">
+			<g:HTMLPanel styleName="{res.css.popupHeader}">
+				<g:Label styleName="{res.css.popupHeaderText}" ui:field="addCollectionPopupHeader"></g:Label>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.assignmentMainContainer}">
+				<g:HTMLPanel styleName="{res.css.assignmentContentContainer}">
+					<g:HTMLPanel styleName="{res.css.assignmentControlsContainer}">
+					    <g:HTMLPanel>
+						<g:Label styleName="{res.css.assignmentTitleLabel}" ui:field="assignmentTitleLabel"></g:Label>
+						<g:Label styleName="{res.css.assignmentErrorMessage}" ui:field="chooseCollectionErrorLabel"></g:Label>
+						</g:HTMLPanel>
+						<g:FlowPanel styleName="{res.css.dropdowncontainer}">
+			              	<g:Label ui:field="dropdownListPlaceHolder" styleName="{res.css.dropdownPlaceHolder}"> </g:Label>
+			              	<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel}">
+				            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
+						   		 </g:HTMLPanel>
+					   		 </g:ScrollPanel>
+          			   </g:FlowPanel>
+          			   <g:Label styleName="{res.css.assignmentsystemMessage}" ui:field="chooseCollectionHelpText"></g:Label>
+          			   
+						<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryTitleLabel"></g:Label>
 					</g:HTMLPanel>
-					<g:HTMLPanel styleName="{res.css.assignmentTabContent}">
-						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
-							ui:field="assignmentTabButton">
-							<g:HTMLPanel styleName="{res.css.assignmentTabTitleBg}">Assignment</g:HTMLPanel>
-						</uc:HTMLEventPanel>
+					<g:HTMLPanel styleName="{res.css.assignmentDirectionsContainer}">
+						<g:Label styleName="{res.css.assignmentTitleLabel}" ui:field="assignmentDirectionLabel"></g:Label>
+						<g:HTMLPanel styleName="{res.css.assignmentDirectionContainer}">
+							<g:TextArea styleName="{res.css.assignmentDirectionTxtArea}" ui:field="assignmentDirectionsTxtArea"></g:TextArea>
+							<g:Label styleName="{res.css.assignmentErrorMessage}" ui:field="directionErrorLabel"></g:Label>
+						</g:HTMLPanel>
+						<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryDirectionLabel"></g:Label>
 					</g:HTMLPanel>
-					<g:HTMLPanel ui:field="tabViewContainer">
+					<g:HTMLPanel styleName="{res.css.assignmentControlsContainer}">
+						<g:Label styleName="{res.css.assignmentTitleLabel}" ui:field="assignmentDueDateLabel"></g:Label>
+						<g:HTMLPanel>
+							<g:SimplePanel ui:field = "datePanelContainer"/>
+							<g:Label styleName="{res.css.mandatoryLabel}" ui:field="mandatoryDueDateLabel"></g:Label>
+						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-			</g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.assignmentButtonsContainer}">
+					<g:Button styleName="secondary"  ui:field="cancelResourcePopupBtnLbl" />
+					<g:Button styleName="primary {res.css.assignButton}"  ui:field="addResourceBtnLbl" />
+					<g:Label ui:field="addingText" styleName=""></g:Label>
+				</g:HTMLPanel>
 		</g:HTMLPanel>
-	</g:PopupPanel>
+	</g:FlowPanel>
 </ui:UiBinder>

@@ -12,14 +12,14 @@
 			    <g:Label styleName="{res.css.forgotPasswordSuccessText}" ui:field="lblDisplayTextMessage" />
 			    <g:Label styleName="{res.css.h1}" ui:field="lblTextMessageInfomation" />
 				<g:HTMLPanel styleName="{res.css.forgotPasswordSuceessButtonContainer}">
-				<g:Button ui:field="okBtnUc" styleName="primary {res.css.btnSubmit}" text="Ok"></g:Button>
+				<g:Button ui:field="okBtnUc" styleName="primary {res.css.btnSubmit}"></g:Button>
 			
 			 </g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.forgotPasswordBottomContainer}">
 			    <g:HTMLPanel styleName="{res.css.footerText}">
-			    <g:Label text="If you have any questions," />
-			    <g:InlineLabel  text="Please contact"/> <g:Anchor ui:field="supportlnk"  href="mailto:support@goorulearning.org" target="_blank">support@goorulearning.org</g:Anchor>
+			    <g:Label ui:field="queriesText"/>
+			    <g:InlineLabel ui:field="pleaseContactLbl"/><g:Anchor ui:field="supportlnk" target="_blank"></g:Anchor>
 			    </g:HTMLPanel>
 			</g:HTMLPanel>
 			</g:HTMLPanel>

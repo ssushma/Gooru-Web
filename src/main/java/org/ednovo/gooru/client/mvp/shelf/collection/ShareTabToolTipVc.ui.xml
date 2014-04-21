@@ -29,6 +29,6 @@
 	</ui:style>
 		<g:FlowPanel ui:field="logPanel" styleName="{style.logPanel}">
 			<g:Label styleName="{style.guideInfoArrow}"/> 
-			<g:Label styleName="{style.logoutText}" text="Cannot make collections public yet."/>
+			<g:Label styleName="{style.logoutText}" ui:field="tooltipText"/>
 		</g:FlowPanel>
 </ui:UiBinder> 

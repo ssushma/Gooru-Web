@@ -6,10 +6,10 @@
 		<div class="{flagPopUpstyle.playerflagpopupwrapper}">
 			<div class="{flagPopUpstyle.playerflagpopupinnerwrapper}">
 				<div class="{flagPopUpstyle.playerflagpopupheader}">
-					<div class="{flagPopUpstyle.playerflagpopupheadertitle}">Flag</div>
+					<g:Label styleName="{flagPopUpstyle.playerflagpopupheadertitle}" ui:field="flagText"></g:Label>
 					<panel:HTMLEventPanel ui:field="closeButton"
 						styleName="{flagPopUpstyle.playerflagpopupheaderCloseBtn}">
-						<g:Image altText="Close" ui:field="popUpCloseButton" />
+						<g:Image  ui:field="popUpCloseButton" />
 					</panel:HTMLEventPanel>
 				</div>
 				<div class="{flagPopUpstyle.playerflagcontentcontainer}">
@@ -20,35 +20,34 @@
 					<div class="{flagPopUpstyle.playerflagradiobutton}">
 						<g:CheckBox ui:field="checkBox3"
 							styleName="{flagPopUpstyle.ckeckBoxPlyerStyle}" />
-						<div class=" {flagPopUpstyle.playerflagcontent}">Resource is inappropriate (i.e. for students)</div>
+						<g:Label styleName=" {flagPopUpstyle.playerflagcontent}" ui:field="inappropriateText"></g:Label>
 					</div>
 					<div class="{flagPopUpstyle.playerflagradiobutton}">
 						<g:CheckBox ui:field="checkBox2"
 							styleName="{flagPopUpstyle.ckeckBoxPlyerStyle}" />
-						<div class=" {flagPopUpstyle.playerflagcontent}">Resource is unavailable (i.e. it doesn't load)</div>
+						<g:Label styleName=" {flagPopUpstyle.playerflagcontent}" ui:field="unavailableText"></g:Label>
 					</div>
 					<div class="{flagPopUpstyle.playerflagradiobutton}">
 						<g:CheckBox ui:field="checkBox1"
 							styleName="{flagPopUpstyle.ckeckBoxPlyerStyle}" />
-						<div class=" {flagPopUpstyle.playerflagcontent}">Resource information appears to be inaccurate (e.g.
-							the resource title, category, description)</div>
+						<g:Label styleName="{flagPopUpstyle.playerflagcontent}" ui:field="inaccurateText"></g:Label>
 					</div>
 
 					<div class="{flagPopUpstyle.playerflagradiobutton}">
 						<g:CheckBox ui:field="checkBox4"
 							styleName="{flagPopUpstyle.ckeckBoxPlyerStyle}" />
-						<div class="{flagPopUpstyle.playerflagcontent}">Other reason</div>
+						<g:Label styleName="{flagPopUpstyle.playerflagcontent}" ui:field="otherReasonText"></g:Label>
 					</div>
-					<div class="{flagPopUpstyle.playerflagcontentTitle}">Please provide us with more details:</div>
+					<g:Label styleName="{flagPopUpstyle.playerflagcontentTitle}" ui:field="provideMoretext"></g:Label>
 					<g:TextArea styleName="{flagPopUpstyle.playerflagtextarea}"
 						ui:field="descriptionTextArea" />
 					<div class="{flagPopUpstyle.playerflagbuttoncontainer}">
 						<g:Button styleName="{flagPopUpstyle.playerflagbuttoncancel}"
-							text="Reset" ui:field="cancelButton" />
+							ui:field="cancelButton"/>
 						<g:Button styleName="{flagPopUpstyle.playerflagbuttonsubmit}"
-							text="Submit" ui:field="submitButton" />
+							 ui:field="submitButton"/>
 						<g:Button styleName="{flagPopUpstyle.playerflagbuttoncancelGray}"
-							text="Submit" ui:field="submitButtonGray" />
+							 ui:field="submitButtonGray"/>
 					</div>
 				</div>
 			</div>

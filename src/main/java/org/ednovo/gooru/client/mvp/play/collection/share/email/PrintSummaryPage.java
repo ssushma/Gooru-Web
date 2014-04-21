@@ -24,17 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.share.email;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeSet;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.player.collection.client.view.collectionoverview.CollectionPlayerImageBundle;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -45,7 +50,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PrintSummaryPage extends Composite implements PlayerMessageProperties{
+public class PrintSummaryPage extends Composite implements PlayerMessageProperties,MessageProperties{
 
 	@UiField HTMLPanel printPageContainer,gooruLogoContainer,userNameContainer,userClassContainer,classField;
 	@UiField HTMLPanel mainContainer,metaDataLeftContainer,metaDataRightContainer,metaDataTitleContainer,metaDataTimeContainer,metaDataUserNameContainer,timeContainer;
@@ -60,9 +65,9 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 	private InlineLabel timeTxt;
 	private InlineLabel timeLbl;
 	
-	private static final String FIB_SEPARATOR = "_______";
-	private static final String MC_FIB_TITLE_TXT = "Multiple Choice and Fill in the Blank Questions";
-	private static final String MC_TITLE_TXT = "Multiple Choice Questions";
+	private static final String FIB_SEPARATOR = GL0885;
+	private static final String MC_FIB_TITLE_TXT = GL1445;
+	private static final String MC_TITLE_TXT = GL1446;
 	
 	private CollectionDo collectionDo=null;
 	
@@ -75,57 +80,63 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 
 	public PrintSummaryPage(CollectionDo collectionDo, String timeSpent, String collectionBitlyLink,  Map<String,AttemptedAnswersDo> attemptedAnswerMap, String completedDate) {
 		initWidget(uiBinder.createAndBindUi(this));
+		userName.setText(GL0649);
+		userClass.setText(GL0650);
+		metaDataTitleTxt.setText(GL0651);
+		metaDataUserNameTxt.setText(GL0652);
+		metaDataTimeTxt.setText(GL0653);
+		oeQuestionLbl.setText(GL0654);
 		this.collectionDo=collectionDo;
-		printPageContainer.getElement().setAttribute("style",PlayerMessageProperties.cp001);
-		gooruLogoContainer.getElement().setAttribute("style",PlayerMessageProperties.cp002);
-		userNameContainer.getElement().setAttribute("style",PlayerMessageProperties.cp003);
-		userName.getElement().setAttribute("style",PlayerMessageProperties.cp004);
-		userField.getElement().setAttribute("style",PlayerMessageProperties.cp005);
-		userClassContainer.getElement().setAttribute("style",PlayerMessageProperties.cp006);
-		userClass.getElement().setAttribute("style",PlayerMessageProperties.cp004);
-		classField.getElement().setAttribute("style",PlayerMessageProperties.cp005);
+		printPageContainer.getElement().setAttribute("style",cp001);
+		gooruLogoContainer.getElement().setAttribute("style",cp002);
+		userNameContainer.getElement().setAttribute("style",cp003);
+		userName.getElement().setAttribute("style",cp004);
+		userField.getElement().setAttribute("style",cp005);
+		userClassContainer.getElement().setAttribute("style",cp006);
+		userClass.getElement().setAttribute("style",cp004);
+		classField.getElement().setAttribute("style",cp005);
 		
-		mainContainer.getElement().setAttribute("style",PlayerMessageProperties.cp007);
-		metaDataLeftContainer.getElement().setAttribute("style",PlayerMessageProperties.cp008);
-		metaDataRightContainer.getElement().setAttribute("style",PlayerMessageProperties.cp0014);
-		metaDataTitleContainer.getElement().setAttribute("style",PlayerMessageProperties.cp0025);
-		metaDataTitleTxt.getElement().setAttribute("style",PlayerMessageProperties.cp009);
-		metaDataTitleLbl.getElement().setAttribute("style",PlayerMessageProperties.cp0010);
+		mainContainer.getElement().setAttribute("style",cp007);
+		metaDataLeftContainer.getElement().setAttribute("style",cp008);
+		metaDataRightContainer.getElement().setAttribute("style",cp0014);
+		metaDataTitleContainer.getElement().setAttribute("style",cp0025);
+		metaDataTitleTxt.getElement().setAttribute("style",cp009);
+		metaDataTitleLbl.getElement().setAttribute("style",cp0010);
 	
-		metaDataTimeTxt.getElement().setAttribute("style",PlayerMessageProperties.cp009);
-		metaDataTimeLbl.getElement().setAttribute("style",PlayerMessageProperties.cp0010);
+		metaDataTimeTxt.getElement().setAttribute("style",cp009);
+		metaDataTimeLbl.getElement().setAttribute("style",cp0010);
 
-		metaDataUserNameContainer.getElement().setAttribute("style",PlayerMessageProperties.cp0025);
-		metaDataUserNameTxt.getElement().setAttribute("style",PlayerMessageProperties.cp009);
-		metaDataUserNameLbl.getElement().setAttribute("style",PlayerMessageProperties.cp0010);
+		metaDataUserNameContainer.getElement().setAttribute("style",cp0025);
+		metaDataUserNameTxt.getElement().setAttribute("style",cp009);
+		metaDataUserNameLbl.getElement().setAttribute("style",cp0010);
 	
 		timeTxt = new InlineLabel();
 		timeTxt.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 		timeLbl = new InlineLabel();
 		timeContainer.add(timeTxt);
 		timeContainer.add(timeLbl);
-		timeLbl.getElement().setAttribute("style",PlayerMessageProperties.cp0012);
+		timeLbl.getElement().setAttribute("style",cp0012);
 		
-		oeQuestionLbl.getElement().setAttribute("style",PlayerMessageProperties.cp0013);
-		mcQuestionsLbl.getElement().setAttribute("style",PlayerMessageProperties.cp0013);
-		mcQuestionsLblPanel.getElement().setAttribute("style",PlayerMessageProperties.cp0013);
+		oeQuestionLbl.getElement().setAttribute("style",cp0013);
+		mcQuestionsLbl.getElement().setAttribute("style",cp0013);
+		mcQuestionsLblPanel.getElement().setAttribute("style",cp0013);
 		mcQuestionsLbl.setText(MC_TITLE_TXT);
-		setMetaData(collectionDo.getTitle(), timeSpent, "", collectionBitlyLink, completedDate);
+		setMetaData(collectionDo.getTitle(), timeSpent, AppClientFactory.getLoggedInUser().getUsername(), collectionBitlyLink, completedDate);
 		//setMcQuestionsData(resourceList, questionResourceOptions);
 		
-		setQuestionsData();
+		setQuestionsData(attemptedAnswerMap);
 	
-		bitlyLink.getElement().setAttribute("style",PlayerMessageProperties.cp0011);
+		bitlyLink.getElement().setAttribute("style",cp0011);
 	}
 
 	private void setMetaData(String collectionTitle, String timeSpent, String collectionUserName, String collectionBitlyLink, String completedDate) {
 		userField.setText("");
 		metaDataTitleLbl.setText(collectionTitle);
-		//metaDataTimeLbl.setText(calculateSpentTime(timeSpent));
+		metaDataTimeLbl.setText(calculateSpentTime(timeSpent));
 		metaDataUserNameLbl.setText(collectionUserName);
-		timeTxt.setText("Completed:");
+		timeTxt.setText(GL1447+GL_SPL_SEMICOLON);
 		timeLbl.setText(completedDate);
-		bitlyLink.setText("Collection Link: "+collectionBitlyLink);
+		bitlyLink.setText(GL1448+GL_SPL_SEMICOLON+" "+collectionBitlyLink);
 	}
 	
 	private String calculateSpentTime(String totalSecs) {
@@ -158,10 +169,10 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 			questionText = questionText.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 			final HTML oeQuestionSummary = new HTML(questionText);
 			final HTML oeQuestionAnswer = new HTML(questionAnswer);
-			oeQuestionDiv.getElement().setAttribute("style",PlayerMessageProperties.cp0015);
-			oeQuestionNumber.getElement().setAttribute("style",PlayerMessageProperties.cp0017);
-			oeQuestionSummary.getElement().setAttribute("style",PlayerMessageProperties.cp0018);
-			oeQuestionAnswer.getElement().setAttribute("style",PlayerMessageProperties.cp0019);
+			oeQuestionDiv.getElement().setAttribute("style",cp0015);
+			oeQuestionNumber.getElement().setAttribute("style",cp0017);
+			oeQuestionSummary.getElement().setAttribute("style",cp0018);
+			oeQuestionAnswer.getElement().setAttribute("style",cp0019);
 			oeQuestionDiv.add(oeQuestionNumber);
 			oeQuestionDiv.add(oeQuestionSummary);
 			oeQuestionDiv.add(oeQuestionAnswer);
@@ -169,7 +180,7 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 			oeQuestionsBox.add(oeQuestionDiv);
 	}
 	
-	public void setQuestionsData(){
+	public void setQuestionsData(Map<String, AttemptedAnswersDo> attemptedAnswerMap){
 		int collectionItemsSize=collectionDo.getCollectionItems().size();
 		int correctAnswers=0; int questionResourceOptionsSize=0;
 		for(int i = 0; i < collectionItemsSize; i++){
@@ -177,7 +188,9 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 			CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(i);
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
 				if(collectionItemDo.getResource().getType()==6){
-					setOeQuestionsData(i, collectionItemDo.getResource().getQuestionText(), "");
+					AttemptedAnswersDo attemptedAnswersDo=  attemptedAnswerMap.get(collectionItemDo.getCollectionItemId());
+					String answerText=attemptedAnswersDo!=null?attemptedAnswersDo.getAnswersText():"";
+					setOeQuestionsData(i, collectionItemDo.getResource().getQuestionText(),answerText);
 				}else{
 					final HTMLPanel mcQuestionDiv = new HTMLPanel("");
 					final Image mcQuestionChoice = new Image();
@@ -186,21 +199,63 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 					String questionText = collectionItemDo.getResource().getQuestionText();
 					questionText = questionText.replaceAll("</p>", "").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("&nbsp;", " ");
 					final HTML mcQuestionAnswer = new HTML();
+					HTML questionLabel=new HTML();
 					final HTMLPanel fibQuestionPanel = new HTMLPanel("");
 					if(collectionItemDo.getResource().getType()==4){
 						String[] fibArray = questionText.split(FIB_SEPARATOR);
 						mcQuestionsLbl.setText(MC_FIB_TITLE_TXT);
-						List<String> questionArray = Arrays.asList(fibArray);
-						fibQuestionPanel.getElement().setAttribute("style",PlayerMessageProperties.cp0023);
+						String fibQuestionTxt = "";
+						int k=0;
+						boolean isFibAnswerCorrect=true;
+						boolean isUserAttempted=false;
+						for(int j = 0; j < fibArray.length; j++) {
+							fibQuestionTxt = fibQuestionTxt + fibArray[j];
+							if(j<answerArraySize) {
+								AttemptedAnswersDo attemptedAnswersDo=attemptedAnswerMap.get(collectionItemDo.getCollectionItemId());
+								String correctAnswer=getQuestionAnswerDo(k,collectionItemDo)!=null?getQuestionAnswerDo(k,collectionItemDo).getAnswerText():"";
+								if(attemptedAnswersDo!=null){
+									isUserAttempted=true;
+									String enteredAnswer=attemptedAnswersDo.getFibAnswersList()[k];
+									if(correctAnswer.equalsIgnoreCase(enteredAnswer)){
+										fibQuestionTxt = fibQuestionTxt + "&nbsp;<div style=\"border-bottom:1px solid #515151;min-width:30px;display:inline-block;\">"+enteredAnswer+"</div>";
+										if(isFibAnswerCorrect){
+											isFibAnswerCorrect=true;
+										}
+										
+									}else{
+										fibQuestionTxt = fibQuestionTxt + "&nbsp;<div style=\"border-bottom:1px solid #515151;min-width:30px;display:inline-block;\">"+enteredAnswer+"</div>";
+										if(isFibAnswerCorrect){
+											isFibAnswerCorrect=false;
+										}
+									}
+								}
+								else{
+									fibQuestionTxt = fibQuestionTxt + "&nbsp;<div style=\"border-bottom:1px solid #515151;min-width:30px;display:inline-block;\"></div>";
+								}
+								k++;
+							}
+						}
+						if(isUserAttempted){
+							if(isFibAnswerCorrect){
+								correctAnswers++;
+								mcQuestionChoice.setUrl(getRightAnswerBundle());
+							}else{
+								mcQuestionChoice.setUrl(getWrongAnswerBundle());
+							}
+						}
+						questionLabel.setHTML(fibQuestionTxt);
+
+						fibQuestionPanel.add(questionLabel);
+						fibQuestionPanel.getElement().setAttribute("style",cp0023);
 					}
 					else {
 						mcQuestionAnswer.setHTML(questionText);
-						mcQuestionAnswer.getElement().setAttribute("style",PlayerMessageProperties.cp0023);
+						mcQuestionAnswer.getElement().setAttribute("style",cp0023);
 					}
 					
-					mcQuestionDiv.getElement().setAttribute("style",PlayerMessageProperties.cp0021);
-					mcQuestionChoice.getElement().setAttribute("style",PlayerMessageProperties.cp0022);
-					mcQuestionNumber.getElement().setAttribute("style",PlayerMessageProperties.cp0017);
+					mcQuestionDiv.getElement().setAttribute("style",cp0021);
+					mcQuestionChoice.getElement().setAttribute("style",cp0022);
+					mcQuestionNumber.getElement().setAttribute("style",cp0017);
 					
 					String correctQuestionOption = collectionItemDo.getResource().getGooruOid();
 					String questionId = collectionItemDo.getResource().getGooruOid();
@@ -209,8 +264,20 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 					mcQuestionDiv.add(mcQuestionNumber);
 					
 					if(collectionItemDo.getResource().getType()==4) {
+						questionResourceOptionsSize++;
 						mcQuestionDiv.add(fibQuestionPanel);
 					} else {
+						questionResourceOptionsSize++;
+						AttemptedAnswersDo attemptedAnswersDo=  attemptedAnswerMap.get(collectionItemDo.getCollectionItemId());
+						if(attemptedAnswersDo!=null){
+							boolean attemptedAnswers=attemptedAnswersDo.isAttemptResult(); 
+							if(attemptedAnswers){
+								correctAnswers++;
+								mcQuestionChoice.setUrl(getRightAnswerBundle());
+							}else{
+								mcQuestionChoice.setUrl(getWrongAnswerBundle());
+							}
+						}
 						mcQuestionDiv.add(mcQuestionAnswer);
 					}
 					
@@ -227,9 +294,32 @@ public class PrintSummaryPage extends Composite implements PlayerMessageProperti
 		if(!(mcQuestionsBox.getWidgetCount()>0)) {
 			mcQuestionsContainer.setVisible(false);
 		}
-		answerCount.setText(correctAnswers+" / "+questionResourceOptionsSize+" correct" );
+		answerCount.setText(correctAnswers+" / "+questionResourceOptionsSize+" "+GL0314);
 		answerCount.getElement().setAttribute("style", cp0026);
 			
+	}
+	
+	private QuestionAnswerDo getQuestionAnswerDo(int index, CollectionItemDo collectionItemDo){ 
+		TreeSet<QuestionAnswerDo> answersList=collectionItemDo.getResource().getAnswers();
+		Iterator<QuestionAnswerDo> answersIterator=answersList.iterator();
+		QuestionAnswerDo questionAnswerDo=null;
+		int i=0;
+		while(answersIterator.hasNext()){
+			questionAnswerDo=answersIterator.next();
+			if(index==i){
+				return questionAnswerDo;
+			}
+			i++;
+		}
+		return questionAnswerDo;
+	}
+	
+	private SafeUri getRightAnswerBundle() {
+		return CollectionPlayerImageBundle.IMAGEBUNDLEINSTANCE.correctAnswerIcon().getSafeUri();
+	}
+
+	private SafeUri getWrongAnswerBundle() {
+		return CollectionPlayerImageBundle.IMAGEBUNDLEINSTANCE.incorrectAnswer().getSafeUri();
 	}
 	
 //	private void setMcQuestionsData( HashMap<String, String> questionResourceOptions) {

@@ -30,8 +30,13 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
+import com.google.gwt.user.client.ui.Label;
+
+
 public interface IsCollectionEndView extends IsViewWithHandlers<CollectionEndUiHandlers>{
 	public void showSummaryQuestionView(CollectionDo collectionDo,Map<String,AttemptedAnswersDo> attemptedAnswerMap);
 	public void showShareWidget(CollectionDo collectionDo,Map<String,String> collectionShare);
 	public void hideSendEmailPopup(String toEmail);
+	public Label getFlagButton();
+	public void setCollectionEndTime(String collectionEndTime,String userSpentTime);
 }

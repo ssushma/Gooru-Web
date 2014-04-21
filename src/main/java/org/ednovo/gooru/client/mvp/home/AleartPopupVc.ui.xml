@@ -3,13 +3,12 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
 	<ui:with type="org.ednovo.gooru.client.mvp.home.HomeCBundle" field="res" />
 	<g:HTMLPanel>
-		<g:FlowPanel styleName="{res.css.removePopupContainer}"	>
+		<g:FlowPanel styleName="{res.css.removePopupContainer}">
 			<g:FlowPanel styleName="{res.css.removeText}">
-				<g:Label
-					text="Sorry! You are only allowed to store your resource in collections." />
+				<g:Label ui:field="storeResourcesText"/>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.actionFieldOne}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="Ok" ui:field="okBtnUc"
+				<gg:BlueButtonUc  ui:field="okBtnUc"
 					styleName="overRideBlueButton" />
 			</g:FlowPanel>
 		</g:FlowPanel>

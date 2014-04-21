@@ -8,7 +8,8 @@
 	text-align: center;
 	color: rgba(100, 100, 100, 0.8);
 	text-shadow: 1px 2px 2px #eee, 0 0 0 #000, 1px 2px 2px #eee;
-	margin-bottom:30px;
+/* 	margin-bottom:30px; */
+	margin-top: 56px;
 }
 
 .pageTitle.h2 {
@@ -34,12 +35,17 @@
 
 #courseTabs .tabsLi {
 	position:relative;
-	padding:0px 51px;
+	padding:0px 37px;
 	margin-left:-1px;
 	line-height:50px;
 	font-size:14px;
 	border-left:1px solid #ddd;
 	cursor:default;
+}
+
+#courseTabs .tabsLi.math {
+	padding:0px 39px;
+
 }
 
 #courseTabs .tabsLi.active {
@@ -56,7 +62,7 @@
 	background:white;
 	border:1px solid #ddd;
 	border-top:none;
-	width:100%;
+	width:100%; 
 	font-size:12px;
 }
 
@@ -88,6 +94,7 @@
 	background: -moz-linear-gradient(top, #CFE3F1, #ADD0E8);
 	background: -ms-linear-gradient(top, #CFE3F1, #ADD0E8);
 	background: -o-linear-gradient(top, #CFE3F1, #ADD0E8);
+	padding:0px 35px !important;
 }
 
 #courseTabs .singleLink.last:hover {
@@ -95,14 +102,32 @@
 	opacity:1;
 }
 
-#courseTabs .dropdown .courseOption {
-	padding:0px 15px;
+/* #courseTabs .dropdown .courseOption {
+	padding:7px;
+	line-height:normal;
 }
 
 #courseTabs .dropdown .courseOption:hover {
 	background-color:#CFE3F1;
-	padding:0px 15px;
+} */
+
+#courseTabs .courseOption {
+	padding: 7px;
+	width: 100%;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	float: left;
+	white-space: normal;
+	line-height: 1.2em;
 }
+
+#courseTabs .courseOption:hover {
+	background-color:#CFE3F1;
+}
+
+
+
 
 #container {
 	width:1000px;
@@ -131,7 +156,7 @@
 #featuredEducator {
 	margin: 20px 0px;
 	font-size:16px;
-}
+	}
 
 #featuredEducator .educatorPhoto {
 	width:40px;
@@ -192,8 +217,9 @@
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 	border-radius:4px;
-	height:315px;
+	float:left;
 	margin-bottom:25px;
+	width: 700px;
 }
 
 #contentScroll .topicBlock .topicTitle {
@@ -332,12 +358,38 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	color : #1076BB;
+	cursor: pointer;
+}
+.collectionTitle:hover{
+	opacity: 0.6;
 }
 
 #contentScroll .topicBlock .collectionInfo .collectionAuthor, #contentScroll .topicBlock .collectionInfo .collectionDescription {
 	margin-bottom:7px;
 	line-height:1.2em;
 }
+
+ .collectionDescription{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+/*
+.collectionDescription:before{
+	content:'...';
+	text-align:right;
+    position: absolute;
+    display:block;
+    width:2em;
+    height:1em;
+    bottom:1em;
+    right:20px;
+    background-color : red;
+} */
+
 
 #contentScroll .topicBlock .collectionInfo button {
 	margin-right:5px;
@@ -396,7 +448,7 @@
 
 .educator .photo {
 	width:185px;
-	height:165px;
+	height:185px;
 	padding:0px;
 	margin-bottom:10px;
 	border:0px;
@@ -463,7 +515,7 @@
 	height:330px;
 	background: url("../images/library/banner.png");
 	position:relative;
-	margin-bottom:30px;
+	margin-bottom:0px;
 	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
 }
 
@@ -615,14 +667,14 @@
 	color: #515151;
 }
 
-.courseOption {
-	padding:0px 15px;
+/* .courseOption {
+	padding:7px;
+	line-height:normal;
 }
 
 .courseOption:hover {
 	background-color:#CFE3F1;
-	padding:0px 15px;
-}
+} */
 
 .aboutGooruAnrPadding {
 	padding: 0 36px !important;
@@ -737,3 +789,170 @@
 .scrollPanel {
 	min-height: 500px;
 }
+
+.bannerSpanBlock {
+	padding-left: 3px;
+	display: inline;
+}
+
+#landingRusdBanner {
+	width:100%;
+	height:330px;
+	background: url("../images/library/landing-image-rusd.png");
+	position:relative;
+	margin-bottom:30px;
+	text-shadow: 2px 2px 5px rgba(0,0,0,.1);
+}
+
+#landingBannerInner {
+	background: url("../images/library/landing-banner-gradient.png") bottom no-repeat;
+	background-size:contain;
+	height:100%;
+}
+
+#landingRusdBanner .fourSteps {
+	color: white;
+	background-color:#000000;
+	padding: 25px 0px;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+	text-shadow: none;	
+}
+
+#landingRusdBanner .fourSteps .step {
+	vertical-align: top;
+	display: inline-block;
+	width: 243px;
+	height: 41px;
+	margin-right: 13px;
+	text-align: left;
+}
+
+#landingRusdBanner .fourSteps .last.step {
+	margin-right:0px;
+	border-right: none;
+}
+
+#landingRusdBanner .fourSteps .step i {
+	font-size:30px;
+	float:left;
+	margin-right:10px;
+}
+
+#landingRusdBanner .fourSteps span {
+	font-size:14px;
+	font-weight:bold;
+}
+
+#landingRusdBanner .header {
+	color:white;
+	font-size:38px;
+	font-weight:bold;
+	text-align:center;
+	padding-top:100px;
+}
+
+#landingRusdBanner .subheader {
+	color:white;
+	font-size:16px;
+	text-align:center;
+	margin-top:10px;
+}
+.partnerLogo {
+	background: url("../images/library/rusd-logo.png");
+	width: 122px;
+	height: 45px;
+	position: absolute;
+	top: 61px;
+	right: 188px;
+}
+.resourcesInsideSubStyle {
+	width: 263px !important;
+	padding-left: 20px !important;
+	border-left: 1px solid rgb(221,221,221) !important;
+	margin-top: 0px !important;
+}
+.collectionInfoSubStyle {
+	float: left !important;
+	width: 370px !important;
+}
+.collectionViewerSubStyle {
+	width: 94% !important;
+	margin-top: 25px !important;
+}
+.tabsLiInactive {
+	color:#999 !important;
+	cursor: default;
+	opacity: 0.6 !important;
+}
+.paginationPanel {
+	float: left;
+	margin-bottom: 20px;
+}
+/* added for 6.0 sprint */
+
+#courseTabs .tabsLi .dropdown .twoColumnContainer {
+    width: 200%;
+    clear: both;
+    height:0px;
+}
+	
+.unitOption {
+    padding:0px 15px;
+}
+
+.unitOption:hover {
+    background-color:#CFE3F1;
+    padding:0px 15px;
+}
+
+#courseTabs .tabsLi .subDropdown {
+    display:none;
+}
+
+#courseTabs .tabsLi .subDropdown {
+    left:-1px;
+    background:white;
+    border:1px solid #ddd;
+    width:100%;
+    font-size:12px;
+    top:0px;
+    width: 50%;
+}
+
+#courseTabs .tabsLi .twoColumnContainer:hover .subDropdown {
+    display:inline-block;
+    line-height:2em;
+    cursor:pointer;
+    width: 78%;
+}
+
+#courseTabs .dropdown .twoColumnContainer .courseOption {
+    width: 50%;
+}
+.popularStarImage{
+	background: url("../images/library/star.png")10px no-repeat;
+	padding: 20px;
+	border: 1px solid #ccc;
+	margin-top: -1px;
+	transition: background-color 0.5s ease;
+	display: inline-block;
+	width: 199px;
+	padding-left: 40px;
+	cursor: pointer;
+}
+
+.standardsDescription {
+	border-bottom: 1px solid #ddd;
+padding-bottom: 15px;
+margin-bottom: 15px;
+}
+
+.partnerMenuPadding {
+	padding: 0 19px !important;
+}
+
+/* end 
+ */

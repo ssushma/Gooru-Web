@@ -22,16 +22,16 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
+
 package org.ednovo.gooru.client.mvp.shelf.list;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FontWeightEffect;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
@@ -40,18 +40,30 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
+import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.event.RequestShelfEvent;
+import org.ednovo.gooru.client.mvp.shelf.event.DragOverOpenFolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.UserInfoMsgShelfEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.LabelGlassPanel;
+import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
+import org.ednovo.gooru.client.uc.tooltip.SearchDragToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.CustomAnimation;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.folder.FolderItemDo;
+import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.ednovo.gooru.shared.util.DOMUtils;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.FontWeight;
@@ -67,34 +79,25 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ShelfCollection.java
- *
- * @description : This is used to describe the collections in shelf
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ShelfCollection extends FocusPanel implements DropBox,
-		MouseOverHandler, ClickHandler {
+		MouseOverHandler, MessageProperties {
 
 	private static ShelfCollectionUiBinder uiBinder = GWT
 			.create(ShelfCollectionUiBinder.class);
@@ -124,19 +127,28 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	DisclosurePanel disPanel;
 
 	@UiField
-	FlowPanel folderIcon, collectionIcon;
-
-	@UiField
 	Label addSuccessMsg;
 	
 	@UiField
 	Button myShelfEditButton;
 	
-	private CollectionDo collectionDo;
+	@UiField HTML htmlToolTipContent;
+	
+	@UiField HTMLPanel panelToolTip, arrowIcon;
+	
+	private String draggedCollectionId="";
+	
+	private String levelOneFolderId="";
+	
+	private FolderDo collectionDo;
 
-	private CollectionItemDo collectionItemDo;
+	private FolderItemDo collectionItemDo;
 
 	private ResourceDropController dropController;
+	
+	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	
+	private TreeItem treeChildSelectedItem = new TreeItem();
 
 	//private static final String ADD_TO_THIS_COLLECTION = "Add to this Collection";
 
@@ -144,7 +156,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	
 //	private static final String EDIT_THIS_COLLECTION = "Drop resource here";
 	
-	private final String CONGRATS_MSG="congrats";
+	private final String CONGRATS_MSG=GL0483.toLowerCase();
 
 	//private static final String EDIT_THIS_COLLECTION = "Edit this Collection";
 
@@ -160,44 +172,96 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	
 	private boolean isValue=true;
 	
+	private int level = 0;
+	
+	private int position;
+	
+	private FolderDo folderDo;
+
+	private boolean folderIsOpened = false;
+	
+	private boolean collectionIsOpened = false;
+	
+	@UiField FolderStyleBundle folderStyle;
+
+	HashMap<String,String> urlParams = new HashMap<String,String>();
+	
+	private static final String O1_LEVEL = "o1";
+	
+	private static final String O2_LEVEL = "o2";
+	
+	private static final String O3_LEVEL = "o3";
+	
+	private static final String ID = "id";
+
+	private static final String DRAGGING_INTO_COLOR="#E1F0D1";
+	
 
 	/**
 	 * Class constructor , assign the {@link CollectionDo} instance
 	 * 
 	 * @param collectionDo
 	 *            instance of {@link CollectionDo}
+	 * @param nextLevel 
 	 */
-	public ShelfCollection(final CollectionDo collectionDo) {
+	public ShelfCollection(final FolderDo collectionDo, final int nextLevel) {
 		res = ShelfListCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		myShelfEditButton.setText(GL0140);
 		myShelfEditButton.getElement().setId("btnMyShelfEdit");
 		glassContainer.setGlassVisible(false);
-		setData(collectionDo);
+		
+		setData(collectionDo,nextLevel);
+		this.folderDo=collectionDo;
 		this.getElement().setAttribute("style", "min-height: 42px;");
 		dropController = new ResourceDropController(this);
-		titleFocPanel.addClickHandler(this);
+		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
+		myShelfEditButton.getElement().getStyle().setMarginRight(20, Unit.PX);
+		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(!isEditButtonSelected) {
-					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
-						myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-					}
+				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
+					myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				}
 			}
 		});
 		titleFocPanel.addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				if(!isEditButtonSelected) {
-					if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
-						myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
-					}
+				if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
+					myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 				}
 			}
 		});
+		myShelfEditButton.addMouseOverHandler(new MouseOverHandler() {
 		
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				if(collectionDo.getType().equalsIgnoreCase("folder")){
+				toolTipPopupPanel.clear();
+				toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(GL1472,""));
+				toolTipPopupPanel.setStyleName("");
+				toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
+				toolTipPopupPanel.show();
+				}else{
+					toolTipPopupPanel.clear();
+					toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(GL1473, ""));
+					toolTipPopupPanel.setStyleName("");
+					toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 27);
+					toolTipPopupPanel.show();
+				}
+			}
+			
+		});
+		myShelfEditButton.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				toolTipPopupPanel.hide();
+			}
+		});
 		wrapperFocPanel.addMouseOverHandler(this);
 		wrapperFocPanel.addMouseOutHandler(new MouseOutHandler() {
 
@@ -208,100 +272,114 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 				}
 			}
 		});
+		
+		htmlToolTipContent.setHTML(GL1395);
+		
+		AppClientFactory.getEventBus().addHandler(CollectionAssignShareEvent.TYPE, handler);
 		addSuccessMsg.setVisible(false);
-		addSuccessMsg.setText("adding...");
-		wrapperFocPanel.addClickHandler(this);
+		addSuccessMsg.setText(GL0591.toLowerCase());
+		wrapperFocPanel.addClickHandler(new ClickOnFolderItem());
 	}
 
 	@UiHandler("myShelfEditButton")
 	public void myShelfEditButtonHandler(ClickEvent event){
-		
+		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 		isValue=false;
-		AppClientFactory.fireEvent(new RequestShelfEvent(collectionDo.getGooruOid()));
-			
-	}
-	/**
-	 * 
-	 * @function setData 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :It sets the data in to collection
-	 * 
-	 * 
-	 * @parm(s) : @param collectionDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	public void setData(CollectionDo collectionDo) {
-		updateData(collectionDo);
-		if (this.collectionDo.getCollectionItems() == null) {
-			this.collectionDo
-					.setCollectionItems(new ArrayList<CollectionItemDo>());
+		if(collectionDo.getType().equalsIgnoreCase("folder")){
+			MixpanelUtil.mixpanelEvent("Search_click_folder_edit");
+			isEditButtonSelected=true;
+			openFolderInShelf();
+		} else {
+			openCollectionInShelf();
 		}
-		if (collectionDo.getCollectionItems().size() > 0) {
-			for (CollectionItemDo collectionItem : collectionDo
-					.getCollectionItems()) {
-				addCollectionItem(collectionItem, false);
+	}
+	
+	public void setData(FolderDo collectionDo, int nextLevel) {
+		updateData(collectionDo);
+		
+		if(!collectionDo.getType().equals("folder")) {
+			titleFocPanel.addStyleName(folderStyle.collection());
+			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		if(collectionDo.getCollectionItems()!=null) {
+			if(collectionDo.getType().equals("folder") && collectionDo.getCollectionItems().size() == 0)
+			{
+				arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
 			}
 		} else {
-/*			if (collectionDo.getCollectionType().equals("folder")) {
-				htmlPanel = new HTMLPanel("This folder is empty!");
-			} else if (collectionDo.getCollectionType().equals("collection")) {
-				htmlPanel = new HTMLPanel("This collection is empty!");
+			arrowIcon.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		
+		if(collectionDo.getSharing()!=null && !collectionDo.getSharing().equalsIgnoreCase("") && collectionDo.getSharing().equals("public")) {
+			if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection") ){
+				titleFocPanel.addStyleName(folderStyle.publicIcon());
+				panelToolTip.getElement().getStyle().clearDisplay();
+			}else{
+				panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
 			}
- */         htmlPanel = new HTMLPanel("This collection is empty!");
-			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
-			htmlPanel.getElement().getStyle().setColor("#999999");
-			htmlPanel.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
-			htmlPanel.getElement().setId(collectionDo.getGooruOid());
-			contentVerPanel.add(htmlPanel);
+		}else{
+			panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		
+		if(nextLevel == 1) {
+			titleLbl.setWidth("170px");
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 2) {
+			titleLbl.setWidth("142px");
+			titleFocPanel.setWidth("143px");
+			titleFocPanel.addStyleName(folderStyle.parent());
+			titleLbl.getElement().getNextSiblingElement().removeAttribute("style");
+			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().removeAttribute("style");
+		} else if(nextLevel == 3) {
+			titleLbl.setWidth("114px");
+			titleFocPanel.setWidth("115px");
+			titleFocPanel.addStyleName(folderStyle.child());
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:105px;");
+			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:20px;");
+		} else if(nextLevel == 4) {
+			titleLbl.setWidth("100px");
+			titleFocPanel.setWidth("89px");
+			titleLbl.getElement().getNextSiblingElement().setAttribute("style", "left:133px;");
+			htmlToolTipContent.getParent().getElement().getPreviousSiblingElement().setAttribute("style", "left:21px;");
+			titleFocPanel.addStyleName(folderStyle.collectionChild());
+			try {
+				titleFocPanel.getParent().getParent().getParent().getParent().getElement().getStyle().setPadding(0, Unit.PX);
+			} catch (Exception e){}
 		}
 	}
-/**
- * 
- * @function setEmptyData 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :It empty's the data.
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+	
+	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
+
+		@Override
+		public void updateShareType(String shareType) {
+
+			if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection")){
+				if(titleFocPanel.getStyleName().contains(folderStyle.open())) {
+					if(shareType.equalsIgnoreCase("public")){
+						titleFocPanel.addStyleName(folderStyle.publicIcon());
+						panelToolTip.getElement().getStyle().clearDisplay();
+					}else{
+						if(titleFocPanel.getStyleName().contains("public")){
+							titleFocPanel.removeStyleName(folderStyle.publicIcon());
+							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
+						}
+					}
+
+				}
+			}
+		}
+	};
+
 	public void setEmptyData() {
-		htmlPanel = new HTMLPanel("This folder is empty!");
+		htmlPanel = new HTMLPanel(GL0989);
 		htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 		htmlPanel.getElement().getStyle().setColor("#999999");
 		htmlPanel.getElement().setId(collectionDo.getGooruOid());
 		contentVerPanel.add(htmlPanel);
 	}
-/**
- * 
- * @function removeEmptyData 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :It removes the empty data
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void removeEmptyData() {
 		if (contentVerPanel.getWidget(0) instanceof HTMLPanel) {
 			contentVerPanel.clear();
@@ -314,20 +392,9 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	 * @param collectionDo
 	 *            instance of {@link CollectionDo}
 	 */
-	public void updateData(CollectionDo collectionDo) {
+	public void updateData(FolderDo collectionDo) {
 		this.collectionDo = collectionDo;
-		// titleLbl.setText(StringUtil.truncateText(collectionDo.getTitle(),
-		// 30));
-//		titleLbl.setHTML(StringUtil.truncateText(collectionDo.getTitle(), 30));
-		// titleLbl.setText(StringUtil.truncateText(collectionDo.getTitle(),
-		// 30));
 		titleLbl.setHTML(collectionDo.getTitle());
-		if (collectionDo.getCollectionType().equalsIgnoreCase("folder")) {
-			collectionIcon.removeFromParent();
-		} else if (collectionDo.getCollectionType().equalsIgnoreCase(
-				"collection")) {
-			folderIcon.removeFromParent();
-		}
 	}
 
 	/**
@@ -336,12 +403,22 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	 * @param collectionItemDo
 	 *            instance of {@link CollectionItemDo}
 	 */
-	public void updateCollectionItem(CollectionItemDo collectionItemDo) {
-		this.collectionItemDo = collectionItemDo;
-		ShelfResource shelfResource = getShelfResource(collectionItemDo	.getCollectionItemId());
+	public void updateCollectionItem(FolderDo collectionItemDo,int Newsequence) {
+//		this.collectionDo = collectionItemDo;
+		ShelfResource shelfResource = getShelfResource(collectionItemDo.getGooruOid());
 		int widgetCount = contentVerPanel.getWidgetCount();
-
-		int sequence = collectionItemDo.getItemSequence() - 1;
+		int sequence = Newsequence - 1;
+		if (Newsequence > sequence) {
+			contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: (sequence + 1) : 0);
+		}
+		if (sequence < Newsequence) {
+			contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
+		}
+		
+//		 contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
+		
+		/** commented temporarily **/
+/*		int sequence = collectionItemDo.getItemSequence() - 1;
 		if (collectionItemDo.getItemSequence() > sequence) {
 			contentVerPanel.insert(shelfResource,
 					widgetCount > 0 ? sequence >= widgetCount ? widgetCount
@@ -352,6 +429,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 					widgetCount > 0 ? sequence >= widgetCount ? widgetCount
 							: sequence : 0);
 		}
+*/
+		/** commented temporarily **/
 
 		// contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >=
 		// widgetCount ? widgetCount: sequence : 0);
@@ -366,22 +445,21 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	 * @param isNew
 	 *            check new collection or exists collection
 	 */
-	public void addCollectionItem(CollectionItemDo collectionItemDo,
-			boolean isNew) {
+	/*public void addCollectionItem(FolderItemDo collectionItemDo, boolean isNew) {
 		Document doc = Document.get();
         if (doc.getElementById(collectionDo.getGooruOid()) != null)
-            doc.getElementById(collectionDo.getGooruOid())
-                    .removeFromParent();
+            doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
 		if (isNew) {
 			if (this.collectionDo.getCollectionItems() == null) {
-				this.collectionDo.setCollectionItems(new ArrayList<CollectionItemDo>());
+				this.collectionDo.setCollectionItems(new ArrayList<FolderItemDo>());
 			}
 			this.collectionDo.getCollectionItems().add(collectionItemDo);
 		}
 		ShelfResource shelfResource = new ShelfResource(collectionItemDo);
 		int widgetCount = contentVerPanel.getWidgetCount();
-		int sequence = collectionItemDo.getItemSequence() - 1;
-		if (collectionDo.getCollectionType().equals("collection")) {
+		//int sequence = collectionItemDo.getItemSequence() - 1;
+		int sequence = 0;
+		if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection") ) {  
 			contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
 		}
 		if (isNew) {
@@ -392,7 +470,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	        		AppClientFactory.fireEvent(new UserInfoMsgShelfEvent(CONGRATS_MSG));
 	        	}
 		}
-	}
+	}*/
 
 	/**
 	 * Remove the collection item from the collection
@@ -400,39 +478,42 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	 * @param collectionItemDo
 	 *            which is to be removed
 	 */
-	public void removeCollectionItem(CollectionItemDo collectionItemDo) {
+	public void removeCollectionItem(FolderDo collectionItemDo) {
 		this.collectionDo.getCollectionItems().remove(collectionItemDo);
 		//this.collectionDo.getCollectionItems().remove(1);
-		ShelfResource shelfResource = getShelfResource(collectionItemDo
-				.getCollectionItemId());
+		ShelfResource shelfResource = getShelfResource(collectionItemDo.getGooruOid());
 		if (shelfResource != null) {
 			contentVerPanel.remove(shelfResource);
 		}
-		if (collectionItemDo.getCollection().getCollectionItems().size() <= 0) {
-
-			if (collectionDo.getCollectionType().equals("folder")) {
-				htmlPanel = new HTMLPanel("This folder is empty!");
-				htmlPanel.getElement().getStyle()
-						.setTextAlign(TextAlign.CENTER);
+		if(collectionItemDo.getItemCount()==0){
+			if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection")) {
+				htmlPanel = new HTMLPanel(GL0854);
+				htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 				htmlPanel.getElement().getStyle().setColor("#999999");
-				htmlPanel.getElement().setId(collectionDo.getGooruOid());
-				contentVerPanel.add(htmlPanel);
-			} else if (collectionDo.getCollectionType().equals("collection")) {
-				htmlPanel = new HTMLPanel("This collection is empty!");
-				htmlPanel.getElement().getStyle()
-						.setTextAlign(TextAlign.CENTER);
-				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
-				htmlPanel.getElement().getStyle().setColor("#999999");
-				htmlPanel.getElement().getStyle()
-						.setFontStyle(FontStyle.ITALIC);
+				htmlPanel.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 				htmlPanel.getElement().setId(collectionDo.getGooruOid());
 				contentVerPanel.add(htmlPanel);
 			}
-
 		}
-		
-				
+		/*if (collectionItemDo.getCollection().getCollectionItems().size() <= 0) {
+			if (collectionDo.getType().equals("folder")) {
+				htmlPanel = new HTMLPanel(GL0989);
+				htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
+				htmlPanel.getElement().getStyle().setColor("#999999");
+				htmlPanel.getElement().setId(collectionDo.getGooruOid());
+				contentVerPanel.add(htmlPanel);
+			} else if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection") ) {
+				htmlPanel = new HTMLPanel(GL0854);
+				htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+				htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
+				htmlPanel.getElement().getStyle().setColor("#999999");
+				htmlPanel.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+				htmlPanel.getElement().setId(collectionDo.getGooruOid());
+				contentVerPanel.add(htmlPanel);
+			}
+		}*/
 	}
 
 	/**
@@ -447,297 +528,332 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget instanceof ShelfResource
-					&& ((ShelfResource) widget).getCollectionItemDo()
-							.getCollectionItemId().equals(collectionItemId)) {
+					&& ((ShelfResource) widget).getCollectionItemDo().getGooruOid().equals(collectionItemId)) {
 				return (ShelfResource) widget;
 			}
 		}
 		return null;
 	}
-/**
- * @description: This is used to drag 
- */
+
 	@Override
-	public void onDragOver(Draggable draggable) {
+	public void onDragOver(final Draggable draggable) {
 	        if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
-	            draggable.getDraggableMirageUc().onDroppable(true);
-//			 	glassContainer.setGlassText(ADD_TO_THIS_COLLECTION);
-		        glassContainer.setGlassVisible(true);
-	            this.setOpen();
+	        	if(folderDo.getType().equalsIgnoreCase("folder")){
+	        		draggable.getDraggableMirageUc().onDroppable(false);
+	        		titleFocPanel.removeStyleName(folderStyle.draggingInto());
+	        		wrapperFocPanel.getElement().getStyle().clearBackgroundColor();
+	        		toolTipPopupPanel.clear();
+	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(GL1135));
+	    			toolTipPopupPanel.setStyleName("");
+	    			toolTipPopupPanel.setPopupPosition(draggable.getElement().getAbsoluteLeft()+8, draggable.getElement().getAbsoluteTop()+10);
+	    			toolTipPopupPanel.show();
+	        	}else{
+	        		if(collectionIsOpened) {
+	        			draggable.getDraggableMirageUc().onDroppable(true);
+    	        		titleFocPanel.addStyleName(folderStyle.draggingInto());
+    	        		wrapperFocPanel.getElement().getStyle().setBackgroundColor(DRAGGING_INTO_COLOR);
+    	        		toolTipPopupPanel.hide();
+	        		}else{
+	        			draggable.getDraggableMirageUc().onDroppable(true);
+    	        		titleFocPanel.addStyleName(folderStyle.draggingInto());
+    	        		wrapperFocPanel.getElement().getStyle().setBackgroundColor(DRAGGING_INTO_COLOR);
+    	        		toolTipPopupPanel.hide();
+    	        		
+	        			/** Changed to new API call for fetching resources in a order **/
+    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+							@Override
+							public void onSuccess(FolderListDo result) {
+								setAllResources(result.getSearchResult());
+		    					setCollectionOpenedStatus(true);
+							}
+							@Override
+							public void onFailure(Throwable caught) {
+								
+							}
+    	        		});
+    	        		
+    	        		/** Previously used API Call **/
+    	        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+		    				@Override
+		    				public void onSuccess(FolderListDo result) { 
+		    					setAllResources(result.getSearchResult());
+		    					setCollectionOpenedStatus(true);
+		    				}
+		    				@Override
+		    				public void onFailure(Throwable caught) {
+		    				}
+		    			});*/
+	        		}
+	        		this.setOpen();
+//	        		AppClientFactory.fireEvent(new ResourceDragOverShelfEvent(folderDo.getGooruOid())); 
+	        	}
+	        }else if(draggable.getType().equals(DRAG_TYPE.COLLECTION)){ 
+	        	if(folderDo.getType().equalsIgnoreCase("scollection")||folderDo.getType().equalsIgnoreCase("collection")){
+	        		toolTipPopupPanel.clear();
+	    			toolTipPopupPanel.setWidget(new SearchDragToolTip(GL1136));
+	    			toolTipPopupPanel.setStyleName("");
+	    			toolTipPopupPanel.setPopupPosition(draggable.getElement().getAbsoluteLeft()+8, draggable.getElement().getAbsoluteTop()+10);
+	    			toolTipPopupPanel.show();
+	        	}else{
+	        		setDraggingIntoStyle(draggable);
+	        		/*if(level==1){
+	        			setDraggingIntoStyle(draggable);
+	        		}else if(level==2){
+	        			titleFocPanel.removeStyleName(folderStyle.draggingInto());
+	        			draggable.getDraggableMirageUc().onDroppable(false);
+	        			if(folderIsOpened){
+	        				setDraggingIntoStyle(draggable);
+	        			}
+	        			setDraggingIntoStyle(draggable);
+	        		}else if(level==3){
+        				titleFocPanel.removeStyleName(folderStyle.draggingInto());
+        				draggable.getDraggableMirageUc().onDroppable(false);
+        				if(folderIsOpened){
+        					setDraggingIntoStyle(draggable);
+        				}
+	        			setDraggingIntoStyle(draggable);
+        			}*/
+	        		toolTipPopupPanel.hide();
+	        	}
 	        }
 	}
+	
 
-	/**
-	 * @description: This method used to drag out after dragging
-	 */
+	private void setDraggingIntoStyle(Draggable draggable) {
+		draggable.getDraggableMirageUc().onDroppable(true);
+		titleFocPanel.addStyleName(folderStyle.draggingInto());
+		toolTipPopupPanel.hide();
+	}
+
 	@Override
 	public void onDragOut(Draggable draggable) {
         glassContainer.setGlassVisible(false);
         if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
             draggable.getDraggableMirageUc().onDroppable(false);
+            titleFocPanel.removeStyleName(folderStyle.draggingInto());
+            wrapperFocPanel.getElement().getStyle().clearBackgroundColor();
+            toolTipPopupPanel.hide();
+        }else if(draggable.getType().equals(DRAG_TYPE.COLLECTION)){
+        	   toolTipPopupPanel.hide();
+        	   titleFocPanel.removeStyleName(folderStyle.draggingInto());
         }
     }
-/**
- * @description: This widget gives support receiving events from browser and add them to panels
- */
+
 	@Override
 	public Widget getDropTarget() {
 		return this;
 	}
-/**
- * @description:This is used to drop the event after dragging the event
- */
+
 	@Override
-	public void onDrop(Draggable draggable) {
+	public void onDrop(final Draggable draggable) {
         if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
             //setOpen();
-        	new CustomAnimation(draggable).run(50);
-        	   	 
-            if (collectionDo.getCollectionItems().size()<25) {
-           	contentVerPanel.setVisible(false);
-    		addSuccessMsg.setVisible(true);
-    		Document doc = Document.get();
-            if (doc.getElementById(collectionDo.getGooruOid()) != null)
-                doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
-            AppClientFactory.fireEvent(new CreateCollectionItemEvent(collectionDo.getGooruOid(), draggable.getDragId()));
-           
-            }else{
-            	AlertContentUc alertContentUc = new AlertContentUc("Oops!", "You've reached the limit of resources you can add to a collection!\n\nTip: Try dividing this into two collections.");
-            }
+        	if(folderDo.getType().equalsIgnoreCase("folder")){
+        		toolTipPopupPanel.hide();
+        	}else{
+        		new CustomAnimation(draggable).run(50);
+        		/** Changed to new API call for fetching resources in a order **/
+        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+					@Override
+					public void onSuccess(FolderListDo result) {
+						if (result.getCount()<25){
+	    	               	contentVerPanel.setVisible(false);
+	    	        		addSuccessMsg.setVisible(true);
+	    	        		Document doc = Document.get();
+	    	                if (doc.getElementById(collectionDo.getGooruOid()) != null)
+	    	                    doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
+	    	                AppClientFactory.fireEvent(new CreateCollectionItemEvent(collectionDo.getGooruOid(), draggable.getDragId()));
+	    	                }else{
+	    	                	AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
+	    	                }
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+        		});
+        		
+        		
+        		
+        		/** Previously used API call **/
+        		/*AppClientFactory.getInjector().getfolderService().getChildFolders(collectionDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+    				@Override
+    				public void onSuccess(FolderListDo result) { 
+    	                if (result.getCount()<25){
+    	               	contentVerPanel.setVisible(false);
+    	        		addSuccessMsg.setVisible(true);
+    	        		Document doc = Document.get();
+    	                if (doc.getElementById(collectionDo.getGooruOid()) != null)
+    	                    doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
+    	                AppClientFactory.fireEvent(new CreateCollectionItemEvent(collectionDo.getGooruOid(), draggable.getDragId()));
+    	                }else{
+    	                	AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
+    	                }
+    				}
+    				@Override
+    				public void onFailure(Throwable caught) {
+    				}
+    			});*/
+        	
+        	}
+        }else if(draggable.getType().equals(DRAG_TYPE.COLLECTION)){
+        	if(folderDo.getType().equalsIgnoreCase("folder")){
+        		draggedCollectionId = draggable.getDragId(); 
+        		new CustomAnimation(draggable).run(50);
+        		toolTipPopupPanel.hide();
+        		AppClientFactory.fireEvent(new DragOverOpenFolderEvent(folderDo.getGooruOid(),true));   
+        		/*if(level==1){
+            		draggedCollectionId = draggable.getDragId(); 
+            		new CustomAnimation(draggable).run(50);
+            		toolTipPopupPanel.hide();
+            		AppClientFactory.fireEvent(new DragOverOpenFolderEvent(folderDo.getGooruOid(),true));   
+            		if(!folderIsOpened){
+//        				AppClientFactory.fireEvent(new DragOverOpenFolderEvent(folderDo.getGooruOid())); 
+        			}else{
+        				getCollectionForm();
+        			}
+            	}else if(level==2 || level==3){
+            		draggedCollectionId = draggable.getDragId(); 
+            		new CustomAnimation(draggable).run(50);
+            		toolTipPopupPanel.hide();
+            		AppClientFactory.fireEvent(new DragOverOpenFolderEvent(folderDo.getGooruOid(),true));  
+            		if(!folderIsOpened){
+//        				AppClientFactory.fireEvent(new DragOverOpenFolderEvent(folderDo.getGooruOid())); 
+        			}else{
+        				getCollectionForm();
+        			}
+            	}*/
+        		
+        	}
+        	toolTipPopupPanel.hide();
+        	titleFocPanel.removeStyleName(folderStyle.draggingInto());
         }
 	}
-/**
- * 
- * @function disableDraggableOnDrop 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is used to  disable the draggable on drop event
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void disableDraggableOnDrop() {
 		this.draggable.getDraggableMirageUc().onDroppable(true);
 	}
-	/**
-	 * 
-	 * @function setOpen 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This is used to open the collection list
-	 * 
-	 * 
-	 * @parm(s) : @param isOpen
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setOpen(boolean isOpen) {
 		if(isOpen) {
-			this.titleFocPanel.removeStyleName(res.css().shelfCollectionTitle());
-			this.titleFocPanel.setStyleName(res.css().shelfCollectionTitleActive());
-			myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-			isEditButtonSelected = true;
+			titleFocPanel.addStyleName(folderStyle.open());
 		} else {
-			this.titleFocPanel.removeStyleName(res.css().shelfCollectionTitleActive());
-			this.titleFocPanel.setStyleName(res.css().shelfCollectionTitle());
-			myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
-			isEditButtonSelected = false;
+			titleFocPanel.removeStyleName(folderStyle.open());
 		}
 		setOpenStatus(false);
 		disPanel.setOpen(isOpen);
 	}
-/**
- * 
- * @function isOpen 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :Checks whether the collection is opened or not
- * 
- * 
- * @parm(s) : @return
- * 
- * @return : boolean
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public boolean isOpen() {
 		return disPanel.isOpen();
 	}
-	/**
-	 * 
-	 * @function setOpenStatus 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :It sets the status whether it is opened or not
-	 * 
-	 * 
-	 * @parm(s) : @param isNewPage
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
 	
 	public void setOpenStatus(boolean isNewPage) {
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
 			disPanel.getElement().getStyle().setDisplay(Display.NONE);
-			myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 		} else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)||AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH)){
 			disPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-			if(isNewPage == true) {
-				myShelfEditButton.getElement().getStyle().setDisplay(Display.BLOCK);
-			}
+//			if(folderDo.getItemCount()==null || folderDo.getItemCount()==0){
+			
+			/** Changed to new API call for fetching resources in a order **/
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+				@Override
+				public void onSuccess(FolderListDo result) {
+					if(result.getSearchResult().size()==0){
+						setCollectionItems(result.getSearchResult());
+					}else{
+						setCollectionItems(result.getSearchResult());
+					}
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+    		});
+			
+			/**Previously used API call **/
+			/*AppClientFactory.getInjector().getfolderService().getChildFolders(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>() {
+				@Override
+				public void onSuccess(FolderListDo result) {
+					if(result.getSearchResult().size()==0){
+						setCollectionItems(result.getSearchResult());
+					}else{
+						setCollectionItems(result.getSearchResult());
+					}
+
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+				}
+			});*/
+//			}
+			
+			
 		}
 	}
-	/**
-	 * 
-	 * @function enableGlassPanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :It enables the glass panel
-	 * 
-	 * 
-	 * @parm(s) : @param enable
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void enableGlassPanel(boolean enable) {
 		glassContainer.setGlassVisible(enable);
 	}
-/**
- * @description:It events the MouseOver event when it is fired
- */
+
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
 		if (event.getSource().equals(wrapperFocPanel)) {
 			if (!getDropController().isDropActive()) {
-//					glassContainer.setGlassText(ADD_TO_THIS_COLLECTION);
-//					glassContainer.setGlassVisible(true);
 			}
 		}
 	}
-/**
- * @description: This is used when an native event is  fired
- */
-	@Override
-	public void onClick(ClickEvent event) {
-        if (event.getSource().equals(titleFocPanel)) 
-        {
-        	MixpanelUtil.Expand_CollectionPanel();
-        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
-          		Storage stockStore = Storage.getLocalStorageIfSupported();
-                if (stockStore != null) {
-                    stockStore.setItem("tabKey", "resourceTab");
-                }
-                if(isValue){
-                AppClientFactory.fireEvent(new RequestShelfEvent(collectionDo.getGooruOid()));
-                }
-                isValue=true;
-                
-        	}
-        	setOpen();
-        } 
-        else if (event.getSource().equals(wrapperFocPanel)) 
-        {
-            if (!getDropController().isDropActive()) 
-            {
-            	MixpanelUtil.Edit_This_Collection();
-                // Set default tabFlag in persistant store for Collection Edit
-                Storage stockStore = Storage.getLocalStorageIfSupported();
-            
-                if (stockStore != null) {
-                    stockStore.setItem("tabKey", "resourceTab");
-                }
-            }
-        }
-	}
-/**
- * 
- * @function addFolderItems 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :This is  used top add folderitems to the collection
- * 
- * 
- * @parm(s) : @param collectionFolderItems
- * @parm(s) : @param collectionDo
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	protected void addFolderItems(CollectionItemDo collectionFolderItems,
-			CollectionDo collectionDo) {
-		FolderResource folderResource = new FolderResource(
-				collectionFolderItems, collectionDo);
-		int widgetCount = contentVerPanel.getWidgetCount();
-		int sequence = collectionFolderItems.getItemSequence() - 1;
-		contentVerPanel.insert(folderResource,
-				widgetCount > 0 ? sequence >= widgetCount ? widgetCount
-						: sequence : 0);
 
+	public class ClickOnFolderItem implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			if(!collectionDo.getType().equals("folder")) {
+				if (event.getSource().equals(titleFocPanel)) {
+		        	MixpanelUtil.Expand_CollectionPanel();
+		        	if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF)) {
+		          		Storage stockStore = Storage.getLocalStorageIfSupported();
+		                if (stockStore != null) {
+		                    stockStore.setItem("tabKey", "resourceTab");
+		                }
+		                if(isValue){
+		                	openCollectionInShelf();
+		                }
+		                isValue=true;
+		        	}
+		        	setOpen();
+		        }  else if (event.getSource().equals(wrapperFocPanel)) {
+		            if (!getDropController().isDropActive()) 
+		            {
+		            	MixpanelUtil.Edit_This_Collection();
+		                Storage stockStore = Storage.getLocalStorageIfSupported();
+		            
+		                if (stockStore != null) {
+		                    stockStore.setItem("tabKey", "resourceTab");
+		                }
+		            }
+		        }
+			}
+		}
 	}
-	/**
-	 * 
-	 * @function getContentVerPanel 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :A apanel that laysout a widget in to a single vertical column
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : VerticalPanel
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-
+	
+	public void openFolderItem() {
+		if(collectionDo.getType().equals("folder")) {
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) && !isEditButtonSelected) {
+     			openFolderInShelf();
+			}
+		}
+	}
+	
 	public VerticalPanel getContentVerPanel() {
-		return contentVerPanel;
+		return contentVerPanel;  
 	}
-/**
- * 
- * @function setOpen 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :It opens  shelf the collection
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setOpen() {
 	    if (shelfCollection == null || !shelfCollection.equals(this)) {
-//            glassContainer.setGlassText(EDIT_THIS_COLLECTION);
             if (shelfCollection != null) {
                 shelfCollection.setOpen(false);
+                setOpenStyle(false, shelfCollection.level);
             }
             shelfCollection = this;
             setOpen(!isOpen());
@@ -745,93 +861,25 @@ public class ShelfCollection extends FocusPanel implements DropBox,
             shelfCollection.enableGlassPanel(false);
         }
 	}
-/**
- * 
- * @function setOpenFolder 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :It opens the folder
- * 
- * 
- * @parm(s) : 
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
-	public void setOpenFolder() {
-		titleFocPanel.setStyleName(res.css().shelfCollectionTitleActive());
-		int widgetCount = contentVerPanel.getWidgetCount();
-		if (collectionDo.getCollectionType().equals("folder")
-				&& widgetCount == 0) {
-			wrapperFocPanel.setStyleName(res.css()
-					.shelfContentWrapperPanelFolderResource());
-			contentVerPanel.setStyleName(res.css()
-					.shelfContentPanelForFolders());
-			String gooruOId = collectionDo.getGooruOid();
-			AppClientFactory
-					.getInjector()
-					.getfolderService()
-					.getFolders(gooruOId,
-							new AsyncCallback<List<CollectionItemDo>>() {
-								@Override
-								public void onFailure(Throwable caught) {
 
-								}
-
-								@Override
-								public void onSuccess(
-										List<CollectionItemDo> result) {
-									for (CollectionItemDo collectionFolderItems : result) {
-										addFolderItems(collectionFolderItems,
-												collectionDo);
-									}
-								}
-							});
-		}
-		else  if(collectionDo.getCollectionType().equals("collection")){
-			htmlPanel = new HTMLPanel("This collection is empty!");
-			htmlPanel.getElement().getStyle()
-					.setTextAlign(TextAlign.CENTER);
-			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
-			htmlPanel.getElement().getStyle().setColor("#999999");
-			htmlPanel.getElement().getStyle()
-					.setFontStyle(FontStyle.ITALIC);
-			htmlPanel.getElement().setId(collectionDo.getGooruOid());
-			contentVerPanel.add(htmlPanel);
-		}
-		setOpen();
-	}
-/**
- * @descriptiom: This is used  when an widget being attached to the browser document
- */
 	@Override
 	protected void onLoad() {
 		super.onLoad();
 		registerDropController();
 	}
-/**
-  * @descriptiom: This is used  when an widget being detached from the browser document
 
- */
 	@Override
 	protected void onUnload() {
 		super.onUnload();
 		unregisterDropController();
 	}
-/**
- * @description: This is used to register drop  controller
- */
+
 	@Override
 	public void registerDropController() {
 		AppClientFactory.fireEvent(new RegisterSearchDropEvent(dropController,
 				RegisterSearchDropEvent.DROP_AREA.COLLECTION));
 	}
-/**
- * @description: this is used to unregister the drop controller
- */
+
 	@Override
 	public void unregisterDropController() {
 		AppClientFactory.fireEvent(new UnregisterSearchDropEvent(
@@ -844,22 +892,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public ResourceDropController getDropController() {
 		return dropController;
 	}
-/**
- * 
- * @function setDropController 
- * 
- * @created_date : 02-Jan-2014
- * 
- * @description :It sets the drop controller
- * 
- * 
- * @parm(s) : @param dropController
- * 
- * @return : void
- *
- * @throws : <Mentioned if any exceptions>
- *
- */
+
 	public void setDropController(ResourceDropController dropController) {
 		this.dropController = dropController;
 	}
@@ -867,12 +900,9 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	/**
 	 * @return collectionDo
 	 */
-	public CollectionDo getCollectionDo() {
+	public FolderDo getCollectionDo() {
 		return collectionDo;
 	}
-	/**
-	 * @description: It registre the drop controller
-	 */
 
 	@Override
 	public void reregisterDropController() {
@@ -880,31 +910,205 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		registerDropController();
 	}
 
-	/**
-	 * @description: It highlights the title
-	 */
 	public void glowTitle() {
-		new FontWeightEffect(titleLbl.getElement(), FontWeight.BOLD,
-				FontWeight.NORMAL, 5000);
+		new FontWeightEffect(titleLbl.getElement(), FontWeight.BOLD, FontWeight.NORMAL, 5000);
 	}
-	/**
-	 * 
-	 * @function removeCollectionItem 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :It removes the collection items
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
-	public void removeCollectionItem() {
+	
+	public void setWidgetPositions(int level, int position, HashMap<String,String> urlParams) {
+		this.level = level;
+		this.position = position;
+
+		if(level==1) {
+			this.urlParams.put(O1_LEVEL, collectionDo.getGooruOid());
+		}
+		if(level==2) {
+			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			this.urlParams.put(O2_LEVEL, collectionDo.getGooruOid());
+		}
+		if(level==3) {
+			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			this.urlParams.put(O3_LEVEL, collectionDo.getGooruOid());
+		}
+		if(level==4) {
+			this.urlParams.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			this.urlParams.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			this.urlParams.put(O3_LEVEL, urlParams.get(O3_LEVEL));
+			this.urlParams.put(ID, collectionDo.getGooruOid());
+		}
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public int getPosition() {
+		return position;
+	}
+	
+	public boolean getFolderOpenedStatus() {
+		return folderIsOpened;
+	}
+	
+	public void setFolderOpenedStatus(boolean folderIsOpened) {
+		this.folderIsOpened = folderIsOpened;
+	}
+	
+	public boolean getCollectionOpenedStatus() {
+		return collectionIsOpened;
+	}
+	
+	public void setCollectionOpenedStatus(boolean collectionIsOpened) {
+		this.collectionIsOpened = collectionIsOpened;
+	}
+
+	public void setCollectionItems(List<FolderDo> folderDo) {
+		setAllResources(folderDo);
+	}
+	
+	public void setAllResources(List<FolderDo> folderDo) { 
+		contentVerPanel.clear();
+		if (folderDo.size() > 0) { 
+			for(FolderDo folderItemDo : folderDo) {
+				addCollectionItem(folderItemDo, false);
+			}
+		} else {
+			contentVerPanel.clear();
+			htmlPanel = new HTMLPanel(GL0854);
+			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
+			htmlPanel.getElement().getStyle().setColor("#999999");
+			htmlPanel.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+			htmlPanel.getElement().setId(collectionDo.getGooruOid());
+			contentVerPanel.add(htmlPanel);
+		}
+	}
+
+	public void addCollectionItem(FolderDo collectionItemDo, boolean isNew) { 
+		Document doc = Document.get();
+        if (doc.getElementById(collectionDo.getGooruOid()) != null)
+            doc.getElementById(collectionDo.getGooruOid()).removeFromParent();
+		if (isNew) {
+			/*if (this.collectionDo.getCollectionItems() == null) {
+				this.collectionDo.setCollectionItems(new ArrayList<FolderItemDo>());
+			}
+			this.collectionDo.getCollectionItems().add(collectionItemDo);*/
+		}
+		ShelfResource shelfResource = new ShelfResource(collectionItemDo); 
+		int widgetCount = contentVerPanel.getWidgetCount();
+//		int sequence = collectionItemDo.getItemSequence() - 1;
+		int sequence = 0;
 		
+		if (collectionDo.getType().equals("collection") || collectionDo.getType().equals("scollection") ) { 
+//			contentVerPanel.insert(shelfResource,widgetCount > 0 ? sequence >= widgetCount ? widgetCount: sequence : 0);
+			contentVerPanel.add(shelfResource); 
+		}
+		if (isNew) {
+			addSuccessMsg.setVisible(false);
+			contentVerPanel.setVisible(true);
+			shelfResource.glowTitle();
+	            if(contentVerPanel.getWidgetCount()==2 && (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH))){
+	        		AppClientFactory.fireEvent(new UserInfoMsgShelfEvent(CONGRATS_MSG));
+	        	}
+		}
+	}
+	
+	public HashMap<String,String> getUrlParams() {
+		return urlParams;
+	}
+	
+	public void setActiveStyle(boolean isActive) {
+		if(isActive){
+			titleFocPanel.addStyleName(folderStyle.active());
+		} else {
+			titleFocPanel.removeStyleName(folderStyle.active());
+		}
+		
+	}
+
+	
+	public void setOpenStyle(boolean isOpen, int subElementsCount) 
+	{
+		Element[] docElement = DOMUtils.getElementsByClassName(folderStyle.arrow(), titleFocPanel.getElement());
+
+		
+		if(docElement.length>0 && !(titleFocPanel.getStyleName().contains("folderStyle-collection")))
+		{
+
+			if(subElementsCount == 0)
+			{
+				if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("block"))
+				{
+					docElement[0].getStyle().setDisplay(Display.NONE);	
+				}
+			}
+			if(subElementsCount > 0)
+			{
+			if(docElement[0].getStyle().getDisplay() != null && docElement[0].getStyle().getDisplay().equalsIgnoreCase("none"))
+			{
+				docElement[0].getStyle().setDisplay(Display.BLOCK);
+			}
+			}
+
+		}
+		if(isOpen) 
+		{
+			titleFocPanel.addStyleName(folderStyle.open());
+		} 
+		else 
+		{
+			titleFocPanel.removeStyleName(folderStyle.open());
+		}
+	}
+
+	
+	public void openFolderInShelf() {
+		Map<String,String> params = new HashMap<String,String>();
+		if(getLevel()==1) {
+			params.put(O1_LEVEL, collectionDo.getGooruOid());
+		} else if(getLevel()==2) {
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			params.put(O2_LEVEL, collectionDo.getGooruOid());
+		} else if(getLevel()==3) {
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			params.put(O3_LEVEL, collectionDo.getGooruOid());
+		}
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+		AppClientFactory.fireEvent(new SetFolderParentNameEvent(collectionDo.getTitle()));
+	}
+	
+	public void openCollectionInShelf() {
+    	Map<String,String> params = new HashMap<String,String>();
+    	if(getLevel()==2) {
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+		} else if(getLevel()==3) {
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+		} else if(getLevel()==4){
+			params.put(O1_LEVEL, urlParams.get(O1_LEVEL));
+			params.put(O2_LEVEL, urlParams.get(O2_LEVEL));
+			params.put(O3_LEVEL, urlParams.get(O3_LEVEL));
+		}
+    	params.put(ID, collectionDo.getGooruOid());
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
+	}
+
+	public void getCollectionForm() {
+		if(!draggedCollectionId.isEmpty()){
+			AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(draggedCollectionId, new SimpleAsyncCallback<CollectionDo>(){
+				@Override
+				public void onSuccess(CollectionDo result) {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("collectionId", result.getGooruOid());
+					params.put("draggedCollectionTitle", result.getTitle());
+					params.put("droppingInto", "Folder");
+					params.put("selectedFolderId", folderDo.getGooruOid());
+					titleFocPanel.removeStyleName(folderStyle.draggingInto());
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION, params);
+				}
+			});
+		}
 	}
 	
 }

@@ -27,27 +27,36 @@
 */
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
+import org.ednovo.gooru.shared.model.content.ClasspageDo;
+import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
+import com.google.gwt.user.client.ui.FlowPanel;
+
+
 /**
- * 
- * @fileName : IsEditClasspageView.java
+ * @fileName : IsClasspageView.java
  *
- * @description : Acts as a bridge between the Presenter and view.
+ * @description : 
+ *
  *
  * @version : 1.0
  *
- * @date: 27-Dec-2013
+ * @date: Apr 17, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
 public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiHandlers>{
 	
@@ -76,4 +85,17 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	public void setUploadedImageToClassPage(String url);
 
 	void closeAllOpenedPopUp();
+	
+	public void setClasspageData(ClasspageDo classpageDo);
+	
+	
+	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String tab, String analyticsId, String monitorId,ClassListPresenter classListPresenter);
+	
+	public void resetEditClasspageView();
+	
+	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo);
+	
+	public FlowPanel getClassListContainer();
+	
+	public AssignmentEditLabelUc getCollectionTitleUc();
 }

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.dnd.AppMirageDragContainer;
@@ -41,9 +42,11 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -57,21 +60,12 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : AbstractSearchView.java
- *
- * @description : Deals with search.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @param <T>
+ *            type of ResourceSearchResultDo
  */
-public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler {
+public abstract class AbstractSearchView<T extends ResourceSearchResultDo> extends BaseViewWithHandlers<SearchUiHandlers> implements IsSearchView<T>, ClickHandler,MessageProperties {
 
 	private static AbstractSearchViewUiBinder uiBinder = GWT.create(AbstractSearchViewUiBinder.class);
 
@@ -92,11 +86,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	
 	protected ResourceDragController dragController;
 
-	private static final String PREVIOUS = "PREVIOUS";
+	private static final String PREVIOUS = GL1462.toUpperCase();
 
-	private static final String NEXT = "NEXT";
+	private static final String NEXT = GL1463.toUpperCase();
 
-	protected final List<CollectionDo> SHELF_COLLECTIONS = new ArrayList<CollectionDo>();
+	protected final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
 	public boolean refreshShelfInfo;
 
@@ -115,21 +109,26 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		setWidget(uiBinder.createAndBindUi(this));
 		searchFilterPanel.getElement().setId("searchFilterPanelDiv");
 	}
-	/**
-	 * To set filters.
-	 */
+
 	@Override
 	public void preSearch(SearchDo<T> searchDo) {
 		reset();
 		searchFilterVc.setFilter(searchDo.getFilters());
-	}
-	/**
-	 * Pagination for search.
-	 */
+		if(!AppClientFactory.isAnonymous()) {
+			searchFilterVc.getUserStandardPrefCodeId();
+		}else{
+			searchFilterVc.getStandardVisiblity();
+		}
+		}
+		
+	
+
 	@Override
 	public void postSearch(SearchDo<T> searchDo) {
-		searchResultPanel.setVisible(false);
+		//searchResultPanel.setVisible(false);
 		searchResultPanel.setClonnable(true);
+		
+		
 		if (searchDo.getSearchResults() != null && searchDo.getSearchResults().size() > 0) {
 			for (T searchResult : searchDo.getSearchResults()) {
 				searchDo.getSearchHits();
@@ -154,6 +153,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 			if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("resource-search"))
 			{
 			searchResultPanel.add(new NOSearchResultCollectionVc());
+			
 			}
 			if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().contains("collection-search"))
 			{
@@ -169,9 +169,7 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 		searchResultPanel.setVisible(true);
 	}
-	/**
-	 * This is to reset the data.
-	 */
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -189,17 +187,15 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	public SearchFilterVc getSearchFilterVc() {
 		return searchFilterVc;
 	}
-	/**
-	 * To set SearchFilter
-	 */
+	
+	
+
 	@Override
 	public void setSearchFilter(SearchFilterDo searchFilterDo) {
 		getSearchFilterVc().renderFilter(searchFilterDo);
 		getUiHandlers().initiateSearch();
 	}
-	/**
-	 * To get search filters
-	 */
+
 	@Override
 	public Map<String, String> getSearchFilters() {
 		return getSearchFilterVc().getFilter();
@@ -222,48 +218,36 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	public AppMirageDragContainer getSearchResultPanel() {
 		return searchResultPanel;
 	}
-	/**
-	 * To set SourceSuggestions to searchFilterVc.
-	 */
+
 	@Override
 	public void setSourceSuggestions(SearchDo<String> sourceSuggestions) {
 		searchFilterVc.setSourceSuggestions(sourceSuggestions);
 	}
-	/**
-	 * To set StandardSuggestions to searchFilterVc.
-	 */
+
 	@Override
 	public void setStandardsSuggestions(SearchDo<CodeDo> standardsSuggestions) {
 		searchFilterVc.setStandardSuggestions(standardsSuggestions);
 	}
-	/**
-	 * To register drop controller.
-	 */
+
 	@Override
 	public void registerDropController(ResourceDropController dropController, RegisterSearchDropEvent.DROP_AREA type) {
 		dragController.unregisterDropController(dropController);
 		dragController.registerDropController(dropController);
 	}
-	/**
-	 * To unregister drop controller.
-	 */
+
 	@Override
 	public void unregisterDropController(ResourceDropController dropController, RegisterSearchDropEvent.DROP_AREA type) {
 		dragController.unregisterDropController(dropController);
 	}
-	/**
-	 * This method is called immediately before a widget will be detached from the browser's document.
-	 */
+
 	@Override
 	public void onUnload() {
 		super.onUnload();
 		dragController.unregisterDropControllers();
 	}
-	/**
-	 * To set shelf collections
-	 */
+
 	@Override
-	public void setShelfCollections(List<CollectionDo> shelfCollections) {
+	public void setShelfCollections(List<FolderDo> shelfCollections) {
 		SHELF_COLLECTIONS.clear();
 		if (shelfCollections != null) {
 			SHELF_COLLECTIONS.addAll(shelfCollections);
@@ -274,17 +258,13 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 		}
 	}
 
-	protected abstract void refreshShelfCollections(List<CollectionDo> shelfCollections);
-	/**
-	 * To set SourceSuggestionsInfo
-	 */
+	protected abstract void refreshShelfCollections(List<FolderDo> shelfCollections);
+
 	@Override
 	public void setStandardsSuggestionsInfo(SearchDo<CodeDo> result) {
 		searchFilterVc.setSourceSuggestionsInfo(result);
 	}
-	/**
-	 * To reset filters.
-	 */
+	
 	@Override
 	public void resetFilters(){
 		searchFilterVc.clearAllFields();

@@ -37,27 +37,15 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ResetTimeoutVc.java
+ * @author Search Team
  *
- * @description : Related to password reset token expired popup .
-
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResetTimeoutVc extends PopupPanel  implements MessageProperties {
 	
 	private AppPopUp appPopUp;
 	
 	@UiField
-	Label forgotPwdLbl;
+	Label forgotPwdLbl,newPwdLbl,timeOutText,requestNewText;
 	
 	private static ResetTimeoutVcUiBinder uiBinder = GWT
 			.create(ResetTimeoutVcUiBinder.class);
@@ -75,6 +63,10 @@ public class ResetTimeoutVc extends PopupPanel  implements MessageProperties {
 		appPopUp.setContent(GL0062, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
+		newPwdLbl.setText(GL1254);
+		timeOutText.setText(GL1257);
+		requestNewText.setText(GL1258);
+		forgotPwdLbl.setText(GL1259);
 		forgotPwdLbl.addClickHandler(new OnResetPasswordVc());
 	}
 	

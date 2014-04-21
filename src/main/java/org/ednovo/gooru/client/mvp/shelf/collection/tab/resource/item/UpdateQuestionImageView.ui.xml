@@ -5,14 +5,14 @@
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	 <ui:style field= "editQuestionStyle" src="EditQuestionResource.css"></ui:style>
  	 <g:HTMLPanel styleName="{editQuestionStyle.addResourceThumbimgContainer}" >
-               <g:HTMLPanel styleName="{editQuestionStyle.addResourceThumbimgHeading}" >Question Image</g:HTMLPanel>
+               <g:HTMLPanel styleName="{editQuestionStyle.addResourceThumbimgHeading}" ui:field="questionImageText"></g:HTMLPanel>
                <g:HTMLPanel styleName="{editQuestionStyle.addResourceThumbimg}" >                     
            		<g:Image styleName="{editQuestionStyle.addResourceThumbimg}" ui:field="updateQuestionImage"></g:Image>
                </g:HTMLPanel>
                <g:HTMLPanel styleName="{editQuestionStyle.addResourceThumbimgLeftContent}" >
                    <g:HTMLPanel styleName="{editQuestionStyle.addResourceThumbimgLeftContainer}" >
-                       <g:Label styleName="{editQuestionStyle.addResourceEditThumbimgLeft}" ui:field="uploadImage">Change Image</g:Label>
-                       <g:Label styleName="{editQuestionStyle.addResourceEditThumbimgLeft}" ui:field="removeImage">Remove Image</g:Label>
+                       <g:Label styleName="{editQuestionStyle.addResourceEditThumbimgLeft}" ui:field="uploadImage"></g:Label>
+                       <g:Label styleName="{editQuestionStyle.addResourceEditThumbimgLeft}" ui:field="removeImage"></g:Label>
                    </g:HTMLPanel>
                </g:HTMLPanel>
            </g:HTMLPanel> 

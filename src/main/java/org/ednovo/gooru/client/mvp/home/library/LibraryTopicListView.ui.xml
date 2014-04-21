@@ -2,11 +2,11 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="libraryStyle" src="library.css" type="org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle" />
-	    <g:HTMLPanel styleName="{libraryStyle.topicBlock}">
+	    <g:HTMLPanel styleName="{libraryStyle.topicBlock}" ui:field="topicBlock">
 	         <g:HTMLPanel styleName="{libraryStyle.topicTitle}">
 	            <g:Label ui:field="topicTitleLbl" styleName="{libraryStyle.topicListEllipsis}"></g:Label>
 	            <panel:HTMLEventPanel styleName="{libraryStyle.searchLink}" ui:field="searchLink">
-	               <g:HTMLPanel styleName="{libraryStyle.hoverText}">Search for more on this topic</g:HTMLPanel>
+	               <g:HTMLPanel styleName="{libraryStyle.hoverText}" ui:field="moreOnTopicText"></g:HTMLPanel>
 	               <g:HTMLPanel styleName="{libraryStyle.searchMagnify}"/>
 	            </panel:HTMLEventPanel>
 	         </g:HTMLPanel>
@@ -16,17 +16,18 @@
 	         <g:HTMLPanel styleName="loadingImage {libraryStyle.loadingIcon}" ui:field="loadingImage"></g:HTMLPanel>
 	         <g:HTMLPanel styleName="{libraryStyle.collectionViewer}" ui:field="collectionViewer">
 	            <g:HTMLPanel styleName="{libraryStyle.collectionInfo}" ui:field="collectionInfo">
+	               <g:HTMLPanel ui:field="standardsDescription" styleName="{libraryStyle.standardsDescription}"></g:HTMLPanel>
 	               <g:Image styleName="{libraryStyle.collectionImage}" ui:field="collectionImage"></g:Image>
 	               <g:HTMLPanel styleName="{libraryStyle.collectionMetaData}">
 		               <g:HTML styleName="{libraryStyle.collectionTitle}" ui:field="collectionTitleLbl"/>
 		               <g:HTML styleName="{libraryStyle.collectionDescription}" ui:field="collectionDescriptionLbl"/>
 					   <g:FlowPanel styleName="{libraryStyle.standards}" ui:field="standardsFloPanel" />
-		               <g:Button styleName="secondary" ui:field="assignCollectionBtn">Assign</g:Button>
-		               <g:Button styleName="secondary" ui:field="customizeCollectionBtn">Customize</g:Button>
+		               <g:Button styleName="secondary" ui:field="assignCollectionBtn"></g:Button>
+		               <g:Button styleName="secondary" ui:field="customizeCollectionBtn"></g:Button>
 	               </g:HTMLPanel>
 	            </g:HTMLPanel>
 	            <g:HTMLPanel styleName="{libraryStyle.resourcesInside}" ui:field="resourcesInside"/>
-	            <g:Label ui:field="noCollectionLbl" styleName="{libraryStyle.noCollectionLbl}">No Collection available!</g:Label>
+	            <g:Label ui:field="noCollectionLbl" styleName="{libraryStyle.noCollectionLbl}"></g:Label>
 	         </g:HTMLPanel>
 	      </g:HTMLPanel>
 </ui:UiBinder> 

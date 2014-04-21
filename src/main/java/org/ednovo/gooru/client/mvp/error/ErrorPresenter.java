@@ -37,19 +37,8 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 /**
- * 
- * @fileName : ErrorPresenter.java
+ * @author Search Team
  *
- * @description : This is presenter class for ErrorView.java
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ErrorPresenter extends BasePlacePresenter<IsErrorView, ErrorPresenter.IsErrorProxy> {
 
@@ -68,9 +57,7 @@ public class ErrorPresenter extends BasePlacePresenter<IsErrorView, ErrorPresent
 	public ErrorPresenter(IsErrorView view, IsErrorProxy proxy) {
 		super(view, proxy);
 	}
-	/**
-	 * This will return the placetoken.
-	 */
+
 	@Override
 	public String getViewToken() {
 		return PlaceTokens.ERROR;

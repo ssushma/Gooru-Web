@@ -5,11 +5,11 @@
 		<g:HTMLPanel styleName="{landingPageStyle.pageSection} featuredCollections" ui:field="panelTeachersPick">
 		   <g:HTMLPanel ui:field="teachersPickPanel" styleName="{landingPageStyle.teachersPickHeading}"/>
 		   <g:HTMLPanel styleName="{landingPageStyle.courseTabs}">
-		      <panel:HTMLEventPanel ui:field="mathTab" styleName="{landingPageStyle.courseTabsLi}">Math</panel:HTMLEventPanel>
-		      <panel:HTMLEventPanel ui:field="scienceTab" styleName="{landingPageStyle.courseTabsLi}">Science</panel:HTMLEventPanel>
-		      <panel:HTMLEventPanel ui:field="socialTab" styleName="{landingPageStyle.courseTabsLi}">Social Sciences</panel:HTMLEventPanel>
-		      <panel:HTMLEventPanel ui:field="languageTab" styleName="{landingPageStyle.courseTabsLi}">Language Arts</panel:HTMLEventPanel>
-		      <panel:HTMLEventPanel ui:field="featuredTab" styleName="{landingPageStyle.courseTabsLi}">Featured</panel:HTMLEventPanel>
+		      <panel:HTMLEventPanel ui:field="mathTab" styleName="{landingPageStyle.courseTabsLi}"></panel:HTMLEventPanel>
+		      <panel:HTMLEventPanel ui:field="scienceTab" styleName="{landingPageStyle.courseTabsLi}"></panel:HTMLEventPanel>
+		      <panel:HTMLEventPanel ui:field="socialTab" styleName="{landingPageStyle.courseTabsLi}"></panel:HTMLEventPanel>
+		      <panel:HTMLEventPanel ui:field="languageTab" styleName="{landingPageStyle.courseTabsLi}"></panel:HTMLEventPanel>
+		      <panel:HTMLEventPanel ui:field="featuredTab" styleName="{landingPageStyle.courseTabsLi}"></panel:HTMLEventPanel>
 		   </g:HTMLPanel>
 		   <g:HTMLPanel styleName="{landingPageStyle.featuredContent}" ui:field="featuredContainer"/>
 		</g:HTMLPanel>

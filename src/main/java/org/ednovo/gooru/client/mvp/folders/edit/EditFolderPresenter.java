@@ -49,26 +49,27 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
+
 /**
  * @fileName : EditFolderPresenter.java
  *
- * @description : This class is used to edit the folder.
+ * @description : 
  *
  * @version : 1.0
  *
- * @date: 30-Dec-2013
+ * @date: Apr 20, 2013
  *
  * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
+
 public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, EditFolderPresenter.IsEditFolderProxy> implements EditFolderUiHandlers {
 
 	@Inject
@@ -107,15 +108,7 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 	private final String SECOND_LEVEL_FOLDER = "2";
 
 	private final String THIRD_LEVEL_FOLDER = "3";
-	
-	/**
-	 * Class constructor.
-	 * @param shelfListPresenter
-	 * @param view
-	 * @param proxy
-	 * @param folderInfoTabPresenter
-	 * @param folderContentTabPresenter
-	 */
+
 	@Inject
 	public EditFolderPresenter(ShelfListPresenter shelfListPresenter, IsEditFolderView view, IsEditFolderProxy proxy,FolderInfoTabPresenter folderInfoTabPresenter,FolderContentTabPresenter folderContentTabPresenter) {
 		super(view, proxy);
@@ -126,30 +119,18 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 		this.shelfListPresenter.disableFolderCollectionPanel();
 		addRegisteredHandler(RequestFolderEvent.TYPE, this);
 	}
-	/**
-	 * 
-	 * Manually reveals a presenter. Only use this method if your presenter is configured
-     * to use manual reveal via {@link Presenter#useManualReveal()}. This method should be
-     * called following one or more asynchronous server calls in
-     * {@link Presenter#prepareFromRequest(PlaceRequest)}.
-	 *
-	 */
+
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.EDIT_FOLDERS)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsEditFolderProxy extends ProxyPlace<EditFolderPresenter> {
 	}
-	/**
-	 * This method is used to get the token.
-	 */
+
 	@Override
 	public String getViewToken() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * Lifecycle method called whenever this presenter is about to be
-	 * revealed.
-	 */
+
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -157,9 +138,7 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 		getView().setBackToSearch();
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 	}
-	/**
-	 * This LifeCycle method is called when the binding the object. And it will set the folder meta data and collection data.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -179,11 +158,7 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 		});
 	
 	}		
-
-	/**
-	 * Lifecycle method called on all visible presenters whenever a
-	 * presenter is revealed anywhere in the presenter hierarchy.
-	 */
+	
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -243,18 +218,14 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
 	}
-	/**
-	 * This method is used to get the folder collections.
-	 */
+	
 	@Override
 	public void getFoldersAndCollections() {
 		folderId = getPlaceManager().getRequestParameter("folderid");
 		getFolderService().getFolderInformation(folderId, getFolderInformationAsyncCallBack());
 		//getFolderService().getFoldersAndCollections(folderId, getCollectionAsyncCallback());
 	}
-	/**
-	 * This method is used to reveal a tab.
-	 */
+	
 	@Override
 	public void revealTab(Type<RevealContentHandler<?>> typeTab,CollectionDo collectionDo) {
 		if (typeTab.equals(TYPE_FOLDER_INFO_TAB)) {
@@ -265,17 +236,13 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 			folderContentTabPresenter.getView().setData(collectionDo);
 		}
 	}
-	/**
-	 * This method is used to clear the tab slots.
-	 */
+
 	@Override
 	public void clearTabSlot() {
 		clearSlot(TYPE_FOLDER_INFO_TAB);
 		clearSlot(TYPE_FOLDER_CONTENT_TAB);
 	}
-	/**
-	 * This method is used to update the collection info.
-	 */
+
 	@Override
 	public void updateCollectionInfo(String collectionId, String title,String description) {
 		getResourceService().updateCollectionMetadata(collectionId, title, description, null, null, null, null, null, null, null, getUpdateCollectionAsyncCallback());
@@ -285,37 +252,11 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 	public ResourceServiceAsync getResourceService() {
 		return resourceService;
 	}
-	/**
-	 * @function setResourceService 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the resource service.
-	 * 
-	 * @parm(s) : @param resourceService
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setResourceService(ResourceServiceAsync resourceService) {
 		this.resourceService = resourceService;
 	}
-	/**
-	 * @function getUpdateCollectionAsyncCallback 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to get the updated collections.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<CollectionDo>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public SimpleAsyncCallback<CollectionDo> getUpdateCollectionAsyncCallback() {
 		if (updateCollectionAsyncCallback == null) {
 			updateCollectionAsyncCallback = new SimpleAsyncCallback<CollectionDo>() {
@@ -344,34 +285,17 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 			SimpleAsyncCallback<List<CollectionItemDo>> getAllFoldersAsyncCallback) {
 		this.getAllFoldersAsyncCallback = getAllFoldersAsyncCallback;
 	}
-	/**
-	 * @function setCollectionItemDo 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : This method is used to set the collection data.
-	 * 
-	 * @parm(s) : @param result
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private void setCollectionItemDo(List<CollectionItemDo> result){
 		this.collectionItemDo = result;
 	}
-	/**
-	 * This method is used to request the folder view.
-	 */
+	
 	@Override
 	public void requestFolderView(String collectionId,Map<String, String> params, Boolean refreshType) {
 		this.folderParams = params;
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_FOLDERS, params, refreshType);
 	}
-	/**
-	 * This method is used to delete the folder.
-	 */
+
 	@Override
 	public void deleteMyFolder(String collectionId, final CollectionDo collectionDo) {
 
@@ -387,9 +311,7 @@ public class EditFolderPresenter extends BasePlacePresenter<IsEditFolderView, Ed
 				}
 			});
 	}
-	/**
-	 * This will redirect the foder.
-	 */
+
 	@Override
 	public void initFolderRedirect() {
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.FOLDERS);

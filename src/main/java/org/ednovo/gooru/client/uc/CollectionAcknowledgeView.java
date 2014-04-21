@@ -44,19 +44,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-/**
- * @fileName : CollectionAcknowledgeView.java
- *
- * @description : This class is used to display the collection acknowledge view.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CollectionAcknowledgeView extends Composite implements HasClickHandlers{
 
 	
@@ -66,9 +54,7 @@ public class CollectionAcknowledgeView extends Composite implements HasClickHand
 
 	interface BottomButtonViewUiBinder extends UiBinder<Widget, CollectionAcknowledgeView> {
 	}
-	/**
-	 * class constructor.
-	 */
+	
 	public CollectionAcknowledgeView(){
 		initWidget(uiBinder.createAndBindUi(this));
 	}
@@ -78,20 +64,7 @@ public class CollectionAcknowledgeView extends Composite implements HasClickHand
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		renderAcknowledgeResource(collectionDo);
 	}
-	/**
-	 * @function renderAcknowledgeResource 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will render the resource acknowledge.
-	 * 
-	 * @parm(s) : @param collectionDo
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void renderAcknowledgeResource(CollectionDo collectionDo){
 		if(collectionDo!=null&&collectionDo.getGooruOid()!=null){
 			List<String> acknowldegeList=collectionDo.getMetaInfo().getAcknowledgement();
@@ -99,16 +72,19 @@ public class CollectionAcknowledgeView extends Composite implements HasClickHand
 				String sourceName=acknowldegeList.get(i);
 				sourceName=sourceName!=null?sourceName.trim():"";
 				final FlowPanel resourceSourcesContainer=new FlowPanel();
-				Label sourceNameLabel=getResourceNameLabel(sourceName);
-				resourceSourcesContainer.add(sourceNameLabel);
 				final FlowPanel resourceSourcesWidget=new FlowPanel();
 				for(int itemsCount=0;itemsCount<collectionDo.getCollectionItems().size();itemsCount++){
 					CollectionItemDo collectionItemDo=collectionDo.getCollectionItems().get(itemsCount);
 					String attribution=collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():null;
 					if(attribution!=null&&attribution.trim().equalsIgnoreCase(sourceName)){
-						TocResourceView ackResourceView=new TocResourceView(collectionItemDo);
-						ackResourceView.addClickHandler(new PreviewResourceView(collectionItemDo, collectionDo.getGooruOid()));
+						if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
+							Label sourceNameLabel=getResourceNameLabel(sourceName);
+							resourceSourcesContainer.add(sourceNameLabel);
+							TocResourceView ackResourceView=new TocResourceView(collectionItemDo,itemsCount+1,false);
+						ackResourceView.setResourceTitleColor();
+						//ackResourceView.addClickHandler(new PreviewResourceView(collectionItemDo, collectionDo.getGooruOid()));
 						resourceSourcesWidget.add(ackResourceView);	
+							}
 					}
 				}
 				resourceSourcesContainer.add(resourceSourcesWidget);
@@ -117,35 +93,16 @@ public class CollectionAcknowledgeView extends Composite implements HasClickHand
 			}
 		}
 	}
-	/**
-	 * @function getResourceNameLabel 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method will return the resource label.
-	 * 
-	 * @parm(s) : @param sourceName
-	 * @parm(s) : @return
-	 * 
-	 * @return : Label
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	private Label getResourceNameLabel(String sourceName){
 		Label sourceNameText=new Label(sourceName);
 		sourceNameText.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceSourceName());
 		return sourceNameText;
 	}
-	/**
-	 * This will add the click event.
-	 */
+	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
 	}
-	/**
-	 * This inner class is used to preview the resource.
-	 */
 	public class PreviewResourceView implements ClickHandler{
 		private CollectionItemDo collectionItemDo;
 		private String collectionId;

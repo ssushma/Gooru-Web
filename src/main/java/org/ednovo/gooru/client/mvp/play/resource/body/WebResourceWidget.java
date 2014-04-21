@@ -30,7 +30,6 @@ import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.IFrameElement;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.HasLoadHandlers;
 import com.google.gwt.event.dom.client.LoadEvent;
@@ -39,8 +38,6 @@ import com.google.gwt.event.logical.shared.HasInitializeHandlers;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.thirdparty.javascript.jscomp.CssRenamingMap.Style;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Frame;
 
@@ -50,7 +47,7 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 	public WebResourceWidget(String webResourceURL) {
 		resourcePreviewFrame = new Frame(webResourceURL);
 		initWidget(resourcePreviewFrame);
-		resourcePreviewFrame.setSize("100%", "auto");
+		resourcePreviewFrame.setSize("100%", "550px");
 		resourcePreviewFrame.getElement().setAttribute("frameborder", "0");
 		resourcePreviewFrame.getElement().setAttribute("vspace", "0");
 		resourcePreviewFrame.getElement().setAttribute("hspace", "0");
@@ -77,11 +74,12 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
  			@Override
  			public void execute() {
  				//timer.schedule(100); 
+ 				try{
  				 Document document = IFrameElement.as(getResourcePreviewFrame().getElement()).getContentDocument();
  	             BodyElement body = document.getBody();
  			 	 Element html=document.getDocumentElement();
- 			 	getResourcePreviewFrame().getElement().getStyle().setVisibility(Visibility.HIDDEN);
- 			 	getResourcePreviewFrame().getElement().getStyle().setPosition(Position.ABSOLUTE);
+ 			 	/*getResourcePreviewFrame().getElement().getStyle().setVisibility(Visibility.HIDDEN);
+ 			 	getResourcePreviewFrame().getElement().getStyle().setPosition(Position.ABSOLUTE);*/
  	             int bodyHeight=Math.max(body.getScrollHeight(), body.getOffsetHeight());
  	             bodyHeight=Math.max(bodyHeight, html.getOffsetHeight());
  	             bodyHeight=Math.max(bodyHeight, html.getClientHeight());
@@ -89,6 +87,9 @@ public class WebResourceWidget extends Composite implements HasInitializeHandler
 	             int scrollHeight=body.getScrollHeight();
 	             getResourcePreviewFrame().getElement().getStyle().clearPosition();
 	             getResourcePreviewFrame().getElement().getStyle().setVisibility(Visibility.VISIBLE);
+ 				}catch(Exception e){
+ 					
+ 				}
  			}
          });
     }

@@ -43,16 +43,16 @@ import com.gwtplatform.mvp.client.View;
  * 
  * @fileName : CollectionAssignTabPresenter.java
  *
- * @description : This is the presenter class for CollectionAssignTabView.java
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: Jul 30, 2013
  *
- * @Author : Gooru Team
+ * @Author ramadevikrishnan
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
 public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAssignTab> implements CollectionAssignTabUiHandlers {
 
@@ -88,9 +88,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 		super(eventBus, view);
 		getView().setUiHandlers(this);
 	}
-	/**
-	 * This method is called when the presenter is instantiated.
-	 */
+
 	@Override
 	public void onBind() {
 		super.onBind();
@@ -103,24 +101,10 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 			}
 		});
 		
-		setAssignmentsListAsyncCallback(new SimpleAsyncCallback<AssignmentsListDo>() {
 
-			@Override
-			public void onSuccess(AssignmentsListDo result) {
-				isApiCalling = false;
-				getView().setAssignmentData(result);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
-		});
 		
 	}
-	/**
-	 * This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 */
+
 	@Override
 	public void onReveal() {
 		super.onReveal();
@@ -134,26 +118,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 		isApiCalling = false;
 		getClasspage(collectionDo, null);
 	}
-	/**
-	 * 
-	 * @function getClasspage 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This is used to get the class page.
-	 * 
-	 * 
-	 * @parm(s) : @param collectionDo
-	 * @parm(s) : @param shareType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getClasspage(CollectionDo collectionDo, String shareType){
 		this.shareType = shareType;
 		this.collectionDo = collectionDo;
@@ -170,9 +135,8 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 			getView().hideContainers();
 		}
 	}
-	/**
-	 * This method is called whenever the user navigates to a page that shows the presenter, whether it was visible or not.
-	 */
+	
+	
 	@Override
 	protected void onReset() {
 		super.onReset();
@@ -186,9 +150,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 		isApiCalling = false;
 		getView().onUnload();
 	}
-	/**
-	 * This is use to call onUnload.
-	 */
+	
 	@Override
 	protected void onHide() {
 		super.onHide();
@@ -202,7 +164,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	 * 
 	 * @created_date : Jul 31, 2013
 	 * 
-	 * @description  :  This is used to get all the classpages.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param limit
@@ -220,9 +182,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	public void getAllClasspages(String limit, String offSet) {
 		getClasspageService().v2GetAllClasspages(limit, offSet, getGetClasspageList());
 	}
-	/**
-	 * This is used to get the next class pages.
-	 */
+	
 	@Override
 	public void getNextClasspages() {
 		classpageOffSet = classpageOffSet+10;
@@ -258,9 +218,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 	public void setGetClasspageList(SimpleAsyncCallback<ClasspageListDo> getClasspageList) {
 		this.getClasspageList = getClasspageList;
 	}
-	/**
-	 * This is used to get the assignments based on ClasspageId.
-	 */
+
 	@Override
 	public void getAssignmentsByClasspageId(String classpageId,String pageSize, String pageNum) {
 		this.classpageId = classpageId;
@@ -281,9 +239,7 @@ public class CollectionAssignTabPresenter extends PresenterWidget<IsCollectionAs
 			SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback) {
 		this.assignmentsListAsyncCallback = assignmentsListAsyncCallback;
 	}
-	/**
-	 * This method is used to get the next assignments.
-	 */
+
 	@Override
 	public void getNextAssignments() {
 		if (classpageId!=null){

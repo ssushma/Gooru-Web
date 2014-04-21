@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -33,20 +35,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : ErrorPopupVc.java
+ * @author Search Team
  *
- * @description : This file used to show error popUp.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ErrorPopupVc extends Composite {
+public class ErrorPopupVc extends Composite implements MessageProperties {
 
 	private static ErrorPopupVcUiBinder uiBinder = GWT.create(ErrorPopupVcUiBinder.class);
 
@@ -60,7 +54,7 @@ public class ErrorPopupVc extends Composite {
 	PopupPanel errorPopUpNew;
 
 	@UiField
-	Label okButton;
+	Label okButton,errorPopupHeaderText,dragText,questionLabel,faqsText,cancelButton;
 	
 	/**
 	 * Class constructor
@@ -68,6 +62,12 @@ public class ErrorPopupVc extends Composite {
 	public ErrorPopupVc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		errorPopupHeaderText.setText(GL0061);
+		dragText.setText(GL1028);
+		questionLabel.setText(GL1029);
+		faqsText.setText(GL1030);
+		okButton.setText(GL0190);
+		cancelButton.setText(GL0142);
 		okButton.addClickHandler(new ClickHandler() {
 
 			@Override

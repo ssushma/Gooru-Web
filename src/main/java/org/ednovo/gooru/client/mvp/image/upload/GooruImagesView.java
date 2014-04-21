@@ -35,21 +35,15 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : GooruImagesView.java
+ * @author Search Team
  *
- * @description : This class is used to display the gooru images.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public  class GooruImagesView extends Composite implements HasClickHandlers{
+
+
+
 
 	private static GooruImagesViewUiBinder uiBinder = GWT.create(GooruImagesViewUiBinder.class);
 
@@ -67,15 +61,14 @@ public  class GooruImagesView extends Composite implements HasClickHandlers{
 		super();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	/***
-	 * This method is used to set the image url.
-	 */
+	
 	public void setImageUrl(String imageUrl){
 		gooruDefaultImage.setUrl(imageUrl);
 	}
 
 	@Override
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
+		// TODO Auto-generated method stub
 		return addDomHandler(handler, ClickEvent.getType());
 	}
 	

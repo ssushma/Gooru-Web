@@ -27,30 +27,21 @@ package org.ednovo.gooru.client.uc;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : PlayerSummaryPageUc.java
- *
- * @description : This class is used on the player summary page.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class PlayerSummaryPageUc extends PopupPanel {
+
+public class PlayerSummaryPageUc extends PopupPanel implements MessageProperties {
 
 	@UiField
 	Button leaveBtn, stayBtn;
+	@UiField Label alertMessageHeaderField,alertMessageField,alertMessageField1;
 	
 	private static PlayerSummaryPageUcUiBinder uiBinder = GWT
 			.create(PlayerSummaryPageUcUiBinder.class);
@@ -58,9 +49,7 @@ public class PlayerSummaryPageUc extends PopupPanel {
 	interface PlayerSummaryPageUcUiBinder extends
 			UiBinder<Widget, PlayerSummaryPageUc> {
 	}
-	/**
-	 * Class constructor.
-	 */
+
 	public PlayerSummaryPageUc() {
 		setWidget(uiBinder.createAndBindUi(this));
 		CollectionCBundle.INSTANCE.css().ensureInjected();
@@ -69,6 +58,11 @@ public class PlayerSummaryPageUc extends PopupPanel {
 		this.setGlassStyleName(CollectionCBundle.INSTANCE.css().playerSummaryPageGlassPanel());
 		this.show();
 		this.center();
+		alertMessageHeaderField.setText(GL1037);
+		alertMessageField.setText(GL1038);
+		alertMessageField1.setText(GL1039);
+		leaveBtn.setText(GL1040);
+		stayBtn.setText(GL1041);
 	}
 
 	public Button getLeaveButton() {

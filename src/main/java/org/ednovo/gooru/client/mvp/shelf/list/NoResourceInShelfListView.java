@@ -25,8 +25,11 @@
 package org.ednovo.gooru.client.mvp.shelf.list;
 
 import org.ednovo.gooru.client.effects.FadeInAndOut;
+import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -35,22 +38,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * 
- * @fileName : NoResourceInShelfListView.java
+ * @author Search Team
  *
- * @description : This is used for describing that  there are no resources in shelf view 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class NoResourceInShelfListView extends Composite {
+public class NoResourceInShelfListView extends Composite implements MessageProperties{
 
 	
 
@@ -58,23 +51,23 @@ public class NoResourceInShelfListView extends Composite {
 	}
 	private static NoResourceInShelfListViewUiBinder uiBinder = GWT.create(NoResourceInShelfListViewUiBinder.class);
 	
-	private static final String  infoMsg_1 ="Add to your collection";
-	private static final String  infoMsg_2 ="by dragging another resource into it";
+	private static final String  infoMsg_1 =GL0982;
+	private static final String  infoMsg_2 =GL0983;
 	
-	private static final String  congratsMsg_1 ="Congratulations, you're now ready";
-	private static final String  congratsMsg_2 ="to play freely on gooru";
-	private final String CONGRATS_MSG="congrats";
-	private final String INFO_MSG = "infoMsg";
-	private final String MSG_NO_IMG = "onlyMsg";
-	private final String CONGRATS_NO_IMG = "onlyCongrats";
+	private static final String  congratsMsg_1 =GL0984;
+	private static final String  congratsMsg_2 =GL0985;
+	private final String CONGRATS_MSG=GL0483.toLowerCase();
+	private final String INFO_MSG =GL0986;
+	private final String MSG_NO_IMG =GL0987;
+	private final String CONGRATS_NO_IMG =GL0988;
 	
 	@UiField
-	Label userInfoMsg_1,userInfoMsg_2;
+	Label userInfoMsg_1,userInfoMsg_2,emptyCollMsg_1,emptyCollMsg_2;
 	
 	@UiField
 	SimplePanel resourceUgArrowImg,resourceImageOneImg,resourceImageTwoImg,resourceImageThreeImg;
 	
-
+	@UiField FolderStyleBundle folderStyle;
 	
 	String msgInfo=null;
 
@@ -85,34 +78,26 @@ public class NoResourceInShelfListView extends Composite {
 	public NoResourceInShelfListView(String msg) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.msgInfo=msg;
+		resourceImageOneImg.getElement().getStyle().setDisplay(Display.NONE);
+		resourceImageTwoImg.getElement().getStyle().setDisplay(Display.NONE);
+		resourceImageThreeImg.getElement().getStyle().setDisplay(Display.NONE);
 		
 		displayUserInfoMsg(msgInfo);
 		
 	}
-	/**
-	 * 
-	 * @function displayUserInfoMsg 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This displays the user information messages
-	 * 
-	 * 
-	 * @parm(s) : @param msg
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	
 	public void displayUserInfoMsg(String msg){
 		if(msg.equals(INFO_MSG)){
+			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
+			emptyCollMsg_2.getElement().getStyle().setDisplay(Display.NONE);
 			userInfoMsg_1.setText(infoMsg_1);
 			userInfoMsg_2.setText(infoMsg_2);
 		
 		}
 		else if(msg.equals(CONGRATS_MSG)){ 
+			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
+			emptyCollMsg_2.getElement().getStyle().setDisplay(Display.NONE);
 			resourceUgArrowImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageOneImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageTwoImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
@@ -135,6 +120,8 @@ public class NoResourceInShelfListView extends Composite {
 			
 		}
 		else if(msg.equals(MSG_NO_IMG)){
+			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
+			emptyCollMsg_2.getElement().getStyle().setDisplay(Display.NONE);
 			resourceUgArrowImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageOneImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageTwoImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
@@ -143,6 +130,8 @@ public class NoResourceInShelfListView extends Composite {
 			userInfoMsg_2.setText(infoMsg_2);
 			
 		}else if(msg.equals(CONGRATS_NO_IMG)){
+			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
+			emptyCollMsg_2.getElement().getStyle().setDisplay(Display.NONE);
 			resourceUgArrowImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageOneImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageTwoImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
@@ -161,6 +150,9 @@ public class NoResourceInShelfListView extends Composite {
 			};
 			shelfUserInfoMsg.schedule(5000);
 			
+		}else{
+			emptyCollMsg_1.setText(GL1056);
+			emptyCollMsg_2.setText(" "+GL1057);
 		}
 		
 		

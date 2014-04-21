@@ -27,19 +27,10 @@ package org.ednovo.gooru.client.mvp.wrap;
 import org.ednovo.gooru.client.gin.IsView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.shared.model.user.UserDo;
+
 /**
+ * @author Search Team
  * 
- * @fileName : IsWrapView.java
- *
- * @description : Acts as a bridge between Presenter and View.
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author: Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsWrapView extends IsView {
 	

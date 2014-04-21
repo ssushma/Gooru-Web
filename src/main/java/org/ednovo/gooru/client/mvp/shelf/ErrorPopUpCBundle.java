@@ -27,26 +27,24 @@
 */
 package org.ednovo.gooru.client.mvp.shelf;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
 
 /**
- * 
  * @fileName : ErrorPopUpCBundle.java
  *
- * @description : This interface is used to apply css styles for Error Popup.
+ * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: 02-Jan-2014
+ * @date: 07-Jun-2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer: 
  */
-
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 public interface ErrorPopUpCBundle extends ClientBundle{
 static final ErrorPopUpCBundle INSTANCE = GWT.create(ErrorPopUpCBundle.class);
 	

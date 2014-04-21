@@ -1,22 +1,33 @@
 .resource-info-container{
 	width: 960px;
 	margin:0 auto;
+	overflow: hidden;
 }
 
 .resource-info-Wrapper{
 	background-color: #F0F0F0;
 	float: left;
-	position:absolute;
+	/*  position:absolute;  */
 	z-index:99;
+	height: 257px;
 }
 .resource-info-metadata-wrapper{
-	width: 374px;
-	min-height: 580px;
+	width: 448px;
+	min-height: 223px;
 	height: auto;
 	margin-top: 22px;
-	margin-left: 19px;
+	margin-left: 17px;
 	float: left;
-	border-right: 1px dashed #AAA;
+	border-right: 1px solid #AAA;
+}
+.resource-info-metadata-innerwrapper{
+	width: 435px;
+	max-height: 215px;
+	height: auto;
+	padding-top: 5px;
+	float: left;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 .resource-info-type-image{
 	float:left;
@@ -31,7 +42,23 @@
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	margin-left: 10px;
-	margin-top: 2px;
+	
+	/* margin-top: 2px; */
+}
+.resource-info-stand-title{
+		float: left;
+	color: #515151;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+.resource-info-title-view{
+	float: left;
+	color: #515151;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	width: 70px;
 }
 .resoruce-info-separator-bullet{
 	width: 5px;
@@ -57,7 +84,8 @@
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #515151;
-	margin-top: 10px;
+	word-wrap: break-word;
+	/* margin-top: 4px; */
 }
 
 .resource-info-more-title{
@@ -66,16 +94,14 @@
 	font-size: 12px;
 	color: #515151;
 	font-weight: bold;
-	margin-top: 17px;
 }
-
 .resource-info-more-left-wrapper{
 	width: 194px;
 	float: left;
 	clear: both;
 }
 .resource-info-more-leftinner-wrapper{
-	width: 194px;
+	width: 202px;
 	float: left;
 	clear: both;
 }
@@ -83,7 +109,7 @@
 .resource-info-grade-wrapper{
 	background-color: #F0F0F0;
 	float: left;
-	margin-top: 10px;		
+	
 }
 .resource-info-grade-icon,.resource-info-rights-icon,.resource-info-view-icon,.resource-info-like-icon{
 	background:url("images/player_images.png") no-repeat;
@@ -99,20 +125,19 @@
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #515151;
-	margin-left: 20px;
+	margin-left:-1px;
 }
 .resource-info-grade-text{
 	float: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #515151;
-	width: 132px;
 	word-wrap: break-word;
 }
 .resource-info-rights-wrapper{
 	float: left;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 4px;
 }
 .resource-info-rights-icon{
 	background-position: -371px -57px;
@@ -126,7 +151,7 @@
 	font-size: 12px;
 	color: #515151;
 	width: 132px;
-	margin-left:20px;
+	margin-left:12px;
 }
 
 .resource-info-more-right-wrapper{
@@ -176,7 +201,7 @@
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #515151;
-	margin-top: 10px;
+	
 }
 .resource-info-stand-wrapper{
 	width: 100%;
@@ -191,7 +216,7 @@
 	font-size: 12px;
 	color: #515151;
 	font-weight: bold;
-	margin-top: 17px;
+	margin-top: 10px;
 }
 
 .resource-info-url-content{
@@ -219,11 +244,11 @@
 }
 
 .resource-info-collections-wrapper{
-	width: 525px;
-	min-height: 580px;
+	width: 474px;
+	min-height: 276px;
 	height: auto;
 	float: left;
-	margin-left: 40px;
+	margin-left: 18px;
 	margin-top: 20px;
 }
 
@@ -262,6 +287,8 @@
 	margin-bottom: 3px;
 	overflow: hidden;
 	cursor: pointer;
+	float: left;
+	width: 272px;
 }
 
 .collection-author-container{
@@ -307,16 +334,61 @@
 	color: #515151;
 	font-weight: bold;
 	display: inline-block;
-	margin-bottom: 15px;
-}
+	}
 
 .playerResourcesRightSection {
-       width: 485px;
-       height: 580px;
+       width: 469px;
+       height: 204px;
        overflow-x: hidden !important;
        float: left;
-       margin-top: 20px;
+       margin-top: 10px;
        margin-bottom: 50px;
-       
+
+}
+.resource-info-publishContainer{
+	width: 426px;
+	float: left;	
+	padding-top: 7px;	
+	padding-bottom: 4px;
+}
+.resource-info-backgroundContainer{
+	background: #515151;
+	margin: 0 auto;
+	padding: 10px;
+	margin-top: 46px;
+}
+.resource-info-bottomImageContainer{
+	text-align: center;
+	padding-top: 10px;
+	cursor: pointer;
+	width: 45px;
+	margin: 0 auto;
+}
+.resource-info-hideImage{
+	display: inline-block;
+	background-image: url("images/hide_arrow.png");
+	width: 10px;
+	color: #fff;
+	height:6px;
+}
+.resource-info-hideText{
+	display: inline-block;
+	vertical-align: top;
+	color: #fff;
+	margin-left: 4px;
+}
+.resource-info-name{
+	color: #fff;
+	text-align: center;
+	padding-bottom: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
 }
 
+.ipadFriendlyIconNone{
+	display:none;
+}
+.gradeContainer{
+	float: left;
+	width: 100%;
+}

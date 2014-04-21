@@ -6,24 +6,24 @@
 		<g:FlowPanel styleName="{res.css.registerContentsize}">
 			<g:FlowPanel styleName="{res.css.registerContentDiv}">
 					<g:FlowPanel>
-						<g:Label text = "We are excited to have you register as a beta-user and join us in creating our next version of Gooru!" styleName="{res.css.registerTextAlign}"/>
+						<g:Label  ui:field="betaText" styleName="{res.css.registerTextAlign}"/>
 					</g:FlowPanel>
 				
 					<g:FlowPanel styleName="{res.css.registerContentAlign}">
-					<g:Label text = "Birthday" styleName="{res.css.registerAlignInputs}"/>
+					<g:Label styleName="{res.css.registerAlignInputs}" ui:field="birthdayLbl"/>
 					<g:SimplePanel ui:field = "dateSimPanel"/>
 					<gg:ErrorLabelUc ui:field="dateValidationUc"/>
 					</g:FlowPanel>
 					
 					<g:FlowPanel styleName="{res.css.registerContentAlign}">
-					<g:Label text = "Email" styleName="{res.css.registerAlignInputs}"/>
+					<g:Label styleName="{res.css.registerAlignInputs}" ui:field="emailLbl"/>
 					<g:TextBox ui:field="emailIdTxtBox" styleName="{res.css.emailTxtBox}"/>
 					<gg:ErrorLabelUc ui:field="emailValidationUc"/>
 					</g:FlowPanel>
 					
 					<g:FlowPanel styleName="{res.css.registerActionField}" ui:field="buttonContainer">
-						<gg:BlueButtonUc text="Go" ui:field="goBtnUc" styleName="{res.css.overRideBlueButton}"/>
-						<g:Anchor text="Cancel" ui:field="cancelAnr" styleName="{res.css.collectionFormCancelButton}"/>
+						<gg:BlueButtonUc ui:field="goBtnUc" styleName="{res.css.overRideBlueButton}"/>
+						<g:Anchor ui:field="cancelAnr" styleName="{res.css.collectionFormCancelButton}"/>
 					</g:FlowPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>

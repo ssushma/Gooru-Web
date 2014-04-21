@@ -36,19 +36,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : TermsOfUse.java
- *
- * @description : This class is used for terms of use.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public abstract class TermsOfUse extends PopupPanel {
 
 	private static TermsOfUseUiBinder uiBinder = GWT

@@ -48,4 +48,6 @@ public interface HomeServiceAsync extends BaseServiceAsync {
 	void whatsNewFibLink(AsyncCallback<String> callback);
 
 	void mosLink(AsyncCallback<String> callback);
+	
+	void getClientIpAddress(AsyncCallback<String> callback);
 }

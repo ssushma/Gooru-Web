@@ -31,19 +31,8 @@ import com.google.gwt.resources.client.CssResource;
 
 
 /**
- * 
- * @fileName : AssignPopUpCBundle.java
+ * @author Search Team
  *
- * @description : This file is used to apply css styles for AssignmentView Popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface AssignPopUpCBundle extends ClientBundle{
 	
@@ -55,6 +44,8 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String mainContainer();
 		
 		String labelText();
+		
+		String labelTextSucees();
 
 		String dropdownContainer();
 
@@ -239,8 +230,28 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		
 		String cpSuccessMsg();
 		
+		String assignmentLabel();
 		
+		String txtboxerrorColor();
+		
+		String directionsDiv();
+		
+		String directionsTextAreaContainer();
+		
+		String directionsTextArea();
+		
+		String duedateDiv();
+		
+		String directionsDivLabel();
+		
+		String duedateDivLabel();
+		
+		String duedateContainer();
+		
+		String buttonWidth();
+		String directionsErrorLbl();
 	}
+
 	@Source("AssignPopUp.css")
 	CollectionAssignCss css();
 

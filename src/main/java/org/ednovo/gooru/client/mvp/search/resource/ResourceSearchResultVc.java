@@ -63,25 +63,13 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ResourceSearchResultVc.java
+ * @author Search Team
  *
- * @description : This file deals with resource metadata.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class ResourceSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc {
+public class ResourceSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc,MessageProperties {
 
 	private static ResourceSearchResultVcUiBinder uiBinder = GWT.create(ResourceSearchResultVcUiBinder.class);
 
@@ -124,11 +112,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	
 	private static final String QUESTION = "Question";
 	
-	private static final String PAGES = " Pages";
+	private static final String PAGES = " "+GL1471;
 	
-	private static final String VIEW = " View";
+	private static final String VIEW = " "+GL1428;
 	
-	private static final String VIEWS = " Views";
+	private static final String VIEWS = " "+GL0934;
 	
 	private static final String NULL = "null";
 	
@@ -142,6 +130,9 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		this.res = ResourceSearchResultCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		imgNotFriendly.setTitle(GL0737);
+		imgNotFriendly.setAltText(GL0737);
+		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		setData(resourceSearchResultDo);
 		wrapperVcr.addStyleName("resourceSearchResultBox");
 		
@@ -153,7 +144,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	 * 
 	 * @created_date : Aug 11, 2013
 	 * 
-	 * @description : This is used to update the views.
+	 * @description
 	 * 
 	 * 
 	 * @parm(s) : @param count
@@ -171,7 +162,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public void updateViews(String count, String contentId, String whatToUpdate){
 		if (resourceSearchResultDo.getGooruOid().equalsIgnoreCase(contentId)){
 			metaDataFloPanel.clear();
-			String category = resourceSearchResultDo.getCategory();
+			String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 			
 			String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
@@ -182,7 +173,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			if (category.equalsIgnoreCase(VIDEO)) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 			} else if (category.equalsIgnoreCase(QUESTION)) {
-				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType()));
+				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
 			}
 			if (resourceSearchResultDo.getNumOfPages() != null && !resourceSearchResultDo.getNumOfPages().equals("0") && !resourceSearchResultDo.getNumOfPages().equalsIgnoreCase(NULL) && resourceSearchResultDo.getNumOfPages().length() > 0) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
@@ -196,7 +187,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
 		
-		String category = resourceSearchResultDo.getCategory();
+		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		wrapperVcr.setData(resourceSearchResultDo);
         String description = resourceSearchResultDo.getDescription();
         String title = "";
@@ -216,7 +207,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 		} else if (category.equalsIgnoreCase(QUESTION)) {
-			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType()));
+			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
 		}
 		if (resourceSearchResultDo.getNumOfPages() != null && !resourceSearchResultDo.getNumOfPages().equals("0") && !resourceSearchResultDo.getNumOfPages().equalsIgnoreCase(NULL) && resourceSearchResultDo.getNumOfPages().length() > 0) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
@@ -245,11 +236,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(MessageProperties.GL0454);
+				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setZIndex(9999999);
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(150+22), imgNotFriendly.getAbsoluteTop()+22);
+				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);
 				toolTip.show();
 			}
 		});
@@ -266,16 +257,16 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 				  }
 			}
 		});
-		
+		if(description!=null && description.length()>205){
+			description = description.trim().substring(0, 205) +"...";	
+		}
 		resourceDescriptionHtml.setHTML(description);
 		resourceTitleContainer.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.getElement().getStyle().setZIndex(99999);
-		resourceImageUc.renderSearch(category, resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME, resourceTitle, false);
+		resourceImageUc.renderSearch(category, resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME, resourceTitle, false,"");
 		SearchUiUtil.renderStandards(standardsFloPanel, resourceSearchResultDo);
 	}
-	/**
-	 * This handler is used to update the search results metadata.
-	 */
+
 	UpdateSearchResultMetaDataHandler setUpdateMetaData =new UpdateSearchResultMetaDataHandler(){
 
 		@Override
@@ -286,25 +277,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			}
 		}
 	};
-	/**
-	 * 
-	 * @function onClickResourceTitle 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to play resource on click of resourceTitleContainer.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
+	
 	@UiHandler("resourceTitleContainer")
 	public void onClickResourceTitle(ClickEvent event){
 		MixpanelUtil.Preview_Resource_From_Search("ResourceTitleLbl");
@@ -327,23 +301,17 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public void setSearchResultVc(ResourceSearchResultWrapperVc searchResultVc) {
 		this.wrapperVcr = searchResultVc;
 	}
-	/**
-	 * This is used to get the dragId.
-	 */
+
 	@Override
 	public String getDragId() {
 		return resourceSearchResultDo.getGooruOid();
 	}
-	/**
-	 * This is used to get the dragType.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		return DRAG_TYPE.RESOURCE;
 	}
-	/**
-	 * To get initDraggableMirage.
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		return new ResourceDragWithImgUc(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getResourceTitle());
@@ -363,37 +331,27 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	public void setResourceSearchResultDo(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
 	}
-	/**
-	 * Blur handler for Drag event.
-	 */
+
 	@Override
 	public void onDragBlur() {
 		getSearchResultVc().onMouseOut(null);
 	}
-	/**
-	 * To get drag handle.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		return getSearchResultVc().getDragHandlePanel();
 	}
-	/**
-	 * To get Drag Top Correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		return 27;
 	}
-	/**
-	 * To get Drag Left Correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		return 20;
 	}
-	/**
-	 * This is used to add to shelf.
-	 */
+
 	@Override
 	public void setAddedToShelf(boolean addedToShelf) {
 		wrapperVcr.setAddedToShelf(addedToShelf);

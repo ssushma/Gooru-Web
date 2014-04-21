@@ -24,12 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.devicesupport;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewImpl;
@@ -37,23 +42,25 @@ import com.gwtplatform.mvp.client.ViewImpl;
 /**
  * 
  * @fileName : DeviceSupportView.java
- *
- * @description : 
- *
- *
+ * 
+ * @description :
+ * 
+ * 
  * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * 
+ * @date: Jul 16, 2013
+ * 
+ * @Author Gooru Team
+ * 
+ * @Reviewer:
  */
-public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView {
+public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView,MessageProperties {
 	Widget widget = null;
 
 	private String device;
 	private String size;
+	
+	@UiField Image deviceSupportLbl;
 
 	@UiTemplate("DeviceSupportView.ui.xml")
 	interface Binder extends UiBinder<Widget, DeviceSupportView> {
@@ -67,33 +74,27 @@ public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView {
 	 */
 	@Inject
 	public DeviceSupportView() {
-		
+		binder.createAndBindUi(this);
+		deviceSupportLbl.setTitle(GL1361);
+		deviceSupportLbl.setAltText(GL1361);
+		deviceSupportLbl.setUrl("images/DeviceSupport/tech-saavy.png");
 	}
-	/**
-	 * This is usually a good place to refresh any information displayed by your presenter.
-		In a presenter hierarchy, this method is called top-down: first on the parent presenters, then on the children.
-	 */
+
 	@Override
 	public void reset() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This method is called immediately after a widget becomes attached to the browser's document.
-	 */
+
 	@Override
 	public void onLoad() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * This method is called immediately before a widget will be detached from the browser's document.
-	 */
+
 	@Override
 	public void onUnload() {
 		throw new RuntimeException("Not implemented");
 	}
-	/**
-	 * It will return the representation of a view as the widget.
-	 */
+
 	@Override
 	public Widget asWidget() {
 

@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -64,21 +65,12 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SearchMoreInfoVc.java
- *
- * @description : This file is related to SearchMoreInfoVc and to Set search meta data and styles for widget.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @param <T>
+ * @param <C>
  */
-public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo>	extends FocusPanel {
+public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo>	extends FocusPanel implements MessageProperties{
 
 	protected static SearchMoreInfoVcUiBinder uiBinder = GWT
 			.create(SearchMoreInfoVcUiBinder.class);
@@ -93,7 +85,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 
 	@UiField
-	public Label countLbl, countLblTxt,rightsLbl,lblNotFriendly;
+	public Label countLbl, countLblTxt,rightsLbl,lblNotFriendly,moreInfotext;
 
 	@UiField Image imgQuestionImage;
 	
@@ -124,9 +116,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 	private SearchDo<C> usedInSearchDo;
 
-	protected static final String OER_DESCRIPTION = "The term Open Educational Resources (OER) refers to educational materials that are freely available and licensed in a way that gives users the legal permission to reuse, revise, remix, and redistribute.";
+	protected static final String OER_DESCRIPTION = GL1092;
 
-	protected static final String OER_TITLE = "Open Education Resources";
+	protected static final String OER_TITLE = GL1093;
 
 	private static final String OER_PNG_IMG = "oer.png";
 
@@ -136,12 +128,10 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 	private static final String NULL = "null";
 	
-	private static final String ALL_GRADES = "ALL GRADES";
+	private static final String ALL_GRADES = GL1467.toUpperCase();
 	
 	ToolTip toolTip = null;
-	/**
-	 * Constructor.
-	 */
+	
 	public SearchMoreInfoVc(){
 		
 		usedInResourcesPanel = new AppMirageDragContainer(null);
@@ -172,6 +162,20 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		}
 		
 		setWidget(uiBinder.createAndBindUi(this));
+		moreInfotext.setText(GL0726);
+		gradeFieldVc.setToolTip(GL0325);
+		tagsFieldVc.setToolTip(GL0727);
+		timeFieldVc.setToolTip(GL0728);
+		likesFieldVc.setToolTip(GL0729);
+		shareField.setToolTip(GL0526);
+		rightsFieldVc.setToolTip(GL0730);
+		rightsLbl.setText(GL0731);
+		resourceSearchRightsFieldVc.setToolTip(GL0730);
+		imgQuestionImage.setTitle(GL0732);
+		imgQuestionImage.setAltText(GL0732);
+		imgQuestionImage.setUrl("images/mos/questionmark.png");
+		resourceSearchGradeFieldVc.setToolTip(GL0325);
+
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<C>>() {
 
 			@Override
@@ -218,35 +222,17 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		}
 		setHandler();
 	}
-	/**
-	 * 
-	 * @function setHandler 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set the tooltip for imgQuestionImage.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setHandler(){
 		imgQuestionImage.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip();
+				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-				toolTip.setPopupPosition(imgQuestionImage.getAbsoluteLeft()-(150+22), imgQuestionImage.getAbsoluteTop()+22);
+				toolTip.setPopupPosition(imgQuestionImage.getAbsoluteLeft()-(50+22), imgQuestionImage.getAbsoluteTop()+22);
 				toolTip.show();
 			}
 		});
@@ -269,9 +255,12 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	/**
 	 * Reset usedInSearchDo values, resource count text and resource count
 	 */
-	public void reset() {
-		usedInSearchDo.setPageNum(1);
-		usedInSearchDo.setSearchResults(null);
+	public void reset(boolean moreInfoMode) {
+		if(usedInSearchDo!=null){
+			usedInSearchDo.setPageNum(1);
+			usedInSearchDo.setSearchResults(null);
+		}
+		
 		usedInResourcesPanel.setClonnable(false);
 		usedInResourcesPanel.clear();
 		getMessageInfo().setVisible(false);
@@ -279,6 +268,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		setResourceCount("");
 		setNotFriendly("");
 		usedInResourcesPanel.setClonnable(true);
+		if(moreInfoMode)
 		requestUsedInResources();
 	}
 
@@ -337,7 +327,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 			
 			List<Integer> gradeListInt = new ArrayList<Integer>();
-			finalGradeStringB.append(gradeListSize > 1 ? "Grades: " : "Grade: ");
+			finalGradeStringB.append(gradeListSize > 1 ? GL1320_1+GL_SPL_SEMICOLON+" " : GL0325+GL_SPL_SEMICOLON+" ");
 			
 
 			
@@ -410,7 +400,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			gradeFieldVc.setHtmlTxt(null);
 		}
 		timeFieldVc.setHtmlTxt(StringUtil.getValidString(searchResultDo.getAverageTime(), null));
-		likesFieldVc.setHtmlTxt(StringUtil.getValidStringWithSuffix(searchResultDo.getVotesUp() + "", "0", " likes"));
+//		likesFieldVc.setHtmlTxt(StringUtil.getValidStringWithSuffix(searchResultDo.getVotesUp() + "", "0", " likes"));
 		/*if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& searchResultDo.getLicense().getIcon().isEmpty()) {
 
 			rightsFieldVc.contentFloPanel.setVisible(false);
@@ -430,8 +420,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		}
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& !searchResultDo.getLicense().getIcon().equals(NULL)) {
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
-			image.setAltText("License");
-			image.setTitle("License");
+			image.setAltText(GL0730);
+			image.setTitle(GL0730);
 			StandardSgItemVc standardItem = null;
 			LicencegItemVc licencegItemVcObj=null;
 			if (searchResultDo.getLicense().getCode() != null&& !searchResultDo.getLicense().getCode().equalsIgnoreCase(NULL)) {
@@ -456,8 +446,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 		} else if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getTag() == OER|| (searchResultDo.getUrl() != null && searchResultDo.getUrl().indexOf(OERCOMMONS_ORG) >= 0)) {
 			Image image = new Image(LICENSE_FOLDER + OER_PNG_IMG);
-			image.setAltText("OER License");
-			image.setTitle("OER License");
+			image.setAltText(GL1098);
+			image.setTitle(GL1098);
 			StandardSgItemVc standardItem = new StandardSgItemVc(OER_TITLE,	OER_DESCRIPTION);
 			standardItem.setHeight("100px");
 			DownToolTipWidgetUc widget = new DownToolTipWidgetUc(image,	standardItem);
@@ -525,26 +515,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 * tmpGradeTxt = tmpGradeTxt + gradeList[k] + ","; } } } } } return
 	 * tmpGradeTxt; }
 	 */
-	/**
-	 * 
-	 * @function formatGrades 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This method is used to format grades.
-	 * 
-	 * 
-	 * @parm(s) : @param list
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private String formatGrades(List<Integer> list) {
 		
     	StringBuffer grade = new StringBuffer();
@@ -586,26 +557,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		}
 		return grade.toString();
 	}
-	/**
-	 * 
-	 * @function generateGradeIfHypen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to generate grades.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private String generateGradeIfHypen(String grade) {
 		String gradeList[];
 	 
@@ -640,26 +592,6 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 * gradeStr.append(i).append(","); } } } }else{
 	 * gradeStr.append(Integer.parseInt(gradeList[0])); } return
 	 * gradeStr.toString(); }
-	 */
-	/**
-	 * 
-	 * @function sortList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :  This is used to sort list.
-	 * 
-	 * 
-	 * @parm(s) : @param list
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<Integer>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
 	 */
 	public List<Integer> sortList(List<Integer> list) {
 
@@ -697,47 +629,11 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	abstract public void renderUsedInResource(C childResource);
 
 	abstract public void requestUsedInResources();
-    /**
-     * 
-     * @function getUsedInResourcesAsyncCallback 
-     * 
-     * @created_date : 31-Dec-2013
-     * 
-     * @description : returns usedInResourcesAsyncCallback.
-     * 
-     * 
-     * @parm(s) : @return
-     * 
-     * @return : SimpleAsyncCallback<SearchDo<C>>
-     *
-     * @throws : <Mentioned if any exceptions>
-     *
-     * 
-     *
-     *
-     */
+
 	public SimpleAsyncCallback<SearchDo<C>> getUsedInResourcesAsyncCallback() {
 		return usedInResourcesAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function setUsedInResourcesAsyncCallback 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set usedInResourcesAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param usedInResourcesAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setUsedInResourcesAsyncCallback(
 			SimpleAsyncCallback<SearchDo<C>> usedInResourcesAsyncCallback) {
 		this.usedInResourcesAsyncCallback = usedInResourcesAsyncCallback;
@@ -779,25 +675,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	public ErrorMessagePanel getMessageInfo() {
 		return messageInfo;
 	}
-	/**
-	 * 
-	 * @function getUsedInResourcesPanel 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns usedInResourcesPanel.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : AppMirageDragContainer
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public AppMirageDragContainer getUsedInResourcesPanel() {
 		return usedInResourcesPanel;
 	}
@@ -815,47 +693,11 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	public MoreInfoFieldVc getLikesField() {
 		return likesFieldVc;
 	}
-	/**
-	 * 
-	 * @function setNotFriendly 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is to set lblNotFriendly text.
-	 * 
-	 * 
-	 * @parm(s) : @param text
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
+	
 	public void setNotFriendly(String text){
 		lblNotFriendly.setText(text);
 	}
-	/**
-	 * 
-	 * @function showNotFriendly 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is to show imgQuestionImage for not friendly.
-	 * 
-	 * 
-	 * @parm(s) : @param visibility
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void showNotFriendly(boolean visibility){
 		lblNotFriendly.setVisible(visibility);
 		imgQuestionImage.setVisible(visibility);

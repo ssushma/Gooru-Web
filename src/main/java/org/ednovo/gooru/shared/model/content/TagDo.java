@@ -28,21 +28,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.ednovo.gooru.shared.model.user.UserDo;
-/**
- * 
- * @fileName : TagDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class TagDo implements Serializable {
 
 	/**
@@ -63,102 +49,63 @@ public class TagDo implements Serializable {
 	private boolean activeFlag;
 
 	private Date createdOn;
+	
+	public TagDo(){}
 
-	/** 
-	 * This method is to get the tagUid
-	 */
 	public String getTagUid() {
 		return tagUid;
 	}
 
-	/** 
-	 * This method is to set the tagUid
-	 */
 	public void setTagUid(String tagUid) {
 		this.tagUid = tagUid;
 	}
 
-	/** 
-	 * This method is to get the content
-	 */
 	public ContentDo getContent() {
 		return content;
 	}
 
-	/** 
-	 * This method is to set the content
-	 */
 	public void setContent(ContentDo content) {
 		this.content = content;
 	}
 
-	/** 
-	 * This method is to get the label
-	 */
 	public String getLabel() {
 		return label;
 	}
 
-	/** 
-	 * This method is to set the label
-	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
-	/** 
-	 * This method is to get the type
-	 */
 	public String getType() {
 		return type;
 	}
 
-	/** 
-	 * This method is to set the type
-	 */
 	public void setType(String type) {
 		this.type = type;
 	}
 
-	/** 
-	 * This method is to get the user
-	 */
-	public UserDo getUser() {
-		return user;
-	}
-
-	/** 
-	 * This method is to set the user
-	 */
-	public void setUser(UserDo user) {
-		this.user = user;
-	}
-
-	/** 
-	 * This method is to get the activeFlag
-	 */
 	public boolean isActiveFlag() {
 		return activeFlag;
 	}
 
-	/** 
-	 * This method is to set the activeFlag
-	 */
 	public void setActiveFlag(boolean activeFlag) {
 		this.activeFlag = activeFlag;
 	}
 
-	/** 
-	 * This method is to get the createdOn
-	 */
 	public Date getCreatedOn() {
 		return createdOn;
 	}
 
-	/** 
-	 * This method is to set the createdOn
-	 */
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+
+	public UserDo getUser() {
+		return user;
+	}
+
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+
 }

@@ -30,18 +30,10 @@ package org.ednovo.gooru.client.mvp.home.event;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : HomeHandler.java
- *
- * @description : Handler for {@link HomeEvent}.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface HomeHandler extends EventHandler {
 

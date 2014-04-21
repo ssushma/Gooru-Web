@@ -30,19 +30,10 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : ShareViewUc.java
+ * @author Search Team
  *
- * @description : This class is used to set the share view.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ShareViewUc extends FlowPanel {
 	
@@ -70,23 +61,7 @@ public class ShareViewUc extends FlowPanel {
 		this.add(collectionShareTooltip);
 		this.add(collectionSubTitle);
 	}
-	/**
-	 * 
-	 * @function setTitleDescriptionStyle 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This will set the styles for title and description.
-	 * 
-	 * 
-	 * @parm(s) : @param paddingLeft
-	 * @parm(s) : @param marginLeft
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void setTitleDescriptionStyle(int paddingLeft, int marginLeft) {
 		collectionShareTooltip.getElement().getStyle().setPaddingLeft(paddingLeft, Unit.PX);
 		collectionSubTitle.getElement().getStyle().setMarginLeft(marginLeft, Unit.PX);

@@ -30,19 +30,10 @@ package org.ednovo.gooru.client.mvp.shelf.event;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
- * @fileName : RefreshCollectionInShelfListHandler.java
- *
- * @description : Handler for {@link RefreshCollectionInShelfListEvent}.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public interface RefreshCollectionInShelfListHandler extends EventHandler {
 

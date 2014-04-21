@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -41,20 +43,12 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : DisclosurePanelUc.java
- *
- * @description : This class is the user defined control of the disclosure panel.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
-public class DisclosurePanelUc extends Composite implements ClickHandler {
+public class DisclosurePanelUc extends Composite implements ClickHandler,MessageProperties {
 
 	private static DisclosurePanelUcUiBinder uiBinder = GWT.create(DisclosurePanelUcUiBinder.class);
 
@@ -88,6 +82,8 @@ public class DisclosurePanelUc extends Composite implements ClickHandler {
 	public DisclosurePanelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
+		titleImg.setAltText(GL1023);
+		titleImg.setUrl("images/Collection-Search/dropdown-arrow-active.png");
 		headerPanel.addClickHandler(this);
 	}
 

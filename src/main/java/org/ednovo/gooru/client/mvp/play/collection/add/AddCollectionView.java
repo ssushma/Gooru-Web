@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.add;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -46,8 +49,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandlers> implements IsAddCollectionView{
+public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandlers> implements IsAddCollectionView , MessageProperties{
 
 
 	private static ResourceShareViewUiBinder uiBinder = GWT.create(ResourceShareViewUiBinder.class);
@@ -56,44 +60,53 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 
 	}
 	
-	public String ERROR_MSG="Collection title should not be empty";
-	public String URL_CHAR="Title cannot be a URL";
-	public String SPEC_CHAR="Title cann't start with special character";
+	public String ERROR_MSG=GL1425;
+	public String URL_CHAR=GL0323;
+	public String SPEC_CHAR=GL1426;
 	public String specialCh = "!@#$%^&*?";
-	public String MAX_ERROR_MESSAGE="Please enter the title less than 50 characters";
+	public String MAX_ERROR_MESSAGE=GL1427;
 	public String thumbnailUrl="";
 	public String collectionGooruOid=null;
 
-    @UiField Image collImage;
+    //@UiField Image collImage;
 	
 	@UiField TextBox collectionTitleInCoverPage;
 	
-	@UiField HTMLPanel collImageUrlHolderPanel,addToCollectionWidgetContainer,addCollectionInsteadLabelContainer,collectionAddImageContainer,addResourceInsteadLabelContainerInCollectionImage;
+	@UiField HTMLPanel addToCollectionWidgetContainer,addCollectionInsteadLabelContainer,collectionAddImageContainer,addResourceInsteadLabelContainerInCollectionImage,addcollectionText;
 	
-	@UiField Label successMessageAddedCollection,addingLabel,addResourceInsteadLabel,addErrorLabel,successMessageLabelText;
+	@UiField Label addingLabel,addResourceInsteadLabel,addErrorLabel,successMessageLabelText,hideText,renameText;
 	
 	@UiField Button addToShelfCollectionButton;
 	
 	@UiField FlowPanel collectionAddedSuccessMessageContainer;
 	
 	@UiField Anchor workSpaceLink;
-	
-	@UiField Label addButtonHideLbl;
+
 	
 	@Inject
 	public AddCollectionView(){
 		setWidget(uiBinder.createAndBindUi(this));
+		hideText.setText(GL0592);
+		addcollectionText.getElement().setInnerHTML(GL0690);
+		renameText.setText(GL0593);
+		addToShelfCollectionButton.setText(GL0590);
 		collectionAddedSuccessMessageContainer.setVisible(false);
 		getAddToShelfCollectionButton().addClickHandler(new OnAddCollectionClick());
 		collectionTitleInCoverPage.addKeyUpHandler(new onKeyErrorMsg());
+		workSpaceLink.setText(GL0589);
 	}
 	
-	public Label getSuccessMessageAddedCollection() {
-		return successMessageAddedCollection;
+	@UiHandler("workSpaceLink")
+	public void workspaceLinkClickEvent(ClickEvent event){
+		AppClientFactory.getPlaceManager().setRefreshPlace(true);
 	}
-	public void setSuccessMessageAddedCollection(Label successMessageAddedCollection) {
-		this.successMessageAddedCollection = successMessageAddedCollection;
-	}
+	
+//	public Label getSuccessMessageAddedCollection() {
+//		return successMessageAddedCollection;
+//	}
+//	public void setSuccessMessageAddedCollection(Label successMessageAddedCollection) {
+//		this.successMessageAddedCollection = successMessageAddedCollection;
+//	}
 	public Label getAddingLabel() {
 		return addingLabel;
 	}
@@ -119,57 +132,55 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 			Button addToShelfCollectionButton) {
 		this.addToShelfCollectionButton = addToShelfCollectionButton;
 	}
-	public Image getCollImage() {
-		return collImage;
-	}
-	public void setCollImage(Image collImage) {
-		this.collImage = collImage;
-	}
+//	public Image getCollImage() {
+//		return collImage;
+//	}
+//	public void setCollImage(Image collImage) {
+//		this.collImage = collImage;
+//	}
 	public TextBox getCollectionTitleInCoverPage() {
 		return collectionTitleInCoverPage;
 	}
 	public void setCollectionTitleInCoverPage(TextBox collectionTitleInCoverPage) {
 		this.collectionTitleInCoverPage = collectionTitleInCoverPage;
 	}
-	public HTMLPanel getCollImageUrlHolderPanel() {
-		return collImageUrlHolderPanel;
-	}
-	public void setCollImageUrlHolderPanel(HTMLPanel collImageUrlHolderPanel) {
-		this.collImageUrlHolderPanel = collImageUrlHolderPanel;
-	}
-	public void displaySuccessLabel(){
-		successMessageAddedCollection.getElement().getStyle().setDisplay(Display.BLOCK);
-	}
+//	public HTMLPanel getCollImageUrlHolderPanel() {
+//		return collImageUrlHolderPanel;
+//	}
+//	public void setCollImageUrlHolderPanel(HTMLPanel collImageUrlHolderPanel) {
+//		this.collImageUrlHolderPanel = collImageUrlHolderPanel;
+//	}
+//	public void displaySuccessLabel(){
+//		successMessageAddedCollection.getElement().getStyle().setDisplay(Display.BLOCK);
+//	}
 	public HTMLPanel getAddToCollectionWidgetContainer() {
 		return addToCollectionWidgetContainer;
 	}
 	public void setAddToCollectionWidgetContainer(HTMLPanel addToCollectionWidgetContainer) {
 		this.addToCollectionWidgetContainer = addToCollectionWidgetContainer;
 	}
-	public Label addToCollectionHideLbl() {
-		return addButtonHideLbl;
-	}
 	
 	public void showSuccessMessageWidget(String collectionId){
 		getAddingLabel().setVisible(false);
 		getAddToShelfCollectionButton().setVisible(true);
 		if(getAddToShelfCollectionButton().getText().equalsIgnoreCase("Add")){
-			getAddToShelfCollectionButton().setText("Add Again");
-			successMessageLabelText.setText("This collection has been added!");
+			getAddToShelfCollectionButton().setText(GL0691);
+			successMessageLabelText.setText(GL0547);
 		}else{
-			successMessageLabelText.setText("This collection has been added, again!");
+			successMessageLabelText.setText(GL0692);
 		}
 		addCollectionInsteadLabelContainer.clear();
+		addResourceInsteadLabel.setText(GL0685);
 		addCollectionInsteadLabelContainer.add(addResourceInsteadLabel);
-		addResourceInsteadLabel.getElement().getStyle().setMarginRight(138,Unit.PX);
-		addResourceInsteadLabel.getElement().getStyle().setMarginTop(-15,Unit.PX);
+		addResourceInsteadLabel.getElement().getStyle().setMarginRight(60,Unit.PX);
+		//addResourceInsteadLabel.getElement().getStyle().setMarginTop(-15,Unit.PX);
 		collectionAddImageContainer.setVisible(false);
 		collectionAddedSuccessMessageContainer.setVisible(true);
 		workSpaceLink.setHref("#organize&id="+collectionId+"&eventType=refresh");
 	}
 	public void showCollectionAddImageWidget(){
-		getAddToShelfCollectionButton().setText("Add");
-		successMessageLabelText.setText("This collection has been added!");
+		getAddToShelfCollectionButton().setText(GL0590);
+		successMessageLabelText.setText(GL0547);
 		addResourceInsteadLabelContainerInCollectionImage.clear();
 		addResourceInsteadLabelContainerInCollectionImage.add(addResourceInsteadLabel);
 		
@@ -181,6 +192,7 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	
 	public class OnAddCollectionClick implements ClickHandler {
 		public void onClick(ClickEvent event) {
+			addingLabel.setText(GL0591);
 			String title = getCollectionTitleInCoverPage().getText();
 			if(title.trim().length()==0){
 				getAddErrorLabel().setVisible(true);
@@ -223,22 +235,89 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		collectionTitleInCoverPage.setValue(collectionTitle);
 		this.collectionGooruOid=collectionId;
 		this.thumbnailUrl=collectionImageUrl;
-		setCollectionThumbnail();
+		//setCollectionThumbnail();
 		getAddErrorLabel().setVisible(false);
 		getAddingLabel().setVisible(false);
 		getCollectionTitleInCoverPage().setVisible(true);
 		showCollectionAddImageWidget();
 	}
-	@UiHandler("collImage")
-	public void setDefaultThumbnail(ErrorEvent event){
-		collImage.setUrl("");
-	}
-	@Override
-	public void setCollectionThumbnail(){
-		collImage.setUrl(thumbnailUrl);
-	}
+//	@UiHandler("collImage")
+//	public void setDefaultThumbnail(ErrorEvent event){
+//		collImage.setUrl("");
+//	}
+//	
+//	public void setCollectionThumbnail(){
+//		collImage.setUrl(thumbnailUrl);
+//	}
 	public void copyCollection(String collectionId,String collectionTile){
 		getUiHandlers().copyCollection( collectionId, collectionTile);
+	}
+	
+	/**
+	 * 
+	 * @function onhideBtnClicked 
+	 * 
+	 * @created_date : 11-Dec-2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param clickEvent
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	@UiHandler("hideButton")
+	public void onhideBtnClicked(ClickEvent clickEvent) 
+	{
+		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		String collectionId = collectionRequest.getParameter("id", null);
+		String collectionItemId = collectionRequest.getParameter("rid", null);
+		String chkViewParam = collectionRequest.getParameter("view", null);
+	if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.RESOURCE_PLAY))
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).
+				with("id", collectionId);
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
+	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY) && chkViewParam == null && collectionItemId != null)
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).
+				with("id", collectionId).with("rid", collectionItemId);
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
+	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam == null && collectionItemId != null)
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).
+				with("id", collectionId).with("rid", collectionItemId);
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
+	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY) && chkViewParam == null && collectionItemId == null)
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).
+				with("id", collectionId);
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
+	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam == null && collectionItemId == null)
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).
+				with("id", collectionId);
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
+	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.COLLECTION_PLAY) && chkViewParam.equalsIgnoreCase("end"))
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).
+				with("id", collectionId).with("view", "end");
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
+	else if(AppClientFactory.getCurrentPlaceToken().contains(PlaceTokens.PREVIEW_PLAY) && chkViewParam.equalsIgnoreCase("end"))
+	{
+		PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).
+				with("id", collectionId).with("view", "end");
+		AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+	}
 	}
 
 }

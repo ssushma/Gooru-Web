@@ -22,7 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+/**
+ * 
+ */
 package org.ednovo.gooru.client.mvp.search.resource;
 
 import com.google.gwt.core.shared.GWT;
@@ -30,19 +32,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceSearchResultCBundle.java
- *
- * @description : This file is used to apply css for Resource Search Results.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface ResourceSearchResultCBundle extends ClientBundle {
 	

@@ -28,18 +28,12 @@
 package org.ednovo.gooru.server.serializer;
 
 import org.apache.commons.lang.ArrayUtils;
+
 /**
- * @fileName : Properties.java
- *
- * @description : Contains constants for the filter properties
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * Contains constants for the filter properties
+ * 
+ * @author Search Team
+ * 
  */
 public interface Properties {
 

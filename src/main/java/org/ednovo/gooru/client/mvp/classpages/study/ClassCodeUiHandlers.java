@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.classpages.study;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
-/**
- * 
- * @fileName : ClassCodeUiHandlers.java
- *
- * @description : This file is used to go to StudentsView.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface ClassCodeUiHandlers extends BaseUiHandlers {
 	
 	void gotoStudentsView(String tbvalue);

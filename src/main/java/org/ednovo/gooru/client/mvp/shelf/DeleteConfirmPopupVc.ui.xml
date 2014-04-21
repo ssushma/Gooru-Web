@@ -3,20 +3,21 @@
 <ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
 	<g:HTMLPanel>
 		<g:FlowPanel styleName="{res.css.deletePopupContainer}">
-			<g:FlowPanel styleName="{res.css.confirmMessageContainer}">
+			<g:FlowPanel styleName="{res.css.confirmMessageContainer}" ui:field="msgFlowPanel">
+			 <g:HTMLPanel styleName="{res.css.deleteIcon}"/>
 			<g:FlowPanel styleName="{res.css.confirmMessageTitle}">
-				<g:Label styleName="{res.css.confirmMessages}" text="You are about to delete your&nbsp;" />
+				<g:HTML styleName="{res.css.confirmMessages}" ui:field="confirmMessagesText"/>
 				<g:Label styleName="{res.css.resourceIndex}" ui:field="entityLbl" />
 			</g:FlowPanel>
-				<g:Label styleName="{res.css.confirmMessageDelete}" text="This is permanent action and will delete all of its content." />
-				<g:Label styleName="{res.css.confirmMessageOk}" text="Please type 'DELETE' and click Ok." />
-				<g:TextBox styleName="{res.css.inlineText}" ui:field="inlineTxtBox" />
+				<g:Label styleName="{res.css.confirmMessageDelete}" ui:field="permenantText"/>
+				<g:Label styleName="{res.css.confirmMessageOk}" ui:field="typeDeleteText"/>
+				<g:TextBox styleName="{res.css.inputText}" ui:field="inlineTxtBox" />
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.actionField}" ui:field="buttonContainer">
-				<gg:BlueButtonUc text="OK" ui:field="okButtonUc" styleName="deleteCollectionDisabledButton" />
-				<g:Anchor text="Cancel" ui:field="cancelAnr" styleName="collectionFormCancelButton" />
+				<g:Button ui:field="cancelAnr" styleName="secondary {res.css.deleteOkayButton}"/>
+				<g:Button ui:field="okButtonUc" styleName="deleteCollectionDisabledButton" />
 			</g:FlowPanel>
-			<g:Label styleName="{res.css.actionField}" ui:field="loadingTextLbl" text="deleting..."></g:Label>
+			<g:Label styleName="{res.css.actionField}" ui:field="loadingTextLbl"></g:Label>
 		</g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -29,21 +29,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : QuestionHintsDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class QuestionHintsDo implements Serializable,Comparable{
 
@@ -54,56 +40,22 @@ public class QuestionHintsDo implements Serializable,Comparable{
 	private int sequence;
 	private Integer hintId;
 	
+	public QuestionHintsDo(){}
+	
 	private static final long serialVersionUID = 1L;
 	
-	/** 
-	 * This method is to get the hintText
-	 */
 	public String getHintText() {
 		return hintText;
 	}
-
-
-	/** 
-	 * This method is to set the hintText
-	 */
 	public void setHintText(String hintText) {
 		this.hintText = hintText;
 	}
-
-
-	/** 
-	 * This method is to get the sequence
-	 */
 	public int getSequence() {
 		return sequence;
 	}
-
-
-	/** 
-	 * This method is to set the sequence
-	 */
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
 	}
-
-
-	/** 
-	 * This method is to get the hintId
-	 */
-	public Integer getHintId() {
-		return hintId;
-	}
-
-
-	/** 
-	 * This method is to set the hintId
-	 */
-	public void setHintId(Integer hintId) {
-		this.hintId = hintId;
-	}
-
-
 	@Override
 	public int compareTo(Object o) {
 		 if (this.sequence == ((QuestionHintsDo) o).sequence)
@@ -113,5 +65,12 @@ public class QuestionHintsDo implements Serializable,Comparable{
 	       else
 	           return -1;
 	}
+	public Integer getHintId() {
+		return hintId;
+	}
+	public void setHintId(Integer hintId) {
+		this.hintId = hintId;
+	}
+	
 	
 }

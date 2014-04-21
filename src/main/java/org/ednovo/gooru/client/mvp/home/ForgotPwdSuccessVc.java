@@ -36,24 +36,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : ForgotPwdSuccessVc.java
+ * @author Search Team
  *
- * @description : To Hide ForgotPasswordVc and to create a new popup.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ForgotPwdSuccessVc extends PopupPanel implements MessageProperties{
 
@@ -73,7 +63,11 @@ public class ForgotPwdSuccessVc extends PopupPanel implements MessageProperties{
 	@UiField(provided = true)
 	LoginPopUpCBundle res;
 	
-	@UiField Label lblLoginHeading,lblTextMessageInfomation,lblDisplayTextMessage;
+	@UiField Label lblLoginHeading,lblTextMessageInfomation,lblDisplayTextMessage,
+	queriesText;
+	
+	@UiField InlineLabel pleaseContactLbl;
+	
 	@UiField HTMLEventPanel closeButton;
 	/**
 	 * Class constructor , create a new pop up
@@ -88,13 +82,17 @@ public class ForgotPwdSuccessVc extends PopupPanel implements MessageProperties{
 		this.getElement().getStyle().setZIndex(99999);
        	okBtnUc.getElement().setId("btnSubmit");
        	supportlnk.getElement().setId("lnksupport");
-		
+       	okBtnUc.setText(GL0190);
+       	queriesText.setText(GL1139+GL_GRR_COMMA);
+       	pleaseContactLbl.setText(GL1145);
+       	supportlnk.setText(GL0299);
+       	supportlnk.setHref("mailto:support@goorulearning.org");
 		this.setSize("502px", "382px");
 		lblLoginHeading.setHeight("16px");
-		lblLoginHeading.setText(MessageProperties.GL0063);
-		lblDisplayTextMessage.setText(MessageProperties.GL0440);
+		lblLoginHeading.setText(GL0063);
+		lblDisplayTextMessage.setText(GL0440);
 		lblTextMessageInfomation.getElement().setAttribute("style", "font-size: 16px !important");
-		lblTextMessageInfomation.setText(MessageProperties.GL0441);
+		lblTextMessageInfomation.setText(GL0441);
 		this.center();
 		
 	}
@@ -114,25 +112,6 @@ public class ForgotPwdSuccessVc extends PopupPanel implements MessageProperties{
 		forgotPasswordConfirmEmail.center();*/
 		
 	}
-	/**
-	 * 
-	 * @function onCloseClick 
-	 * 
-	 * @created_date : 30-Dec-2013
-	 * 
-	 * @description : UIHandler for closeButton.
-	 * 
-	 * 
-	 * @parm(s) : @param clickEvent
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("closeButton")
 	public void onCloseClick(ClickEvent clickEvent) {
 		Window.enableScrolling(true);

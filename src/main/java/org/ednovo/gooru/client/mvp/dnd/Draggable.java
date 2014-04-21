@@ -32,18 +32,10 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
 import com.allen_sauer.gwt.dnd.client.HasDragHandle;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : Draggable.java
- *
- * @description : This is the class used for to make widget draggable.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class Draggable extends FocusPanel implements HasDragHandle {
 
@@ -62,9 +54,7 @@ public class Draggable extends FocusPanel implements HasDragHandle {
 		setDraggableMiriage(draggableUc);
 		setWidget(draggableUc);
 	}
-	/**
-	 * This method is used to set the drag mode.
-	 */
+
 	public void setDragMode(boolean draggable) {
 		if (draggable) {
 			setDragId(draggableUc.getDragId());
@@ -75,149 +65,43 @@ public class Draggable extends FocusPanel implements HasDragHandle {
 			draggableUc.onDragBlur();
 		}
 	}
-	/**
-	 * @function getDraggableMirageUc 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will check whether the widget is draggable or not.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : IsDraggableMirage
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public IsDraggableMirage getDraggableMirageUc() {
 		if (draggableMirageUc == null) {
 			draggableMirageUc = draggableUc.initDraggableMirage();
 		}
 		return draggableMirageUc;
 	}
-	/**
-	 * @function getDraggableUc 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will check whether the widget is draggable or not.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : IsDraggable
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public IsDraggable getDraggableUc() {
 		return draggableUc;
 	}
-	/**
-	 * @function getDraggableUc 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will set the draggable miriage.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : IsDraggable
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setDraggableMiriage(IsDraggable draggableMiriage) {
 		this.draggableUc = draggableMiriage;
 	}
-	/**
-	 * @function cloneDraggable 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : It will clone the draggable widget.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : Draggable
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public Draggable cloneDraggable() {
 		return new Draggable(getDraggableUc());
 	}
-	/**
-	 * This will handle the drag handler.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		return getDraggableUc().getDragHandle() != null ? getDraggableUc().getDragHandle() : this;
 	}
-	/**
-	 * @function getDragId 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will return the drag id.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public String getDragId() {
 		return dragId;
 	}
-	/**
-	 * @function setDragId 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will set the drag id.
-	 * 
-	 * @parm(s) : @param dragId
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setDragId(String dragId) {
 		this.dragId = dragId;
 	}
-	/**
-	 * @function getType 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will return the drag type.
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : DRAG_TYPE
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public DRAG_TYPE getType() {
 		return type;
 	}
-	/**
-	 * @function setType 
-	 * 
-	 * @created_date : 27-Dec-2013
-	 * 
-	 * @description : This method will set the type of the Drag type.
-	 * 
-	 * @parm(s) : @param type
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+
 	public void setType(DRAG_TYPE type) {
 		this.type = type;
 	}

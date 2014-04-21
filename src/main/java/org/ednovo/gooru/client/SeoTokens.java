@@ -22,35 +22,22 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client;
-/**
- * 
- * @fileName : SeoTokens.java
- *
- * @description : This interface is used to set the seo tokens.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface SeoTokens {
-	String HOME_TITLE_ANONYMOUS = "Gooru | Featured Courses | Sign up, Sign in ";
-	String HOME_TITLE_LOGGEDIN = "Gooru | Featured Courses";
-	String RESOURCE_PLAYER_TITLE = "Gooru | ";
-	String COLLECTION_PLAYER_TITLE = "Gooru | ";
-	String RESOURCE_SEARCH_TITLE = "Gooru | Discover Resources | ";
-	String COLLECTION_SEARCH_TITLE = "Gooru | Discover Collections | ";
-	String TEACH_TITLE = "Gooru | Teach";
-	String STUDY_TITLE = "Gooru | Study";
-	String WORKSPACE_TITLE = "Gooru | Organize";
-	String SETTINGS_TITLE = "Gooru | Settings";
-	String PROFILE_PAGE_TITLE = "Gooru | ";
-	String COURSE_PAGE_TITLE = "Gooru | ";
+	String HOME_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
+	String HOME_TITLE_LOGGEDIN = "Featured Courses";
+	String RESOURCE_PLAYER_TITLE = "";
+	String COLLECTION_PLAYER_TITLE = "";
+	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
+	String COLLECTION_SEARCH_TITLE = "Discover Collections | ";
+	String TEACH_TITLE = "Teach";
+	String STUDY_TITLE = "Study";
+	String WORKSPACE_TITLE = "Organize";
+	String SETTINGS_TITLE = "Settings";
+	String PROFILE_PAGE_TITLE = "";
+	String COURSE_PAGE_TITLE = "";
 	
 	String HOME_META_DESCRIPTION = "Gooru provides millions of free educational K-12 resources. Teachers can access and organize collections, build quizzes, and assign to students. Gooru is a non-profit organization.";
 	

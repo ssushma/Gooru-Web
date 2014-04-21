@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import org.ednovo.gooru.client.ui.TinyMCE;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -42,20 +43,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : UpdateQuestionHints.java
- *
- * @description : This class is used to update question hints.
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class UpdateQuestionHints extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers{
+
+public class UpdateQuestionHints extends Composite implements HasMouseOutHandlers,HasMouseOverHandlers,MessageProperties{
 	 	
       @UiField Label hintsChoice;
       
@@ -69,36 +58,25 @@ public class UpdateQuestionHints extends Composite implements HasMouseOutHandler
 		  
 	  }
 	  public static UpdateQuestionHintsUiBinder uiBinder=GWT.create(UpdateQuestionHintsUiBinder.class);
-	  /**
-	   * class constructor.
-	   */
+	
 	  public UpdateQuestionHints(){
 		  initWidget(uiBinder.createAndBindUi(this));
 	  }
-	  /**
-	   * class constructor.
-	   */
 	  public UpdateQuestionHints(String labelname){
 		  initWidget(uiBinder.createAndBindUi(this));
 		  hintsChoice.setText(labelname);
 	  }
-	  /**
-	   * class constructor.
-	   */
 	  public UpdateQuestionHints(int count,String hintText){
 		  initWidget(uiBinder.createAndBindUi(this));
 		 this.hintText=hintText;
 		  if(count==1){
 			  hintsChoice.setText(""+count);
-			  addHintsLabel.setText("Hints (hints will show up in this order)");
+			  addHintsLabel.setText(GL0859);
 		  }else{
 			  hintsChoice.setText(""+count);
 		  }
 		  hintDelLbl.getElement().getStyle().setDisplay(Display.NONE);
 	  }
-	  /**
-	   * It will hit on load.
-	   */
 	  public void onLoad(){
 		  super.onLoad();
 		  Scheduler.get().scheduleDeferred(new ScheduledCommand(){
@@ -109,56 +87,22 @@ public class UpdateQuestionHints extends Composite implements HasMouseOutHandler
 	        });
 		 
 	  }
-	  /**
-	   * @function setHintText 
-	   * 
-	   * @created_date : 02-Jan-2014
-	   * 
-	   * @description :This method is used to set hint text.
-	   * 
-	   * 
-	   * @parm(s) : 
-	   * 
-	   * @return : void
-	   *
-	   * @throws : <Mentioned if any exceptions>
-	   *
-	   */
 	  public void setHintText(){
 		  if(hintText!=null){
 			  hintsTextBox.setText(hintText);
 		  }
 	  }
-	  /**
-	   * @function setLabelName 
-	   * 
-	   * @created_date : 02-Jan-2014
-	   * 
-	   * @description : This method is used to set label name.
-	   * 
-	   * 
-	   * @parm(s) : @param labelName
-	   * 
-	   * @return : void
-	   *
-	   * @throws : <Mentioned if any exceptions>
-	   *
-	   */
 	  public void setLabelName(String labelName){
 		  hintsChoice.setText(labelName);
 		}
-	  /**
-	   * Adding the mouse over event.
-	   */
 	  @Override
 		public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+			// TODO Auto-generated method stub
 			return addDomHandler(handler, MouseOverEvent.getType());
 		}
-	  /**
-	   * Adding the mouse out event.
-	   */
 		@Override
 		public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+			// TODO Auto-generated method stub
 			return addDomHandler(handler, MouseOutEvent.getType());
 		}
 		

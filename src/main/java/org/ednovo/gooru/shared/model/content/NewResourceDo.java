@@ -26,21 +26,7 @@ package org.ednovo.gooru.shared.model.content;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : NewResourceDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class NewResourceDo extends ResourceDo {
 
@@ -58,75 +44,59 @@ public class NewResourceDo extends ResourceDo {
 	private String category;
 	private String thumbnailImgUrl;
 	private Integer stop;
+	private ResourceFormatDo resourceFormat;
+	
+	private String thumbnail;
+	
 	/** 
-	 * This method is to get the id
+	 * This method is to get the resourceFormat
 	 */
+	public ResourceFormatDo getResourceFormat() {
+		return resourceFormat;
+	}
+
+	/** 
+	 * This method is to set the resourceFormat
+	 */
+	public void setResourceFormat(ResourceFormatDo resourceFormat) {
+		this.resourceFormat = resourceFormat;
+	}
+
+	public NewResourceDo(){}
+	
 	public String getId() {
 		return id;
 	}
-	/** 
-	 * This method is to set the id
-	 */
 	public void setId(String id) {
 		this.id = id;
 	}
-	/** 
-	 * This method is to get the url
-	 */
 	public String getUrl() {
 		return url;
 	}
-	/** 
-	 * This method is to set the url
-	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	/** 
-	 * This method is to get the title
-	 */
 	public String getTitle() {
 		return title;
 	}
-	/** 
-	 * This method is to set the title
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	/** 
-	 * This method is to get the description
-	 */
 	public String getDescription() {
 		return description;
 	}
-	/** 
-	 * This method is to set the description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/** 
-	 * This method is to get the category
-	 */
 	public String getCategory() {
 		return category;
 	}
-	/** 
-	 * This method is to set the category
-	 */
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	/** 
-	 * This method is to get the thumbnailImgUrl
-	 */
 	public String getThumbnailImgUrl() {
 		return thumbnailImgUrl;
 	}
-	/** 
-	 * This method is to set the thumbnailImgUrl
-	 */
 	public void setThumbnailImgUrl(String thumbnailImgUrl) {
 		this.thumbnailImgUrl = thumbnailImgUrl;
 	}
@@ -142,4 +112,14 @@ public class NewResourceDo extends ResourceDo {
 	public void setStop(Integer stop) {
 		this.stop = stop;
 	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	
+
 }

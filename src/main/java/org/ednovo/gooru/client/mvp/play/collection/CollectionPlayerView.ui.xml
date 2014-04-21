@@ -6,7 +6,7 @@
 	<ui:style field= "playerStyle" src="collectionplayer.css"/>
 	<g:FlowPanel>
 		<g:FlowPanel>
-			<header:CollectionPlayerHeaderView ui:field="headerView"></header:CollectionPlayerHeaderView>
+			<header:StudyPlayerHeaderView ui:field="headerView"></header:StudyPlayerHeaderView>
 		</g:FlowPanel>
 		<g:FlowPanel ui:field="navigationContainer"></g:FlowPanel>
 		<g:FlowPanel ui:field="playerBodyContainer"></g:FlowPanel>

@@ -7,15 +7,10 @@
 			<g:HTMLPanel styleName="{res.css.profilePopupInnerContaienr}">
 				<g:Image ui:field="profileImage" styleName="{res.css.profilePopupInnerImage}"></g:Image>
 				<g:HTMLPanel styleName="{res.css.profilePopupInnerSeparator}"></g:HTMLPanel>
-				<g:Label styleName="{res.css.profilePopupInnerTitle}"
-					ui:field="userNameLbl">Jody Silverman</g:Label>
+				<g:Label styleName="{res.css.profilePopupInnerTitle}" ui:field="userNameLbl"></g:Label>
 				<!-- <g:HTMLPanel styleName="{res.css.profilePopupInnerHints}"> has created 
 					<span>103</span> public collections </g:HTMLPanel> -->
-				<g:Label styleName="{res.css.profilePopupInnerDetails}"
-					ui:field="userProfileDesc">Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Proin diam elit, luctus id porttitor
-					semper, feugiat ac elit. Aenean non sagittis arcu, sit amet
-					commodo felis. Proin mattis tristique posuere.</g:Label>
+				<g:Label styleName="{res.css.profilePopupInnerDetails}" ui:field="userProfileDesc"></g:Label>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel>

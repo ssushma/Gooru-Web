@@ -2,15 +2,25 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="toolTip" src="ToolTip.css" />
-		
+	<ui:with type="org.ednovo.gooru.client.mvp.classpages.ClasspageListPopupViewCBundle" field="res" />	
 	<g:HTMLPanel styleName="{toolTip.tooltipContainer}"
 		ui:field="panelCode">
 		<!-- <g:HTMLPanel styleName="{toolTip.arrowBorder}"></g:HTMLPanel> -->
-		<g:HTMLPanel styleName="{toolTip.tooltipContent}" ui:field="tooltipPanel">
-			<g:Label styleName="{toolTip.tooltipContentTitle}" ui:field="lblTitle" />
-			<panel:TextBoxWithPlaceholder ui:field="classCodeTxtBox"
-							styleName="{toolTip.classCodeTxtBox}" />
-			<g:Button styleName="primary" ui:field="enterLbl">Enter</g:Button>
+		<g:HTMLPanel styleName="{toolTip.studyTooltipContent}" ui:field="tooltipPanel">
+			<g:HTMLPanel styleName="{toolTip.inputContainer}">
+				<g:Label styleName="{toolTip.tooltipContentTitle}" ui:field="lblTitle" />
+				<panel:TextBoxWithPlaceholder ui:field="classCodeTxtBox"
+								styleName="{toolTip.classCodeTxtBox}" />
+				<g:Button styleName="primary" ui:field="enterLbl"></g:Button>
+				<g:Button styleName="primary disabled" ui:field="disabledBtn"></g:Button>
+			</g:HTMLPanel>
+			 <g:Label  ui:field="lblLoading"></g:Label>
+			<g:ScrollPanel ui:field="spanelCollectionList" styleName="{res.css.scrollPanelClasspageList}">
+	        		<g:VerticalPanel styleName="{res.css.htmlPanelClasspageList}" ui:field="classStudyList">
+	        		    
+	        		</g:VerticalPanel>
+	            </g:ScrollPanel>
+			<!-- <g:HTMLPanel ui:field="classStudyList"></g:HTMLPanel> -->
 		</g:HTMLPanel>
 	</g:HTMLPanel>
 

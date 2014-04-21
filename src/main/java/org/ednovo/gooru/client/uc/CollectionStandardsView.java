@@ -27,9 +27,14 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowStandardToolTip;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -45,19 +50,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : CollectionStandardsView.java
- *
- * @description : This class is used to display the collection standards view.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CollectionStandardsView extends Composite implements HasClickHandlers{
 	
 	
@@ -69,9 +62,7 @@ public class CollectionStandardsView extends Composite implements HasClickHandle
 
 	interface CollectionStandardsViewUiBinder extends UiBinder<Widget, CollectionStandardsView> {
 	}
-	/**
-	 * Class constructor.
-	 */
+	
 	public CollectionStandardsView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
@@ -83,26 +74,11 @@ public class CollectionStandardsView extends Composite implements HasClickHandle
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		renderStandards(standardsList);
 	}
-	/**
-	 * This will add the click event.
-	 */
+
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
 		return addDomHandler(handler, ClickEvent.getType());
 	}
-	/**
-	 * @function renderStandards 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :  This will render the all the standards.
-	 * 
-	 * @parm(s) : @param standardsList
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 */
+	
 	public void renderStandards(List<StandardFo> standardsList){
 		for(int i=0;i<standardsList.size();i++){
 			Label standardText=new Label(standardsList.get(i).getCode());
@@ -112,29 +88,55 @@ public class CollectionStandardsView extends Composite implements HasClickHandle
 			standardText.addMouseOutHandler(new MouseOutHideToolTip());
 		}
 	}
+	
+
 	/**
-	 * This inner class is used to handle the mouse over handler.
+	 * 
+	 * Inner class.
+	 *
 	 */
 	public class MouseOverShowStandardToolTip implements MouseOverHandler
 	{
-		String desc=null;
+		String description=null;
 		
+		/**
+		 * Class constructor.
+		 * @param description {@link String}
+		 */
 		public MouseOverShowStandardToolTip(String description) {
-			this.desc = description;
+			this.description = description;
 		}
 		
+		/**
+		 * On mouse over tooltip is shown.
+		 * @param event {@link MouseOverEvent}
+		 */
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTip = new ToolTipPopUp(desc, (event.getRelativeElement().getAbsoluteLeft()-45),(event.getRelativeElement().getAbsoluteTop()-140));
-			toolTip.popupArrow.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setPopupArrow());
+			toolTip = new ToolTipPopUp(description, (event.getRelativeElement().getAbsoluteLeft()-45),(event.getRelativeElement().getAbsoluteTop()-140- ((description.length() / 30) * 12)));
+			toolTip.popupArrow.removeFromParent();
+			toolTip.removeStyleName("gwt-PopupPanel");
+			toolTip.getElement().setAttribute("style", "z-index:99999 !important");
+			toolTip.downPopupArrow.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setPopupStandardArrow());
+			toolTip.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			toolTip.show();
+			int tooltipHeight=toolTip.getOffsetHeight();
+			toolTip.setPopupPosition((event.getRelativeElement().getAbsoluteLeft()-45), event.getRelativeElement().getAbsoluteTop()-tooltipHeight);
+			toolTip.getElement().getStyle().clearVisibility();
 		}
 	}
+	
 	/**
-	 * This inner class is used to handle the mouse out handler.
+	 * 
+	 * Inner class.
+	 *
 	 */
 	public class MouseOutHideToolTip implements MouseOutHandler
 	{
+		/**
+		 * On mouse out hides the tool tip.
+		 * @return event {@link MouseOutEvent}
+		 */
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTip.hide();

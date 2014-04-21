@@ -62,23 +62,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionShareTabVc.java
- *
- * @description : This file deals with collection share tab
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionShareTabVc extends Composite implements MessageProperties{
 
@@ -121,7 +111,10 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 
-	private HTMLPanel rbPublicPanel, rbPublic, rbPrivatePanel, rbPrivate, rbShareablePanel, rbShareable;
+	private HTMLPanel rbPublicPanel, rbPublic, rbPrivatePanel, rbPrivate, rbShareablePanel, rbShareable,shareViaText;
+	
+	
+	@UiField Label visibilityText,visibilityOptiontext,shareCollectiontext;
 	
 	private String rawUrl, embedLink;
 	
@@ -129,7 +122,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	private static final String GOORU_UID = "gooruuid";
 	
-	private static String CONFIRM_MESSAGE = "You need to confirm your account before you can make collections public!";
+	private static String CONFIRM_MESSAGE = GL1490+GL_SPL_EXCLAMATION;
 	
 	private CollectionShareAlertPopup collectionShareAlertPopup;
 	
@@ -152,7 +145,12 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	public CollectionShareTabVc(CollectionDo collection) {
 		this.collection = collection;
 		initWidget(uiBinder.createAndBindUi(this));
-
+		shareViaText = new HTMLPanel("");
+		visibilityText.setText(GL0842);
+		visibilityOptiontext.setText(GL0843);
+		shareCollectiontext.setText(GL0545.toUpperCase());
+		shareViaText.getElement().setInnerHTML(GL0638);
+		//GL0638
 		socialShareLinksView = new SocialShareLinksView();
 		this.setData(collection);
 		
@@ -176,20 +174,20 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		
 		publicFocPanel = new FlowPanel();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
-		shareViewPublicUc = new ShareViewUc("Public", "Allows others to find and learn from your collection");
+		shareViewPublicUc = new ShareViewUc(GL0329, GL0330);
 		shareViewPublicUc.setTitleDescriptionStyle(52, 44);
 		publicFocPanel.add(shareViewPublicUc);
 		publicFocPanel.add(rbPublicPanel);
 		publicShareFloPanel.add(publicFocPanel);
 		linkFocPanel = new FlowPanel();
-		shareViewShareableUc = new ShareViewUc("Shareable", "Allows you to share with only those who have a link");
+		shareViewShareableUc = new ShareViewUc(GL0331, GL0332);
 		shareViewShareableUc.setTitleDescriptionStyle(12, 44);
 		linkFocPanel.add(shareViewShareableUc);
 		linkFocPanel.add(rbShareablePanel);
 		linkShareFloPanel.add(linkFocPanel);
 		
 		privateFocPanel = new FlowPanel();
-		shareViewPrivateUc = new ShareViewUc("Private", "No one but you can see this collection"); 
+		shareViewPrivateUc = new ShareViewUc(GL0333, GL0334); 
 		shareViewPrivateUc.setTitleDescriptionStyle(40, 44);
 		privateFocPanel.add(shareViewPrivateUc);
 		privateFocPanel.add(rbPrivatePanel);
@@ -240,13 +238,13 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			@Override
 			public void onSuccess(Map<String, String> result) {
 				if (result != null && result.containsKey("shortenUrl")) {
-					socialShareLinksView.setEmbedBitlyLink(result.get("shortenUrl"));
+					socialShareLinksView.setEmbedBitlyLink(result.get("decodeRawUrl"));
 				}
 				rawUrl=result.get("rawUrl").toString();
 			}
 		});
 		
-		String params = "/#"+PlaceTokens.COLLECTION_PLAY+"&id="+this.collection.getGooruOid();
+		String params = "/#"+PlaceTokens.PREVIEW_PLAY+"&id="+this.collection.getGooruOid();
 		AppClientFactory.getInjector().getSearchService().getCollectionPlayDirectLink(params, new SimpleAsyncCallback<String>() {
 
 			@Override
@@ -284,25 +282,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		socialShareLinksViewContainer.add(socialShareLinksView);
 		getUserType();
 	}
-	/**
-	 * 
-	 * @function getUserType 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This is used to get the user type.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getUserType() {
 			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
 				@Override
@@ -324,73 +304,19 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 				}
 		});
 	}
-	/**
-	 * 
-	 * @function displayAllVisiblePanels 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This method is used to display all the visible panels.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void displayAllVisiblePanels() {
 		publicShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		linkShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 		privateShareFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 	}
-	/**
-	 * 
-	 * @function disableAllVisiblePanels 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is to hide all the visible panels.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void disableAllVisiblePanels() {
 		publicShareFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 		linkShareFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 		privateShareFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 	}
-	/**
-	 * 
-	 * @function setSharingUi 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to set the sharing ui.
-	 * 
-	 * 
-	 * @parm(s) : @param shareType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setSharingUi(String shareType){
 		if (shareType.equalsIgnoreCase("private")) {
 			socialShareLinksView.getshareLinkTxtBox().addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
@@ -402,25 +328,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			isSharable = true;
 		}
 	}
-	/**
-	 * 
-	 * @function updateCollectionItem 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is used to update the collection item.
-	 * 
-	 * 
-	 * @parm(s) : @param shareType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	private void updateCollectionItem(String shareType) {
 		this.collection.setSharing(shareType);
 		this.setData(collection);
@@ -477,20 +384,20 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 						for(int i=0;i<result.size();i++){
 							if (result.size() >1){
 								if(i==result.size()-1){
-									sb.append(" and ");
+									sb.append(" "+GL_GRR_AND+" ");
 								}else{
 									if (i==0){
 									}else{
-										sb.append(", ");
+										sb.append(GL_GRR_COMMA+" ");
 									}
 								}
 							}
 							sb.append(result.get(i).getTitle());
 						}
 						if(result.size()>1){
-							sb.append(" Classpages.");
+							sb.append(" "+GL1154+".");
 						}else{
-							sb.append(" Classpage.");
+							sb.append(" "+GL0102+".");
 						}
 						
 						 String titles=sb.toString();
@@ -603,25 +510,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	public void setData(CollectionDo collection) {
 		this.collection = collection;
 	}
-	/**
-	 * 
-	 * @function onReveal 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :This method is called whenever the Presenter was not visible on screen and becomes visible.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void onReveal() {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("type", "!collection-search");
@@ -645,13 +534,14 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	 */
 	private void addSocialResource() {
 		shareDo = new SocialShareDo();
-		shareDo.setBitlylink(socialShareLinksView.getshareLinkTxtBox().getText());
+		shareDo.setBitlylink(rawUrl);
 		shareDo.setRawUrl(rawUrl);
 		shareDo.setTitle(collection.getTitle());
 		shareDo.setShareType(collection.getSharing());
 		shareDo.setDescription(collection.getGoals());
 		shareDo.setThumbnailurl(collection.getThumbnailUrl());
 		shareDo.setCategoryType(collection.getCategory());
+		shareDo.setDecodeRawUrl(socialShareLinksView.getshareLinkTxtBox().getText());
 		shareDo.setOnlyIcon(false);
 		shareDo.setIsSearchShare(false);
 		contentpanel.clear();
@@ -666,7 +556,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	 */
 	private void addSocialResource(String shareType) {
 		shareDo = new SocialShareDo();
-		shareDo.setBitlylink(socialShareLinksView.getshareLinkTxtBox().getText());
+		shareDo.setBitlylink(rawUrl);
 		shareDo.setRawUrl(rawUrl);
 		shareDo.setTitle(collection.getTitle());
 		shareDo.setShareType(shareType);
@@ -674,6 +564,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		shareDo.setThumbnailurl(collection.getThumbnailUrl());
 		shareDo.setCategoryType(collection.getCategory());
 		shareDo.setOnlyIcon(false);
+		shareDo.setDecodeRawUrl(socialShareLinksView.getshareLinkTxtBox().getText());
 		shareDo.setIsSearchShare(false);
 		contentpanel.clear();
 		SocialShareView socialView = new SocialShareView(shareDo);
@@ -693,48 +584,12 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		loadingImageLabel.setVisible(false);
 		mainShareContainer.setVisible(true);
 	}
-	/**
-	 * 
-	 * @function setShareUrlGenerationAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : To set shareUrlGenerationAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @param shareShortenUrlAsyncCallback
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void setShareUrlGenerationAsyncCallback(
 			SimpleAsyncCallback<Map<String, String>> shareShortenUrlAsyncCallback) {
 		this.shareUrlGenerationAsyncCallback = shareShortenUrlAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function getShareShortenUrlAsyncCallback 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : returns shareUrlGenerationAsyncCallback.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : SimpleAsyncCallback<Map<String,String>>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public SimpleAsyncCallback<Map<String, String>> getShareShortenUrlAsyncCallback() {
 		return shareUrlGenerationAsyncCallback;
 	}
@@ -753,25 +608,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			SimpleAsyncCallback<Map<String, String>> shareUrlWithGenerationAsyncCallback) {
 		this.shareUrlWithGenerationAsyncCallback = shareUrlWithGenerationAsyncCallback;
 	}
-	/**
-	 * 
-	 * @function selectPrivateResource 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description : This file is used to select the Private Resource
-	 * 
-	 * 
-	 * @parm(s) : @param visibilityType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void selectPrivateResource(String visibilityType) {
 		if(visibilityType.equalsIgnoreCase("public")) {
 			rbPublic.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButtonSelected());

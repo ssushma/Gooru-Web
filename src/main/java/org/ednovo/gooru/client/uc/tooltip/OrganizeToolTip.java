@@ -24,28 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : OrganizeToolTip.java
- *
- * @description : This class is used to display the organize tooltip.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class OrganizeToolTip extends Composite{
+
+public class OrganizeToolTip extends Composite implements MessageProperties{
 	
-	
+	@UiField HTMLPanel organizeText,customizableText;
 	public OrganizeToolTip(){
 		initWidget(organizeToolTipUiBinder.createAndBindUi(this));
+		organizeText.getElement().setInnerHTML(GL0180);
+		customizableText.getElement().setInnerHTML(GL1064);
 	}
 	
 	public interface OrganizeToolTipUiBinder extends UiBinder<Widget, OrganizeToolTip>{

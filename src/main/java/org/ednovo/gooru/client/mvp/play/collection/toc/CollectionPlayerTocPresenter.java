@@ -46,5 +46,8 @@ public class CollectionPlayerTocPresenter extends PresenterWidget<IsCollectionPl
 	public void setResourceActive(String collectionId,String collectionItemid,boolean isCollectionHome){
 		getView().setResourceActive(collectionId,collectionItemid,isCollectionHome);
 	}
+	public void clearNavigationPanel(){
+		getView().clearNavigationPanel();
+	}
 
 }

@@ -29,18 +29,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+
 /**
- * @fileName : ErrorMessagePanel.java
+ * @author Search Team
  *
- * @description : This file used to set the error message panel.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ErrorMessagePanel extends FlowPanel {
 	private Label errorMessage;

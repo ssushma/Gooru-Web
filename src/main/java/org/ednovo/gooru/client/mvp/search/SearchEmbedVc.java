@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.EmbedEnableHandler;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,25 +40,25 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
+/** 
  * 
  * @fileName : SearchEmbedVc.java
  *
- * @description : This class is used to display the Embed iframe content for user to use.
- *
+ * @description : 
+ *	This class is used to display the Embed iframe content for user to use.
  *
  * @version : 1.0
  *
- * @date: 31-Dec-2013
+ * @date: Jul 15, 2013
  *
- * @Author : Gooru Team
+ * @Author Gooru Team
  *
- * @Reviewer: Gooru Team
+ * @Reviewer:
  */
-public class SearchEmbedVc extends Composite {
+public class SearchEmbedVc extends Composite implements MessageProperties{
 
 	
-	@UiField TextArea txtAreaEmbed; 
+	@UiField TextArea txtAreaEmbed,embedlineText; 
 	
 	boolean isEditable;
 	
@@ -81,7 +82,7 @@ public class SearchEmbedVc extends Composite {
 	public SearchEmbedVc(String bitlyLink, final boolean isEditable) {
 		this.isEditable = isEditable;
 		initWidget(uiBinder.createAndBindUi(this));
-		
+		embedlineText.setText(GL0718);
 		txtAreaEmbed.getElement().setAttribute("id", "txtAreaEmbed");
 		
 		//Handle click event for selecting all text inside text box.
@@ -111,21 +112,7 @@ public class SearchEmbedVc extends Composite {
 		
 		updateIsEditable(isEditable);
 	}
-	/**
-	 * 
-	 * @fileName : SearchEmbedVc.java
-	 *
-	 * @description : This is used to focus on Embed textArea.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+	
 	public class OnTextAreaClick implements ClickHandler{
 
 		@Override
@@ -136,25 +123,6 @@ public class SearchEmbedVc extends Composite {
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function updateIsEditable 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to update the embed textarea.
-	 * 
-	 * 
-	 * @parm(s) : @param isEditable
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	public void updateIsEditable(boolean isEditable){
 		this.isEditable = isEditable;
 		if (!isEditable){

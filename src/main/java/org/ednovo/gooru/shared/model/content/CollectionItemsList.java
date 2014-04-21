@@ -25,21 +25,7 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
-/**
- * 
- * @fileName : CollectionItemsList.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public class CollectionItemsList implements Serializable {
 	
 	/**
@@ -51,70 +37,41 @@ public class CollectionItemsList implements Serializable {
 	private String collectionType;
 	private Integer collectionItemsListSize;
 	
+	public CollectionItemsList(){}
 	
 	private static final long serialVersionUID = 1L;
-
-
-	/** 
-	 * This method is to get the collectionTitle
-	 */
 	public String getCollectionTitle() {
 		return collectionTitle;
 	}
-
-
-	/** 
-	 * This method is to set the collectionTitle
-	 */
 	public void setCollectionTitle(String collectionTitle) {
 		this.collectionTitle = collectionTitle;
 	}
-
-
-	/** 
-	 * This method is to get the collectionId
-	 */
 	public String getCollectionId() {
 		return collectionId;
 	}
-
-
-	/** 
-	 * This method is to set the collectionId
-	 */
 	public void setCollectionId(String collectionId) {
 		this.collectionId = collectionId;
 	}
-
-
-	/** 
-	 * This method is to get the collectionType
-	 */
 	public String getCollectionType() {
 		return collectionType;
 	}
-
-
-	/** 
-	 * This method is to set the collectionType
-	 */
 	public void setCollectionType(String collectionType) {
 		this.collectionType = collectionType;
 	}
-
-
-	/** 
-	 * This method is to get the collectionItemsListSize
-	 */
 	public Integer getCollectionItemsListSize() {
 		return collectionItemsListSize;
 	}
-
-
-	/** 
-	 * This method is to set the collectionItemsListSize
-	 */
 	public void setCollectionItemsListSize(Integer collectionItemsListSize) {
 		this.collectionItemsListSize = collectionItemsListSize;
 	}
+	
+	
+
+
+
+	
+	
+	
+	
+
 }

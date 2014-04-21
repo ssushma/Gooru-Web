@@ -31,20 +31,10 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventHandler;
+
 /**
+ * @author Search Team
  * 
- * @fileName : RefreshCollectionInFolderLevelListHandler.java
- *
- * @description : This is related to event handlers for RefreshCollectionInFolderLevelListHandler.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface RefreshCollectionInFolderLevelListHandler extends EventHandler {
 

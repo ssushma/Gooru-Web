@@ -24,39 +24,26 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : RemoveToolTipUc.java
- *
- * @description : This class is used to remove the tooltip.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class RemoveToolTipUc extends PopupPanel{
+
+public class RemoveToolTipUc extends PopupPanel implements MessageProperties{
 	
-	
+	@UiField Label removeText;
 	public interface RemoveToolTipUcUiBinder extends UiBinder<Widget, RemoveToolTipUc>{
 		
 	}
-	
 	public static RemoveToolTipUcUiBinder uiBinder=GWT.create(RemoveToolTipUcUiBinder.class);
 	
-	/**
-	 * class constructor.
-	 */
 	public RemoveToolTipUc(){
 		
 		setWidget(uiBinder.createAndBindUi(this));
-		
+		removeText.setText(GL0237);
 	}
 }

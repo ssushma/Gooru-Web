@@ -31,21 +31,7 @@ import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : CollectionQuestionItemDo.java
- *
- * @description :  This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class CollectionQuestionItemDo implements Serializable {
 
@@ -68,172 +54,97 @@ public class CollectionQuestionItemDo implements Serializable {
 	private int timeToCompleteInSecs;
 	private HashMap<String,ArrayList<QuestionHintsDo>> hints;
 	private HashMap<String,ArrayList<QuestionAnswerDo>> answers;
-	/** 
-	 * This method is to get the sharing
-	 */
+	
+	public CollectionQuestionItemDo(){}
+	
 	public String getSharing() {
 		return sharing;
 	}
-	/** 
-	 * This method is to set the sharing
-	 */
-	public void setSharing(String sharing) {
-		this.sharing = sharing;
-	}
-	/** 
-	 * This method is to get the title
-	 */
 	public String getTitle() {
 		return title;
 	}
-	/** 
-	 * This method is to set the title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	/** 
-	 * This method is to get the isLive
-	 */
 	public String getIsLive() {
 		return isLive;
 	}
-	/** 
-	 * This method is to set the isLive
-	 */
-	public void setIsLive(String isLive) {
-		this.isLive = isLive;
-	}
-	/** 
-	 * This method is to get the label
-	 */
 	public String getLabel() {
 		return label;
 	}
-	/** 
-	 * This method is to set the label
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	/** 
-	 * This method is to get the questionText
-	 */
 	public String getQuestionText() {
 		return questionText;
 	}
-	/** 
-	 * This method is to set the questionText
-	 */
-	public void setQuestionText(String questionText) {
-		this.questionText = questionText;
-	}
-	/** 
-	 * This method is to get the explanation
-	 */
-	public String getExplanation() {
-		return explanation;
-	}
-	/** 
-	 * This method is to set the explanation
-	 */
-	public void setExplanation(String explanation) {
-		this.explanation = explanation;
-	}
-	/** 
-	 * This method is to get the description
-	 */
+
 	public String getDescription() {
 		return description;
 	}
-	/** 
-	 * This method is to set the description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	/** 
-	 * This method is to get the difficultyLevel
-	 */
 	public String getDifficultyLevel() {
 		return difficultyLevel;
 	}
-	/** 
-	 * This method is to set the difficultyLevel
-	 */
-	public void setDifficultyLevel(String difficultyLevel) {
-		this.difficultyLevel = difficultyLevel;
-	}
-	/** 
-	 * This method is to get the concept
-	 */
 	public String getConcept() {
 		return concept;
 	}
-	/** 
-	 * This method is to set the concept
-	 */
-	public void setConcept(String concept) {
-		this.concept = concept;
-	}
-	/** 
-	 * This method is to get the typeName
-	 */
 	public String getTypeName() {
 		return typeName;
 	}
-	/** 
-	 * This method is to set the typeName
-	 */
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
-	/** 
-	 * This method is to get the gooruOid
-	 */
-	public String getGooruOid() {
-		return gooruOid;
-	}
-	/** 
-	 * This method is to set the gooruOid
-	 */
-	public void setGooruOid(String gooruOid) {
-		this.gooruOid = gooruOid;
-	}
-	/** 
-	 * This method is to get the timeToCompleteInSecs
-	 */
 	public int getTimeToCompleteInSecs() {
 		return timeToCompleteInSecs;
 	}
-	/** 
-	 * This method is to set the timeToCompleteInSecs
-	 */
-	public void setTimeToCompleteInSecs(int timeToCompleteInSecs) {
-		this.timeToCompleteInSecs = timeToCompleteInSecs;
-	}
-	/** 
-	 * This method is to get the hints
-	 */
-	public HashMap<String, ArrayList<QuestionHintsDo>> getHints() {
-		return hints;
-	}
-	/** 
-	 * This method is to set the hints
-	 */
-	public void setHints(HashMap<String, ArrayList<QuestionHintsDo>> hints) {
-		this.hints = hints;
-	}
-	/** 
-	 * This method is to get the answers
-	 */
+	
 	public HashMap<String, ArrayList<QuestionAnswerDo>> getAnswers() {
 		return answers;
 	}
-	/** 
-	 * This method is to set the answers
-	 */
+	public void setSharing(String sharing) {
+		this.sharing = sharing;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public void setIsLive(String isLive) {
+		this.isLive = isLive;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	public void setQuestionText(String questionText) {
+		this.questionText = questionText;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public void setDifficultyLevel(String difficultyLevel) {
+		this.difficultyLevel = difficultyLevel;
+	}
+	public String getGooruOid() {
+		return gooruOid;
+	}
+	public void setGooruOid(String gooruOid) {
+		this.gooruOid = gooruOid;
+	}
+	public void setConcept(String concept) {
+		this.concept = concept;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	public void setTimeToCompleteInSecs(int timeToCompleteInSecs) {
+		this.timeToCompleteInSecs = timeToCompleteInSecs;
+	}
+	
 	public void setAnswers(HashMap<String, ArrayList<QuestionAnswerDo>> answers) {
 		this.answers = answers;
 	}
+	public String getExplanation() {
+		return explanation;
+	}
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
+	}
+	public HashMap<String,ArrayList<QuestionHintsDo>> getHints() {
+		return hints;
+	}
+	public void setHints(HashMap<String,ArrayList<QuestionHintsDo>> hints) {
+		this.hints = hints;
+	}
+
+	
 }

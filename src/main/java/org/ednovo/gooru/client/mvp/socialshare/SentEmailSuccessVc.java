@@ -26,31 +26,36 @@ package org.ednovo.gooru.client.mvp.socialshare;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
  * @fileName : SentEmailSuccessVc.java
  *
  * @description : This file used to show email share success popUp.
+ *                   
+ * 
+ * @version : 5.4
  *
- * @version : 1.0
+ * @date: August, 2013
  *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
+ * @Author: Gooru Team
+ * 
  * @Reviewer: Gooru Team
  */
 public class SentEmailSuccessVc extends Composite implements MessageProperties{
@@ -66,7 +71,7 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 
 	@UiField
 	Label okLbl,toEmailLbl;
-
+	@UiField HTMLPanel emailToFriendText,emailSentText;
 
 	/**
 	 * Class constructor , create a new pop up
@@ -82,7 +87,31 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
+		emailToFriendText.getElement().setInnerHTML(GL0222);
+		emailSentText.getElement().setInnerHTML(GL0648);
 		toEmailLbl.setText(toEmail);
+		okLbl.setText(GL0190);
+		Window.enableScrolling(false);
+	}
+	
+	public SentEmailSuccessVc(String messageHeader, String desc) {
+		initWidget(uiBinder.createAndBindUi(this));
+		appPopUp = new AppPopUp();
+		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+		appPopUp.setStyleName(ShelfCBundle.INSTANCE.css().shelfItemSucessPopUp());
+		appPopUp.getElement().getStyle().setZIndex(999999);
+		appPopUp.setPixelSize(480, 208);
+		appPopUp.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
+		appPopUp.setGlassEnabled(true);
+		appPopUp.show();
+		appPopUp.center();
+		emailToFriendText.getElement().setInnerHTML(messageHeader);
+		emailSentText.getElement().setInnerHTML("");
+		/*toEmailLbl.getElement().getStyle().setWidth(70, Unit.PCT);
+		toEmailLbl.getElement().getStyle().setPaddingLeft(86, Unit.PX);*/
+		toEmailLbl.setStyleName(ShelfCBundle.INSTANCE.css().aleartDescText());
+		toEmailLbl.setText(desc);
+		okLbl.setText(GL0190);
 		Window.enableScrolling(false);
 	}
 
@@ -94,7 +123,12 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 	public void onBtnClick(ClickEvent clickEvent) {
 		appPopUp.hide();
 		String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
-		if(!(placeToken.equals(PlaceTokens.COLLECTION_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
+		if(placeToken.equals(PlaceTokens.STUDENT) && !StudentAssignmentView.getMainContainerStatus())
+		{
+			Window.enableScrolling(true);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+		}
+		else if(!(placeToken.equals(PlaceTokens.COLLECTION_PLAY) ||placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
 			Window.enableScrolling(true);
 		}
 	}

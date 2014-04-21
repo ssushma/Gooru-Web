@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RegisterTabDndEvent.java
- *
- * @description : This file is used to invoke RegisterTabDndEvent while drag the resource if anonymous user logged in . 
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class RegisterTabDndEvent extends GwtEvent<RegisterTabDndHandler> {
 
@@ -53,16 +42,12 @@ public class RegisterTabDndEvent extends GwtEvent<RegisterTabDndHandler> {
 	 */
 	public RegisterTabDndEvent() {
 	}
-	/**
-	 * Returns the Event.Type used to register this event, allowing an EventBus to find handlers of the appropriate class.
-	 */
+
 	@Override
 	public Type<RegisterTabDndHandler> getAssociatedType() {
 		return TYPE;
 	}
-	/**
-	 *This method will be  called by HandlerManager and it will be used to  invoke RegisterTabDndEvent while drag the resource if anonymous user logged in . 
-	 */
+
 	@Override
 	protected void dispatch(RegisterTabDndHandler handler) {
 		handler.registerDndControllers();

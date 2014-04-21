@@ -29,59 +29,20 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
+ * @author Search Team
  * 
- * @fileName : CollectionsCBundle.java
- *
- * @description : This file is used to apply css styles for collections.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface CollectionsCBundle extends ClientBundle {
 
-	static final CollectionsCBundle INSTANCE = GWT
-			.create(CollectionsCBundle.class);
+	static final CollectionsCBundle INSTANCE = GWT.create(CollectionsCBundle.class);
 
 	public interface CollectionsCss extends CssResource {
-		
-		String myCollectionTitleDashedNoBorderContainerTwo();
-
-		String myCollectionInsightChapterContainerNoBorder();
-
-		String myCollectionInsightChapterBigImageContainer();
-
-		String myCollectionInsightChapterBigImage();
-
-		String blueBar();
-
-		String myCollectionInsightChapterTitleContainer();
-
-		String myCollectionInsightChapterTitle();
-
-		String myCollectionInsightChapterSubTitleBlack();
-		
-		String imageDim();
-		
-		String collectionHover();
-		
-		String playIcon();
-		
-		String collectionThumbnail();
-		
-		String collectionHoverEditRemoveContainer();
-
-		String CollectionHoverEideButton();
-
-		String CollectionHoverEideRemove();
+		String classpageTextarea();
+		String dateText();
+		String systemMessage();
+		String dueDataIcon();
 	}
 
-	@Source("collections.css")
+	@Source("collectionsstyles.css")
 	CollectionsCss css();
-
 }

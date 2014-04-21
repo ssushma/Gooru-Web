@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.event;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : RegisterTabDndHandler.java
- *
- * @description : this file is used to register events while drag the resource if anonymous user logged in 
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface RegisterTabDndHandler extends EventHandler {
 

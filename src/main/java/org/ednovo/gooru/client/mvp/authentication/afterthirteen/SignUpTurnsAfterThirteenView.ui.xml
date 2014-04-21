@@ -38,7 +38,7 @@
 			<g:HTMLPanel styleName="{res.css.turnsThirteenButtonContainer}">
 				<g:Button ui:field="btnEnterLater" styleName="secondary"></g:Button>
 				<g:Button ui:field="btnSubmit" styleName="primary"></g:Button>
-				<g:Label ui:field="lblUpdating" styleName="{res.css.updatingText}">submitting...</g:Label>
+				<g:Label ui:field="lblUpdating" styleName="{res.css.updatingText}"></g:Label>
 			</g:HTMLPanel>
 
 		</g:HTMLPanel>

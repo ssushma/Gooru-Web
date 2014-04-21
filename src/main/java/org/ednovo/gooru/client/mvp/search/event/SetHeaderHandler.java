@@ -33,19 +33,8 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SetHeaderHandler.java
- *
- * @description : This is the handler to set Header.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SetHeaderHandler extends EventHandler, BaseUiHandlers {
 

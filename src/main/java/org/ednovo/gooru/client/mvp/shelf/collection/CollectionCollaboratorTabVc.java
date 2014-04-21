@@ -50,25 +50,14 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : CollectionCollaboratorTabVc.java
+ * @author Search Team
  *
- * @description : This file deals with collection collaborators
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class CollectionCollaboratorTabVc extends Composite implements MessageProperties {
 	
-	private static final String USER_DOES_NOT_EXIST = "User does not exist";
+	private static final String USER_DOES_NOT_EXIST = GL1488;
 	
-	private static final String COLLABORATOR_ALREADY_ADDED = "Collaborator already added"; 
+	private static final String COLLABORATOR_ALREADY_ADDED = GL1489; 
 
 	private static EditCollaboratorVcUiBinder uiBinder = GWT.create(EditCollaboratorVcUiBinder.class);
 
@@ -82,7 +71,7 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 	TextBox collaboratorTxtBox;
 
 	@UiField
-	Label gooruBlueLbl;
+	Label gooruBlueLbl,collaboratorsText,addRecentText;
 
 	private CollectionDo collection = null;
 
@@ -93,6 +82,9 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 	public CollectionCollaboratorTabVc(CollectionDo collectionDo) {
 		this.collection = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
+		collaboratorsText.setText(GL0832);
+		gooruBlueLbl.setText(GL0590);
+		addRecentText.setText(GL0833);
 		getCollaboratorUsers(collectionDo.getGooruOid());
 		collaboratorTxtBox.addKeyUpHandler(new OnTextPress());
 	}
@@ -135,6 +127,8 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 	}
 
 	/**
+	 * @author Search Team
+	 *
 	 * keyUpHandler event to get collaborator list
 	 */
 	private class OnTextPress implements KeyUpHandler {
@@ -187,26 +181,7 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function hasCollaboraor 
-	 * 
-	 * @created_date : 02-Jan-2014
-	 * 
-	 * @description :To check wheather collaborator already exists.
-	 * 
-	 * 
-	 * @parm(s) : @param collaborator
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private boolean hasCollaboraor(String collaborator) {
 		for (Widget widget : addedCollaboratorFloPanel) {
 			CloseLabel filterSuggestItem = (CloseLabel) widget;

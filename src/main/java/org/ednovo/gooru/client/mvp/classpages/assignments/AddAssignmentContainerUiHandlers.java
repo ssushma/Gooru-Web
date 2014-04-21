@@ -23,30 +23,29 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.assignments;
-
+/**
+* @fileName : AddResourceUiHandlers.java 
+*
+* @description :This file is used to handle Ui Click events.
+*
+* @version :5.1
+*
+* @date: Apr 6 2013
+   	
+* @Author  Gooru Team
+* 
+* @Reviewer 
+*
+*/
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.EventHandler;
-/**
- * 
- * @fileName : AddAssignmentContainerUiHandlers.java
- *
- * @description : This file is used to handle Ui Click events.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+import com.google.gwt.user.client.ui.TreeItem;
+
 public interface AddAssignmentContainerUiHandlers extends BaseUiHandlers, EventHandler{
-
-	void createAssignment(CollectionDo collectionDo,String dueDate);
-
-	void v2CreateAssignment(AssignmentDo assignmentDo);
+	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel);
+	public void getFolderItems(TreeItem item,String parentId);
+	public void addCollectionToAssign(String collectionId,String direction,String dueDate);
 }

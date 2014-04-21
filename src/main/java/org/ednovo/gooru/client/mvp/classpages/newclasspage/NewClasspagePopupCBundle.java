@@ -27,18 +27,12 @@ package org.ednovo.gooru.client.mvp.classpages.newclasspage;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
+
+
 /**
- * @fileName : NewClasspagePopupCBundle.java
+ * @author Search Team
  *
- * @description : This interface is used to set the css styles for the new Class page.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface NewClasspagePopupCBundle extends ClientBundle{
 	

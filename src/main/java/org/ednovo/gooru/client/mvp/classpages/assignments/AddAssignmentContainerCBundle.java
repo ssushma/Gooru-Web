@@ -28,21 +28,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-/**
- * 
- * @fileName : AddAssignmentContainerCBundle.java
- *
- * @description : This file is used to apply css styles for Assignment popup.
- *
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface AddAssignmentContainerCBundle extends ClientBundle {
 	static final AddAssignmentContainerCBundle INSTANCE = GWT.create(AddAssignmentContainerCBundle.class);
 	
@@ -113,6 +99,40 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		
 		String assignmentDirectionsContainer();
 		
+		String popupContainer();
+		
+		String popupContent();
+		
+		String popupHeader();
+		
+		String popupHeaderText();
+		String assignmentSuccessMainContainer();
+		// floder level...
+		
+		String folderStucture();
+		String folderLevel();
+		String title();
+		String root();
+		String parent();
+		String child();
+		String open();
+		String arrow();
+		String empty();
+		String selected();
+		String foldercollection();
+		String innerchild();
+		String dropdowncontainer();
+		String dropdownPlaceHolder();
+		String dropdownListContainerScrollPanel();
+		String assignmentsystemMessage();
+		String successImage();
+		String successText();
+		String successPopupContainer();
+		String assignmentErrorMessage();
+		String copyResourcePopupContainer();
+		String assignmentDirectiomErrorMessage();
+		String loadingText();
+		String assignButton();
 		
 	}
 	@Source("assignmentpopup.css")

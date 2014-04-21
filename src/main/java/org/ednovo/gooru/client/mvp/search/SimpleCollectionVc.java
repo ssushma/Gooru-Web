@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.UserProfileUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -63,21 +64,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * 
- * @fileName : SimpleCollectionVc.java
+ * @author Search Team
  *
- * @description :This is to Set collection meta data info such as title, image, resource count, etc.. 
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
-public class SimpleCollectionVc extends Composite implements IsDraggable {
+public class SimpleCollectionVc extends Composite implements IsDraggable,MessageProperties {
 
 	private static SimpleCollectionVcUiBinder uiBinder = GWT.create(SimpleCollectionVcUiBinder.class);
 
@@ -105,15 +95,15 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 	
 	//@UiField SearchMoreInfoVcCBundle res;
 
-	private static final String ALL_GRADES = "ALL GRADES";
+	private static final String ALL_GRADES = GL1467.toUpperCase();
 	
 	private CollectionSearchResultDo collectionSearchResultDo;
 	
-	private static final String VIEWS= " Views";
+	private static final String VIEWS= " "+GL0934;
 	
-	private static final String RESOURCES = " resources";
+	private static final String RESOURCES = " "+GL0174.toLowerCase();
 	
-	private static final String RESOURCE = " resource";
+	private static final String RESOURCE = " "+GL1110.toLowerCase();
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	/**
@@ -147,7 +137,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		this.collectionSearchResultDo = collectionSearchResultDo;
 		//collectionTitleLbl.setText(StringUtil.truncateText(collectionSearchResultDo.getResourceTitle(), 30));
 		collectionTitleLbl.setHTML(StringUtil.truncateText(collectionSearchResultDo.getResourceTitle(), 30));
-		creatorNameLbl.setText("Created by ");
+		creatorNameLbl.setText(GL0622);
 		creatorNameLblValue.setText(collectionSearchResultDo.getOwner().getUsername());
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			String grade =collectionSearchResultDo.getGrade();
@@ -181,7 +171,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 				
 				
 				List<Integer> gradeListInt = new ArrayList<Integer>();
-				finalGradeStringB.append(gradeListSize > 1 ? "Grades: " : "Grade: ");
+				finalGradeStringB.append(gradeListSize > 1 ? GL1320_1+GL_SPL_SEMICOLON+" " : GL0325+GL_SPL_SEMICOLON+" ");
 				
 				/*if(gradeListInt.size()!=12){
 					if (isKindergarten) {
@@ -237,8 +227,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 				gradesLblValue.setText(null);
 			}
 		}
-		if(collectionSearchResultDo.getOwner().getUsername().equalsIgnoreCase("Autodesk") || collectionSearchResultDo.getOwner().getUsername().equalsIgnoreCase("Lessonopoly") || collectionSearchResultDo.getOwner().getUsername().equalsIgnoreCase("CommonSenseMedia") || collectionSearchResultDo.getOwner().getUsername().equalsIgnoreCase("FTE") || collectionSearchResultDo.getOwner().getUsername().equalsIgnoreCase("WSPWH") || collectionSearchResultDo.getOwner().getUsername().equalsIgnoreCase("lisaNGC"))
-		{
+		if(StringUtil.isPartnerUser(collectionSearchResultDo.getOwner().getUsername())) {
 			if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
 			creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
 			creatorNameLblValue.getElement().getStyle().setCursor(Cursor.POINTER);
@@ -248,12 +237,8 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-				
 					MixpanelUtil.Click_Resource_Username();
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("id", collectionSearchResultDo.getOwner().getGooruUId());
-					params.put("user", collectionSearchResultDo.getOwner().getUsername());
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE, params);
+					AppClientFactory.getPlaceManager().revealPlace(collectionSearchResultDo.getOwner().getUsername());
 				}
 			});
 			
@@ -302,26 +287,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		collectionImageUc.setGooruOid(collectionSearchResultDo.getGooruOid());
 	}
 	
-	/**
-	 * 
-	 * @function generateGradeIfHypen 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to generate grades.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private static String generateGradeIfHypen(String grade) {
 		String gradeList[];
 		StringBuilder gradeStr = new StringBuilder();
@@ -344,26 +310,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		}
 		return gradeStr.toString();
 	}
-	/**
-	 * 
-	 * @function sortList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to sort the list.
-	 * 
-	 * 
-	 * @parm(s) : @param list
-	 * @parm(s) : @return
-	 * 
-	 * @return : List<Integer>
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public List<Integer> sortList(List<Integer> list) {
 		int listSize = list.size();
 		for (int i = 0; i < listSize; i++) {
@@ -379,26 +326,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 
 		return list;
 	}
-	/**
-	 * 
-	 * @function formatGrades 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to format grades.
-	 * 
-	 * 
-	 * @parm(s) : @param list
-	 * @parm(s) : @return
-	 * 
-	 * @return : String
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private  String formatGrades(List<Integer> list) {
 
 		StringBuffer grade = new StringBuffer();
@@ -441,50 +369,45 @@ public class SimpleCollectionVc extends Composite implements IsDraggable {
 		}
 		return grade.toString();
 	}
-	/**
-	 * To get drag id.
-	 */
+
+	
+	
+	
+	
+	
+	
+	
+	
+
 	@Override
 	public String getDragId() {
 		return collectionSearchResultDo.getGooruOid();
 	}
-	/**
-	 * To get drag type.
-	 */
+
 	@Override
 	public DRAG_TYPE getDragType() {
 		return DRAG_TYPE.COLLECTION;
 	}
-	/**
-	 * returns IsDraggableMirage.
-	 */
+
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
 		return new ResourceDragWithImgUc(DRAG_TYPE.COLLECTION.getName(), collectionSearchResultDo.getResourceTitle());
 	}
-	/**
-	 * Blur handler on drag.
-	 */
+	
 	@Override
 	public void onDragBlur() {
 	}
-	/**
-	 * To get Drag handle.
-	 */
+
 	@Override
 	public Widget getDragHandle() {
 		return null;
 	}
-	/**
-	 * To get Drag Top Correction.
-	 */
+
 	@Override
 	public int getDragTopCorrection() {
 		return 7;
 	}
-	/**
-	 * To get Drag Left Correction.
-	 */
+
 	@Override
 	public int getDragLeftCorrection() {
 		return 11;

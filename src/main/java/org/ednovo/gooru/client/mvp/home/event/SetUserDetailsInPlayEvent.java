@@ -28,19 +28,10 @@
 package org.ednovo.gooru.client.mvp.home.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+
 /**
- * @fileName : SetUserDetailsInPlayEvent.java
- *
- * @description :  This event is sent to the {@link com.gwtplatform.mvp.client.EventBus},
- * whenever this event is fired , it will set the user details in the play event.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
+ * @author Search Team
+ * 
  */
 public class SetUserDetailsInPlayEvent extends GwtEvent<SetUserDetailsInPlayEventHandler> {
 

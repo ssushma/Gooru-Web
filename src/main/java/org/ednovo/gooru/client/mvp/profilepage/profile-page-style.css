@@ -226,7 +226,7 @@ a:hover {
 	padding: 10px;
 	margin-bottom: 20px;
 	display: block;
-	width: 680px; /*Needs confirmation from Nicole. To match the collection width, the folder width is increased to 790px*/
+	width: 680px;
 }
 
 .contentNavigationPanel {
@@ -1098,6 +1098,7 @@ li.resources {
 .gooru-social-url {
 	width: 123px;
 	height: 32px;
+	font-size: 12px;
 	background-color: rgb(255,255,255);
 	border: 1px solid rgb(221,221,221);
 	padding: 0px 5px;
@@ -1244,6 +1245,10 @@ li.resources {
 	float: left;
 	color: #4c98cc;
 	cursor: pointer;
+}
+.floatLeftCollectionInputBox {
+	display: inline-block;
+	float: left;
 }
 
 .moreGradeCourseLbl:hover {

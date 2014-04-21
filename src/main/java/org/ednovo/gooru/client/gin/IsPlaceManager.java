@@ -28,22 +28,10 @@ import java.util.Map;
 
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-import com.gwtplatform.mvp.client.proxy.ProxyPlaceAbstract;
+
 /**
+ * @author Search Team
  * 
- * @fileName : IsPlaceManager.java
- *
- * @description :  Place managers work as an intermediary between the GWT {@link com.google.gwt.user.client.History}
-* 				 API and {@link ProxyPlaceAbstract}. It sets up event listener relationships to synchronize them.
- *
- *
- * @version : 1.0
- *
- * @date: 26-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface IsPlaceManager extends PlaceManager {
 	
@@ -80,5 +68,33 @@ public interface IsPlaceManager extends PlaceManager {
 	void revealPlace(String viewToken, Map<String, String> params, boolean onlyIfNew);
 	
 	boolean refreshPlace();
+	
+	PlaceRequest getPreviousPlayerRequestUrl();
+	
+	public void revealClosePlayer();
+	
+	public void setRefreshPlace(boolean refreshPlace);
+
+	PlaceRequest preparePlaceRequest(String viewToken, Map<String, String> params);
+	
+	public String getBeforePlayerOpenSeoToken();
+	
+	public void setBeforePlayerOpenSeoToken(String beforePlayerOpenSeoToken);
+	
+	public String getPageLocation();
+	
+	public String getDataLogClasspageId();
+	
+	public String getClasspageEventId();
+	
+	public void setClasspageEventId(String classpageEventId);
+	
+	public void setSearchMovedPlaceRequest(PlaceRequest searchMovedPlaceRequest);
+	
+	public String getPlayerMode();
+	
+	public String getFolderIds();
+	
+	public String getPlayerModeInTeach();
 	
 }

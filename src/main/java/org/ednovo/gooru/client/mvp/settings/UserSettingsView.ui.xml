@@ -2,28 +2,37 @@
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
 	ui:generateKeys='com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator'
 	ui:generateLocales='default'>
 
 	<ui:style field="RightPanel" src="right-panel.css" />
-	<ui:style field="Settings" src="Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
-	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
-	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle" field="ccb" />
+	<ui:style field="Settings" src="Setting-page.css"
+		type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle"
+		field="res" />
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
+		field="ccb" />
 
 	<g:HTMLPanel styleName="{Settings.settingWrapper}">
 		<!-- right panel -->
-		<g:HTMLPanel styleName="{RightPanel.myFolderRightContentWrapperNew}">
+		<g:HTMLPanel styleName="{RightPanel.settingContentWrapperNew}">
 			<g:HTMLPanel styleName="{Settings.settingHeaderInfo}">
-				<g:HTMLPanel styleName="{Settings.settingPageMainTitle}">Settings</g:HTMLPanel>
+				<g:HTMLPanel styleName="{Settings.settingPageMainTitle}"
+					ui:field="settingsText"></g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{Settings.settingPageCenterWrapper}">
 				<!-- start of user image part -->
 				<g:HTMLPanel styleName="{Settings.settingPageUserImageContainer}">
 					<g:HTMLPanel styleName="{Settings.settingPageUserImageHolder}">
-						<panel:HTMLEventPanel styleName="{Settings.settingPageUserImage}" ui:field="profileImageContainer">
-							<g:Image title="User Pic" altText="User Pic" styleName="{Settings.uploadProfileImageHolder}" ui:field="uploadProfileImage" width="201" height="225" />
-							<g:Label styleName="{Settings.uploadProfileImageButton}" ui:field="uploadProfilImageButton">Edit image</g:Label>
+						<panel:HTMLEventPanel styleName="{Settings.settingPageUserImage}"
+							ui:field="profileImageContainer">
+							<g:Image styleName="{Settings.uploadProfileImageHolder}"
+								ui:field="uploadProfileImage" width="201" height="225" />
+							<g:Label styleName="{Settings.uploadProfileImageButton}"
+								ui:field="uploadProfilImageButton"></g:Label>
 						</panel:HTMLEventPanel>
 						<g:Label styleName="{Settings.settingPageUserImageUserName}"
 							ui:field="lbName" />
@@ -34,45 +43,47 @@
 					<!-- Profile Page -->
 					<g:HTMLPanel styleName="{Settings.publicProfileContent}"
 						ui:field="aboutUsContainer">
-						<g:HTMLPanel styleName="{Settings.publicProfileTitle}">Profile Page</g:HTMLPanel>
+						<g:HTMLPanel styleName="{Settings.publicProfileTitle}"
+							ui:field="profilePageText"></g:HTMLPanel>
 						<g:HTMLPanel styleName="{Settings.publicProfileOnButtonContent}">
 							<!-- <g:HTMLPanel styleName="{Settings.publicProfileOnButtonbg}"> -->
-								<g:Button styleName="{Settings.publicProfileOnButtonActive}"
-									ui:field="profileOnButton">On</g:Button>
-								<g:Button styleName="{Settings.publicProfileOffButtonsDeActive}"
-									ui:field="profileOffButton">Off</g:Button>
-						<!-- 	</g:HTMLPanel> -->
+							<g:Button styleName="{Settings.publicProfileOnButtonActive}"
+								ui:field="profileOnButton"></g:Button>
+							<g:Button styleName="{Settings.publicProfileOffButtonsDeActive}"
+								ui:field="profileOffButton"></g:Button>
+							<!-- </g:HTMLPanel> -->
 						</g:HTMLPanel>
-	<g:HTMLPanel styleName="{Settings.clearContent}"/>
-						<g:HTMLPanel styleName="{Settings.publicProfileTitle}">Tell Us About Yourself</g:HTMLPanel>
-						<g:HTMLPanel styleName="{Settings.publicProfileDescription}">This will appear in your
-							Profile Page. </g:HTMLPanel>
+						<g:HTMLPanel styleName="{Settings.clearContent}" />
+						<g:HTMLPanel styleName="{Settings.publicProfileTitle}"
+							ui:field="aboutUsText"></g:HTMLPanel>
+						<g:HTMLPanel styleName="{Settings.publicProfileDescription}"
+							ui:field="appearText"></g:HTMLPanel>
 
 						<panel:HTMLEventPanel ui:field="profileDescriptionlabel">
 							<uc:ProfileBiographyEditUC styleName="{Settings.profileDescription}"
 								ui:field="profileTextArea" />
 						</panel:HTMLEventPanel>
-						
-						
-				<g:FocusPanel styleName="{Settings.publicProfileTextarea}" ui:field="noAboutUsContainer">
-    	<!-- <g:HTMLPanel styleName="{Settings.publicProfileIcon-hover}"> -->
-    	    <panel:HTMLEventPanel ui:field="pencilTextAreaImage"  styleName="{Settings.publicProfilePencil-IconNew}"/>
-       		</g:FocusPanel>
-						
-						
+
+
+						<g:FocusPanel styleName="{Settings.publicProfileTextarea}"
+							ui:field="noAboutUsContainer">
+							<panel:HTMLEventPanel ui:field="pencilTextAreaImage"
+								styleName="{Settings.publicProfilePencil-IconNew}" />
+						</g:FocusPanel>
+
+
 						<g:Label styleName="{Settings.mandatoryAboutUsLabel}"
-							ui:field="aboutUsCharacterValidation">Character
-							limit reached.</g:Label>
+							ui:field="aboutUsCharacterValidation"></g:Label>
 						<g:HTMLPanel styleName="{Settings.publicProfileSaveButtonContent}">
-								<g:Button
+							<g:Button
 								styleName="{Settings.publicProfileSaveButtonText} {Settings.publicProfileSaveButtonBg}"
-								ui:field="btnSave">Save</g:Button>
+								ui:field="btnSave"></g:Button>
 							<panel:HTMLEventPanel styleName="{Settings.publicProfileCancelText}"
-								ui:field="biographyCancelButton">Cancel</panel:HTMLEventPanel>
+								ui:field="biographyCancelButton"></panel:HTMLEventPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{Settings.publicProfileHoverButtons}">
-								<g:Button styleName="{Settings.publicProfileSeePageButtonBg}"
-								ui:field="btnSeeMyProfile">View Profile</g:Button>
+							<g:Button styleName="{Settings.publicProfileSeePageButtonBg}"
+								ui:field="btnSeeMyProfile"></g:Button>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
@@ -82,21 +93,22 @@
 						<g:HTMLPanel styleName="{Settings.settingInfoTitleContainer}">
 							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
 								ui:field="plAccount">
-								<g:HTMLPanel styleName="{Settings.settingInfoTitle}">Account</g:HTMLPanel>
+								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
+									ui:field="accountText"></g:HTMLPanel>
 								<g:HTMLPanel ui:field="editButtonContainerAccount">
-								<g:Label ui:field="accountSavingTextLabel" styleName="{Settings.settingInfoText}">Saving...</g:Label>
-								<g:Button ui:field="editButtonAccount" text="Edit" styleName="{Settings.settingEditButton}"/>
-								<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}" ui:field="buttonContainer">
-									<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}">
-										<g:Button styleName="{Settings.settingCancelButton}"
-											ui:field="settingCancelButton">Cancel</g:Button>
-											<g:Button styleName="{Settings.settingsPageSaveProfileButton}"
-											ui:field="settingsSaveButton">Save</g:Button>
+									<g:Label ui:field="accountSavingTextLabel" styleName="{Settings.settingInfoText}"></g:Label>
+									<g:Button ui:field="editButtonAccount" styleName="{Settings.settingEditButton}" />
+									<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}"
+										ui:field="buttonContainer">
+										<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}">
+											<g:Button styleName="{Settings.settingCancelButton}"
+												ui:field="settingCancelButton"></g:Button>
+											<g:Button styleName="primary" ui:field="settingsSaveButton"></g:Button>
+										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								</g:HTMLPanel>
-							
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}"
+
+								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
 									ui:field="accountExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="accountMiniusArrow" visible="false"></g:HTMLPanel>
@@ -104,95 +116,98 @@
 							</panel:HTMLEventPanel>
 							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}"
 								ui:field="userAccount" visible="false">
-
 								<g:HTMLPanel styleName="{Settings.settingOneSetOfInputContainer}">
-									<g:HTMLPanel styleName="{Settings.settingInfoNameText}">Username:</g:HTMLPanel>
+									<g:HTMLPanel styleName="{Settings.settingInfoNameText}"
+										ui:field="usernameText"></g:HTMLPanel>
 
-									<g:HTMLPanel styleName="{Settings.settingOneSetOfLabelontainer}">
+									<g:HTMLPanel styleName="{Settings.settingOneSetOfLabelontainer}"
+										ui:field="panelUserNameLabelContainer">
 										<g:Label styleName="{Settings.settingPageUserNameColor}"
 											ui:field="lbUName" />
-									</g:HTMLPanel>
-								</g:HTMLPanel>
-								<g:HTMLPanel styleName="{Settings.settingOneSetOfInputContainerName}">
-									<g:HTMLPanel styleName="{Settings.settingInfoNameTextContent}">Name:</g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="{Settings.settingOneSetOfInputBoxContainer}"> --> 
-									<uc:SettingEditLabelUc ui:field="tbFirstNameUcLabel" styleName="{Settings.settingPageUserNameColorfirstName}" />
-									<uc:SettingLastNameEditLabelUC ui:field="tbLastNameUcLabel" styleName="{Settings.settingOneSetOfInputContainerLastNameNew}"/>
-									<!-- <g:HTMLPanel styleName="{Settings.settingOneSetOfLabelontainerName}">
-									<g:HTMLPanel styleName="{Settings.settingOneSetOfInputContainerLastNameNew}">
-									</g:HTMLPanel>
-									</g:HTMLPanel> -->
-									<!-- <g:HTMLPanel styleName="{Settings.settingOneSetOfInputContainerLastNameNew}" ui:field="lastNameContainer">
-									<g:HTMLPanel styleName="{Settings.settingOneSetOfLabelontainerName}">
-									
-									</g:HTMLPanel>
-									</g:HTMLPanel> -->
-									<!--  </g:HTMLPanel>  -->
-								</g:HTMLPanel>
-								 <g:Label styleName="{Settings.mandatoryNameLabel}" ui:field="charLimitFNameLbl">Character
-									limit reached.</g:Label>
- 
-								<!-- <g:HTMLPanel styleName="{Settings.settingOneSetOfInputContainer}">
-									<g:HTMLPanel styleName="{Settings.settingInfoNameText}">Last Name</g:HTMLPanel>
-									<g:HTMLPanel styleName="{Settings.settingOneSetOfInputBoxContainer}">
-										<g:TextBox ui:field="tbLastName"
-											styleName="{Settings.settingOneSetOfInputBox}" />
-
-									</g:HTMLPanel>
-								</g:HTMLPanel> -->
-								 <!-- <g:Label styleName="{Settings.mandatoryLabel}" ui:field="charLimitLNameLbl">Character
-									limit reached.</g:Label>  -->
-								<g:HTMLPanel styleName="{Settings.settingInfoTitleContainerTwo}">
-									<g:HTMLPanel styleName="{Settings.settingInfoNameText}">Gender:</g:HTMLPanel>
-										<g:HTMLPanel styleName="{Settings.settingOneSetOfLabelontainer}">
-									<g:Label styleName="{Settings.settingPageUserNameColorGender}"
-											ui:field="lblgender" />
+										<!-- <uc:SettingEditLabelUc ui:field="txtUserName" styleName="{Settings.settingPageUserNameColorfirstName}" 
+											/> -->
+										<g:TextBox styleName="SettingEditName" ui:field="txtUserName"></g:TextBox>
+										<g:HTMLPanel styleName="questionHoverContainer" ui:field="panelHelp">
+											<g:HTMLPanel styleName="questionHover">?</g:HTMLPanel>
+											<g:HTMLPanel styleName="tooltipContainer" ui:field="panelTooltipContainer">
+												<g:HTMLPanel styleName="arrowBorder"></g:HTMLPanel>
+												<g:HTMLPanel styleName="arrow"></g:HTMLPanel>
+												<g:HTMLPanel styleName="tooltipContent" ui:field="panelToolTipContent">
+													<g:HTML styleName="" ui:field="htmlToolTipDesc" />
+												</g:HTMLPanel>
 											</g:HTMLPanel>
+										</g:HTMLPanel>
+									</g:HTMLPanel>
+
+								</g:HTMLPanel>
+								<uc:ErrorLabelUc ui:field="userNameValidationUc" />
+								<g:HTMLPanel styleName="{Settings.settingOneSetOfInputContainerName}">
+									<g:HTMLPanel styleName="{Settings.settingInfoNameTextContent}"
+										ui:field="nametext"></g:HTMLPanel>
+									<!-- <g:HTMLPanel styleName="{Settings.settingOneSetOfInputBoxContainer}"> -->
+									<uc:SettingEditLabelUc ui:field="tbFirstNameUcLabel"
+										styleName="{Settings.settingPageUserNameColorfirstName}" />
+									<uc:SettingLastNameEditLabelUC
+										ui:field="tbLastNameUcLabel" styleName="{Settings.settingOneSetOfInputContainerLastNameNew}" />
+								</g:HTMLPanel>
+								<g:Label styleName="{Settings.mandatoryNameLabel}"
+									ui:field="charLimitFNameLbl"></g:Label>
+								<g:HTMLPanel styleName="{Settings.settingInfoTitleContainerTwo}">
+									<g:HTMLPanel styleName="{Settings.settingInfoNameText}"
+										ui:field="genderText"></g:HTMLPanel>
+									<g:HTMLPanel styleName="{Settings.settingOneSetOfLabelontainer}">
+										<g:Label styleName="{Settings.settingPageUserNameColorGender}"
+											ui:field="lblgender" />
+									</g:HTMLPanel>
 									<g:HTMLPanel styleName="{Settings.settingPageRadioButtonContainer}"
 										ui:field="radioButtonContainer">
 										<g:HTMLPanel styleName="{Settings.settingPageRadioButtonHolder}">
 											<g:Label styleName="{Settings.radio}" ui:field="lbMale"></g:Label>
-											<span styleName="{Settings.radioText}">Male</span>
+											<g:Label styleName="{Settings.radioTextGeneral}"
+												ui:field="lbMaleText"></g:Label>
 										</g:HTMLPanel>
 
 										<g:HTMLPanel styleName="{Settings.settingPageRadioButtonHolder}">
 											<g:Label styleName="{Settings.radio}" ui:field="lbFemale"></g:Label>
-											<span>
-												Female</span>
-
+											<g:Label styleName="{Settings.radioTextGeneral}"
+												ui:field="lbFemaleText"></g:Label>
 										</g:HTMLPanel>
 										<g:HTMLPanel styleName="{Settings.settingPageRadioButtonHolder}">
 											<g:Label styleName="{Settings.radio}" ui:field="lbOther"></g:Label>
-											<span>Other</span>
+											<g:Label styleName="{Settings.radioTextGeneral}"
+												ui:field="lbOtherText"></g:Label>
 										</g:HTMLPanel>
 										<g:HTMLPanel styleName="{Settings.settingPageRadioButtonHolder}">
 											<g:Label styleName="{Settings.radio}" ui:field="lbShare"></g:Label>
-											<span>Prefer not to share</span>
+											<g:Label styleName="{Settings.radioTextGeneral}"
+												ui:field="notToShareText"></g:Label>
 										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								
- 							</g:HTMLPanel>
+
+							</g:HTMLPanel>
 						</g:HTMLPanel>
-						
-						
-						<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}">
+
+
+						<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}" ui:field="emailPanel">
 							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
 								ui:field="plContact">
-								<g:HTMLPanel styleName="{Settings.settingInfoTitle}">Email</g:HTMLPanel>
+								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
+									ui:field="emailtext"></g:HTMLPanel>
 								<g:HTMLPanel ui:field="editButtonContainerContact">
-								<g:Label ui:field="SavingTextLabel" styleName="{Settings.settingInfoText}">Saving...</g:Label>
-								<g:Button ui:field="editButtonContact" text="Edit" styleName="{Settings.settingEditButton}"/>
-								<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}" ui:field="emailbuttonContainer">
-									<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}">
-										<g:Button styleName="{Settings.settingCancelButton}"
-											ui:field="emailCancelButton">Cancel</g:Button>
+									<g:Label ui:field="SavingTextLabel" styleName="{Settings.settingInfoText}"></g:Label>
+									<g:Button ui:field="editButtonContact" styleName="{Settings.settingEditButton}" />
+									<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}"
+										ui:field="emailbuttonContainer">
+										<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}">
+											<g:Button styleName="{Settings.settingCancelButton}"
+												ui:field="emailCancelButton"></g:Button>
 											<g:Button styleName="{Settings.settingsPageSaveProfileButton}"
-											ui:field="emailSaveButton">Save</g:Button>
+												ui:field="emailSaveButton"></g:Button>
+										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								</g:HTMLPanel>
-							<!-- 	<g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}"
+								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
 									ui:field="contactExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="contactMiniusArrow" visible="false"></g:HTMLPanel>
@@ -200,25 +215,27 @@
 							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}"
 								visible="false" ui:field="userContact">
 								<g:HTMLPanel styleName="{Settings.settingOneSetOfContactInputContainer}">
-									<g:Label styleName="{Settings.settingInfoEmailText}">Email:</g:Label>
-									<uc:SettingEmailEditLabelUc styleName="{Settings.settingOneSetOfLableEmail}"
-										ui:field="lbEmail"/>
-										<g:Label styleName="{Settings.emailSecurityText}" ui:field="emailTextConfirmation">(Email not confirmed yet)</g:Label>
-									<!-- <g:Label styleName="{Settings.settingOneSetOfLable}"
-										ui:field="lbEmail" /> -->
+									<g:Label styleName="{Settings.settingInfoEmailText}"
+										ui:field="email"></g:Label>
+									<uc:SettingEmailEditLabelUc
+										styleName="{Settings.settingOneSetOfLableEmail}" ui:field="lbEmail" />
+									<g:Label styleName="{Settings.emailSecurityText}"
+										ui:field="emailTextConfirmation"></g:Label>
+									<!-- <g:Label styleName="{Settings.settingOneSetOfLable}" ui:field="lbEmail" 
+										/> -->
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
-						
-						
-						
+
+
+
 						<g:HTMLPanel styleName="{Settings.settingInfoTitleContainer}">
 							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
 								ui:field="plSecurity">
-								<g:HTMLPanel styleName="{Settings.settingInfoTitle}">Security</g:HTMLPanel>
-								<!-- <g:HTMLPanel ui:field="editButtonContaineSecurity"><g:Button ui:field="editButtonSecurity" text="Edit" styleName="{Settings.settingEditButton}"/></g:HTMLPanel>
- -->								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}"
-									ui:field="securityExpandArrow"></g:HTMLPanel> -->
+								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
+									ui:field="securityText"></g:HTMLPanel>
+								<!-- <g:HTMLPanel ui:field="editButtonContaineSecurity"><g:Button 
+									ui:field="editButtonSecurity" text="Edit" styleName="{Settings.settingEditButton}"/></g:HTMLPanel> -->								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" ui:field="securityExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="securityMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
@@ -226,85 +243,140 @@
 							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}"
 								visible="false" ui:field="userSecurity">
 								<g:Label styleName="{Settings.settingInfoNameGoogleTextOne}"
-									ui:field="forgetPasswordMsg"> You cannot change your password because you logged in
-									with your Google account.</g:Label>
+									ui:field="forgetPasswordMsg"></g:Label>
 								<g:Label styleName="{Settings.settingInfoForgotPassword}"
-									ui:field="forgetPassword"> Click here to change your password.</g:Label>
-								<g:Label styleName="{Settings.pleaseWait}"
-									ui:field="lblPleaseWait">Please wait...</g:Label>
+									ui:field="forgetPassword"></g:Label>
+								<g:Label styleName="{Settings.pleaseWait}" ui:field="lblPleaseWait"></g:Label>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 						<g:HTMLPanel styleName="{Settings.settingInfoTitleContainer}">
 							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
 								ui:field="plEducation">
-								<g:HTMLPanel styleName="{Settings.settingInfoTitle}">Educational Information
-								</g:HTMLPanel><g:HTMLPanel ui:field="editButtonContainerEdu">
-								<g:Label ui:field="EduSavingTextLabel" styleName="{Settings.settingInfoText}">Saving...</g:Label>
-								<g:Button ui:field="editButtonEdu" text="Edit" styleName="{Settings.settingEditButton}"/>
-								<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}" ui:field="EduInfoButtonContainer">
-									<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}">
-										<g:Button styleName="{Settings.settingCancelButton}"
-											ui:field="eduInfoCancelButton">Cancel</g:Button>
+								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
+									ui:field="settingsinfoText">
+								</g:HTMLPanel>
+								<g:HTMLPanel ui:field="editButtonContainerEdu">
+									<g:Label ui:field="EduSavingTextLabel" styleName="{Settings.settingInfoText}"></g:Label>
+									<g:Button ui:field="editButtonEdu" styleName="{Settings.settingEditButton}" />
+									<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}"
+										ui:field="EduInfoButtonContainer">
+										<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}">
+											<g:Button styleName="{Settings.settingCancelButton}"
+												ui:field="eduInfoCancelButton"></g:Button>
 											<g:Button styleName="{Settings.settingsPageSaveProfileButton}"
-											ui:field="eduInfoSaveButton">Save</g:Button>
+												ui:field="eduInfoSaveButton"></g:Button>
+										</g:HTMLPanel>
 									</g:HTMLPanel>
 								</g:HTMLPanel>
-								</g:HTMLPanel>
-								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}"
+								<!-- <g:HTMLPanel styleName="{Settings.settingInfoExpanderArrow}" 
 									ui:field="educationalExpandArrow"></g:HTMLPanel> -->
 								<g:HTMLPanel styleName="{Settings.settingInfoMimiusArrow}"
 									ui:field="educationalMiniusArrow" visible="false"></g:HTMLPanel>
 							</panel:HTMLEventPanel>
 							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}"
 								visible="false" ui:field="userEducation">
-								<g:Label styleName="{Settings.settingInfoRoleText}"> ROLE:</g:Label>
+								<g:Label styleName="{Settings.settingInfoRoleText}"
+									ui:field="roleText"></g:Label>
 								<g:Label styleName="{Settings.settingInfoRoleText}"
 									ui:field="lbRole" />
-							
-							<panel:HTMLEventPanel styleName="{Settings.userCoursePopup}" ui:field="userCoursePopup">
-							<g:FlowPanel styleName="{Settings.settingGradeInfoContainer}">
-								<g:FlowPanel styleName="{Settings.settingGradeInfoTitleContainer}">
-									<g:Label styleName="{Settings.settingGradeInfoTitle}" text="GRADE(S):" />
-								</g:FlowPanel>
-								<g:HTMLPanel ui:field="DefaultGardeContainer" styleName="{Settings.settingGradeContentContainer}"/>
-								<g:HTMLPanel ui:field="gradeContainer" >
-								<g:Label styleName="{Settings.settingGradeTitleLabel}" ui:field="gradeLbl" text="Select grade(s) for this collection." />
-								<g:FlowPanel styleName="{Settings.settingGradeContentContainer}">
-									<g:FlowPanel styleName="{Settings.settingGradeGartenContainer}" ui:field="KinderGarten" />
-									<g:FlowPanel styleName="{ccb.css.gradeListCont}">
-										<g:FlowPanel ui:field="gradeTopList" />
-										<g:FlowPanel ui:field="gradeMiddleList" />
+
+								<panel:HTMLEventPanel styleName="{Settings.userCoursePopup}"
+									ui:field="userCoursePopup">
+									<g:FlowPanel styleName="{Settings.settingGradeInfoContainer}">
+										<g:FlowPanel styleName="{Settings.settingGradeInfoTitleContainer}">
+											<g:Label styleName="{Settings.settingGradeInfoTitle}"
+												ui:field="gradeText" />
+										</g:FlowPanel>
+										<g:HTMLPanel ui:field="DefaultGardeContainer"
+											styleName="{Settings.settingGradeContentContainer}" />
+										<g:HTMLPanel ui:field="gradeContainer">
+											<g:Label styleName="{Settings.settingGradeTitleLabel}"
+												ui:field="gradeLbl" />
+											<g:FlowPanel styleName="{Settings.settingGradeContentContainer}">
+												<g:FlowPanel styleName="{Settings.settingGradeGartenContainer}"
+													ui:field="KinderGarten" />
+												<g:FlowPanel styleName="{ccb.css.gradeListCont}">
+													<g:FlowPanel ui:field="gradeTopList" />
+													<g:FlowPanel ui:field="gradeMiddleList" />
+												</g:FlowPanel>
+												<g:FlowPanel styleName="{Settings.settingGradeGartenContainer}"
+													ui:field="higherEducation" />
+											</g:FlowPanel>
+										</g:HTMLPanel>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="{Settings.settingGradeGartenContainer}" ui:field="higherEducation" />
-								</g:FlowPanel></g:HTMLPanel>
-							</g:FlowPanel>
-							<g:FlowPanel styleName="{Settings.settingGradeInfoContainer}">
-								<g:FlowPanel styleName="{Settings.settingCourseInfoTitleContainer}">
-									<g:Label ui:field="courseLabel" styleName="{Settings.settingCourseInfoTitle}" text="COURSE(S):"/>
-								</g:FlowPanel>
-									<g:FlowPanel styleName="{Settings.addedCoursesList}" ui:field="collectionCourseDefaultLstPanel" />
-								<g:HTMLPanel ui:field="courseContainer">
-								<g:Label styleName="{Settings.settingCourseTitleLabel}" ui:field="courseLbl" text="Select grade(s) for this collection." />
-								<g:FlowPanel styleName="{ccb.css.floatLeftCollectionInputBox}" ui:field="courseData">
-									<g:FlowPanel styleName="{ccb.css.collectionCourseLstPanel}" ui:field="collectionCourseLstPanel" />
-									<!-- <g:Button styleName="{ccb.css.infoAddButton}" text="Add" ui:field="addCourseBtn" /> -->
-									<g:Label styleName="{ccb.css.courseMaxMsg}" text="Oops! You can only add 5 courses." ui:field="courseMaxMsg" />
-								</g:FlowPanel>	
-								<g:FlowPanel styleName="{Settings.addedCoursesList}" ui:field="coursesPanel">
-								</g:FlowPanel>
+									<g:FlowPanel styleName="{Settings.settingGradeInfoContainer}">
+										<g:FlowPanel styleName="{Settings.settingCourseInfoTitleContainer}">
+											<g:Label ui:field="courseLabel" styleName="{Settings.settingCourseInfoTitle}" />
+										</g:FlowPanel>
+										<g:FlowPanel styleName="{Settings.addedCoursesList}"
+											ui:field="collectionCourseDefaultLstPanel" />
+										<g:HTMLPanel ui:field="courseContainer">
+											<g:Label styleName="{Settings.settingCourseTitleLabel}"
+												ui:field="courseLbl" />
+											<g:FlowPanel styleName="{ccb.css.floatLeftCollectionInputBox}"
+												ui:field="courseData">
+												<g:FlowPanel styleName="{ccb.css.collectionCourseLstPanel}"
+													ui:field="collectionCourseLstPanel" />
+												<!-- <g:Button styleName="{ccb.css.infoAddButton}" text="Add" 
+													ui:field="addCourseBtn" /> -->
+												<g:Label styleName="{ccb.css.courseMaxMsg}"
+													ui:field="courseMaxMsg" />
+											</g:FlowPanel>
+											<g:FlowPanel styleName="{Settings.addedCoursesList}"
+												ui:field="coursesPanel">
+											</g:FlowPanel>
+										</g:HTMLPanel>
+									</g:FlowPanel>
+									<!-- <g:FlowPanel styleName="{Settings.coursePoupSaveBtnContainer}"> 
+										<g:Button styleName="{ccb.css.infoAddButton}" text="Save" ui:field="saveBtn" 
+										/> <g:Label styleName="{Settings.coursePopupCancelLbl}" text="Cancel" ui:field="cancelBtn" 
+										/> </g:FlowPanel> -->
+								</panel:HTMLEventPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+				<!-- Standards Preference -->
+							<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}">
+							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
+								ui:field="panelStandards">
+								<g:HTMLPanel styleName="{Settings.settingInfoTitle}"
+									ui:field="standardsText"></g:HTMLPanel>
+								<g:HTMLPanel ui:field="standardsEditButtonContainer">
+									<g:Button ui:field="standardsEditButton" styleName="{Settings.settingEditButton}" />
+									<g:Label ui:field="standardSavingTextLabel" styleName="{Settings.settingInfoText}"></g:Label>
+									<g:HTMLPanel styleName="{Settings.settingsPageSaveButtonContainer}"
+										ui:field="standardsButtonContainer">
+										<g:HTMLPanel styleName="{Settings.settingsPageSaveProfileButtonCenter}" ui:field="standardsSaveCancelButtonContainer">
+											<g:Button styleName="{Settings.settingCancelButton}"
+												ui:field="standardsCancelButton"></g:Button>
+											<g:Button styleName="primary"
+												ui:field="standardsSaveButton"></g:Button>
+										</g:HTMLPanel>
+									</g:HTMLPanel>
 								</g:HTMLPanel>
-							</g:FlowPanel>
-							<!-- <g:FlowPanel styleName="{Settings.coursePoupSaveBtnContainer}">
-								<g:Button styleName="{ccb.css.infoAddButton}" text="Save" ui:field="saveBtn" />
-								<g:Label styleName="{Settings.coursePopupCancelLbl}" text="Cancel" ui:field="cancelBtn" />
-							</g:FlowPanel> -->
-					   </panel:HTMLEventPanel>
-                      </g:HTMLPanel>
+							</panel:HTMLEventPanel>
+							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}"
+								ui:field="userStandardDefaultView">
+								<g:HTMLPanel styleName="{Settings.settingOneSetOfStandardInputContainer}">
+								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCommonCore"></g:Label>
+								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaScience"></g:Label>
+								    <g:Label styleName="{Settings.standardsText}" ui:field="lblTexas"></g:Label>
+								    <g:Label styleName="{Settings.defaultTextcss}" ui:field="lblUserMessage"></g:Label>
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}"
+								ui:field="userStandardEditView">
+								<g:Label styleName="{Settings.standardsTextDescription}" ui:field="description"></g:Label>
+								<g:HTMLPanel styleName="{Settings.settingOneSetOfStandardInputContainer}" ui:field="userStandardTextPanel">
+								 
+								</g:HTMLPanel>
+							</g:HTMLPanel>
 						</g:HTMLPanel>
 						
+			<!-- end Standards Preference -->			
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+		<sg:FooterUc />
 	</g:HTMLPanel>
 </ui:UiBinder>

@@ -53,12 +53,14 @@ import org.ednovo.gooru.client.uc.ProfilePageGradeLabel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -93,32 +95,18 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
-/**
- * 
- * @fileName : ProfilePageView.java
- *
- * @description : This file deals with profile page.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers> implements IsProfilePageView {
+
+public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers> implements IsProfilePageView,MessageProperties {
 	@UiField
 	Anchor /* shareTabVc, */contentTabVc;
 
 	@UiField
-	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg;
+	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg,mySubjectsText;
 	
-	@UiField Label cancelBtn;
+	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText,shareWithOthersText;
 
 	@UiField
-	Image userProfilePic;
+	Image userProfilePic,errorImage;
 
 	@UiField
 	HTMLPanel profileOnContainerPanel, profileOffContainerPanel;
@@ -168,7 +156,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	Label noCollectionMsgPanel = new Label();
 
-	private Label editImageButton = new Label("Edit image");
+	private Label editImageButton = new Label(GL0800);
 
 	final private String WORKSPACE_FOLDER = "folder";
 
@@ -181,6 +169,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private AlertContentUc alertContentUc;
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
+	
+	private SocialShareView socialView=null;
 	
 	boolean enableEdit = true;
 
@@ -213,21 +203,20 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	private boolean isGradeCourseBtnClick = false;
 	
+	private String profileImageUrl="images/profilepage/user-profile-pic.png";
+	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
 
 	interface ProfilePageViewUiBinder extends UiBinder<Widget, ProfilePageView> {
 	}
-	/**
-	 * Class Constructor.
-	 */
+
 	@Inject
 	public ProfilePageView() {
 		this.res = ShelfCBundle.INSTANCE;
 		res.css().ensureInjected();
 		ccb = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
-		
 		profileTextArea = new ProfilePageDescriptionEditUc() {
 			@Override
 			public void onEditDisabled(String text) {
@@ -257,6 +246,30 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileTextArea.getElement().getStyle().setWidth(650, Unit.PX);
 
 		setWidget(uiBinder.createAndBindUi(this));
+		mySubjectsText.setText(GL1074);
+		addCourseGradeBtn.setText(GL1075);
+		editPencil.getElement().setInnerHTML(GL0140);
+		gradeText.setText(GL1076);
+		courseLabel.setText(GL0574);
+		addCourseBtn.setText(GL0590);
+		courseMaxMsg.setText(GL0822);
+		saveBtn.setText(GL0141);
+		cancelBtn.setText(GL0142);
+		aboutMeTextContainer.getElement().setInnerHTML(GL1077);
+		addBioBtn.setText(GL0140);
+		aboutUsCharacterValidation.setText(GL0143);
+		btnSave.setText(GL0141);
+		biographyCancelButton.setText(GL0142);
+		profilePageViewMsg.setText(GL1078);
+		profilePageText.setText(GL1079);
+		profileOnButton.setText(GL0802);
+		profileOffButton.setText(GL0803);
+		shareWithOthersText.setText(GL1080);
+		bitlyLink.setText(GL1081);
+		contentTabVc.setText(GL1082);
+		errorImage.setTitle(GL1091_1);
+		errorImage.setAltText(GL1091_1);
+		errorImage.setUrl("images/404_message.png");
 		profileOnContainerPanel.setVisible(false);
 		profileOffContainerPanel.setVisible(false);
 		loadingPanel.setVisible(true);
@@ -330,21 +343,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
 		
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : UIHandler for ProfileOnClickEvent.And this is used to make share type as public and to enable update profile visibility setting.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class ProfileOnClickEvent implements ClickHandler  {
 
 		@Override
@@ -352,7 +351,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			MixpanelUtil.Click_On();
 			enableProfileButton(true);
 			shareDo.setShareType("public");
-			SocialShareView socialView = new SocialShareView(shareDo);
+			socialView = new SocialShareView(shareDo);
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			bitlyLink.removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
@@ -364,31 +363,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		
 	}
-	/**
-	 * 
-	 * @function onClickOffButton 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :  UIHandler for profileOffButton.And this is used to make share type as private and to disable update profile visibility setting.
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("profileOffButton")
 	public void onClickOffButton(ClickEvent event) {
 		MixpanelUtil.Click_Off();
 		enableProfileButton(false);
 		shareDo.setShareType("private");
-		SocialShareView socialView = new SocialShareView(shareDo);
+		socialView = new SocialShareView(shareDo);
 		socialButtonContainer.clear();
 		socialButtonContainer.add(socialView);
 		bitlyLink.addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
@@ -397,25 +378,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		//update profile setting
 		getUiHandlers().updateProfileVisibilitySetting("false");
 	}
-	/**
-	 * 
-	 * @function enableProfileButton 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to enable profile button.
-	 * 
-	 * 
-	 * @parm(s) : @param isToEnabled
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	void enableProfileButton(boolean isToEnabled) {
 		if (isToEnabled) {
 			this.profileOnStatus = "true";
@@ -435,25 +398,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			setPublicShareDo("private");
 		}
 	}
-	/**
-	 * 
-	 * @function setInitialProfileStatus 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set initial profile status.
-	 * 
-	 * 
-	 * @parm(s) : @param isEnabled
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setInitialProfileStatus(String isEnabled) {
 		if(isEnabled == "true") {
 			setPublicShareDo("public");
@@ -465,29 +410,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @function setPublicShareDo 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : This is used to set shareDo as public.
-	 * 
-	 * 
-	 * @parm(s) : @param privatePublic
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	private void setPublicShareDo(String privatePublic) {
 		try {
 			shareDo.setShareType(privatePublic);
-			SocialShareView socialView = new SocialShareView(shareDo);
+			socialView = new SocialShareView(shareDo);
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			if(privatePublic.equalsIgnoreCase("private")) {
@@ -502,9 +429,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 
 	}
-	/**
-	 * setInSlot() is a method used by GWTP in it's lifecycle to set the widget hierarchy that has to be shown to the user. Each time setInSlot is called, it will replace the previous presenter that was assigned to that slot
-	 */
+	
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
@@ -513,9 +438,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * This is used to set the profile data.
-	 */
+
 	@Override
 	public void setProfileData(final ProfileDo profileDo) {
 		if(profileDo.getAboutMe()==null) {
@@ -526,12 +449,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
 		moreGradeCourseLbl.clear();
-		getUiHandlers().setShareView();
-		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+ " does not have any collections!");
+		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+GL1083);
 		userName.setText(profileDo.getUser().getUsernameDisplay());
 		userBio.setText(profileDo.getAboutMe());
 		profileTextArea.setText(profileDo.getAboutMe());
-		userProfilePic.setUrl(profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random());
+		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
+		userProfilePic.setUrl(profileImageUrl);
 		userProfilePic.setAltText(profileDo.getUser().getUsername());
 		userProfilePic.setTitle(profileDo.getUser().getUsername());
 		userProfilePic.getElement().getStyle().setHeight(100, Unit.PX);
@@ -544,6 +467,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				userProfilePic.setTitle(profileDo.getUser().getUsername());
 			}
 		});
+		getUiHandlers().setShareView();
 		gooruSocialButtonsContainer.setVisible(true);
 		setUserGradeList(profileDo.getGrade());
 		setUserCourseList(profileDo.getCourses());
@@ -552,25 +476,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
 		
 	}
-	/**
-	 * 
-	 * @function setUserCourseList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to set the user course list.
-	 * 
-	 * 
-	 * @parm(s) : @param codeList
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setUserCourseList(Set<ProfileCodeDo> codeList) {
 		profileDo.setCourses(codeList);
 		userCourseList.clear();
@@ -581,25 +487,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			userGradeList.add(courseLabel);
 		}
 	}
-	/**
-	 * 
-	 * @function setUserGradeList 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set the user grade list.
-	 * 
-	 * 
-	 * @parm(s) : @param grade
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setUserGradeList(String grade) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
@@ -607,7 +495,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	if(grade!=null && !grade.isEmpty()) {
 		boolean isHigherEducation = false;
 		if(grade.contains("Kindergarten")) {
-			Label gradeLabel = new Label("Kindergarten");
+			Label gradeLabel = new Label(GL0850);
 			grade = grade.replaceAll("Kindergarten", "");
 			gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
 			gradeLabel.addClickHandler(new OnGradeEditImageClick());
@@ -634,32 +522,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		
 		if(isHigherEducation == true) {
-			Label gradeLabel = new Label("Higher Education");
+			Label gradeLabel = new Label(GL0169);
 			gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
 			gradeLabel.addClickHandler(new OnGradeEditImageClick());
 			userGradeList.add(gradeLabel);
 		}
 		}
 	}
-	/**
-	 * 
-	 * @function setMetaDataContainerWidth 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set metadata container width.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setMetaDataContainerWidth() {
 		int gradeContainerWidth = userGradeList.getOffsetWidth();
 //		int courseContainerWidth = userCourseList.getOffsetWidth();
@@ -687,25 +557,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 			renderExtraGradeCourse(moreGradeCourseLbls);
 	}
-	/**
-	 * 
-	 * @function renderExtraGradeCourse 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to render Extra Grade Course.
-	 * 
-	 * 
-	 * @parm(s) : @param datas
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void renderExtraGradeCourse(List<String> datas) {
 		if (datas.size() > 0) {
 			FlowPanel toolTipwidgets = new FlowPanel();
@@ -714,14 +566,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
 				toolTipwidgets.add(label);
 			}
-			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + datas.size() +" more"), toolTipwidgets);
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + datas.size() +" "+GL1152), toolTipwidgets);
 			toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLinkPad());
 			moreGradeCourseLbl.add(toolTipUc);
 		}
 	}
-	/**
-	 * This method is used to make the content tab visible.
-	 */
+
 	public void setContentTabVisibility(boolean isVisible) {
 		if (isVisible) {
 			setContentViewCss();
@@ -729,48 +579,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			shareLinkFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
-	/**
-	 * 
-	 * @function setContentViewCss 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set css.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setContentViewCss() {
 		contentTabVc.removeStyleName(res.css().tabsLi());
 		contentTabVc.setStyleName(res.css().tabsLiActive());
 	}
-	/**
-	 * 
-	 * @function onContentTabVc 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description : UIHandler contentTabVc. 
-	 * 
-	 * 
-	 * @parm(s) : @param event
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("contentTabVc")
 	public void onContentTabVc(ClickEvent event) {
 		Map<String, String> params = new HashMap<String, String>();
@@ -778,9 +592,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		params.put("user", AppClientFactory.getPlaceManager().getRequestParameter("user"));
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE, params);
 	}
-	/**
-	 * This is used to set content item data.
-	 */
+	
 	@Override
 	public void setContentItemData(List<CollectionItemDo> collectionItemDo) {
 		if (collectionItemDo.size() > 0) {
@@ -810,24 +622,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		displayFooter();
 		publicPPRightContainer.add(footerUc);
 	}
-	/**
-	 * This is used to clear content item data.
-	 */
+
 	@Override
 	public void clearContentItemData() {
 		publicPPRightContainer.clear();
 	}
-	/**
-	 * This is used to set the metadata.
-	 */
+
 	@Override
 	public void setMetaData(CollectionItemDo collectionItemDo) {
 		publicPPRightContainer.add(new ProfilePageCollectionMetaData(
 				collectionItemDo));
 	}
-	/**
-	 * This is used to set the share data.
-	 */
+
 	@Override
 	public void setShareData(ProfileDo profileDo, List<String> shortenUrl,
 			String profileUrl) {
@@ -835,7 +641,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		bitlyLink.setReadOnly(true);
 		bitlyLink.addClickHandler(new OnTextBoxClick());
 		bitlyLink.setText(shortenUrl.get(2));
-		
 		/*profileUrl = "http://qa.goorulearning.org/gooru-gwt/" + "%23"
 				+ profileUrl;
 		profileUrl = profileUrl.replaceAll("#", "%23");
@@ -846,30 +651,16 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		shareDo.setBitlylink(shortenUrl.get(0));
 		shareDo.setRawUrl(shortenUrl.get(1));
 		shareDo.setTitle(profileDo.getUser().getUsername());
-		shareDo.setDescription("Check out  "
-				+ profileDo.getUser().getUsername() + "'s Gooru Profile Page");
-		shareDo.setThumbnailurl("");
-		shareDo.setCategoryType("");
+		shareDo.setDescription(GL1085
+				+ profileDo.getUser().getUsername() + GL1086);
+		shareDo.setThumbnailurl(profileImageUrl);
+		shareDo.setCategoryType("profile");
 		shareDo.setPppBitlylink(profileUrl);
 		shareDo.setOnlyIcon(true);
 		shareDo.setIsSearchShare(false);
 		setInitialProfileStatus(profileOnStatus);
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This is used to set focus on bitlyLink.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class OnTextBoxClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -877,23 +668,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			bitlyLink.setFocus(true);
 		}
 	}
-	/**
-	 * Returns profileOnContainerPanel.
-	 */
+
 	@Override
 	public HTMLPanel getOnProfileContainer() {
 		return profileOnContainerPanel;
 	}
-	/**
-	 * Returns profileOffContainerPanel.
-	 */
+
 	@Override
 	public HTMLPanel getOffProfileContainer() {
 		return profileOffContainerPanel;
 	}
-	/**
-	 * This is used to set collection data.
-	 */
+
 	@Override
 	public void setCollectionData(CollectionItemDo collectionItemDo) {
 		PPPCollectionResult pppCollectionResult = new PPPCollectionResult(
@@ -903,33 +688,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		displayFooter();
 		publicPPRightContainer.add(footerUc);
 	}
-	/**
-	 * 
-	 * @function displayFooter 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to display footer.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void displayFooter() {
 		footerUc.setFooterWidth();
 		footerUc.getElement().getStyle().setMarginLeft(-119, Unit.PX);
 		footerUc.getElement().getStyle().setDisplay(Display.BLOCK);
 	}
-	/**
-	 * This is used to show profile view.
-	 */
+
 	@Override
 	public void showProfileView(boolean isVisible) {
 		userName.setText("");
@@ -941,21 +706,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		socialButtonContainer.clear();
 		profileTextArea.setText("");
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This is used to show image upload widget.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class ShowImageUploadWidget implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -966,21 +717,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This is used to show edit button.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class ShowEditButton implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -989,37 +726,24 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This is used to hide edit button.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class HideEditButton implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 				editImageButton.getElement().getStyle().clearDisplay();
 		}
 	}
-	/**
-	 * This is used to set user profile image.
-	 */
+
 	@Override
 	public void setUserProfileImage(String imageUrl) {
-		userProfilePic.setUrl(imageUrl + "?" + Math.random());
+		profileImageUrl=imageUrl + "?" + Math.random();
+		userProfilePic.setUrl(profileImageUrl);
+		shareDo.setThumbnailurl(profileImageUrl);
+		if(socialView!=null){
+			socialView.setShareDo(shareDo);
+		}
 	}
-	/**
-	 * This is used to enable edit table data.
-	 */
+
 	@Override
 	public void enableEditableData(String profileOnStatus) {
 		this.profileOnStatus = profileOnStatus;
@@ -1028,7 +752,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileImageContainer.add(editImageButton);
 		
 		if(profileDo.getUser().getProfileImageUrl()==null) {
-			editImageButton.setText("Add Image");
+			editImageButton.setText(GL1087);
 		}
 		courseData.getElement().getStyle().setWidth(324, Unit.PX);
 		saveBtn.getElement().getStyle().setFloat(Float.LEFT);
@@ -1055,25 +779,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			enableProfileButton(false);
 		}
 	}
-	/**
-	 * 
-	 * @function profilePageEditBioPanelUpdate 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to update profile page edit biopanel.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void profilePageEditBioPanelUpdate() {
 		btnSave.getElement().setAttribute("id", "btnSaveEditBio");
 		biographyCancelButton.getElement().setAttribute("id", "btnCancelEditBio");
@@ -1121,21 +827,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userMetadata.addMouseOutHandler(new hideGradeEditPencil());
 		getProfileBiographyEditUC().setText(profileDo.getAboutMe());
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This handler is used for profileTextArea to switch to edit.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1146,21 +838,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : PencilImageClick handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnPencilImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1172,21 +850,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This method is used to hide pencil edit.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class hideEditPencil implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -1195,21 +859,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : This method is used to show the editpencil.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class showEditPencil implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
@@ -1218,21 +868,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : OnGradeEditImageClick handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	private class OnGradeEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -1245,21 +881,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	        	isShowing=true;
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : showGradeEditPencil MouseOver Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class showGradeEditPencil implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -1269,21 +891,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 			}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : hideGradeEditPencil MouseOut Handler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	public class hideGradeEditPencil implements MouseOutHandler {
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
@@ -1291,21 +899,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				editPencil.setVisible(false);
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : addBioBtn UIHandler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	@UiHandler("addBioBtn")
 	public void OnClickAddBioButton(ClickEvent event) {
 		if(enableEdit){
@@ -1315,21 +909,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileTextArea.switchToEdit();
 		}
 	}
-	/**
-	 * 
-	 * @fileName : ProfilePageView.java
-	 *
-	 * @description : saveBtn UIHandler.
-	 *
-	 *
-	 * @version : 1.0
-	 *
-	 * @date: 31-Dec-2013
-	 *
-	 * @Author : Gooru Team
-	 *
-	 * @Reviewer: Gooru Team
-	 */
+
 	@UiHandler("saveBtn")
 	public void OnClickGradeEditButton(ClickEvent event) {
 		if (enableEdit){
@@ -1346,25 +926,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			userCoursePopup.setVisible(false);
 		}
 	}
-	/**
-	 * 
-	 * @function setAddGradeCourseBtnVisibility 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This method is used to set add grade course visible.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void setAddGradeCourseBtnVisibility() {
 		if(userGradeList.getWidgetCount() > 0 || userCourseList.getWidgetCount() > 0) {
 			addCourseGradeBtn.setVisible(false);
@@ -1374,76 +936,33 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			editPencil.setVisible(false);
 		}
 	}
-	/**
-	 * 
-	 * @function setAddGradeCourseBtnVisibility 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :cancelBtn UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
 	@UiHandler("cancelBtn")
 	public void OnCancelGradeEditButton(ClickEvent event) {
 		userCoursePopup.setVisible(false);
 	}
-	/**
-	 * 
-	 * @function setAddGradeCourseBtnVisibility 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :btnSave UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("btnSave")
 	public void OnClickbiographySaveButton(ClickEvent event) {
-		if (enableEdit){
-			noAboutUsContainer.setVisible(false);
-			aboutUsCharacterValidation.setVisible(false);
-			MixpanelUtil.Click_On_Save();
-			profileTextArea.switchToLabel();
-		}
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", profileTextArea.geteditTextBox().getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+
+			@Override
+			public void onSuccess(Boolean value) {
+				if(value){
+					SetStyleForProfanity.SetStyleForProfanityForTextArea(profileTextArea.geteditTextBox(), profileTextArea.getErrorLabel(), value);
+				}else{
+					if (enableEdit){
+						noAboutUsContainer.setVisible(false);
+						aboutUsCharacterValidation.setVisible(false);
+						MixpanelUtil.Click_On_Save();
+						profileTextArea.switchToLabel();
+					}
+				}
+			}
+		});
 	}
-	/**
-	 * 
-	 * @function setAddGradeCourseBtnVisibility 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :biographyCancelButton UIHandler.
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	@UiHandler("biographyCancelButton")
 	public void OnClickBiographyCancelButton(ClickEvent event) {
 		//disableContentAndSetOldContent(profileDo.getAboutMe());
@@ -1451,6 +970,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
 		profileTextArea.cancel();
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", profileTextArea.geteditTextBox().getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				profileTextArea.getErrorLabel().setVisible(false);
+			}
+		});
 	}
 
 	/*public void disableContentAndSetOldContent(String aboutMe) {
@@ -1473,9 +1000,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileTextArea.cancel();
 	}
 */
-	/**
-	 * Returns profileTextArea.
-	 */
 	@Override
 	public ProfilePageDescriptionEditUc getProfileBiographyEditUC() {
 		return profileTextArea;
@@ -1489,8 +1013,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		higherEducation.clear();
 		gradeTopList.clear();
 		gradeMiddleList.clear();
-		KinderGarten.add(new ProfilePageGradeLabel("Kindergarten", profileDo));
-		higherEducation.add(new ProfilePageGradeLabel("Higher Education",profileDo));
+		KinderGarten.add(new ProfilePageGradeLabel(GL0850, profileDo));
+		higherEducation.add(new ProfilePageGradeLabel(GL0169,profileDo));
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 6) {
 				gradeTopList.add(new ProfilePageGradeLabel(i + "", profileDo));
@@ -1522,9 +1046,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				.courseMaxMsg());
 		courseMaxMsg.getElement().getStyle().setFloat(Float.LEFT);
 	}
-	/**
-	 * This is used to set course list.
-	 */
+
 	@Override
 	public void setCourseList(List<LibraryCodeDo> libraryCode) {
 		collectionCourseLst = new GroupedListBox();
@@ -1587,7 +1109,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 					return;
 				}
 				if (validateCourse(courseCodeLabel) && courseCode != null) {
-					alertContentUc=new AlertContentUc("Oops", "Please add different courses");
+					alertContentUc=new AlertContentUc(GL1089, GL1090);
 				} else {
 					Set<ProfileCodeDo> profileCodeDoSet = new HashSet<ProfileCodeDo>();
 					ProfileCodeDo profileCodeDo = new ProfileCodeDo();
@@ -1623,32 +1145,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		return false;
 	}
-	/**
-	 * returns profileDo.
-	 */
+
 	@Override
 	public ProfileDo getProfileDo() {
 		return profileDo;
 	}
-	/**
-	 * 
-	 * @function enableAddBioBtn 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :Thi sis used to enable add bio button.
-	 * 
-	 * 
-	 * @parm(s) : @param textType
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	private void enableAddBioBtn(String textType) {
 		if (textType.equalsIgnoreCase("addBioBtn")) {
 			addBioBtn.setVisible(true);
@@ -1665,9 +1167,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileTextArea.cancel();
 		}
 	}
-	/**
-	 * This is used to disable child data.
-	 */
+
 	@Override
 	public void disableChildData() {
 		userMetadata.setVisible(false);
@@ -1675,9 +1175,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		gooruSocialButtonsContainer.setVisible(false);
 		gooruProfileOnOffContainer.setVisible(false);
 	}
-	/**
-	 * This is used to make some ui fileds enable and disable.
-	 */
+	
 	@Override
 	public void editOptions(boolean toEnable){
 		enableEdit = toEnable;
@@ -1694,34 +1192,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 		}
 	}
-	/**
-	 * returns profilePageViewMsg.
-	 */
+
 	@Override
 	public Label getChilNoShareOption() {
 		return profilePageViewMsg;
 	}
-	/**
-	 * 
-	 * @function getEnableWidget 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :This is used to enable the widget.
-	 * 
-	 * 
-	 * @parm(s) : @param toEnable
-	 * @parm(s) : @param about
-	 * @parm(s) : @param set
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+	
 	public void getEnableWidget(boolean toEnable,String about,Set<ProfileCodeDo> set) {
 		if(toEnable){
 			gooruProfileOnOffContainer.setVisible(true);
@@ -1752,9 +1228,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}
 	}
-	/**
-	 * This is used to close all the opened popup's.
-	 */
+
 	@Override
 	public void closeAllOpenedPopUp() {
 		if(alertContentUc!=null){
@@ -1762,9 +1236,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 
 	}
-	/**
-	 * GradeCourseEditBtn click event.
-	 */
+	
 	private void clickGradeCourseEditBtn() {
 		getUiHandlers().getTaxonomyData();
 		setGradeList(profileDo.getGrade());

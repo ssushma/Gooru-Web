@@ -23,19 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.user;
-/**
- * @fileName : UserGroupDo.java
- *
- * @description : This class is used as data object.
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 
 public class UserGroupDo extends PartyDo {
 
@@ -49,47 +37,31 @@ public class UserGroupDo extends PartyDo {
 	private String userGroupType;
 
 	private OrganizationDo organization;
+	
+	public UserGroupDo(){}
 
-	/** 
-	 * This method is to get the activeFlag
-	 */
-	public boolean isActiveFlag() {
-		return activeFlag;
-	}
-
-	/** 
-	 * This method is to set the activeFlag
-	 */
-	public void setActiveFlag(boolean activeFlag) {
-		this.activeFlag = activeFlag;
-	}
-
-	/** 
-	 * This method is to get the userGroupType
-	 */
-	public String getUserGroupType() {
-		return userGroupType;
-	}
-
-	/** 
-	 * This method is to set the userGroupType
-	 */
-	public void setUserGroupType(String userGroupType) {
-		this.userGroupType = userGroupType;
-	}
-
-	/** 
-	 * This method is to get the organization
-	 */
 	public OrganizationDo getOrganization() {
 		return organization;
 	}
 
-	/** 
-	 * This method is to set the organization
-	 */
 	public void setOrganization(OrganizationDo organization) {
 		this.organization = organization;
 	}
-	
+
+	public boolean isActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(boolean activeFlag) {
+		this.activeFlag = activeFlag;
+	}
+
+	public String getUserGroupType() {
+		return userGroupType;
+	}
+
+	public void setUserGroupType(String userGroupType) {
+		this.userGroupType = userGroupType;
+	}
+
 }

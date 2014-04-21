@@ -28,21 +28,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-/**
- * 
- * @fileName : TaskResourceSearchDo.java
- *
- * @description : This class is used as data object.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 @JsonInclude(Include.NON_NULL)
 public class TaskResourceSearchDo extends TaskDo {
 	
@@ -57,6 +43,7 @@ public class TaskResourceSearchDo extends TaskDo {
 	private Integer sequence;
 	private String associationDate;
 	private String taskResourceAssocUid;
+	public TaskResourceSearchDo(){}
 	/** 
 	 * This method is to get the resource
 	 */

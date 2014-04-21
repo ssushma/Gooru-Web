@@ -27,19 +27,6 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-/**
- * @fileName : ForgetPopUpCBundle.java
- *
- * @description : This interface is used to set the styles for forget popup.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
 public interface ForgetPopUpCBundle extends ClientBundle{
 static final ForgetPopUpCBundle INSTANCE = GWT.create(ForgetPopUpCBundle.class);
 	

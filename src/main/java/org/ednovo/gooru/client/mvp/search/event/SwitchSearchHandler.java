@@ -30,19 +30,8 @@ package org.ednovo.gooru.client.mvp.search.event;
 import com.google.gwt.event.shared.EventHandler;
 
 /**
+ * @author Search Team
  * 
- * @fileName : SwitchSearchHandler.java
- *
- * @description : This file is used to  Set search view, collection search or resource searh.
- *
- *
- * @version : 1.0
- *
- * @date: 02-Jan-2014
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface SwitchSearchHandler extends EventHandler {
 

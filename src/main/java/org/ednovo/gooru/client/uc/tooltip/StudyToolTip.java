@@ -24,28 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-/**
- * @fileName : StudyToolTip.java
- *
- * @description : This class is used to display the study tooltip.
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
- */
-public class StudyToolTip extends Composite{
+
+public class StudyToolTip extends Composite implements MessageProperties{
 	
-	
+	@UiField HTMLPanel studyText,guidanceText;
 	public StudyToolTip(){
 		initWidget(studyToolTipUiBinder.createAndBindUi(this));
+		studyText.getElement().setInnerHTML(GL0182);
+		guidanceText.getElement().setInnerHTML(GL1066);
 	}
 	
 	public interface StudyToolTipUiBinder extends UiBinder<Widget, StudyToolTip>{

@@ -36,18 +36,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 /**
- * @fileName : CopyRightPolicyVc.java
+ * @author Search Team
  *
- * @description : This class is used for copy rights policy.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public abstract class CopyRightPolicyVc extends PopupPanel {
 

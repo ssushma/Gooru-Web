@@ -6,18 +6,18 @@
 	    <div class="{noResultStyle.noResultsBox}">
 	    <div class="{noResultStyle.container}">
 			<div class="{noResultStyle.noResults}">
-				<div class="{noResultStyle.header}">We didn't find any results for that...</div>
-				<div class="{noResultStyle.leftColumn}">You may try:
-					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.orange}"></div><div class="{noResultStyle.liContent}">Removing some filters</div></div>
-					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.green}"></div><div class="{noResultStyle.liContent}">Checking the spelling</div></div>
-					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.lightBlue}"></div><div class="{noResultStyle.liContent}">Using a different keyword</div></div>
-					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.blue}"></div><div class="{noResultStyle.liContent}">Changing the toggle (resources vs. collections)</div></div>
-				</div>
+				<g:Label styleName="{noResultStyle.header}" ui:field="didnotFindText"></g:Label>
+				<g:Label styleName="{noResultStyle.leftColumn}" ui:field="tryText">
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.orange}"></div><g:Label styleName="{noResultStyle.liContent}" ui:field="removeFiltersText"></g:Label></div>
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.green}"></div><g:Label styleName="{noResultStyle.liContent}" ui:field="checkSpellingText"></g:Label></div>
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.lightBlue}"></div><g:Label styleName="{noResultStyle.liContent}" ui:field="differentKeywordText"></g:Label></div>
+					<div class="{noResultStyle.liPosition}"><div class="{noResultStyle.blue}"></div><g:Label styleName="{noResultStyle.liContent}" ui:field="changeToggleText"></g:Label></div>
+				</g:Label>
 				<div class="{noResultStyle.rightColumn}"></div>
 			</div>
 			
 				<g:HTMLPanel styleName="{noResultStyle.suggestedResources}" ui:field="suggestedResourcesContainer">
-				   <g:Label styleName="{noResultStyle.header}">Try our suggested resources</g:Label>
+				   <g:Label styleName="{noResultStyle.header}" ui:field="suggestedresourcesText"></g:Label>
 				    <g:Label styleName="{noResultStyle.suggestedCollectionCount}" ui:field="resourcesCount"/>
 					
 					<!-- <g:HTMLPanel styleName="{noResultStyle.resourceContainer}">

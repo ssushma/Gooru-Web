@@ -79,10 +79,10 @@
 }
 
 .liContent {
-	width: 160px;
+	width: 166px;
 	line-height: 1.4em;
 	display: block;
-	float: left;
+	/* float: left; */
 }
 
 .noResults {

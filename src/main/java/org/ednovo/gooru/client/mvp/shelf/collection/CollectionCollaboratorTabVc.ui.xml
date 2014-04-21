@@ -6,10 +6,10 @@ xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:a="urn:import:aj.org.obje
 		<g:FlowPanel styleName="{res.css.collaboratorPanel}">
 			<g:FlowPanel styleName="{res.css.addCollaborator}">
 				<!-- <g:SimplePanel styleName="{res.css.clear}" /> -->
-				<g:Label text="Collaborators" styleName="{res.css.addCollaboratorText}"/>
+				<g:Label styleName="{res.css.addCollaboratorText}" ui:field="collaboratorsText"/>
 				<g:FlowPanel styleName="">
 					<g:TextBox styleName="{res.css.collaboratorBox}" ui:field="collaboratorTxtBox"/>
-					<g:Label ui:field="gooruBlueLbl" styleName="{res.css.addCollabBlueBtn}" text="Add"></g:Label>
+					<g:Label ui:field="gooruBlueLbl" styleName="{res.css.addCollabBlueBtn}"></g:Label>
 				</g:FlowPanel>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{res.css.addedCollaborator}">
@@ -18,7 +18,7 @@ xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:a="urn:import:aj.org.obje
 			</g:FlowPanel>
 		</g:FlowPanel>
 		<g:FlowPanel styleName="{res.css.collaboratorPanelRight}">
-		<g:Label styleName="{res.css.collaboratorRecent}" text="ADD FROM RECENT" />
+		<g:Label styleName="{res.css.collaboratorRecent}" ui:field="addRecentText"/>
 		</g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

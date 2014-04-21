@@ -25,21 +25,7 @@
 package org.ednovo.gooru.client.mvp.folders.edit.tab.content;
 
 import com.google.gwt.resources.client.CssResource;
-/**
- * 
- * @fileName : folderContentCBundle.java
- *
- * @description : This file is used to apply css styles.
- *
- *
- * @version : 1.0
- *
- * @date: 30-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
- */
+
 public interface folderContentCBundle extends CssResource {
 
 	String myFolderCollectionPlusContainer();

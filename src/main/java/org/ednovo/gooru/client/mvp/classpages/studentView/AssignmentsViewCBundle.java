@@ -27,19 +27,10 @@ package org.ednovo.gooru.client.mvp.classpages.studentView;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+
 /**
+ * @author Search Team
  * 
- * @fileName : AssignmentsViewCBundle.java
- *
- * @description : This interface is used to add the css styles for the assignments.
- *
- * @version : 1.0
- *
- * @date: 27-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public interface AssignmentsViewCBundle extends ClientBundle {
 

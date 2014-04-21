@@ -41,6 +41,7 @@
 	/* margin-bottom: 3px;
 	margin-right: 4px; */
 	color: #999999;
+	 display:inline-block;
 }
 /* .authorName:hover {
 	font-style: italic;
@@ -76,6 +77,7 @@
 	color: #515151;
 	overflow: hidden;
 	line-height: 1.2;
+	margin-top:25px;
 }
 
 .collectionHover {
@@ -107,4 +109,9 @@
 .authorContainer{
 	float: left;
 	width: 288px;
+}
+.collaboratorStyle {
+    display:inline-block;
+    color: #0f76bb;
+    font-style: italic;
 }

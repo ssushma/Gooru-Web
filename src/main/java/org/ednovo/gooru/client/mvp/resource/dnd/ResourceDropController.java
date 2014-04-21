@@ -40,19 +40,8 @@ import com.allen_sauer.gwt.dnd.client.VetoDragException;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * @author Search Team
  * 
- * @fileName : ResourceDropController.java
- *
- * @description : Create a DropController for each drop target on which draggable widgets can be dropped. Do not forget to register each DropController with a DragController.
- *
- *
- * @version : 1.0
- *
- * @date: 31-Dec-2013
- *
- * @Author : Gooru Team
- *
- * @Reviewer: Gooru Team
  */
 public class ResourceDropController extends AppSimpleDropController {
 
@@ -68,9 +57,7 @@ public class ResourceDropController extends AppSimpleDropController {
 		super(dropBox.asWidget());
 		this.resourceDropBox = dropBox;
 	}
-	/**
-	 *  This method is Called when the draggable widget or its proxy is dropped on our drop target.
-	 */
+
 	@Override
 	public void onDrop(DragContext context) {
 		setDropActive(false);
@@ -93,9 +80,7 @@ public class ResourceDropController extends AppSimpleDropController {
 		}
 		super.onDrop(context);
 	}
-	/**
-	 *This method is Called when the draggable widget or its proxy engages our drop target.
-	 */
+
 	@Override
 	public void onEnter(DragContext context) {
 		setDropActive(true);
@@ -106,9 +91,7 @@ public class ResourceDropController extends AppSimpleDropController {
 			}
 		}
 	}
-	/**
-	 * Called when the reference widget stops engaging our drop target by leaving the area of the page occupied by our drop target, or after onDrop(DragContext) to allow for any cleanup.
-	 */
+
 	@Override
 	public void onLeave(DragContext context) {
 		setDropActive(false);
@@ -119,76 +102,20 @@ public class ResourceDropController extends AppSimpleDropController {
 		}
 		super.onLeave(context);
 	}
-	/**
-	 *  Called just prior to onDrop(DragContext) to allow the drop operation to be cancelled by throwing a VetoDragException.
-	 */
+
 	@Override
 	public void onPreviewDrop(DragContext context) throws VetoDragException {
 		super.onPreviewDrop(context);
 	}
-	/**
-	 * 
-	 * @function getResourceDropBox 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns resourceDropBox.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : DropBox
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public DropBox getResourceDropBox() {
 		return resourceDropBox;
 	}
-	/**
-	 * 
-	 * @function isDropActive 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :returns dropActive.
-	 * 
-	 * 
-	 * @parm(s) : @return
-	 * 
-	 * @return : boolean
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public boolean isDropActive() {
 		return dropActive;
 	}
-	/**
-	 * 
-	 * @function setDropActive 
-	 * 
-	 * @created_date : 31-Dec-2013
-	 * 
-	 * @description :Toset drop active.
-	 * 
-	 * 
-	 * @parm(s) : @param dropActive
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
+
 	public void setDropActive(boolean dropActive) {
 		this.dropActive = dropActive;
 	}

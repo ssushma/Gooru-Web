@@ -55,7 +55,7 @@ public class CollectionPlayPresenter extends BasePlacePresenter<IsCollectionPlay
 	private CollectionFormInPlayPresenter collectionFormInPlayPresenter;
 	
 	@ProxyCodeSplit
-	@NameToken(PlaceTokens.COLLECTION_PLAY)
+	@NameToken(PlaceTokens.COLLECTION_PLAY_OLD)
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsCollectionPlayProxy extends ProxyPlace<CollectionPlayPresenter> {
 	}

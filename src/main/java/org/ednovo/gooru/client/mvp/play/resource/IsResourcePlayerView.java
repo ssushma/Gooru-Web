@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.resource;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.PopupView;
 
@@ -33,8 +34,11 @@ public interface IsResourcePlayerView extends PopupView, IsViewWithHandlers<Reso
 	public FlowPanel getPlayerBodyContainer();
 	public void setResourceTitle(String resourceTitle);
 	public FlowPanel getNavigationContainer();
-	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable);
-	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean makeShareButtonActive);
-	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion);
+	public void enablePlayerButton(boolean isAddButtonEnable,boolean isInfoButtonEnable, boolean isShareButtonEnable,boolean isFlagButtonEnable);
+	public void makeButtonActive(boolean makeAddButtonActive,boolean makeInfoButtionActive, boolean makeShareButtonActive,boolean makeFlagButtonActive);
+	public void clearActiveButton(boolean deselectAddButton,boolean deselectInfoButton,boolean deselectShareButtion,boolean deselectFlagButton);
 	public void updateThumbsRatingView(int userThumbRating);
+	public Button getFlagButton();
+	public void setTabPlaceRequest(String string, boolean b, boolean c);
+	public void makeFlagButtonOrange();
 }

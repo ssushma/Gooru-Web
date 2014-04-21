@@ -4,9 +4,9 @@
 	<ui:with type="org.ednovo.gooru.client.GooruCBundle" field="res" />
 	<g:HTMLPanel styleName="{res.css.gooruGuideCont}">
 		<g:Label styleName="{res.css.guideInfoArrow}"/>
-	   <p class="{res.css.guideInfoText}">Use the Gooru Guide to help navigate the site when you get stuck.</p>
+	   <p class="{res.css.guideInfoText}"><g:Label ui:field="gooruGuideLbl"></g:Label></p>
 	   <g:FlowPanel styleName="{res.css.gooruGuideButton}">
-	   		<gg:BlueButtonUc styleName="{res.css.guideButton}" ui:field="guideSlideHomeBtnUc" text="Got it!"/>
+	   		<gg:BlueButtonUc styleName="{res.css.guideButton}" ui:field="guideSlideHomeBtnUc"/>
 	   	</g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 
