@@ -68,7 +68,6 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	public String thumbnailUrl="";
 	public String collectionGooruOid=null;
 
-    //@UiField Image collImage;
 	
 	@UiField TextBox collectionTitleInCoverPage;
 	
@@ -100,13 +99,6 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 	public void workspaceLinkClickEvent(ClickEvent event){
 		AppClientFactory.getPlaceManager().setRefreshPlace(true);
 	}
-	
-//	public Label getSuccessMessageAddedCollection() {
-//		return successMessageAddedCollection;
-//	}
-//	public void setSuccessMessageAddedCollection(Label successMessageAddedCollection) {
-//		this.successMessageAddedCollection = successMessageAddedCollection;
-//	}
 	public Label getAddingLabel() {
 		return addingLabel;
 	}
@@ -132,27 +124,12 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 			Button addToShelfCollectionButton) {
 		this.addToShelfCollectionButton = addToShelfCollectionButton;
 	}
-//	public Image getCollImage() {
-//		return collImage;
-//	}
-//	public void setCollImage(Image collImage) {
-//		this.collImage = collImage;
-//	}
 	public TextBox getCollectionTitleInCoverPage() {
 		return collectionTitleInCoverPage;
 	}
 	public void setCollectionTitleInCoverPage(TextBox collectionTitleInCoverPage) {
 		this.collectionTitleInCoverPage = collectionTitleInCoverPage;
 	}
-//	public HTMLPanel getCollImageUrlHolderPanel() {
-//		return collImageUrlHolderPanel;
-//	}
-//	public void setCollImageUrlHolderPanel(HTMLPanel collImageUrlHolderPanel) {
-//		this.collImageUrlHolderPanel = collImageUrlHolderPanel;
-//	}
-//	public void displaySuccessLabel(){
-//		successMessageAddedCollection.getElement().getStyle().setDisplay(Display.BLOCK);
-//	}
 	public HTMLPanel getAddToCollectionWidgetContainer() {
 		return addToCollectionWidgetContainer;
 	}
@@ -241,14 +218,6 @@ public class AddCollectionView extends BaseViewWithHandlers<AddCollectionUiHandl
 		getCollectionTitleInCoverPage().setVisible(true);
 		showCollectionAddImageWidget();
 	}
-//	@UiHandler("collImage")
-//	public void setDefaultThumbnail(ErrorEvent event){
-//		collImage.setUrl("");
-//	}
-//	
-//	public void setCollectionThumbnail(){
-//		collImage.setUrl(thumbnailUrl);
-//	}
 	public void copyCollection(String collectionId,String collectionTile){
 		getUiHandlers().copyCollection( collectionId, collectionTile);
 	}
