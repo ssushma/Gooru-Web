@@ -25,7 +25,6 @@
   <!--Inherit this class for disabling obfuscation. Remove this line for production-->
   <inherits name='com.google.gwt.resources.Resources'/>
 
-
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
   <!-- any one of the following lines.                            -->

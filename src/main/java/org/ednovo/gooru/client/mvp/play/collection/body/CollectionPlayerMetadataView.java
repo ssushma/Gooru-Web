@@ -200,7 +200,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
-		anchor.setHref("#"+userName);
+		anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		anchor.setText(userName);
 		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		anchor.setTarget("_blank");

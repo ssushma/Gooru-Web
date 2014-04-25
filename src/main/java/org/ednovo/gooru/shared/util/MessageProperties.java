@@ -1988,7 +1988,7 @@ public interface MessageProperties {
     	String GL1560 = "Common Core State Standards";
     	String GL1561 = "California Science Curriculum Standards";
     	String GL1562 = "Texas Essential Knowledge and Skills";
-    	String GL1563 = "Join this class to, <ui><li>Track your progress,</li><li>Quickly access this class in the future,</li><li>Keep your teacher happy</li></ui>";
+    	String GL1563 = "Join this class to: <ui><li style=\"margin-left:10px\">Track your progress</li><li style=\"margin-left:10px\">Quickly access this class in the future</li></ui>";
     	String GL1564 = "Are you sure you want to hide these standards? If you do, these standards will no longer be visible to you on this site.";
     	
     	String GL1565 = "Looks like you've tagged collections with these Standards!";
