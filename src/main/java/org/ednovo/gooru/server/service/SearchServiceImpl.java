@@ -28,6 +28,7 @@
 package org.ednovo.gooru.server.service;
 
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -180,7 +181,6 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		}
 		
 		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.RESOURCE_SEARCH, filtersMap, getLoggedInSessionToken(), query, searchDo.getPageNum() + "", searchDo.getPageSize() + "", SINGLE, "false", TRUE, TRUE);
-		System.out.println("getResourceSearch Results : "+url);
 		if(getSearchEndPoint().contains(MessageProperties.HTTPS)){
 			url = appendHttpsURL(url);
 		}

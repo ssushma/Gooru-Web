@@ -329,6 +329,9 @@ public class HeaderUc extends Composite implements MessageProperties,
 			public void keyAction(String text) {
 				MixpanelUtil.Search_autocomplete_select();
 				autokeySuggestOracle.clear();
+				
+				
+				
 				autoSuggestKeywordDo.setQuery(text);
 				searchData = getEditSearchTxtBox().getText();
 				autoSuggestKeywordDo.setType("resource");
@@ -1056,7 +1059,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 						PlaceTokens.COLLECTION_SEARCH, params);
 			}else{
 				String queryVal = params.get("query");
-				queryVal = queryVal.replaceAll("%5C1", "&");
+				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);	
 				AppClientFactory.getPlaceManager().revealPlace(
@@ -1265,7 +1268,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 								PlaceTokens.COLLECTION_SEARCH, params);
 					}else{
 						String queryVal = params.get("query");
-						queryVal = queryVal.replaceAll("%5C1", "&");
+						//queryVal = queryVal.replaceAll("%5C1", "&");
 						Map<String, String> map = params;
 						map.put("query", queryVal);
 						AppClientFactory.getPlaceManager().revealPlace(
@@ -1614,7 +1617,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 						PlaceTokens.COLLECTION_SEARCH, params);
 			} else {
 				String queryVal = params.get("query");
-				queryVal = queryVal.replaceAll("%5C1", "&");
+				//queryVal = queryVal.replaceAll("%5C1", "&");
 				Map<String, String> map = params;
 				map.put("query", queryVal);
 				AppClientFactory.getPlaceManager().revealPlace(

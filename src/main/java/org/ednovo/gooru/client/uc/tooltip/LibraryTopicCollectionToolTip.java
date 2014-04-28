@@ -77,7 +77,7 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 		arowPanel.setVisible(true);
 		if (position.equalsIgnoreCase("studyView")) {
 			arowPanel.getElement().setAttribute("style", "margin-left: 203px;");
-			textFlowPanel.getElement().getStyle().setWidth(216, Unit.PX);
+			textFlowPanel.getElement().getStyle().setWidth(233, Unit.PX);
 			categoryLbl.setHTML(content);
 		} else {
 			arowPanel.getElement().setAttribute("style", "margin-left: 19px;");
