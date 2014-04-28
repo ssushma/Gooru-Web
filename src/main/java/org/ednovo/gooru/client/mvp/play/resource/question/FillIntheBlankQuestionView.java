@@ -184,12 +184,10 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 					isFibStatus=true;
 				}
 				textBoxArray.get(i).addStyleName(oeStyle.answerCorrectTextBox());
-				//attemptStatusArray.add(1);
 			}else{
 				isFibStatus=false;
 				textBoxArray.get(i).addStyleName(oeStyle.answerWrongTextBox());
 				showResultPanel(i,questionAnswerDo.getAnswerText());
-				//attemptStatusArray.add(0);
 			}
 			textBoxArray.get(i).setReadOnly(true);
 			i++;

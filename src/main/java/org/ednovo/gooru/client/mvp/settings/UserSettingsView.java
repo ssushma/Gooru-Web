@@ -511,11 +511,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				/// Words are clear then continue the next steps
 				if(!userNameValidate){
 					if (txtUserName.isVisible()){
-						if (txtUserName.getText().contains(" ")){
-							setErrorMessage(GL1635);
-						}else{
 							setErrorMessage(GL0475);
-						}
 					}
 						
 				}else if (txtUserName.getText().length() <4 || txtUserName.getText().length() >20){

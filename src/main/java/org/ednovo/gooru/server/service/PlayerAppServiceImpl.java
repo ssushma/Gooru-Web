@@ -383,11 +383,21 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public String sendEmail(String fromEmail, String toEmail, String copyEmail,String subject, String message) {
 		JSONObject mailJsonObject=new JSONObject();
 		try {
+			
+			String completeLogoDetails = "<!DOCTYPE html> <html> <head> <meta http-equiv=" +
+					"Content-Type" +
+					" content=" +
+					"text/html; charset=UTF-8" +
+					" /> </head> <body style='font-family: arial, sans-serif;color: #515151;height:375px;font-size: 12px; background-color: #f0f0f0;'> <img id='logo-header' src='http://sfs.goorulearning.org/media/mail/v1/images/gooru-logo-small.png' style='width:100px;height:30px;margin: 30px auto 10px auto; margin-left: 385px;'" +
+					"></img> <div class='content-block img-desc' style='width: 500px;padding: 35px;margin: 0px auto 30px auto;background-color: white;border: 1px solid #DDD;-moz-box-shadow: 0 0 10px rgba(0,0,0,.1); -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);box-shadow: 0 0 10px rgba(0,0,0,.1);'> <div style='font-family: arial;width: 520px;color:#666;height:150px'>"+ message + 
+					"</body> </html>";
+			
 			mailJsonObject.put("fromDisplayName", fromEmail);
 			mailJsonObject.put("to", toEmail);
 			mailJsonObject.put("cfm", copyEmail);
 			mailJsonObject.put("subject", subject);
-			mailJsonObject.put("message", message);
+			mailJsonObject.put("message", completeLogoDetails);
+			
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SOCIAL_EMAIL,getLoggedInSessionToken());
 			ServiceProcessor.post(url, getRestUsername(), getRestPassword(),mailJsonObject.toString());
 		} catch (JSONException e) {

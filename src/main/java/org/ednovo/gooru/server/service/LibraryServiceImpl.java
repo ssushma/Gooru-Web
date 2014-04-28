@@ -89,9 +89,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private static final String UNIT = "unit";
 	private static final String TOPIC = "topic";
 	
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.service.LibraryService#getCourses(java.lang.String)
-	 */
+	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;
@@ -147,7 +145,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_LIBRARY_COURSES, subjectId, getLoggedInSessionToken());
 		url+=getLibraryName(libraryName);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		//need to do here
+		//need to do here		
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeSubjectsforStandards(jsonRepresentation,subjectId);
 	}
@@ -186,6 +184,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		url+=getLibraryName(libraryName);
 		url+=getStandardId(standardsId);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeTopicList(jsonRepresentation);
 	}
@@ -336,23 +335,29 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	}
 	
 	public HashMap<String,StandardsDo> deserializeSubjectsforStandards(JsonRepresentation jsonRep, String subjectName) {
-	
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				String jsonRepStr = jsonRep.getJsonObject().toString();
 				JSONObject mainObj = jsonRep.getJsonObject();
 				if(jsonRep.getJsonObject().getJSONObject(subjectName).getJSONArray(DATA).length()>0)
 				{
-					JSONArray courseArray = jsonRep.getJsonObject().getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(0).getJSONArray(COURSE);
-					
+					for(int z=0;z<jsonRep.getJsonObject().getJSONObject(subjectName).getJSONArray(DATA).length();z++){
+					JSONArray courseArray = jsonRep.getJsonObject().getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(z).getJSONArray(COURSE);
 						for(int n=0; n<courseArray.length();n++)
 						{
 							for(int m=0; m<courseArray.getJSONObject(n).getJSONArray(UNIT).length();m++)
 							{
 								JSONArray topicArray = courseArray.getJSONObject(n).getJSONArray(UNIT).getJSONObject(m).getJSONArray(TOPIC);
-									for(int l=0; l<topicArray.length();l++) {
+								
+								for(int l=0; l<topicArray.length();l++) {
 										JSONArray lessonDoList = new JSONArray();
 										JSONObject lessonList = topicArray.getJSONObject(l);
+										//This code is only for TEXS
+										if(jsonRep.getJsonObject().getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(z).getString("label").contains("Texas")){
+											JSONObject lessonObj1 = new JSONObject();
+											lessonObj1=topicArray.getJSONObject(l);
+											lessonDoList.put(lessonObj1);
+										}
 										if(!lessonList.isNull(LESSON)) {
 											for(int j=0;j<topicArray.getJSONObject(l).getJSONArray(LESSON).length();j++) 
 											{
@@ -370,13 +375,14 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 												}
 											}
 										}
-										
-										mainObj.getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(0).getJSONArray(COURSE).getJSONObject(n).getJSONArray(UNIT).getJSONObject(m).getJSONArray(TOPIC).getJSONObject(l).remove(LESSON);
-										mainObj.getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(0).getJSONArray(COURSE).getJSONObject(n).getJSONArray(UNIT).getJSONObject(m).getJSONArray(TOPIC).getJSONObject(l).put(LESSON, lessonDoList);
+										mainObj.getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(z).getJSONArray(COURSE).getJSONObject(n).getJSONArray(UNIT).getJSONObject(m).getJSONArray(TOPIC).getJSONObject(l).remove(LESSON);
+										mainObj.getJSONObject(subjectName).getJSONArray(DATA).getJSONObject(z).getJSONArray(COURSE).getJSONObject(n).getJSONArray(UNIT).getJSONObject(m).getJSONArray(TOPIC).getJSONObject(l).put(LESSON, lessonDoList);
 									}
 								jsonRepStr = mainObj.toString();
+								
 							}
 						}
+					}
 				}
 				return JsonDeserializer.deserialize(jsonRepStr, new TypeReference<HashMap<String, StandardsDo>>() {});
 			} catch (JSONException e) {
@@ -444,8 +450,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				for(int i=0;i<topicArray.length();i++) {
 					ArrayList<LessonDo> lessonDoList = new ArrayList<LessonDo>();
 					try {
+						if(!topicArray.getJSONObject(i).isNull(COLLECTION)){
+							lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), LessonDo.class));
+						}
 						if(topicArray.getJSONObject(i).getJSONArray(LESSON)!=null) {
-							
 							for(int j=0;j<topicArray.getJSONObject(i).getJSONArray(LESSON).length();j++) 
 							{
 								lessonDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).getJSONArray(LESSON).getJSONObject(j).toString(), LessonDo.class));
@@ -472,10 +480,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 						} catch(Exception ex) {
 							conceptDoList.add(JsonDeserializer.deserialize(topicArray.getJSONObject(i).toString(), ConceptDo.class));
 						}
-					}
-					
-
-					
+					}					
 				}
 				if(conceptDoList.size()>0) {
 					topicDo.setCollection(conceptDoList);

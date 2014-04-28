@@ -117,6 +117,7 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 
 	private String loggedEmailId;
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
+	private int count=0;
 
 	private static final String AT_SYMBOL = "@";
 
@@ -324,6 +325,7 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 									if(result){
 										SetStyleForProfanity.SetStyleForProfanityForRichTextArea(msgTxa, mandatoryErrorRichTextArea, result);
 									}else{
+										if(count==0){
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 											AppClientFactory
 											.getInjector()
@@ -344,6 +346,9 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 											});
 										}
 									}
+										count++;
+									}
+									
 								}
 							});
 						}
