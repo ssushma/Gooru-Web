@@ -404,7 +404,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCommonCore.setText(GL1560);
 		lblCaliforniaScience.setText(GL1561);
 		lblTexas.setText(GL1562);
-		lblNgss.setText(GL1637);
+		lblNgss.setText(GL1655);
 		
 		description.setText(GL1583);
 		userStandardEditView.setVisible(false);
@@ -419,7 +419,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		californiaStandChk.setName("30424,42236,42237");
 		texasChk.setText(GL1562);
 		texasChk.setName("72168");
-		ngssChk.setText(GL1637);
+		ngssChk.setText(GL1655);
 		ngssChk.setName("94027");
 		
 		commonCoreChk.setStyleName(Settings.standardsCheckBox());
