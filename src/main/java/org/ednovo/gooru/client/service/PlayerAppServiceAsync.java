@@ -34,8 +34,11 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
@@ -108,6 +111,18 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	public void getFeaturedContent(AsyncCallback<ArrayList<FeaturedContentDo>> callback);
 
 	public void deleteReaction(String gooruReactionId,AsyncCallback<Void> callback);
+	
+	public void createStarRatings(String associateGooruOid,int starRatingValue,AsyncCallback<StarRatingsDo> callback);
+
+	public void getResourceStarRatings(String gooruOid, String gooruUid,AsyncCallback<StarRatingsDo> callback);
+	
+	public void getContentStarRatings(String gooruOid,AsyncCallback<ContentStarRatingsDo> callback);
+	
+	public void updateResourceStarRatings(String gooruOid,int score,AsyncCallback<StarRatingsDo> callback);
+	
+	public void getUserStarRatings(String gooruUid,AsyncCallback<UserStarRatingsDo> callback);
+	
+	public void getResourceRatingWithReviews(String gooruOid, String gooruUid,AsyncCallback<ArrayList<StarRatingsDo>> callback); 
 
 	
 	

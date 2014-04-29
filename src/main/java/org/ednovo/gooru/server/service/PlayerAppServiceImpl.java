@@ -44,8 +44,11 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
@@ -75,6 +78,10 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	private static final String TITLE="title";
 	private static final String FIRST_NAME="firstName";
 	private static final String PROFILE_IMAGE_URL="profileImageUrl";
+	private static final String SCORE="score";
+	private static final String AVERAGE="average";
+	private static final String COUNT="count";
+	private static final String ASSOCIATE_GOORU_OID="assocGooruOid";
 
 
 	@Override
@@ -922,6 +929,165 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			standardIdVal = "&rootNodeId="+standardId;
 		}
 		return standardIdVal;
+	}
+	
+	@Override
+	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue) {
+		JsonRepresentation jsonRep=null;
+		JSONObject jsonObject=null;
+		try {
+			 String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_STAR_RATINGS, getLoggedInSessionToken());
+			 JSONObject createStarRatingsJsonObj = new JSONObject();
+			 createStarRatingsJsonObj.put(ASSOCIATE_GOORU_OID, associateGooruOid);
+			 createStarRatingsJsonObj.put(SCORE, starRatingValue);
+			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));
+			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
+			 System.out.println("----??? "+url );
+			 System.out.println("----??? "+createStarRatingsJsonObj.toString() );
+			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
+			 jsonRep= jsonResponseRep.getJsonRepresentation();
+			 jsonObject= jsonRep.getJsonObject();
+			 
+		} catch (Exception e) {
+			
+		}
+		return deserializeResourceStarRatings(jsonObject);
+	}
+	
+	private StarRatingsDo deserializeResourceStarRatings(JSONObject jsonObject) {
+		StarRatingsDo starRatingsDo = new  StarRatingsDo(); 
+		try {
+			starRatingsDo.setAssocGooruOid(jsonObject.isNull("assocGooruOid")?"":jsonObject.getString("assocGooruOid"));
+			starRatingsDo.setDeleteReactionGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
+			starRatingsDo.setScore(jsonObject.getInt(SCORE)); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return starRatingsDo;
+	}
+
+	@Override
+	public StarRatingsDo getResourceStarRatings(String associatedGooruOid, String gooruUid) {
+		JsonRepresentation jsonRep=null;
+		JSONObject jsonObject=null;
+		try {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STAR_RATINGS,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
+			System.out.println("--- get ratings -- "+url); 
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonRep=jsonResponseRep.getJsonRepresentation();
+			jsonObject= jsonRep.getJsonObject();
+		} catch (Exception e) {
+		}
+		
+		return deserializeResourceStarRatings(jsonObject);
+	}
+
+	@Override
+	public ContentStarRatingsDo getContentStarRatings(String gooruOid) {
+		JsonRepresentation jsonRepresentation =null;
+		JSONObject jsonObject = null;
+		try {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_STAR_RATINGS,gooruOid,getLoggedInSessionToken());
+			System.out.println("--- get content ratings -- "+url); 
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url,getRestUsername(), getRestPassword());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			jsonObject= jsonRepresentation.getJsonObject();
+		} catch (Exception e) {
+		}
+		return deserializeContentStarRatings(jsonObject);
+	}
+
+	private ContentStarRatingsDo deserializeContentStarRatings(JSONObject jsonObject) {
+		ContentStarRatingsDo contentStarRatingsDo = new  ContentStarRatingsDo(); 
+		try {
+			contentStarRatingsDo.setAverage(jsonObject.getInt(AVERAGE));
+			contentStarRatingsDo.setCount(jsonObject.getInt(COUNT));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return contentStarRatingsDo;
+	}
+
+	@Override
+	public StarRatingsDo updateResourceStarRatings(String gooruOid, int score) {
+		JsonRepresentation jsonRepresentation=null;
+		JSONObject jsonObject = null;
+		try {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_STAR_RATINGS,gooruOid, getLoggedInSessionToken());
+			JSONObject updateStarRatingsJsonObj = new JSONObject();
+			updateStarRatingsJsonObj.put(SCORE,score);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateStarRatingsJsonObj.toString());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			jsonObject= jsonRepresentation.getJsonObject();
+			
+		} catch (Exception e) {
+		}
+		
+		return deserializeResourceStarRatings(jsonObject);
+	}
+
+	@Override
+	public UserStarRatingsDo getUserStarRatings(String gooruOid) {
+		JsonRepresentation jsonRepresentation =null;
+		JSONObject jsonObject = null;
+		try {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_STAR_RATINGS,gooruOid,getLoggedInSessionToken());
+			System.out.println("--- get user ratings -- "+url); 
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url,getRestUsername(), getRestPassword());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			jsonObject= jsonRepresentation.getJsonObject();
+		} catch (Exception e) {
+		}
+		return deserializeUserStarRatings(jsonObject);
+	}
+	
+	private UserStarRatingsDo deserializeUserStarRatings(JSONObject jsonObject) {
+		UserStarRatingsDo userStarRatingsDo = new  UserStarRatingsDo(); 
+		try {
+			userStarRatingsDo.setAverage(jsonObject.getInt(AVERAGE));
+			userStarRatingsDo.setCount(jsonObject.getInt(COUNT));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return userStarRatingsDo;
+	}
+
+	@Override
+	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid) {
+		JsonRepresentation jsonRep=null;
+		JSONObject jsonObject = null;
+		try {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),gooruUid);
+			System.out.println("--- url get review ratings -- "+url);
+			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+			jsonObject = jsonResponseRep.getJsonRepresentation().getJsonObject();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+//		jsonRep=jsonResponseRep.getJsonRepresentation().getJsonObject();
+		return deserializeGetResourceRatingWithReviews(jsonObject); 
+	}
+
+	private ArrayList<StarRatingsDo> deserializeGetResourceRatingWithReviews(JSONObject jsonObject) {
+		ArrayList<StarRatingsDo> starRatingsList=new ArrayList<StarRatingsDo>();
+		try {
+			if(jsonObject.getInt("totalHitCount")>0){
+				JSONArray jsonArray=jsonObject.getJSONArray("searchResults"); 
+				for(int i=0;i<jsonArray.length();i++){
+					JSONObject resourceRatingsJsonObject=jsonArray.getJSONObject(0); 
+					StarRatingsDo starRatingsDo =deserializeResourceStarRatings(resourceRatingsJsonObject);
+					starRatingsList.add(starRatingsDo);
+				}	
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return starRatingsList;
 	}
 
 }

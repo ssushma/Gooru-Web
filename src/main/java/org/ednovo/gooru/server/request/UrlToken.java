@@ -510,7 +510,19 @@ public enum UrlToken {
 	
 	V2_PARTNER_CHILD_FOLDER_LIST("/v2/folder/{0}/item?sessionToken={1}&fetchChilds=true&&itemLimit={2}"),
 	
-	V2_GET_PARTNERS("/v2/partner?sessionToken={0}");
+	V2_GET_PARTNERS("/v2/partner?sessionToken={0}"),
+	
+	CREATE_STAR_RATINGS("/v2/rating?sessionToken={0}"),
+	
+	GET_STAR_RATINGS("/v2/rating/{0}?sessionToken={1}&creatorUId={2}"),
+	
+	GET_CONTENT_STAR_RATINGS("/v2/content/{0}/rating/star/count?sessionToken={1}"),
+	
+	UPDATE_STAR_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	
+	GET_USER_STAR_RATINGS("/v2/user/{0}/rating/star/count?sessionToken={1}"),
+	
+	GET_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}");
 	
 	private String url;
 
