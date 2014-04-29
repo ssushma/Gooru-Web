@@ -2080,4 +2080,5 @@ public interface MessageProperties {
     	
     	String GL1636="Note: Your teacher will receive an email from Gooru on your behalf";
 
-};
+    	String GL1637="Edit Folder Metadata";
+   };
