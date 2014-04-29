@@ -275,6 +275,46 @@ public interface CollectionCBundle extends ClientBundle{
 		String shelfGradeTeacherTipButtonsContainer();
 		String searchRenameCollProfanityErrLbl();
 		String createCollContentAlignInputs();
+		
+		String primaryLabel();
+		String infoContainerMargin();
+		String primaryLabelContainer();
+		
+		String primaryToggleArrowBottom();
+		
+		String primaryToggleArrowBottomrotateRight();
+		
+		String secondaryLabelContainer();
+		
+		String secondaryInformationContainer();
+		
+		String secondaryInfoContainer();
+		
+		String languageObjectiveContainer();
+		
+		String languageObjectiveTextArea();
+		
+		String languageObjectiveInfoContainer();
+		
+		String depthOfKnowledgeContainer();
+		
+		String checkBoxinnerContiner();
+		
+		String checkBoxOuterContiner();
+				
+		String checkBoxinnerContinerlevel2();
+		String checkBoxinnerContinerlevel3();
+		String checkBoxinnerContinerlevel4();
+		
+		String checkBoxlevels();
+		
+		String checkBoxinnerContinerlearning();
+		
+		String checkBoxinnerContinerlearninglevel2();
+		
+		String checkBoxinnerContinerlearninglevel3();
+		
+
 	}
 	@Source("Collection.css")
 	CollectionCss css();
