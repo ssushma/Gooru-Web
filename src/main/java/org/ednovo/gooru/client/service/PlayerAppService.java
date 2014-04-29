@@ -34,8 +34,11 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
@@ -118,5 +121,17 @@ public interface PlayerAppService extends BaseService {
 	public ArrayList<FeaturedContentDo> getFeaturedContent();
 	
 	public void deleteReaction(String gooruReactionId);
+	
+	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue);
+	
+	public StarRatingsDo getResourceStarRatings(String gooruOid, String gooruUid);
+	
+	public ContentStarRatingsDo getContentStarRatings(String gooruOid);
+	
+	public StarRatingsDo updateResourceStarRatings(String gooruOid, int score);
+	
+	public UserStarRatingsDo getUserStarRatings(String gooruOid); 
+	
+	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid);
 	
 }
