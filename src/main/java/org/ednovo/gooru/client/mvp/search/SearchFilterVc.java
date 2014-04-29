@@ -134,6 +134,9 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	DisclosurePanelUc authorPanelUc;
 	
 	@UiField HTMLPanel panelNotMobileFriendly;
+	
+	@UiField
+	HTMLPanel oerPanel;
 
 	@UiField(provided = true)
 	AppSuggestBox sourceSgstBox;
@@ -491,16 +494,23 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	public void renderCheckBox(HTMLPanel disclosurePanelVc, String key, String value) {
 		if (chkNotFriendly==null){
-			chkNotFriendly = new CheckBox();
+			
 		}
+		chkNotFriendly = new CheckBox();
 		chkNotFriendly.setText(value);
-		disclosurePanelVc.setStyleName("mobilefriendlyContainer");
+		
 		chkNotFriendly.setName(key);
 		if(value.equalsIgnoreCase("Mobile Friendly")){
+			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
 			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
 			/*chkNotFriendly.getElement().getStyle().setMarginLeft(9, Unit.PX);
 			chkNotFriendly.getElement().getStyle().setWidth(102, Unit.PX);*/
+		}
+		if(value.equalsIgnoreCase("Show only OER")){
+			chkNotFriendly.getElement().setId("chkOer");
+			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
+			chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		}
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
@@ -637,6 +647,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.clear();
 		gradePanelUc.clear();
 		panelNotMobileFriendly.clear();
+		oerPanel.clear();
 		if (searchFilterDo != null) {
 			if (searchFilterDo.getCategories() != null) {
 				Iterator<Map.Entry<String, String>> categoriesIterator = searchFilterDo.getCategories().entrySet().iterator();
@@ -656,6 +667,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					renderCheckBox(subjectPanelUc, subject, subject);
 				}
 			}
+			renderCheckBox(oerPanel, "not_show_OER", "Show only OER");
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			resourceLinkLbl.addStyleName(style.active());
