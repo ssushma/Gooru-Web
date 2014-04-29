@@ -89,9 +89,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private static final String UNIT = "unit";
 	private static final String TOPIC = "topic";
 	
-	/* (non-Javadoc)
-	 * @see org.ednovo.gooru.client.service.LibraryService#getCourses(java.lang.String)
-	 */
+	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
 		JsonRepresentation jsonRepresentation = null;

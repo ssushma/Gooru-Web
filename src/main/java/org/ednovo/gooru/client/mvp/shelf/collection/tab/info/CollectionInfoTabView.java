@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -43,13 +42,13 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.CourseListUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.GradeLabel;
+import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -59,6 +58,10 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -70,12 +73,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
-import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 
 /**
  * @author Search Team
@@ -93,10 +97,18 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl;
+	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,level1Label,level2Label,level3Label,level4Label,learningInnovationHeader,learningInnovationTitle,learninglevel1Label,learninglevel2Label,learninglevel3Label;
 	
+	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow;
+	
+	@UiField ScrollPanel spanelAudiencePanel,spanelInstructionalPanel;	
+
 	@UiField
-	HTMLPanel panelLoading,mainInfoPanel;
+	HTMLPanel panelLoading,mainInfoPanel,secondaryContentsContainer,htmlAudienceListContainer,htmlInstructionalListContainer;
+	
+	@UiField TextArea textAreaVal;
+	
+	@UiField SimpleCheckBox level1,level2,level3,level4,learninglevel1,learninglevel2,learninglevel3;
 	
 /*	@UiField TextArea teacherTipTextarea;*/
 	
@@ -217,6 +229,70 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		standardLabel.setText(GL0575.toUpperCase());
 		addStandardBtn.setText(GL0590);
 		standardMaxMsg.setText(GL0849);
+		instructionalMethod.setText(GL1637);
+		audienceLabel.setText(GL1638);
+		instructionalTitle.setText(GL1639);
+		audienceTitle.setText(GL1640);
+		textAreaVal.setText(GL1641);
+		languageObjectiveHeader.setText(GL1642);
+		depthOfKnowledgeHeader.setText(GL1643);
+		depthOfKnowledgeTitle.setText(GL1644);
+	
+		level1Label.setText(GL1645);
+		level2Label.setText(GL1646);
+		level3Label.setText(GL1647);
+		level4Label.setText(GL1648);
+		
+		learningInnovationHeader.setText(GL1649);
+		learningInnovationTitle.setText(GL1650);
+		
+		learninglevel1Label.setText(GL1651);
+		learninglevel2Label.setText(GL1652);
+		learninglevel3Label.setText(GL1653);
+		
+		lblInstructionalPlaceHolder.setText(GL0105);
+		lblAudiencePlaceHolder.setText(GL0105);
+		
+		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		
+	
+		textAreaVal.getElement().setAttribute("maxlength", "1000");
+		
+		textAreaVal.addFocusHandler(new FocusHandler() {
+			@Override
+			public void onFocus(FocusEvent event) {
+				String directionText=textAreaVal.getText().trim();
+				if(directionText.equalsIgnoreCase(GL1641)){
+					textAreaVal.setText("");
+				}
+				textAreaVal.getElement().getStyle().setColor("black");
+			}
+		});
+		
+		textAreaVal.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				if(textAreaVal.getText().length() > 1000)
+				{
+					textAreaVal.cancelKey();
+				}			
+			}
+		});
+		
+		textAreaVal.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(textAreaVal.getText().length() == 0)
+				{
+					textAreaVal.setText(GL1641);
+					textAreaVal.getElement().getStyle().setColor("#999");
+				}
+/*				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("text", textAreaVal.getText());*/
+
+			}
+		});
 		
 		AppClientFactory.getEventBus().addHandler(AddCourseEvent.TYPE, addCourseHandler);
 /*		addTeacherTip.addBlurHandler(new BlurHandler() {
@@ -507,6 +583,40 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		removeCourseBtn.setVisible(false);
 		getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
 		courseCode="";
+	}
+	
+	@UiHandler("toggleArrowButtonPrimary")
+	public void onClickHidePrimaryContainer(ClickEvent clickEvent){
+		if(mainInfoPanel.isVisible())
+		{
+			mainInfoPanel.setVisible(false);
+			//toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottom());
+			toggleArrowButtonPrimary.addStyleName(res.css().primaryToggleArrowBottomrotateRight());
+			
+		}
+		else
+		{
+			mainInfoPanel.setVisible(true);
+			toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+			//toggleArrowButtonPrimary.setStyleName(res.css().primaryToggleArrowBottom());
+		}
+	}
+	
+	@UiHandler("toggleArrowButtonSecondary")
+	public void onClickHideSecondaryContainer(ClickEvent clickEvent){
+		if(secondaryContentsContainer.isVisible())
+		{
+			secondaryContentsContainer.setVisible(false);
+			//toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottom());
+			toggleArrowButtonSecondary.addStyleName(res.css().primaryToggleArrowBottomrotateRight());
+			
+		}
+		else
+		{
+			secondaryContentsContainer.setVisible(true);
+			toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+			//toggleArrowButtonPrimary.setStyleName(res.css().primaryToggleArrowBottom());
+		}
 	}
 	
 /*	@UiHandler("addTeacherTip")
