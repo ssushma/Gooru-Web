@@ -2099,5 +2099,5 @@ public interface MessageProperties {
     	String GL1653 = "Communication and Collaboration";
 
 
-    	String GL1637="Edit Folder Metadata";
+    	String GL1654="Edit Folder Metadata";
    };
