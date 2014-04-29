@@ -186,7 +186,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		organizeTitleLbl.setText(GL0180);
 		editFolderLbl.setText(GL1147);
 		deleteFolderLbl.setText(GL1148);
-		editMetaLbl.setText(GL1637);
+		editMetaLbl.setText(GL1654);
 		newCollectionBtn.setText(GL1451);
 		newFolderBtn.setText(GL1450);
 		
