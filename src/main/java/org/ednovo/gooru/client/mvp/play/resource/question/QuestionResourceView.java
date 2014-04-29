@@ -60,6 +60,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	private int hintsLength=0;
 	
 	private MultipleChoicesQuestionWidget multipleChoicesQuestionWidget=null;
+	private MultipleAnswersQuestionWidget multipleAnswersQuestionWidget=null;
 	private OpendEndedQuestionWidget opendEndedQuestionWidget=null;
 	private FillInTheBlankQuestionWidget fillInTheBlankQuestionWidget=null;
 	
@@ -115,6 +116,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		else if(collectionItemDo.getResource().getType()==4){
 			fillInTheBlankQuestionWidget=new FillInTheBlankQuestionWidget(collectionItemDo,attemptedAnswerDo);
 			questionContainer.add(fillInTheBlankQuestionWidget);
+		}else if(collectionItemDo.getResource().getType()==7){
+			multipleAnswersQuestionWidget=new MultipleAnswersQuestionWidget(collectionItemDo,attemptedAnswerDo);
+			questionContainer.add(multipleAnswersQuestionWidget);
 		}
 	}
 	private void clearAnswerOptionsContainer(){
@@ -226,6 +230,36 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 	public class MultipleChoicesQuestionWidget extends MultipleChoicesQuestionView{
 		private AttemptedAnswersDo attemptedAnswerDo=null;
 		public MultipleChoicesQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
+			super(collectionItemDo,attemptedAnswerDo);
+			this.attemptedAnswerDo=attemptedAnswerDo;
+		}
+		@Override
+		public void createSessionItemAttempt(int answerId,String answerAttemptStatus) {
+			getUiHandlers().createSessionItemAttempt(answerId, answerAttemptStatus);	
+		}
+		public void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo){
+			getUiHandlers().setAttemptStatus(collectionItemId, attemptAnswerDo);
+		}
+		public void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId) {
+			getUiHandlers().setAnswerAttemptSequence(attemptSequence, attemptStatus, answerId);
+		}
+		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
+			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,1);
+		}
+		public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+			getUiHandlers().setAnswerIdWithTime(answerId, answerStatus, answerSequence);
+			if(isFirstTry&&attemptedAnswerDo==null){
+				getUiHandlers().setResourceScore(score);
+			}
+		}
+		public void increaseUserAttemptCount(){
+			getUiHandlers().increaseUserAttemptCount();
+		}
+	}
+	
+	public class MultipleAnswersQuestionWidget extends MultipleAnswersQuestionView{
+		private AttemptedAnswersDo attemptedAnswerDo=null;
+		public MultipleAnswersQuestionWidget(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 			super(collectionItemDo,attemptedAnswerDo);
 			this.attemptedAnswerDo=attemptedAnswerDo;
 		}

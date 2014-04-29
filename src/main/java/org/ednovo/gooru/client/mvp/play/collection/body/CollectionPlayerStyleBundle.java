@@ -45,4 +45,5 @@ public interface CollectionPlayerStyleBundle extends CssResource {
 	String conceptTitle();
 	String userImage();
 	String insightsFrameContent();
+	String clearBoth();
 }

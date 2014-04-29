@@ -40,6 +40,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.CommentWidgetChildView;
+import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -81,8 +83,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlayerMetadataUiHandlers> implements IsPreviewPlayerMetadataView, MessageProperties{
 
-	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer;
-	@UiField Label userNameLabel,viewsCountLabel,courseTitle,successPostMsg,commentCount,seeMoreButton,characterLimit,noCommentsLbl,orText,toCommentText;
+	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer,courseTitle;
+	@UiField Label userNameLabel,viewsCountLabel,successPostMsg,commentCount,seeMoreButton,characterLimit,noCommentsLbl,orText,toCommentText;
 	@UiField Label lblWhatsNext, lblSeeOtherRelatedConcepts,lblAuthor, lblCourse, lblStandards, lblRelatedConcepts,loginMessagingText;
 	@UiField Image profileThumbnailImage,userPhoto;
 	@UiField HTMLPanel authorPanel,whatNextPanel,addComment,loginMessaging,relatedConceptsEndPage,relatedConceptsCoverPage,homePageConceptsPanel,
@@ -143,6 +145,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@Inject
 	public PreviewPlayerMetadataView(){
 		setWidget(uiBinder.createAndBindUi(this));
+		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		loginMessagingText.setText(GL0568);
 		orText.setText(GL0209);
 		toCommentText.setText(" "+GL0569);
@@ -237,16 +240,20 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		viewsCountLabel.setText(viewsText);
 	}
 	public void renderCourseInfo(List<String> courseInfo){
-		courseTitle.setText("");
+		courseTitle.clear();
 		if(courseInfo!=null&&courseInfo.size()>0){
 			courseSection.setVisible(true);
-			setCourseTitle(courseInfo.get(0));
+			//setCourseTitle(courseInfo.get(0));
+			SearchUiUtil.renderMetaData(courseTitle, courseInfo, 0);
+			Label dummyLabel=new Label();
+			dummyLabel.setStyleName(playerStyle.clearBoth());
+			courseTitle.add(dummyLabel);
 		}else{
 			courseSection.setVisible(false);
 		}
 	}
 	public void setCourseTitle(String title){
-		courseTitle.setText(title);
+		//courseTitle.setText(title);
 	}
 	public void setLikesCount(int likesCount){
 		

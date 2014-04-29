@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.DataInsightsUrlTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.uc.CollaboratorsUc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -72,8 +74,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView,MessageProperties{
 
 	
-	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer,messageContainer,frameContainer;
-	@UiField Label userNameLabel,viewsCountLabel,courseTitle,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc;
+	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer,messageContainer,frameContainer,courseTitle;
+	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc;
 	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,insightsHeaderText,insightsContentText;//collectionSummaryLbl,emptyMsgDescOne,emptyMsgDescTwo
 	@UiField Image profileThumbnailImage;
 	@UiField HTMLPanel authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer;
@@ -100,6 +102,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		teacherContainer.setVisible(false);
 		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 	}
 	
 	@Override
@@ -174,16 +177,20 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		viewsCountLabel.setText(viewsText);
 	}
 	public void renderCourseInfo(List<String> courseInfo){
-		courseTitle.setText("");
+		courseTitle.clear();
 		if(courseInfo!=null&&courseInfo.size()>0){
 			courseSection.setVisible(true);
-			setCourseTitle(courseInfo.get(0));
+			//setCourseTitle(courseInfo.get(0));
+			SearchUiUtil.renderMetaData(courseTitle, courseInfo, 0);
+			Label dummyLabel=new Label();
+			dummyLabel.setStyleName(playerStyle.clearBoth());
+			courseTitle.add(dummyLabel);
 		}else{
 			courseSection.setVisible(false);
 		}
 	}
 	public void setCourseTitle(String title){
-		courseTitle.setText(title);
+		//courseTitle.setText(title);
 	}
 	public void setLikesCount(int likesCount){
 		
