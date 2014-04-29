@@ -502,7 +502,6 @@
 .editPanelContent .titleSection .title {
     font-size:20px;
     font-weight:bold;
-    width:440px;
     float:left;
     height:30px;
     line-height:30px;
@@ -514,12 +513,11 @@
 }
 
 .editPanelContent .titleSection .dropdownButtonContainer {
-    float:right;
+    float:left;
     width:76px;
 }
 
 .editPanelContent .mainSection {
-    border-top:1px solid white;
     padding:5px 30px;
     background: #f0f0f0;
 }
@@ -724,7 +722,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
     background: url(../images/folders/panel/empty-folder-large.png) no-repeat center;
 }
 .buttonMargins {
-	margin: 10px 0px 0px 10px;	
+	margin: 0px 0px 0px 10px;	
 }
 
 .folderTitleElipses{
@@ -837,4 +835,61 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 
 .collectionButton{
 	margin-left: 10px !important;
+}
+
+/* Drop Down Menu*/
+.dropdownButtonContainer {
+	float: left;
+}
+
+.dropdownButtonContainer .dropdown {
+    display:none;
+    background: white;
+    border: 1px solid #ddd;
+    position: absolute;
+    z-index: 98;
+    margin-left: -105px;
+    line-height: 1.2em;
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.dropdownButtonContainer:hover .dropdown {
+    display:block;
+}
+
+.dropdownButtonContainer .dropdown .option {
+    padding:5px;
+}
+
+.dropdownButtonContainer .dropdown .option:hover {
+    background-color:#CFE3F1;
+    cursor:pointer;
+}
+
+.dropdownButtonContainer .dropdown .option.disabled {
+    color:#999;
+}
+
+.dropdownButtonContainer .dropdown .option.disabled:hover {
+    background-color:white;
+    cursor:default;
+}
+
+.dropdownItem {
+	height: 15px;
+	width: 15px;
+	margin: 5px;
+	padding-bottom: 6px;
+	cursor: pointer;
+	background: url('../images/settings/down-arrow.png') no-repeat center;
+}
+
+.dropdownItem:hover {
+	
+}
+
+.metaContainer {
+	height: 200px;
 }

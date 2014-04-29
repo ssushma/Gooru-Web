@@ -164,10 +164,10 @@
 
 .infoContainer {
 	/* padding: 20px; */
-	float: left;
 	width: 96%;
 	padding-left:40px;
 	padding-top: 20px;
+	float: left;
 }
 
 .gradeInfoContainer {
@@ -345,7 +345,7 @@ position: relative;
 	color: #CCCCCC;
 	float: left;
 	font-size: 16px;
-	min-height: 160px;
+
 }
 
 .shelfVocabulary {
@@ -1117,4 +1117,130 @@ float: left;
 	height: 28px;
 	padding-left: 2px;
 	width: 298px;
+}
+.primaryLabel{
+		font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color:#515151;
+	font-weight:bold;
+
+
+}
+.infoContainerMargin{
+	margin-top:20px;
+}
+.primaryLabelContainer{
+	width: 91%;
+		border-bottom: 1px solid #ccc;
+}
+.secondaryLabelContainer
+{
+	width: 91%;
+	border-bottom: 1px solid #ccc;
+}
+.primaryToggleArrowBottom {
+	background: url("images/toggle_arrow_down.png") no-repeat transparent;
+	cursor: pointer;
+	display: block;
+	float: right;
+	height: 14px;
+	width: 12px;
+	margin-top: -14px;
+
+}
+.primaryToggleArrowBottomrotateRight {
+	
+transform: rotate(270deg);
+-ms-transform: rotate(270deg); /* IE 9 */
+-webkit-transform: rotate(270deg); /* Safari and Chrome */
+-o-transform: rotate(270deg); /* Opera */
+-moz-transform: rotate(270deg); /* Firefox */
+
+/* if you want to do this move with animate use transition */
+transition: .5s;
+-moz-transition: .5s; /* Firefox 4 */
+-webkit-transition: .5s; /* Safari and Chrome */
+-o-transition: .5s; /* Opera */
+
+}
+.secondaryInformationContainer
+{
+	padding:20px;
+	float: left;
+width: 96%;
+padding-left:40px;
+}
+.secondaryInfoContainer {
+	float: left;
+	margin-right: 45px;
+	margin-bottom: 50px;
+	width: 42%;
+	margin-top:-8px;
+}
+.languageObjectiveContainer{
+		float: left;
+	margin-right: 45px;
+	width: 91%;
+	margin-top:20px;
+}
+.depthOfKnowledgeContainer
+{
+	float: left;
+	margin-right: 45px;
+	width: 91%;
+}
+.languageObjectiveTextArea
+{
+	width: 100%;
+resize: none;
+padding: 4px;
+border: 1px solid #ccc;
+font-size: 12px;
+font-family: Arial Unicode MS, Arial, sans-serif;
+height: 73px;
+}
+.languageObjectiveInfoContainer {
+	float: left;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 98%;
+	opacity: 0.6;
+}
+.checkBoxOuterContiner
+{
+	width:105%
+}
+.checkBoxinnerContiner
+{
+	width:18%;
+	float:left;
+}
+.checkBoxinnerContinerlevel2
+{
+	width:24%;
+	float:left;
+}
+.checkBoxinnerContinerlevel3{
+		width:29%;
+	float:left;
+}
+.checkBoxinnerContinerlevel4{
+		width:29%;
+	float:left;
+}
+.checkBoxlevels
+{
+	float:left;
+}
+.checkBoxinnerContinerlearning{
+		width:80%;
+	float:left;
+}
+.checkBoxinnerContinerlearninglevel2{
+			width:80%;
+	float:left;
+}
+.checkBoxinnerContinerlearninglevel3{
+				width:80%;
+	float:left;
 }
