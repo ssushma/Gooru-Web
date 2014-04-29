@@ -205,7 +205,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 			if(StringUtil.isPartnerUser(collectionResultDo.getOwner().getUsername())) {
 				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
 				creatorNameLblValue.getElement().getStyle().setCursor(Cursor.POINTER);
-				creatorNameLblValue.getElement().getStyle().setFloat(Float.LEFT);
+//				creatorNameLblValue.getElement().getStyle().setFloat(Float.LEFT);
 				
 				creatorNameLblValue.addClickHandler(new ClickHandler() {
 					
