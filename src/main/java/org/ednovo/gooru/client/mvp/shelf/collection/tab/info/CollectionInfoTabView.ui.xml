@@ -11,7 +11,7 @@
 	<g:HTMLPanel>
 	<g:HTMLPanel styleName="{res.css.infoContainer}">
 	<g:HTMLPanel styleName="{res.css.primaryLabelContainer}">
-			<g:HTMLPanel styleName="{res.css.primaryLabel}">Primary Information</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.primaryLabel}" ui:field="primaryLabelTag"></g:HTMLPanel>
 			<g:Label ui:field="toggleArrowButtonPrimary" styleName="{res.css.primaryToggleArrowBottom}"></g:Label>
 			</g:HTMLPanel>
 		<g:HTMLPanel ui:field="panelLoading">
@@ -99,7 +99,7 @@ Uncomment them if Teacher Tip option needs to be resumed
 			<g:HTMLPanel styleName="{res.css.secondaryInformationContainer}">
 				
 			<g:HTMLPanel styleName="{res.css.secondaryLabelContainer}">
-			<g:HTMLPanel styleName="{res.css.primaryLabel}">Secondary Information</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.primaryLabel}" ui:field="secondaryHeaderLabel"></g:HTMLPanel>
 			<g:Label ui:field="toggleArrowButtonSecondary" styleName="{res.css.primaryToggleArrowBottom}"></g:Label>
 			</g:HTMLPanel>
 			

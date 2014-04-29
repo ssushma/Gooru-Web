@@ -104,7 +104,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	@UiField ScrollPanel spanelAudiencePanel,spanelInstructionalPanel;	
 
 	@UiField
-	HTMLPanel panelLoading,mainInfoPanel,secondaryContentsContainer,htmlAudienceListContainer,htmlInstructionalListContainer;
+	HTMLPanel panelLoading,mainInfoPanel,secondaryContentsContainer,htmlAudienceListContainer,htmlInstructionalListContainer,primaryLabelTag,secondaryHeaderLabel;
 	
 	@UiField TextArea textAreaVal;
 	
@@ -251,12 +251,11 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		learninglevel3Label.setText(GL1653);
 		
 		lblInstructionalPlaceHolder.setText(GL0105);
-		lblAudiencePlaceHolder.setText(GL0105);
+		lblAudiencePlaceHolder.setText(GL0105);	
 		
-		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
-		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
-		
-	
+		primaryLabelTag.getElement().setInnerHTML(GL1656);
+		secondaryHeaderLabel.getElement().setInnerHTML(GL1657);
+
 		textAreaVal.getElement().setAttribute("maxlength", "1000");
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
@@ -391,6 +390,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		}
 		/*collectionCourseLstPanel.clear();
 		collectionCourseLstPanel.add(collectionCourseLst);*/
+
+		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		
+		secondaryContentsContainer.setVisible(true);
+		
 		panelLoading.setVisible(false);
 		mainInfoPanel.setVisible(true);
 	}
