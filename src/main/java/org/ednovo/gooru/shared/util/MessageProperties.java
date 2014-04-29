@@ -2079,6 +2079,25 @@ public interface MessageProperties {
     	String GL1635 ="Username cannot contain spaces";
     	
     	String GL1636="Note: Your teacher will receive an email from Gooru on your behalf";
+    	
+    	String GL1637="INSTRUCTIONAL METHOD";
+      	String GL1638="AUDIENCE";
+      	String GL1639="Choose the purpose for your collection";
+      	String GL1640="Choose an audience for this collection";
+      	String GL1641="e.g: Students will be able to explain patterns in the number of zeroes of an answer when multiplying by the powers of ten and explain patterns in the placement of decimal point.";
+      	String GL1642="LANGUAGE OBJECTIVES";
+      	String GL1643="DEPTH OF KNOWLEDGE";
+    	String GL1644="Choose the...";
+    	String GL1645="Level1: Recall";
+    	String GL1646="Level2: Skill/Concept";
+      	String GL1647="Level3: Strategic Thinking";
+      	String GL1648="Level4: Extended Thinking";      	
+      	String GL1649="LEARNING & INNOVATION SKILLS";      	
+      	String GL1650 = "Choose the skills that this collection addresses.";
+      	String GL1651 = "Creativity and Innovation";
+      	String GL1652 = "Critical Thinking and Problem Solving";
+    	String GL1653 = "Communication and Collaboration";
+
 
     	String GL1637="Edit Folder Metadata";
    };
