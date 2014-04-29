@@ -2079,5 +2079,6 @@ public interface MessageProperties {
     	String GL1635 ="Username cannot contain spaces";
     	
     	String GL1636="Note: Your teacher will receive an email from Gooru on your behalf";
+    	String GL1637 = "Next Generation Science Standards";
 
 };
