@@ -398,7 +398,12 @@ margin-top: -2px;
 	float: right;
 	right: 10px;
 }
-
+.myEducationArrowleftContainer {
+	position: absolute;
+	top: 12px;
+	float: right;
+	right: 97px;
+}
 .myFolderCollectionArrowleft {
 	background-position: -44px 0;
 	width: 15px;
@@ -881,6 +886,10 @@ user agent stylesheetdiv {
 .myFolderCollectionFormContent {
 	padding: 0px 0px 0px 0px;
 }
+.myEducationalFormContent{
+		padding: 0px 0px 0px 0px;
+		padding-top: 12px;
+}
 
 .myFolderCollectionFormTitle {
 	font-family: Arial, Helvetica, sans-serif;
@@ -919,7 +928,14 @@ user agent stylesheetdiv {
 	height: 28px;
 	margin-bottom: 10px;
 }
-
+.myEducationPanelInputDiv {
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	height: 28px;
+	margin-bottom: 10px;
+	margin-right: 92px;
+}
 .myFolderCollectionCategoryDivText {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -1340,6 +1356,16 @@ user agent stylesheetdiv {
 	z-index: 1;
 	top: -11px;
 	width: 358px;
+}
+.myEducationDropdown { /* height: 250px; */
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	z-index: 1;
+	top: -11px;
+	width: 264px;
 }
 .myshelfCollectionresourceDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);

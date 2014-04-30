@@ -212,11 +212,15 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionUrlbgTitle();
 		String myFolderCollectionFormContainer();
 		String myFolderCollectionFormContent();
+		String myEducationalFormContent();
+		String myEducationArrowleftContainer();
 		String myFolderCollectionFormTitle();
 		String myFolderCollectionFormInputControl();
 		String myFolderCollectionFormInputNoneborder();
 		String myFolderCollectionCategoryDiv();
 		String myFolderCollectionCategoryInputDiv();
+		String myEducationPanelInputDiv();
+		String myEducationDropdown();
 		String myFolderCollectionCategoryDivText();
 		String myFolderCollectionFormInputBottomText();
 		String myFolderCollectionThumbImageContainer();
