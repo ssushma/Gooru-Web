@@ -2098,6 +2098,8 @@ public interface MessageProperties {
       	String GL1652 = "Critical Thinking and Problem Solving";
     	String GL1653 = "Communication and Collaboration";
 
-
     	String GL1654="Edit Folder Metadata";
-   };
+    	String GL1655 = "Next Generation Science Standards";
+
+
+};

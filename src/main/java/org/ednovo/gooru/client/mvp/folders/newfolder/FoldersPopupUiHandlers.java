@@ -43,14 +43,12 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
  */
 public interface FoldersPopupUiHandlers extends BaseUiHandlers{
 	
-	//void createFolder();
 	/**
 	 * 
 	 * @param collectionDo {@link CollectionDo}
 	 */
 	void createFolder(CollectionDo collectionDo);
 	
-	//void createFolderToParentFolder();
 	/**
 	 * 
 	 * @param collectionDo {@link CollectionDo}

@@ -357,8 +357,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 			standardPanel.addStyleName(libraryStyleUc.tabsLi());
 			standardPanel.removeStyleName(libraryStyleUc.tabsLiInactive());
 			if(standardData.getWidgetCount()>0) {
-				standardData.getWidget(0).setVisible(true);
-				standardData.getWidget(1).setVisible(true);
+				setStandardDataWidgetVisibility(true,false);
 			}
 		}
 	}
@@ -650,6 +649,8 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else {
+				getStandardPrefCode(null);
 			}
 		}
 		if(courseIdRefresh!=null) {
