@@ -92,7 +92,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	public void onKeypressTextArea(KeyUpEvent event){
 		answerText=openEndedAnswerTextArea.getValue();
 		setOeQuestionAnswerText(answerText);
-		saveOeAnswerData();
+		//saveOeAnswerData();
 		 if(answerText!=null){
 			 if(answerText.trim().length()>=1000){
 				 errorMessageText.setText(ERROR_MESSAGE);
