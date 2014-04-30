@@ -36,4 +36,5 @@ public interface PreviewPlayerUiHandlers extends BaseUiHandlers,ShowResourceView
 	public void updateResourceThumbsRating(int userThumbsRataing);
 	public void showLoginPopupWidget(String widgetMode);
 	public void resetCollectionPlayer();
+	public boolean isOpenEndedAnswerSubmited();
 }

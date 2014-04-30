@@ -38,4 +38,5 @@ public interface CollectionPlayerUiHandlers extends BaseUiHandlers,ShowResourceV
 	public void resetCollectionPlayer();
 	public void getReportData(String associatedGooruOid);
 	public void revealTeachOrStudypage(String page);
+	public boolean isOpenEndedAnswerSubmited();
 	}

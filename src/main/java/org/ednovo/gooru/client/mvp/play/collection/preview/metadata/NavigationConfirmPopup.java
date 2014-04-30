@@ -42,13 +42,8 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @fileName : CopyConfirmPopupVc.java
+ * @fileName : NavigationConfirmPopup.java
  * 
- * @description :This class is used to copy collection in self page
- * 
- * @version : 5.5
- * 
- * @date: Apr 17, 2013
  * 
  * @Author :Gooru Team
  * 

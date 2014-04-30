@@ -421,6 +421,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			getContentReport(collectionItemDo.getResource().getGooruOid());
 		}
 		setUserAttemptedQuestionTypeAndStatus(false,0);
+		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter,false);
 	}
 	public void makeButtonActive(String tabView){
@@ -445,21 +446,6 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 				getView().makeButtonActive(false,false, false,true);
 			}
 			
-		}
-	}
-	public void openEndedAnswerSubmited(CollectionItemDo collectionItemDo){
-		if(collectionItemDo!=null){
-			String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
-			if(resourceTypeName.equalsIgnoreCase("assessment-question")){
-				if(collectionItemDo.getResource().getType()==6){
-					setOpenEndedAnswerSubmited(false);
-				}else{
-					setOpenEndedAnswerSubmited(true);
-				}
-			}
-			else{
-				setOpenEndedAnswerSubmited(true);
-			}
 		}
 	}
 	public void createSessionAttemptTryWhenNavigation(){
@@ -796,6 +782,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			clearIframeContent();
 			resoruceMetadataPresenter.resetResourceMetaData();
 			resourceInfoPresenter.resetResourceInfo();
+			setOpenEndedAnswerSubmited(true);
 		}
 	}
 	
