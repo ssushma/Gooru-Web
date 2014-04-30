@@ -492,10 +492,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param key check box name
 	 * @param value check box value
 	 */
-	public void renderCheckBox(HTMLPanel disclosurePanelVc, String key, String value) {
-		if (chkNotFriendly==null){
-			
-		}
+	public void renderCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
+		
 		chkNotFriendly = new CheckBox();
 		chkNotFriendly.setText(value);
 		
@@ -520,9 +518,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
 				if (chkNotFriendly.getValue()){
-					MixpanelUtil.MOS_Filter("Selected");
+					if(value.equalsIgnoreCase("Mobile Friendly")){
+						MixpanelUtil.MOS_Filter("Selected");
+					}else{
+						MixpanelUtil.mixpanelEvent("checks the OER filter box");
+					}
+					
 				}else{
-					MixpanelUtil.MOS_Filter("Unselected");
+					if(value.equalsIgnoreCase("Mobile Friendly")){
+						MixpanelUtil.MOS_Filter("Unselected");
+					}else{
+						MixpanelUtil.mixpanelEvent("unchecks the OER filter box");
+					}
+					
 				}
 				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 			}

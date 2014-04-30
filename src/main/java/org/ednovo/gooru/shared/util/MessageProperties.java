@@ -2112,6 +2112,27 @@ public interface MessageProperties {
     	String GL1661="Your responses will be lost.";
     	String GL1662="back to response";
     	String GL1663="continue";
-
-
+    	
+    	String GL1664="Educational Use";
+    	String GL1665="Activity";
+    	String GL1666="Homework";
+    	String GL1667="Game";
+    	String GL1668="Presentation";
+    	String GL1669="Reference Material";
+    	String GL1670="Quiz";
+    	String GL1671="Curriculum Plan";
+    	String GL1672="Lesson Plan";
+    	String GL1673="Unit Plan";
+    	String GL1674="Project Plan";
+    	String GL1675="Reading";
+    	String GL1676="Article";
+    	String GL1677="Book";
+    	String GL1678="Moments of Learning";
+    	String GL1679="Preparing the Learning";
+    	String GL1680="Interacting with the Text";
+    	String GL1681="Extending Understanding";
+     	String GL1682="Standards";
+    	String GL1683="e.g.CCSS.Math.Content.8.F.A.3";
+    	String GL1684="Please choose one of the following...";
+    	
    };
