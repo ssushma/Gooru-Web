@@ -216,6 +216,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myEducationArrowleftContainer();
 		String myFolderCollectionFormTitle();
 		String myFolderCollectionFormInputControl();
+		String myEducationFormInputControl();
 		String myFolderCollectionFormInputNoneborder();
 		String myFolderCollectionCategoryDiv();
 		String myFolderCollectionCategoryInputDiv();

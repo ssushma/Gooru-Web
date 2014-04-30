@@ -424,7 +424,7 @@
 		<!-- Standards Start -->
 		 <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="standardsText"></g:HTMLPanel>
-          <g:HTMLPanel styleName="{res.css.myFolderCollectionFormInputControl}">
+          <g:HTMLPanel styleName="{res.css.myEducationFormInputControl}">
 				<g:TextBox ui:field="standardsTextBox" styleName="{res.css.inputTextBox}"/>
           </g:HTMLPanel>
            <g:Label ui:field="mandatoryStandardsLblForSwareWords"></g:Label>
