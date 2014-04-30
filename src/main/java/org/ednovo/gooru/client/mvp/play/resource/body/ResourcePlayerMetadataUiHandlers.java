@@ -36,4 +36,6 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
 	public void deleteReaction(String gooruReactionId);   
 	
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
+	
+	public boolean isOeAnswerSubmited();
 }
