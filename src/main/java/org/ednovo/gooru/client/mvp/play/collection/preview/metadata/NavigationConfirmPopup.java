@@ -83,10 +83,10 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 		this.setModal(true);
 	}
 	public void setStaticTexts(){
-		popupHeader.setText(GL1656);
-		popupText.setText(GL1657);
-		continueButton.setText(GL1659);
-		backToResponseButton.setText(GL1658);
+		popupHeader.setText(GL1660);
+		popupText.setText(GL1661);
+		continueButton.setText(GL1663);
+		backToResponseButton.setText(GL1662);
 		continueButton.getElement().setId("backtoresponse");
 		backToResponseButton.getElement().setId("continue");
 	}
