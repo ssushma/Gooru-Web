@@ -63,7 +63,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresente
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPreviewPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
-import org.ednovo.gooru.client.uc.NarrationUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -572,8 +571,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()))
 		getProfilUserVisibility(collectionDo.getUser().getGooruUId());
 		getView().setStudentViewLink();
-		//stopResourceDataLog();
-		//resetAnswerLists();
 		clearIframeContent();
 		metadataPresenter.setPreviewHomePresenter();
 		if(!AppClientFactory.isAnonymous()){
@@ -634,7 +631,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
 			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
-		openEndedAnswerSubmited(collectionItemDo);
+		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 		
 	}
@@ -650,21 +647,13 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		setOpenEndedAnswerSubmited(true);
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
-				//makeButtonActive(tabView);
 				return;
 			}
 		}
-		//TODO need to check is collection sharable or not, need to enable narration button if narration exist.
-		//enablePlayerButton(true,false, true, false, true);
 		this.collectionSummaryId=collectionDo.getGooruOid();
-		//makeButtonActive(tabView);
 		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
-		PlaceRequest previousResoruceRequest=getPreviousButtonRequestUrl();
 		getView().setResourceTitle(collectionDo.getTitle());
 		getView().setStudentViewLink();
-		//getView().resetThumbsButtons();
-		//getView().updateThumbsRatingView(collectionDo.getUserRating());
-		//resoruceMetadataPresenter.showResourceWidget(collectionDo,previousResoruceRequest);
 		clearIframeContent();
 		if(!AppClientFactory.isAnonymous()){
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
@@ -679,21 +668,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		
 	}
 	
-	public void openEndedAnswerSubmited(CollectionItemDo collectionItemDo){
-		if(collectionItemDo!=null){
-			String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
-			if(resourceTypeName.equalsIgnoreCase("assessment-question")){
-				if(collectionItemDo.getResource().getType()==6){
-					setOpenEndedAnswerSubmited(false);
-				}else{
-					setOpenEndedAnswerSubmited(true);
-				}
-			}
-			else{
-				setOpenEndedAnswerSubmited(true);
-			}
-		}
-	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
 			if(tabView.equalsIgnoreCase("add")){

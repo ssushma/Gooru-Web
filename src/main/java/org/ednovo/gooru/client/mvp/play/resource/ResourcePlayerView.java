@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.header.ResourcePlayerHeaderView;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
@@ -165,8 +166,20 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	
 	public class CloseResourcePlayerEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
-			hideFromPopup(true);
-			resetPlayer();
+			if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+				new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						hideFromPopup(true);
+						resetPlayer();
+					}
+				};
+			}else{
+				hideFromPopup(true);
+				resetPlayer();
+			}
+			
 		}
 	}
 	

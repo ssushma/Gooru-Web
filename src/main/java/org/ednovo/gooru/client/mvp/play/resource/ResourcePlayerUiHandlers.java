@@ -34,4 +34,5 @@ public interface ResourcePlayerUiHandlers extends BaseUiHandlers,ShowResourceVie
 	public void updateResourceThumbsRating(int userThumbsRataing);
 	public void showLoginPopupWidget(String widgetMode);
 	public void getContentReport(String assoGooruId);
+	public boolean isOpenEndedAnswerSubmited();
 }

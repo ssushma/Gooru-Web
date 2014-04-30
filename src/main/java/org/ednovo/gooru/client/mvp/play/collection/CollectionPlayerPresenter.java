@@ -619,16 +619,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		if(!AppClientFactory.isAnonymous()){
 			getReportData(collectionItemDo.getResource().getGooruOid());
 		}
-//		getView().showAddToolTip();
 		setUserAttemptedQuestionTypeAndStatus(false,0);
-		//getView().setResourceTitle(collectionItemDo.getResource().getTitle());
-		//getView().resetThumbsButtons();
-		//getView().updateThumbsRatingView(collectionItemDo.getResource().getUserRating());
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
 		}
-		openEndedAnswerSubmited(collectionItemDo);
+		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 		
 	}
@@ -673,22 +669,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setDataInsighsUrl();
 		}
 	};
-	
-	public void openEndedAnswerSubmited(CollectionItemDo collectionItemDo){
-		if(collectionItemDo!=null){
-			String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
-			if(resourceTypeName.equalsIgnoreCase("assessment-question")){
-				if(collectionItemDo.getResource().getType()==6){
-					setOpenEndedAnswerSubmited(false);
-				}else{
-					setOpenEndedAnswerSubmited(true);
-				}
-			}
-			else{
-				setOpenEndedAnswerSubmited(true);
-			}
-		}
-	}
 	
 	public void setClassCollectionDataInsightsUrl(){
 		if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){

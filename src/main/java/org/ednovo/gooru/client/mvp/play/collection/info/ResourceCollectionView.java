@@ -120,12 +120,22 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 	}
 	
 	public void setCollectionMetadata(){
+		
+		int resourceCount = resourceSearchResultDo.getNoOfResources();
+		int questionCount = resourceSearchResultDo.getNoOfQuestions();
 		metadataContainer.clear();
 		metadataContainer.add(getCourseNames());
 		metadataContainer.add(getViewsLabel());
-		metadataContainer.add(getSeparator());
-		metadataContainer.add(setResourceCount());
+		if(resourceCount>0 || (resourceCount==0&&questionCount==0)) {
+			metadataContainer.add(getSeparator());
+			metadataContainer.add(setResourceCount(resourceCount));
+		}
+		if(questionCount>0) {
+			metadataContainer.add(getSeparator());
+			metadataContainer.add(setQuestionCount(questionCount));
+		}
 	}
+	
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor=new Anchor();
 		String userNameText=userName.getText();
@@ -179,9 +189,16 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 		return separator;
 	}
 	
-	private Label setResourceCount(){
-		String resourcesCount=resourceSearchResultDo.getNoOfResources()==1?resourceSearchResultDo.getNoOfResources()+" "+GL1110:resourceSearchResultDo.getNoOfResources()+" "+GL0174;
+	private Label setResourceCount(int count){
+		String resourcesCount=count==1?count+" "+GL1110:count+" "+GL0174;
 		Label resourceCountLabel=new Label(resourcesCount);
+		resourceCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceCount());
+		return resourceCountLabel;
+	}
+
+	private Label setQuestionCount(int count){
+		String questionCount=count==1?count+" "+GL0308:count+" "+GL1042;
+		Label resourceCountLabel=new Label(questionCount);
 		resourceCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceCount());
 		return resourceCountLabel;
 	}
