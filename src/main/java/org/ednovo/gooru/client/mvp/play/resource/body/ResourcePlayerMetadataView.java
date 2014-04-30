@@ -31,10 +31,12 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
@@ -51,11 +53,13 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -67,11 +71,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static FlowPanel wrapperContainerField;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer;
-	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive;
+	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer,ratingsContainer;
+	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,starValue;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
+	
+	/*@UiField SimpleCheckBox starFive,starFour,starThree,starTwo,starOne;*/
+	
+	/*@UiField  StarRatingsUc starRatings;*/
 
 	HandlerRegistration forwardButtonHandler=null, backwardButtonHandler=null;
 	
@@ -89,6 +97,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private boolean isNeedHelpSelected=false;
 	private CollectionItemDo collectionItemDo=null;
 	private String gooruReactionId="";
+	private UserStarRatingsWidget userStarRatings = null;
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
@@ -107,8 +116,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFour.setText(GL0584); 
 		reactionToolTipFive.setText(GL0585); 
 		
+		starValue.setVisible(false);
+		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+		}
+		
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
+//			collectionContainer.add(starRatingsUc);
 		}
 	}
 
@@ -730,5 +746,78 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		return isProtocolsMatched;
 	}
 	
+	/**
+	 * Sets the user ratings and and star rating widget will get added.
+	 * 
+	 * @param result {@link StarRatingsDo}
+	 * @param showThankYouToolTip {@link Boolean}
+	 */
+	@Override
+	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip) {
+		userStarRatings = new UserStarRatingsWidget(result,showThankYouToolTip);
+		ratingsContainer.clear();
+		ratingsContainer.add(userStarRatings);
+	}
+	
+	@Override
+	public void setDefaultUserStarRatings() {
+		starValue.setVisible(false);
+	}
+	
+	/**
+	 * 
+	 * Inner class extending to StarRatingsUc {@link StarRatingsUc}
+	 *
+	 */
+	public class UserStarRatingsWidget extends StarRatingsUc{
+		StarRatingsDo ratingsDo =null;
+		public boolean showThankYouToolTip;
+		
+		/**
+		 * Class Constructor
+		 * @param result {@link StarRatingsDo}
+		 * @param showThankYouToolTip {@link Boolean} 
+		 */
+		public UserStarRatingsWidget(StarRatingsDo result, boolean showThankYouToolTip) { 
+			this.ratingsDo=result;
+			this.showThankYouToolTip=showThankYouToolTip;
+			setRatings(result,showThankYouToolTip);
+		}
+		
+		/**
+		 * Implementation of parent class method, in this create API will be called based the rating selected.
+		 * @param selectedStar {@link String}
+		 */
+		@Override
+		public void crateStarRating(String selectedStar) {
+			if(selectedStar.equals("starOne")){
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true);
+			}else if(selectedStar.equals("starTwo")){                                           
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true);
+			}else if(selectedStar.equals("starThree")){                                          
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true);
+			}else if(selectedStar.equals("starFour")){                                           
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true);
+			}else if(selectedStar.equals("starFive")){                                           
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true);
+			}
+		}
+		
+		/**
+		 * Sets the Star rating based on the API result.
+		 * @param result {@link StarRatingsDo}
+		 * @param showThankYouToolTip {@link Boolean} 
+		 */
+		private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
+			if(showThankYouToolTip){
+				ThankYouResourceStarRatings thankYouResourceStarRatings = new ThankYouResourceStarRatings();
+				thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+				thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+				thankYouResourceStarRatings.show();
+				thankYouResourceStarRatings.setAutoHideEnabled(true);
+			}
+			setUserRatings(result);
+		}
+	}
 	
 }

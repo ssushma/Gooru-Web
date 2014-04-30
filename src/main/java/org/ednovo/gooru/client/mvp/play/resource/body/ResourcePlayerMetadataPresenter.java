@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+
  * 
  *  http://www.goorulearning.org/
  * 
@@ -37,9 +38,11 @@ import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresen
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -204,6 +207,53 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 	public void createSessionAttemptTryWhenNavigation(int questionType){
 		questionResourcePresenter.createSessionAttemptTryWhenNavigation(questionType);
+	}
+	
+	
+	/**
+	 * Creates the ratings based on the user input and triggers the API.
+	 * 
+	 * @param associateGooruOid {@link String}
+	 * @param starRatingValue {@link Integer}
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@Override
+	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip) {
+		AppClientFactory.getInjector().getPlayerAppService().createStarRatings(associateGooruOid,starRatingValue,new SimpleAsyncCallback<StarRatingsDo>() {
+
+			@Override
+			public void onSuccess(StarRatingsDo result) { 
+				getView().setUserStarRatings(result,showThankYouToolTip);
+			}
+		});
+	}
+
+	/**
+	 * Sets the Ratings for a resource.
+	 * 
+	 * @param collectionItemDo {@link CollectionItemDo}
+	 */
+	public void setResourceStarRatings(CollectionItemDo collectionItemDo) { 
+		/*AppClientFactory.getInjector().getPlayerAppService().getResourceStarRatings(collectionItemDo.getResource().getGooruOid(),AppClientFactory.getGooruUid(),new SimpleAsyncCallback<StarRatingsDo>() {
+
+			@Override
+			public void onSuccess(StarRatingsDo result) {
+				getView().setUserStarRatings(result,null);
+			}
+		});*/
+		
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				if(result.size()>0){
+					getView().setUserStarRatings(result.get(0),false); 
+				}else{
+					getView().setUserStarRatings(null,false); 
+				}
+				
+			}
+		});
 	}
 
 }

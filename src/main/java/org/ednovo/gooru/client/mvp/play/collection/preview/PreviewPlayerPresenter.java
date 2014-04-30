@@ -614,6 +614,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
+			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 		
