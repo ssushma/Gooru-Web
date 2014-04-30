@@ -128,6 +128,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 //			collectionContainer.add(starRatingsUc);
 		}
+		if(AppClientFactory.isAnonymous()){
+			userStarRatings = new UserStarRatingsWidget();
+			ratingsContainer.clear();
+			ratingsContainer.add(userStarRatings);
+		}
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -182,7 +187,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		backwardButtonHandler=backwardButton.addClickHandler(new ShowResourceView(previousResourceRequest));
 	}
 
-	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest){
+	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest){ 
 		if(AppClientFactory.isAnonymous()){
 			setDefaultReaction();
 		}
@@ -795,7 +800,19 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			this.showThankYouToolTip=showThankYouToolTip;
 			setRatings(result,showThankYouToolTip);
 		}
-		
+		/**
+		 * Class constructor
+		 */
+		public UserStarRatingsWidget() {
+			setDefaultRatings();
+		}
+		/**
+		 * Sets the default rating.
+		 */
+		private void setDefaultRatings() {
+			getDefaultRatings();
+		}
+
 		/**
 		 * Implementation of parent class method, in this create API will be called based the rating selected.
 		 * @param selectedStar {@link String}
