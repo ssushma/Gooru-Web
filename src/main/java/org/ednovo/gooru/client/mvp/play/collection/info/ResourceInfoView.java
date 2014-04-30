@@ -76,7 +76,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public static final String STANDARD_CODE = "code";
 	public static final String STANDARD_DESCRIPTION = "description";
 	
-	@UiField HTMLPanel resourceDescription,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel;;
+	@UiField HTMLPanel resourceDescription,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
+	oerPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
+	readingLevelPanel,schoolLevelPanel,languagePanel,countryCodePanel,addsPanel,copyRightPanel,hostPanel,courseNumberPanel,
+	seriesPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -85,12 +88,18 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	//@UiField Label staticGradeText;
 	
 	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblPublisher,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
-					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle;
+					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,oerTitle,mbFriendlyLbl,
+					mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,eduUseType,
+					eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,dKnowledgeType,readingLevelLbl,readingLevelType,
+					schoolLevelType,schoolLevelLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,addsLbl,addsType,
+					copyRightType,copyRightLbl,hostType,hostLbl,cNoLbl,cNoType,seriesType,seriesLbl,controlType,controlLbl,
+					acessHazardlLbl,acessHazardType,mediaFeatureLbl,mediaFeatureType,accessModelLbl,accessModeType,accesibilityLbl,generalLbl;
+	
 	@UiField static Label standaInfo;
 	
 	@UiField FlowPanel standardsInfoConatiner,licenceContainer;
 	
-	@UiField HTML resourceInfoSeparator;
+	@UiField HTML resourceInfoSeparator,resourceInfoSeparatorTimeLbl,metadataBottomseperatorLine,metadataBottomseperatorLineTwo;
 	@UiField
 	HTMLEventPanel hideButton;
 	
@@ -103,6 +112,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     private static final  String PAGE_SIZES="20";
     
     private static final String NOT_FRIENDY_TAG="not_iPad_friendly";
+    
+    private static final String BOTTOMSEPARATOR="____________________________________________________________________";
     
     
     private int collectionItemSizeData=0;
@@ -123,6 +134,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
+		generalLbl.setText(GL1684);
 		publisherText.setText(GL0566);
 		courseText.setText(GL0616);
 		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
@@ -135,8 +147,84 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
 	//	standaInfo.setText(GL0977);
 		resourceInfoSeparator.setHTML(SEPARATOR);
+		resourceInfoSeparatorTimeLbl.setHTML(SEPARATOR);
 		resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
-		
+		timeRequiredLabel.setText(GL1660+GL_SPL_SEMICOLON);
+		resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
+		oerTitle.setText(GL1661+GL_SPL_SEMICOLON);
+		mbFriendlyLbl.setText(GL1662+GL_SPL_SEMICOLON);
+		mbFriendlyText.setText("");
+		metadataBottomseperatorLine.setHTML(BOTTOMSEPARATOR);
+		dataTypeLbl.setText(GL1663+GL_SPL_SEMICOLON);
+		dataTypeFormat.setText("");
+		interactiveLbl.setText(GL1664+GL_SPL_SEMICOLON);
+		interactiveType.setText("");
+		eduAllignLbl.setText(GL1665+GL_SPL_SEMICOLON);
+		eduAllignType.setText("");
+		eduUseLbl.setText(GL1666+GL_SPL_SEMICOLON);
+		eduUseType.setText("");
+		eduRoleLbl.setText(GL1667+GL_SPL_SEMICOLON);
+		eduRoleType.setText("");
+		ageRangeLbl.setText(GL1668+GL_SPL_SEMICOLON);
+		ageRangeType.setText("");
+		dKnowledgeLbl.setText(GL1669+GL_SPL_SEMICOLON);
+		dKnowledgeType.setText("");
+		readingLevelLbl.setText(GL1670+GL_SPL_SEMICOLON);
+		readingLevelType.setText("");
+		schoolLevelLbl.setText(GL1671+GL_SPL_SEMICOLON);
+		schoolLevelType.setText("");
+		languageLbl.setText(GL1672+GL_SPL_SEMICOLON);
+		languageType.setText("");
+		countryCodeLbl.setText(GL1673+GL_SPL_SEMICOLON);
+		countryCodeType.setText("");
+		addsLbl.setText(GL1674+GL_SPL_SEMICOLON);
+		addsType.setText("");
+		copyRightLbl.setText(GL1675+GL_SPL_SEMICOLON);
+		copyRightType.setText("");
+		hostLbl.setText(GL1676+GL_SPL_SEMICOLON);
+		hostType.setText("");
+		cNoLbl.setText(GL1677+GL_SPL_SEMICOLON);
+		cNoType.setText("");
+		seriesLbl.setText(GL1678+GL_SPL_SEMICOLON);
+		seriesType.setText("");
+		metadataBottomseperatorLineTwo.setHTML(BOTTOMSEPARATOR);
+		accesibilityLbl.setText(GL1679);
+		controlLbl.setText(GL1680+GL_SPL_SEMICOLON);
+		controlType.setText("");
+		acessHazardlLbl.setText(GL1681+GL_SPL_SEMICOLON);
+		acessHazardType.setText("");
+		mediaFeatureLbl.setText(GL1682+GL_SPL_SEMICOLON);
+		mediaFeatureType.setText("");
+		accessModelLbl.setText(GL1683+GL_SPL_SEMICOLON);
+		accessModeType.setText("");
+		generalLbl.setVisible(false);
+		timeRequiredLabel.setVisible(false);
+		resourceInfoSeparatorTimeLbl.setVisible(false);
+		oerPanel.setVisible(false);
+		mobileFriendlyPanel.setVisible(false);
+		metadataBottomseperatorLine.setVisible(false);
+		DataTypePanel.setVisible(false);
+		interactivityTypePanel.setVisible(false);
+		eduAllignPanel.setVisible(false);
+		eduUsePanel.setVisible(false);
+		eduRolePanel.setVisible(false);
+		ageRangePanel.setVisible(false);
+		dKnowledgePanel.setVisible(false);
+		readingLevelPanel.setVisible(false);
+		schoolLevelPanel.setVisible(false);
+		languagePanel.setVisible(false);
+		countryCodePanel.setVisible(false);
+		addsPanel.setVisible(false);
+		copyRightPanel.setVisible(false);
+		hostPanel.setVisible(false);
+		courseNumberPanel.setVisible(false);
+		seriesPanel.setVisible(false);
+		metadataBottomseperatorLineTwo.setVisible(false);
+		accessibilityPanel.setVisible(false);
+		controlPanel.setVisible(false);
+		accessHazardPanel.setVisible(false);
+		mediaFeaturePanel.setVisible(false);
+		accessModePanel.setVisible(false);
 		
 	}
 
@@ -491,6 +579,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
 				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getDefinition()));
+				//image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getName()));
 				image.addMouseOutHandler(new MouseOutHideToolTip());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();

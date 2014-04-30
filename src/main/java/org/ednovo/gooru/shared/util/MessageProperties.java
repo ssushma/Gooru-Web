@@ -2106,6 +2106,32 @@ public interface MessageProperties {
     	
     	String GL1658="TEACHER TIPS";
     	String GL1659="Share how you use this collection with your students. This will help other teachers understand how you are using your collection.";
-
+    	
+    	//Added new fields for player metadata.
+    	String GL1660="Time Required";
+    	String GL1661="OER";
+    	String GL1662="Mobile Friendly";
+    	String GL1663="Data Type";
+    	String GL1664="Interactivity Type";
+    	String GL1665="Educational Alignment";
+    	String GL1666="Educational Use";
+    	String GL1667="Educational Role";
+    	String GL1668="Age Range";
+    	String GL1669="Depth of Knowledge";
+    	String GL1670="Reading Level";
+     	String GL1671="School Level";
+     	String GL1672="Language";
+    	String GL1673=	"Country Code";
+    	String GL1674="Ads";
+    	String GL1675="Copyright Holder";
+    	String GL1676="Host";
+    	String GL1677="Course Number";
+    	String GL1678="Series Title";
+    	String GL1679="ACCESSIBILITY";
+    	String GL1680="Control Flexibility";
+    	String GL1681="Access Hazard";
+    	String GL1682=	"Media Feature";
+    	String GL1683="Access Mode";
+    	String GL1684="GENERAL";
 
 };
