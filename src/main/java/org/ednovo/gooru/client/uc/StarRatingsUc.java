@@ -26,6 +26,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -78,22 +80,35 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starOne")
 	public void onStarOneclicked(ClickEvent event){
-		if(starOne.getValue()){
-			crateStarRating("starOne");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starOne.getValue()){
+				crateStarRating("starOne");
+			}else{
+			}
 		}
+		
+		
 	}
-	
+
 	/**
 	 * On click of Star 2 sets the rating on view.
 	 * @param clickEvent {@link ClickEvent}
 	 */
 	@UiHandler("starTwo")
 	public void onStarTwoclicked(ClickEvent event){
-		if(starTwo.getValue()){
-			crateStarRating("starTwo");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starTwo.getValue()){
+				crateStarRating("starTwo");
+			}else{
+			}
 		}
+		
 	}
 	
 	/**
@@ -102,9 +117,14 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starThree")
 	public void onStarThreeclicked(ClickEvent event){
-		if(starThree.getValue()){
-			crateStarRating("starThree");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starThree.getValue()){
+				crateStarRating("starThree");
+			}else{
+			}
 		}
 	}
 	
@@ -114,10 +134,16 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starFour")
 	public void onStarFourclicked(ClickEvent event){
-		if(starFour.getValue()){
-			crateStarRating("starFour");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starFour.getValue()){
+				crateStarRating("starFour");
+			}else{
+			}
 		}
+		
 	}
 	
 	/**
@@ -126,10 +152,16 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starFive")
 	public void onStarFiveclicked(ClickEvent event){
-		if(starFive.getValue()){
-			crateStarRating("starFive");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starFive.getValue()){
+				crateStarRating("starFive");
+			}else{
+			}
 		}
+		
 	}
 
 	/**
@@ -200,5 +232,25 @@ public abstract class StarRatingsUc extends Composite {
 	 * @param selectedStar
 	 */
 	public abstract void crateStarRating(String selectedStar);
-
+	
+	/**
+	 * Invokes Log-in pop-up
+	 */
+	private void showLoginPopupWidget() { 
+		LoginPopupUc popup =new LoginPopupUc();
+		popup.setWidgetMode("ratingWidget");
+		popup.setGlassEnabled(true);
+	}
+	
+	/**
+	 * default rating will get set
+	 */
+	public void getDefaultRatings(){
+		starOne.setValue(false);
+		starTwo.setValue(false);
+		starThree.setValue(false);
+		starFour.setValue(false);
+		starFive.setValue(false);
+	}
+	
 }
