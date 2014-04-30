@@ -63,7 +63,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.CollectionFormInPlayPresente
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListInPreviewPlayEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
-import org.ednovo.gooru.client.uc.NarrationUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -201,8 +200,10 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	private boolean isUserAttemptedAnswer=false;
 	
 	private int userAttemptedQuestionType=0;
+	
+	private boolean isOpenEndedAnswerSubmited=false;
      
-    public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
+	public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
     
     public static final  Object METADATA_PRESENTER_SLOT = new Object();
     
@@ -333,6 +334,20 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	 */
 	public void setCollectionScore(Integer collectionScore) {
 		this.collectionScore = collectionScore;
+	}
+
+   /**
+	 * @return the isOpenEndedAnswerSubmited
+	 */
+	public boolean isOpenEndedAnswerSubmited() {
+		return isOpenEndedAnswerSubmited;
+	}
+
+	/**
+	 * @param isOpenEndedAnswerSubmited the isOpenEndedAnswerSubmited to set
+	 */
+	public void setOpenEndedAnswerSubmited(boolean isOpenEndedAnswerSubmited) {
+		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
 	}
 	
 	@Inject
@@ -545,6 +560,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		metadataPresenter.displayAuthorDetails(true);
 		metadataPresenter.setCollectionMetadata(collectionDo);
 		showSignupPopup();
+		setOpenEndedAnswerSubmited(true);
 		if(this.collectionMetadataId!=null){
 			if(this.collectionMetadataId.equalsIgnoreCase(collectionDo.getGooruOid())){
 				return;
@@ -554,8 +570,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()))
 		getProfilUserVisibility(collectionDo.getUser().getGooruUId());
 		getView().setStudentViewLink();
-		//stopResourceDataLog();
-		//resetAnswerLists();
 		clearIframeContent();
 		metadataPresenter.setPreviewHomePresenter();
 		if(!AppClientFactory.isAnonymous()){
@@ -614,7 +628,9 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
+			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
+		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 		
 	}
@@ -627,23 +643,16 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		metadataPresenter.setCollectionMetadata(collectionDo);
 		metadataPresenter.getFlagedReport(collectionId);
 		showSignupPopup();
+		setOpenEndedAnswerSubmited(true);
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
-				//makeButtonActive(tabView);
 				return;
 			}
 		}
-		//TODO need to check is collection sharable or not, need to enable narration button if narration exist.
-		//enablePlayerButton(true,false, true, false, true);
 		this.collectionSummaryId=collectionDo.getGooruOid();
-		//makeButtonActive(tabView);
 		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
-		PlaceRequest previousResoruceRequest=getPreviousButtonRequestUrl();
 		getView().setResourceTitle(collectionDo.getTitle());
 		getView().setStudentViewLink();
-		//getView().resetThumbsButtons();
-		//getView().updateThumbsRatingView(collectionDo.getUserRating());
-		//resoruceMetadataPresenter.showResourceWidget(collectionDo,previousResoruceRequest);
 		clearIframeContent();
 		if(!AppClientFactory.isAnonymous()){
 			metadataPresenter.getFlagedReport(collectionDo.getGooruOid());
@@ -657,6 +666,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
 		
 	}
+	
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
 			if(tabView.equalsIgnoreCase("add")){
@@ -1606,6 +1616,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			resoruceMetadataPresenter.resetResourceMetaData();
 			resourceInfoPresenter.resetResourceInfo();
 			collectionPlayerTocPresenter.clearNavigationPanel();
+			setOpenEndedAnswerSubmited(false);
 		}
 		
 	}

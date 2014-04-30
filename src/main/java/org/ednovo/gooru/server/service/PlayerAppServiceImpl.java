@@ -931,6 +931,14 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return standardIdVal;
 	}
 	
+	/**
+	 * Creates a Ratings given by the user by triggering Create Rating API.
+	 * 
+	 *  @param associateGooruOid {@link String}
+	 *  @param starRatingValue {@link Integer}
+	 *  
+	 *  @return StarRating model object {@link StarRatingsDo} 
+	 */
 	@Override
 	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue) {
 		JsonRepresentation jsonRep=null;
@@ -942,8 +950,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 createStarRatingsJsonObj.put(SCORE, starRatingValue);
 			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));
 			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
-			 System.out.println("----??? "+url );
-			 System.out.println("----??? "+createStarRatingsJsonObj.toString() );
 			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
 			 jsonRep= jsonResponseRep.getJsonRepresentation();
 			 jsonObject= jsonRep.getJsonObject();
@@ -953,6 +959,13 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		return deserializeResourceStarRatings(jsonObject);
 	}
+	
+	/**
+	 * Deserializes  Star rating model object.
+	 * 
+	 * @param jsonObject {@link JSONObject}
+	 * @return starRatingsDo {@link StarRatingsDo}
+	 */
 	
 	private StarRatingsDo deserializeResourceStarRatings(JSONObject jsonObject) {
 		StarRatingsDo starRatingsDo = new  StarRatingsDo(); 
@@ -966,6 +979,15 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		
 		return starRatingsDo;
 	}
+	
+	/**
+	 * Gets the ratings given by the user for each resource by calling an API.
+	 * 
+	 * @param associateGooruOid {@link String}
+	 * @param gooruUid {@link String}
+	 *  
+	 * @return StarRating model object {@link StarRatingsDo} 
+	 */
 
 	@Override
 	public StarRatingsDo getResourceStarRatings(String associatedGooruOid, String gooruUid) {
@@ -973,7 +995,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JSONObject jsonObject=null;
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STAR_RATINGS,associatedGooruOid,getLoggedInSessionToken(),gooruUid);
-			System.out.println("--- get ratings -- "+url); 
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRep.getJsonObject();
@@ -983,13 +1004,20 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return deserializeResourceStarRatings(jsonObject);
 	}
 
+	/**
+	 * Gets the over all content star ratings for each resource by calling an API.
+	 * 
+	 * @param associateGooruOid {@link String}
+	 * @param gooruUid {@link String}
+	 *  
+	 * @return StarRating model object {@link StarRatingsDo} 
+	 */
 	@Override
 	public ContentStarRatingsDo getContentStarRatings(String gooruOid) {
 		JsonRepresentation jsonRepresentation =null;
 		JSONObject jsonObject = null;
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_STAR_RATINGS,gooruOid,getLoggedInSessionToken());
-			System.out.println("--- get content ratings -- "+url); 
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url,getRestUsername(), getRestPassword());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRepresentation.getJsonObject();
@@ -997,7 +1025,13 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		return deserializeContentStarRatings(jsonObject);
 	}
-
+	
+	/**
+	 * Deserializes Content star rating  model object.
+	 * 
+	 * @param jsonObject {@link JSONObject}
+	 * @return starRatingsDo {@link ContentStarRatingsDo}
+	 */
 	private ContentStarRatingsDo deserializeContentStarRatings(JSONObject jsonObject) {
 		ContentStarRatingsDo contentStarRatingsDo = new  ContentStarRatingsDo(); 
 		try {
@@ -1010,6 +1044,15 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return contentStarRatingsDo;
 	}
 
+	/**
+	 * Updates the rating for a resource resource by calling an API.
+	 * 
+	 * @param gooruOid {@link String}
+	 * @param score {@link Integer}
+	 *  
+	 * @return StarRating model object {@link StarRatingsDo} 
+	 */
+	
 	@Override
 	public StarRatingsDo updateResourceStarRatings(String gooruOid, int score) {
 		JsonRepresentation jsonRepresentation=null;
@@ -1027,6 +1070,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		
 		return deserializeResourceStarRatings(jsonObject);
 	}
+	
+	/**
+	 * Gets the user star ratings.
+	 * @param gooruOid {@link String}
+	 * @return {@link UserStarRatingsDo}
+	 */
 
 	@Override
 	public UserStarRatingsDo getUserStarRatings(String gooruOid) {
@@ -1034,7 +1083,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JSONObject jsonObject = null;
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_STAR_RATINGS,gooruOid,getLoggedInSessionToken());
-			System.out.println("--- get user ratings -- "+url); 
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url,getRestUsername(), getRestPassword());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRepresentation.getJsonObject();
@@ -1043,6 +1091,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return deserializeUserStarRatings(jsonObject);
 	}
 	
+	/**
+	 * De-serialize User star rating model object
+	 * @param jsonObject {@link JSONObject}
+	 * @return {@link UserStarRatingsDo}
+	 */
 	private UserStarRatingsDo deserializeUserStarRatings(JSONObject jsonObject) {
 		UserStarRatingsDo userStarRatingsDo = new  UserStarRatingsDo(); 
 		try {
@@ -1055,6 +1108,13 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return userStarRatingsDo;
 	}
 
+	/**
+	 * Gets all the ratings and reviews for the resources.
+	 * @param resourceId {@link String}
+	 * @param gooruUid {@link String}
+	 * 
+	 * @return {@link ArrayList<StarRatingsDo> }
+	 */
 	@Override
 	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid) {
 		JsonRepresentation jsonRep=null;
@@ -1070,6 +1130,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 //		jsonRep=jsonResponseRep.getJsonRepresentation().getJsonObject();
 		return deserializeGetResourceRatingWithReviews(jsonObject); 
 	}
+	
+	/**
+	 * De-Serialize Resource ratings with reviews.
+	 * @param jsonObject {@link JSONObject}
+	 * @return {@link  ArrayList<StarRatingsDo> }
+	 */
 
 	private ArrayList<StarRatingsDo> deserializeGetResourceRatingWithReviews(JSONObject jsonObject) {
 		ArrayList<StarRatingsDo> starRatingsList=new ArrayList<StarRatingsDo>();

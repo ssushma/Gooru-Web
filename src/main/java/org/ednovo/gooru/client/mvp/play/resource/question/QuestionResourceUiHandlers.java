@@ -46,4 +46,5 @@ public interface QuestionResourceUiHandlers extends BaseUiHandlers{
 	public void triggerSaveOeAnswerTextDataEvent();
 	public void setFibAnswerIdsWithTime(List<Integer> attemptAnswerIds,List<Integer> attemptTrySequenceArray,List<Integer> attemptStatusArray);
 	public void increaseUserAttemptCount();
+	public void isOeAnswerSubmited(boolean isOeAnswerSubmited);
 }

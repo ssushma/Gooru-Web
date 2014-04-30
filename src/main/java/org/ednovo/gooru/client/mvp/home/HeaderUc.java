@@ -1548,6 +1548,14 @@ public class HeaderUc extends Composite implements MessageProperties,
 		classpageListVc.setPopupPosition(left, top);
 		classpageListVc.show();
 		// classpageListVc.getAllClasspages();
+		Window.addWindowScrollHandler(new Window.ScrollHandler() {
+		       public void onWindowScroll(Window.ScrollEvent scrollEvent) {
+		    	   classpageListVc.getElement().getStyle()
+					.setPosition(Position.FIXED);	
+//		    	   classpageListVc.setPopupPosition(event.getScrollLeft(),event.getScrollTop());
+		    	   classpageListVc.setPopupPosition(777,51);
+		       }
+		    });
 	}
 	DeleteClasspageListHandler deleteHandler = new DeleteClasspageListHandler() {
 		

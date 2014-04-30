@@ -54,6 +54,7 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 	private static final String THUMBNAILS = "thumbnails";
 	private static final String URL = "url";
 	private static final String COLLECTION_ITEM_COUNT="collectionItemCount";
+	private static final String QUESTION_COUNT="questionCount";
 
 	private static final String GOORU_OID = "id";
 
@@ -117,6 +118,8 @@ public class CollectionSearchResultDeSerializer extends SearchDeSerializer<Colle
 		searchResult.setTags(getJsonString(recordJsonObject, TAGS));
 		try {
 			searchResult.setResourceCount(stringtoInteger(recordJsonObject, COLLECTION_ITEM_COUNT, 0));
+			searchResult.setQuestionCount(stringtoInteger(recordJsonObject, QUESTION_COUNT, 0));
+			
 			if (recordJsonObject.has(LICENSE)) {
 				JSONObject license = recordJsonObject.getJSONObject(LICENSE);
 				if (license != null) {

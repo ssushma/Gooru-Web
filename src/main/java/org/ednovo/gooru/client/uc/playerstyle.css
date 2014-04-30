@@ -403,18 +403,21 @@
 	width: 19px;
 	height: 17px;
 	float: left;
+	margin-right:5px;
 }
 .answer-checkbox-normal-icon:hover{
 	background-position: -25px -19px ;
 	width: 19px;
 	height: 17px;
 	float: left;
+	margin-right:5px;
 }
 .answer-checkbox-selected-icon{
 	background-position: -25px -36px ;
 	width: 19px;
 	height: 17px;
 	float: left;
+	margin-right:5px;
 }
 .answer-checkbox-selected-icon:hover{
 	background-position: -25px -53px ;

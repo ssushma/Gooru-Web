@@ -2100,6 +2100,18 @@ public interface MessageProperties {
 
     	String GL1654="Edit Folder Metadata";
     	String GL1655 = "Next Generation Science Standards";
+    	
+    	String GL1656="Primary Information";
+    	String GL1657="Secondary Information";
+    	
+    	String GL1658="TEACHER TIPS";
+    	String GL1659="Share how you use this collection with your students. This will help other teachers understand how you are using your collection.";
+    	
+    	//Navigation Confirmation popup
+    	String GL1660="Are you sure you want to navigate away?";
+    	String GL1661="Your responses will be lost.";
+    	String GL1662="back to response";
+    	String GL1663="continue";
 
 
-};
+   };
