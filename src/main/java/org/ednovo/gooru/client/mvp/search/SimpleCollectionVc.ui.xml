@@ -120,7 +120,7 @@ width: 497px;*//
 				<g:FlowPanel ui:field="standardsDataPanel"></g:FlowPanel>
 				<g:Label styleName="{style.resourceCountImg}" />	
 				<g:Label styleName="{style.resourceCount}" ui:field="resourceCountLbl" />
-				
+				<g:Label styleName="{style.resourceCount}" ui:field="questionCountLbl" />
 			</g:FlowPanel>
 			
 			<g:FlowPanel styleName="{style.collectionGradesPanel}" ui:field="collectionGradePanel">
