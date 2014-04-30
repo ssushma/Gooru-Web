@@ -206,7 +206,7 @@
 {
 		float: right;
 	clear: both;
-	margin-right: 67px;
+	margin-right: 25px;
 	
 
 }
@@ -219,7 +219,7 @@ clear: both;
 .shelfTeacherTipButtonsCancel
 {
 	clear: both;
-	left: 150px;
+	left: 193px;
 position: relative;
 }
 .shelfGradeTeacherTipTextbox{
@@ -227,10 +227,11 @@ position: relative;
 	margin: 10px 0px 10px 0px;
 	float: right;
 	clear: both;
-	width: 277px;
-	margin-right:67px;
-	height:140px;
+	width: 92%;
+	margin-right: 23px;
+	height: 68px;
 	resize:none;
+	margin-top: -15px;
 }
 
 .shelfGradeSelectResources {
@@ -1243,4 +1244,49 @@ height: 73px;
 .checkBoxinnerContinerlearninglevel3{
 				width:80%;
 	float:left;
+}
+.dropdownContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+}
+.arrowInstructional {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	top: -9px;
+	float: right;
+	margin-top: -12px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+.scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:80px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
 }

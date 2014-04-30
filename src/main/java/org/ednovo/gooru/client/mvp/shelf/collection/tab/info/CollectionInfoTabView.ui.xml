@@ -11,7 +11,7 @@
 	<g:HTMLPanel>
 	<g:HTMLPanel styleName="{res.css.infoContainer}">
 	<g:HTMLPanel styleName="{res.css.primaryLabelContainer}">
-			<g:HTMLPanel styleName="{res.css.primaryLabel}">Primary Information</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.primaryLabel}" ui:field="primaryLabelTag"></g:HTMLPanel>
 			<g:Label ui:field="toggleArrowButtonPrimary" styleName="{res.css.primaryToggleArrowBottom}"></g:Label>
 			</g:HTMLPanel>
 		<g:HTMLPanel ui:field="panelLoading">
@@ -99,7 +99,7 @@ Uncomment them if Teacher Tip option needs to be resumed
 			<g:HTMLPanel styleName="{res.css.secondaryInformationContainer}">
 				
 			<g:HTMLPanel styleName="{res.css.secondaryLabelContainer}">
-			<g:HTMLPanel styleName="{res.css.primaryLabel}">Secondary Information</g:HTMLPanel>
+			<g:HTMLPanel styleName="{res.css.primaryLabel}" ui:field="secondaryHeaderLabel"></g:HTMLPanel>
 			<g:Label ui:field="toggleArrowButtonSecondary" styleName="{res.css.primaryToggleArrowBottom}"></g:Label>
 			</g:HTMLPanel>
 			
@@ -178,10 +178,10 @@ Uncomment them if Teacher Tip option needs to be resumed
 				</g:FlowPanel>
 				<g:Label styleName="{res.css.shelfGradeInfoBottom}"  ui:field="instructionalTitle" />
 				<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}">
-				<g:HTMLPanel styleName="{res.css.dropdownContainer}">
+				<g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}">
 				<g:Label ui:field="lblInstructionalPlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
-				<g:Label ui:field="lblInstructionalArrow" styleName="{res.css.arrow}"></g:Label>
-				<g:ScrollPanel ui:field="spanelInstructionalPanel"	styleName="{res.css.scrollPanelContainer}">
+				<g:Label ui:field="lblInstructionalArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+				<g:ScrollPanel ui:field="spanelInstructionalPanel"	styleName="{res.css.scrollPanelContainerInstructional}">
 				<g:HTMLPanel ui:field="htmlInstructionalListContainer"	styleName=""></g:HTMLPanel>
 				</g:ScrollPanel>
 				</g:HTMLPanel>
@@ -201,10 +201,10 @@ Uncomment them if Teacher Tip option needs to be resumed
 				</g:FlowPanel>
 				<g:Label styleName="{res.css.shelfGradeInfoBottom}" ui:field="audienceTitle" />
 				<g:FlowPanel styleName="{res.css.shelfGradeInfogardenContainer}">
-				<g:HTMLPanel styleName="{res.css.dropdownContainer}">
+				<g:HTMLPanel styleName="{res.css.dropdownContainerInstructional}">
 				<g:Label ui:field="lblAudiencePlaceHolder" styleName="{res.css.placeHolderText}"></g:Label>
-				<g:Label ui:field="lblAudienceArrow" styleName="{res.css.arrow}"></g:Label>
-				<g:ScrollPanel ui:field="spanelAudiencePanel"	styleName="{res.css.scrollPanelContainer}">
+				<g:Label ui:field="lblAudienceArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+				<g:ScrollPanel ui:field="spanelAudiencePanel"	styleName="{res.css.scrollPanelContainerInstructional}">
 				<g:HTMLPanel ui:field="htmlAudienceListContainer"	styleName=""></g:HTMLPanel>
 				</g:ScrollPanel>
 				</g:HTMLPanel>
