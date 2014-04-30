@@ -120,9 +120,9 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	
 	private static final String RESOURCE = " "+GL1110;
 
-	private static final String QUESTIONS = " Questions";
+	private static final String QUESTIONS = " "+GL1042;
 	
-	private static final String QUESTION = " Question";
+	private static final String QUESTION = " "+GL0308;
 
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	/**
