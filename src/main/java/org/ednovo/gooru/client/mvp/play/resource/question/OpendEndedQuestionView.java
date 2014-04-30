@@ -100,6 +100,11 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 			 }else{
 				 errorMessageText.setText("");
 			 }
+			 if(answerText.length()>0){
+				 isOeAnswerSubmited(false);
+			 }else{
+				 isOeAnswerSubmited(true);
+			 }
 		 }
 		 isUserAnswerAttempted(true);
 	}
@@ -122,7 +127,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 				 submittedText.setText(GL1138);
 				 //TODO answer submit API
 				 showSubmitedText();
-				 
+				 isOeAnswerSubmited(true);
 			 }
 		 }else{
 			 errorMessageText.setText(EMPTY_ERROR_MESSAGE);
@@ -158,4 +163,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		
 	}
 	public abstract void increaseUserAttemptCount();
+	public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
+		
+	}
 }

@@ -6,18 +6,17 @@
 	<ui:with type="org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle" field="res"></ui:with>
 		<g:FlowPanel styleName="{res.css.popupContent}">
 			<g:HTMLPanel styleName="{res.css.popupHeader}">
-				<g:Label styleName="{res.css.popupHeaderText}" ui:field="copyCollectionPopupHeader">Are you sure you want?</g:Label>
+				<g:Label styleName="{res.css.popupHeaderText}" ui:field="popupHeader"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentMainContainer}">
 				<g:HTMLPanel styleName="{res.css.assignmentContentContainer}">
 					<g:HTMLPanel styleName="{res.css.assignmentControlsContainer}">
-						<g:Label styleName="{res.css.assignmentTitleLabel}" ui:field="copyResourceTitleLabel">Data will be loss.</g:Label>
+						<g:Label styleName="{res.css.assignmentTitleLabel}" ui:field="popupText"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.assignmentButtonsContainer}">
-					<g:Button styleName="secondary"  ui:field="cancelResourcePopupBtnLbl" />
-					<g:Button styleName="primary"  ui:field="copyResourceBtnLbl" />
-					<g:Label ui:field="addingText" styleName=""></g:Label>
+				<g:HTMLPanel styleName="{res.css.navigateButtonsContainer}">
+					<g:Button styleName="secondary"  ui:field="backToResponseButton" />
+					<g:Button styleName="primary"  ui:field="continueButton" />
 				</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:FlowPanel>

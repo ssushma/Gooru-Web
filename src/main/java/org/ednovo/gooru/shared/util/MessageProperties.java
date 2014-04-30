@@ -2100,6 +2100,12 @@ public interface MessageProperties {
 
     	String GL1654="Edit Folder Metadata";
     	String GL1655 = "Next Generation Science Standards";
+    	
+    	//Navigation Confirmation popup
+    	String GL1656="Are you sure you want to navigate away?";
+    	String GL1657="Your responses will be lost.";
+    	String GL1658="back to response";
+    	String GL1659="continue";
 
 
 };

@@ -314,6 +314,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void increaseUserAttemptCount(){
 			getUiHandlers().increaseUserAttemptCount();
 		}
+		public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
+			getUiHandlers().isOeAnswerSubmited(isOeAnswerSubmited);
+		}
 	}
 	
 	public class FillInTheBlankQuestionWidget extends FillIntheBlankQuestionView{

@@ -439,13 +439,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
-				@Override
-				public void navigateToNextResource() {
-					super.hide();
-					AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
-				}
-			};
+			if(!getUiHandlers().isOeAnswerSubmited()){
+				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+					}
+				};
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+			}
 		}
 	}
 

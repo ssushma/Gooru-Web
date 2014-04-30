@@ -130,6 +130,18 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			previewPlayerPresenter.removeUserAttemptResult();
 		}
 	}
+	
+	public boolean isOeAnswerSubmited(){
+		boolean isOeAnswerSubmited=true;
+		if(isCollectionPlayer){
+			isOeAnswerSubmited=collectionPlayerPresenter.isOpenEndedAnswerSubmited();
+		}else if(isResourcePlayer){
+			isOeAnswerSubmited=resourcePlayerPresenter.isOpenEndedAnswerSubmited();
+		}else if(isPreviewPlayer){
+			isOeAnswerSubmited=previewPlayerPresenter.isOpenEndedAnswerSubmited();
+		}
+		return isOeAnswerSubmited;
+	}
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName){
 		Long startTime=System.currentTimeMillis();
 		if(isCollectionPlayer){

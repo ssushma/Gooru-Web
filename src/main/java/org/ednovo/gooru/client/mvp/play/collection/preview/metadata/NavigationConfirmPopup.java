@@ -56,8 +56,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class NavigationConfirmPopup extends PopupPanel implements MessageProperties{
 	
-	@UiField Button copyResourceBtnLbl,cancelResourcePopupBtnLbl;
-	@UiField Label copyCollectionPopupHeader,copyResourceTitleLabel;
+	@UiField Button continueButton,backToResponseButton;
+	@UiField Label popupHeader,popupText;
 	
 
 	private static NavigationConfirmPopupUiBinder uiBinder = GWT.create(NavigationConfirmPopupUiBinder.class);
@@ -65,7 +65,6 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 	interface NavigationConfirmPopupUiBinder extends UiBinder<Widget, NavigationConfirmPopup> {
 	}
 	
-
 	/**
 	 * default constructor of CopyConfirmPopupVc
 	 */
@@ -84,12 +83,12 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 		this.setModal(true);
 	}
 	public void setStaticTexts(){
-		copyCollectionPopupHeader.setText(GL0946);
-		copyResourceTitleLabel.setText(GL0947);
-		copyResourceBtnLbl.setText(GL0827);
-		cancelResourcePopupBtnLbl.setText(GL0142);
-		copyResourceBtnLbl.getElement().setId("btnCopy");
-		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
+		popupHeader.setText(GL1656);
+		popupText.setText(GL1657);
+		continueButton.setText(GL1659);
+		backToResponseButton.setText(GL1658);
+		continueButton.getElement().setId("backtoresponse");
+		backToResponseButton.getElement().setId("continue");
 	}
 	
 
@@ -98,13 +97,13 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 	 * 
 	 * @param clickEvent
 	 */
-	@UiHandler("cancelResourcePopupBtnLbl")
+	@UiHandler("backToResponseButton")
 	public void onCancelClick(ClickEvent clickEvent) {
 		hide();
 	}
 
 
-	@UiHandler("copyResourceBtnLbl")
+	@UiHandler("continueButton")
 	public void onClickCopyBtn(ClickEvent clickEvent){
 		navigateToNextResource();
 	}
