@@ -72,9 +72,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @ServiceURL("/resourceService")
 public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 3247182821197046755L;
 	
 	private static final String ADD_TO_SHELF = "addToShelf";

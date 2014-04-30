@@ -95,7 +95,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	Label leftArrowLbl, rightArrowLbl, uploadImageLbl;
 
 	@UiField
-	public TextBox urlTextBox, titleTextBox;
+	public TextBox urlTextBox, titleTextBox,standardsTextBox;
 
 	@UiField
 	public TextArea descriptionTxtAera;
@@ -106,7 +106,8 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	public Image setThumbnailImage;
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,orText,refreshText;
+	HTMLPanel standardsText,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText;
 
 	@UiField
 	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText;//otherText
@@ -115,10 +116,10 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image;//other
 
 	@UiField
-	HTMLPanel resourceTypePanel, resourceDescriptionContainer,buttonsPanel;
+	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
+	Label resoureDropDownLbl, resourceCategoryLabel,resourceEducationalLabel,resourcemomentsOfLearningLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 	
 	@UiField
 	CheckBox rightsChkBox;
@@ -139,7 +140,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	// public TinyMCE tinyMce=null; 
 	public boolean isValidYoutubeUrlFlag = true;
 
-	public boolean resoureDropDownLblOpen = false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
 	
 	private boolean isShortenedUrl;
 	
@@ -162,6 +163,27 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		videoLabel.getElement().setInnerHTML(GL0918);
 		interactiveText.getElement().setInnerHTML(GL0919);
 		websiteText.getElement().setInnerHTML(GL1396);
+		educationalTitle.getElement().setInnerHTML("Educational Use");
+		activityText.getElement().setInnerHTML("Activity");
+		handoutText.getElement().setInnerHTML("Handout");
+		homeworkText.getElement().setInnerHTML("Homework");
+		gameText.getElement().setInnerHTML("Game");
+		presentationText.getElement().setInnerHTML("Presentation");
+		referenceMaterialText.getElement().setInnerHTML("Reference Material");
+		quizText.getElement().setInnerHTML("Quiz");
+		curriculumPlanText.getElement().setInnerHTML("Curriculum Plan");
+		lessonPlanText.getElement().setInnerHTML("Lesson Plan");
+		unitPlanText.getElement().setInnerHTML("Unit Plan");
+		projectPlanText.getElement().setInnerHTML("Project Plan");
+		readingText.getElement().setInnerHTML("Reading");
+		textbookText.getElement().setInnerHTML("Textbook");
+		articleText.getElement().setInnerHTML("Article");
+		bookText.getElement().setInnerHTML("Book");
+		momentsOfLearningTitle.getElement().setInnerHTML("Moments of Learning");
+		preparingTheLearningText.getElement().setInnerHTML("Preparing the Learning");
+		interactingWithTheTextText.getElement().setInnerHTML("Interacting with the Text");
+		extendingUnderstandingText.getElement().setInnerHTML("Extending Understanding");
+		standardsText.getElement().setInnerHTML("Standards");
 		/*slideText.getElement().setInnerHTML(GL0908);
 		handoutText.getElement().setInnerHTML(GL0907);
 		textbookLabel.getElement().setInnerHTML(GL0909);
@@ -192,6 +214,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
 		descriptionTxtAera.getElement().setAttribute("placeholder", GL0359);
+		standardsTextBox.getElement().setAttribute("placeholder", "e.g.CCSS.Math.Content.8.F.A.3");
 		urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
 		urlTextBox.addBlurHandler(new UrlBlurHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
@@ -199,6 +222,9 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
 		resourceCategoryLabel.setText(GL0360);
+		resourceEducationalLabel.setText("Please choose one of the following...");
+		resourcemomentsOfLearningLabel.setText("Please choose one of the following...");
+		
 		mandatoryUrlLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
 		mandatoryTitleLblForSwareWords.setVisible(false);
@@ -218,6 +244,8 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		setThumbnailImage.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		resourceTypePanel.setVisible(false);
+		educationalUsePanel.setVisible(false);
+		momentsOfLearningPanel.setVisible(false);
 		loadingPanel.setVisible(false);
 		panelContentRights.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
@@ -749,7 +777,26 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		}
 
 	}
-
+	@UiHandler("educationalDropDownLbl")
+	public void educationalDropDownClick(ClickEvent event) {
+		if (educationalDropDownLblOpen == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+		}
+	}
+	@UiHandler("momentsOfLearningDropDownLbl")
+	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		if (momentsOfLearningOpen == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+		}
+	}
 	public void setImageThumbnail() {
 		if( thumbnailImages.size()>0){
 		if (activeImageIndex == 0) {
