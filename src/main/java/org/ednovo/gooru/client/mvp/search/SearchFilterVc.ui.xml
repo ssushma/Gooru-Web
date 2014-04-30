@@ -156,6 +156,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		<uc:DisclosurePanelUc  ui:field="gradePanelUc" />
 		
+		<g:HTMLPanel ui:field="oerPanel"></g:HTMLPanel>
+		
 		<g:FlowPanel>
 			<g:Label  styleName="{style.clearAll}" ui:field="clearAll" />
 		</g:FlowPanel>

@@ -92,12 +92,18 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	public void onKeypressTextArea(KeyUpEvent event){
 		answerText=openEndedAnswerTextArea.getValue();
 		setOeQuestionAnswerText(answerText);
+		saveOeAnswerData();
 		 if(answerText!=null){
 			 if(answerText.trim().length()>=1000){
 				 errorMessageText.setText(ERROR_MESSAGE);
 				 event.preventDefault();
 			 }else{
 				 errorMessageText.setText("");
+			 }
+			 if(answerText.length()>0){
+				 isOeAnswerSubmited(false);
+			 }else{
+				 isOeAnswerSubmited(true);
 			 }
 		 }
 		 isUserAnswerAttempted(true);
@@ -121,7 +127,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 				 submittedText.setText(GL1138);
 				 //TODO answer submit API
 				 showSubmitedText();
-				 
+				 isOeAnswerSubmited(true);
 			 }
 		 }else{
 			 errorMessageText.setText(EMPTY_ERROR_MESSAGE);
@@ -132,14 +138,17 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		submittedText.setText("");
 		answetTextAfterSubmission.add(new HTML(openEndedAnswerTextArea.getValue()));
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
-		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
-		attempteAnswersDo.setAnswersText(openEndedAnswerTextArea.getValue());
+		saveOeAnswerData();
 		openEndedAnswerTextArea.removeFromParent();
-		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
-		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 		increaseUserAttemptCount();
 		saveOeQuestionAnswerDataLogEvent();
 		triggerSaveOeAnswerTextDataEvent();
+	}
+	public void saveOeAnswerData(){
+		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
+		attempteAnswersDo.setAnswersText(openEndedAnswerTextArea.getValue());
+		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
+		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 	}
 	public void createSesstionItemAttemptOeWhenNavigation(){
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
@@ -154,4 +163,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		
 	}
 	public abstract void increaseUserAttemptCount();
+	public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
+		
+	}
 }

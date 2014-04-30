@@ -5,13 +5,13 @@
 
 .collectionHeaderPanel {
 	height: 94px;
-	width: 485px;
+	width: 523px;
 }
 
 .collectionHeaderTextPanel {
 	float: left;
 	height: 60px;
-	width:343px;
+	width:378px;
 }
 
 .collectionTitle {
@@ -61,6 +61,7 @@
 .resourceCount {
 	color: #4E9746;
 	font-size: 12px;
+	float: left;
 }
 
 .standards {

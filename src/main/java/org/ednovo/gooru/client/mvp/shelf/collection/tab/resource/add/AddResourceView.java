@@ -111,12 +111,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText;
 
-	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton/*,multipleAnswerTabButton*//*,fillInTheBlankTabButton*/,myComputerTabButton,fillInTheBlankTabButton;
+	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton;
 
 	
 	@UiField Label titleLbl,addResourceCloseButton;
 	
-	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,fillInTheBlankRadioButton/*,multipleAnswerRadioButton*//*,fillInTheBlankRadioButton*/;
+	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton,multipleAnswerRadioButton,fillInTheBlankRadioButton;
 	
 	private ResourceMetaInfoDo resMetaInfo;
 	
@@ -163,7 +163,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		trueOrFlaseButton.addClickHandler(new showTrueOrFalseWidget());
 		openEndedButton.addClickHandler(new showOpenEndedWidget());
 		fillInTheBlankTabButton.addClickHandler(new ShowFillInTheBlanWidget());
-		//multipleAnswerTabButton.addClickHandler(new ShowMultipleAnswerWidget());
+		multipleAnswerTabButton.addClickHandler(new ShowMultipleAnswerWidget());
 		urlTabButton.addClickHandler(new ClickHandler() {	
 			@Override
 			public void onClick(ClickEvent event) {
@@ -748,7 +748,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
 			openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
-//			multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.NONE);
+			multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails());
 			tabViewContainer.add(addWebResourceWidget);
@@ -766,7 +766,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				openEndedButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
-		//		multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+				multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -780,7 +780,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			    myComputerTabButton.setStyleName(res.css().buttonDeSelected());
 			    searchTabButton.setStyleName(res.css().buttonDeSelected());
 			    fillInTheBlankTabButton.setStyleName(res.css().buttonDeSelected());
-			//    multipleAnswerTabButton.setStyleName(res.css().buttonDeSelected());
+			    multipleAnswerTabButton.setStyleName(res.css().buttonDeSelected());
 			    trueOrFlaseButton.setStyleName(res.css().buttonDeSelected());
 			    openEndedButton.setStyleName(res.css().buttonDeSelected());
 			}catch(Exception e) {
@@ -797,7 +797,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				openEndedButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
-			//	multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+				multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -814,7 +814,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					openEndedRadioButton.setValue(true);
 				}else if(questionTypeNum==7){
 					highlightSelectedTab("MA");
-					//multipleAnswerRadioButton.setValue(true);
+					multipleAnswerRadioButton.setValue(true);
 				}else if(questionTypeNum==4){
 					highlightSelectedTab("FIB");
 					fillInTheBlankRadioButton.setValue(true);
@@ -891,12 +891,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}
 	}
-	/*private class ShowMultipleAnswerWidget implements ClickHandler{
+	private class ShowMultipleAnswerWidget implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
 			Window.enableScrolling(false);
 			if(!multipleAnswerRadioButton.getValue()){
-				//Window.enableScrolling(true);
 				highlightSelectedTab("MA");
 				multipleAnswerRadioButton.setValue(true);
 				addQuestionResourceWidget.setQuestionType("MA");
@@ -905,7 +904,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			}
 		}
 		
-	}*/
+	}
 	private class ShowFillInTheBlanWidget implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -936,7 +935,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}else if(tabType.equals("TF")){
 			trueOrFlaseButton.setStyleName(res.css().buttonSelected());
 		}else if(tabType.equals("MA")){
-			//multipleAnswerTabButton.setStyleName(res.css().buttonSelected());
+			multipleAnswerTabButton.setStyleName(res.css().buttonSelected());
 		}else if(tabType.equals("MC")){
 			questionTabButton.setStyleName(res.css().buttonSelected());
 		}else if(tabType.equals("OE")){

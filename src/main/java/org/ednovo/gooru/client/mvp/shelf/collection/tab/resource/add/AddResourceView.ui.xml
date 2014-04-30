@@ -42,12 +42,12 @@
 							<g:Anchor ui:field="multiplechoice" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
 						
-						<!-- <uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="multipleAnswerTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="multipleAnswerRadioButton"
 									styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
 							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}">Multiple Answer</g:Anchor>
-						</uc:HTMLEventPanel> -->
+						</uc:HTMLEventPanel>
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="trueOrFlaseButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="trueOrFalseRadioButton"
