@@ -320,6 +320,8 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String scrollPanelContainerInstructional();
 		
+		
+		
 
 	}
 	@Source("Collection.css")

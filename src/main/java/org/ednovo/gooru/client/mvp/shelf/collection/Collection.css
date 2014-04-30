@@ -206,7 +206,7 @@
 {
 		float: right;
 	clear: both;
-	margin-right: 67px;
+	margin-right: 25px;
 	
 
 }
@@ -219,7 +219,7 @@ clear: both;
 .shelfTeacherTipButtonsCancel
 {
 	clear: both;
-	left: 150px;
+	left: 193px;
 position: relative;
 }
 .shelfGradeTeacherTipTextbox{
@@ -227,10 +227,11 @@ position: relative;
 	margin: 10px 0px 10px 0px;
 	float: right;
 	clear: both;
-	width: 277px;
-	margin-right:67px;
-	height:140px;
+	width: 92%;
+	margin-right: 23px;
+	height: 68px;
 	resize:none;
+	margin-top: -15px;
 }
 
 .shelfGradeSelectResources {
