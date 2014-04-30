@@ -107,6 +107,7 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.gwt.user.client.Window.ScrollEvent;
 
 /**
  * @author Search Team
@@ -346,6 +347,12 @@ public class HeaderUc extends Composite implements MessageProperties,
 		});
 		getEditSearchTxtBox().addSelectionHandler(this);
 		getEditSearchTxtBox().setPopupStyleName("shelfEditSearchTextBox");
+		Window.addWindowScrollHandler(new Window.ScrollHandler() {
+		    @Override
+		    public void onWindowScroll(ScrollEvent event) {
+		    	getEditSearchTxtBox().hideSuggestionList();   	
+			}
+		});
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
