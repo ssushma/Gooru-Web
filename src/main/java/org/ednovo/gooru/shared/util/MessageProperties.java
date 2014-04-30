@@ -156,7 +156,7 @@ public interface MessageProperties {
 	String GL0103 = "Assignment";
 	String GL0104 = "Assign";
 	
-	String GL0105 = "Choose one of the following...";
+	String GL0105 = "Please choose one of the following...";
 	
 	String GL0106 = "Don't your collections deserve a home?";
 	String GL0107 = "Click on the&nbsp;";
