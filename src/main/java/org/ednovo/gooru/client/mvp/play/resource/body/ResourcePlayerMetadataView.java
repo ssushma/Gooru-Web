@@ -30,8 +30,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
+import org.ednovo.gooru.client.uc.NarrationUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -453,7 +455,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+			if(!getUiHandlers().isOeAnswerSubmited()){
+				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+					}
+				};
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+			}
 		}
 	}
 

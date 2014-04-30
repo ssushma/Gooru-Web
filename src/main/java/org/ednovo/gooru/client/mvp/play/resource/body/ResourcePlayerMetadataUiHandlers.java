@@ -39,5 +39,7 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
 	
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
 	
-	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);    
+	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);   
+	
+	public boolean isOeAnswerSubmited();
 }

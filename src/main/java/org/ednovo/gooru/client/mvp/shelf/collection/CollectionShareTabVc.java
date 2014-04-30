@@ -50,6 +50,8 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -58,12 +60,15 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -92,6 +97,10 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	@UiField
 	HTMLPanel contentpanel, loadingImageLabel;
+	
+	@UiField TextArea teacherTipTextarea;
+	
+	@UiField Button addTeacherTip, cancelTeacherTip;
 
 	private FlowPanel publicFocPanel;
 
@@ -114,7 +123,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private HTMLPanel rbPublicPanel, rbPublic, rbPrivatePanel, rbPrivate, rbShareablePanel, rbShareable,shareViaText;
 	
 	
-	@UiField Label visibilityText,visibilityOptiontext,shareCollectiontext;
+	@UiField Label visibilityText,visibilityOptiontext,errorLabelForTeacherTip,shareCollectiontext,visibilityTextTeacherTip,visibilityOptiontextTeacherTip;
 	
 	private String rawUrl, embedLink;
 	
@@ -147,7 +156,13 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		shareViaText = new HTMLPanel("");
 		visibilityText.setText(GL0842);
+		visibilityTextTeacherTip.setText(GL1658);
 		visibilityOptiontext.setText(GL0843);
+		
+		visibilityOptiontextTeacherTip.setText(GL1659);
+		
+		getCollectionTeacherTipInfo(collection.getGooruOid());
+		
 		shareCollectiontext.setText(GL0545.toUpperCase());
 		shareViaText.getElement().setInnerHTML(GL0638);
 		//GL0638
@@ -158,6 +173,18 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			shareLinkFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			socialShareLinksView.getshareLinkTxtBox().addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 		}
+		
+		addTeacherTip.addBlurHandler(new BlurHandler() {
+		
+		@Override
+		public void onBlur(BlurEvent event) {
+			if(teacherTipTextarea.getText().length()>0)
+			{
+			errorLabelForTeacherTip.setVisible(false);
+			}
+			
+			}
+		});
 
 		rbPublic = new HTMLPanel("");
 		rbShareable = new HTMLPanel("");
@@ -608,6 +635,70 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			SimpleAsyncCallback<Map<String, String>> shareUrlWithGenerationAsyncCallback) {
 		this.shareUrlWithGenerationAsyncCallback = shareUrlWithGenerationAsyncCallback;
 	}
+	
+	@UiHandler("addTeacherTip")
+	public void onClickAddTeacherTip(ClickEvent clickEvent){
+		updateCollectionTeacherTipInfo(collection, teacherTipTextarea.getText());
+		
+		
+	}
+	
+	public void updateCollectionTeacherTipInfo(CollectionDo collectionDo, String teacherTip) {
+		if(teacherTip.length()>0)
+		{
+		AppClientFactory.getInjector().getResourceService().updateCollectionInfo(collectionDo, teacherTip, new AsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				setExistingTeacherTip(result);
+				//getView().onPostCourseUpdate(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		}
+		else
+		{
+			displayErrorMsgTeacherTip();
+		}
+
+	}
+	
+	public void setExistingTeacherTip(CollectionDo collectionDo) {
+		this.collection = collectionDo;
+		teacherTipTextarea.setText(collectionDo.getKeyPoints());
+	}
+
+	public void displayErrorMsgTeacherTip(){
+
+		errorLabelForTeacherTip.setVisible(true);
+		errorLabelForTeacherTip.setText(MessageProperties.GL1116);
+		
+	}
+	
+	public void getCollectionTeacherTipInfo(String collectionId) {
+
+		AppClientFactory.getInjector().getResourceService().getCollectionInfoV2API(collectionId, new AsyncCallback<CollectionDo>() {
+
+			@Override
+			public void onSuccess(CollectionDo result) {
+				setExistingTeacherTip(result);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+
+	}
+	
 	
 	private void selectPrivateResource(String visibilityType) {
 		if(visibilityType.equalsIgnoreCase("public")) {

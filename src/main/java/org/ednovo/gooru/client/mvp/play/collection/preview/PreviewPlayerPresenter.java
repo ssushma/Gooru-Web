@@ -201,8 +201,10 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	private boolean isUserAttemptedAnswer=false;
 	
 	private int userAttemptedQuestionType=0;
+	
+	private boolean isOpenEndedAnswerSubmited=false;
      
-    public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
+	public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
     
     public static final  Object METADATA_PRESENTER_SLOT = new Object();
     
@@ -333,6 +335,20 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	 */
 	public void setCollectionScore(Integer collectionScore) {
 		this.collectionScore = collectionScore;
+	}
+
+   /**
+	 * @return the isOpenEndedAnswerSubmited
+	 */
+	public boolean isOpenEndedAnswerSubmited() {
+		return isOpenEndedAnswerSubmited;
+	}
+
+	/**
+	 * @param isOpenEndedAnswerSubmited the isOpenEndedAnswerSubmited to set
+	 */
+	public void setOpenEndedAnswerSubmited(boolean isOpenEndedAnswerSubmited) {
+		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
 	}
 	
 	@Inject
@@ -545,6 +561,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		metadataPresenter.displayAuthorDetails(true);
 		metadataPresenter.setCollectionMetadata(collectionDo);
 		showSignupPopup();
+		setOpenEndedAnswerSubmited(true);
 		if(this.collectionMetadataId!=null){
 			if(this.collectionMetadataId.equalsIgnoreCase(collectionDo.getGooruOid())){
 				return;
@@ -616,6 +633,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
 			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
+		openEndedAnswerSubmited(collectionItemDo);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
 		
 	}
@@ -628,6 +646,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		metadataPresenter.setCollectionMetadata(collectionDo);
 		metadataPresenter.getFlagedReport(collectionId);
 		showSignupPopup();
+		setOpenEndedAnswerSubmited(true);
 		if(this.collectionSummaryId!=null){
 			if(this.collectionSummaryId.equalsIgnoreCase(collectionDo.getGooruOid())){
 				//makeButtonActive(tabView);
@@ -657,6 +676,22 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		metadataPresenter.setPreviewEndPresenter();
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
 		
+	}
+	
+	public void openEndedAnswerSubmited(CollectionItemDo collectionItemDo){
+		if(collectionItemDo!=null){
+			String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
+			if(resourceTypeName.equalsIgnoreCase("assessment-question")){
+				if(collectionItemDo.getResource().getType()==6){
+					setOpenEndedAnswerSubmited(false);
+				}else{
+					setOpenEndedAnswerSubmited(true);
+				}
+			}
+			else{
+				setOpenEndedAnswerSubmited(true);
+			}
+		}
 	}
 	public void makeButtonActive(String tabView){
 		if(tabView!=null){
@@ -1607,6 +1642,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			resoruceMetadataPresenter.resetResourceMetaData();
 			resourceInfoPresenter.resetResourceInfo();
 			collectionPlayerTocPresenter.clearNavigationPanel();
+			setOpenEndedAnswerSubmited(false);
 		}
 		
 	}

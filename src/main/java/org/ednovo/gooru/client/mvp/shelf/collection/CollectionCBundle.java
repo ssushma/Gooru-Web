@@ -314,6 +314,14 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String checkBoxinnerContinerlearninglevel3();
 		
+		String dropdownContainerInstructional();
+		
+		String arrowInstructional();
+		
+		String scrollPanelContainerInstructional();
+		
+		
+		
 
 	}
 	@Source("Collection.css")

@@ -157,6 +157,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	private Integer attemptCount=0;
 	
+	private boolean isOpenEndedAnswerSubmited=false;
+	
+	
     /**
 	 * @return the answerIdsObject
 	 */
@@ -253,6 +256,20 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 */
 	public void setAttemptCount(Integer attemptCount) {
 		this.attemptCount = attemptCount;
+	}
+	
+	/**
+	 * @return the isOpenEndedAnswerSubmited
+	 */
+	public boolean isOpenEndedAnswerSubmited() {
+		return isOpenEndedAnswerSubmited;
+	}
+
+	/**
+	 * @param isOpenEndedAnswerSubmited the isOpenEndedAnswerSubmited to set
+	 */
+	public void setOpenEndedAnswerSubmited(boolean isOpenEndedAnswerSubmited) {
+		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
 	}
 	
     public static final  Object TAB_PRESENTER_SLOT = new Object(); 
@@ -428,6 +445,21 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 				getView().makeButtonActive(false,false, false,true);
 			}
 			
+		}
+	}
+	public void openEndedAnswerSubmited(CollectionItemDo collectionItemDo){
+		if(collectionItemDo!=null){
+			String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
+			if(resourceTypeName.equalsIgnoreCase("assessment-question")){
+				if(collectionItemDo.getResource().getType()==6){
+					setOpenEndedAnswerSubmited(false);
+				}else{
+					setOpenEndedAnswerSubmited(true);
+				}
+			}
+			else{
+				setOpenEndedAnswerSubmited(true);
+			}
 		}
 	}
 	public void createSessionAttemptTryWhenNavigation(){
