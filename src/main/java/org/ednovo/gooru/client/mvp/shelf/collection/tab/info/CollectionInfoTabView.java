@@ -251,7 +251,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		learninglevel3Label.setText(GL1653);
 		
 		lblInstructionalPlaceHolder.setText(GL0105);
-		lblAudiencePlaceHolder.setText(GL0105);	
+		lblAudiencePlaceHolder.setText(GL0105);
+		
+		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		
+	
 		
 		primaryLabelTag.getElement().setInnerHTML(GL1656);
 		secondaryHeaderLabel.getElement().setInnerHTML(GL1657);
