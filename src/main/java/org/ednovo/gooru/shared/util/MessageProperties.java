@@ -2166,6 +2166,7 @@ public interface MessageProperties {
     	String GL1706=	"Media Feature";
     	String GL1707="Access Mode";
     	String GL1708="GENERAL";
+		String GL1709="e.g: I use this with my students to explain how, etc...";
     	
    }
 
