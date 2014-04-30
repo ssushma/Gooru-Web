@@ -118,7 +118,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	private static final String USER_INFO_FAILED_ON_TOKEN = "Get User info failed on token : ";
 
-	public static final int COOKIE_AGE = 1209600;
+	public static final int COOKIE_AGE = 86400;
 	
 	private static final String PRODUCTION_SWITCH = "production.switch";
 	

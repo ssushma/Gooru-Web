@@ -27,7 +27,9 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -40,4 +42,6 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
 	
 	public void setDefaultReaction();
+	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip);
+	public void setDefaultUserStarRatings();   
 }

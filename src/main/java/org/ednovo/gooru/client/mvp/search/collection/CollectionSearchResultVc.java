@@ -120,6 +120,10 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	
 	private static final String RESOURCE = " "+GL1110;
 
+	private static final String QUESTIONS = " "+GL1042;
+	
+	private static final String QUESTION = " "+GL0308;
+
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	/**
 	 * Class constructor, creates new instance of CollectionSearchResultWrapperVc and call collection search result setData method
@@ -134,6 +138,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(collectionResultDo);
 		wrapperVc.addStyleName("collectionSearchResultBox");
+		resourceCountLbl.setVisible(false);
 		
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 	}
@@ -264,11 +269,22 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		}
 		collectionDescriptionHtml.setHTML(description);
 		
-		
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionResultDo.getCourseNames(), 30);
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionResultDo.getTotalViews() + "", VIEWS);
-		metaDataPanelFloPanel.add(new SeparatorUc());
-		resourceCountLbl.setText(collectionResultDo.getResourceCount() +" " + (collectionResultDo.getResourceCount()>1 ? RESOURCES : RESOURCE));
+		if(collectionResultDo.getResourceCount()>0 || (collectionResultDo.getResourceCount()==0&&collectionResultDo.getQuestionCount()==0)) {
+			metaDataPanelFloPanel.add(new SeparatorUc());
+			Label resourceCountLbl1 = new Label(collectionResultDo.getResourceCount() +" " + (collectionResultDo.getResourceCount()>1 ? RESOURCES : RESOURCE));
+			resourceCountLbl1.setStyleName(res.css().resourceCount());
+			metaDataPanelFloPanel.add(resourceCountLbl1);
+		}
+		if(collectionResultDo.getQuestionCount()>0) {
+			metaDataPanelFloPanel.add(new SeparatorUc());
+			Label questionCountLbl1 = new Label(collectionResultDo.getQuestionCount() +" " + (collectionResultDo.getQuestionCount()>1 ? QUESTIONS : QUESTION));
+			questionCountLbl1.setStyleName(res.css().resourceCount());
+			metaDataPanelFloPanel.add(questionCountLbl1);
+		}
+		
+		//resourceCountLbl.setText(collectionResultDo.getResourceCount() +" " + (collectionResultDo.getResourceCount()>1 ? RESOURCES : RESOURCE));
 		
 		SearchUiUtil.renderStandards(standardsFloPanel, collectionResultDo);
 	}

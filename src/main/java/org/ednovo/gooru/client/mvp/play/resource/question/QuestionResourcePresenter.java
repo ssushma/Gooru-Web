@@ -303,6 +303,16 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 		
 	}
 	
+	public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.setOpenEndedAnswerSubmited(isOeAnswerSubmited);
+		}else if(isResourcePlayer){
+			resourcePlayerPresenter.setOpenEndedAnswerSubmited(isOeAnswerSubmited);
+		}else if(isPreviewPlayer){
+			previewPlayerPresenter.setOpenEndedAnswerSubmited(isOeAnswerSubmited);
+		}		
+	}
+	
 	public Long getUnixTimeStamp(){
 		Long currentTime=System.currentTimeMillis();
 		return currentTime;

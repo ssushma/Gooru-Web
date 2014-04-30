@@ -70,11 +70,11 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
@@ -97,7 +97,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	FlowPanel gradeTopList, gradeMiddleList, gradeBottomList, courseData, standardsPanel, KinderGarten, higherEducation,standardContainer;
 
 	@UiField
-	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,level1Label,level2Label,level3Label,level4Label,learningInnovationHeader,learningInnovationTitle,learninglevel1Label,learninglevel2Label,learninglevel3Label;
+	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
 	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow;
 	
@@ -108,7 +108,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	@UiField TextArea textAreaVal;
 	
-	@UiField SimpleCheckBox level1,level2,level3,level4,learninglevel1,learninglevel2,learninglevel3;
+	@UiField CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,learninglevel1,learninglevel2,learninglevel3;
+	
 	
 /*	@UiField TextArea teacherTipTextarea;*/
 	
@@ -238,20 +239,25 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		depthOfKnowledgeHeader.setText(GL1643);
 		depthOfKnowledgeTitle.setText(GL1644);
 	
-		level1Label.setText(GL1645);
-		level2Label.setText(GL1646);
-		level3Label.setText(GL1647);
-		level4Label.setText(GL1648);
+		chkLevelRecall.setText(GL1645);
+		chkLevelSkillConcept.setText(GL1646);
+		chkLevelStrategicThinking.setText(GL1647);
+		chkLevelExtendedThinking.setText(GL1648);
 		
 		learningInnovationHeader.setText(GL1649);
 		learningInnovationTitle.setText(GL1650);
 		
-		learninglevel1Label.setText(GL1651);
-		learninglevel2Label.setText(GL1652);
-		learninglevel3Label.setText(GL1653);
+		learninglevel1.setText(GL1651);
+		learninglevel2.setText(GL1652);
+		learninglevel3.setText(GL1653);
 		
 		lblInstructionalPlaceHolder.setText(GL0105);
-		lblAudiencePlaceHolder.setText(GL0105);	
+		lblAudiencePlaceHolder.setText(GL0105);
+		
+		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
+		
+	
 		
 		primaryLabelTag.getElement().setInnerHTML(GL1656);
 		secondaryHeaderLabel.getElement().setInnerHTML(GL1657);
@@ -282,14 +288,45 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(textAreaVal.getText().length() == 0)
-				{
+				if(textAreaVal.getText().length() == 0){
 					textAreaVal.setText(GL1641);
 					textAreaVal.getElement().getStyle().setColor("#999");
 				}
-/*				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", textAreaVal.getText());*/
+			}
+		});
+		
+		
+		lblAudiencePlaceHolder.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				OpenAudienceDropdown();
+			}
 
+			
+		});
+		
+		lblAudienceArrow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				OpenAudienceDropdown();
+			}
+		});
+		
+		lblInstructionalPlaceHolder.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				OpenInstructionalDropdown();
+			}
+		});
+		
+		lblInstructionalArrow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				OpenInstructionalDropdown();	
 			}
 		});
 		
@@ -298,14 +335,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(teacherTipTextarea.getText().length()>0)
-				{
-				errorLabelForTeacherTip.setVisible(false);
+				if(teacherTipTextarea.getText().length()>0){
+					errorLabelForTeacherTip.setVisible(false);
 				}
 				
 			}
 		});
-		
 		teacherTipTextLabel.setText(MessageProperties.GL0750);*/
 		standardsDefaultText.setText(GL0749);
 		addStandardBtn.setVisible(false);
@@ -317,8 +352,36 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		removeCourseBtn.setVisible(false);
 		courseLbl.getElement().getStyle().setDisplay(Display.NONE);
 		
+		spanelInstructionalPanel.setVisible(false);
+		spanelAudiencePanel.setVisible(false);
 	}
 
+	private void OpenAudienceDropdown() {
+		if (spanelInstructionalPanel.isVisible()){
+			spanelInstructionalPanel.setVisible(false);
+		}
+		
+		if (spanelAudiencePanel.isVisible()){
+			spanelAudiencePanel.setVisible(false);
+		}else{
+			spanelAudiencePanel.setVisible(true);
+		}
+	}
+	
+	private void OpenInstructionalDropdown() {
+		if (spanelAudiencePanel.isVisible()){
+			spanelAudiencePanel.setVisible(false);
+		}
+		
+		if (spanelInstructionalPanel.isVisible()){
+			spanelInstructionalPanel.setVisible(false);
+		}else{
+			spanelInstructionalPanel.setVisible(true);
+		}
+		
+		
+	}
+	
 	@Override
 	public void reset() {
 		super.reset();

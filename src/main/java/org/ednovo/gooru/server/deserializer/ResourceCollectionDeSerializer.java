@@ -162,6 +162,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	
 	public static final String RESOURCE_FORMAT = "resourceFormat";
 	
+	public static final String NUMBEROF_QUESTIONS="numberOfQuestions";
+
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
 //		try {
@@ -202,6 +204,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceSearchResultDo.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
 		resourceSearchResultDo.setNumOfPages(getJsonString(recordJsonObject, NO_OF_PAGES));
 		resourceSearchResultDo.setNoOfResources(stringtoInteger(recordJsonObject, NUMBEROF_RESOURECES, 0));
+		resourceSearchResultDo.setNoOfQuestions(stringtoInteger(recordJsonObject, NUMBEROF_QUESTIONS, 0));
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 
