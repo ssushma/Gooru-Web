@@ -326,6 +326,10 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String languageObjectives();
 		
+		String teacherTipLabel();
+		
+		String teacherTipPencilHolder();
+		
 
 	}
 	@Source("Collection.css")

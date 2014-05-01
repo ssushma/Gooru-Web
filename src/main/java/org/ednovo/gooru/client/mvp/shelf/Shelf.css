@@ -1379,7 +1379,7 @@
 .collectionVisibility{
 	float: left;
 	width: 575px;
-	margin-bottom: 29px;
+	margin-bottom: 20px;
 }
 .collectionVisibleShareLineSeparator {
 	float: left;
@@ -1552,4 +1552,13 @@ padding-left: 11px;
 	text-align: center;
 	padding: 15px 0px 0px 86px;
 	word-wrap: break-word;
+}
+.collectionEditImageTeacherTip {
+background: url(images/Collection-Search/icon-sprite.png) repeat scroll -71px -169px transparent;
+float: right;
+height: 18px;
+margin-right: 78px;
+width: 14px;
+cursor: pointer;
+
 }

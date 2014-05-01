@@ -215,6 +215,7 @@
 	width:332px;
 	float: right;
 clear: both;
+margin-top:17px;
 }
 .shelfTeacherTipButtonsCancel
 {
@@ -1298,4 +1299,17 @@ height: 73px;
 }
 .languageObjectives{
 	width: 35%;
+}
+.teacherTipLabel {
+	color: black;
+	margin-left: 25px;
+	float:left;
+	height: auto;
+	clear: both;
+	max-width:500px;
+	word-wrap: break-word;
+}
+.teacherTipPencilHolder{
+	float:left;
+	vertical-align: top;
 }

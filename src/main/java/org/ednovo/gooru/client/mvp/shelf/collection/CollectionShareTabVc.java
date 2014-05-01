@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -54,6 +55,12 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -84,7 +91,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	HTMLEventPanel publicShareFloPanel;
 
 	@UiField
-	HTMLEventPanel privateShareFloPanel;
+	HTMLEventPanel privateShareFloPanel,finalTeacherTipLabelContainer;
 
 	@UiField
 	HTMLEventPanel linkShareFloPanel;
@@ -96,7 +103,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	FlowPanel socialShareLinksViewContainer;
 	
 	@UiField
-	HTMLPanel contentpanel, loadingImageLabel;
+	HTMLPanel contentpanel, loadingImageLabel,textAreaContianer;
 	
 	@UiField TextArea teacherTipTextarea;
 	
@@ -123,7 +130,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private HTMLPanel rbPublicPanel, rbPublic, rbPrivatePanel, rbPrivate, rbShareablePanel, rbShareable,shareViaText;
 	
 	
-	@UiField Label visibilityText,visibilityOptiontext,errorLabelForTeacherTip,shareCollectiontext,visibilityTextTeacherTip,visibilityOptiontextTeacherTip;
+	@UiField Label visibilityText,visibilityOptiontext,userTeacherTipText,simplePencilPanel,errorLabelForTeacherTip,shareCollectiontext,visibilityTextTeacherTip,visibilityOptiontextTeacherTip;
 	
 	private String rawUrl, embedLink;
 	
@@ -139,6 +146,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	public SocialShareLinksView socialShareLinksView = null;
 	
+	private boolean isShowDescPencil=true;
+	
 //	List<ClassPageCollectionDo> classPageCollectionDo = null;
 	
 	interface CollectionShareTabVcUiBinder extends
@@ -151,7 +160,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	 * @param collection
 	 *            instance of {@link CollectionDo}
 	 */
-	public CollectionShareTabVc(CollectionDo collection) {
+	public CollectionShareTabVc(final CollectionDo collection) {
 		this.collection = collection;
 		initWidget(uiBinder.createAndBindUi(this));
 		shareViaText = new HTMLPanel("");
@@ -162,6 +171,16 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		visibilityOptiontextTeacherTip.setText(GL1659);
 		
 		getCollectionTeacherTipInfo(collection.getGooruOid());
+		
+		//teacherTipTextarea.addKeyUpHandler(new OnKeyUpHandler());
+		
+//here
+		setDefaults(collection.getKeyPoints());
+		simplePencilPanel.addClickHandler(new OpenCollectionEditDescription());
+		finalTeacherTipLabelContainer
+		.addMouseOverHandler(new OnCollectionDescriptionClick());
+		finalTeacherTipLabelContainer
+		.addMouseOutHandler(new OnCollectionDescriptionOut());
 		
 		shareCollectiontext.setText(GL0545.toUpperCase());
 		shareViaText.getElement().setInnerHTML(GL0638);
@@ -185,6 +204,60 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			
 			}
 		});
+		
+		teacherTipTextarea.addKeyUpHandler(new DirectionsKeyUpHandler());
+		teacherTipTextarea.getElement().setAttribute("maxlength", "400");
+		
+		teacherTipTextarea.addFocusHandler(new FocusHandler() {
+			@Override
+			public void onFocus(FocusEvent event) {
+				String directionText=teacherTipTextarea.getText().trim();
+				if(directionText.equalsIgnoreCase(GL1709)){
+					teacherTipTextarea.setText("");
+				}
+				teacherTipTextarea.getElement().getStyle().setColor("black");
+			}
+		});
+		
+		teacherTipTextarea.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				if(teacherTipTextarea.getText().length() > 415)
+				{
+					teacherTipTextarea.cancelKey();
+				}			
+			}
+		});
+		teacherTipTextarea.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(teacherTipTextarea.getText().length() == 0)
+				{
+					teacherTipTextarea.setText(GL1709);
+					teacherTipTextarea.getElement().getStyle().setColor("#999");
+				}
+				else
+				{
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", teacherTipTextarea.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+						@Override
+						public void onSuccess(Boolean value) {
+							errorLabelForTeacherTip.setText("");
+							SetStyleForProfanity.SetStyleForProfanityForTextArea(teacherTipTextarea, errorLabelForTeacherTip, value);
+							errorLabelForTeacherTip
+							.addStyleName("titleAlertMessageActive");
+					errorLabelForTeacherTip
+							.removeStyleName("titleAlertMessageDeActive");
+								
+						}
+					});
+				}
+		
+
+			}
+		});
+		
 
 		rbPublic = new HTMLPanel("");
 		rbShareable = new HTMLPanel("");
@@ -308,6 +381,21 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		mainShareContainer.setVisible(false);
 		socialShareLinksViewContainer.add(socialShareLinksView);
 		getUserType();
+	}
+	
+	public class OnCollectionDescriptionClick implements MouseOverHandler {
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+		
+			simplePencilPanel.setVisible(true);
+		}
+	}
+
+	public class OnCollectionDescriptionOut implements MouseOutHandler {
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			simplePencilPanel.setVisible(false);
+		}
 	}
 	
 	public void getUserType() {
@@ -473,6 +561,29 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			}
 		}
 	}
+	
+	/**
+	 * This class is used to edit collection description
+	 */
+	public class OpenCollectionEditDescription implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			/*collectionDescriptionUc.switchToEdit();
+			collectionDescriptionUc.setText(collectionDo.getGoals());*/
+			finalTeacherTipLabelContainer.setVisible(false);
+			textAreaContianer.setVisible(true);
+			
+			/*
+			 * editSelfCollectionSaveButton.getElement().getStyle().setDisplay(
+			 * Display.NONE);
+			 * editSelfCollectionSaveButtonCancel.getElement().getStyle
+			 * ().setDisplay(Display.NONE);
+			 */
+			simplePencilPanel.setVisible(false);
+			isShowDescPencil=false;
+
+		}
+	}
 
 	/**
 	 * @author Search Team Updated sharing type , change the collection as
@@ -536,6 +647,27 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	 */
 	public void setData(CollectionDo collection) {
 		this.collection = collection;
+	}
+	
+	public void setDefaults(String teacherTipLatest)
+	{
+		textAreaContianer.setVisible(false);
+		finalTeacherTipLabelContainer.setVisible(true);
+		userTeacherTipText.setText(teacherTipLatest);
+
+		
+		
+		
+	}
+	public void setEdittable(String teacherTipLatest)
+	{
+		textAreaContianer.setVisible(false);
+		finalTeacherTipLabelContainer.setVisible(true);
+		userTeacherTipText.setText(teacherTipLatest);
+
+		
+		
+		
 	}
 
 	public void onReveal() {
@@ -638,7 +770,40 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	@UiHandler("addTeacherTip")
 	public void onClickAddTeacherTip(ClickEvent clickEvent){
-		updateCollectionTeacherTipInfo(collection, teacherTipTextarea.getText());
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", teacherTipTextarea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+				System.out.println("error value"+value);
+				
+				if(!value)
+				{
+					updateCollectionTeacherTipInfo(collection, teacherTipTextarea.getText());
+					setDefaults(teacherTipTextarea.getText());
+
+				}
+				else
+				{
+					errorLabelForTeacherTip.setText("");
+					SetStyleForProfanity.SetStyleForProfanityForTextArea(teacherTipTextarea, errorLabelForTeacherTip, value);
+					errorLabelForTeacherTip
+					.addStyleName("titleAlertMessageActive");
+			errorLabelForTeacherTip
+					.removeStyleName("titleAlertMessageDeActive");
+				}
+					
+			}
+		});
+	
+		
+		
+	}
+	@UiHandler("cancelTeacherTip")
+	public void onClickcancelTeacherTip(ClickEvent clickEvent){
+	
+		setEdittable(collection.getKeyPoints());
+		
 		
 		
 	}
@@ -672,6 +837,24 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		this.collection = collectionDo;
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
 	}
+	
+	public void checkCharacterLimit(String text) {
+		if (text.length() >= 415) {
+			errorLabelForTeacherTip
+					.addStyleName("titleAlertMessageActive");
+			errorLabelForTeacherTip
+					.removeStyleName("titleAlertMessageDeActive");
+		} else {
+			errorLabelForTeacherTip
+					.addStyleName("titleAlertMessageDeActive");
+			errorLabelForTeacherTip
+					.removeStyleName("titleAlertMessageActive");
+		}
+	}
+	
+
+	
+	
 
 	public void displayErrorMsgTeacherTip(){
 
@@ -699,6 +882,19 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 
 	}
 	
+	private class DirectionsKeyUpHandler implements KeyUpHandler {
+		public void onKeyUp(KeyUpEvent event) {
+			errorLabelForTeacherTip.setVisible(false);
+			if (teacherTipTextarea.getText().length() >=400) {
+				teacherTipTextarea.setText(teacherTipTextarea.getText().trim()
+						.substring(0, 400));
+				errorLabelForTeacherTip.setText("");
+				errorLabelForTeacherTip.setText(MessageProperties.GL0143);
+				errorLabelForTeacherTip.setVisible(true);
+			}
+
+		}
+	}
 	
 	private void selectPrivateResource(String visibilityType) {
 		if(visibilityType.equalsIgnoreCase("public")) {
