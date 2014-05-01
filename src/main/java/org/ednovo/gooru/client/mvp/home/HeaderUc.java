@@ -107,6 +107,7 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.gwt.user.client.Window.ScrollEvent;
 
 /**
  * @author Search Team
@@ -346,6 +347,12 @@ public class HeaderUc extends Composite implements MessageProperties,
 		});
 		getEditSearchTxtBox().addSelectionHandler(this);
 		getEditSearchTxtBox().setPopupStyleName("shelfEditSearchTextBox");
+		Window.addWindowScrollHandler(new Window.ScrollHandler() {
+		    @Override
+		    public void onWindowScroll(ScrollEvent event) {
+		    	getEditSearchTxtBox().hideSuggestionList();   	
+			}
+		});
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		headerMainPanel.getElement().setAttribute("id", "headerMainPanel");
@@ -1541,6 +1548,14 @@ public class HeaderUc extends Composite implements MessageProperties,
 		classpageListVc.setPopupPosition(left, top);
 		classpageListVc.show();
 		// classpageListVc.getAllClasspages();
+		Window.addWindowScrollHandler(new Window.ScrollHandler() {
+		       public void onWindowScroll(Window.ScrollEvent scrollEvent) {
+		    	   classpageListVc.getElement().getStyle()
+					.setPosition(Position.FIXED);	
+//		    	   classpageListVc.setPopupPosition(event.getScrollLeft(),event.getScrollTop());
+		    	   classpageListVc.setPopupPosition(777,51);
+		       }
+		    });
 	}
 	DeleteClasspageListHandler deleteHandler = new DeleteClasspageListHandler() {
 		

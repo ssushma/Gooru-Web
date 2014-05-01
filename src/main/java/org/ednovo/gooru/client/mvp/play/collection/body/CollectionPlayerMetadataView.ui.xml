@@ -45,7 +45,7 @@
                 </g:HTMLPanel>
                 <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="courseSection">
                     <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblCourse" />
-                    <g:Label styleName="{playerStyle.courseTitle}" ui:field="courseTitle"></g:Label>
+                    <g:FlowPanel styleName="{playerStyle.courseTitle}" ui:field="courseTitle"></g:FlowPanel>
                 </g:HTMLPanel>
                 <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="standardSection">
                     <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lblStandards" />

@@ -1,0 +1,82 @@
+.mainSection {
+    border-top:1px solid white;
+    margin: 5px 30px;
+    background: #f0f0f0;
+}
+
+.contentBlock {
+	background: white;
+	border: 1px solid #ddd;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	border-radius: 4px;
+	overflow: hidden;
+	margin: 10px auto;
+	width: 91%;
+}
+
+.contentBlock:hover {
+	cursor: pointer;
+	-moz-box-shadow: 0 0 10px #4c98cc;
+	-webkit-box-shadow: 0 0 10px #4c98cc;
+	box-shadow: 0 0 10px #4c98cc;
+}
+
+.ideasBlock {
+	color: #999;
+	display: inline-block;
+	vertical-align: top;
+	width: 178px;
+	min-height: 170px;
+	padding: 10px;
+	padding-right: 10px;
+	margin: 5px 0px;
+	border-right: 2px solid #f4f4f4;
+}
+
+.ideasBlockLast {
+	border-right: 0px solid #f4f4f4;
+}
+
+.blockView {
+	padding-left: 22px;
+}
+
+.blockView {
+	position: relative;
+}
+
+.blockViewTitle {
+	color: #515151;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+.idea {
+	background: url(../images/folders/metadata/ideas.png) no-repeat 2px 0px;
+}
+
+.question {
+	background: url(../images/folders/metadata/question.png) no-repeat 0px 0px;
+}
+
+.task {
+	background: url(../images/folders/metadata/task.png) no-repeat 0px 2px;
+}
+
+.openItem {
+	background: url(../images/folders/metadata/c_in.png) no-repeat 0px 2px;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	margin-top: 3px;
+}
+
+.closeItem {
+	background: url(../images/folders/metadata/c_out.png) no-repeat 0px 2px;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	margin-top: 3px;
+}

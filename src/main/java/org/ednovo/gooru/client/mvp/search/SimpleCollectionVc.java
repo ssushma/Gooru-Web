@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.uc.CollectionImageUc;
+import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.UserProfileUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -81,7 +82,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable,Message
 	Label creatorNameLbl,creatorNameLblValue,gradesLblValue;
 
 	@UiField
-	Label resourceCountLbl;
+	Label resourceCountLbl, questionCountLbl;
 
 	@UiField
 	CollectionImageUc collectionImageUc;
@@ -104,6 +105,10 @@ public class SimpleCollectionVc extends Composite implements IsDraggable,Message
 	private static final String RESOURCES = " "+GL0174.toLowerCase();
 	
 	private static final String RESOURCE = " "+GL1110.toLowerCase();
+	
+	private static final String QUESTIONS = " "+GL1042.toLowerCase();
+	
+	private static final String QUESTION = " "+GL0308.toLowerCase();
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	/**
@@ -273,14 +278,30 @@ public class SimpleCollectionVc extends Composite implements IsDraggable,Message
 		SearchUiUtil.renderMetaData(metaDataFloPanel, collectionSearchResultDo.getCourseNames(), 30);
 		SearchUiUtil.renderMetaData(metaDataFloPanel, collectionSearchResultDo.getTotalViews() + "", VIEWS);
 		
-		if (collectionSearchResultDo.getResourceCount()>1){
-			resourceCountLbl.setText(collectionSearchResultDo.getResourceCount() + RESOURCES);
-		}else{
-			resourceCountLbl.setText(collectionSearchResultDo.getResourceCount() + RESOURCE);
+		int resourceCount = collectionSearchResultDo.getResourceCount();
+		int questionCount = collectionSearchResultDo.getQuestionCount();
+		
+		if (resourceCount>1){
+			resourceCountLbl.setText(resourceCount + RESOURCES);
+		} else if(resourceCount==0&&questionCount==0){
+			resourceCountLbl.setText(resourceCount + RESOURCE);
 		}
+		
+		if (questionCount>1){
+			questionCountLbl.setText(questionCount + QUESTIONS);
+		} else if (questionCount==1) {
+			questionCountLbl.setText(questionCount + QUESTION);
+		}
+		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			resourceCountLbl.getElement().getStyle().setMarginLeft(10, Unit.PX);
-			metaDataFloPanel.add(resourceCountLbl);
+			if(!resourceCountLbl.getText().isEmpty()) {
+				metaDataFloPanel.add(new SeparatorUc());
+				metaDataFloPanel.add(resourceCountLbl);
+			}
+			if(!questionCountLbl.getText().isEmpty()) {
+				metaDataFloPanel.add(new SeparatorUc());
+				metaDataFloPanel.add(questionCountLbl);
+			}
 		}
 		SearchUiUtil.renderStandards(standardsDataPanel, collectionSearchResultDo);
 		collectionImageUc.setUrl(collectionSearchResultDo.getUrl(), collectionSearchResultDo.getResourceTitle());

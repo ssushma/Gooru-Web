@@ -25,6 +25,7 @@ import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -62,13 +63,16 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
-	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl;
-	@UiField Button editBtn, newCollectionBtn, newFolderBtn;
+	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
+	@UiField Button newCollectionBtn, newFolderBtn;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
 	@UiField FolderStyleBundle folderStyle;
 	@UiField HTMLPanel loadingImage;
+	
+	@UiField
+	FolderItemMetaDataUc folderItemMetaDataUc;
 	
 	private  List<FolderDo> folderList = null;
 	
@@ -182,7 +186,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		organizeTitleLbl.setText(GL0180);
 		editFolderLbl.setText(GL1147);
 		deleteFolderLbl.setText(GL1148);
-		editBtn.setText(GL0140);
+		editMetaLbl.setText(GL1654);
 		newCollectionBtn.setText(GL1451);
 		newFolderBtn.setText(GL1450);
 		
@@ -263,6 +267,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		mainSection.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
 		
+		if(folderList != null)
+		{
 		if(folderList.size()==0&&!isPaginated){
 			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
 				isFolderPanelEmpty = true;
@@ -287,7 +293,21 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				mainSection.addStyleName(folderStyle.emptyFolder());
 			}
 			
-		}else{
+		}
+		else{
+			mainSection.removeStyleName(folderStyle.emptyFolder());
+			if(!isPaginated) {
+				folderContentBlock.clear();
+			}
+			for(int i = 0; i<folderList.size(); i++) {
+				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
+					isFolderType = false;
+				}
+				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+			}
+		}
+		}
+		else{
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
 				folderContentBlock.clear();
@@ -568,5 +588,15 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		O1_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
 		O2_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
 		O3_LEVEL_VALUE = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		displayMetaDataContainer();
+	}
+	
+	private void displayMetaDataContainer() {
+		Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());
+		if(map.size()>0) {
+			folderItemMetaDataUc.setVisible(true);
+		} else {
+			folderItemMetaDataUc.setVisible(false);
+		}
 	}
 }

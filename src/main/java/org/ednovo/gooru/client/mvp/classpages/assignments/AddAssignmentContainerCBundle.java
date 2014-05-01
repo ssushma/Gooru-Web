@@ -44,6 +44,8 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		
 		String assignmentButtonsContainer();
 		
+		String navigateButtonsContainer();
+		
 		String assignmentMainContainer();
 
 		String buttonSelected();

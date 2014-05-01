@@ -80,7 +80,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 			.create(AddWebResourceViewUiBinder.class);
 
 	@UiField
-	public Label cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText;
+	public Label mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -95,7 +95,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	Label leftArrowLbl, rightArrowLbl, uploadImageLbl;
 
 	@UiField
-	public TextBox urlTextBox, titleTextBox;
+	public TextBox urlTextBox, titleTextBox,standardsTextBox;
 
 	@UiField
 	public TextArea descriptionTxtAera;
@@ -106,7 +106,8 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	public Image setThumbnailImage;
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,orText,refreshText;
+	HTMLPanel standardsText,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText;
 
 	@UiField
 	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText;//otherText
@@ -115,10 +116,10 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image;//other
 
 	@UiField
-	HTMLPanel resourceTypePanel, resourceDescriptionContainer,buttonsPanel;
+	HTMLPanel resourceTypePanel,educationalUsePanel,momentsOfLearningPanel, resourceDescriptionContainer,buttonsPanel;
 
 	@UiField
-	Label resoureDropDownLbl, resourceCategoryLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
+	Label resoureDropDownLbl, resourceCategoryLabel,resourceEducationalLabel,resourcemomentsOfLearningLabel, loadingTextLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
 	
 	@UiField
 	CheckBox rightsChkBox;
@@ -139,7 +140,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	// public TinyMCE tinyMce=null; 
 	public boolean isValidYoutubeUrlFlag = true;
 
-	public boolean resoureDropDownLblOpen = false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
 	
 	private boolean isShortenedUrl;
 	
@@ -162,6 +163,27 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		videoLabel.getElement().setInnerHTML(GL0918);
 		interactiveText.getElement().setInnerHTML(GL0919);
 		websiteText.getElement().setInnerHTML(GL1396);
+		educationalTitle.getElement().setInnerHTML(GL1664);
+		activityText.getElement().setInnerHTML(GL1665);
+		handoutText.getElement().setInnerHTML(GL0907);
+		homeworkText.getElement().setInnerHTML(GL1666);
+		gameText.getElement().setInnerHTML(GL1667);
+		presentationText.getElement().setInnerHTML(GL1668);
+		referenceMaterialText.getElement().setInnerHTML(GL1669);
+		quizText.getElement().setInnerHTML(GL1670);
+		curriculumPlanText.getElement().setInnerHTML(GL1671);
+		lessonPlanText.getElement().setInnerHTML(GL1672);
+		unitPlanText.getElement().setInnerHTML(GL1673);
+		projectPlanText.getElement().setInnerHTML(GL1674);
+		readingText.getElement().setInnerHTML(GL1675);
+		textbookText.getElement().setInnerHTML(GL0909);
+		articleText.getElement().setInnerHTML(GL1676);
+		bookText.getElement().setInnerHTML(GL1677);
+		momentsOfLearningTitle.getElement().setInnerHTML(GL1678);
+		preparingTheLearningText.getElement().setInnerHTML(GL1679);
+		interactingWithTheTextText.getElement().setInnerHTML(GL1680);
+		extendingUnderstandingText.getElement().setInnerHTML(GL1681);
+		standardsText.getElement().setInnerHTML(GL1682);
 		/*slideText.getElement().setInnerHTML(GL0908);
 		handoutText.getElement().setInnerHTML(GL0907);
 		textbookLabel.getElement().setInnerHTML(GL0909);
@@ -192,6 +214,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
 		descriptionTxtAera.getElement().setAttribute("placeholder", GL0359);
+		standardsTextBox.getElement().setAttribute("placeholder", GL1683);
 		urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
 		urlTextBox.addBlurHandler(new UrlBlurHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
@@ -199,6 +222,9 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
 		resourceCategoryLabel.setText(GL0360);
+		resourceEducationalLabel.setText(GL1684);
+		resourcemomentsOfLearningLabel.setText(GL1684);
+		
 		mandatoryUrlLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
 		mandatoryTitleLblForSwareWords.setVisible(false);
@@ -218,6 +244,8 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		setThumbnailImage.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		resourceTypePanel.setVisible(false);
+		educationalUsePanel.setVisible(false);
+		momentsOfLearningPanel.setVisible(false);
 		loadingPanel.setVisible(false);
 		panelContentRights.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
@@ -749,7 +777,173 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		}
 
 	}
-
+	
+	
+	@UiHandler("activityPanel")
+	void activityPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
+		resourceEducationalLabel.setText(GL1665);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("handoutPanel")
+	void handoutPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_handout_selected");
+		resourceEducationalLabel.setText(GL0907);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("homeworkPanel")
+	void homeworkPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_homework_selected");
+		resourceEducationalLabel.setText(GL1666);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("gamePanel")
+	void gamePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_game_selected");
+		resourceEducationalLabel.setText(GL1667);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("presentationPanel")
+	void presentationPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_presentation_selected");
+		resourceEducationalLabel.setText(GL1668);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("referenceMaterialPanel")
+	void referenceMaterialPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_reference_material_selected");
+		resourceEducationalLabel.setText(GL1669);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("quizPanel")
+	void quizPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_quiz_selected");
+		resourceEducationalLabel.setText(GL1670);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("curriculumPlanPanel")
+	void curriculumPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_curriculum_plan_selected");
+		resourceEducationalLabel.setText(GL1671);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("lessonPlanPanel")
+	void lessonPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_lesson_plan_selected");
+		resourceEducationalLabel.setText(GL1672);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("unitPlanPanel")
+	void unitPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_unit_plan_selected");
+		resourceEducationalLabel.setText(GL1673);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("projectPlanPanel")
+	void projectPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_project_plan_selected");
+		resourceEducationalLabel.setText(GL1674);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("readingPanel")
+	void readingPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_reading_selected");
+		resourceEducationalLabel.setText(GL1675);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("textbookPanel")
+	void textbookPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_textbook_selected");
+		resourceEducationalLabel.setText(GL0909);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("articlePanel")
+	void articlePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_article_selected");
+		resourceEducationalLabel.setText(GL1676);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("bookPanel")
+	void bookPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_book_selected");
+		resourceEducationalLabel.setText(GL1677);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	
+	@UiHandler("educationalDropDownLbl")
+	public void educationalDropDownClick(ClickEvent event) {
+		if (educationalDropDownLblOpen == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+		}
+	}
+	@UiHandler("preparingTheLearningPanel")
+	void preparingTheLearningPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_preparing_the_learning_selected");
+		resourcemomentsOfLearningLabel.setText(GL1679);
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+	}
+	@UiHandler("interactingWithTheTextPanel")
+	void interactingWithTheTextPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_interacting_with_the_text_selected");
+		resourcemomentsOfLearningLabel.setText(GL1680);
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+	}
+	@UiHandler("extendingUnderstandingPanel")
+	void extendingUnderstandingPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_extending_Understanding_selected");
+		resourcemomentsOfLearningLabel.setText(GL1681);
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+	}
+	@UiHandler("momentsOfLearningDropDownLbl")
+	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		if (momentsOfLearningOpen == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
+		}
+	}
 	public void setImageThumbnail() {
 		if( thumbnailImages.size()>0){
 		if (activeImageIndex == 0) {

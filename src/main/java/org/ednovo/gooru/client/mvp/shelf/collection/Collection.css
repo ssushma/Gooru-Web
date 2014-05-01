@@ -164,10 +164,10 @@
 
 .infoContainer {
 	/* padding: 20px; */
-	float: left;
 	width: 96%;
 	padding-left:40px;
 	padding-top: 20px;
+	float: left;
 }
 
 .gradeInfoContainer {
@@ -206,7 +206,7 @@
 {
 		float: right;
 	clear: both;
-	margin-right: 67px;
+	margin-right: 25px;
 	
 
 }
@@ -215,11 +215,12 @@
 	width:332px;
 	float: right;
 clear: both;
+margin-top:17px;
 }
 .shelfTeacherTipButtonsCancel
 {
 	clear: both;
-	left: 150px;
+	left: 193px;
 position: relative;
 }
 .shelfGradeTeacherTipTextbox{
@@ -227,10 +228,11 @@ position: relative;
 	margin: 10px 0px 10px 0px;
 	float: right;
 	clear: both;
-	width: 277px;
-	margin-right:67px;
-	height:140px;
+	width: 92%;
+	margin-right: 23px;
+	height: 68px;
 	resize:none;
+	margin-top: -15px;
 }
 
 .shelfGradeSelectResources {
@@ -345,7 +347,7 @@ position: relative;
 	color: #CCCCCC;
 	float: left;
 	font-size: 16px;
-	min-height: 160px;
+
 }
 
 .shelfVocabulary {
@@ -1117,4 +1119,197 @@ float: left;
 	height: 28px;
 	padding-left: 2px;
 	width: 298px;
+}
+.primaryLabel{
+		font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color:#515151;
+	font-weight:bold;
+
+
+}
+.infoContainerMargin{
+	margin-top:20px;
+}
+.primaryLabelContainer{
+	width: 24%;
+}
+.secondaryLabelContainer{
+	width: 27%;
+}
+.primaryToggleArrowBottom {
+	background: url("images/toggle_arrow_down.png") no-repeat transparent;
+	cursor: pointer;
+	display: block;
+	float: right;
+	height: 14px;
+	width: 12px;
+	margin-top: -14px;
+
+}
+.primaryToggleArrowBottomrotateRight {
+	
+transform: rotate(270deg);
+-ms-transform: rotate(270deg); /* IE 9 */
+-webkit-transform: rotate(270deg); /* Safari and Chrome */
+-o-transform: rotate(270deg); /* Opera */
+-moz-transform: rotate(270deg); /* Firefox */
+
+/* if you want to do this move with animate use transition */
+transition: .5s;
+-moz-transition: .5s; /* Firefox 4 */
+-webkit-transition: .5s; /* Safari and Chrome */
+-o-transition: .5s; /* Opera */
+
+}
+.secondaryInformationContainer
+{
+	padding:20px;
+	float: left;
+width: 96%;
+padding-left:40px;
+}
+.secondaryInfoContainer {
+	float: left;
+	margin-right: 45px;
+	margin-bottom: 50px;
+	width: 42%;
+	margin-top:-8px;
+}
+.languageObjectiveContainer{
+		float: left;
+	margin-right: 45px;
+	width: 91%;
+	margin-top:20px;
+}
+.depthOfKnowledgeContainer
+{
+	float: left;
+	margin-right: 45px;
+	width: 91%;
+}
+.languageObjectiveTextArea
+{
+	width: 100%;
+resize: none;
+padding: 4px;
+border: 1px solid #ccc;
+font-size: 12px;
+font-family: Arial Unicode MS, Arial, sans-serif;
+height: 73px;
+}
+.languageObjectiveInfoContainer {
+	float: left;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 98%;
+	opacity: 0.6;
+}
+.checkBoxOuterContiner
+{
+	width:105%
+}
+.checkBoxinnerContiner
+{
+	width:18%;
+	float:left;
+}
+.checkBoxinnerContinerlevel2
+{
+	width:24%;
+	float:left;
+}
+.checkBoxinnerContinerlevel3{
+		width:29%;
+	float:left;
+}
+.checkBoxinnerContinerlevel4{
+		width:29%;
+	float:left;
+}
+.checkBoxlevels{
+	float:left;
+	padding: 3px 0px;
+}
+.checkBoxinnerContinerlearning{
+		width:80%;
+	float:left;
+}
+.checkBoxinnerContinerlearninglevel2{
+			width:80%;
+	float:left;
+}
+.checkBoxinnerContinerlearninglevel3{
+				width:80%;
+	float:left;
+}
+.dropdownContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+}
+.arrowInstructional {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	top: -9px;
+	float: right;
+	margin-top: -12px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+.scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:80px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
+}
+
+
+.learningInnovationSkills{
+	width: 50%;
+}
+
+.deptOfKnowledge{
+	width: 35%;
+}
+.languageObjectives{
+	width: 35%;
+}
+.teacherTipLabel {
+	color: black;
+	margin-left: 25px;
+	float:left;
+	height: auto;
+	clear: both;
+	max-width:500px;
+	word-wrap: break-word;
+}
+.teacherTipPencilHolder{
+	float:left;
+	vertical-align: top;
 }

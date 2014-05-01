@@ -156,7 +156,7 @@ public interface MessageProperties {
 	String GL0103 = "Assignment";
 	String GL0104 = "Assign";
 	
-	String GL0105 = "Choose one of the following...";
+	String GL0105 = "Please choose one of the following...";
 	
 	String GL0106 = "Don't your collections deserve a home?";
 	String GL0107 = "Click on the&nbsp;";
@@ -2079,5 +2079,94 @@ public interface MessageProperties {
     	String GL1635 ="Username cannot contain spaces";
     	
     	String GL1636="Note: Your teacher will receive an email from Gooru on your behalf";
+    	
+    	String GL1637="INSTRUCTIONAL METHOD";
+      	String GL1638="AUDIENCE";
+      	String GL1639="Choose the purpose for your collection";
+      	String GL1640="Choose an audience for this collection";
+      	String GL1641="e.g: Students will be able to explain patterns in the number of zeroes of an answer when multiplying by the powers of ten and explain patterns in the placement of decimal point.";
+      	String GL1642="LANGUAGE OBJECTIVES";
+      	String GL1643="DEPTH OF KNOWLEDGE";
+    	String GL1644="Choose the...";
+    	String GL1645="Level1: Recall";
+    	String GL1646="Level2: Skill/Concept";
+      	String GL1647="Level3: Strategic Thinking";
+      	String GL1648="Level4: Extended Thinking";      	
+      	String GL1649="LEARNING & INNOVATION SKILLS";      	
+      	String GL1650 = "Choose the skills that this collection addresses.";
+      	String GL1651 = "Creativity and Innovation";
+      	String GL1652 = "Critical Thinking and Problem Solving";
+    	String GL1653 = "Communication and Collaboration";
 
-};
+    	String GL1654="Edit Folder Metadata";
+    	String GL1655 = "Next Generation Science Standards";
+    	
+    	String GL1656="Primary Information";
+    	String GL1657="Secondary Information";
+    	
+    	String GL1658="TEACHER TIPS";
+    	String GL1659="Share how you use this collection with your students. This will help other teachers understand how you are using your collection.";
+    	
+
+    	
+
+
+
+    	//Navigation Confirmation popup
+    	String GL1660="Are you sure you want to navigate away?";
+    	String GL1661="Your responses will be lost.";
+    	String GL1662="back to response";
+    	String GL1663="continue";
+    	
+    	String GL1664="Educational Use";
+    	String GL1665="Activity";
+    	String GL1666="Homework";
+    	String GL1667="Game";
+    	String GL1668="Presentation";
+    	String GL1669="Reference Material";
+    	String GL1670="Quiz";
+    	String GL1671="Curriculum Plan";
+    	String GL1672="Lesson Plan";
+    	String GL1673="Unit Plan";
+    	String GL1674="Project Plan";
+    	String GL1675="Reading";
+    	String GL1676="Article";
+    	String GL1677="Book";
+    	String GL1678="Moments of Learning";
+    	String GL1679="Preparing the Learning";
+    	String GL1680="Interacting with the Text";
+    	String GL1681="Extending Understanding";
+     	String GL1682="Standards";
+    	String GL1683="e.g.CCSS.Math.Content.8.F.A.3";
+    	String GL1684="Please choose one of the following...";
+    	
+    	
+    	//Added new fields for player metadata.
+    	String GL1685="Time Required";
+    	String GL1686="OER";
+    	String GL1687="Mobile Friendly";
+    	String GL1688="Data Type";
+    	String GL1689="Interactivity Type";
+    	String GL1690="Educational Alignment";
+    	String GL1691="Educational Role";
+    	String GL1692="Age Range";
+    	String GL1693="Depth of Knowledge";
+    	String GL1694="Reading Level";
+     	String GL1695="School Level";
+     	String GL1696="Language";
+    	String GL1697=	"Country Code";
+    	String GL1698="Ads";
+    	String GL1699="Copyright Holder";
+    	String GL1700="Host";
+    	String GL1701="Course Number";
+    	String GL1702="Series Title";
+    	String GL1703="ACCESSIBILITY";
+    	String GL1704="Control Flexibility";
+    	String GL1705="Access Hazard";
+    	String GL1706=	"Media Feature";
+    	String GL1707="Access Mode";
+    	String GL1708="GENERAL";
+		String GL1709="e.g: I use this with my students to explain how, etc...";
+    	
+   }
+

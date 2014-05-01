@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.header.StudyPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -298,23 +299,37 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 
 	public class CloseResourcePlayerEvent implements ClickHandler{
 		public void onClick(ClickEvent event) {
-			//String page=
-			String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
-			if(page!=null){
-				if(page.equals("teach")){
-					//TODO reveal to teach page
-					getUiHandlers().revealTeachOrStudypage(page);
-				}else if(page.equals("study")){
-					//TODO reveal to studypage
-					getUiHandlers().revealTeachOrStudypage(page);
-				}else{
-					hideFromPopup(true);
-					closePreviewPlayer();
-				}
+			if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+				new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						closePlayer();
+					}
+				};
+			}else{
+				closePlayer();
+			}
+			
+		}
+	}
+	
+	public void closePlayer(){
+		String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
+		if(page!=null){
+			if(page.equals("teach")){
+				//TODO reveal to teach page
+				getUiHandlers().revealTeachOrStudypage(page);
+			}else if(page.equals("study")){
+				//TODO reveal to studypage
+				getUiHandlers().revealTeachOrStudypage(page);
 			}else{
 				hideFromPopup(true);
 				closePreviewPlayer();
 			}
+		}else{
+			hideFromPopup(true);
+			closePreviewPlayer();
 		}
 	}
 	

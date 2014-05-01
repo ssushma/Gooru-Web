@@ -275,3 +275,6 @@
 .marginBotton10Px{
 	margin-bottom: 10px;
 }
+.clearBoth{
+	clear: both;
+}

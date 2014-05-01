@@ -157,6 +157,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	private Integer attemptCount=0;
 	
+	private boolean isOpenEndedAnswerSubmited=false;
+	
+	
     /**
 	 * @return the answerIdsObject
 	 */
@@ -253,6 +256,20 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 */
 	public void setAttemptCount(Integer attemptCount) {
 		this.attemptCount = attemptCount;
+	}
+	
+	/**
+	 * @return the isOpenEndedAnswerSubmited
+	 */
+	public boolean isOpenEndedAnswerSubmited() {
+		return isOpenEndedAnswerSubmited;
+	}
+
+	/**
+	 * @param isOpenEndedAnswerSubmited the isOpenEndedAnswerSubmited to set
+	 */
+	public void setOpenEndedAnswerSubmited(boolean isOpenEndedAnswerSubmited) {
+		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
 	}
 	
     public static final  Object TAB_PRESENTER_SLOT = new Object(); 
@@ -404,6 +421,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			getContentReport(collectionItemDo.getResource().getGooruOid());
 		}
 		setUserAttemptedQuestionTypeAndStatus(false,0);
+		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter,false);
 	}
 	public void makeButtonActive(String tabView){
@@ -764,6 +782,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			clearIframeContent();
 			resoruceMetadataPresenter.resetResourceMetaData();
 			resourceInfoPresenter.resetResourceInfo();
+			setOpenEndedAnswerSubmited(true);
 		}
 	}
 	
