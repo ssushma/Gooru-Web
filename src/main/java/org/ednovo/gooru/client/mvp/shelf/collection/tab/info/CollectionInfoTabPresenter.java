@@ -109,6 +109,11 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				}
 
 			});
+			
+			
+			//Get Depth of Knowledge and other details///
+			
+			
 	}
 	
 	@Override

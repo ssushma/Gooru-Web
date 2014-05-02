@@ -59,6 +59,8 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	
 	String MEDIATYPE_FLT = "fltNot.mediaType";
 	
+	String OER_FLT = "flt.license";
+	
 	/**
 	 * Set post search view
 	 * @param searchDo instance of {@link SearchDo}

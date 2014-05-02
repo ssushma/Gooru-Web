@@ -73,8 +73,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static FlowPanel wrapperContainerField;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer,ratingsContainer;
-	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,starValue;
+	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer/*ratingsContainer*/;
+	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
@@ -118,16 +118,21 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFour.setText(GL0584); 
 		reactionToolTipFive.setText(GL0585); 
 		
-		starValue.setVisible(false);
+//		starValue.setVisible(false);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 //			collectionContainer.add(starRatingsUc);
-		}
+		}*/
+		/*if(AppClientFactory.isAnonymous()){
+			userStarRatings = new UserStarRatingsWidget();
+			ratingsContainer.clear();
+			ratingsContainer.add(userStarRatings);
+		}*/
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -182,7 +187,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		backwardButtonHandler=backwardButton.addClickHandler(new ShowResourceView(previousResourceRequest));
 	}
 
-	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest){
+	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest){ 
 		if(AppClientFactory.isAnonymous()){
 			setDefaultReaction();
 		}
@@ -766,14 +771,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip) {
-		userStarRatings = new UserStarRatingsWidget(result,showThankYouToolTip);
+		/**
+		 * Do not un comment for 6.2 release.
+		 */
+		/*userStarRatings = new UserStarRatingsWidget(result,showThankYouToolTip);
 		ratingsContainer.clear();
-		ratingsContainer.add(userStarRatings);
+		ratingsContainer.add(userStarRatings);*/
 	}
 	
 	@Override
 	public void setDefaultUserStarRatings() {
-		starValue.setVisible(false);
+//		starValue.setVisible(false);
 	}
 	
 	/**
@@ -795,7 +803,19 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			this.showThankYouToolTip=showThankYouToolTip;
 			setRatings(result,showThankYouToolTip);
 		}
-		
+		/**
+		 * Class constructor
+		 */
+		public UserStarRatingsWidget() {
+			setDefaultRatings();
+		}
+		/**
+		 * Sets the default rating.
+		 */
+		private void setDefaultRatings() {
+			getDefaultRatings();
+		}
+
 		/**
 		 * Implementation of parent class method, in this create API will be called based the rating selected.
 		 * @param selectedStar {@link String}

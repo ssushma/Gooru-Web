@@ -215,6 +215,7 @@
 	width:332px;
 	float: right;
 clear: both;
+margin-top:17px;
 }
 .shelfTeacherTipButtonsCancel
 {
@@ -1131,13 +1132,10 @@ float: left;
 	margin-top:20px;
 }
 .primaryLabelContainer{
-	width: 91%;
-		border-bottom: 1px solid #ccc;
+	width: 24%;
 }
-.secondaryLabelContainer
-{
-	width: 91%;
-	border-bottom: 1px solid #ccc;
+.secondaryLabelContainer{
+	width: 27%;
 }
 .primaryToggleArrowBottom {
 	background: url("images/toggle_arrow_down.png") no-repeat transparent;
@@ -1229,9 +1227,9 @@ height: 73px;
 		width:29%;
 	float:left;
 }
-.checkBoxlevels
-{
+.checkBoxlevels{
 	float:left;
+	padding: 3px 0px;
 }
 .checkBoxinnerContinerlearning{
 		width:80%;
@@ -1289,4 +1287,29 @@ height: 73px;
 	top: 7px;
 	left: -1px;
 	z-index: 9;
+}
+
+
+.learningInnovationSkills{
+	width: 50%;
+}
+
+.deptOfKnowledge{
+	width: 35%;
+}
+.languageObjectives{
+	width: 35%;
+}
+.teacherTipLabel {
+	color: black;
+	margin-left: 25px;
+	float:left;
+	height: auto;
+	clear: both;
+	max-width:500px;
+	word-wrap: break-word;
+}
+.teacherTipPencilHolder{
+	float:left;
+	vertical-align: top;
 }

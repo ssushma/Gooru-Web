@@ -189,7 +189,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		editMetaLbl.setText(GL1654);
 		newCollectionBtn.setText(GL1451);
 		newFolderBtn.setText(GL1450);
-		
+		folderItemMetaDataUc.setVisible(false);
 	}
 	
 	public class AddNewFolderClick implements ClickHandler {
@@ -267,6 +267,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		}
 		mainSection.getElement().setAttribute("style", "min-height:"+(Window.getClientHeight()-100)+"px");
 		
+		if(folderList != null)
+		{
 		if(folderList.size()==0&&!isPaginated){
 			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
 				isFolderPanelEmpty = true;
@@ -291,7 +293,21 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				mainSection.addStyleName(folderStyle.emptyFolder());
 			}
 			
-		}else{
+		}
+		else{
+			mainSection.removeStyleName(folderStyle.emptyFolder());
+			if(!isPaginated) {
+				folderContentBlock.clear();
+			}
+			for(int i = 0; i<folderList.size(); i++) {
+				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
+					isFolderType = false;
+				}
+				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+			}
+		}
+		}
+		else{
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
 				folderContentBlock.clear();
@@ -582,5 +598,11 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		} else {
 			folderItemMetaDataUc.setVisible(false);
 		}
+	}
+	
+	@UiHandler("editMetaLbl")
+	public void editMetaData(ClickEvent event) {
+		folderItemMetaDataUc.updateFolderData(presentFolderId, organizeTitleLbl.getText());
+		folderItemMetaDataUc.showEditableMetaData(false);
 	}
 }
