@@ -671,10 +671,17 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	{
 		textAreaContianer.setVisible(false);
 		finalTeacherTipLabelContainer.setVisible(true);
+		textAreaContianer.setVisible(false);
+		finalTeacherTipLabelContainer.setVisible(true);
+		if(teacherTipLatest != null && !teacherTipLatest.isEmpty())
+		{
 		userTeacherTipText.setText(teacherTipLatest);
-
-		
-		
+		}
+		else
+		{
+		userTeacherTipText.setText(GL1709);
+		}
+	
 		
 	}
 
