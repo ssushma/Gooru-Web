@@ -30,9 +30,12 @@ public interface AddResourceBundle extends CssResource {
 	String answerDeselected();
 	String answerSelected();
 	String addResourceFormAnswerDelete();
-
 	String addResourceThumbnailContent();
 	String addResourceSprite();
 	String addResourceImgDesc();
+	String addResourceFormAnswerInputControl();
+	String addResourceMultipleAnswerInputControl();
+	String yesNoTextStyle();
+	String addResourceFormTitleChoiceAlign();
 
 }
