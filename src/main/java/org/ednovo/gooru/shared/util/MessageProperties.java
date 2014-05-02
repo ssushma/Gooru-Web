@@ -156,7 +156,7 @@ public interface MessageProperties {
 	String GL0103 = "Assignment";
 	String GL0104 = "Assign";
 	
-	String GL0105 = "Choose one of the following...";
+	String GL0105 = "Please choose one of the following...";
 	
 	String GL0106 = "Don't your collections deserve a home?";
 	String GL0107 = "Click on the&nbsp;";
@@ -2107,6 +2107,11 @@ public interface MessageProperties {
     	String GL1658="TEACHER TIPS";
     	String GL1659="Share how you use this collection with your students. This will help other teachers understand how you are using your collection.";
     	
+
+    	
+
+
+
     	//Navigation Confirmation popup
     	String GL1660="Are you sure you want to navigate away?";
     	String GL1661="Your responses will be lost.";
@@ -2135,4 +2140,33 @@ public interface MessageProperties {
     	String GL1683="e.g.CCSS.Math.Content.8.F.A.3";
     	String GL1684="Please choose one of the following...";
     	
-   };
+    	
+    	//Added new fields for player metadata.
+    	String GL1685="Time Required";
+    	String GL1686="OER";
+    	String GL1687="Mobile Friendly";
+    	String GL1688="Data Type";
+    	String GL1689="Interactivity Type";
+    	String GL1690="Educational Alignment";
+    	String GL1691="Educational Role";
+    	String GL1692="Age Range";
+    	String GL1693="Depth of Knowledge";
+    	String GL1694="Reading Level";
+     	String GL1695="School Level";
+     	String GL1696="Language";
+    	String GL1697=	"Country Code";
+    	String GL1698="Ads";
+    	String GL1699="Copyright Holder";
+    	String GL1700="Host";
+    	String GL1701="Course Number";
+    	String GL1702="Series Title";
+    	String GL1703="ACCESSIBILITY";
+    	String GL1704="Control Flexibility";
+    	String GL1705="Access Hazard";
+    	String GL1706=	"Media Feature";
+    	String GL1707="Access Mode";
+    	String GL1708="GENERAL";
+		String GL1709="e.g: I use this with my students to explain how, etc...";
+    	
+   }
+

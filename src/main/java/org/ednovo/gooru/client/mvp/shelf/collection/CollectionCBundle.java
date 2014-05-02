@@ -320,7 +320,15 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String scrollPanelContainerInstructional();
 		
+		String learningInnovationSkills();
 		
+		String deptOfKnowledge();
+		
+		String languageObjectives();
+		
+		String teacherTipLabel();
+		
+		String teacherTipPencilHolder();
 		
 
 	}
