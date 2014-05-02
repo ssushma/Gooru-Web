@@ -2143,30 +2143,37 @@ public interface MessageProperties {
     	
     	//Added new fields for player metadata.
     	String GL1685="Time Required";
-    	String GL1686="OER";
-    	String GL1687="Mobile Friendly";
+    	String GL1686="Contributor";
+    	String GL1687="Mobile-friendlyness";
     	String GL1688="Data Type";
     	String GL1689="Interactivity Type";
     	String GL1690="Educational Alignment";
-    	String GL1691="Educational Role";
+    	String GL1691="Educational Role (Audience)";
     	String GL1692="Age Range";
     	String GL1693="Depth of Knowledge";
     	String GL1694="Reading Level";
-     	String GL1695="School Level";
+     	String GL1695="Has Adaptation";
      	String GL1696="Language";
     	String GL1697=	"Country Code";
-    	String GL1698="Ads";
+    	String GL1698="Is Adaptation";
     	String GL1699="Copyright Holder";
     	String GL1700="Host";
-    	String GL1701="Course Number";
-    	String GL1702="Series Title";
+    	String GL1701="Gooru Course";
+    	String GL1702="Accessbility API";
     	String GL1703="ACCESSIBILITY";
     	String GL1704="Control Flexibility";
     	String GL1705="Access Hazard";
-    	String GL1706=	"Media Feature";
+    	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL";
+    	String GL1708="GENERAL INFO";
 		String GL1709="e.g: I use this with my students to explain how, etc...";
+		String GL1710="RESOURCE INFO";
+		String GL1711="Date Created";
+		String GL1712="Thumbnail URL";
+		String GL1713="License Code";
+		String GL1714="EDUCATIONAL INFO";
+		String GL1715="Gooru Subject";
+		
     	
    }
 
