@@ -189,7 +189,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		editMetaLbl.setText(GL1654);
 		newCollectionBtn.setText(GL1451);
 		newFolderBtn.setText(GL1450);
-		
+		folderItemMetaDataUc.setVisible(false);
 	}
 	
 	public class AddNewFolderClick implements ClickHandler {
@@ -598,5 +598,10 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		} else {
 			folderItemMetaDataUc.setVisible(false);
 		}
+	}
+	
+	@UiHandler("editMetaLbl")
+	public void editMetaData(ClickEvent event) {
+		folderItemMetaDataUc.showEditableMetaData(false);
 	}
 }
