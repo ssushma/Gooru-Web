@@ -60,6 +60,12 @@ public abstract class StarRatingsUc extends Composite {
 	
 	@UiField Label starValue; 
 	
+	private static final String POOR="Poor";
+	private static final String FAIR="Fair";
+	private static final String GOOD="Good";
+	private static final String VERY_GOOD="Very Good";
+	private static final String EXCELLENT="Excellent";
+	
 
 	private static StarRatingsUiBinder uiBinder = GWT.create(StarRatingsUiBinder.class);
 
@@ -173,7 +179,7 @@ public abstract class StarRatingsUc extends Composite {
 		if(result!=null){
 			if(result.getScore()==1){
 				starValue.setVisible(true);
-				starValue.setText("Poor");
+				starValue.setText(POOR);
 				starOne.setValue(true);
 				starTwo.setValue(false);
 				starThree.setValue(false);
@@ -181,7 +187,7 @@ public abstract class StarRatingsUc extends Composite {
 				starFive.setValue(false);
 			}else if(result.getScore()==2){
 				starValue.setVisible(true);
-				starValue.setText("Fair");
+				starValue.setText(FAIR);
 				starOne.setValue(true);
 				starTwo.setValue(true);
 				starThree.setValue(false);
@@ -189,7 +195,7 @@ public abstract class StarRatingsUc extends Composite {
 				starFive.setValue(false);
 			}else if(result.getScore()==3){
 				starValue.setVisible(true);
-				starValue.setText("Good");
+				starValue.setText(GOOD);
 				starOne.setValue(true);
 				starTwo.setValue(true);
 				starThree.setValue(true);
@@ -197,7 +203,7 @@ public abstract class StarRatingsUc extends Composite {
 				starFive.setValue(false);
 			}else if(result.getScore()==4){
 				starValue.setVisible(true);
-				starValue.setText("Very Good");
+				starValue.setText(VERY_GOOD);
 				starOne.setValue(true);
 				starTwo.setValue(true);
 				starThree.setValue(true);
@@ -205,7 +211,7 @@ public abstract class StarRatingsUc extends Composite {
 				starFive.setValue(false);
 			}else if(result.getScore()==5){
 				starValue.setVisible(true);
-				starValue.setText("Excellent");
+				starValue.setText(EXCELLENT);
 				starOne.setValue(true);
 				starTwo.setValue(true);
 				starThree.setValue(true);
