@@ -390,6 +390,7 @@ public interface ShelfCBundle extends ClientBundle{
 		String deleteOkayButton();
 		
 		String aleartDescText();
+		String collectionEditImageTeacherTip();
 	}
 	
 	@Source("Shelf.css")

@@ -69,6 +69,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -220,6 +221,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
     private static final String COLLECTION_COMMENTS="COLLECTION_COMMENTS";
     
     private static final String PRIVATE="private";
+    
+    private static String Star_Rating_Widget = "ratingWidget";
     
 
     /**
@@ -628,7 +631,10 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
-			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+			/**
+			 * Do not un comment for 6.2 release
+			 */
+//			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
@@ -1497,8 +1503,22 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			metadataPresenter.setPlayerLoginStatusHandler(true);
 		}else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(COLLECTION_COMMENTS)){
 			metadataPresenter.setPlayerLoginStatusHandler(true);
+		}else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(Star_Rating_Widget)){
+			isResourceContentRating(collectionItemDo.getResource().getGooruOid());
 		}
 	}
+	
+	/**
+	 * Gets the respective resource ratings rated by the user.
+	 * @param resourceGooruId {@link String} 
+	 */
+	private void isResourceContentRating(String resourceGooruId) {
+		if(!AppClientFactory.isAnonymous()){
+			getContentRating(resourceGooruId);
+		}
+	}
+	
+	
 	private void isResourceContentReaction(String resourceGooruId) {
 		if(!AppClientFactory.isAnonymous()){
 			getContentReaction(resourceGooruId);
@@ -1529,6 +1549,26 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			}
 		});
 	}
+	
+	/**
+	 * Get ratings API is called and gets respective ratings.
+	 * @param resourceGooruId {@link String}
+	 */
+	private void getContentRating(String resourceGooruId) {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				if(result.size()>0){
+					resoruceMetadataPresenter.getView().setUserStarRatings(result.get(0),false); 
+				}else{
+					resoruceMetadataPresenter.getView().setUserStarRatings(null,false); 
+				}
+				
+			}
+		});
+		
+	}
+
 
 	public void updateFlagImageOnHomeView(){
 		metadataPresenter.getFlagedReport(collectionDo.getGooruOid());

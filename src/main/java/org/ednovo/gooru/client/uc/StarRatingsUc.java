@@ -26,9 +26,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
+import org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeView.OnassignCollectionBtnMouseOver;
+import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -56,7 +64,18 @@ public abstract class StarRatingsUc extends Composite {
 	@UiField
 	public SimpleCheckBox starOne,starTwo,starThree,starFour,starFive;
 	
-	@UiField Label starValue; 
+	@UiField Label starValue,mouseOverStarValue; 
+	
+	private static final String POOR="Poor";
+	private static final String FAIR="Fair";
+	private static final String GOOD="Good";
+	private static final String VERY_GOOD="Very Good";
+	private static final String EXCELLENT="Excellent";
+	private static final String ONE_STAR="starOne";
+	private static final String TWO_STAR="starTwo";
+	private static final String THREE_STAR="starThree";
+	private static final String FOUR_STAR="starFour";
+	private static final String FIVE_STAR="starFive";
 	
 
 	private static StarRatingsUiBinder uiBinder = GWT.create(StarRatingsUiBinder.class);
@@ -70,7 +89,21 @@ public abstract class StarRatingsUc extends Composite {
 	public StarRatingsUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		starValue.setVisible(false);
+		starOne.addMouseOverHandler(new OnStarMouseOver(ONE_STAR));
+		starTwo.addMouseOverHandler(new OnStarMouseOver(TWO_STAR));
+		starThree.addMouseOverHandler(new OnStarMouseOver(THREE_STAR));
+		starFour.addMouseOverHandler(new OnStarMouseOver(FOUR_STAR));
+		starFive.addMouseOverHandler(new OnStarMouseOver(FIVE_STAR));
+		
+		starOne.addMouseOutHandler(new OnStarMouseOut(ONE_STAR));
+		starTwo.addMouseOutHandler(new OnStarMouseOut(TWO_STAR));
+		starThree.addMouseOutHandler(new OnStarMouseOut(THREE_STAR));
+		starFour.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
+		starFive.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
+		
+		
 	}
+	
 	
 	/**
 	 * On click of Star 1 sets the rating on view.
@@ -78,22 +111,35 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starOne")
 	public void onStarOneclicked(ClickEvent event){
-		if(starOne.getValue()){
-			crateStarRating("starOne");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starOne.getValue()){
+				crateStarRating(ONE_STAR);
+			}else{
+			}
 		}
+		
+		
 	}
-	
+
 	/**
 	 * On click of Star 2 sets the rating on view.
 	 * @param clickEvent {@link ClickEvent}
 	 */
 	@UiHandler("starTwo")
 	public void onStarTwoclicked(ClickEvent event){
-		if(starTwo.getValue()){
-			crateStarRating("starTwo");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starTwo.getValue()){
+				crateStarRating(TWO_STAR);
+			}else{
+			}
 		}
+		
 	}
 	
 	/**
@@ -102,9 +148,14 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starThree")
 	public void onStarThreeclicked(ClickEvent event){
-		if(starThree.getValue()){
-			crateStarRating("starThree");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starThree.getValue()){
+				crateStarRating(THREE_STAR);
+			}else{
+			}
 		}
 	}
 	
@@ -114,10 +165,16 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starFour")
 	public void onStarFourclicked(ClickEvent event){
-		if(starFour.getValue()){
-			crateStarRating("starFour");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starFour.getValue()){
+				crateStarRating(FOUR_STAR);
+			}else{
+			}
 		}
+		
 	}
 	
 	/**
@@ -126,10 +183,16 @@ public abstract class StarRatingsUc extends Composite {
 	 */
 	@UiHandler("starFive")
 	public void onStarFiveclicked(ClickEvent event){
-		if(starFive.getValue()){
-			crateStarRating("starFive");
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget();
 		}else{
+			if(starFive.getValue()){
+				crateStarRating(FIVE_STAR);
+			}else{
+			}
 		}
+		
 	}
 
 	/**
@@ -141,51 +204,68 @@ public abstract class StarRatingsUc extends Composite {
 		if(result!=null){
 			if(result.getScore()==1){
 				starValue.setVisible(true);
-				starValue.setText("Poor");
-				starOne.setValue(true);
-				starTwo.setValue(false);
-				starThree.setValue(false);
-				starFour.setValue(false);
-				starFive.setValue(false);
+				starValue.setText(POOR);
+				setStarRatingValue(1); 
 			}else if(result.getScore()==2){
 				starValue.setVisible(true);
-				starValue.setText("Fair");
-				starOne.setValue(true);
-				starTwo.setValue(true);
-				starThree.setValue(false);
-				starFour.setValue(false);
-				starFive.setValue(false);
+				starValue.setText(FAIR);
 			}else if(result.getScore()==3){
 				starValue.setVisible(true);
-				starValue.setText("Good");
-				starOne.setValue(true);
-				starTwo.setValue(true);
-				starThree.setValue(true);
-				starFour.setValue(false);
-				starFive.setValue(false);
+				starValue.setText(GOOD);
+				setStarRatingValue(2);
 			}else if(result.getScore()==4){
 				starValue.setVisible(true);
-				starValue.setText("Very Good");
-				starOne.setValue(true);
-				starTwo.setValue(true);
-				starThree.setValue(true);
-				starFour.setValue(true);
-				starFive.setValue(false);
+				starValue.setText(VERY_GOOD);
+				setStarRatingValue(4);
+				
 			}else if(result.getScore()==5){
 				starValue.setVisible(true);
-				starValue.setText("Excellent");
-				starOne.setValue(true);
-				starTwo.setValue(true);
-				starThree.setValue(true);
-				starFour.setValue(true);
-				starFive.setValue(true);
+				starValue.setText(EXCELLENT);
+				setStarRatingValue(5);
 			}else{
-				starOne.setValue(false);
-				starTwo.setValue(false);
-				starThree.setValue(false);
-				starFour.setValue(false);
-				starFive.setValue(false);
+				setStarRatingValue(0);
 			}
+		}else{
+			setStarRatingValue(0);
+		}
+		
+	}
+	
+	/**
+	 * Sets the stars on view based on the scores.
+	 * @param starRating {@link Integer}
+	 */
+	private void setStarRatingValue(int starRating) {
+		if(starRating==1){
+			starOne.setValue(true);
+			starTwo.setValue(false);
+			starThree.setValue(false);
+			starFour.setValue(false);
+			starFive.setValue(false);
+		}else if(starRating==2){
+			starOne.setValue(true);
+			starTwo.setValue(true);
+			starThree.setValue(false);
+			starFour.setValue(false);
+			starFive.setValue(false);
+		}else if(starRating==3){
+			starOne.setValue(true);
+			starTwo.setValue(true);
+			starThree.setValue(true);
+			starFour.setValue(false);
+			starFive.setValue(false);
+		}else if(starRating==4){
+			starOne.setValue(true);
+			starTwo.setValue(true);
+			starThree.setValue(true);
+			starFour.setValue(true);
+			starFive.setValue(false);
+		}else if(starRating==5){
+			starOne.setValue(true);
+			starTwo.setValue(true);
+			starThree.setValue(true);
+			starFour.setValue(true);
+			starFive.setValue(true);
 		}else{
 			starOne.setValue(false);
 			starTwo.setValue(false);
@@ -193,12 +273,88 @@ public abstract class StarRatingsUc extends Composite {
 			starFour.setValue(false);
 			starFive.setValue(false);
 		}
-		
 	}
+
 	/**
 	 * Abstract method, which will send the rated information to the implemented class.
 	 * @param selectedStar
 	 */
 	public abstract void crateStarRating(String selectedStar);
+	
+	/**
+	 * Invokes Log-in pop-up
+	 */
+	private void showLoginPopupWidget() { 
+		LoginPopupUc popup =new LoginPopupUc();
+		popup.setWidgetMode("ratingWidget");
+		popup.setGlassEnabled(true);
+	}
+	
+	/**
+	 * default rating will get set
+	 */
+	public void getDefaultRatings(){
+		starOne.setValue(false);
+		starTwo.setValue(false);
+		starThree.setValue(false);
+		starFour.setValue(false);
+		starFive.setValue(false);
+	}
+	
+	public class OnStarMouseOver implements MouseOverHandler{
+		private String starScore="";
+		public OnStarMouseOver(String starScore) {
+			this.starScore=starScore;
+		}
 
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			if(starScore.equalsIgnoreCase(ONE_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(POOR);
+			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(FAIR);
+			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(GOOD);
+			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(VERY_GOOD);
+			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(EXCELLENT);
+			}
+		}
+		
+	}
+	
+	public class OnStarMouseOut implements MouseOutHandler{
+		private String starScore="";
+		public OnStarMouseOut(String starScore) {
+			this.starScore=starScore;
+		}
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			
+			if(starScore.equalsIgnoreCase(ONE_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}
+		}
+	}
+	
 }

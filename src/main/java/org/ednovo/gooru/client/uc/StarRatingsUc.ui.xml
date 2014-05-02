@@ -13,9 +13,9 @@
 			id="star2" name="rating" value="2" /><label for="star2" title="Fair"> 2 stars</label> 
 			<input type="radio" id="star1" name="rating" value="1" /><label for="star1" 
 			title="Poor"> 1 star</label> </fieldset> -->
-
+		<g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
+			<g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label>
 		<g:HTMLPanel styleName="{playerStyle.rating}">
-			<g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
 			<g:SimpleCheckBox ui:field="starOne" name="rating"
 				styleName="{playerStyle.rating}" />
 			<g:SimpleCheckBox ui:field="starTwo" name="rating"
