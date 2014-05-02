@@ -360,6 +360,11 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		JSONObject folderObject=new JSONObject();
 		try {
 			folderObject.put(TITLE, title);
+			folderObject.put("performanceTasks", "performance Tasks");
+			folderObject.put("bigIdeas", "big Ideas");
+			folderObject.put("essentialQuestions", "essential Questions");
+			System.out.println(url);
+			System.out.println(folderObject.toString());
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
 		} catch (Exception e) {}
 	}
