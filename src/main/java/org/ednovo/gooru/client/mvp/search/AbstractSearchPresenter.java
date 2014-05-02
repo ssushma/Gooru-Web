@@ -306,6 +306,11 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			if (notFriendly != null && notFriendly.equalsIgnoreCase("not_ipad_friendly")) {
 				filters.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 			}
+			String oer=getPlaceManager().getRequestParameter(IsSearchView.OER_FLT);
+			if(oer != null && oer.equalsIgnoreCase("OER")){
+				filters.put(IsSearchView.OER_FLT, oer);
+			}
+			
 		}
 		return filters;
 	}
@@ -439,12 +444,19 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				}
 				if (viewToken.equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 					String notFriendly = getPlaceManager().getRequestParameter(IsSearchView.MEDIATYPE_FLT);
+					String oer = getPlaceManager().getRequestParameter(IsSearchView.OWNER_FLT);
 					if (notFriendly != null) {
 						params.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 					}
+					if (oer != null) {
+						params.put(IsSearchView.OER_FLT, oer);
+					}
 				}else{
 					params.remove(IsSearchView.MEDIATYPE_FLT);
+					params.remove(IsSearchView.OER_FLT);
 				}
+				
+				
 				getView().resetFilters();
 			}
 			params.put(QUERY, getSearchDo().getUrlQuery());
