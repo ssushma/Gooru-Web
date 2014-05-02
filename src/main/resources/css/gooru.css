@@ -1307,6 +1307,17 @@ td.datePickerMonth{
 	border:0 !important;
 }
 
+.multiAnswerChoiceContainer iframe, .multiAnswerChoiceContainer table.mceLayout {
+	height: 30px!important;
+	min-height: 30px!important;
+	width: 180px !important;
+	border:0 !important;
+}
+
+.multiAnswerChoiceContainer table.mceLayout td.mceIframeContainer{
+	border:0 !important;
+}
+
 .resourceDescriptionContainer iframe, .resourceDescriptionContainer table.mceLayout {
 	height: 81px!important;
 	min-height: 50px!important;

@@ -95,7 +95,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	@UiField Anchor addAnswerChoice,addHintsLabel;
 
 	@UiField Anchor addQuestionImg;
-	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText;
+	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText,noLabelText;
 	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent;
 	/*@UiField ListBox questionTypeTextBox;*/
 	@UiField BlueButtonUc addbutton;
@@ -171,6 +171,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		addQuestionImg.setText(GL_SPL_PLUS+" "+GL0860);
 		addResourceFormTitleChoice.setText(GL0864);
 		correctText.getElement().setInnerHTML(GL0314);
+		noLabelText.setVisible(false);
 		alphaLetterA.setLabelName(GL_GRR_ALPHABET_A);
 		alphaLetterB.setLabelName(GL_GRR_ALPHABET_B);
 		addAnswerChoice.setText(GL0866);
@@ -269,7 +270,19 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 			addQuestionAnswerChoice.optionSelectedButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswerChoice);
+					if(questionType.equals("MA")){
+						selectYesOption(questionAnswerChoiceContainer, addQuestionAnswerChoice);
+					}else{
+						selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswerChoice);
+					}
+				}
+			});
+			addQuestionAnswerChoice.optionNoButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(questionType.equals("MA")){
+						selectNoOption(questionAnswerChoiceContainer, addQuestionAnswerChoice);
+					}
 				}
 			});
 		}
@@ -308,7 +321,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		int questionTypeNum=collectionItemDo.getResource().getType();
 		if(questionTypeNum==1){
 			setQuestionType("MC");
-			showMulipleAnswerChoice();
+			showMulipleChoice();
 		}else if(questionTypeNum==3){
 			setQuestionType("T/F");
 			showTrueOrFalseAnswerChoice();
@@ -320,7 +333,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 			showFillInTheBlank();
 		}else if(questionTypeNum==7){
 			setQuestionType("MA");
-			showMulipleAnswerChoice();
+			showMulipleAnswerChoiceOptions();
 		}
 	}
 	public void refreshOptionNames(){
@@ -359,8 +372,19 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 			}else{
 				addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
 			}
-			
 		}
+	}
+	public void selectYesOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
+		if(addQuestionAnswerChoice.optionSelectedButton.getStyleName().equals(addWebResourceStyle.answerDeselected())){
+			addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
+			addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
+		}
+	}
+	public void selectNoOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
+			if(addQuestionAnswerChoice.optionNoButton.getStyleName().equals(addWebResourceStyle.answerDeselected())){
+				addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerSelected());
+				addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
+			}
 	}
 	
 	public void addStyleToBody(AddQuestionAnswerChoice addQuestionAnswerChoice){
@@ -445,7 +469,19 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 			addQuestionAnswer.optionSelectedButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswer);
+					if(questionType.equals("MA")){
+						selectYesOption(questionAnswerChoiceContainer, addQuestionAnswer);
+					}else{
+						selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswer);
+					}
+				}
+			});
+			addQuestionAnswer.optionNoButton.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(questionType.equals("MA")){
+						selectNoOption(questionAnswerChoiceContainer, addQuestionAnswer);
+					}
 				}
 			});
 			questionAnswerChoiceContainer.add(addQuestionAnswer);
@@ -456,6 +492,11 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 		final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
 		addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
+		if(questionType.equals("MA")){
+			addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
+		}else{
+			addQuestionAnswer.showAnswerChoicesForOthers();
+		}
 		addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
 	}
 	private void addQuesetionAnswerOptionTextArea(final AddQuestionAnswerChoice addQuestionAnswer,int widgetCount){
@@ -464,7 +505,19 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		addQuestionAnswer.optionSelectedButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswer);
+				if(questionType.equals("MA")){
+					selectYesOption(questionAnswerChoiceContainer, addQuestionAnswer);
+				}else{
+					selectOrDeselectOption(questionAnswerChoiceContainer,addQuestionAnswer);
+				}
+			}
+		});
+		addQuestionAnswer.optionNoButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(questionType.equals("MA")){
+					selectNoOption(questionAnswerChoiceContainer, addQuestionAnswer);
+				}
 			}
 		});
 		if(widgetCount>1){
@@ -1201,13 +1254,34 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	 * 
 	 */
 	
-	public void showMulipleAnswerChoice(){
+	public void showMulipleChoice(){
 		setHeaderAndBodyText(questionType);
 		ansChoiceErrMsg.setText("");
 		errorMessageForQuestion.setText("");
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
      		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
-     		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");       
+     		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");      
+     		 addQuestionAnswerChoice.showAnswerChoicesForOthers();
+		 }
+		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
+		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		addAnswerChoice.getElement().getStyle().setDisplay(Display.BLOCK);
+		answerchoiceTitleContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+	}
+	
+	/**
+	 * This method sets Multiple Answer question type content.
+	 * 
+	 */
+	
+	public void showMulipleAnswerChoiceOptions(){
+		setHeaderAndBodyText(questionType);
+		ansChoiceErrMsg.setText("");
+		errorMessageForQuestion.setText("");
+		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
+     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
+     		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
+     		 addQuestionAnswerChoice.showAnswerChoicesForMultipleAnswers();
 		 }
 		questionTrueOrFalseAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.NONE);
 		questionAnswerChoiceContainer.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1360,7 +1434,12 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	        final AddHintsView addHints = new AddHintsView(widgetCount+1,hints.getHintText());
 	        addHintsTextArea(addHints);
 		}
-		if(collectionItemDo.getResource().getType()==1||collectionItemDo.getResource().getType()==7){
+		if(collectionItemDo.getResource().getType()==1){
+			addResourceFormTitleChoice.setText(GL0864);
+			correctText.clear();
+			correctText.getElement().setInnerHTML(GL0314);
+			setCorrectTextStyle();
+			noLabelText.setVisible(false);
 			questionAnswerChoiceContainer.clear();
 			while (it.hasNext()) {
 				QuestionAnswerDo answer = it.next();
@@ -1373,7 +1452,32 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 				}
 				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
 			}
+		}else if(collectionItemDo.getResource().getType()==7){
+			addResourceFormTitleChoice.setText("Enter answers and select correct ones *");
+			correctText.clear();
+			correctText.getElement().setInnerHTML("Yes");
+			noLabelText.setVisible(true);
+			noLabelText.getElement().setInnerHTML("No");
+			setYesOrNoLabelStyles();
+			questionAnswerChoiceContainer.clear();
+			while (it.hasNext()) {
+				QuestionAnswerDo answer = it.next();
+				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
+				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
+				addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
+				if(answer.isIsCorrect()){	
+					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
+				}else{
+					addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerSelected());
+				}
+				addQuesetionAnswerOptionTextArea(addQuestionAnswer,widgetCount);
+			}
 		}else if(collectionItemDo.getResource().getType()==3){
+			addResourceFormTitleChoice.setText(GL0864);
+			correctText.clear();
+			correctText.getElement().setInnerHTML(GL0314);
+			setCorrectTextStyle();
+			noLabelText.setVisible(false);
 			setMultipleChoiceAnswerFields();
 			int answerCount=0;
 			while (it.hasNext()) {
@@ -1459,7 +1563,6 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 				 */
 				
 				ans = temp.substring(1).replace("&nbsp;", "").trim(); 
-				System.out.println("ans ::"+ans);
 				if(ans.equalsIgnoreCase("")){
 					isAnsweEmpty = true;
 				}else{
@@ -1612,4 +1715,12 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
          return getBrowserName().toLowerCase().contains("msie");
      }*/
      
+     public void setYesOrNoLabelStyles(){
+    	 correctText.setStyleName(addWebResourceStyle.yesNoTextStyle());
+    	 noLabelText.setStyleName(addWebResourceStyle.yesNoTextStyle());
+     }
+     
+     public void setCorrectTextStyle(){
+    	 correctText.setStyleName(addWebResourceStyle.addResourceFormTitleChoiceAlign());
+     }
 }

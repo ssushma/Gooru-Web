@@ -613,6 +613,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		//String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_QUESTION_ITEM, collectionId, getLoggedInSessionToken());
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId, getLoggedInSessionToken());
+		System.out.println("urll===>"+url);
 //		Form collectionQuestionForm=ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question");
 //		collectionQuestionForm.add("mediaFileName", mediafileName);
 //		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionForm);
@@ -620,6 +621,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
+		System.out.println("collectionQuestionData===>"+collectionQuestionData);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
