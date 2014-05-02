@@ -2,6 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:f="urn:import:com.sun.corba.se.spi.orbutil.fsm"
 	xmlns:gg="urn:import:org.ednovo.gooru.client.uc" xmlns:defaultImage="urn:import:org.ednovo.gooru.client.mvp.image.upload">
+	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle" field="res" />
 	<ui:style>
 		.imagePopupLeft {
 			width: 170px;
@@ -52,9 +53,22 @@
 	}
 		
 		.imageUploadInfo {
-			font-size: 15px;
+			font-size: 14px;
 			padding: 5px;
 			margin: 0 0 1px;
+			float: left;
+			margin-left: 29px;
+			color: green;
+			font-weight: bold;
+		}
+		.videoUploadInfo {
+			font-size: 14px;
+			padding: 5px;
+			margin: 0 0 1px;
+			color: green;
+			font-weight: bold;
+			width: 43px;
+			float: left;
 		}
 		
 		.uploadPicstureInfo {
@@ -197,11 +211,33 @@
 			color: #1076bb;
 			padding-left: 6px;
 		}
+		.seperatorTextInfo{
+		font-size: 14px;
+		padding: 5px;
+		margin: 0 0 1px;
+		color: green;
+		font-weight: bold;
+		float: left;
+		margin-right: 5px;
+
+		}
+		.spacingDiv{
+			height:10px;
+			margin-top: 27px;
+		}
+		.timeContianerOuter{
+	margin-top:10px;
+
+	}
+
 	</ui:style>
 	<g:FlowPanel styleName="{style.imagePopupContainer}">
 		<g:FlowPanel ui:field="imagUploadFloPanel">
 			<g:FlowPanel styleName="{style.imagePopupLeft}">
 				<g:Label styleName="{style.imageUploadInfo}" ui:field="chooseText"/>
+				<g:Label styleName="{style.seperatorTextInfo}" ui:field="seperatorText"/>
+				<g:Label styleName="{style.videoUploadInfo}" ui:field="chooseTextVideo"/>
+				<g:HTMLPanel styleName="{style.spacingDiv}"></g:HTMLPanel>
 				<g:Anchor styleName="{style.imageUploadList}" ui:field="imageUploadOnWebLbl"/>
 				<g:Anchor styleName="{style.imageUploadList} " ui:field="imageUploadOnComputerLbl"/>
 				<g:Anchor styleName="{style.imageUploadList}" ui:field="uploadGooruImages"/>
@@ -238,7 +274,38 @@
 							<gg:ErrorLabelUc ui:field="urlValidation"/>	
 						</g:FlowPanel>
 						<g:FlowPanel styleName="{style.imageUploadMinHeightUrl}">
-							<g:Label ui:field="typeImageurlText"></g:Label>
+						<g:Label ui:field="typeImageurlText"></g:Label>
+							
+						<g:FlowPanel styleName="{style.timeContianerOuter}" ui:field="timeEditContainer">
+						<g:FlowPanel styleName="{res.css.editTimeContainer}">
+					    <g:Label styleName="{res.css.fromLbl}" ui:field="fromLbl"/>
+					    <g:FlowPanel styleName="{res.css.textAlignContainer}">
+					   	<g:TextBox styleName="{res.css.textBox}" ui:field="fromTxt" />
+					   	</g:FlowPanel>
+						<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="minsText"></g:HTMLPanel>
+						<g:FlowPanel styleName="{res.css.textAlignContainer}">
+						<g:TextBox styleName="{res.css.textBox}" ui:field="toTxt" />
+						</g:FlowPanel>
+						<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="secondsText"></g:HTMLPanel>
+						</g:FlowPanel>
+						
+						<g:FlowPanel styleName="{res.css.editTimeContainer}">
+					    <g:Label styleName="{res.css.fromLbl}" ui:field="ToLbl"/>
+					    <g:FlowPanel styleName="{res.css.textAlignContainer}">
+						<g:TextBox styleName="{res.css.textBox}" ui:field="EndTimeTxt1" />
+						</g:FlowPanel>
+						<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="endMinsText"></g:HTMLPanel>
+						<g:FlowPanel styleName="{res.css.textAlignContainer}">
+						<g:TextBox styleName="{res.css.textBox}" ui:field="EndTimeTxt2" />
+						</g:FlowPanel>
+						<g:HTMLPanel styleName="{res.css.MinuteLabel}" ui:field="endSecondsText"></g:HTMLPanel>
+						</g:FlowPanel>
+						<g:Frame ui:field="youtubeFrame" styleName="{style.timeContianerOuter}"></g:Frame>
+							<g:FlowPanel styleName="{style.imageUploadAlign}">
+						<gg:BlueButtonUc ui:field="onSystemConfirmBtn" />
+					</g:FlowPanel>
+						</g:FlowPanel>
+				
 						</g:FlowPanel>
 						<g:Label styleName="{style.infoUrlUpload}" ui:field="infoUrlUploadText"/>
 						<g:FlowPanel styleName="{style.imageUploadAlign}">
@@ -246,6 +313,11 @@
 						</g:FlowPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>
+				
+				
+				
+				
+				
 				<g:FlowPanel styleName="{style.uploadGooruImagesContainer}" ui:field="uploadGooruImagesContainer">
 					<g:Label styleName="{style.uploadPicstureInfo}" ui:field="chooseFromText"/>
 						<g:FlowPanel styleName="{style.defaultImagesContainer}" ui:field="gooruProfileDefaultImagesContainer">
