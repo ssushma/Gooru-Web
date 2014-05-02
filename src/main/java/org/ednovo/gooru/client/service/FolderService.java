@@ -129,7 +129,7 @@ public interface FolderService extends BaseService {
 	 * @param title
 	 * @throws GwtException
 	 */
-	public void updateFolder(String folderId, String title) throws GwtException;
+	public void updateFolder(String folderId, String title, String ideas, String questions, String performance) throws GwtException;
 	
 	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf)throws GwtException;
 	
