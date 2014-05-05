@@ -75,6 +75,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -91,13 +92,13 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@UiField HTMLPanel authorPanel,whatNextPanel,addComment,loginMessaging,relatedConceptsEndPage,relatedConceptsCoverPage,homePageConceptsPanel,
 						courseSection,standardSection,depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
 						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer,languageObjectiveContainer;
-	@UiField Anchor loginUrl, signupUrl,previewFlagButton;
+	@UiField Anchor loginUrl, signupUrl,previewFlagButton,seeMoreAnchor;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField TextArea commentField;
 	@UiField VerticalPanel commentsContainer;
 	@UiField PreviewPlayerStyleBundle playerStyle;
-	@UiField Label lbllanguageObjectiveText,lbllanguageObjective,lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
-	
+	@UiField Label lbllanguageObjectiveText,lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
+	@UiField InlineLabel lbllanguageObjective,lbllanguageObjectiveAll;
 	private static final String CREATE = "CREATE";
 	
 	private static final String DELETE = "DELETE";
@@ -237,6 +238,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		lbllearningAndInnovationText.setText(GL1722);
 		lblAudienceText.setText(GL1723);
 		lblInstructionalmethodText.setText(GL1724);
+		
 	}
 	
 	public void setUserName(String userName){
@@ -989,6 +991,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					depthOfKnowledgeContainer.setVisible(false);
 					
 				}
+			}else
+			{
+				depthOfKnowledgeContainer.setVisible(false);
 			}
 		}
 		}else
@@ -1011,6 +1016,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					{
 						InstructionalmethodContainer.setVisible(false);
 					}
+			}else
+			{
+				InstructionalmethodContainer.setVisible(false);
 			}
 			}
 			}else
@@ -1035,6 +1043,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					audienceContainer.setVisible(false);
 					
 				}
+			}else{
+				audienceContainer.setVisible(false);
 			}
 		}}
 		else
@@ -1050,6 +1060,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
 					learningAndInnovationSkill = true;
 					Label lbllearningSkills = new Label(checkboxSelectedDo.getName());
+					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
 					if(learningAndInnovationSkill){
 						learningAndInnovationSkillsContainer.setVisible(true);
@@ -1058,6 +1069,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 						learningAndInnovationSkillsContainer.setVisible(false);
 						
 					}
+			}else{
+				learningAndInnovationSkillsContainer.setVisible(false);
 			}
 		}}else
 		{
@@ -1066,11 +1079,24 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	
 	public void renderLanguageObjective(String languageObjective)
-	{
+	{	
 		if(languageObjective!=null)
 		{
-			lbllanguageObjective.setText(languageObjective);
+			
 			languageObjectiveContainer.setVisible(true);
+			lbllanguageObjectiveAll.setVisible(false);
+			seeMoreAnchor.getElement().setAttribute("style", "float:right;margin-top:15px;");
+			if(languageObjective.length()>=80){
+				seeMoreAnchor.setText(GL1728);	
+				seeMoreAnchor.setVisible(true);
+				lbllanguageObjective.setText(languageObjective.substring(0,80));
+				lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+			}
+			else
+			{
+				seeMoreAnchor.setVisible(false);
+				lbllanguageObjective.setText(languageObjective);
+			}
 			
 		}
 		else
@@ -1078,5 +1104,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			languageObjectiveContainer.setVisible(false);
 			
 		}
+	}
+	@UiHandler("seeMoreAnchor")
+	public void clickSeeAll(ClickEvent event)
+	{
+		lbllanguageObjectiveAll.setVisible(true);
+		seeMoreAnchor.setVisible(false);
 	}
 }
