@@ -194,19 +194,19 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		mediaFeatureType.setText("");
 		accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
 		accessModeType.setText("");
-		resourceInfoLbl.setText(GL1710);
+		resourceInfoLbl.setText(GL1716);
 	
 		dateCreatedPanel.setVisible(true);
-		dateCreatedLbl.setText(GL1711+GL_SPL_SEMICOLON);
+		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
 		createdDateInfo.setText("");
 		authorPanel.setVisible(true);
 		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
 		authorName.setText("");
-		thumbnailText.setText(GL1712+GL_SPL_SEMICOLON);
+		thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);
 		thumbnailurlValue.setText("");
-		licenceCodeLbl.setText(GL1713+GL_SPL_SEMICOLON);
+		licenceCodeLbl.setText(GL1719+GL_SPL_SEMICOLON);
 		licenceCodeType.setText("");
-		educationallLbl.setText(GL1714);
+		educationallLbl.setText(GL1720);
 		gooruSubjectLbl.setText(GL1715+GL_SPL_SEMICOLON);
 		gooruSubjectInfo.setText("");
 		gooruSubjectPanel.setVisible(true);
