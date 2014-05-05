@@ -38,6 +38,7 @@ public class checkboxSelectedDo implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String selected;
 	private String value;
+	private String name;
 	
 	
 	public checkboxSelectedDo() {}
@@ -60,6 +61,16 @@ public class checkboxSelectedDo implements Serializable
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 

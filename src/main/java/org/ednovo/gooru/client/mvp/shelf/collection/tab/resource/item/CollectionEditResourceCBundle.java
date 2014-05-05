@@ -225,6 +225,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionCategoryDivText();
 		String myFolderCollectionFormInputBottomText();
 		String myFolderCollectionThumbImageContainer();
+		String standardsInEditResource();
 		String myFolderCollectionThumbImageDesc();
 		String myFolderCollectionThumbRect();
 		String myFolderCollectionThumbArrLContainer();
