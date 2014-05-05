@@ -305,6 +305,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(searchDo.getFilters()!=null && searchDo.getFilters().size()>0) {
 			url = url + "&"+COURSE_CODE_ID+"="+searchDo.getFilters().get(COURSE_CODE_ID);
 		}
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeStandards(jsonRep));

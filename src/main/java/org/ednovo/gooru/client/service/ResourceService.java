@@ -354,6 +354,15 @@ public interface ResourceService extends BaseService {
 
 	public CollectionDo updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips) throws GwtException;
+	
+	public CollectionDo updateCollectionLanguageObjective(CollectionDo collectionDo,
+			String languageObjective) throws GwtException;
+	
+	public CollectionDo updateCollectionDepthOfKnowledge(CollectionDo collectionDo,
+			String depthOfKnowledge, Boolean selectedVal) throws GwtException;
+	
+	public CollectionDo updateCollectionLearningSkills(CollectionDo collectionDo,
+			String depthOfKnowledge, Boolean selectedVal) throws GwtException;
 
 	public CollectionDo getCollectionInfoV2API(String collectionId)
 			throws GwtException;
