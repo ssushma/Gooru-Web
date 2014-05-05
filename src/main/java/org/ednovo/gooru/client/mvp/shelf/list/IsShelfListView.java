@@ -159,4 +159,6 @@ public interface IsShelfListView extends IsViewWithHandlers<ShelfListUiHandlers>
 	Integer getChildPageNumber();
 
 	void setChildPageNumber(Integer childPageNumber);
+	
+	void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions);
 }

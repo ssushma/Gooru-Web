@@ -2,6 +2,8 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -88,6 +90,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		bigIdeasLbl.setHTML(bigIdeas);
 		essentialQuestionsLbl.setHTML(essentialQuestions);
 		performanceTaskLbl.setHTML(performanceTask);
+		AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeas, performanceTask, essentialQuestions));
 	}
 	
 	public void showEditableMetaData(boolean isVisible) {
