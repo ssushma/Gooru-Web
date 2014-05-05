@@ -46,7 +46,7 @@ import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
@@ -61,6 +61,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -424,6 +425,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				if(gooruOid!=null&&gooruOid.equalsIgnoreCase(collection.getGooruOid())) {
 					checkShelfRefreshStatus(treeItem, gooruOid);
 					AppClientFactory.fireEvent(new SetFolderParentNameEvent(collection.getTitle()));
+					AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(collection)));
 					shelfCollection.setFolderOpenedStatus(true);
 				}
 				collectionCount++;
@@ -952,6 +954,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void getChildFolderItems(List<FolderDo> folderListDo) {
 		String o2 = null, o3 = null, selectedFolder = null, selectedFolderName = null, id = null;
+		FolderDo folderDo = null;
 		TreeItem selectedItem = null;
 		ShelfCollection selectedWidget = (ShelfCollection) treeChildSelectedItem.getWidget();
 		if(folderListDo!=null) {
@@ -982,6 +985,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					}
 					selectedItem = item;
 					selectedFolderName = folderListDo.get(i).getTitle();
+					folderDo = folderListDo.get(i);
 				} else if(nextLevel==3&& (o3!=null&&o3.equalsIgnoreCase(folderListDo.get(i).getGooruOid()) || id!=null&&id.equalsIgnoreCase(folderListDo.get(i).getGooruOid()))) {
 					if(o3!=null) {
 						selectedFolder = o3;
@@ -990,10 +994,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					}
 					selectedItem = item;
 					selectedFolderName = folderListDo.get(i).getTitle();
+					folderDo = folderListDo.get(i);
 				} else if (nextLevel==4&&id!=null&&id.equalsIgnoreCase(folderListDo.get(i).getGooruOid())) {
 					selectedFolder = id;
 					selectedItem = item;
 					selectedFolderName = folderListDo.get(i).getTitle();
+					folderDo = folderListDo.get(i);
 				} 
 			}
 		}
@@ -1015,6 +1021,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			checkShelfRefreshStatus(selectedItem, selectedFolder);
 			ShelfCollection selectedWidget1 = (ShelfCollection) treeChildSelectedItem.getWidget();
 			AppClientFactory.fireEvent(new SetFolderParentNameEvent(selectedFolderName));
+			AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 			selectedWidget1.setFolderOpenedStatus(true);
 		}
 		
@@ -1151,6 +1158,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 							onDragOverOpenFolder(params.get(O2_LEVEL),false);
 							setCreatedFolderActiveStatus("",folderDo,params,2);
 							AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderDo.getTitle()));
+							AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 							setFolderStyle(folderDo.getGooruOid());
 //							AppClientFactory.fireEvent(new SetCollectionMovedStyleEvent(folderDo.getGooruOid())); 
 						}
@@ -1182,6 +1190,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 						onDragOverOpenFolder(params.get(O1_LEVEL),false);
 						setCreatedFolderActiveStatus("",folderDo,params,1); 
 						AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderDo.getTitle()));
+						AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 						setFolderStyle(folderDo.getGooruOid());
 //						AppClientFactory.fireEvent(new SetCollectionMovedStyleEvent(folderDo.getGooruOid()));
 					}
@@ -1922,6 +1931,15 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	@Override
 	public void setChildPageNumber(Integer childPageNumber) {
 		this.childPageNumber = childPageNumber;
+	}
+
+	@Override
+	public void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions) {
+		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
+		shelfCollection.getCollectionDo().setIdeas(ideas);
+		shelfCollection.getCollectionDo().setPerformanceTasks(performanceTasks);
+		shelfCollection.getCollectionDo().setQuestions(questions);
+		System.out.println(shelfCollection.getCollectionDo().getQuestions());
 	}
 
 }

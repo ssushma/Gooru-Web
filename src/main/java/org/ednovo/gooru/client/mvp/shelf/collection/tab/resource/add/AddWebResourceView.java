@@ -24,21 +24,31 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -52,6 +62,9 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
@@ -59,17 +72,21 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AddWebResourceView extends Composite implements MessageProperties{
+public abstract class AddWebResourceView extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 
 	public interface AddWebResourceViewUiBinder extends
 			UiBinder<Widget, AddWebResourceView> {
@@ -80,12 +97,12 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 			.create(AddWebResourceViewUiBinder.class);
 
 	@UiField
-	public Label mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl;
+	public Label standardsDefaultText,mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
 	@UiField
-	Label mandatoryUrlLbl, mandatoryTitleLbl,rightsLbl;
+	Label standardMaxMsg, mandatoryUrlLbl, mandatoryTitleLbl,rightsLbl;
 
 	@UiField
 	Label mandatoryCategoryLbl;
@@ -95,7 +112,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	Label leftArrowLbl, rightArrowLbl, uploadImageLbl;
 
 	@UiField
-	public TextBox urlTextBox, titleTextBox,standardsTextBox;
+	public TextBox urlTextBox, titleTextBox;
 
 	@UiField
 	public TextArea descriptionTxtAera;
@@ -106,7 +123,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	public Image setThumbnailImage;
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel standardsText,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	HTMLPanel extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,homeworkText,	gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText;
 
 	@UiField
@@ -132,6 +149,11 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	@UiField
 	Anchor commuGuideLinesAnr;
 		
+	@UiField(provided = true)
+	AppSuggestBox standardSgstBox;
+	
+	@UiField FlowPanel standardsPanel;
+	
 	Integer videoDuration=0;
 	private CopyRightPolicyVc copyRightPolicy;
 	
@@ -145,7 +167,14 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	private boolean isShortenedUrl;
 	
 	boolean isValidate = true;
-
+	
+	private AppMultiWordSuggestOracle standardSuggestOracle;
+	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	private static final String FLT_CODE_ID = "id";
+	List<String> standardPreflist=new ArrayList<String>();
+	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	
+	String courseCode="";
 	int activeImageIndex = 0;
 	protected List<String> thumbnailImages;
 	String thumbnailUrlStr = null;
@@ -154,6 +183,77 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:mp3))$)";
 		
 	public AddWebResourceView(CollectionDo collectionDo) { 
+		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		standardSearchDo.setPageSize(10);
+		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
+			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+			@Override
+			public void keyAction(String text) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+						}						
+					}
+					
+					/*if(standardsPrefDisplayPopup){*/
+						standardsPreferenceOrganizeToolTip.hide();
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+							
+							@Override
+							public void onSuccess(SearchDo<CodeDo> result) {
+								setStandardSuggestions(result);
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+						/*}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+	
+						//standardSuggestOracle.add(GL1613);
+						
+					}*/
+					}
+					
+				
+			}
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		standardSgstBox.addSelectionHandler(this);
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		urlTitle.getElement().setInnerHTML(GL0915);
@@ -183,7 +283,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		preparingTheLearningText.getElement().setInnerHTML(GL1679);
 		interactingWithTheTextText.getElement().setInnerHTML(GL1680);
 		extendingUnderstandingText.getElement().setInnerHTML(GL1681);
-		standardsText.getElement().setInnerHTML(GL1682);
+		standardsDefaultText.setText(GL1682);
 		/*slideText.getElement().setInnerHTML(GL0908);
 		handoutText.getElement().setInnerHTML(GL0907);
 		textbookLabel.getElement().setInnerHTML(GL0909);
@@ -214,7 +314,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
 		descriptionTxtAera.getElement().setAttribute("placeholder", GL0359);
-		standardsTextBox.getElement().setAttribute("placeholder", GL1683);
+		
 		urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
 		urlTextBox.addBlurHandler(new UrlBlurHandler());
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
@@ -328,7 +428,36 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		// tinyMce=new TinyMCE();
 		// resourceDescriptionContainer.add(tinyMce);
 	}
-
+	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		standardSuggestOracle.clear();
+		this.standardSearchDo = standardSearchDo;
+		if (this.standardSearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedStandards(standardsPanel);
+			for (CodeDo code : standardSearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					standardSuggestOracle.add(code.getCode());
+				}
+				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		standardSgstBox.showSuggestionList();
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedStandards(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
 	private class CloseClickHandler implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -346,7 +475,64 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		panelContentRights.setVisible(false);
 	}
 	public abstract void hidePopup();
+	
+	private static String getCodeIdByCode(String code, List<CodeDo> codes) {
+		if (codes != null) {
+			for (CodeDo codeDo : codes) {
+				if (code.equals(codeDo.getCode())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
+	/**
+	 * Adding new standard for the collection , will check it has more than
+	 * fifteen standards
+	 * 
+	 * @param standard
+	 *            which to be added for the collection
+	 */
+	public void addStandard(String standard, String id) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standard != null && !standard.isEmpty()) {
+				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
+			}
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
+	}
+	/**
+	 * new label is created for the standard which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc createStandardLabel(final String standardCode, final String id, String description) {
+		CloseLabel closeLabel = new CloseLabel(standardCode) {
 
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	public void standardMaxShow() {
+		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
+		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
+		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
+		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
+	}
+	
+	@Override
+	public void onSelection(SelectionEvent<Suggestion> event) {
+		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
+		standardSgstBox.setText("");
+		standardSuggestOracle.clear();
+	}
 	private class OnEditImageClick implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
@@ -510,7 +696,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
 												if(collectionDo.getSharing().equalsIgnoreCase("public")){
 													
-													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true);
+													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),getAddedStandards(standardsPanel));
 													addResourceBtnLbl.setEnabled(true);
 													/*WebResourcePreview webResourcePreview = new WebResourcePreview() {
 														
@@ -546,7 +732,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 													
 												}
 												else{
-													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false);
+													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),getAddedStandards(standardsPanel));
 													addResourceBtnLbl.setEnabled(true);
 												}
 												
@@ -562,7 +748,7 @@ public abstract class AddWebResourceView extends Composite implements MessagePro
 		}
 	}
 
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag);
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<String> standards);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
 

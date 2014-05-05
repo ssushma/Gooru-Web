@@ -22,27 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.preview.metadata;
-/**
- * @fileName : PreviewPlayerStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-import com.google.gwt.resources.client.CssResource;
-public interface PreviewPlayerStyleBundle extends CssResource {
-	String successPostMsg();
-	String deleteMsg();
-	String conceptTitle();
-	String clearBoth();
-	String depthofKnow();
+import java.util.Map;
+
+import com.google.gwt.event.shared.EventHandler;
+
+/**
+ * @author Gooru Team
+ * 
+ */
+public interface SetFolderMetaDataHandler extends EventHandler {
+
+	/**
+	 * update folder Meta Data
+	 */
+	void setFolderMetaData(Map<String,String> folderMetaData);
+
 }
