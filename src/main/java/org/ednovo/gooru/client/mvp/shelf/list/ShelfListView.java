@@ -1933,4 +1933,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		this.childPageNumber = childPageNumber;
 	}
 
+	@Override
+	public void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions) {
+		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
+		shelfCollection.getCollectionDo().setIdeas(ideas);
+		shelfCollection.getCollectionDo().setPerformanceTasks(performanceTasks);
+		shelfCollection.getCollectionDo().setQuestions(questions);
+		System.out.println(shelfCollection.getCollectionDo().getQuestions());
+	}
+
 }
