@@ -2189,6 +2189,8 @@ public interface MessageProperties {
 		String GL1727="Ex: Write an informational essay.";
 		
 		String GL1728 = "See All";
-		
+		String GL1729 = "Big Ideas";
+		String GL1730 = "Essential Questions";
+		String GL1731 = "Performance Task";
    }
 
