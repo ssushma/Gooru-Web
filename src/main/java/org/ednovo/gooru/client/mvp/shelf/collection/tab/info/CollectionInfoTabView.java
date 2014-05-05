@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -156,12 +157,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public CollectionInfoTabView() {
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
-		
-		/*if(standardPreflist!=null){
-		for (String istandardPreflistcodeId : standardPreflist) {
-			standardcodeIdPref=istandardPreflistcodeId;
-		}
-		}*/
+
 		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
@@ -254,6 +250,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		lblInstructionalPlaceHolder.setText(GL0105);
 		lblAudiencePlaceHolder.setText(GL0105);
 		
+		configureClickEvents();
+		
 		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		
@@ -291,6 +289,16 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				if(textAreaVal.getText().length() == 0){
 					textAreaVal.setText(GL1641);
 					textAreaVal.getElement().getStyle().setColor("#999");
+				}
+				else
+				{
+					//callapi
+					AppClientFactory.getInjector().getResourceService().updateCollectionLanguageObjective(collectionDo, textAreaVal.getText(), new SimpleAsyncCallback<CollectionDo>() {
+								@Override
+								public void onSuccess(CollectionDo result) {
+									
+								}
+					});
 				}
 			}
 		});
@@ -355,6 +363,129 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
 	}
+	
+	public void configureClickEvents()
+	{
+	chkLevelRecall.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1645,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		chkLevelSkillConcept.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1646,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		chkLevelStrategicThinking.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1647,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		chkLevelExtendedThinking.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1648,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		learninglevel1.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1651,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		learninglevel2.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();		
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1652,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+	learninglevel3.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1653,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+	}
 
 	private void OpenAudienceDropdown() {
 		if (spanelInstructionalPanel.isVisible()){
@@ -407,7 +538,105 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		if (this.collectionDo == null) {
 			this.collectionDo = collectionDo;
 			
-		//	getUiHandlers().getCollectionTeacherTipInfo(collectionDo.getGooruOid());
+	//	getUiHandlers().getCollectionTeacherTipInfo(collectionDo.getGooruOid());
+			
+			for(int i=0; i<collectionDo.getDepthOfKnowledges().size(); i++)
+			{
+				String compareValueLevel = collectionDo.getDepthOfKnowledges().get(i).getValue().replaceAll("\\s+","");
+				String compareValueLevelFetched = chkLevelRecall.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
+				
+				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+					chkLevelRecall.setValue(true);
+					}
+					else
+					{
+					chkLevelRecall.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						chkLevelSkillConcept.setValue(true);
+					}
+					else
+					{
+						chkLevelSkillConcept.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						chkLevelExtendedThinking.setValue(true);
+					}
+					else
+					{
+						chkLevelExtendedThinking.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						chkLevelStrategicThinking.setValue(true);
+					}
+					else
+					{
+						chkLevelStrategicThinking.setValue(false);
+					}
+				}
+			}
+			
+			for(int i=0; i<collectionDo.getLearningSkills().size(); i++)
+			{
+				String compareValueLevel = collectionDo.getLearningSkills().get(i).getValue().replaceAll("\\s+","");
+				String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
+
+				
+				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						learninglevel1.setValue(true);
+					}
+					else
+					{
+						learninglevel1.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						learninglevel2.setValue(true);
+					}
+					else
+					{
+						learninglevel2.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
+				{
+					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						learninglevel3.setValue(true);
+					}
+					else
+					{
+						learninglevel3.setValue(false);
+					}
+				}
+
+			}
 			
 			for (CodeDo code : collectionDo.getTaxonomySet()) {
 				if (code.getDepth() == 2) {
