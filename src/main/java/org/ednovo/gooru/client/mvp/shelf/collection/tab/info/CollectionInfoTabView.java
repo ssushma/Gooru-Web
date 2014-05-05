@@ -554,12 +554,20 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					{
 					chkLevelRecall.setValue(true);
 					}
+					else
+					{
+					chkLevelRecall.setValue(false);
+					}
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 				{
 					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
 					{
 						chkLevelSkillConcept.setValue(true);
+					}
+					else
+					{
+						chkLevelSkillConcept.setValue(false);
 					}
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
@@ -568,12 +576,20 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					{
 						chkLevelExtendedThinking.setValue(true);
 					}
+					else
+					{
+						chkLevelExtendedThinking.setValue(false);
+					}
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
 				{
 					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
 					{
 						chkLevelStrategicThinking.setValue(true);
+					}
+					else
+					{
+						chkLevelStrategicThinking.setValue(false);
 					}
 				}
 			}
@@ -592,6 +608,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					{
 						learninglevel1.setValue(true);
 					}
+					else
+					{
+						learninglevel1.setValue(false);
+					}
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 				{
@@ -599,12 +619,20 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					{
 						learninglevel2.setValue(true);
 					}
+					else
+					{
+						learninglevel2.setValue(false);
+					}
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 				{
 					if(collectionDo.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
 					{
 						learninglevel3.setValue(true);
+					}
+					else
+					{
+						learninglevel3.setValue(false);
 					}
 				}
 
