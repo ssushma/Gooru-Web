@@ -138,5 +138,14 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips, AsyncCallback<CollectionDo> asyncCallback);
 	
+	void updateCollectionLanguageObjective(CollectionDo collectionDo,
+			String languageObjective, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void updateCollectionDepthOfKnowledge(CollectionDo collectionDo,
+			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void updateCollectionLearningSkills(CollectionDo collectionDo,
+			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
 	void getCollectionInfoV2API(String collectionId, AsyncCallback<CollectionDo> asyncCallback);
 }

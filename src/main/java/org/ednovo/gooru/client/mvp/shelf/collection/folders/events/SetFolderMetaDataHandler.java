@@ -22,20 +22,21 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
-import com.google.gwt.resources.client.CssResource;
+package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-public interface AddResourceBundle extends CssResource {
-	
-	String answerDeselected();
-	String answerSelected();
-	String addResourceFormAnswerDelete();
-	String addResourceThumbnailContent();
-	String addResourceSprite();
-	String addResourceImgDesc();
-	String addResourceFormAnswerInputControl();
-	String addResourceMultipleAnswerInputControl();
-	String yesNoTextStyle();
-	String addResourceFormTitleChoiceAlign();
+import java.util.Map;
+
+import com.google.gwt.event.shared.EventHandler;
+
+/**
+ * @author Gooru Team
+ * 
+ */
+public interface SetFolderMetaDataHandler extends EventHandler {
+
+	/**
+	 * update folder Meta Data
+	 */
+	void setFolderMetaData(Map<String,String> folderMetaData);
 
 }

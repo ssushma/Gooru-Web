@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -115,7 +116,7 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 
 	@Override
 	public void updateCollectionInfo(String folderId, final String title, String description) {
-		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, null, null, null, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				AppClientFactory.fireEvent(new UpdateShelfFolderNameEvent(title));
@@ -148,5 +149,9 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 	@Override
 	public void updateFolderItem(FolderDo folderDo, String parentId, HashMap<String,String> params) {
 		getView().addFolderItem(folderDo, parentId, params);
+	}
+
+	public void setFolderMetaData(Map<String, String> folderMetaData) {
+		getView().setFolderMetaData(folderMetaData);
 	}
 }

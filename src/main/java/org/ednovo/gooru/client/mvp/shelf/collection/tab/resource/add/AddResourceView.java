@@ -772,7 +772,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				setRadioButtonValues();
 				addQuestionResourceWidget.setQuestionType("MC");
-				addQuestionResourceWidget.showMulipleAnswerChoice();
+				addQuestionResourceWidget.showMulipleChoice();
 				tabViewContainer.add(addQuestionResourceWidget);
 				questionTabButton.setStyleName(res.css().buttonSelected());
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
@@ -861,8 +861,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				multipleChoiceRadioButton.setValue(true);
 				highlightSelectedTab("MC");
 				addQuestionResourceWidget.setQuestionType("MC");
-				addQuestionResourceWidget.showMulipleAnswerChoice();
+				addQuestionResourceWidget.showMulipleChoice();
 				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
+				addQuestionResourceWidget.correctText.clear();
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML(GL0314);
+				addQuestionResourceWidget.setCorrectTextStyle();
+				addQuestionResourceWidget.noLabelText.setVisible(false);
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}
 		}
@@ -876,6 +880,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addQuestionResourceWidget.setQuestionType("T/F");
 				addQuestionResourceWidget.showTrueOrFalseAnswerChoice();
 				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
+				addQuestionResourceWidget.correctText.clear();
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML(GL0314);
+				addQuestionResourceWidget.setCorrectTextStyle();
+				addQuestionResourceWidget.noLabelText.setVisible(false);
 
 			}
 		}
@@ -900,7 +908,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				multipleAnswerRadioButton.setValue(true);
 				addQuestionResourceWidget.setQuestionType("MA");
 				addQuestionResourceWidget.addResourceFormTitleChoice.setText("Enter answers and select correct ones *");
-				addQuestionResourceWidget.showMulipleAnswerChoice();
+				addQuestionResourceWidget.correctText.clear();
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML("Yes");
+				addQuestionResourceWidget.noLabelText.setVisible(true);
+				addQuestionResourceWidget.noLabelText.getElement().setInnerHTML("No");
+				addQuestionResourceWidget.setYesOrNoLabelStyles();
+				addQuestionResourceWidget.showMulipleAnswerChoiceOptions();
 			}
 		}
 		

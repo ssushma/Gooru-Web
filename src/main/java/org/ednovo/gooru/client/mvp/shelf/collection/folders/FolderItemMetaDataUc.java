@@ -1,5 +1,11 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
@@ -17,7 +23,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FolderItemMetaDataUc extends Composite {
+public class FolderItemMetaDataUc extends Composite implements MessageProperties{
 
 	@UiField Button closeItem, saveBtn, cancelBtn;
 	
@@ -29,6 +35,8 @@ public class FolderItemMetaDataUc extends Composite {
 	
 	@UiField FolderItemMetaDataUcStyleBundle folderMetaStyle;
 	
+	private String folderId = null, title = null;
+	
 	private static FolderItemMetaDataUcUiBinder uiBinder = GWT
 			.create(FolderItemMetaDataUcUiBinder.class);
 
@@ -39,7 +47,7 @@ public class FolderItemMetaDataUc extends Composite {
 	public FolderItemMetaDataUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		showEditableMetaData(true);
-		setMetaData("Big Ideas will be generated while creating the folders","Essential Questions are required for developing a right collection","Improve your performance by taking care of the proper revision notes");
+		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
 		bigIdeasHTML.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -68,10 +76,21 @@ public class FolderItemMetaDataUc extends Composite {
 		});
 	}
 	
-	private void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
+	public void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
+		if(bigIdeas==null || bigIdeas.isEmpty()) {
+			bigIdeas = GL1725;
+		}
+		if(essentialQuestions==null || essentialQuestions.isEmpty()) {
+			essentialQuestions = GL1726;
+		}
+		if(performanceTask==null || performanceTask.isEmpty()) {
+			performanceTask = GL1727;
+		}
+		
 		bigIdeasLbl.setHTML(bigIdeas);
 		essentialQuestionsLbl.setHTML(essentialQuestions);
 		performanceTaskLbl.setHTML(performanceTask);
+		AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeas, performanceTask, essentialQuestions));
 	}
 	
 	public void showEditableMetaData(boolean isVisible) {
@@ -93,6 +112,7 @@ public class FolderItemMetaDataUc extends Composite {
 	public void clickSaveBtn(ClickEvent event) {
 		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
 		showEditableMetaData(true);
+		updateFolderMetaData();
 	}
 	
 	@UiHandler("cancelBtn")
@@ -116,5 +136,19 @@ public class FolderItemMetaDataUc extends Composite {
 			closeItem.addStyleName(folderMetaStyle.closeItem());
 			closeItem.removeStyleName(folderMetaStyle.openItem());
 		}
+	}
+	
+	public void updateFolderData(String folderId, String title) {
+		this.folderId = folderId;
+		this.title = title;
+	}
+	
+	public void updateFolderMetaData() {
+		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML(), new SimpleAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				
+			}
+		});
 	}
 }

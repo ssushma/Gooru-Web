@@ -805,6 +805,14 @@ float: left;
 	-webkit-border-radius: 12px !important;
 	-moz-border-radius: 12px !important;
 }
+.resoruce-info-separator-bulletBlack{
+	width: 5px;
+	height: 5px;
+	float: left;
+	background-color: #0D0E0D;;
+	margin-left: -22px;
+	margin-top: 4px;
+}
 .add-button-active:hover, .add-button-normal:hover,
 .info-button-active:hover, .info-button-normal:hover,
 .share-button-active:hover,.share-button-normal:hover,
