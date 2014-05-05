@@ -2188,5 +2188,7 @@ public interface MessageProperties {
 		String GL1726="Ex: Why is it important to know the qualities of a character? How do characters’ actions reveal or convey who they are?";
 		String GL1727="Ex: Write an informational essay.";
 		
+		String GL1728 = "See All";
+		
    }
 
