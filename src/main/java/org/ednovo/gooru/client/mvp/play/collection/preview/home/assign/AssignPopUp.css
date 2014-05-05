@@ -345,7 +345,7 @@ text-align:center;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:530px;
+	height:590px;
 }
 .shareContent {
 	background-color: transparent;
@@ -661,7 +661,7 @@ button.LoginText {
 }
 .contentBorder {
 	text-align: center;
-	margin-top: 10px;
+	margin-top: -13px;
 	margin-bottom: 15px;
 	border-bottom: 1px solid rgb(221,221,221);
 }
@@ -674,7 +674,7 @@ button.LoginText {
 .inputBlockOuter {
 	width: 300px;
 	margin: 0 auto;
-	padding-top: 20px;
+	/* padding-top: 20px; */
 	padding-left: 35px;
 }
 .inputBlock {
@@ -880,6 +880,40 @@ button.LoginText {
 	text-align: left;
 	color:orange;
 	float:left;
+}
+
+.gConnectButton {
+	padding:16px 16px 15px 64px;
+	color:white;
+	background: #1076BB url("images/login/g.png") left center no-repeat;
+	background: url("images/login/g.png") left center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: url("images/login/g.png") left center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/login/g.png") left center no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("images/login/g.png") left center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+	border-radius:4px;
+	border:1px solid #1076BB;
+	/* margin-bottom: 15px; */
+	cursor: pointer;
+}
+
+.gConnectButton:hover {
+	background: #1076BB url("images/login/g.png") left center no-repeat;
+}
+
+.divider {
+	border-bottom:1px solid #ddd;
+	width:100%;
+	height:1em;
+	margin:10px 0px 20px 0px;
+}
+
+.dividerText {
+	display:inline;
+	position:relative;
+	top:.5em;
+	padding:0px 10px;
+	background-color:#F0F0F0;
+	font-size: 12px;
 }
 
 /*End Success popup */

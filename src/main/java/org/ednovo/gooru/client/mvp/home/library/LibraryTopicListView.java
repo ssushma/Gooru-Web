@@ -1051,7 +1051,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("auto");
+				successPopupVc.setHeight("592px");
 
 				successPopupVc.show();
 				successPopupVc.center();

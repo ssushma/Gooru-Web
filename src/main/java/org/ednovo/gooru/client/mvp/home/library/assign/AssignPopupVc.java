@@ -52,6 +52,8 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.DataLogEvents;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -107,6 +109,11 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 
 	@UiField
 	Anchor forgotPwd,ancSignUp;
+	
+	@UiField
+	Button gmailButton;
+	
+	@UiField Label lblOr;
 
 	@UiField
 	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
@@ -311,7 +318,10 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 		loginButton.getElement().setId("btnLogin");
 
 		lblPleaseWait.setVisible(false);
-
+		
+		gmailButton.setText(GL0203);
+		gmailButton.getElement().setId("btnAssignGmail");
+		lblOr.setText(GL0209);
 		shareLinkTxtBox.setReadOnly(true);
 		shareLinkTxtBox.addClickHandler(new OnClickShareHandler());
 		assignDes.setText(GL0513);
@@ -652,6 +662,29 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 		AppClientFactory.getPlaceManager().revealPlace(
 				AppClientFactory.getCurrentPlaceToken(), params);
 		closePoup();
+	}
+	
+	/**
+	 * User login popup allows to sign in if correct credentials and set user
+	 * info on header view
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
+	 */
+	@UiHandler("gmailButton")
+	public void onGmailButtonClicked(ClickEvent clickEvent){
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		String callBack = Window.Location.getHref();
+	
+		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
+		
+			@Override
+			public void onSuccess(String result) {
+//				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				Window.Location.replace(result);
+			
+			}
+		});
 	}
 
 	public class OnClickShareHandler implements ClickHandler {
