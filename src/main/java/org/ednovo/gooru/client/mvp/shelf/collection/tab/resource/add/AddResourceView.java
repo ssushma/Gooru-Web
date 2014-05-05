@@ -265,7 +265,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		
 	
 		@Override
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<String> standards) {
 //			this.setVisible(false);
 			
 			 webResourceId = idStr;
@@ -304,7 +304,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					
 					@Override
 					public void addWebResource() {
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards);
 						/*webResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 						webResourcePreview.actionPanel.getElement().getStyle().setDisplay(Display.NONE);*/
 						webResourcePreview.hide();
@@ -335,7 +335,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 				
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards);
 			}
 		}
 		

@@ -61,6 +61,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -70,6 +71,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -479,6 +481,12 @@ public class CollectionResourceTabView extends
 								public void resourceImageUpload() {
 									getUiHandlers().imageEditResourceUpload();
 								}
+
+								@Override
+								public void onSelection(
+										SelectionEvent<Suggestion> event) {
+									super.onSelection(event);		
+								}
 								};
 							}
 							else {
@@ -638,6 +646,13 @@ public class CollectionResourceTabView extends
 							public void resourceImageUpload() {
 								getUiHandlers().imageEditResourceUpload();
 								}
+
+							@Override
+							public void onSelection(
+									SelectionEvent<Suggestion> event) {
+								super.onSelection(event);
+								
+							}
 							};
 						}
 

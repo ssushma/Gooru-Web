@@ -27,8 +27,10 @@ package org.ednovo.gooru.server.service;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aspectj.weaver.patterns.FormalBinding;
 import org.ednovo.gooru.client.service.ResourceService;
@@ -42,6 +44,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -67,6 +70,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gwt.json.client.JSONArray;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
@@ -529,17 +533,33 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException {
 		
-		NewResourceDo newResourceDo = new NewResourceDo();
-		
+		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
 		newResourceDo.setTitle(titleStr);
+		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+		 for(int i = 0; i<standards.size(); i++){
+			 CodeDo codeObj=new CodeDo();
+			 codeObj.setCode(standards.get(i));
+			 standardsDo.add(codeObj);
+	      }
+		newResourceDo.setTaxonomySet(standardsDo);
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
-		
+		newResourceDo.setEducationalUse(edcuationalUse);
+		try{
+			org.json.JSONArray jsonArray=new org.json.JSONArray();
+			JSONObject momentsOfLearningObj=new JSONObject();
+			momentsOfLearningObj.put("value", momentsOfLearning);
+			momentsOfLearningObj.put("selected", "true");
+			jsonArray.put(momentsOfLearningObj.toString());
+			newResourceDo.setMomentsOfLearning(jsonArray.toString());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(categoryStr);
 		

@@ -263,7 +263,7 @@ public interface ResourceService extends BaseService {
 	 * @return CollectionDO
 	 * @throws GwtException
 	 */
-	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime) throws GwtException;
+	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException;
 	
 	
 	/**

@@ -34,22 +34,31 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
+import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -63,10 +72,14 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -75,9 +88,11 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
-public abstract class AddQuestionResourceView extends Composite implements MessageProperties{
+public abstract class AddQuestionResourceView extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 	
 	public interface AddQuestionResourceViewUiBinder extends UiBinder<Widget, AddQuestionResourceView>{
 		
@@ -87,15 +102,16 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	
 	private CollectionItemDo collectionItemDo=null;
 	 boolean isAnsweEmpty = false;
-	@UiField Label errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg; 
+	@UiField Label depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg; 
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights;
-	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
+	@UiField HTMLPanel educationalUsePanel,questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
-	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl;
+	@UiField Label mandatoryEducationalLbl,resourceEducationalLabel,questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl;
 	@UiField Anchor addAnswerChoice,addHintsLabel;
 
 	@UiField Anchor addQuestionImg;
-	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText;
+	@UiField HTMLPanel educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,hintsContainer,buttonContainer,questionText,correctText;
 	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent;
 	/*@UiField ListBox questionTypeTextBox;*/
 	@UiField BlueButtonUc addbutton;
@@ -106,7 +122,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
 	@UiField Button cancelButton;
 	@UiField
-	CheckBox rightsChkBox;
+	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking,rightsChkBox;
 	@UiField
 	Anchor copyRightAnr;
 	
@@ -121,7 +137,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
 	
-	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false;
+	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
 	
 	public String getQuestionType() {
@@ -162,9 +178,91 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	
 	private List<Widget> answerChoicesList=new ArrayList<Widget>();
 	
+	@UiField(provided = true)
+	AppSuggestBox standardSgstBox;
+	
+	@UiField FlowPanel standardsPanel;
+	private AppMultiWordSuggestOracle standardSuggestOracle;
+	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	private static final String FLT_CODE_ID = "id";
+	List<String> standardPreflist=new ArrayList<String>();
+	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	String courseCode="";
+	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
 	public AddQuestionResourceView(){
+		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		standardSearchDo.setPageSize(10);
+		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
+			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+			@Override
+			public void keyAction(String text) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+						}						
+					}
+					
+					/*if(standardsPrefDisplayPopup){*/
+						standardsPreferenceOrganizeToolTip.hide();
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+							
+							@Override
+							public void onSuccess(SearchDo<CodeDo> result) {
+								setStandardSuggestions(result);
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+						/*}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+	
+						//standardSuggestOracle.add(GL1613);
+						
+					}*/
+					}
+					
+				
+			}
+
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+		
+		standardSgstBox.addSelectionHandler(this);
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
 		questionText.getElement().setInnerHTML(" "+GL0863);
@@ -201,6 +299,30 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		loadingTextLbl.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
+		educationalTitle.getElement().setInnerHTML(GL1664);
+		activityText.getElement().setInnerHTML(GL1665);
+		handoutText.getElement().setInnerHTML(GL0907);
+		homeworkText.getElement().setInnerHTML(GL1666);
+		gameText.getElement().setInnerHTML(GL1667);
+		presentationText.getElement().setInnerHTML(GL1668);
+		referenceMaterialText.getElement().setInnerHTML(GL1669);
+		quizText.getElement().setInnerHTML(GL1670);
+		curriculumPlanText.getElement().setInnerHTML(GL1671);
+		lessonPlanText.getElement().setInnerHTML(GL1672);
+		unitPlanText.getElement().setInnerHTML(GL1673);
+		projectPlanText.getElement().setInnerHTML(GL1674);
+		readingText.getElement().setInnerHTML(GL1675);
+		textbookText.getElement().setInnerHTML(GL0909);
+		articleText.getElement().setInnerHTML(GL1676);
+		bookText.getElement().setInnerHTML(GL1677);
+		resourceEducationalLabel.setText(GL1684);
+		standardsDefaultText.setText(GL1682);
+		depthOfKnowledgeHeader.setText(GL1693);
+		chkLevelRecall.setText(GL1645);
+		chkLevelSkillConcept.setText(GL1646);
+		chkLevelStrategicThinking.setText(GL1647);
+		chkLevelExtendedThinking.setText(GL1648);
+		educationalUsePanel.setVisible(false);
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -299,7 +421,92 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		rightsChkBox.addClickHandler(new rightsChecked());
 		setTrueOrFalseFields();
 	}
-	
+	@Override
+	public void onSelection(SelectionEvent<Suggestion> event) {
+		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
+		standardSgstBox.setText("");
+		standardSuggestOracle.clear();
+	}
+	private static String getCodeIdByCode(String code, List<CodeDo> codes) {
+		if (codes != null) {
+			for (CodeDo codeDo : codes) {
+				if (code.equals(codeDo.getCode())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
+	/**
+	 * Adding new standard for the collection , will check it has more than
+	 * fifteen standards
+	 * 
+	 * @param standard
+	 *            which to be added for the collection
+	 */
+	public void addStandard(String standard, String id) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standard != null && !standard.isEmpty()) {
+				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
+			}
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
+	}
+	/**
+	 * new label is created for the standard which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc createStandardLabel(final String standardCode, final String id, String description) {
+		CloseLabel closeLabel = new CloseLabel(standardCode) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	public void standardMaxShow() {
+		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
+		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
+		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
+		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
+	}
+	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		standardSuggestOracle.clear();
+		this.standardSearchDo = standardSearchDo;
+		if (this.standardSearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedStandards(standardsPanel);
+			for (CodeDo code : standardSearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					standardSuggestOracle.add(code.getCode());
+				}
+				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		standardSgstBox.showSuggestionList();
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedStandards(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
 	/**
 	 * Sets the text for type of question selected based on question type number.
 	 */
@@ -1596,7 +1803,137 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 	
 	}
+	@UiHandler("activityPanel")
+	void activityPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
+		resourceEducationalLabel.setText(GL1665);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("handoutPanel")
+	void handoutPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_handout_selected");
+		resourceEducationalLabel.setText(GL0907);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("homeworkPanel")
+	void homeworkPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_homework_selected");
+		resourceEducationalLabel.setText(GL1666);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("gamePanel")
+	void gamePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_game_selected");
+		resourceEducationalLabel.setText(GL1667);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("presentationPanel")
+	void presentationPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_presentation_selected");
+		resourceEducationalLabel.setText(GL1668);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("referenceMaterialPanel")
+	void referenceMaterialPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_reference_material_selected");
+		resourceEducationalLabel.setText(GL1669);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("quizPanel")
+	void quizPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_quiz_selected");
+		resourceEducationalLabel.setText(GL1670);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("curriculumPlanPanel")
+	void curriculumPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_curriculum_plan_selected");
+		resourceEducationalLabel.setText(GL1671);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("lessonPlanPanel")
+	void lessonPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_lesson_plan_selected");
+		resourceEducationalLabel.setText(GL1672);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("unitPlanPanel")
+	void unitPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_unit_plan_selected");
+		resourceEducationalLabel.setText(GL1673);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("projectPlanPanel")
+	void projectPlanPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_project_plan_selected");
+		resourceEducationalLabel.setText(GL1674);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("readingPanel")
+	void readingPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_reading_selected");
+		resourceEducationalLabel.setText(GL1675);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("textbookPanel")
+	void textbookPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_textbook_selected");
+		resourceEducationalLabel.setText(GL0909);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("articlePanel")
+	void articlePanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_article_selected");
+		resourceEducationalLabel.setText(GL1676);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
+	@UiHandler("bookPanel")
+	void bookPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_book_selected");
+		resourceEducationalLabel.setText(GL1677);
+		educationalUsePanel.setVisible(false);
+		educationalDropDownLblOpen = false;
+		mandatoryEducationalLbl.setVisible(false);
+	}
 	
+	@UiHandler("educationalDropDownLbl")
+	public void educationalDropDownClick(ClickEvent event) {
+		if (educationalDropDownLblOpen == false) {
+			educationalUsePanel.setVisible(true);
+			educationalDropDownLblOpen = true;
+		} else {
+			educationalUsePanel.setVisible(false);
+			educationalDropDownLblOpen = false;
+		}
+	}
 	/**
      * Gets the name of the used browser.
      */
