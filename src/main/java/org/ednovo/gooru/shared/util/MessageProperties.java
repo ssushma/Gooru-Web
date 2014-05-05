@@ -1029,7 +1029,7 @@ public interface MessageProperties {
 		//Hints
 		String GL0859	="Hints (hints will show up in this order)";
 		//Add Question image in shelf
-		String GL0860	="Question Image";//Label
+		String GL0860	="Question Image or Video";//Label
 		String GL0861	=	"Change Image";//Label
 		String GL0862	="Remove Image";//Label
 		//Add Question Resource View in shelf.
@@ -2167,13 +2167,17 @@ public interface MessageProperties {
     	String GL1707="Access Mode";
     	String GL1708="GENERAL INFO";
 		String GL1709="e.g: I use this with my students to explain how, etc...";
-		String GL1710="RESOURCE INFO";
-		String GL1711="Date Created";
-		String GL1712="Thumbnail URL";
-		String GL1713="License Code";
-		String GL1714="EDUCATIONAL INFO";
+		String GL1710="Image";
+		String GL1711="Video";
+		String GL1712="YouTube URL";
+		String GL1713="Type the YouTube video URL in the text field above. if it's correct, you'll see a preview below. Feel free to also edit the video start and stop time as well.";
+		String GL1714="Preview";
 		String GL1715="Gooru Subject";
-		
+		String GL1716="RESOURCE INFO";
+		String GL1717="Date Created";
+		String GL1718="Thumbnail URL";
+		String GL1719="License Code";
+		String GL1720="EDUCATIONAL INFO";
     	
    }
 

@@ -85,6 +85,9 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			display: inline-block;
 			vertical-align:top;
 		}
+	.oer {
+			margin: 20px auto 0;
+			}
 		
 		
 	</ui:style>
@@ -156,7 +159,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		<uc:DisclosurePanelUc  ui:field="gradePanelUc" />
 		
-		<g:HTMLPanel ui:field="oerPanel"></g:HTMLPanel>
+		<g:HTMLPanel ui:field="oerPanel" styleName="{style.oer}"/>
 		
 		<g:FlowPanel>
 			<g:Label  styleName="{style.clearAll}" ui:field="clearAll" />
