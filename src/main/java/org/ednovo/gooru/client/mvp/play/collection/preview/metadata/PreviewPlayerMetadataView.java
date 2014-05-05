@@ -141,6 +141,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	private boolean isConceptsVisible = false;
 	
+	private String languageObjectiveValue;
+	
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, PreviewPlayerMetadataView> {
@@ -1080,17 +1082,17 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	public void renderLanguageObjective(String languageObjective)
 	{	
-		if(languageObjective!=null)
+	if(languageObjective!=null)
 		{
-			
+			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
-			lbllanguageObjectiveAll.setVisible(false);
+			//lbllanguageObjectiveAll.setVisible(false);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;margin-top:15px;");
-			if(languageObjective.length()>=80){
+			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(GL1728);	
 				seeMoreAnchor.setVisible(true);
-				lbllanguageObjective.setText(languageObjective.substring(0,80));
-				lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+				lbllanguageObjective.setText(languageObjective.substring(0,200));
+				//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
 			}
 			else
 			{
@@ -1108,7 +1110,9 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@UiHandler("seeMoreAnchor")
 	public void clickSeeAll(ClickEvent event)
 	{
-		lbllanguageObjectiveAll.setVisible(true);
+		//lbllanguageObjectiveAll.setVisible(true);
 		seeMoreAnchor.setVisible(false);
+		lbllanguageObjective.setText("");
+		lbllanguageObjective.setText(languageObjectiveValue);
 	}
 }
