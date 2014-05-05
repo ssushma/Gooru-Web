@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
@@ -74,6 +75,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -88,13 +90,15 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@UiField Label lblWhatsNext, lblSeeOtherRelatedConcepts,lblAuthor, lblCourse, lblStandards, lblRelatedConcepts,loginMessagingText;
 	@UiField Image profileThumbnailImage,userPhoto;
 	@UiField HTMLPanel authorPanel,whatNextPanel,addComment,loginMessaging,relatedConceptsEndPage,relatedConceptsCoverPage,homePageConceptsPanel,
-						courseSection,standardSection;
-	@UiField Anchor loginUrl, signupUrl,previewFlagButton;
+						courseSection,standardSection,depthOfKnowledgePanel,audiencePanel,instructionalmethodPanel,learningAndInnovationSkillPanel,
+						InstructionalmethodContainer,audienceContainer,learningAndInnovationSkillsContainer,depthOfKnowledgeContainer,languageObjectiveContainer;
+	@UiField Anchor loginUrl, signupUrl,previewFlagButton,seeMoreAnchor;
 	@UiField Button postCommentBtn,postCommentCancel;
 	@UiField TextArea commentField;
 	@UiField VerticalPanel commentsContainer;
 	@UiField PreviewPlayerStyleBundle playerStyle;
-	
+	@UiField Label lbllanguageObjectiveText,lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
+	@UiField InlineLabel lbllanguageObjective,lbllanguageObjectiveAll;
 	private static final String CREATE = "CREATE";
 	
 	private static final String DELETE = "DELETE";
@@ -178,6 +182,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		setUserProfileImage(collectionDo.getUser().getGooruUId());
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
+		renderDepthOfKnowledge(collectionDo.getDepthOfKnowledges());
+		renderInstructionalMethod(collectionDo.getInstructionalMethod());
+		renderAudience(collectionDo.getAudience());
+		renderLearningAndInnovationSkill(collectionDo.getLearningSkills());
+		renderLanguageObjective(collectionDo.getLanguageObjectives());
 	}
 	
 
@@ -223,6 +232,13 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		previewFlagButton.setText(GL0556);
 		previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+		//added for 6.2 release
+		lbllanguageObjectiveText.setText(GL1721);
+		lbldepthOfKnowledgeText.setText(GL1693);
+		lbllearningAndInnovationText.setText(GL1722);
+		lblAudienceText.setText(GL1723);
+		lblInstructionalmethodText.setText(GL1724);
+		
 	}
 	
 	public void setUserName(String userName){
@@ -958,5 +974,141 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			whatNextPanel.setVisible(false);
 			homePageConceptsPanel.setVisible(false);
 		}
+	}
+	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
+		if(depthofKnowledgeList!=null){
+			depthOfKnowledgePanel.clear();
+			boolean depthofKnowledgeValue = false;
+			for (checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
+				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+					depthofKnowledgeValue = true;
+					Label depthofKnowledge = new Label(checkboxSelectedDo.getName());
+					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
+					depthOfKnowledgePanel.add(depthofKnowledge);
+				if(depthofKnowledgeValue){
+					depthOfKnowledgeContainer.setVisible(true);
+				}else{
+					depthOfKnowledgeContainer.setVisible(false);
+					
+				}
+			}else
+			{
+				depthOfKnowledgeContainer.setVisible(false);
+			}
+		}
+		}else
+		{
+			depthOfKnowledgeContainer.setVisible(false);
+		}
+	}
+	public void renderInstructionalMethod(List<checkboxSelectedDo> instructionmethodList){
+		if(instructionmethodList!=null){
+			instructionalmethodPanel.clear();
+			boolean instructionMethod=false;
+			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) {
+				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+					instructionMethod = true;
+					Label lblInstructionMethod = new Label(checkboxSelectedDo.getName());
+					instructionalmethodPanel.add(lblInstructionMethod);
+					if(instructionMethod){
+						InstructionalmethodContainer.setVisible(true);
+					}else
+					{
+						InstructionalmethodContainer.setVisible(false);
+					}
+			}else
+			{
+				InstructionalmethodContainer.setVisible(false);
+			}
+			}
+			}else
+		{
+				InstructionalmethodContainer.setVisible(false);
+		}
+	}
+	public void renderAudience(List<checkboxSelectedDo> audienceList){
+		if(audienceList!=null){
+			audiencePanel.clear();
+			boolean audience=false;
+			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
+				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+					audience = true;
+					Label lblaudience = new Label(checkboxSelectedDo.getName());
+					audiencePanel.add(lblaudience);
+				if(audience){
+					audienceContainer.setVisible(true);
+				}
+				else
+				{
+					audienceContainer.setVisible(false);
+					
+				}
+			}else{
+				audienceContainer.setVisible(false);
+			}
+		}}
+		else
+		{
+			audienceContainer.setVisible(false);
+		}
+	}
+	public void renderLearningAndInnovationSkill(List<checkboxSelectedDo> learningSkillsList){
+		if(learningSkillsList!=null){
+			learningAndInnovationSkillPanel.clear();
+			boolean learningAndInnovationSkill = false;
+			for (checkboxSelectedDo checkboxSelectedDo : learningSkillsList) {
+				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+					learningAndInnovationSkill = true;
+					Label lbllearningSkills = new Label(checkboxSelectedDo.getName());
+					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
+					learningAndInnovationSkillPanel.add(lbllearningSkills);
+					if(learningAndInnovationSkill){
+						learningAndInnovationSkillsContainer.setVisible(true);
+					}else
+					{
+						learningAndInnovationSkillsContainer.setVisible(false);
+						
+					}
+			}else{
+				learningAndInnovationSkillsContainer.setVisible(false);
+			}
+		}}else
+		{
+			learningAndInnovationSkillsContainer.setVisible(false);
+		}
+	}
+	
+	public void renderLanguageObjective(String languageObjective)
+	{	
+		if(languageObjective!=null)
+		{
+			
+			languageObjectiveContainer.setVisible(true);
+			lbllanguageObjectiveAll.setVisible(false);
+			seeMoreAnchor.getElement().setAttribute("style", "float:right;margin-top:15px;");
+			if(languageObjective.length()>=80){
+				seeMoreAnchor.setText(GL1728);	
+				seeMoreAnchor.setVisible(true);
+				lbllanguageObjective.setText(languageObjective.substring(0,80));
+				lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+			}
+			else
+			{
+				seeMoreAnchor.setVisible(false);
+				lbllanguageObjective.setText(languageObjective);
+			}
+			
+		}
+		else
+		{
+			languageObjectiveContainer.setVisible(false);
+			
+		}
+	}
+	@UiHandler("seeMoreAnchor")
+	public void clickSeeAll(ClickEvent event)
+	{
+		lbllanguageObjectiveAll.setVisible(true);
+		seeMoreAnchor.setVisible(false);
 	}
 }

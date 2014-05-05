@@ -45,6 +45,8 @@ public class NewResourceDo extends ResourceDo {
 	private String thumbnailImgUrl;
 	private Integer stop;
 	private ResourceFormatDo resourceFormat;
+	private String educationalUse;
+	private String momentsOfLearning;
 	
 	private String thumbnail;
 	
@@ -119,6 +121,22 @@ public class NewResourceDo extends ResourceDo {
 
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+
+	public String getEducationalUse() {
+		return educationalUse;
+	}
+
+	public void setEducationalUse(String educationalUse) {
+		this.educationalUse = educationalUse;
+	}
+
+	public String getMomentsOfLearning() {
+		return momentsOfLearning;
+	}
+
+	public void setMomentsOfLearning(String momentsOfLearning) {
+		this.momentsOfLearning = momentsOfLearning;
 	}
 	
 

@@ -349,7 +349,18 @@ position: relative;
 	font-size: 16px;
 
 }
-
+.addResourceSuggestedBox {
+	color: #CCCCCC;
+	float: right;
+	font-size: 16px;
+    margin-right: 70px; 
+}
+.addResourceSuggestedBoxForQuestion {
+	color: #CCCCCC;
+	float: right;
+	font-size: 16px;
+    margin-right: 50px; 
+}
 .shelfVocabulary {
 	color: #cccccc;
 	font-size: 16px;
@@ -1205,6 +1216,12 @@ height: 73px;
 	width: 98%;
 	opacity: 0.6;
 }
+.questionDepthOfKnoweldgeContainer{
+	float: left;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 98%;
+}
 .checkBoxOuterContiner
 {
 	width:105%
@@ -1225,6 +1242,11 @@ height: 73px;
 }
 .checkBoxinnerContinerlevel4{
 		width:29%;
+	float:left;
+}
+.checkBoxinnerContinerForQuestion
+{
+	width:50%;
 	float:left;
 }
 .checkBoxlevels{
