@@ -277,9 +277,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			 if(webResourceCategory.contains("Videos")||webResourceCategory.contains("Interactives")||webResourceCategory.contains("Images")||webResourceCategory.contains("Texts"))
 			{
 				 webResourceCategory=webResourceCategory.substring(0, webResourceCategory.length()-1);
-				 if(webResourceCategory.contains("Image")||webResourceCategory.contains("Images")){
+				/* if(webResourceCategory.contains("Image")||webResourceCategory.contains("Images")){
 					 webResourceCategory="Slide";
-				 }
+				 }*/
 			}
 			 webResourceThumbnail = thumbnailUrlStr;
 			 webResourceEnd = endTime; 
