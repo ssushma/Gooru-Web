@@ -518,19 +518,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
 				if (chkNotFriendly.getValue()){
-					if(value.equalsIgnoreCase("Mobile Friendly")){
 						MixpanelUtil.MOS_Filter("Selected");
-					}else{
-						MixpanelUtil.mixpanelEvent("checks the OER filter box");
-					}
 					
 				}else{
-					if(value.equalsIgnoreCase("Mobile Friendly")){
 						MixpanelUtil.MOS_Filter("Unselected");
-					}else{
-						MixpanelUtil.mixpanelEvent("unchecks the OER filter box");
-					}
-					
 				}
 				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 			}
@@ -551,6 +542,12 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if (chkOER.getValue()){
+					MixpanelUtil.mixpanelEvent("checks the OER filter box");
+
+				}else{
+					MixpanelUtil.mixpanelEvent("unchecks the OER filter box");
+				}
 				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 				
 			}

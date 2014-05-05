@@ -51,6 +51,8 @@ import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.DataLogEvents;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -99,7 +101,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 	TextBoxWithPlaceholder passwordTxtBox;
 
 	@UiField
-	Button loginButton;
+	Button loginButton,gmailButton;
 
 	@UiField
 	TextArea shareLinkTxtBox;
@@ -108,7 +110,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 	Anchor forgotPwd,ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText;
+	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
 
 	private boolean isPrivate = false;
 	private static final String SWITCH_FULL_URL = GL0643;
@@ -316,6 +318,9 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 
 		lblPleaseWait.setText(GL0242);
 
+		gmailButton.setText(GL0203);
+		gmailButton.getElement().setId("btnAssignGmail");
+		lblOr.setText(GL0209);
 		loginTxtBox.getElement().setId("tbLoginUsername");
 		passwordTxtBox.getElement().setId("tbLoginPassword");
 		loginButton.getElement().setId("btnLogin");
@@ -683,6 +688,29 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 		AppClientFactory.getPlaceManager().revealPlace(
 				AppClientFactory.getCurrentPlaceToken(), params);
 		closePoup();
+	}
+	
+	/**
+	 * User login popup allows to sign in if correct credentials and set user
+	 * info on header view
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
+	 */
+	@UiHandler("gmailButton")
+	public void onGmailButtonClicked(ClickEvent clickEvent){
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		String callBack = Window.Location.getHref();
+	
+		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
+		
+			@Override
+			public void onSuccess(String result) {
+//				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				Window.Location.replace(result);
+			
+			}
+		});
 	}
 
 	public class OnClickShareHandler implements ClickHandler {
