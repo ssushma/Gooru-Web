@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
@@ -45,6 +46,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
@@ -140,6 +142,8 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	
 	private String parentId, id=null;
 	
+	Map<String,String> folderMetaData = new HashMap<String,String>();
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SHELF)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -201,6 +205,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		addRegisteredHandler(CollectionAssignShareEvent.TYPE, handler);
 		addRegisteredHandler(SetCollabCountEvent.TYPE, setCollabCount);
 		addRegisteredHandler(SetFolderParentNameEvent.TYPE, this);
+		addRegisteredHandler(SetFolderMetaDataEvent.TYPE, this);
 	}
 	
 	@Override
@@ -617,6 +622,12 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			errorPopup.show();
 			errorPopup.center();
 		}
+	}
+
+	@Override
+	public void setFolderMetaData(Map<String, String> folderMetaData) {
+		folderItemTabPresenter.setFolderMetaData(folderMetaData);
+		this.folderMetaData = folderMetaData;
 	}
 	
 }

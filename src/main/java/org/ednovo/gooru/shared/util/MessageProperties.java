@@ -2179,5 +2179,10 @@ public interface MessageProperties {
 		String GL1719="License Code";
 		String GL1720="EDUCATIONAL INFO";
     	
+		
+		String GL1725="Ex: Our character is largely determined by our beliefs, experiences, and relationships.";
+		String GL1726="Ex: Why is it important to know the qualities of a character? How do characters’ actions reveal or convey who they are?";
+		String GL1727="Ex: Write an informational essay.";
+		
    }
 

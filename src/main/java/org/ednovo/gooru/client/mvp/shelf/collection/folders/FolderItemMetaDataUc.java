@@ -2,6 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
@@ -20,7 +21,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FolderItemMetaDataUc extends Composite {
+public class FolderItemMetaDataUc extends Composite implements MessageProperties{
 
 	@UiField Button closeItem, saveBtn, cancelBtn;
 	
@@ -44,6 +45,7 @@ public class FolderItemMetaDataUc extends Composite {
 	public FolderItemMetaDataUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		showEditableMetaData(true);
+		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
 		bigIdeasHTML.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -72,7 +74,17 @@ public class FolderItemMetaDataUc extends Composite {
 		});
 	}
 	
-	private void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
+	public void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
+		if(bigIdeas==null || bigIdeas.isEmpty()) {
+			bigIdeas = GL1725;
+		}
+		if(essentialQuestions==null || essentialQuestions.isEmpty()) {
+			essentialQuestions = GL1726;
+		}
+		if(performanceTask==null || performanceTask.isEmpty()) {
+			performanceTask = GL1727;
+		}
+		
 		bigIdeasLbl.setHTML(bigIdeas);
 		essentialQuestionsLbl.setHTML(essentialQuestions);
 		performanceTaskLbl.setHTML(performanceTask);

@@ -24,6 +24,9 @@ public class FolderDo implements Serializable{
 	private List<FolderItemDo> collectionItems;
 	private ResourceFormatDo resourceFormat;
 	private ResourceTypeDo resourceTypeDo;
+	private String ideas;
+	private String performanceTasks;
+	private String questions;
 	
 	public FolderDo(){}
 
@@ -152,4 +155,29 @@ public class FolderDo implements Serializable{
 	public void setResourceTypeDo(ResourceTypeDo resourceTypeDo) {
 		this.resourceTypeDo = resourceTypeDo;
 	}
+
+	public String getIdeas() {
+		return ideas;
+	}
+
+	public void setIdeas(String ideas) {
+		this.ideas = ideas;
+	}
+
+	public String getPerformanceTasks() {
+		return performanceTasks;
+	}
+
+	public void setPerformanceTasks(String performanceTasks) {
+		this.performanceTasks = performanceTasks;
+	}
+
+	public String getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(String questions) {
+		this.questions = questions;
+	}
+	
 }
