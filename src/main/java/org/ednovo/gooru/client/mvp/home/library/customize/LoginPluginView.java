@@ -41,6 +41,8 @@ import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.DataLogEvents;
+import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -90,13 +92,13 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	TextBoxWithPlaceholder passwordTxtBox;
 
 	@UiField
-	Button loginButton;
+	Button loginButton,gmailButton;
 
 	@UiField
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription,donotHaveAcount;
+	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
 
@@ -170,7 +172,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		loginTxtBox.getElement().setId("tbLoginUsername");
 		passwordTxtBox.getElement().setId("tbLoginPassword");
 		loginButton.getElement().setId("btnLogin");
-
+		gmailButton.setText(GL0203);
+		lblOr.setText(GL0209);
+		gmailButton.getElement().setId("customizeGmailBtn");
 		lblPleaseWait.setVisible(false);
 
 	}
@@ -302,6 +306,29 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		closePoupfromChild();
 		// this.hide();
 
+	}
+	
+	/**
+	 * User login popup allows to sign in if correct credentials and set user
+	 * info on header view
+	 * 
+	 * @param clickEvent
+	 *            instance of {@link ClickEvent}
+	 */
+	@UiHandler("gmailButton")
+	public void onGmailButtonClicked(ClickEvent clickEvent){
+		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
+		String callBack = Window.Location.getHref();
+	
+		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
+		
+			@Override
+			public void onSuccess(String result) {
+//				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
+				Window.Location.replace(result);
+			
+			}
+		});
 	}
 
 	public ResourceServiceAsync getResourceService() {

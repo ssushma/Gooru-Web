@@ -256,6 +256,8 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String divider();
 		
 		String dividerText();
+		
+		String dividerCustomize();
 	}
 
 	@Source("AssignPopUp.css")
