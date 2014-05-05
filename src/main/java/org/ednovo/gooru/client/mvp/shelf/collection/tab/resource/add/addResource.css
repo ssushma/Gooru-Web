@@ -241,6 +241,15 @@ width: 100%;
 	border-style: solid;
 	position: relative;
 }
+.addResourceMultipleAnswerInputControl {
+	float: left;
+	width: 60%;
+	height: 30px;
+	border-color: rgb(221,221,221);
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+}
 .addResourceFormAnswerTextAlign {
 	font-size: 12px;
 	color: rgb(81,81,81);
@@ -1053,4 +1062,13 @@ width: 114px;
 
 .ownResourceFormRightsContent:hover {
 	cursor: pointer;
+}
+.yesNoTextStyle {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 12px;
+color: #515151;
+text-align: center;
+position: static;
+float: left;
+margin-left: 41px;
 }
