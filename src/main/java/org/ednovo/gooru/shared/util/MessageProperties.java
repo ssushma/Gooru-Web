@@ -2178,6 +2178,10 @@ public interface MessageProperties {
 		String GL1718="Thumbnail URL";
 		String GL1719="License Code";
 		String GL1720="EDUCATIONAL INFO";
+		String GL1721 = "Language Objective";
+		String GL1722 = "Learning & Innovation Skills";
+		String GL1723 = "Audience";
+		String GL1724 = "Instructional Method";
     	
 		
 		String GL1725="Ex: Our character is largely determined by our beliefs, experiences, and relationships.";
