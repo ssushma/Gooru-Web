@@ -912,9 +912,16 @@ button.LoginText {
 	position:relative;
 	top:.5em;
 	padding:0px 10px;
-	background-color:#F0F0F0;
+	background-color:white;
 	font-size: 12px;
 }
+.dividerCustomize {
+	border-bottom:1px solid #ddd;
+	width:94%;
+	height:1em;
+	margin:10px 0px 20px 0px;
+}
+
 /*End Success popup */
 
 

@@ -52,7 +52,8 @@
                
                  <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="languageObjectiveContainer">
                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbllanguageObjectiveText" />
-                       <g:Label ui:field="lbllanguageObjective" />
+                       <g:InlineLabel ui:field="lbllanguageObjective" />
+                       <g:Anchor ui:field = "seeMoreAnchor"/>  <g:InlineLabel ui:field="lbllanguageObjectiveAll" />
                  </g:HTMLPanel>
                   <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="depthOfKnowledgeContainer">
                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbldepthOfKnowledgeText" />
