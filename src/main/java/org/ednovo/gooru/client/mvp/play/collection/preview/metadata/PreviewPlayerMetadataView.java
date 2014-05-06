@@ -57,6 +57,7 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -97,7 +98,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@UiField TextArea commentField;
 	@UiField VerticalPanel commentsContainer;
 	@UiField PreviewPlayerStyleBundle playerStyle;
-	@UiField Label lbllanguageObjectiveText,lbldepthOfKnowledgeText,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
+	@UiField Label lbllanguageObjectiveText,lbldepthOfKnowledgeText,teacherTipLabel,lbllearningAndInnovationText,lblAudienceText,lblInstructionalmethodText;
 	@UiField InlineLabel lbllanguageObjective,lbllanguageObjectiveAll;
 	private static final String CREATE = "CREATE";
 	
@@ -140,6 +141,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	private boolean isHavingBadWords;
 	
 	private boolean isConceptsVisible = false;
+	
+	private String languageObjectiveValue, depthofKnowledgeValue;
 	
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
@@ -186,7 +189,23 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		renderInstructionalMethod(collectionDo.getInstructionalMethod());
 		renderAudience(collectionDo.getAudience());
 		renderLearningAndInnovationSkill(collectionDo.getLearningSkills());
-		renderLanguageObjective(collectionDo.getLanguageObjectives());
+		renderLanguageObjective(collectionDo.getLanguageObjective());
+		if(collectionDo.getKeyPoints() != null)
+		{
+			if(collectionDo.getKeyPoints().length()>300)
+			{
+				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
+			}
+			else if(collectionDo.getKeyPoints().length()>100)
+			{
+				authorPanel.getElement().getStyle().setHeight(130, Unit.PX);
+			}
+			else
+			{
+				authorPanel.getElement().getStyle().setHeight(100, Unit.PX);
+			}
+				teacherTipLabel.setText(""+collectionDo.getKeyPoints()+"");			
+		}
 	}
 	
 
@@ -978,24 +997,27 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
 		if(depthofKnowledgeList!=null){
 			depthOfKnowledgePanel.clear();
+			
 			boolean depthofKnowledgeValue = false;
+
+			
 			for (checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
-				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
 					depthofKnowledgeValue = true;
-					Label depthofKnowledge = new Label(checkboxSelectedDo.getName());
+					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthOfKnowledgePanel.add(depthofKnowledge);
-				if(depthofKnowledgeValue){
-					depthOfKnowledgeContainer.setVisible(true);
-				}else{
-					depthOfKnowledgeContainer.setVisible(false);
-					
-				}
-			}else
-			{
-				depthOfKnowledgeContainer.setVisible(false);
+
 			}
 		}
+			
+			if(depthofKnowledgeValue){
+				depthOfKnowledgeContainer.setVisible(true);
+			}else{
+				depthOfKnowledgeContainer.setVisible(false);
+				
+			}
+			
 		}else
 		{
 			depthOfKnowledgeContainer.setVisible(false);
@@ -1005,48 +1027,56 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		if(instructionmethodList!=null){
 			instructionalmethodPanel.clear();
 			boolean instructionMethod=false;
-			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) {
-				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) 
+			{
+			if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true"))
+			{
 					instructionMethod = true;
-					Label lblInstructionMethod = new Label(checkboxSelectedDo.getName());
+					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
 					instructionalmethodPanel.add(lblInstructionMethod);
-					if(instructionMethod){
-						InstructionalmethodContainer.setVisible(true);
-					}else
-					{
-						InstructionalmethodContainer.setVisible(false);
-					}
+					InstructionalmethodContainer.setVisible(true);
+
+			}
+
+			}
+			
+			if(instructionMethod)
+			{
+			InstructionalmethodContainer.setVisible(true);
+			}else
+			{
+			InstructionalmethodContainer.setVisible(false);
+			}
+			
 			}else
 			{
 				InstructionalmethodContainer.setVisible(false);
 			}
-			}
-			}else
-		{
-				InstructionalmethodContainer.setVisible(false);
-		}
 	}
 	public void renderAudience(List<checkboxSelectedDo> audienceList){
 		if(audienceList!=null){
 			audiencePanel.clear();
 			boolean audience=false;
+			
 			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
-				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
 					audience = true;
-					Label lblaudience = new Label(checkboxSelectedDo.getName());
+					Label lblaudience = new Label(checkboxSelectedDo.getValue());
 					audiencePanel.add(lblaudience);
-				if(audience){
-					audienceContainer.setVisible(true);
-				}
-				else
-				{
-					audienceContainer.setVisible(false);
-					
-				}
-			}else{
-				audienceContainer.setVisible(false);
+
 			}
-		}}
+		}
+		
+			if(audience){
+				audienceContainer.setVisible(true);
+			}
+			else
+			{
+				audienceContainer.setVisible(false);
+				
+			}
+			
+		}
 		else
 		{
 			audienceContainer.setVisible(false);
@@ -1057,22 +1087,24 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			learningAndInnovationSkillPanel.clear();
 			boolean learningAndInnovationSkill = false;
 			for (checkboxSelectedDo checkboxSelectedDo : learningSkillsList) {
-				if(checkboxSelectedDo.getValue().equalsIgnoreCase("true")){
+				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
 					learningAndInnovationSkill = true;
-					Label lbllearningSkills = new Label(checkboxSelectedDo.getName());
+					Label lbllearningSkills = new Label(checkboxSelectedDo.getValue());
 					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
-					if(learningAndInnovationSkill){
-						learningAndInnovationSkillsContainer.setVisible(true);
-					}else
-					{
-						learningAndInnovationSkillsContainer.setVisible(false);
-						
-					}
-			}else{
-				learningAndInnovationSkillsContainer.setVisible(false);
+
 			}
-		}}else
+		}
+		
+			if(learningAndInnovationSkill){
+				learningAndInnovationSkillsContainer.setVisible(true);
+			}else
+			{
+				learningAndInnovationSkillsContainer.setVisible(false);
+				
+			}
+			
+		}else
 		{
 			learningAndInnovationSkillsContainer.setVisible(false);
 		}
@@ -1080,17 +1112,17 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	public void renderLanguageObjective(String languageObjective)
 	{	
-		if(languageObjective!=null)
+	if(languageObjective!=null)
 		{
-			
+			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
-			lbllanguageObjectiveAll.setVisible(false);
+			//lbllanguageObjectiveAll.setVisible(false);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;margin-top:15px;");
-			if(languageObjective.length()>=80){
+			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(GL1728);	
 				seeMoreAnchor.setVisible(true);
-				lbllanguageObjective.setText(languageObjective.substring(0,80));
-				lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+				lbllanguageObjective.setText(languageObjective.substring(0,200));
+				//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
 			}
 			else
 			{
@@ -1105,10 +1137,15 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			
 		}
 	}
+	
+
+	
 	@UiHandler("seeMoreAnchor")
 	public void clickSeeAll(ClickEvent event)
 	{
-		lbllanguageObjectiveAll.setVisible(true);
+		//lbllanguageObjectiveAll.setVisible(true);
 		seeMoreAnchor.setVisible(false);
+		lbllanguageObjective.setText("");
+		lbllanguageObjective.setText(languageObjectiveValue);
 	}
 }

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.shared.model.content;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -75,9 +76,13 @@ public class ResourceDo extends ContentDo {
     private String questionText;
     
     private Integer userRating;
+    
+    private Date createdOn;
 
     
-    /** 
+   
+	
+	/** 
 	 * This method is to get the encodedUrl
 	 */
 	public String getEncodedUrl() {
@@ -351,6 +356,11 @@ public class ResourceDo extends ContentDo {
 	public void setResourceFormat(ResourceFormatDo resourceFormat) {
 		this.resourceFormat = resourceFormat;
 	}
-	
-	
+	//These are the setters and getters to get created date
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
 }

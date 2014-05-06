@@ -61,6 +61,12 @@
     padding-bottom:15px;
     border-bottom:1px solid #ddd;
 }
+.infoSectionAuthor{
+    margin-top:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+
+}
 .infoSection:last-child {
     border-bottom:none;
 }
@@ -292,7 +298,6 @@
 	-khtml-border-radius: 3px 3px 3px 3px;
 	-o-border-radius: 3px 3px 3px 3px;
 	color: white;
-	float: left;
 	font-size: 10px;
 	font-weight: normal;
 	margin-right: 5px;
@@ -304,4 +309,12 @@
 	width: 176px;
 	min-height: 80px;
 	height: auto;
+}
+.teacherTipOuterContainer
+{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+	
 }
