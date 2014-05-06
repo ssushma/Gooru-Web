@@ -15,8 +15,8 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.navigateButtonsContainer}">
-					<g:Button styleName="secondary"  ui:field="backToResponseButton" />
-					<g:Button styleName="primary"  ui:field="continueButton" />
+					<g:Button styleName="secondary"  ui:field="continueButton" />
+					<g:Button styleName="primary"  ui:field="backToResponseButton" />
 				</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:FlowPanel>
