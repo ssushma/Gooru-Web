@@ -337,6 +337,8 @@ public interface CollectionCBundle extends ClientBundle{
 		String checkBoxinnerContinerForQuestion();
 		
 		String questionDepthOfKnoweldgeContainer();
+		
+		String errorLabelColor();
 
 	}
 	@Source("Collection.css")

@@ -1310,6 +1310,7 @@ height: 73px;
 	top: 7px;
 	left: -1px;
 	z-index: 9;
+	overflow-x:hidden !important;
 }
 
 
@@ -1335,4 +1336,8 @@ height: 73px;
 .teacherTipPencilHolder{
 	float:left;
 	vertical-align: top;
+}
+.errorLabelColor
+{
+	color:orange;
 }
