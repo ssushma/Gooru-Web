@@ -24,8 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.info;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -57,6 +59,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -77,9 +80,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public static final String STANDARD_DESCRIPTION = "description";
 	
 	@UiField HTMLPanel resourceDescription,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
-	oerPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
-	readingLevelPanel,schoolLevelPanel,languagePanel,countryCodePanel,addsPanel,copyRightPanel,hostPanel,courseNumberPanel,
-	seriesPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel;
+	contributorPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
+	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,gooruCoursePanel,
+	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,dateCreatedPanel,
+	authorPanel,gooruSubjectPanel;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -88,18 +92,20 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	//@UiField Label staticGradeText;
 	
 	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblPublisher,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
-					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,oerTitle,mbFriendlyLbl,
+					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,contributorTitle,mbFriendlyLbl,
 					mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,eduUseType,
 					eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,dKnowledgeType,readingLevelLbl,readingLevelType,
-					schoolLevelType,schoolLevelLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,addsLbl,addsType,
-					copyRightType,copyRightLbl,hostType,hostLbl,cNoLbl,cNoType,seriesType,seriesLbl,controlType,controlLbl,
-					acessHazardlLbl,acessHazardType,mediaFeatureLbl,mediaFeatureType,accessModelLbl,accessModeType,accesibilityLbl,generalLbl;
+					hasAdaptationType,hasAdaptationLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,isAdaptationLbl,isAdaptationType,
+					copyRightType,copyRightLbl,hostType,hostLbl,gooruCourseLbl,gooruCourseInfo,accessibilityAPIType,accessibilityAPILbl,controlType,controlLbl,
+					acessHazardlLbl,acessHazardType,mediaFeatureLbl,mediaFeatureType,accessModelLbl,accessModeType,accesibilityLbl,generalLbl,
+					thumbnailText,thumbnailurlValue,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
+					createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo;
 	
 	@UiField static Label standaInfo;
 	
 	@UiField FlowPanel standardsInfoConatiner,licenceContainer;
 	
-	@UiField HTML resourceInfoSeparator,resourceInfoSeparatorTimeLbl,metadataBottomseperatorLine,metadataBottomseperatorLineTwo;
+	@UiField HTML resourceInfoSeparator,resourceInfoSeparatorTimeLbl,resourcetypeSeparator;
 	@UiField
 	HTMLEventPanel hideButton;
 	
@@ -112,8 +118,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     private static final  String PAGE_SIZES="20";
     
     private static final String NOT_FRIENDY_TAG="not_iPad_friendly";
-    
-    private static final String BOTTOMSEPARATOR="____________________________________________________________________";
     
     
     private int collectionItemSizeData=0;
@@ -134,27 +138,23 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
-		generalLbl.setText(GL1708);
 		publisherText.setText(GL0566);
 		courseText.setText(GL0616);
 		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
-		learningobjectiveText.setText(GL0904 + ""+GL_SPL_SEMICOLON);
 		standardsText.setText(GL0619);
 		collectionsText.getElement().setInnerHTML(GL0620);
 		hideText.setText(GL0592);
 		resourceInfoText.setText(GL0621);
 		gradeTitle.setText(GL0325+ ""+GL_SPL_SEMICOLON);
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
-	//	standaInfo.setText(GL0977);
-		resourceInfoSeparator.setHTML(SEPARATOR);
-		resourceInfoSeparatorTimeLbl.setHTML(SEPARATOR);
-		resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
+
+		generalLbl.setText(GL1708);
 		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
 		resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
-		oerTitle.setText(GL1686+GL_SPL_SEMICOLON);
+		contributorTitle.setText(GL1686+GL_SPL_SEMICOLON);
+		contributorName.setText("");
 		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 		mbFriendlyText.setText("");
-		metadataBottomseperatorLine.setHTML(BOTTOMSEPARATOR);
 		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
 		dataTypeFormat.setText("");
 		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
@@ -171,23 +171,23 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		dKnowledgeType.setText("");
 		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
 		readingLevelType.setText("");
-		schoolLevelLbl.setText(GL1695+GL_SPL_SEMICOLON);
-		schoolLevelType.setText("");
+		hasAdaptationLbl.setText(GL1695+GL_SPL_SEMICOLON);
+		hasAdaptationType.setText("");
 		languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
 		languageType.setText("");
 		countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
 		countryCodeType.setText("");
-		addsLbl.setText(GL1698+GL_SPL_SEMICOLON);
-		addsType.setText("");
+		isAdaptationLbl.setText(GL1698+GL_SPL_SEMICOLON);
+		isAdaptationType.setText("");
 		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
 		copyRightType.setText("");
 		hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
 		hostType.setText("");
-		cNoLbl.setText(GL1701+GL_SPL_SEMICOLON);
-		cNoType.setText("");
-		seriesLbl.setText(GL1702+GL_SPL_SEMICOLON);
-		seriesType.setText("");
-		metadataBottomseperatorLineTwo.setHTML(BOTTOMSEPARATOR);
+		gooruCourseLbl.setText(GL1701+GL_SPL_SEMICOLON);
+		gooruCourseInfo.setText("");
+		accessibilityAPILbl.setText(GL1702+GL_SPL_SEMICOLON);
+		accessibilityAPIType.setText("");
+	
 		accesibilityLbl.setText(GL1703);
 		controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
 		controlType.setText("");
@@ -197,35 +197,21 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		mediaFeatureType.setText("");
 		accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
 		accessModeType.setText("");
-		generalLbl.setVisible(false);
-		timeRequiredLabel.setVisible(false);
-		resourceInfoSeparatorTimeLbl.setVisible(false);
-		oerPanel.setVisible(false);
-		mobileFriendlyPanel.setVisible(false);
-		metadataBottomseperatorLine.setVisible(false);
-		DataTypePanel.setVisible(false);
-		interactivityTypePanel.setVisible(false);
-		eduAllignPanel.setVisible(false);
-		eduUsePanel.setVisible(false);
-		eduRolePanel.setVisible(false);
-		ageRangePanel.setVisible(false);
-		dKnowledgePanel.setVisible(false);
-		readingLevelPanel.setVisible(false);
-		schoolLevelPanel.setVisible(false);
-		languagePanel.setVisible(false);
-		countryCodePanel.setVisible(false);
-		addsPanel.setVisible(false);
-		copyRightPanel.setVisible(false);
-		hostPanel.setVisible(false);
-		courseNumberPanel.setVisible(false);
-		seriesPanel.setVisible(false);
-		metadataBottomseperatorLineTwo.setVisible(false);
-		accessibilityPanel.setVisible(false);
-		controlPanel.setVisible(false);
-		accessHazardPanel.setVisible(false);
-		mediaFeaturePanel.setVisible(false);
-		accessModePanel.setVisible(false);
-		
+		resourceInfoLbl.setText(GL1716);
+		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
+		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
+		authorName.setText("");
+		thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);
+		licenceCodeLbl.setText(GL1719+GL_SPL_SEMICOLON);
+		educationallLbl.setText(GL1720);
+		gooruSubjectLbl.setText(GL1715+GL_SPL_SEMICOLON);
+		gooruSubjectInfo.setText("");
+		resourceTypeImage.getElement().setAttribute("style", "margin-bottom: 15px;");
+	//	standaInfo.setText(GL0977);
+		//resourceInfoSeparator.setHTML(SEPARATOR);
+		//resourceInfoSeparatorTimeLbl.setHTML(SEPARATOR);
+	//	resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
+		//resourcetypeSeparator.setHTML(SEPARATOR);
 	}
 
 	@Override
@@ -249,9 +235,132 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		setPublisher(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"",collectionItemDo.getResource().getUrl());
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		if(collectionItemDo.getResource().getThumbnails()!=null){
+			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
+		}
+		if(collectionItemDo.getResource().getLicense()!=null){
+			setLicenCode(collectionItemDo.getResource().getLicense().getCode());
+		}
+		if(collectionItemDo.getResource().getCreatedOn()!=null){
+			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
+		}
+		resourceTypeImage.getElement().setAttribute("style", "margin-top: -25px;position: absolute;");
+		resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
 		
+		//Need to open this after we got time required field from API
+		/*resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());*/
+		
+		generalLbl.setVisible(true);
+		
+		//Need to open this after we got the related parameters from the API.
+		/*resourceInfoLbl.setVisible(true);*/
+		
+		//Need to make visible as true for all these fields once we got required fields from API. 
+		educationallLbl.setVisible(false);
+		accesibilityLbl.setVisible(false);
+		timeRequiredLabel.setVisible(false);
+		resourceInfoSeparatorTimeLbl.setVisible(false);
+		contributorPanel.setVisible(false);
+		mobileFriendlyPanel.setVisible(false);
+		DataTypePanel.setVisible(false);
+		interactivityTypePanel.setVisible(false);
+		eduAllignPanel.setVisible(false);
+		eduUsePanel.setVisible(false);
+		eduRolePanel.setVisible(false);
+		ageRangePanel.setVisible(false);
+		dKnowledgePanel.setVisible(false);
+		readingLevelPanel.setVisible(false);
+		hasAdaptationPanel.setVisible(false);
+		languagePanel.setVisible(false);
+		countryCodePanel.setVisible(false);
+		isAdaptationPanel.setVisible(false);
+		copyRightPanel.setVisible(false);
+		hostPanel.setVisible(false);
+		gooruCoursePanel.setVisible(false);
+		accessibilityAPIPanel.setVisible(false);
+		accessibilityPanel.setVisible(false);
+		controlPanel.setVisible(false);
+		accessHazardPanel.setVisible(false);
+		mediaFeaturePanel.setVisible(false);
+		accessModePanel.setVisible(false);
+		gooruSubjectPanel.setVisible(false);
+		authorPanel.setVisible(false);
+		
+		}else{
+			thumbnailPanel.setVisible(false);
+			licenceCodePanel.setVisible(false);
+			dateCreatedPanel.setVisible(false);
+			resourcetypeSeparator.setHTML(SEPARATOR);
+			resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
+			resourceTypeImage.getElement().setAttribute("style", "margin-top: 0px;");
+			resourceTypeImage.getElement().setAttribute("style", "position: relative;");
+			learningobjectiveText.setText(GL0904 + ""+GL_SPL_SEMICOLON);
+			
+			authorPanel.setVisible(false);
+			gooruSubjectPanel.setVisible(false);
+			generalLbl.setVisible(false);
+			educationallLbl.setVisible(false);
+			resourceInfoLbl.setVisible(false);
+			accesibilityLbl.setVisible(false);
+			timeRequiredLabel.setVisible(false);
+			resourceInfoSeparatorTimeLbl.setVisible(false);
+			contributorPanel.setVisible(false);
+			mobileFriendlyPanel.setVisible(false);
+			DataTypePanel.setVisible(false);
+			interactivityTypePanel.setVisible(false);
+			eduAllignPanel.setVisible(false);
+			eduUsePanel.setVisible(false);
+			eduRolePanel.setVisible(false);
+			ageRangePanel.setVisible(false);
+			dKnowledgePanel.setVisible(false);
+			readingLevelPanel.setVisible(false);
+			hasAdaptationPanel.setVisible(false);
+			languagePanel.setVisible(false);
+			countryCodePanel.setVisible(false);
+			isAdaptationPanel.setVisible(false);
+			copyRightPanel.setVisible(false);
+			hostPanel.setVisible(false);
+			gooruCoursePanel.setVisible(false);
+			accessibilityAPIPanel.setVisible(false);
+			accessibilityPanel.setVisible(false);
+			controlPanel.setVisible(false);
+			accessHazardPanel.setVisible(false);
+			mediaFeaturePanel.setVisible(false);
+			accessModePanel.setVisible(false);
+			
+		}
 	}
 	
+	private void setCreatedDate(Date createdOn) {
+		resourceInfoLbl.setVisible(true);
+		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(createdOn);
+		dateCreatedPanel.setVisible(true);
+		createdDateInfo.setText(dateString);
+	}
+
+	
+	private void setLicenCode(String code) {
+	
+		if(code==null||code.equalsIgnoreCase("")||code.equalsIgnoreCase("null") || code.equalsIgnoreCase("Not Available")){
+			licenceCodePanel.setVisible(false);
+		}else{
+			licenceCodePanel.setVisible(true);
+			licenceCodeType.setText(code);
+		}		
+	}
+
+	private void setThumbnailUrl(String url) {
+	
+		if(url==null||url.equalsIgnoreCase("")||url.equalsIgnoreCase("null")){
+			thumbnailPanel.setVisible(false);
+		}else{
+			thumbnailPanel.setVisible(true);
+			thumbnailurlValue.setText(url);
+		}
+		
+	}
+
 	public void setResourceDescription(String resourceDescription){
 		this.resourceDescription.clear();
 		if(resourceDescription!=null && !resourceDescription.equalsIgnoreCase("null") && !resourceDescription.equalsIgnoreCase("")){

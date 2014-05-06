@@ -22,20 +22,33 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
-import com.google.gwt.resources.client.CssResource;
+package org.ednovo.gooru.client.mvp.shelf.collection.folders.events;
 
-public interface AddResourceBundle extends CssResource {
+import java.util.Map;
+
+import com.google.gwt.event.shared.GwtEvent;
+
+/**
+ * @author Gooru Team
+ * 
+ */
+public class SetFolderMetaDataEvent extends GwtEvent<SetFolderMetaDataHandler> {
+
+	public static final Type<SetFolderMetaDataHandler> TYPE = new Type<SetFolderMetaDataHandler>();
+	private Map<String,String> folderMetaData;
 	
-	String answerDeselected();
-	String answerSelected();
-	String addResourceFormAnswerDelete();
-	String addResourceThumbnailContent();
-	String addResourceSprite();
-	String addResourceImgDesc();
-	String addResourceFormAnswerInputControl();
-	String addResourceMultipleAnswerInputControl();
-	String yesNoTextStyle();
-	String addResourceFormTitleChoiceAlign();
+	public SetFolderMetaDataEvent(Map<String,String> folderMetaData){
+		this.folderMetaData=folderMetaData;	
+	}
+	
+	@Override
+	public Type<SetFolderMetaDataHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetFolderMetaDataHandler handler) {
+		handler.setFolderMetaData(folderMetaData);
+	}
 
 }

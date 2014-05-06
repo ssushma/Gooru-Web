@@ -52,9 +52,9 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 	
 	public static AddQuestionAnswerChoiceUiBinder uiBinder=GWT.create(AddQuestionAnswerChoiceUiBinder.class);
 	
-	@UiField Label labelChoice,optionSelectedButton,errorMessageforAnswerChoice;
+	@UiField Label labelChoice,optionSelectedButton,errorMessageforAnswerChoice,optionNoButton;
 	@UiField TinyMCE answerTextBox;
-	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner;
+	@UiField HTMLPanel deleteButtonContainer,tinyOrTextBoxConatiner,optionNoButtonContainer;
 	@UiField AddResourceBundle addWebResourceStyle;
 	public String fieldValue;
 	public Label ansChoiceDeleteButton=new Label();
@@ -64,6 +64,7 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
+		optionNoButtonContainer.setVisible(false);
 	}
 	public AddQuestionAnswerChoice(String labelName){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -71,6 +72,7 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
+		optionNoButtonContainer.setVisible(false);
 	}
 	public AddQuestionAnswerChoice(String labelName,String richTextData){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -79,6 +81,17 @@ public class AddQuestionAnswerChoice extends Composite implements HasMouseOutHan
 		ansChoiceDeleteButton.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		ansChoiceDeleteButton.getElement().getStyle().setDisplay(Display.NONE);
 		deleteButtonContainer.add(ansChoiceDeleteButton);
+		optionNoButtonContainer.setVisible(false);
+	}
+	public void showAnswerChoicesForMultipleAnswers(){
+		tinyOrTextBoxConatiner.setStyleName(addWebResourceStyle.addResourceMultipleAnswerInputControl());
+		tinyOrTextBoxConatiner.addStyleName("multiAnswerChoiceContainer");
+		optionNoButtonContainer.setVisible(true);
+	}
+	public void showAnswerChoicesForOthers(){
+		tinyOrTextBoxConatiner.setStyleName(addWebResourceStyle.addResourceFormAnswerInputControl());
+		tinyOrTextBoxConatiner.addStyleName("answerChoiceAndHintsTextcontainer");
+		optionNoButtonContainer.setVisible(false);
 	}
 	@Override
 	public void onLoad(){

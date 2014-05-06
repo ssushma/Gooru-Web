@@ -225,6 +225,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionCategoryDivText();
 		String myFolderCollectionFormInputBottomText();
 		String myFolderCollectionThumbImageContainer();
+		String standardsInEditResource();
 		String myFolderCollectionThumbImageDesc();
 		String myFolderCollectionThumbRect();
 		String myFolderCollectionThumbArrLContainer();
@@ -459,6 +460,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String additionalText();
 		String updateTextStyle();
 		String myshelfCollectionresourceDropdown();
+		String myEducationalPanelSubTitles();
+		String myEducationQuestionDropdown();
 	}
 
 	@Source("CollectionEditResource.css")

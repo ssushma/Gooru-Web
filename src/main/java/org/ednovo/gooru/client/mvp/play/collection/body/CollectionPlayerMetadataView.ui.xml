@@ -54,6 +54,12 @@
                 <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="viewSection">
                     <g:Label ui:field="viewsCountLabel" styleName="{playerStyle.views}"/>
                 </g:HTMLPanel>
+                  <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="languageObjectiveContainer">
+                       <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbllanguageObjectiveText" />
+                       <g:Label ui:field="lbllanguageObjective" />
+                       <g:Anchor ui:field = "seeMoreAnchor"/> 
+                       <!--  <g:InlineLabel ui:field="lbllanguageObjectiveAll" /> -->
+                 </g:HTMLPanel>
                 <g:HTMLPanel styleName="{playerStyle.infoSection}">
                    <g:Anchor ui:field="previewFlagButton"/>
                 </g:HTMLPanel>

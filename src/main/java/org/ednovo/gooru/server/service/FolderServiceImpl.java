@@ -71,6 +71,9 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	private static final String TITLE = "title";
 	private static final String SOURCE_ID = "sourceId";
 	private static final String TARGET_ID = "targetId";
+	private static final String IDEAS = "ideas";
+	private static final String QUESTIONS = "questions";
+	private static final String PERFORMANCE_TASKS = "performanceTasks";
 	
 	private String parentId = "";
 	
@@ -353,13 +356,31 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 	}
 
 	@Override
-	public void updateFolder(String folderId, String title) throws GwtException {
+	public void updateFolder(String folderId, String title, String ideas, String questions, String performance) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_UPDATE_FOLDER_METADATA, folderId, getLoggedInSessionToken());
 		JSONObject folderObject=new JSONObject();
 		try {
 			folderObject.put(TITLE, title);
+			if(ideas!=null) {
+				if(ideas.length()>1000) {
+					ideas = ideas.substring(0, 1000);
+				}
+				folderObject.put(IDEAS, ideas);
+			}
+			if(questions!=null) {
+				if(questions.length()>1000) {
+					questions = questions.substring(0, 1000);
+				}
+				folderObject.put(QUESTIONS, questions);
+			}
+			if(performance!=null) {
+				if(performance.length()>1000) {
+					performance = performance.substring(0, 1000);
+				}
+				folderObject.put(PERFORMANCE_TASKS, performance);
+			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());
 		} catch (Exception e) {}
 	}

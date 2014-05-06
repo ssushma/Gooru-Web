@@ -222,6 +222,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
     
     private static final String PRIVATE="private";
     
+    private static String Star_Rating_Widget = "ratingWidget";
+    
 
     /**
 	 * @return the answerIdsObject
@@ -629,7 +631,10 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
-			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+			/**
+			 * Do not un comment for 6.2 release
+			 */
+//			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
@@ -1498,7 +1503,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			metadataPresenter.setPlayerLoginStatusHandler(true);
 		}else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(COLLECTION_COMMENTS)){
 			metadataPresenter.setPlayerLoginStatusHandler(true);
-		}else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase("ratingWidget")){
+		}else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(Star_Rating_Widget)){
 			isResourceContentRating(collectionItemDo.getResource().getGooruOid());
 		}
 	}

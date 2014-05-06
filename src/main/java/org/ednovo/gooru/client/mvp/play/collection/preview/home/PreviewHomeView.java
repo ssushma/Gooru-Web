@@ -283,7 +283,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("auto");
+				successPopupVc.setHeight("592px");
 
 				successPopupVc.show();
 				successPopupVc.center();
@@ -339,7 +339,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("350px");
+			successPopupVc.setHeight("405px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}

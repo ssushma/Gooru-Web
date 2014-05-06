@@ -1,34 +1,33 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<ui:style field="folderMetaStyle" src="FolderItemMetaDataUc.css"/>
+	<ui:style field="folderMetaStyle" src="FolderItemMetaDataUc.css" type="org.ednovo.gooru.client.mvp.shelf.collection.folders.FolderItemMetaDataUcStyleBundle" />
 	<g:HTMLPanel styleName="{folderMetaStyle.mainSection} {folderMetaStyle.contentBlock}">
-	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}">
+	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="bigIdeasPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.idea}">
-	         <g:HTMLPanel styleName="{folderMetaStyle.blockViewTitle}">Big Ideas</g:HTMLPanel>
-	         <br/>
+	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="ideasStaticLbl"/>
 	      </g:HTMLPanel>
-	      The road to equity is met with many obstacles. 
+	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="bigIdeasLbl"/>
+	      <g:RichTextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="bigIdeasHTML"/>
 	   </g:HTMLPanel>
-	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}">
+	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="essentialQuestionsPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.question}">
-	         <g:HTMLPanel styleName="{folderMetaStyle.blockViewTitle}">Essential Questions</g:HTMLPanel>
+	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="questionsStaticLbl"/>
 	      </g:HTMLPanel>
-	      <br/>
-	      +How do different people handle inequality and what does that show about their character?<br/>
-	      <br/>
-	      +What segregates, or separates people from one another?<br/>
-	      <br/>
-	      +How has inequality changed over time? 
+	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="essentialQuestionsLbl"/>
+	      <g:RichTextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="essentialQuestionsHTML"/>
 	   </g:HTMLPanel>
-	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast}">
+	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast}" ui:field="performanceTaskPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.task}">
-	         <g:HTMLPanel styleName="{folderMetaStyle.blockViewTitle}">Performance Task</g:HTMLPanel>
+	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="tasksStaticLbl"/>
 	      </g:HTMLPanel>
-	      <br/>
-	      Write an argumentative essay
-	      Art against racism. 
+	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="performanceTaskLbl"/>
+	      <g:RichTextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="performanceTaskHTML"/>
 	   </g:HTMLPanel>
 	  <g:Button styleName="{folderMetaStyle.closeItem}" ui:field="closeItem"/>
+	  <g:HTMLPanel styleName="{folderMetaStyle.formButtons}" ui:field="formButtons">
+          <g:Button styleName="primary" ui:field="saveBtn"></g:Button>
+      	  <g:Button styleName="secondary" ui:field="cancelBtn"></g:Button>
+      </g:HTMLPanel>
 	</g:HTMLPanel>
-</ui:UiBinder> 
+</ui:UiBinder>

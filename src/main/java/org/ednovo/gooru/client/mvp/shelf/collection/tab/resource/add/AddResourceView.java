@@ -265,7 +265,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		
 	
 		@Override
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag) {
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<String> standards) {
 //			this.setVisible(false);
 			
 			 webResourceId = idStr;
@@ -277,9 +277,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			 if(webResourceCategory.contains("Videos")||webResourceCategory.contains("Interactives")||webResourceCategory.contains("Images")||webResourceCategory.contains("Texts"))
 			{
 				 webResourceCategory=webResourceCategory.substring(0, webResourceCategory.length()-1);
-				 if(webResourceCategory.contains("Image")||webResourceCategory.contains("Images")){
+				/* if(webResourceCategory.contains("Image")||webResourceCategory.contains("Images")){
 					 webResourceCategory="Slide";
-				 }
+				 }*/
 			}
 			 webResourceThumbnail = thumbnailUrlStr;
 			 webResourceEnd = endTime; 
@@ -304,7 +304,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					
 					@Override
 					public void addWebResource() {
-						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd);
+						getUiHandlers().addResource( webResourceId,  webResourceUrl,  webResourceTitle,  webResourceDescription, webResourceCategory,  webResourceThumbnail,  webResourceEnd,educationalUse,momentsOfLearning,standards);
 						/*webResourcePreview.lblConfirmAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 						webResourcePreview.actionPanel.getElement().getStyle().setDisplay(Display.NONE);*/
 						webResourcePreview.hide();
@@ -335,7 +335,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				webResourcePreview.show();
 				
 			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime);
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards);
 			}
 		}
 		
@@ -772,7 +772,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				setRadioButtonValues();
 				addQuestionResourceWidget.setQuestionType("MC");
-				addQuestionResourceWidget.showMulipleAnswerChoice();
+				addQuestionResourceWidget.showMulipleChoice();
 				tabViewContainer.add(addQuestionResourceWidget);
 				questionTabButton.setStyleName(res.css().buttonSelected());
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
@@ -861,8 +861,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				multipleChoiceRadioButton.setValue(true);
 				highlightSelectedTab("MC");
 				addQuestionResourceWidget.setQuestionType("MC");
-				addQuestionResourceWidget.showMulipleAnswerChoice();
+				addQuestionResourceWidget.showMulipleChoice();
 				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
+				addQuestionResourceWidget.correctText.clear();
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML(GL0314);
+				addQuestionResourceWidget.setCorrectTextStyle();
+				addQuestionResourceWidget.noLabelText.setVisible(false);
 				AppClientFactory.fireEvent(new GetEditPageHeightEvent(appPopUp, false));
 			}
 		}
@@ -876,6 +880,10 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				addQuestionResourceWidget.setQuestionType("T/F");
 				addQuestionResourceWidget.showTrueOrFalseAnswerChoice();
 				addQuestionResourceWidget.addResourceFormTitleChoice.setText(GL0864);
+				addQuestionResourceWidget.correctText.clear();
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML(GL0314);
+				addQuestionResourceWidget.setCorrectTextStyle();
+				addQuestionResourceWidget.noLabelText.setVisible(false);
 
 			}
 		}
@@ -900,7 +908,12 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				multipleAnswerRadioButton.setValue(true);
 				addQuestionResourceWidget.setQuestionType("MA");
 				addQuestionResourceWidget.addResourceFormTitleChoice.setText("Enter answers and select correct ones *");
-				addQuestionResourceWidget.showMulipleAnswerChoice();
+				addQuestionResourceWidget.correctText.clear();
+				addQuestionResourceWidget.correctText.getElement().setInnerHTML("Yes");
+				addQuestionResourceWidget.noLabelText.setVisible(true);
+				addQuestionResourceWidget.noLabelText.getElement().setInnerHTML("No");
+				addQuestionResourceWidget.setYesOrNoLabelStyles();
+				addQuestionResourceWidget.showMulipleAnswerChoiceOptions();
 			}
 		}
 		

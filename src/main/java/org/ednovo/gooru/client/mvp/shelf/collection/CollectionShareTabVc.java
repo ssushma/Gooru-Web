@@ -177,6 +177,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 //here
 		setDefaults(collection.getKeyPoints());
 		simplePencilPanel.addClickHandler(new OpenCollectionEditDescription());
+		userTeacherTipText.addClickHandler(new OpenCollectionEditDescription());
 		finalTeacherTipLabelContainer
 		.addMouseOverHandler(new OnCollectionDescriptionClick());
 		finalTeacherTipLabelContainer
@@ -570,8 +571,10 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		public void onClick(ClickEvent event) {
 			/*collectionDescriptionUc.switchToEdit();
 			collectionDescriptionUc.setText(collectionDo.getGoals());*/
+
 			finalTeacherTipLabelContainer.setVisible(false);
 			textAreaContianer.setVisible(true);
+			teacherTipTextarea.setFocus(true);
 			
 			/*
 			 * editSelfCollectionSaveButton.getElement().getStyle().setDisplay(
@@ -651,9 +654,19 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	public void setDefaults(String teacherTipLatest)
 	{
+		
 		textAreaContianer.setVisible(false);
 		finalTeacherTipLabelContainer.setVisible(true);
+		if(teacherTipLatest != null && !teacherTipLatest.isEmpty())
+		{
 		userTeacherTipText.setText(teacherTipLatest);
+		userTeacherTipText.getElement().removeAttribute("style");
+		}
+		else
+		{
+		userTeacherTipText.setText(GL1709);
+		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
+		}
 
 		
 		
@@ -663,10 +676,19 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	{
 		textAreaContianer.setVisible(false);
 		finalTeacherTipLabelContainer.setVisible(true);
+		textAreaContianer.setVisible(false);
+		finalTeacherTipLabelContainer.setVisible(true);
+		if(teacherTipLatest != null && !teacherTipLatest.isEmpty())
+		{
 		userTeacherTipText.setText(teacherTipLatest);
-
-		
-		
+		userTeacherTipText.getElement().removeAttribute("style");
+		}
+		else
+		{
+		userTeacherTipText.setText(GL1709);
+		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
+		}
+	
 		
 	}
 

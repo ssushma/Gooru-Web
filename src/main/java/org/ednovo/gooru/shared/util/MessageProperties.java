@@ -431,6 +431,7 @@ public interface MessageProperties {
 	String GL0304 = "Edit Question";
 	String GL0305 = "Multiple Choice";
 	String GL0306 = "True/False";
+	String GL0306_1=  "Multiple Answer";
 	String GL0307 = "Open-Ended";
 	String GL0308 = "Question";
 	String GL0309 = "Add Question Image";
@@ -1839,10 +1840,10 @@ public interface MessageProperties {
 		String GL1453="You are seeing this page because this resource cannot be displayed in our player.";
 		
 		//FillintheBlankQuestionView and multiple Choices Question View.
-		String GL1454="Please type your answer(s) in the blank(s) provided";
+		String GL1454="Please type your answer(s) in the blank(s) provided, and click \"Submit\"";
 		String GL1455="Blank";
 		String GL1456="correct answer";
-		String GL1457="Please select the correct answer";
+		String GL1457="Please select the correct answer, and click \"Submit\"";
 		
 		//open ended questions
 		String GL1458="Character limit is reached";
@@ -2088,10 +2089,10 @@ public interface MessageProperties {
       	String GL1642="LANGUAGE OBJECTIVES";
       	String GL1643="DEPTH OF KNOWLEDGE";
     	String GL1644="Choose the...";
-    	String GL1645="Level1: Recall";
-    	String GL1646="Level2: Skill/Concept";
-      	String GL1647="Level3: Strategic Thinking";
-      	String GL1648="Level4: Extended Thinking";      	
+    	String GL1645="Level 1: Recall";
+    	String GL1646="Level 2: Skill/Concept";
+      	String GL1647="Level 3: Strategic Thinking";
+      	String GL1648="Level 4: Extended Thinking";      	
       	String GL1649="LEARNING & INNOVATION SKILLS";      	
       	String GL1650 = "Choose the skills that this collection addresses.";
       	String GL1651 = "Creativity and Innovation";
@@ -2143,30 +2144,63 @@ public interface MessageProperties {
     	
     	//Added new fields for player metadata.
     	String GL1685="Time Required";
-    	String GL1686="OER";
-    	String GL1687="Mobile Friendly";
+    	String GL1686="Contributor";
+    	String GL1687="Mobile-friendlyness";
     	String GL1688="Data Type";
     	String GL1689="Interactivity Type";
     	String GL1690="Educational Alignment";
-    	String GL1691="Educational Role";
+    	String GL1691="Educational Role (Audience)";
     	String GL1692="Age Range";
     	String GL1693="Depth of Knowledge";
     	String GL1694="Reading Level";
-     	String GL1695="School Level";
+     	String GL1695="Has Adaptation";
      	String GL1696="Language";
     	String GL1697=	"Country Code";
-    	String GL1698="Ads";
+    	String GL1698="Is Adaptation";
     	String GL1699="Copyright Holder";
     	String GL1700="Host";
-    	String GL1701="Course Number";
-    	String GL1702="Series Title";
+    	String GL1701="Gooru Course";
+    	String GL1702="Accessbility API";
     	String GL1703="ACCESSIBILITY";
     	String GL1704="Control Flexibility";
     	String GL1705="Access Hazard";
-    	String GL1706=	"Media Feature";
+    	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL";
+    	String GL1708="GENERAL INFO";
 		String GL1709="e.g: I use this with my students to explain how, etc...";
+		String GL1710="Image";
+		String GL1711="Video";
+		String GL1712="YouTube URL";
+		String GL1713="Type the YouTube video URL in the text field above. if it's correct, you'll see a preview below. Feel free to also edit the video start and stop time as well.";
+		String GL1714="Preview";
+		String GL1715="Gooru Subject";
+		String GL1716="RESOURCE INFO";
+		String GL1717="Date Created";
+		String GL1718="Thumbnail URL";
+		String GL1719="License Code";
+		String GL1720="EDUCATIONAL INFO";
+		String GL1721 = "Language Objective";
+		String GL1722 = "Learning & Innovation Skills";
+		String GL1723 = "Audience";
+		String GL1724 = "Instructional Method";
     	
+		
+		String GL1725="Ex: Our character is largely determined by our beliefs, experiences, and relationships.";
+		String GL1726="Ex: Why is it important to know the qualities of a character? How do characters’ actions reveal or convey who they are?";
+		String GL1727="Ex: Write an informational essay.";
+		
+		String GL1728 = "See All";
+		String GL1729 ="Access Prior Knowledge,Introduce New Material,Quiz";
+		String GL1730 ="All Students,Students below grade level,Students above grade level,English Language learners,Students with special needs,Teachers";
+		String GL1731 = "Big Ideas";
+		String GL1732 = "Essential Questions";
+		String GL1733 = "Performance Task";
+		
+		//Add Question Popup
+		
+		String GL1734 = "Select the levels of DOK that correspond with the cognitive complexity of this question.";
+		String GL1735 = "No";
+		String GL1736 = "Please select \"Yes\" or \"No\" for each statement, and click \"Submit\".";
+		
    }
 

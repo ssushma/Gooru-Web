@@ -45,6 +45,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String narrationLink;
 	private String notes;
 	private String keyPoints;
+	private String languageObjective;
 	private String language;
 	private String goals;
 	private String grade;
@@ -63,6 +64,10 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private TrackActivityDo trackActivity;
 	private String sharing;
 	private String status;
+	private List<checkboxSelectedDo> depthOfKnowledges;
+	private List<checkboxSelectedDo> instructionalMethod;
+	private List<checkboxSelectedDo> audience;
+	private List<checkboxSelectedDo> learningSkills;
 	
 	public CollectionDo(){
 		
@@ -70,6 +75,38 @@ public class CollectionDo extends ResourceDo implements Serializable{
 
 	public String getAdds() {
 		return adds;
+	}
+
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
+	}
+
+	public List<checkboxSelectedDo> getInstructionalMethod() {
+		return instructionalMethod;
+	}
+
+	public void setInstructionalMethod(List<checkboxSelectedDo> instructionalMethod) {
+		this.instructionalMethod = instructionalMethod;
+	}
+
+	public List<checkboxSelectedDo> getAudience() {
+		return audience;
+	}
+
+	public void setAudience(List<checkboxSelectedDo> audience) {
+		this.audience = audience;
+	}
+
+	public List<checkboxSelectedDo> getLearningSkills() {
+		return learningSkills;
+	}
+
+	public void setLearningSkills(List<checkboxSelectedDo> learningSkills) {
+		this.learningSkills = learningSkills;
 	}
 
 	public void setAdds(String adds) {
@@ -273,5 +310,16 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getLanguageObjective() {
+		return languageObjective;
+	}
+
+	public void setLanguageObjective(String languageObjective) {
+		this.languageObjective = languageObjective;
+	}
+
+	
+	
 	
 }

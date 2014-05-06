@@ -25,14 +25,17 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseHandler;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -99,7 +102,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	@UiField
 	Label  standardMaxMsg, courseLabel, standardLabel,courseLbl, standardsDefaultText,gradeLbl,selectGradeLbl,selectCourseLbl,toggleArrowButtonPrimary,toggleArrowButtonSecondary,instructionalMethod,audienceLabel,audienceTitle,instructionalTitle,languageObjectiveHeader,depthOfKnowledgeHeader,depthOfKnowledgeTitle,learningInnovationHeader,learningInnovationTitle;
 	
-	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow;
+	@UiField Label lblAudiencePlaceHolder,lblAudienceArrow,lblInstructionalPlaceHolder,lblInstructionalArrow,languageObjectiveerrLabel;
 	
 	@UiField ScrollPanel spanelAudiencePanel,spanelInstructionalPanel;	
 
@@ -145,6 +148,12 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	
 	List<String> standardPreflist=null;
 	
+	String InstructionalMethodStr = GL1729;
+	
+	String AudienceStr = GL1730;
+	
+	String newInstructionalVal = "";
+	
 	private static CollectionInfoTabViewUiBinder uiBinder = GWT.create(CollectionInfoTabViewUiBinder.class);
 
 	interface CollectionInfoTabViewUiBinder extends UiBinder<Widget, CollectionInfoTabView> {
@@ -156,12 +165,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public CollectionInfoTabView() {
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
-		
-		/*if(standardPreflist!=null){
-		for (String istandardPreflistcodeId : standardPreflist) {
-			standardcodeIdPref=istandardPreflistcodeId;
-		}
-		}*/
+
 		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
 			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
@@ -254,6 +258,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		lblInstructionalPlaceHolder.setText(GL0105);
 		lblAudiencePlaceHolder.setText(GL0105);
 		
+		configureClickEvents();
+		
 		toggleArrowButtonPrimary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		toggleArrowButtonSecondary.removeStyleName(res.css().primaryToggleArrowBottomrotateRight());
 		
@@ -261,6 +267,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 		primaryLabelTag.getElement().setInnerHTML(GL1656);
 		secondaryHeaderLabel.getElement().setInnerHTML(GL1657);
+		
+		textAreaVal.getElement().removeAttribute("style");
+
+		languageObjectiveerrLabel.setVisible(false);
 
 		textAreaVal.getElement().setAttribute("maxlength", "1000");
 		
@@ -288,12 +298,155 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addBlurHandler(new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
+				
 				if(textAreaVal.getText().length() == 0){
 					textAreaVal.setText(GL1641);
 					textAreaVal.getElement().getStyle().setColor("#999");
 				}
+				else
+				{
+					Map<String, String> parms = new HashMap<String, String>();
+					parms.put("text", textAreaVal.getText());
+					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+						
+						@Override
+						public void onSuccess(Boolean value) {
+					//callapi
+							if(!value)
+							{
+								textAreaVal.getElement().removeAttribute("style");
+								languageObjectiveerrLabel.setVisible(false);
+								AppClientFactory.getInjector().getResourceService().updateCollectionLanguageObjective(collectionDo, textAreaVal.getText(), new SimpleAsyncCallback<CollectionDo>() {
+										@Override
+										public void onSuccess(CollectionDo result) {
+											
+										}
+								});
+							}
+							else
+							{
+								textAreaVal.getElement().getStyle().setBorderColor("orange");
+								languageObjectiveerrLabel.setText(GL0554);
+								languageObjectiveerrLabel.setVisible(true);
+							}
+						}
+					});
+				}
 			}
 		});
+	
+		List<String> instructionalMethodList = Arrays.asList(InstructionalMethodStr.split(","));
+
+		
+		for(int k=0; k<instructionalMethodList.size(); k++)
+		{
+
+				String instructionalTitle = instructionalMethodList.get(k);
+				
+				final Label titleLabel = new Label(instructionalTitle);
+				titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
+				titleLabel.getElement().setAttribute("id", instructionalTitle);
+				//Set Click event for title
+				titleLabel.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {		
+						String optionSelected = titleLabel.getElement().getId();
+						lblInstructionalPlaceHolder.setText(optionSelected);
+						spanelInstructionalPanel.setVisible(false);
+						lblInstructionalPlaceHolder.getElement().setId(titleLabel.getElement().getId());
+						lblInstructionalPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+						
+				
+						if(collectionDo.getInstructionalMethod() != null)
+						{
+							if(collectionDo.getInstructionalMethod().size()>0)
+							{
+								if(collectionDo.getInstructionalMethod().get(0).getValue() != null && !collectionDo.getInstructionalMethod().get(0).getValue().isEmpty())
+								{
+								AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, collectionDo.getInstructionalMethod().get(0).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
+									@Override
+									public void onSuccess(CollectionDo result) {
+										
+									}
+								});
+								}
+							}
+						}
+						
+
+							AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, optionSelected,true, new SimpleAsyncCallback<CollectionDo>() {
+								@Override
+								public void onSuccess(CollectionDo result) {
+									
+							
+								}
+							});
+
+							lblInstructionalPlaceHolder.setText(optionSelected);
+				
+					}
+				});
+				htmlInstructionalListContainer.add(titleLabel);
+				
+			
+		}
+		
+	List<String> audienceList = Arrays.asList(AudienceStr.split(","));
+		
+		for(int n=0; n<audienceList.size(); n++)
+		{
+
+				String audienceTitle = audienceList.get(n);
+				
+				final Label titleLabel = new Label(audienceTitle);
+				titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
+				titleLabel.getElement().setAttribute("id", audienceTitle);
+				//Set Click event for title
+				titleLabel.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {		
+						String optionSelected = titleLabel.getElement().getId();
+						lblAudiencePlaceHolder.setText(optionSelected);
+						spanelAudiencePanel.setVisible(false);
+						lblAudiencePlaceHolder.getElement().setId(titleLabel.getElement().getId());
+						lblAudiencePlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+						
+				
+						if(collectionDo.getAudience() != null)
+						{
+							if(collectionDo.getAudience().size()>0)
+							{
+								if(collectionDo.getAudience().get(0).getValue() != null && !collectionDo.getAudience().get(0).getValue().isEmpty())
+								{
+								AppClientFactory.getInjector().getResourceService().updateCollectionAudience(collectionDo, collectionDo.getAudience().get(0).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
+									@Override
+									public void onSuccess(CollectionDo result) {
+										
+									}
+								});
+								}
+							}
+						}
+						
+
+							AppClientFactory.getInjector().getResourceService().updateCollectionAudience(collectionDo, optionSelected,true, new SimpleAsyncCallback<CollectionDo>() {
+								@Override
+								public void onSuccess(CollectionDo result) {
+									
+							
+								}
+							});
+
+							lblAudiencePlaceHolder.setText(optionSelected);
+				
+					}
+				});
+				htmlAudienceListContainer.add(titleLabel);
+				
+			
+		}
 		
 		
 		lblAudiencePlaceHolder.addClickHandler(new ClickHandler() {
@@ -355,6 +508,129 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		spanelInstructionalPanel.setVisible(false);
 		spanelAudiencePanel.setVisible(false);
 	}
+	
+	public void configureClickEvents()
+	{
+	chkLevelRecall.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1645,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		chkLevelSkillConcept.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1646,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		chkLevelStrategicThinking.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1647,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		chkLevelExtendedThinking.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionDepthOfKnowledge(collectionDo, GL1648,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		learninglevel1.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1651,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+		learninglevel2.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();		
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1652,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+		
+	learninglevel3.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				  CheckBox checkBox = (CheckBox) event.getSource();
+			        boolean checked = checkBox.getValue();
+
+
+					AppClientFactory.getInjector().getResourceService().updateCollectionLearningSkills(collectionDo, GL1653,checked, new SimpleAsyncCallback<CollectionDo>() {
+						@Override
+						public void onSuccess(CollectionDo result) {
+							
+						}
+					});
+				
+			}
+		});
+	}
 
 	private void OpenAudienceDropdown() {
 		if (spanelInstructionalPanel.isVisible()){
@@ -403,13 +679,163 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	}
 
 	@Override
-	public void setData(CollectionDo collectionDo) {
-		if (this.collectionDo == null) {
-			this.collectionDo = collectionDo;
+	public void setData(CollectionDo collectionDoVal) {
+		
+		this.collectionDo = collectionDoVal;
+		
+			if(collectionDoVal.getLanguageObjective() != null)
+			{
+				textAreaVal.setText(collectionDo.getLanguageObjective());
+			}
+			else
+			{
+				textAreaVal.setText(GL1641);
+			}
 			
-		//	getUiHandlers().getCollectionTeacherTipInfo(collectionDo.getGooruOid());
+
 			
-			for (CodeDo code : collectionDo.getTaxonomySet()) {
+			for(int i=0; i<collectionDoVal.getDepthOfKnowledges().size(); i++)
+			{
+			
+		
+				String compareValueLevel = collectionDoVal.getDepthOfKnowledges().get(i).getValue().replaceAll("\\s+","");
+				String compareValueLevelFetched = chkLevelRecall.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox1 = chkLevelSkillConcept.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox2 = chkLevelExtendedThinking.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox3 = chkLevelStrategicThinking.getText().replaceAll("\\s+","");
+				
+				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
+				{
+					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+					chkLevelRecall.setValue(true);
+					}
+					else
+					{
+					chkLevelRecall.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
+				{
+					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						chkLevelSkillConcept.setValue(true);
+					}
+					else
+					{
+						chkLevelSkillConcept.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
+				{
+					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						chkLevelExtendedThinking.setValue(true);
+					}
+					else
+					{
+						chkLevelExtendedThinking.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
+				{
+					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						chkLevelStrategicThinking.setValue(true);
+					}
+					else
+					{
+						chkLevelStrategicThinking.setValue(false);
+					}
+				}
+			}
+			
+			for(int j=0; j<collectionDoVal.getLearningSkills().size(); j++)
+			{
+				String compareValueLevel = collectionDoVal.getLearningSkills().get(j).getValue().replaceAll("\\s+","");
+				String compareValueLevelFetched = learninglevel1.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox1 = learninglevel2.getText().replaceAll("\\s+","");
+				String compareValueLevelCheckbox2 = learninglevel3.getText().replaceAll("\\s+","");
+
+				
+				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
+				{
+					if(collectionDoVal.getLearningSkills().get(j).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						learninglevel1.setValue(true);
+					}
+					else
+					{
+						learninglevel1.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
+				{
+					if(collectionDoVal.getLearningSkills().get(j).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						learninglevel2.setValue(true);
+					}
+					else
+					{
+						learninglevel2.setValue(false);
+					}
+				}
+				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
+				{
+					if(collectionDoVal.getLearningSkills().get(j).getSelected().toString().equalsIgnoreCase("true"))
+					{
+						learninglevel3.setValue(true);
+					}
+					else
+					{
+						learninglevel3.setValue(false);
+					}
+				}
+
+			}
+
+			for(int m=0; m<collectionDoVal.getInstructionalMethod().size(); m++)
+			{
+				if(collectionDoVal.getInstructionalMethod().get(m).getValue() != null || !collectionDoVal.getInstructionalMethod().get(m).getValue().isEmpty())
+				{
+					if(collectionDoVal.getInstructionalMethod().get(m).getSelected().equalsIgnoreCase("true"))
+					{
+						lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
+						break;
+					}
+					else
+					{
+					lblInstructionalPlaceHolder.setText(GL0105);
+					}
+				}
+				else
+				{
+				lblInstructionalPlaceHolder.setText(GL0105);
+				}
+			}
+			
+			for(int n=0; n<collectionDoVal.getAudience().size(); n++)
+			{
+				if(collectionDoVal.getAudience().get(n).getValue() != null || !collectionDoVal.getAudience().get(n).getValue().isEmpty())
+				{
+					if(collectionDoVal.getAudience().get(n).getSelected().equalsIgnoreCase("true"))
+					{
+						lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
+						break;
+					}
+					else
+					{
+						lblAudiencePlaceHolder.setText(GL0105);
+					}
+				}
+				else
+				{
+				lblAudiencePlaceHolder.setText(GL0105);
+				}
+			}
+		
+			
+			for (CodeDo code : collectionDoVal.getTaxonomySet()) {
 				if (code.getDepth() == 2) {
 					courseLbl.setText(code.getLabel());
 					courseLbl.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -419,8 +845,8 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				
 			}
-			if (collectionDo.getMetaInfo() != null && collectionDo.getMetaInfo().getStandards() != null) {
-				for (StandardFo standard : collectionDo.getMetaInfo().getStandards()) {
+			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getStandards() != null) {
+				for (StandardFo standard : collectionDoVal.getMetaInfo().getStandards()) {
 					standardsPanel.add(createStandardLabel(standard.getCode(), standard.getCodeId() + "", standard.getDescription()));
 				}
 			}
@@ -436,7 +862,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 					isCheckedValue = false;
 				}
 			}*/
-		}
+		
 	}
 
 	@Override

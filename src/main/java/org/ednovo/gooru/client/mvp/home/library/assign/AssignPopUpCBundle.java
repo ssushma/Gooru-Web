@@ -250,6 +250,14 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		
 		String buttonWidth();
 		String directionsErrorLbl();
+		
+		String gConnectButton();
+		
+		String divider();
+		
+		String dividerText();
+		
+		String dividerCustomize();
 	}
 
 	@Source("AssignPopUp.css")

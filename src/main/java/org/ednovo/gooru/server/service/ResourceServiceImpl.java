@@ -27,8 +27,10 @@ package org.ednovo.gooru.server.service;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aspectj.weaver.patterns.FormalBinding;
 import org.ednovo.gooru.client.service.ResourceService;
@@ -42,6 +44,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -67,6 +70,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gwt.json.client.JSONArray;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
@@ -430,6 +434,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj= new CollectionDo();
 	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_COLLLECTION_METADATA, collectionId, getLoggedInSessionToken());
+	    
 	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollection(title, description, grade, sharing, vocabulary, taxonomyCode, updateTaxonomyByCode,mediaType, action));
 	    jsonRep = jsonResponseRep.getJsonRepresentation();
 	    if(jsonResponseRep.getStatusCode()==200){
@@ -439,12 +444,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 			collectionDoObj=new CollectionDo();
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 		}
-		
-//	    	    try {
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	    return collectionDoObj;
 	}
 
@@ -529,17 +528,33 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException {
 		
-		NewResourceDo newResourceDo = new NewResourceDo();
-		
+		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
 		newResourceDo.setTitle(titleStr);
+		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+		 for(int i = 0; i<standards.size(); i++){
+			 CodeDo codeObj=new CodeDo();
+			 codeObj.setCode(standards.get(i));
+			 standardsDo.add(codeObj);
+	      }
+		newResourceDo.setTaxonomySet(standardsDo);
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
-		
+		newResourceDo.setEducationalUse(edcuationalUse);
+		try{
+			org.json.JSONArray jsonArray=new org.json.JSONArray();
+			JSONObject momentsOfLearningObj=new JSONObject();
+			momentsOfLearningObj.put("value", momentsOfLearning);
+			momentsOfLearningObj.put("selected", "true");
+			jsonArray.put(momentsOfLearningObj.toString());
+			newResourceDo.setMomentsOfLearning(jsonArray.toString());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(categoryStr);
 		
@@ -611,15 +626,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException {
 		JsonRepresentation jsonRep = null;
-		//String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_QUESTION_ITEM, collectionId, getLoggedInSessionToken());
+
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_ADD_QUESTION_ITEM, collectionId, getLoggedInSessionToken());
-//		Form collectionQuestionForm=ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question");
-//		collectionQuestionForm.add("mediaFileName", mediafileName);
-//		jsonRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionForm);
+
 		CollectionAddQuestionItemDo collectionAddQuestionItemDo=new CollectionAddQuestionItemDo();
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -768,6 +782,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -969,6 +984,72 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		return deserializeCollection(jsonRep);
 
 	}
+	
+	@Override
+	public CollectionDo updateCollectionLanguageObjective(CollectionDo collectionDo, String languageObjective) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
+		if(ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data").length>0)
+		{		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data")[0]);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}
+		return deserializeCollection(jsonRep);
+
+	}
+	
+	@Override
+	public CollectionDo updateCollectionInstructionalMethod(CollectionDo collectionDo, String instructionalMethod, Boolean selectedVal) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
+		if(ResourceFormFactory.updateCollectionInstructionalMethod(collectionDo.getTitle(), instructionalMethod,selectedVal).getValuesArray("data").length>0)
+		{
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionInstructionalMethod(collectionDo.getTitle(), instructionalMethod,selectedVal).getValuesArray("data")[0]);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}
+		return deserializeCollection(jsonRep);
+
+	}
+	
+	@Override
+	public CollectionDo updateCollectionAudience(CollectionDo collectionDo, String audience, Boolean selectedVal) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
+		if(ResourceFormFactory.updateCollectionAudience(collectionDo.getTitle(), audience,selectedVal).getValuesArray("data").length>0)
+		{
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionAudience(collectionDo.getTitle(), audience,selectedVal).getValuesArray("data")[0]);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}
+		return deserializeCollection(jsonRep);
+
+	}
+	
+	@Override
+	public CollectionDo updateCollectionDepthOfKnowledge(CollectionDo collectionDo, String depthOfKnowlwedgevalues, Boolean selectedVal) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
+		if(ResourceFormFactory.updateCollectionDepthOfKnowledge(collectionDo.getTitle(), depthOfKnowlwedgevalues,selectedVal).getValuesArray("data").length>0)
+		{
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionDepthOfKnowledge(collectionDo.getTitle(), depthOfKnowlwedgevalues,selectedVal).getValuesArray("data")[0]);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}
+		return deserializeCollection(jsonRep);
+
+	}
+	
+	@Override
+	public CollectionDo updateCollectionLearningSkills(CollectionDo collectionDo, String learningSkillsvalues, Boolean selectedVal) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
+		if(ResourceFormFactory.updateCollectionLearningSkills(collectionDo.getTitle(), learningSkillsvalues,selectedVal).getValuesArray("data").length>0)
+		{
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionLearningSkills(collectionDo.getTitle(), learningSkillsvalues,selectedVal).getValuesArray("data")[0]);
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}
+		return deserializeCollection(jsonRep);
+
+	}
+	
 	
 	@Override
 	public CollectionDo getCollectionInfoV2API(String collectionId) throws GwtException {

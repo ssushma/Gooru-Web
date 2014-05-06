@@ -22,20 +22,56 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
-import com.google.gwt.resources.client.CssResource;
+package org.ednovo.gooru.shared.model.content;
 
-public interface AddResourceBundle extends CssResource {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
+public class checkboxSelectedDo implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String selected;
+	private String value;
+	private String name;
 	
-	String answerDeselected();
-	String answerSelected();
-	String addResourceFormAnswerDelete();
-	String addResourceThumbnailContent();
-	String addResourceSprite();
-	String addResourceImgDesc();
-	String addResourceFormAnswerInputControl();
-	String addResourceMultipleAnswerInputControl();
-	String yesNoTextStyle();
-	String addResourceFormTitleChoiceAlign();
+	
+	public checkboxSelectedDo() {}
+
+
+	public String getSelected() {
+		return selected;
+	}
+
+
+	public void setSelected(String selected) {
+		this.selected = selected;
+	}
+
+
+	public String getValue() {
+		return value;
+	}
+
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 }

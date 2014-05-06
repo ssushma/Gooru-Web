@@ -384,6 +384,9 @@ public interface PlayerBundle extends ClientBundle {
 		
 		public String btnResourceLink();
 		
+		@ClassName("resoruce-info-separator-bulletBlack")
+		public String bulletBlack();
+		
 		@ClassName("studyPlayer")
 		public String studyPlayer();
 	}

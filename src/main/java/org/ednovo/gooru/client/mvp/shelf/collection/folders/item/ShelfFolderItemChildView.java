@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.UcCBundle;
@@ -237,6 +238,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			} else {
 				params.put(O1_LEVEL, folderId);
 			}
+			AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 		} else {
 			if(o3!=null) {
 				params.put(O1_LEVEL, o1);
@@ -255,6 +257,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderDo.getTitle()));
+		
 		return params;
 	}
 	
@@ -281,6 +284,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 				}
 				AppClientFactory.fireEvent(new SetFolderCollectionStyleEvent(params,FOLDER)); 
 				AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderTitle));
+				AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 			} else if (folderType.equals(SCOLLECTION)){
 				if(o1!=null) {
