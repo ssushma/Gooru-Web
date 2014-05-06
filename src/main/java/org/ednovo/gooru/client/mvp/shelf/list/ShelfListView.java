@@ -1939,7 +1939,6 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		shelfCollection.getCollectionDo().setIdeas(ideas);
 		shelfCollection.getCollectionDo().setPerformanceTasks(performanceTasks);
 		shelfCollection.getCollectionDo().setQuestions(questions);
-		System.out.println(shelfCollection.getCollectionDo().getQuestions());
 	}
 
 }

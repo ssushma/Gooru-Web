@@ -608,6 +608,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 
 	@Override
 	public void setFolderMetaData(Map<String, String> folderMetaData) {
-		folderItemMetaDataUc.setMetaData(folderMetaData.get("ideas"), folderMetaData.get("questions"), folderMetaData.get("performanceTasks"));
+		String ideas = folderMetaData.get("ideas")!=null?folderMetaData.get("ideas"):"";
+		String questions = folderMetaData.get("questions")!=null?folderMetaData.get("questions"):"";
+		String performanceTasks = folderMetaData.get("performanceTasks")!=null?folderMetaData.get("performanceTasks"):"";
+		folderItemMetaDataUc.setMetaData(ideas, questions, performanceTasks);
 	}
 }

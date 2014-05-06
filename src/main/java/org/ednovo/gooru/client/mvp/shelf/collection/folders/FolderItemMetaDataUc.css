@@ -102,6 +102,8 @@
 
 .padding10 {
 	padding: 10px;
+	overflow: auto;
+	height: 137px;
 }
 
 .textAreaStyle {

@@ -238,6 +238,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			} else {
 				params.put(O1_LEVEL, folderId);
 			}
+			AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 		} else {
 			if(o3!=null) {
 				params.put(O1_LEVEL, o1);
@@ -256,7 +257,6 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 		AppClientFactory.fireEvent(new SetFolderParentNameEvent(folderDo.getTitle()));
-		AppClientFactory.fireEvent(new SetFolderMetaDataEvent(StringUtil.getFolderMetaData(folderDo)));
 		
 		return params;
 	}

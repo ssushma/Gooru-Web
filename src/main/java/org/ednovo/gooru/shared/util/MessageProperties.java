@@ -2088,10 +2088,10 @@ public interface MessageProperties {
       	String GL1642="LANGUAGE OBJECTIVES";
       	String GL1643="DEPTH OF KNOWLEDGE";
     	String GL1644="Choose the...";
-    	String GL1645="Level1: Recall";
-    	String GL1646="Level2: Skill/Concept";
-      	String GL1647="Level3: Strategic Thinking";
-      	String GL1648="Level4: Extended Thinking";      	
+    	String GL1645="Level 1: Recall";
+    	String GL1646="Level 2: Skill/Concept";
+      	String GL1647="Level 3: Strategic Thinking";
+      	String GL1648="Level 4: Extended Thinking";      	
       	String GL1649="LEARNING & INNOVATION SKILLS";      	
       	String GL1650 = "Choose the skills that this collection addresses.";
       	String GL1651 = "Creativity and Innovation";
@@ -2191,6 +2191,8 @@ public interface MessageProperties {
 		String GL1728 = "See All";
 		String GL1729 ="Access Prior Knowledge,Introduce New Material,Quiz";
 		String GL1730 ="All Students,Students below grade level,Students above grade level,English Language learners,Students with special needs,Teachers";
-		
+		String GL1731 = "Big Ideas";
+		String GL1732 = "Essential Questions";
+		String GL1733 = "Performance Task";
    }
 
