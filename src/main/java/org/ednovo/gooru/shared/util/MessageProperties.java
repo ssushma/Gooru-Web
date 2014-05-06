@@ -1960,8 +1960,8 @@ public interface MessageProperties {
 				
 		String GL1538 = "Remove Students?";
 		String GL1539 = "<ui>Usernames must:<br><br><li style=\"margin-left:10px\">be between 4 and 20 characters in length </li><li style=\"margin-left:10px\">not include spaces or special characters </li></ui><br>If you have any trouble updating your username, you can contact us at <a href=\"mailto:support@goorulearning.org\">support@goorulearning.org</a>.";
-        String GL1540 = "Welcome to Class!";
-        String GL1541 = "To proceed to join, please read & accept the privacy terms.";
+        String GL1540 = "Welcome to";
+        String GL1541 = "To get started, click on the \"Join Class,\" button below.";
         String GL1542 = "Gooru Privacy Terms";
         String GL1543 = "By clicking \"Join Class,\"  I agree to share my collection progress and information with <i>{0}</i>";
         
@@ -2201,6 +2201,7 @@ public interface MessageProperties {
 		String GL1734 = "Select the levels of DOK that correspond with the cognitive complexity of this question.";
 		String GL1735 = "No";
 		String GL1736 = "Please select \"Yes\" or \"No\" for each statement, and click \"Submit\".";
-		
+		String GL1737 = "Reports";
+		String GL1738 = "Join Later";
    }
 
