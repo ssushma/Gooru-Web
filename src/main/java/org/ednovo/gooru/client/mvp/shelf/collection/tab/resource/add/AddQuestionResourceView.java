@@ -27,9 +27,11 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 
@@ -58,6 +60,7 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -141,7 +144,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
-	
+	Set<checkboxSelectedDo> depthOfKnowledges= new HashSet<checkboxSelectedDo>();;
 	public String getQuestionType() {
 		return questionType;
 	}
@@ -435,6 +438,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		chkLevelStrategicThinking.setText(GL1647);
 		chkLevelExtendedThinking.setText(GL1648);
 		educationalUsePanel.setVisible(false);
+		addClickEventsForCheckBox();
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
@@ -1268,7 +1272,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setHints(hintsMap);
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
-			
+			List<String> standards=getAddedStandards(standardsPanel);
+			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+			 for(int i = 0; i<standards.size(); i++){
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCode(standards.get(i));
+				 standardsDo.add(codeObj);
+		      }
+			collectionQuestionItemDo.setTaxonomySet(standardsDo);
+			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledges);
+			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
+			collectionQuestionItemDo.setEducationalUse(resourceEducationalLabel.getText());
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
@@ -2119,5 +2133,31 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
      
      public void setCorrectTextStyle(){
     	 correctText.setStyleName(addWebResourceStyle.addResourceFormTitleChoiceAlign());
+     }
+     public void addClickEventsForCheckBox(){
+    	 chkLevelRecall.addClickHandler(new AddCheckBoxClickHandler());
+    	 chkLevelSkillConcept.addClickHandler(new AddCheckBoxClickHandler());
+    	 chkLevelStrategicThinking.addClickHandler(new AddCheckBoxClickHandler());
+    	 chkLevelExtendedThinking.addClickHandler(new AddCheckBoxClickHandler());
+     }
+     public class AddCheckBoxClickHandler implements ClickHandler  {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			 CheckBox checkBox = (CheckBox) event.getSource();
+		     boolean checked = checkBox.getValue();			     		   
+		     if(checked){
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected("true");
+			     depthObj.setValue(checkBox.getText());
+			     depthOfKnowledges.add(depthObj);
+		     }else{
+		    	 for (checkboxSelectedDo currentElement : depthOfKnowledges) {
+		    		if( currentElement.getValue().equalsIgnoreCase(checkBox.getText())){
+		    			depthOfKnowledges.remove(currentElement);
+		    		}
+		    	}
+		     }
+		}
      }
 }
