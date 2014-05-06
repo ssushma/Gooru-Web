@@ -3,7 +3,6 @@ package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -11,6 +10,9 @@ import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -20,6 +22,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -35,6 +38,8 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	@UiField FolderItemMetaDataUcStyleBundle folderMetaStyle;
 	
+	@UiField Label ideasStaticLbl, questionsStaticLbl, tasksStaticLbl;
+	
 	private String folderId = null, title = null;
 	
 	private static FolderItemMetaDataUcUiBinder uiBinder = GWT
@@ -46,6 +51,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 
 	public FolderItemMetaDataUc() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setDebugIds();
 		showEditableMetaData(true);
 		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
 		bigIdeasHTML.addInitializeHandler(new InitializeHandler() {
@@ -54,6 +60,13 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			    Document document = IFrameElement.as(bigIdeasHTML.getElement()).getContentDocument();
                 BodyElement body = document.getBody();
                 body.setAttribute("style", "font-family: Arial;font-size:12px;");
+			}
+		});
+		
+		bigIdeasHTML.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				bigIdeasHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
 			}
 		});
 		
@@ -66,6 +79,13 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			}
 		});
 		
+		essentialQuestionsHTML.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
+			}
+		});
+
 		performanceTaskHTML.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -74,6 +94,39 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
                 body.setAttribute("style", "font-family: Arial;font-size:12px;");
 			}
 		});
+		
+		performanceTaskHTML.addKeyDownHandler(new KeyDownHandler() {
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				performanceTaskHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
+			}
+		});
+
+	}
+	
+	private void setDebugIds() {
+		ideasStaticLbl.setText(GL1731);
+		questionsStaticLbl.setText(GL1732);
+		tasksStaticLbl.setText(GL1733);
+		saveBtn.setText(GL0141);
+		cancelBtn.setText(GL0142);
+	}
+	
+	private String restrictKeyLimit(KeyDownEvent event, String text) {
+		 if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER ||
+                 event.getNativeKeyCode() == KeyCodes.KEY_UP ||
+                 event.getNativeKeyCode() == KeyCodes.KEY_LEFT||
+                 event.getNativeKeyCode() == KeyCodes.KEY_DOWN ||
+                 event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE||
+                 event.getNativeKeyCode() == KeyCodes.KEY_SHIFT) {
+			 
+         } else {
+	         if(text.trim().length()>600){
+	        	 text.substring(0, 600);
+	        	 event.preventDefault();
+	         }
+         }
+		 return text;
 	}
 	
 	public void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
