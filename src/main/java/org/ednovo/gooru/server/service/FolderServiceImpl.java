@@ -364,12 +364,21 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		try {
 			folderObject.put(TITLE, title);
 			if(ideas!=null) {
+				if(ideas.length()>1000) {
+					ideas = ideas.substring(0, 1000);
+				}
 				folderObject.put(IDEAS, ideas);
 			}
 			if(questions!=null) {
+				if(questions.length()>1000) {
+					questions = questions.substring(0, 1000);
+				}
 				folderObject.put(QUESTIONS, questions);
 			}
 			if(performance!=null) {
+				if(performance.length()>1000) {
+					performance = performance.substring(0, 1000);
+				}
 				folderObject.put(PERFORMANCE_TASKS, performance);
 			}
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.put(url, getRestUsername(), getRestPassword(),folderObject.toString());

@@ -246,10 +246,15 @@ public class StringUtil {
 	
 	public static Map<String,String> getFolderMetaData(FolderDo folderDo) {
 		Map<String,String> folderMetaData = new HashMap<String,String>();
-		folderMetaData.put("ideas", folderDo.getIdeas());
-		folderMetaData.put("performanceTasks", folderDo.getPerformanceTasks());
-		folderMetaData.put("questions", folderDo.getQuestions());
+		if(folderDo.getIdeas()!=null) {
+			folderMetaData.put("ideas", folderDo.getIdeas());
+		}
+		if(folderDo.getPerformanceTasks()!=null) {
+			folderMetaData.put("performanceTasks", folderDo.getPerformanceTasks());
+		}
+		if(folderDo.getQuestions()!=null) {
+			folderMetaData.put("questions", folderDo.getQuestions());
+		}
 		return folderMetaData;
 	}
-
 }
