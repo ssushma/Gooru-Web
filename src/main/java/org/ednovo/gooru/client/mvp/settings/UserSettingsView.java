@@ -382,9 +382,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		
 		lblPleaseWait.setVisible(false);
 		
-		txtUserName.addBlurHandler(new OnBlurHandler());
+	//	txtUserName.addBlurHandler(new OnBlurHandler());
+		txtUserName.addKeyUpHandler(new OnKeyUpHandler());
 		clearErrorMessage();
-		txtUserName.addKeyUpHandler(new KeyUpHandler() {
+		/*txtUserName.addKeyUpHandler(new KeyUpHandler() {
 			
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
@@ -393,7 +394,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					setErrorMessage(GL0473);
 				}
 			}
-		});
+		});*/
 		//added in 6.1
 		standardsEditButton.setText(GL0140);
 		standardsSaveButton.setText(GL0141);
@@ -517,11 +518,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	 *
 	 * @Reviewer:
 	 */
-	private class OnBlurHandler implements BlurHandler {
+	private class OnKeyUpHandler implements KeyUpHandler {
 
 		@Override
-		public void onBlur(BlurEvent event) {
-			
+		public void onKeyUp(KeyUpEvent event) {
+			clearErrorMessage();
+			if (txtUserName.getText().length() <4 || txtUserName.getText().length() >20){
+				setErrorMessage(GL0473);
+			}
 			if (txtUserName.getText().equalsIgnoreCase(lbUName.getText().trim())){
 				isUserNameChanged = false;
 				clearErrorMessage();
@@ -552,6 +556,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				}
 			} 
 		}
+
+		
 	}
 	/**
 	 * 

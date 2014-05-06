@@ -25,10 +25,10 @@
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
-import org.ednovo.gooru.client.mvp.play.resource.question.MultipleChoicesQuestionView.MultipleChoicesQuestionViewUiBinder;
-import org.ednovo.gooru.client.mvp.play.resource.question.MultipleChoicesQuestionView.RadioButtonSelectEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
@@ -106,8 +106,35 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			checkBoxAnswerOptionView.radioYesButton.addClickHandler(new CheckBoxButtonSelectEvent(checkBoxAnswerOptionView,questionAnswerDo,i+1,true));
 			checkBoxAnswerOptionView.radioNoButton.addClickHandler(new CheckBoxButtonSelectEvent(checkBoxAnswerOptionView,questionAnswerDo,i+1,false));
 			optionsContainer.add(checkBoxAnswerOptionView);
-			showPreviousAttemptResult(questionAnswerDo.getAnswerId(),checkBoxAnswerOptionView);
+			showPreviousResult(questionAnswerDo.getAnswerId(),checkBoxAnswerOptionView);
 			i++;
+		}
+	}
+	
+	public void showPreviousResult(int answerId,CheckBoxAnswerOptionView checkBoxAnswerOptionView){
+		if(attemptedAnswerDo!=null){
+		 Map<Integer,Boolean> answerOptionCount=attemptedAnswerDo.getAnswerOptionResult();
+			 if(answerOptionCount.get(answerId)!=null){
+				if(answerOptionCount.get(answerId)){
+					checkBoxAnswerOptionView.radioYesButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
+					checkBoxAnswerOptionView.answerOptionYesRadioButton.setValue(true);
+					checkBoxAnswerOptionView.answerOptionNoRadioButton.setValue(false);
+					if(checkBoxAnswerOptionView.isAnswerCorrect()){
+						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+					}else{
+						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
+					}
+				}else{
+					checkBoxAnswerOptionView.radioNoButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
+					checkBoxAnswerOptionView.answerOptionYesRadioButton.setValue(false);
+					checkBoxAnswerOptionView.answerOptionNoRadioButton.setValue(true);
+					if(!checkBoxAnswerOptionView.isAnswerCorrect()){
+						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+					}else{
+						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
+					}
+				}
+			 }
 		}
 	}
 	
@@ -204,44 +231,56 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	
 	private void showCorrectResult(){
 		int widgetCount=optionsContainer.getWidgetCount();
+		boolean mutipleAnswerChoiceStatus=true;
+		Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer,Boolean>();
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
-				System.out.println("hellooo==1"+checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue());
-				System.out.println("hellooo==5"+checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
-					System.out.println("hellooo==2");
 					//createSessionItemAttempt(checkBoxAnswerOptionView.getAnswerId(), checkBoxAnswerOptionView.isAnswerCorrect()?"correct":"wrong");
-					AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
-					attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
-					attempteAnswersDo.setAttemptResult(checkBoxAnswerOptionView.isAnswerCorrect());
-					attempteAnswersDo.setAnswerId(checkBoxAnswerOptionView.getAnswerId());
-					setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
-					increaseUserAttemptCount();
-					int score=0;
-					boolean isFirstTry=isChekcAnswerButtonClicked;
-					if(!isChekcAnswerButtonClicked){
-						isChekcAnswerButtonClicked=true;
-						score=checkBoxAnswerOptionView.isAnswerCorrect()?1:0;
-					}
-					setAnswersDetailsWitithTime(checkBoxAnswerOptionView.getAnswerId(),checkBoxAnswerOptionView.isAnswerCorrect()?1:0,(i+1),score,!isFirstTry);
+					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), true);
 					if(checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+						if(mutipleAnswerChoiceStatus){
+							mutipleAnswerChoiceStatus=true;
+						}
 					}else{
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
+						 mutipleAnswerChoiceStatus=false;
 					}
 				}
 				if(checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
-					System.out.println("hellooo==3");
+					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), false);
 					if(!checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+						if(mutipleAnswerChoiceStatus){
+							mutipleAnswerChoiceStatus=true;
+						}
 					}else{
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
+						mutipleAnswerChoiceStatus=false;
 					}
+				}
+				if(!checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()&&!checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+					mutipleAnswerChoiceStatus=false;
 				}
 			}
 		}
+		increaseUserAttemptCount();
+		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
+		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
+		//attempteAnswersDo.setAttemptResult(checkBoxAnswerOptionView.isAnswerCorrect());
+		//attempteAnswersDo.setAnswerId(checkBoxAnswerOptionView.getAnswerId());
+		attempteAnswersDo.setAnswerOptionResult(answerOptionResult);
+		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
+		int score=0;
+		boolean isFirstTry=isChekcAnswerButtonClicked;
+		if(!isChekcAnswerButtonClicked){
+			isChekcAnswerButtonClicked=true;
+			score=mutipleAnswerChoiceStatus?1:0;
+		}
+		setAnswersDetailsWitithTime(0,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);
 	}
 	
 	public abstract void createSessionItemAttempt(int answerId,String answerAttemptStatus);
