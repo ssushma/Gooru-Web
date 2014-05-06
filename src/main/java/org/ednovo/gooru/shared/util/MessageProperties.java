@@ -492,7 +492,7 @@ public interface MessageProperties {
 	String GL0349="Multiple Choice Question";
 	String GL0350="Write your question, provide at least two answer choices and select one correct answer. You can add up to five answers, an image, explanation and up to five hints.";
 	String GL0351="Multiple Answer Question";
-	String GL0352="Write your question, provide up to five answer choices and select at least one correct answer (you can select up to all five to be correct). You can also add an image, explanation and up to five hints.";
+	String GL0352="Write your question, provide two to five answer choices, and select \"Yes\" or \"No\" as the correct answer for each. You can also add an image, explanation and up to five hints.";
 	String GL0353="True/False Question";
 	String GL0354="Write your statement and select whether it is true or false. You can also add an image, explanation and up to five hints.";
 	String GL0355="Fill in the Blank Question";
@@ -1484,7 +1484,7 @@ public interface MessageProperties {
 		String GL1224="Image URL";
 		String GL1225="Upload";
 		String GL1226="Type the image URL in the text field above. If it's correct, you'll see an image preview here. Please upload images smaller than 5MB. ";
-		String GL1227="Remember, using others' images on the web without their permission may be bad manners or worse, copyright infringement.";
+		String GL1227="We encourage you to incorporate images that you have permission to use, or are otherwise part of the public domain.";
 		String GL1228="Choose an image from the following options";
 		String GL1229="The image you are trying to upload is either the wrong file type or too large! Please upload another image.";
 		String GL1230="Something went wrong, please try again with some other cover image.";
@@ -2083,18 +2083,18 @@ public interface MessageProperties {
     	
     	String GL1637="INSTRUCTIONAL METHOD";
       	String GL1638="AUDIENCE";
-      	String GL1639="Choose the purpose for your collection";
+      	String GL1639="Label the purpose of your collection:";
       	String GL1640="Choose an audience for this collection";
       	String GL1641="e.g: Students will be able to explain patterns in the number of zeroes of an answer when multiplying by the powers of ten and explain patterns in the placement of decimal point.";
       	String GL1642="LANGUAGE OBJECTIVES";
       	String GL1643="DEPTH OF KNOWLEDGE";
-    	String GL1644="Choose the...";
+    	String GL1644="Select the levels of DOK that correspond with the cognitive complexity of your collection:";
     	String GL1645="Level 1: Recall";
     	String GL1646="Level 2: Skill/Concept";
       	String GL1647="Level 3: Strategic Thinking";
       	String GL1648="Level 4: Extended Thinking";      	
       	String GL1649="LEARNING & INNOVATION SKILLS";      	
-      	String GL1650 = "Choose the skills that this collection addresses.";
+      	String GL1650 = "Select the 21st century skills that this collection addresses:";
       	String GL1651 = "Creativity and Innovation";
       	String GL1652 = "Critical Thinking and Problem Solving";
     	String GL1653 = "Communication and Collaboration";
@@ -2106,7 +2106,7 @@ public interface MessageProperties {
     	String GL1657="Secondary Information";
     	
     	String GL1658="TEACHER TIPS";
-    	String GL1659="Share how you use this collection with your students. This will help other teachers understand how you are using your collection.";
+    	String GL1659="Describe the context around how you're using Gooru with students. This will help other teachers understand how they might use this collection.";
     	
 
     	
@@ -2167,7 +2167,7 @@ public interface MessageProperties {
     	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
     	String GL1708="GENERAL INFO";
-		String GL1709="e.g: I use this with my students to explain how, etc...";
+		String GL1709="e.g. I used this collection as an opportunity for my students to explore various reasons for the Fall of Rome. They completed a graphic organizer as they worked through this collection and were then accountable to making judgements on which reasons they thought were the most significant and why. It all led up to a Socratic Seminar answering the essential question,\"In what ways did the pinnacle and demise of Rome influence European culture and history?\"" ;
 		String GL1710="Image";
 		String GL1711="Video";
 		String GL1712="YouTube URL";
