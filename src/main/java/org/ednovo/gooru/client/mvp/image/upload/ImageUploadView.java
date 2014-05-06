@@ -36,21 +36,16 @@ import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.GlassPanelWithLoadingUc;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -69,7 +64,6 @@ import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.google.gwt.user.client.ui.FormSubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormSubmitEvent;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -98,8 +92,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@UiField
 	FileUpload fileUpload;
-	
-	@UiField Frame youtubeFrame;
 
 	@UiField
 	Anchor imageUploadOnWebLbl,uploadGooruImages;
@@ -110,19 +102,19 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	@UiField
 	FlowPanel imageUploadOnUrlFloPanel,gooruProfileDefaultImagesContainer;
 	@UiField Button okButtonOnUploadGooruImages;
-	@UiField Label cancelButtonOnUploadGooruImages,fromLbl,ToLbl;
+	@UiField Label cancelButtonOnUploadGooruImages;
 
 	@UiField
 	FlowPanel imageUploadOnWebFloPanel;
 
 	@UiField
-	BlueButtonUc onWebCancelBtn,onSystemConfirmBtn;
+	BlueButtonUc onWebCancelBtn;
 
 	@UiField
 	BlueButtonUc onSystemCancelBtn;
 
 	@UiField
-	TextBox imageWebUploadUrlTxtBox,fromTxt,toTxt,EndTimeTxt1,EndTimeTxt2;
+	TextBox imageWebUploadUrlTxtBox;
 
 	@UiField
 	BlueButtonUc uploadImageButtonOnWeb;
@@ -131,7 +123,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	FormPanel fileuploadForm;
 
 	@UiField
-	FlowPanel imagUploadFloPanel,uploadGooruImagesContainer,timeEditContainer;
+	FlowPanel imagUploadFloPanel,uploadGooruImagesContainer;
 
 	@UiField
 	FlowPanel imageCropFloPanel;
@@ -141,14 +133,10 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 
 	@UiField
 	ErrorLabelUc urlValidation;
-	
-	Boolean imageUpload = true;
-	Boolean videoUpload = false;
-	
 	@UiField
-	HTMLPanel notWorkingPanel,minsText,secondsText,endMinsText,endSecondsText;
+	HTMLPanel notWorkingPanel;
 	
-	@UiField Label chooseText,seperatorText,chooseTextVideo,uploadFromComputer,uploadLimitText,notWorkingLblText,
+	@UiField Label chooseText,uploadFromComputer,uploadLimitText,notWorkingLblText,
 	uploadFromWebText,imageURLLbl,typeImageurlText,infoUrlUploadText,chooseFromText;
 	
 	private static final String IMAGE_UPLOAD_URL = "/media?sessionToken={0}&uploadFileName={1}&resize=true&width=600&height=450";
@@ -172,19 +160,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		appPopUp.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
 		imageCropPopup = new AppPopUp(GL1424);
 		imageCropPopup.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
-		
-		chooseText.setText(GL1710);
-		fromLbl.setText(GL0972);
-		ToLbl.setText(GL0973);
-		minsText.getElement().setInnerHTML(GL0958);
-		secondsText.getElement().setInnerHTML(GL0959);
-		
-		endMinsText.getElement().setInnerHTML(GL0958);
-		endSecondsText.getElement().setInnerHTML(GL0959);
-		
-		timeEditContainer.setVisible(false);
-		chooseText.getElement().setAttribute("style", "border-bottom: 2px solid green;");
-		chooseTextVideo.setText(GL1711);
+		chooseText.setText(GL1215+GL_SPL_SEMICOLON);
 		imageUploadOnWebLbl.setText(GL1216);
 		imageUploadOnComputerLbl.setText(GL1217);
 		uploadGooruImages.setText(GL1218);
@@ -198,7 +174,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		uploadImageButtonOnWeb.setText(GL1225);
 		typeImageurlText.setText(GL1226);
 		infoUrlUploadText.setText(GL1227);
-		seperatorText.setText("|");
 		onWebCancelBtn.setText(GL0142);
 		chooseFromText.setText(GL1228+GL_SPL_SEMICOLON);
 		okButtonOnUploadGooruImages.setText(GL0190);
@@ -224,16 +199,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		appPopUp.setModal(true);
 		notWorkingPanel.setVisible(false);
 		readThisLbl.setHref(GL1265);
-		onSystemConfirmBtn.setText(GL1225);
-		onSystemConfirmBtn.setVisible(false);
-		
-		youtubeFrame.setWidth("400" + Unit.PX);
-		youtubeFrame.setHeight("188" + Unit.PX);
-		youtubeFrame.getElement().setAttribute("frameborder", "0");
-		youtubeFrame.getElement().setAttribute("allowfullscreen", "true");
-		youtubeFrame.setVisible(false);
-		
-		
 //		Window.enableScrolling(false);
 //		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
 		addClickEventToDefaultImages();
@@ -276,69 +241,6 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 				}
 
 			}
-		});
-		
-		fromTxt.getElement().setAttribute("maxlength", "2");
-		toTxt.getElement().setAttribute("maxlength", "2");
-		EndTimeTxt1.getElement().setAttribute("maxlength", "2");
-		EndTimeTxt2.getElement().setAttribute("maxlength", "2");
-		
-		fromTxt.getElement().setAttribute("placeholder","00");
-		toTxt.getElement().setAttribute("placeholder","00");
-		EndTimeTxt1.getElement().setAttribute("placeholder","00");
-		EndTimeTxt2.getElement().setAttribute("placeholder","00");
-		
-		fromTxt.addKeyPressHandler(new KeyPressHandler() {
-		    public void onKeyPress(KeyPressEvent event) {
-			        if(event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_DELETE && 
-		                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_BACKSPACE &&
-		                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_LEFT &&
-		                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_RIGHT){
-		                    String c = event.getCharCode()+"";
-		                    if(RegExp.compile("[^0-9]").test(c) && (fromTxt.getText().length()>2))
-		                    	fromTxt.cancelKey();
-		            }
-		        // do your thang
-		    }
-		});
-		
-		toTxt.addKeyPressHandler(new KeyPressHandler() {
-		    public void onKeyPress(KeyPressEvent event) {
-		        if(event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_DELETE && 
-		                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_BACKSPACE &&
-		                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_LEFT &&
-		                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_RIGHT){
-		                    String c = event.getCharCode()+"";
-		                    if(RegExp.compile("[^0-9]").test(c) && (toTxt.getText().length()>2))
-		                    	toTxt.cancelKey();
-		            }
-		        // do your thang
-		    }
-		});
-		EndTimeTxt1.addKeyPressHandler(new KeyPressHandler() {
-		    public void onKeyPress(KeyPressEvent event) {
-		    	 if(event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_DELETE && 
-			                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_BACKSPACE &&
-			                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_LEFT &&
-			                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_RIGHT){
-			                    String c = event.getCharCode()+"";
-			                    if(RegExp.compile("[^0-9]").test(c) && (EndTimeTxt1.getText().length()>2))
-			                    	EndTimeTxt1.cancelKey();
-			            }
-		    }
-		});
-		EndTimeTxt2.addKeyPressHandler(new KeyPressHandler() {
-		    public void onKeyPress(KeyPressEvent event) {
-		    	 if(event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_DELETE && 
-			                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_BACKSPACE &&
-			                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_LEFT &&
-			                event.getNativeEvent().getKeyCode()!=KeyCodes.KEY_RIGHT){
-			                    String c = event.getCharCode()+"";
-			                    if(RegExp.compile("[^0-9]").test(c) && (EndTimeTxt2.getText().length()>2))
-			                    	EndTimeTxt2.cancelKey();
-			            }
-		        // do your thang
-		    }
 		});
 		
 		
@@ -438,81 +340,7 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
 			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
 	}
-	
-	
-	/**
-	 * Upload image from local machine to enable or disable tab.
-	 * @param clickEvent instance of {@link ClickEvent}
-	 */
-	@UiHandler("chooseText")
-	public void onChooseTextClick(ClickEvent clickEvent) {
-//here
-		imageUpload = true;
-		videoUpload = false;
-		uploadImageButtonOnWeb.setText(GL1225);
-		chooseTextVideo.getElement().removeAttribute("style");
-		chooseText.getElement().setAttribute("style", "border-bottom: 2px solid green;");
-		imageURLLbl.setText(GL1224);
-		typeImageurlText.setText(GL1226);
-		imageUploadOnComputerLbl.setVisible(true);
-		timeEditContainer.setVisible(false);
-		if(isUserUnder13){
-			uploadGooruImages.getElement().getStyle().setDisplay(Display.BLOCK);
-			imageUploadOnComputerLbl.getElement().getStyle().setDisplay(Display.NONE);
-			imageUploadOnWebLbl.getElement().getStyle().setDisplay(Display.NONE);
-			uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
-			imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-			imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.NONE);
-			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
-		}else{
-			imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
-			uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
-			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
-		}
-	}
-	
-	@UiHandler("chooseTextVideo")
-	public void onChooseTextVideoClick(ClickEvent clickEvent) 
-	{
-//here
-		uploadImageButtonOnWeb.setText(GL1714);
-		imageUpload = false;
-		videoUpload = true;
-		chooseText.getElement().removeAttribute("style");
-		chooseTextVideo.getElement().setAttribute("style", "border-bottom: 2px solid green;");
-		imageURLLbl.setText(GL1712);
-		typeImageurlText.setText(GL1713);		
-		imageUploadOnComputerLbl.setVisible(false);
-		timeEditContainer.setVisible(true);
-		if(isUserUnder13){
-			uploadGooruImages.getElement().getStyle().setDisplay(Display.BLOCK);
-			imageUploadOnComputerLbl.getElement().getStyle().setDisplay(Display.NONE);
-			imageUploadOnWebLbl.getElement().getStyle().setDisplay(Display.NONE);
-			uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
-			imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-			imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.NONE);
-			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
-		}
-		else
-		{
-			imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
-			uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
-			imageUploadOnUrlFloPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-			imageUploadOnWebFloPanel.getElement().getStyle().setDisplay(Display.NONE);
-			uploadGooruImagesContainer.getElement().getStyle().setDisplay(Display.NONE);
-		}
-	
-		
-		
-	}
+
 	/**
 	 * Upload image from web to enable or disable tab.
 	 * @param clickEvent instance of {@link ClickEvent}
@@ -594,37 +422,11 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 	 * @param clickEvent instance of {@link ClickEvent}
 	 */
 	@UiHandler("uploadImageButtonOnWeb")
-	public void uploadImageButtonOnWeb(ClickEvent clickEvent) 
-	{
-		if(videoUpload)
-		{
-			String youTubeIbStr = "https://www.youtube.com/embed/"+ResourceImageUtil.getYoutubeVideoId(imageWebUploadUrlTxtBox.getText());
-			onSystemConfirmBtn.setVisible(true);
-			youtubeFrame.setUrl(youTubeIbStr);
-			youtubeFrame.setVisible(true);
-		
-			//getUiHandlers().imageWebUpload(imageWebUploadUrlTxtBox.getText());
-		}
-		else if(hasValidateData() && imageUpload) 
-		{
+	public void uploadImageButtonOnWeb(ClickEvent clickEvent) {
+		if (hasValidateData()) {
 			glasspanelLoadingImage(true);
 			getUiHandlers().imageWebUpload(imageWebUploadUrlTxtBox.getText());
 		}
-
-	}
-	
-	@UiHandler("onSystemConfirmBtn")
-	public void onSystemConfirmBtnClick(ClickEvent clickEvent)
-	{
-		
-		
-/*		if(this.selectedWidgetIndex!=-1){
-			glasspanelLoadingImage(true);
-			GooruImagesView gooruImagesView=(GooruImagesView)gooruProfileDefaultImagesContainer.getWidget(selectedWidgetIndex);
-			String url=gooruImagesView.gooruDefaultImage.getUrl();
-			getUiHandlers().uploadGooruDefaultImage(url);
-			//getUiHandlers().uploadGooruDefaultImage("http://devrepo.goorulearning.org/qalive/f000/0237/5845/63daa896-aaa4-43f2-a6fb-c67e15514e00-280x215.png");
-		}*/
 	}
 
 	@UiHandler("okButtonOnUploadGooruImages")
