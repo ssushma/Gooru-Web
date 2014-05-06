@@ -155,9 +155,6 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		essentialQuestionsHTML.setVisible(!isVisible);
 		performanceTaskHTML.setVisible(!isVisible);
 		formButtons.setVisible(!isVisible);
-		System.out.println(bigIdeas);
-		System.out.println(essentialQuestions);
-		System.out.println(performanceTask);
 		
 		if(!bigIdeas.isEmpty()) {
 			bigIdeasHTML.setHTML(bigIdeasLbl.getText());
