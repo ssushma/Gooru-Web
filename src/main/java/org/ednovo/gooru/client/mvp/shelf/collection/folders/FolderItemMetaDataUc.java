@@ -121,8 +121,8 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
                  event.getNativeKeyCode() == KeyCodes.KEY_SHIFT) {
 			 
          } else {
-	         if(text.trim().length()>1000){
-	        	 text.substring(0, 1000);
+	         if(text.trim().length()>600){
+	        	 text.substring(0, 600);
 	        	 event.preventDefault();
 	         }
          }
