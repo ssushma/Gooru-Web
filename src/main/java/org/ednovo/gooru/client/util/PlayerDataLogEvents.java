@@ -379,6 +379,8 @@ public class PlayerDataLogEvents {
 				return "FIB";
 			case 6:
 				return "OE";
+			case 7:
+				return "MA";
 			default:
 				return "RES";
 		}

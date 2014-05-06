@@ -316,5 +316,17 @@
 	margin-top: -3px;
 }
 
-
-
+.yesnotextContainer{
+	margin-bottom: 10px;
+	width: 100%;
+	font-size: 12px;
+	font-style: italic;
+	color:#515151;
+}
+.yesText{
+	color:#515151;
+}
+.noText{
+	color:#515151;
+	font-wight:bold;
+}
