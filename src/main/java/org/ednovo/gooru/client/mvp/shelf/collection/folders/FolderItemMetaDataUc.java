@@ -105,9 +105,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	}
 	
 	private void setDebugIds() {
-		ideasStaticLbl.setText(GL1729);
-		questionsStaticLbl.setText(GL1730);
-		tasksStaticLbl.setText(GL1731);
+		ideasStaticLbl.setText(GL1731);
+		questionsStaticLbl.setText(GL1732);
+		tasksStaticLbl.setText(GL1733);
 		saveBtn.setText(GL0141);
 		cancelBtn.setText(GL0142);
 	}
