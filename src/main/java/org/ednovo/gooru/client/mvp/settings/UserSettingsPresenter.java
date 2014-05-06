@@ -321,6 +321,8 @@ public class UserSettingsPresenter
 							user.getUser().getFirstName());
 					getView().getTbLastName().setText(
 							user.getUser().getLastName());
+					getView().getLbUserName().setText(
+							user.getUser().getUsername());
 					getView().hideuserDetailsContainerOnClickOfTab();
 					if (user.getUser().getLoginType()
 							.equalsIgnoreCase("credential")) {
@@ -379,8 +381,8 @@ public class UserSettingsPresenter
 					getView().getLbName().setText(
 							user.getUser().getFirstName() + " "
 									+ user.getUser().getLastName());
-					getView().getLbUserName().setText(
-							user.getUser().getUsername());
+					
+					
 					if (user.getUser().getLoginType() != null) {
 						if (user.getUser().getLoginType().trim()
 								.equalsIgnoreCase("apps")) {

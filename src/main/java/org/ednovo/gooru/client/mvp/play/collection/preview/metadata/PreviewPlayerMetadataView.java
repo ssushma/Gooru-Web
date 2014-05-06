@@ -995,6 +995,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		}
 	}
 	public void renderDepthOfKnowledge(List<checkboxSelectedDo> depthofKnowledgeList ) {
+		depthOfKnowledgeContainer.setVisible(false);
 		if(depthofKnowledgeList!=null){
 			depthOfKnowledgePanel.clear();
 			
@@ -1002,13 +1003,16 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 
 			
 			for (checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
+				if(checkboxSelectedDo.getSelected()!=null){
 				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
 					depthofKnowledgeValue = true;
 					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
+					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
 
 			}
+				}
 		}
 			
 			if(depthofKnowledgeValue){
@@ -1024,6 +1028,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		}
 	}
 	public void renderInstructionalMethod(List<checkboxSelectedDo> instructionmethodList){
+		InstructionalmethodContainer.setVisible(false);
 		if(instructionmethodList!=null){
 			instructionalmethodPanel.clear();
 			boolean instructionMethod=false;
@@ -1054,6 +1059,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			}
 	}
 	public void renderAudience(List<checkboxSelectedDo> audienceList){
+		audienceContainer.setVisible(false);
 		if(audienceList!=null){
 			audiencePanel.clear();
 			boolean audience=false;
@@ -1083,19 +1089,24 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		}
 	}
 	public void renderLearningAndInnovationSkill(List<checkboxSelectedDo> learningSkillsList){
+		learningAndInnovationSkillsContainer.setVisible(false);
+		
 		if(learningSkillsList!=null){
 			learningAndInnovationSkillPanel.clear();
 			boolean learningAndInnovationSkill = false;
+			Label lbllearningSkills = null;
 			for (checkboxSelectedDo checkboxSelectedDo : learningSkillsList) {
 				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
 					learningAndInnovationSkill = true;
-					Label lbllearningSkills = new Label(checkboxSelectedDo.getValue());
+					lbllearningSkills = new Label(checkboxSelectedDo.getValue());
 					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
+					lbllearningSkills.getElement().setAttribute("style", "display:table");
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
-
-			}
+				}
+				
+				
 		}
-		
+			
 			if(learningAndInnovationSkill){
 				learningAndInnovationSkillsContainer.setVisible(true);
 			}else
@@ -1111,18 +1122,17 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	
 	public void renderLanguageObjective(String languageObjective)
-	{	
+	{
 	if(languageObjective!=null)
 		{
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
-			//lbllanguageObjectiveAll.setVisible(false);
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;margin-top:15px;");
 			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(GL1728);	
 				seeMoreAnchor.setVisible(true);
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
-				//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+				
 			}
 			else
 			{
@@ -1143,9 +1153,8 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@UiHandler("seeMoreAnchor")
 	public void clickSeeAll(ClickEvent event)
 	{
-		//lbllanguageObjectiveAll.setVisible(true);
-		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText("");
+		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText(languageObjectiveValue);
 	}
 }

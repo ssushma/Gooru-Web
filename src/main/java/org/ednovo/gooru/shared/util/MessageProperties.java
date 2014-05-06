@@ -1029,7 +1029,7 @@ public interface MessageProperties {
 		//Hints
 		String GL0859	="Hints (hints will show up in this order)";
 		//Add Question image in shelf
-		String GL0860	="Question Image or Video";//Label
+		String GL0860	="Question Image";//Label
 		String GL0861	=	"Change Image";//Label
 		String GL0862	="Remove Image";//Label
 		//Add Question Resource View in shelf.
@@ -1839,10 +1839,10 @@ public interface MessageProperties {
 		String GL1453="You are seeing this page because this resource cannot be displayed in our player.";
 		
 		//FillintheBlankQuestionView and multiple Choices Question View.
-		String GL1454="Please type your answer(s) in the blank(s) provided";
+		String GL1454="Please type your answer(s) in the blank(s) provided, and click \"Submit\"";
 		String GL1455="Blank";
 		String GL1456="correct answer";
-		String GL1457="Please select the correct answer";
+		String GL1457="Please select the correct answer, and click \"Submit\"";
 		
 		//open ended questions
 		String GL1458="Character limit is reached";
@@ -2088,10 +2088,10 @@ public interface MessageProperties {
       	String GL1642="LANGUAGE OBJECTIVES";
       	String GL1643="DEPTH OF KNOWLEDGE";
     	String GL1644="Choose the...";
-    	String GL1645="Level1: Recall";
-    	String GL1646="Level2: Skill/Concept";
-      	String GL1647="Level3: Strategic Thinking";
-      	String GL1648="Level4: Extended Thinking";      	
+    	String GL1645="Level 1: Recall";
+    	String GL1646="Level 2: Skill/Concept";
+      	String GL1647="Level 3: Strategic Thinking";
+      	String GL1648="Level 4: Extended Thinking";      	
       	String GL1649="LEARNING & INNOVATION SKILLS";      	
       	String GL1650 = "Choose the skills that this collection addresses.";
       	String GL1651 = "Creativity and Innovation";
