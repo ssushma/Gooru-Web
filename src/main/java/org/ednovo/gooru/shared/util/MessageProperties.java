@@ -2194,5 +2194,6 @@ public interface MessageProperties {
 		String GL1731 = "Big Ideas";
 		String GL1732 = "Essential Questions";
 		String GL1733 = "Performance Task";
+		String GL1734 = "Reports";
    }
 
