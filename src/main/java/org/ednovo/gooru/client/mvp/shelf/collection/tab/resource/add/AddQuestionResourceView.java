@@ -89,8 +89,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AddQuestionResourceView extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 	
@@ -194,77 +194,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
 	public AddQuestionResourceView(){
-		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
-		standardSearchDo.setPageSize(10);
-		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
-			@Override
-			public void keyAction(String text) {
-				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
-				standardSearchDo.setSearchResults(null);
-				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
-				if(!courseCode.isEmpty()) {
-					Map<String,String> filters = new HashMap<String, String>();
-					filters.put(FLT_CODE_ID,courseCode);
-					standardSearchDo.setFilters(filters);
-				}
-				standardSearchDo.setQuery(text);
-				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
-					if(standardPreflist!=null){
-						for(int count=0; count<standardPreflist.size();count++) {
-							if(text.contains(standardPreflist.get(count))) {
-								standardsPrefDisplayPopup = true;
-								break;
-							} else {
-								standardsPrefDisplayPopup = false;
-							}
-						}						
-					}
-					
-					/*if(standardsPrefDisplayPopup){*/
-						standardsPreferenceOrganizeToolTip.hide();
-						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
-							
-							@Override
-							public void onSuccess(SearchDo<CodeDo> result) {
-								setStandardSuggestions(result);
-								
-							}
-							
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
-							}
-						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
-					else{
-						standardSgstBox.hideSuggestionList();
-						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
-						//standardSuggestOracle.add(GL1613);
-						
-					}*/
-					}
-					
-				
-			}
-
-			@Override
-			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		
-		standardSgstBox.addSelectionHandler(this);
+		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
 		questionText.getElement().setInnerHTML(" "+GL0863);
@@ -302,30 +232,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		loadingTextLbl.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
-		educationalTitle.getElement().setInnerHTML(GL1664);
-		activityText.getElement().setInnerHTML(GL1665);
-		handoutText.getElement().setInnerHTML(GL0907);
-		homeworkText.getElement().setInnerHTML(GL1666);
-		gameText.getElement().setInnerHTML(GL1667);
-		presentationText.getElement().setInnerHTML(GL1668);
-		referenceMaterialText.getElement().setInnerHTML(GL1669);
-		quizText.getElement().setInnerHTML(GL1670);
-		curriculumPlanText.getElement().setInnerHTML(GL1671);
-		lessonPlanText.getElement().setInnerHTML(GL1672);
-		unitPlanText.getElement().setInnerHTML(GL1673);
-		projectPlanText.getElement().setInnerHTML(GL1674);
-		readingText.getElement().setInnerHTML(GL1675);
-		textbookText.getElement().setInnerHTML(GL0909);
-		articleText.getElement().setInnerHTML(GL1676);
-		bookText.getElement().setInnerHTML(GL1677);
-		resourceEducationalLabel.setText(GL1684);
-		standardsDefaultText.setText(GL1682);
-		depthOfKnowledgeHeader.setText(GL1693);
-		chkLevelRecall.setText(GL1645);
-		chkLevelSkillConcept.setText(GL1646);
-		chkLevelStrategicThinking.setText(GL1647);
-		chkLevelExtendedThinking.setText(GL1648);
-		educationalUsePanel.setVisible(false);
+		setTextForTheFields();
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -414,6 +321,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		//questionNameTextAreaToolBarButton.addClickHandler(new ShowTinyMceToolBar(questionNameTextArea));
 	}
 	public AddQuestionResourceView(CollectionItemDo collectionItemDo){
+		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
 		addbutton.setText(GL0141);
@@ -435,6 +343,98 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setQuestionTypeStaticTexts();
 		rightsChkBox.addClickHandler(new rightsChecked());
 		setTrueOrFalseFields();
+		setTextForTheFields();
+	}
+	public void initializeAutoSuggestedBox(){
+		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		standardSearchDo.setPageSize(10);
+		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
+			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+			@Override
+			public void keyAction(String text) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+						}						
+					}
+					/*if(standardsPrefDisplayPopup){*/
+						standardsPreferenceOrganizeToolTip.hide();
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+							@Override
+							public void onSuccess(SearchDo<CodeDo> result) {
+								setStandardSuggestions(result);
+								
+							}
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+						/*}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+	
+						//standardSuggestOracle.add(GL1613);
+						
+					}*/
+					}
+			}
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+		};
+		standardSgstBox.addSelectionHandler(this);
+	}
+	public void setTextForTheFields(){
+		educationalTitle.getElement().setInnerHTML(GL1664);
+		activityText.getElement().setInnerHTML(GL1665);
+		handoutText.getElement().setInnerHTML(GL0907);
+		homeworkText.getElement().setInnerHTML(GL1666);
+		gameText.getElement().setInnerHTML(GL1667);
+		presentationText.getElement().setInnerHTML(GL1668);
+		referenceMaterialText.getElement().setInnerHTML(GL1669);
+		quizText.getElement().setInnerHTML(GL1670);
+		curriculumPlanText.getElement().setInnerHTML(GL1671);
+		lessonPlanText.getElement().setInnerHTML(GL1672);
+		unitPlanText.getElement().setInnerHTML(GL1673);
+		projectPlanText.getElement().setInnerHTML(GL1674);
+		readingText.getElement().setInnerHTML(GL1675);
+		textbookText.getElement().setInnerHTML(GL0909);
+		articleText.getElement().setInnerHTML(GL1676);
+		bookText.getElement().setInnerHTML(GL1677);
+		resourceEducationalLabel.setText(GL1684);
+		standardsDefaultText.setText(GL1682);
+		depthOfKnowledgeHeader.setText(GL1693);
+		chkLevelRecall.setText(GL1645);
+		chkLevelSkillConcept.setText(GL1646);
+		chkLevelStrategicThinking.setText(GL1647);
+		chkLevelExtendedThinking.setText(GL1648);
+		educationalUsePanel.setVisible(false);
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
@@ -1268,7 +1268,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setHints(hintsMap);
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
-		
+			
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
