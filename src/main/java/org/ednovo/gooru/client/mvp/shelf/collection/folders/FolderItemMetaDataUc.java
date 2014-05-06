@@ -143,7 +143,6 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		bigIdeasLbl.setHTML(bigIdeas);
 		essentialQuestionsLbl.setHTML(essentialQuestions);
 		performanceTaskLbl.setHTML(performanceTask);
-		AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeas, performanceTask, essentialQuestions));
 	}
 	
 	public void showEditableMetaData(boolean isVisible) {
@@ -164,6 +163,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	@UiHandler("saveBtn")
 	public void clickSaveBtn(ClickEvent event) {
 		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
+		AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeasHTML.getHTML(), performanceTaskHTML.getHTML(), essentialQuestionsHTML.getHTML()));
 		showEditableMetaData(true);
 		updateFolderMetaData();
 	}
