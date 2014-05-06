@@ -144,6 +144,13 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void updateCollectionDepthOfKnowledge(CollectionDo collectionDo,
 			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
 	
+	void updateCollectionInstructionalMethod(CollectionDo collectionDo,
+			String instructionMethod,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void updateCollectionAudience(CollectionDo collectionDo,
+			String instructionMethod,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
+	
+	
 	void updateCollectionLearningSkills(CollectionDo collectionDo,
 			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
 	
