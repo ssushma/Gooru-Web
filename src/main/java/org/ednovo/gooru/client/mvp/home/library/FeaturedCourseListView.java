@@ -79,6 +79,8 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 
 	private final static String MALE = "male";
 	
+	private String parentId;
+	
 	private static FeaturedCourseListViewUiBinder uiBinder = GWT
 			.create(FeaturedCourseListViewUiBinder.class);
 
@@ -175,7 +177,11 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 			courseAuthor.setVisible(false);
 			contributorImage.setUrl(DEFAULT_USER_IMG);
 		}
-		setCourseId(courseDo.getCodeId());
+		if(courseDo.getCodeId()!=null) {
+			setCourseId(courseDo.getCodeId());
+		} else {
+			setParentId(courseDo.getParentId());
+		}
 	}
 	
 	public HTMLEventPanel getfeaturedCoursePanel() {
@@ -188,5 +194,13 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 
 	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 }
