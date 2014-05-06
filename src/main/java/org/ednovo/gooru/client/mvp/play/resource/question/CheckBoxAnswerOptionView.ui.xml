@@ -4,8 +4,10 @@
 <ui:style field="oeStyle" src="questionresource.css"/>
 	<g:FlowPanel styleName="{oeStyle.resourcesQuizzessAnswersOptionsContainer}">
      	<g:Label styleName="{oeStyle.quizAnswerChoiceOption}" ui:field="answerChoiceResult"></g:Label>
-     	<g:Label ui:field="checkBoxButton"></g:Label>
+     	<g:Label ui:field="radioYesButton"></g:Label>
+     	<g:Label ui:field="radioNoButton"></g:Label>
         <g:HTML styleName="{oeStyle.answerOptionContent}" ui:field="answerOptionText"></g:HTML>
-        <g:CheckBox  ui:field="answerOptionCheckBoxButton" styleName="{oeStyle.hideButton}"></g:CheckBox>
+        <g:RadioButton ui:field="answerOptionYesRadioButton" name="maRadioButton" styleName="{oeStyle.hideButton}"></g:RadioButton>
+        <g:RadioButton ui:field="answerOptionNoRadioButton" name="maRadioButton"  styleName="{oeStyle.hideButton}"></g:RadioButton>
     </g:FlowPanel>
 </ui:UiBinder> 
