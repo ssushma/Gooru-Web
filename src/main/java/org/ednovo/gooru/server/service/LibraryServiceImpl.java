@@ -28,7 +28,9 @@ package org.ednovo.gooru.server.service;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.ednovo.gooru.client.service.LibraryService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
@@ -88,7 +90,12 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private static final String COURSE = "course";
 	private static final String UNIT = "unit";
 	private static final String TOPIC = "topic";
-	
+	private static final String COURSE_100_75_IMG = "../images/library/course-100x75.png";
+	private static final String FEATURED = "featured";
+
+	private static final String EXCLUDED_COURSE = "Language and Composition";
+	private static final String INCLUDED_COURSE = "Teachable Moments";
+	private static final String AUTODESK_GOORU_UID = "8a6b75b8-0537-492e-8970-c41ade8723a6";
 	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
@@ -136,7 +143,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		url+=getLibraryName(libraryName);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-		return deserializeSubjects(jsonRepresentation,subjectId);
+		return deserializeSubjects(jsonRepresentation,subjectId,libraryName);
 	}
 	
 	@Override
@@ -322,16 +329,38 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	 * @throws : <Mentioned if any exceptions>
 	 *
 	 */
-	public HashMap<String,SubjectDo> deserializeSubjects(JsonRepresentation jsonRep, String subjectName) {
+	public HashMap<String,SubjectDo> deserializeSubjects(JsonRepresentation jsonRep, String subjectName, String libraryName) {
+		HashMap<String, SubjectDo> subjectList = new HashMap<String, SubjectDo>();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			try {
 				String jsonRepStr = jsonRep.getJsonObject().toString();
-				return JsonDeserializer.deserialize(jsonRepStr, new TypeReference<HashMap<String, SubjectDo>>() {});
+				subjectList = JsonDeserializer.deserialize(jsonRepStr, new TypeReference<HashMap<String, SubjectDo>>() {});
+				if(libraryName.equals(RUSD)&&subjectName.equals(FEATURED)) {
+					subjectList = getThirdPartyPartnerData(subjectList,subjectName);
+				}
+				return subjectList;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 		return new HashMap<String,SubjectDo>();
+	}
+	
+	private HashMap<String, SubjectDo> getThirdPartyPartnerData(HashMap<String, SubjectDo> subjectList, String subjectName) {
+		ArrayList<CourseDo> data = subjectList.get(subjectName).getData();
+		CourseDo courseDo = new CourseDo();
+		for(int i=0;i<data.size();i++) {
+			if(data.get(i).getLabel().equalsIgnoreCase(EXCLUDED_COURSE)) {
+				courseDo = data.get(i);
+				courseDo.setLabel(INCLUDED_COURSE);
+				courseDo.setParentId(AUTODESK_GOORU_UID);
+				courseDo.getThumbnails().setUrl(COURSE_100_75_IMG);
+				data.remove(i);
+			}
+		}
+		data.add(0, courseDo);
+		subjectList.get(subjectName).setData(data);
+		return subjectList;
 	}
 	
 	public HashMap<String,StandardsDo> deserializeSubjectsforStandards(JsonRepresentation jsonRep, String subjectName) {
