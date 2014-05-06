@@ -7,6 +7,10 @@
 		<g:FlowPanel styleName="{oeStyle.openEndedQuestionAnswerContainer}">
           	  <g:HTMLPanel styleName="{oeStyle.openEndedQuestionAnswerTitle}" ui:field="answerText"></g:HTMLPanel>
           	  <g:Label styleName="{oeStyle.systemMessageStyle}" ui:field="messageBodyText"></g:Label>
+          	  <g:HTMLPanel styleName="{oeStyle.yesnotextContainer}">
+          	  <g:InlineLabel styleName="{oeStyle.yesText}">Yes</g:InlineLabel>
+          	   <g:InlineLabel styleName="{oeStyle.noText}">No</g:InlineLabel>
+          	  </g:HTMLPanel>
           	  <g:FlowPanel ui:field="optionsContainer"></g:FlowPanel>
           	  <g:Button styleName="{oeStyle.hintsInActiveButton} {oeStyle.adjustCheckAnswerButton}" ui:field="checkAnswer"></g:Button>
 	     </g:FlowPanel>
