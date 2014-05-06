@@ -1839,10 +1839,10 @@ public interface MessageProperties {
 		String GL1453="You are seeing this page because this resource cannot be displayed in our player.";
 		
 		//FillintheBlankQuestionView and multiple Choices Question View.
-		String GL1454="Please type your answer(s) in the blank(s) provided";
+		String GL1454="Please type your answer(s) in the blank(s) provided, and click \"Submit\"";
 		String GL1455="Blank";
 		String GL1456="correct answer";
-		String GL1457="Please select the correct answer";
+		String GL1457="Please select the correct answer, and click \"Submit\"";
 		
 		//open ended questions
 		String GL1458="Character limit is reached";
