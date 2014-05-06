@@ -75,6 +75,7 @@ public interface IsCollectionInfoTabView extends IsViewWithHandlers<CollectionIn
 	FlowPanel getStandardContainer();
 	
 	void getUserStandardPrefCodeId(List<String> list);
+
 	
 /*	void displayErrorMsgTeacherTip();
 

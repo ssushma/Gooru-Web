@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
@@ -81,6 +82,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	@Override
 	public void onReveal() {
 		super.onReveal();
+		
+		System.out.println("called once");
+		
 		getView().onLoad();
 		//getView().reset();
 			getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
@@ -109,6 +113,21 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				}
 
 			});
+			/*String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new AsyncCallback<CollectionDo>() {
+
+				@Override
+				public void onSuccess(CollectionDo result) {
+					getView().setData(result);
+				}
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+			});*/
+
 			
 			
 			//Get Depth of Knowledge and other details///

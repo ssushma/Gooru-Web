@@ -45,7 +45,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private String narrationLink;
 	private String notes;
 	private String keyPoints;
-	private String languageObjectives;
+	private String languageObjective;
 	private String language;
 	private String goals;
 	private String grade;
@@ -311,13 +311,14 @@ public class CollectionDo extends ResourceDo implements Serializable{
 		this.status = status;
 	}
 
-	public String getLanguageObjectives() {
-		return languageObjectives;
+	public String getLanguageObjective() {
+		return languageObjective;
 	}
 
-	public void setLanguageObjectives(String languageObjectives) {
-		this.languageObjectives = languageObjectives;
+	public void setLanguageObjective(String languageObjective) {
+		this.languageObjective = languageObjective;
 	}
+
 	
 	
 	

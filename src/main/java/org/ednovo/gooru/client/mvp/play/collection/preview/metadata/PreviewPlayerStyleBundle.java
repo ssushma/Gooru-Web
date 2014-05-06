@@ -45,4 +45,6 @@ public interface PreviewPlayerStyleBundle extends CssResource {
 	String conceptTitle();
 	String clearBoth();
 	String depthofKnow();
+	String infoSectionAuthor();
+	String teacherTipOuterContainer();
 }

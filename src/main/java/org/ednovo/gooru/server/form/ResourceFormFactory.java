@@ -204,6 +204,94 @@ public class ResourceFormFactory {
 	 * @param action add or delete
 	 * @return form
 	 */
+	public static Form updateCollectionInstructionalMethod(String title, String instructionalMethod, Boolean selectedVal) {
+		Form form = new Form();
+		try
+		{
+		String instructionalMethodKey = "instructionalMethod";
+		String instructionalMethodSelectedKey = "selected";	
+		String instructionalMethodSelectedValKey = "value";
+	
+		JSONObject instructionalMethodCompleteObject = new JSONObject();
+		JSONArray instructionalMethodArray = new JSONArray();
+		JSONObject instructionalMethodeObject = new JSONObject();
+		instructionalMethodeObject.put(instructionalMethodSelectedKey, selectedVal.toString());
+		instructionalMethodeObject.put(instructionalMethodSelectedValKey, instructionalMethod);
+		instructionalMethodArray.put(instructionalMethodeObject);
+		
+		instructionalMethodCompleteObject.put(instructionalMethodKey, instructionalMethodArray);
+	
+		String objectName = "collection";
+		
+		JSONObject collectionObject = new JSONObject();
+		collectionObject.put(objectName, instructionalMethodCompleteObject);
+	
+		String data =  collectionObject.toString();
+	
+		form.add("data", data);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		return form;
+	}
+	/**
+	 * Set collection meta info to {@link Form}
+	 * @param title of the collection
+	 * @param description of the collection
+	 * @param grade of the collection
+	 * @param sharing of the collection
+	 * @param vocabulary of the collection
+	 * @param taxonomyCode of the collection
+	 * @param updateTaxonomyByCode that codeId or code
+	 * @param action add or delete
+	 * @return form
+	 */
+	public static Form updateCollectionAudience(String title, String audience, Boolean selectedVal) {
+		Form form = new Form();
+		try
+		{
+		String instructionalMethodKey = "audience";
+		String instructionalMethodSelectedKey = "selected";	
+		String instructionalMethodSelectedValKey = "value";
+	
+		JSONObject instructionalMethodCompleteObject = new JSONObject();
+		JSONArray instructionalMethodArray = new JSONArray();
+		JSONObject instructionalMethodeObject = new JSONObject();
+		instructionalMethodeObject.put(instructionalMethodSelectedKey, selectedVal.toString());
+		instructionalMethodeObject.put(instructionalMethodSelectedValKey, audience);
+		instructionalMethodArray.put(instructionalMethodeObject);
+		
+		instructionalMethodCompleteObject.put(instructionalMethodKey, instructionalMethodArray);
+	
+		String objectName = "collection";
+		
+		JSONObject collectionObject = new JSONObject();
+		collectionObject.put(objectName, instructionalMethodCompleteObject);
+	
+		String data =  collectionObject.toString();
+	
+		form.add("data", data);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		return form;
+	}
+	/**
+	 * Set collection meta info to {@link Form}
+	 * @param title of the collection
+	 * @param description of the collection
+	 * @param grade of the collection
+	 * @param sharing of the collection
+	 * @param vocabulary of the collection
+	 * @param taxonomyCode of the collection
+	 * @param updateTaxonomyByCode that codeId or code
+	 * @param action add or delete
+	 * @return form
+	 */
 	public static Form updateCollectionDepthOfKnowledge(String title, String depthOfKnowledge, Boolean selectedVal) {
 		Form form = new Form();
 		try
@@ -215,7 +303,7 @@ public class ResourceFormFactory {
 		JSONObject depthOfKnowledgeCompleteObject = new JSONObject();
 		JSONArray depthOfKnowledgeArray = new JSONArray();
 		JSONObject depthOfKnowledgeObject = new JSONObject();
-		depthOfKnowledgeObject.put(depthOfKnowledgeSelectedKey, selectedVal);
+		depthOfKnowledgeObject.put(depthOfKnowledgeSelectedKey, selectedVal.toString());
 		depthOfKnowledgeObject.put(depthOfKnowledgeSelectedValKey, depthOfKnowledge);
 		depthOfKnowledgeArray.put(depthOfKnowledgeObject);
 		
@@ -260,7 +348,7 @@ public class ResourceFormFactory {
 		JSONObject depthOfKnowledgeCompleteObject = new JSONObject();
 		JSONArray depthOfKnowledgeArray = new JSONArray();
 		JSONObject depthOfKnowledgeObject = new JSONObject();
-		depthOfKnowledgeObject.put(learningSkillsSelectedKey, selectedVal);
+		depthOfKnowledgeObject.put(learningSkillsSelectedKey, selectedVal.toString());
 		depthOfKnowledgeObject.put(learningSkillsSelectedValKey, depthOfKnowledge);
 		depthOfKnowledgeArray.put(depthOfKnowledgeObject);
 		
