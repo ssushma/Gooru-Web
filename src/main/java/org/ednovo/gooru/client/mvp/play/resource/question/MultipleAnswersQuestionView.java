@@ -100,9 +100,11 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			QuestionAnswerDo questionAnswerDo=answersList.next();
 			final CheckBoxAnswerOptionView checkBoxAnswerOptionView=new CheckBoxAnswerOptionView(questionAnswerDo.getAnswerText(),("(" + (char) (65 + i) + ") "));
 			checkBoxAnswerOptionView.setAnswerId(questionAnswerDo.getAnswerId());
-			checkBoxAnswerOptionView.checkBoxButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalCheckboxIcon());
+			checkBoxAnswerOptionView.radioYesButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalRadioIcon());
+			checkBoxAnswerOptionView.radioNoButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalRadioIcon());
 			checkBoxAnswerOptionView.setAnswerCorrect(questionAnswerDo.isIsCorrect());
-			checkBoxAnswerOptionView.checkBoxButton.addClickHandler(new CheckBoxButtonSelectEvent(checkBoxAnswerOptionView,questionAnswerDo,i+1));
+			checkBoxAnswerOptionView.radioYesButton.addClickHandler(new CheckBoxButtonSelectEvent(checkBoxAnswerOptionView,questionAnswerDo,i+1,true));
+			checkBoxAnswerOptionView.radioNoButton.addClickHandler(new CheckBoxButtonSelectEvent(checkBoxAnswerOptionView,questionAnswerDo,i+1,false));
 			optionsContainer.add(checkBoxAnswerOptionView);
 			showPreviousAttemptResult(questionAnswerDo.getAnswerId(),checkBoxAnswerOptionView);
 			i++;
@@ -114,12 +116,12 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			if(attemptedAnswerDo.getAnswerId()==answerId){
 				if(attemptedAnswerDo.isAttemptResult()){
 					checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
-					checkBoxAnswerOptionView.checkBoxButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedCheckboxIcon());
-					checkBoxAnswerOptionView.answerOptionCheckBoxButton.setValue(true);
+					checkBoxAnswerOptionView.radioYesButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
+					checkBoxAnswerOptionView.answerOptionYesRadioButton.setValue(true);
 				}else{
 					checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
-					checkBoxAnswerOptionView.checkBoxButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedCheckboxIcon());
-					checkBoxAnswerOptionView.answerOptionCheckBoxButton.setValue(true);
+					checkBoxAnswerOptionView.radioYesButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
+					checkBoxAnswerOptionView.answerOptionYesRadioButton.setValue(true);
 				}
 			}
 		}
@@ -128,26 +130,32 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 		private CheckBoxAnswerOptionView checkBoxAnswerOptionView=null;
 		private QuestionAnswerDo questionAnswerDo=null;
 		private int attemptSequence=1;
+		private boolean isYesButton=false;
 		
-		public CheckBoxButtonSelectEvent(CheckBoxAnswerOptionView checkBoxAnswerOptionView,QuestionAnswerDo questionAnswerDo,int attemptSequence){
+		public CheckBoxButtonSelectEvent(CheckBoxAnswerOptionView checkBoxAnswerOptionView,QuestionAnswerDo questionAnswerDo,int attemptSequence,boolean isYesButton){
 			this.checkBoxAnswerOptionView=checkBoxAnswerOptionView;
 			this.questionAnswerDo=questionAnswerDo;
 			this.attemptSequence=attemptSequence;
+			this.isYesButton=isYesButton;
 		}
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			if(!this.checkBoxAnswerOptionView.answerOptionCheckBoxButton.getValue()){
-				checkBoxAnswerOptionView.answerOptionCheckBoxButton.setValue(true);
+			if(isYesButton&&!this.checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
+				checkBoxAnswerOptionView.answerOptionYesRadioButton.setValue(true);
+				checkBoxAnswerOptionView.answerOptionNoRadioButton.setValue(false);
 				enableCheckAnswerButton();
-				checkBoxAnswerOptionView.checkBoxButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedCheckboxIcon());
+				checkBoxAnswerOptionView.radioYesButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
+				checkBoxAnswerOptionView.radioNoButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalRadioIcon());
 				int attemptStatus=questionAnswerDo.isIsCorrect()?1:0;
 				setAnswerAttemptSequence(attemptSequence,attemptStatus,questionAnswerDo.getAnswerId());
 				isUserAnswerAttempted(true);
-			}else{
-				checkBoxAnswerOptionView.answerOptionCheckBoxButton.setValue(false);
+			}else if(!isYesButton&&!this.checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+				checkBoxAnswerOptionView.answerOptionYesRadioButton.setValue(false);
+				checkBoxAnswerOptionView.answerOptionNoRadioButton.setValue(true);
 				enableCheckAnswerButton();
-				checkBoxAnswerOptionView.checkBoxButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalCheckboxIcon());
+				checkBoxAnswerOptionView.radioYesButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().normalRadioIcon());
+				checkBoxAnswerOptionView.radioNoButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().selectedRadioIcon());
 				int attemptStatus=questionAnswerDo.isIsCorrect()?1:0;
 				setAnswerAttemptSequence(attemptSequence,attemptStatus,questionAnswerDo.getAnswerId());
 				isUserAnswerAttempted(true);
@@ -164,20 +172,24 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
 				checkBoxAnswerOptionView.answerChoiceResult.setStyleName("");
-				if(checkBoxAnswerOptionView.answerOptionCheckBoxButton.getValue()){
-					isOptionSelected=true;
-				}
+//				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
+//					isOptionSelected=true;
+//				}
 			}
 		}
-		if(isOptionSelected){
-			isCheckButtonEnabled=true;
-			checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
-			checkAnswer.addStyleName("primary");
-		}else{
-			isCheckButtonEnabled=false;
-			checkAnswer.removeStyleName("primary");
-			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
-		}
+//		if(isOptionSelected){
+//			isCheckButtonEnabled=true;
+//			checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
+//			checkAnswer.addStyleName("primary");
+//		}else{
+//			isCheckButtonEnabled=false;
+//			checkAnswer.removeStyleName("primary");
+//			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+//		}
+		
+		isCheckButtonEnabled=true;
+		checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
+		checkAnswer.addStyleName("primary");
 	}
 	
 	@UiHandler("checkAnswer")
@@ -196,7 +208,10 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
-				if(checkBoxAnswerOptionView.answerOptionCheckBoxButton.getValue()){
+				System.out.println("hellooo==1"+checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue());
+				System.out.println("hellooo==5"+checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue());
+				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
+					System.out.println("hellooo==2");
 					//createSessionItemAttempt(checkBoxAnswerOptionView.getAnswerId(), checkBoxAnswerOptionView.isAnswerCorrect()?"correct":"wrong");
 					AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 					attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -211,7 +226,15 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 						score=checkBoxAnswerOptionView.isAnswerCorrect()?1:0;
 					}
 					setAnswersDetailsWitithTime(checkBoxAnswerOptionView.getAnswerId(),checkBoxAnswerOptionView.isAnswerCorrect()?1:0,(i+1),score,!isFirstTry);
-					if(checkBoxAnswerOptionView.isAnswerCorrect()){
+					if(checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
+						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+					}else{
+						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
+					}
+				}
+				if(checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+					System.out.println("hellooo==3");
+					if(!checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 					}else{
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());

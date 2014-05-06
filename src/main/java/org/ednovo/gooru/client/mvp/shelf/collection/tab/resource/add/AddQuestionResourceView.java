@@ -428,6 +428,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		for(int i=0;i<2;i++){
 			int widgetCount=questionTrueOrFalseAnswerChoiceContainer.getWidgetCount();
 			final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+			addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 			addQuestionAnswer.tinyOrTextBoxConatiner.clear();
 			if(i==0){
 				addQuestionAnswer.fieldValue="True";
@@ -466,6 +467,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		for(int i=0;i<2;i++){
 			int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 			final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+			addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 			addQuestionAnswer.optionSelectedButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -491,6 +493,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 	public void clickedOnAddChoiceButton(ClickEvent clickEvent){
 		int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 		final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+		addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 		addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
 		if(questionType.equals("MA")){
 			addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
@@ -744,20 +747,34 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 					}
 			
 			}
-    	}else if(getQuestionType().equalsIgnoreCase("MC") || getQuestionType().equalsIgnoreCase("MA")){
+    	}else if(getQuestionType().equalsIgnoreCase("MC")){
     		if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
     			fieldValidationCheck = false;
 				isAddBtnClicked=true;
 			}
     	
-				if(!isHintsAdded(hintsContainer)){
-					if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
-						String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
-						ansChoiceErrMsg.setText(errorMessage);
-						fieldValidationCheck = false;
-						isAddBtnClicked=true;
-					}
+			if(!isHintsAdded(hintsContainer)){
+				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
+					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+					ansChoiceErrMsg.setText(errorMessage);
+					fieldValidationCheck = false;
+					isAddBtnClicked=true;
 				}
+			}
+    	} else if(getQuestionType().equalsIgnoreCase("MA")){
+    		if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
+    			fieldValidationCheck = false;
+				isAddBtnClicked=true;
+			}
+    	
+			if(!isHintsAdded(hintsContainer)){
+				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
+					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+					ansChoiceErrMsg.setText(errorMessage);
+					fieldValidationCheck = false;
+					isAddBtnClicked=true;
+				}
+			}
     	}
     	if(isAddBtnClicked){
     		isRightsClicked=rightsChkBox.getValue();
@@ -840,7 +857,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
     									}
     								}
     							
-    								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MC") || getQuestionType().equalsIgnoreCase("MA")) {
+    								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MC")) {
     									ansChoiceErrMsg.setText("");
     									if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
     										fieldValidationStaus = false;
@@ -848,6 +865,27 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
     									}else{
     										if(!isHintsAdded(hintsContainer)){
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
+    												System.out
+															.println("go to helllll");
+    												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+    												ansChoiceErrMsg.setText(errorMessage);
+    												fieldValidationStaus = false;
+    												isAddBtnClicked=true;
+    											}else{
+    												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
+    											}
+    										}
+    									}
+    								}
+    						    	
+    								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MA")) {
+    									ansChoiceErrMsg.setText("");
+    									if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
+    										fieldValidationStaus = false;
+    										isAddBtnClicked=true;
+    									}else{
+    										if(!isHintsAdded(hintsContainer)){
+    											if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
     												fieldValidationStaus = false;
@@ -1064,6 +1102,22 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
              return isAnswerChoiceSelected;
 
      }
+	 private boolean isYesOrNoChoiceSelected(HTMLPanel questionAnswerChoiceContainer) {
+         boolean isAnswerChoiceSelected=false;
+         for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
+             AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
+             if(addQuestionAnswerChoice.optionSelectedButton.getStyleName().equals(addWebResourceStyle.answerSelected())||
+            		 addQuestionAnswerChoice.optionNoButton.getStyleName().equals(addWebResourceStyle.answerSelected())){
+            	 System.out.println("true....;;;");
+                    isAnswerChoiceSelected=true;
+             }else{
+            	 System.out.println("false;;;");
+            	 return false;
+             }
+         }
+         
+         return isAnswerChoiceSelected;
+     }
 	 public boolean profanityCheckForHints(final boolean fieldValidationStaus,final List<String> answersListFIB,final String mediaFileName){
 		 validationValue=false;
 		 AppClientFactory.getInjector().getResourceService().checkProfanityForList(hintsListForProfanity, new SimpleAsyncCallback<List<ProfanityCheckDo>>() {
@@ -1259,7 +1313,8 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		ansChoiceErrMsg.setText("");
 		errorMessageForQuestion.setText("");
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
+     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i); 
+     		addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
      		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");      
      		 addQuestionAnswerChoice.showAnswerChoicesForOthers();
 		 }
@@ -1279,7 +1334,8 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 		ansChoiceErrMsg.setText("");
 		errorMessageForQuestion.setText("");
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
+     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);  
+     		addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
      		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
      		 addQuestionAnswerChoice.showAnswerChoicesForMultipleAnswers();
 		 }
@@ -1445,6 +1501,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
+				addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 				if(answer.isIsCorrect()){	
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 				}else{
@@ -1464,6 +1521,7 @@ public abstract class AddQuestionResourceView extends Composite implements Messa
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
+				addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 				addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
 				if(answer.isIsCorrect()){	
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
