@@ -263,7 +263,7 @@ public interface ResourceService extends BaseService {
 	 * @return CollectionDO
 	 * @throws GwtException
 	 */
-	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime) throws GwtException;
+	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException;
 	
 	
 	/**
@@ -354,6 +354,22 @@ public interface ResourceService extends BaseService {
 
 	public CollectionDo updateCollectionInfo(CollectionDo collectionDo,
 			String teacherTips) throws GwtException;
+	
+	public CollectionDo updateCollectionLanguageObjective(CollectionDo collectionDo,
+			String languageObjective) throws GwtException;
+	
+	public CollectionDo updateCollectionDepthOfKnowledge(CollectionDo collectionDo,
+			String depthOfKnowledge, Boolean selectedVal) throws GwtException;
+	
+	public CollectionDo updateCollectionInstructionalMethod(CollectionDo collectionDo,
+			String instructionMethod, Boolean selectedVal) throws GwtException;
+	
+	public CollectionDo updateCollectionLearningSkills(CollectionDo collectionDo,
+			String depthOfKnowledge, Boolean selectedVal) throws GwtException;
+	
+	
+	public CollectionDo updateCollectionAudience(CollectionDo collectionDo,
+			String audience, Boolean selectedVal) throws GwtException;
 
 	public CollectionDo getCollectionInfoV2API(String collectionId)
 			throws GwtException;

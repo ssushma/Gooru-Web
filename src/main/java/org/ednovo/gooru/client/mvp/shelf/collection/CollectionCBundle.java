@@ -330,6 +330,15 @@ public interface CollectionCBundle extends ClientBundle{
 		
 		String teacherTipPencilHolder();
 		
+		String addResourceSuggestedBox();
+		
+		String addResourceSuggestedBoxForQuestion();
+		
+		String checkBoxinnerContinerForQuestion();
+		
+		String questionDepthOfKnoweldgeContainer();
+		
+		String errorLabelColor();
 
 	}
 	@Source("Collection.css")

@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RemoveMovedCo
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetCollectionMovedStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CopyDraggedCollectionEvent;
@@ -149,6 +150,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(SetCollectionMovedStyleEvent.TYPE, this); 
 		addRegisteredHandler(SetFolderCollectionStyleEvent.TYPE, this); 
 		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
+		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
 	}
 
 	@Override
@@ -504,5 +506,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void openParentFolderEvent() {
 		getView().openParentFolderEvent();
+	}
+
+	@Override
+	public void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions) {
+		getView().updateShelfFolderMetaData(ideas, performanceTasks, questions);
 	}
 }

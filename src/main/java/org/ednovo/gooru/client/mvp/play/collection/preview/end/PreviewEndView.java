@@ -198,7 +198,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("auto");
+				successPopupVc.setHeight("592px");
 
 				successPopupVc.show();
 				successPopupVc.center();
@@ -255,7 +255,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("350px");
+				successPopupVc.setHeight("405px");
 				successPopupVc.show();
 				successPopupVc.center();
 			}

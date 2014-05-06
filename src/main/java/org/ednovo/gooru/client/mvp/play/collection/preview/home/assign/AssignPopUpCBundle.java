@@ -250,6 +250,11 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		
 		String collectionSearchRenameTxtboxErrorColor();
 		
+        String gConnectButton();
+		
+		String divider();
+		
+		String dividerText();
 		
 	}
 	@Source("AssignPopUp.css")

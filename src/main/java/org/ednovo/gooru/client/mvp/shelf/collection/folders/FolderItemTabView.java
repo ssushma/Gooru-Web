@@ -605,4 +605,12 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		folderItemMetaDataUc.updateFolderData(presentFolderId, organizeTitleLbl.getText());
 		folderItemMetaDataUc.showEditableMetaData(false);
 	}
+
+	@Override
+	public void setFolderMetaData(Map<String, String> folderMetaData) {
+		String ideas = folderMetaData.get("ideas")!=null?folderMetaData.get("ideas"):"";
+		String questions = folderMetaData.get("questions")!=null?folderMetaData.get("questions"):"";
+		String performanceTasks = folderMetaData.get("performanceTasks")!=null?folderMetaData.get("performanceTasks"):"";
+		folderItemMetaDataUc.setMetaData(ideas, questions, performanceTasks);
+	}
 }

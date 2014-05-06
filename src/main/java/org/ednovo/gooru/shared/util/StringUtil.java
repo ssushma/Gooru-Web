@@ -29,12 +29,13 @@
 package org.ednovo.gooru.shared.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 
 /**
@@ -242,5 +243,18 @@ public class StringUtil {
 		}
 		return partnerName;
 	}
-
+	
+	public static Map<String,String> getFolderMetaData(FolderDo folderDo) {
+		Map<String,String> folderMetaData = new HashMap<String,String>();
+		if(folderDo.getIdeas()!=null) {
+			folderMetaData.put("ideas", folderDo.getIdeas());
+		}
+		if(folderDo.getPerformanceTasks()!=null) {
+			folderMetaData.put("performanceTasks", folderDo.getPerformanceTasks());
+		}
+		if(folderDo.getQuestions()!=null) {
+			folderMetaData.put("questions", folderDo.getQuestions());
+		}
+		return folderMetaData;
+	}
 }

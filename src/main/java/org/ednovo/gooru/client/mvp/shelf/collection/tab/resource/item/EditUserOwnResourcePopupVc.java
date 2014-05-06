@@ -528,9 +528,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			 if(categoryStr.contains("Videos")||categoryStr.contains("Interactives")||categoryStr.contains("Images")||categoryStr.contains("Texts"))
 				{
 				 categoryStr=categoryStr.substring(0, categoryStr.length()-1);
-					 if(categoryStr.contains("Image")){
+					 /*if(categoryStr.contains("Image")){
 						 categoryStr="Slide";
-					 }
+					 }*/
 				}
 			 if(uploadContainer.isVisible()){
 				 if(resourcePathTextBox.getText().trim() == null || resourcePathTextBox.getText().trim().equalsIgnoreCase("")){
@@ -586,9 +586,9 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 					if(categoryStr.contains("Images")||categoryStr.contains("Texts"))
 					{
 						categoryStr=categoryStr.substring(0, categoryStr.length()-1);
-						 if(categoryStr.contains("Image")||categoryStr.contains("Images")){
+						/* if(categoryStr.contains("Image")||categoryStr.contains("Images")){
 							 categoryStr="Slide";
-						 }
+						 }*/
 					}
 					updateUserOwnResource(filePath,mediaFileName,originalFileName,titleStr,descriptionTxtAera.getText().trim(),categoryStr,thumbnailUrlStr);
 				}

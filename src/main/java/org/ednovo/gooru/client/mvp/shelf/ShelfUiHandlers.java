@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.shelf;
 import java.util.HashMap;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.UpdateResourceCountEventHandler;
@@ -40,7 +41,7 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
  * @author Search Team
  *
  */
-public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHandler,UpdateResourceCountEventHandler, SetFolderParentNameHandler{
+public interface ShelfUiHandlers extends BaseUiHandlers,GetEditPageHeightEventHandler,UpdateResourceCountEventHandler, SetFolderParentNameHandler, SetFolderMetaDataHandler{
 
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_SHELF_TAB = new Type<RevealContentHandler<?>>();

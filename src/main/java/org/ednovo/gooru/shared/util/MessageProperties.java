@@ -2143,38 +2143,56 @@ public interface MessageProperties {
     	
     	//Added new fields for player metadata.
     	String GL1685="Time Required";
-    	String GL1686="OER";
-    	String GL1687="Mobile Friendly";
+    	String GL1686="Contributor";
+    	String GL1687="Mobile-friendlyness";
     	String GL1688="Data Type";
     	String GL1689="Interactivity Type";
     	String GL1690="Educational Alignment";
-    	String GL1691="Educational Role";
+    	String GL1691="Educational Role (Audience)";
     	String GL1692="Age Range";
     	String GL1693="Depth of Knowledge";
     	String GL1694="Reading Level";
-     	String GL1695="School Level";
+     	String GL1695="Has Adaptation";
      	String GL1696="Language";
     	String GL1697=	"Country Code";
-    	String GL1698="Ads";
+    	String GL1698="Is Adaptation";
     	String GL1699="Copyright Holder";
     	String GL1700="Host";
-    	String GL1701="Course Number";
-    	String GL1702="Series Title";
+    	String GL1701="Gooru Course";
+    	String GL1702="Accessbility API";
     	String GL1703="ACCESSIBILITY";
     	String GL1704="Control Flexibility";
     	String GL1705="Access Hazard";
-    	String GL1706=	"Media Feature";
+    	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL";
+    	String GL1708="GENERAL INFO";
 		String GL1709="e.g: I use this with my students to explain how, etc...";
-		
 		String GL1710="Image";
 		String GL1711="Video";
 		String GL1712="YouTube URL";
 		String GL1713="Type the YouTube video URL in the text field above. if it's correct, you'll see a preview below. Feel free to also edit the video start and stop time as well.";
 		String GL1714="Preview";
-
-		
+		String GL1715="Gooru Subject";
+		String GL1716="RESOURCE INFO";
+		String GL1717="Date Created";
+		String GL1718="Thumbnail URL";
+		String GL1719="License Code";
+		String GL1720="EDUCATIONAL INFO";
+		String GL1721 = "Language Objective";
+		String GL1722 = "Learning & Innovation Skills";
+		String GL1723 = "Audience";
+		String GL1724 = "Instructional Method";
     	
+		
+		String GL1725="Ex: Our character is largely determined by our beliefs, experiences, and relationships.";
+		String GL1726="Ex: Why is it important to know the qualities of a character? How do characters’ actions reveal or convey who they are?";
+		String GL1727="Ex: Write an informational essay.";
+		
+		String GL1728 = "See All";
+		String GL1729 ="Access Prior Knowledge,Introduce New Material,Quiz";
+		String GL1730 ="All Students,Students below grade level,Students above grade level,English Language learners,Students with special needs,Teachers";
+		String GL1731 = "Big Ideas";
+		String GL1732 = "Essential Questions";
+		String GL1733 = "Performance Task";
    }
 

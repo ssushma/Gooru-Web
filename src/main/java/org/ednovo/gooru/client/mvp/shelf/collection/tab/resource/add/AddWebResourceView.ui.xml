@@ -4,6 +4,9 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle"
 		field="res"></ui:with>
+		<ui:with
+		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
+		field="res1" />
 	<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="contentPanel">
         <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>
@@ -422,14 +425,21 @@
 		</g:HTMLPanel>
 		<!-- Moments of Learning  End-->
 		<!-- Standards Start -->
-		 <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
-          <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="standardsText"></g:HTMLPanel>
-          <g:HTMLPanel styleName="{res.css.myEducationFormInputControl}">
-				<g:TextBox ui:field="standardsTextBox" styleName="{res.css.inputTextBox}"/>
-          </g:HTMLPanel>
-           <g:Label ui:field="mandatoryStandardsLblForSwareWords"></g:Label>
-          <g:Label styleName="{res.css.myFolderCollectionFormInputBottomText}" ui:field="mandatoryStandardsLbl"></g:Label>
-        </g:HTMLPanel>
+		 <g:FlowPanel ui:field="standardContainer">
+					<g:Label styleName="{res1.css.shelfGradeInfoBottom}"
+						ui:field="standardsDefaultText"></g:Label>
+					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
+						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
+							<g:FlowPanel styleName="{res1.css.standardsCont}">
+								<uc:AppSuggestBox ui:field="standardSgstBox"
+									width="255px" height="19px" />
+								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />
+								<g:FlowPanel ui:field="standardsPanel"
+									styleName="{res1.css.collectionStandardsMargin}" />
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+				</g:FlowPanel>
         <!-- Standards End -->
           <g:HTMLPanel styleName="{res.css.resourceRightsContainer}">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
