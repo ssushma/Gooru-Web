@@ -1008,6 +1008,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					depthofKnowledgeValue = true;
 					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
+					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
 
 			}
@@ -1099,6 +1100,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 					learningAndInnovationSkill = true;
 					lbllearningSkills = new Label(checkboxSelectedDo.getValue());
 					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
+					lbllearningSkills.getElement().setAttribute("style", "display:table");
 					learningAndInnovationSkillPanel.add(lbllearningSkills);
 				}
 				
