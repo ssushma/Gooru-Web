@@ -1029,7 +1029,7 @@ public interface MessageProperties {
 		//Hints
 		String GL0859	="Hints (hints will show up in this order)";
 		//Add Question image in shelf
-		String GL0860	="Question Image or Video";//Label
+		String GL0860	="Question Image";//Label
 		String GL0861	=	"Change Image";//Label
 		String GL0862	="Remove Image";//Label
 		//Add Question Resource View in shelf.
