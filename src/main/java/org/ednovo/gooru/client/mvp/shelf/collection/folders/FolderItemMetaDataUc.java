@@ -40,7 +40,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	@UiField Label ideasStaticLbl, questionsStaticLbl, tasksStaticLbl;
 	
-	private String folderId = null, title = null;
+	private String folderId = null, title = null, bigIdeas = "", essentialQuestions = "", performanceTask = "";
 	
 	private static FolderItemMetaDataUcUiBinder uiBinder = GWT
 			.create(FolderItemMetaDataUcUiBinder.class);
@@ -53,7 +53,6 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		setDebugIds();
 		showEditableMetaData(true);
-		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
 		bigIdeasHTML.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
@@ -82,7 +81,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		essentialQuestionsHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
+				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, essentialQuestionsHTML.getText()));
 			}
 		});
 
@@ -98,7 +97,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		performanceTaskHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				performanceTaskHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
+				performanceTaskHTML.setHTML(restrictKeyLimit(event, performanceTaskHTML.getText()));
 			}
 		});
 
@@ -122,7 +121,6 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			 
          } else {
 	         if(text.trim().length()>600){
-	        	 text.substring(0, 600);
 	        	 event.preventDefault();
 	         }
          }
@@ -130,6 +128,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	}
 	
 	public void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
+		this.bigIdeas = bigIdeas;
+		this.essentialQuestions = essentialQuestions;
+		this.performanceTask = performanceTask;
 		if(bigIdeas==null || bigIdeas.isEmpty()) {
 			bigIdeas = GL1725;
 		}
@@ -154,10 +155,19 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		essentialQuestionsHTML.setVisible(!isVisible);
 		performanceTaskHTML.setVisible(!isVisible);
 		formButtons.setVisible(!isVisible);
-
-		bigIdeasHTML.setHTML(bigIdeasLbl.getText());
-		essentialQuestionsHTML.setHTML(essentialQuestionsLbl.getText());
-		performanceTaskHTML.setHTML(performanceTaskLbl.getText());
+		System.out.println(bigIdeas);
+		System.out.println(essentialQuestions);
+		System.out.println(performanceTask);
+		
+		if(!bigIdeas.isEmpty()) {
+			bigIdeasHTML.setHTML(bigIdeasLbl.getText());
+		}
+		if(!essentialQuestions.isEmpty()) {
+			essentialQuestionsHTML.setHTML(essentialQuestionsLbl.getText());
+		}
+		if(!performanceTask.isEmpty()) {
+			performanceTaskHTML.setHTML(performanceTaskLbl.getText());
+		}
 	}
 	
 	@UiHandler("saveBtn")
