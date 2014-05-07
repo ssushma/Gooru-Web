@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
@@ -75,7 +76,7 @@ import com.google.gwt.json.client.JSONArray;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
-public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
+public class ResourceServiceImpl extends BaseServiceImpl implements MessageProperties,ResourceService {
 
 	
 	private static final long serialVersionUID = 3247182821197046755L;
@@ -545,12 +546,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
+		if(!edcuationalUse.equalsIgnoreCase(GL1684))
 		newResourceDo.setEducationalUse(edcuationalUse);
 		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
 		checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
 		momentsOfObj.setSelected(true);
 		momentsOfObj.setValue(momentsOfLearning);
 		arrayOfMoments.add(momentsOfObj);
+		if(!momentsOfLearning.equalsIgnoreCase(GL1684))
 		newResourceDo.setMomentsOfLearning(arrayOfMoments);
 		
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
