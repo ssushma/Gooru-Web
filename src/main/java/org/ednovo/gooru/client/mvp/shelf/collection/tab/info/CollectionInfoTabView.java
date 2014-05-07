@@ -272,7 +272,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 		languageObjectiveerrLabel.setVisible(false);
 
-		textAreaVal.getElement().setAttribute("maxlength", "1000");
+		textAreaVal.getElement().setAttribute("maxlength", "415");
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
@@ -288,7 +288,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				if(textAreaVal.getText().length() > 1000)
+				if(textAreaVal.getText().length() >= 415)
 				{
 					textAreaVal.cancelKey();
 				}			
@@ -706,7 +706,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				
 				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
 					{
 					chkLevelRecall.setValue(true);
 					}
@@ -717,7 +717,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
 					{
 						chkLevelSkillConcept.setValue(true);
 					}
@@ -728,7 +728,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
 					{
 						chkLevelExtendedThinking.setValue(true);
 					}
@@ -739,7 +739,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox3))
 				{
-					if(collectionDoVal.getDepthOfKnowledges().get(i).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getDepthOfKnowledges().get(i).isSelected()==true)
 					{
 						chkLevelStrategicThinking.setValue(true);
 					}
@@ -760,7 +760,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				
 				if(compareValueLevel.equalsIgnoreCase(compareValueLevelFetched))
 				{
-					if(collectionDoVal.getLearningSkills().get(j).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
 					{
 						learninglevel1.setValue(true);
 					}
@@ -771,7 +771,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox1))
 				{
-					if(collectionDoVal.getLearningSkills().get(j).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
 					{
 						learninglevel2.setValue(true);
 					}
@@ -782,7 +782,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 				else if(compareValueLevel.equalsIgnoreCase(compareValueLevelCheckbox2))
 				{
-					if(collectionDoVal.getLearningSkills().get(j).getSelected().toString().equalsIgnoreCase("true"))
+					if(collectionDoVal.getLearningSkills().get(j).isSelected()==true)
 					{
 						learninglevel3.setValue(true);
 					}
@@ -798,7 +798,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			{
 				if(collectionDoVal.getInstructionalMethod().get(m).getValue() != null || !collectionDoVal.getInstructionalMethod().get(m).getValue().isEmpty())
 				{
-					if(collectionDoVal.getInstructionalMethod().get(m).getSelected().equalsIgnoreCase("true"))
+					if(collectionDoVal.getInstructionalMethod().get(m).isSelected()==true)
 					{
 						lblInstructionalPlaceHolder.setText(collectionDoVal.getInstructionalMethod().get(m).getValue());
 						break;
@@ -818,7 +818,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			{
 				if(collectionDoVal.getAudience().get(n).getValue() != null || !collectionDoVal.getAudience().get(n).getValue().isEmpty())
 				{
-					if(collectionDoVal.getAudience().get(n).getSelected().equalsIgnoreCase("true"))
+					if(collectionDoVal.getAudience().get(n).isSelected()==true)
 					{
 						lblAudiencePlaceHolder.setText(collectionDoVal.getAudience().get(n).getValue());
 						break;

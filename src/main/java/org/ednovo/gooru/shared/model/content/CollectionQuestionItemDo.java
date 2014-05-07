@@ -58,8 +58,8 @@ public class CollectionQuestionItemDo implements Serializable {
 	private HashMap<String,ArrayList<QuestionHintsDo>> hints;
 	private HashMap<String,ArrayList<QuestionAnswerDo>> answers;
 	private String educationalUse;
-	private Set<CodeDo> taxonomySet;
-	private Set<checkboxSelectedDo> depthOfKnowledges;
+	private HashMap<String,ArrayList<CodeDo>> taxonomySet;
+	private HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledges;
 	
 	public CollectionQuestionItemDo(){}
 	
@@ -160,20 +160,20 @@ public class CollectionQuestionItemDo implements Serializable {
 		this.educationalUse = educationalUse;
 	}
 
-	public Set<CodeDo> getTaxonomySet() {
+	public HashMap<String, ArrayList<CodeDo>> getTaxonomySet() {
 		return taxonomySet;
 	}
 
-	public void setTaxonomySet(Set<CodeDo> taxonomySet) {
+	public void setTaxonomySet(HashMap<String, ArrayList<CodeDo>> taxonomySet) {
 		this.taxonomySet = taxonomySet;
 	}
 
-	public Set<checkboxSelectedDo> getDepthOfKnowledges() {
+	public HashMap<String, ArrayList<checkboxSelectedDo>> getDepthOfKnowledges() {
 		return depthOfKnowledges;
 	}
 
-	public void setDepthOfKnowledges(Set<checkboxSelectedDo> depthOfKnowledges) {
+	public void setDepthOfKnowledges(
+			HashMap<String, ArrayList<checkboxSelectedDo>> depthOfKnowledges) {
 		this.depthOfKnowledges = depthOfKnowledges;
 	}
-
 }
