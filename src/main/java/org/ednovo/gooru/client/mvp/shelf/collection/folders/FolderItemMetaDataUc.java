@@ -147,6 +147,13 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	}
 	
 	public void showEditableMetaData(boolean isVisible) {
+		
+		performanceTaskPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
+		essentialQuestionsPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
+		bigIdeasPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
+		closeItem.addStyleName(folderMetaStyle.closeItem());
+		closeItem.removeStyleName(folderMetaStyle.openItem());
+		
 		bigIdeasLbl.setVisible(isVisible);
 		essentialQuestionsLbl.setVisible(isVisible);
 		performanceTaskLbl.setVisible(isVisible);
@@ -190,12 +197,14 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	public void clickCloseItem(ClickEvent event) {
 		showEditableMetaData(true);
 		if(closeItem.getStyleName().contains(folderMetaStyle.closeItem())) {
+			System.out.println("ht::"+folderMetaStyle.closedPanelHeight());	
 			performanceTaskPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			essentialQuestionsPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			bigIdeasPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			closeItem.removeStyleName(folderMetaStyle.closeItem());
 			closeItem.addStyleName(folderMetaStyle.openItem());
 		} else {
+			System.out.println("ht1::"+folderMetaStyle.closedPanelHeight());
 			performanceTaskPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 			essentialQuestionsPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 			bigIdeasPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
