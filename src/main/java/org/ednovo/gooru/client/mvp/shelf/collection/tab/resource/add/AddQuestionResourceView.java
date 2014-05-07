@@ -2182,7 +2182,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     boolean checked = checkBox.getValue();			     		   
 		     if(checked){
 		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected("true");
+			     depthObj.setSelected(true);
 			     depthObj.setValue(checkBox.getText());
 			     depthOfKnowledges.add(depthObj);
 		     }else{

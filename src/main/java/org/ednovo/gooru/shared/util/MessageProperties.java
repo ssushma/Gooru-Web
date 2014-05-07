@@ -1473,14 +1473,14 @@ public interface MessageProperties {
 		
 		//image upload view.
 		String GL1215="Choose a picture from";
-		String GL1216="On the web";
+		String GL1216="On the Web";
 		String GL1217="My Computer";
 		String GL1218="Gooru Images";
 		String GL1219="Upload a picture from a file on your computer";
 		String GL1220="You can upload a JPG,GIF, or PNG file of size smaller than 5MB.";
 		String GL1221="Not Working";
 		String GL1222="Read this";
-		String GL1223="Upload a picture from a file on the web";
+		String GL1223="Upload a picture from the web.";
 		String GL1224="Image URL";
 		String GL1225="Upload";
 		String GL1226="Type the image URL in the text field above. If it's correct, you'll see an image preview here. Please upload images smaller than 5MB. ";
@@ -2084,7 +2084,7 @@ public interface MessageProperties {
     	String GL1637="INSTRUCTIONAL METHOD";
       	String GL1638="AUDIENCE";
       	String GL1639="Label the purpose of your collection:";
-      	String GL1640="Choose an audience for this collection";
+      	String GL1640="Choose an audience for this collection:";
       	String GL1641="e.g: Students will be able to explain patterns in the number of zeroes of an answer when multiplying by the powers of ten and explain patterns in the placement of decimal point.";
       	String GL1642="LANGUAGE OBJECTIVES";
       	String GL1643="DEPTH OF KNOWLEDGE";
@@ -2203,5 +2203,16 @@ public interface MessageProperties {
 		String GL1736 = "Please select \"Yes\" or \"No\" for each statement, and click \"Submit\".";
 		String GL1737 = "Reports";
 		String GL1738 = "Join Later";
+		
+		String GL1739 = "e.g. I used this collection as an opportunity for my students to explore various reasons for the Fall of Rome. They completed a graphic organizer as they worked through this collection and were then accountable to making judgements on which reasons they thought were the most significant and why. It all led up to a Socratic Seminar answering the essential question, In what ways did the pinnacle and demise of Rome influence European culture and history?";
+		String GL1740 = "e.g. Students will be able to explain patterns in the number of zeroes of an answer when multiplying by the powers of ten and explain patterns in the placement of the decimal point.";
+		
+		
+		//Upload Video 
+		String GL1741 = "Upload a video from the web.";
+		String GL1742 = "Sorry, we don't currently support YouTube channels. Please use a direct YouTube video url.";
+		String GL1743 = "Type the YouTube video URL in the text field above. If it's correct, you'll see an image preview below. Feel free to also edit the video start and stop time as well.";
+		String GL1744 = "We encourage you to incorporate videos that you have permission to use, or are otherwise part of the public domain. ";
+		
    }
 
