@@ -82,11 +82,9 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		
-		System.out.println("called once");
-		
+	
 		getView().onLoad();
-		//getView().reset();
+		getView().reset();
 			getTaxonomyService().getCourse(new SimpleAsyncCallback<List<LibraryCodeDo>>() {
 
 				@Override
