@@ -893,6 +893,7 @@ user agent stylesheetdiv {
 .myEducationalFormContent{
 		padding: 0px 0px 0px 0px;
 		padding-top: 12px;
+		clear: both;
 }
 
 .myFolderCollectionFormTitle {

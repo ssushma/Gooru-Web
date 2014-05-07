@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.model.content;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -46,7 +48,7 @@ public class NewResourceDo extends ResourceDo {
 	private Integer stop;
 	private ResourceFormatDo resourceFormat;
 	private String educationalUse;
-	private String momentsOfLearning;
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
 	
 	private String thumbnail;
 	
@@ -131,13 +133,12 @@ public class NewResourceDo extends ResourceDo {
 		this.educationalUse = educationalUse;
 	}
 
-	public String getMomentsOfLearning() {
+	public ArrayList<checkboxSelectedDo> getMomentsOfLearning() {
 		return momentsOfLearning;
 	}
 
-	public void setMomentsOfLearning(String momentsOfLearning) {
+	public void setMomentsOfLearning(ArrayList<checkboxSelectedDo> momentsOfLearning) {
 		this.momentsOfLearning = momentsOfLearning;
 	}
-	
 
 }
