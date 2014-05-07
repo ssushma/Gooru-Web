@@ -1003,17 +1003,15 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 
 			
 			for (checkboxSelectedDo checkboxSelectedDo : depthofKnowledgeList) {
-				if(checkboxSelectedDo.getSelected()!=null){
-				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
+				if(checkboxSelectedDo.isSelected()){
 					depthofKnowledgeValue = true;
 					Label depthofKnowledge = new Label(checkboxSelectedDo.getValue());
 					depthofKnowledge.addStyleName(playerStyle.depthofKnow());
 					depthofKnowledge.getElement().setAttribute("style", "display:table");
 					depthOfKnowledgePanel.add(depthofKnowledge);
 
-			}
 				}
-		}
+			}
 			
 			if(depthofKnowledgeValue){
 				depthOfKnowledgeContainer.setVisible(true);
@@ -1034,7 +1032,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			boolean instructionMethod=false;
 			for (checkboxSelectedDo checkboxSelectedDo : instructionmethodList) 
 			{
-			if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true"))
+			if(checkboxSelectedDo.isSelected())
 			{
 					instructionMethod = true;
 					Label lblInstructionMethod = new Label(checkboxSelectedDo.getValue());
@@ -1065,7 +1063,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			boolean audience=false;
 			
 			for (checkboxSelectedDo checkboxSelectedDo : audienceList) {
-				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
+				if(checkboxSelectedDo.isSelected()){
 					audience = true;
 					Label lblaudience = new Label(checkboxSelectedDo.getValue());
 					audiencePanel.add(lblaudience);
@@ -1096,7 +1094,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			boolean learningAndInnovationSkill = false;
 			Label lbllearningSkills = null;
 			for (checkboxSelectedDo checkboxSelectedDo : learningSkillsList) {
-				if(checkboxSelectedDo.getSelected().equalsIgnoreCase("true")){
+				if(checkboxSelectedDo.isSelected()){
 					learningAndInnovationSkill = true;
 					lbllearningSkills = new Label(checkboxSelectedDo.getValue());
 					lbllearningSkills.addStyleName(playerStyle.depthofKnow());
@@ -1123,6 +1121,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	public void renderLanguageObjective(String languageObjective)
 	{
+		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
 	if(languageObjective!=null)
 		{
 			languageObjectiveValue=languageObjective;

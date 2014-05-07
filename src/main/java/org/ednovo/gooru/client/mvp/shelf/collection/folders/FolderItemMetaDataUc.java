@@ -158,12 +158,18 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		
 		if(!bigIdeas.isEmpty()) {
 			bigIdeasHTML.setHTML(bigIdeasLbl.getText());
+		} else {
+			bigIdeasHTML.setHTML(bigIdeas);
 		}
 		if(!essentialQuestions.isEmpty()) {
 			essentialQuestionsHTML.setHTML(essentialQuestionsLbl.getText());
+		} else {
+			essentialQuestionsHTML.setHTML(essentialQuestions);
 		}
 		if(!performanceTask.isEmpty()) {
 			performanceTaskHTML.setHTML(performanceTaskLbl.getText());
+		} else {
+			performanceTaskHTML.setHTML(performanceTask);
 		}
 	}
 	

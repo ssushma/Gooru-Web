@@ -60,7 +60,7 @@
                  
               <g:HTMLPanel styleName="{playerStyle.infoSection}" ui:field="depthOfKnowledgeContainer">
                        <g:Label styleName="h6 {playerStyle.marginBotton10Px}" ui:field="lbldepthOfKnowledgeText" />
-                       <g:HTMLPanel ui:field="depthOfKnowledgePanel" styleName="{playerStyle.depthOfKnowledgePanel}"></g:HTMLPanel>
+                       <g:HTMLPanel ui:field="depthOfKnowledgePanel"></g:HTMLPanel>
                       
                  </g:HTMLPanel> 
                  

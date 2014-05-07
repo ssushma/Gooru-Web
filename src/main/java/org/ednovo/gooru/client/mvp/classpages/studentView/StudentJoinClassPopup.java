@@ -30,9 +30,9 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 	ClasspageDo classpageDo;
 	@UiField Label closeLbl;
 	
-	@UiField Button joinClassBtn;
+	@UiField Button joinClassBtn,joinLaterBtn;
 	
-	@UiField HTMLPanel headerPanel;//termsPanel, descPanel, welcomePanel
+	@UiField HTMLPanel headerPanel,welcomePanel,descPanel,classNamePanel;//termsPanel, descPanel, welcomePanel
 	
 	@UiField HTML htmlInformation,htmlAgree;
 
@@ -43,8 +43,7 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 		this.classpageDo = classpageDo;
 		
 		String userName = classpageDo.getCreatorUsername();
-		System.out.println("userName : "+userName);
-		setStaticData();
+		setStaticData(classpageDo);
 
 		this.setGlassEnabled(true);
 
@@ -52,10 +51,28 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 	}
 
-	private void setStaticData() {
+	private void setStaticData(ClasspageDo classpageDo) {
 		headerPanel.getElement().setInnerHTML(GL1536);
-//		welcomePanel.getElement().setInnerHTML(GL1540);
-//		descPanel.getElement().setInnerHTML(GL1541);
+		
+		if(classpageDo.getSharing().equalsIgnoreCase("public"))
+		{
+			welcomePanel.setVisible(true);
+			classNamePanel.setVisible(true);
+			descPanel.setVisible(true);
+			joinLaterBtn.setVisible(true);
+		
+		welcomePanel.getElement().setInnerHTML(GL1540);
+		classNamePanel.getElement().setInnerHTML(classpageDo.getTitle() +"!");
+		descPanel.getElement().setInnerHTML(GL1541);
+		joinLaterBtn.setText(GL1738);
+		}
+		else
+		{
+			welcomePanel.setVisible(false);
+			classNamePanel.setVisible(false);
+			descPanel.setVisible(false);
+			joinLaterBtn.setVisible(false);
+		}
 //		termsPanel.getElement().setInnerHTML(GL1542);
 		String userName = classpageDo.getCreatorUsername();
 		htmlAgree.getElement().setInnerHTML(StringUtil.generateMessage(GL1543, userName != null ? userName : ""));
@@ -67,6 +84,11 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 
 	@UiHandler("closeLbl")
 	public void clickOnCloseBtn(ClickEvent clickEvent){
+		closePoup();
+	}
+	
+	@UiHandler("joinLaterBtn")
+	public void clickOnJoinLaterBtn(ClickEvent clickEvent){
 		closePoup();
 	}
 	

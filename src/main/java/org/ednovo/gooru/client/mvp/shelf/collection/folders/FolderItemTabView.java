@@ -401,7 +401,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			FolderDeleteView folderDeleteView=new FolderDeleteView();
 			folderDeleteView.setGlassEnabled(true);
 			folderDeleteView.setStyleName("folderDelete");
-			folderDeleteView.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - (630), Window.getScrollTop() + 182);
+			folderDeleteView.setPopupPosition((Window.getClientWidth()-450)/2, Window.getScrollTop() + 182);
+
 			Window.enableScrolling(false);
 			folderDeleteView.show();
 		}
@@ -612,5 +613,6 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		String questions = folderMetaData.get("questions")!=null?folderMetaData.get("questions"):"";
 		String performanceTasks = folderMetaData.get("performanceTasks")!=null?folderMetaData.get("performanceTasks"):"";
 		folderItemMetaDataUc.setMetaData(ideas, questions, performanceTasks);
+		folderItemMetaDataUc.showEditableMetaData(true);
 	}
 }

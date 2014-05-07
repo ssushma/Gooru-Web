@@ -35,4 +35,6 @@ public interface DataInsightsUrlTokens {
 	
 	String PLAYER_CLASS_PREVIOUS_DATA="dashboard/#/classpage/{0}/collection/{1}/user/{2}/session/?session_token={3}";
 	
+	String CLASS_REPORTS="dashboard/#/reports/classpage/{0}/user/{1}?session_token={2}";
+
 }

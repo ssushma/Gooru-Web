@@ -58,6 +58,8 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
@@ -183,6 +185,12 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	private static final String TEXAS = "texas";
 	
 	private static final String CCSS = "ccss";
+	
+	private static final String SHARING_TYPE = "public";
+	
+	private static final String COLLECTION_TYPE = "folder";
+	
+	ArrayList<PartnerFolderDo> partnerFolderList = new ArrayList<PartnerFolderDo>();
 	
 	private static LibraryViewUiBinder uiBinder = GWT.create(LibraryViewUiBinder.class);
 
@@ -571,7 +579,12 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
 					defaultCourseId = ""+courseDoList.get(i).getCodeId();
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(i).getUnit());
+						if(partnerFolderList.size()>0) {
+							setThirdPartyCourseUnitData(partnerFolderList);
+						} else {
+							getPartnerWorkspaceFolders();
+						}
+						//setUnitListData(courseDoList.get(i).getUnit());
 					}
 					else {
 						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);	
@@ -581,7 +594,12 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				if(i==0) {
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(i).getUnit());
+						if(partnerFolderList.size()>0) {
+							setThirdPartyCourseUnitData(partnerFolderList);
+						} else {
+							getPartnerWorkspaceFolders();
+						}
+						//setUnitListData(courseDoList.get(i).getUnit());
 					}
 					else{
 						getPopularList(courseDoList.get(i).getUnit(), courseDoList.get(i).getCodeId(), true);	
@@ -601,7 +619,15 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			try {
 				if(courseId.equals(""+featuredCourseListView.getCourseId())) {
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(widgetCount).getUnit());
+						if(courseDoList.get(widgetCount).getParentId()!=null) {
+							if(partnerFolderList.size()>0) {
+								setThirdPartyCourseUnitData(partnerFolderList);
+							} else {
+								getPartnerWorkspaceFolders();
+							}
+						} else {
+							setUnitListData(courseDoList.get(widgetCount).getUnit());
+						}
 					}
 					else{
 						getPopularList(courseDoList.get(widgetCount).getUnit(), courseDoList.get(widgetCount).getCodeId(), true);	
@@ -620,7 +646,15 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 					}
 					widget.addStyleName(ACTIVE_STYLE);
 					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
-						setUnitListData(courseDoList.get(widgetCountTemp).getUnit());	
+						if(courseDoList.get(widgetCountTemp).getParentId()!=null) {
+							if(partnerFolderList.size()>0) {
+								setThirdPartyCourseUnitData(partnerFolderList);
+							} else {
+								getPartnerWorkspaceFolders();
+							}
+						} else {
+							setUnitListData(courseDoList.get(widgetCountTemp).getUnit());
+						}
 					}
 					else{
 						getPopularList(courseDoList.get(widgetCountTemp).getUnit(), courseDoList.get(widgetCountTemp).getCodeId(), false);
@@ -1114,6 +1148,92 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	
 	public HTMLPanel getContentScroll() {
 		return contentScroll;
+	}
+
+	public void getPartnerWorkspaceFolders() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace("Autodesk", 20, SHARING_TYPE, COLLECTION_TYPE, new AsyncCallback<PartnerFolderListDo>(){
+			@Override
+			public void onFailure(Throwable caught) {}
+			
+			@Override
+			public void onSuccess(PartnerFolderListDo result) {
+				partnerFolderList = result.getSearchResult();
+				setThirdPartyCourseUnitData(partnerFolderList);
+			}
+		});
+	}
+	
+	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<PartnerFolderListDo>() {
+			@Override
+			public void onSuccess(PartnerFolderListDo result) {
+				//getView().setTopicListData(result.getSearchResult(), folderId);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+
+	private void setThirdPartyCourseUnitData(final ArrayList<PartnerFolderDo> folderList) {
+		getLeftNav().clear();
+		getContentScroll().clear();
+		String folderId = AppClientFactory.getPlaceManager().getRequestParameter("id");
+		int j = 0;
+		for(int i = 0; i<folderList.size(); i++) {
+			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
+				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
+				getLeftNav().add(libraryUnitMenuView);
+				if(j==0&&folderId==null) {
+					j++;
+					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
+					unitListId = folderList.get(i).getGooruOid();
+					setTopicListData(folderList.get(i).getFolderItems(), unitListId);
+					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+				}
+			}
+		}
+		
+		final Iterator<Widget> widgets = getLeftNav().iterator();
+		int widgetCount = 0;
+		while (widgets.hasNext()) {
+			final Widget widget = widgets.next();
+			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
+			final int finalWidgetCount = widgetCount;
+			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					getContentScroll().setVisible(false);
+					final Iterator<Widget> widgetsPanel = getLeftNav().iterator();
+					while (widgetsPanel.hasNext()) {
+						widgetsPanel.next().removeStyleName(libraryStyleUc.unitLiActive());
+					}
+					widget.addStyleName(libraryStyleUc.unitLiActive());
+					unitListId = libraryUnitMenuView.getUnitId();
+					if(finalWidgetCount==0) {
+						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
+					} else {
+						//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+					}
+				}
+			});
+			widgetCount++;
+		}
+	}
+	
+	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId) {
+		getContentScroll().clear();
+		try {
+			int count = 0;
+			for(int i = 0; i <folderListDo.size(); i++) {
+				count++;
+				getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+			}
+			getContentScroll().setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
