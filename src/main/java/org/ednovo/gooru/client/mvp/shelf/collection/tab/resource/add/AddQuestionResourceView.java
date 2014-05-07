@@ -51,6 +51,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -66,8 +67,11 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -90,6 +94,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
@@ -139,6 +144,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField AddQuestionAnswerChoice alphaLetterA,alphaLetterB;
 	private CopyRightPolicyVc copyRightPolicy;
 	
+	@UiField Image depthOfKnoweldgeToolTip;
+	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
 	
@@ -438,6 +445,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		chkLevelStrategicThinking.setText(GL1647);
 		chkLevelExtendedThinking.setText(GL1648);
 		educationalUsePanel.setVisible(false);
+		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
+		depthOfKnoweldgeToolTip.setTitle("Question Mark");
 		addClickEventsForCheckBox();
 	}
 	@Override
@@ -2139,6 +2148,31 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     	 chkLevelSkillConcept.addClickHandler(new AddCheckBoxClickHandler());
     	 chkLevelStrategicThinking.addClickHandler(new AddCheckBoxClickHandler());
     	 chkLevelExtendedThinking.addClickHandler(new AddCheckBoxClickHandler());
+    	 depthOfKnoweldgeToolTip.addMouseOverHandler(new MouseOverHandler() {
+ 			
+ 			@Override
+ 			public void onMouseOver(MouseOverEvent event) {
+ 				toolTip = new ToolTip("");
+ 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
+ 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+ 				toolTip.setPopupPosition(depthOfKnoweldgeToolTip.getAbsoluteLeft()-(50+22), depthOfKnoweldgeToolTip.getAbsoluteTop()+22);
+ 				toolTip.getElement().getStyle().setZIndex(1111);
+ 				toolTip.show();
+ 			}
+ 		});
+ 		depthOfKnoweldgeToolTip.addMouseOutHandler(new MouseOutHandler() {
+ 			
+ 			@Override
+ 			public void onMouseOut(MouseOutEvent event) {
+ 				
+ 				EventTarget target = event.getRelatedTarget();
+ 				  if (Element.is(target)) {
+ 					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+ 						  toolTip.hide();
+ 					  }
+ 				  }
+ 			}
+ 		});
      }
      public class AddCheckBoxClickHandler implements ClickHandler  {
 
@@ -2148,7 +2182,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		     boolean checked = checkBox.getValue();			     		   
 		     if(checked){
 		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
-			     depthObj.setSelected("true");
+			     depthObj.setSelected(true);
 			     depthObj.setValue(checkBox.getText());
 			     depthOfKnowledges.add(depthObj);
 		     }else{

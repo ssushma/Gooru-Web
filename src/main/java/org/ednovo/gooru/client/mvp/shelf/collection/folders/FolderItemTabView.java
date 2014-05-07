@@ -402,6 +402,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			folderDeleteView.setGlassEnabled(true);
 			folderDeleteView.setStyleName("folderDelete");
 			folderDeleteView.setPopupPosition((Window.getClientWidth()-450)/2, Window.getScrollTop() + 182);
+
 			Window.enableScrolling(false);
 			folderDeleteView.show();
 		}
