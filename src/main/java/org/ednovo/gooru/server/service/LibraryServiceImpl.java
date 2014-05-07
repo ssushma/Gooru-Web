@@ -95,7 +95,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 
 	private static final String EXCLUDED_COURSE = "Language and Composition";
 	private static final String INCLUDED_COURSE = "Teachable Moments";
-	private static final String AUTODESK_GOORU_UID = "8a6b75b8-0537-492e-8970-c41ade8723a6";
+	private static final String AUTODESK_GOORU_UID = "237011b7-d174-4221-9dcb-563526dd0b09";
+	private final static String DEFAULT_USER_IMG = "../images/settings/setting-user-image.png";
+	private static final String MALE = "male";
+	private final static String RUSDLEARNS = "rusdlearns";
 	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
@@ -355,6 +358,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				courseDo.setLabel(INCLUDED_COURSE);
 				courseDo.setParentId(AUTODESK_GOORU_UID);
 				courseDo.getThumbnails().setUrl(COURSE_100_75_IMG);
+				courseDo.getCreator().setGender(MALE);
+				courseDo.getCreator().setLastName(RUSDLEARNS);
+				courseDo.getCreator().setGooruUId(AUTODESK_GOORU_UID);
+				courseDo.setUser(null);
 				data.remove(i);
 			}
 		}
