@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
@@ -545,16 +546,13 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
 		newResourceDo.setEducationalUse(edcuationalUse);
-		try{
-			org.json.JSONArray jsonArray=new org.json.JSONArray();
-			JSONObject momentsOfLearningObj=new JSONObject();
-			momentsOfLearningObj.put("value", momentsOfLearning);
-			momentsOfLearningObj.put("selected", "true");
-			jsonArray.put(momentsOfLearningObj.toString());
-			newResourceDo.setMomentsOfLearning(jsonArray.toString());
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
+		checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
+		momentsOfObj.setSelected(true);
+		momentsOfObj.setValue(momentsOfLearning);
+		arrayOfMoments.add(momentsOfObj);
+		newResourceDo.setMomentsOfLearning(arrayOfMoments);
+		
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
 		resourceFormat.setValue(categoryStr);
 		
@@ -633,7 +631,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
-
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -782,7 +779,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj=new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_COLLECTION, collectionGooruOid, getGuestSessionToken(""), "true");
-
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
