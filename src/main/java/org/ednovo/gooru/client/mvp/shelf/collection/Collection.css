@@ -184,7 +184,7 @@
 .shelfGradeInfoBottom {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;
-	width: 277px;
+	width: 100%;
 }
 
 .shelfGradeTeacherTipTextTitle {
@@ -204,24 +204,20 @@
 }
 .shelfTeacherTipButtons
 {
-		float: right;
+	float: right;
 	clear: both;
 	margin-right: 25px;
-	
-
+	margin-left: 15px;
 }
 .shelfGradeTeacherTipButtonsContainer
 {
 	width:332px;
 	float: right;
-clear: both;
-margin-top:17px;
-}
-.shelfTeacherTipButtonsCancel
-{
 	clear: both;
-	left: 193px;
-position: relative;
+	margin-top:17px;
+}
+.shelfTeacherTipButtonsCancel{
+	float: right;
 }
 .shelfGradeTeacherTipTextbox{
 	color: rgb(112, 109, 109);
@@ -1198,6 +1194,7 @@ padding-left:40px;
 	float: left;
 	margin-right: 45px;
 	width: 91%;
+	clear: both;
 }
 .languageObjectiveTextArea
 {
@@ -1332,6 +1329,7 @@ height: 73px;
 	clear: both;
 	max-width:500px;
 	word-wrap: break-word;
+	cursor: pointer;
 }
 .teacherTipPencilHolder{
 	float:left;
@@ -1340,4 +1338,7 @@ height: 73px;
 .errorLabelColor
 {
 	color:orange;
+}
+.depthOfKnowledgeSubContainer{
+	display: inline-flex;
 }

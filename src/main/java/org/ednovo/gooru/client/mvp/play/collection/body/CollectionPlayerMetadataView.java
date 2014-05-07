@@ -76,14 +76,14 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer,messageContainer,frameContainer,courseTitle;
 	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc;
-	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,insightsHeaderText,insightsContentText;//collectionSummaryLbl,emptyMsgDescOne,emptyMsgDescTwo
+	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,insightsHeaderText,insightsContentText,lbllanguageObjectiveText,lbllanguageObjective;//collectionSummaryLbl,emptyMsgDescOne,emptyMsgDescTwo
 	@UiField Image profileThumbnailImage;
-	@UiField HTMLPanel authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer;
-	@UiField Anchor previewFlagButton;
+	@UiField HTMLPanel authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer;
+	@UiField Anchor previewFlagButton,seeMoreAnchor;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	//@UiField Frame insightsFrame;
 //	@UiField Button collectionSummaryPrintBtn;
-	
+	private String languageObjectiveValue;
 	private CollectionDo collectionDo=null;
 	
 	public static final String STANDARD_CODE = "code";
@@ -121,6 +121,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		setUserProfileImage(collectionDo.getUser().getGooruUId());
 		renderCourseInfo(collectionDo.getMetaInfo().getCourse());
 		renderStandards(standardsContainer,getStandardsMap(this.collectionDo.getMetaInfo().getStandards()));
+		renderLanguageObjective(collectionDo.getLanguageObjective());
 		
 	}
 	
@@ -160,6 +161,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		insightsContentText.setText(GL1627);
 		previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
+		lbllanguageObjectiveText.setText(GL1721);
 	}
 	
 	public void setUserName(String userName){
@@ -448,5 +450,40 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		//insightsFrame.setUrl("");
 	}
 	
-	
+	public void renderLanguageObjective(String languageObjective)
+	{	
+	lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
+	if(languageObjective!=null)
+		{
+			languageObjectiveValue=languageObjective;
+			languageObjectiveContainer.setVisible(true);
+			//lbllanguageObjectiveAll.setVisible(false);
+			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
+			if(languageObjective.length()>=200){
+				seeMoreAnchor.setText(GL1728);	
+				seeMoreAnchor.setVisible(true);
+				lbllanguageObjective.setText(languageObjective.substring(0,200));
+				//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
+			}
+			else
+			{
+				seeMoreAnchor.setVisible(false);
+				lbllanguageObjective.setText(languageObjective);
+			}
+			
+		}
+		else
+		{
+			languageObjectiveContainer.setVisible(false);
+			
+		}
+	}
+	@UiHandler("seeMoreAnchor")
+	public void clickSeeAll(ClickEvent event)
+	{
+		//lbllanguageObjectiveAll.setVisible(true);
+		seeMoreAnchor.setVisible(false);
+		lbllanguageObjective.setText("");
+		lbllanguageObjective.setText(languageObjectiveValue);
+	}
 }

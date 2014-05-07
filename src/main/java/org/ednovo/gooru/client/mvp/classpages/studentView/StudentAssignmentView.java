@@ -782,10 +782,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 	
 	public void openJoinClassEvent(){
-System.out.println("checkstatus::"+classpageDo.getStatus());
+
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
 		{
-		if(!classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()) && !classpageDo.getStatus().equalsIgnoreCase("active") && classpageDo.getStatus().equalsIgnoreCase("pending"))
+		if((!classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()) && !classpageDo.getStatus().equalsIgnoreCase("active") && classpageDo.getStatus().equalsIgnoreCase("pending"))|| classpageDo.getStatus().equalsIgnoreCase("not-invited"))
 		{
 		
 		joinPopupButtonClick =  new StudentJoinClassPopup(classpageDo) {

@@ -207,7 +207,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		});
 		
 		teacherTipTextarea.addKeyUpHandler(new DirectionsKeyUpHandler());
-		teacherTipTextarea.getElement().setAttribute("maxlength", "400");
+		teacherTipTextarea.getElement().setAttribute("maxlength", "500");
 		
 		teacherTipTextarea.addFocusHandler(new FocusHandler() {
 			@Override
@@ -223,7 +223,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		teacherTipTextarea.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				if(teacherTipTextarea.getText().length() > 415)
+				if(teacherTipTextarea.getText().length() > 501)
 				{
 					teacherTipTextarea.cancelKey();
 				}			

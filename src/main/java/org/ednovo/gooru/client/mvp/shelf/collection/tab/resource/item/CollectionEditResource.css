@@ -893,6 +893,7 @@ user agent stylesheetdiv {
 .myEducationalFormContent{
 		padding: 0px 0px 0px 0px;
 		padding-top: 12px;
+		clear: both;
 }
 
 .myFolderCollectionFormTitle {
@@ -1369,7 +1370,15 @@ user agent stylesheetdiv {
 	text-align: left;
 	padding: 5px 0px 0px 0px;
 }
-
+.myEducationalPanelSubTitles{
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(153, 153, 153);
+	text-align: left;
+	padding: 5px 5px 5px 7px;
+}
 .myFolderCollectionFolderDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
 	border-width: 1px;
@@ -1388,7 +1397,17 @@ user agent stylesheetdiv {
 	background-color: rgb(255, 255, 255);
 	z-index: 1;
 	top: -11px;
-	width: 264px;
+	width: 257px;
+}
+.myEducationQuestionDropdown { /* height: 250px; */
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	z-index: 1;
+	top: -11px;
+	width: 277px;
 }
 .myshelfCollectionresourceDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);

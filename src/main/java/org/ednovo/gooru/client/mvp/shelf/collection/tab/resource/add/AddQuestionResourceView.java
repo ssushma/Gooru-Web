@@ -27,9 +27,11 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 
@@ -49,6 +51,7 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.RemoveToolTipUc;
 import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -58,13 +61,17 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -87,10 +94,11 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
+import com.google.gwt.user.client.ui.Widget;
 
 public abstract class AddQuestionResourceView extends Composite implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 	
@@ -136,12 +144,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField AddQuestionAnswerChoice alphaLetterA,alphaLetterB;
 	private CopyRightPolicyVc copyRightPolicy;
 	
+	@UiField Image depthOfKnoweldgeToolTip;
+	ToolTip toolTip=null;
 	private TermsAndPolicyVc termsAndPolicyVc;
 	private TermsOfUse termsOfUse;
 	
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
-	
+	Set<checkboxSelectedDo> depthOfKnowledges= new HashSet<checkboxSelectedDo>();;
 	public String getQuestionType() {
 		return questionType;
 	}
@@ -194,77 +204,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
 	public AddQuestionResourceView(){
-		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
-		standardSearchDo.setPageSize(10);
-		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
-			@Override
-			public void keyAction(String text) {
-				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
-				standardSearchDo.setSearchResults(null);
-				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
-				if(!courseCode.isEmpty()) {
-					Map<String,String> filters = new HashMap<String, String>();
-					filters.put(FLT_CODE_ID,courseCode);
-					standardSearchDo.setFilters(filters);
-				}
-				standardSearchDo.setQuery(text);
-				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
-					if(standardPreflist!=null){
-						for(int count=0; count<standardPreflist.size();count++) {
-							if(text.contains(standardPreflist.get(count))) {
-								standardsPrefDisplayPopup = true;
-								break;
-							} else {
-								standardsPrefDisplayPopup = false;
-							}
-						}						
-					}
-					
-					/*if(standardsPrefDisplayPopup){*/
-						standardsPreferenceOrganizeToolTip.hide();
-						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
-							
-							@Override
-							public void onSuccess(SearchDo<CodeDo> result) {
-								setStandardSuggestions(result);
-								
-							}
-							
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
-							}
-						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
-					else{
-						standardSgstBox.hideSuggestionList();
-						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
-						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
-						//standardSuggestOracle.add(GL1613);
-						
-					}*/
-					}
-					
-				
-			}
-
-			@Override
-			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		
-		standardSgstBox.addSelectionHandler(this);
+		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
 		questionText.getElement().setInnerHTML(" "+GL0863);
@@ -302,30 +242,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		loadingTextLbl.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
-		educationalTitle.getElement().setInnerHTML(GL1664);
-		activityText.getElement().setInnerHTML(GL1665);
-		handoutText.getElement().setInnerHTML(GL0907);
-		homeworkText.getElement().setInnerHTML(GL1666);
-		gameText.getElement().setInnerHTML(GL1667);
-		presentationText.getElement().setInnerHTML(GL1668);
-		referenceMaterialText.getElement().setInnerHTML(GL1669);
-		quizText.getElement().setInnerHTML(GL1670);
-		curriculumPlanText.getElement().setInnerHTML(GL1671);
-		lessonPlanText.getElement().setInnerHTML(GL1672);
-		unitPlanText.getElement().setInnerHTML(GL1673);
-		projectPlanText.getElement().setInnerHTML(GL1674);
-		readingText.getElement().setInnerHTML(GL1675);
-		textbookText.getElement().setInnerHTML(GL0909);
-		articleText.getElement().setInnerHTML(GL1676);
-		bookText.getElement().setInnerHTML(GL1677);
-		resourceEducationalLabel.setText(GL1684);
-		standardsDefaultText.setText(GL1682);
-		depthOfKnowledgeHeader.setText(GL1693);
-		chkLevelRecall.setText(GL1645);
-		chkLevelSkillConcept.setText(GL1646);
-		chkLevelStrategicThinking.setText(GL1647);
-		chkLevelExtendedThinking.setText(GL1648);
-		educationalUsePanel.setVisible(false);
+		setTextForTheFields();
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -414,6 +331,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		//questionNameTextAreaToolBarButton.addClickHandler(new ShowTinyMceToolBar(questionNameTextArea));
 	}
 	public AddQuestionResourceView(CollectionItemDo collectionItemDo){
+		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
 		addbutton.setText(GL0141);
@@ -435,6 +353,101 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		setQuestionTypeStaticTexts();
 		rightsChkBox.addClickHandler(new rightsChecked());
 		setTrueOrFalseFields();
+		setTextForTheFields();
+	}
+	public void initializeAutoSuggestedBox(){
+		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		standardSearchDo.setPageSize(10);
+		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
+			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+			@Override
+			public void keyAction(String text) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				//standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+						}						
+					}
+					/*if(standardsPrefDisplayPopup){*/
+						standardsPreferenceOrganizeToolTip.hide();
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+							@Override
+							public void onSuccess(SearchDo<CodeDo> result) {
+								setStandardSuggestions(result);
+								
+							}
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
+						//standardSgstBox.showSuggestionList();
+						/*}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+	
+						//standardSuggestOracle.add(GL1613);
+						
+					}*/
+					}
+			}
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+		};
+		standardSgstBox.addSelectionHandler(this);
+	}
+	public void setTextForTheFields(){
+		educationalTitle.getElement().setInnerHTML(GL1664);
+		activityText.getElement().setInnerHTML(GL1665);
+		handoutText.getElement().setInnerHTML(GL0907);
+		homeworkText.getElement().setInnerHTML(GL1666);
+		gameText.getElement().setInnerHTML(GL1667);
+		presentationText.getElement().setInnerHTML(GL1668);
+		referenceMaterialText.getElement().setInnerHTML(GL1669);
+		quizText.getElement().setInnerHTML(GL1670);
+		curriculumPlanText.getElement().setInnerHTML(GL1671);
+		lessonPlanText.getElement().setInnerHTML(GL1672);
+		unitPlanText.getElement().setInnerHTML(GL1673);
+		projectPlanText.getElement().setInnerHTML(GL1674);
+		readingText.getElement().setInnerHTML(GL1675);
+		textbookText.getElement().setInnerHTML(GL0909);
+		articleText.getElement().setInnerHTML(GL1676);
+		bookText.getElement().setInnerHTML(GL1677);
+		resourceEducationalLabel.setText(GL1684);
+		standardsDefaultText.setText(GL1682);
+		depthOfKnowledgeHeader.setText(GL1693);
+		chkLevelRecall.setText(GL1645);
+		chkLevelSkillConcept.setText(GL1646);
+		chkLevelStrategicThinking.setText(GL1647);
+		chkLevelExtendedThinking.setText(GL1648);
+		educationalUsePanel.setVisible(false);
+		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
+		depthOfKnoweldgeToolTip.setTitle("Question Mark");
+		addClickEventsForCheckBox();
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
@@ -637,6 +650,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		for(int i=0;i<2;i++){
 			int widgetCount=questionTrueOrFalseAnswerChoiceContainer.getWidgetCount();
 			final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+			addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 			addQuestionAnswer.tinyOrTextBoxConatiner.clear();
 			if(i==0){
 				addQuestionAnswer.fieldValue="True";
@@ -675,6 +689,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		for(int i=0;i<2;i++){
 			int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 			final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+			addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 			addQuestionAnswer.optionSelectedButton.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
@@ -700,6 +715,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void clickedOnAddChoiceButton(ClickEvent clickEvent){
 		int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 		final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount]);
+		addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 		addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
 		if(questionType.equals("MA")){
 			addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
@@ -953,20 +969,34 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					}
 			
 			}
-    	}else if(getQuestionType().equalsIgnoreCase("MC") || getQuestionType().equalsIgnoreCase("MA")){
+    	}else if(getQuestionType().equalsIgnoreCase("MC")){
     		if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
     			fieldValidationCheck = false;
 				isAddBtnClicked=true;
 			}
     	
-				if(!isHintsAdded(hintsContainer)){
-					if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
-						String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
-						ansChoiceErrMsg.setText(errorMessage);
-						fieldValidationCheck = false;
-						isAddBtnClicked=true;
-					}
+			if(!isHintsAdded(hintsContainer)){
+				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
+					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+					ansChoiceErrMsg.setText(errorMessage);
+					fieldValidationCheck = false;
+					isAddBtnClicked=true;
 				}
+			}
+    	} else if(getQuestionType().equalsIgnoreCase("MA")){
+    		if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
+    			fieldValidationCheck = false;
+				isAddBtnClicked=true;
+			}
+    	
+			if(!isHintsAdded(hintsContainer)){
+				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
+					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+					ansChoiceErrMsg.setText(errorMessage);
+					fieldValidationCheck = false;
+					isAddBtnClicked=true;
+				}
+			}
     	}
     	if(isAddBtnClicked){
     		isRightsClicked=rightsChkBox.getValue();
@@ -1049,7 +1079,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}
     								}
     							
-    								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MC") || getQuestionType().equalsIgnoreCase("MA")) {
+    								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MC")) {
     									ansChoiceErrMsg.setText("");
     									if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
     										fieldValidationStaus = false;
@@ -1057,6 +1087,27 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}else{
     										if(!isHintsAdded(hintsContainer)){
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
+    												System.out
+															.println("go to helllll");
+    												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
+    												ansChoiceErrMsg.setText(errorMessage);
+    												fieldValidationStaus = false;
+    												isAddBtnClicked=true;
+    											}else{
+    												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
+    											}
+    										}
+    									}
+    								}
+    						    	
+    								else if (fieldValidationStaus && getQuestionType().equalsIgnoreCase("MA")) {
+    									ansChoiceErrMsg.setText("");
+    									if (isAnswerChoiceEmpty(questionAnswerChoiceContainer)) {
+    										fieldValidationStaus = false;
+    										isAddBtnClicked=true;
+    									}else{
+    										if(!isHintsAdded(hintsContainer)){
+    											if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
     												fieldValidationStaus = false;
@@ -1230,7 +1281,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setHints(hintsMap);
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
-		
+			List<String> standards=getAddedStandards(standardsPanel);
+			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+			 for(int i = 0; i<standards.size(); i++){
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCode(standards.get(i));
+				 standardsDo.add(codeObj);
+		      }
+			collectionQuestionItemDo.setTaxonomySet(standardsDo);
+			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledges);
+			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
+			collectionQuestionItemDo.setEducationalUse(resourceEducationalLabel.getText());
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
@@ -1272,6 +1333,22 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
              
              return isAnswerChoiceSelected;
 
+     }
+	 private boolean isYesOrNoChoiceSelected(HTMLPanel questionAnswerChoiceContainer) {
+         boolean isAnswerChoiceSelected=false;
+         for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
+             AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
+             if(addQuestionAnswerChoice.optionSelectedButton.getStyleName().equals(addWebResourceStyle.answerSelected())||
+            		 addQuestionAnswerChoice.optionNoButton.getStyleName().equals(addWebResourceStyle.answerSelected())){
+            	 System.out.println("true....;;;");
+                    isAnswerChoiceSelected=true;
+             }else{
+            	 System.out.println("false;;;");
+            	 return false;
+             }
+         }
+         
+         return isAnswerChoiceSelected;
      }
 	 public boolean profanityCheckForHints(final boolean fieldValidationStaus,final List<String> answersListFIB,final String mediaFileName){
 		 validationValue=false;
@@ -1468,7 +1545,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		ansChoiceErrMsg.setText("");
 		errorMessageForQuestion.setText("");
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
+     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i); 
+     		addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
      		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");      
      		 addQuestionAnswerChoice.showAnswerChoicesForOthers();
 		 }
@@ -1488,7 +1566,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		ansChoiceErrMsg.setText("");
 		errorMessageForQuestion.setText("");
 		 for(int i=0;i<questionAnswerChoiceContainer.getWidgetCount();i++){
-     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);   
+     		 AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);  
+     		addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
      		 addQuestionAnswerChoice.errorMessageforAnswerChoice.setText("");
      		 addQuestionAnswerChoice.showAnswerChoicesForMultipleAnswers();
 		 }
@@ -1654,6 +1733,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
+				addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 				if(answer.isIsCorrect()){	
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 				}else{
@@ -1673,6 +1753,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				QuestionAnswerDo answer = it.next();
 				int widgetCount=questionAnswerChoiceContainer.getWidgetCount();
 				final AddQuestionAnswerChoice addQuestionAnswer=new AddQuestionAnswerChoice(anserChoiceArray[widgetCount],answer.getAnswerText());
+				addQuestionAnswer.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 				addQuestionAnswer.showAnswerChoicesForMultipleAnswers();
 				if(answer.isIsCorrect()){	
 					addQuestionAnswer.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
@@ -2061,5 +2142,56 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
      
      public void setCorrectTextStyle(){
     	 correctText.setStyleName(addWebResourceStyle.addResourceFormTitleChoiceAlign());
+     }
+     public void addClickEventsForCheckBox(){
+    	 chkLevelRecall.addClickHandler(new AddCheckBoxClickHandler());
+    	 chkLevelSkillConcept.addClickHandler(new AddCheckBoxClickHandler());
+    	 chkLevelStrategicThinking.addClickHandler(new AddCheckBoxClickHandler());
+    	 chkLevelExtendedThinking.addClickHandler(new AddCheckBoxClickHandler());
+    	 depthOfKnoweldgeToolTip.addMouseOverHandler(new MouseOverHandler() {
+ 			
+ 			@Override
+ 			public void onMouseOver(MouseOverEvent event) {
+ 				toolTip = new ToolTip("");
+ 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
+ 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+ 				toolTip.setPopupPosition(depthOfKnoweldgeToolTip.getAbsoluteLeft()-(50+22), depthOfKnoweldgeToolTip.getAbsoluteTop()+22);
+ 				toolTip.getElement().getStyle().setZIndex(1111);
+ 				toolTip.show();
+ 			}
+ 		});
+ 		depthOfKnoweldgeToolTip.addMouseOutHandler(new MouseOutHandler() {
+ 			
+ 			@Override
+ 			public void onMouseOut(MouseOutEvent event) {
+ 				
+ 				EventTarget target = event.getRelatedTarget();
+ 				  if (Element.is(target)) {
+ 					  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+ 						  toolTip.hide();
+ 					  }
+ 				  }
+ 			}
+ 		});
+     }
+     public class AddCheckBoxClickHandler implements ClickHandler  {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			 CheckBox checkBox = (CheckBox) event.getSource();
+		     boolean checked = checkBox.getValue();			     		   
+		     if(checked){
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(checkBox.getText());
+			     depthOfKnowledges.add(depthObj);
+		     }else{
+		    	 for (checkboxSelectedDo currentElement : depthOfKnowledges) {
+		    		if( currentElement.getValue().equalsIgnoreCase(checkBox.getText())){
+		    			depthOfKnowledges.remove(currentElement);
+		    		}
+		    	}
+		     }
+		}
      }
 }

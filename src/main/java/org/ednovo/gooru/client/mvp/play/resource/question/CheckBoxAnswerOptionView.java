@@ -41,9 +41,9 @@ public class CheckBoxAnswerOptionView extends Composite{
 	public interface CheckBoxAnswerOptionViewUiBinder extends UiBinder<Widget,CheckBoxAnswerOptionView>{
 
 	}
-	@UiField public Label answerChoiceResult,checkBoxButton;
+	@UiField public Label answerChoiceResult,radioYesButton,radioNoButton;
 	@UiField HTML answerOptionText;
-	@UiField public CheckBox answerOptionCheckBoxButton;
+	@UiField public RadioButton answerOptionYesRadioButton,answerOptionNoRadioButton;
 	//@UiField public CheckBox answerOptionCheckBoxButton;
 	private int answerId;
 	private boolean isAnswerCorrect;
@@ -53,6 +53,8 @@ public class CheckBoxAnswerOptionView extends Composite{
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
 		//optionAlpahabeticSerialNo.setText(questionSerialNum);
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
+		answerOptionYesRadioButton.setName(questionSerialNum);
+		answerOptionNoRadioButton.setName(questionSerialNum);
 	}
 	private HTML getHTML(String html){
 		html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");

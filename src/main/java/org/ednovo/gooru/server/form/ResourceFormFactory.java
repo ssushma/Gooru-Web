@@ -215,7 +215,7 @@ public class ResourceFormFactory {
 		JSONObject instructionalMethodCompleteObject = new JSONObject();
 		JSONArray instructionalMethodArray = new JSONArray();
 		JSONObject instructionalMethodeObject = new JSONObject();
-		instructionalMethodeObject.put(instructionalMethodSelectedKey, selectedVal.toString());
+		instructionalMethodeObject.put(instructionalMethodSelectedKey, selectedVal);
 		instructionalMethodeObject.put(instructionalMethodSelectedValKey, instructionalMethod);
 		instructionalMethodArray.put(instructionalMethodeObject);
 		
@@ -227,7 +227,7 @@ public class ResourceFormFactory {
 		collectionObject.put(objectName, instructionalMethodCompleteObject);
 	
 		String data =  collectionObject.toString();
-	
+
 		form.add("data", data);
 		}
 		catch(Exception ex)
@@ -259,7 +259,7 @@ public class ResourceFormFactory {
 		JSONObject instructionalMethodCompleteObject = new JSONObject();
 		JSONArray instructionalMethodArray = new JSONArray();
 		JSONObject instructionalMethodeObject = new JSONObject();
-		instructionalMethodeObject.put(instructionalMethodSelectedKey, selectedVal.toString());
+		instructionalMethodeObject.put(instructionalMethodSelectedKey, selectedVal);
 		instructionalMethodeObject.put(instructionalMethodSelectedValKey, audience);
 		instructionalMethodArray.put(instructionalMethodeObject);
 		
@@ -303,7 +303,7 @@ public class ResourceFormFactory {
 		JSONObject depthOfKnowledgeCompleteObject = new JSONObject();
 		JSONArray depthOfKnowledgeArray = new JSONArray();
 		JSONObject depthOfKnowledgeObject = new JSONObject();
-		depthOfKnowledgeObject.put(depthOfKnowledgeSelectedKey, selectedVal.toString());
+		depthOfKnowledgeObject.put(depthOfKnowledgeSelectedKey, selectedVal);
 		depthOfKnowledgeObject.put(depthOfKnowledgeSelectedValKey, depthOfKnowledge);
 		depthOfKnowledgeArray.put(depthOfKnowledgeObject);
 		
@@ -315,7 +315,6 @@ public class ResourceFormFactory {
 		collectionObject.put(objectName, depthOfKnowledgeCompleteObject);
 	
 		String data =  collectionObject.toString();
-	
 		form.add("data", data);
 		}
 		catch(Exception ex)
@@ -348,7 +347,7 @@ public class ResourceFormFactory {
 		JSONObject depthOfKnowledgeCompleteObject = new JSONObject();
 		JSONArray depthOfKnowledgeArray = new JSONArray();
 		JSONObject depthOfKnowledgeObject = new JSONObject();
-		depthOfKnowledgeObject.put(learningSkillsSelectedKey, selectedVal.toString());
+		depthOfKnowledgeObject.put(learningSkillsSelectedKey, selectedVal);
 		depthOfKnowledgeObject.put(learningSkillsSelectedValKey, depthOfKnowledge);
 		depthOfKnowledgeArray.put(depthOfKnowledgeObject);
 		
