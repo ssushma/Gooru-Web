@@ -204,24 +204,20 @@
 }
 .shelfTeacherTipButtons
 {
-		float: right;
+	float: right;
 	clear: both;
 	margin-right: 25px;
-	
-
+	margin-left: 15px;
 }
 .shelfGradeTeacherTipButtonsContainer
 {
 	width:332px;
 	float: right;
-clear: both;
-margin-top:17px;
-}
-.shelfTeacherTipButtonsCancel
-{
 	clear: both;
-	left: 193px;
-position: relative;
+	margin-top:17px;
+}
+.shelfTeacherTipButtonsCancel{
+	float: right;
 }
 .shelfGradeTeacherTipTextbox{
 	color: rgb(112, 109, 109);
@@ -1332,6 +1328,7 @@ height: 73px;
 	clear: both;
 	max-width:500px;
 	word-wrap: break-word;
+	cursor: pointer;
 }
 .teacherTipPencilHolder{
 	float:left;
