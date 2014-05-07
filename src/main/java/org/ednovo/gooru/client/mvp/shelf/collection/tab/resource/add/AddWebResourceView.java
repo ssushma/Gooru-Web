@@ -1215,11 +1215,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	public boolean isValidUrl(String url, boolean topLevelDomainRequired) {
 		if (urlValidator == null || urlPlusTldValidator == null) {
-			urlValidator = RegExp
+			/*urlValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\_\\-/\\()]+)*){1}$");
+		*/	
+			/*urlPlusTldValidator = RegExp
+			.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+\\.[a-zA-Z]{2,}(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\,\\_\\-/\\()]+)*){1}$");
+*/
+			urlValidator = RegExp
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+			
 			urlPlusTldValidator = RegExp
-					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+\\.[a-zA-Z]{2,}(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\,\\_\\-/\\()]+)*){1}$");
-		}
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+
+					}
 		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
 				.exec(url) != null;
 	}
