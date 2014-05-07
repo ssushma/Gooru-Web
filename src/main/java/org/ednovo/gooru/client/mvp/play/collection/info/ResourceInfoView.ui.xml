@@ -11,14 +11,16 @@
          <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-wrapper}">
 	         <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-innerwrapper}">
 	           <g:HTMLPanel styleName="{playerStyle.resource-info-type-image}">
-	           		<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="lblresourceType"/>
-	           		<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>
+	         
 	           		<g:HTMLPanel styleName="{playerStyle.ipadFriendlyIconNone}" ui:field="mobileFriendly"></g:HTMLPanel>
-	           			<g:HTML  ui:field="resourcetypeSeparator" />
+	           			
 	          	   	<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="resourceView"> </g:Label>
 	           		<g:HTML  ui:field="resourceInfoSeparator"/>
 	           		<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="timeRequiredLabel"> </g:Label>
 	           		<g:HTML ui:field="resourceInfoSeparatorTimeLbl"/>
+	           		<g:HTML  ui:field="resourcetypeSeparator" />
+	           		<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="lblresourceType"/>
+	           		<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>
 	             </g:HTMLPanel>
 	             
 	               <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
