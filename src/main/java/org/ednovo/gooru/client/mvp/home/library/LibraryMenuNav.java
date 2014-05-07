@@ -159,8 +159,8 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 			}
 		});
 		
-		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-			sciencePanel.addMouseOverHandler(new MouseOverHandler() {
+/*		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+*/			sciencePanel.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
 					if(!isScienceHovered) {
@@ -170,12 +170,12 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 					}
 				}
 			});
-		} else {
+/*		} else {
 			sciencePanel.removeStyleName("courseScrollStyle");
 			sciencePanel.removeStyleName(libraryStyleUc.tabsLi());
 			sciencePanel.addStyleName(libraryStyleUc.tabsLiInactive());
 		}
-		
+*/		
 //		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			mathPanel.addMouseOverHandler(new MouseOverHandler() {
 				@Override
