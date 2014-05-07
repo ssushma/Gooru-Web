@@ -107,8 +107,9 @@
 }
 
 .textAreaStyle {
+	font-size:10px;
 	color: #515151;
-	width: 180px;
+	width: 180px !important;
 	margin-top: 5px;
 	border: 1px solid #ddd;
 	overflow: scroll;

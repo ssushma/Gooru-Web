@@ -68,7 +68,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		bigIdeasHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				bigIdeasHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
+				bigIdeasHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText(), errorLabelbigIdeasHTML));
 			}
 		});
 		
@@ -84,7 +84,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		essentialQuestionsHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, essentialQuestionsHTML.getText()));
+				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, essentialQuestionsHTML.getText(), errorLabelessentialQuestionsHTML));
 			}
 		});
 
@@ -100,7 +100,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		performanceTaskHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				performanceTaskHTML.setHTML(restrictKeyLimit(event, performanceTaskHTML.getText()));
+				performanceTaskHTML.setHTML(restrictKeyLimit(event, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML));
 			}
 		});
 
@@ -114,17 +114,30 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		cancelBtn.setText(GL0142);
 	}
 	
-	private String restrictKeyLimit(KeyDownEvent event, String text) {
+	private String restrictKeyLimit(KeyDownEvent event, String text, Label errorLabelToDisplay) {
 		 if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER ||
                  event.getNativeKeyCode() == KeyCodes.KEY_UP ||
                  event.getNativeKeyCode() == KeyCodes.KEY_LEFT||
                  event.getNativeKeyCode() == KeyCodes.KEY_DOWN ||
                  event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE||
                  event.getNativeKeyCode() == KeyCodes.KEY_SHIFT) {
-			 
-         } else {
-	         if(text.trim().length()>600){
+			 if(text.trim().length()<=599)
+			 {
+				 errorLabelToDisplay.setVisible(false);	 
+			 }
+		 
+         } 
+		 else 
+         {
+	         if(text.trim().length()>598)
+	         {
+	        	 errorLabelToDisplay.setVisible(true);	
+	        	 errorLabelToDisplay.setText(GL0143);	        	 
 	        	 event.preventDefault();
+	         }
+	         else
+	         {
+	        	 errorLabelToDisplay.setVisible(false);	
 	         }
          }
 		 return text;
@@ -271,6 +284,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	@UiHandler("cancelBtn")
 	public void clickCancelBtn(ClickEvent event) {
+		clearErrorMsgs();
 		showEditableMetaData(true);
 	}
 	
