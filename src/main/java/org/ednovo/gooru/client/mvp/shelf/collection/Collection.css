@@ -1198,6 +1198,7 @@ padding-left:40px;
 	float: left;
 	margin-right: 45px;
 	width: 91%;
+	clear: both;
 }
 .languageObjectiveTextArea
 {
@@ -1340,4 +1341,7 @@ height: 73px;
 .errorLabelColor
 {
 	color:orange;
+}
+.depthOfKnowledgeSubContainer{
+	display: inline-flex;
 }
