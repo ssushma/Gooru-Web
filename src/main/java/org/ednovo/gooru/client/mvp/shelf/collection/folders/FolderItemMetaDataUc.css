@@ -125,3 +125,6 @@
 .openedPanelHeight {
 	height: 170px;
 }
+.errorLabel{
+	color:#fab03a;
+}
