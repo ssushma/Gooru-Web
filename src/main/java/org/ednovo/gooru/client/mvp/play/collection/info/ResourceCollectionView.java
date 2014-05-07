@@ -121,8 +121,8 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 	
 	public void setCollectionMetadata(){
 		
-		int resourceCount = resourceSearchResultDo.getNoOfResources();
-		int questionCount = resourceSearchResultDo.getNoOfQuestions();
+		int resourceCount = resourceSearchResultDo.getResourceCount();
+		int questionCount = resourceSearchResultDo.getQuestionCount();
 		metadataContainer.clear();
 		metadataContainer.add(getCourseNames());
 		metadataContainer.add(getViewsLabel());
