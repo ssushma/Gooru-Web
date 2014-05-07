@@ -285,6 +285,17 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void increaseUserAttemptCount(){
 			getUiHandlers().increaseUserAttemptCount();
 		}
+		@Override
+		public void userAttemptedValue(List<String> userAttemptedValueList) {
+			String attemptedAnswersText="";
+			for(int i=0;i<userAttemptedValueList.size();i++){
+				attemptedAnswersText=attemptedAnswersText+"["+userAttemptedValueList.get(i)+"]";
+				if((i+1)!=userAttemptedValueList.size()){
+					attemptedAnswersText=attemptedAnswersText+",";
+				}
+			}
+			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);
+		}
 	}
 	
 	public class OpendEndedQuestionWidget extends OpendEndedQuestionView{
