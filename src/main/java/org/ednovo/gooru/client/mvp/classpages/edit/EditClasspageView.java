@@ -120,6 +120,7 @@ public class EditClasspageView extends
 	static Button monitorProgress;
 
 	@UiField
+	static
 	Button backArrowButton;
 
 	@UiField
@@ -135,7 +136,7 @@ public class EditClasspageView extends
 	Button assignmentsTab;
 
 	@UiField
-	Button classListTab;
+	Button classListTab,reportsTab;
 	
 	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel;
 
@@ -264,6 +265,8 @@ public class EditClasspageView extends
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.addClickHandler(new ClassListTabClicked());
 		
+		reportsTab.addClickHandler(new reportsTabClicked());
+		
 		shareTabContainerPanel.clear();
 		shareTabContainerPanel.setVisible(false);
 
@@ -335,6 +338,8 @@ public class EditClasspageView extends
 
 			classListTab.getElement().setClassName("");
 			
+			reportsTab.getElement().setClassName("");
+			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
 			getClassListContainer().setVisible(false);
@@ -368,6 +373,8 @@ public class EditClasspageView extends
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				backArrowButton.setVisible(true);
+				monitorProgress.setVisible(true);
 			mainContainer.setVisible(false);
 			frameDiv.setVisible(true);
 			if(monitorProgress.getText().equalsIgnoreCase(GL1586)){
@@ -432,6 +439,7 @@ public class EditClasspageView extends
 		monitorProgress.setText(GL1586);
 		assignmentsTab.setText(GL1623);
 		classListTab.setText(GL1624);
+		reportsTab.setText(GL1737);
 		noAssignmentsMessageLblTwo.setText(GL1625);
 		
 		//htmlShareText.setHTML(GL0229 + GL0230);
@@ -626,13 +634,39 @@ public class EditClasspageView extends
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
+			
+			backArrowButton.setVisible(false);
+			monitorProgress.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			getClassListContainer().setVisible(true);
 			
+			frameDiv.setVisible(false);
+			
+			
+			
+		}
+		else if(tab!=null && tab.equalsIgnoreCase("reports")){
+			reportsTab.addStyleName(res.css().selected());
+			assignmentsTab.getElement().setClassName("");
+			classListTab.getElement().setClassName("");
+			newAssignmentAndMsgPanel.setVisible(false);
+			assignmentsTabContainerPanel.setVisible(false);
+			getClassListContainer().setVisible(false);
+			
+			backArrowButton.setVisible(false);
+			monitorProgress.setVisible(false);
+			
+			frameDiv.setVisible(true);
+			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
+			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
+			frameUrl.setUrl(frameReportsUrl());
+			
 		}
 		else if(analyticsId!=null)
 		{
+			backArrowButton.setVisible(true);
+			monitorProgress.setVisible(true);
 			mainContainer.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
@@ -643,6 +677,8 @@ public class EditClasspageView extends
 		}
 		else if(monitorId!=null)
 		{
+			backArrowButton.setVisible(true);
+			monitorProgress.setVisible(true);
 			mainContainer.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
@@ -652,7 +688,10 @@ public class EditClasspageView extends
 			monitorProgress.setText(GL1587);
 		}
 		else{
+			
 			removeLoadingPanel();
+			backArrowButton.setVisible(false);
+			monitorProgress.setVisible(false);
 			mainContainer.setVisible(true);
 			frameUrl.getElement().getStyle().clearWidth();
 			frameUrl.getElement().getStyle().clearHeight();
@@ -973,6 +1012,8 @@ public class EditClasspageView extends
 
 		classListTab.getElement().setClassName("");
 		
+		reportsTab.getElement().setClassName("");
+		
 		newAssignmentAndMsgPanel.setVisible(true);
 		assignmentsTabContainerPanel.setVisible(true);
 		getClassListContainer().setVisible(false);
@@ -1006,6 +1047,16 @@ public class EditClasspageView extends
 		}
 
 			String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_COLLECTION_SUMMARY_DATA,classpageId,analyticsId,AppClientFactory.getLoginSessionToken());
+
+			urlVal = urlVal+"&"+Math.random();
+			
+		return urlVal;
+	}
+	
+	private static String frameReportsUrl() {
+		String classpageId = AppClientFactory.getPlaceManager().getRequestParameter("classpageid");
+
+			String urlVal = StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.CLASS_REPORTS,classpageId,AppClientFactory.getLoggedInUser().getGooruUId(),AppClientFactory.getLoginSessionToken());
 
 			urlVal = urlVal+"&"+Math.random();
 			
@@ -1103,6 +1154,12 @@ public class EditClasspageView extends
 
 			classListTab.getElement().setClassName("");
 			
+			reportsTab.getElement().setClassName("");
+			
+			backArrowButton.setVisible(true);
+			monitorProgress.setVisible(true);
+			frameDiv.setVisible(false);
+			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
 			getClassListContainer().setVisible(false);
@@ -1131,11 +1188,15 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			classListTab.addStyleName(res.css().selected());
-
+			reportsTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
+			
+			backArrowButton.setVisible(true);
+			monitorProgress.setVisible(true);
+			frameDiv.setVisible(false);
 			getClassListContainer().setVisible(true);
 			Map<String,String> params = new HashMap<String,String>();
 			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
@@ -1154,6 +1215,44 @@ public class EditClasspageView extends
         }
 		}
 	}
+	
+	public class reportsTabClicked implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			reportsTab.addStyleName(res.css().selected());
+			classListTab.getElement().setClassName("");
+			assignmentsTab.getElement().setClassName("");
+			refresh=false;
+			newAssignmentAndMsgPanel.setVisible(false);
+			backArrowButton.setVisible(false);
+			monitorProgress.setVisible(false);
+			assignmentsTabContainerPanel.setVisible(false);
+			getClassListContainer().setVisible(false);
+			
+			frameDiv.setVisible(true);
+			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
+			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
+			frameUrl.setUrl(frameReportsUrl());
+
+			
+			Map<String,String> params = new HashMap<String,String>();
+			String pageSize=AppClientFactory.getPlaceManager().getRequestParameter("pageSize", null);
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String pos=AppClientFactory.getPlaceManager().getRequestParameter("pos", null);
+			params.put("pageSize", pageSize);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pageNum);
+			params.put("pos", pos);
+			params.put("tab", "reports");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			if(classlistPresenter!=null){
+                classlistPresenter.getView().clearDataAndErrorMessages();
+        }
+		}
+	}
+	
 	@Override
 	public FlowPanel getClassListContainer() {
 		return classListContainer;
@@ -1162,6 +1261,8 @@ public class EditClasspageView extends
 	{
 
 		mainContainer.setVisible(false);
+		backArrowButton.setVisible(true);
+		monitorProgress.setVisible(true);
 		frameDiv.setVisible(true);
 		frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 		frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
@@ -1173,6 +1274,8 @@ public class EditClasspageView extends
 	{
 
 		mainContainer.setVisible(false);
+		backArrowButton.setVisible(true);
+		monitorProgress.setVisible(true);
 		frameDiv.setVisible(true);
 		frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 		frameUrl.getElement().getStyle().setHeight(300, Unit.PX);

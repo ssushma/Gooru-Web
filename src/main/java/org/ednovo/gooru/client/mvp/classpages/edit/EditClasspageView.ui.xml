@@ -67,6 +67,7 @@
 			<g:HTMLPanel styleName="{res.css.teachTab}">
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
+				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 			</g:HTMLPanel>
 
 			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
