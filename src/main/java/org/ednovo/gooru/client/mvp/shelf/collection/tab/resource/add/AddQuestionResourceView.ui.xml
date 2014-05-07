@@ -61,11 +61,16 @@
         </g:FlowPanel>
          <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForExplanation"></g:Label>
       	
+      	 <g:HTMLPanel ui:field="hintsContainer"></g:HTMLPanel>
+         <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addHintsLabel"></g:Anchor>
+         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForHintsCheck"></g:Label>
+     
       	 <!-- Depth Of Knowledge Start-->
-      	<g:FlowPanel styleName="{res1.css.depthOfKnowledgeContainer}">
-					<g:FlowPanel>
+      	<g:FlowPanel  styleName="{res1.css.depthOfKnowledgeContainer}">
+					<g:FlowPanel styleName="{res1.css.depthOfKnowledgeSubContainer}">
 						<g:Label styleName="{addWebResourceStyle.addResourceFormTitle}"
 							ui:field="depthOfKnowledgeHeader" ></g:Label>
+							<g:Image styleName="friendlyQuestionMark" altText="Question Mark"  ui:field="depthOfKnoweldgeToolTip"></g:Image>
 					</g:FlowPanel>
 					<g:Label styleName="{addWebResourceStyle.addResourceFormTitle}"
 						ui:field="depthOfKnowledgeTitle" />
@@ -217,10 +222,7 @@
         <!-- Standards End -->
     
          
-        <g:HTMLPanel ui:field="hintsContainer"></g:HTMLPanel>
-        <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addHintsLabel"></g:Anchor>
-         <g:Label styleName="{addWebResourceStyle.addResourceFormInputBottomText}" ui:field="errorMessageForHintsCheck"></g:Label>
-      </g:HTMLPanel>
+        </g:HTMLPanel>
       <g:HTMLPanel styleName="{addWebResourceStyle.resourceRightsContainer}">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{addWebResourceStyle.resourceRightsCheckBox}" checked="true" ></g:CheckBox>
         	<g:Label ui:field="rightsLbl" styleName="{addWebResourceStyle.ownResourceFormDeclarationText}"></g:Label> 

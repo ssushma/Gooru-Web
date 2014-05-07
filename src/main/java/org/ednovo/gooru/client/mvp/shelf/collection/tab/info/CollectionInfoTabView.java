@@ -272,7 +272,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 		languageObjectiveerrLabel.setVisible(false);
 
-		textAreaVal.getElement().setAttribute("maxlength", "1000");
+		textAreaVal.getElement().setAttribute("maxlength", "415");
 		
 		textAreaVal.addFocusHandler(new FocusHandler() {
 			@Override
@@ -288,7 +288,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		textAreaVal.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				if(textAreaVal.getText().length() > 1000)
+				if(textAreaVal.getText().length() >= 415)
 				{
 					textAreaVal.cancelKey();
 				}			

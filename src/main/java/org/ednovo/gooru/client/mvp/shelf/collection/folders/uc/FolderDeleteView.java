@@ -7,6 +7,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
+import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -30,7 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class FolderDeleteView extends PopupPanel implements MessageProperties{
+public class FolderDeleteView extends AppPopUp implements MessageProperties{
 
 	private static FolderDeleteViewUiBinder uiBinder = GWT
 			.create(FolderDeleteViewUiBinder.class);
@@ -62,6 +63,8 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 		}
 		setWidget(uiBinder.createAndBindUi(this)); 
 		setView();
+		
+		
 	}
 	/**
 	 * @function setview
@@ -104,7 +107,7 @@ public class FolderDeleteView extends PopupPanel implements MessageProperties{
 	*/
 	@UiHandler("cancelButton")
 	public void onClickOfCancelButton(ClickEvent event){
-		this.hide();	
+		hide();	
 		Window.enableScrolling(true);
 	}
 	
