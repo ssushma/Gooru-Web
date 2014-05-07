@@ -1123,6 +1123,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	public void renderLanguageObjective(String languageObjective)
 	{
+		lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
 	if(languageObjective!=null)
 		{
 			languageObjectiveValue=languageObjective;

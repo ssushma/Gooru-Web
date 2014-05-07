@@ -452,6 +452,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	public void renderLanguageObjective(String languageObjective)
 	{	
+	lbllanguageObjective.getElement().setAttribute("style", "word-wrap: break-word;");
 	if(languageObjective!=null)
 		{
 			languageObjectiveValue=languageObjective;
