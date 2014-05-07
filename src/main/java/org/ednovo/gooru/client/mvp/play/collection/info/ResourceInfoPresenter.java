@@ -38,6 +38,9 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 
 	private CollectionItemDo collectionItemDo=null;
 	
+	public String mycollectionTitle;
+	
+	
 	@Inject
 	private PlayerAppServiceAsync playerAppService;
 	
@@ -53,11 +56,13 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 				return;
 			}else{
 				this.collectionItemDo=collectionItemDo;
+				getView().setCollectionTitle(mycollectionTitle);
 				getView().setResourceMedaDataInfo(collectionItemDo);
 			}		
 		}
 		else{
 			this.collectionItemDo=collectionItemDo;
+			getView().setCollectionTitle(mycollectionTitle);
 			getView().setResourceMedaDataInfo(collectionItemDo);
 		}
 	}
@@ -82,6 +87,14 @@ public class ResourceInfoPresenter extends PresenterWidget<IsResourceInfoView> i
 	
 	public void resetResourceInfo(){
 		collectionItemDo=null;
+	}
+
+	public void setMycollectionTitle(String mycollectionTitle) {
+		this.mycollectionTitle = mycollectionTitle;
+	}
+	
+	public String getMycollectionTitle() {
+		return mycollectionTitle;
 	}
 
 }

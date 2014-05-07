@@ -982,6 +982,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	
 	public void setResourceInfoView(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
+		resourceInfoPresenter.setMycollectionTitle(collectionDo.getTitle());
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
