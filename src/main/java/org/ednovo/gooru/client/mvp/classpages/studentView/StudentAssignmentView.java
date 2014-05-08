@@ -270,12 +270,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 										public void onClickPositiveButton(
 												ClickEvent event) {
 											Window.enableScrolling(true);
-											btnJoinClass.setVisible(true);
-											userImage.setVisible(false);
-											lblWebHelp.setVisible(true);
-											btnWithDraw.setVisible(false);
-											LblMember.setVisible(false);
-											userImage.setVisible(false);
+											btnJoinClass.setVisible(false);
+											userImage.setVisible(true);
+											lblWebHelp.setVisible(false);
+											btnWithDraw.setVisible(true);
+											LblMember.setVisible(true);
+											userImage.setVisible(true);
 											mainContainer.setVisible(true);
 											this.hide();
 											isJoinPopupPublic=false;
