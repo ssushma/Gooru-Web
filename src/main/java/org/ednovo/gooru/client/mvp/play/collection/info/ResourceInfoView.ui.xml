@@ -58,7 +58,7 @@
 	          
 	        	<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="thumbnailPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="thumbnailText"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="thumbnailurlValue"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="thumbnailurlValue"/>
 	      		</g:HTMLPanel>
 	          
 	           	<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="publisherPanel">
@@ -116,7 +116,12 @@
 	      		
 	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="dKnowledgePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="dKnowledgeLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="dKnowledgeType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="dKnowledgeType"/>
+	      		</g:HTMLPanel>
+	      		
+	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="momentsoflearningPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="momentsoflearningLbl"></g:Label>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="momentsoflearningType"/>
 	      		</g:HTMLPanel>
 	      		
 	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="readingLevelPanel">

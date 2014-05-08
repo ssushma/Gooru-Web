@@ -85,15 +85,20 @@ public class ResourceDo extends ContentDo {
    
 	private String educationalAlignment;
 	
-	private List<String> educationalUse;
+	private List<checkboxSelectedDo> educationalUse;
 	
+	private List<checkboxSelectedDo> momentsOfLearning;
+	
+	private List<checkboxSelectedDo> depthOfKnowledges;
+	
+
+	
+
 	private String  educationalRole;
 	
 	private String interactivityType;
 	
 	private String ageRange;
-	
-	private String depthOfKnowledge;
 	
 	private String gooruSubject;
 	
@@ -128,13 +133,25 @@ public class ResourceDo extends ContentDo {
 	private List<String> accessibilityAPI;
 	
 	
-	public List<String> getEducationalUse() {
+	public List<checkboxSelectedDo> getEducationalUse() {
 		return educationalUse;
 	}
-	public void setEducationalUse(List<String> educationalUse) {
+	public void setEducationalUse(List<checkboxSelectedDo> educationalUse) {
 		this.educationalUse = educationalUse;
 	}
-	
+
+	public List<checkboxSelectedDo> getMomentsOfLearning() {
+		return momentsOfLearning;
+	}
+	public void setMomentsOfLearning(List<checkboxSelectedDo> momentsOfLearning) {
+		this.momentsOfLearning = momentsOfLearning;
+	}
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
+	}
 	public List<String> getAccessibilityAPI() {
 		return accessibilityAPI;
 	}
@@ -248,12 +265,7 @@ public class ResourceDo extends ContentDo {
 	public void setGooruSubject(String gooruSubject) {
 		this.gooruSubject = gooruSubject;
 	}
-	public String getDepthOfKnowledge() {
-		return depthOfKnowledge;
-	}
-	public void setDepthOfKnowledge(String depthOfKnowledge) {
-		this.depthOfKnowledge = depthOfKnowledge;
-	}
+	
 	public String getAgeRange() {
 		return ageRange;
 	}

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,11 +50,13 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -85,7 +88,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	contributorPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,gooruCoursePanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,dateCreatedPanel,
-	authorPanel,gooruSubjectPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,gooruCourseInfo,accessModeType,mediaFeatureType,accessibilityAPIType;
+	authorPanel,gooruSubjectPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,gooruCourseInfo,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -96,12 +100,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblPublisher,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
 					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,contributorTitle,mbFriendlyLbl,
 					mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
-					eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,dKnowledgeType,readingLevelLbl,
+					eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
 					hasAdaptationType,hasAdaptationLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,isAdaptationLbl,isAdaptationType,
 					copyRightType,copyRightLbl,hostType,hostLbl,gooruCourseLbl,accessibilityAPILbl,controlType,controlLbl,
 					acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
-					thumbnailText,thumbnailurlValue,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
-					createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,timeRequiredvalue,lblcollectionName;
+					thumbnailText,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
+					createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,timeRequiredvalue,lblcollectionName,
+					momentsoflearningLbl;
 	
 	@UiField static Label standaInfo;
 	
@@ -151,70 +156,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
 
 		generalLbl.setText(GL1708);
-		keywordsTitle.setText("Keywords");
-		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
-		resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
-		contributorTitle.setText(GL1686+GL_SPL_SEMICOLON);
-		//contributorName.setText("");
-		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-		//mbFriendlyText.setText("");
-		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
-		//dataTypeFormat.setText("");
-		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
-		//interactiveType.setText("");
-		eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
-		//eduAllignType.setText("");
-		eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
-		//eduUseType.setText("");
-		eduRoleLbl.setText(GL1691+GL_SPL_SEMICOLON);
-		//eduRoleType.setText("");
-		ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
-		//ageRangeType.setText("");
-		dKnowledgeLbl.setText(GL1693+GL_SPL_SEMICOLON);
-		//dKnowledgeType.setText("");
-		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
-		timeRequiredvalue.setText("3 min 20sec");
-		hasAdaptationLbl.setText(GL1695+GL_SPL_SEMICOLON);
-		hasAdaptationType.setText("");
-		languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
-		languageType.setText("");
-		countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
-		//countryCodeType.setText("");
-		isAdaptationLbl.setText(GL1698+GL_SPL_SEMICOLON);
-		isAdaptationType.setText("");
-		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
-		//copyRightType.setText("");
-		hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
-		//hostType.setText("");
-		gooruCourseLbl.setText(GL1701+GL_SPL_SEMICOLON);
-		
-		accessibilityAPILbl.setText(GL1702+GL_SPL_SEMICOLON);
-		
-	
-		accesibilityLbl.setText(GL1703);
-		controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
-		controlType.setText("");
-		acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
-		acessHazardType.setText("");
-		mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
-		
-		accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
-		
+		//accesibilityLbl.setText(GL1703);
 		resourceInfoLbl.setText(GL1716);
-		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
-		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
-		authorName.setText("");
-		thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);
-		licenceCodeLbl.setText(GL1719+GL_SPL_SEMICOLON);
 		educationallLbl.setText(GL1720);
-		gooruSubjectLbl.setText(GL1715+GL_SPL_SEMICOLON);
-		//gooruSubjectInfo.setText("");
+		
+		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
+		timeRequiredvalue.setText("3 min 20sec");
+		
+		resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
 		resourceTypeImage.getElement().setAttribute("style", "margin-bottom: 15px;");
-	//	standaInfo.setText(GL0977);
-		//resourceInfoSeparator.setHTML(SEPARATOR);
-		//resourceInfoSeparatorTimeLbl.setHTML(SEPARATOR);
-	//	resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
-		//resourcetypeSeparator.setHTML(SEPARATOR);
 	}
 
 	@Override
@@ -222,7 +172,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
+				collectionItemDo.getResource().setMobilefriendlyness("NO");
+			}else{
+				collectionItemDo.getResource().setMobilefriendlyness("YES");
 			}
+		}else{
+			accessibilityPanel.setVisible(true);
 		}
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
 			setResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName());
@@ -254,162 +209,189 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		lblcollectionName.getElement().setAttribute("style", "margin-left: 19px;");
 		
 		collectionItemDo.getResource().setHost("HippoCampus");
-		setHostDetails(collectionItemDo.getResource().getHost());
+		//setHostDetails(collectionItemDo.getResource().getHost());
+		setHostDetails("");
 		
 		collectionItemDo.getResource().setEducationalAlignment("Teaches");
-		setedAlignDetails(collectionItemDo.getResource().getEducationalAlignment());
-
-		/*ArrayList<String> eduUsedetails = new ArrayList<String>();
-		eduUsedetails.add(0, "Handout");
-		eduUsedetails.add(1, "Reference");*/
+		//setedAlignDetails(collectionItemDo.getResource().getEducationalAlignment());
+		setedAlignDetails("");
+		
 		List<String> eduUsedetails = new ArrayList<String>();
-		eduUsedetails.add(0, "Handout");
-		eduUsedetails.add(1, "Reference");
-		collectionItemDo.getResource().setEducationalUse(eduUsedetails);
+		if(collectionItemDo.getResource().getEducationalUse()!=null){
+		if(collectionItemDo.getResource().getEducationalUse().size()>0){
+		for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
+			eduUsedetails.add(collectionItemDo.getResource().getEducationalUse().get(i).getValue());
+		}
 		seteducationaluseDetails(eduUsedetails);
+		eduUsePanel.setVisible(true);
+		}else{
+			eduUsePanel.setVisible(false);
+		}
+		}
+		
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+			List<String> depthofknowledgedetails = new ArrayList<String>();
+			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
+			if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
+			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledges().size();i++){
+				depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
+			}
+			setDepthofknowledgeDetails(depthofknowledgedetails);
+			dKnowledgePanel.setVisible(true);
+			}else{
+				dKnowledgePanel.setVisible(false);
+			}
+			}
+			momentsoflearningPanel.setVisible(false);
+		}
+		else{
+			List<String> momentoflearningdetails = new ArrayList<String>();
+			if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
+			if(collectionItemDo.getResource().getMomentsOfLearning().size()>0){
+			for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
+				momentoflearningdetails.add(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
+			}
+			setmonentoflearningDetails(momentoflearningdetails);
+			momentsoflearningPanel.setVisible(true);
+			}else{
+				momentsoflearningPanel.setVisible(false);	
+			}
+			}
+			dKnowledgePanel.setVisible(false);
+		}
+		
 		
 		collectionItemDo.getResource().setEducationalRole("Student");
-		seteducationalRoleDetails(collectionItemDo.getResource().getEducationalRole());
+		//seteducationalRoleDetails(collectionItemDo.getResource().getEducationalRole());
+		seteducationalRoleDetails("");
 		
 		collectionItemDo.getResource().setInteractivityType("Exposive");
-		setinteractivityTypeDetails(collectionItemDo.getResource().getInteractivityType());
+		//setinteractivityTypeDetails(collectionItemDo.getResource().getInteractivityType());
+		setinteractivityTypeDetails("");
 		
 		collectionItemDo.getResource().setAgeRange("10-14");
-		setageRangeDetails(collectionItemDo.getResource().getAgeRange());
-		
-		collectionItemDo.getResource().setDepthOfKnowledge("Level1");
-		setDepthofknowledgeDetails(collectionItemDo.getResource().getDepthOfKnowledge());
-		
+		//setageRangeDetails(collectionItemDo.getResource().getAgeRange());
+		setageRangeDetails("");
 		
 		List<String> readingLeveldetails = new ArrayList<String>();
 		readingLeveldetails.add(0, "6");
 		readingLeveldetails.add(1, "7");
 		readingLeveldetails.add(2, "8");
 		collectionItemDo.getResource().setReadinglevel(readingLeveldetails);
-		showreadingLevelDetails(collectionItemDo.getResource().getReadinglevel());
+		//showreadingLevelDetails(collectionItemDo.getResource().getReadinglevel());
+		showreadingLevelDetails(null);
 		
 		collectionItemDo.getResource().setGooruSubject("English & Language Arts");
-		setgooruSubjectDetails(collectionItemDo.getResource().getGooruSubject());
-		
+		//setgooruSubjectDetails(collectionItemDo.getResource().getGooruSubject());
+		setgooruSubjectDetails("");
 		
 		List<String> gooruCoursedetails = new ArrayList<String>();
 		gooruCoursedetails.add(0, "English6");
 		gooruCoursedetails.add(1, "English7");
 		gooruCoursedetails.add(2, "English8");
 		collectionItemDo.getResource().setGooruCourse(gooruCoursedetails);
-		showgooruCourseDetails(collectionItemDo.getResource().getGooruCourse());
+		//showgooruCourseDetails(collectionItemDo.getResource().getGooruCourse());
+		showgooruCourseDetails(null);
 		
 		collectionItemDo.getResource().setCountryCode("USA");
-		setCountryCodeDetails(collectionItemDo.getResource().getCountryCode());
+		//setCountryCodeDetails(collectionItemDo.getResource().getCountryCode());
+		setCountryCodeDetails("");
 		
 		collectionItemDo.getResource().setLanguage("English");
-		setlanguageDetails(collectionItemDo.getResource().getLanguage());
+		//setlanguageDetails(collectionItemDo.getResource().getLanguage());
+		setlanguageDetails("");
 		
 		collectionItemDo.getResource().setDataType("Data Type");
-		setdataTypeDetails(collectionItemDo.getResource().getDataType());
+		//setdataTypeDetails(collectionItemDo.getResource().getDataType());
+		setdataTypeDetails("");
 		
 		collectionItemDo.getResource().setAuthor("Bill Gates");
-		setAuthorDetails(collectionItemDo.getResource().getAuthor());
+		//setAuthorDetails(collectionItemDo.getResource().getAuthor());
+		setAuthorDetails("");
 		
 		collectionItemDo.getResource().setCopyRightHolder("Bill Gates");
-		setCopyRightHolderDetails(collectionItemDo.getResource().getCopyRightHolder());
+		//setCopyRightHolderDetails(collectionItemDo.getResource().getCopyRightHolder());
+		setCopyRightHolderDetails("");
 		
 		collectionItemDo.getResource().setContributor("Melinda Gates");
-		setContributorDetails(collectionItemDo.getResource().getContributor());
+		//setContributorDetails(collectionItemDo.getResource().getContributor());
+		setContributorDetails("");
 		
 		List<String> keyworddetails = new ArrayList<String>();
 		keyworddetails.add(0, "nouns");
 		keyworddetails.add(1, "plural");
 		keyworddetails.add(2, "singular");
 		collectionItemDo.getResource().setKeywords(keyworddetails);
-		setkeywordsDetails(collectionItemDo.getResource().getKeywords());
+		//setkeywordsDetails(collectionItemDo.getResource().getKeywords());
+		setkeywordsDetails(null);
 		
-		collectionItemDo.getResource().setMobilefriendlyness("YES");
+		//setmobilefriendlynessdetails(collectionItemDo.getResource().getMobilefriendlyness());
 		setmobilefriendlynessdetails(collectionItemDo.getResource().getMobilefriendlyness());
 		
 		List<String> acessmodedetails = new ArrayList<String>();
 		acessmodedetails.add(0, "Visual");
 		acessmodedetails.add(1, "Auditory");
 		collectionItemDo.getResource().setAcessmode(acessmodedetails);
-		setacessmodeDetails(collectionItemDo.getResource().getAcessmode());
+		//setacessmodeDetails(collectionItemDo.getResource().getAcessmode());
+		setacessmodeDetails(null);
 		
 		List<String> mediafeaturesdetails = new ArrayList<String>();
 		mediafeaturesdetails.add(0, "Alternativetext");
 		mediafeaturesdetails.add(1, "Annotations");
 		collectionItemDo.getResource().setMediaFeatures(mediafeaturesdetails);
-		setmediafeaturesDetails(collectionItemDo.getResource().getMediaFeatures());
+		//setmediafeaturesDetails(collectionItemDo.getResource().getMediaFeatures());
+		setmediafeaturesDetails(null);
 		
 		collectionItemDo.getResource().setControlflexibility("Full Keyboard Control");
-		setcontrolflexibilityDetails(collectionItemDo.getResource().getControlflexibility());
+		//setcontrolflexibilityDetails(collectionItemDo.getResource().getControlflexibility());
+		setcontrolflexibilityDetails("");
 		
 		collectionItemDo.getResource().setAccesshazard("Motion Simulation");
-		setAcessHazardDetails(collectionItemDo.getResource().getAccesshazard());
+		//setAcessHazardDetails(collectionItemDo.getResource().getAccesshazard());
+		setAcessHazardDetails("");
 		
 		collectionItemDo.getResource().setHasadaptation("YES");
-		sethasadaptationDetails(collectionItemDo.getResource().getHasadaptation());
+		//sethasadaptationDetails(collectionItemDo.getResource().getHasadaptation());
+		sethasadaptationDetails("");
 		
 		collectionItemDo.getResource().setIsadaptation("NO");
-		setIsadaptationDetails(collectionItemDo.getResource().getIsadaptation());
+		//setIsadaptationDetails(collectionItemDo.getResource().getIsadaptation());
+		setIsadaptationDetails("");
 		
 		List<String> accessibilitydetails = new ArrayList<String>();
 		accessibilitydetails.add(0, "Android Accessibility");
 		accessibilitydetails.add(1, "ARIA");
 		collectionItemDo.getResource().setAccessibilityAPI(accessibilitydetails);
-		setaccessibilityDetails(collectionItemDo.getResource().getAccessibilityAPI());
-		
-		/*resourceTypeImage.getElement().setAttribute("style", "margin-top: -25px;position: absolute;");*/
+		//setaccessibilityDetails(collectionItemDo.getResource().getAccessibilityAPI());
+		setaccessibilityDetails(null);
+
 		resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
-		
-		
 		resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
-		
-		generalLbl.setVisible(true);
 		timeRequiredvalue.setVisible(true);
 		
-		//Need to open this after we got the related parameters from the API.
-		/*resourceInfoLbl.setVisible(true);*/
 		
-		//Need to make visible as true for all these fields once we got required fields from API. 
-		//educationallLbl.setVisible(true);
-		accesibilityLbl.setVisible(true);
+		
+		/*generalLbl.setVisible(true);*/
+		resourceInfoLbl.setVisible(true);
+		educationallLbl.setVisible(true);
+		/*accesibilityLbl.setVisible(true);*/
+		
 		timeRequiredLabel.setVisible(true);
 		resourceInfoSeparatorTimeLbl.setVisible(true);
-		//contributorPanel.setVisible(true);
-		//mobileFriendlyPanel.setVisible(true);
-		//DataTypePanel.setVisible(true);
-		//interactivityTypePanel.setVisible(true);
-		//eduAllignPanel.setVisible(true);
-		//eduUsePanel.setVisible(true);
-		//eduRolePanel.setVisible(true);
-		//ageRangePanel.setVisible(true);
-		//dKnowledgePanel.setVisible(true);
-		//readingLevelPanel.setVisible(true);
-		//hasAdaptationPanel.setVisible(true);
-		//languagePanel.setVisible(true);
-		//countryCodePanel.setVisible(true);
-		//isAdaptationPanel.setVisible(true);
-		//copyRightPanel.setVisible(true);
-		
-		//gooruCoursePanel.setVisible(true);
-		//accessibilityAPIPanel.setVisible(true);
 		accessibilityPanel.setVisible(true);
-		//controlPanel.setVisible(true);
-		//accessHazardPanel.setVisible(true);
-		//mediaFeaturePanel.setVisible(true);
-		//accessModePanel.setVisible(true);
-		//gooruSubjectPanel.setVisible(true);
-		//authorPanel.setVisible(true);
 		
 		}else{
-			thumbnailPanel.setVisible(false);
-			licenceCodePanel.setVisible(false);
-			dateCreatedPanel.setVisible(false);
+			
 			resourcetypeSeparator.setHTML(SEPARATOR);
 			resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
 			resourceTypeImage.getElement().setAttribute("style", "position: relative;");
 			learningobjectiveText.setText(GL0904 + ""+GL_SPL_SEMICOLON);
 			resourceTypeImage.getElement().setAttribute("style","top:15px;position: relative;left:50px;");
-			
+		
+			momentsoflearningPanel.setVisible(false);
+			thumbnailPanel.setVisible(false);
+			licenceCodePanel.setVisible(false);
+			dateCreatedPanel.setVisible(false);
 			lblcollectionName.setVisible(false);
 			timeRequiredvalue.setVisible(false);
 			authorPanel.setVisible(false);
@@ -450,11 +432,83 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			mediaFeatureType.setVisible(false);
 			accessibilityAPIType.setVisible(false);
 		}
+		
+		if(collectionItemDo.getResource().getCreatedOn()!=null){
+			resourceInfoLbl.setText(GL1716);
+			resourceInfoLbl.setVisible(true);
+		}else{
+			resourceInfoLbl.setVisible(false);
+		}
+		
+		if(collectionItemDo.getResource().getMomentsOfLearning()!=null && collectionItemDo.getResource().getDepthOfKnowledges() !=null && collectionItemDo.getResource().getEducationalUse()!=null){
+		if(collectionItemDo.getResource().getMomentsOfLearning().size()==0 && collectionItemDo.getResource().getDepthOfKnowledges().size()==0 && collectionItemDo.getResource().getEducationalUse().size()==0){
+			educationallLbl.setVisible(false);
+		}else{
+			educationallLbl.setVisible(true);
+		}
+		}else{
+			educationallLbl.setVisible(false);
+		}
+		
 	}
 	
+	private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
+		momentsoflearningType.clear();
+		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
+			momentsoflearningPanel.setVisible(false);
+		}else{
+			momentsoflearningLbl.setText("Moments Of Learning:");
+		if(momentoflearningdetails.size()>0){
+			final Label momentsofLabel=new Label(momentoflearningdetails.get(0)+","+momentoflearningdetails.get(1));
+			momentsofLabel.getElement().setAttribute("style", "float: left;");
+			momentsoflearningType.add(momentsofLabel);
+			momentsoflearningPanel.setVisible(true);
+		}
+		if(momentoflearningdetails.size()>2){
+			final Label momentsofLabel=new Label("+"+(momentoflearningdetails.size()-2)); 
+			momentsofLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			momentsoflearningType.add(momentsofLabel);
+			Widget momentswidget = getCommonwidget(momentoflearningdetails);
+			momentsofLabel.addMouseOverHandler(new MouseOverShowToolTip(momentswidget));
+			momentsofLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			momentsoflearningPanel.setVisible(true);
+		}
+		}
+		
+	}
+
+	private void setDepthofknowledgeDetails(List<String> depthOfKnowledgedetails) {
+		// TODO Auto-generated method stub
+		dKnowledgeType.clear();
+		if(depthOfKnowledgedetails == null || depthOfKnowledgedetails.size() == 0 || depthOfKnowledgedetails.contains(null) || depthOfKnowledgedetails.contains("") ){
+			dKnowledgePanel.setVisible(false);
+		}else{
+			dKnowledgeLbl.setText(GL1693+GL_SPL_SEMICOLON);
+		if(depthOfKnowledgedetails.size()>0){
+			final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+			deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
+			dKnowledgeType.add(deapthknowledgeLabel);
+			dKnowledgePanel.setVisible(true);
+		}
+		if(depthOfKnowledgedetails.size()>2){
+			final Label deapthknowledgeLabel=new Label("+"+(depthOfKnowledgedetails.size()-2)); 
+			deapthknowledgeLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			dKnowledgeType.add(deapthknowledgeLabel);
+			Widget depthofwidget = getCommonwidget(depthOfKnowledgedetails);
+			deapthknowledgeLabel.addMouseOverHandler(new MouseOverShowToolTip(depthofwidget));
+			deapthknowledgeLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			dKnowledgePanel.setVisible(true);
+		}
+		}
+	}
+
 	private void seteducationaluseDetails(List<String> eduUsedetails) {
 		// TODO Auto-generated method stub
 		eduUseType.clear();
+		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
+			eduUsePanel.setVisible(false);
+		}else{
+			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
 		if(eduUsedetails.size()>0){
 			final Label eduUseLabel=new Label(eduUsedetails.get(0)+","+eduUsedetails.get(1));
 			eduUseLabel.getElement().setAttribute("style", "float: left;");
@@ -470,10 +524,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			eduUsePanel.setVisible(true);
 		}
+		}
 	}
 
 	private void setaccessibilityDetails(List<String> accessibilityAPI) {
 		accessibilityAPIType.clear();
+		if(accessibilityAPI == null || accessibilityAPI.size() == 0 || accessibilityAPI.contains(null) || accessibilityAPI.contains("") ){
+			accessibilityAPIPanel.setVisible(false);
+		}else{
+			accessibilityAPILbl.setText(GL1702+GL_SPL_SEMICOLON);
 		if(accessibilityAPI.size()>0){
 			final Label accessibilityLabel=new Label(accessibilityAPI.get(0)+","+accessibilityAPI.get(1));
 			accessibilityLabel.getElement().setAttribute("style", "float: left;");
@@ -489,36 +548,60 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			accessibilityLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			accessibilityAPIPanel.setVisible(true);
 		}
-		
+		}
 	}
 
 	private void setAcessHazardDetails(String accesshazard) {
 		// TODO Auto-generated method stub
+		if(accesshazard==""||accesshazard==null ){
+			accessHazardPanel.setVisible(false);
+		}else{
 		accessHazardPanel.setVisible(true);
 		acessHazardType.setText(accesshazard);
+		acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setIsadaptationDetails(String isadaptation) {
 		// TODO Auto-generated method stub
+		if(isadaptation==""||isadaptation==null ){
+			isAdaptationPanel.setVisible(false);
+		}else{
 		isAdaptationPanel.setVisible(true);
 		isAdaptationType.setText(isadaptation);
+		isAdaptationLbl.setText(GL1698+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void sethasadaptationDetails(String hasadaptation) {
 		// TODO Auto-generated method stub
+		if(hasadaptation==""||hasadaptation==null ){
+			hasAdaptationPanel.setVisible(false);
+		}else{
 		hasAdaptationPanel.setVisible(true);
+		hasAdaptationLbl.setText(GL1695+GL_SPL_SEMICOLON);
 		hasAdaptationType.setText(hasadaptation);
+		}
 	}
 
 	private void setcontrolflexibilityDetails(String controlflexibility) {
 		// TODO Auto-generated method stub
+		if(controlflexibility==""||controlflexibility==null ){
+			controlPanel.setVisible(false);
+		}else{
 		controlPanel.setVisible(true);
 		controlType.setText(controlflexibility);
+		controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setmediafeaturesDetails(List<String> mediaFeatures) {
 		// TODO Auto-generated method stub
 		mediaFeatureType.clear();
+		if(mediaFeatures == null || mediaFeatures.size() == 0 || mediaFeatures.contains(null) || mediaFeatures.contains("") ){
+			mediaFeaturePanel.setVisible(false);
+		}else{
+			mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
 		if(mediaFeatures.size()>0){
 			final Label mediafeatureLabel=new Label(mediaFeatures.get(0)+","+mediaFeatures.get(1));
 			mediafeatureLabel.getElement().setAttribute("style", "float: left;");
@@ -534,10 +617,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			mediafetureCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			mediaFeaturePanel.setVisible(true);
 		}
+		}
 	}
 
 	private void setacessmodeDetails(List<String> acessmode) {
 		accessModeType.clear();
+		if(acessmode == null || acessmode.size() == 0 || acessmode.contains(null) || acessmode.contains("") ){
+			accessModePanel.setVisible(false);
+		}else{
+			accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
 		if(acessmode.size()>0){
 			final Label accessmodeLabel=new Label(acessmode.get(0)+","+acessmode.get(1));
 			accessmodeLabel.getElement().setAttribute("style", "float: left;");
@@ -553,18 +641,31 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			acessmodeCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			accessModePanel.setVisible(true);
 		}
-		
+		}
 	}
 
 	private void setmobilefriendlynessdetails(String mobilefriendlyness) {
 		// TODO Auto-generated method stub
+		if(mobilefriendlyness==""||mobilefriendlyness==null ){
+			mobileFriendlyPanel.setVisible(false);
+			accessibilityPanel.setVisible(false);
+			accesibilityLbl.setVisible(false);
+		}else{
 		mobileFriendlyPanel.setVisible(true);
+		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 		mbFriendlyText.setText(mobilefriendlyness);
+		accessibilityPanel.setVisible(true);
+		accesibilityLbl.setText(GL1703);
+		}
 	}
 
 	private void showgooruCourseDetails(List<String> gooruCourse) {
 		// TODO Auto-generated method stub
 		gooruCourseInfo.clear();
+		if(gooruCourse == null || gooruCourse.size() == 0 || gooruCourse.contains(null) || gooruCourse.contains("") ){
+			gooruCoursePanel.setVisible(false);
+		}else{
+			gooruCourseLbl.setText(GL1701+GL_SPL_SEMICOLON);
 		if(gooruCourse.size()>0){
 			final Label goorucourseLabel=new Label(gooruCourse.get(0)+","+gooruCourse.get(1));
 			goorucourseLabel.getElement().setAttribute("style", "float: left;");
@@ -580,11 +681,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			goorucourseCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			gooruCoursePanel.setVisible(true);
 		}
+		}
 	}
 
 	private void showreadingLevelDetails(List<String> readinglevel) {
 		// TODO Auto-generated method stub
 		readingLevelType.clear();
+		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+		if(readinglevel == null || readinglevel.size() == 0 || readinglevel.contains(null) || readinglevel.contains("") ){
+			readingLevelPanel.setVisible(false);
+		}else{
 		if(readinglevel.size()>0){
 			final Label readingLabel=new Label(readinglevel.get(0)+","+readinglevel.get(1));
 			readingLabel.getElement().setAttribute("style", "float: left;");
@@ -600,12 +706,17 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			readingCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			readingLevelPanel.setVisible(true);
 		}
+		}
 	}
 
 	private void setkeywordsDetails(List<String> keywords) {
 		// TODO Auto-generated method stub
 		keywordsInfo.clear();
+		if(keywords == null || keywords.size() == 0 || keywords.contains(null) || keywords.contains("") ){
+			keyWordsPanel.setVisible(false);
+		}else{
 		if(keywords.size()>0){
+			keywordsTitle.setText("Keywords");
 			final Label keywordLabel=new Label(keywords.get(0)+","+keywords.get(1));
 			keywordLabel.getElement().setAttribute("style", "float: left;");
 			keywordsInfo.add(keywordLabel);
@@ -620,100 +731,145 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			keywordCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			keyWordsPanel.setVisible(true);
 		}
+		}
 	}
 
 	private void setContributorDetails(String contributor) {
 		// TODO Auto-generated method stub
+		if(contributor==""||contributor==null ){
+			contributorPanel.setVisible(false);
+		}else{
+		contributorTitle.setText(GL1686+GL_SPL_SEMICOLON);
 		contributorPanel.setVisible(true);
 		contributorName.setText(contributor);
+		}
 	}
 
 	private void setCopyRightHolderDetails(String copyRightHolder) {
 		// TODO Auto-generated method stub
+		if(copyRightHolder==""||copyRightHolder==null ){
+			copyRightPanel.setVisible(false);
+		}else{
 		copyRightPanel.setVisible(true);
 		copyRightType.setText(copyRightHolder);
+		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setAuthorDetails(String author) {
 		// TODO Auto-generated method stub
+		if(author==""||author==null ){
+			authorPanel.setVisible(false);
+		}else{
 		authorPanel.setVisible(true);
+		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
 		authorName.setText(author);
+		}
 	}
 
 	private void setdataTypeDetails(String dataType) {
 		// TODO Auto-generated method stub
+		if(dataType==""||dataType==null ){
+			DataTypePanel.setVisible(false);
+		}else{
 		DataTypePanel.setVisible(true);
 		dataTypeFormat.setText(dataType);
+		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setlanguageDetails(String language) {
 		// TODO Auto-generated method stub
+		if(language==""||language==null ){
+			languagePanel.setVisible(false);
+		}else{
 		languagePanel.setVisible(true);
 		languageType.setText(language);
+		languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setCountryCodeDetails(String countryCode) {
 		// TODO Auto-generated method stub
+		if(countryCode==""||countryCode==null ){
+			countryCodePanel.setVisible(false);
+		}else{
 		countryCodePanel.setVisible(true);
 		countryCodeType.setText(countryCode);
+		countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setgooruSubjectDetails(String gooruSubject) {
 		// TODO Auto-generated method stub
+		if(gooruSubject==""||gooruSubject==null ){
+			gooruSubjectPanel.setVisible(false);
+		}else{
 		gooruSubjectPanel.setVisible(true);
 		gooruSubjectInfo.setText(gooruSubject);
-	}
-
-	private void setDepthofknowledgeDetails(String depthOfKnowledge) {
-		// TODO Auto-generated method stub
-		dKnowledgePanel.setVisible(true);
-		dKnowledgeType.setText(depthOfKnowledge);
+		gooruSubjectLbl.setText(GL1715+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setageRangeDetails(String ageRange) {
 		// TODO Auto-generated method stub
+		if(ageRange==""||ageRange==null ){
+			ageRangePanel.setVisible(false);
+		}else{
 		ageRangePanel.setVisible(true);
 		ageRangeType.setText(ageRange);
+		ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setinteractivityTypeDetails(String interactivityType) {
 		// TODO Auto-generated method stub
+		if(interactivityType==""||interactivityType==null ){
+			interactivityTypePanel.setVisible(false);
+		}else{
 		interactivityTypePanel.setVisible(true);
 		interactiveType.setText(interactivityType);
+		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void seteducationalRoleDetails(String educationalRole) {
+		if(educationalRole==""||educationalRole==null ){
+			eduRolePanel.setVisible(false);
+		}else{
 		eduRolePanel.setVisible(true);
 		eduRoleType.setText(educationalRole);
+		eduRoleLbl.setText(GL1691+GL_SPL_SEMICOLON);
+		}
 	}
 
-/*	private void seteducationaluseDetails(ArrayList<String> eduUsedetails) {
-		// TODO Auto-generated method stub
-		eduUsePanel.setVisible(true);
-		eduUseType.setVisible(true);
-		eduUseType.clear();
-		for(int i=0;i<eduUsedetails.size();i++){
-			Label eduUsedetailsLabel = new Label(eduUsedetails.get(i)+",");
-			eduUseType.add(eduUsedetailsLabel);
-		}
-	}*/
 
 	private void setedAlignDetails(String educationalAlignment) {
-		educationallLbl.setVisible(true);
-		eduAllignPanel.setVisible(true);
-		eduAllignType.setText(educationalAlignment);
+		if(educationalAlignment==""|| educationalAlignment==null){
+			eduAllignPanel.setVisible(false);
+		}else{
+			eduAllignPanel.setVisible(true);
+			eduAllignType.setText(educationalAlignment);
+			eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
+		}
 	}
 
 	private void setHostDetails(String host) {
-		hostPanel.setVisible(true);
-		hostType.setText(host);
+		if(host==""||host==null ){
+			hostPanel.setVisible(false);
+		}else{
+			hostPanel.setVisible(true);
+			hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
+			hostType.setText(host);
+		}
 	}
 
 	private void setCreatedDate(Date createdOn) {
-		resourceInfoLbl.setVisible(true);
+		
 		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(createdOn);
 		dateCreatedPanel.setVisible(true);
 		createdDateInfo.setText(dateString);
+		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
 	}
 
 	
@@ -724,16 +880,26 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			licenceCodePanel.setVisible(true);
 			licenceCodeType.setText(code);
+			licenceCodeLbl.setText(GL1719+GL_SPL_SEMICOLON);
 		}		
 	}
 
 	private void setThumbnailUrl(String url) {
-	
+		thumbnailurlValue.clear();
 		if(url==null||url.equalsIgnoreCase("")||url.equalsIgnoreCase("null")){
 			thumbnailPanel.setVisible(false);
 		}else{
 			thumbnailPanel.setVisible(true);
-			thumbnailurlValue.setText(url);
+			if(!url.substring(0, 4).equalsIgnoreCase("http")){
+				url= "http://"+url;
+			}
+			Anchor thumbnailAnchor=new Anchor(url);
+			thumbnailAnchor.setHref(url);
+			thumbnailAnchor.setStyleName("");
+			thumbnailAnchor.setTarget("_blank");
+			
+			thumbnailurlValue.add(thumbnailAnchor);
+			thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);
 		}
 		
 	}
