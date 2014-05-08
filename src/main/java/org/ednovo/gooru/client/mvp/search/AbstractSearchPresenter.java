@@ -307,7 +307,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				filters.put(IsSearchView.MEDIATYPE_FLT, notFriendly);
 			}
 			String oer=getPlaceManager().getRequestParameter(IsSearchView.OER_FLT);
-			if(oer != null && oer.equalsIgnoreCase("OER")){
+			if(oer != null && oer.equalsIgnoreCase("1")){
 				filters.put(IsSearchView.OER_FLT, oer);
 			}
 			

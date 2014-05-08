@@ -357,6 +357,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.setHeaderTitle(GL0226);
 		gradePanelUc.setHeaderTitle(GL0165);
 		clearAll.setText(GL0725);
+		oerPanel.setVisible(false);
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
@@ -795,7 +796,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 //				}
 			}
 			if(chkOER!=null && chkOER.getValue()){
-				filterMap.put(IsSearchView.OER_FLT, "OER");
+				filterMap.put(IsSearchView.OER_FLT, "1");
 			}
 			}else{
 			filterMap.remove(IsSearchView.MEDIATYPE_FLT);

@@ -536,6 +536,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
 		newResourceDo.setTitle(titleStr);
+		
 		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 		 for(int i = 0; i<standards.size(); i++){
 			 CodeDo codeObj=new CodeDo();
@@ -546,8 +547,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
+		
+		ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
+		checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
+		educationalOfObj.setSelected(true);
+		educationalOfObj.setValue(edcuationalUse);
+		arrayOfEducational.add(educationalOfObj);
 		if(!edcuationalUse.equalsIgnoreCase(GL1684))
-		newResourceDo.setEducationalUse(edcuationalUse);
+		newResourceDo.setEducationalUse(arrayOfEducational);
+		
 		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
 		checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
 		momentsOfObj.setSelected(true);
@@ -689,6 +697,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		}
 		
 		newResourceDo.setResourceFormat(resourceFormat);
+		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
+		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
+		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
