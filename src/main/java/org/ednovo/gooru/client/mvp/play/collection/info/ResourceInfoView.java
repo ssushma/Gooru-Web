@@ -245,7 +245,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(collectionItemDo.getResource().getCreatedOn()!=null){
 			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
 		}
-		resourceTypeImage.getElement().setAttribute("style", "margin-top: -25px;position: absolute;");
+		resourceTypeImage.getElement().setAttribute("style", "margin-left: -40px;position: relative;");
 		resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
 		
 		//Need to open this after we got time required field from API

@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
@@ -38,7 +41,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	@UiField FolderItemMetaDataUcStyleBundle folderMetaStyle;
 	
-	@UiField Label ideasStaticLbl, questionsStaticLbl, tasksStaticLbl;
+	@UiField Label ideasStaticLbl, questionsStaticLbl, tasksStaticLbl,errorLabelbigIdeasHTML,errorLabelperformanceTaskHTML,errorLabelessentialQuestionsHTML;
 	
 	private String folderId = null, title = null, bigIdeas = "", essentialQuestions = "", performanceTask = "";
 	
@@ -65,7 +68,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		bigIdeasHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				bigIdeasHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText()));
+				bigIdeasHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText(), errorLabelbigIdeasHTML));
 			}
 		});
 		
@@ -81,7 +84,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		essentialQuestionsHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, essentialQuestionsHTML.getText()));
+				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, essentialQuestionsHTML.getText(), errorLabelessentialQuestionsHTML));
 			}
 		});
 
@@ -97,7 +100,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		performanceTaskHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				performanceTaskHTML.setHTML(restrictKeyLimit(event, performanceTaskHTML.getText()));
+				performanceTaskHTML.setHTML(restrictKeyLimit(event, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML));
 			}
 		});
 
@@ -111,17 +114,30 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		cancelBtn.setText(GL0142);
 	}
 	
-	private String restrictKeyLimit(KeyDownEvent event, String text) {
+	private String restrictKeyLimit(KeyDownEvent event, String text, Label errorLabelToDisplay) {
 		 if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER ||
                  event.getNativeKeyCode() == KeyCodes.KEY_UP ||
                  event.getNativeKeyCode() == KeyCodes.KEY_LEFT||
                  event.getNativeKeyCode() == KeyCodes.KEY_DOWN ||
                  event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE||
                  event.getNativeKeyCode() == KeyCodes.KEY_SHIFT) {
-			 
-         } else {
-	         if(text.trim().length()>600){
+			 if(text.trim().length()<=599)
+			 {
+				 errorLabelToDisplay.setVisible(false);	 
+			 }
+		 
+         } 
+		 else 
+         {
+	         if(text.trim().length()>598)
+	         {
+	        	 errorLabelToDisplay.setVisible(true);	
+	        	 errorLabelToDisplay.setText(GL0143);	        	 
 	        	 event.preventDefault();
+	         }
+	         else
+	         {
+	        	 errorLabelToDisplay.setVisible(false);	
 	         }
          }
 		 return text;
@@ -144,9 +160,27 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		bigIdeasLbl.setHTML(bigIdeas);
 		essentialQuestionsLbl.setHTML(essentialQuestions);
 		performanceTaskLbl.setHTML(performanceTask);
+		
+		errorLabelbigIdeasHTML.setVisible(false);
+		errorLabelessentialQuestionsHTML.setVisible(false);
+		errorLabelperformanceTaskHTML.setVisible(false);
+		
+		bigIdeasHTML.getElement().removeAttribute("style");
+		essentialQuestionsHTML.getElement().removeAttribute("style");
+		performanceTaskHTML.getElement().removeAttribute("style");
+		
+	}
+	
+	public void beforeEditSetOpen() {
+		performanceTaskPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
+		essentialQuestionsPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
+		bigIdeasPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
+		closeItem.addStyleName(folderMetaStyle.closeItem());
+		closeItem.removeStyleName(folderMetaStyle.openItem());
 	}
 	
 	public void showEditableMetaData(boolean isVisible) {
+		
 		bigIdeasLbl.setVisible(isVisible);
 		essentialQuestionsLbl.setVisible(isVisible);
 		performanceTaskLbl.setVisible(isVisible);
@@ -175,32 +209,107 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	@UiHandler("saveBtn")
 	public void clickSaveBtn(ClickEvent event) {
-		setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
-		AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeasHTML.getHTML(), performanceTaskHTML.getHTML(), essentialQuestionsHTML.getHTML()));
-		showEditableMetaData(true);
-		updateFolderMetaData();
+		
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", bigIdeasHTML.getHTML());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean value) {
+				if(!value)
+				{
+					clearErrorMsgs();
+				Map<String, String> parms1 = new HashMap<String, String>();
+				parms1.put("text", essentialQuestionsHTML.getHTML());
+				AppClientFactory.getInjector().getResourceService().checkProfanity(parms1, new SimpleAsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean value) {
+						if(!value)
+						{
+						clearErrorMsgs();
+						Map<String, String> parms2 = new HashMap<String, String>();
+						parms2.put("text", performanceTaskHTML.getHTML());
+						AppClientFactory.getInjector().getResourceService().checkProfanity(parms2, new SimpleAsyncCallback<Boolean>() {
+							
+							@Override
+							public void onSuccess(Boolean value) {
+								if(!value)
+								{
+									clearErrorMsgs();
+								setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
+								AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeasHTML.getHTML(), performanceTaskHTML.getHTML(), essentialQuestionsHTML.getHTML()));
+								showEditableMetaData(true);
+								updateFolderMetaData();
+								
+								}
+								else
+								{
+									performanceTaskHTML.getElement().getStyle().setBorderColor("orange");
+									errorLabelperformanceTaskHTML.setText(GL0554);
+									errorLabelperformanceTaskHTML.setVisible(true);	
+								}
+							}
+						});
+						}
+						else
+						{
+							essentialQuestionsHTML.getElement().getStyle().setBorderColor("orange");
+							errorLabelessentialQuestionsHTML.setText(GL0554);
+							errorLabelessentialQuestionsHTML.setVisible(true);
+						}
+					}
+				});
+				}
+				else
+				{
+					//errorLabelbigIdeasHTML.setText("error text");
+					bigIdeasHTML.getElement().getStyle().setBorderColor("orange");
+					errorLabelbigIdeasHTML.setText(GL0554);
+					errorLabelbigIdeasHTML.setVisible(true);
+				}
+				
+			}
+		});
+
+	}
+	
+	public void clearErrorMsgs()
+	{
+		errorLabelessentialQuestionsHTML.setVisible(false);
+		essentialQuestionsHTML.getElement().removeAttribute("style");
+		errorLabelperformanceTaskHTML.setVisible(false);	
+		performanceTaskHTML.getElement().removeAttribute("style");
+		errorLabelbigIdeasHTML.setVisible(false);	
+		bigIdeasHTML.getElement().removeAttribute("style");
 	}
 	
 	@UiHandler("cancelBtn")
 	public void clickCancelBtn(ClickEvent event) {
+		clearErrorMsgs();
 		showEditableMetaData(true);
 	}
 	
 	@UiHandler("closeItem")
 	public void clickCloseItem(ClickEvent event) {
 		showEditableMetaData(true);
-		if(closeItem.getStyleName().contains(folderMetaStyle.closeItem())) {
+		if(closeItem.getStyleName().contains(folderMetaStyle.closeItem())) 
+		{
+			closeItem.removeStyleName(folderMetaStyle.closeItem());
+			closeItem.addStyleName(folderMetaStyle.openItem());
 			performanceTaskPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			essentialQuestionsPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			bigIdeasPanel.addStyleName(folderMetaStyle.closedPanelHeight());
-			closeItem.removeStyleName(folderMetaStyle.closeItem());
-			closeItem.addStyleName(folderMetaStyle.openItem());
-		} else {
+	
+		} 
+		else 
+		{
+			closeItem.addStyleName(folderMetaStyle.closeItem());
+			closeItem.removeStyleName(folderMetaStyle.openItem());
 			performanceTaskPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 			essentialQuestionsPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 			bigIdeasPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
-			closeItem.addStyleName(folderMetaStyle.closeItem());
-			closeItem.removeStyleName(folderMetaStyle.openItem());
+
 		}
 	}
 	

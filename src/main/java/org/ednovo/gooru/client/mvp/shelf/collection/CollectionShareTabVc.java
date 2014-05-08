@@ -860,23 +860,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
 	}
 	
-	public void checkCharacterLimit(String text) {
-		if (text.length() >= 415) {
-			errorLabelForTeacherTip
-					.addStyleName("titleAlertMessageActive");
-			errorLabelForTeacherTip
-					.removeStyleName("titleAlertMessageDeActive");
-		} else {
-			errorLabelForTeacherTip
-					.addStyleName("titleAlertMessageDeActive");
-			errorLabelForTeacherTip
-					.removeStyleName("titleAlertMessageActive");
-		}
-	}
-	
-
-	
-	
 
 	public void displayErrorMsgTeacherTip(){
 
@@ -907,12 +890,16 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
 			errorLabelForTeacherTip.setVisible(false);
-			if (teacherTipTextarea.getText().length() >=400) {
+			if (teacherTipTextarea.getText().length() >=500) {
 				teacherTipTextarea.setText(teacherTipTextarea.getText().trim()
-						.substring(0, 400));
+						.substring(0, 500));
 				errorLabelForTeacherTip.setText("");
 				errorLabelForTeacherTip.setText(MessageProperties.GL0143);
 				errorLabelForTeacherTip.setVisible(true);
+			}
+			else
+			{
+				errorLabelForTeacherTip.setVisible(false);
 			}
 
 		}

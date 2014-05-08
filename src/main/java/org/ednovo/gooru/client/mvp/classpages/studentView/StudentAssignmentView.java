@@ -208,6 +208,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
+		
+		studentViewImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				studentViewImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
+			}
+		});
 
 		
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
@@ -223,7 +231,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				LblMember.setText(GL1551);
 				mainContainer.setVisible(true);
 			}
-			else if(classpageDo.getStatus().equalsIgnoreCase("active")){
+			else if(classpageDo.getStatus().equalsIgnoreCase("active"))
+			{
 				btnJoinClass.setVisible(false);
 				userImage.setVisible(true);
 				lblWebHelp.setVisible(false);
@@ -234,7 +243,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 			else 
 			{
-				
 				btnJoinClass.setVisible(true);
 				userImage.setVisible(false);
 				lblWebHelp.setVisible(true);
@@ -243,6 +251,62 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				userImage.setVisible(false);
 				mainContainer.setVisible(true);
 
+				if(!isJoinPopupPublic){
+					isJoinPopupPublic=true;
+					joinPopupPublic =  new StudentJoinClassPopup(classpageDo) {
+					
+					@Override
+					void joinIntoClass() {
+							String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+							AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+
+								@Override
+								public void onSuccess(ClasspageDo result) {
+									joinPopupPublic.hide();
+									mainContainer.setVisible(true);
+									SuccessPopupViewVc success=new SuccessPopupViewVc(){
+
+										@Override
+										public void onClickPositiveButton(
+												ClickEvent event) {
+											Window.enableScrolling(true);
+											btnJoinClass.setVisible(false);
+											userImage.setVisible(true);
+											lblWebHelp.setVisible(false);
+											btnWithDraw.setVisible(true);
+											LblMember.setVisible(true);
+											userImage.setVisible(true);
+											mainContainer.setVisible(true);
+											this.hide();
+											isJoinPopupPublic=false;
+											
+										}
+										
+									};
+									success.setHeight("248px");
+                                    success.setWidth("450px");
+                                    success.setPopupTitle(GL1553);
+                                    success.setDescText(GL1554+classpageDo.getTitle()+GL_SPL_EXCLAMATION+'\n'+GL1552);
+                                    success.setPositiveButtonText(GL0190);
+                                    success.center();
+                                    success.show();
+						
+								}
+							});
+					}
+
+					@Override
+					public void closePoup() {
+						hide();
+					}
+				};
+				}
+				int windowHeight=Window.getClientHeight()/2; //I subtract 10 from the client height so the window isn't maximized.
+				int windowWidth=Window.getClientWidth()/2;
+				joinPopupPublic.setPopupPosition(windowWidth-253, windowHeight-70);
+				joinPopupPublic.setPixelSize(506, 261);		
+				//joinPopup.center();
+				joinPopupPublic.show();
 
 				
 			}	
@@ -275,7 +339,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					LblMember.setVisible(true);
 					userImage.setVisible(true);
 					mainContainer.setVisible(true);
-				}else if(classpageDo.getStatus().equalsIgnoreCase("pending")) {
+				}
+			else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
+			{
 					btnJoinClass.setVisible(true);
 					userImage.setVisible(false);
 					lblWebHelp.setVisible(true);
@@ -387,11 +453,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		//here we need to check for http://collab.ednovo.org/jira/browse/CORE-516 this 
 		//api response and display the button text and functionality.
 		DataLogEvents.classpageView(GwtUUIDGenerator.uuid(), "classpage-view", classpageDo.getClasspageId(), AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
-	}
-	
-	@UiHandler("studentViewImage")
-	public void setErrorImage(ErrorEvent event){
-		studentViewImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
 	}
 	
 	@Override
