@@ -208,6 +208,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				imgProfileImage.setUrl(defaultProfileImage);
 			}
 		});
+		
+		studentViewImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				studentViewImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
+			}
+		});
 
 		
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
@@ -387,11 +395,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		//here we need to check for http://collab.ednovo.org/jira/browse/CORE-516 this 
 		//api response and display the button text and functionality.
 		DataLogEvents.classpageView(GwtUUIDGenerator.uuid(), "classpage-view", classpageDo.getClasspageId(), AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
-	}
-	
-	@UiHandler("studentViewImage")
-	public void setErrorImage(ErrorEvent event){
-		studentViewImage.setUrl(DEFAULT_CLASSPAGE_IMAGE);
 	}
 	
 	@Override

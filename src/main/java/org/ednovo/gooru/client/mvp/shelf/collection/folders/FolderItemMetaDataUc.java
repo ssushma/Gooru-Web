@@ -171,13 +171,15 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		
 	}
 	
-	public void showEditableMetaData(boolean isVisible) {
-		
+	public void beforeEditSetOpen() {
 		performanceTaskPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 		essentialQuestionsPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 		bigIdeasPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 		closeItem.addStyleName(folderMetaStyle.closeItem());
 		closeItem.removeStyleName(folderMetaStyle.openItem());
+	}
+	
+	public void showEditableMetaData(boolean isVisible) {
 		
 		bigIdeasLbl.setVisible(isVisible);
 		essentialQuestionsLbl.setVisible(isVisible);
@@ -291,20 +293,23 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	@UiHandler("closeItem")
 	public void clickCloseItem(ClickEvent event) {
 		showEditableMetaData(true);
-		if(closeItem.getStyleName().contains(folderMetaStyle.closeItem())) {
-			System.out.println("ht::"+folderMetaStyle.closedPanelHeight());	
+		if(closeItem.getStyleName().contains(folderMetaStyle.closeItem())) 
+		{
+			closeItem.removeStyleName(folderMetaStyle.closeItem());
+			closeItem.addStyleName(folderMetaStyle.openItem());
 			performanceTaskPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			essentialQuestionsPanel.addStyleName(folderMetaStyle.closedPanelHeight());
 			bigIdeasPanel.addStyleName(folderMetaStyle.closedPanelHeight());
-			closeItem.removeStyleName(folderMetaStyle.closeItem());
-			closeItem.addStyleName(folderMetaStyle.openItem());
-		} else {
-			System.out.println("ht1::"+folderMetaStyle.closedPanelHeight());
+	
+		} 
+		else 
+		{
+			closeItem.addStyleName(folderMetaStyle.closeItem());
+			closeItem.removeStyleName(folderMetaStyle.openItem());
 			performanceTaskPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 			essentialQuestionsPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
 			bigIdeasPanel.removeStyleName(folderMetaStyle.closedPanelHeight());
-			closeItem.addStyleName(folderMetaStyle.closeItem());
-			closeItem.removeStyleName(folderMetaStyle.openItem());
+
 		}
 	}
 	

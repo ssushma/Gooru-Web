@@ -192,7 +192,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		renderLanguageObjective(collectionDo.getLanguageObjective());
 		if(collectionDo.getKeyPoints() != null)
 		{
-			if(collectionDo.getKeyPoints().length()>300)
+			if(collectionDo.getKeyPoints().length()>410)
+			{
+				authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
+			}
+			else if(collectionDo.getKeyPoints().length()>300)
 			{
 				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
 			}
