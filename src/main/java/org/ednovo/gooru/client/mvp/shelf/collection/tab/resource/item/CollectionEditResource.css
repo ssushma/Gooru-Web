@@ -1399,6 +1399,16 @@ user agent stylesheetdiv {
 	top: -11px;
 	width: 257px;
 }
+.myEducationEditDropdown { /* height: 250px; */
+	border-color: rgb(221, 221, 221);
+	border-width: 1px;
+	border-style: solid;
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	z-index: 1;
+	top: -11px;
+	width: 373px;
+}
 .myEducationQuestionDropdown { /* height: 250px; */
 	border-color: rgb(221, 221, 221);
 	border-width: 1px;

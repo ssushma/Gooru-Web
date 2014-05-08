@@ -196,10 +196,9 @@
 	margin-right:67px;
 }
 .shelfGradeTeacherTipError {
-	color: red;
 	float: right;
 	clear: both;
-	width: 332px;
+	/* width: 332px; */
 	margin-right:67px;
 }
 .shelfTeacherTipButtons

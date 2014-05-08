@@ -7,4 +7,5 @@ public interface FolderItemMetaDataUcStyleBundle  extends CssResource{
 	String openedPanelHeight();
 	String openItem();
 	String closeItem();
+	String errorLabel();
 }

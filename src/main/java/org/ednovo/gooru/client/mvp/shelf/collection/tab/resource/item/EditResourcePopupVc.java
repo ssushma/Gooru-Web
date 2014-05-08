@@ -26,8 +26,10 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
@@ -50,6 +52,7 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -85,10 +88,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 
 public abstract class EditResourcePopupVc extends AppPopUp implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 
@@ -101,7 +104,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public Label generateImageLbl;
 
 	@UiField
-	Label standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,agreeText,additionalText;
+	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,agreeText,additionalText;
 
 	@UiField
 	Label mandatoryCategoryLbl, urlTextLbl,andText;
@@ -125,10 +128,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	// Drop down for Resource Type//
 	@UiField
-	HTMLPanel educationalUsePanel,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	HTMLPanel momentsOfLearningPanel,momentsOfLearningTitle,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,educationalUsePanel,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
 	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel;//otherPanel
 	
-	@UiField Label standardsDefaultText,resourceCategoryLabel,loadingTextLbl,rightsLbl;
+	@UiField Label mandatorymomentsOfLearninglLbl,standardsDefaultText,resourceCategoryLabel,loadingTextLbl,rightsLbl;
 	
 	 @UiField HTMLPanel categorypanel,video,interactive,website,resourceTypePanel,image,texts,audio,resourceFormat,resDescription,urlTextPanel,titleTextPanel,thumbnailLbl,orLbl,refreshLblPanel;//other,
 	 @UiField CheckBox rightsChkBox;
@@ -152,7 +155,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	String fileNameWithOutRespUrl = null;
 	
-	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false;
+	public boolean resoureDropDownLblOpen = false,educationalDropDownLblOpen=false,momentsOfLearningOpen=false;
 	
 	private static final String DEFULT_IMAGE_PREFIX = "images/default-";
 
@@ -331,7 +334,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		bookText.getElement().setInnerHTML(GL1677);
 		educationalUsePanel.setVisible(false);
 		standardsDefaultText.setText(GL1682);
-		
+		momentsOfLearningTitle.getElement().setInnerHTML(GL1678);
+		preparingTheLearningText.getElement().setInnerHTML(GL1679);
+		interactingWithTheTextText.getElement().setInnerHTML(GL1680);
+		extendingUnderstandingText.getElement().setInnerHTML(GL1681);
+		resourceEducationalLabel.setText(GL1684);
+		resourcemomentsOfLearningLabel.setText(GL1684);
 		displayResourceInfo();
 		show();
 		center();
@@ -509,6 +517,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 
 	public void displayResourceInfo() {
+		
 		String url = collectionItemDo.getResource().getUrl();
 		urlTextLbl.setText(url);
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
@@ -604,6 +613,22 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(url, category);
+		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
+			   if(item.isSelected()){
+				    resourceEducationalLabel.setText(item.getValue());
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					mandatoryEducationalLbl.setVisible(false);
+			   }
+			}
+		for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
+		   if(item.isSelected()){
+			   resourcemomentsOfLearningLabel.setText(item.getValue());
+			   momentsOfLearningPanel.setVisible(false);
+			   momentsOfLearningOpen = false;
+			   mandatorymomentsOfLearninglLbl.setVisible(false);
+		   }
+		}
 	}
 
 	public void setImage(String url, String category){
@@ -714,6 +739,32 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													collectionItemDo.getResource().getThumbnails().setUrl(null);
 												}
 												collectionItemDo.getResource().setUrl(urlStr);
+												
+												if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684)){
+													ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
+													checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
+													educationalOfObj.setSelected(true);
+													educationalOfObj.setValue(resourceEducationalLabel.getText());
+													arrayOfEducational.add(educationalOfObj);
+													collectionItemDo.getResource().setEducationalUse(arrayOfEducational);
+												}
+												if(!resourcemomentsOfLearningLabel.getText().equalsIgnoreCase(GL1684)){
+													ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
+													checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
+													momentsOfObj.setSelected(true);
+													momentsOfObj.setValue(resourcemomentsOfLearningLabel.getText());
+													arrayOfMoments.add(momentsOfObj);
+													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
+												}
+												//set standards
+												List<String> standards = getAddedStandards(standardsPanel);
+												Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+												 for(int i = 0; i<standards.size(); i++){
+													 CodeDo codeObj=new CodeDo();
+													 codeObj.setCode(standards.get(i));
+													 standardsDo.add(codeObj);
+											      }
+												 collectionItemDo.getResource().setTaxonomySet(standardsDo);
 												updateResource(collectionItemDo);
 											}
 										}
@@ -1135,6 +1186,40 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		} else {
 			educationalUsePanel.setVisible(false);
 			educationalDropDownLblOpen = false;
+		}
+	}
+	@UiHandler("preparingTheLearningPanel")
+	void preparingTheLearningPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_preparing_the_learning_selected");
+		resourcemomentsOfLearningLabel.setText(GL1679);
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+	}
+	@UiHandler("interactingWithTheTextPanel")
+	void interactingWithTheTextPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_interacting_with_the_text_selected");
+		resourcemomentsOfLearningLabel.setText(GL1680);
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+	}
+	@UiHandler("extendingUnderstandingPanel")
+	void extendingUnderstandingPanel(ClickEvent event) {
+		MixpanelUtil.mixpanelEvent("organize_add_resource_extending_Understanding_selected");
+		resourcemomentsOfLearningLabel.setText(GL1681);
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningOpen = false;
+		mandatorymomentsOfLearninglLbl.setVisible(false);
+	}
+	@UiHandler("momentsOfLearningDropDownLbl")
+	public void momentsOfLearningDropDownClick(ClickEvent event) {
+		if (momentsOfLearningOpen == false) {
+			momentsOfLearningPanel.setVisible(true);
+			momentsOfLearningOpen = true;
+		} else {
+			momentsOfLearningPanel.setVisible(false);
+			momentsOfLearningOpen = false;
 		}
 	}
 	@Override

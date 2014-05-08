@@ -276,8 +276,8 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void isUserAnswerAttempted(boolean isUserAttemptedResult){
 			getUiHandlers().setUserAttemptedQuestionTypeAndStatus(isUserAttemptedResult,1);
 		}
-		public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
-			getUiHandlers().setAnswerIdWithTime(answerId, answerStatus, answerSequence);
+		public void setAnswersDetailsWitithTime(List<Integer> answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+			getUiHandlers().setAnswerIdWithTimeForMa(answerId, answerStatus, answerSequence);
 			if(isFirstTry&&attemptedAnswerDo==null){
 				getUiHandlers().setResourceScore(score);
 			}
@@ -295,6 +295,23 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 				}
 			}
 			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);
+		}
+		public void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus){
+			String attemptedAnswers="";
+			String answerId="";
+			for(int i=0;i<userAttemptedAnswers.size();i++){
+				attemptedAnswers=attemptedAnswers+userAttemptedAnswers.get(i);
+				try{
+					answerId=answerId+(answerIds.get(i).toString());
+				}catch(Exception e){
+					
+				}
+				if((i+1)!=userAttemptedAnswers.size()){
+					attemptedAnswers=attemptedAnswers+",";
+					answerId=answerId+",";
+				}
+			}
+			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
 		}
 	}
 	

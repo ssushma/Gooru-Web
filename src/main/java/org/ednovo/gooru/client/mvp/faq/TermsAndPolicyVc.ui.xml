@@ -151,6 +151,13 @@
 			margin-left: 15px;
 			width: 98%;
 		}
+        .contactUs {
+            float: left;
+            clear: both;
+			margin-left: 15px;
+			width: 98%;
+		}
+        
 	</ui:style>
 
 	<g:HTMLPanel>
@@ -394,15 +401,15 @@
 								If you have any questions about this Privacy Policy, please contact us at:    
 							</span>
 							
-							<span class="{style.policyTextLine} {style.paragraph}">Ednovo,</span>
+							<span class="{style.contactUs}">Ednovo</span>
 							
-							<span class="{style.policyTextLine} {style.paragraph}">1032 Elwell Court, Suite 210,</span>
+							<span class="{style.contactUs}">1032 Elwell Court, Suite 210</span>
 
-							<span class="{style.policyTextLine} {style.paragraph}">Palo Alto, CA 94304</span>
+							<span class="{style.contactUs}">Palo Alto, CA 94304</span>
 
-							<span class="{style.policyTextLine} {style.paragraph}">650-331-0219.</span>
+							<span class="{style.contactUs}">650-331-0219</span>
 							
-							<span class="{style.policyTextLine} {style.paragraph}">
+							<span class="{style.contactUs}">
 							    <a href="mailto:legal@goorulearning.org">legal@goorulearning.org</a>
 							</span>
 
