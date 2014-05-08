@@ -243,8 +243,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 			else 
 			{
-				System.out.println("iam here display joinclass popup");
-
 				btnJoinClass.setVisible(true);
 				userImage.setVisible(false);
 				lblWebHelp.setVisible(true);
