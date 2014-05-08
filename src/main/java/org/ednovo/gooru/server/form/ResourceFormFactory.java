@@ -154,11 +154,10 @@ public class ResourceFormFactory {
 		
 		String titleName = "title";
 		String keyPointsKey = "keyPoints";
-		String dataObj = "{\""+titleName+"\" : " + title +",\""+keyPointsKey+"\" : " + keyPointsVal +"}";
+		String dataObj = "{\""+titleName+"\" : " + title +",\""+keyPointsKey+"\" : \"" + keyPointsVal +"\"}";
 		
 		String objectName = "collection";
 		String data = "{\""+objectName+"\" : " + JsonSerializer.serialize(dataObj) +"}";
-		
 		form.add("data", data);
 		return form;
 	}
