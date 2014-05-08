@@ -26,6 +26,7 @@ package org.ednovo.gooru.shared.model.content;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -79,9 +80,9 @@ public class ResourceDo extends ContentDo {
     
     private Date createdOn;
 
-    
-   
-	
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private ArrayList<checkboxSelectedDo> educationalUse;
+	private List<checkboxSelectedDo> depthOfKnowledges;
 	/** 
 	 * This method is to get the encodedUrl
 	 */
@@ -362,5 +363,23 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+	public ArrayList<checkboxSelectedDo> getMomentsOfLearning() {
+		return momentsOfLearning;
+	}
+	public void setMomentsOfLearning(ArrayList<checkboxSelectedDo> momentsOfLearning) {
+		this.momentsOfLearning = momentsOfLearning;
+	}
+	public ArrayList<checkboxSelectedDo> getEducationalUse() {
+		return educationalUse;
+	}
+	public void setEducationalUse(ArrayList<checkboxSelectedDo> educationalUse) {
+		this.educationalUse = educationalUse;
+	}
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
 	}
 }
