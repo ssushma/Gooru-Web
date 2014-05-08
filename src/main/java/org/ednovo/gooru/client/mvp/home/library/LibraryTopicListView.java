@@ -800,7 +800,11 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 									String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
 									resourceImage.setUrl(thumbnailUrl);
 								} else {
-									resourceImage.setUrl(libraryResourceDo.getThumbnails().getUrl());
+									if(libraryResourceDo.getThumbnails()!=null&&libraryResourceDo.getThumbnails().getUrl()!=null&&libraryResourceDo.getThumbnails().getUrl().isEmpty()) {
+										resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
+									} else {
+										resourceImage.setUrl(libraryResourceDo.getThumbnails().getUrl());
+									}
 								}
 								resourceImage.addErrorHandler(new ErrorHandler() {
 									@Override
