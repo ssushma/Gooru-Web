@@ -25,6 +25,9 @@
 package org.ednovo.gooru.client.uc;
 
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -46,6 +49,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class TocCollectionHomeView extends Composite implements HasClickHandlers,MessageProperties {
 
@@ -68,7 +72,8 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
 		resourceTitle.getElement().setInnerHTML(GL1052);
-		setResourcePlayLink();
+		//setResourcePlayLink();
+		//this.addClickHandler(new ResourceRequest());
 	}
 	
 	public void onLoad(){
@@ -92,6 +97,18 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 		String resourceLink="#"+viewToken+"&id="+collectionId;
 		resourceLink += PreviewPlayerPresenter.setConceptPlayerParameters();
 		return resourceLink;
+	}
+	
+	public class ResourceRequest implements ClickHandler{
+		public void onClick(ClickEvent event){
+			Map<String,String> params = new LinkedHashMap<String,String>();
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			params.put("id", collectionId);
+			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {

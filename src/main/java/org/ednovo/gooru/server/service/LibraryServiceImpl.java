@@ -90,7 +90,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private static final String COURSE = "course";
 	private static final String UNIT = "unit";
 	private static final String TOPIC = "topic";
-	private static final String COURSE_100_75_IMG = "../images/library/course-100x75.png";
+	private static final String COURSE_100_75_IMG = "../images/library/partners/TeachableMoments.png";
 	private static final String FEATURED = "featured";
 
 	private static final String EXCLUDED_COURSE = "Language and Composition";

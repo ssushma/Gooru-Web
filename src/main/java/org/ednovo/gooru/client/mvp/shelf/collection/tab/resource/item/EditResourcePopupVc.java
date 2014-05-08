@@ -54,6 +54,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
@@ -141,8 +142,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
-	@UiField FlowPanel standardsPanel;
-	
+	@UiField FlowPanel standardContainer,standardsPanel;
+	private static final String USER_META_ACTIVE_FLAG = "0";
 	ResourceMetaInfoDo resMetaInfoDo = null;
 	private CopyRightPolicyVc copyRightPolicy;
 	
@@ -166,7 +167,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	private static final String FLT_CODE_ID = "id";
-	List<String> standardPreflist=new ArrayList<String>();
+	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
@@ -190,7 +191,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
+				standardSgstBox.hideSuggestionList();
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
@@ -210,7 +211,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 						}						
 					}
 					
-					/*if(standardsPrefDisplayPopup){*/
+					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
 							
@@ -222,30 +223,25 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 							
 							@Override
 							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
 							}
 						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
+						
+						standardSgstBox.showSuggestionList();
+						}
 					else{
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
 						//standardSuggestOracle.add(GL1613);
 						
-					}*/
 					}
-					
-				
+					}
 			}
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
@@ -412,6 +408,29 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		});
 		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
 		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						standardContainer.setVisible(false);
+					}else
+					{
+						standardContainer.setVisible(true);
+						standardPreflist=new ArrayList<String>();
+						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+							standardPreflist.add(code);
+							standardPreflist.add(code.substring(0, 2));
+						 }
+						
+					}
+				}else{
+					standardContainer.setVisible(false);
+				}
+			}
+
+		});
 	}
 	public void onLoad(){
 		super.onLoad();
@@ -628,6 +647,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			   momentsOfLearningOpen = false;
 			   mandatorymomentsOfLearninglLbl.setVisible(false);
 		   }
+		}
+		for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+			 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
 		}
 	}
 
