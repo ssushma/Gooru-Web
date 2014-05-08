@@ -582,7 +582,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						if(partnerFolderList.size()>0) {
 							setThirdPartyCourseUnitData(partnerFolderList);
 						} else {
-							getPartnerWorkspaceFolders();
+							getPartnerWorkspaceFolders(courseDoList.get(i).getCreator().getUsername());
 						}
 						//setUnitListData(courseDoList.get(i).getUnit());
 					}
@@ -597,7 +597,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						if(partnerFolderList.size()>0) {
 							setThirdPartyCourseUnitData(partnerFolderList);
 						} else {
-							getPartnerWorkspaceFolders();
+							getPartnerWorkspaceFolders(courseDoList.get(i).getCreator().getUsername());
 						}
 						//setUnitListData(courseDoList.get(i).getUnit());
 					}
@@ -623,7 +623,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 							if(partnerFolderList.size()>0) {
 								setThirdPartyCourseUnitData(partnerFolderList);
 							} else {
-								getPartnerWorkspaceFolders();
+								getPartnerWorkspaceFolders(courseDoList.get(widgetCount).getCreator().getUsername());
 							}
 						} else {
 							setUnitListData(courseDoList.get(widgetCount).getUnit());
@@ -650,7 +650,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 							if(partnerFolderList.size()>0) {
 								setThirdPartyCourseUnitData(partnerFolderList);
 							} else {
-								getPartnerWorkspaceFolders();
+								getPartnerWorkspaceFolders(courseDoList.get(widgetCountTemp).getCreator().getUsername());
 							}
 						} else {
 							setUnitListData(courseDoList.get(widgetCountTemp).getUnit());
@@ -1150,8 +1150,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		return contentScroll;
 	}
 
-	public void getPartnerWorkspaceFolders() {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace("Autodesk", 20, SHARING_TYPE, COLLECTION_TYPE, new AsyncCallback<PartnerFolderListDo>(){
+	public void getPartnerWorkspaceFolders(String partnerName) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, COLLECTION_TYPE, new AsyncCallback<PartnerFolderListDo>(){
 			@Override
 			public void onFailure(Throwable caught) {}
 			

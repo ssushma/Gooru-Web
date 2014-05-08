@@ -360,6 +360,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				courseDo.getThumbnails().setUrl(COURSE_100_75_IMG);
 				courseDo.getCreator().setGender(MALE);
 				courseDo.getCreator().setLastName(RUSDLEARNS);
+				courseDo.getCreator().setUsername(RUSDLEARNS);
 				courseDo.getCreator().setGooruUId(AUTODESK_GOORU_UID);
 				courseDo.setUser(null);
 				data.remove(i);
