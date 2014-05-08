@@ -757,6 +757,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		@Override
 		public void onBlur(BlurEvent event) {
 			final Map<String, String> parms = new HashMap<String, String>();
+			
 			parms.put("text", urlTextBox.getText().trim());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
@@ -766,8 +767,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						addResourceBtnLbl.setVisible(true);
 						addResourceBtnPanel.setVisible(true);
 						String userUrlStr = urlTextBox.getText().trim();
-						System.out.println("domain : "+Window.Location.getHost());
-						System.out.println("domain : "+Window.Location.getHostName());
 						if (userUrlStr.contains("goorulearning.org")) {
 							if (userUrlStr.contains("support.goorulearning.org")
 									|| userUrlStr.contains("about.goorulearning.org")) {
@@ -795,6 +794,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							if (isValidUrl(userUrlStr, true)) {
 								userUrlStr = URL.encode(userUrlStr);
 								userUrlStr = userUrlStr.replaceAll("#", "%23");
+								urlTextBox.setText(URL.decode(userUrlStr));
 								String userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_detailpage&", "");
 								userUrlStr1 = userUrlStr.replaceAll(
