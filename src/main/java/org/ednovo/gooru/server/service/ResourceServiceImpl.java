@@ -532,7 +532,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
 			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException {
-		
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
@@ -598,8 +597,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			url = URLEncoder.encode(url, "UTF-8");
 		} catch (UnsupportedEncodingException ex) {
 		}
+	
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url, getLoggedInSessionToken());
+	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceItem(jsonRep);
@@ -767,6 +768,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	@Override
 	public String checkShortenUrl(String shortenUrl) throws GwtException { 
 		JsonRepresentation jsonRep = null;
+		try {
+			shortenUrl = URLEncoder.encode(shortenUrl, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {}
+	
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_SHORTEN_URL,shortenUrl,getLoggedInSessionToken()); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
