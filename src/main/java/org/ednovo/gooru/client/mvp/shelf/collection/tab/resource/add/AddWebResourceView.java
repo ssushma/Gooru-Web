@@ -586,9 +586,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
 											urlStr = urlStr.replaceAll("feature=player_embedded&", "");
 											urlStr = URL.encode(urlStr);
-											urlStr = urlStr.replaceAll("#", "%23");
+											//urlStr = urlStr.replaceAll("#", "%23");
 											String youTubeId = getYoutubeVideoId(urlStr);
-											System.out.println("youTubeId :"+youTubeId);
+										
 											if (urlStr.endsWith("/")) {
 												urlStr = urlStr.substring(0, urlStr.length() - 1);
 											}
@@ -757,6 +757,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		@Override
 		public void onBlur(BlurEvent event) {
 			final Map<String, String> parms = new HashMap<String, String>();
+			
 			parms.put("text", urlTextBox.getText().trim());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
@@ -766,8 +767,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						addResourceBtnLbl.setVisible(true);
 						addResourceBtnPanel.setVisible(true);
 						String userUrlStr = urlTextBox.getText().trim();
-						System.out.println("domain : "+Window.Location.getHost());
-						System.out.println("domain : "+Window.Location.getHostName());
 						if (userUrlStr.contains("goorulearning.org")) {
 							if (userUrlStr.contains("support.goorulearning.org")
 									|| userUrlStr.contains("about.goorulearning.org")) {
@@ -793,8 +792,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							}
 
 							if (isValidUrl(userUrlStr, true)) {
+								
 								userUrlStr = URL.encode(userUrlStr);
-								userUrlStr = userUrlStr.replaceAll("#", "%23");
+								//userUrlStr = userUrlStr.replaceAll("#", "%23");
+								urlTextBox.setText(URL.decode(userUrlStr));
 								String userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_detailpage&", "");
 								userUrlStr1 = userUrlStr.replaceAll(
@@ -1215,11 +1216,19 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	public boolean isValidUrl(String url, boolean topLevelDomainRequired) {
 		if (urlValidator == null || urlPlusTldValidator == null) {
-			urlValidator = RegExp
+			/*urlValidator = RegExp
 					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\_\\-/\\()]+)*){1}$");
+		*/	
+			/*urlPlusTldValidator = RegExp
+			.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+\\.[a-zA-Z]{2,}(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\,\\_\\-/\\()]+)*){1}$");
+*/
+			urlValidator = RegExp
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+			
 			urlPlusTldValidator = RegExp
-					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+\\.[a-zA-Z]{2,}(:\\d{1,5})?(/[\\w#!:.?+=&%@!\\,\\_\\-/\\()]+)*){1}$");
-		}
+					.compile("^((ftp|http|https)://[\\w@.\\-\\_\\()]+(:\\d{1,5})?(/[\\?%&=]+)*)");
+
+					}
 		return (topLevelDomainRequired ? urlPlusTldValidator : urlValidator)
 				.exec(url) != null;
 	}

@@ -50,6 +50,7 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 	
 	private Integer collaboratorCount;
 	
+	private Integer onlyResourceCount;
 	
 	public CollectionSearchResultDo() {
 
@@ -93,6 +94,14 @@ public class CollectionSearchResultDo extends ResourceSearchResultDo {
 
 	public void setQuestionCount(int questionCount) {
 		this.questionCount = questionCount;
+	}
+
+	public Integer getOnlyResourceCount() {
+		return onlyResourceCount;
+	}
+
+	public void setOnlyResourceCount(Integer onlyResourceCount) {
+		this.onlyResourceCount = onlyResourceCount;
 	}
 
 }

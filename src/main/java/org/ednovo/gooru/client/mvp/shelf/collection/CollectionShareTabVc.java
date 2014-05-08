@@ -792,6 +792,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	@UiHandler("addTeacherTip")
 	public void onClickAddTeacherTip(ClickEvent clickEvent){
+
+		if (teacherTipTextarea.getText().length()>0){
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text", teacherTipTextarea.getText());
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -817,39 +819,35 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 					
 			}
 		});
-	
-		
-		
+		}
 	}
 	@UiHandler("cancelTeacherTip")
 	public void onClickcancelTeacherTip(ClickEvent clickEvent){
-	
-		setEdittable(collection.getKeyPoints());
-		
-		
-		
+		teacherTipTextarea.setText(collection.getKeyPoints());
+		setEdittable(collection.getKeyPoints());		
 	}
 	
 	public void updateCollectionTeacherTipInfo(CollectionDo collectionDo, String teacherTip) {
-		if(teacherTip.length()>0)
-		{
-		AppClientFactory.getInjector().getResourceService().updateCollectionInfo(collectionDo, teacherTip, new AsyncCallback<CollectionDo>() {
+		if (teacherTip.length() > 0) {
+			AppClientFactory
+					.getInjector()
+					.getResourceService()
+					.updateCollectionInfo(collectionDo, teacherTip,
+							new AsyncCallback<CollectionDo>() {
 
-			@Override
-			public void onSuccess(CollectionDo result) {
-				setExistingTeacherTip(result);
-				//getView().onPostCourseUpdate(result);
-			}
+								@Override
+								public void onSuccess(CollectionDo result) {
+									setExistingTeacherTip(result);
+									// getView().onPostCourseUpdate(result);
+								}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		}
-		else
-		{
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+		} else {
 			displayErrorMsgTeacherTip();
 		}
 
@@ -859,23 +857,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		this.collection = collectionDo;
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
 	}
-	
-	public void checkCharacterLimit(String text) {
-		if (text.length() >= 415) {
-			errorLabelForTeacherTip
-					.addStyleName("titleAlertMessageActive");
-			errorLabelForTeacherTip
-					.removeStyleName("titleAlertMessageDeActive");
-		} else {
-			errorLabelForTeacherTip
-					.addStyleName("titleAlertMessageDeActive");
-			errorLabelForTeacherTip
-					.removeStyleName("titleAlertMessageActive");
-		}
-	}
-	
-
-	
 	
 
 	public void displayErrorMsgTeacherTip(){
@@ -907,12 +888,16 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
 			errorLabelForTeacherTip.setVisible(false);
-			if (teacherTipTextarea.getText().length() >=400) {
+			if (teacherTipTextarea.getText().length() >=500) {
 				teacherTipTextarea.setText(teacherTipTextarea.getText().trim()
-						.substring(0, 400));
+						.substring(0, 500));
 				errorLabelForTeacherTip.setText("");
 				errorLabelForTeacherTip.setText(MessageProperties.GL0143);
 				errorLabelForTeacherTip.setVisible(true);
+			}
+			else
+			{
+				errorLabelForTeacherTip.setVisible(false);
 			}
 
 		}

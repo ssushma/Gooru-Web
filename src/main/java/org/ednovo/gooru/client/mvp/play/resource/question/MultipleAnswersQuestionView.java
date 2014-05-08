@@ -24,8 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -233,11 +235,15 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 		int widgetCount=optionsContainer.getWidgetCount();
 		boolean mutipleAnswerChoiceStatus=true;
 		Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer,Boolean>();
+		List<String> userAttemptedValueList=new ArrayList<String>();
+		List<Integer> answerIds=new ArrayList<Integer>();
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
+				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
+					userAttemptedValueList.add("1");
 					//createSessionItemAttempt(checkBoxAnswerOptionView.getAnswerId(), checkBoxAnswerOptionView.isAnswerCorrect()?"correct":"wrong");
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), true);
 					if(checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
@@ -251,6 +257,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					}
 				}
 				if(checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+					userAttemptedValueList.add("0");
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), false);
 					if(!checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
@@ -263,6 +270,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					}
 				}
 				if(!checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()&&!checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+					userAttemptedValueList.add("");
 					mutipleAnswerChoiceStatus=false;
 				}
 			}
@@ -280,17 +288,21 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			isChekcAnswerButtonClicked=true;
 			score=mutipleAnswerChoiceStatus?1:0;
 		}
-		setAnswersDetailsWitithTime(0,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);
+		String attemptStatus=mutipleAnswerChoiceStatus==true?"correct":"wrong";
+		userAttemptedValue(userAttemptedValueList);
+		setAnswersDetailsWitithTime(answerIds,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);
+		createSesstionItemAttemptForMultipleAnswer(answerIds,userAttemptedValueList,attemptStatus);
 	}
 	
 	public abstract void createSessionItemAttempt(int answerId,String answerAttemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
 	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
 	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
-	public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){
 		
 	}
 	public abstract void increaseUserAttemptCount();
-	
+	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
+	public abstract void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	
 }

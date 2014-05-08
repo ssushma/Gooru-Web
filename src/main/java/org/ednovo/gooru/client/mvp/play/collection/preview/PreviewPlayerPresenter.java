@@ -202,7 +202,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	
 	private int userAttemptedQuestionType=0;
 	
-	private boolean isOpenEndedAnswerSubmited=false;
+	private boolean isOpenEndedAnswerSubmited=true;
      
 	public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
     
@@ -452,6 +452,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
+	}
+	
+	@Override
+	protected void onUnbind() {
+	  super.onUnbind();
+	  System.out.println("gooru gooruuuuuuuuuuuuuuuu");
 	}
 	
 	@Override
@@ -1603,6 +1609,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	protected void showCollectionErrorMessage(){
 		clearSlot(METADATA_PRESENTER_SLOT);
 		enablePlayerButton(false, false, false, false, false, false);
+		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(new CollectionNonExistView());
 	}

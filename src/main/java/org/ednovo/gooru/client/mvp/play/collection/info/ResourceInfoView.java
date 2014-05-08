@@ -170,6 +170,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
 		if(collectionItemDo.getResource().getMediaType()!=null){
+			accessibilityPanel.setVisible(true);
+			accesibilityLbl.setVisible(true);
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
 				collectionItemDo.getResource().setMobilefriendlyness("NO");
@@ -177,7 +179,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				collectionItemDo.getResource().setMobilefriendlyness("YES");
 			}
 		}else{
-			accessibilityPanel.setVisible(true);
+			accessibilityPanel.setVisible(false);
+			accesibilityLbl.setVisible(false);
 		}
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
 			setResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName());
@@ -203,6 +206,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(collectionItemDo.getResource().getCreatedOn()!=null){
 			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
 		}
+
 		
 		lblcollectionName.setVisible(true);
 		lblcollectionName.setText(title);
@@ -241,6 +245,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}else{
 				dKnowledgePanel.setVisible(false);
 			}
+			}else{
+				dKnowledgePanel.setVisible(false);
 			}
 			momentsoflearningPanel.setVisible(false);
 		}
@@ -256,6 +262,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}else{
 				momentsoflearningPanel.setVisible(false);	
 			}
+			}else{
+				momentsoflearningPanel.setVisible(false);
 			}
 			dKnowledgePanel.setVisible(false);
 		}
@@ -364,6 +372,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		collectionItemDo.getResource().setAccessibilityAPI(accessibilitydetails);
 		//setaccessibilityDetails(collectionItemDo.getResource().getAccessibilityAPI());
 		setaccessibilityDetails(null);
+
+
+		resourceTypeImage.getElement().setAttribute("style", "position: relative;");
 
 		resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
 		resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
@@ -507,13 +518,15 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		eduUseType.clear();
 		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
 			eduUsePanel.setVisible(false);
+			educationallLbl.setVisible(false);
 		}else{
-			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
 		if(eduUsedetails.size()>0){
 			final Label eduUseLabel=new Label(eduUsedetails.get(0)+","+eduUsedetails.get(1));
 			eduUseLabel.getElement().setAttribute("style", "float: left;");
 			eduUseType.add(eduUseLabel);
 			eduUsePanel.setVisible(true);
+			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+			educationallLbl.setVisible(true);
 		}
 		if(eduUsedetails.size()>2){
 			final Label eduUseLabel=new Label("+"+(eduUsedetails.size()-2)); 
@@ -523,6 +536,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
 			eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			eduUsePanel.setVisible(true);
+			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+			educationallLbl.setVisible(true);
 		}
 		}
 	}

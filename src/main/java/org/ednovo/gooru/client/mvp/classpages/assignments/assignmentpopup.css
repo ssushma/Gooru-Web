@@ -29,7 +29,7 @@
 }
 .navigateButtonsContainer{
 	float: left;
-	margin: 38px 0 15px 100px;
+	margin: 38px 0 15px 55px;
 }
 
 .assessmentAddContainer {
@@ -633,7 +633,21 @@
 	font-size: 12px;
 	color: #999;
  }
- 
  .assignButton{
  	margin-left: 10px;
  }
+ 
+.assignmentTitleLabelForOe{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: rgb(81, 81, 81);
+	text-align: left;
+	margin-bottom:5px;
+	float: left;
+}
+  .primaryButton{
+ 	 margin-left: 5px;
+  }
+ 
+ 

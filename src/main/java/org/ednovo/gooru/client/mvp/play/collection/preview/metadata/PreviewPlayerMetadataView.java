@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+1 * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
  * 
  *  http://www.goorulearning.org/
  * 
@@ -192,7 +192,11 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		renderLanguageObjective(collectionDo.getLanguageObjective());
 		if(collectionDo.getKeyPoints() != null)
 		{
-			if(collectionDo.getKeyPoints().length()>300)
+			if(collectionDo.getKeyPoints().length()>410)
+			{
+				authorPanel.getElement().getStyle().setHeight(295, Unit.PX);
+			}
+			else if(collectionDo.getKeyPoints().length()>300)
 			{
 				authorPanel.getElement().getStyle().setHeight(253, Unit.PX);
 			}
@@ -1126,7 +1130,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		{
 			languageObjectiveValue=languageObjective;
 			languageObjectiveContainer.setVisible(true);
-			seeMoreAnchor.getElement().setAttribute("style", "float:right;margin-top:15px;");
+			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
 			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(GL1728);	
 				seeMoreAnchor.setVisible(true);

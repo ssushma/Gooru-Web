@@ -11,12 +11,12 @@
 			<g:HTMLPanel styleName="{res.css.assignmentMainContainer}">
 				<g:HTMLPanel styleName="{res.css.assignmentContentContainer}">
 					<g:HTMLPanel styleName="{res.css.assignmentControlsContainer}">
-						<g:Label styleName="{res.css.assignmentTitleLabel}" ui:field="popupText"></g:Label>
+						<g:Label styleName="{res.css.assignmentTitleLabelForOe}" ui:field="popupText"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{res.css.navigateButtonsContainer}">
 					<g:Button styleName="secondary"  ui:field="continueButton" />
-					<g:Button styleName="primary"  ui:field="backToResponseButton" />
+					<g:Button styleName="primary {res.css.primaryButton}"  ui:field="backToResponseButton" />
 				</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:FlowPanel>

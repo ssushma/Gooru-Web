@@ -8,21 +8,24 @@
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="ideasStaticLbl"/>
 	      </g:HTMLPanel>
 	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="bigIdeasLbl"/>
-	      <g:RichTextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="bigIdeasHTML"/>
+	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="bigIdeasHTML"/>
+	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelbigIdeasHTML"></g:Label>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock}" ui:field="essentialQuestionsPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.question}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="questionsStaticLbl"/>
 	      </g:HTMLPanel>
 	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="essentialQuestionsLbl"/>
-	      <g:RichTextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="essentialQuestionsHTML"/>
+	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="essentialQuestionsHTML"/>
+	       <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelessentialQuestionsHTML"></g:Label>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast}" ui:field="performanceTaskPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.task}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="tasksStaticLbl"/>
 	      </g:HTMLPanel>
 	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="performanceTaskLbl"/>
-	      <g:RichTextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="performanceTaskHTML"/>
+	      <g:TextArea styleName="{folderMetaStyle.textAreaStyle}" ui:field="performanceTaskHTML"/>
+	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelperformanceTaskHTML"></g:Label>
 	   </g:HTMLPanel>
 	  <g:Button styleName="{folderMetaStyle.closeItem}" ui:field="closeItem"/>
 	  <g:HTMLPanel styleName="{folderMetaStyle.formButtons}" ui:field="formButtons">

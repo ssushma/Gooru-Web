@@ -80,20 +80,12 @@ public class ResourceDo extends ContentDo {
     
     private Date createdOn;
 
+
     /** need to change these after api is finalized  **/
     private String host;
    
 	private String educationalAlignment;
 	
-	private List<checkboxSelectedDo> educationalUse;
-	
-	private List<checkboxSelectedDo> momentsOfLearning;
-	
-	private List<checkboxSelectedDo> depthOfKnowledges;
-	
-
-	
-
 	private String  educationalRole;
 	
 	private String interactivityType;
@@ -133,25 +125,7 @@ public class ResourceDo extends ContentDo {
 	private List<String> accessibilityAPI;
 	
 	
-	public List<checkboxSelectedDo> getEducationalUse() {
-		return educationalUse;
-	}
-	public void setEducationalUse(List<checkboxSelectedDo> educationalUse) {
-		this.educationalUse = educationalUse;
-	}
 
-	public List<checkboxSelectedDo> getMomentsOfLearning() {
-		return momentsOfLearning;
-	}
-	public void setMomentsOfLearning(List<checkboxSelectedDo> momentsOfLearning) {
-		this.momentsOfLearning = momentsOfLearning;
-	}
-	public List<checkboxSelectedDo> getDepthOfKnowledges() {
-		return depthOfKnowledges;
-	}
-	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
-		this.depthOfKnowledges = depthOfKnowledges;
-	}
 	public List<String> getAccessibilityAPI() {
 		return accessibilityAPI;
 	}
@@ -302,6 +276,11 @@ public class ResourceDo extends ContentDo {
 
 	/** need to change the above **/
 	
+
+	private ArrayList<checkboxSelectedDo> momentsOfLearning;
+	private ArrayList<checkboxSelectedDo> educationalUse;
+	private List<checkboxSelectedDo> depthOfKnowledges;
+
 	/** 
 	 * This method is to get the encodedUrl
 	 */
@@ -582,5 +561,23 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+	public ArrayList<checkboxSelectedDo> getMomentsOfLearning() {
+		return momentsOfLearning;
+	}
+	public void setMomentsOfLearning(ArrayList<checkboxSelectedDo> momentsOfLearning) {
+		this.momentsOfLearning = momentsOfLearning;
+	}
+	public ArrayList<checkboxSelectedDo> getEducationalUse() {
+		return educationalUse;
+	}
+	public void setEducationalUse(ArrayList<checkboxSelectedDo> educationalUse) {
+		this.educationalUse = educationalUse;
+	}
+	public List<checkboxSelectedDo> getDepthOfKnowledges() {
+		return depthOfKnowledges;
+	}
+	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
+		this.depthOfKnowledges = depthOfKnowledges;
 	}
 }

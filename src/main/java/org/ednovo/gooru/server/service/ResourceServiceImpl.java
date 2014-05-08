@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +64,7 @@ import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
@@ -75,7 +77,7 @@ import com.google.gwt.json.client.JSONArray;
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
-public class ResourceServiceImpl extends BaseServiceImpl implements ResourceService {
+public class ResourceServiceImpl extends BaseServiceImpl implements MessageProperties,ResourceService {
 
 	
 	private static final long serialVersionUID = 3247182821197046755L;
@@ -530,11 +532,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
 			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException {
-		
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
 		newResourceDo.setTitle(titleStr);
+		
 		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 		 for(int i = 0; i<standards.size(); i++){
 			 CodeDo codeObj=new CodeDo();
@@ -545,12 +547,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
 		newResourceDo.setStop(endTime);
-		newResourceDo.setEducationalUse(edcuationalUse);
+		
+		ArrayList<checkboxSelectedDo> arrayOfEducational=new ArrayList<checkboxSelectedDo>();
+		checkboxSelectedDo educationalOfObj=new checkboxSelectedDo();
+		educationalOfObj.setSelected(true);
+		educationalOfObj.setValue(edcuationalUse);
+		arrayOfEducational.add(educationalOfObj);
+		if(!edcuationalUse.equalsIgnoreCase(GL1684))
+		newResourceDo.setEducationalUse(arrayOfEducational);
+		
 		ArrayList<checkboxSelectedDo> arrayOfMoments=new ArrayList<checkboxSelectedDo>();
 		checkboxSelectedDo momentsOfObj=new checkboxSelectedDo();
 		momentsOfObj.setSelected(true);
 		momentsOfObj.setValue(momentsOfLearning);
 		arrayOfMoments.add(momentsOfObj);
+		if(!momentsOfLearning.equalsIgnoreCase(GL1684))
 		newResourceDo.setMomentsOfLearning(arrayOfMoments);
 		
 		ResourceFormatDo resourceFormat = new ResourceFormatDo();
@@ -590,9 +601,14 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	
 	@Override
 	public ExistsResourceDo checkResourceExists(String url) throws GwtException {
-		
+		try {
+			url = URLEncoder.encode(url, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {
+		}
+	
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url, getLoggedInSessionToken());
+	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceItem(jsonRep);
@@ -686,6 +702,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 		}
 		
 		newResourceDo.setResourceFormat(resourceFormat);
+		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
+		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
+		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
@@ -760,6 +779,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements ResourceServ
 	@Override
 	public String checkShortenUrl(String shortenUrl) throws GwtException { 
 		JsonRepresentation jsonRep = null;
+		try {
+			shortenUrl = URLEncoder.encode(shortenUrl, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {}
+	
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_SHORTEN_URL,shortenUrl,getLoggedInSessionToken()); 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();

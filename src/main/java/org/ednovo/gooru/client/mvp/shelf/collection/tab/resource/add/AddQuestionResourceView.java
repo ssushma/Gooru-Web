@@ -151,7 +151,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
-	Set<checkboxSelectedDo> depthOfKnowledges= new HashSet<checkboxSelectedDo>();;
+	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();;
 	public String getQuestionType() {
 		return questionType;
 	}
@@ -1281,15 +1281,19 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setHints(hintsMap);
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
+			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
 			List<String> standards=getAddedStandards(standardsPanel);
-			Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+			ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
 			 for(int i = 0; i<standards.size(); i++){
 				 CodeDo codeObj=new CodeDo();
 				 codeObj.setCode(standards.get(i));
 				 standardsDo.add(codeObj);
 		      }
-			collectionQuestionItemDo.setTaxonomySet(standardsDo);
-			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledges);
+			 taxonomySet.put("taxonomyCode", standardsDo);
+			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
+			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
+			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
 			collectionQuestionItemDo.setEducationalUse(resourceEducationalLabel.getText());
 			if(!isSaveButtonClicked){
@@ -1778,6 +1782,28 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
+		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
+			   if(item.isSelected()){
+				    resourceEducationalLabel.setText(item.getValue());
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					mandatoryEducationalLbl.setVisible(false);
+			   }
+		}
+		int checkBoxCount=0;
+		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
+			   if(item.isSelected()){
+				   if(checkBoxCount==0)
+				   chkLevelRecall.setChecked(true);
+				   if(checkBoxCount==1)
+			       chkLevelSkillConcept.setChecked(true);
+				   if(checkBoxCount==2)
+			       chkLevelStrategicThinking.setChecked(true);
+				   if(checkBoxCount==3)
+			       chkLevelExtendedThinking.setChecked(true);
+			   }
+			   checkBoxCount++;
+			}
 	}
 	
 	
@@ -2152,7 +2178,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  			
  			@Override
  			public void onMouseOver(MouseOverEvent event) {
- 				toolTip = new ToolTip("");
+ 				toolTip = new ToolTip(GL1734);
+ 				toolTip.getLblLink().setVisible(false);
  				toolTip.getElement().getStyle().setBackgroundColor("transparent");
  				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
  				toolTip.setPopupPosition(depthOfKnoweldgeToolTip.getAbsoluteLeft()-(50+22), depthOfKnoweldgeToolTip.getAbsoluteTop()+22);

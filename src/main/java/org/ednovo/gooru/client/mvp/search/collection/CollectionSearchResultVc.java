@@ -181,7 +181,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 			SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionResultDo.getCourseNames(), 30);
 			SearchUiUtil.renderMetaData(metaDataPanelFloPanel, count + "", (Integer.parseInt(count) >1 ? VIEWS : VIEW));
 			metaDataPanelFloPanel.add(new SeparatorUc());
-			resourceCountLbl.setText(collectionResultDo.getResourceCount() +" " + (collectionResultDo.getResourceCount()>1 ? RESOURCES : RESOURCE));
+			resourceCountLbl.setText(collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
 		}
 	}
 	
@@ -271,9 +271,9 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionResultDo.getCourseNames(), 30);
 		SearchUiUtil.renderMetaData(metaDataPanelFloPanel, collectionResultDo.getTotalViews() + "", VIEWS);
-		if(collectionResultDo.getResourceCount()>0 || (collectionResultDo.getResourceCount()==0&&collectionResultDo.getQuestionCount()==0)) {
+		if(collectionResultDo.getOnlyResourceCount()>0 || (collectionResultDo.getOnlyResourceCount()==0&&collectionResultDo.getQuestionCount()==0)) {
 			metaDataPanelFloPanel.add(new SeparatorUc());
-			Label resourceCountLbl1 = new Label(collectionResultDo.getResourceCount() +" " + (collectionResultDo.getResourceCount()>1 ? RESOURCES : RESOURCE));
+			Label resourceCountLbl1 = new Label(collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
 			resourceCountLbl1.setStyleName(res.css().resourceCount());
 			metaDataPanelFloPanel.add(resourceCountLbl1);
 		}
@@ -284,7 +284,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 			metaDataPanelFloPanel.add(questionCountLbl1);
 		}
 		
-		//resourceCountLbl.setText(collectionResultDo.getResourceCount() +" " + (collectionResultDo.getResourceCount()>1 ? RESOURCES : RESOURCE));
+		//resourceCountLbl.setText(collectionResultDo.getOnlyResourceCount() +" " + (collectionResultDo.getOnlyResourceCount()>1 ? RESOURCES : RESOURCE));
 		
 		SearchUiUtil.renderStandards(standardsFloPanel, collectionResultDo);
 	}

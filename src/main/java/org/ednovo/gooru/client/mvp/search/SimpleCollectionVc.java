@@ -278,7 +278,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable,Message
 		SearchUiUtil.renderMetaData(metaDataFloPanel, collectionSearchResultDo.getCourseNames(), 30);
 		SearchUiUtil.renderMetaData(metaDataFloPanel, collectionSearchResultDo.getTotalViews() + "", VIEWS);
 		
-		int resourceCount = collectionSearchResultDo.getResourceCount();
+		int resourceCount = collectionSearchResultDo.getOnlyResourceCount();
 		int questionCount = collectionSearchResultDo.getQuestionCount();
 		
 		if (resourceCount>1){
