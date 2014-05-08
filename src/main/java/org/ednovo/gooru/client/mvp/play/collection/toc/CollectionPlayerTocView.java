@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.toc;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +33,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.ResourceCurosal;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TocCollectionEndView;
@@ -45,6 +45,7 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -87,14 +88,17 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 				List<CollectionItemDo> collectionItems=collectionDo.getCollectionItems();
 			
 				TocCollectionHomeView tocCollectionHomeView=new TocCollectionHomeView(collectionDo.getThumbnails().getUrl());
+				tocCollectionHomeView.addClickHandler(new HomeRequest());
 				navgationTocContainer.add(tocCollectionHomeView);
 				for(int i=0;i<collectionItems.size();i++){
 					CollectionItemDo collectionItemDo=collectionItems.get(i);
-					TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true);
+					TocResourceView tocResoruceView=new TocResourceView(collectionItemDo,i+1,true,false);
+					tocResoruceView.addClickHandler(new ResourceRequest(collectionItemDo));
 					tocResoruceView.setCollectionItemId(collectionItemDo.getCollectionItemId());
 					navgationTocContainer.add(tocResoruceView);
 				}
 				TocCollectionEndView tocCollectionEndView=new TocCollectionEndView(collectionDo.getThumbnails().getUrl());
+				tocCollectionEndView.addClickHandler(new EndRequest());
 				navgationTocContainer.add(tocCollectionEndView);
 				if(resourcesSize>6){
 					new ResourceCurosal(nextButton, previousButton, navgationTocContainer, resourcesSize, 120);
@@ -150,6 +154,95 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 		
 	}
 	
+	public class ResourceRequest implements ClickHandler{
+		private CollectionItemDo collectionItemDo;
+		public ResourceRequest(CollectionItemDo collectionItemDo){
+			this.collectionItemDo=collectionItemDo;
+		}
+		public void onClick(ClickEvent event){
+			Map<String,String> params = new LinkedHashMap<String,String>();
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			params.put("id", collectionId);
+			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+				params.put("rid", collectionItemDo.getCollectionItemId());
+				params.put("tab", "narration");
+				final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+				if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+					NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+						@Override
+						public void navigateToNextResource() {
+							super.hide();
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+						}
+					};
+				}else{
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				}
+			}else{
+				params.put("rid", collectionItemDo.getCollectionItemId());
+				final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+				if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+					NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+						@Override
+						public void navigateToNextResource() {
+							super.hide();
+							AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+						}
+					};
+				}else{
+					AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				}
+			}
+		}
+	}
+	
+	public class EndRequest implements ClickHandler{
+		public void onClick(ClickEvent event){	
+			Map<String,String> params = new LinkedHashMap<String,String>();
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			params.put("id", collectionId);
+			params.put("view", "end");
+			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			//PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+			final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+			if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					}
+				};
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			}
+		}
+	}
+	
+	public class HomeRequest implements ClickHandler{
+		public void onClick(ClickEvent event){
+			Map<String,String> params = new LinkedHashMap<String,String>();
+			String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			params.put("id", collectionId);
+			params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+			String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+			final PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+			if(!getUiHandlers().isOpenEndedAnswerSubmited()){
+				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+					}
+				};
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			}
+		}
+	}
 	/**
 	 * 
 	 * @function onhideBtnClicked 

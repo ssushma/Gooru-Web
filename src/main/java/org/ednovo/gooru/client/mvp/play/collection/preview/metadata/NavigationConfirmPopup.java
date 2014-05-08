@@ -105,7 +105,7 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 	
 	public void hide(){
 		super.hide();
-		Window.enableScrolling(true);
+		//Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 	
