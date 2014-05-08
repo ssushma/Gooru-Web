@@ -110,6 +110,8 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
 	
-	
+	public Anchor getLblLink(){
+		return lblLink;
+	}
 	
 }

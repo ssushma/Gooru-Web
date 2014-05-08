@@ -1782,6 +1782,28 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
+		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
+			   if(item.isSelected()){
+				    resourceEducationalLabel.setText(item.getValue());
+					educationalUsePanel.setVisible(false);
+					educationalDropDownLblOpen = false;
+					mandatoryEducationalLbl.setVisible(false);
+			   }
+		}
+		int checkBoxCount=0;
+		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
+			   if(item.isSelected()){
+				   if(checkBoxCount==0)
+				   chkLevelRecall.setChecked(true);
+				   if(checkBoxCount==1)
+			       chkLevelSkillConcept.setChecked(true);
+				   if(checkBoxCount==2)
+			       chkLevelStrategicThinking.setChecked(true);
+				   if(checkBoxCount==3)
+			       chkLevelExtendedThinking.setChecked(true);
+			   }
+			   checkBoxCount++;
+			}
 	}
 	
 	
@@ -2157,6 +2179,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
  			@Override
  			public void onMouseOver(MouseOverEvent event) {
  				toolTip = new ToolTip(GL1734);
+ 				toolTip.getLblLink().setVisible(false);
  				toolTip.getElement().getStyle().setBackgroundColor("transparent");
  				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
  				toolTip.setPopupPosition(depthOfKnoweldgeToolTip.getAbsoluteLeft()-(50+22), depthOfKnoweldgeToolTip.getAbsoluteTop()+22);
