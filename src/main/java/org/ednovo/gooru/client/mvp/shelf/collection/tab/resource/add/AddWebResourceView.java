@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -152,7 +153,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
 	
-	@UiField FlowPanel standardsPanel;
+	@UiField FlowPanel standardsPanel,standardContainer;
 	
 	Integer videoDuration=0;
 	private CopyRightPolicyVc copyRightPolicy;
@@ -171,7 +172,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	private static final String FLT_CODE_ID = "id";
-	List<String> standardPreflist=new ArrayList<String>();
+	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	
 	String courseCode="";
@@ -181,12 +182,13 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	CollectionDo collectionDo;
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	private static final String RESOURCE_UPLOAD_FILE_PATTERN = "([^\\s]+([^?#]*\\.(?:mp3))$)";
-		
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 	public AddWebResourceView(CollectionDo collectionDo) { 
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
@@ -212,8 +214,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							}
 						}						
 					}
-					
-					/*if(standardsPrefDisplayPopup){*/
+					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
 							
@@ -225,34 +226,35 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							
 							@Override
 							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
 							}
 						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
+						standardSgstBox.showSuggestionList();
+						}
 					else{
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
 						//standardSuggestOracle.add(GL1613);
-						
-					}*/
 					}
-					
-				
+				}
 			}
 
 			@Override
 			public HandlerRegistration addClickHandler(ClickHandler handler) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};
-		
+		BlurHandler blurHandler=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing())
+				standardsPreferenceOrganizeToolTip.show();
+			}
+		};
+		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
@@ -418,6 +420,29 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		});
 		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
 		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						standardContainer.setVisible(false);
+					}else
+					{
+						standardContainer.setVisible(true);
+						standardPreflist=new ArrayList<String>();
+						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+							standardPreflist.add(code);
+							standardPreflist.add(code.substring(0, 2));
+						 }
+						
+					}
+				}else{
+					standardContainer.setVisible(false);
+				}
+			}
+
+		});
 	}
 
 	public void onLoad() {

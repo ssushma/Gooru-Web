@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -73,6 +74,8 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -127,7 +130,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField BlueButtonUc addbutton;
 	/*@UiField TextArea explainationTextArea;*/
 	@UiField TinyMCE questionNameTextArea,explainationTextArea;
-	@UiField FlowPanel answerchoiceTitleContainer;
+	@UiField FlowPanel standardContainer,answerchoiceTitleContainer;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
 	@UiField Button cancelButton;
@@ -151,7 +154,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
-	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();;
+	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
+	private static final String USER_META_ACTIVE_FLAG = "0";
 	public String getQuestionType() {
 		return questionType;
 	}
@@ -197,12 +201,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	private static final String FLT_CODE_ID = "id";
-	List<String> standardPreflist=new ArrayList<String>();
+	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 	public AddQuestionResourceView(){
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -359,14 +365,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
+				standardSgstBox.hideSuggestionList();
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
@@ -385,7 +390,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							}
 						}						
 					}
-					/*if(standardsPrefDisplayPopup){*/
+					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
 							@Override
@@ -399,18 +404,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 								
 							}
 						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
+						
+						standardSgstBox.showSuggestionList();
+						}
 					else{
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
 						//standardSuggestOracle.add(GL1613);
-						
-					}*/
+					}
 					}
 			}
 			@Override
@@ -419,6 +423,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		};
 		standardSgstBox.addSelectionHandler(this);
+		BlurHandler blurHandler=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing())
+				standardsPreferenceOrganizeToolTip.show();
+			}
+		};
+		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 	}
 	public void setTextForTheFields(){
 		educationalTitle.getElement().setInnerHTML(GL1664);
@@ -448,6 +461,29 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
 		addClickEventsForCheckBox();
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						standardContainer.setVisible(false);
+					}else
+					{
+						standardContainer.setVisible(true);
+						standardPreflist=new ArrayList<String>();
+						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+							standardPreflist.add(code);
+							standardPreflist.add(code.substring(0, 2));
+						 }
+						
+					}
+				}else{
+					standardContainer.setVisible(false);
+				}
+			}
+
+		});
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
@@ -1804,6 +1840,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			   }
 			   checkBoxCount++;
 			}
+		for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+			 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+		}
 	}
 	
 	
