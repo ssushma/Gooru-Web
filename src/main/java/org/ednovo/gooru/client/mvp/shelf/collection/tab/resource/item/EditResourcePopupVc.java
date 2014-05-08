@@ -169,6 +169,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
@@ -632,25 +633,32 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 		thumbnailUrlStr = collectionItemDo.getResource().getThumbnailUrl();
 		setImage(url, category);
-		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
-			   if(item.isSelected()){
-				    resourceEducationalLabel.setText(item.getValue());
-					educationalUsePanel.setVisible(false);
-					educationalDropDownLblOpen = false;
-					mandatoryEducationalLbl.setVisible(false);
-			   }
+		if( collectionItemDo.getResource().getEducationalUse()!=null){
+			for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
+				   if(item.isSelected()){
+					    resourceEducationalLabel.setText(item.getValue());
+						educationalUsePanel.setVisible(false);
+						educationalDropDownLblOpen = false;
+						mandatoryEducationalLbl.setVisible(false);
+				   }
+				}
+		}
+		if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
+			for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
+				   if(item.isSelected()){
+					   resourcemomentsOfLearningLabel.setText(item.getValue());
+					   momentsOfLearningPanel.setVisible(false);
+					   momentsOfLearningOpen = false;
+					   mandatorymomentsOfLearninglLbl.setVisible(false);
+				   }
+				}
+		}
+		if(collectionItemDo.getResource().getTaxonomySet()!=null){
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
 			}
-		for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
-		   if(item.isSelected()){
-			   resourcemomentsOfLearningLabel.setText(item.getValue());
-			   momentsOfLearningPanel.setVisible(false);
-			   momentsOfLearningOpen = false;
-			   mandatorymomentsOfLearninglLbl.setVisible(false);
-		   }
 		}
-		for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
-			 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
-		}
+		
 	}
 
 	public void setImage(String url, String category){
@@ -778,15 +786,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													arrayOfMoments.add(momentsOfObj);
 													collectionItemDo.getResource().setMomentsOfLearning(arrayOfMoments);
 												}
-												//set standards
-												List<String> standards = getAddedStandards(standardsPanel);
-												Set<CodeDo> standardsDo=new HashSet<CodeDo>();
-												 for(int i = 0; i<standards.size(); i++){
-													 CodeDo codeObj=new CodeDo();
-													 codeObj.setCode(standards.get(i));
-													 standardsDo.add(codeObj);
-											      }
-												 collectionItemDo.getResource().setTaxonomySet(standardsDo);
+												collectionItemDo.getResource().setTaxonomySet(standardsDo);
 												updateResource(collectionItemDo);
 											}
 										}
@@ -1246,6 +1246,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
+		
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
@@ -1260,6 +1261,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(Integer.parseInt(id));
+				codeObj.setCode(standard);
+				standardsDo.add(codeObj);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {

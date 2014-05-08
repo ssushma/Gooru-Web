@@ -155,6 +155,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
 	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
+	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	public String getQuestionType() {
 		return questionType;
@@ -511,6 +512,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(Integer.parseInt(id));
+				codeObj.setCode(standard);
+				standardsDo.add(codeObj);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
@@ -1318,13 +1323,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
-			List<String> standards=getAddedStandards(standardsPanel);
-			ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
-			 for(int i = 0; i<standards.size(); i++){
-				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCode(standards.get(i));
-				 standardsDo.add(codeObj);
-		      }
 			 taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
@@ -1818,6 +1816,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
+		if( collectionItemDo.getResource().getEducationalUse()!=null){
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
 			   if(item.isSelected()){
 				    resourceEducationalLabel.setText(item.getValue());
@@ -1826,6 +1825,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					mandatoryEducationalLbl.setVisible(false);
 			   }
 		}
+		}
+		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 		int checkBoxCount=0;
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
 			   if(item.isSelected()){
@@ -1840,8 +1841,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			   }
 			   checkBoxCount++;
 			}
-		for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
-			 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+		}
+		if(collectionItemDo.getResource().getTaxonomySet()!=null){
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+			}
 		}
 	}
 	
