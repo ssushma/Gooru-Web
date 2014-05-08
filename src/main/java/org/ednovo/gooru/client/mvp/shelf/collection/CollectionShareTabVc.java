@@ -51,12 +51,15 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -194,17 +197,15 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			socialShareLinksView.getshareLinkTxtBox().addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 		}
 		
-		addTeacherTip.addBlurHandler(new BlurHandler() {
-		
-		@Override
-		public void onBlur(BlurEvent event) {
-			if(teacherTipTextarea.getText().length()>0)
-			{
-			errorLabelForTeacherTip.setVisible(false);
-			}
-			
-			}
-		});
+//		addTeacherTip.addBlurHandler(new BlurHandler() {
+//		
+//		@Override
+//		public void onBlur(BlurEvent event) {
+//				if(teacherTipTextarea.getText().length()>0 && teacherTipTextarea.getText().length()<500){
+//					errorLabelForTeacherTip.setVisible(false);
+//				}
+//			}
+//		});
 		
 		teacherTipTextarea.addKeyUpHandler(new DirectionsKeyUpHandler());
 		teacherTipTextarea.getElement().setAttribute("maxlength", "500");
@@ -219,12 +220,19 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 				teacherTipTextarea.getElement().getStyle().setColor("black");
 			}
 		});
-		
+		teacherTipTextarea.addKeyDownHandler(new KeyDownHandler() {
+			
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				errorLabelForTeacherTip.addStyleName("titleAlertMessageDeActive");
+				errorLabelForTeacherTip.removeStyleName("titleAlertMessageActive");
+			}
+		});
 		teacherTipTextarea.addKeyPressHandler(new KeyPressHandler() {
 			@Override
 			public void onKeyPress(KeyPressEvent event) {
-				if(teacherTipTextarea.getText().length() > 501)
-				{
+				
+				if(teacherTipTextarea.getText().length() > 501){
 					teacherTipTextarea.cancelKey();
 				}			
 			}
@@ -239,20 +247,20 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 				}
 				else
 				{
-					Map<String, String> parms = new HashMap<String, String>();
-					parms.put("text", teacherTipTextarea.getText());
-					AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-						@Override
-						public void onSuccess(Boolean value) {
-							errorLabelForTeacherTip.setText("");
-							SetStyleForProfanity.SetStyleForProfanityForTextArea(teacherTipTextarea, errorLabelForTeacherTip, value);
-							errorLabelForTeacherTip
-							.addStyleName("titleAlertMessageActive");
-					errorLabelForTeacherTip
-							.removeStyleName("titleAlertMessageDeActive");
-								
-						}
-					});
+					if (teacherTipTextarea.getText().length() > 0 && teacherTipTextarea.getText().length() <=500){
+						Map<String, String> parms = new HashMap<String, String>();
+						parms.put("text", teacherTipTextarea.getText());
+						AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+							@Override
+							public void onSuccess(Boolean value) {
+								errorLabelForTeacherTip.setText("");
+								errorLabelForTeacherTip.getElement().getStyle().setMarginRight(28, Unit.PX);
+								SetStyleForProfanity.SetStyleForProfanityForTextArea(teacherTipTextarea, errorLabelForTeacherTip, value);
+								errorLabelForTeacherTip.addStyleName("titleAlertMessageActive");
+								errorLabelForTeacherTip.removeStyleName("titleAlertMessageDeActive");
+							}
+						});
+					}
 				}
 		
 
@@ -808,11 +816,10 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 				else
 				{
 					errorLabelForTeacherTip.setText("");
+					errorLabelForTeacherTip.getElement().getStyle().setMarginRight(28, Unit.PX);
 					SetStyleForProfanity.SetStyleForProfanityForTextArea(teacherTipTextarea, errorLabelForTeacherTip, value);
-					errorLabelForTeacherTip
-					.addStyleName("titleAlertMessageActive");
-			errorLabelForTeacherTip
-					.removeStyleName("titleAlertMessageDeActive");
+					errorLabelForTeacherTip.addStyleName("titleAlertMessageActive");
+					errorLabelForTeacherTip.removeStyleName("titleAlertMessageDeActive");
 				}
 					
 			}
@@ -823,11 +830,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	}
 	@UiHandler("cancelTeacherTip")
 	public void onClickcancelTeacherTip(ClickEvent clickEvent){
-	
+		teacherTipTextarea.setText("");
 		setEdittable(collection.getKeyPoints());
-		
-		
-		
 	}
 	
 	public void updateCollectionTeacherTipInfo(CollectionDo collectionDo, String teacherTip) {
@@ -889,11 +893,12 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	private class DirectionsKeyUpHandler implements KeyUpHandler {
 		public void onKeyUp(KeyUpEvent event) {
-			errorLabelForTeacherTip.setVisible(false);
-			if (teacherTipTextarea.getText().length() >=500) {
+			if (teacherTipTextarea.getText().length() >= 500) {
 				teacherTipTextarea.setText(teacherTipTextarea.getText().trim()
 						.substring(0, 500));
 				errorLabelForTeacherTip.setText("");
+				errorLabelForTeacherTip.addStyleName("titleAlertMessageActive");
+				errorLabelForTeacherTip.removeStyleName("titleAlertMessageDeActive");
 				errorLabelForTeacherTip.setText(MessageProperties.GL0143);
 				errorLabelForTeacherTip.setVisible(true);
 			}
