@@ -303,6 +303,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					@Override
 					public void closePoup() {
 						hide();
+						Window.enableScrolling(true);
 				
 					}
 				};
