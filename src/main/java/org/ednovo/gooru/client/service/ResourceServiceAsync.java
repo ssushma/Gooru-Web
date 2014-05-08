@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
@@ -89,7 +90,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 //	void getMyUserCollections(AsyncCallback<List<CollectionItemsListDo>> callback) throws GwtException;
 
-	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<String> standards, AsyncCallback<CollectionItemDo> callback);
+	void addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime, String edcuationalUse, String momentsOfLearning, List<CodeDo> standards, AsyncCallback<CollectionItemDo> callback);
 	
 	void getResourceMetaInfo(String url, AsyncCallback<ResourceMetaInfoDo> callback);
 	
