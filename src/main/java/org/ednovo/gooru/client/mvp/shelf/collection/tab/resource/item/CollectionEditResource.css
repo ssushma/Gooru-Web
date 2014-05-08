@@ -1551,6 +1551,8 @@ input[type="text"] {
 	color: rgb(81, 81, 81);
 	text-align: left;
 	padding: 5px 0px 10px 0px;
+	word-wrap: break-word;
+	width: 461px;
 }
 
 .resourceExistsPopupFormInputControl {

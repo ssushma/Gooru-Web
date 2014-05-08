@@ -26,6 +26,9 @@ package org.ednovo.gooru.client.uc;
 
 
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -51,6 +54,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class TocResourceView extends Composite implements HasClickHandlers,MessageProperties{
 
@@ -74,7 +78,7 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 	}
 	
 	@UiConstructor
-	public TocResourceView(CollectionItemDo collectionItemDo,Integer itemIndex,boolean showItemIndex){
+	public TocResourceView(CollectionItemDo collectionItemDo,Integer itemIndex,boolean showItemIndex, boolean addHyperlink){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
 		if(showItemIndex){
@@ -85,7 +89,11 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
 			setResourceTypeIcon(collectionItemDo.getResource().getResourceFormat().getDisplayName());
 		}
-		setResourcePlayLink();
+		if(addHyperlink){
+			//setResourcePlayLink();
+		}else{
+			//this.addClickHandler(new ResourceRequest());
+		}
 	}
 	
 	public void setResourceTitleColor(){
@@ -145,6 +153,27 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 			return resourceLink;
 		}
 	}
+public class ResourceRequest implements ClickHandler{
+	public void onClick(ClickEvent event){
+		Map<String,String> params = new LinkedHashMap<String,String>();
+		String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		params.put("id", collectionId);
+		params = PreviewPlayerPresenter.setConceptPlayerParameters(params);
+		String viewToken=AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		if(collectionItemDo.getNarration()!=null&&!collectionItemDo.getNarration().trim().equals("")){
+			params.put("rid", collectionItemDo.getCollectionItemId());
+			params.put("tab", "narration");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}else{
+			params.put("rid", collectionItemDo.getCollectionItemId());
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(viewToken, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		}
+	}
+
+}
+	
 	
 	public void setResourceTypeIcon(String category){
 		resourceTypeImage.addStyleName(getResourceTypeImage(category));
