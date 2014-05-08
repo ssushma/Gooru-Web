@@ -34,6 +34,7 @@ import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -261,6 +262,42 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			previewPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
 		}		
+	}
+	
+	public void setAnswerIdWithTimeForMa(List<Integer> answerId,Integer attemptStatus,Integer attemptSequence) {
+		setAnswerIds(answerId);
+		if(isCollectionPlayer){
+			//collectionPlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
+			collectionPlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			collectionPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			collectionPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
+		}else if(isResourcePlayer){
+			//resourcePlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
+			resourcePlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			resourcePlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			resourcePlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
+		}else if(isPreviewPlayer){
+			//previewPlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
+			previewPlayerPresenter.setAnswerIdsObject(new JSONObject());
+			setAnswerIds(answerId);
+			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
+			previewPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
+		}		
+	}
+	
+	public void setAnswerIds(List<Integer> answerId){
+		for(int i=0;i<answerId.size();i++){
+			if(isCollectionPlayer){
+				collectionPlayerPresenter.getAnswerIdsObject().put(answerId.get(i).toString(), new JSONNumber(getUnixTimeStamp()));
+			}else if(isResourcePlayer){
+				resourcePlayerPresenter.getAnswerIdsObject().put(answerId.get(i).toString(), new JSONNumber(getUnixTimeStamp()));
+			}else if(isPreviewPlayer){
+				previewPlayerPresenter.getAnswerIdsObject().put(answerId.get(i).toString(), new JSONNumber(getUnixTimeStamp()));
+			}		
+		}
+		
 	}
 	
 	public void setResourceScore(Integer score) {

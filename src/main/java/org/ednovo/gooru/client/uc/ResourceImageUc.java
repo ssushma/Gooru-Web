@@ -174,7 +174,7 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 				failedThumbnailGeneration = true;
 			}
 		});
-		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL)) {
+		if (thumbnailUrl == null || thumbnailUrl.endsWith(NULL) || thumbnailUrl.equalsIgnoreCase("") ) {
 			setDefaultThumbnail(thumbnailUrl, realUrl, categoryString, generateYoutube);
 		} else {
 		
