@@ -47,7 +47,7 @@ public class NewResourceDo extends ResourceDo {
 	private String thumbnailImgUrl;
 	private Integer stop;
 	private ResourceFormatDo resourceFormat;
-	private String educationalUse;
+	private ArrayList<checkboxSelectedDo> educationalUse;
 	private ArrayList<checkboxSelectedDo> momentsOfLearning;
 	
 	private String thumbnail;
@@ -125,11 +125,12 @@ public class NewResourceDo extends ResourceDo {
 		this.thumbnail = thumbnail;
 	}
 
-	public String getEducationalUse() {
+	
+	public ArrayList<checkboxSelectedDo> getEducationalUse() {
 		return educationalUse;
 	}
 
-	public void setEducationalUse(String educationalUse) {
+	public void setEducationalUse(ArrayList<checkboxSelectedDo> educationalUse) {
 		this.educationalUse = educationalUse;
 	}
 
