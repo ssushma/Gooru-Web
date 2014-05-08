@@ -236,10 +236,12 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 		boolean mutipleAnswerChoiceStatus=true;
 		Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer,Boolean>();
 		List<String> userAttemptedValueList=new ArrayList<String>();
+		List<Integer> answerIds=new ArrayList<Integer>();
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
+				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 					userAttemptedValueList.add("1");
 					//createSessionItemAttempt(checkBoxAnswerOptionView.getAnswerId(), checkBoxAnswerOptionView.isAnswerCorrect()?"correct":"wrong");
@@ -286,18 +288,21 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			isChekcAnswerButtonClicked=true;
 			score=mutipleAnswerChoiceStatus?1:0;
 		}
+		String attemptStatus=mutipleAnswerChoiceStatus==true?"correct":"wrong";
 		userAttemptedValue(userAttemptedValueList);
-		setAnswersDetailsWitithTime(0,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);
+		setAnswersDetailsWitithTime(answerIds,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);
+		createSesstionItemAttemptForMultipleAnswer(answerIds,userAttemptedValueList,attemptStatus);
 	}
 	
 	public abstract void createSessionItemAttempt(int answerId,String answerAttemptStatus);
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
 	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
 	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
-	public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
+	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){
 		
 	}
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
+	public abstract void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
 	
 }

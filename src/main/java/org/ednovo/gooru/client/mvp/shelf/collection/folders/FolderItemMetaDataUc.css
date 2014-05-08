@@ -98,6 +98,7 @@
 	width: 120px;
 	margin: 0 auto;
 	margin-bottom: 10px;
+	margin-top: 23px;
 }
 
 .padding10 {
@@ -107,8 +108,9 @@
 }
 
 .textAreaStyle {
+	font-size:10px;
 	color: #515151;
-	width: 180px;
+	width: 180px !important;
 	margin-top: 5px;
 	border: 1px solid #ddd;
 	overflow: scroll;
@@ -124,4 +126,7 @@
 
 .openedPanelHeight {
 	height: 170px;
+}
+.errorLabel{
+	float: right;
 }

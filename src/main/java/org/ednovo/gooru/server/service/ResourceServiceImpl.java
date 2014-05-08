@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -601,7 +602,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	
 	@Override
 	public ExistsResourceDo checkResourceExists(String url) throws GwtException {
-		
+		try {
+			url = URLEncoder.encode(url, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {
+		}
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CHECK_RESOURCE_EXISTS, url, getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
