@@ -136,6 +136,9 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		String loadingText();
 		String assignButton();
 		
+		String assignmentTitleLabelForOe();
+		String primaryButton();
+		
 	}
 	@Source("assignmentpopup.css")
 	NewAssignmentPopupCss css();

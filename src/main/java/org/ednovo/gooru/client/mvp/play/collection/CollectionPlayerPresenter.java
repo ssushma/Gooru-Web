@@ -1564,6 +1564,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	protected void showCollectionErrorMessage(){
 		clearSlot(METADATA_PRESENTER_SLOT);
 		enablePlayerButton(false, false, false, false, false, false);
+		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(new CollectionNonExistView());
 	}
