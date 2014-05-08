@@ -243,6 +243,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 			else 
 			{
+
+				
 				btnJoinClass.setVisible(true);
 				userImage.setVisible(false);
 				lblWebHelp.setVisible(true);
@@ -250,6 +252,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				LblMember.setVisible(false);
 				userImage.setVisible(false);
 				mainContainer.setVisible(true);
+				
+				if(!AppClientFactory.isAnonymous())
+				{
 
 				if(!isJoinPopupPublic){
 					isJoinPopupPublic=true;
@@ -275,7 +280,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 											lblWebHelp.setVisible(false);
 											btnWithDraw.setVisible(true);
 											LblMember.setVisible(true);
-											userImage.setVisible(true);
+											LblMember.setText(GL1549);
 											mainContainer.setVisible(true);
 											this.hide();
 											isJoinPopupPublic=false;
@@ -298,6 +303,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 					@Override
 					public void closePoup() {
 						hide();
+				
 					}
 				};
 				}
@@ -307,6 +313,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				joinPopupPublic.setPixelSize(506, 261);		
 				//joinPopup.center();
 				joinPopupPublic.show();
+				
+			}
 
 				
 			}	
@@ -846,7 +854,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
 		{
-		if((!classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()) && !classpageDo.getStatus().equalsIgnoreCase("active") && classpageDo.getStatus().equalsIgnoreCase("pending"))|| classpageDo.getStatus().equalsIgnoreCase("not-invited"))
+		if((!classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()) && !classpageDo.getStatus().equalsIgnoreCase("active") && classpageDo.getStatus().equalsIgnoreCase("pending")))
 		{
 		
 		joinPopupButtonClick =  new StudentJoinClassPopup(classpageDo) {
