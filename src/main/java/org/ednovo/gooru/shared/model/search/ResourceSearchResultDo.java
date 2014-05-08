@@ -114,6 +114,10 @@ public class ResourceSearchResultDo implements Serializable {
 	private String gooruUId;
 	
 	private int noOfQuestions;
+	
+	private int resourceCount;
+	
+	private int questionCount;
 
 	/** 
 	 * This method is to get the mediaType
@@ -432,5 +436,23 @@ public class ResourceSearchResultDo implements Serializable {
 	public void setNoOfQuestions(int noOfQuestions) {
 		this.noOfQuestions = noOfQuestions;
 	}
+
+	public int getResourceCount() {
+		return resourceCount;
+	}
+
+	public void setResourceCount(int resourceCount) {
+		this.resourceCount = resourceCount;
+	}
+
+	public int getQuestionCount() {
+		return questionCount;
+	}
+
+	public void setQuestionCount(int questionCount) {
+		this.questionCount = questionCount;
+	}
+	
+	
 	
 }

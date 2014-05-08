@@ -87,7 +87,11 @@ public class CollectionUploadImageUc extends Composite implements MessagePropert
 	 * @param url of image
 	 */
 	public void setUrl(String url) {
-		collectionImg.setUrl(url);
+		if(url!=null&&url.trim().isEmpty()) {
+			collectionImg.setUrl("images/default-collection-image-160x120.png");
+		} else {
+			collectionImg.setUrl(url);
+		}
 	}
 
 	/**
