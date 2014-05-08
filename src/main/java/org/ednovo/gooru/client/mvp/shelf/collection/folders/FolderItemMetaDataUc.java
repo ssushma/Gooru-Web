@@ -12,10 +12,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.InitializeEvent;
 import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -26,7 +28,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class FolderItemMetaDataUc extends Composite implements MessageProperties{
@@ -35,7 +37,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	
 	@UiField HTML bigIdeasLbl, essentialQuestionsLbl, performanceTaskLbl;
 	
-	@UiField RichTextArea bigIdeasHTML, essentialQuestionsHTML, performanceTaskHTML;
+	@UiField TextArea bigIdeasHTML, essentialQuestionsHTML, performanceTaskHTML;
 	
 	@UiField HTMLPanel formButtons, performanceTaskPanel, essentialQuestionsPanel, bigIdeasPanel;
 	
@@ -56,51 +58,50 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		setDebugIds();
 		showEditableMetaData(true);
-		bigIdeasHTML.addInitializeHandler(new InitializeHandler() {
+		
+		bigIdeasHTML.getElement().setAttribute("maxlength", "600");
+		essentialQuestionsHTML.getElement().setAttribute("maxlength", "600");
+		performanceTaskHTML.getElement().setAttribute("maxlength", "600");
+		
+		bigIdeasHTML.addKeyPressHandler(new KeyPressHandler() {
 			@Override
-			public void onInitialize(InitializeEvent event) {
-			    Document document = IFrameElement.as(bigIdeasHTML.getElement()).getContentDocument();
-                BodyElement body = document.getBody();
-                body.setAttribute("style", "font-family: Arial;font-size:12px;");
+			public void onKeyPress(KeyPressEvent event) {
+				restrictKeyLimit(event, bigIdeasHTML, bigIdeasHTML.getText(), errorLabelbigIdeasHTML);
 			}
 		});
 		
-		bigIdeasHTML.addKeyDownHandler(new KeyDownHandler() {
+		bigIdeasHTML.addBlurHandler(new BlurHandler() {
 			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				bigIdeasHTML.setHTML(restrictKeyLimit(event, bigIdeasHTML.getText(), errorLabelbigIdeasHTML));
+			public void onBlur(BlurEvent event) {
+				restrictKeyLimit(null, bigIdeasHTML, bigIdeasHTML.getText(), errorLabelbigIdeasHTML);
 			}
 		});
 		
-		essentialQuestionsHTML.addInitializeHandler(new InitializeHandler() {
+		essentialQuestionsHTML.addKeyPressHandler(new KeyPressHandler() {			
 			@Override
-			public void onInitialize(InitializeEvent event) {
-			    Document document = IFrameElement.as(essentialQuestionsHTML.getElement()).getContentDocument();
-                BodyElement body = document.getBody();
-                body.setAttribute("style", "font-family: Arial;font-size:12px;");
-			}
-		});
-		
-		essentialQuestionsHTML.addKeyDownHandler(new KeyDownHandler() {
-			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				essentialQuestionsHTML.setHTML(restrictKeyLimit(event, essentialQuestionsHTML.getText(), errorLabelessentialQuestionsHTML));
+			public void onKeyPress(KeyPressEvent event) {
+				restrictKeyLimit(event, essentialQuestionsHTML, essentialQuestionsHTML.getText(), errorLabelessentialQuestionsHTML);
 			}
 		});
 
-		performanceTaskHTML.addInitializeHandler(new InitializeHandler() {
+		essentialQuestionsHTML.addBlurHandler(new BlurHandler() {
 			@Override
-			public void onInitialize(InitializeEvent event) {
-			    Document document = IFrameElement.as(performanceTaskHTML.getElement()).getContentDocument();
-                BodyElement body = document.getBody();
-                body.setAttribute("style", "font-family: Arial;font-size:12px;");
+			public void onBlur(BlurEvent event) {
+				restrictKeyLimit(null, essentialQuestionsHTML, essentialQuestionsHTML.getText(), errorLabelessentialQuestionsHTML);
 			}
 		});
 		
-		performanceTaskHTML.addKeyDownHandler(new KeyDownHandler() {
+		performanceTaskHTML.addKeyPressHandler(new KeyPressHandler() {			
 			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				performanceTaskHTML.setHTML(restrictKeyLimit(event, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML));
+			public void onKeyPress(KeyPressEvent event) {
+				restrictKeyLimit(event, performanceTaskHTML, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML);
+			}
+		});
+
+		performanceTaskHTML.addBlurHandler(new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				restrictKeyLimit(null, performanceTaskHTML, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML);
 			}
 		});
 
@@ -114,33 +115,29 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		cancelBtn.setText(GL0142);
 	}
 	
-	private String restrictKeyLimit(KeyDownEvent event, String text, Label errorLabelToDisplay) {
-		 if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER ||
-                 event.getNativeKeyCode() == KeyCodes.KEY_UP ||
-                 event.getNativeKeyCode() == KeyCodes.KEY_LEFT||
-                 event.getNativeKeyCode() == KeyCodes.KEY_DOWN ||
-                 event.getNativeKeyCode() == KeyCodes.KEY_BACKSPACE||
-                 event.getNativeKeyCode() == KeyCodes.KEY_SHIFT) {
-			 if(text.trim().length()<=599)
-			 {
-				 errorLabelToDisplay.setVisible(false);	 
-			 }
-		 
-         } 
-		 else 
-         {
-	         if(text.trim().length()>598)
-	         {
-	        	 errorLabelToDisplay.setVisible(true);	
-	        	 errorLabelToDisplay.setText(GL0143);	        	 
-	        	 event.preventDefault();
-	         }
-	         else
-	         {
-	        	 errorLabelToDisplay.setVisible(false);	
-	         }
-         }
-		 return text;
+	private void restrictKeyLimit(KeyPressEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
+		if(text.trim().length()<=599) {
+			errorLabelToDisplay.setVisible(false);	 
+		} else if(text.trim().length()>598) {
+			if(event==null) {
+				textArea.cancelKey();
+				errorLabelToDisplay.setVisible(true);
+				errorLabelToDisplay.setText(GL0143);	        	 
+			} else {
+				if(event.isControlKeyDown() || event.isShiftKeyDown() ||
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_UP)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_LEFT)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_DOWN)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_RIGHT)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE)) || 
+						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_DELETE))) {
+				} else {
+					textArea.cancelKey();
+					errorLabelToDisplay.setVisible(true);
+					errorLabelToDisplay.setText(GL0143);
+				}
+			}
+		}
 	}
 	
 	public void setMetaData(String bigIdeas, String essentialQuestions, String performanceTask) {
@@ -157,9 +154,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			performanceTask = GL1727;
 		}
 		
-		bigIdeasLbl.setHTML(bigIdeas);
-		essentialQuestionsLbl.setHTML(essentialQuestions);
-		performanceTaskLbl.setHTML(performanceTask);
+		bigIdeasLbl.setText(bigIdeas);
+		essentialQuestionsLbl.setText(essentialQuestions);
+		performanceTaskLbl.setText(performanceTask);
 		
 		errorLabelbigIdeasHTML.setVisible(false);
 		errorLabelessentialQuestionsHTML.setVisible(false);
@@ -191,19 +188,19 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		formButtons.setVisible(!isVisible);
 		
 		if(!bigIdeas.isEmpty()) {
-			bigIdeasHTML.setHTML(bigIdeasLbl.getText());
+			bigIdeasHTML.setText(bigIdeasLbl.getText());
 		} else {
-			bigIdeasHTML.setHTML(bigIdeas);
+			bigIdeasHTML.setText(bigIdeas);
 		}
 		if(!essentialQuestions.isEmpty()) {
-			essentialQuestionsHTML.setHTML(essentialQuestionsLbl.getText());
+			essentialQuestionsHTML.setText(essentialQuestionsLbl.getText());
 		} else {
-			essentialQuestionsHTML.setHTML(essentialQuestions);
+			essentialQuestionsHTML.setText(essentialQuestions);
 		}
 		if(!performanceTask.isEmpty()) {
-			performanceTaskHTML.setHTML(performanceTaskLbl.getText());
+			performanceTaskHTML.setText(performanceTaskLbl.getText());
 		} else {
-			performanceTaskHTML.setHTML(performanceTask);
+			performanceTaskHTML.setText(performanceTask);
 		}
 	}
 	
@@ -211,7 +208,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	public void clickSaveBtn(ClickEvent event) {
 		
 		Map<String, String> parms = new HashMap<String, String>();
-		parms.put("text", bigIdeasHTML.getHTML());
+		parms.put("text", bigIdeasHTML.getText());
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			
 			@Override
@@ -220,7 +217,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 				{
 					clearErrorMsgs();
 				Map<String, String> parms1 = new HashMap<String, String>();
-				parms1.put("text", essentialQuestionsHTML.getHTML());
+				parms1.put("text", essentialQuestionsHTML.getText());
 				AppClientFactory.getInjector().getResourceService().checkProfanity(parms1, new SimpleAsyncCallback<Boolean>() {
 					
 					@Override
@@ -229,7 +226,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 						{
 						clearErrorMsgs();
 						Map<String, String> parms2 = new HashMap<String, String>();
-						parms2.put("text", performanceTaskHTML.getHTML());
+						parms2.put("text", performanceTaskHTML.getText());
 						AppClientFactory.getInjector().getResourceService().checkProfanity(parms2, new SimpleAsyncCallback<Boolean>() {
 							
 							@Override
@@ -237,8 +234,8 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 								if(!value)
 								{
 									clearErrorMsgs();
-								setMetaData(bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML());
-								AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeasHTML.getHTML(), performanceTaskHTML.getHTML(), essentialQuestionsHTML.getHTML()));
+								setMetaData(bigIdeasHTML.getText(), essentialQuestionsHTML.getText(), performanceTaskHTML.getText());
+								AppClientFactory.fireEvent(new UpdateShelfFolderMetaDataEvent(bigIdeasHTML.getText(), performanceTaskHTML.getText(), essentialQuestionsHTML.getText()));
 								showEditableMetaData(true);
 								updateFolderMetaData();
 								
@@ -319,7 +316,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 	}
 	
 	public void updateFolderMetaData() {
-		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, bigIdeasHTML.getHTML(), essentialQuestionsHTML.getHTML(), performanceTaskHTML.getHTML(), new SimpleAsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, bigIdeasHTML.getText(), essentialQuestionsHTML.getText(), performanceTaskHTML.getText(), new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				
