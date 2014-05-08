@@ -105,7 +105,7 @@ public class CollectionImageUc extends Composite implements ClickHandler,Message
 	 * @param url of the image
 	 */
 	public void setUrl(String url, String title) {
-		if (url == null || url.endsWith(NULL)) {
+		if (url == null || url.endsWith(NULL) || (url!=null&&url.trim().isEmpty())) {
 			image.setUrl(DEFULT_IMAGE);
 		} else {
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {

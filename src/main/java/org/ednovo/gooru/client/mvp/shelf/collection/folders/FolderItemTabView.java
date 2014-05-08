@@ -604,6 +604,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiHandler("editMetaLbl")
 	public void editMetaData(ClickEvent event) {
 		folderItemMetaDataUc.updateFolderData(presentFolderId, organizeTitleLbl.getText());
+		folderItemMetaDataUc.beforeEditSetOpen();
 		folderItemMetaDataUc.showEditableMetaData(false);
 	}
 
