@@ -830,6 +830,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		Label errorMessageLabel=new Label();
 		errorMessageLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceErrorStyle());
 		enablePlayerButton(false, false, false,false);
+		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(errorMessageLabel);
 	}

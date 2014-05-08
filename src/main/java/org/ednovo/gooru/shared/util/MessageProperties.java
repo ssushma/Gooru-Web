@@ -2114,10 +2114,10 @@ public interface MessageProperties {
 
 
     	//Navigation Confirmation popup
-    	String GL1660="Are you sure you want to navigate away?";
-    	String GL1661="Your responses will be lost.";
-    	String GL1662="back to response";
-    	String GL1663="continue";
+    	String GL1660="You haven't submitted your answer yet.";
+    	String GL1661="Are you sure you want to navigate away? Your responses will not be saved unless you submit it!";
+    	String GL1662="Return to your response";
+    	String GL1663="Continue anyways";
     	
     	String GL1664="Educational Use";
     	String GL1665="Activity";
