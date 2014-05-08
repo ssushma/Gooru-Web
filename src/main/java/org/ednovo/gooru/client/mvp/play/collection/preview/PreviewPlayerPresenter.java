@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.UpdatePreviewViewCountEvent;
 import org.ednovo.gooru.client.mvp.play.collection.flag.CollectionFlagPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.PreviewPlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionSharePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocPresenter;
@@ -202,7 +203,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	
 	private int userAttemptedQuestionType=0;
 	
-	private boolean isOpenEndedAnswerSubmited=false;
+	private boolean isOpenEndedAnswerSubmited=true;
      
 	public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
     
@@ -378,6 +379,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resoruceMetadataPresenter.setPreviewPlayerPresenter(this);
 		resourceFlagPresenter.setPreviewPlayerPresenter(this);
 		collectionFlagPresenter.setPreviewPlayerPresenter(this);
+		collectionPlayerTocPresenter.setPreviewPlayerPresenter(this);
 		addResourcePresenter.getAddCollectionViewButton().setVisible(false);
 		addCollectionPresenter.getAddResourceViewButton().setVisible(false);
 		addResourcePresenter.getAddNewCollectionButton().addClickHandler(new ShowNewCollectionWidget());
@@ -452,6 +454,11 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		Document doc=Document.get();
 		Element bodyelement = doc.getBody();
 		bodyelement.getParentElement().setAttribute("style", "overflow:hidden");
+	}
+	
+	@Override
+	protected void onUnbind() {
+	  super.onUnbind();
 	}
 	
 	@Override
@@ -982,6 +989,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	
 	public void setResourceInfoView(String resourceId){
 		CollectionItemDo collectionItemDo=getCollectionItemDo(resourceId);
+		resourceInfoPresenter.setMycollectionTitle(collectionDo.getTitle());
 		resourceInfoPresenter.setResoruceDetails(collectionItemDo);
 		setInSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT, resourceInfoPresenter,false);
 		new CustomAnimation(getView().getNavigationContainer()).run(400);
@@ -1602,6 +1610,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	protected void showCollectionErrorMessage(){
 		clearSlot(METADATA_PRESENTER_SLOT);
 		enablePlayerButton(false, false, false, false, false, false);
+		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
 		getView().getPlayerBodyContainer().add(new CollectionNonExistView());
 	}
@@ -1661,8 +1670,18 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		
 	}
 	private class ShowResourceView{
-		public ShowResourceView(PlaceRequest resourceRequest){
-			AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+		public ShowResourceView(final PlaceRequest resourceRequest){
+			if(!isOpenEndedAnswerSubmited()){
+				NavigationConfirmPopup confirmPopup=new NavigationConfirmPopup() {
+					@Override
+					public void navigateToNextResource() {
+						super.hide();
+						AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+					}
+				};
+			}else{
+				AppClientFactory.getPlaceManager().revealPlace(false, resourceRequest,true);
+			}
 		}
 	}
 	public static native void pauseVideo(Element myPlayer) /*-{

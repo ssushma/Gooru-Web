@@ -611,9 +611,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 											urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
 											urlStr = urlStr.replaceAll("feature=player_embedded&", "");
 											urlStr = URL.encode(urlStr);
-											urlStr = urlStr.replaceAll("#", "%23");
+											//urlStr = urlStr.replaceAll("#", "%23");
 											String youTubeId = getYoutubeVideoId(urlStr);
-											System.out.println("youTubeId :"+youTubeId);
+										
 											if (urlStr.endsWith("/")) {
 												urlStr = urlStr.substring(0, urlStr.length() - 1);
 											}
@@ -817,8 +817,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 							}
 
 							if (isValidUrl(userUrlStr, true)) {
+								
 								userUrlStr = URL.encode(userUrlStr);
-								userUrlStr = userUrlStr.replaceAll("#", "%23");
+								//userUrlStr = userUrlStr.replaceAll("#", "%23");
 								urlTextBox.setText(URL.decode(userUrlStr));
 								String userUrlStr1 = userUrlStr.replaceAll(
 										"feature=player_detailpage&", "");

@@ -113,6 +113,10 @@
 	width: 180px !important;
 	margin-top: 5px;
 	border: 1px solid #ddd;
+	direction: ltr;
+	height: 152px;
+	font-family: Arial;
+	font-size:12px;
 	overflow: scroll;
 	overflow-x: hidden;
 	overflow: visible;

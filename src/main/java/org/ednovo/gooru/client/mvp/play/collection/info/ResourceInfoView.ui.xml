@@ -10,17 +10,17 @@
       <g:FlowPanel styleName="{playerStyle.resource-info-Wrapper}">
          <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-wrapper}">
 	         <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-innerwrapper}">
+	         <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>
+	         <g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="lblcollectionName"/>
 	           <g:HTMLPanel styleName="{playerStyle.resource-info-type-image}">
-	         
+	           		<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="lblresourceType"/>
 	           		<g:HTMLPanel styleName="{playerStyle.ipadFriendlyIconNone}" ui:field="mobileFriendly"></g:HTMLPanel>
-	           			
 	          	   	<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="resourceView"> </g:Label>
 	           		<g:HTML  ui:field="resourceInfoSeparator"/>
 	           		<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="timeRequiredLabel"> </g:Label>
+	           			<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="timeRequiredvalue"> </g:Label>
 	           		<g:HTML ui:field="resourceInfoSeparatorTimeLbl"/>
 	           		<g:HTML  ui:field="resourcetypeSeparator" />
-	           		<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="lblresourceType"/>
-	           		<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>
 	             </g:HTMLPanel>
 	             
 	               <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
@@ -58,7 +58,7 @@
 	          
 	        	<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="thumbnailPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="thumbnailText"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="thumbnailurlValue"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="thumbnailurlValue"/>
 	      		</g:HTMLPanel>
 	          
 	           	<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="publisherPanel">
@@ -96,7 +96,7 @@
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="eduUsePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="eduUseLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="eduUseType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="eduUseType"/>
 	      		</g:HTMLPanel>
 	           
 	            <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="eduRolePanel">
@@ -116,12 +116,17 @@
 	      		
 	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="dKnowledgePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="dKnowledgeLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="dKnowledgeType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="dKnowledgeType"/>
+	      		</g:HTMLPanel>
+	      		
+	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="momentsoflearningPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="momentsoflearningLbl"></g:Label>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="momentsoflearningType"/>
 	      		</g:HTMLPanel>
 	      		
 	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="readingLevelPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="readingLevelLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="readingLevelType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="readingLevelType"/>
 	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gooruSubjectPanel">
@@ -131,7 +136,7 @@
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gooruCoursePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gooruCourseLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="gooruCourseInfo"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="gooruCourseInfo"/>
 	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
@@ -173,10 +178,10 @@
 	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="contributorName"/>
 	      		</g:HTMLPanel>
 	      		
-	      		<!--  <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="keyWordsPanel">
+	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="keyWordsPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="keywordsTitle"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="keywordsInfo"/>
-	      		</g:HTMLPanel> -->
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="keywordsInfo"/>
+	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="accessibilityPanel">
 	          	 <g:Label styleName="{playerStyle.resource-info-more-titleboarder}" ui:field="accesibilityLbl"></g:Label>
@@ -189,12 +194,12 @@
 	      	  
 	      	  <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="accessModePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="accessModelLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="accessModeType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="accessModeType"/>
 	      	  </g:HTMLPanel>
 	      	  
 	      	  <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="mediaFeaturePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="mediaFeatureLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="mediaFeatureType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="mediaFeatureType"/>
 	      	  </g:HTMLPanel>
 	      		
 	       	 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="controlPanel">
@@ -219,7 +224,7 @@
 	      		
 	      	 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="accessibilityAPIPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="accessibilityAPILbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="accessibilityAPIType"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="accessibilityAPIType"/>
 	      	 </g:HTMLPanel>
 	      		
 	          <!-- <g:HTMLPanel styleName="{playerStyle.gradeContainer}"> -->
