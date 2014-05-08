@@ -80,9 +80,207 @@ public class ResourceDo extends ContentDo {
     
     private Date createdOn;
 
+
+    /** need to change these after api is finalized  **/
+    private String host;
+   
+	private String educationalAlignment;
+	
+	private String  educationalRole;
+	
+	private String interactivityType;
+	
+	private String ageRange;
+	
+	private String gooruSubject;
+	
+	private String countryCode;
+	
+	private String language;
+	
+	private String dataType;
+	
+	private String author;
+	
+	private String copyRightHolder;
+	
+	private String contributor;
+	
+	private List<String> keywords;
+	
+	private List<String> readinglevel;
+	
+	private List<String> gooruCourse;
+	
+	private String mobilefriendlyness;
+	
+	private List<String> acessmode;
+	
+	private List<String> mediaFeatures;
+	
+	private String controlflexibility;
+	
+	private String accesshazard;
+	
+	private List<String> accessibilityAPI;
+	
+	
+
+	public List<String> getAccessibilityAPI() {
+		return accessibilityAPI;
+	}
+	public void setAccessibilityAPI(List<String> accessibilityAPI) {
+		this.accessibilityAPI = accessibilityAPI;
+	}
+	public String getAccesshazard() {
+		return accesshazard;
+	}
+	public void setAccesshazard(String accesshazard) {
+		this.accesshazard = accesshazard;
+	}
+	public String getHasadaptation() {
+		return hasadaptation;
+	}
+	public void setHasadaptation(String hasadaptation) {
+		this.hasadaptation = hasadaptation;
+	}
+	public String getIsadaptation() {
+		return isadaptation;
+	}
+	public void setIsadaptation(String isadaptation) {
+		this.isadaptation = isadaptation;
+	}
+
+	private String hasadaptation;
+	
+	private String isadaptation;
+	
+	public String getControlflexibility() {
+		return controlflexibility;
+	}
+	public void setControlflexibility(String controlflexibility) {
+		this.controlflexibility = controlflexibility;
+	}
+	public List<String> getMediaFeatures() {
+		return mediaFeatures;
+	}
+	public void setMediaFeatures(List<String> mediaFeatures) {
+		this.mediaFeatures = mediaFeatures;
+	}
+	public List<String> getAcessmode() {
+		return acessmode;
+	}
+	public void setAcessmode(List<String> acessmode) {
+		this.acessmode = acessmode;
+	}
+	public String getMobilefriendlyness() {
+		return mobilefriendlyness;
+	}
+	public void setMobilefriendlyness(String mobilefriendlyness) {
+		this.mobilefriendlyness = mobilefriendlyness;
+	}
+	public List<String> getGooruCourse() {
+		return gooruCourse;
+	}
+	public void setGooruCourse(List<String> gooruCourse) {
+		this.gooruCourse = gooruCourse;
+	}
+	public List<String> getReadinglevel() {
+		return readinglevel;
+	}
+	public void setReadinglevel(List<String> readinglevel) {
+		this.readinglevel = readinglevel;
+	}
+	public List<String> getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
+	}
+	public String getContributor() {
+		return contributor;
+	}
+	public void setContributor(String contributor) {
+		this.contributor = contributor;
+	}
+	public String getCopyRightHolder() {
+		return copyRightHolder;
+	}
+	public void setCopyRightHolder(String copyRightHolder) {
+		this.copyRightHolder = copyRightHolder;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getDataType() {
+		return dataType;
+	}
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getCountryCode() {
+		return countryCode;
+	}
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	public String getGooruSubject() {
+		return gooruSubject;
+	}
+	public void setGooruSubject(String gooruSubject) {
+		this.gooruSubject = gooruSubject;
+	}
+	
+	public String getAgeRange() {
+		return ageRange;
+	}
+	public void setAgeRange(String ageRange) {
+		this.ageRange = ageRange;
+	}
+	public String getInteractivityType() {
+		return interactivityType;
+	}
+	public void setInteractivityType(String interactivityType) {
+		this.interactivityType = interactivityType;
+	}
+	public String getEducationalRole() {
+		return educationalRole;
+	}
+	public void setEducationalRole(String educationalRole) {
+		this.educationalRole = educationalRole;
+	}
+	
+	
+	
+	public String getEducationalAlignment() {
+		return educationalAlignment;
+	}
+	public void setEducationalAlignment(String educationalAlignment) {
+		this.educationalAlignment = educationalAlignment;
+	}
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	/** need to change the above **/
+	
+
 	private ArrayList<checkboxSelectedDo> momentsOfLearning;
 	private ArrayList<checkboxSelectedDo> educationalUse;
 	private List<checkboxSelectedDo> depthOfKnowledges;
+
 	/** 
 	 * This method is to get the encodedUrl
 	 */
