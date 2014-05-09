@@ -120,6 +120,9 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static String TIME_TO_COMPLETE_IN_SEC="timeToCompleteInSec";
 	public static String QUESTION_TYPE_NAME="typeName";
 	public static final String COLLECTION_ITEMS="collectionItems";
+	public static final String EDUCATIONALUSE = "educationalUse";
+	public static final String MOMENTSOFLEARNING = "momentsOfLearning";
+	public static final String DEPTHOFKNOWLEDGE = "depthOfKnowledges";
 	
 	public static final String NUMBEROF_RESOURECES="numberOfResources";
 	
@@ -313,6 +316,9 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setCategory(getJsonString(recordJsonObject, CATEGORY));
 		resourceDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		resourceDo.setGrade(getJsonString(recordJsonObject, GRADE));
+		resourceDo.setEducationalUse(getJsonArray(recordJsonObject, EDUCATIONALUSE));
+		resourceDo.setMomentsOfLearning(getJsonArray(recordJsonObject, MOMENTSOFLEARNING));
+		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
 		try{
 			resourceDo.setResourceFormat(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RESOURCE_FORMAT).toString(), ResourceFormatDo.class));
 		}catch(Exception e){
