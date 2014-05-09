@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.info;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -694,6 +696,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		
 			if(collectionDoVal.getLanguageObjective() != null)
 			{
+
 				textAreaVal.setText(collectionDo.getLanguageObjective());
 			}
 			else
