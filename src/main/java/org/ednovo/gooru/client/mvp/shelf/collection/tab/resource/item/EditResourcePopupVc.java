@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
@@ -185,8 +186,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
 		super();
 		
-		System.out.println("educational use::"+collectionItemDo.getResource().getEducationalUse());
-		
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
@@ -318,7 +317,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resDescription.getElement().setInnerHTML(GL0904); 
 		urlTextPanel.getElement().setInnerHTML(GL0915);
 		mandatoryUrlLbl.setText(GL0916);
-		
+		momentsOfLearningPanel.setVisible(false);
 		System.out.println("test::"+GL1664);
 		
 		educationalTitle.getElement().setInnerHTML(GL1664);
@@ -665,7 +664,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 		}
 		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(item.getCodeId());
+				 codeObj.setCode(item.getCode());
+				 standardsDo.add(codeObj);
 				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
 			}
 		}
@@ -1332,6 +1335,28 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
+				for(final CodeDo codeObj:standardsDo){
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						//standardsDo.remove(codeObj);
+						CollectionDo collectionDo=new CollectionDo();
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionDo, collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<CollectionDo>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onSuccess(CollectionDo result) {
+								standardsDo.remove(codeObj);
+								
+							}
+							
+						});
+						
+					}
+				}
 				this.getParent().removeFromParent();
 			}
 		};

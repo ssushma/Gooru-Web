@@ -882,26 +882,16 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				featuredContributor.setVisible(true);
 				final String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
 				if(courseDo!=null) {
-					courseImage.setUrl(courseDo.getThumbnails().getUrl());
+					if(courseDo.getThumbnails()!=null&&courseDo.getThumbnails().getUrl().isEmpty()) {
+						setDefaultCourseImage(standardId, courseDo.getLabel());
+					} else {
+						courseImage.setUrl(courseDo.getThumbnails().getUrl());
+					}
+					
 					courseImage.addErrorHandler(new ErrorHandler() {
 						@Override
 						public void onError(ErrorEvent event) {
-							if(standardId != null)
-							{
-								if(standardLibraryName.equals(TEXAS)) {
-									if(courseDo.getLabel().equalsIgnoreCase("Integrated Physics and Chemistry")) {
-										courseImage.setUrl(TEKS_SCIENCE);
-									} else {
-										courseImage.setUrl(TEKS_MATHS);
-									}
-								} else {
-									courseImage.setUrl(STANDARD_DEFAULT_IMG);	
-								}
-							}
-							else
-							{
-							courseImage.setUrl(COURSE_DEFAULT_IMG);
-							}
+							setDefaultCourseImage(standardId, courseDo.getLabel());
 						}
 					});
 					
@@ -989,6 +979,26 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				}
 			}
 			
+	}
+	
+	private void setDefaultCourseImage(String standardId, String courseLabel) {
+		if(standardId != null)
+		{
+			if(standardLibraryName.equals(TEXAS)) {
+				if(courseLabel.equalsIgnoreCase("Integrated Physics and Chemistry")) {
+					courseImage.setUrl(TEKS_SCIENCE);
+				} else {
+					courseImage.setUrl(TEKS_MATHS);
+				}
+			} else {
+				courseImage.setUrl(STANDARD_DEFAULT_IMG);	
+			}
+		}
+		else
+		{
+		courseImage.setUrl(COURSE_DEFAULT_IMG);
+		}
+
 	}
 	
 	/**

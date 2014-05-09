@@ -9,17 +9,12 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFo
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.BodyElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
-import com.google.gwt.event.logical.shared.InitializeEvent;
-import com.google.gwt.event.logical.shared.InitializeHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -63,9 +58,10 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		essentialQuestionsHTML.getElement().setAttribute("maxlength", "600");
 		performanceTaskHTML.getElement().setAttribute("maxlength", "600");
 		
-		bigIdeasHTML.addKeyPressHandler(new KeyPressHandler() {
+		bigIdeasHTML.addKeyDownHandler(new KeyDownHandler() {
+			
 			@Override
-			public void onKeyPress(KeyPressEvent event) {
+			public void onKeyDown(KeyDownEvent event) {
 				restrictKeyLimit(event, bigIdeasHTML, bigIdeasHTML.getText(), errorLabelbigIdeasHTML);
 			}
 		});
@@ -77,9 +73,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			}
 		});
 		
-		essentialQuestionsHTML.addKeyPressHandler(new KeyPressHandler() {			
+		essentialQuestionsHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
-			public void onKeyPress(KeyPressEvent event) {
+			public void onKeyDown(KeyDownEvent event) {
 				restrictKeyLimit(event, essentialQuestionsHTML, essentialQuestionsHTML.getText(), errorLabelessentialQuestionsHTML);
 			}
 		});
@@ -91,9 +87,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 			}
 		});
 		
-		performanceTaskHTML.addKeyPressHandler(new KeyPressHandler() {			
+		performanceTaskHTML.addKeyDownHandler(new KeyDownHandler() {
 			@Override
-			public void onKeyPress(KeyPressEvent event) {
+			public void onKeyDown(KeyDownEvent event) {
 				restrictKeyLimit(event, performanceTaskHTML, performanceTaskHTML.getText(), errorLabelperformanceTaskHTML);
 			}
 		});
@@ -115,7 +111,7 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 		cancelBtn.setText(GL0142);
 	}
 	
-	private void restrictKeyLimit(KeyPressEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
+	private void restrictKeyLimit(KeyDownEvent event, TextArea textArea, String text, Label errorLabelToDisplay) {
 		if(text.trim().length()<=599) {
 			errorLabelToDisplay.setVisible(false);	 
 		} else if(text.trim().length()>598) {
@@ -131,6 +127,9 @@ public class FolderItemMetaDataUc extends Composite implements MessageProperties
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_RIGHT)) || 
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE)) || 
 						((event.getNativeEvent().getKeyCode() == KeyCodes.KEY_DELETE))) {
+					if(text.trim().length()<=600) {
+						errorLabelToDisplay.setVisible(false);	 
+					}
 				} else {
 					textArea.cancelKey();
 					errorLabelToDisplay.setVisible(true);

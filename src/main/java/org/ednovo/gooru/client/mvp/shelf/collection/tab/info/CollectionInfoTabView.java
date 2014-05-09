@@ -165,10 +165,10 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 	public CollectionInfoTabView() {
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
-
+		final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 		
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+			
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
@@ -226,6 +226,15 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 		res = CollectionCBundle.INSTANCE;
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
+		BlurHandler blurhander=new BlurHandler() {
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip!=null && standardsPreferenceOrganizeToolTip.isShowing()){
+					standardsPreferenceOrganizeToolTip.hide();
+				}
+			}
+		};
+		standardSgstBox.addDomHandler(blurhander, BlurEvent.getType());
 		gradeLbl.setText(GL1076.toUpperCase());
 		selectGradeLbl.setText(GL0820);
 		selectCourseLbl.setText(GL0846);
