@@ -2215,5 +2215,7 @@ public interface MessageProperties {
 		String GL1744 = "We encourage you to incorporate videos that you have permission to use, or are otherwise part of the public domain. ";
 		String GL1745 = "Description : ";
 		String GL1746 ="Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
+		
+		String GL1747 = "By";
    }
 
