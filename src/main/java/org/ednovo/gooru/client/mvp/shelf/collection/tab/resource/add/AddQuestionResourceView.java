@@ -205,6 +205,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	String courseCode="";
+	boolean isEditResource=false;
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
@@ -214,6 +215,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
+		isEditResource=false;
 		questionText.getElement().setInnerHTML(" "+GL0863);
 		addQuestionImg.setText(GL_SPL_PLUS+" "+GL0860);
 		addResourceFormTitleChoice.setText(GL0864);
@@ -341,6 +343,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
+		isEditResource=true;
 		addbutton.setText(GL0141);
 		loadingTextLbl.setVisible(false);
 		loadingTextLbl.setText(GL0808);
@@ -1333,8 +1336,37 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+			
+			HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+			ArrayList<checkboxSelectedDo> arrayList=new ArrayList<checkboxSelectedDo>();
+			if(!isEditResource){
+				checkboxSelectedDo checkObj=new checkboxSelectedDo();
+				checkObj.setSelected(true);
+				checkObj.setValue(resourceEducationalLabel.getText());
+				arrayList.add(checkObj);
+			}else{
+				if(collectionItemDo.getResource().getEducationalUse() != null)
+				{
+				for(int eduI=0; eduI<collectionItemDo.getResource().getEducationalUse().size(); eduI++)
+				{
+					if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue().trim()))
+					{
+						checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
+						eduUseObjPrevious.setSelected(false);
+						eduUseObjPrevious.setValue(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue());
+						arrayList.add(eduUseObjPrevious);
+					}else{
+						checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
+						eduUseObjPrevious.setSelected(true);
+						eduUseObjPrevious.setValue(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue());
+						arrayList.add(eduUseObjPrevious);
+					}
+				}
+				}
+			}
+			educationalUse.put("educationalUse", arrayList);
 			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
-			collectionQuestionItemDo.setEducationalUse(resourceEducationalLabel.getText());
+			collectionQuestionItemDo.setEducationalUse(educationalUse);
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
@@ -1848,8 +1880,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 		if(collectionItemDo.getResource().getTaxonomySet()!=null){
+			standardsPanel.clear();
 			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {	
-				 CodeDo codeObj=new CodeDo();
+				CodeDo codeObj=new CodeDo();
 				 codeObj.setCodeId(item.getCodeId());
 				 codeObj.setCode(item.getCode());
 				 standardsDo.add(codeObj);

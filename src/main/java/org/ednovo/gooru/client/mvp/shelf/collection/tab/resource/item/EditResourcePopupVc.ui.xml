@@ -383,7 +383,7 @@
 						ui:field="standardsDefaultText"></g:Label>
 					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
 						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBox}">
-							<g:FlowPanel styleName="{res1.css.standardsCont}">
+							<g:FlowPanel styleName="{res1.css.standardsEditResourceCont}">
 								<uc:AppSuggestBox ui:field="standardSgstBox"
 									width="255px" height="19px" />
 								<g:Label styleName="{res1.css.standardMaxHide}" ui:field="standardMaxMsg" />

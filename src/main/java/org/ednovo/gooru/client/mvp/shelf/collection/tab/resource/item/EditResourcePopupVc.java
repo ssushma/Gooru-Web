@@ -318,7 +318,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		resDescription.getElement().setInnerHTML(GL0904); 
 		urlTextPanel.getElement().setInnerHTML(GL0915);
 		mandatoryUrlLbl.setText(GL0916);
-		
+		momentsOfLearningPanel.setVisible(false);
 		System.out.println("test::"+GL1664);
 		
 		educationalTitle.getElement().setInnerHTML(GL1664);
