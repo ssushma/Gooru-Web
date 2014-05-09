@@ -227,6 +227,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduUsedetails.add(collectionItemDo.getResource().getEducationalUse().get(i).getValue());
 		}
 		seteducationaluseDetails(eduUsedetails);
+		educationallLbl.setVisible(true);
 		eduUsePanel.setVisible(true);
 		}else{
 			eduUsePanel.setVisible(false);
@@ -383,8 +384,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		
 		
 		/*generalLbl.setVisible(true);*/
-		resourceInfoLbl.setVisible(true);
-		educationallLbl.setVisible(true);
+		/*resourceInfoLbl.setVisible(true);*/
+		/*educationallLbl.setVisible(true);*/
 		/*accesibilityLbl.setVisible(true);*/
 		
 		timeRequiredLabel.setVisible(true);
@@ -451,15 +452,43 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			resourceInfoLbl.setVisible(false);
 		}
 		
-		if(collectionItemDo.getResource().getMomentsOfLearning()!=null && collectionItemDo.getResource().getDepthOfKnowledges() !=null && collectionItemDo.getResource().getEducationalUse()!=null){
-		if(collectionItemDo.getResource().getMomentsOfLearning().size()==0 && collectionItemDo.getResource().getDepthOfKnowledges().size()==0 && collectionItemDo.getResource().getEducationalUse().size()==0){
-			educationallLbl.setVisible(false);
+		if(collectionItemDo.getResource().getGrade()!=null
+				&& collectionItemDo.getResource().getUrl()!=null 
+				&& collectionItemDo.getResource().getThumbnailUrl()!=null
+				&& collectionItemDo.getResource().getTaxonomySet()!=null
+				&& collectionItemDo.getResource().getLicense() !=null && collectionItemDo.getStandards()!=null){
+			if(!collectionItemDo.getResource().getGrade().equalsIgnoreCase("") || !collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")
+					|| !collectionItemDo.getResource().getUrl().equalsIgnoreCase("") || !collectionItemDo.getResource().getUrl().equalsIgnoreCase("null")
+					|| !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("") || !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("null")
+					|| collectionItemDo.getResource().getTaxonomySet().size()!=0  || collectionItemDo.getStandards().size()!=0 ){
+				generalLbl.setVisible(true);	
+			}
 		}else{
-			educationallLbl.setVisible(true);
+			generalLbl.setVisible(false);
 		}
+		
+		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
+			if(collectionItemDo.getResource().getDepthOfKnowledges() !=null && collectionItemDo.getResource().getEducationalUse()!=null){
+				if( collectionItemDo.getResource().getDepthOfKnowledges().size()==0 && collectionItemDo.getResource().getEducationalUse().size()==0){
+					educationallLbl.setVisible(false);
+				}else{
+					educationallLbl.setVisible(true);
+				}
+				}else{
+					educationallLbl.setVisible(false);
+				}
 		}else{
-			educationallLbl.setVisible(false);
+			if(collectionItemDo.getResource().getMomentsOfLearning()!=null  && collectionItemDo.getResource().getEducationalUse()!=null){
+				if(collectionItemDo.getResource().getMomentsOfLearning().size()==0 && collectionItemDo.getResource().getEducationalUse().size()==0){
+					educationallLbl.setVisible(false);
+				}else{
+					educationallLbl.setVisible(true);
+				}
+				}else{
+					educationallLbl.setVisible(false);
+				}
 		}
+		
 		
 	}
 	
@@ -516,15 +545,18 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void seteducationaluseDetails(List<String> eduUsedetails) {
 		// TODO Auto-generated method stub
 		eduUseType.clear();
+		System.out.println("eduUsedetails::::::::::::"+eduUsedetails);
 		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
+			System.out.println("eduUsedetails123::::::::::::"+eduUsedetails);
 			eduUsePanel.setVisible(false);
-			educationallLbl.setVisible(false);
 		}else{
+			educationallLbl.setText(GL1720);
 		if(eduUsedetails.size()>0){
 			final Label eduUseLabel=new Label(eduUsedetails.get(0)+","+eduUsedetails.get(1));
 			eduUseLabel.getElement().setAttribute("style", "float: left;");
 			eduUseType.add(eduUseLabel);
 			eduUsePanel.setVisible(true);
+			educationallLbl.setText(GL1720);
 			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
 			educationallLbl.setVisible(true);
 		}
@@ -536,6 +568,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
 			eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			eduUsePanel.setVisible(true);
+			educationallLbl.setText(GL1720);
 			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
 			educationallLbl.setVisible(true);
 		}
