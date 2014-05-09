@@ -196,7 +196,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		mainTitleLbl.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setAltText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setTitle(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
-		studentViewImage.setUrl(classpageDo.getThumbnailUrl());
+		studentViewImage.setUrl(classpageDo.getThumbnailUrl() == "" ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
 		imgProfileImage.setUrl(classpageDo.getCreatorProfileImage());
 		lblUserName.setText(classpageDo.getCreatorUsername());
