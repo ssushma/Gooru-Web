@@ -182,7 +182,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 			globalTooltipWithButton.setStyleName("");
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
-			globalTooltipWithButton.setPopupPosition(Document.get().getElementById("addButton").getAbsoluteLeft()-16, Document.get().getElementById("addButton").getAbsoluteTop()+22);
+			globalTooltipWithButton.setPopupPosition(Document.get().getElementById("addButton").getAbsoluteLeft()-16, Document.get().getElementById("addButton").getScrollTop()+22);
 			globalTooltipWithButton.show();
 		}
 	}
