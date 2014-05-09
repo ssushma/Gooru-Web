@@ -156,4 +156,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 			String depthOfKnowledge,Boolean selectedVal, AsyncCallback<CollectionDo> asyncCallback);
 	
 	void getCollectionInfoV2API(String collectionId, AsyncCallback<CollectionDo> asyncCallback);
+	
+	void deleteTaxonomyResource(String resourceId,Integer codeId,AsyncCallback<Void> asyncCallback);
 }

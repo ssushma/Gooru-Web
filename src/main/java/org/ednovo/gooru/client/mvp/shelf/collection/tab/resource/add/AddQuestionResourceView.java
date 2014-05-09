@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
@@ -205,6 +206,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	String courseCode="";
+	boolean isEditResource=false;
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
@@ -214,6 +216,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
+		isEditResource=false;
 		questionText.getElement().setInnerHTML(" "+GL0863);
 		addQuestionImg.setText(GL_SPL_PLUS+" "+GL0860);
 		addResourceFormTitleChoice.setText(GL0864);
@@ -341,6 +344,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
+		isEditResource=true;
 		addbutton.setText(GL0141);
 		loadingTextLbl.setVisible(false);
 		loadingTextLbl.setText(GL0808);
@@ -535,6 +539,25 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
+				for(final CodeDo codeObj:standardsDo){
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<Void>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								
+							}
+
+							@Override
+							public void onSuccess(Void result) {
+								standardsDo.remove(codeObj);
+								
+							}
+							
+						});
+						
+					}
+				}
 				this.getParent().removeFromParent();
 			}
 		};
@@ -1128,8 +1151,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}else{
     										if(!isHintsAdded(hintsContainer)){
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
-    												System.out
-															.println("go to helllll");
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
     												fieldValidationStaus = false;
@@ -1328,8 +1349,37 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
+			
+			HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+			ArrayList<checkboxSelectedDo> arrayList=new ArrayList<checkboxSelectedDo>();
+			if(!isEditResource){
+				checkboxSelectedDo checkObj=new checkboxSelectedDo();
+				checkObj.setSelected(true);
+				checkObj.setValue(resourceEducationalLabel.getText());
+				arrayList.add(checkObj);
+			}else{
+				if(collectionItemDo.getResource().getEducationalUse() != null)
+				{
+				for(int eduI=0; eduI<collectionItemDo.getResource().getEducationalUse().size(); eduI++)
+				{
+					if(!resourceEducationalLabel.getText().trim().equalsIgnoreCase(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue().trim()))
+					{
+						checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
+						eduUseObjPrevious.setSelected(false);
+						eduUseObjPrevious.setValue(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue());
+						arrayList.add(eduUseObjPrevious);
+					}else{
+						checkboxSelectedDo eduUseObjPrevious=new checkboxSelectedDo();
+						eduUseObjPrevious.setSelected(true);
+						eduUseObjPrevious.setValue(collectionItemDo.getResource().getEducationalUse().get(eduI).getValue());
+						arrayList.add(eduUseObjPrevious);
+					}
+				}
+				}
+			}
+			educationalUse.put("educationalUse", arrayList);
 			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
-			collectionQuestionItemDo.setEducationalUse(resourceEducationalLabel.getText());
+			collectionQuestionItemDo.setEducationalUse(educationalUse);
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
@@ -1816,7 +1866,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
-		if( collectionItemDo.getResource().getEducationalUse()!=null){
+		if(collectionItemDo.getResource().getEducationalUse()!=null){
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
 			   if(item.isSelected()){
 				    resourceEducationalLabel.setText(item.getValue());
@@ -1843,7 +1893,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+			standardsPanel.clear();
+			standardsDo.clear();
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {	
+				CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(item.getCodeId());
+				 codeObj.setCode(item.getCode());
+				 standardsDo.add(codeObj);
 				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
 			}
 		}

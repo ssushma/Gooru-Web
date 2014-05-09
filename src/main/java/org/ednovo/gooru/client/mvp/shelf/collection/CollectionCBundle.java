@@ -91,6 +91,7 @@ public interface CollectionCBundle extends ClientBundle{
 		String infoAddButton();
 		
 		String standardsCont();
+		String standardsEditResourceCont();
 		
 		String gradeListCont();
 		

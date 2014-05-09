@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -67,13 +68,15 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.json.client.JSONArray;
+
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
@@ -588,6 +591,11 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	//		String form = ResourceFormFactory.generateDataForm(newResourceDo, RESOURCE);
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
 		
+		//ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data")[0]
+		
+		System.out.println("resourceUrl::"+url);
+		System.out.println("resourceForm::"+form);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -598,6 +606,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_INFO, getLoggedInSessionToken(), url);
+		System.out.println("resourcemetadata::"+urlStr);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceMetaInfo(jsonRep);
@@ -652,6 +661,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
 		
+		System.out.println("urladd::"+url);
+		System.out.println("urladddata::"+collectionQuestionData);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -664,7 +676,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		if(thumbnailUrl!=null){
 			updateQuestionImage(collectionItemDo.getResource().getGooruOid(),thumbnailUrl);
 		}
+		System.out.println("url::"+url);
+		System.out.println("urldata::"+ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question"));
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question"));
+		try {
+			System.out.println("jsonrep::"+jsonResponseRep.getJsonRepresentation().getText());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		ResourceDo resourceDo=deserializeResourceDoItem(jsonRep);
 		return convertResourceToCollectionItemDo(resourceDo,collectionItemDo);
@@ -710,7 +730,19 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
 		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
+		System.out.println("getMomentsOfLearning::"+collectionItemDo.getResource().getMomentsOfLearning());
+		
+		for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++)
+		{
+			System.out.println("getMomentsOfLearning::"+collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
+		}
+		
+		
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
+		
+		System.out.println("update url::"+url);
+		System.out.println("update form::"+form);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1015,6 +1047,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data").length>0)
 		{		
+			System.out.println("language::"+url);
+			System.out.println("language::"+ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data")[0]);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}
@@ -1084,6 +1118,37 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
 		return deserializeCollection(jsonRep);
+
+	}
+
+	@Override
+	public void deleteTaxonomyResource(String resourceId, Integer codeId)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.DELETE_TAXONOMY_RESOURCE, resourceId,
+				getLoggedInSessionToken());
+		
+		try {
+			JSONObject taxonomyObject = new JSONObject();
+			JSONObject taxonomySetObj = new JSONObject();
+
+			JSONArray codeIdJsonArray = new JSONArray();
+			codeIdJsonArray.put(new JSONObject().put("codeId", codeId));
+
+			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
+			taxonomyObject.put("resource", taxonomySetObj);
+		
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+					.put(url, getRestUsername(), getRestPassword(),
+							taxonomyObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			
+		} catch (Exception ex) {
+			
+		}
+		// return null;
 
 	}
 

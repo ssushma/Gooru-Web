@@ -120,6 +120,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private SimpleAsyncCallback<Map<String, String>> shareUrlWithGenerationAsyncCallback;
 	
 	private CollectionDo collection;
+	
+	private CollectionDo collectionDo;
 
 	private SocialShareDo shareDo;
 
@@ -823,8 +825,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	}
 	@UiHandler("cancelTeacherTip")
 	public void onClickcancelTeacherTip(ClickEvent clickEvent){
-		teacherTipTextarea.setText(collection.getKeyPoints());
-		setEdittable(collection.getKeyPoints());		
+		teacherTipTextarea.setText(collectionDo.getKeyPoints());
+		setEdittable(collectionDo.getKeyPoints());		
 	}
 	
 	public void updateCollectionTeacherTipInfo(CollectionDo collectionDo, String teacherTip) {
@@ -854,7 +856,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	}
 	
 	public void setExistingTeacherTip(CollectionDo collectionDo) {
-		this.collection = collectionDo;
+		this.collectionDo = collectionDo;
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
 	}
 	
