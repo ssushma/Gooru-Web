@@ -26,8 +26,12 @@ package org.ednovo.gooru.server.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.service.FolderService;
 import org.ednovo.gooru.server.ArrayListSorter;
@@ -42,8 +46,10 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Form;
@@ -324,6 +330,7 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 		String url = null;
 		CollectionDo collectionDo = null;
 		JSONObject collectionDataObject=new JSONObject();
+		JSONObject courseIdObj=new JSONObject();
 		JSONObject FolderDataObject=new JSONObject();
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_CREATE_COLLECTION_IN_FOLDER, getLoggedInSessionToken());
 		try {
@@ -333,8 +340,10 @@ public class FolderServiceImpl extends BaseServiceImpl implements FolderService 
 			collectionDataObject.put("grade", data.getGrade());
 			collectionDataObject.put("mediaType", data.getMediaType());
 			if (courseCodeId != null) {
-				collectionDataObject.put("taxonomyCode", courseCodeId);
-
+				courseIdObj.put("codeId", courseCodeId);
+				ArrayList<JSONObject> taxonomyArray= new ArrayList<JSONObject>();
+				taxonomyArray.add(courseIdObj);
+				collectionDataObject.put("taxonomySet", taxonomyArray);
 			}
 			FolderDataObject.put("collection", collectionDataObject);
 			FolderDataObject.put("parentId", folderId);
