@@ -174,6 +174,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private static final String FLT_CODE_ID = "id";
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	List<CodeDo> standardsDo=new ArrayList<CodeDo>();
 	
 	String courseCode="";
 	int activeImageIndex = 0;
@@ -521,6 +522,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(Integer.parseInt(getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults())));
+				codeObj.setCode(standardSgstBox.getValue());
+				standardsDo.add(codeObj);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
@@ -554,6 +559,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
+		
 		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
 		standardSgstBox.setText("");
 		standardSuggestOracle.clear();
@@ -721,7 +727,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
 												if(collectionDo.getSharing().equalsIgnoreCase("public")){
 													
-													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),getAddedStandards(standardsPanel));
+													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
 													addResourceBtnLbl.setEnabled(true);
 													/*WebResourcePreview webResourcePreview = new WebResourcePreview() {
 														
@@ -757,7 +763,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													
 												}
 												else{
-													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),getAddedStandards(standardsPanel));
+													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
 													addResourceBtnLbl.setEnabled(true);
 												}
 												
@@ -773,7 +779,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		}
 	}
 
-	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<String> standards);
+	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime, boolean conformationFlag,String educationalUse,String momentsOfLearning,List<CodeDo> standards);
 
 //	public abstract void addResource(String idStr, String urlStr,	String titleStr, String descriptionStr, String categoryStr,	String thumbnailUrlStr, Integer endTime);
 

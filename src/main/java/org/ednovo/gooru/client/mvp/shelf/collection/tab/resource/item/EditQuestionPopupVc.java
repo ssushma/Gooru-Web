@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -291,6 +292,22 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		// setModal(true);
 		// Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+		
+/*		 System.out.println("eduinfo::"+collectionItemDo.getResource().getEducationalUse());
+		 
+		 if( collectionItemDo.getResource().getEducationalUse()!=null){
+				for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
+					 
+					 System.out.println("item.getValue()::"+item.getValue());
+					   if(item.isSelected()){
+						    resourceEducationalLabel.setText(item.getValue());
+							educationalUsePanel.setVisible(false);
+							educationalDropDownLblOpen = false;
+							mandatoryEducationalLbl.setVisible(false);
+					   }
+					}
+			}*/
+		
 
 		show();
 		center();
@@ -301,7 +318,20 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		 chkLevelSkillConcept.setText(GL1646);
 		 chkLevelStrategicThinking.setText(GL1647);
 		 chkLevelExtendedThinking.setText(GL1648);
-		 educationalUsePanel.setVisible(false);
+	//	 educationalUsePanel.setVisible(false);
+		 
+
+/*			if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
+				for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
+					   if(item.isSelected()){
+						   resourcemomentsOfLearningLabel.setText(item.getValue());
+						   momentsOfLearningPanel.setVisible(false);
+						   momentsOfLearningOpen = false;
+						   mandatorymomentsOfLearninglLbl.setVisible(false);
+					   }
+					}
+			}*/
+		 
 	}
 
 	@Override

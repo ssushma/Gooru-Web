@@ -48,6 +48,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionRes
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
@@ -250,7 +251,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		
 	}
 	@Override
-	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) {
+	public void addResource(String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards) {
 		getResourceService().addNewResource("", collectionDo.getGooruOid(), urlStr, titleStr, descriptionStr, categoryStr, thumbnailImgSrcStr, endTime,edcuationalUse,momentsOfLearning,standards, getCollectionItemAsyncCallback());
 	}
 	
@@ -428,6 +429,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			SimpleAsyncCallback<CollectionItemDo> updateQuestionResourceAsyncCallback) {
 		this.updateQuestionResourceAsyncCallback = updateQuestionResourceAsyncCallback;
 	}
+
+	
 
 }
 
