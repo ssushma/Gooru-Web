@@ -1894,6 +1894,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		if(collectionItemDo.getResource().getTaxonomySet()!=null){
 			standardsPanel.clear();
+			standardsDo.clear();
 			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {	
 				CodeDo codeObj=new CodeDo();
 				 codeObj.setCodeId(item.getCodeId());
