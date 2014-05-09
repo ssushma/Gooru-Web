@@ -228,15 +228,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 		seteducationaluseDetails(eduUsedetails);
-		educationallLbl.setVisible(true);
 		eduUsePanel.setVisible(true);
 		}else{
 			eduUsePanel.setVisible(false);
 		}
 		}
+		List<String> depthofknowledgedetails = new ArrayList<String>();
+		List<String> momentoflearningdetails = new ArrayList<String>();
 		
 		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-			List<String> depthofknowledgedetails = new ArrayList<String>();
+		 depthofknowledgedetails = new ArrayList<String>();
 			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 			if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
 			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledges().size();i++){
@@ -256,7 +257,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			momentsoflearningPanel.setVisible(false);
 		}
 		else{
-			List<String> momentoflearningdetails = new ArrayList<String>();
+			 momentoflearningdetails = new ArrayList<String>();
 			if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
 			if(collectionItemDo.getResource().getMomentsOfLearning().size()>0){
 			for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
@@ -473,30 +474,73 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			generalLbl.setVisible(false);
 		}
+		System.out.println("eduUsedetails:::::::"+eduUsedetails);
+		System.out.println("depthofknowledgedetails:::::::"+depthofknowledgedetails);
+		System.out.println("momentoflearningdetails:::::::"+momentoflearningdetails);
 		
 		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-			if(collectionItemDo.getResource().getDepthOfKnowledges() !=null && collectionItemDo.getResource().getEducationalUse()!=null){
-				if( collectionItemDo.getResource().getDepthOfKnowledges().size()==0 && collectionItemDo.getResource().getEducationalUse().size()==0){
-					educationallLbl.setVisible(false);
-				}else{
+			if(depthofknowledgedetails == null && eduUsedetails==null){
+				educationallLbl.setVisible(false);
+				eduUsePanel.setVisible(false);
+				dKnowledgePanel.setVisible(false);
+			}else if(depthofknowledgedetails!=null && eduUsedetails!=null){
+				if(depthofknowledgedetails.size()>0 || eduUsedetails.size()>0){
 					educationallLbl.setVisible(true);
-				}
-				}else{
+					if(eduUsedetails.size()>0){
+						eduUsePanel.setVisible(true);
+					}else if(depthofknowledgedetails.size()>0){
+						dKnowledgePanel.setVisible(true);
+					}
+					//eduUsePanel.setVisible(true);
+				}else if(depthofknowledgedetails.size()==0 && eduUsedetails.size()==0){
 					educationallLbl.setVisible(false);
+					eduUsePanel.setVisible(false);
+					dKnowledgePanel.setVisible(false);
 				}
+			}
+			else{
+				if(depthofknowledgedetails ==null || eduUsedetails==null){
+					if(depthofknowledgedetails!=null && depthofknowledgedetails.size()>0){
+						educationallLbl.setVisible(true);
+						dKnowledgePanel.setVisible(true);
+					}else if(eduUsedetails!=null && eduUsedetails.size()>0){
+						educationallLbl.setVisible(true);
+						eduUsePanel.setVisible(true);
+					}
+				}
+					
+			}
 		}else{
-			if(collectionItemDo.getResource().getMomentsOfLearning()!=null  && collectionItemDo.getResource().getEducationalUse()!=null){
-				if(collectionItemDo.getResource().getMomentsOfLearning().size()==0 && collectionItemDo.getResource().getEducationalUse().size()==0){
-					educationallLbl.setVisible(false);
-				}else{
+			if(momentoflearningdetails==null  && eduUsedetails==null){
+				educationallLbl.setVisible(false);
+				eduUsePanel.setVisible(false);
+				momentsoflearningPanel.setVisible(false);
+			}else if(momentoflearningdetails!=null && eduUsedetails!=null){
+				if(momentoflearningdetails.size()>0 || eduUsedetails.size()>0){
 					educationallLbl.setVisible(true);
-				}
-				}else{
+					if(momentoflearningdetails.size()>0){
+						momentsoflearningPanel.setVisible(true);
+					}else if(eduUsedetails.size()>0){
+						eduUsePanel.setVisible(true);
+					}
+				}else if(momentoflearningdetails.size()==0 && eduUsedetails.size()==0){
 					educationallLbl.setVisible(false);
+					eduUsePanel.setVisible(false);
+					momentsoflearningPanel.setVisible(false);
 				}
+			}
+			else{
+				if(momentoflearningdetails==null || eduUsedetails==null){
+				if(momentoflearningdetails!=null && momentoflearningdetails.size()>0){
+					educationallLbl.setVisible(true);
+					momentsoflearningPanel.setVisible(true);
+				}else if(eduUsedetails!=null && eduUsedetails.size()>0){
+					educationallLbl.setVisible(true);
+					eduUsePanel.setVisible(true);
+				}
+			}
+			}
 		}
-		
-		
 	}
 	
 	private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
@@ -532,14 +576,25 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			dKnowledgeLbl.setText(GL1693+GL_SPL_SEMICOLON);
 		if(depthOfKnowledgedetails.size()>0){
-			final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
-			deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
-			dKnowledgeType.add(deapthknowledgeLabel);
-			dKnowledgePanel.setVisible(true);
+			if(depthOfKnowledgedetails.size()==1){
+				final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0));
+				deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
+				dKnowledgeType.add(deapthknowledgeLabel);
+				dKnowledgePanel.setVisible(true);
+			} if(depthOfKnowledgedetails.size()==2){
+				final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+				deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
+				dKnowledgeType.add(deapthknowledgeLabel);
+				dKnowledgePanel.setVisible(true);
+			}
+			
 		}
 		if(depthOfKnowledgedetails.size()>2){
 			final Label deapthknowledgeLabel=new Label("+"+(depthOfKnowledgedetails.size()-2)); 
 			deapthknowledgeLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label deapthknowledgeLabelNew=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+			deapthknowledgeLabelNew.getElement().setAttribute("style", "float:left;");
+			dKnowledgeType.add(deapthknowledgeLabelNew);
 			dKnowledgeType.add(deapthknowledgeLabel);
 			Widget depthofwidget = getCommonwidget(depthOfKnowledgedetails);
 			deapthknowledgeLabel.addMouseOverHandler(new MouseOverShowToolTip(depthofwidget));
@@ -547,14 +602,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			dKnowledgePanel.setVisible(true);
 		}
 		}
+		
 	}
 
 	private void seteducationaluseDetails(List<String> eduUsedetails) {
 		// TODO Auto-generated method stub
 		eduUseType.clear();
-		System.out.println("eduUsedetails::::::::::::"+eduUsedetails);
 		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
-			System.out.println("eduUsedetails123::::::::::::"+eduUsedetails);
 			eduUsePanel.setVisible(false);
 		}else{
 			educationallLbl.setText(GL1720);
@@ -961,6 +1015,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	public void setResourceDescription(String resourceDescription){
 		this.resourceDescription.clear();
+		this.resourceDescriptionTitle.clear();
 		if(resourceDescription!=null && !resourceDescription.equalsIgnoreCase("null") && !resourceDescription.equalsIgnoreCase("")){
 			this.resourceDescription.setVisible(true);
 			this.resourceDescriptionTitle.setVisible(true);
