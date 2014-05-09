@@ -162,6 +162,9 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 					authorName = MS+courseDo.getCreator().getLastName();
 				} else {
 					authorName = courseDo.getCreator().getLastName();
+					if(courseDo.getCreator().getLastName().contains("RUSD")) {
+						authorName = GL1747 +" "+authorName;
+					}
 				}
 				courseAuthor.setText(authorName);
 				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
