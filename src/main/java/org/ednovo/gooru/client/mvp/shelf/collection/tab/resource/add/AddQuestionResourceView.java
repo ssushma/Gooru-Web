@@ -541,15 +541,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			public void onCloseLabelClick(ClickEvent event) {
 				for(final CodeDo codeObj:standardsDo){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
-						CollectionDo collectionDo=new CollectionDo();
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionDo, collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<CollectionDo>() {
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<Void>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
+								
 							}
 
 							@Override
-							public void onSuccess(CollectionDo result) {
+							public void onSuccess(Void result) {
 								standardsDo.remove(codeObj);
 								
 							}

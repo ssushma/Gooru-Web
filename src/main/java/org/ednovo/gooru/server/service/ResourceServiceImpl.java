@@ -1122,30 +1122,34 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	}
 
 	@Override
-	public CollectionDo deleteTaxonomyResource(CollectionDo collectionDo,
-			String resourceId,Integer codeId) throws GwtException {
+	public void deleteTaxonomyResource(String resourceId, Integer codeId)
+			throws GwtException {
 		JsonRepresentation jsonRep = null;
+
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.DELETE_TAXONOMY_RESOURCE, resourceId,
+				getLoggedInSessionToken());
 		
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_TAXONOMY_RESOURCE,resourceId,getLoggedInSessionToken());
-	
-		try{
-		JSONObject taxonomyObject = new JSONObject();
-		JSONObject taxonomySetObj = new JSONObject();
+		try {
+			JSONObject taxonomyObject = new JSONObject();
+			JSONObject taxonomySetObj = new JSONObject();
+
+			JSONArray codeIdJsonArray = new JSONArray();
+			codeIdJsonArray.put(new JSONObject().put("codeId", codeId));
+
+			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
+			taxonomyObject.put("resource", taxonomySetObj);
 		
-		JSONArray codeIdJsonArray=new JSONArray(); 
-		System.out.println("codeId.."+codeId);
-		codeIdJsonArray.put(new JSONObject().put("codeId", codeId));
-		
-		
-		taxonomySetObj.put("taxonomySet", codeIdJsonArray);
-		taxonomyObject.put("resource", taxonomySetObj);
-		
-		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url,getRestUsername(), getRestPassword(),taxonomyObject.toString());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		}catch(Exception j){}
-		return null;
-		
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+					.put(url, getRestUsername(), getRestPassword(),
+							taxonomyObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			
+		} catch (Exception ex) {
+			
+		}
+		// return null;
+
 	}
 
 }
