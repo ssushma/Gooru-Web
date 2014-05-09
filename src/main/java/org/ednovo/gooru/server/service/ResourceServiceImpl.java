@@ -531,18 +531,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 
 	public CollectionItemDo addNewResource(String gooruOid, String idStr,
 			String urlStr, String titleStr, String descriptionStr,
-			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<String> standards) throws GwtException {
+			String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards) throws GwtException {
 		NewResourceDo newResourceDo = new NewResourceDo();		
 		newResourceDo.setId(idStr);
 		newResourceDo.setUrl(urlStr);
 		newResourceDo.setTitle(titleStr);
 		
 		Set<CodeDo> standardsDo=new HashSet<CodeDo>();
-		 for(int i = 0; i<standards.size(); i++){
+		for(CodeDo item:standards)
+		{
 			 CodeDo codeObj=new CodeDo();
-			 codeObj.setCode(standards.get(i));
+			 codeObj.setCode(item.getCode());
+			 codeObj.setCodeId(item.getCodeId());
 			 standardsDo.add(codeObj);
-	      }
+		}
+		
 		newResourceDo.setTaxonomySet(standardsDo);
 		newResourceDo.setDescription(descriptionStr);
 		newResourceDo.setCategory(categoryStr);
@@ -584,6 +587,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr,getLoggedInSessionToken(),  URLEncoder.encode(titleStr).toString(), urlStr, categoryStr, URLEncoder.encode(descriptionStr).toString(), thumbnailImgSrcStr, String.valueOf(endTime));
 	//		String form = ResourceFormFactory.generateDataForm(newResourceDo, RESOURCE);
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -647,6 +651,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);

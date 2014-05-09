@@ -79,7 +79,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public static final String STANDARD_DESCRIPTION = "description";
 	private String title;
 	
-	@UiField HTMLPanel resourceDescription,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
+	@UiField HTMLPanel resourceDescription,resourceDescriptionTitle,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
 	contributorPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,gooruCoursePanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,dateCreatedPanel,
@@ -100,7 +100,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					copyRightType,copyRightLbl,hostType,hostLbl,gooruCourseLbl,accessibilityAPILbl,controlType,controlLbl,
 					acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 					thumbnailText,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
-					createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,timeRequiredvalue,lblcollectionName,
+					createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,timeRequiredvalue,
 					momentsoflearningLbl;
 	
 	@UiField static Label standaInfo;
@@ -191,7 +191,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
 		setPublisher(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"",collectionItemDo.getResource().getUrl());
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){*/
 		if(collectionItemDo.getResource().getThumbnails()!=null){
 			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
 		}
@@ -202,10 +202,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
 		}
 
-		
+/*		
 		lblcollectionName.setVisible(true);
 		lblcollectionName.setText(title);
-		lblcollectionName.getElement().setAttribute("style", "margin-left: 19px;");
+		lblcollectionName.getElement().setAttribute("style", "margin-left: 19px;");*/
 		
 		collectionItemDo.getResource().setHost("HippoCampus");
 		//setHostDetails(collectionItemDo.getResource().getHost());
@@ -216,10 +216,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		setedAlignDetails("");
 		
 		List<String> eduUsedetails = new ArrayList<String>();
+
+		System.out.println("collectionItemDo.getResource().getEducationalUse()::"+collectionItemDo.getResource().getEducationalUse());
+		
 		if(collectionItemDo.getResource().getEducationalUse()!=null){
 		if(collectionItemDo.getResource().getEducationalUse().size()>0){
 		for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
+			if(collectionItemDo.getResource().getEducationalUse().get(i).isSelected())
+			{
 			eduUsedetails.add(collectionItemDo.getResource().getEducationalUse().get(i).getValue());
+			}
 		}
 		seteducationaluseDetails(eduUsedetails);
 		eduUsePanel.setVisible(true);
@@ -233,7 +239,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 			if(collectionItemDo.getResource().getDepthOfKnowledges().size()>0){
 			for(int i=0;i<collectionItemDo.getResource().getDepthOfKnowledges().size();i++){
+				if(collectionItemDo.getResource().getDepthOfKnowledges().get(i).isSelected())
+				{
 				depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
+				}
 			}
 			setDepthofknowledgeDetails(depthofknowledgedetails);
 			dKnowledgePanel.setVisible(true);
@@ -250,7 +259,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(collectionItemDo.getResource().getMomentsOfLearning()!=null){
 			if(collectionItemDo.getResource().getMomentsOfLearning().size()>0){
 			for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++){
+				if(collectionItemDo.getResource().getMomentsOfLearning().get(i).isSelected())
+				{
 				momentoflearningdetails.add(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
+				}
 			}
 			setmonentoflearningDetails(momentoflearningdetails);
 			momentsoflearningPanel.setVisible(true);
@@ -386,7 +398,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		resourceInfoSeparatorTimeLbl.setVisible(true);
 		accessibilityPanel.setVisible(true);
 		
-		}else{
+		/*}else{
 			
 			resourcetypeSeparator.setHTML(SEPARATOR);
 			resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
@@ -398,7 +410,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			thumbnailPanel.setVisible(false);
 			licenceCodePanel.setVisible(false);
 			dateCreatedPanel.setVisible(false);
-			lblcollectionName.setVisible(false);
+			//lblcollectionName.setVisible(false);
 			timeRequiredvalue.setVisible(false);
 			authorPanel.setVisible(false);
 			gooruSubjectPanel.setVisible(false);
@@ -437,7 +449,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			accessModeType.setVisible(false);
 			mediaFeatureType.setVisible(false);
 			accessibilityAPIType.setVisible(false);
-		}
+		}*/
 		
 		if(collectionItemDo.getResource().getCreatedOn()!=null){
 			resourceInfoLbl.setText(GL1716);
@@ -465,7 +477,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			momentsoflearningLbl.setText("Moments Of Learning:");
 		if(momentoflearningdetails.size()>0){
-			final Label momentsofLabel=new Label(momentoflearningdetails.get(0)+","+momentoflearningdetails.get(1));
+			final Label momentsofLabel=new Label(momentoflearningdetails.get(0));
 			momentsofLabel.getElement().setAttribute("style", "float: left;");
 			momentsoflearningType.add(momentsofLabel);
 			momentsoflearningPanel.setVisible(true);
@@ -516,7 +528,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			educationallLbl.setVisible(false);
 		}else{
 		if(eduUsedetails.size()>0){
-			final Label eduUseLabel=new Label(eduUsedetails.get(0)+","+eduUsedetails.get(1));
+			final Label eduUseLabel=new Label(eduUsedetails.get(0));
 			eduUseLabel.getElement().setAttribute("style", "float: left;");
 			eduUseType.add(eduUseLabel);
 			eduUsePanel.setVisible(true);
@@ -918,19 +930,23 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		this.resourceDescription.clear();
 		if(resourceDescription!=null && !resourceDescription.equalsIgnoreCase("null") && !resourceDescription.equalsIgnoreCase("")){
 			this.resourceDescription.setVisible(true);
+			this.resourceDescriptionTitle.setVisible(true);
 			this.learningobjectiveText.setVisible(true);
 			if(resourceDescription.length()>415){
 				resourceDescription =(resourceDescription.substring(0, 415))+"...";
 				this.resourceDescription.add(setText(resourceDescription));
+				this.resourceDescriptionTitle.add(setText(GL1745));
 			}
 			else{
 				this.resourceDescription.add(setText(resourceDescription));
+				this.resourceDescriptionTitle.add(setText(GL1745));
 			}
 		}
 		else
 		{
 			//this.resourceDescription.add(setText(GL0977));
 			this.resourceDescription.setVisible(false);
+			this.resourceDescriptionTitle.setVisible(false);
 			this.learningobjectiveText.setVisible(false);
 		}
 	}
