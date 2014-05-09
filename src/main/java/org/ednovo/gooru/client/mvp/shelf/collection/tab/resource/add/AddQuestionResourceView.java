@@ -2249,8 +2249,71 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		@Override
 		public void onClick(ClickEvent event) {
 			 CheckBox checkBox = (CheckBox) event.getSource();
-		     boolean checked = checkBox.getValue();			     		   
-		     if(checked){
+		     boolean checked = checkBox.getValue();		
+		     
+		     depthOfKnowledges.clear();
+		    	
+		     if(chkLevelRecall.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelRecall.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelRecall.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		     if(chkLevelSkillConcept.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelSkillConcept.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelSkillConcept.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		     if(chkLevelStrategicThinking.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelStrategicThinking.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelStrategicThinking.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		     if(chkLevelExtendedThinking.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelExtendedThinking.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelExtendedThinking.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		 /*    if(checked){
 		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			     depthObj.setSelected(true);
 			     depthObj.setValue(checkBox.getText());
@@ -2261,7 +2324,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		    			depthOfKnowledges.remove(currentElement);
 		    		}
 		    	}
-		     }
+		     }*/
 		}
      }
 }
