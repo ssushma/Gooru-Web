@@ -307,6 +307,11 @@
 	float: left;
 	position: relative;
 }
+.standardsEditResourceCont {
+	float: left;
+	position: relative;
+	z-index: 99999;
+}
 
 .gradeListCont {
 	color: #999999;
