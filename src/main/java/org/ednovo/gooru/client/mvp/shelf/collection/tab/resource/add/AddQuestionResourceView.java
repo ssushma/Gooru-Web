@@ -535,6 +535,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
+				for(CodeDo codeObj:standardsDo){
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						standardsDo.remove(codeObj);
+					}
+				}
 				this.getParent().removeFromParent();
 			}
 		};
@@ -1816,7 +1821,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
-		if( collectionItemDo.getResource().getEducationalUse()!=null){
+		if(collectionItemDo.getResource().getEducationalUse()!=null){
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
 			   if(item.isSelected()){
 				    resourceEducationalLabel.setText(item.getValue());
@@ -1843,7 +1848,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}
 		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {	
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(item.getCodeId());
+				 codeObj.setCode(item.getCode());
+				 standardsDo.add(codeObj);
 				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
 			}
 		}
