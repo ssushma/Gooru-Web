@@ -665,7 +665,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				}
 		}
 		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {
+				 CodeDo codeObj=new CodeDo();
+				 codeObj.setCodeId(item.getCodeId());
+				 codeObj.setCode(item.getCode());
+				 standardsDo.add(codeObj);
 				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
 			}
 		}
@@ -1332,6 +1336,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
+				for(CodeDo codeObj:standardsDo){
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						standardsDo.remove(codeObj);
+					}
+				}
 				this.getParent().removeFromParent();
 			}
 		};
