@@ -155,6 +155,23 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			collectionDo=new CollectionDo();
 			collectionDo.setStatusCode(jsonResponseRep.getStatusCode());
 		}
+		
+		try {  
+		
+			if(collectionDo.getLanguageObjective() != null)
+			{
+				collectionDo.setLanguageObjective(URLDecoder.decode(collectionDo.getLanguageObjective(), "UTF-8"));
+			}
+			if(collectionDo.getKeyPoints() != null)
+			{
+				collectionDo.setKeyPoints(URLDecoder.decode(collectionDo.getKeyPoints(), "UTF-8")); 
+			}
+
+        } catch (UnsupportedEncodingException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }
+		
 		return collectionDo;
 	}
 	
