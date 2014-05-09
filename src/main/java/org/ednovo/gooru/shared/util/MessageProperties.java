@@ -1047,7 +1047,7 @@ public interface MessageProperties {
 		String GL0873	="Privacy";//Anchor
 		String GL0874	="for additional information.";//Label
 		String GL0875	="Copyright";//Anchor
-		String GL0876	="Please choose atleast one correct answer.";
+		String GL0876	="Please select \"Yes\" or \"No\" for each answer choice.";
 		String GL0877	="Hints Charecters should be <=150";
 		String GL0878	="Answer Charecters should be <=150";
 		String GL0879	="Explanation Charecters should be <=400";
