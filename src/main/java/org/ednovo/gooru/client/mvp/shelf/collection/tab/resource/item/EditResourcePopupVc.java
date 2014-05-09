@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
@@ -184,8 +185,6 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 	public EditResourcePopupVc(CollectionItemDo collectionItemDo) {
 		super();
-		
-		System.out.println("educational use::"+collectionItemDo.getResource().getEducationalUse());
 		
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
@@ -1336,9 +1335,26 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(CodeDo codeObj:standardsDo){
+				for(final CodeDo codeObj:standardsDo){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
-						standardsDo.remove(codeObj);
+						//standardsDo.remove(codeObj);
+						CollectionDo collectionDo=new CollectionDo();
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionDo, collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<CollectionDo>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onSuccess(CollectionDo result) {
+								standardsDo.remove(codeObj);
+								
+							}
+							
+						});
+						
 					}
 				}
 				this.getParent().removeFromParent();

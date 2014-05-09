@@ -40,6 +40,7 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.json.JSONException;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -374,4 +375,6 @@ public interface ResourceService extends BaseService {
 
 	public CollectionDo getCollectionInfoV2API(String collectionId)
 			throws GwtException;
+	
+	public CollectionDo deleteTaxonomyResource(CollectionDo collectionDo,String resourceId,Integer codeId)throws GwtException;
 }
