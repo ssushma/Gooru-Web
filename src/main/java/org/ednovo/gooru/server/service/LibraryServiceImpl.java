@@ -90,15 +90,16 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private static final String COURSE = "course";
 	private static final String UNIT = "unit";
 	private static final String TOPIC = "topic";
-	private static final String COURSE_100_75_IMG = "../images/library/course-100x75.png";
+	private static final String COURSE_100_75_IMG = "../images/library/partners/TeachableMoments.png";
 	private static final String FEATURED = "featured";
 
 	private static final String EXCLUDED_COURSE = "Language and Composition";
 	private static final String INCLUDED_COURSE = "Teachable Moments";
 	private static final String AUTODESK_GOORU_UID = "237011b7-d174-4221-9dcb-563526dd0b09";
 	private final static String DEFAULT_USER_IMG = "../images/settings/setting-user-image.png";
-	private static final String MALE = "male";
+	private static final String MALE = "none";
 	private final static String RUSDLEARNS = "rusdlearns";
+	private final static String RUSD_LAST_NAME = "RUSD Teachers";
 	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
@@ -359,7 +360,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				courseDo.setParentId(AUTODESK_GOORU_UID);
 				courseDo.getThumbnails().setUrl(COURSE_100_75_IMG);
 				courseDo.getCreator().setGender(MALE);
-				courseDo.getCreator().setLastName(RUSDLEARNS);
+				courseDo.getCreator().setLastName(RUSD_LAST_NAME);
 				courseDo.getCreator().setUsername(RUSDLEARNS);
 				courseDo.getCreator().setGooruUId(AUTODESK_GOORU_UID);
 				courseDo.setUser(null);

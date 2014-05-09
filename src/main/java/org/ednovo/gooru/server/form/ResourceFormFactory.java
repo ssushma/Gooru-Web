@@ -154,7 +154,7 @@ public class ResourceFormFactory {
 		
 		String titleName = "title";
 		String keyPointsKey = "keyPoints";
-		String dataObj = "{\""+titleName+"\" : " + title +",\""+keyPointsKey+"\" : \"" + keyPointsVal +"\"}";
+		String dataObj = "{\""+titleName+"\" : \"" + title +"\",\""+keyPointsKey+"\" : \"" + keyPointsVal +"\"}";
 		
 		String objectName = "collection";
 		String data = "{\""+objectName+"\" : " + JsonSerializer.serialize(dataObj) +"}";
@@ -183,10 +183,12 @@ public class ResourceFormFactory {
 		String collectionTypeValue = "collection";
 		String addToShelfKey= "addToShelf";
 		String addToShelfVal= "true";
-		String dataObj = "{\""+titleName+"\" : " + title +",\""+collectionTypeKey+"\" : " + collectionTypeValue +",\""+keyPointsKey+"\" : " + languageObjective +"}";
+		
+		String dataObj = "{\""+titleName+"\" : \"" + title +"\",\""+collectionTypeKey+"\" : \"" + collectionTypeValue +"\",\""+keyPointsKey+"\" : \"" + languageObjective +"\"}";
 		
 		String objectName = "collection";
-		String data = "{\""+objectName+"\" : " + JsonSerializer.serialize(dataObj) +",\""+addToShelfKey+"\" : " + addToShelfVal +"}";
+		
+		String data = "{\""+objectName+"\" : " + JsonSerializer.serialize(dataObj) +",\""+addToShelfKey+"\" : \"" + addToShelfVal +"\"}";
 		
 		form.add("data", data);
 		return form;

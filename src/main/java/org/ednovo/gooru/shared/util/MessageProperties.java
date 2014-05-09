@@ -2166,7 +2166,7 @@ public interface MessageProperties {
     	String GL1705="Access Hazard";
     	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL INFO";
+    	String GL1708="GENERAL";
 		String GL1709="e.g. I used this collection as an opportunity for my students to explore various reasons for the Fall of Rome. They completed a graphic organizer as they worked through this collection and were then accountable to making judgements on which reasons they thought were the most significant and why. It all led up to a Socratic Seminar answering the essential question,\"In what ways did the pinnacle and demise of Rome influence European culture and history?\"" ;
 		String GL1710="Image";
 		String GL1711="Video";
@@ -2213,6 +2213,9 @@ public interface MessageProperties {
 		String GL1742 = "Sorry, we don't currently support YouTube channels. Please use a direct YouTube video url.";
 		String GL1743 = "Type the YouTube video URL in the text field above. If it's correct, you'll see an image preview below. Feel free to also edit the video start and stop time as well.";
 		String GL1744 = "We encourage you to incorporate videos that you have permission to use, or are otherwise part of the public domain. ";
+		String GL1745 = "Description : ";
+		String GL1746 ="Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
 		
+		String GL1747 = "By";
    }
 

@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -73,6 +74,8 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -127,7 +130,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField BlueButtonUc addbutton;
 	/*@UiField TextArea explainationTextArea;*/
 	@UiField TinyMCE questionNameTextArea,explainationTextArea;
-	@UiField FlowPanel answerchoiceTitleContainer;
+	@UiField FlowPanel standardContainer,answerchoiceTitleContainer;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
 	@UiField Button cancelButton;
@@ -151,7 +154,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	
 	boolean isSaveButtonClicked=false,isAddBtnClicked=true,isRightsClicked=false,educationalDropDownLblOpen=false;
 	private String questionType="MC";
-	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();;
+	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
+	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
+	private static final String USER_META_ACTIVE_FLAG = "0";
 	public String getQuestionType() {
 		return questionType;
 	}
@@ -197,12 +202,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private AppMultiWordSuggestOracle standardSuggestOracle;
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 	private static final String FLT_CODE_ID = "id";
-	List<String> standardPreflist=new ArrayList<String>();
+	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	String courseCode="";
 	
 	String[] anserChoiceArray=new String[]{"A","B","C","D","E"};
 	List<ProfanityCheckDo> profanityList,hintsListForProfanity;
+	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 	public AddQuestionResourceView(){
 		initializeAutoSuggestedBox();
 		initWidget(uiBinder.createAndBindUi(this));
@@ -359,14 +366,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
 				standardsPreferenceOrganizeToolTip.hide();
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
-				//standardSgstBox.hideSuggestionList();
+				standardSgstBox.hideSuggestionList();
 				if(!courseCode.isEmpty()) {
 					Map<String,String> filters = new HashMap<String, String>();
 					filters.put(FLT_CODE_ID,courseCode);
@@ -385,7 +391,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 							}
 						}						
 					}
-					/*if(standardsPrefDisplayPopup){*/
+					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
 							@Override
@@ -399,18 +405,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 								
 							}
 						});
-						//getUiHandlers().requestStandardsSuggestion(standardSearchDo);
-						//standardSgstBox.showSuggestionList();
-						/*}
+						
+						standardSgstBox.showSuggestionList();
+						}
 					else{
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
 						standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
-	
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
 						//standardSuggestOracle.add(GL1613);
-						
-					}*/
+					}
 					}
 			}
 			@Override
@@ -419,6 +424,15 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		};
 		standardSgstBox.addSelectionHandler(this);
+		BlurHandler blurHandler=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing())
+				standardsPreferenceOrganizeToolTip.show();
+			}
+		};
+		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 	}
 	public void setTextForTheFields(){
 		educationalTitle.getElement().setInnerHTML(GL1664);
@@ -448,6 +462,29 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
 		addClickEventsForCheckBox();
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						standardContainer.setVisible(false);
+					}else
+					{
+						standardContainer.setVisible(true);
+						standardPreflist=new ArrayList<String>();
+						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+							standardPreflist.add(code);
+							standardPreflist.add(code.substring(0, 2));
+						 }
+						
+					}
+				}else{
+					standardContainer.setVisible(false);
+				}
+			}
+
+		});
 	}
 	@Override
 	public void onSelection(SelectionEvent<Suggestion> event) {
@@ -475,6 +512,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
+				CodeDo codeObj=new CodeDo();
+				codeObj.setCodeId(Integer.parseInt(id));
+				codeObj.setCode(standard);
+				standardsDo.add(codeObj);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
@@ -1282,13 +1323,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			collectionQuestionItemDo.setTitle(questionText);
 			collectionQuestionItemDo.setDescription(questionText);  
 			HashMap<String,ArrayList<CodeDo>> taxonomySet = new HashMap<String,ArrayList<CodeDo>>();
-			List<String> standards=getAddedStandards(standardsPanel);
-			ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
-			 for(int i = 0; i<standards.size(); i++){
-				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCode(standards.get(i));
-				 standardsDo.add(codeObj);
-		      }
 			 taxonomySet.put("taxonomyCode", standardsDo);
 			collectionQuestionItemDo.setTaxonomySet(taxonomySet);
 			HashMap<String,ArrayList<checkboxSelectedDo>> depthOfKnowledge = new HashMap<String,ArrayList<checkboxSelectedDo>>();
@@ -1782,6 +1816,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
+		if( collectionItemDo.getResource().getEducationalUse()!=null){
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
 			   if(item.isSelected()){
 				    resourceEducationalLabel.setText(item.getValue());
@@ -1790,6 +1825,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					mandatoryEducationalLbl.setVisible(false);
 			   }
 		}
+		}
+		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 		int checkBoxCount=0;
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
 			   if(item.isSelected()){
@@ -1804,6 +1841,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			   }
 			   checkBoxCount++;
 			}
+		}
+		if(collectionItemDo.getResource().getTaxonomySet()!=null){
+			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {			
+				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+			}
+		}
 	}
 	
 	
@@ -2206,8 +2249,71 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		@Override
 		public void onClick(ClickEvent event) {
 			 CheckBox checkBox = (CheckBox) event.getSource();
-		     boolean checked = checkBox.getValue();			     		   
-		     if(checked){
+		     boolean checked = checkBox.getValue();		
+		     
+		     depthOfKnowledges.clear();
+		    	
+		     if(chkLevelRecall.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelRecall.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelRecall.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		     if(chkLevelSkillConcept.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelSkillConcept.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelSkillConcept.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		     if(chkLevelStrategicThinking.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelStrategicThinking.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelStrategicThinking.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		     if(chkLevelExtendedThinking.isChecked())
+		     {
+		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(true);
+			     depthObj.setValue(chkLevelExtendedThinking.getText());
+			     depthOfKnowledges.add(depthObj); 
+		     }
+		     else
+		     {
+		      	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
+			     depthObj.setSelected(false);
+			     depthObj.setValue(chkLevelExtendedThinking.getText());
+			     depthOfKnowledges.add(depthObj);  
+		     }
+		     
+		 /*    if(checked){
 		    	 checkboxSelectedDo depthObj=new checkboxSelectedDo();
 			     depthObj.setSelected(true);
 			     depthObj.setValue(checkBox.getText());
@@ -2218,7 +2324,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		    			depthOfKnowledges.remove(currentElement);
 		    		}
 		    	}
-		     }
+		     }*/
 		}
      }
 }
