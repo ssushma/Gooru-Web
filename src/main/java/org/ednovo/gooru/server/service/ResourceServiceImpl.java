@@ -68,13 +68,15 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gwt.json.client.JSONArray;
+
 
 @Service("resourceService")
 @ServiceURL("/resourceService")
@@ -735,6 +737,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			System.out.println("getMomentsOfLearning::"+collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
 		}
 		
+		
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
 		
 		System.out.println("update url::"+url);
@@ -1116,6 +1119,33 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		
 		return deserializeCollection(jsonRep);
 
+	}
+
+	@Override
+	public CollectionDo deleteTaxonomyResource(CollectionDo collectionDo,
+			String resourceId,Integer codeId) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_TAXONOMY_RESOURCE,resourceId,getLoggedInSessionToken());
+	
+		try{
+		JSONObject taxonomyObject = new JSONObject();
+		JSONObject taxonomySetObj = new JSONObject();
+		
+		JSONArray codeIdJsonArray=new JSONArray(); 
+		System.out.println("codeId.."+codeId);
+		codeIdJsonArray.put(new JSONObject().put("codeId", codeId));
+		
+		
+		taxonomySetObj.put("taxonomySet", codeIdJsonArray);
+		taxonomyObject.put("resource", taxonomySetObj);
+		
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url,getRestUsername(), getRestPassword(),taxonomyObject.toString());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		}catch(Exception j){}
+		return null;
+		
 	}
 
 }

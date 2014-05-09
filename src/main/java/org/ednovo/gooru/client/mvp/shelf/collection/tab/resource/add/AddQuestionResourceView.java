@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.ui.TinyMCE;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
@@ -535,9 +536,23 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(CodeDo codeObj:standardsDo){
+				for(final CodeDo codeObj:standardsDo){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
-						standardsDo.remove(codeObj);
+						CollectionDo collectionDo=new CollectionDo();
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionDo, collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<CollectionDo>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+							}
+
+							@Override
+							public void onSuccess(CollectionDo result) {
+								standardsDo.remove(codeObj);
+								
+							}
+							
+						});
+						
 					}
 				}
 				this.getParent().removeFromParent();
@@ -1133,8 +1148,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}else{
     										if(!isHintsAdded(hintsContainer)){
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
-    												System.out
-															.println("go to helllll");
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
     												fieldValidationStaus = false;
