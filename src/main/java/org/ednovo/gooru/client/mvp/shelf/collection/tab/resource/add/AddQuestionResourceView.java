@@ -540,6 +540,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				for(final CodeDo codeObj:standardsDo){
+					if(isEditResource){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
 						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<Void>() {
 
@@ -557,6 +558,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						});
 						
 					}
+				}else
+				{
+					if(codeObj.getCodeId()==Integer.parseInt(id)){
+						standardsDo.remove(codeObj);
+					}
+				}
 				}
 				this.getParent().removeFromParent();
 			}
