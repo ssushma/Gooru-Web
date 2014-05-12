@@ -236,7 +236,9 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		public void onKeyUp(KeyUpEvent event) {
 			for(int i=0;i<textBoxArray.size();i++){
 				if(textBoxArray.get(i).getText().length()>0){
-					enableCheckAnswerButton();
+					if(!textBoxArray.get(i).isReadOnly()){
+						enableCheckAnswerButton();
+					}
 				}
 				enteredAnswerText[i]=textBoxArray.get(i).getText().trim();
 			}
