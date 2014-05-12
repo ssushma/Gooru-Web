@@ -173,6 +173,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
@@ -469,7 +470,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
+        if(deletedStandardsDo.size()>0){
+        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new AsyncCallback<Void>() {
+				
+				@Override
+				public void onSuccess(Void result) {
+					deletedStandardsDo.clear();
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+        }
 		hide();
 	}
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
@@ -1365,7 +1379,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 							@Override
 							public void onSuccess(Void result) {
-								
+								CodeDo deletedObj=new CodeDo();
+								deletedObj.setCodeId(codeObj.getCodeId());
+								deletedStandardsDo.add(deletedObj);
 								standardsDo.remove(codeObj);
 								
 							}

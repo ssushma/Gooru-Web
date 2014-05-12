@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.model.code.CodeDo;
@@ -158,4 +159,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void getCollectionInfoV2API(String collectionId, AsyncCallback<CollectionDo> asyncCallback);
 	
 	void deleteTaxonomyResource(String resourceId,Integer codeId,AsyncCallback<Void> asyncCallback);
+	
+	void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj,AsyncCallback<Void> asyncCallback);
 }

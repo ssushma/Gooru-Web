@@ -157,6 +157,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	private String questionType="MC";
 	ArrayList<checkboxSelectedDo> depthOfKnowledges= new ArrayList<checkboxSelectedDo>();
 	ArrayList<CodeDo> standardsDo=new ArrayList<CodeDo>();
+	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	public String getQuestionType() {
 		return questionType;
@@ -551,12 +552,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 
 							@Override
 							public void onSuccess(Void result) {
+								CodeDo deletedObj=new CodeDo();
+								deletedObj.setCodeId(codeObj.getCodeId());
+								deletedStandardsDo.add(deletedObj);
 								standardsDo.remove(codeObj);
-								
 							}
-							
 						});
-						
 					}
 				}else
 				{
@@ -712,8 +713,23 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		
 		resetToHints();
 		//resetToAnswers();
+		if(isEditResource){
+			if(deletedStandardsDo.size()>0){
+	        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						deletedStandardsDo.clear();
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						
+					}
+				});
+	        }
+		}
 		hidePopup();
-		
 	}
 	public void setTrueOrFalseFields(){
 		questionTrueOrFalseAnswerChoiceContainer.clear();
@@ -1899,9 +1915,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			   checkBoxCount++;
 			}
 		}
-		standardsPanel.clear();
-		standardsDo.clear();
+		
 		if(collectionItemDo.getStandards()!=null){
+			standardsPanel.clear();
+			standardsDo.clear();
 			String codeID="",code="",label="";
 			for (Map<String, String> map: collectionItemDo.getStandards()) {
 				 CodeDo codeObj=new CodeDo();
