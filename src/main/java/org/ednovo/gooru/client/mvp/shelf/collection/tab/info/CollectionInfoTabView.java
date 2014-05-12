@@ -689,7 +689,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	@Override
 	public void setData(CollectionDo collectionDoVal) {
-		
+		reset();
 		this.collectionDo = collectionDoVal;
 		
 			if(collectionDoVal.getLanguageObjective() != null)
