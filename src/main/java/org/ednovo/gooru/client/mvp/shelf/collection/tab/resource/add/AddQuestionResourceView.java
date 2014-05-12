@@ -1899,15 +1899,30 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			   checkBoxCount++;
 			}
 		}
-		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			standardsPanel.clear();
-			standardsDo.clear();
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {	
-				CodeDo codeObj=new CodeDo();
-				 codeObj.setCodeId(item.getCodeId());
-				 codeObj.setCode(item.getCode());
+		standardsPanel.clear();
+		standardsDo.clear();
+		if(collectionItemDo.getStandards()!=null){
+			String codeID="",code="",label="";
+			for (Map<String, String> map: collectionItemDo.getStandards()) {
+				 CodeDo codeObj=new CodeDo();
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					String key = entry.getKey();
+					String values = entry.getValue();
+					 if(key.contains("codeId")){
+						 codeID=values;
+						 codeObj.setCodeId(Integer.parseInt(values));
+					 }
+					 if(key.contains("code")){
+						 code=values;
+						 codeObj.setCode(values);
+					 }
+					 if(key.contains("description")){
+						 label=values;
+						 codeObj.setLabel(values);
+					 }
+					}
 				 standardsDo.add(codeObj);
-				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+				 standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
 	}
