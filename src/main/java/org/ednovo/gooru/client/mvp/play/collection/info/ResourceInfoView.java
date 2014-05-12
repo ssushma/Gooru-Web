@@ -156,7 +156,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		educationallLbl.setText(GL1720);
 		
 		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
-		timeRequiredvalue.setText("3 min 20sec");
+		timeRequiredvalue.setText("");
 		
 		resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
 		resourceTypeImage.getElement().setAttribute("style", "margin-bottom: 15px;");
@@ -217,7 +217,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		
 		List<String> eduUsedetails = new ArrayList<String>();
 
-		System.out.println("collectionItemDo.getResource().getEducationalUse()::"+collectionItemDo.getResource().getEducationalUse());
+		//System.out.println("collectionItemDo.getResource().getEducationalUse()::"+collectionItemDo.getResource().getEducationalUse());
 		
 		if(collectionItemDo.getResource().getEducationalUse()!=null){
 		if(collectionItemDo.getResource().getEducationalUse().size()>0){
@@ -228,7 +228,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 		seteducationaluseDetails(eduUsedetails);
-		eduUsePanel.setVisible(true);
 		}else{
 			eduUsePanel.setVisible(false);
 		}
@@ -474,9 +473,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			generalLbl.setVisible(false);
 		}
-		System.out.println("eduUsedetails:::::::"+eduUsedetails);
+		/*System.out.println("eduUsedetails:::::::"+eduUsedetails);
 		System.out.println("depthofknowledgedetails:::::::"+depthofknowledgedetails);
-		System.out.println("momentoflearningdetails:::::::"+momentoflearningdetails);
+		System.out.println("momentoflearningdetails:::::::"+momentoflearningdetails);*/
 		
 		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 			if(depthofknowledgedetails == null && eduUsedetails==null){
@@ -541,6 +540,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 			}
 		}
+		timeRequiredvalue.setVisible(false);
+		timeRequiredLabel.setVisible(false);
 	}
 	
 	private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
@@ -1341,7 +1342,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	public HTML setText(String text){
 		text=text.replaceAll("</p>", " ").replaceAll("&nbsp;", " ").replaceAll("<p>", "")
-					.replaceAll("<span>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br", "").replaceAll(">", "");
+					.replaceAll("<span>", "").replaceAll("<br", "").replaceAll(">", "");
 		HTML html=new HTML(text);
 		html.setStyleName("");
 		return html;
