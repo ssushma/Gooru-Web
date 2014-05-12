@@ -524,8 +524,9 @@ public enum UrlToken {
 	
 	GET_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
 	
-	DELETE_TAXONOMY_RESOURCE("/v2/resource/{0}/taxonomy?sessionToken={1}");
+	DELETE_TAXONOMY_RESOURCE("/v2/resource/{0}/taxonomy?sessionToken={1}"),
 	
+	UPDATE_TAXONOMY_RESOURCE("/v2/resource/{0}?sessionToken={1}");
 	
 	
 	private String url;

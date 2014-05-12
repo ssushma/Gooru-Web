@@ -199,18 +199,22 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 		description = existsResourceDo.getDescription();
 		category = existsResourceDo.getCategory().toLowerCase();
 		thumbnailUrl = existsResourceDo.getThumbnails().getUrl();
-		
 		resourceUrlLbl.setText(url);
 		resourceTitleLbl.setText(title);
-		
+		if(thumbnailUrl!=null && !thumbnailUrl.equalsIgnoreCase("")){
 		if (thumbnailUrl.endsWith("null")){
 			if (url.indexOf("youtube") >0){
 				String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(url);
 				thumbnailUrl = "http://img.youtube.com/vi/"+youTubeIbStr+"/1.jpg";
 			}else{
 				thumbnailUrl = DEFULT_IMAGE_PREFIX+category+PNG;
+				
 			}
 		}
+		}else{
+			thumbnailUrl = DEFULT_IMAGE_PREFIX+category+PNG;
+		}
+		
 		resourceThumbnailImg.setStyleName("thumbnailImageDec");
 		resourceThumbnailImg.setUrl(thumbnailUrl);
 		
@@ -238,7 +242,7 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteVideo");
 		}else if (categoryStr.equalsIgnoreCase("Interactive")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteInteractive");
-		}else if (categoryStr.equalsIgnoreCase("Website")||categoryStr.equalsIgnoreCase("Exam")||categoryStr.equalsIgnoreCase("Webpage")){
+		}else if (categoryStr.equalsIgnoreCase("Website")||categoryStr.equalsIgnoreCase("Exam")||categoryStr.equalsIgnoreCase("Webpage")||categoryStr.equalsIgnoreCase("webpage")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteWebsite");
 		}else if (categoryStr.equalsIgnoreCase("Slide")||categoryStr.equalsIgnoreCase("Image")){
 			resourceThumbnailImage.setStyleName("resourceExistsResourceTypeSpriteImage");

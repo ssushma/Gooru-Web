@@ -1357,4 +1357,34 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 
 	}
 
+	@Override
+	public void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj) throws GwtException {
+		JsonRepresentation jsonRep = null;
+
+		for (CodeDo codeDo : taxonomyObj) {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(),
+					UrlToken.UPDATE_TAXONOMY_RESOURCE, resourceId,
+					getLoggedInSessionToken());
+			
+			try {
+				JSONObject taxonomyObject = new JSONObject();
+				JSONObject taxonomySetObj = new JSONObject();
+
+				JSONArray codeIdJsonArray = new JSONArray();
+				codeIdJsonArray.put(new JSONObject().put("codeId", codeDo.getCodeId()));
+
+				taxonomySetObj.put("taxonomySet", codeIdJsonArray);
+				taxonomyObject.put("resource", taxonomySetObj);
+			    System.out.println("url:"+url);
+			    System.out.println("taxonomy udate:"+taxonomyObject.toString());
+				JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+						.put(url, getRestUsername(), getRestPassword(),
+								taxonomyObject.toString());
+				jsonRep = jsonResponseRep.getJsonRepresentation();
+				
+			} catch (Exception ex) {
+				
+			}
+		}
+	}
 }

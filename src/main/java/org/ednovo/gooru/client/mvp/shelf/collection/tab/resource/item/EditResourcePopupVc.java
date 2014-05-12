@@ -173,6 +173,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	List<String> standardPreflist;
 	private Map<String, String> standardCodesMap = new HashMap<String, String>();
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
+	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
@@ -469,7 +470,20 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-
+        if(deletedStandardsDo.size()>0){
+        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new AsyncCallback<Void>() {
+				
+				@Override
+				public void onSuccess(Void result) {
+					deletedStandardsDo.clear();
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+        }
 		hide();
 	}
 	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
@@ -663,13 +677,30 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				   }
 				}
 		}
-		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {
+		if(collectionItemDo.getStandards()!=null){
+			standardsPanel.clear();
+			standardsDo.clear();
+			String codeID="",code="",label="";
+			for (Map<String, String> map: collectionItemDo.getStandards()) {
 				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCodeId(item.getCodeId());
-				 codeObj.setCode(item.getCode());
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					String key = entry.getKey();
+					String values = entry.getValue();
+					 if(key.contains("codeId")){
+						 codeID=values;
+						 codeObj.setCodeId(Integer.parseInt(values));
+					 }
+					 if(key.contains("code")){
+						 code=values;
+						 codeObj.setCode(values);
+					 }
+					 if(key.contains("description")){
+						 label=values;
+						 codeObj.setLabel(values);
+					 }
+					}
 				 standardsDo.add(codeObj);
-				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+				 standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
 		
@@ -1348,7 +1379,9 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 
 							@Override
 							public void onSuccess(Void result) {
-								
+								CodeDo deletedObj=new CodeDo();
+								deletedObj.setCodeId(codeObj.getCodeId());
+								deletedStandardsDo.add(deletedObj);
 								standardsDo.remove(codeObj);
 								
 							}
