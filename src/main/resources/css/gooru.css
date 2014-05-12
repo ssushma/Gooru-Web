@@ -1123,21 +1123,21 @@ td.datePickerMonth{
 /* Resource type Icon to set Dynamically*/
 
 .resourceExistsResourceTypeSpriteVideo {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: 0px 1px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteInteractive {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: 0px -27px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteWebsite {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: 0px -223px;
 	width: 28px;
@@ -1186,14 +1186,14 @@ td.datePickerMonth{
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteAudio {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: 0px -297px;
 	width: 28px;
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteImage {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: 0px -251px;
 	width: 28px;
@@ -1207,7 +1207,7 @@ td.datePickerMonth{
 	height: 22px;
 }
 .resourceExistsResourceTypeSpriteText {
-	background: url(images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
+	background: url(../images/NewResourcePopup/resource-icon-sprite.png) no-repeat;
 	
 	background-position: -0px -55px;
 	width: 28px;
