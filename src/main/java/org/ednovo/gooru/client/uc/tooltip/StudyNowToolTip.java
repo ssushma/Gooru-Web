@@ -403,7 +403,7 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 
 	public void getStudyClassList(String offSet) {
 		setStudyClassList(null);
-		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(String.valueOf(limit), offSet,
+		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(String.valueOf(limit), offSet,String.valueOf(Math.random()),
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
@@ -414,45 +414,61 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 				});
 	}
 	
-	private void setStudyClassList(ClasspageListDo classList) {
-		lblLoading.setVisible(false);
-		isApiCalling = false;
-		if(classList!=null){
-			resultSize=classpageListDo.getSearchResults()!=null?classpageListDo.getSearchResults().size():0;
-		}else{
-			resultSize =0;
-		}
-		if(resultSize>0) {
-			lblTitle.setVisible(false);
-			classStudyList.setVisible(true);
-			spanelCollectionList.setVisible(true);
-			if (toClear) {
-				classStudyList.clear();
-				toClear = false;
-				classpageList.clear();
-				listClasspage.clear();
-			}
-			for(int i = 0; i<resultSize;i++) {
-//				Label className = new Label("classList "+i);
-				String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
-				classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
-				listClasspage.add(classpageId);
-				/*className.setStyleName("studyNowToolTipLbl");
-				if(i==0) {
-					className.getElement().getStyle().setMarginTop(2, Unit.PX);
-				}
-				className.addClickHandler(new OnEnterClassCodeClick());
-				classStudyList.add(className);*/
-			}
-			generateClasspageList();
-		} else {
-			/*offSet = tmpOffSet;
-			Element element=Document.get().getElementById("lblLoading");
-			if(element!=null){
-				element.removeFromParent();
-			}*/
-//			lblTitle.setVisible(true);
-		}
+	private void setStudyClassList(final ClasspageListDo classList) {
+		
+		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(String.valueOf(limit), String.valueOf(0),String.valueOf(Math.random()),
+				new SimpleAsyncCallback<ClasspageListDo >() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+						classpageListDo = result;
+						totalHitCount=result.getTotalHitCount();
+						
+						System.out.println("classpageListDo.getSearchResults().size()::"+result.getSearchResults().size());
+						
+						lblLoading.setVisible(false);
+						isApiCalling = false;
+						if(classList!=null){
+							resultSize=classpageListDo.getSearchResults()!=null?classpageListDo.getSearchResults().size():0;
+						}else{
+							resultSize =0;
+						}
+						if(resultSize>0) {
+							lblTitle.setVisible(false);
+							classStudyList.setVisible(true);
+							spanelCollectionList.setVisible(true);
+							if (toClear) {
+								classStudyList.clear();
+								toClear = false;
+								classpageList.clear();
+								listClasspage.clear();
+							}
+							listClasspage.clear();
+							for(int i = 0; i<resultSize;i++) 
+							{
+//								Label className = new Label("classList "+i);
+								String classpageId = classpageListDo.getSearchResults().get(i).getGooruOid();
+								classpageList.put(classpageId, classpageListDo.getSearchResults().get(i));
+								listClasspage.add(classpageId);
+								/*className.setStyleName("studyNowToolTipLbl");
+								if(i==0) {
+									className.getElement().getStyle().setMarginTop(2, Unit.PX);
+								}
+								className.addClickHandler(new OnEnterClassCodeClick());
+								classStudyList.add(className);*/
+							}
+							generateClasspageList();
+						} else {
+							/*offSet = tmpOffSet;
+							Element element=Document.get().getElementById("lblLoading");
+							if(element!=null){
+								element.removeFromParent();
+							}*/
+//							lblTitle.setVisible(true);
+						}
+					}
+				});
+		
+		
 	}
 	
 	public void generateClasspageList(){
@@ -462,6 +478,19 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 			classStudyList.add(createClasspageTitleLabel(
 				classpageTitle, listClasspage.get(i), false));
 		}
+	}
+	
+	public void refreshClasslist()
+	{
+		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(String.valueOf(limit), String.valueOf(offSet),String.valueOf(Math.random()),
+				new SimpleAsyncCallback<ClasspageListDo >() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+						classpageListDo = result;
+						totalHitCount=result.getTotalHitCount();
+						setStudyClassList(result);
+					}
+				});
 	}
 	
 	
