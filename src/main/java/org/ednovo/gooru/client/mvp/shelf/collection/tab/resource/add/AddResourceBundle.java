@@ -37,5 +37,6 @@ public interface AddResourceBundle extends CssResource {
 	String addResourceMultipleAnswerInputControl();
 	String yesNoTextStyle();
 	String addResourceFormTitleChoiceAlign();
+	String addResourceDepthOfKnoweldgeFormTitle();
 
 }

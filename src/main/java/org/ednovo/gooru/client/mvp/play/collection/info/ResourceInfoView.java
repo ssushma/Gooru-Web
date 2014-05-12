@@ -246,7 +246,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				}
 			}
 			setDepthofknowledgeDetails(depthofknowledgedetails);
-			dKnowledgePanel.setVisible(true);
+			//dKnowledgePanel.setVisible(true);
 			}else{
 				dKnowledgePanel.setVisible(false);
 			}
@@ -266,7 +266,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				}
 			}
 			setmonentoflearningDetails(momentoflearningdetails);
-			momentsoflearningPanel.setVisible(true);
+			//momentsoflearningPanel.setVisible(true);
 			}else{
 				momentsoflearningPanel.setVisible(false);	
 			}
@@ -459,24 +459,21 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			resourceInfoLbl.setVisible(false);
 		}
 		
-		if(collectionItemDo.getResource().getGrade()!=null
-				&& collectionItemDo.getResource().getUrl()!=null 
-				&& collectionItemDo.getResource().getThumbnailUrl()!=null
-				&& collectionItemDo.getResource().getTaxonomySet()!=null
-				&& collectionItemDo.getResource().getLicense() !=null && collectionItemDo.getStandards()!=null){
-			if(!collectionItemDo.getResource().getGrade().equalsIgnoreCase("") || !collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")
-					|| !collectionItemDo.getResource().getUrl().equalsIgnoreCase("") || !collectionItemDo.getResource().getUrl().equalsIgnoreCase("null")
-					|| !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("") || !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("null")
-					|| collectionItemDo.getResource().getTaxonomySet().size()!=0  || collectionItemDo.getStandards().size()!=0 ){
-				generalLbl.setVisible(true);	
-			}
-		}else{
+		if(collectionItemDo.getResource().getGrade()==null
+				&& collectionItemDo.getResource().getUrl()==null 
+				&& collectionItemDo.getResource().getThumbnailUrl()==null
+				&& collectionItemDo.getResource().getTaxonomySet()==null
+				&& collectionItemDo.getResource().getLicense() ==null && collectionItemDo.getStandards()==null){
 			generalLbl.setVisible(false);
+			/*if(!collectionItemDo.getResource().getGrade().equalsIgnoreCase("") && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")
+					|| !collectionItemDo.getResource().getUrl().equalsIgnoreCase("") && !collectionItemDo.getResource().getUrl().equalsIgnoreCase("null")
+					|| !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("") && !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("null")
+					|| collectionItemDo.getResource().getTaxonomySet().size()>0  || collectionItemDo.getStandards().size()>0 ){
+				generalLbl.setVisible(true);	
+			}*/
+		}else{
+			generalLbl.setVisible(true);
 		}
-		/*System.out.println("eduUsedetails:::::::"+eduUsedetails);
-		System.out.println("depthofknowledgedetails:::::::"+depthofknowledgedetails);
-		System.out.println("momentoflearningdetails:::::::"+momentoflearningdetails);*/
-		
 		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 			if(depthofknowledgedetails == null && eduUsedetails==null){
 				educationallLbl.setVisible(false);
@@ -1027,12 +1024,22 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				this.resourceDescriptionTitle.add(setText(GL1745));
 			}
 			else{
-				this.resourceDescription.add(setText(resourceDescription));
-				this.resourceDescriptionTitle.add(setText(GL1745));
+				
+				if(setText(resourceDescription).equals("")){
+					this.resourceDescription.setVisible(false);
+					this.resourceDescriptionTitle.setVisible(false);
+				}else{
+					this.resourceDescription.setVisible(true);
+					this.resourceDescriptionTitle.setVisible(true);
+					this.resourceDescription.add(setText(resourceDescription));
+					this.resourceDescriptionTitle.add(setText(GL1745));
+				}
+				
 			}
 		}
 		else
 		{
+			
 			//this.resourceDescription.add(setText(GL0977));
 			this.resourceDescription.setVisible(false);
 			this.resourceDescriptionTitle.setVisible(false);
@@ -1041,6 +1048,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	public void setResourceAttribution(String attribution,Set<CodeDo> taxonomoyList){
+		
 		List<String> coursesList=new ArrayList<String>();
 		if(taxonomoyList!=null){
 			Iterator<CodeDo> taxonomyIterator=taxonomoyList.iterator();
@@ -1123,6 +1131,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 	public void setGrades(String gradesText){
+		
 		if(gradesText!=null&&!gradesText.equalsIgnoreCase("")&&!gradesText.equalsIgnoreCase("null")){
 				this.gradesText.setText(getGrades(gradesText));
 				gradesPanel.setVisible(true);
@@ -1342,7 +1351,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	public HTML setText(String text){
 		text=text.replaceAll("</p>", " ").replaceAll("&nbsp;", " ").replaceAll("<p>", "")
-					.replaceAll("<span>", "").replaceAll("<br", "").replaceAll(">", "");
+					.replaceAll("<span>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br", "").replaceAll(">", "");
 		HTML html=new HTML(text);
 		html.setStyleName("");
 		return html;
@@ -1353,8 +1362,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
-				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getDefinition()));
-				//image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getName()));
+				//image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getDefinition()));
+				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getName()));
 				image.addMouseOutHandler(new MouseOutHideToolTip());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
@@ -1376,6 +1385,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	public static void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
+		
 		if (standardsList != null) {
 			standaInfo.setVisible(false);
 			standardsContentContainer.setVisible(true);

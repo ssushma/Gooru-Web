@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.exception.GwtException;
@@ -40,7 +41,6 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
-import org.json.JSONException;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -377,4 +377,6 @@ public interface ResourceService extends BaseService {
 			throws GwtException;
 	
 	public void deleteTaxonomyResource(String resourceId,Integer codeId)throws GwtException;
+	
+	public void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj)throws GwtException;
 }
