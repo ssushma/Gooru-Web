@@ -111,7 +111,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 				}
 
 			});
-			/*String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
+			String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
 			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new AsyncCallback<CollectionDo>() {
 
 				@Override
@@ -124,7 +124,7 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 					// TODO Auto-generated method stub
 					
 				}
-			});*/
+			});
 
 			
 			
