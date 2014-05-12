@@ -172,7 +172,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		
 		visibilityOptiontextTeacherTip.setText(GL1659);
 		
-		getCollectionTeacherTipInfo(collection.getGooruOid());
+
 		
 		//teacherTipTextarea.addKeyUpHandler(new OnKeyUpHandler());
 		
@@ -761,6 +761,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	 *            collection shorten url , used to share with others
 	 */
 	private void setData(Map<String, String> shortenUrl) {
+		getCollectionTeacherTipInfo(collection.getGooruOid());
 		socialShareLinksView.setData(shortenUrl);
 		rawUrl = shortenUrl.get("rawUrl").toString();
 		addSocialResource();
@@ -858,6 +859,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	public void setExistingTeacherTip(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
+		userTeacherTipText.setText(collectionDo.getKeyPoints());
+		
 	}
 	
 

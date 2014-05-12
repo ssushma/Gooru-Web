@@ -996,8 +996,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(url==null||url.equalsIgnoreCase("")||url.equalsIgnoreCase("null")){
 			thumbnailPanel.setVisible(false);
 		}else{
-			thumbnailPanel.setVisible(true);
-			if(!url.substring(0, 4).equalsIgnoreCase("http")){
+			thumbnailPanel.setVisible(false);
+		/*	if(!url.substring(0, 4).equalsIgnoreCase("http")){
 				url= "http://"+url;
 			}
 			Anchor thumbnailAnchor=new Anchor(url);
@@ -1006,7 +1006,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			thumbnailAnchor.setTarget("_blank");
 			
 			thumbnailurlValue.add(thumbnailAnchor);
-			thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);
+			thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);*/
 		}
 		
 	}
