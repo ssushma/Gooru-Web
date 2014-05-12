@@ -26,6 +26,7 @@ package org.ednovo.gooru.server.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -279,6 +280,22 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			collectionDoObj=new CollectionDo();
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 		}
+	
+		try {  
+			if(collectionDoObj.getLanguageObjective() != null)
+			{
+			collectionDoObj.setLanguageObjective(URLDecoder.decode(collectionDoObj.getLanguageObjective(), "UTF-8"));
+			}
+			if(collectionDoObj.getKeyPoints() != null)
+			{
+			collectionDoObj.setKeyPoints(URLDecoder.decode(collectionDoObj.getKeyPoints(), "UTF-8")); 
+			}
+
+        } catch (UnsupportedEncodingException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }
+		
 		return collectionDoObj;
 
 	}
@@ -848,6 +865,22 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			collectionDoObj=new CollectionDo();
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 		}
+		try {  
+		
+			if(collectionDoObj.getLanguageObjective() != null)
+			{
+				collectionDoObj.setLanguageObjective(URLDecoder.decode(collectionDoObj.getLanguageObjective(), "UTF-8"));
+			}
+			if(collectionDoObj.getKeyPoints() != null)
+			{
+				collectionDoObj.setKeyPoints(URLDecoder.decode(collectionDoObj.getKeyPoints(), "UTF-8")); 
+			}
+
+        } catch (UnsupportedEncodingException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }	
+		
 		return collectionDoObj;
 	}
 
@@ -864,6 +897,23 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			collectionDoObj=new CollectionDo();
 			collectionDoObj.setStatusCode(jsonResponseRep.getStatusCode());
 		}
+		
+		try {  
+			
+			if(collectionDoObj.getLanguageObjective() != null)
+			{
+				collectionDoObj.setLanguageObjective(URLDecoder.decode(collectionDoObj.getLanguageObjective(), "UTF-8"));
+			}
+			if(collectionDoObj.getKeyPoints() != null)
+			{
+				collectionDoObj.setKeyPoints(URLDecoder.decode(collectionDoObj.getKeyPoints(), "UTF-8")); 
+			}
+
+        } catch (UnsupportedEncodingException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }	
+		
 		return collectionDoObj;
 	}
 
@@ -1030,81 +1080,216 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	
 	@Override
 	public CollectionDo updateCollectionInfo(CollectionDo collectionDo, String teacherTips) throws GwtException {
+		CollectionDo collectionDoObj = new CollectionDo();
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data").length>0)
 		{
+			if(teacherTips != null)
+			{
+				try {  
+					teacherTips = URLEncoder.encode(teacherTips, "UTF-8");  
+
+	            } catch (UnsupportedEncodingException e) {  
+	                // TODO Auto-generated catch block  
+	                e.printStackTrace();  
+	            }
+			}
+			
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		collectionDoObj = deserializeCollection(jsonRep);
+		
 		}
-		return deserializeCollection(jsonRep);
+		try {  
+		
+			if(collectionDoObj.getLanguageObjective() != null)
+			{
+				collectionDoObj.setLanguageObjective(URLDecoder.decode(collectionDoObj.getLanguageObjective(), "UTF-8"));
+			}
+			if(collectionDoObj.getKeyPoints() != null)
+			{
+				collectionDoObj.setKeyPoints(URLDecoder.decode(collectionDoObj.getKeyPoints(), "UTF-8")); 
+			}
+
+
+        } catch (UnsupportedEncodingException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }	
+		return collectionDoObj;
 
 	}
 	
 	@Override
 	public CollectionDo updateCollectionLanguageObjective(CollectionDo collectionDo, String languageObjective) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		CollectionDo collectionObjectDo = new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data").length>0)
 		{		
-			System.out.println("language::"+url);
-			System.out.println("language::"+ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data")[0]);
+			if(languageObjective != null)
+			{
+				try {  
+					languageObjective = URLEncoder.encode(languageObjective, "UTF-8");  
+
+	            } catch (UnsupportedEncodingException e) {  
+	                // TODO Auto-generated catch block  
+	                e.printStackTrace();  
+	            }
+			}
+
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionLanguageObjective(collectionDo.getTitle(), languageObjective).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}
-		return deserializeCollection(jsonRep);
+		collectionObjectDo = deserializeCollection(jsonRep);
+		try
+		{
+		
+			if(collectionObjectDo.getLanguageObjective() != null)
+			{
+				String correctDecoded = URLDecoder.decode(collectionObjectDo.getLanguageObjective(), "UTF-8"); 
+				collectionObjectDo.setLanguageObjective(correctDecoded);
+			}
+			if(collectionObjectDo.getKeyPoints() != null)
+			{
+				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
+			}
+		
+		  } catch (UnsupportedEncodingException e) {  
+              // TODO Auto-generated catch block  
+              e.printStackTrace();  
+          }
+		return collectionObjectDo;
 
 	}
 	
 	@Override
 	public CollectionDo updateCollectionInstructionalMethod(CollectionDo collectionDo, String instructionalMethod, Boolean selectedVal) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		CollectionDo collectionObjectDo = new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionInstructionalMethod(collectionDo.getTitle(), instructionalMethod,selectedVal).getValuesArray("data").length>0)
 		{
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionInstructionalMethod(collectionDo.getTitle(), instructionalMethod,selectedVal).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}
-		return deserializeCollection(jsonRep);
+		collectionObjectDo = deserializeCollection(jsonRep);
+		try
+		{
+		
+			if(collectionObjectDo.getLanguageObjective() != null)
+			{
+				String correctDecoded = URLDecoder.decode(collectionObjectDo.getLanguageObjective(), "UTF-8"); 
+				collectionObjectDo.setLanguageObjective(correctDecoded);
+			}
+			if(collectionObjectDo.getKeyPoints() != null)
+			{
+				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
+			}
+		
+		  } catch (UnsupportedEncodingException e) {  
+              // TODO Auto-generated catch block  
+              e.printStackTrace();  
+          }
+		return collectionObjectDo;
 
 	}
 	
 	@Override
 	public CollectionDo updateCollectionAudience(CollectionDo collectionDo, String audience, Boolean selectedVal) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		CollectionDo collectionObjectDo = new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionAudience(collectionDo.getTitle(), audience,selectedVal).getValuesArray("data").length>0)
 		{
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionAudience(collectionDo.getTitle(), audience,selectedVal).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}
-		return deserializeCollection(jsonRep);
+		collectionObjectDo = deserializeCollection(jsonRep);
+		try
+		{
+		
+			if(collectionObjectDo.getLanguageObjective() != null)
+			{
+				String correctDecoded = URLDecoder.decode(collectionObjectDo.getLanguageObjective(), "UTF-8"); 
+				collectionObjectDo.setLanguageObjective(correctDecoded);
+			}
+			if(collectionObjectDo.getKeyPoints() != null)
+			{
+				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
+			}
+		
+		  } catch (UnsupportedEncodingException e) {  
+              // TODO Auto-generated catch block  
+              e.printStackTrace();  
+          }
+		return collectionObjectDo;
 
 	}
 	
 	@Override
 	public CollectionDo updateCollectionDepthOfKnowledge(CollectionDo collectionDo, String depthOfKnowlwedgevalues, Boolean selectedVal) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		CollectionDo collectionObjectDo = new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionDepthOfKnowledge(collectionDo.getTitle(), depthOfKnowlwedgevalues,selectedVal).getValuesArray("data").length>0)
 		{
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionDepthOfKnowledge(collectionDo.getTitle(), depthOfKnowlwedgevalues,selectedVal).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}
-		return deserializeCollection(jsonRep);
+		try
+		{
+			collectionObjectDo = deserializeCollection(jsonRep);
+		
+			if(collectionObjectDo.getLanguageObjective() != null)
+			{
+				String correctDecoded = URLDecoder.decode(collectionObjectDo.getLanguageObjective(), "UTF-8"); 
+				collectionObjectDo.setLanguageObjective(correctDecoded);
+			}
+			if(collectionObjectDo.getKeyPoints() != null)
+			{
+				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
+			}
+		
+		  } catch (UnsupportedEncodingException e) {  
+              // TODO Auto-generated catch block  
+              e.printStackTrace();  
+          }
+		return collectionObjectDo;
 
 	}
 	
 	@Override
 	public CollectionDo updateCollectionLearningSkills(CollectionDo collectionDo, String learningSkillsvalues, Boolean selectedVal) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		CollectionDo collectionObjectDo = new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionDo.getGooruOid(), getLoggedInSessionToken());
 		if(ResourceFormFactory.updateCollectionLearningSkills(collectionDo.getTitle(), learningSkillsvalues,selectedVal).getValuesArray("data").length>0)
 		{
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollectionLearningSkills(collectionDo.getTitle(), learningSkillsvalues,selectedVal).getValuesArray("data")[0]);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		}
-		return deserializeCollection(jsonRep);
+		try
+		{
+			collectionObjectDo = deserializeCollection(jsonRep);
+		
+			if(collectionObjectDo.getLanguageObjective() != null)
+			{
+				String correctDecoded = URLDecoder.decode(collectionObjectDo.getLanguageObjective(), "UTF-8"); 
+				collectionObjectDo.setLanguageObjective(correctDecoded);
+			}
+			if(collectionObjectDo.getKeyPoints() != null)
+			{
+				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
+			}
+		
+		  } catch (UnsupportedEncodingException e) {  
+              // TODO Auto-generated catch block  
+              e.printStackTrace();  
+          }
+		return collectionObjectDo;
 
 	}
 	
@@ -1112,40 +1297,64 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	@Override
 	public CollectionDo getCollectionInfoV2API(String collectionId) throws GwtException {
 		JsonRepresentation jsonRep = null;
+		CollectionDo collectionObjectDo = new CollectionDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
 
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
-		return deserializeCollection(jsonRep);
+		try
+		{
+			collectionObjectDo = deserializeCollection(jsonRep);
+		
+			if(collectionObjectDo.getLanguageObjective() != null)
+			{
+				String correctDecoded = URLDecoder.decode(collectionObjectDo.getLanguageObjective(), "UTF-8"); 
+				collectionObjectDo.setLanguageObjective(correctDecoded);
+			}
+			if(collectionObjectDo.getKeyPoints() != null)
+			{
+				collectionObjectDo.setKeyPoints(URLDecoder.decode(collectionObjectDo.getKeyPoints(), "UTF-8")); 
+			}
+		
+		  } catch (UnsupportedEncodingException e) {  
+              // TODO Auto-generated catch block  
+              e.printStackTrace();  
+          }
+		
+		return collectionObjectDo;
 
 	}
 
 	@Override
-	public CollectionDo deleteTaxonomyResource(CollectionDo collectionDo,
-			String resourceId,Integer codeId) throws GwtException {
+	public void deleteTaxonomyResource(String resourceId, Integer codeId)
+			throws GwtException {
 		JsonRepresentation jsonRep = null;
+
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.DELETE_TAXONOMY_RESOURCE, resourceId,
+				getLoggedInSessionToken());
 		
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_TAXONOMY_RESOURCE,resourceId,getLoggedInSessionToken());
-	
-		try{
-		JSONObject taxonomyObject = new JSONObject();
-		JSONObject taxonomySetObj = new JSONObject();
+		try {
+			JSONObject taxonomyObject = new JSONObject();
+			JSONObject taxonomySetObj = new JSONObject();
+
+			JSONArray codeIdJsonArray = new JSONArray();
+			codeIdJsonArray.put(new JSONObject().put("codeId", codeId));
+
+			taxonomySetObj.put("taxonomySet", codeIdJsonArray);
+			taxonomyObject.put("resource", taxonomySetObj);
 		
-		JSONArray codeIdJsonArray=new JSONArray(); 
-		System.out.println("codeId.."+codeId);
-		codeIdJsonArray.put(new JSONObject().put("codeId", codeId));
-		
-		
-		taxonomySetObj.put("taxonomySet", codeIdJsonArray);
-		taxonomyObject.put("resource", taxonomySetObj);
-		
-		
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url,getRestUsername(), getRestPassword(),taxonomyObject.toString());
-		jsonRep = jsonResponseRep.getJsonRepresentation();
-		}catch(Exception j){}
-		return null;
-		
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor
+					.put(url, getRestUsername(), getRestPassword(),
+							taxonomyObject.toString());
+			jsonRep = jsonResponseRep.getJsonRepresentation();
+			
+		} catch (Exception ex) {
+			
+		}
+		// return null;
+
 	}
 
 }

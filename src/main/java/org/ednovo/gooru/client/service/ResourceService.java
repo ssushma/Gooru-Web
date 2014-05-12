@@ -376,5 +376,5 @@ public interface ResourceService extends BaseService {
 	public CollectionDo getCollectionInfoV2API(String collectionId)
 			throws GwtException;
 	
-	public CollectionDo deleteTaxonomyResource(CollectionDo collectionDo,String resourceId,Integer codeId)throws GwtException;
+	public void deleteTaxonomyResource(String resourceId,Integer codeId)throws GwtException;
 }

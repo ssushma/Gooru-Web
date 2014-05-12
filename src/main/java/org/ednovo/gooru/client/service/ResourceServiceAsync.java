@@ -157,5 +157,5 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void getCollectionInfoV2API(String collectionId, AsyncCallback<CollectionDo> asyncCallback);
 	
-	void deleteTaxonomyResource(CollectionDo collectionDo,String resourceId,Integer codeId,AsyncCallback<CollectionDo> asyncCallback);
+	void deleteTaxonomyResource(String resourceId,Integer codeId,AsyncCallback<Void> asyncCallback);
 }

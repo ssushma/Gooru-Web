@@ -1338,17 +1338,17 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				for(final CodeDo codeObj:standardsDo){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
 						//standardsDo.remove(codeObj);
-						CollectionDo collectionDo=new CollectionDo();
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionDo, collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<CollectionDo>() {
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<Void>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
-								
+							
 							}
 
+
 							@Override
-							public void onSuccess(CollectionDo result) {
+							public void onSuccess(Void result) {
+								
 								standardsDo.remove(codeObj);
 								
 							}
