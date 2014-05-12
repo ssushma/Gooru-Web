@@ -689,7 +689,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 
 	@Override
 	public void setData(CollectionDo collectionDoVal) {
-		
+		reset();
 		this.collectionDo = collectionDoVal;
 		
 			if(collectionDoVal.getLanguageObjective() != null)
@@ -844,16 +844,23 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 				}
 			}
 		
-			
-			for (CodeDo code : collectionDoVal.getTaxonomySet()) {
-				if (code.getDepth() == 2) {
-					courseLbl.setText(code.getLabel());
-					courseLbl.getElement().getStyle().setDisplay(Display.BLOCK);
-					courseCode=Integer.toString(code.getCodeId());
-					addCourseBtn.setText(CHANGE_COURSE);
-					removeCourseBtn.setVisible(true);
+			if(collectionDoVal.getTaxonomySet().size()==0){
+				courseLbl.getElement().getStyle().setDisplay(Display.NONE);
+				addCourseBtn.setText(ADD_COURSE);
+				removeCourseBtn.setVisible(false);
+				getUiHandlers().updateCourse(collectionDo.getGooruOid(), courseCode, "delete");
+				courseCode="";
+			}else{
+				for (CodeDo code : collectionDoVal.getTaxonomySet()) {
+					if (code.getDepth() == 2) {
+						courseLbl.setText(code.getLabel());
+						courseLbl.getElement().getStyle().setDisplay(Display.BLOCK);
+						courseCode=Integer.toString(code.getCodeId());
+						addCourseBtn.setText(CHANGE_COURSE);
+						removeCourseBtn.setVisible(true);
+					}
+					
 				}
-				
 			}
 			if (collectionDoVal.getMetaInfo() != null && collectionDoVal.getMetaInfo().getStandards() != null) {
 				for (StandardFo standard : collectionDoVal.getMetaInfo().getStandards()) {
