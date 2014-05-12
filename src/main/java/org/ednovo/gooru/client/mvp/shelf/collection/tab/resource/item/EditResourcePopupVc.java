@@ -663,13 +663,30 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				   }
 				}
 		}
-		if(collectionItemDo.getResource().getTaxonomySet()!=null){
-			for (CodeDo item : collectionItemDo.getResource().getTaxonomySet()) {
+		if(collectionItemDo.getStandards()!=null){
+			standardsPanel.clear();
+			standardsDo.clear();
+			String codeID="",code="",label="";
+			for (Map<String, String> map: collectionItemDo.getStandards()) {
 				 CodeDo codeObj=new CodeDo();
-				 codeObj.setCodeId(item.getCodeId());
-				 codeObj.setCode(item.getCode());
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					String key = entry.getKey();
+					String values = entry.getValue();
+					 if(key.contains("codeId")){
+						 codeID=values;
+						 codeObj.setCodeId(Integer.parseInt(values));
+					 }
+					 if(key.contains("code")){
+						 code=values;
+						 codeObj.setCode(values);
+					 }
+					 if(key.contains("description")){
+						 label=values;
+						 codeObj.setLabel(values);
+					 }
+					}
 				 standardsDo.add(codeObj);
-				 standardsPanel.add(createStandardLabel(item.getCode(), Integer.toString(item.getCodeId()),item.getLabel()));
+				 standardsPanel.add(createStandardLabel(code, codeID,label));
 			}
 		}
 		
