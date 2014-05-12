@@ -68,7 +68,7 @@
       	 <!-- Depth Of Knowledge Start-->
       	<g:FlowPanel  styleName="{res1.css.depthOfKnowledgeContainer}">
 					<g:FlowPanel styleName="{res1.css.depthOfKnowledgeSubContainer}">
-						<g:Label styleName="{addWebResourceStyle.addResourceFormTitle}"
+						<g:Label styleName="{addWebResourceStyle.addResourceDepthOfKnoweldgeFormTitle}"
 							ui:field="depthOfKnowledgeHeader" ></g:Label>
 							<g:Image styleName="friendlyQuestionMark" altText="Question Mark"  ui:field="depthOfKnoweldgeToolTip"></g:Image>
 					</g:FlowPanel>
