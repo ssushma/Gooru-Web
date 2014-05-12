@@ -452,6 +452,8 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 	private void setLessonData(final List<LessonDo> lessonDoList) {
 		boolean isLessonHighlighted = true;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
+		final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
+		int overallCount = 0;
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			LESSON_PAGE_INITIAL_LIMIT = 20;
 		}
@@ -462,9 +464,10 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				} else {
 					isLessonHighlighted = false;
 				}
+				overallCount = ++overallCount + lessonDoList.get(i).getCollection().size();
 				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted, (i+1)));
 			}
-			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
+
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
 				@Override
 				public void onScroll(ScrollEvent event) {
@@ -495,6 +498,22 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				}
 				conceptList.add(new LibraryLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted,(i+1)));
 			}
+		}
+		if(overallCount<15) {
+			isScrollable = false;
+			AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					throw new RuntimeException("Not implemented");
+				}
+
+				@Override
+				public void onSuccess(ArrayList<LessonDo> result) {
+					for(int i=0;i<result.size();i++) {
+						conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
+					}
+				}
+			});
 		}
 	}
 	
