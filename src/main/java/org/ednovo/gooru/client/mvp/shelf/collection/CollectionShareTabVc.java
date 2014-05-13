@@ -859,7 +859,16 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	public void setExistingTeacherTip(CollectionDo collectionDo) {
 		this.collectionDo = collectionDo;
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
+		if(collectionDo.getKeyPoints() != null && !collectionDo.getKeyPoints().isEmpty())
+		{
 		userTeacherTipText.setText(collectionDo.getKeyPoints());
+		userTeacherTipText.getElement().removeAttribute("style");
+		}
+		else
+		{
+		userTeacherTipText.setText(GL1709);
+		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
+		}
 		
 	}
 	

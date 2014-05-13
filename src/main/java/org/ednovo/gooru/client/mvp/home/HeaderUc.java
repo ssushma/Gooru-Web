@@ -1383,7 +1383,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		@Override
 		public void onClick(ClickEvent event) {
-			isStudyNow = true;
+			isStudyNow = true;			
 			if (isClassCodePopupOpen) {
 				if(studyNowToolTip!=null && studyNowToolTip.isShowing()){
 					studyNowToolTip.hide();
@@ -1397,6 +1397,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 							if(studyNowToolTip!=null){
 								studyNowToolTip.getLblTitle().setVisible(true);
 								studyNowToolTip.getClassStudyList().clear();
+								
 							}
 						}
 					}else{
@@ -1405,6 +1406,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 							studyNowToolTip = new StudyNowToolTip();
 						}
 					}
+					studyNowToolTip.refreshClasslist();
 					studyNowToolTip.getElement().getStyle()
 							.setBackgroundColor("transparent");
 					studyNowToolTip.getElement().getStyle()
