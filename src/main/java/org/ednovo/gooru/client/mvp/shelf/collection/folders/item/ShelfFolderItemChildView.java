@@ -95,10 +95,25 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			contentBlock.addStyleName(folderStyle.folder());
 		} else if (folderType.equals(SCOLLECTION) || folderType.equals(COLLECTION)){
 			folderImage.setVisible(false);
+			collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
 			collectionImage.setVisible(true);
-			if(folderDo.getThumbnails()!=null&&folderDo.getThumbnails().getUrl()!=null) {
+			if(folderDo.getThumbnails()!=null) 
+			{
+				if(folderDo.getThumbnails().getUrl()!=null)
+				{
+					if(!folderDo.getThumbnails().getUrl().isEmpty())
+					{
 				collectionImage.setUrl(folderDo.getThumbnails().getUrl());
-			} else {
+					}
+					else {
+						collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
+					}
+				}
+				else {
+					collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
+				}
+			} 
+			else {
 				collectionImage.setUrl(DEFULT_IMAGE_PREFIX);
 			}
 			collectionImage.addErrorHandler(new ErrorHandler() {
