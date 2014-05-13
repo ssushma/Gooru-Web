@@ -488,11 +488,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	@Override
-	public ClasspageListDo v2GetUserClasses(String limit, String offSet) throws GwtException {
+	public ClasspageListDo v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
 
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_LISTCLASSES, getLoggedInSessionToken(), limit, offSet);
+				UrlToken.V2_GET_LISTCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		System.out.println("urlval::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
