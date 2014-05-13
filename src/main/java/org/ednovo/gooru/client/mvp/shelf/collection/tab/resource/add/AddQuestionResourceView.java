@@ -641,6 +641,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	}
 	
 	public void selectOrDeselectOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
+
 		if(questionType.equals("T/F")||questionType.equals("MC")){
 			removeSelectedOption(questionAnswerChoiceContainer,addQuestionAnswerChoice);
 		}
@@ -669,12 +670,32 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 	}
 	public void selectYesOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
-		if(addQuestionAnswerChoice.optionSelectedButton.getStyleName().equals(addWebResourceStyle.answerDeselected())){
+
+		String styleSelectedVal = "";
+		String styleSelectedValcomparer = "";
+		
+		List<String> items = Arrays.asList(addQuestionAnswerChoice.optionSelectedButton.getStyleName().split("\\s*-\\s*"));
+		
+		if (!items.isEmpty()) {
+			styleSelectedVal = items.get(items.size()-1);
+			}
+		
+		List<String> itemsComparer = Arrays.asList(addWebResourceStyle.answerDeselected().split("\\s*-\\s*"));
+		
+		if (!itemsComparer.isEmpty()) {
+			styleSelectedValcomparer = itemsComparer.get(itemsComparer.size()-1);
+			}
+		
+		if(styleSelectedVal.equals(styleSelectedValcomparer)){
 			addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerSelected());
 			addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerDeselected());
 		}
+		
+		
+		
 	}
 	public void selectNoOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
+		System.out.println("iam selectNoOption::");
 			if(addQuestionAnswerChoice.optionNoButton.getStyleName().equals(addWebResourceStyle.answerDeselected())){
 				addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerSelected());
 				addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
