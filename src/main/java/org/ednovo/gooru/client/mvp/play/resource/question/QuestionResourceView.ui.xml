@@ -14,10 +14,5 @@
 	         <g:FlowPanel styleName="{oeStyle.hintsHoldingContainer}" ui:field="hintsContainer"></g:FlowPanel>
 	         <g:HTMLPanel styleName="{oeStyle.explanationText}"  ui:field="explanationContainer"></g:HTMLPanel>
          </g:FlowPanel>
-         <!-- answer 
-      	<g:FlowPanel  ui:field="answerOptionsContainer">
-          	
-        </g:FlowPanel>
-          end of answers -->
      </g:FlowPanel>
 </ui:UiBinder>
