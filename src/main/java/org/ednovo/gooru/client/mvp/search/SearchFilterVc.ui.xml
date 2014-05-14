@@ -126,7 +126,24 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			</uc:add>
 		</uc:DisclosurePanelUc>
 		
-		
+		<uc:DisclosurePanelUc  ui:field="aggregatorPanelUc" visible="false">
+			<uc:add>
+				<uc:AppSuggestBox ui:field="aggregatorSgstBox" width="130px" />
+			</uc:add>
+			<uc:add>
+			 	<g:Label styleName="{style.helpIconBtn}" ui:field="aggregatorHelpicon" visible="false"/>
+			</uc:add>
+			<uc:add>
+			 	<panel:HTMLEventPanel ui:field="aggregatorToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+			</uc:add>
+			<uc:add>
+				<g:Label styleName="{style.notFound}" ui:field="aggregatorNotFoundLbl"/>
+			</uc:add>
+			<uc:add>
+				<g:FlowPanel ui:field="aggregatorContainerFloPanel" />
+			</uc:add>
+		</uc:DisclosurePanelUc>
+			
 		<uc:DisclosurePanelUc  ui:field="authorPanelUc" visible="false">
 			<uc:add>
 				<g:TextBox ui:field="authorTxtBox" width="130px" />

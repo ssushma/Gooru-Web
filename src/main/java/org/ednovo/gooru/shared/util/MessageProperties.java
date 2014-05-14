@@ -2214,8 +2214,10 @@ public interface MessageProperties {
 		String GL1743 = "Type the YouTube video URL in the text field above. If it's correct, you'll see an image preview below. Feel free to also edit the video start and stop time as well.";
 		String GL1744 = "We encourage you to incorporate videos that you have permission to use, or are otherwise part of the public domain. ";
 		String GL1745 = "Description : ";
-		String GL1746 ="Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
+		String GL1746 = "Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
 		
 		String GL1747 = "By";
+		String GL1748 = "Aggregator";
+		String GL1749 = "e.g. YouTube";
    }
 
