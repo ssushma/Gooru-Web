@@ -298,7 +298,7 @@ public class ResourceRequest implements ClickHandler{
 		}catch(Exception e){
 			
 		}
-		return thumbnailImage!=null?thumbnailImage:"";
+		return thumbnailImage!=null?thumbnailImage:"images/defaultRes.png";
 	}
 	
 	private HTML getHTML(String html){

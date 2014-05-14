@@ -52,6 +52,9 @@ public class ThumbnailDo implements Serializable{
 		return url;
 	}
 	public void setUrl(String url) {
+		if(url!=null&&url.isEmpty()) {
+			url = "images/defaultRes.png";
+		}
 		this.url = url;
 	}
 }
