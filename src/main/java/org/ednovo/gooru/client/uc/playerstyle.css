@@ -813,6 +813,23 @@ float: left;
 	margin-left: -22px;
 	margin-top: 4px;
 }
+.label-collection-title{
+ 	position: relative;
+ 	top: 14px;
+ 	font-weight: bold;
+ 	max-width: 58%;
+ 	min-width: 10%;
+ 	float: left;
+ 	white-space: nowrap !important;
+ 	overflow: hidden;
+ 	text-overflow: ellipsis;
+ 	margin-left: 10px;
+ }
+.label-collection-title span.AM img {
+	max-height: 31px;
+	height: 31px;
+	margin-top:-10px;
+}
 .add-button-active:hover, .add-button-normal:hover,
 .info-button-active:hover, .info-button-normal:hover,
 .share-button-active:hover,.share-button-normal:hover,
