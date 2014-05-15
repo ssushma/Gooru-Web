@@ -126,6 +126,10 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 
 	void resetFilters();
 
-	
+	/**
+	 * Set standards suggestion
+	 * @param aggregatorSuggestions instance of {@link SearchDo} type 
+	 */
+	void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions);
 
 }
