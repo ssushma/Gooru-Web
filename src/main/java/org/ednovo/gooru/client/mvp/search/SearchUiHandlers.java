@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.search;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEventHandler;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsHandler;
 import org.ednovo.gooru.client.mvp.search.event.RefreshSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropHandler;
@@ -43,7 +44,7 @@ import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropHandler;
  * @author Search Team
  * 
  */
-public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler {
+public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandler, RefreshSearchHandler, StandardsSuggestionHandler, SourceSuggestionHandler, RegisterSearchDropHandler, SearchHandler, UnregisterSearchDropHandler, SwitchSearchHandler, ConsumeShelfCollectionsHandler, StandardsSuggestionInfoHandler,AggregatorSuggestionEventHandler {
 	
 	/**
 	 * Set search page view

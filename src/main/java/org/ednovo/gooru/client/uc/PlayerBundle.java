@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.uc;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.NotStrict;
 
 /**
  * @author Search Team
@@ -387,10 +388,13 @@ public interface PlayerBundle extends ClientBundle {
 		@ClassName("resoruce-info-separator-bulletBlack")
 		public String bulletBlack();
 		
+		@ClassName("label-collection-title")
+		public String resourceTitleStyleName();
+		
 		@ClassName("studyPlayer")
 		public String studyPlayer();
 	}
-
+	@NotStrict
 	@Source("playerstyle.css")
 	PlayerStyle getPlayerStyle();
 
