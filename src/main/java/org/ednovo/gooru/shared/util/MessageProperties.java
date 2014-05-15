@@ -2219,5 +2219,15 @@ public interface MessageProperties {
 		String GL1747 = "By";
 		String GL1748 = "Aggregator";
 		String GL1749 = "e.g. YouTube";
+		
+		String GL1748_1 = "Libraries";
+		String GL1749_1 = "Community Library";
+		String GL1750 = "District Library";
+		String GL1751 = "Partner Library";
+		
+		String GL1752 = "My Collections";
+		String GL1753 = "My Classes";
+
+		
    }
 
