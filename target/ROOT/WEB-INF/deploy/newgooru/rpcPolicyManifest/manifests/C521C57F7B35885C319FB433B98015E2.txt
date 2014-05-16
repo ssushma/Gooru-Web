@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.SearchService
+path: 8B7F16562DF47E3DE1D84BE7CA23DE4F.gwt.rpc

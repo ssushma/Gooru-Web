@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.MediaUploadService
+path: B2D183BFF1BB7C01F84EC08B85F7BD24.gwt.rpc

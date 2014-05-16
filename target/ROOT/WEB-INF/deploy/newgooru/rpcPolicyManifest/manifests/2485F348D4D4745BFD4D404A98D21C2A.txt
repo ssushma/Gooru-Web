@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.PlayerAppService
+path: 8FE597D497D8A681A25D534073A17250.gwt.rpc

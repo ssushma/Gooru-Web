@@ -465,6 +465,8 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 100%;
+	height: 182px;
+	cursor: pointer;
 }
 .headerStyle{
 	font-size: 12px;

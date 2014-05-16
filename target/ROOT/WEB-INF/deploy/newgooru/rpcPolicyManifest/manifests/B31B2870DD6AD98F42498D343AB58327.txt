@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.FolderService
+path: A62273EA2D5B5DC7D6105E1222C7B2CE.gwt.rpc

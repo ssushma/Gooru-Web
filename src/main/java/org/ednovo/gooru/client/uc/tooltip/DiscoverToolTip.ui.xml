@@ -11,9 +11,9 @@
 		<g:HTMLPanel styleName="{toolTip.discoverTooltipContent}" ui:field="tooltipPanel">
 			<g:Label styleName="{toolTip.discoverTooltipLabel}" ui:field="lblGooruLibrary" />
 			<g:Label styleName="{toolTip.discoverTooltipLabel}" ui:field="lblRusdLibrary" />
-<!-- 			<panel:HTMLEventPanel styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
+ 			<panel:HTMLEventPanel styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
 			<g:HTMLPanel ui:field="dropdownImg" styleName="{toolTip.partnerDropDownArrow}"></g:HTMLPanel>
- -->		</g:HTMLPanel>
-<!-- 		<panel:HTMLEventPanel styleName="{toolTip.partnerLibraryContainer}" ui:field="partnerLibContainer"/>
- -->	</g:HTMLPanel>
+		</g:HTMLPanel>
+ 		<panel:HTMLEventPanel styleName="{toolTip.partnerLibraryContainer}" ui:field="partnerLibContainer"/>
+	</g:HTMLPanel>
 </ui:UiBinder>

@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.CollaboratorsService
+path: 4616D0F2FFF0DE91744082EFD5E380EA.gwt.rpc

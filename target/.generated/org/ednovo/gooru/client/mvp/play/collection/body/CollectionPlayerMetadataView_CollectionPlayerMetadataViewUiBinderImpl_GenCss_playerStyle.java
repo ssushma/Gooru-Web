@@ -1,0 +1,53 @@
+package org.ednovo.gooru.client.mvp.play.collection.body;
+
+import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle;
+
+public interface CollectionPlayerMetadataView_CollectionPlayerMetadataViewUiBinderImpl_GenCss_playerStyle extends CollectionPlayerStyleBundle {
+  String progress();
+  String insightsFrameContainer();
+  String loginStatus();
+  String nextSteps();
+  String marginTop10();
+  String username();
+  String addComment();
+  String ribbon();
+  String flagCollection();
+  String remainingTrack();
+  String loginMessaging();
+  String h2();
+  String seeMore();
+  String marginBotton10Px();
+  String insightsFrame();
+  String userImageContainer();
+  String commentField();
+  String loggedOut();
+  String classInfoRibbon();
+  String infoSection();
+  String editComment();
+  String courseTitle();
+  String container();
+  String leftPanel();
+  String rightPanel();
+  String loggingIcon();
+  String trackInner();
+  String relatedConcepts();
+  String innerDot();
+  String errorMessage();
+  String messageContainer();
+  String classInfo();
+  String userPhoto();
+  String collectionSummary();
+  String ribbonContent();
+  String buttonGroup();
+  String flaggedCollection();
+  String standard();
+  String commentsSection();
+  String messagecontentText();
+  String emptyMessage();
+  String standard_section();
+  String commentsH2();
+  String views();
+  String clearfix();
+  String messageTextHeader();
+  String hrShadow();
+}

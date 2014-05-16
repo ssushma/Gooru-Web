@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.ResourceService
+path: 278DBA1B053B0C2CDEA6DE956B860015.gwt.rpc
