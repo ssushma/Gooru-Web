@@ -20,7 +20,7 @@
 			<g:Label styleName="{res.css.pencilEditImage}" ui:field="pencilEditNarationLbl"/>
 			<g:FlowPanel ui:field="editFloPanel" styleName="{res.css.editPanel}">
 				<g:FlowPanel ui:field="narationFloPanel" styleName="resourceNarrationContainer">
-					 <g:RichTextArea styleName="{res.css.resourceNarrationEdit}"  ui:field="narrationTxtArea"/> 
+					 <g:TextArea styleName="{res.css.resourceNarrationEdit}"  ui:field="narrationTxtArea"/> 
 					<!-- <tinyMce:TinyMCE ui:field="narrationTxtArea"></tinyMce:TinyMCE> -->
 					<!-- <g:Label styleName="{res.css.pencilEditImage}" ui:field="pencilEditNaration"/> -->
 					<g:Label styleName="{res.css.narrationAlertMessage}" ui:field="narrationAlertMessageLbl" />
