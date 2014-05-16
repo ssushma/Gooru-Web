@@ -1007,7 +1007,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 			String aggregator = filter.get(IsSearchView.SOURCE_FLT);
 		if (aggregator != null) {
-				setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
+				//setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
 			}
 			
 		} else {
