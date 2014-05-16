@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.ShelfService
+path: C1CE1230EAE5B7058D70C75695D9802A.gwt.rpc

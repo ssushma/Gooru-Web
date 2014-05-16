@@ -1,0 +1,93 @@
+* {
+	margin: 0px;
+	padding:0px;
+}
+
+body {
+	font-family: arial, sans-serif;
+	color:#515151;
+	font-size: 12px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+h1 {
+	font-size: 16px;
+	font-weight: normal;
+	margin-bottom:10px;
+}
+
+a {
+	color:#1076BB;
+	text-decoration:none;
+}
+
+a:hover {
+	opacity: .6;
+}
+.embed-container{
+	font-family: arial, sans-serif;
+	color:#515151;
+	font-size: 12px;
+	flat:left;
+	width:500px;
+	height:208px;
+}
+.collectionImage:hover{
+	text-decoration:none;
+	opacity:1;
+}
+
+.collection-image {
+	width:310px;
+	height:208px;
+	background:#515151;
+	border-left:10px solid #1076BB;
+	float:left;
+	margin-right:10px;
+	position:relative;
+	cursor:pointer;
+}
+
+.button {
+	color:white;
+	display: inline-block !important;
+	border:1px solid #1076BB;
+	background: url("../images/button-arrow.png") right center no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: url("../images/button-arrow.png") right center no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("../images/button-arrow.png") right center no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("../images/button-arrow.png") right center no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: url("button-arrow.png") right center no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+	padding: 10px 50px 10px 10px;
+	font-size: 16px;
+	border-radius: 4px;
+	position:absolute;
+	top:30px;
+	right:30px;
+}
+
+.collection-image:hover .button {
+	color: white;
+	background: url("../images/button-arrow.png") right center no-repeat #1076BB;
+}
+
+.metadata {
+	width:170px;
+	float:left;
+}
+
+.title {
+	width: 170px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.description {
+	margin-bottom:10px;
+}
+
+.label, .resources {
+	font-weight:bold;
+}

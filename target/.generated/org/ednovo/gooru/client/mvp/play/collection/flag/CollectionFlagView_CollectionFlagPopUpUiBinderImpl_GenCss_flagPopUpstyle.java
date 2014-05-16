@@ -1,0 +1,56 @@
+package org.ednovo.gooru.client.mvp.play.collection.flag;
+
+import com.google.gwt.resources.client.CssResource;
+
+public interface CollectionFlagView_CollectionFlagPopUpUiBinderImpl_GenCss_flagPopUpstyle extends CssResource {
+  String playerflagpopupheadertitle();
+  String dropdownListContainerScrollPanel();
+  String flagresourceleftpart();
+  String dropdownListContainer();
+  String playerflagpopupwrapper();
+  String playerflagbuttonsubmit();
+  String playerflagcontenttextCollectionTitle();
+  String endedquestionmenu();
+  String playerflagcontentChooseResource();
+  String playerflagcontentTextdescription();
+  String playerflagtextarea();
+  String emailThankYouLbl();
+  String endedquestionheader();
+  String playerflagcontentTextResourcedescription();
+  String collectionPlayerExistingCollectionInputContainer();
+  String playerflagpopupheader();
+  String dropdownListPlaceHolder();
+  String dropdownListItemContainer();
+  String playerflagcontentcontainerThankYou();
+  String emailIdLbl();
+  String playerflagcontentthankyou();
+  String flagButtonselected();
+  String playerflagcontent();
+  String playerflagradiobutton();
+  String playerflagbuttoncontainer();
+  String thankyoubuttoncontainer();
+  String endedquestionrightpart();
+  String endedquestionmenuselected();
+  String flagbuttonDeSelected();
+  String ckeckBoxPlyerStyle();
+  String playerflagpopupinnerwrapper();
+  String downarrow();
+  String playerflagcontenttext();
+  String playerflagcontentcontainer();
+  String leftalign();
+  String endedquestionwrapper();
+  String endedquestionheaderflagtext();
+  String glassStyle();
+  String thankyoupopupinnerwrapper();
+  String playerflagbuttoncancel();
+  String playerflagbuttoncancelGray();
+  String flagresourcenmenutext();
+  String resourcePlayerflagbuttoncontainer();
+  String playerflagcollectionresourcescontentcontainer();
+  String playerflagbuttonOk();
+  String playerflagcontentTextCollectiondescription();
+  String flagresourcesinnerwrapper();
+  String thankyoupopupwrapper();
+  String thankyouflagbuttonsubmit();
+  String playerflagpopupheaderCloseBtn();
+}

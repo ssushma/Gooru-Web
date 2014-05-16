@@ -1,0 +1,2 @@
+serviceClass: org.ednovo.gooru.client.service.LibraryService
+path: E7B46B8A0C46BF4410333EC84E8E1451.gwt.rpc

@@ -4,7 +4,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field= "playerStyle" src="collectionplayermetadata.css" type="org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerStyleBundle" />
-	      <g:FlowPanel styleName="{playerStyle.container} {playerStyle.clearfix}">
+	      <g:FlowPanel ui:field="studyMainContianer" styleName="{playerStyle.container} {playerStyle.clearfix}">
             <g:FlowPanel styleName="{playerStyle.leftPanel}">
             	<g:FlowPanel ui:field="metadataContainer"></g:FlowPanel>
                <!--  <g:Label styleName="{playerStyle.hrShadow}"></g:Label> -->
