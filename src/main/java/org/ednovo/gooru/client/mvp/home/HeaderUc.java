@@ -75,6 +75,8 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ErrorEvent;
+import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -85,7 +87,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.http.client.URL;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -93,12 +94,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -107,7 +110,6 @@ import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.google.gwt.user.client.Window.ScrollEvent;
 
 /**
  * @author Search Team
@@ -224,6 +226,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 	@UiField
 	HTMLEventPanel acctActivationPl;
 	
+	@UiField Image imgUserProfile;
+	
 	DiscoverToolTip discoverToolTip;
 
 	boolean isGooruGuidePanelOpen = false;
@@ -311,6 +315,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
 
 	private String discoverLinkUrl = null;
+	
+	private static String DEFAULT_PROFILE_IMAGE="images/settings/setting-user-image.png";
 
 	/**
 	 * Class constructor , set logged in user , gooru classic view link
@@ -375,7 +381,18 @@ public class HeaderUc extends Composite implements MessageProperties,
 		editSearchInputFloPanel.setVisible(false);
 		LoginLinkContainer.setVisible(false);
 		loggedInfoLbl.setVisible(false);
+		loggedInfoLbl.getElement().getStyle().clearWidth();
+		imgUserProfile.setVisible(false);
 		logoutDownArrowLbl.setVisible(false);
+		
+		
+		imgUserProfile.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				imgUserProfile.setUrl(DEFAULT_PROFILE_IMAGE);
+			}
+		});
 		
 		/*
 		 * classCodeTxtBox.setText("");
@@ -430,10 +447,10 @@ public class HeaderUc extends Composite implements MessageProperties,
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				GL0177);
 		lblBeta.setText(GL0178);
-		discoverLink.setText(GL0179);
-		organizeLink.setText(GL0180);
-		teachLink.setText(GL0181);
-		studyLink.setText(GL0182);
+		discoverLink.setText(GL1748_1);
+		organizeLink.setText(GL1752);
+		teachLink.setText(GL1753);
+		studyLink.setText(GL0182);//not used.
 		loggedInfoLbl.setText(GL0183);
 		// classCodeTxtBox.setPlaceholder(MessageProperties.GL0184);
 		StudyLbl.setText(GL0185);
@@ -444,6 +461,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 		registerLinkLbl.getElement().setId("lblRegister");
 		discoverLinkContainer.addMouseOverHandler(new DiscoverMouseOver());
 		discoverLinkContainer.addMouseOutHandler(new DiscoverMouseOut());
+		
+		studyLinkContainer.setVisible(false);
 		ClickHandler eve1 = new ClickHandler() {
 
 			@Override
@@ -1164,8 +1183,13 @@ public class HeaderUc extends Composite implements MessageProperties,
 //			}
 			 
 			loggedInfoLbl.setText(userDo.getUsername());
+			imgUserProfile.setUrl(userDo.getProfileImageUrl() != "" && userDo.getProfileImageUrl() !=null ? userDo.getProfileImageUrl() : null);
+			imgUserProfile.setVisible(true);
 			LoginLinkContainer.setVisible(true);
 			loggedInfoLbl.setVisible(true);
+			if (userDo.getUsername().length() >= 30){
+				loggedInfoLbl.getElement().getStyle().setWidth(170, Unit.PX);
+			}
 			logoutDownArrowLbl.setVisible(true);
 			logInfoFloPanel.setVisible(false);
 			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
@@ -1190,6 +1214,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		} else {
 			LoginLinkContainer.setVisible(false);
 			loggedInfoLbl.setVisible(false);
+			loggedInfoLbl.getElement().getStyle().clearWidth();
 			logoutDownArrowLbl.setVisible(false);
 			acctActivationPl.setVisible(false);
 			logInfoFloPanel.setVisible(true);

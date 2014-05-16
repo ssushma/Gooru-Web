@@ -47,6 +47,8 @@ public class StringUtil {
 	 public static final int INDEX_NOT_FOUND = -1;
 	 
 	 public static final String EMPTY = "";
+	 
+	 public static boolean IPAD_MESSAGE_Close_Click = false;
 
 	public static boolean hasValidString(String string) {
 		return string != null && string.length() > 0 && !string.equalsIgnoreCase("null");

@@ -646,7 +646,7 @@ public interface MessageProperties {
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
-	String GL0515 = "RUSD Library";
+	String GL0515 = "District Library";
 	String GL0516 = "Community Library";
 	String GL0517 = "Assign to another Class";
 	String GL0518 = "Assign this collection";
@@ -2219,5 +2219,15 @@ public interface MessageProperties {
 		String GL1747 = "By";
 		String GL1748 = "Aggregator";
 		String GL1749 = "e.g. YouTube";
+		
+		String GL1748_1 = "Libraries";
+		String GL1749_1 = "Community Library";
+		String GL1750 = "District Library";
+		String GL1751 = "Partner Library";
+		
+		String GL1752 = "My Collections";
+		String GL1753 = "My Classes";
+
+		
    }
 

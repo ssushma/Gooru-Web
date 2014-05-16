@@ -372,10 +372,10 @@
 		}
 		.username
 		{
-			max-width: 220px;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			padding: 8px;
 		}
 	   .resourceRightsPopupContainer{
 	        margin: 0 auto;
@@ -402,7 +402,16 @@
 			text-decoration: none !important;
 			cursor: pointer;
 		}
-	
+		.profileImage{
+			border-radius: 50px;
+			box-shadow: 0 0 0 2px #87badd;
+			width: 30px;
+			height: 30px;
+			float: left;
+		}
+		div#LinkheaderElement5 {
+			padding: 10px;
+		}
 	</ui:style>
 	<g:HTMLPanel>
 
@@ -449,6 +458,7 @@
                       </uc:HTMLEventPanel>
 
                       <uc:HTMLEventPanel styleName="{style.menu}" ui:field="LoginLinkContainer">
+                          	<g:Image styleName="{style.profileImage}" ui:field="imgUserProfile"></g:Image>
                       		<g:Label styleName="{style.username}" ui:field="loggedInfoLbl" />       
                       </uc:HTMLEventPanel>
                       <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}">

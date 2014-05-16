@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
@@ -60,6 +61,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -74,7 +76,20 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class CollectionPlayerMetadataView extends BaseViewWithHandlers<CollectionPlayerMetadataUiHandlers> implements IsCollectionPlayerMetadataView,MessageProperties{
 
 	
-	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer,messageContainer,frameContainer,courseTitle;
+	@UiField
+	static FlowPanel studyMainContianer;
+	@UiField
+	FlowPanel metadataContainer;
+	@UiField
+	FlowPanel standardsContainer;
+	@UiField
+	FlowPanel teamContainer;
+	@UiField
+	FlowPanel messageContainer;
+	@UiField
+	FlowPanel frameContainer;
+	@UiField
+	FlowPanel courseTitle;
 	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc;
 	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,insightsHeaderText,insightsContentText,lbllanguageObjectiveText,lbllanguageObjective;//collectionSummaryLbl,emptyMsgDescOne,emptyMsgDescTwo
 	@UiField Image profileThumbnailImage;
@@ -103,6 +118,26 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		messageContainer.setVisible(false);
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
+			 
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
+		  }
+		  else
+		  {
+			  studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
+			  
+		  }
 	}
 	
 	@Override
@@ -485,5 +520,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText("");
 		lbllanguageObjective.setText(languageObjectiveValue);
+	}
+	
+	public static void onClosingAndriodorIpaddiv()
+	{
+		studyMainContianer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 }
