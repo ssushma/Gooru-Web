@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.play.collection.body.CollectionPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.collection.header.StudyPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
@@ -41,7 +42,10 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
+import com.anotherbigidea.flash.movie.Image;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -49,8 +53,11 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -64,6 +71,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
 	
 	@UiField StudyPlayerHeaderView headerView;
+	
+	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	
+	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	
 	private PopupPanel appPopUp;
 	
@@ -118,7 +129,57 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		headerView.getAuthorContainer().addClickHandler(new ShowLoginPopupEvent());
 		setAutoHideOnNavigationEventEnabled(true);
 		hidePlayerButtons(true,null);
+		
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  headerView.getElement().setAttribute("style", "position:relative;");
+			 ipadSectiondiv.setVisible(true);
+			 androidSectiondiv.setVisible(false);
+
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  headerView.getElement().setAttribute("style", "position:relative;");
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(true);
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+		  else
+		  {
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(false);
+			  headerView.getElement().setAttribute("style", "position:fixed;");
+			  
+		  }
+		
 	}
+	
+	@UiHandler("closeIpadBtn")
+	public void onIpadCloseClick(ClickEvent clickEvent){
+		 ipadSectiondiv.setVisible(false);
+		  androidSectiondiv.setVisible(false);
+		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
+	}
+
+	@UiHandler("closeAndriodBtn")
+	public void onAndriodCloseClick(ClickEvent clickEvent){
+		 ipadSectiondiv.setVisible(false);
+		  androidSectiondiv.setVisible(false);
+		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  CollectionPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
+	}
+	
 	 @Override
 	  public void setAutoHideOnNavigationEventEnabled(boolean autoHide) {
 	    if (autoHide) {

@@ -68,6 +68,7 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -89,6 +90,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -147,7 +149,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	HTML backToSearchHtml, backToSearchPreHtml;
 
 	@UiField
-	FlowPanel backToSearchFloPanel, noCollectionResetPanel, collectionFloPanel, scrollContainer;
+	FlowPanel backToSearchFloPanel, noCollectionResetPanel, collectionFloPanel;
+
+	@UiField
+	static FlowPanel scrollContainer;
 
 	@UiField(provided = true)
 	ShelfCBundle res;
@@ -271,7 +276,13 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 				/**
 		 * this method is used to save collection description after update
+		 * 
+		 * 
 		 */
+
+		
+		
+		
 		collectionDescriptionUc = new EditableTextAreaUc() {
 
 			@Override
@@ -465,6 +476,25 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		 OpenCollectionEditDescription());
 		simplePencilPanel.addClickHandler(new OpenCollectionEditDescription());
 		collectionDescriptionTitle.addClickHandler(new OpenCollectionEditDescription());
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  scrollContainer.getElement().setAttribute("style", "position:relative;");
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  scrollContainer.getElement().setAttribute("style", "position:relative;");
+		  }		  
+		  else
+		  {
+			  scrollContainer.getElement().setAttribute("style", "position:fixed;");
+		  }
+		
 
 		collectionFloPanel.addDomHandler(new ClickHandler() {
 
@@ -1777,6 +1807,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	@Override
 	public HTMLPanel getLoadingImageLabel() {
 		return loadingImageLabel;
+	}
+	
+	public static void onClosingAndriodorIpaddiv()
+	{
+		  scrollContainer.getElement().setAttribute("style", "position:fixed;");
 	}
 	
 	public static native void setFolderListHeight() /*-{

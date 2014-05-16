@@ -41,6 +41,8 @@ import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -56,6 +58,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -123,6 +126,26 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			 
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+		  }
+		  else
+		  {
+			  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+			  
+		  }
 		
 		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
@@ -835,6 +858,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 		
+	
+		
 		/**
 		 * Sets the Star rating based on the API result.
 		 * @param result {@link StarRatingsDo}
@@ -850,6 +875,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			setUserRatings(result);
 		}
+	}
+	
+	public static void onClosingAndriodorIpaddiv()
+	{
+		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 	
 }

@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,6 +49,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -76,6 +79,9 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	}
 	
 	@UiField Label lblRusdLibrary,lblGooruLibrary;
+	
+	@UiField
+	static HTMLPanel panelCode;
 
 /*	@UiField HTMLEventPanel lblPartnerLibrary, partnerLibContainer;
 	
@@ -126,11 +132,40 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
 		});
+        
+        
+        Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+
+			  panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:relative;");
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+		  else
+		  {
+			  panelCode.getElement().getFirstChildElement().removeAttribute("style");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+        
 	}
 	
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());
+	}
+	
+	public static void onclickOfAndriodorIpadcloseDiv()
+	{
+		panelCode.getElement().getFirstChildElement().removeAttribute("style");
 	}
 
 /*	private class OpenPartnerMenu implements MouseOverHandler {
