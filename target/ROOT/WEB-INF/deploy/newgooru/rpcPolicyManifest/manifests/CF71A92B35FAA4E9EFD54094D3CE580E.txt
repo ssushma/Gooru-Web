@@ -1,2 +1,0 @@
-serviceClass: org.ednovo.gooru.client.service.ProfilePageService
-path: 14EC2DCF3B396912F423B45D93477C16.gwt.rpc

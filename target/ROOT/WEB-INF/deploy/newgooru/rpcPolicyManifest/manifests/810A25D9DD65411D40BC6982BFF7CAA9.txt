@@ -1,2 +1,0 @@
-serviceClass: org.ednovo.gooru.client.service.ClasspageService
-path: ADCF998C77119934CE49CA2A90D6D21A.gwt.rpc

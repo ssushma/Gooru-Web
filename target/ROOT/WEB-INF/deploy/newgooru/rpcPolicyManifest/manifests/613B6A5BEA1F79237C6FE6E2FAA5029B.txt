@@ -1,2 +1,0 @@
-serviceClass: org.ednovo.gooru.client.service.HomeService
-path: 2C254C19B8ECF4293C777916A7690CFB.gwt.rpc
