@@ -196,29 +196,33 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	private void enableCheckAnswerButton(){
 		int widgetCount=optionsContainer.getWidgetCount();
 		boolean isOptionSelected=false;
+		int clickcount=0;
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
 				checkBoxAnswerOptionView.answerChoiceResult.setStyleName("");
-//				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
-//					isOptionSelected=true;
-//				}
+				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()||checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+					clickcount++;
+					if(clickcount==widgetCount){
+						isOptionSelected=true;
+					}
+				}
 			}
 		}
-//		if(isOptionSelected){
-//			isCheckButtonEnabled=true;
-//			checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
-//			checkAnswer.addStyleName("primary");
-//		}else{
-//			isCheckButtonEnabled=false;
-//			checkAnswer.removeStyleName("primary");
-//			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
-//		}
+		if(isOptionSelected){
+			isCheckButtonEnabled=true;
+			checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
+			checkAnswer.addStyleName("primary");
+		}else{
+			isCheckButtonEnabled=false;
+			checkAnswer.removeStyleName("primary");
+			checkAnswer.addStyleName(oeStyle.hintsInActiveButton());
+		}
 		
-		isCheckButtonEnabled=true;
+		/*isCheckButtonEnabled=true;
 		checkAnswer.removeStyleName(oeStyle.hintsInActiveButton());
-		checkAnswer.addStyleName("primary");
+		checkAnswer.addStyleName("primary");*/
 	}
 	
 	@UiHandler("checkAnswer")
