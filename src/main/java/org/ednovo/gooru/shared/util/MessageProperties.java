@@ -694,7 +694,7 @@ public interface MessageProperties {
 	String GL0554 = "#$*@! Please find a G-rated way to express yourself!";
 	String GL0555 = "This message has been deleted.";
 	String GL0556 = "Flag this collection";
-	String GL0557 = "You'hv flagged this collection";
+	String GL0557 = "You've flagged this collection";
 	
 	String GL0558 = "Delete";
 	String GL0559 = "Are you sure you want to delete this?";
