@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -96,6 +97,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 	@UiField
 	Label shareLbl;
+	
+	@UiField RatingWidgetView ratingWidget;
 	
 	@UiField(provided = true)
 	SearchResultWrapperCBundle res;

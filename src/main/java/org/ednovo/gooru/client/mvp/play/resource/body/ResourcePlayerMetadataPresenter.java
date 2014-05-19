@@ -158,7 +158,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public void resetResourceMetaData(){
 		getView().getResourceWidgetContainer().clear();
 	}
-
+	public void removeRatingContainer(boolean flag){
+		getView().removeRatingContainer(flag);
+	}
 	@Override
 	public void createReaction(String resourceId,String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
 		AppClientFactory.getInjector().getPlayerAppService().createReaction(resourceId,reactionText,gooruReactionId,collectionId,createStudyPlayerReaction, new SimpleAsyncCallback<ReactionDo>() {

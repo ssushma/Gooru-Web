@@ -5,9 +5,9 @@
 .rating {
     margin: 3px 10px 3px 0px;
     font-size:12px;
-    /* width: 95px; used in search
-    float: right; used in search
-    text-align:right; used in search */
+    /* //width: 95px; used in search
+    //float: right; used in search
+    //text-align:right; used in search */
     vertical-align:middle;
     line-height: 1.4em;
 }
@@ -22,8 +22,8 @@
 }
 
 /* //.rating .star:before, .userRating .star:before {content:'\2606';}
-//.rating .star.filled:before, .userRating .star.filled:before {content:'\2605';} */
-
+//.rating .star.filled:before, .userRating .star.filled:before {content:'\2605';}
+ */
 .star:before {
     display: inline-block;
     font-family: FontAwesome;
@@ -343,12 +343,11 @@ fieldset {
 .ratingContainer {
     height:60px;
     white-space:nowrap;
-    overflow:hidden;
-    text-align:center;
+    //overflow:hidden;
+    //text-align:center;
     -webkit-font-smoothing: antialiased !important;
-    margin-left:10px;
+    margin:10px;
     position:relative;
-    float:left;
 }
 
 .editRatingContainer {
@@ -508,17 +507,17 @@ left: -10px;
 }
 
 .arrow {
-	width: 0px;
-	height: 0px;
-	border: 10px solid;
-	border-style:inset solid inset none;
-	border-color: transparent white transparent transparent;
-	position: absolute;
-	margin: auto;
-	top: 15px;
-	border-left: none;
-	z-index: 100;
-	left: -9px;
+width: 0px;
+height: 0px;
+border: 10px solid;
+border-style:inset solid inset none;
+border-color: transparent white transparent transparent;
+position: absolute;
+margin: auto;
+top: 15px;
+border-left: none;
+z-index: 100;
+left: -9px;
 }
 
 .confirmationIcon {

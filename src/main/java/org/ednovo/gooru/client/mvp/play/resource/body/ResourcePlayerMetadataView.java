@@ -76,7 +76,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static FlowPanel wrapperContainerField;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer/*ratingsContainer*/;
+	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer,ratingsContainer;
 	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
@@ -877,6 +877,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 	}
 	
+	public void removeRatingContainer(boolean flag){
+		if(flag){
+			ratingsContainer.removeFromParent();
+		}else{
+			emoticsContainer.removeFromParent();
+		}
+	}
 	public static void onClosingAndriodorIpaddiv()
 	{
 		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");

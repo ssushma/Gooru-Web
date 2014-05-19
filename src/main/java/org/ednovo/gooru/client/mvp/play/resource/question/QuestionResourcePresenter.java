@@ -24,17 +24,22 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -265,23 +270,25 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	}
 	
 	public void setAnswerIdWithTimeForMa(List<Integer> answerId,Integer attemptStatus,Integer attemptSequence) {
-		setAnswerIds(answerId);
 		if(isCollectionPlayer){
 			//collectionPlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
 			collectionPlayerPresenter.setAnswerIdsObject(new JSONObject());
 			setAnswerIds(answerId);
+			collectionPlayerPresenter.getAttemptStatusArray().clear();
 			collectionPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			collectionPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
 		}else if(isResourcePlayer){
 			//resourcePlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
 			resourcePlayerPresenter.setAnswerIdsObject(new JSONObject());
 			setAnswerIds(answerId);
+			resourcePlayerPresenter.getAttemptStatusArray().clear();
 			resourcePlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			resourcePlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
 		}else if(isPreviewPlayer){
 			//previewPlayerPresenter.getAnswerIdsObject().put(answerId.toString(), new JSONNumber(getUnixTimeStamp()));
 			previewPlayerPresenter.setAnswerIdsObject(new JSONObject());
 			setAnswerIds(answerId);
+			previewPlayerPresenter.getAttemptStatusArray().clear();
 			previewPlayerPresenter.getAttemptStatusArray().add(attemptStatus);
 			previewPlayerPresenter.getAttemptTrySequenceArray().add(attemptSequence);
 		}		
@@ -337,8 +344,8 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 			previewPlayerPresenter.getAttemptStatusArray().clear();
 			previewPlayerPresenter.getAttemptStatusArray().add(attemptTrySequenceArray!=null?attemptStatusArray.get(0):0);
 		}		
-		
 	}
+	
 	
 	public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
 		if(isCollectionPlayer){
@@ -348,6 +355,31 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 		}else if(isPreviewPlayer){
 			previewPlayerPresenter.setOpenEndedAnswerSubmited(isOeAnswerSubmited);
 		}		
+	}
+	
+	public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
+		List<JSONObject> answerOptionJsonArray=new ArrayList<JSONObject>();
+		Long timeStamp=getUnixTimeStamp();
+		if(answerOptionAttemptList!=null&&answerOptionAttemptList.size()>0){
+			for(int i=0;i<answerOptionAttemptList.size();i++){
+				AnswerAttemptDo answerAttemptDo=answerOptionAttemptList.get(i);
+				JSONObject attemptAnswerJsonObject=new JSONObject();
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.TEXT, new JSONString(answerAttemptDo.getText().toString()));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.STATUS, new JSONString(answerAttemptDo.getStatus().toString()));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.ORDER, new JSONString(answerAttemptDo.getOrder().toString()));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.ANSWERID, new JSONNumber(answerAttemptDo.getAnswerId()));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.TIMESTAMP, new JSONNumber(timeStamp));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.SKIP, JSONBoolean.getInstance(answerAttemptDo.isSkip()));
+				answerOptionJsonArray.add(attemptAnswerJsonObject);
+			}
+		}
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.getAnswerObjectArray().add(answerOptionJsonArray);
+		}else if(isResourcePlayer){
+			resourcePlayerPresenter.getAnswerObjectArray().add(answerOptionJsonArray);
+		}else if(isPreviewPlayer){
+			previewPlayerPresenter.getAnswerObjectArray().add(answerOptionJsonArray);
+		}
 	}
 	
 	public Long getUnixTimeStamp(){
