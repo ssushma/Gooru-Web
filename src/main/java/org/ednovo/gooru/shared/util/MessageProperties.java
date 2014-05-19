@@ -2230,10 +2230,17 @@ public interface MessageProperties {
 		String GL1754 =	"Collections with this Resource";
 		String GL1755 =	"Resources in this Collection";
 		String GL1756 =	"Info";
-
-
 		String GL1757 = "Create a Collection";
 		String GL1758 = "Create a Folder";
 		String GL1759 = "Edit my Collections";
+		
+		String GL1760 = "Oops! Looks like this resource is no longer available!";
+		String GL1761 = "Click the next arrow to keep going to the next resource!";
+		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
+		
+
+
+
+
    }
 
