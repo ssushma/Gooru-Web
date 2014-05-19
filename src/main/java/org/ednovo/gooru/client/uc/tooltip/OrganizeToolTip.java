@@ -22,31 +22,161 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.google.gwt.core.shared.GWT;
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
+import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.folder.FolderDo;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasMouseOutHandlers;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class OrganizeToolTip extends Composite implements MessageProperties{
-	
-	@UiField HTMLPanel organizeText,customizableText;
-	public OrganizeToolTip(){
-		initWidget(organizeToolTipUiBinder.createAndBindUi(this));
-		organizeText.getElement().setInnerHTML(GL0180);
-		customizableText.getElement().setInnerHTML(GL1064);
-	}
-	
-	public interface OrganizeToolTipUiBinder extends UiBinder<Widget, OrganizeToolTip>{
-		
-	}
-	
-	public static OrganizeToolTipUiBinder organizeToolTipUiBinder=GWT.create(OrganizeToolTipUiBinder.class);
-	
 
+/**
+ * @fileName : OrganizeToolTip.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 27-Dec-2013
+ *
+ * @Author: Gooru Team
+ *
+ * @Reviewer: Gooru Team
+ */
+public class OrganizeToolTip extends PopupPanel implements MessageProperties, HasMouseOutHandlers{
+	
+	private static OrganizeTipUiBinder uiBinder = GWT
+			.create(OrganizeTipUiBinder.class);
+
+	interface OrganizeTipUiBinder extends UiBinder<Widget, OrganizeToolTip> {
+	}
+	
+	@UiField Label lblCreateFolder,lblCreateCollection, lblEditMyCollections;
+	
+	public OrganizeToolTip() {
+		setWidget(uiBinder.createAndBindUi(this));
+		lblCreateCollection.setText(GL1757);
+		lblCreateFolder.setText(GL1758);
+		lblEditMyCollections.setText(GL1759);
+		
+		
+		lblCreateFolder.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (!AppClientFactory.isAnonymous()){
+					FolderPopupUc folderPopupUc = new FolderPopupUc("", true) {
+						@Override
+						public void onClickPositiveButton(ClickEvent event, String folderName, String parentId, HashMap<String,String> params) {
+							if(!folderName.isEmpty()) {
+								createFolderInParent(folderName, parentId, params); 
+								Window.enableScrolling(true);
+								this.hide();
+							}
+						}
+					};
+					folderPopupUc.setGlassEnabled(true);
+					folderPopupUc.removeStyleName("gwt-PopupPanelGlass");
+					folderPopupUc.setPopupPosition((Window.getClientWidth() - 456)/2, (Window.getClientHeight() - 522)/2);
+					Window.enableScrolling(false);
+					folderPopupUc.show();
+				}
+			}
+		});
+		
+		
+		
+		this.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+			    hide();
+			}
+		});
+        
+        lblCreateCollection.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (!AppClientFactory.isAnonymous()){
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+				}
+			}
+		});
+        
+        lblEditMyCollections.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+			}
+		});
+	}
+	
+	@Override
+	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+		return addDomHandler(handler, MouseOutEvent.getType());
+	}
+	
+	public void createFolderInParent(String folderName,
+			final String parentId, final HashMap<String, String> params) {
+		boolean addToShelf = false;
+		if(parentId.isEmpty()) {
+			addToShelf = true;
+		}
+		AppClientFactory.getInjector().getfolderService().createFolder(folderName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
+			@Override
+			public void onSuccess(FolderDo result) {
+				AppClientFactory.fireEvent(new UpdateFolderItemEvent(result, parentId, params));
+			}
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
+	
+	public class RedirectToPartnerPage implements ClickHandler {
+		private String folderId;
+		public RedirectToPartnerPage(String folderId) {
+			this.folderId = folderId;
+		}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			hide();
+			Map<String,String> params = new HashMap<String, String>();
+			params.put("pid", folderId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
+		}
+	}
+	
 }
