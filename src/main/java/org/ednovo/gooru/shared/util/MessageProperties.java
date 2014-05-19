@@ -170,7 +170,7 @@ public interface MessageProperties {
 	String GL0113 = "This assignment has already reached its 10 collection limit.";
 	String GL0114 = "This collection has already been added to this assignment.";
 	
-	String GL0115 = "New Class";
+	String GL0115 = "Create a New Class";
 	String GL0116 = "Class List";
 	String GL0117 = "You haven't started a Class yet!";
 	String GL0118 = "Classes are the simplest way to share collections with your students.";
@@ -2217,7 +2217,7 @@ public interface MessageProperties {
 		String GL1746 = "Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
 		
 		String GL1747 = "By";
-		String GL1748 = "Aggregator";
+		String GL1748 = "Aggregator:";
 		String GL1749 = "e.g. YouTube";
 		
 		String GL1748_1 = "Libraries";
@@ -2238,7 +2238,7 @@ public interface MessageProperties {
 		String GL1761 = "Click the next arrow to keep going to the next resource!";
 		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
 		
-
+		String GL1762_1 = "Enter a Class Code";
 
 
 

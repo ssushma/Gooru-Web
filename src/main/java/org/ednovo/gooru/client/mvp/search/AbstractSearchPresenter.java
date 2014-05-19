@@ -371,7 +371,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		if(getPlaceManager().getRequestParameter(QUERY) != null)
 		{
 			queryVal = getPlaceManager().getRequestParameter(QUERY);	
-			queryVal = queryVal.replaceAll("%5C1", "&");
+			/*queryVal = queryVal.replaceAll("%5C1", "&");*/
 		}
 		try
 		{
@@ -393,7 +393,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		if(getPlaceManager().getRequestParameter(QUERY) != null)
 		{
 			queryVal = getPlaceManager().getRequestParameter(QUERY);	
-			queryVal = queryVal.replaceAll("%5C1", "&");
+			/*queryVal = queryVal.replaceAll("%5C1", "&");*/
 		}
 		try
 		{

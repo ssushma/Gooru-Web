@@ -26,11 +26,15 @@ package org.ednovo.gooru.client.mvp.play.resource.question;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -141,8 +145,20 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		saveOeAnswerData();
 		openEndedAnswerTextArea.removeFromParent();
 		increaseUserAttemptCount();
+		userAnswerObject();
 		saveOeQuestionAnswerDataLogEvent();
 		triggerSaveOeAnswerTextDataEvent();
+	}
+	
+	public void userAnswerObject(){
+		List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
+		AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+		answerAttemptDo.setText(openEndedAnswerTextArea.getValue()); 
+		answerAttemptDo.setAnswerId(0);
+		answerAttemptDo.setOrder("");
+		answerAttemptDo.setStatus("pending");
+		userAttemptedOptionsList.add(answerAttemptDo);
+		userAttemptedAnswerObject(userAttemptedOptionsList);
 	}
 	public void saveOeAnswerData(){
 		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
@@ -166,4 +182,5 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
 		
 	}
+	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> userAttemptedOptionsList);
 }

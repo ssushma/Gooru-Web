@@ -111,7 +111,7 @@
 		}
 		.teachUserNameTextContainerAddAssignmentRight
 		{
-			width: 550px;
+			width: 455px;
 			float: left;
 		}
 		.teachUserNameTextWhite:hover {
@@ -205,10 +205,9 @@
 			float:right; cursor:pointer; margin:10px 0px 0px 0px; width:26px; height:26px; background:url(../images/headernew/setting.png);
 		}
 		.teachUserNameContainerHoverAddAssignment {
-			/*width: 0px;*/
-			float: right;
+			float: left;
 			 height: 50px;
-             width:580px;
+             width:455px;
 		}
 		.teachUserNameTextContainer {
 			float: left;
@@ -353,7 +352,8 @@
 		}
 		.loginInfo{
 	         float: right;
-			 width: 235px;
+			 <!-- width: 235px; -->
+			width: 148px;
 		}
 		.classCodeTxtBox{
 	        margin-left: 15px;
@@ -437,7 +437,7 @@
 					</g:FlowPanel>
             	
                <g:HTMLPanel styleName="{style.teachUserNameContainerHoverAddAssignment}" ui:field="mainDotsPanel">
-              <g:HTMLPanel styleName="{style.teachUserNameTextContainerAddAssignmentRight}">
+              <g:HTMLPanel styleName="{style.teachUserNameTextContainerAddAssignmentRight}"  ui:field="mainInnerDotsPanel">
                    <g:HTMLPanel ui:field="dotsPanel" styleName="{style.teachUserNameTextContainerAddAssignment}">
                        
                       <uc:HTMLEventPanel styleName="{style.menu}" ui:field="discoverLinkContainer">
@@ -452,7 +452,7 @@
                       <uc:HTMLEventPanel styleName="{style.teachUserNameTextBlack}" ui:field="teachLinkContainer">
                         	<g:Label ui:field="teachLink" />
                       </uc:HTMLEventPanel>
-                       
+                      <!-- This is hidden -->
                       <uc:HTMLEventPanel styleName="{style.teachUserNameTextBlack}" ui:field="studyLinkContainer">
                         	<g:Label ui:field="studyLink" />
                       </uc:HTMLEventPanel>
@@ -482,13 +482,13 @@
               </g:HTMLPanel>
                     <g:FlowPanel ui:field="logInfoFloPanel" styleName="{style.loginInfo}">
                        <g:HTMLPanel styleName="{style.login}">
-							<g:Label ui:field="registerLinkLbl" styleName="{res.css.loggedInfo}"/> 
+							<!-- <g:Label ui:field="registerLinkLbl" styleName="{res.css.loggedInfo}"/>  -->
 							<g:Label ui:field="loginLink" styleName="{res.css.loggedInfo}"/>    
 					  </g:HTMLPanel> 
 					  <g:HTMLPanel>
 					      <!-- <uc:TextBoxWithPlaceholder ui:field="classCodeTxtBox"
 							styleName="{style.classCodeTxtBox}" /> -->
-							<g:Button styleName="{style.signUpButton} primary" ui:field="StudyLbl"/> 
+							<g:Button styleName="{style.signUpButton} primary" ui:field="registerLinkLbl"/> 
 					  </g:HTMLPanel>
 				   </g:FlowPanel>
          </g:HTMLPanel>
