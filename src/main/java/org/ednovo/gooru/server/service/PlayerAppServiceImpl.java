@@ -223,6 +223,46 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 	
 	@Override
+	public CollectionItemDo getResourceObj(String resourceId) {
+		JsonRepresentation jsonRepresentation = null;
+		CollectionItemDo collectionItemDo=null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
+		System.out.println("getresource::"+url);
+		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+		try {
+			if(jsonResponseRep.getStatusCode()==200){
+				collectionItemDo=ResourceCollectionDeSerializer.deserializeCollectionItemDo(jsonRepresentation.getJsonObject());
+				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
+				String decodeUrl=collectionItemDo.getResource().getUrl();
+				if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){
+					if(decodeUrl.substring(0, 4).equalsIgnoreCase("http")){
+					}else{
+						String encodeUrl;
+						try {
+							encodeUrl = URLEncoder.encode(collectionItemDo.getResource().getUrl(),"UTF-8").replaceAll("\\+", "%20");
+							collectionItemDo.getResource().setUrl(encodeUrl);
+						} catch (UnsupportedEncodingException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}else{
+				collectionItemDo=new CollectionItemDo();
+				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
+			}
+			//Added this line because of URL encoding is not supported in Shared and View packages.
+			//collectionItemDo.getResource().setEncodedUrl(URLEncoder.encode(collectionItemDo.getResource().getUrl()));
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return collectionItemDo;
+	}
+	
+	
+	
+	@Override
 	public Map<String, String> getShortenShareUrl(String contentGooruOid) {
 		JsonRepresentation jsonRep = null;
 		Map<String, String> shareUrls=new HashMap<String, String>();

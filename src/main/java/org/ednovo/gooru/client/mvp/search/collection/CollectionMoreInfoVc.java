@@ -61,8 +61,8 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 	public CollectionMoreInfoVc(ResourceDragController searchDragController,String collectionId) {
 		super(searchDragController,false);
 		this.collectionId=collectionId;
-		getRightsField().setVisible(false);
-		getLikesField().setVisible(false);
+/*		getRightsField().setVisible(false);
+		getLikesField().setVisible(false);*/
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class CollectionMoreInfoVc extends SearchMoreInfoVc<CollectionSearchResul
 
 	@Override
 	public void setUsedInResources(List<CollectionItemSearchResultDo> usedInResources) {
-		gradeFieldVc = new MoreInfoFieldVc();
+//		gradeFieldVc = new MoreInfoFieldVc();
 		if (usedInResources.size() == 0) {
 			getMessageInfo().setMessage(NO_RESOURCES_IN_THIS_COLLECTION, GL0091);
 			getMessageInfo().getElement().getStyle().setDisplay(Display.BLOCK); 
