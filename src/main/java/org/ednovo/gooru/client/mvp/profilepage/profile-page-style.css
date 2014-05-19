@@ -47,14 +47,12 @@ a:hover {
 }
 
 .profileContainer {
-	padding:20px;
 	width:1121px;
 	margin:auto;
-	position: fixed;
 }
 
 .userInfo {
-	overflow:hidden;
+	
 }
 
 .avatar {
@@ -211,7 +209,6 @@ a:hover {
 }	
 
 .contentView {
-	height:600px; /* This needs to be calculated. Use the window height - 210px */
 	border-top: 1px solid #ddd;
 }
 
@@ -236,17 +233,14 @@ a:hover {
 	float:left;
 	border-right: 1px dashed #ccc;
 	padding:20px 20px 0px 0px;
-	position: fixed;
 }
 
 .contentVisualView {
-	width:713px;
+	width:708px;
 	height:100%;
 	overflow:auto;
 	overflow-x: hidden;
-	float:left;
 	padding:20px;
-	position: fixed;
 	margin-left: 370px;
 }
 

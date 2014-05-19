@@ -22,25 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.profilepage.content;
 
-package org.ednovo.gooru.client;
+import java.util.ArrayList;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 
-public interface SeoTokens extends MessageProperties{
-	String HOME_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
-	String HOME_TITLE_LOGGEDIN = "Featured Courses";
-	String RESOURCE_PLAYER_TITLE = "";
-	String COLLECTION_PLAYER_TITLE = "";
-	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
-	String COLLECTION_SEARCH_TITLE = "Discover Collections | ";
-	String TEACH_TITLE = GL1753;
-	String STUDY_TITLE = "Study";
-	String WORKSPACE_TITLE = GL1752;
-	String SETTINGS_TITLE = "Settings";
-	String PROFILE_PAGE_TITLE = "";
-	String COURSE_PAGE_TITLE = "";
+/**
+ * @author SearchTeam
+ * 
+ */
+public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibraryPresenter> {
+	/**
+	 * Load Partners page {@link loadPartnersPage}
+	 * @param callBack
+	 * @param placeToken
+	 */
+	void loadPartnersPage(String callBack, String placeToken);
 	
-	String HOME_META_DESCRIPTION = "Gooru provides millions of free educational K-12 resources. Teachers can access and organize collections, build quizzes, and assign to students. Gooru is a non-profit organization.";
+	/**
+	 * Set Partners Unit Data {@link setUnitList}
+	 * @param folderList
+	 */
+	public void setUnitList(ArrayList<PartnerFolderDo> folderList);
+
+	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId);
 	
+	public void loadingPanel(boolean isVisible);
+	
+	public void clearPanels();
+
 }
