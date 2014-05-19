@@ -172,6 +172,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
 	
+	@UiField Image aggregatorTooltip,publisherTooltip;
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
 	@UiField
@@ -360,11 +361,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		};
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
 */
+		
 		sourceSgstBox.getElement().setAttribute("placeHolder", GL1464);
 		sourceSgstBox.getElement().setId("asSourceSgst");
+		sourceSgstBox.getElement().setAttribute("style","margin-top: 5px;");
 		standardSgstBox.addSelectionHandler(this);
 		aggregatorSgstBox.getElement().setId("asAggregatorSgst");
 		aggregatorSgstBox.getElement().setAttribute("placeHolder", GL1749);
+		aggregatorSgstBox.getElement().setAttribute("style","margin-top: 5px;");
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -390,7 +394,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.setHeaderTitle(GL0226);
 		gradePanelUc.setHeaderTitle(GL0165);
 		clearAll.setText(GL0725);
-		oerPanel.setVisible(false);
+	//	oerPanel.setVisible(false);
 		aggregatorPanelUc.setHeaderTitle(GL1748);
 		
 		if (resourceSearch) {
@@ -400,6 +404,62 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
 			aggregatorNotFoundLbl.getElement().getStyle().setOpacity(0.0);
+			aggregatorTooltip.setUrl("images/mos/questionmark.png");
+			aggregatorTooltip.setAltText(GL0732);
+			aggregatorTooltip.setTitle(GL0732);
+			publisherTooltip.setUrl("images/mos/questionmark.png");
+			publisherTooltip.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip("Text not finialized");
+					toolTip.getLblLink().setVisible(false);
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(publisherTooltip.getAbsoluteLeft()-(50+22), publisherTooltip.getAbsoluteTop()+22);
+					toolTip.show();
+				}
+			});
+			publisherTooltip.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					EventTarget target = ((MouseOutEvent) event).getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }	
+					
+				}
+			});
+			aggregatorTooltip.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip("Text not finialized");
+					toolTip.getLblLink().setVisible(false);
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(aggregatorTooltip.getAbsoluteLeft()-(50+22), aggregatorTooltip.getAbsoluteTop()+22);
+					toolTip.show();
+					
+				}
+			});
+			aggregatorTooltip.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					EventTarget target = ((MouseOutEvent) event).getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }	
+					
+				}
+			});
+			
 		} else {
 			authorPanelUc.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
@@ -571,9 +631,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkOER.setText(value);
 		chkOER.setName(key);
 		disclosurePanelVc.add(chkOER);
-		if(value.equalsIgnoreCase("Show only OER")){
+		if(value.equalsIgnoreCase("OER")){
+			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
-			//chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
+			chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 		}
 		chkOER.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
@@ -749,7 +810,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			renderOERCheckBox(oerPanel, "not_show_OER", "Show only OER");
+			
 			resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
@@ -793,6 +854,43 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			});
 			panelNotMobileFriendly.add(imgNotFriendly);
 			panelNotMobileFriendly.setVisible(true);
+			//added for OER search
+			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
+			final Image oer = new Image("images/mos/questionmark.png");
+			oer.getElement().getStyle().setLeft(93, Unit.PX);
+			oer.getElement().getStyle().setTop(-19, Unit.PX);
+			oer.getElement().getStyle().setPosition(Position.RELATIVE);
+			oer.getElement().getStyle().setCursor(Cursor.POINTER);
+			oer.setAltText(GL0732);
+			oer.setTitle(GL0732);
+			oer.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip("Text not finialized");
+					toolTip.getLblLink().setVisible(false);
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(oer.getAbsoluteLeft()-(50+22), oer.getAbsoluteTop()+22);
+					toolTip.show();
+				}
+			
+			});
+			oer.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					EventTarget target = event.getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }
+					
+				}
+			});
+			oerPanel.add(oer);
+			oerPanel.setVisible(true);
 		}else{
 			collectionLinkLbl.addStyleName(style.active());
 			resourceLinkLbl.removeStyleName(style.active());
@@ -1377,5 +1475,5 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	{
 		standardPanelUc.setVisible(true);
 	}
-
+	
 }

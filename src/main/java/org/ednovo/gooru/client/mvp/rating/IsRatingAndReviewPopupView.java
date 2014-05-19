@@ -22,27 +22,11 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.body;
+package org.ednovo.gooru.client.mvp.rating;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ReactionDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import com.gwtplatform.mvp.client.PopupView;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-
-public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<ResourcePlayerMetadataUiHandlers>{
-	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest);
-	public void showResourceWidget(CollectionItemDo collectionItemDo);
-	public void showResourceWidget(PlaceRequest previousResourceRequest);
-	public FlowPanel getResourceWidgetContainer();
+public interface IsRatingAndReviewPopupView extends PopupView, IsViewWithHandlers<RatingAndReviewPopupUiHandlers>{
 	
-	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
-	
-	public void setDefaultReaction();
-	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip);
-	public void setDefaultUserStarRatings();   
-	public void removeRatingContainer(boolean flag);
 }

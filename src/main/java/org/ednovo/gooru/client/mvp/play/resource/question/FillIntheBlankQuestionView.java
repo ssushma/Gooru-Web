@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -172,6 +173,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		List<Integer> attemptAnswerIds=new ArrayList<Integer>();
 		List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
 		List<Integer> attemptStatusArray=new ArrayList<Integer>();
+		List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 		while(answersIterator.hasNext()){
 			QuestionAnswerDo questionAnswerDo=answersIterator.next();
 			String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText().trim();
@@ -180,12 +182,22 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
 		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
 		  	attemptTrySequenceArray.add(i+1);
+		  	AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+			answerAttemptDo.setText(textBoxAnswerDoAnswerText);
+			answerAttemptDo.setAnswerId(questionAnswerDo.getAnswerId());
+			answerAttemptDo.setOrder(i+1+"");
+			userAttemptedOptionsList.add(answerAttemptDo);
+			if(textBoxAnswerDoAnswerText!=null&&textBoxAnswerDoAnswerText.equals("")){
+				answerAttemptDo.setSkip(true);
+			}
 			if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
+				answerAttemptDo.setStatus("1");
 				if(isFibStatus){
 					isFibStatus=true;
 				}
 				textBoxArray.get(i).addStyleName(oeStyle.answerCorrectTextBox());
 			}else{
+				answerAttemptDo.setStatus("0");
 				isFibStatus=false;
 				textBoxArray.get(i).addStyleName(oeStyle.answerWrongTextBox());
 				showResultPanel(i,questionAnswerDo.getAnswerText());
@@ -201,6 +213,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 			isFirstAttempt=true;
 			score=isFibStatus?1:0;
 		}
+		userAttemptedAnswerObject(userAttemptedOptionsList);
 		String attemptStatus=isFibStatus==true?"correct":"wrong";
 		createSesstionItemAttemptOe(attemptAnswerIds,attemptedAnswersList,attemptStatus);
 		setFibAnswerIdsWithTime(attemptAnswerIds,attemptTrySequenceArray,attemptStatusArray,score,isFirstAttempt,attemptedAnswersList);
@@ -283,5 +296,8 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 	}
 	public void increaseUserAttemptCount(){
 		
+	}
+	
+	public void userAttemptedAnswerObject(List<AnswerAttemptDo> userAttemptedOptionsList) {
 	}
 }

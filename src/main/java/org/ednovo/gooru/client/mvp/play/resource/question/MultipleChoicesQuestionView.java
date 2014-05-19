@@ -24,12 +24,15 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TreeSet;
 
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -203,6 +206,14 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 					}else{
 						questionAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 					}
+					List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
+					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+					answerAttemptDo.setText(questionAnswerOptionView.getAnswerText()); 
+					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
+					answerAttemptDo.setOrder(i+1+"");
+					answerAttemptDo.setStatus(questionAnswerOptionView.isAnswerCorrect()?"1":"0");
+					userAttemptedOptionsList.add(answerAttemptDo);
+					userAttemptedAnswerObject(userAttemptedOptionsList);
 				}
 			}
 		}
@@ -228,5 +239,6 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 		
 	}
 	public abstract void increaseUserAttemptCount();
+	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);
 
 }

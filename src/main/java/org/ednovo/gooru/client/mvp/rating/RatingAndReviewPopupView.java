@@ -22,27 +22,49 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.body;
+package org.ednovo.gooru.client.mvp.rating;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ReactionDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<ResourcePlayerMetadataUiHandlers>{
-	public void showResourceWidget(CollectionItemDo collectionItemDo,PlaceRequest nextResoruceRequest,PlaceRequest previousResourceRequest);
-	public void showResourceWidget(CollectionItemDo collectionItemDo);
-	public void showResourceWidget(PlaceRequest previousResourceRequest);
-	public FlowPanel getResourceWidgetContainer();
+public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndReviewPopupUiHandlers> implements IsRatingAndReviewPopupView,MessageProperties{
 	
-	public void setReaction(ReactionDo reactionDo, String gooruReactionId); 
+	public PopupPanel appPopUp;
 	
-	public void setDefaultReaction();
-	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip);
-	public void setDefaultUserStarRatings();   
-	public void removeRatingContainer(boolean flag);
+	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
+
+	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, RatingAndReviewPopupView> {
+	}
+	
+	@Inject
+	public RatingAndReviewPopupView(EventBus eventsBus){
+		super(eventsBus);
+		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	@Override
+	public Widget asWidget() {
+		return appPopUp;
+	}
+	@Override
+	public void reset() {
+		
+	}
+	@Override
+	public void onLoad() {
+		
+	}
+	@Override
+	public void onUnload() {
+		
+	}
+	
 }
