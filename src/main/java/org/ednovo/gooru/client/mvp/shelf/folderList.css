@@ -398,8 +398,9 @@
     background-image:none;
     padding-top: 15px;
     display: block;
-    width: 100px;
+    width: 130px;
     float: left;
+    font-weight:bold;
 }
 
 .folderLevel.root .dropdownButtonContainer {
