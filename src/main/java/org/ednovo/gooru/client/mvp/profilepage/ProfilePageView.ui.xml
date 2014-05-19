@@ -3,7 +3,7 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" >
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.content">
 	
 	<ui:style field="ProfilePageStyle" src="profile-page-style.css" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
@@ -117,10 +117,7 @@
         </g:HTMLPanel>
 			<g:HTMLPanel styleName="{ProfilePageStyle.loadingImage}" ui:field="loadingPanel"/>        
 				<g:HTMLPanel styleName="{ProfilePageStyle.contentView}" ui:field="contentview">
-	                <g:HTMLPanel styleName="{ProfilePageStyle.contentNavigationPanel}" ui:field="contentNavigationPanel">
-	                    <g:SimplePanel styleName="{ProfilePageStyle.folders}" ui:field="shelfTabSimPanel"/>
-	                </g:HTMLPanel>
-	                <g:HTMLPanel ui:field="publicPPRightContainer" styleName="{ProfilePageStyle.contentVisualView}"/>
+						<libraryview:ProfilePageLibraryView ui:field="profilePageLibraryView"/>
                </g:HTMLPanel>
             <g:HTMLPanel ui:field="shareLinkFloPanel" styleName="{res.css.shareLinkFlowPanel}"></g:HTMLPanel>
         </g:HTMLPanel>

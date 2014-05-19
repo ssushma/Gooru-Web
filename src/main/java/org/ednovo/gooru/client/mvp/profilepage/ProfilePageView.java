@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.item.ProfilePageItemChildView;
+import org.ednovo.gooru.client.mvp.profilepage.content.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
@@ -90,7 +90,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -112,11 +111,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	HTMLPanel profileOnContainerPanel, profileOffContainerPanel;
 
 	@UiField
-	SimplePanel shelfTabSimPanel;
-
-	@UiField
-	HTMLPanel publicPPRightContainer, contentview, shareLinkFloPanel,
-			contentNavigationPanel, socialButtonContainer, bioMainContainer;
+	HTMLPanel contentview, shareLinkFloPanel,
+			socialButtonContainer, bioMainContainer;
 
 	@UiField
 	HTMLPanel loadingPanel, userGradeList, userCourseList, metaDataContainer;
@@ -154,6 +150,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField
 	FlowPanel courseData, collectionCourseLstPanel, coursesPanel;
 
+	@UiField
+	ProfilePageLibraryView profilePageLibraryView;
+	
 	Label noCollectionMsgPanel = new Label();
 
 	private Label editImageButton = new Label(GL0800);
@@ -276,10 +275,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		addCourseGradeBtn.getElement().setId("btnAddCourseGrade");
 		addCourseBtn.getElement().setId("btnAddCourse");
 		editImageButton.getElement().setId("btnEditImage");
-		int clientHeight = Window.getClientHeight();
-		clientHeight = clientHeight - DEFAULT_PROFILE_LIST_VIEW_HEIGHT;
-		contentNavigationPanel.getElement().getStyle().setHeight(clientHeight, Unit.PX);
-		publicPPRightContainer.getElement().getStyle().setHeight(clientHeight, Unit.PX);
 		editImageButton.setStyleName(CollectionCBundle.INSTANCE.css().profileEditImageButton());
 		userCoursePopup.setVisible(false);
 		profileOnButton.getElement().setAttribute("id", "btnProfileOn");
@@ -434,7 +429,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			if (slot == ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW) {
-				shelfTabSimPanel.setWidget(content);
+				
 			}
 		}
 	}
@@ -595,43 +590,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	@Override
 	public void setContentItemData(List<CollectionItemDo> collectionItemDo) {
-		if (collectionItemDo.size() > 0) {
 
-			Iterator<CollectionItemDo> iterator = collectionItemDo.iterator();
-			while (iterator.hasNext()) {
-				CollectionItemDo collectionItem = iterator.next();
-				if (collectionItem.getResource().getResourceType().getName()
-						.equalsIgnoreCase(WORKSPACE_FOLDER)) {
-					publicPPRightContainer.add(new ProfilePageItemChildView(
-							collectionItem));
-				} else if (collectionItem.getResource().getResourceType()
-						.getName().equalsIgnoreCase(WORKSPACE_COLLECTION)) {
-					publicPPRightContainer.add(new PPPCollectionResult(
-							collectionItem));
-				}
-			}
-		} else {
-			noCollectionMsgPanel.setStyleName(res.css()
-					.noCollectionMessageRight());
-			noCollectionMsgPanel.getElement().getStyle()
-					.setHeight(300, Unit.PX);
-			publicPPRightContainer.add(noCollectionMsgPanel);
-			footerUc.getElement().getStyle().setMarginBottom(50, Unit.PX);
-		}
-		loadingPanel.setVisible(false);
-		displayFooter();
-		publicPPRightContainer.add(footerUc);
 	}
 
 	@Override
 	public void clearContentItemData() {
-		publicPPRightContainer.clear();
+
 	}
 
 	@Override
 	public void setMetaData(CollectionItemDo collectionItemDo) {
-		publicPPRightContainer.add(new ProfilePageCollectionMetaData(
-				collectionItemDo));
+		
 	}
 
 	@Override
@@ -681,12 +650,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@Override
 	public void setCollectionData(CollectionItemDo collectionItemDo) {
-		PPPCollectionResult pppCollectionResult = new PPPCollectionResult(
-				collectionItemDo);
-		publicPPRightContainer.add(pppCollectionResult);
+		PPPCollectionResult pppCollectionResult = new PPPCollectionResult(collectionItemDo);
 		pppCollectionResult.openDisclosurePanel();
 		displayFooter();
-		publicPPRightContainer.add(footerUc);
 	}
 
 	public void displayFooter() {
@@ -700,7 +666,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userName.setText("");
 		userBio.setText("");
 		userProfilePic.setUrl("");
-		publicPPRightContainer.clear();
 		shareLinkFloPanel.clear();
 		bitlyLink.setText("");
 		socialButtonContainer.clear();
@@ -1246,4 +1211,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
 		}
 	}
+	
+	@Override
+	public void onLoad() {
+		Window.enableScrolling(true);
+	}
+
+	@Override
+	public ProfilePageLibraryView getContentView() {
+		return profilePageLibraryView;
+	}
+
 }
