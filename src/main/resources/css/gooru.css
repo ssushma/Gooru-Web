@@ -1510,6 +1510,15 @@ color:#999;
  	padding-left: 30px;
 	padding-bottom: 6px;
 }
+.oerContainer  input[type="checkbox"] {
+	margin: 3px 0.5ex !important;
+}
+
+.oerContainer .filterCheckBox label {
+	background: url(../images/OER_logo.png) no-repeat transparent;
+ 	padding-left: 30px;
+	padding-bottom: 6px;
+}
 .navigationText span.AM img{
 	max-height:23px;
 	height:23px;

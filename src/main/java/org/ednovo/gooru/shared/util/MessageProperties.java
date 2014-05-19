@@ -2217,7 +2217,7 @@ public interface MessageProperties {
 		String GL1746 = "Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
 		
 		String GL1747 = "By";
-		String GL1748 = "Aggregator";
+		String GL1748 = "Aggregator:";
 		String GL1749 = "e.g. YouTube";
 		
 		String GL1748_1 = "Libraries";
