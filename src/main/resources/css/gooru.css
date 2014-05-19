@@ -1760,3 +1760,113 @@ li.token-input-input-token-gooru {
 .discoverTooltipLabel:hover {
 	background-color: #cfe3f1;
 }
+
+/* RATINGS AND REVIEWS */
+
+.rating {
+    margin: 3px 10px 3px 0px;
+    font-size:12px;
+   /*  width: 95px; used in search
+    float: right; used in search
+    text-align:right; used in search */
+    vertical-align:middle;
+    line-height: 1.4em;
+}
+
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:16px;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    line-height:1.2;
+    color:#999;
+    font-size:16px;
+    transition: color .2s;
+}
+
+.rating:not(:checked) > label:before {
+    line-height: 1;
+    display: inline-block;
+    text-decoration: inherit;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content:'\f006';
+}
+
+.rating > input:checked ~ label:before,
+.rating:not(:checked) > label:hover:before,
+.rating:not(:checked) > label:hover ~ label:before{
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content:'\f005';;
+}
+
+.rating > input:checked ~ label {
+    color: #579ECF;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #1076BB;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #1076BB;
+}
+
+fieldset {
+    border:none;
+    display:inline-block;
+}
+
+.rating .star, .userRating .star {
+    font-size:14px;
+    color:#999;
+}
+
+.rating .star.filled {
+    color:#4e9746;
+}
+
+/* //.rating .star:before, .userRating .star:before {content:'\2606';}
+//.rating .star.filled:before, .userRating .star.filled:before {content:'\2605';}
+ */
+.star:before {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content:'\f006';
+}
+
+.star.filled:before {
+    content: "\f005";
+}
+
+.userRating .star.filled {
+    color:#1076BB;
+}

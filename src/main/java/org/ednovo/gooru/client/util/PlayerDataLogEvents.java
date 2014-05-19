@@ -113,6 +113,14 @@ public class PlayerDataLogEvents {
 	public static final String STUDY="study";
 	public static final String SESSIONID="sessionId";
 	public static final String ATTEMPTCOUNT="attemptCount";
+	public static final String ANSWEROBJECT="answerObject";
+	public static final String STATUS="status";
+	public static final String ORDER="order";
+	public static final String ANSWERID="answerId";
+	public static final String TIMESTAMP="timeStamp";
+	public static final String SKIP="skip";
+	
+	
 	
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
 		triggerDataLogCall(collectionDataLogEventMap);
@@ -203,7 +211,7 @@ public class PlayerDataLogEvents {
 	}
 	
 	public static  JSONString getDataLogPayLoadObject(String questionType,String oeAnswerText, List<Integer> attemptStatus, List<Integer> attemptTrySequence,
-										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount){
+										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,JSONArray answerObjectArray){
 		JSONObject payLoadMap=new JSONObject();
 		try{
 			payLoadMap.put(QUESTIONTYPE, new JSONString(questionType));
@@ -215,6 +223,7 @@ public class PlayerDataLogEvents {
 			payLoadMap.put(ATTEMPTCOUNT,new JSONNumber(attemptCount));
 			payLoadMap.put(HINTS, new JSONString(hintIdsObject.toString()));
 			payLoadMap.put(EXPLANATION, new JSONString(explanationIdsObject.toString()));
+			payLoadMap.put(ANSWEROBJECT, new JSONString(answerObjectArray.toString()));
 		}catch(Exception e){
 			
 		}

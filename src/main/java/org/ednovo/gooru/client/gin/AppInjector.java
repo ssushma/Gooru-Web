@@ -55,6 +55,7 @@ import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
 import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
@@ -181,5 +182,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<NgcLibraryPresenter> getNgcLibraryPresenter();
 
 	AsyncProvider<WspwhLibraryPresenter> getWspwhLibraryPresenter();
+	
+	AsyncProvider<RatingAndReviewPopupPresenter> getRatingAndReviewPopupPresenter();
 
 }

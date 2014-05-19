@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -236,11 +237,16 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 		boolean mutipleAnswerChoiceStatus=true;
 		Map<Integer,Boolean> answerOptionResult=new LinkedHashMap<Integer,Boolean>();
 		List<String> userAttemptedValueList=new ArrayList<String>();
+		List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 		List<Integer> answerIds=new ArrayList<Integer>();
 		for(int i=0;i<widgetCount;i++){
 			Widget widget=optionsContainer.getWidget(i);
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
+				AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
+				answerAttemptDo.setText(""); //TODO need to confirm with BE team what value need pass
+				answerAttemptDo.setAnswerId(checkBoxAnswerOptionView.getAnswerId());
+				answerAttemptDo.setOrder(i+1+"");
 				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 					userAttemptedValueList.add("1");
@@ -248,10 +254,12 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), true);
 					if(checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
+						answerAttemptDo.setStatus("1");
 						if(mutipleAnswerChoiceStatus){
 							mutipleAnswerChoiceStatus=true;
 						}
 					}else{
+						answerAttemptDo.setStatus("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						 mutipleAnswerChoiceStatus=false;
 					}
@@ -260,21 +268,26 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					userAttemptedValueList.add("0");
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), false);
 					if(!checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+						answerAttemptDo.setStatus("1");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 						if(mutipleAnswerChoiceStatus){
 							mutipleAnswerChoiceStatus=true;
 						}
 					}else{
+						answerAttemptDo.setStatus("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
 				}
 				if(!checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()&&!checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
 					userAttemptedValueList.add("");
+					answerAttemptDo.setStatus("");
 					mutipleAnswerChoiceStatus=false;
 				}
+				userAttemptedOptionsList.add(answerAttemptDo);
 			}
 		}
+		userAttemptedAnswerObject(userAttemptedOptionsList);
 		increaseUserAttemptCount();
 		AttemptedAnswersDo attempteAnswersDo=new AttemptedAnswersDo();
 		attempteAnswersDo.setQuestionType(collectionItemDo.getResource().getType());
@@ -304,5 +317,6 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
 	public abstract void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
+	public abstract void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList);
 	
 }
