@@ -22,25 +22,24 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.library.partner;
+package org.ednovo.gooru.client.mvp.profilepage.content;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-import org.ednovo.gooru.shared.model.content.ThumbnailDo;
-import org.ednovo.gooru.shared.model.library.CourseDo;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
+import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -49,45 +48,52 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author Search Team
-` * 
+ * @author Gooru Team
+ * 
  */
-public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHandlers> implements IsPartnerLibraryView, MessageProperties {
+public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView,MessageProperties {
 
-	@UiField HTMLPanel partnerPanel;
+	@UiField HTMLPanel profilePageLibraryView;
 	
 	LibraryView libraryView = null;
 	
-	private static final String FOLDERID = "id";
+	private static final String FOLDERID = "folderId";
 	
 	@UiField LibraryStyleBundle libraryStyleUc;
-	
+
 	private String unitListId = "";
 	
-	private static final String LIBRARY_PAGE = "partner-page";
+	ProfilePageLibraryPresenter profilePageLibraryPresenter = null;
+	
+	private static ProfilePageLibraryViewUiBinder uiBinder = GWT.create(ProfilePageLibraryViewUiBinder.class);
 
-	private static PartnerLibraryViewUiBinder uiBinder = GWT.create(PartnerLibraryViewUiBinder.class);
-
-	interface PartnerLibraryViewUiBinder extends UiBinder<Widget, PartnerLibraryView> {
-	}
+	interface ProfilePageLibraryViewUiBinder extends UiBinder<Widget, ProfilePageLibraryView> {}
 
 	/**
 	 * Class constructor
+	 
+	 * @param collectionItem
+	 *            instance of {@link CollectionItemDo}
 	 */
-	public PartnerLibraryView() {
-		setWidget(uiBinder.createAndBindUi(this));
-		libraryView = new LibraryView(PlaceTokens.HOME);
-		partnerPanel.add(libraryView);
+	public ProfilePageLibraryView() {
+		initWidget(uiBinder.createAndBindUi(this));
+		setPresenter(new ProfilePageLibraryPresenter(this));
+		libraryView = new LibraryView(PlaceTokens.PROFILE_PAGE);
+		profilePageLibraryView.add(libraryView);
+		profilePageLibraryView.getElement().getStyle().setMarginTop(20, Unit.PX);
 	}
-
+	
+	public void setData(String gooruUId) {
+		getPresenter().getPartnerWorkspaceFolders();
+	}
+	
 	@Override
 	public void loadPartnersPage(String callBack, String placeToken) {
-		libraryView.loadContributorsPage(callBack,placeToken);
+		//libraryView.loadContributorsPage(callBack,placeToken);
 	}
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
-		setCourseImageData();
 		libraryView.getLeftNav().clear();
 		libraryView.getContentScroll().clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
@@ -102,7 +108,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
 					unitListId = folderList.get(i).getGooruOid();
 					setTopicListData(folderList.get(i).getFolderItems(), unitListId);
-					//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 				}
 			}
 		}
@@ -127,7 +132,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 					if(finalWidgetCount==0) {
 						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
 					} else {
-						getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+						//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
 			});
@@ -152,78 +157,6 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		}
 	}
 	
-	private void setCourseImageData() {
-		libraryView.setCourseData(getPartnerName());
-	}
-	
-	private CourseDo getPartnerName() {
-		String partnerPlace = AppClientFactory.getCurrentPlaceToken();
-		CourseDo courseDo = new CourseDo();
-		ThumbnailDo thumbnailDo = new ThumbnailDo();
-		LibraryUserDo libraryUserDo = new LibraryUserDo();
-		
-		if(partnerPlace.equals(PlaceTokens.AUTODESK)) {
-			
-			courseDo.setLabel("Autodesk® Digital STEAM Workshop");
-			thumbnailDo.setUrl("../images/library/partners/autodesk.png");
-			libraryUserDo.setPartnerName(GL1566);
-			libraryUserDo.setPartnerUrl(GL1567);
-			
-		} else if(partnerPlace.equals(PlaceTokens.ONR)) {
-			
-			courseDo.setLabel("Oceanography & Space Sciences");
-			thumbnailDo.setUrl("../images/library/partners/onr.png");
-			libraryUserDo.setPartnerName(GL1568);
-			libraryUserDo.setPartnerUrl(GL1569);
-			
-		} else if(partnerPlace.equals(PlaceTokens.FTE)) {
-			courseDo.setLabel("Introduction to Economics & Hot Topics");
-			thumbnailDo.setUrl("../images/library/partners/fte.png");
-			libraryUserDo.setPartnerName(GL1570);
-			libraryUserDo.setPartnerUrl(GL1571);
-			
-		} else if(partnerPlace.equals(PlaceTokens.NGC)) {
-			
-			courseDo.setLabel("NGC Global Issues");
-			thumbnailDo.setUrl("../images/library/partners/ngc.png");
-			libraryUserDo.setPartnerName(GL1572);
-			libraryUserDo.setPartnerUrl(GL1573);
-
-		} else if(partnerPlace.equals(PlaceTokens.WSPWH)) {
-			
-			courseDo.setLabel("Literary-Based Civic Education");
-			thumbnailDo.setUrl("../images/library/partners/wspwh.png");
-			libraryUserDo.setPartnerName(GL1574);
-			libraryUserDo.setPartnerUrl(GL1575);
-
-		} else if(partnerPlace.equals(PlaceTokens.LESSONOPOLY)) {
-			
-			courseDo.setLabel("Lessonopoly");
-			thumbnailDo.setUrl("../images/library/partners/lessonopoly.png");
-			libraryUserDo.setPartnerName(GL1576);
-			libraryUserDo.setPartnerUrl(GL1577);
-
-		} else if(partnerPlace.equals(PlaceTokens.FINCAPINC)) {
-			
-			courseDo.setLabel("Fincap Inc.");
-			thumbnailDo.setUrl("../images/library/partners/cfci.png");
-			libraryUserDo.setPartnerName(GL1576);
-			libraryUserDo.setPartnerUrl(GL1577);
-
-		} else if(partnerPlace.equals(PlaceTokens.PSDPAL)) {
-			
-			courseDo.setLabel("K-12 Arabic lessons");
-			thumbnailDo.setUrl("../images/library/partners/cfci.png");
-			libraryUserDo.setPartnerName(GL1576);
-			libraryUserDo.setPartnerUrl(GL1577);
-
-		}
-		
-		courseDo.setThumbnails(thumbnailDo);
-		courseDo.setCreator(libraryUserDo);
-		return courseDo;
-	}
-
 	@Override
 	public void loadingPanel(boolean isVisible) {
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
@@ -233,8 +166,15 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 	public void clearPanels() {
 		libraryView.getContentScroll().clear();
 		libraryView.getLeftNav().clear();
+	}	
+	
+	@Override
+	public void setPresenter(ProfilePageLibraryPresenter profilePageLibraryPresenter) {
+		this.profilePageLibraryPresenter = profilePageLibraryPresenter;
 	}
 	
-	
-	
+	@Override
+	public ProfilePageLibraryPresenter getPresenter() {
+		return profilePageLibraryPresenter;
+	}
 }

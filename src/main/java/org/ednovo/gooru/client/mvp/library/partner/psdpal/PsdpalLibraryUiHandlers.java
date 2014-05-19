@@ -22,25 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.library.partner.psdpal;
 
-package org.ednovo.gooru.client;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-public interface SeoTokens extends MessageProperties{
-	String HOME_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
-	String HOME_TITLE_LOGGEDIN = "Featured Courses";
-	String RESOURCE_PLAYER_TITLE = "";
-	String COLLECTION_PLAYER_TITLE = "";
-	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
-	String COLLECTION_SEARCH_TITLE = "Discover Collections | ";
-	String TEACH_TITLE = GL1753;
-	String STUDY_TITLE = "Study";
-	String WORKSPACE_TITLE = GL1752;
-	String SETTINGS_TITLE = "Settings";
-	String PROFILE_PAGE_TITLE = "";
-	String COURSE_PAGE_TITLE = "";
-	
-	String HOME_META_DESCRIPTION = "Gooru provides millions of free educational K-12 resources. Teachers can access and organize collections, build quizzes, and assign to students. Gooru is a non-profit organization.";
-	
+/**
+ * @author Search Team
+ * 
+ */
+public interface PsdpalLibraryUiHandlers extends BaseUiHandlers {
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLDERS_SLOT = new Type<RevealContentHandler<?>>();
+
 }

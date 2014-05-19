@@ -255,23 +255,35 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 *
 	 */
 	public void setDebugId() {
-		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
-			partnerLogo.setVisible(true);
-			partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
-			landingBanner.setVisible(false);
-		} else {
+		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
 			partnerLogo.setVisible(false);
-		}
+			contributorsContainer.setVisible(false);
+			courseBanner.setVisible(false);
+			featuredEducator.setVisible(false);
+			courseTabs.setVisible(false);
+			landingBanner.setVisible(false);
+			featuredContributorsLink.setVisible(false);
+			featuredCourseTabs.setVisible(false);
+			featuredCousesLbl.setVisible(false);
+		} else {
+			if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			} else {
+				partnerLogo.setVisible(false);
+			}
 
-		contributorsContainer.setVisible(false);
-		courseBanner.setVisible(false);
-		featuredEducator.setVisible(false);
-		libraryMenuNavigation = new LibraryMenuNav(getPlaceToken());
-		courseTabs.add(libraryMenuNavigation);
-		landingBanner.add(new LibraryBannerView(getPlaceToken()));
-		featuredContributorsLink.setText(GL1005);
-		featuredContributorsLink.setTitle(GL0680);
-		featuredContributorsLink.setHref("#"+getPlaceToken()+"&page="+FEATURED_CONTRIBUTORS);
+			contributorsContainer.setVisible(false);
+			courseBanner.setVisible(false);
+			featuredEducator.setVisible(false);
+			libraryMenuNavigation = new LibraryMenuNav(getPlaceToken());
+			courseTabs.add(libraryMenuNavigation);
+			landingBanner.add(new LibraryBannerView(getPlaceToken()));
+			featuredContributorsLink.setText(GL1005);
+			featuredContributorsLink.setTitle(GL0680);
+			featuredContributorsLink.setHref("#"+getPlaceToken()+"&page="+FEATURED_CONTRIBUTORS);
+		}
 	}
 	
 	@Override

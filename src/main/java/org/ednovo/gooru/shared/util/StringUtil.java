@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
@@ -242,6 +243,10 @@ public class StringUtil {
 			partnerName = "New Global Citizens (NGC)";
 		} else if(partnerName.equalsIgnoreCase("ONR")) {
 			partnerName = "Office of Naval Research (ONR)";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.FINCAPINC)) {
+			partnerName = "Fincap Inc.";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.PSDPAL)) {
+			partnerName = "Partners for Sustainable Development (PSD)";
 		}
 		return partnerName;
 	}

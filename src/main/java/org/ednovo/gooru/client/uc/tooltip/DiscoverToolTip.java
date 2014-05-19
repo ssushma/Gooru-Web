@@ -210,9 +210,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		AppClientFactory.getInjector().getLibraryService().getPartners(new AsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
-//				setPartners(partnersList);
 				setPartners(partnersList);
-//				setTabSelection(AppClientFactory.getCurrentPlaceToken());
 			}
 
 			@Override
@@ -223,6 +221,14 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.COURSE_PAGE_TITLE+courseLabel);	
 	}
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
+		
+		LibraryUserDo psdPalDo = new LibraryUserDo();
+		LibraryUserDo fincaPinc = new LibraryUserDo();
+		psdPalDo.setUsername(PlaceTokens.PSDPAL);
+		fincaPinc.setUsername(PlaceTokens.FINCAPINC);
+		partnersList.add(fincaPinc);
+		partnersList.add(psdPalDo);
+		
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
 			final Label partnerTitle = new Label(StringUtil.getPartnerName(libraryUserDo.getUsername()));

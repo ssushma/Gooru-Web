@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -131,6 +132,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		} else {
 			setPlaceToken(PlaceTokens.HOME);
 		}
+		partnerPanel.setVisible(false);
 		featuredCourses.setText(GL1009);
 		scienceText.setText(GL1000);
 		mathText.setText(GL1001);
@@ -145,6 +147,13 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		featuredCourses.setVisible(false);
 		partnerPanel.addStyleName(libraryStyleUc.partnerMenuPadding());
 		partnerText.setText(GL1550);
+		
+		scienceText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		mathText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		socialSciencesText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		languageArtsText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		standardsText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		aboutGooruAnr.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		
 		if(!AppClientFactory.isAnonymous()){
 			try {
