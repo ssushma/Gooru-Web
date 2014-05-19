@@ -256,7 +256,7 @@ public interface MessageProperties {
 	
 	//Header
 	String GL0179 = "Discover";
-	String GL0180 = "Organize";
+	String GL0180 = "My Collections";
 	String GL0181 = "Teach";
 	String GL0182 = "Study";
 	String GL0183 = "Hi Guest!";
@@ -646,7 +646,7 @@ public interface MessageProperties {
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
-	String GL0515 = "RUSD Library";
+	String GL0515 = "District Library";
 	String GL0516 = "Community Library";
 	String GL0517 = "Assign to another Class";
 	String GL0518 = "Assign this collection";
@@ -694,7 +694,7 @@ public interface MessageProperties {
 	String GL0554 = "#$*@! Please find a G-rated way to express yourself!";
 	String GL0555 = "This message has been deleted.";
 	String GL0556 = "Flag this collection";
-	String GL0557 = "You'hv flagged this collection";
+	String GL0557 = "You've flagged this collection";
 	
 	String GL0558 = "Delete";
 	String GL0559 = "Are you sure you want to delete this?";
@@ -2166,7 +2166,7 @@ public interface MessageProperties {
     	String GL1705="Access Hazard";
     	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL";
+    	String GL1708="GENERAL INFO";
 		String GL1709="e.g. I used this collection as an opportunity for my students to explore various reasons for the Fall of Rome. They completed a graphic organizer as they worked through this collection and were then accountable to making judgements on which reasons they thought were the most significant and why. It all led up to a Socratic Seminar answering the essential question,\"In what ways did the pinnacle and demise of Rome influence European culture and history?\"" ;
 		String GL1710="Image";
 		String GL1711="Video";
@@ -2219,5 +2219,21 @@ public interface MessageProperties {
 		String GL1747 = "By";
 		String GL1748 = "Aggregator";
 		String GL1749 = "e.g. YouTube";
+		
+		String GL1748_1 = "Libraries";
+		String GL1749_1 = "Community Library";
+		String GL1750 = "District Library";
+		String GL1751 = "Partner Library";
+		
+		String GL1752 = "My Collections";
+		String GL1753 = "My Classes";
+		String GL1754 =	"Collections with this Resource";
+		String GL1755 =	"Resources in this Collection";
+		String GL1756 =	"Info";
+
+
+		String GL1757 = "Create a Collection";
+		String GL1758 = "Create a Folder";
+		String GL1759 = "Edit my Collections";
    }
 

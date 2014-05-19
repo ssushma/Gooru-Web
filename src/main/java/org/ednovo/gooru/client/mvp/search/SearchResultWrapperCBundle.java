@@ -59,6 +59,10 @@ public interface SearchResultWrapperCBundle extends ClientBundle {
 		String moreInfoActive();
 
 		String moreInfo();
+		
+		String infoLblActive();
+
+		String infoLbl();
 
 		String disclosurePanel();
 		

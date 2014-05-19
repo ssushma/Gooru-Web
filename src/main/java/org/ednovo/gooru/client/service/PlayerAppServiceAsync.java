@@ -56,6 +56,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void getResourceCollectionItem(String apiKey,String resourceId,String tabView,AsyncCallback<CollectionItemDo> callback);
 	
+	public void getResourceObj(String resourceId,AsyncCallback<CollectionItemDo> callback);
+	
 	public void getShortenShareUrl(String contentGooruOid,  AsyncCallback<Map<String, String>> callback);
 	
 	public void updateViewCount(String gooruid,String viewCount,String resourceType,AsyncCallback<String> callback);

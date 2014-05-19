@@ -92,6 +92,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
@@ -132,7 +133,7 @@ public class ShelfCollectionResourceChildView extends
 	TextBox fromTxt, toTxt,EndTimeTxt1,EndTimeTxt2,startpdfPageNumber;
 
 	@UiField
-	RichTextArea narrationTxtArea;
+	TextArea narrationTxtArea;
 	
 	/*@UiField
 	TinyMCE narrationTxtArea;*/
@@ -423,14 +424,14 @@ public class ShelfCollectionResourceChildView extends
 		} else if (!checkLoggedInUser()) {
 			editInfoLbl.setVisible(false);
 		}
-		narrationTxtArea.addInitializeHandler(new InitializeHandler() {
+		/*narrationTxtArea.addInitializeHandler(new InitializeHandler() {
 			@Override
 			public void onInitialize(InitializeEvent event) {
 				    Document document = IFrameElement.as(narrationTxtArea.getElement()).getContentDocument();
 	                BodyElement body = document.getBody();
 	                body.setAttribute("style", "font-family: Arial;font-size:13px;color:#515151;line-height:1.2;margin:0px;");
 			}
-		});
+		});*/
 		
 /*		narrationTxtArea.addBlurHandler(new BlurHandler() {
 			
@@ -608,7 +609,7 @@ public class ShelfCollectionResourceChildView extends
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			narrationDataLength=narrationTxtArea.getText().toString().trim().length();
-			 if (trim(narrationTxtArea.getHTML()).length() > 0 && trim(narrationTxtArea.getHTML()).length() <= 600){
+			 if (trim(narrationTxtArea.getText()).length() > 0 && trim(narrationTxtArea.getText()).length() <= 600){
 				
 				updateNarrationBtn.setEnabled(true);
                 updateNarrationBtn.getElement().removeClassName("disabled");
@@ -1279,7 +1280,7 @@ public class ShelfCollectionResourceChildView extends
 		videoDisplay.setVisible(false);
 		editFieldsFloPanel.setVisible(false);
 			if (collectionItemDo.getNarration() != null) {
-				narrationTxtArea.setHTML(collectionItemDo.getNarration());
+				narrationTxtArea.setText(collectionItemDo.getNarration());
 			}
 			resourceNarrationHtml.setHTML(ADD_NARRATION_FOR_YOUR_VIEWERS);
 			setEditMode(true);
@@ -1321,7 +1322,7 @@ public class ShelfCollectionResourceChildView extends
 						UpdateTextMessage.setVisible(true);
 						if (resourceNarrationHtml.getHTML().length() > 0) {
 							//narration = narrationTxtArea.getRawContent();
-							narration = trim(narrationTxtArea.getHTML());
+							narration = trim(narrationTxtArea.getText());
 							collectionItemDo.setNarration(narration);
 						}
 					
@@ -1348,7 +1349,7 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("cancelNarrationBtn")
 	public void onclickcancelNarrationBtn(ClickEvent event){
-		narrationTxtArea.setHTML(collectionItemDo.getNarration());
+		narrationTxtArea.setText(collectionItemDo.getNarration());
 		fromLblDisplayText.setVisible(true);
 		videoDisplay.setVisible(true);
 		setEditMode(false);

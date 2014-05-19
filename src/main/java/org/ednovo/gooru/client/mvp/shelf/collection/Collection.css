@@ -186,7 +186,14 @@
 	margin: 10px 0px 10px 0px;
 	width: 100%;
 }
-
+.addQuestionStandard {
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+	float:left;
+	font-size: 12px;
+	color: #515151;
+}
 .shelfGradeTeacherTipTextTitle {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;

@@ -116,15 +116,17 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	 boolean isAnsweEmpty = false;
 	@UiField Label depthOfKnowledgeHeader,standardMaxMsg,standardsDefaultText,errorMessageForAnsCheck,errorMessageForHintsCheck,errorMessageForExplanation,addResourceFormTitleChoice,ansChoiceErrMsg; 
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights;
-	@UiField HTMLPanel educationalUsePanel,questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
+	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
-	@UiField Label mandatoryEducationalLbl,resourceEducationalLabel,questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl;
+	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl;
 	@UiField Anchor addAnswerChoice,addHintsLabel;
 
 	@UiField Anchor addQuestionImg;
 
-	@UiField HTMLPanel educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,hintsContainer,buttonContainer,questionText,correctText,noLabelText;
+/*	@UiField HTMLPanel educationalUsePanel,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
+	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText;
+*/	
+	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText,noLabelText;
 
 	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent;
 	/*@UiField ListBox questionTypeTextBox;*/
@@ -440,7 +442,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 	}
 	public void setTextForTheFields(){
-		educationalTitle.getElement().setInnerHTML(GL1664);
+		/*educationalTitle.getElement().setInnerHTML(GL1664);
 		activityText.getElement().setInnerHTML(GL1665);
 		handoutText.getElement().setInnerHTML(GL0907);
 		homeworkText.getElement().setInnerHTML(GL1666);
@@ -456,14 +458,14 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		textbookText.getElement().setInnerHTML(GL0909);
 		articleText.getElement().setInnerHTML(GL1676);
 		bookText.getElement().setInnerHTML(GL1677);
-		resourceEducationalLabel.setText(GL1684);
+		educationalUsePanel.setVisible(false);
+		resourceEducationalLabel.setText(GL1684);*/
 		standardsDefaultText.setText(GL1682);
 		depthOfKnowledgeHeader.setText(GL1693);
 		chkLevelRecall.setText(GL1645);
 		chkLevelSkillConcept.setText(GL1646);
 		chkLevelStrategicThinking.setText(GL1647);
 		chkLevelExtendedThinking.setText(GL1648);
-		educationalUsePanel.setVisible(false);
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
 		addClickEventsForCheckBox();
@@ -1394,7 +1396,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			depthOfKnowledge.put("depthOfKnowledge", depthOfKnowledges);
 			collectionQuestionItemDo.setDepthOfKnowledges(depthOfKnowledge);
 			
-			HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse = new HashMap<String,ArrayList<checkboxSelectedDo>>();
+			/*HashMap<String,ArrayList<checkboxSelectedDo>> educationalUse = new HashMap<String,ArrayList<checkboxSelectedDo>>();
 			ArrayList<checkboxSelectedDo> arrayList=new ArrayList<checkboxSelectedDo>();
 			if(!isEditResource){
 				checkboxSelectedDo checkObj=new checkboxSelectedDo();
@@ -1423,7 +1425,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 			educationalUse.put("educationalUse", arrayList);
 			if(!resourceEducationalLabel.getText().equalsIgnoreCase(GL1684))
-			collectionQuestionItemDo.setEducationalUse(educationalUse);
+			collectionQuestionItemDo.setEducationalUse(educationalUse);*/
 			if(!isSaveButtonClicked){
 				isSaveButtonClicked=true;
 				if (getQuestionType().equalsIgnoreCase("T/F")) {
@@ -1910,7 +1912,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}else{
 			setMultipleChoiceAnswerFields();
 		}
-		if(collectionItemDo.getResource().getEducationalUse()!=null){
+		/*if(collectionItemDo.getResource().getEducationalUse()!=null){
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {			
 			   if(item.isSelected()){
 				    resourceEducationalLabel.setText(item.getValue());
@@ -1919,7 +1921,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					mandatoryEducationalLbl.setVisible(false);
 			   }
 		}
-		}
+		}*/
 		if(collectionItemDo.getResource().getDepthOfKnowledges()!=null){
 		int checkBoxCount=0;
 		for (checkboxSelectedDo item : collectionItemDo.getResource().getDepthOfKnowledges()) {			
@@ -2174,7 +2176,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		Window.open("http://support.goorulearning.org/hc/en-us/articles/200688506","_blank",""); 
 	
 	}
-	@UiHandler("activityPanel")
+	/*@UiHandler("activityPanel")
 	void activityPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
 		resourceEducationalLabel.setText(GL1665);
@@ -2304,7 +2306,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			educationalUsePanel.setVisible(false);
 			educationalDropDownLblOpen = false;
 		}
-	}
+	}*/
 	/**
      * Gets the name of the used browser.
      */

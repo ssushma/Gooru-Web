@@ -102,7 +102,7 @@
 					<g:FlowPanel styleName="{res1.css.shelfGradeInfogardenContainer}" />
 				</g:FlowPanel>
          <!-- Depth Of Knowledge End -->
-    	<!-- Educational use -->
+    	<!-- Educational use 
 		 <g:HTMLPanel styleName="{res.css.myEducationalFormContent}">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="educationalTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">
@@ -201,11 +201,11 @@
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<!-- Educational use End -->
+		 Educational use End -->
 		        
 		<!-- Standards Start -->
 		 <g:FlowPanel ui:field="standardContainer">
-					<g:Label styleName="{res1.css.shelfGradeInfoBottom}"
+					<g:Label styleName="{res1.css.addQuestionStandard}"
 						ui:field="standardsDefaultText"></g:Label>
 					<g:FlowPanel styleName="{res1.css.shelfCourseSubject}">
 						<g:FlowPanel styleName="{res1.css.addResourceSuggestedBoxForQuestion}">

@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.gin.BasePopupViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.header.CollectionPlayerHeaderView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
+import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.PreviewPlayerMetadataView;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -41,7 +42,9 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
+import com.anotherbigidea.flash.movie.Image;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -49,8 +52,11 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -64,6 +70,10 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
 	
 	@UiField CollectionPlayerHeaderView headerView;
+	
+	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn, closeAndriodBtn;
+	
+	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
 	
 	private PopupPanel appPopUp;
 	
@@ -118,6 +128,34 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 		headerView.getFlagButton().addClickHandler(new ShowTabWidgetView("flag"));
 		
 		setAutoHideOnNavigationEventEnabled(true);
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  headerView.getElement().setAttribute("style", "position:relative;");
+			  ipadSectiondiv.setVisible(true);
+			  androidSectiondiv.setVisible(false);
+
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  headerView.getElement().setAttribute("style", "position:relative;");
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(true);
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+		  else
+		  {
+			  headerView.getElement().setAttribute("style", "position:fixed;");
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(false);
+
+		  }
+		
 	}
 
 	  @Override
@@ -162,6 +200,26 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			boolean isShareButtonEnable, boolean isNarrationButtonEnable,
 			boolean isNavigationButtonEnable,boolean isFlagButtonActive) {
 		headerView.enableButtons(isAddButtonEnable,isInfoButtonEnable, isShareButtonEnable, isNarrationButtonEnable, isNavigationButtonEnable,isFlagButtonActive);
+	}
+	
+	@UiHandler("closeIpadBtn")
+	public void onIpadCloseClick(ClickEvent clickEvent){
+		  headerView.getElement().setAttribute("style", "position:fixed;");
+		  ipadSectiondiv.setVisible(false);
+		  androidSectiondiv.setVisible(false);
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  PreviewPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
+	}
+
+	@UiHandler("closeAndriodBtn")
+	public void onAndriodCloseClick(ClickEvent clickEvent){
+		headerView.getElement().setAttribute("style", "position:fixed;");
+		  ipadSectiondiv.setVisible(false);
+		  androidSectiondiv.setVisible(false);
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  PreviewPlayerMetadataView.onClosingAndriodorIpaddiv();
+		  ResourcePlayerMetadataView.onClosingAndriodorIpaddiv();
 	}
 	
 	public class ShowTabWidgetView implements ClickHandler{

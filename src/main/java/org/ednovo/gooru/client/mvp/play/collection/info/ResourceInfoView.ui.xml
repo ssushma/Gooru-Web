@@ -11,20 +11,17 @@
          <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-wrapper}">
 
 	          <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-innerwrapper}">	
-	          <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
-	          	 <g:Label styleName="{playerStyle.resource-info-more-titleboarder}" ui:field="generalLbl"></g:Label>
-	           </g:HTMLPanel>
-	                  
+	                  <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>	 
+       					<g:HTML ui:field="lblcollectionName"></g:HTML>  
 	           <g:HTMLPanel styleName="{playerStyle.resource-info-type-image}">	           	
 	           		<g:HTMLPanel styleName="{playerStyle.ipadFriendlyIconNone}" ui:field="mobileFriendly"></g:HTMLPanel>
-	          	   	<g:Label styleName="{playerStyle.resource-info-title-viewTitle}" ui:field="resourceView"> </g:Label>
+	           		<g:Label styleName="{playerStyle.resource-info-title-viewTitle2}" ui:field="lblresourceType"/>
 	           		<g:HTML  ui:field="resourceInfoSeparator"/>
+	           		<g:Label styleName="{playerStyle.resource-info-title-viewTitle}" ui:field="resourceView"> </g:Label>
+	           		<g:HTML  ui:field="resourcetypeSeparator" />
 	           		<g:Label styleName="{playerStyle.resource-info-title-viewTitle1}" ui:field="timeRequiredLabel"> </g:Label>
 	           			<g:Label styleName="{playerStyle.resource-info-title-view}" ui:field="timeRequiredvalue"> </g:Label>
-	           		<g:HTML ui:field="resourceInfoSeparatorTimeLbl"/>
-	           		<g:HTML  ui:field="resourcetypeSeparator" />
-	           			<g:Label styleName="{playerStyle.resource-info-title-viewTitle2}" ui:field="lblresourceType"/>
-	           		  <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>	           		  
+	           			  <!-- <g:HTML ui:field="resourceInfoSeparatorTimeLbl"/>	 -->         		  
 	             </g:HTMLPanel>
 	             
 	             <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
@@ -34,6 +31,10 @@
 	             <g:HTMLPanel styleName="{playerStyle.resource-info-more-titleDesc}"  ui:field="resourceDescriptionTitle"/>
 	               <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="resourceDescription"/>
 	            </g:HTMLPanel>
+	            
+	             <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
+          	 <g:Label styleName="{playerStyle.resource-info-more-titleboarder}" ui:field="generalLbl"></g:Label>
+           </g:HTMLPanel>
 	             
 	             <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gradesPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gradeTitle"></g:Label>

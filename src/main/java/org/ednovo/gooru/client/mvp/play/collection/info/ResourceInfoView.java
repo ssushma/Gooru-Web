@@ -90,8 +90,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	@UiField ScrollPanel scrollPanel;
 	
-	//@UiField Label staticGradeText;
-	
 	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblPublisher,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
 					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,contributorTitle,mbFriendlyLbl,
 					mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
@@ -107,7 +105,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	@UiField FlowPanel standardsInfoConatiner,licenceContainer;
 	
-	@UiField HTML resourceInfoSeparator,resourceInfoSeparatorTimeLbl,resourcetypeSeparator;
+	@UiField HTML resourceInfoSeparator,resourcetypeSeparator,lblcollectionName;
 	@UiField
 	HTMLEventPanel hideButton;
 	
@@ -151,31 +149,22 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
 
 		generalLbl.setText(GL1708);
-		//accesibilityLbl.setText(GL1703);
 		resourceInfoLbl.setText(GL1716);
 		educationallLbl.setText(GL1720);
 		
 		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
 		timeRequiredvalue.setText("");
 		
-		resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
-		resourceTypeImage.getElement().setAttribute("style", "margin-bottom: 15px;");
+		//resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
+		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 	}
 
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
 		if(collectionItemDo.getResource().getMediaType()!=null){
-			accessibilityPanel.setVisible(true);
-			accesibilityLbl.setVisible(true);
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
-				collectionItemDo.getResource().setMobilefriendlyness("NO");
-			}else{
-				collectionItemDo.getResource().setMobilefriendlyness("YES");
 			}
-		}else{
-			accessibilityPanel.setVisible(false);
-			accesibilityLbl.setVisible(false);
 		}
 		if(collectionItemDo.getResource().getResourceFormat()!=null){
 			setResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName());
@@ -202,11 +191,17 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
 		}
 
-/*		
-		lblcollectionName.setVisible(true);
-		lblcollectionName.setText(title);
-		lblcollectionName.getElement().setAttribute("style", "margin-left: 19px;");*/
-		
+		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			lblcollectionName.setVisible(true);
+			lblcollectionName.setText(title);
+			lblcollectionName.getElement().setAttribute("style", "margin-left: 40px;position: relative;top: 14px;font-weight: bold;");
+		 }else{
+		    lblcollectionName.setVisible(false);
+		 	}*/
+			
+			lblcollectionName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			lblcollectionName.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTitleStyleName());
+			
 		collectionItemDo.getResource().setHost("HippoCampus");
 		//setHostDetails(collectionItemDo.getResource().getHost());
 		setHostDetails("");
@@ -217,8 +212,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		
 		List<String> eduUsedetails = new ArrayList<String>();
 
-		//System.out.println("collectionItemDo.getResource().getEducationalUse()::"+collectionItemDo.getResource().getEducationalUse());
-		
 		if(collectionItemDo.getResource().getEducationalUse()!=null){
 		if(collectionItemDo.getResource().getEducationalUse().size()>0){
 		for(int i=0;i<collectionItemDo.getResource().getEducationalUse().size();i++){
@@ -342,7 +335,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		setkeywordsDetails(null);
 		
 		//setmobilefriendlynessdetails(collectionItemDo.getResource().getMobilefriendlyness());
-		setmobilefriendlynessdetails(collectionItemDo.getResource().getMobilefriendlyness());
+		setmobilefriendlynessdetails(collectionItemDo.getResource().getMediaType());
 		
 		List<String> acessmodedetails = new ArrayList<String>();
 		acessmodedetails.add(0, "Visual");
@@ -382,21 +375,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		setaccessibilityDetails(null);
 
 
-		resourceTypeImage.getElement().setAttribute("style", "position: relative;");
+		resourceTypeImage.getElement().setAttribute("style", "position: relative;margin-top:10px;margin-bottom: 10px;");
 
-		resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
+		//resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
 		resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().bulletBlack());
 		timeRequiredvalue.setVisible(true);
 		
-		
-		
-		/*generalLbl.setVisible(true);*/
-		/*resourceInfoLbl.setVisible(true);*/
-		/*educationallLbl.setVisible(true);*/
-		/*accesibilityLbl.setVisible(true);*/
-		
 		timeRequiredLabel.setVisible(true);
-		resourceInfoSeparatorTimeLbl.setVisible(true);
 		accessibilityPanel.setVisible(true);
 		
 		/*}else{
@@ -465,14 +450,50 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				&& collectionItemDo.getResource().getTaxonomySet()==null
 				&& collectionItemDo.getResource().getLicense() ==null && collectionItemDo.getStandards()==null){
 			generalLbl.setVisible(false);
-			/*if(!collectionItemDo.getResource().getGrade().equalsIgnoreCase("") && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")
-					|| !collectionItemDo.getResource().getUrl().equalsIgnoreCase("") && !collectionItemDo.getResource().getUrl().equalsIgnoreCase("null")
-					|| !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("") && !collectionItemDo.getResource().getThumbnailUrl().equalsIgnoreCase("null")
-					|| collectionItemDo.getResource().getTaxonomySet().size()>0  || collectionItemDo.getStandards().size()>0 ){
-				generalLbl.setVisible(true);	
-			}*/
 		}else{
-			generalLbl.setVisible(true);
+			  if(collectionItemDo.getResource().getGrade()!=null && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("")&&!collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")){
+				  			generalLbl.setVisible(true);
+				  		}
+				  		else if(collectionItemDo.getResource().getUrl()!=null&&!collectionItemDo.getResource().getUrl().equalsIgnoreCase("")&&!collectionItemDo.getResource().getUrl().equalsIgnoreCase("null")){
+				  			generalLbl.setVisible(true);
+				  		}else if(collectionItemDo.getResource().getTaxonomySet()!=null && collectionItemDo.getResource().getTaxonomySet().size()>0){
+				  			List<String> coursesList=new ArrayList<String>();
+				  			Set<CodeDo>	taxonomoyList = collectionItemDo.getResource().getTaxonomySet();
+				  			if(taxonomoyList!=null){
+				  				Iterator<CodeDo> taxonomyIterator=taxonomoyList.iterator();
+				  				while (taxonomyIterator.hasNext()) {
+				  					CodeDo codeDo=taxonomyIterator.next();
+				  					if(codeDo.getDepth()==2){
+				  						coursesList.add(codeDo.getLabel());
+				  					}
+				  				}
+				  			}
+				  			if(coursesList.size()>0){
+				  				generalLbl.setVisible(true);	
+				  			}
+				  		}else if(collectionItemDo.getStandards()!=null && collectionItemDo.getStandards().size()>0){
+				  			List<Map<String,String>> standardsList1	=collectionItemDo.getStandards();
+				  			Iterator<Map<String, String>> iterator = standardsList1.iterator();
+				  			int count = 0;
+				  			while (iterator.hasNext()) {
+				  				Map<String, String> standard = iterator.next();
+				  				String stdCode = standard.get(STANDARD_CODE);
+				  				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				  				count++;
+				  			}
+				  			if(standardsList1.size()>0){
+				  				generalLbl.setVisible(true);	
+				  			}
+				 			}else if(collectionItemDo.getResource().getLicense()!=null && collectionItemDo.getResource().getLicense().getIcon()!=null &&!collectionItemDo.getResource().getLicense().getIcon().trim().equals("") ){
+				  			 generalLbl.setVisible(true);	
+				 			}
+				  		else if(collectionItemDo.getResource().getResourceSource()!=null && collectionItemDo.getResource().getResourceSource().getAttribution()!=null && !collectionItemDo.getResource().getResourceSource().getAttribution().equalsIgnoreCase("") && !collectionItemDo.getResource().getResourceSource().getAttribution().equalsIgnoreCase("null")){
+				  			generalLbl.setVisible(true);	
+				 			}
+				  		else{
+				  			//System.out.println("final else loop:::::");
+				  			generalLbl.setVisible(false);
+				  		}
 		}
 		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
 			if(depthofknowledgedetails == null && eduUsedetails==null){
@@ -751,20 +772,33 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 
-	private void setmobilefriendlynessdetails(String mobilefriendlyness) {
+	private void setmobilefriendlynessdetails(String mediaType) {
 		// TODO Auto-generated method stub
-		if(mobilefriendlyness==""||mobilefriendlyness==null ){
+		if(mediaType!=null&&!mediaType.equalsIgnoreCase("")&&!mediaType.equalsIgnoreCase("null")){
+			if(mediaType.equals(NOT_FRIENDY_TAG)){
+				mobileFriendlyPanel.setVisible(true);
+				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
+				mbFriendlyText.setText("NO");
+				accessibilityPanel.setVisible(true);
+				accesibilityLbl.setText(GL1703);
+				accesibilityLbl.setVisible(true);
+			}else{
+				mobileFriendlyPanel.setVisible(true);
+				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
+				mbFriendlyText.setText("YES");
+				accessibilityPanel.setVisible(true);
+				accesibilityLbl.setText(GL1703);
+				accesibilityLbl.setVisible(true);
+			}
+			
+		}else{
 			mobileFriendlyPanel.setVisible(false);
 			accessibilityPanel.setVisible(false);
 			accesibilityLbl.setVisible(false);
-		}else{
-		mobileFriendlyPanel.setVisible(true);
-		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-		mbFriendlyText.setText(mobilefriendlyness);
-		accessibilityPanel.setVisible(true);
-		accesibilityLbl.setText(GL1703);
+			accesibilityLbl.setVisible(false);
 		}
 	}
+
 
 	private void showgooruCourseDetails(List<String> gooruCourse) {
 		// TODO Auto-generated method stub
@@ -1016,7 +1050,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		this.resourceDescriptionTitle.clear();
 		if(resourceDescription!=null && !resourceDescription.equalsIgnoreCase("null") && !resourceDescription.equalsIgnoreCase("")){
 			this.resourceDescription.setVisible(true);
-			this.resourceDescriptionTitle.setVisible(true);
+			//this.resourceDescriptionTitle.setVisible(true);
+			this.resourceDescriptionTitle.setVisible(false);
 			this.learningobjectiveText.setVisible(true);
 			if(resourceDescription.length()>415){
 				resourceDescription =(resourceDescription.substring(0, 415))+"...";
@@ -1030,7 +1065,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					this.resourceDescriptionTitle.setVisible(false);
 				}else{
 					this.resourceDescription.setVisible(true);
-					this.resourceDescriptionTitle.setVisible(true);
+					//this.resourceDescriptionTitle.setVisible(true);
+					this.resourceDescriptionTitle.setVisible(false);
 					this.resourceDescription.add(setText(resourceDescription));
 					this.resourceDescriptionTitle.add(setText(GL1745));
 				}
@@ -1363,7 +1399,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
 				//image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getDefinition()));
-				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getName()));
+				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()+"         "+licenseDo.getName()));
 				image.addMouseOutHandler(new MouseOutHideToolTip());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
@@ -1501,6 +1537,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			resourceTypeImage.setStyleName(getResourceTypeImage(resourceType));
 		}
 	}
+	private String removeHtmlTags(String html){
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+        return html;
+	}
+	
 	@Override
 	public void loadResourceCollection(ResoruceCollectionDo resoruceCollectionDo) {
 		List<ResourceSearchResultDo> resourceSearchResultList=resoruceCollectionDo.getSearchResults();
