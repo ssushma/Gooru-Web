@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.profilepage;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.client.mvp.profilepage.content.ProfilePageLibraryView;
 import org.ednovo.gooru.client.uc.ProfilePageDescriptionEditUc;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -34,6 +35,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @fileName : IsProfilePageView.java
@@ -103,4 +105,6 @@ public interface IsProfilePageView extends IsViewWithHandlers<ProfilePageUiHandl
 	Label getChilNoShareOption();
 
 	void closeAllOpenedPopUp();
+	
+	ProfilePageLibraryView getContentView();
 }
