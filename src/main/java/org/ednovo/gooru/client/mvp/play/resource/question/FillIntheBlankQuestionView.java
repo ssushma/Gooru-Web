@@ -178,6 +178,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 			QuestionAnswerDo questionAnswerDo=answersIterator.next();
 			String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText().trim();
 		  	String 	textBoxAnswerDoAnswerText	=	textBoxArray.get(i).getText().trim();
+		  	questionAnswerDoAnswerText 	=questionAnswerDoAnswerText.replaceAll("<[^>]*>", "");
 		  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
 		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
 		  	attemptTrySequenceArray.add(i+1);

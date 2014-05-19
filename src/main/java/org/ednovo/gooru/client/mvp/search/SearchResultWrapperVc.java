@@ -78,7 +78,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	DisclosurePanel disclosureDisPanel;
 
 	@UiField
-	FocusPanel moreInfoLinkFocPanel;
+	FocusPanel moreInfoLinkFocPanel,infoLblFocPanel;
 
 	@UiField
 	FocusPanel shareLinkFocPanel;
@@ -93,7 +93,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	FlowPanel disclosureHeaderFloPanel;
 
 	@UiField
-	Label moreInfoLbl;
+	Label moreInfoLbl,infoLbl;
 
 	@UiField
 	Label shareLbl;
@@ -114,6 +114,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	private static String ADDED = GL0736;
 
 	private SearchShareVc searchShareVc;
+	
+	private SearchInfoTabVc searchInfoVc;
 
 	private Boolean moreInfoMode = null;
 
@@ -134,10 +136,18 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setAddedStatus(null);
-		moreInfoLbl.setText(GL0734);
+		if(rootWebUrl.contains("collection-search")){
+			moreInfoLbl.setText(GL1755);
+		} else if (rootWebUrl.contains("resource-search")) {
+			moreInfoLbl.setText(GL1754);
+		}
+		infoLbl.setText(GL1756);
+		
+	
 		shareLbl.setText(GL0526);
 		
 		moreInfoLbl.getElement().setId("lblMoreInfo");
+		infoLbl.getElement().setId("lblInfo");
 		shareLbl.getElement().setId("lblSahre");
 		String browserType = browserAgent.returnFormFactorView();
 		if(!(browserType.equalsIgnoreCase("desktop"))) {
@@ -149,6 +159,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			disclosureHeaderFloPanel.setVisible(false);
 		}
 		searchShareVc = new SearchShareVc();
+		searchInfoVc = new SearchInfoTabVc();
 		addStyleName(UcCBundle.INSTANCE.css().userDefaultSelectDisable());
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			addStyleName(SearchResultWrapperCBundle.INSTANCE.css().collectionPPPPanel());
@@ -202,6 +213,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public void openMoreInfoContainer() {
 		if (moreInfoMode == null || !moreInfoMode) {
 			moreInfoMode = true;
+			infoLbl.removeStyleName(res.css().infoLblActive());
 			moreInfoLbl.addStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
 			disclosureContentSimPanel.clear();
@@ -214,6 +226,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			onDisclosureClose();
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
+			infoLbl.removeStyleName(res.css().infoLblActive());
 		}
 	}
 	
@@ -226,9 +239,11 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 		if (moreInfoMode == null || moreInfoMode) {
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
+			infoLbl.removeStyleName(res.css().infoLblActive());
 			shareLbl.addStyleName(res.css().shareActive());
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchShareVc());
+		
 			getSearchShareVc().onReveal();
 			moreInfoMode = false;
 			onDisclosureOpen();
@@ -237,6 +252,35 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			onDisclosureClose();
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
+			infoLbl.removeStyleName(res.css().infoLblActive());
+		}
+	}
+	
+	/**
+	 * View share link widget
+	 * @param clickEvent instance Of {@link ClickEvent}
+	 */
+	@UiHandler("infoLblFocPanel")
+	public void onInfoTabClick(ClickEvent clickEvent) {
+
+		if (moreInfoMode == null || moreInfoMode) {
+			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
+			infoLbl.addStyleName(res.css().infoLblActive());
+			shareLbl.removeStyleName(res.css().shareActive());
+			disclosureContentSimPanel.clear();
+			disclosureContentSimPanel.setWidget(getSearchInfoVc());
+			getSearchInfoVc().setData(this.searchResultDo);
+			getSearchInfoVc().onReveal();
+			//getSearchInfoVc().reset(moreInfoMode);
+		//	
+			moreInfoMode = false;
+			onDisclosureOpen();
+			MixpanelUtil.Click_Share();
+		} else {
+			onDisclosureClose();
+			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
+			shareLbl.removeStyleName(res.css().shareActive());
+			infoLbl.removeStyleName(res.css().infoLblActive());
 		}
 	}
 
@@ -338,6 +382,17 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	public DisclosurePanel getDisclosurePanel() {
 		return disclosureDisPanel;
+	}
+	
+	
+
+
+	public SearchInfoTabVc getSearchInfoVc() {
+		return searchInfoVc;
+	}
+
+	public void setSearchInfoVc(SearchInfoTabVc searchInfoVc) {
+		this.searchInfoVc = searchInfoVc;
 	}
 
 	/**

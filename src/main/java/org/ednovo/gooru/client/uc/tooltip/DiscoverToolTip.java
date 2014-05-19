@@ -31,10 +31,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,6 +51,8 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -76,11 +82,16 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	}
 	
 	@UiField Label lblRusdLibrary,lblGooruLibrary;
+	
+	@UiField
+	static HTMLPanel panelCode;
 
-/*	@UiField HTMLEventPanel lblPartnerLibrary, partnerLibContainer;
+	@UiField HTMLEventPanel lblPartnerLibrary, partnerLibContainer;
 	
 	@UiField HTMLPanel dropdownImg;
-*/	/**
+	
+//	@UiField LibraryStyleBundle libraryStyleUc;
+	/**
 	 * Because this class has a default constructor, it can
 	 * be used as a binder template. In other words, it can be used in other
 	 * *.ui.xml files as follows:
@@ -95,14 +106,14 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		setWidget(uiBinder.createAndBindUi(this));
 		lblRusdLibrary.setText(GL0515);
 		lblGooruLibrary.setText(GL0516);
-/*		lblPartnerLibrary.add(new Label(GL1550));
+		lblPartnerLibrary.add(new Label(GL1751));
 		lblPartnerLibrary.addMouseOverHandler(new OpenPartnerMenu());
 		partnerLibContainer.addMouseOutHandler(new ClosePartnerMenu());
 		lblRusdLibrary.addMouseOverHandler(new CloseOtherMenus());
 		lblGooruLibrary.addMouseOverHandler(new CloseOtherMenus());
 		partnerLibContainer.setVisible(false);
-*/		
-		//getPartnersData();
+		
+		getPartners();
 		
 		lblRusdLibrary.addClickHandler(new ClickHandler() {
 			@Override
@@ -126,14 +137,43 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 			}
 		});
+        
+        
+        Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+
+			  panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:relative;");
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+		  else
+		  {
+			  panelCode.getElement().getFirstChildElement().removeAttribute("style");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+        
 	}
 	
 	@Override
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
 		return addDomHandler(handler, MouseOutEvent.getType());
 	}
+	
+	public static void onclickOfAndriodorIpadcloseDiv()
+	{
+		panelCode.getElement().getFirstChildElement().removeAttribute("style");
+	}
 
-/*	private class OpenPartnerMenu implements MouseOverHandler {
+	private class OpenPartnerMenu implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			lblPartnerLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
@@ -166,21 +206,58 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 			partnerLibContainer.add(partnerName);
 		}
 	}
+	public void getPartners() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new AsyncCallback<ArrayList<LibraryUserDo>>() {
+			@Override
+			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
+				setPartners(partnersList);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {}
+		});
+	}
+	private void setHeaderBrowserTitle(String courseLabel) {
+		AppClientFactory.setBrowserWindowTitle(SeoTokens.COURSE_PAGE_TITLE+courseLabel);	
+	}
+	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
+		
+		LibraryUserDo psdPalDo = new LibraryUserDo();
+		LibraryUserDo fincaPinc = new LibraryUserDo();
+		psdPalDo.setUsername(PlaceTokens.PSDPAL);
+		fincaPinc.setUsername(PlaceTokens.FINCAPINC);
+		partnersList.add(fincaPinc);
+		partnersList.add(psdPalDo);
+		
+		for(int i=0;i<partnersList.size();i++) {
+			final LibraryUserDo libraryUserDo = partnersList.get(i);
+			final Label partnerTitle = new Label(StringUtil.getPartnerName(libraryUserDo.getUsername()));
+			partnerTitle.addStyleName("courseOption");
+			partnerTitle.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					setHeaderBrowserTitle(partnerTitle.getText());
+					AppClientFactory.getPlaceManager().revealPlace(libraryUserDo.getUsername());
+				}
+			});
+			partnerLibContainer.add(partnerTitle);
+		}
+	}
 	
 	private void getPartnersData() {
-		List partnersData = new ArrayList();
+		List<String> partnersData = new ArrayList<String>();
 		partnersData.add("Autodesk® ");
 		partnersData.add("8a6b75b8-0537-492e-8970-c41ade8723a6");
-		partnersData.add("Office of Naval Research (ONR)");
-		partnersData.add("2e8dd71c-cef6-435d-bfd8-0afad9939b07");
 		partnersData.add("Foundation for Teaching Economics (FTE)");
 		partnersData.add("de182361-8379-4d82-9168-e5bd8b658cff");
-		partnersData.add("New Global Citizens (NGC)");
-		partnersData.add("bac737f6-4945-4990-b3d6-8c07ec09f9c8");
-		partnersData.add("What So Proudly We Hail");
-		partnersData.add("593eeff6-2fa2-487b-941d-67d197e10201");
 		partnersData.add("SVEF's Lessonopoly");
 		partnersData.add("cd46b323-83d6-44ef-acf1-cef0705623db");
+		partnersData.add("New Global Citizens (NGC)");
+		partnersData.add("bac737f6-4945-4990-b3d6-8c07ec09f9c8");
+		partnersData.add("Office of Naval Research (ONR)");
+		partnersData.add("2e8dd71c-cef6-435d-bfd8-0afad9939b07");
+		partnersData.add("What So Proudly We Hail");
+		partnersData.add("593eeff6-2fa2-487b-941d-67d197e10201");
 		setPartnersData(partnersData);
 	}
 
@@ -195,8 +272,8 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 			hide();
 			Map<String,String> params = new HashMap<String, String>();
 			params.put("pid", folderId);
-			//AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PARTNER_LIBRARY, params);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
 		}
 	}
-	*/
+	
 }

@@ -58,6 +58,10 @@ public interface PlayerAppService extends BaseService {
 	
 	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView);
 	
+	public CollectionItemDo getResourceObj(String resourceId);
+	
+	
+	
 	/**
 	 * Get shorten collection url
 	 * @param contentGooruOid of collection

@@ -1870,3 +1870,20 @@ fieldset {
 .userRating .star.filled {
     color:#1076BB;
 }
+/* tool tip dropdown css */
+.courseOption {
+	padding: 7px;
+	width: 100%;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	float: left;
+	white-space: normal;
+	line-height: 1.2em;
+}
+
+.courseOption:hover {
+	background-color:#CFE3F1;
+}
+
+
