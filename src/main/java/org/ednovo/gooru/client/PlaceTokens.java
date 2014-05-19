@@ -44,7 +44,7 @@ public interface PlaceTokens {
 	String CREATEFOLDER = "createfolder";
 	String REGISTER="registration";
 	String STUDENT = "students-view";
-	String STUDY = "study";
+	String STUDY = "myclasses";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";
 	

@@ -150,3 +150,25 @@
 	text-overflow: ellipsis;
 	width: 90%;
 }
+
+.inputContainer{
+	padding: 8px;
+	padding-top:12px;
+}
+
+.tooltipContentTitle {
+	padding-bottom: 10px;
+}
+
+.classCodeTxtBox {
+	width: 120px;
+	border: 1px #E3E3E3 solid !important;
+	background-color: #FFF !important;
+	font-size: 12px !important;
+	outline: 0;
+	display: inline-block;
+	padding: 6px;
+	font-family: Tahoma, sans-serif !important;
+	text-transform: uppercase;
+	height: 17px;
+}
