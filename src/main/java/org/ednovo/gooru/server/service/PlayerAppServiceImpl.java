@@ -1039,6 +1039,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 	
 	/**
+	 * Not in use...
 	 * Gets the ratings given by the user for each resource by calling an API.
 	 * 
 	 * @param associateGooruOid {@link String}
@@ -1167,7 +1168,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 
 	/**
-	 * Gets all the ratings and reviews for the resources.
+	 * Gets all the ratings and reviews for the resources filtered by user.
 	 * @param resourceId {@link String}
 	 * @param gooruUid {@link String}
 	 * 

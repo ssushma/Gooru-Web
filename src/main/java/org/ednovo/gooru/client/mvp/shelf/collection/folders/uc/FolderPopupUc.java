@@ -276,7 +276,7 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 	private void setData(List<FolderDo> folders, String moveType) {
 		if(getPageNumber()==0) {
 			FolderDo organizeDo = new FolderDo();
-			organizeDo.setTitle("Organize");
+			organizeDo.setTitle(GL1752);
 			setOrganizeStaticData(organizeDo, 0, 0, 0);
 		}
 		

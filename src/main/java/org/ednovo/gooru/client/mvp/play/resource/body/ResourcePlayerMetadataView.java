@@ -884,7 +884,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			emoticsContainer.removeFromParent();
 		}
 	}
-	
 	public static void onClosingAndriodorIpaddiv()
 	{
 		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");

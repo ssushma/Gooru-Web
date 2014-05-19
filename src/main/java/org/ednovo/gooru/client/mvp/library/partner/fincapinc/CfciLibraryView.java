@@ -22,25 +22,41 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.library.partner.fincapinc;
 
-package org.ednovo.gooru.client;
-
+import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
-public interface SeoTokens extends MessageProperties{
-	String HOME_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
-	String HOME_TITLE_LOGGEDIN = "Featured Courses";
-	String RESOURCE_PLAYER_TITLE = "";
-	String COLLECTION_PLAYER_TITLE = "";
-	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
-	String COLLECTION_SEARCH_TITLE = "Discover Collections | ";
-	String TEACH_TITLE = GL1753;
-	String STUDY_TITLE = "Study";
-	String WORKSPACE_TITLE = GL1752;
-	String SETTINGS_TITLE = "Settings";
-	String PROFILE_PAGE_TITLE = "";
-	String COURSE_PAGE_TITLE = "";
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
+
+/**
+ * @author Search Team
+` * 
+ */
+public class CfciLibraryView extends BaseViewWithHandlers<CfciLibraryUiHandlers> implements IsCfciView, MessageProperties {
+
+	@UiField SimplePanel partnerPanel;
 	
-	String HOME_META_DESCRIPTION = "Gooru provides millions of free educational K-12 resources. Teachers can access and organize collections, build quizzes, and assign to students. Gooru is a non-profit organization.";
+	private static CfciLibraryViewUiBinder uiBinder = GWT.create(CfciLibraryViewUiBinder.class);
+
+	interface CfciLibraryViewUiBinder extends UiBinder<Widget, CfciLibraryView> {
+	}
+
+	public CfciLibraryView() {
+		setWidget(uiBinder.createAndBindUi(this));
+	}
 	
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (content != null) {
+			if (slot == CfciLibraryUiHandlers.TYPE_FOLDERS_SLOT) {
+				partnerPanel.setWidget(content);
+			}
+		}
+	}
+
 }
