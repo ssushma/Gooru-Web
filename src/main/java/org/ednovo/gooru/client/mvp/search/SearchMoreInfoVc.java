@@ -80,12 +80,12 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	}
 
 	@UiField
-	public MoreInfoFieldVc resourceSearchGradeFieldVc,resourceSearchRightsFieldVc,gradeFieldVc,tagsFieldVc,timeFieldVc,likesFieldVc,shareField,rightsFieldVc;
+	public MoreInfoFieldVc resourceSearchGradeFieldVc,resourceSearchRightsFieldVc;
 
 
 
 	@UiField
-	public Label countLbl, countLblTxt,rightsLbl,lblNotFriendly,moreInfotext;
+	public Label countLbl, countLblTxt,rightsLbl,lblNotFriendly;
 
 	@UiField Image imgQuestionImage;
 	
@@ -103,7 +103,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	public AppMirageDragContainer usedInResourcesPanel;
 
 	@UiField
-	FlowPanel metaInfoFloPanel,resourceMoreInfoRightPanel;
+	FlowPanel resourceMoreInfoRightPanel;
 
 	@UiField(provided = true)
 	SearchMoreInfoVcCBundle res;
@@ -162,19 +162,14 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		}
 		
 		setWidget(uiBinder.createAndBindUi(this));
-		moreInfotext.setText(GL0726);
-		gradeFieldVc.setToolTip(GL0325);
-		tagsFieldVc.setToolTip(GL0727);
-		timeFieldVc.setToolTip(GL0728);
-		likesFieldVc.setToolTip(GL0729);
-		shareField.setToolTip(GL0526);
-		rightsFieldVc.setToolTip(GL0730);
+
 		rightsLbl.setText(GL0731);
 		resourceSearchRightsFieldVc.setToolTip(GL0730);
 		imgQuestionImage.setTitle(GL0732);
 		imgQuestionImage.setAltText(GL0732);
 		imgQuestionImage.setUrl("images/mos/questionmark.png");
 		resourceSearchGradeFieldVc.setToolTip(GL0325);
+
 
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<C>>() {
 
@@ -210,15 +205,15 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	
 		rightsLbl.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			metaInfoFloPanel.setVisible(false);
+		//	metaInfoFloPanel.setVisible(false);
 			rightsLbl.setVisible(true);
 			resourceScrPanel.setStyleName(res.css().moreInfoResourceSearceRightScrollPanel());
 			resourceMoreInfoRightPanel.getElement().getStyle().setWidth(489, Unit.PX);
 //			resourceScrPanel.setStyleName(res.css().moreInfoResourceSearchRightPanel());
 		}
 		else{
-			metaInfoFloPanel.setVisible(true);
-			shareField.setVisible(false);
+	/*		metaInfoFloPanel.setVisible(true);
+			shareField.setVisible(false);*/
 		}
 		setHandler();
 	}
@@ -390,16 +385,16 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 			grade = finalGradeStringB.toString();
 			
-			if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
+/*			if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 				if(!gradeFieldVc.getElement().toString().contains("Grade:")) {
 					gradeFieldVc.setHtmlTxt(grade);
 				}
-			}
+			}*/
 			
 		} else {
-			gradeFieldVc.setHtmlTxt(null);
+			//gradeFieldVc.setHtmlTxt(null);
 		}
-		timeFieldVc.setHtmlTxt(StringUtil.getValidString(searchResultDo.getAverageTime(), null));
+		//timeFieldVc.setHtmlTxt(StringUtil.getValidString(searchResultDo.getAverageTime(), null));
 //		likesFieldVc.setHtmlTxt(StringUtil.getValidStringWithSuffix(searchResultDo.getVotesUp() + "", "0", " likes"));
 		/*if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& searchResultDo.getLicense().getIcon().isEmpty()) {
 
@@ -414,10 +409,10 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			rightsLbl.setVisible(false);
 
 		}
-		else{
+/*		else{
 			rightsFieldVc.contentFloPanel.setVisible(false);
 			rightsFieldVc.imageIconSimPanel.setVisible(false);
-		}
+		}*/
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& !searchResultDo.getLicense().getIcon().equals(NULL)) {
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
 			image.setAltText(GL0730);
@@ -437,9 +432,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 				widget.setStyleName("rightsToolTip");
 				resourceSearchRightsFieldVc.addWidget(widget);
 			}else{
-				rightsFieldVc.addWidget(widget1);
+				//rightsFieldVc.addWidget(widget1);
 				widget.setStyleName("rightsToolTip");
-				rightsFieldVc.addWidget(widget);
+				//rightsFieldVc.addWidget(widget);
 			}
 			
 			
@@ -456,12 +451,12 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 				rightsLbl.setVisible(true);
 				resourceSearchRightsFieldVc.addWidget(widget);
 			}else{
-				rightsFieldVc.addWidget(widget);
+				//rightsFieldVc.addWidget(widget);
 			}
 			
 		} else {
 			rightsLbl.setVisible(false);
-			rightsFieldVc.setHtmlTxt(null);
+			//rightsFieldVc.setHtmlTxt(null);
 			resourceSearchRightsFieldVc.setHtmlTxt(null);
 		}
 		if (searchResultDo.getTagSet() != null
@@ -478,9 +473,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 						.tagText());
 				label.setStyleName("tagToolStyle");
 				tagList.append((tagIndex > 0 ? ", " : "") + tag.getLabel());
-				if (tagIndex < 4) {
+	/*			if (tagIndex < 4) {
 					tagsFieldVc.addWidget(label);
-				}
+				}*/
 				tagIndex++;
 			}
 
@@ -491,14 +486,14 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 						new Label("+" + (tagIndex - 4)), toolTipInfo);
 				toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE
 						.css().blueLink());
-				tagsFieldVc.addWidget(toolTipUc);
-			} else {
+		/*		tagsFieldVc.addWidget(toolTipUc);*/
+			} /*else {
 				tagsFieldVc.setHtmlTxt(null);
-			}
+			}*/
 
-		} else {
+		} /*else {
 			tagsFieldVc.setHtmlTxt(null);
-		}
+		}*/
 	}
 	
 	
@@ -646,7 +641,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 	 *            instance of {@link MoreInfoFieldVc}
 	 */
 	public void addMoreInfoField(MoreInfoFieldVc moreInfoField) {
-		metaInfoFloPanel.add(moreInfoField);
+	//	metaInfoFloPanel.add(moreInfoField);
 	}
 
 	/**
@@ -680,19 +675,19 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		return usedInResourcesPanel;
 	}
 
-	/**
+/*	*//**
 	 * @return rightsFiled instance of {@link MoreInfoFieldVc}
-	 */
+	 *//*
 	public MoreInfoFieldVc getRightsField() {
 		return rightsFieldVc;
 	}
 
-	/**
+	*//**
 	 * @return likesFiled instance of {@link MoreInfoFieldVc}
-	 */
+	 *//*
 	public MoreInfoFieldVc getLikesField() {
 		return likesFieldVc;
-	}
+	}*/
 
 	
 	public void setNotFriendly(String text){

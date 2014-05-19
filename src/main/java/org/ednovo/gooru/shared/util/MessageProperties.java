@@ -256,7 +256,7 @@ public interface MessageProperties {
 	
 	//Header
 	String GL0179 = "Discover";
-	String GL0180 = "Organize";
+	String GL0180 = "My Collections";
 	String GL0181 = "Teach";
 	String GL0182 = "Study";
 	String GL0183 = "Hi Guest!";
@@ -2166,7 +2166,7 @@ public interface MessageProperties {
     	String GL1705="Access Hazard";
     	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL";
+    	String GL1708="GENERAL INFO";
 		String GL1709="e.g. I used this collection as an opportunity for my students to explore various reasons for the Fall of Rome. They completed a graphic organizer as they worked through this collection and were then accountable to making judgements on which reasons they thought were the most significant and why. It all led up to a Socratic Seminar answering the essential question,\"In what ways did the pinnacle and demise of Rome influence European culture and history?\"" ;
 		String GL1710="Image";
 		String GL1711="Video";
@@ -2227,6 +2227,9 @@ public interface MessageProperties {
 		
 		String GL1752 = "My Collections";
 		String GL1753 = "My Classes";
+		String GL1754 =	"Collections with this Resource";
+		String GL1755 =	"Resources in this Collection";
+		String GL1756 =	"Info";
 
 		
    }
