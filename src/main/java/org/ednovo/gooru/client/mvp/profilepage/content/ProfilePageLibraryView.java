@@ -30,17 +30,16 @@ import java.util.Iterator;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.folders.item.FolderItemChildPresenter;
 import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
-import org.ednovo.gooru.client.mvp.socialshare.SocialSharePresenter;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -58,7 +57,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	LibraryView libraryView = null;
 	
-	private static final String FOLDERID = "id";
+	private static final String FOLDERID = "folderId";
 	
 	@UiField LibraryStyleBundle libraryStyleUc;
 
@@ -81,6 +80,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		setPresenter(new ProfilePageLibraryPresenter(this));
 		libraryView = new LibraryView(PlaceTokens.PROFILE_PAGE);
 		profilePageLibraryView.add(libraryView);
+		profilePageLibraryView.getElement().getStyle().setMarginTop(20, Unit.PX);
 	}
 	
 	public void setData(String gooruUId) {
@@ -94,7 +94,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
-		//setCourseImageData();
 		libraryView.getLeftNav().clear();
 		libraryView.getContentScroll().clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
@@ -156,10 +155,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			e.printStackTrace();
 			loadingPanel(false);
 		}
-	}
-	
-	private void setCourseImageData() {
-		libraryView.setCourseData(null);
 	}
 	
 	@Override

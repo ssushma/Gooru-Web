@@ -74,7 +74,7 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
-				getView().setTopicListData(result.getSearchResult(), folderId);
+ 				getView().setTopicListData(result.getSearchResult(), folderId);
 			}
 			
 			@Override

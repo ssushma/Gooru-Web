@@ -263,6 +263,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			courseTabs.setVisible(false);
 			landingBanner.setVisible(false);
 			featuredContributorsLink.setVisible(false);
+			featuredCourseTabs.setVisible(false);
+			featuredCousesLbl.setVisible(false);
 		} else {
 			if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
 				partnerLogo.setVisible(true);

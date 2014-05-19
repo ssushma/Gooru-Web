@@ -271,7 +271,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		errorImage.setUrl("images/404_message.png");
 		profileOnContainerPanel.setVisible(false);
 		profileOffContainerPanel.setVisible(false);
-		loadingPanel.setVisible(true);
+		loadingPanel.setVisible(false);
 		addCourseGradeBtn.getElement().setId("btnAddCourseGrade");
 		addCourseBtn.getElement().setId("btnAddCourse");
 		editImageButton.getElement().setId("btnEditImage");
