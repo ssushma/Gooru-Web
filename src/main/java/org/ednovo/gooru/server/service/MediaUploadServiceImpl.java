@@ -103,10 +103,6 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 			return fileName;
 		} 
 		else {
-			File userFile = new File(imageUrl);
-			String filename = userFile.getName();
-			
-			imageUrl = filename;
 			return imageUrl;
 		}
 
