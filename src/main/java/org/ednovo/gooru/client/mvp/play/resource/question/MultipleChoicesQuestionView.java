@@ -208,13 +208,12 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 					}
 					List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(""); //TODO need to confirm with BE team what value need pass
+					answerAttemptDo.setText(questionAnswerOptionView.getAnswerText()); 
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerAttemptDo.setStatus(questionAnswerOptionView.isAnswerCorrect()?"1":"0");
 					userAttemptedOptionsList.add(answerAttemptDo);
 					userAttemptedAnswerObject(userAttemptedOptionsList);
-					
 				}
 			}
 		}

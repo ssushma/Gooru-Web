@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.question;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -35,7 +36,6 @@ import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -357,7 +357,7 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 	}
 	
 	public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
-		JSONArray answerOptionJsonArray=new JSONArray();
+		List<JSONObject> answerOptionJsonArray=new ArrayList<JSONObject>();
 		Long timeStamp=getUnixTimeStamp();
 		if(answerOptionAttemptList!=null&&answerOptionAttemptList.size()>0){
 			for(int i=0;i<answerOptionAttemptList.size();i++){
@@ -368,15 +368,15 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.ORDER, new JSONString(answerAttemptDo.getOrder().toString()));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.ANSWERID, new JSONNumber(timeStamp));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.TIMESTAMP, new JSONNumber(timeStamp));
-				answerOptionJsonArray.set(i, attemptAnswerJsonObject);
+				answerOptionJsonArray.add(attemptAnswerJsonObject);
 			}
 		}
 		if(isCollectionPlayer){
-			collectionPlayerPresenter.setAnswerObjectArray(answerOptionJsonArray);
+			collectionPlayerPresenter.getAnswerObjectArray().add(answerOptionJsonArray);
 		}else if(isResourcePlayer){
-			resourcePlayerPresenter.setAnswerObjectArray(answerOptionJsonArray);
+			resourcePlayerPresenter.getAnswerObjectArray().add(answerOptionJsonArray);
 		}else if(isPreviewPlayer){
-			previewPlayerPresenter.setAnswerObjectArray(answerOptionJsonArray);
+			previewPlayerPresenter.getAnswerObjectArray().add(answerOptionJsonArray);
 		}
 	}
 	

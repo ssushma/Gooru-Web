@@ -211,7 +211,7 @@ public class PlayerDataLogEvents {
 	}
 	
 	public static  JSONString getDataLogPayLoadObject(String questionType,String oeAnswerText, List<Integer> attemptStatus, List<Integer> attemptTrySequence,
-										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,JSONArray answerObjectArray){
+										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,List<List<JSONObject>> answerObjectArray){
 		JSONObject payLoadMap=new JSONObject();
 		try{
 			payLoadMap.put(QUESTIONTYPE, new JSONString(questionType));
@@ -223,7 +223,7 @@ public class PlayerDataLogEvents {
 			payLoadMap.put(ATTEMPTCOUNT,new JSONNumber(attemptCount));
 			payLoadMap.put(HINTS, new JSONString(hintIdsObject.toString()));
 			payLoadMap.put(EXPLANATION, new JSONString(explanationIdsObject.toString()));
-			payLoadMap.put(ANSWEROBJECT, new JSONString(answerObjectArray.toString()));
+			payLoadMap.put(ANSWEROBJECT, new JSONString(getAnswerObjectArrayInString(answerObjectArray)));
 		}catch(Exception e){
 			
 		}
@@ -238,6 +238,18 @@ public class PlayerDataLogEvents {
 		
 		}
 		return new JSONString(payLoadMap.toString());
+	}
+	
+	public static String getAnswerObjectArrayInString(List<List<JSONObject>> answerObjectArray){
+		String attemptedAnswersObject="";
+		for(int i=0;i<answerObjectArray.size();i++){
+			List<JSONObject> jsonArray=answerObjectArray.get(i);
+			attemptedAnswersObject=attemptedAnswersObject+jsonArray;
+			if((i+1)!=answerObjectArray.size()){
+				attemptedAnswersObject=attemptedAnswersObject+",";
+			}
+		}
+		return attemptedAnswersObject;
 	}
 	
 	public static JSONArray createJsniIntArray(List<Integer> attemptTrySequence){

@@ -150,7 +150,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	
 	private JSONObject explanationIdsObject=new JSONObject();
 	
-	private JSONArray answerObjectArray=new JSONArray();
+	private List<List<JSONObject>> answerObjectArray=new ArrayList<List<JSONObject>>();
 	
 	private List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
 	
@@ -275,11 +275,11 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
 	}
 	
-	public JSONArray getAnswerObjectArray() {
+	public List<List<JSONObject>> getAnswerObjectArray() {
 		return answerObjectArray;
 	}
 
-	public void setAnswerObjectArray(JSONArray answerObjectArray) {
+	public void setAnswerObjectArray(List<List<JSONObject>> answerObjectArray) {
 		this.answerObjectArray = answerObjectArray;
 	}
 	
@@ -665,7 +665,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		hintIdsObject=new JSONObject();
 		explanationIdsObject=new JSONObject();
 		answerIdsObject=new JSONObject();
-		answerObjectArray=new JSONArray();
+		answerObjectArray.clear();
 		attemptStatusArray.clear();
 		attemptTrySequenceArray.clear();
 		attemptAnswersMap.clear();

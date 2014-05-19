@@ -178,7 +178,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	private JSONObject answerIdsObject=new JSONObject();
 	
-	private JSONArray answerObjectArray=new JSONArray();
+	private List<List<JSONObject>> answerObjectArray=new ArrayList<List<JSONObject>>();
 	
 	private JSONObject hintIdsObject=new JSONObject();
 	
@@ -355,14 +355,14 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	/**
 	 * @return the answerObjectArray
 	 */
-	public JSONArray getAnswerObjectArray() {
+	public List<List<JSONObject>> getAnswerObjectArray() {
 		return answerObjectArray;
 	}
 
 	/**
 	 * @param answerObjectArray the answerObjectArray to set
 	 */
-	public void setAnswerObjectArray(JSONArray answerObjectArray) {
+	public void setAnswerObjectArray(List<List<JSONObject>> answerObjectArray) {
 		this.answerObjectArray = answerObjectArray;
 	}
 
@@ -1292,7 +1292,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		hintIdsObject=new JSONObject();
 		explanationIdsObject=new JSONObject();
 		answerIdsObject=new JSONObject();
-		answerObjectArray=new JSONArray();
+		answerObjectArray.clear();
 		attemptStatusArray.clear();
 		attemptTrySequenceArray.clear();
 		setResourceScore(0);
@@ -1622,7 +1622,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			hintIdsObject=new JSONObject();
 			explanationIdsObject=new JSONObject();
 			answerIdsObject=new JSONObject();
-			answerObjectArray=new JSONArray();
+			answerObjectArray.clear();
 			attemptStatusArray.clear();
 			attemptTrySequenceArray.clear();
 			setResourceScore(0);
