@@ -778,6 +778,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 				name = "teach";
 //				onLinkPopupClicked(null);
 //				TODO need to show new logout page....
+				manageDotsMenuSelection(studyLink);
+				AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 			}
 		}
 

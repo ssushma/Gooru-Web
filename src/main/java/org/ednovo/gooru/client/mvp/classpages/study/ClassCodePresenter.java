@@ -66,6 +66,8 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 			IsClassCodeProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
 	
 	@Override
@@ -98,7 +100,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		super.onReveal();
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
