@@ -183,10 +183,13 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
 		  	attemptTrySequenceArray.add(i+1);
 		  	AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-			answerAttemptDo.setText(""); //TODO need to confirm with BE team what value need pass
+			answerAttemptDo.setText(textBoxAnswerDoAnswerText);
 			answerAttemptDo.setAnswerId(questionAnswerDo.getAnswerId());
 			answerAttemptDo.setOrder(i+1+"");
 			userAttemptedOptionsList.add(answerAttemptDo);
+			if(textBoxAnswerDoAnswerText!=null&&textBoxAnswerDoAnswerText.equals("")){
+				answerAttemptDo.setSkip(true);
+			}
 			if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
 				answerAttemptDo.setStatus("1");
 				if(isFibStatus){

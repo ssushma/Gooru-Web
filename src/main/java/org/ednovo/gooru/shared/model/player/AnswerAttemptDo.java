@@ -17,6 +17,7 @@ public class AnswerAttemptDo implements Serializable{
 	private String status="";
 	private String order="";
 	private int answerId=0;
+	private boolean skip=false;
 	/**
 	 * @return the text
 	 */
@@ -64,6 +65,12 @@ public class AnswerAttemptDo implements Serializable{
 	 */
 	public void setAnswerId(int answerId) {
 		this.answerId = answerId;
+	}
+	public boolean isSkip() {
+		return skip;
+	}
+	public void setSkip(boolean skip) {
+		this.skip = skip;
 	}
 	
 }

@@ -248,7 +248,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 			if(widget instanceof CheckBoxAnswerOptionView){
 				CheckBoxAnswerOptionView checkBoxAnswerOptionView=(CheckBoxAnswerOptionView)widget;
 				AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-				answerAttemptDo.setText(""); //TODO need to confirm with BE team what value need pass
+				answerAttemptDo.setText(checkBoxAnswerOptionView.getAnswerText()); 
 				answerAttemptDo.setAnswerId(checkBoxAnswerOptionView.getAnswerId());
 				answerAttemptDo.setOrder(i+1+"");
 				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
@@ -265,7 +265,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					}else{
 						answerAttemptDo.setStatus("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
-						 mutipleAnswerChoiceStatus=false;
+						mutipleAnswerChoiceStatus=false;
 					}
 				}
 				if(checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){

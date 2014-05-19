@@ -36,6 +36,7 @@ import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -366,8 +367,9 @@ public class QuestionResourcePresenter extends PresenterWidget<IsQuestionResourc
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.TEXT, new JSONString(answerAttemptDo.getText().toString()));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.STATUS, new JSONString(answerAttemptDo.getStatus().toString()));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.ORDER, new JSONString(answerAttemptDo.getOrder().toString()));
-				attemptAnswerJsonObject.put(PlayerDataLogEvents.ANSWERID, new JSONNumber(timeStamp));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.ANSWERID, new JSONNumber(answerAttemptDo.getAnswerId()));
 				attemptAnswerJsonObject.put(PlayerDataLogEvents.TIMESTAMP, new JSONNumber(timeStamp));
+				attemptAnswerJsonObject.put(PlayerDataLogEvents.SKIP, JSONBoolean.getInstance(answerAttemptDo.isSkip()));
 				answerOptionJsonArray.add(attemptAnswerJsonObject);
 			}
 		}
