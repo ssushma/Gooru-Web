@@ -82,7 +82,7 @@ grade modification......
 }
 
 .moreInfoRightScrollPanel {
-	width: 365px;
+	width: 548px;
 	height: 212px;
 	float: left;
 	padding-left: 10px;
@@ -131,8 +131,9 @@ grade modification......
 }
 
 .moreInfoRightPanel {
-	width: 345px;
+	width: 505px;
 	float: left;
+	padding-left:8px;
 }
 
 
