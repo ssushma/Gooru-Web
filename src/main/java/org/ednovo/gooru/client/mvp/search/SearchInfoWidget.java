@@ -26,18 +26,18 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			UiBinder<Widget, SearchInfoWidget> {
 	}
      
-	@UiField Label resourceTypeImage,resourceView,lblPublisher,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
-	standardsText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,contributorTitle,mbFriendlyLbl,
+	@UiField Label lblPublisher,publisherText,courseText,legalText,
+	standardsText,gradeTitle,gradesText,originalUrlTitle,contributorTitle,mbFriendlyLbl,
 	mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 	eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
 	hasAdaptationType,hasAdaptationLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,isAdaptationLbl,isAdaptationType,
 	copyRightType,copyRightLbl,hostType,hostLbl,gooruCourseLbl,accessibilityAPILbl,controlType,controlLbl,
 	acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 	thumbnailText,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
-	createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,timeRequiredvalue,
+	createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,
 	momentsoflearningLbl;
 	
-	@UiField HTMLPanel resourceDescription,resourceDescriptionTitle,rightsLogoContainer,courseInfo,mobileFriendly,originalUrlText,publisherPanel,coursePanel,gradesPanel,
+	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,coursePanel,gradesPanel,
 	contributorPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,gooruCoursePanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,dateCreatedPanel,
@@ -70,8 +70,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		resourceInfoLbl.setText(GL1716);
 		educationallLbl.setText(GL1720);
 		
-		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
-		timeRequiredvalue.setText("");
 	}
 
 }
