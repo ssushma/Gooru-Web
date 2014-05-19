@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -105,6 +106,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	private ResourceSearchResultDo resourceSearchResultDo;
 	
+	private RatingWidgetView ratingWidgetView=null;
+	
 	
 	private static final String PLAYER_NAME = "resource";
 	
@@ -135,8 +138,13 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		setData(resourceSearchResultDo);
 		wrapperVcr.addStyleName("resourceSearchResultBox");
-		
-		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);		
+		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
+		ratingWidgetView=new RatingWidgetView();
+		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
+	}
+	
+	public RatingWidgetView getRatingWidgetView(){
+		return ratingWidgetView;
 	}
 	/**
 	 * 

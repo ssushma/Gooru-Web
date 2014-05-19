@@ -11,7 +11,7 @@
 		<g:InlineLabel styleName="star"></g:InlineLabel>
 		<g:InlineLabel styleName="star"></g:InlineLabel>
 		<g:InlineLabel styleName="">(</g:InlineLabel>
-		<g:InlineLabel styleName="" ui:field="ratingCountLabel">5</g:InlineLabel>
+		<g:InlineLabel styleName="{style.ratingCountLabel}" ui:field="ratingCountLabel">5</g:InlineLabel>
 		<g:InlineLabel styleName="">)</g:InlineLabel>
 	</g:FlowPanel>
 </ui:UiBinder>

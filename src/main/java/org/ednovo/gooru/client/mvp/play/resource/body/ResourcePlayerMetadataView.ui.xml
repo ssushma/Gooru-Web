@@ -20,11 +20,11 @@
 			<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
                 <g:HTMLPanel>Rate this resource</g:HTMLPanel>
                 <g:HTMLPanel styleName="ratingContainer">
-                    <g:RadioButton name="rating" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" styleName="rating"></g:RadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
                 </g:HTMLPanel>
             </g:HTMLPanel>
 			
