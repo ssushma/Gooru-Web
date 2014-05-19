@@ -299,7 +299,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 			public void onKeyPress(KeyPressEvent event) {
 				if(textAreaVal.getText().length() >= 415)
 				{
-					textAreaVal.cancelKey();
+					/*textAreaVal.cancelKey();*/
 				}			
 			}
 		});
@@ -325,12 +325,14 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 							{
 								textAreaVal.getElement().removeAttribute("style");
 								languageObjectiveerrLabel.setVisible(false);
+								if(collectionDo !=null){
 								AppClientFactory.getInjector().getResourceService().updateCollectionLanguageObjective(collectionDo, textAreaVal.getText(), new SimpleAsyncCallback<CollectionDo>() {
 										@Override
 										public void onSuccess(CollectionDo result) {
 											
 										}
 								});
+								}
 							}
 							else
 							{

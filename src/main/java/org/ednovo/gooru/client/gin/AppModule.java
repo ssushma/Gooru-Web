@@ -102,6 +102,10 @@ import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPrese
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter.IsAutodeskLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.IsAutodeskLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter.IsCfciLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.fincapinc.IsCfciView;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter.IsFteLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryView;
@@ -118,6 +122,10 @@ import org.ednovo.gooru.client.mvp.library.partner.onr.IsOnrLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter.IsOnrLibraryProxy;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryView;
+import org.ednovo.gooru.client.mvp.library.partner.psdpal.IsPsdpalView;
+import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter.IsPsdpalLibraryProxy;
+import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.IsWspwhLibraryView;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter.IsWspwhLibraryProxy;
@@ -442,6 +450,8 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(NgcLibraryPresenter.class, IsNgcLibraryView.class, NgcLibraryView.class,IsNgcLibraryProxy.class);
 		bindPresenter(WspwhLibraryPresenter.class, IsWspwhLibraryView.class, WspwhLibraryView.class,IsWspwhLibraryProxy.class);
 		bindPresenterWidget(PartnerLibraryPresenter.class, IsPartnerLibraryView.class, PartnerLibraryView.class);
+		bindPresenter(PsdpalLibraryPresenter.class, IsPsdpalView.class, PsdpalLibraryView.class,IsPsdpalLibraryProxy.class);
+		bindPresenter(CfciLibraryPresenter.class, IsCfciView.class, CfciLibraryView.class,IsCfciLibraryProxy.class);
 
 	}
 }
