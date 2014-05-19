@@ -4,10 +4,11 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="ratingandreview.css"/>
-	<div class="{style.popup} userInput">
+	<g:HTMLPanel styleName="{style.popup} userInput">
             <div class="{style.popupInner}">
                 <div class="{style.popupHeader}">
-                    <h1>Reviews for &lt;Resource Title&gt;</h1><div class="{style.closeButton}"></div>
+                    <h1>Reviews for &lt;Resource Title&gt;</h1>
+                    <g:Label styleName="{style.closeButton}" ui:field="closeButton"></g:Label>
                 </div>
                 <div class="{style.popupContent}">
                     <div class="{style.ratingVisualizations}">
@@ -86,5 +87,5 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </g:HTMLPanel>
 </ui:UiBinder>

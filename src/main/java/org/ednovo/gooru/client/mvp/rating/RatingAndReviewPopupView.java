@@ -24,12 +24,16 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.rating;
 
-import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -39,15 +43,26 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	public PopupPanel appPopUp;
 	
+	@UiField Label closeButton;
+	
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
 
 	interface ResourceNarrationViewUiBinder extends UiBinder<Widget, RatingAndReviewPopupView> {
+		
 	}
 	
 	@Inject
 	public RatingAndReviewPopupView(EventBus eventsBus){
 		super(eventsBus);
+		appPopUp=new PopupPanel();
+		appPopUp.setGlassEnabled(true);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
+	}
+	
+	@UiHandler("closeButton")
+	public void closeRatingAndReviewPopup(ClickEvent event){
+		hide();
+		Window.enableScrolling(true);
 	}
 	
 	@Override

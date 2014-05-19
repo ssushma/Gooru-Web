@@ -47,8 +47,7 @@ public class RatingWidgetView extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
-	@UiHandler("ratingCountLabel")
-	public void ratingCountLabelClickEvent(ClickEvent event){
-		
+	public InlineLabel getRatingCountLabel(){
+		return ratingCountLabel;
 	}
 }

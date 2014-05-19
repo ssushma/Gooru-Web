@@ -98,8 +98,6 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiField
 	Label shareLbl;
 	
-	@UiField RatingWidgetView ratingWidget;
-	
 	@UiField(provided = true)
 	SearchResultWrapperCBundle res;
 
@@ -108,6 +106,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	@UiField
 	Label resourcePlayerClickPanel;
+	
+	@UiField public FlowPanel ratingWidgetPanel;
 
 	private static String DRAG_TO_ADD = GL0735;
 
