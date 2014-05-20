@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="style" src="ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
+
+	<g:HTMLPanel styleName="{style.container}">
+	   <g:HTMLPanel styleName="{style.leftNav}" ui:field="leftNav"/>
+	   <g:HTMLPanel styleName="{style.contentScroll}" ui:field="contentScroll"/>
+	</g:HTMLPanel>
+
+</ui:UiBinder>

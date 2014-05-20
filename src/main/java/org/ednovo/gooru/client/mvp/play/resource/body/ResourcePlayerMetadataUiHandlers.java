@@ -25,11 +25,12 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 
-public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
+public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler {
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
 
@@ -39,7 +40,11 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers {
 	
 	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
 	
-	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);   
+	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview);   
 	
 	public boolean isOeAnswerSubmited();
+
+	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);
+
+	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview); 
 }

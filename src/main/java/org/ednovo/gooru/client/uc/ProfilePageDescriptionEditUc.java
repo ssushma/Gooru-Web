@@ -88,14 +88,14 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		deckPanel.showWidget(0);
 		errorLabel.setText(GL1043);
 		biographyLabel = new Label();
-		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 500px; min-height: 33px;");
+		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 755px; min-height: 33px;");
 		
 		biographyEditImage = new Label(GL0140);
 		biographyEditImage.setStyleName(res.css().editImage());
 		errorLabel.setVisible(false);
 		errorLabelForEditText.getElement().setAttribute("style", "float: left;text-align: right;width: 76%;");
 		errorLabelForEditText.setVisible(false);
-		editTextBox.getElement().setAttribute("maxlength", "500");
+		editTextBox.getElement().setAttribute("maxlength", "725");
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 		editTextBox.getElement().setAttribute("id", "txtAreaAboutYourself");
 		editTextBox.addBlurHandler(new BlurHandler() {
