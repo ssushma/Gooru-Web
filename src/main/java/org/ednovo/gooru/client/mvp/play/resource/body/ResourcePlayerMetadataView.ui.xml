@@ -20,11 +20,19 @@
 			<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
                 <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
                 <g:HTMLPanel styleName="ratingContainer">
+
                     <g:RadioButton name="rating" ui:field="five_star" styleName="rating"></g:RadioButton>
                     <g:RadioButton name="rating" ui:field="four_star" styleName="rating"></g:RadioButton>
                     <g:RadioButton name="rating" ui:field="three_star" styleName="rating"></g:RadioButton>
                     <g:RadioButton name="rating" ui:field="two_star" styleName="rating"></g:RadioButton>
                     <g:RadioButton name="rating" ui:field="one_star" styleName="rating"></g:RadioButton>
+
+                    <!-- <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton> -->
+
                 </g:HTMLPanel>
             </g:HTMLPanel>
 			

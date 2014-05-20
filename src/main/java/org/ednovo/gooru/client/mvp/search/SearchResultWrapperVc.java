@@ -98,8 +98,6 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@UiField
 	Label shareLbl;
 	
-	@UiField RatingWidgetView ratingWidget;
-	
 	@UiField(provided = true)
 	SearchResultWrapperCBundle res;
 
@@ -108,6 +106,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	
 	@UiField
 	Label resourcePlayerClickPanel;
+	
+	@UiField public FlowPanel ratingWidgetPanel;
 
 	private static String DRAG_TO_ADD = GL0735;
 
@@ -277,7 +277,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			colleResMode = false;
 			moreInfoMode = true;
 			shareMode = true;
-			collcResLbl.addStyleName(res.css().moreInfoActive());
+			collcResLbl.addStyleName(res.css().infoLblActive());
 			moreInfoLbl.removeStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
 			disclosureContentSimPanel.clear();
@@ -299,7 +299,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 */
 	public void onDisclosureClose() {
 		openedResult = null;
-		moreInfoMode = null;
+		moreInfoMode = true;
+		shareMode = true;
+		colleResMode = true;
 		disclosureDisPanel.setOpen(false);
 	}
 

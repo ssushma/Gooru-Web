@@ -51,4 +51,6 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 */
 	void initiateSearch();
 	
+	public void showRatingAndReviewPopup();
+	
 }

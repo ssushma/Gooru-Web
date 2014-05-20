@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
@@ -58,7 +59,9 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * 
  */
 public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsResourceSearchView, ResourceSearchPresenter.IsResourceSearchProxy> implements SearchUiHandlers {
-
+	
+	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -72,8 +75,9 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter) {
+	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(view, proxy, signUpViewPresenter);
+		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 	}
 
@@ -126,5 +130,9 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 			 AppClientFactory.setEnableScroll(false);
 	    }
 
+	}
+	public void showRatingAndReviewPopup(){
+		Window.enableScrolling(false);
+		addToPopupSlot(ratingAndReviewPopup);
 	}
 }
