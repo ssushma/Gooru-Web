@@ -634,7 +634,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		AppClientFactory
 				.getInjector()
 				.getClasspageService()
-				.v2GetAllClasspages(String.valueOf(limit), offSet,
+				.v2GetAllClass(String.valueOf(limit), offSet,
 						new SimpleAsyncCallback<ClasspageListDo>() {
 							@Override
 							public void onSuccess(ClasspageListDo result) {
@@ -1029,7 +1029,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			OpenClasspageEdit(nextClasspageId);
 		} else {
 			showNoClasspages();
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 		}
 	}
 

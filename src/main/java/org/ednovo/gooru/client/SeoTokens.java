@@ -35,7 +35,7 @@ public interface SeoTokens extends MessageProperties{
 	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
 	String COLLECTION_SEARCH_TITLE = "Discover Collections | ";
 	String TEACH_TITLE = GL1753;
-	String STUDY_TITLE = "Study";
+	String STUDY_TITLE = GL1753;
 	String WORKSPACE_TITLE = GL1752;
 	String SETTINGS_TITLE = "Settings";
 	String PROFILE_PAGE_TITLE = "";
