@@ -125,9 +125,7 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		
 		<uc:DisclosurePanelUc  ui:field="aggregatorPanelUc" visible="false">
-		   <uc:add>
-		    	<g:Image ui:field="aggregatorTooltip"  styleName="{style.aggregatorTooltip}"/>
-		   </uc:add>
+		 
 			<uc:add>
 				<uc:AppSuggestBox ui:field="aggregatorSgstBox" width="130px" />
 			</uc:add>
@@ -144,10 +142,8 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 				<g:FlowPanel ui:field="aggregatorContainerFloPanel" />
 			</uc:add>
 		</uc:DisclosurePanelUc>
+		
 			<uc:DisclosurePanelUc  ui:field="sourcePanelUc" visible="false">
-			 <uc:add>
-		    	<g:Image ui:field="publisherTooltip"  styleName="{style.publisherTooltip}"/>
-		   </uc:add>
 			<uc:add>
 				<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
 			</uc:add>
