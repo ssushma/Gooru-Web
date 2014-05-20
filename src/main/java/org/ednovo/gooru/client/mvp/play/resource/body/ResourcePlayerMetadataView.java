@@ -57,6 +57,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -68,6 +69,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
+import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -85,6 +87,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
 	@UiField RadioButton one_star,two_star,three_star,four_star,five_star;
+	
+	/*@UiField SimpleRadioButton rating1;
+	@UiField SimpleRadioButton rating2;
+	@UiField SimpleRadioButton rating3;
+	@UiField SimpleRadioButton rating4;
+	@UiField SimpleRadioButton rating5;*/
 	
 	/*@UiField SimpleCheckBox starFive,starFour,starThree,starTwo,starOne;*/
 	
@@ -123,6 +131,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
 	}
+	
+	/*@UiFactory
+	public SimpleRadioButton createRadioButton() {
+	    return new SimpleRadioButton("");
+	}*/
 
 	@Inject
 	public ResourcePlayerMetadataView(){
@@ -136,6 +149,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipThree.setText(GL0583); 
 		reactionToolTipFour.setText(GL0584); 
 		reactionToolTipFive.setText(GL0585); 
+		
+		/*rating1 = new SimpleRadioButton("rating");
+		rating2 = new SimpleRadioButton("rating");
+		rating3 = new SimpleRadioButton("rating");
+		rating4 = new SimpleRadioButton("rating");
+		rating5 = new SimpleRadioButton("rating");*/
 		
 //		starValue.setVisible(false);
 		

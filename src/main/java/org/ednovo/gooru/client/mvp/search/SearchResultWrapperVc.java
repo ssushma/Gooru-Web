@@ -114,8 +114,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	private static String ADDED = GL0736;
 
 	private SearchShareVc searchShareVc;
-	
-	private SearchInfoTabVc searchInfoVc;
+
 	
 	private SearchInfoWidget searchInfoWidget;
 
@@ -142,11 +141,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		setAddedStatus(null);
-		if(rootWebUrl.contains("collection-search")){
-			collcResLbl.setText(GL1755);
-		} else if (rootWebUrl.contains("resource-search")) {
-			collcResLbl.setText(GL1754);
-		}
+
 		moreInfoLbl.setText(GL1756);
 		
 	
@@ -165,7 +160,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			disclosureHeaderFloPanel.setVisible(false);
 		}
 		searchShareVc = new SearchShareVc();
-		searchInfoVc = new SearchInfoTabVc();
+
 		searchInfoWidget = new SearchInfoWidget();
 		addStyleName(UcCBundle.INSTANCE.css().userDefaultSelectDisable());
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
@@ -176,6 +171,9 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			addStyleName(SearchResultWrapperCBundle.INSTANCE.css().searchPanel());
 			addedStatusLbl.setText(DRAG_TO_ADD);
 		}
+		
+
+		
 	}
 
 	void setResourcePlayerClickPanelMobile() {
@@ -227,7 +225,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			shareLbl.removeStyleName(res.css().shareActive());
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchInfoWidget());
-			getSearchMoreInfoVc().setData(this.searchResultDo);
+			getSearchInfoWidget().setData(this.searchResultDo);
 			getSearchMoreInfoVc().reset(moreInfoMode);
 			onDisclosureOpen();
 			MixpanelUtil.Click_moreInfo();
@@ -368,6 +366,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		this.searchResultDo = searchResultDo;
 		//getSearchMoreInfoVc().setData(searchResultDo); 
 		getSearchShareVc().setData(searchResultDo);
+	
+		
+		if(rootWebUrl.contains("collection-search")){
+			collcResLbl.setText(GL1755+ " ("+searchResultDo.getResourceCount()+")");
+		} else if (rootWebUrl.contains("resource-search")) {
+			collcResLbl.setText(GL1754 + " ("+searchResultDo.getScollectionCount()+")");
+		}
 		
 		final String gooruOid = searchResultDo.getGooruOid();
 		resourcePlayerClickPanel.addClickHandler(new ClickHandler() {
@@ -396,17 +401,6 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		return disclosureDisPanel;
 	}
 	
-	
-
-
-	public SearchInfoTabVc getSearchInfoVc() {
-		return searchInfoVc;
-	}
-
-	public void setSearchInfoVc(SearchInfoTabVc searchInfoVc) {
-		this.searchInfoVc = searchInfoVc;
-	}
-
 	/**
 	 * @return instance of {@link SearchShareVc}
 	 */

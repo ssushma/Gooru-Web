@@ -33,10 +33,14 @@
                     <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
                     <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton> -->
 
+                   <!--  <g:SimpleRadioButton styleName="rating" ui:field="rating1"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating2"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating3"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating4"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating5"></g:SimpleRadioButton> -->
                 </g:HTMLPanel>
             </g:HTMLPanel>
-			
-			
+
 			    <htmlevents:HTMLEventPanel ui:field="emoticsContainer" styleName="{playerStyle.emoticsContainer}">
 				    <g:HTMLPanel ui:field="singleEmoticsContainer">
 						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
