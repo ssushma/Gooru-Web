@@ -235,7 +235,7 @@
 	color: #515151;
 	padding: 0px;
 	font-size: 12px !important;
-	max-width: 548px;
+	max-width: 755px;
 	float: left;
 	word-wrap: break-word;
 }
@@ -261,7 +261,7 @@
 
 .profilePageTextAreaDecsription {
 	background-color: rgb(255, 255, 255);
-	width: 488px !important;
+	width: 680px !important;
 	height: 70px !important;
 	font-size: 12px;
 	word-wrap: break-word;
