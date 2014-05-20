@@ -22,54 +22,38 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.home.library;
 /**
- * @fileName : LibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
+ * 
  */
+package org.ednovo.gooru.client.mvp.profilepage.data;
 
-import com.google.gwt.resources.client.CssResource;
+import java.util.ArrayList;
 
+import org.ednovo.gooru.client.child.IsChildView;
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 
-public interface LibraryStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
+/**
+ * @author SearchTeam
+ * 
+ */
+public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibraryPresenter> {
+	/**
+	 * Load Partners page {@link loadPartnersPage}
+	 * @param callBack
+	 * @param placeToken
+	 */
+	void loadPartnersPage(String callBack, String placeToken);
+	
+	/**
+	 * Set Partners Unit Data {@link setUnitList}
+	 * @param folderList
+	 */
+	public void setUnitList(ArrayList<PartnerFolderDo> folderList);
 
-	String bannerSpanBlock();
-	String partnerLogo();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
+	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId);
+	
+	public void loadingPanel(boolean isVisible);
+	
+	public void clearPanels();
+
 }

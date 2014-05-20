@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.mvp.profilepage;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.client.mvp.profilepage.content.ProfilePageLibraryView;
+import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.uc.ProfilePageDescriptionEditUc;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
