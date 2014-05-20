@@ -47,11 +47,13 @@ public class CheckBoxAnswerOptionView extends Composite{
 	//@UiField public CheckBox answerOptionCheckBoxButton;
 	private int answerId;
 	private boolean isAnswerCorrect;
+	private String answerText="";
 	public static CheckBoxAnswerOptionViewUiBinder questionAnswerOptionViewUiBinder=GWT.create(CheckBoxAnswerOptionViewUiBinder.class);
 	
 	public CheckBoxAnswerOptionView(String questionText,String questionSerialNum){
 		initWidget(questionAnswerOptionViewUiBinder.createAndBindUi(this));
 		//optionAlpahabeticSerialNo.setText(questionSerialNum);
+		this.answerText=questionText;
 		answerOptionText.setHTML(questionSerialNum+" "+removeHtmlTags(questionText));
 		answerOptionYesRadioButton.setName(questionSerialNum);
 		answerOptionNoRadioButton.setName(questionSerialNum);
@@ -77,6 +79,12 @@ public class CheckBoxAnswerOptionView extends Composite{
 	}
 	public void setAnswerCorrect(boolean isAnswerCorrect) {
 		this.isAnswerCorrect = isAnswerCorrect;
+	}
+	public String getAnswerText() {
+		return answerText;
+	}
+	public void setAnswerText(String answerText) {
+		this.answerText = answerText;
 	}
 	
 }

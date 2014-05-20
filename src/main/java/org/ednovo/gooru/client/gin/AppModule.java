@@ -216,6 +216,9 @@ import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.IsProfilePageContentTabView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTabPresenter;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.ProfilePageContentTabView;
+import org.ednovo.gooru.client.mvp.rating.IsRatingAndReviewPopupView;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.register.IsRegisterView;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter.IsRegisterProxy;
@@ -450,6 +453,7 @@ public class AppModule extends AppPresenterModule {
 		bindPresenter(NgcLibraryPresenter.class, IsNgcLibraryView.class, NgcLibraryView.class,IsNgcLibraryProxy.class);
 		bindPresenter(WspwhLibraryPresenter.class, IsWspwhLibraryView.class, WspwhLibraryView.class,IsWspwhLibraryProxy.class);
 		bindPresenterWidget(PartnerLibraryPresenter.class, IsPartnerLibraryView.class, PartnerLibraryView.class);
+		bindPresenterWidget(RatingAndReviewPopupPresenter.class, IsRatingAndReviewPopupView.class, RatingAndReviewPopupView.class);
 		bindPresenter(PsdpalLibraryPresenter.class, IsPsdpalView.class, PsdpalLibraryView.class,IsPsdpalLibraryProxy.class);
 		bindPresenter(CfciLibraryPresenter.class, IsCfciView.class, CfciLibraryView.class,IsCfciLibraryProxy.class);
 

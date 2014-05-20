@@ -36,6 +36,8 @@ import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -53,8 +55,16 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 
 	@Override
 	public IsDraggable renderSearchResult(ResourceSearchResultDo searchResultDo) {
-		
-		return new ResourceSearchResultVc(searchResultDo, dragController);
+		ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
+		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		return resourceSearchResultVc;
+	}
+	
+	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			getUiHandlers().showRatingAndReviewPopup();
+		}
 	}
 
 	@Override

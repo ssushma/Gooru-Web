@@ -85,11 +85,23 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			display: inline-block;
 			vertical-align:top;
 		}
-	.oer {
+		.oer {
 			margin: 20px auto 0;
-			}
-		
-		
+		}
+		.aggregatorTooltip{
+			left: 82px;
+			top: 390px;
+			margin-left: 0px;
+			position: absolute;
+			cursor: pointer;
+		}
+		.publisherTooltip{
+			left: 73px;
+			top: 461px;
+			margin-left: 0px;
+			position: absolute;
+			cursor: pointer;
+		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.searchFilterVcContainer}" ui:field="myCollectionSearch">
 		<g:FlowPanel>
@@ -105,28 +117,17 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		<g:HTMLPanel ui:field="panelNotMobileFriendly"></g:HTMLPanel>
 		
+		<g:HTMLPanel ui:field="oerPanel"/>
+		
 		<uc:DisclosurePanelUc  ui:field="categoryPanelUc" />
 		
 		
-		<uc:DisclosurePanelUc  ui:field="sourcePanelUc" visible="false">
-			<uc:add>
-				<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
-			</uc:add>
-			<uc:add>
-			 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
-			</uc:add>
-			<uc:add>
-			 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
-			</uc:add>
-			<uc:add>
-				<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
-			</uc:add>
-			<uc:add>
-				<g:FlowPanel ui:field="sourceContainerFloPanel" />
-			</uc:add>
-		</uc:DisclosurePanelUc>
+		
 		
 		<uc:DisclosurePanelUc  ui:field="aggregatorPanelUc" visible="false">
+		   <uc:add>
+		    	<g:Image ui:field="aggregatorTooltip"  styleName="{style.aggregatorTooltip}"/>
+		   </uc:add>
 			<uc:add>
 				<uc:AppSuggestBox ui:field="aggregatorSgstBox" width="130px" />
 			</uc:add>
@@ -143,7 +144,26 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 				<g:FlowPanel ui:field="aggregatorContainerFloPanel" />
 			</uc:add>
 		</uc:DisclosurePanelUc>
-			
+			<uc:DisclosurePanelUc  ui:field="sourcePanelUc" visible="false">
+			 <uc:add>
+		    	<g:Image ui:field="publisherTooltip"  styleName="{style.publisherTooltip}"/>
+		   </uc:add>
+			<uc:add>
+				<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
+			</uc:add>
+			<uc:add>
+			 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
+			</uc:add>
+			<uc:add>
+			 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
+			</uc:add>
+			<uc:add>
+				<g:Label styleName="{style.notFound}" ui:field="sourcesNotFoundLbl"/>
+			</uc:add>
+			<uc:add>
+				<g:FlowPanel ui:field="sourceContainerFloPanel" />
+			</uc:add>
+		</uc:DisclosurePanelUc>
 		<uc:DisclosurePanelUc  ui:field="authorPanelUc" visible="false">
 			<uc:add>
 				<g:TextBox ui:field="authorTxtBox" width="130px" />
@@ -175,8 +195,6 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		<uc:DisclosurePanelUc  ui:field="subjectPanelUc" />
 		
 		<uc:DisclosurePanelUc  ui:field="gradePanelUc" />
-		
-		<g:HTMLPanel ui:field="oerPanel" styleName="{style.oer}"/>
 		
 		<g:FlowPanel>
 			<g:Label  styleName="{style.clearAll}" ui:field="clearAll" />

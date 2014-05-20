@@ -44,4 +44,5 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void setDefaultReaction();
 	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip);
 	public void setDefaultUserStarRatings();   
+	public void removeRatingContainer(boolean flag);
 }
