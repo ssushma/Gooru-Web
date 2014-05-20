@@ -22,54 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.home.library;
-/**
- * @fileName : LibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
-import com.google.gwt.resources.client.CssResource;
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
-public interface LibraryStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
+public class LeftMenuItemView extends Composite {
 
-	String bannerSpanBlock();
-	String partnerLogo();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
-	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
-	String collectionSmall();
-	String conceptTitleLeft();
+	@UiField Label unitMenuItem;
+	
+	private String unitId;
+	
+	private Integer childCount;
+	
+	
+	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
+			.create(LibraryUnitMenuViewUiBinder.class);
+
+	interface LibraryUnitMenuViewUiBinder extends
+			UiBinder<Widget, LeftMenuItemView> {
+	}
+
+	public LeftMenuItemView(PartnerFolderDo folderDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		unitMenuItem.setText(folderDo.getTitle());
+		setUnitId(folderDo.getGooruOid());
+	}
+
+	public Label getUnitMenuItemPanel() {
+		return unitMenuItem;
+	}
+
+	public String getUnitId() {
+		return unitId;
+	}
+
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
+	}
+	public Integer getChildCount() {
+		return childCount;
+	}
+
+	public void setChildCount(Integer childCount) {
+		this.childCount = childCount;
+	}
 }

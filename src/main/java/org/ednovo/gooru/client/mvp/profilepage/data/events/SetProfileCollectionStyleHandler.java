@@ -22,38 +22,44 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.profilepage.data.events;
+
+import com.google.gwt.event.shared.EventHandler;
 /**
  * 
+ * @fileName : SetConceptTitleStyleHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Dec 4, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
  */
-package org.ednovo.gooru.client.mvp.profilepage.content;
 
-import java.util.ArrayList;
+public interface SetProfileCollectionStyleHandler extends EventHandler {
 
-import org.ednovo.gooru.client.child.IsChildView;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-
-/**
- * @author SearchTeam
- * 
- */
-public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibraryPresenter> {
 	/**
-	 * Load Partners page {@link loadPartnersPage}
-	 * @param callBack
-	 * @param placeToken
+	 * 
+	 * @function setConceptTitleStyleHandler 
+	 * 
+	 * @created_date : 12-Dec-2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param conceptId
+	 * @parm(s) : @param topicId
+	 * @parm(s) : @param lessonId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
 	 */
-	void loadPartnersPage(String callBack, String placeToken);
-	
-	/**
-	 * Set Partners Unit Data {@link setUnitList}
-	 * @param folderList
-	 */
-	public void setUnitList(ArrayList<PartnerFolderDo> folderList);
-
-	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId);
-	
-	public void loadingPanel(boolean isVisible);
-	
-	public void clearPanels();
-
+	void setProfileCollectionStyleHandler(String conceptId, Integer topicId, Integer lessonId);
 }

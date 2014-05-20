@@ -22,18 +22,19 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.home.library;
+package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
-import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
+import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
+import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleEvent;
+import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleHandler;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
@@ -51,42 +52,35 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LibraryLessonUc extends Composite implements MessageProperties {
+public class PartnerLessonUc extends Composite implements MessageProperties {
 
 	@UiField HTMLPanel lessonList;
-	@UiField LibraryStyleBundle libraryStyleUc;
+	@UiField ProfilePageLibraryStyleBundle style;
 	private Integer topicId;
 	private String conceptId;
 	private Integer lessonId;
 	private String lessonLabel;
 	private String lessonCode;
 	Map<String,Label> conceptTitles = new HashMap<String,Label>();
-	private static final String SUBJECT_NAME = "subject";
-	private static final String STANDARDS="standard";
+	HTMLPanel conceptList = new HTMLPanel("");
+	HTML lessonTitle = new HTML();
 	
 	private static LibraryLessonUcUiBinder uiBinder = GWT
 			.create(LibraryLessonUcUiBinder.class);
 
-	interface LibraryLessonUcUiBinder extends UiBinder<Widget, LibraryLessonUc> {
+	interface LibraryLessonUcUiBinder extends UiBinder<Widget, PartnerLessonUc> {
 	}
 
-	public LibraryLessonUc(LessonDo lessonDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
-		this.topicId = topicId;
-		setLessonData(lessonDo,null,lessonDo.getCollection(),isLessonHighlighted,lessonNumber);
-	}
-	
-	public LibraryLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
-		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
+		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
 		setLessonData(null, null, conceptDoList, isLessonHighlighted,lessonNumber);
 	}
-	
-	public LibraryLessonUc(PartnerFolderDo partnerFolderDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+
+	public PartnerLessonUc(PartnerFolderDo partnerFolderDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
+		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
 		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),isLessonHighlighted,lessonNumber);
 	}
@@ -106,82 +100,52 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 	 * 
 	 * @return : void
 	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
+	 * @throws : <Mentioned if any exceptions>	 
 	 * 
-	 *
-	 *
 	 */
 	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, boolean isLessonHighlighted, Integer lessonNumber) {
-		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
-		if(lessonDo!=null) {
-			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+lessonDo.getLabel());
-			lessonTitle = getLessonTitleStyle(lessonTitle);
-			
-			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-				
-			} else {
-				lessonList.add(lessonTitle);
-			}
-			lessonId = lessonDo.getCodeId();
-		} else {
-			lessonId = lessonNumber;
-		}
-
 		if(partnerFolderDo!=null) {
-			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+partnerFolderDo.getTitle());
-			lessonTitle = getLessonTitleStyle(lessonTitle);
-
-			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-				
+			lessonTitle.setHTML(partnerFolderDo.getTitle());
+			lessonTitle.addStyleName(style.lessonTitle());
+			if(lessonNumber == 1) {
+				lessonTitle = setOpenStyle(true);
 			} else {
-				lessonList.add(lessonTitle);
+				lessonTitle = setOpenStyle(false);
 			}
+			lessonList.add(lessonTitle);
 			lessonId = lessonNumber;
 		}
-		
+		lessonTitle.addClickHandler(new OpenLessonHandler());
 		for(int i = 0; i<conceptDoList.size(); i++) {
 			String conceptTitle = "";
 			final ConceptDo conceptDo = conceptDoList.get(i);
-			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
-				conceptTitle = lessonDo.getCode();
-				lessonCode = lessonDo.getCode();
-				lessonLabel = lessonDo.getLabel();
-			} else {
-				conceptTitle = conceptDo.getTitle();
-			}
+			conceptTitle = conceptDo.getTitle();
 			
 			Label conceptTitleLbl = new Label(conceptTitle);
-			conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-				conceptTitleLbl.addStyleName(libraryStyleUc.collectionSmall());
-				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitleLeft());
-			}
-			lessonList.add(conceptTitleLbl);
+			conceptTitleLbl.addStyleName(style.conceptTitle());
+			conceptTitleLbl.addStyleName(style.collectionSmall());
+			conceptList.add(conceptTitleLbl);
 			conceptTitles.put(conceptDo.getGooruOid(), conceptTitleLbl);
 			if(i==0&&isLessonHighlighted) {
-				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitleActive());
+				conceptTitleLbl.addStyleName(style.conceptActive());
 				isLessonHighlighted = false;
 			}
 			conceptTitleLbl.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					conceptId = conceptDo.getGooruOid();
-					AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
+					AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
 					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
 					getConceptDetails(conceptId);
 				}
 			});
 		}
-	}
-	
-	private HTML getLessonTitleStyle(HTML lessonTitle) {
-		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
-			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
+		lessonList.add(conceptList);
+		if(lessonNumber == 1) {
+			conceptList = openConceptList(true);
 		} else {
-			lessonTitle.setStyleName(libraryStyleUc.lessonTitleProfile());
+			conceptList = openConceptList(false);
 		}
-		return lessonTitle;
 	}
 
 	/**
@@ -200,9 +164,7 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 	 *
 	 */
 	private void getConceptDetails(String gooruOid) {
-		if(AppClientFactory.getPlaceManager().getRequestParameter("standardId")!=null){
-			String standardsId = AppClientFactory.getPlaceManager().getRequestParameter("standardId");
-		AppClientFactory.getInjector().getLibraryService().getConceptForStandards(gooruOid,standardsId, false, new AsyncCallback<ConceptDo>() {
+		AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new AsyncCallback<ConceptDo>() {
 			@Override
 			public void onSuccess(ConceptDo conceptDo) {
 				AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
@@ -213,36 +175,52 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 				throw new RuntimeException("Not implemented");
 			}
 		});
-		}
-		else
-		{
-			AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new AsyncCallback<ConceptDo>() {
-				@Override
-				public void onSuccess(ConceptDo conceptDo) {
-					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					throw new RuntimeException("Not implemented");
-				}
-			});
-		}
 	}
 	
 	
-	SetConceptTitleStyleHandler setConceptTitleStyleHandler = new SetConceptTitleStyleHandler() {
+	SetProfileCollectionStyleHandler setProfileCollectionStyleHandler = new SetProfileCollectionStyleHandler() {
 		@Override
-		public void setConceptTitleStyleHandler(String collectionId, Integer topicNo, Integer lessonNo) {
+		public void setProfileCollectionStyleHandler(String collectionId, Integer topicNo, Integer lessonNo) {
 			if(topicNo==topicId) {
 				for (Map.Entry<String, Label> entry : conceptTitles.entrySet()) {
 				    if(entry.getKey().equals(collectionId)&&(lessonId==lessonNo)) {
-					    entry.getValue().addStyleName(libraryStyleUc.conceptTitleActive());
+				    	entry.getValue().addStyleName(style.conceptActive());
 				    } else {
-				    	entry.getValue().removeStyleName(libraryStyleUc.conceptTitleActive());
+				    	entry.getValue().removeStyleName(style.conceptActive());
 				    }
 				}
 			}
 		}
 	};
+	
+	private HTML setOpenStyle(boolean isOpen) {
+		if(isOpen) {
+			lessonTitle.addStyleName(style.open());
+		} else {
+			lessonTitle.removeStyleName(style.open());
+		}
+		return lessonTitle;
+	}
+	
+	private HTMLPanel openConceptList(boolean isOpen) {
+		if(isOpen) {
+			conceptList.setVisible(true);
+		} else {
+			conceptList.setVisible(false);
+		}
+		return conceptList;
+	}
+	
+	public class OpenLessonHandler implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			if(conceptList.isVisible()) {
+				openConceptList(false);
+				setOpenStyle(false);
+			} else {
+				openConceptList(true);
+				setOpenStyle(true);
+			}
+		}
+	}
 }

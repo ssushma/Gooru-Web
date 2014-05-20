@@ -22,9 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.home.library;
+package org.ednovo.gooru.client.mvp.profilepage.data;
 /**
- * @fileName : LibraryStyleBundle.java
+ * @fileName : ProfilePageLibraryStyleBundle.java
  *
  * @description : 
  *
@@ -41,35 +41,13 @@ package org.ednovo.gooru.client.mvp.home.library;
 import com.google.gwt.resources.client.CssResource;
 
 
-public interface LibraryStyleBundle extends CssResource {
-	String conceptTitle();
-	String lessonTitle();
-	String conceptTitleActive();
-	String courseOption();
-	String aboutGooruAnrPadding();
-	String unitLiActive();
-	String header();
-	String course();
-	String resourceImage();
-	String blueLink();
-
-	String bannerSpanBlock();
-	String partnerLogo();
-	String resourcesInsideSubStyle();
-	String collectionInfoSubStyle();
-	String collectionViewerSubStyle();
-	String tabsLi();
-	String tabsLiInactive();
-	String singleLink();
+public interface ProfilePageLibraryStyleBundle extends CssResource {
+	String open();
 	String active();
-	String paginationPanel();
-	String twoColumnContainer();
-	String subDropdown();
-	String unitOption();
-	String popularStarImage();
-	String math();
-	String partnerMenuPadding();
-	String lessonTitleProfile();
+	String resourceImage();
+	String conceptTitle();
 	String collectionSmall();
-	String conceptTitleLeft();
+	String conceptActive();
+	String lessonTitle();
+	String collection();
 }
