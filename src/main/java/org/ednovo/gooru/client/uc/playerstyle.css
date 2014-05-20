@@ -254,9 +254,9 @@
 .resource-type-info-interactive,.resource-type-info-question,.resource-type-info-website,.resource-type-info-textbook,
 .resource-type-info-handout,.resource-type-info-lesson,.resource-type-info-exam,.resource-type-info-audio,.resource-type-info-imageIcon,.resource-type-info-other,.resource-type-info-text{
 	background:url("images/resource-type-icons.png") no-repeat;
-	width: 27px;
+	width: 34px;
 	height: 20px;
-	margin-left: 7px;
+	margin-left: 4px;
 	margin-top: -4px;
 	float:left;
 }

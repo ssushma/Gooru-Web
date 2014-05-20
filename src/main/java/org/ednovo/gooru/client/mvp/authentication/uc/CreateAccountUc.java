@@ -1002,7 +1002,13 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 								Boolean userNameValidate = txtChooseUsername.getText().matches(USER_NAME_REGEX);
 								if(!userNameValidate){
 									userNameValidUc.addStyleName(res.css().errorLbl());
-									userNameValidUc.setText(GL0475);
+									 if(!txtChooseUsername.getText().contains(" ")){
+											if (txtChooseUsername.isVisible()){
+												userNameValidUc.setText(GL0475);
+												}
+									}else if(txtChooseUsername.getText().contains(" ")){
+										userNameValidUc.setText(GL1635);
+									}
 									userNameValidUc.setVisible(true);
 									isValidUserName = false;	
 								}
@@ -1057,7 +1063,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	 * @param type
 	 * 
 	 */
-	public boolean checkUserAvailability(String userName, final String type) {
+	public boolean checkUserAvailability(final String userName, final String type) {
 
 		AppClientFactory.getInjector().getUserService()
 				.getEmailId(userName, type, new SimpleAsyncCallback<UserDo>() {
@@ -1077,11 +1083,13 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 						}
 						if (type.equalsIgnoreCase("username") && isAvailable) {
 							isValidUserName = result.isAvailability();
-							txtChooseUsername.addStyleName(res.css()
-									.errorMsgDisplay());
-							userNameValidUc.addStyleName(res.css().errorLbl());
-							userNameValidUc.setText(GL0444);
-							userNameValidUc.setVisible(true);
+							if(!userName.contains(" ")){
+								txtChooseUsername.addStyleName(res.css()
+										.errorMsgDisplay());
+								userNameValidUc.addStyleName(res.css().errorLbl());
+								userNameValidUc.setText(GL0444);
+								userNameValidUc.setVisible(true);
+							}
 						}else if (type.equalsIgnoreCase("username") && !isAvailable) {
 							isValidUserName = result.isAvailability();
 						}

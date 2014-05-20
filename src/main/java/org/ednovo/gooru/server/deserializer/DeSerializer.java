@@ -69,6 +69,20 @@ public abstract class DeSerializer {
 		}
 	}
 	
+	protected static Integer getJsonInteger(JSONObject jsonObject, String key) {
+		if (jsonObject != null && !jsonObject.isNull(key) && jsonObject.has(key)) {
+			int value = 0;
+			try {
+				value = jsonObject.getInt(key);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return value != 0 ? value : 0;
+		} else {
+			return 0;
+		}
+	}
+	
 	protected static ArrayList<checkboxSelectedDo> getJsonArray(JSONObject jsonObject, String key) {
 		ArrayList<checkboxSelectedDo> arrayObj = new ArrayList<checkboxSelectedDo>();
 		if (jsonObject != null && !jsonObject.isNull(key) && jsonObject.has(key)) {

@@ -31,6 +31,7 @@ import java.util.TreeSet;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.QuestionHintsDo;
+import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -255,6 +256,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		public void increaseUserAttemptCount(){
 			getUiHandlers().increaseUserAttemptCount();
 		}
+		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
+			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
+		}
 	}
 	
 	public class MultipleAnswersQuestionWidget extends MultipleAnswersQuestionView{
@@ -313,6 +317,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}
 			getUiHandlers().createSesstionItemAttemptOe(answerId,attemptStatus,attemptedAnswers);
 		}
+		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
+			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
+		}
 	}
 	
 	public class OpendEndedQuestionWidget extends OpendEndedQuestionView{
@@ -344,6 +351,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		public void isOeAnswerSubmited(boolean isOeAnswerSubmited){
 			getUiHandlers().isOeAnswerSubmited(isOeAnswerSubmited);
+		}
+		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
+			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
 	
@@ -394,6 +404,9 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			if(isFirstAttempt&&attemptedAnswerDo==null){
 				getUiHandlers().setResourceScore(score);
 			}
+		}
+		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
+			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
 		}
 	}
 

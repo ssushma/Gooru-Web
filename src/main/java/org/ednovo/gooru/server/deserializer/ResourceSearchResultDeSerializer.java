@@ -96,6 +96,9 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
+		
+		resourceSearchResultDo.setScollectionCount(getJsonInteger(recordJsonObject, COLLECTIONCOUNT));
+		
 		if(resourceSearchResultDo.getResourceType().getName().equals(ASSESSMENT_QUESTION)){
 			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, TIME_TO_COMPLETE_IN_SEC));
 			resourceSearchResultDo.setQuestionType(getJsonString(recordJsonObject, QUESTION_TYPE_NAME));

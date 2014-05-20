@@ -83,6 +83,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -183,6 +184,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	private JSONObject explanationIdsObject=new JSONObject();
 	
 	private List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
+	
+	private List<List<JSONObject>> answerObjectArray=new ArrayList<List<JSONObject>>();
 	
 	private Integer resourceScore=0;
 	
@@ -355,6 +358,21 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
 	}
 	
+
+	/**
+	 * @return the answerObjectArray
+	 */
+	public List<List<JSONObject>> getAnswerObjectArray() {
+		return answerObjectArray;
+	}
+
+	/**
+	 * @param answerObjectArray the answerObjectArray to set
+	 */
+	public void setAnswerObjectArray(List<List<JSONObject>> answerObjectArray) {
+		this.answerObjectArray = answerObjectArray;
+	}
+	
 	@Inject
 	public PreviewPlayerPresenter(PreviewPlayerMetadataPresenter metadataPresenter,ResourcePlayerMetadataPresenter resoruceMetadataPresenter,
 			CollectionPlayerTocPresenter collectionPlayerTocPresenter,CollectionSharePresenter collectionSharePresenter,
@@ -378,6 +396,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		this.signUpViewPresenter=signUpViewPresenter;
 		metadataPresenter.setPreviewPlayerPresenter(this);
 		resoruceMetadataPresenter.setPreviewPlayerPresenter(this);
+		resoruceMetadataPresenter.removeRatingContainer(false);
 		resourceFlagPresenter.setPreviewPlayerPresenter(this);
 		collectionFlagPresenter.setPreviewPlayerPresenter(this);
 		collectionPlayerTocPresenter.setPreviewPlayerPresenter(this);
@@ -640,10 +659,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo,nextResoruceRequest,previousResoruceRequest);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
-			/**
-			 * Do not un comment for 6.2 release
-			 */
-//			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
@@ -1263,6 +1279,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		hintIdsObject=new JSONObject();
 		explanationIdsObject=new JSONObject();
 		answerIdsObject=new JSONObject();
+		answerObjectArray.clear();
 		attemptStatusArray.clear();
 		attemptTrySequenceArray.clear();
 		setResourceScore(0);
@@ -1659,6 +1676,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			hintIdsObject=new JSONObject();
 			explanationIdsObject=new JSONObject();
 			answerIdsObject=new JSONObject();
+			answerObjectArray.clear();
 			attemptStatusArray.clear();
 			attemptTrySequenceArray.clear();
 			setResourceScore(0);
@@ -1846,7 +1864,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), collectionNewDataLogEventId, eventType, playerMode,questionTypeString,null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore()));
-		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount()));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
@@ -1868,7 +1886,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,collectionDo.getGooruOid(), resourceNewDataLogEventId, "", playerMode,"question",null,path,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0));
-		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount()));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerReactiontDataLogEvent(String resourceId,Long reactionStartTime,Long reactionEndTime,String reactionType,String eventName){

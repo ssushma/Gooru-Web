@@ -24,7 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.study;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
+import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.uc.TextBoxWithFocus;
 import org.ednovo.gooru.shared.util.MessageProperties;
 

@@ -69,6 +69,12 @@ public interface ClasspageListPopupViewCBundle extends ClientBundle {
 		String classpageTitleHeaderActive();
 		
 		String classpageLoadingOnPagination();
+		
+		String inputContainer();
+
+		String tooltipContentTitle();
+
+		String classCodeTxtBox();
 	}
 
 	@Source("ClasspageListPopup.css")
