@@ -235,7 +235,7 @@
 	color: #515151;
 	padding: 0px;
 	font-size: 12px !important;
-	max-width: 755px;
+	max-width: 823px;
 	float: left;
 	word-wrap: break-word;
 }
@@ -262,7 +262,7 @@
 .profilePageTextAreaDecsription {
 	background-color: rgb(255, 255, 255);
 	width: 680px !important;
-	height: 70px !important;
+	height: 60px !important;
 	font-size: 12px;
 	word-wrap: break-word;
 	border-color: rgb(221, 221, 221);
@@ -1369,7 +1369,6 @@
 }
 
 .editImage {
-	margin-top:-7px;
 	float: left;
 	margin-left: 5px;
 	color: #1076bb;
