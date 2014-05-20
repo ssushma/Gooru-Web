@@ -5,7 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.data">
 	
-	<ui:style field="ProfilePageStyle" src="profile-page-style.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
+	<ui:style field="ProfilePageStyle" src="profile-page-style.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle" field="ccb" />
 	<ui:style field="settingsStyle" src="../settings/Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
