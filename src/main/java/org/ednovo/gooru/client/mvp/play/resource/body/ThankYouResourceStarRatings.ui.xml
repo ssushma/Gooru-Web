@@ -30,7 +30,7 @@
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
                     <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}">
                         <g:Button ui:field="btnSkip" styleName="secondary">Skip</g:Button>
-                        <g:Button ui:field="btnPost" styleName="primary">Post</g:Button>
+                        <g:Button ui:field="btnPost" styleName="primary"></g:Button>
                     </g:HTMLPanel>
                 </g:HTMLPanel>
 	    
