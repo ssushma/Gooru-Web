@@ -5,7 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.data">
 	
-	<ui:style field="ProfilePageStyle" src="profile-page-style.css" />
+	<ui:style field="ProfilePageStyle" src="profile-page-style.css"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle" field="ccb" />
 	<ui:style field="settingsStyle" src="../settings/Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
@@ -15,11 +15,32 @@
             <g:FlowPanel styleName="{ProfilePageStyle.userMetaDataContainer}">
 	            <panel:HTMLEventPanel styleName="{ProfilePageStyle.avatar}" ui:field="profileImageContainer">
 	                <g:Image ui:field="userProfilePic"></g:Image>
+	                <g:HTMLPanel styleName="{ProfilePageStyle.starBg}">Gooru Featured Teacher</g:HTMLPanel>
 	            </panel:HTMLEventPanel>
 	            <g:HTMLPanel styleName="{ProfilePageStyle.aboutUserText}">
 	                <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userName"></g:Label>
+					<g:HTMLPanel styleName="{ProfilePageStyle.aboutUserTextRight}">
+					   <g:HTMLPanel styleName="{ProfilePageStyle.hoverButtons}">
+		 			   	  <g:Label ui:field="profilePageViewMsg" visible="false"></g:Label>
+					   <!--  Profile On/Off container start -->
+					   		<g:HTMLPanel ui:field="gooruProfileOnOffContainer" styleName="{ProfilePageStyle.gooruProfileOnOffContainer}">
+					   		    <g:Label styleName="{settingsStyle.publicProfileTitle}" ui:field="profilePageText"></g:Label>
+								<g:HTMLPanel styleName="{settingsStyle.publicProfileOnButtonContent}">
+										<g:Button styleName="{settingsStyle.publicProfileOnButtonActive}" ui:field="profileOnButton"></g:Button>
+										<g:Button styleName="{settingsStyle.publicProfileOffButtonsDeActive}" ui:field="profileOffButton"></g:Button>
+								</g:HTMLPanel>
+							   <!--  Social container start -->
+							   <g:HTMLPanel ui:field="gooruSocialButtonsContainer" styleName="{ProfilePageStyle.gooruSocialButtonsContainer}">
+									   <g:HTMLPanel styleName="{ProfilePageStyle.gooru-social-buttons}">
+									      <g:HTMLPanel ui:field="socialButtonContainer"/>
+							   		   </g:HTMLPanel>
+							   </g:HTMLPanel>
+							   <!--  Social container stop-->
+							</g:HTMLPanel>
+					   <!--  Profile On/Off container stop -->
+					   </g:HTMLPanel>
+		        	</g:HTMLPanel>
 					<panel:HTMLEventPanel styleName="{ProfilePageStyle.userMetadata}" ui:field="userMetadata">
-					   <g:Label styleName="{ProfilePageStyle.userDesc}" ui:field="mySubjectsText"></g:Label>
 					   <g:HTMLPanel styleName="{ProfilePageStyle.metaDataContainer}" ui:field="metaDataContainer">
 					   	   <g:Button ui:field="addCourseGradeBtn" visible="false" styleName="{ProfilePageStyle.edit-Button}"></g:Button>
 						   <g:HTMLPanel styleName="{ProfilePageStyle.userCount}" ui:field="userGradeList"/>
@@ -62,12 +83,11 @@
 					   </panel:HTMLEventPanel>
 					</panel:HTMLEventPanel>
 		                <g:HTMLPanel styleName="{ProfilePageStyle.bioMainContainer}" ui:field="bioMainContainer">
-		                	<g:HTMLPanel styleName="{ProfilePageStyle.bioLeftContainer}" ui:field="aboutMeTextContainer"></g:HTMLPanel>
 			                <g:HTMLPanel styleName="{ProfilePageStyle.bioRightContainer}">
 			                	<g:Button styleName="{ProfilePageStyle.edit-Button}" visible="false" ui:field="addBioBtn" />
 				                <g:Label styleName="{ProfilePageStyle.userBio}" ui:field="userBio"></g:Label>
 				                <!-- Profile page user Bio TextArea Edit start -->
-				                <g:HTMLPanel ui:field="profilePageEditBioPanel">
+				                <g:HTMLPanel ui:field="profilePageEditBioPanel" styleName="{ProfilePageStyle.profilePageEditBioPanel}">
 					                <panel:HTMLEventPanel ui:field="profileDescriptionlabel" styleName="{ProfilePageStyle.bioTextAreaContainer}">
 										<uc:ProfilePageDescriptionEditUc styleName="{settingsStyle.profileDescription}" ui:field="profileTextArea" />
 									</panel:HTMLEventPanel>
@@ -83,31 +103,6 @@
 			                <!-- Profile page user Bio TextArea Edit stop -->
 		                 </g:HTMLPanel>
 	                </g:HTMLPanel>
-	            </g:HTMLPanel>
-				<g:HTMLPanel styleName="{ProfilePageStyle.aboutUserTextRight}">
-				   <g:HTMLPanel styleName="{ProfilePageStyle.hoverButtons}">
-	 			   	  <g:Label ui:field="profilePageViewMsg" visible="false"></g:Label>
-				   <!--  Profile On/Off container start -->
-				   		<g:HTMLPanel ui:field="gooruProfileOnOffContainer" styleName="{ProfilePageStyle.gooruProfileOnOffContainer}">
-				   		    <g:Label styleName="{settingsStyle.publicProfileTitle}" ui:field="profilePageText"></g:Label>
-							<g:HTMLPanel styleName="{settingsStyle.publicProfileOnButtonContent}">
-									<g:Button styleName="{settingsStyle.publicProfileOnButtonActive}" ui:field="profileOnButton"></g:Button>
-									<g:Button styleName="{settingsStyle.publicProfileOffButtonsDeActive}" ui:field="profileOffButton"></g:Button>
-							</g:HTMLPanel>
-						</g:HTMLPanel>
-				   <!--  Profile On/Off container stop -->
-				   </g:HTMLPanel>
-				   <!--  Social container start -->
-				   <g:HTMLPanel ui:field="gooruSocialButtonsContainer">
-				   		   <g:Label styleName="{ProfilePageStyle.share-rightDesc}" ui:field="shareWithOthersText"></g:Label>
-						   <g:HTMLPanel styleName="{ProfilePageStyle.gooru-social-buttons}">
-						      <g:HTMLPanel ui:field="socialButtonContainer"/>
-				   		   </g:HTMLPanel>
-						   <g:HTMLPanel styleName="{ProfilePageStyle.gooru-social-Input}">
-						      <g:TextBox styleName="{ProfilePageStyle.gooru-social-url}" readOnly="true" ui:field="bitlyLink"></g:TextBox>
-						   </g:HTMLPanel>
-				   </g:HTMLPanel>
-				   <!--  Social container stop-->
 	        </g:HTMLPanel>
 			</g:FlowPanel>	        
         <g:HTMLPanel styleName="{ProfilePageStyle.userContent}">
