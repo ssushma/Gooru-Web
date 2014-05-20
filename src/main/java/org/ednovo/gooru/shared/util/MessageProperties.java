@@ -647,6 +647,8 @@ public interface MessageProperties {
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
 	String GL0515 = "District Library";
+	String GL0515_1 = "RUSD Library";
+	
 	String GL0516 = "Community Library";
 	String GL0517 = "Assign to another Class";
 	String GL0518 = "Assign this collection";
