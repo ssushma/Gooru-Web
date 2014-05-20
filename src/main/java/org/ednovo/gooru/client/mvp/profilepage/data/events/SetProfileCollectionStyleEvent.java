@@ -22,12 +22,50 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.profilepage.data.events;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.GwtEvent;
 
-public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
-	public void getPartnerChildFolderItems(String folderId, int pageNumber);
-	public void getPartnerWorkspaceFolders();
-	void getIntoPartnerLibrarypage();
+/**
+ * 
+ * @fileName : SetConceptTitleStyleEvent.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 11-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
+public class SetProfileCollectionStyleEvent extends GwtEvent<SetProfileCollectionStyleHandler> {
+
+	private Integer topicId;
+	private Integer lessonId;
+	private String conceptId;
+	
+	public static final Type<SetProfileCollectionStyleHandler> TYPE = new Type<SetProfileCollectionStyleHandler>();
+	
+	/**
+	 * 
+	 */
+	public SetProfileCollectionStyleEvent(String conceptId, Integer topicId, Integer lessonId) {
+		this.conceptId=conceptId;
+		this.topicId=topicId;
+		this.lessonId=lessonId;
+	}
+	
+	@Override
+	public Type<SetProfileCollectionStyleHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetProfileCollectionStyleHandler handler) {
+		handler.setProfileCollectionStyleHandler(conceptId,topicId,lessonId);
+	}
+
 }

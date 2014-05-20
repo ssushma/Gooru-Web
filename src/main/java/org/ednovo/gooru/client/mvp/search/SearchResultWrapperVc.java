@@ -226,7 +226,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			disclosureContentSimPanel.clear();
 			disclosureContentSimPanel.setWidget(getSearchInfoWidget());
 			getSearchInfoWidget().setData(this.searchResultDo);
-			getSearchMoreInfoVc().reset(moreInfoMode);
+			getSearchInfoWidget().setData();
 			onDisclosureOpen();
 			MixpanelUtil.Click_moreInfo();
 		} else {

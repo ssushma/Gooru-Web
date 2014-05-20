@@ -470,6 +470,23 @@
 	padding: 8px;
 }
 
+.districtLibraryContainer{
+	background: white;
+	margin-left: 141px;
+	font-weight: normal;
+	border: 1px solid #ddd;
+	background-color: white;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+	-moz-border-radius: 4px;
+	position: relative;
+	width: 75%;
+	height: 28px;
+	cursor: pointer;
+	margin-top: 23px;
+}
+
 .partnerLibraryContainer {
 	background: white;
 	margin-left: 141px;
@@ -483,7 +500,7 @@
 	-moz-border-radius: 4px;
 	position: relative;
 	width: 100%;
-	height: 238px;
+	height: 249px;
 	cursor: pointer;
 }
 .headerStyle{

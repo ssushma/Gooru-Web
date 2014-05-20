@@ -1380,5 +1380,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return deserializeStudentsList(jsonRep);
 	}
 	
+	@Override
+	public ClasspageListDo v2GetAllClass(String limit, String offSet) throws GwtException {
+
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.TEACH_STUDY, getLoggedInSessionToken(), limit, offSet);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
 }
 

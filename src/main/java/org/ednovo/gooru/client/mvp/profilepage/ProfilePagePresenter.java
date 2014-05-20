@@ -183,8 +183,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		} else {
 			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
 		}
-		
-		
 	}
 	
 	@Override
@@ -217,7 +215,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 							getView().setProfileData(profileDo);
 							
 							/** New Library Layout Data **/
-							getView().getContentView().setData("");
+							getView().getContentView().setData();
 							
 							if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())&&!isChildUser(result)) {
 								getView().enableEditableData(profileOptionvalue);

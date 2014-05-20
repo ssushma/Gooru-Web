@@ -22,41 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
-public interface PlaceTokens {
-	String HOME = "discover";
-	String RESOURCE_SEARCH = "resource-search";
-	String COLLECTION_SEARCH = "collection-search";
-	String ERROR = "error";
-	String SHELF = "mycollections";
-	String COLLECTION = "collection";
-	String RESOURCE_PLAY_OLD = "resource-play-old";
-	String COLLECTION_PLAY = "collection-play";
-	String COLLECTION_PLAY_OLD = "collection-play-old";
-	String PREVIEW_PLAY = "preview-play";
-	String RESOURCE_PLAY="resource-play";
-	String TEACH = "no-teach";		//This is not used...
-	String FOLDERS = "organizee";
-	String EDIT_FOLDERS = "organize-folder";
-	String EDIT_CLASSPAGE = "teach";
-	String SETTINGS = "settings";
-	String CREATEFOLDER = "createfolder";
-	String REGISTER="registration";
-	String STUDENT = "students-view";
-	String STUDY = "myclasses";
-	String PROFILE_PAGE = "profilepage";
-	String RUSD_LIBRARY = "rusd";
+import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+
+public class LeftMenuItemView extends Composite {
+
+	@UiField Label unitMenuItem;
 	
-	String DEVICE_NOT_SUPPORTED = "not-supported";
+	private String unitId;
 	
-	String FTE = "FTE";
-	String ONR = "ONR";
-	String AUTODESK = "Autodesk";
-	String LESSONOPOLY = "Lessonopoly";
-	String NGC = "NGC";
-	String WSPWH = "WSPWH";
-	String PSDPAL = "PSDPAL";
-	String FINCAPINC = "fincapinc";
+	private Integer childCount;
 	
+	
+	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
+			.create(LibraryUnitMenuViewUiBinder.class);
+
+	interface LibraryUnitMenuViewUiBinder extends
+			UiBinder<Widget, LeftMenuItemView> {
+	}
+
+	public LeftMenuItemView(PartnerFolderDo folderDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		unitMenuItem.setText(folderDo.getTitle());
+		setUnitId(folderDo.getGooruOid());
+	}
+
+	public Label getUnitMenuItemPanel() {
+		return unitMenuItem;
+	}
+
+	public String getUnitId() {
+		return unitId;
+	}
+
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
+	}
+	public Integer getChildCount() {
+		return childCount;
+	}
+
+	public void setChildCount(Integer childCount) {
+		this.childCount = childCount;
+	}
 }

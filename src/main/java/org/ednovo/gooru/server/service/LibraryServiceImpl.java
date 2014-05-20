@@ -614,6 +614,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"");
+		System.out.println(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
@@ -760,7 +761,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				}
 			}
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		return secondLevelFolders;
 	}
