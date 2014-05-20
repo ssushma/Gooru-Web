@@ -16,8 +16,9 @@
 		<g:HTMLPanel styleName="{playerStyle.collectionContainer}" ui:field="collectionContainer">
 			<g:HTMLPanel styleName="{playerStyle.collectionHeader}">
 			
-			 <g:Label  ui:field="starValue"></g:Label>
+			 
 			<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
+			    <g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
                 <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
                 <g:HTMLPanel styleName="ratingContainer">
 
