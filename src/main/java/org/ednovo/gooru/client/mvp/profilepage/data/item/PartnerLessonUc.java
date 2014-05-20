@@ -31,9 +31,10 @@ import java.util.Map;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
-import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
+import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleEvent;
+import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleHandler;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
@@ -72,14 +73,14 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 
 	public PartnerLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
+		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
 		setLessonData(null, null, conceptDoList, isLessonHighlighted,lessonNumber);
 	}
 
 	public PartnerLessonUc(PartnerFolderDo partnerFolderDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getEventBus().addHandler(SetConceptTitleStyleEvent.TYPE, setConceptTitleStyleHandler);
+		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
 		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),isLessonHighlighted,lessonNumber);
 	}
@@ -133,7 +134,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				@Override
 				public void onClick(ClickEvent event) {
 					conceptId = conceptDo.getGooruOid();
-					AppClientFactory.fireEvent(new SetConceptTitleStyleEvent(conceptId,topicId,lessonId));
+					AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
 					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
 					getConceptDetails(conceptId);
 				}
@@ -177,13 +178,13 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	}
 	
 	
-	SetConceptTitleStyleHandler setConceptTitleStyleHandler = new SetConceptTitleStyleHandler() {
+	SetProfileCollectionStyleHandler setProfileCollectionStyleHandler = new SetProfileCollectionStyleHandler() {
 		@Override
-		public void setConceptTitleStyleHandler(String collectionId, Integer topicNo, Integer lessonNo) {
+		public void setProfileCollectionStyleHandler(String collectionId, Integer topicNo, Integer lessonNo) {
 			if(topicNo==topicId) {
 				for (Map.Entry<String, Label> entry : conceptTitles.entrySet()) {
 				    if(entry.getKey().equals(collectionId)&&(lessonId==lessonNo)) {
-					    entry.getValue().addStyleName(style.conceptActive());
+				    	entry.getValue().addStyleName(style.conceptActive());
 				    } else {
 				    	entry.getValue().removeStyleName(style.conceptActive());
 				    }

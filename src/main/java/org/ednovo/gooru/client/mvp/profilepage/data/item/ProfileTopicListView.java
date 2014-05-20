@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
+import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
@@ -50,6 +52,7 @@ import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -611,14 +614,10 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	}
 
 	public class OnassignCollectionBtnMouseOut implements MouseOutHandler{
-
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			toolTipPopupPanelNew.hide();
 		}
-
-		
-		
 	}
 	
 	public class OncustomizeCollectionBtnMouseOver implements MouseOverHandler{
@@ -823,6 +822,60 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			}
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PREVIEW_PLAY, params);
 		}
-}
+	}
 
+	@UiHandler("assignCollectionBtn")
+	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
+		String collectionId = getConceptDo().getGooruOid();
+		if(!isAssignPopup){
+			isAssignPopup=true;
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
+				@Override
+				public void closePoup() {
+					Window.enableScrolling(true);
+			        this.hide();
+			    	isAssignPopup=false;
+				}
+			};
+			Window.scrollTo(0, 0);
+			successPopupVc.setWidth("500px");
+			successPopupVc.setHeight("592px");
+			successPopupVc.show();
+			successPopupVc.center();
+			if (AppClientFactory.isAnonymous()){
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+			else {				
+				successPopupVc.setPopupPosition(successPopupVc.getAbsoluteLeft(), 30);
+			}
+		}
+	}
+	
+	@UiHandler("customizeCollectionBtn")
+	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
+		String collectionId = getConceptDo().getGooruOid();
+		if(!isCustomizePopup){
+			isCustomizePopup=true;
+		Boolean loginFlag = false;
+		if (AppClientFactory.isAnonymous()){
+			loginFlag = true;
+		} else {
+			loginFlag = false;
+		}
+		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
+			@Override
+			public void closePoup() {
+				Window.enableScrolling(true);
+				this.hide();	
+				isCustomizePopup = false;
+			}
+		};
+		Window.scrollTo(0, 0);
+		successPopupVc.setWidth("500px");
+		successPopupVc.setHeight("405px");
+			successPopupVc.show();
+			successPopupVc.center();
+		}
+	}	
+	
 }

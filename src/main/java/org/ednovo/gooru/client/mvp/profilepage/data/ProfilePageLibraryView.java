@@ -29,7 +29,6 @@ import java.util.Iterator;
 
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.LeftMenuItemView;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -92,6 +91,9 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		for(int i = 0; i<folderList.size(); i++) {
 			LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
 			leftNav.add(leftMenuItemView);
+			if(folderList.get(i).getType().equals("scollection")) {
+				leftMenuItemView.addStyleName(style.collection());
+			}
 			if(j==0&&folderId==null) {
 				j++;
 				loadingPanel(true);
