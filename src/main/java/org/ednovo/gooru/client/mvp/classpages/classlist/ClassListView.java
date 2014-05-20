@@ -31,6 +31,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -1017,7 +1018,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		activeMemberCounter = lstActiveMembers.size();
 		
 		Document mainDoc = Document.get();
-		
+		AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
 		if(activeMemberCounter==0 && !mainDoc.getElementById("ActiveMembersList").getFirstChildElement().hasChildNodes())
 		{
 		//ancActiveListSeeMore.setVisible(false);
@@ -1095,6 +1096,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 						}
 						enableInvite();
 						activeMemberCounter = childWidgetCount;
+						AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
 						if(childWidgetCount == 0){
 							lblActiveMembers.setVisible(true);
 							lblActiveMembersDesc.setVisible(true);
