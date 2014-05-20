@@ -2227,8 +2227,8 @@ public interface MessageProperties {
 		
 		String GL1752 = "My Collections";
 		String GL1753 = "My Classes";
-		String GL1754 =	"Collections with this Resource";
-		String GL1755 =	"Resources in this Collection";
+		String GL1754 =	"Collections";
+		String GL1755 =	"Resources";
 		String GL1756 =	"Info";
 		String GL1757 = "Create a Collection";
 		String GL1758 = "Create a Folder";

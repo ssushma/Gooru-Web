@@ -437,3 +437,7 @@
 	float: left;
 	width: 100%;
 }
+.labelTitle{
+font-weight: bold;
+color: black;
+}

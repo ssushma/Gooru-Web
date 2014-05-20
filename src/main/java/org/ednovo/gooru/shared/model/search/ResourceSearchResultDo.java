@@ -115,6 +115,8 @@ public class ResourceSearchResultDo implements Serializable {
 	
 	private int noOfQuestions;
 	
+	private int scollectionCount;
+	
 	private int resourceCount;
 	
 	private int questionCount;
@@ -451,6 +453,14 @@ public class ResourceSearchResultDo implements Serializable {
 
 	public void setQuestionCount(int questionCount) {
 		this.questionCount = questionCount;
+	}
+
+	public int getScollectionCount() {
+		return scollectionCount;
+	}
+
+	public void setScollectionCount(int scollectionCount) {
+		this.scollectionCount = scollectionCount;
 	}
 	
 	
