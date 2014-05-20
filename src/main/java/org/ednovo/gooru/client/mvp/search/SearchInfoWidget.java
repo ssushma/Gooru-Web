@@ -9,8 +9,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
-import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowStandardToolTip;
+import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
@@ -27,6 +26,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -54,7 +54,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 	thumbnailText,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
 	createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,
-	momentsoflearningLbl;
+	momentsoflearningLbl,resourceTypeImage;
 	
 	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,coursePanel,gradesPanel,
 	contributorPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
@@ -72,6 +72,8 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	private ResourceSearchResultDo searchResultDo;
 	private CollectionItemDo collectionItemDo;
 	
+	@UiField HTML lblcollectionName;
+
 	/**
 	 * Because this class has a default constructor, it can
 	 * be used as a binder template. In other words, it can be used in other
@@ -85,7 +87,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	 */
 	public SearchInfoWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
+		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		setGenealInfoData();
 		
 		
@@ -110,9 +112,87 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	 * 
 	 * @param searchResultDo
 	 *            instance of {@link ResourceSearchResultDo}
-	 */
+	 *//*
 	public void setData(ResourceSearchResultDo searchResultDo) {
 		this.searchResultDo = searchResultDo;
+	}*/
+	
+	public void setData(ResourceSearchResultDo searchResultsDo) {
+		if(searchResultsDo.getResourceFormat()!=null){
+			setResourceTypeImage(searchResultsDo.getResourceFormat().getValue());
+		}
+		if(searchResultsDo.getResourceTitle()!=null){
+			lblcollectionName.setHTML(removeHtmlTags(searchResultsDo.getResourceTitle()));
+			
+		}
+		if(searchResultsDo.getGrade()!=null)
+		{
+			gradesText.setText(searchResultsDo.getGrade());
+		}
+	}
+	
+	public void setResourceTypeImage(String resourceType){
+		if(resourceType!=null){
+			resourceType=resourceType.toLowerCase();
+			if(resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("textbook")||resourceType.equalsIgnoreCase("handout"))
+			{
+				resourceType=resourceType.replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
+			}
+			if(resourceType.equalsIgnoreCase("slide"))
+			{
+				resourceType=resourceType.replaceAll("slide","Image");
+			}
+			if(resourceType.equalsIgnoreCase("exam")||resourceType.equalsIgnoreCase("challenge")||resourceType.equalsIgnoreCase("website"))
+			{
+				resourceType=resourceType.replaceAll("exam","Webpage").replaceAll("challenge", "Webpage").replaceAll("website", "Webpage");
+			}
+			//lblresourceType.setText(resourceType);
+			resourceTypeImage.setStyleName(getResourceTypeImage(resourceType));
+		}
+	}
+	
+	private String removeHtmlTags(String html){
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+        return html;
+	}
+	
+	public String getResourceTypeImage(String resourceType){
+		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
+		}else if(resourceType.equalsIgnoreCase("Interactive")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfo();
+		}
+		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();		
+		}
+		else if(resourceType.equalsIgnoreCase("Slide")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
+		}
+		else if(resourceType.equalsIgnoreCase("Textbook")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+		}
+		else if(resourceType.equalsIgnoreCase("Question")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceTypeInfo();
+		}
+		else if(resourceType.equalsIgnoreCase("lesson")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().lessonResourceTypeInfo();
+			
+		}else if(resourceType.equalsIgnoreCase("Handout")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+		} else if(resourceType.equalsIgnoreCase("text")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceTypeInfo();
+		}
+		else if(resourceType.equalsIgnoreCase("image")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().imageResourceTypeInfo();
+		}
+		else if(resourceType.equalsIgnoreCase("audio")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().audioResourceTypeInfo();
+		}else if(resourceType.equalsIgnoreCase("exam")){
+			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceTypeInfo();
+		}
+		else {
+			return PlayerBundle.INSTANCE.getPlayerStyle().otherResourceTypeInfo();
+		}
 	}
 	
 	/**

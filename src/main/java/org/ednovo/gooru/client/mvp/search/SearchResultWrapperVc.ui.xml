@@ -5,9 +5,9 @@ xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import
 	<g:FlowPanel >
 		<g:FocusPanel ui:field="dragHandleFocPanel" styleName="{res.css.searchResultWrapper}" >
 			<g:FlowPanel>
-				<g:SimplePanel styleName="{res.css.contentPanel}" ui:field="contentSimPanel" />
-				<g:Label styleName="{res.css.statusLbl}" ui:field="addedStatusLbl" />
-				<rating:RatingWidgetView ui:field="ratingWidget"></rating:RatingWidgetView>
+				<g:SimplePanel styleName="{res.css.contentPanel}" ui:field="contentSimPanel" />			
+				<g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
+					<g:Label styleName="{res.css.statusLbl}" ui:field="addedStatusLbl" />
 			</g:FlowPanel>
 		</g:FocusPanel>
 		<g:Label ui:field="resourcePlayerClickPanel"></g:Label>

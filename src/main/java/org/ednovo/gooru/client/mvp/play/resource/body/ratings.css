@@ -527,3 +527,10 @@ left: -10px;
     margin:0px auto 20px auto;
     background: url('../_images/checkmark.png') center no-repeat;
 }
+
+.ratingValue{
+	text-align: left;
+	margin-left: 15px;
+	margin-bottom: 2px;
+	font-style: italic;
+}
