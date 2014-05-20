@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
+import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
@@ -827,12 +828,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 * it will display resource not found error view.
 	 */
 	protected void showResourceErrorMessage(){
-		Label errorMessageLabel=new Label();
+		/*Label errorMessageLabel=new Label();
 		errorMessageLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceErrorStyle());
-		enablePlayerButton(false, false, false,false);
+	*/	enablePlayerButton(false, false, false,false);
 		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
-		getView().getPlayerBodyContainer().add(errorMessageLabel);
+		getView().getPlayerBodyContainer().add(new ResourceNonExitView());
 	}
 	
 	public class ShowNewCollectionWidget implements ClickHandler{

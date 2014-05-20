@@ -52,6 +52,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.PreviewPlaye
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionSharePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocPresenter;
 import org.ednovo.gooru.client.mvp.play.error.CollectionNonExistView;
+import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
@@ -595,6 +596,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	}
 	public void showResourceView(String collectionItemId,String tabView) {
 		CollectionItemDo collectionItemDo=getCollectionItemDo(collectionItemId);
+		if(collectionItemDo!=null){
 		this.collectionMetadataId=null;
 		this.collectionSummaryId=null;
 		showSignupPopup();
@@ -645,7 +647,15 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
-		
+		}
+		else
+		{
+			enablePlayerButton(false, false, false, false, false, false);
+			getView().getPlayerBodyContainer().clear();
+			getView().getPlayerBodyContainer().add(new ResourceNonExitView());
+			getView().getNavigationContainer().getElement().getStyle().setProperty("display", "block");
+			
+		}
 	}
 	public void showCollectionEndView(String collectionId,String tabView) {
 		this.collectionMetadataId=null;

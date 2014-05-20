@@ -74,7 +74,7 @@ public class CollectionNonExistView extends Composite implements MessageProperti
 		initWidget(collectionNonExistViewUiBinder.createAndBindUi(this));
 		btnLibrary.setText(GL0506);
 		noLongerText.getElement().setInnerHTML(GL0655);
-		recycleImage.setUrl("images/recycle.png");
+		recycleImage.setUrl("images/collection_error.png");
 		madePrivateOrDeletedText.getElement().setInnerHTML(GL0656);
 		meanTimetext.getElement().setInnerHTML(GL0657);
 		btnLibrary.setText(GL0506);
