@@ -542,10 +542,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				boolean userNameValidate = txtUserName.getText().matches(USER_NAME_REGEX);
 				/// Words are clear then continue the next steps
 				if(!userNameValidate){
-					if (txtUserName.isVisible()){
-							setErrorMessage(GL0475);
+					 if(!txtUserName.getText().contains(" ")){
+							if (txtUserName.isVisible()){
+									setErrorMessage(GL0475);
+								}
+					}else if(txtUserName.getText().contains(" ")){
+						setErrorMessage(GL1635);
 					}
-						
 				}else if (txtUserName.getText().length() <4 || txtUserName.getText().length() >20){
 					if (txtUserName.isVisible())
 						setErrorMessage(GL0473);
@@ -621,7 +624,6 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 							isValidUserName = result.isAvailability();
 							if (txtUserName.isVisible()){
 								setErrorMessage(GL0444);
-							
 								disableAccSaveButton();
 							}
 
