@@ -1,0 +1,93 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gg="urn:import:org.ednovo.gooru.client.uc">
+	<ui:with
+		type="org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesCBundle"
+		field="res" />
+	<g:HTMLPanel styleName="{res.css.popup}">
+		  <g:HTMLPanel  styleName="{res.css.popupInner}">
+		    <g:HTMLPanel styleName="{res.css.popupHeader}"> Add Tags
+		      <g:Label styleName="{res.css.tag}"></g:Label>
+		    </g:HTMLPanel >
+		    <g:HTMLPanel  styleName="{res.css.popupContent}">Add as many tags as you’d like by clicking on the words within each category.<br />
+		      <br />
+		      <g:Label styleName="{res.css.h5}">Educational Use</g:Label>
+		      <g:Label styleName="{res.css.li}">Activity </g:Label>
+		      <g:Label styleName="{res.css.li}">Handout </g:Label>
+		      <g:Label styleName="{res.css.li}">Homework </g:Label>
+		      <g:Label styleName="{res.css.li}"> Game </g:Label>
+		      <g:Label styleName="{res.css.li}">Presentation</g:Label>
+		      <g:Label styleName="{res.css.li}"> Reference Material</g:Label>
+		      <g:Label styleName="{res.css.li}">Quiz </g:Label>
+		      <g:Label styleName="{res.css.li}">Curriculum Plan </g:Label>
+		      <g:Label styleName="{res.css.li}">Lesson Plan </g:Label>
+		      <g:Label styleName="{res.css.li}">Unit Plan </g:Label>
+		      <g:Label styleName="{res.css.li}">Project Plan </g:Label>
+		      <g:Label styleName="{res.css.li}"> Reading </g:Label>
+		      <g:Label styleName="{res.css.li}"> Textbook </g:Label>
+		      <g:Label styleName="{res.css.li}"> Article </g:Label>
+		      <g:Label styleName="{res.css.li}"> Book</g:Label>
+		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.h5} {res.css.qmark}">Standards<br />
+		        <g:TextBox styleName="{res.css.inputtype}" />
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.levelType}">
+		        <g:Label  styleName="{res.css.h5}">Lexile Level</g:Label >
+		        <gg:SlideBarView ui:field="slideBar"></gg:SlideBarView>
+		      <!--    <g:HTMLPanel styleName="{res.css.sliderBg}">
+		          <g:HTMLPanel styleName="{res.css.sliderLeft}"></g:HTMLPanel>
+		          <g:HTMLPanel styleName="{res.css.sliderRight}"></g:HTMLPanel>
+		          <g:HTMLPanel styleName="{res.css.sliderCircle}"></g:HTMLPanel>
+		        </g:HTMLPanel>
+		        <g:HTMLPanel styleName="{res.css.levels}">
+		          <g:Label styleName="{res.css.levelnumbers}">Kindergarden </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">1 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">2 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">3 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">4 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">5 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">6 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">7</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers]">8 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">9 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">10</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">11 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}">12 </g:Label>
+		        </g:HTMLPanel>-->
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
+		      <g:Label styleName="{res.css.h5}">Ads</g:Label>
+		      <g:Label styleName="{res.css.li}">No Advertisement </g:Label>
+		      <g:Label styleName="{res.css.li}">Moderate Advertisements </g:Label>
+		      <g:Label styleName="{res.css.li}"> Aggressive Advertisements</g:Label>
+		      <br />
+		      <br />
+		      <g:Label styleName="{res.css.clearfix}"></g:Label>
+		      <g:Label styleName="{res.css.h5}">Access Hazard</g:Label>
+		      <g:Label styleName="{res.css.li}">Flashing </g:Label>
+		      <g:Label styleName="{res.css.li} {res.css.select}">Flashing Hazard </g:Label>
+		      <g:Label styleName="{res.css.li}"> Motion Simulation </g:Label>
+		      <g:Label styleName="{res.css.li}"> Motion Simulation Hazard </g:Label>
+		      <g:Label styleName="{res.css.li}"> Sound </g:Label>
+		      <g:Label styleName="{res.css.li}"> Sound Hazard</g:Label>
+		      <g:Label styleName="{res.css.clearfix}"></g:Label>
+		      <br />
+		      <g:HTMLPanel styleName="{res.css.h5}{res.css.selectsection}">Media Feature
+		        <select name="" styleName="{res.css.dropdown}">
+		          <option></option>
+		          <option></option>
+		        </select>
+		      </g:HTMLPanel>
+		      <g:HTMLPanel styleName="{res.css.h5} {res.css.selectsection} {res.css.fRight}">Mobile Friendly<br />
+		        <button type="button"  styleName="{res.css.OnButtonDeActive}"> Yes</button>
+		        <button type="button" styleName="{res.css.OffButtonsActive}"> No</button>
+		      </g:HTMLPanel>
+		    </g:HTMLPanel>
+		    <g:HTMLPanel styleName="{res.css.okcancel}">
+		      <button class="secondary" id="btn">Cancel</button>
+		      <button class="primary" id="btn">Add Tags</button>
+		    </g:HTMLPanel>
+		  </g:HTMLPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
