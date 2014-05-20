@@ -587,7 +587,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 	public void manageDotsMenuSelection(Label dotsLink) {
 
-		for (int i = 1; i < 6; i++) {
+		for (int i = 1; i < 4; i++) {
 
 			if (userDo != null
 					&& !userDo.getUserUid().equals(
@@ -743,15 +743,15 @@ public class HeaderUc extends Composite implements MessageProperties,
 				stockStore.setItem("tabKey", "resourceTab");
 			}
 			if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-//				Window.enableScrolling(true);
-//				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
-//				Element e = null;
-//				if ((e = event.getRelativeElement()) != null) {
-//					if (e.getInnerHTML() != null && e.getInnerHTML().contains("gwt-Label"))
-//						MixpanelUtil.Click_Organize_LandingPage();
-//				}
-//				manageDotsMenuSelection(organizeLink);
-//				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
+				Element e = null;
+				if ((e = event.getRelativeElement()) != null) {
+					if (e.getInnerHTML() != null && e.getInnerHTML().contains("gwt-Label"))
+						MixpanelUtil.Click_Organize_LandingPage();
+				}
+				manageDotsMenuSelection(organizeLink);
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 			} else {
 				name = "organize";
 //				AppClientFactory.fireEvent(new InvokeLoginEvent());
@@ -778,7 +778,6 @@ public class HeaderUc extends Composite implements MessageProperties,
 				name = "teach";
 //				onLinkPopupClicked(null);
 //				TODO need to show new logout page....
-				manageDotsMenuSelection(studyLink);
 				AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 			}
 		}
@@ -867,14 +866,16 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			tooltipTimer.cancel();
-			toolTipPopupPanel.hide();
-			EventTarget target = event.getRelatedTarget();
-			  if (Element.is(target)) {
-				  if (!organizeToolTip.getElement().isOrHasChild(Element.as(target))){
-					  organizeToolTip.hide();
-				  }
-			  }
+			if (!AppClientFactory.isAnonymous()){
+				tooltipTimer.cancel();
+				toolTipPopupPanel.hide();
+				EventTarget target = event.getRelatedTarget();
+				if (Element.is(target)) {
+					if (!organizeToolTip.getElement().isOrHasChild(Element.as(target))){
+						organizeToolTip.hide();
+					}
+				}
+			}
 		}
 	}
 

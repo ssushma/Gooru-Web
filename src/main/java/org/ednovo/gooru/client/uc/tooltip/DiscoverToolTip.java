@@ -81,12 +81,12 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	interface DiscoverToolTipUiBinder extends UiBinder<Widget, DiscoverToolTip> {
 	}
 	
-	@UiField Label lblRusdLibrary,lblGooruLibrary;
+	@UiField Label lblGooruLibrary;
 	
 	@UiField
 	static HTMLPanel panelCode;
 
-	@UiField HTMLEventPanel lblPartnerLibrary, partnerLibContainer;
+	@UiField HTMLEventPanel lblPartnerLibrary, partnerLibContainer, lblDistrictLibrary, districtLibContainer;
 	
 	@UiField HTMLPanel dropdownImg;
 	
@@ -104,25 +104,46 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	 */
 	public DiscoverToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
-		lblRusdLibrary.setText(GL0515);
+		lblDistrictLibrary.getElement().setInnerHTML(GL0515);
 		lblGooruLibrary.setText(GL0516);
+		
 		lblPartnerLibrary.add(new Label(GL1751));
 		lblPartnerLibrary.addMouseOverHandler(new OpenPartnerMenu());
 		partnerLibContainer.addMouseOutHandler(new ClosePartnerMenu());
-		lblRusdLibrary.addMouseOverHandler(new CloseOtherMenus());
+		
 		lblGooruLibrary.addMouseOverHandler(new CloseOtherMenus());
 		partnerLibContainer.setVisible(false);
+		districtLibContainer.setVisible(false);
+		lblDistrictLibrary.addMouseOverHandler(new OpenDistrictMenus());
 		
-		getPartners();
-		
-		lblRusdLibrary.addClickHandler(new ClickHandler() {
+		final Label partnerTitle = new Label(GL0515_1);
+		partnerTitle.addStyleName("courseOption");
+		partnerTitle.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				MixpanelUtil.mixpanelEvent("Community_Library_Click_RUSD");
+				setHeaderBrowserTitle(partnerTitle.getText());
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RUSD_LIBRARY);
 			}
 		});
+		partnerTitle.addMouseOverHandler(new MouseOverHandler() {
+			
+			@Override
+			public void onMouseOver(MouseOverEvent event) {
+				
+			}
+		});
+		partnerTitle.addMouseOutHandler(new MouseOutHandler() {
+			
+			@Override
+			public void onMouseOut(MouseOutEvent event) {
+				
+			}
+		});
+		districtLibContainer.add(partnerTitle);
 		
+		getPartners();
+				
 		this.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
@@ -140,26 +161,17 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
         
         
         Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
-		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
-		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		  
-		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-
-			  panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:relative;");
-		  }
-		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
-		  {
-			  panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  }
-		  else
-		  {
-			  panelCode.getElement().getFirstChildElement().removeAttribute("style");
-			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
-		  }
+		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
+			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+		}else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click){
+			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+		}else{
+			panelCode.getElement().getFirstChildElement().removeAttribute("style");
+		}
         
 	}
 	
@@ -177,7 +189,9 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			lblPartnerLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
+			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
 			partnerLibContainer.setVisible(true);
+			districtLibContainer.setVisible(false);
 		}
 	}
 
@@ -185,15 +199,27 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			lblPartnerLibrary.getElement().getStyle().clearBackgroundColor();
+			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
 			partnerLibContainer.setVisible(false);
+			districtLibContainer.setVisible(false);
 		}
 	}
-	
+	private class OpenDistrictMenus implements MouseOverHandler {
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			lblPartnerLibrary.getElement().getStyle().clearBackgroundColor();
+			partnerLibContainer.setVisible(false);
+			lblDistrictLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
+			districtLibContainer.setVisible(true);
+		}
+	}
 	private class CloseOtherMenus implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			lblPartnerLibrary.getElement().getStyle().clearBackgroundColor();
 			partnerLibContainer.setVisible(false);
+			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
+			districtLibContainer.setVisible(false);
 		}
 	}
 	
