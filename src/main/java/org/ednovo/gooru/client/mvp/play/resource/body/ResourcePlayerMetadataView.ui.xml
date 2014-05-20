@@ -18,17 +18,29 @@
 			
 			 <g:Label  ui:field="starValue"></g:Label>
 			<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
-                <g:HTMLPanel>Rate this resource</g:HTMLPanel>
+                <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
                 <g:HTMLPanel styleName="ratingContainer">
+
+                    <g:RadioButton name="rating" ui:field="five_star" styleName="rating"></g:RadioButton>
+                    <g:RadioButton name="rating" ui:field="four_star" styleName="rating"></g:RadioButton>
+                    <g:RadioButton name="rating" ui:field="three_star" styleName="rating"></g:RadioButton>
+                    <g:RadioButton name="rating" ui:field="two_star" styleName="rating"></g:RadioButton>
+                    <g:RadioButton name="rating" ui:field="one_star" styleName="rating"></g:RadioButton>
+
+                    <!-- <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
                     <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
                     <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
                     <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
-                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
-                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton> -->
+
+                   <!--  <g:SimpleRadioButton styleName="rating" ui:field="rating1"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating2"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating3"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating4"></g:SimpleRadioButton>
+                    <g:SimpleRadioButton styleName="rating" ui:field="rating5"></g:SimpleRadioButton> -->
                 </g:HTMLPanel>
             </g:HTMLPanel>
-			
-			
+
 			    <htmlevents:HTMLEventPanel ui:field="emoticsContainer" styleName="{playerStyle.emoticsContainer}">
 				    <g:HTMLPanel ui:field="singleEmoticsContainer">
 						<g:HTMLPanel styleName="{playerStyle.iconOuter}">

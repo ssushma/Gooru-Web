@@ -45,6 +45,7 @@ public class ResourceDeserializer extends DeSerializer {
 	private static final String RESOURCE = "resource";
 	private static final String LABEL = "label";
 	private static final String CATEGORY = "category";
+	private static final String COLLECTIONCOUNT = "scollectionCount";
 	private static final String ID = "id";
 	private static final String DESCRIPTION = "description";
 	private static final String TYPE = "type";
@@ -84,6 +85,7 @@ public class ResourceDeserializer extends DeSerializer {
 			resultDo.setUrl(getJsonString(resourceJsonObject.getJSONObject(THUMBNAILS), YOUTUBE_URL));
 		}
 		resultDo.setCategory(getJsonString(resourceJsonObject, CATEGORY));
+		resultDo.setScollectionCount(getJsonInteger(resourceJsonObject, COLLECTIONCOUNT));
 		resultDo.setGooruOid(getJsonString(resourceJsonObject, ID));
 		resultDo.setDescription(getJsonString(resourceJsonObject, DESCRIPTION));
 		resultDo.setAssetURI(getJsonString(resourceJsonObject, "assetURI"));

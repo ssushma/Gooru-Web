@@ -51,6 +51,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.collection.share.CollectionSharePresenter;
 import org.ednovo.gooru.client.mvp.play.collection.toc.CollectionPlayerTocPresenter;
 import org.ednovo.gooru.client.mvp.play.error.CollectionNonExistView;
+import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
@@ -599,6 +600,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	public void showResourceView(String collectionItemId,String tabView) {
 		CollectionItemDo collectionItemDo=getCollectionItemDo(collectionItemId);
+		if(collectionItemDo!=null){
 		this.collectionMetadataId=null;
 		this.collectionSummaryId=null;
 		/** Commented to implement new study end page **/
@@ -642,7 +644,13 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);
-		
+		}
+		else{
+			enablePlayerButton(false, false, false, false, false, false);
+			getView().getPlayerBodyContainer().clear();
+			getView().getPlayerBodyContainer().add(new ResourceNonExitView());
+			getView().getNavigationContainer().getElement().getStyle().setProperty("display", "block");
+		}
 	}
 	public void showCollectionEndView(String collectionId,String tabView) {
 		this.collectionMetadataId=null;

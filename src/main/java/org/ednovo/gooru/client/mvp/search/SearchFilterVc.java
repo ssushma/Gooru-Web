@@ -172,7 +172,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
 	
-	@UiField Image aggregatorTooltip,publisherTooltip;
+	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
 	@UiField
@@ -369,6 +369,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		aggregatorSgstBox.getElement().setId("asAggregatorSgst");
 		aggregatorSgstBox.getElement().setAttribute("placeHolder", GL1749);
 		aggregatorSgstBox.getElement().setAttribute("style","margin-top: 5px;");
+		
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -404,10 +405,25 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
 			aggregatorNotFoundLbl.getElement().getStyle().setOpacity(0.0);
+			
+			final Image publisherTooltip  = new Image();
+			publisherTooltip.setUrl("images/mos/questionmark.png");
+			publisherTooltip.getElement().getStyle().setMarginTop(-46, Unit.PX);
+			publisherTooltip.getElement().getStyle().setMarginLeft(73, Unit.PX);
+			publisherTooltip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			publisherTooltip.setAltText(GL0732);
+			publisherTooltip.setTitle(GL0732);
+			
+			final Image aggregatorTooltip = new Image();
 			aggregatorTooltip.setUrl("images/mos/questionmark.png");
+			aggregatorTooltip.getElement().getStyle().setMarginTop(-46, Unit.PX);
+			aggregatorTooltip.getElement().getStyle().setMarginLeft(85, Unit.PX);
+			aggregatorTooltip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			
 			aggregatorTooltip.setAltText(GL0732);
 			aggregatorTooltip.setTitle(GL0732);
-			publisherTooltip.setUrl("images/mos/questionmark.png");
+			aggregatorPanelUc.getContent().add(aggregatorTooltip);
+			sourcePanelUc.getContent().add(publisherTooltip);
 			publisherTooltip.addMouseOverHandler(new MouseOverHandler() {
 				
 				@Override
@@ -857,8 +873,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			//added for OER search
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			final Image oer = new Image("images/mos/questionmark.png");
-			oer.getElement().getStyle().setLeft(93, Unit.PX);
-			oer.getElement().getStyle().setTop(-19, Unit.PX);
+			oer.getElement().getStyle().setLeft(85, Unit.PX);
+			oer.getElement().getStyle().setTop(-20, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(GL0732);

@@ -1515,9 +1515,10 @@ color:#999;
 }
 
 .oerContainer .filterCheckBox label {
-	background: url(../images/OER_logo.png) no-repeat transparent;
+	background: url(../images/OER_logo.png) 0px 4px no-repeat transparent;
  	padding-left: 30px;
-	padding-bottom: 6px;
+	position: relative;
+	top: -3px;
 }
 .navigationText span.AM img{
 	max-height:23px;
@@ -1773,7 +1774,6 @@ li.token-input-input-token-gooru {
 /* RATINGS AND REVIEWS */
 
 .rating {
-    margin: 3px 10px 3px 0px;
     font-size:12px;
    /*  width: 95px; used in search
     float: right; used in search
