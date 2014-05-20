@@ -873,8 +873,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			//added for OER search
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			final Image oer = new Image("images/mos/questionmark.png");
-			oer.getElement().getStyle().setLeft(93, Unit.PX);
-			oer.getElement().getStyle().setTop(-19, Unit.PX);
+			oer.getElement().getStyle().setLeft(85, Unit.PX);
+			oer.getElement().getStyle().setTop(-20, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(GL0732);

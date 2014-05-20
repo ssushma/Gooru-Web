@@ -25,22 +25,16 @@
 
 package org.ednovo.gooru.client.uc.tooltip;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
-import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
-import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,8 +42,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -89,7 +81,7 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 		lblCreateCollection.setText(GL1757);
 		lblCreateFolder.setText(GL1758);
 		lblEditMyCollections.setText(GL1759);
-		
+		lblEditMyCollections.setVisible(false);
 		
 		lblCreateFolder.addClickHandler(new ClickHandler() {
 			@Override
@@ -137,7 +129,8 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+				if (!AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.SHELF))
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 			}
 		});
 	}
@@ -155,28 +148,14 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 		}
 		AppClientFactory.getInjector().getfolderService().createFolder(folderName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
 			@Override
-			public void onSuccess(FolderDo result) {
-				AppClientFactory.fireEvent(new UpdateFolderItemEvent(result, parentId, params));
+			public void onSuccess(FolderDo folderDo) {
+				folderDo.setType("folder");
+				AppClientFactory.fireEvent(new UpdateFolderItemEvent(folderDo, parentId, params));
+				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params));
 			}
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 		});
-	}
-	
-	public class RedirectToPartnerPage implements ClickHandler {
-		private String folderId;
-		public RedirectToPartnerPage(String folderId) {
-			this.folderId = folderId;
-		}
-
-		@Override
-		public void onClick(ClickEvent event) {
-			hide();
-			Map<String,String> params = new HashMap<String, String>();
-			params.put("pid", folderId);
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
-		}
-	}
-	
+	}	
 }
