@@ -264,7 +264,7 @@ public class EditClasspageView extends
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.addClickHandler(new ClassListTabClicked());
 		
-		reportsTab.setVisible(false);
+		//reportsTab.setVisible(false);
 		
 		reportsTab.addClickHandler(new reportsTabClicked());
 		
