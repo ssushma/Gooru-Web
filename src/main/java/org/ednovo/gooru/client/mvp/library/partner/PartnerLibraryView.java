@@ -213,7 +213,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		} else if(partnerPlace.equals(PlaceTokens.PSDPAL)) {
 			
 			courseDo.setLabel("K-12 Arabic lessons");
-			thumbnailDo.setUrl("../images/library/partners/cfci.png");
+			thumbnailDo.setUrl("../images/library/partners/psd.png");
 			libraryUserDo.setPartnerName(GL1576);
 			libraryUserDo.setPartnerUrl(GL1577);
 

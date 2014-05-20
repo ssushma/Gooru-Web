@@ -247,14 +247,6 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.COURSE_PAGE_TITLE+courseLabel);	
 	}
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
-		
-		LibraryUserDo psdPalDo = new LibraryUserDo();
-		LibraryUserDo fincaPinc = new LibraryUserDo();
-		psdPalDo.setUsername(PlaceTokens.PSDPAL);
-		fincaPinc.setUsername(PlaceTokens.FINCAPINC);
-		partnersList.add(fincaPinc);
-		partnersList.add(psdPalDo);
-		
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
 			final Label partnerTitle = new Label(StringUtil.getPartnerName(libraryUserDo.getUsername()));

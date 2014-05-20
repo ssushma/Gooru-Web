@@ -22,12 +22,31 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.profilepage.data;
+/**
+ * @fileName : ProfilePageLibraryStyleBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 02-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.resources.client.CssResource;
 
-public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
-	public void getPartnerChildFolderItems(String folderId, int pageNumber);
-	public void getPartnerWorkspaceFolders();
-	void getIntoPartnerLibrarypage();
+
+public interface ProfilePageLibraryStyleBundle extends CssResource {
+	String open();
+	String active();
+	String resourceImage();
+	String conceptTitle();
+	String collectionSmall();
+	String conceptActive();
+	String lessonTitle();
 }

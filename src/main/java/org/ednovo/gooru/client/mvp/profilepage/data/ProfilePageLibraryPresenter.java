@@ -25,7 +25,7 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildPresenter;

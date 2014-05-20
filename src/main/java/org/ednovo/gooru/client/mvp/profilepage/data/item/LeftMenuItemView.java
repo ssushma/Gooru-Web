@@ -22,38 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
-import java.util.ArrayList;
-
-import org.ednovo.gooru.client.child.IsChildView;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 
-/**
- * @author SearchTeam
- * 
- */
-public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibraryPresenter> {
-	/**
-	 * Load Partners page {@link loadPartnersPage}
-	 * @param callBack
-	 * @param placeToken
-	 */
-	void loadPartnersPage(String callBack, String placeToken);
-	
-	/**
-	 * Set Partners Unit Data {@link setUnitList}
-	 * @param folderList
-	 */
-	public void setUnitList(ArrayList<PartnerFolderDo> folderList);
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 
-	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId);
-	
-	public void loadingPanel(boolean isVisible);
-	
-	public void clearPanels();
+public class LeftMenuItemView extends Composite {
 
+	@UiField Label unitMenuItem;
+	
+	private String unitId;
+	
+	private Integer childCount;
+	
+	
+	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
+			.create(LibraryUnitMenuViewUiBinder.class);
+
+	interface LibraryUnitMenuViewUiBinder extends
+			UiBinder<Widget, LeftMenuItemView> {
+	}
+
+	public LeftMenuItemView(PartnerFolderDo folderDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		unitMenuItem.setText(folderDo.getTitle());
+		setUnitId(folderDo.getGooruOid());
+	}
+
+	public Label getUnitMenuItemPanel() {
+		return unitMenuItem;
+	}
+
+	public String getUnitId() {
+		return unitId;
+	}
+
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
+	}
+	public Integer getChildCount() {
+		return childCount;
+	}
+
+	public void setChildCount(Integer childCount) {
+		this.childCount = childCount;
+	}
 }
