@@ -522,12 +522,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		List<String> moreGradeCourseLbls = new ArrayList<String>();
 		
 			int gradeWidth = 0;
+			int gradeCount = 1;
 			Iterator<Widget> gradeWidgets = userGradeList.iterator();
+			int widgetCount = userGradeList.getWidgetCount();
 			while (gradeWidgets.hasNext()) {
 				Widget widget = gradeWidgets.next();
+				String commaSeparator = "";
 				if (widget instanceof Label) {
+					String text = ((Label) widget).getText();
+					if(!(gradeCount==widgetCount)) {
+						text = concatenateGradeTxt(text);
+					}
 					if((gradeContainerWidth - gradeWidth)>widget.getOffsetWidth()) {
 						if(isValue){
+							if(!(gradeCount==widgetCount)) {
+								commaSeparator = GL_GRR_COMMA;
+							}
 							gradeWidth = gradeWidth + widget.getOffsetWidth() + RENDER_MARGIN_WIDTH;
 						}else {
 							isValue=false;
@@ -537,7 +547,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 						isValue=false;
 						moreGradeCourseLbls.add(((Label) widget).getText());
 					}
+					((Label) widget).setText(text+commaSeparator);
 				}
+				gradeCount++;
 			}
 			renderExtraGradeCourse(moreGradeCourseLbls);
 	}
@@ -1189,4 +1201,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		return profilePageLibraryView;
 	}
 
+	private String concatenateGradeTxt(String text) {
+		if(text.length()<3) {
+			if(text.equals("1")) {
+				text = text.concat("st "+GL0325);
+			} else if(text.equals("2")) {
+				text = text.concat("nd "+GL0325);
+			} else if(text.equals("3")) {
+				text = text.concat("rd "+GL0325);
+			} else {
+				text = text.concat("th "+GL0325);
+			} 
+		}
+		return text;
+	}	
 }
