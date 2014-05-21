@@ -101,6 +101,7 @@ a:hover {
 	height: 35px;
 	width: 100%;
 	border:1px solid #ddd;
+	display: none;
 	background: rgb(239,239,239); /* Old browsers */
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#EDEDED));
@@ -210,7 +211,7 @@ a:hover {
 }	
 
 .contentView {
-	border-top: 1px solid #ddd;
+	
 }
 
 .folderBlock {
@@ -1284,4 +1285,9 @@ li.resources {
 	padding-left: 14px;
 	float: left;
 	padding-top: 3px;
+}
+
+.userNameborder {
+	width: 100%;
+	border-bottom: 1px solid #ddd;
 }
