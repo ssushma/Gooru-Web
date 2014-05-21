@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
@@ -383,6 +385,10 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 							}
 							//Call shelf api to load the first collection.
+						}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
+							openClasspage();
+							Window.enableScrolling(true);
+							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						}else{
 							AppClientFactory.resetPlace();
 							Window.enableScrolling(true);
@@ -395,7 +401,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 					    }
 					    
 					    if(nameToken.equals(PlaceTokens.TEACH)) {
-					    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
+//					    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
 					    }  else if(nameToken.equals(PlaceTokens.SHELF)){
 							getCollectionFirstItem();
 					    }
@@ -677,6 +683,31 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 		this.widgetMode = widgetMode;
 
 	}
-	
+	public void openClasspage() {
+		AppClientFactory
+				.getInjector()
+				.getClasspageService()
+				.v2GetAllClass("2", "0",
+						new SimpleAsyncCallback<ClasspageListDo>() {
+							@Override
+							public void onSuccess(ClasspageListDo result) {
+								if (result.getSearchResults().size() > 0){
+									OpenClasspageEdit(result.getSearchResults().get(0).getGooruOid());
+								}else{
+									
+								}
+							}
+						});
+	}
+	private void OpenClasspageEdit(String gooruOId) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("classpageid", gooruOId);
+		params.put("pageNum", "0");
+		params.put("pageSize", "10");
+		params.put("pos", "1");
+		AppClientFactory.getPlaceManager().revealPlace(
+				PlaceTokens.EDIT_CLASSPAGE, params);
+	}
+
 }
 
