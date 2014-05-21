@@ -50,4 +50,8 @@ public interface ProfilePageLibraryStyleBundle extends CssResource {
 	String conceptActive();
 	String lessonTitle();
 	String collection();
+	String collectionViewerSubStyle();
+	String collectionInfoSubStyle();
+	String resourcesInsideSubStyle();
+
 }

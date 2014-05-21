@@ -232,49 +232,65 @@ public class SimpleCollectionVc extends Composite implements IsDraggable,Message
 				gradesLblValue.setText(null);
 			}
 		}
-		if(StringUtil.isPartnerUser(collectionSearchResultDo.getOwner().getUsername())) {
-			if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
-			creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
-			creatorNameLblValue.getElement().getStyle().setCursor(Cursor.POINTER);
-			creatorNameLblValue.getElement().getStyle().setFloat(Float.LEFT);
-			
-			creatorNameLblValue.addClickHandler(new ClickHandler() {
-				
-				@Override
-				public void onClick(ClickEvent event) {
-					MixpanelUtil.Click_Resource_Username();
-					AppClientFactory.getPlaceManager().revealPlace(collectionSearchResultDo.getOwner().getUsername());
-				}
-			});
-			
-			creatorNameLblValue.addMouseOverHandler(new MouseOverHandler() {
-
-				@Override
-				public void onMouseOver(MouseOverEvent event) {
-					AppClientFactory.getInjector().getUserService().getUserProfileV2Details(collectionSearchResultDo.getOwner().getGooruUId(), USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
-
-						@Override
-						public void onSuccess(ProfileDo result) {
-							String username=result.getUser().getUsernameDisplay();
-							String aboutMe=result.getAboutMe();
-							UserProfileUc userProfieVc = new UserProfileUc(username,aboutMe, result.getUser().getProfileImageUrl());
-							containerPanel.add(userProfieVc);
-						}
-						
-					});
-				}
-			});
-
-		  creatorNameLblValue.addMouseOutHandler(new MouseOutHandler() {
-
-				@Override
-				public void onMouseOut(MouseOutEvent event) {
-					containerPanel.clear();
-				}
-			});
-		}
 		
-	}
+		if ((collectionSearchResultDo.getOwner().isProfileUserVisibility())){
+			if(StringUtil.isPartnerUser(collectionSearchResultDo.getOwner().getUsername())) {
+				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
+				creatorNameLblValue.getElement().getStyle().setCursor(Cursor.POINTER);
+				creatorNameLblValue.getElement().getStyle().setFloat(Float.LEFT);
+
+				creatorNameLblValue.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.Click_Resource_Username();
+						AppClientFactory.getPlaceManager().revealPlace(collectionSearchResultDo.getOwner().getUsername());
+					}
+				});
+
+				creatorNameLblValue.addMouseOverHandler(new MouseOverHandler() {
+
+					@Override
+					public void onMouseOver(MouseOverEvent event) {
+						AppClientFactory.getInjector().getUserService().getUserProfileV2Details(collectionSearchResultDo.getOwner().getGooruUId(), USER_META_ACTIVE_FLAG, new SimpleAsyncCallback<ProfileDo>(){
+
+							@Override
+							public void onSuccess(ProfileDo result) {
+								String username=result.getUser().getUsernameDisplay();
+								String aboutMe=result.getAboutMe();
+								UserProfileUc userProfieVc = new UserProfileUc(username,aboutMe, result.getUser().getProfileImageUrl());
+								containerPanel.add(userProfieVc);
+							}
+
+						});
+					}
+				});
+
+				creatorNameLblValue.addMouseOutHandler(new MouseOutHandler() {
+
+					@Override
+					public void onMouseOut(MouseOutEvent event) {
+						containerPanel.clear();
+					}
+				});
+			}else{
+				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
+				creatorNameLblValue.getElement().getStyle().setCursor(Cursor.POINTER);
+				creatorNameLblValue.getElement().getStyle().setFloat(Float.LEFT);
+
+				creatorNameLblValue.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.Click_Resource_Username();
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("id", collectionSearchResultDo.getOwner().getGooruUId());
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE,params);
+					}
+				});
+			}
+
+		}
 		SearchUiUtil.renderMetaData(metaDataFloPanel, collectionSearchResultDo.getCourseNames(), 30);
 		SearchUiUtil.renderMetaData(metaDataFloPanel, collectionSearchResultDo.getTotalViews() + "", VIEWS);
 		

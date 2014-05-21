@@ -333,7 +333,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					aggregatorSearchDo.setSearchResults(null);
 					aggregatorSearchDo.setQuery(text);
 					if (text != null && text.trim().length() > 0) {
-						//AppClientFactory.fireEvent(new AggregatorSuggestionEvent(aggregatorSearchDo));
+						AppClientFactory.fireEvent(new AggregatorSuggestionEvent(aggregatorSearchDo));
 					}
 				}
 				
@@ -883,7 +883,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				
 				@Override
 				public void onMouseOver(MouseOverEvent event) {
-					toolTip = new ToolTip(GL1767);
+					toolTip = new ToolTip(GL1770);
 					toolTip.getLblLink().setVisible(false);
 					toolTip.getElement().getStyle().setBackgroundColor("transparent");
 					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -946,11 +946,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if (resourceSearch) {
 			String sourceSgsts = getSuggestions(sourceContainerFloPanel);
 			if (!sourceSgsts.isEmpty()) {
-				filterMap.put(IsSearchView.SOURCE_FLT, sourceSgsts);
+				filterMap.put(IsSearchView.PUBLISHER_FLT, sourceSgsts);
 			}
 			String aggregatorSgsts = getSuggestions(aggregatorContainerFloPanel);
 			if (!aggregatorSgsts.isEmpty()) {
-				filterMap.put(IsSearchView.SOURCE_FLT, aggregatorSgsts);
+				filterMap.put(IsSearchView.AGGREGATOR_FLT, aggregatorSgsts);
 			}
 		} else {
 			String authorSgsts = getSuggestions(authorContainerFloPanel);
@@ -1115,13 +1115,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			setFilterSuggestionData(standardContainerFloPanel, standards.split(COMMA_SEPARATOR), true);
 		}
 		if (resourceSearch) {
-			String sources = filter.get(IsSearchView.SOURCE_FLT);
+			String sources = filter.get(IsSearchView.PUBLISHER_FLT);
 			if (sources != null) {
 				setFilterSuggestionData(sourceContainerFloPanel, sources.split(COMMA_SEPARATOR), false);
 			}
-			String aggregator = filter.get(IsSearchView.SOURCE_FLT);
+			String aggregator = filter.get(IsSearchView.AGGREGATOR_FLT);
 		if (aggregator != null) {
-				//setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
+				setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
 			}
 			
 		} else {
