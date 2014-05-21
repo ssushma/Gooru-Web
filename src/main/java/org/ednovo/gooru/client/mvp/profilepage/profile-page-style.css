@@ -93,7 +93,7 @@ a:hover {
 }
 
 .userContent {
-	clear:both;
+	float: left;
 	border-bottom:1px solid #ddd;
 }
 

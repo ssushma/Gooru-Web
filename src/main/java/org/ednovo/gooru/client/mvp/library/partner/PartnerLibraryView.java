@@ -205,17 +205,17 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 		} else if(partnerPlace.equals(PlaceTokens.FINCAPINC)) {
 			
-			courseDo.setLabel("Fincap Inc.");
+			courseDo.setLabel("Personal Finance");
 			thumbnailDo.setUrl("../images/library/partners/cfci.png");
-			libraryUserDo.setPartnerName(GL1576);
-			libraryUserDo.setPartnerUrl(GL1577);
+			libraryUserDo.setPartnerName(GL1765);
+			libraryUserDo.setPartnerUrl(GL1766);
 
 		} else if(partnerPlace.equals(PlaceTokens.PSDPAL)) {
 			
 			courseDo.setLabel("K-12 Arabic lessons");
 			thumbnailDo.setUrl("../images/library/partners/psd.png");
-			libraryUserDo.setPartnerName(GL1576);
-			libraryUserDo.setPartnerUrl(GL1577);
+			libraryUserDo.setPartnerName(GL1763);
+			libraryUserDo.setPartnerUrl(GL1764);
 
 		}
 		
