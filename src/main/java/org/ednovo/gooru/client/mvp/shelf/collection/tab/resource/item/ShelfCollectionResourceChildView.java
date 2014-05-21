@@ -340,7 +340,7 @@ public class ShelfCollectionResourceChildView extends
 		StartPageLbl.setText(GL0961);
 		EditBtn.setText(GL0140);
 		updateResourceBtn.setText(GL0962);
-		addTages.setText("Add Tages");
+		addTages.setText("Add Tags");
 		editInfoLbl.setText(GL0963);
 		editVideoTimeLbl.setText(GL0964);
 		editStartPageLbl.setText(GL0960);
