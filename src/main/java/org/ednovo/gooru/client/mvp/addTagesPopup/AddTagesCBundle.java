@@ -44,7 +44,13 @@ public interface AddTagesCBundle extends ClientBundle{
 		String placeHolderText();
 		String arrowInstructional();
 		String h5FloatLeft();
-
+		String addQuestionStandard();
+		String shelfCourseSubject();
+		String addResourceSuggestedBoxForQuestion();
+		String standardsCont();
+		String standardMaxHide();
+		String collectionStandardsMargin();
+		
 		
 	}
 	@NotStrict
