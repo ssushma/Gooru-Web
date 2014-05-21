@@ -54,7 +54,8 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
 	
-	String mediaFeatureStr = GL1763;
+	String mediaFeatureStr = GL1767;
+	String resourceId=null;
 /*	
 	@UiField(provided = true)
 	SlideBarView slideBar;*/
@@ -63,7 +64,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 	
 	@UiField HTMLPanel moveCircle;*/
 
-	public AddTagesPopupView() {
+	public AddTagesPopupView(String resourceId) {
 		super(false);
 /*		slideBar=new SlideBarView(1,12);
 		slideBar.setStepSize(1.0);
@@ -74,7 +75,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		this.res = AddTagesCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
-		
+		this.resourceId=resourceId;
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
 		spanelMediaFeaturePanel.setVisible(false);
@@ -1145,10 +1146,9 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			{
 				tagList.add("\"" + lexileMainarr[i].toString() +"\"");
 			}
-		
 		}
 
-		addTagsServiceRequest(tagList.toString(), "fc81bf4f-1f62-4d30-8e2a-3f518bbc8ee4");
+		addTagsServiceRequest(tagList.toString(), resourceId);
 	
 	}
 	
