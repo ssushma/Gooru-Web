@@ -146,6 +146,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
 		url+=getStandardId(rootNodeId);
+		System.out.println("getSimpleCollectionDetils:"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -472,12 +473,22 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 	
 	public boolean getUserProfileVisibility(String gooruUid){
-		boolean userProfileVisibility=true;
+		boolean userProfileVisibility=false;
 		JsonRepresentation jsonRep =null;
+		JSONObject jsonObject= null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE,gooruUid,getLoggedInSessionToken());
+		System.out.println("getUserProfileVisibility:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
+		try{
+			jsonObject = jsonRep.getJsonObject();
+			System.out.println("optionalvalue::"+jsonObject.getBoolean("optionalValue"));
+			userProfileVisibility = jsonObject.getBoolean("optionalValue");
+		}catch(Exception exception){
+			
+		}
 		return userProfileVisibility;
+		
 	}
 	@Override
 	public String copyCollection(String collectionId, String collectionTitle) {
