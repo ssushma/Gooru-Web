@@ -201,15 +201,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
 		
-		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-//			collectionContainer.add(starRatingsUc);
-		}*/
-		/*if(AppClientFactory.isAnonymous()){
-			userStarRatings = new UserStarRatingsWidget();
-			ratingsContainer.clear();
-			ratingsContainer.add(userStarRatings);
-		}*/
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
