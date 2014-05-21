@@ -47,7 +47,7 @@ a:hover {
 }
 
 .profileContainer {
-	width:1121px;
+	width:1000px;
 	margin:auto;
 }
 
@@ -56,28 +56,29 @@ a:hover {
 }
 
 .avatar {
-	width:100px;
-	height:100px;
+	width:174px;
+	height:175px;
+	position: relative;
 	background-color:white;
 	-moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
-	padding:10px;
 	float:left;
-	margin-right:20px;
 }
 
 .aboutUserText {
-	width:633px;
-	float:left;
+	width: 80%;
+	float: right;
+	padding: 10px;
 }
 
 .userName {
-	font-size: 38px;
+	font-size: 20px;
 	font-weight: bold;
 	color: rgba(100,100,100, 0.8);
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
 	background-color: transparent;
+	float: left;
 }
 
 .userBio {
@@ -92,7 +93,7 @@ a:hover {
 }
 
 .userContent {
-	clear:both;
+	float: left;
 	border-bottom:1px solid #ddd;
 }
 
@@ -978,8 +979,7 @@ li.resources {
 }
 
 .userMetadata {
-	width: 700px;
-	padding-top: 10px;
+	width: 800px;
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -992,7 +992,6 @@ li.resources {
 	width: 462px;
 	float: left;
 	text-align: center;
-	margin-left: 5px;
 	margin-right: 5px;
 	overflow: hidden;
     height: 25px;
@@ -1076,13 +1075,14 @@ li.resources {
 }
 .aboutUserTextRight {
 	overflow: hidden;
-	width: 348px;
-	float: left;
+	float: right;
 }
 .gooru-social-buttons {
 	float: right;
 	clear: right;
 	width: 102px;
+	margin-top: -10px;
+	margin-left: 10px;
 }
 .gooru-social-Input {
 	float: right;
@@ -1111,7 +1111,6 @@ li.resources {
 .gooruProfileOnOffContainer {
 	float: right;
 	clear: right;
-	height: 75px;
 	text-align: center;
 }
 
@@ -1175,7 +1174,8 @@ li.resources {
 
 .bioMainContainer {
 	float: left;
-	width: 635px;
+	padding-top: 10px;
+	border-top: 1px solid #999;
 }
 
 .bioLeftContainer {
@@ -1185,7 +1185,7 @@ li.resources {
 
 .bioRightContainer {
 	float: left;
-	width: 560px;
+	width: 795px;
 }
 
 .metaDataContainer {
@@ -1195,13 +1195,14 @@ li.resources {
 }
 
 .bioTextAreaContainer {
-	width: 477px;
+	width: 755px;
 	float: left;
 }
 .userMetaDataContainer {
 	float:left;
 	margin-bottom: 20px;
 	margin-top:28px;
+	background: white;
 }
 .coursePopupCancelLbl {
 	float: left;
@@ -1255,4 +1256,32 @@ li.resources {
 	width: 50px;
 	height: 25px;
 	margin-left: 10px;
+}
+
+.starBg {
+	color: #fff;
+	cursor: pointer;
+	bottom: 0px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	position: absolute;
+	font-weight: bold;
+	padding: 10px 7px;
+	padding-left: 30px;
+	background: #4D9645 url('images/profilepage/rating.png') 5px 8px no-repeat;
+}
+
+.gooruSocialButtonsContainer {
+	float: left;
+}
+.profilePageEditBioPanel {
+	position: relative;
+}
+
+.roleStyle {
+	display: inline-block;
+	font-size: 16px;
+	padding-left: 14px;
+	float: left;
+	padding-top: 3px;
 }

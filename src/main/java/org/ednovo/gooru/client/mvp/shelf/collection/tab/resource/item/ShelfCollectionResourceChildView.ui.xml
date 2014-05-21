@@ -89,6 +89,7 @@
 		      <g:Label styleName="{res.css.editButtonText}" ui:field="editStartPageLbl" />
 		    <g:Label styleName="{res.css.editButtonText}" ui:field="copyResource" />
 			<g:Label styleName="{res.css.editButtonText}"  ui:field="confirmDeleteLbl" />
+				<g:Label styleName="{res.css.editButtonText}"  ui:field="addTages" />
 			</g:FlowPanel>
 		<g:Label styleName="{res.css.updateTextStyle}" ui:field="UpdateTextMessage"/>
 		 <g:FlowPanel styleName="{res.css.actionPanel}" ui:field="actionVerPanel">
