@@ -61,7 +61,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 
 	@Override
 	public void getPartnerWorkspaceFolders() {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, COLLECTION_TYPE, new AsyncCallback<PartnerFolderListDo>(){
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, null, new AsyncCallback<PartnerFolderListDo>(){
 			@Override
 			public void onFailure(Throwable caught) {}
 			
