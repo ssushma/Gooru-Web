@@ -47,6 +47,7 @@ import org.ednovo.gooru.client.mvp.play.collection.event.ShowCollectionTabWidget
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowPreviewTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.events.SetCommentsOptionsEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
@@ -386,9 +387,10 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 							}
 							//Call shelf api to load the first collection.
 						}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
-							openClasspage();
 							Window.enableScrolling(true);
 							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+							AppClientFactory.fireEvent(new SetButtonEvent());
+							openClasspage();
 						}else{
 							AppClientFactory.resetPlace();
 							Window.enableScrolling(true);
