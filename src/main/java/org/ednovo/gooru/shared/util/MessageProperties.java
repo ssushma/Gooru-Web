@@ -2241,6 +2241,7 @@ public interface MessageProperties {
 		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
 		
 		String GL1762_1 = "Enter a Class Code";
+		String GL1763 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
 
     	String GL1763 = "Click here for the Partners for Sustainable Development (PSD) website";
     	String GL1764 = "http://psdpal.org/";

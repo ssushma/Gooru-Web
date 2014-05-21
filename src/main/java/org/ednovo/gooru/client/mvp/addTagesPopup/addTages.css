@@ -2,9 +2,11 @@
 	background-color: #FFF;
 	width: 590px;
 	padding: 3px;
+	height:587px;
 }
 .popupInner {
 	border: 1px solid #DDD;
+	height:584px;
 }
 .popupHeader {
 	padding: 10px 15px;
@@ -23,8 +25,8 @@
 }
 .okcancel {
 	margin: auto;
-	margin-bottom: 15px;
 	text-align: center;
+	margin-top:50px;
 }
 .tag {
 	display: inline-block;
@@ -39,14 +41,19 @@
 	font-weight: bold;
 	padding: 5px 0px;
 }
+.h5FloatLeft {
+	font-size: 12px !important;
+	font-weight: bold;
+	padding: 5px 0px;
+	float:left;
+}
 .li {
 	cursor: pointer;
 	display: inline-block;
 	margin-right: 5px;
 	padding: 0px 10px 8px 0px;
 }
-.li:nth-child(6) {
-	color: #fff;
+.selected {
 	padding: 5px 10px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -115,6 +122,7 @@
 	vertical-align: top;
 	padding: 7px 12px;
 	color: #515151;
+	cursor: pointer;
 }
 .levelType{
 	
@@ -126,6 +134,7 @@
 }
 .fRight {
 	float: right;
+	margin-top: -27px;
 }
 .OnButtonDeActive {
 	font-size: 12px;
@@ -170,4 +179,88 @@ border-bottom: 2px solid #848280;
 background-color: #efebe7;
 height: 34pt;
 width: 50%;
+}
+.scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:80px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
+	overflow-x:hidden !important;
+}
+.secondaryInfoContainer {
+	float: left;
+	margin-right: 45px;
+	margin-bottom: 50px;
+	width: 42%;
+	margin-top:-8px;
+}
+.gradeInfoTitleContainer {
+	border-bottom: 1px solid #ccc;
+}
+.shelfGradeInfoTitle {
+	color: #cccccc;
+	font-size: 16px;
+}
+.shelfGradeInfoBottom {
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+}
+.shelfGradeInfogardenContainer {
+	float: left;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 300px;
+	opacity: 0.6;
+}
+.dropdownContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:270px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+}
+.placeHolderText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(153,153,153);
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	width: 90%;
+}
+.arrowInstructional {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	top: -9px;
+	float: right;
+	margin-top: -12px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
 }
