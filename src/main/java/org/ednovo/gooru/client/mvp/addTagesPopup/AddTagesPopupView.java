@@ -65,7 +65,7 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	
 	@UiField Label headerEducationalUse, handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	
-	@UiField Button cancelBtn,addTagsBtn;
+	@UiField Button cancelBtn,addTagsBtn,mobileYes,mobileNo;
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
@@ -98,21 +98,11 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	
 	String mediaFeatureStr = GL1767;
 	String resourceId=null;
-/*	
-	@UiField(provided = true)
-	SlideBarView slideBar;*/
-	
-/*	@UiField HTMLEventPanel barSlider;
-	
-	@UiField HTMLPanel moveCircle;*/
+
 
 	public AddTagesPopupView(String resourceId) {
 		super(false);
-/*		slideBar=new SlideBarView(1,12);
-		slideBar.setStepSize(1.0);
-		slideBar.setCurrentValue(1);
-		slideBar.setNumTicks(12);
-		slideBar.setNumLabels(12);*/
+
 		initializeAutoSuggestedBox();
 		this.res = AddTagesCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -140,27 +130,7 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			}
 		});
 		getTagsServiceRequest(resourceId);
-/*		barSlider.addClickHandler(new ClickHandler() 
-		{
-			
-			@Override
-			public void onClick(ClickEvent event) 
-			{
-		
-			     Object soruce = event.getSource();			     
-			     int leftPos = event.getNativeEvent().getClientX();
-		            if (soruce instanceof HTMLPanel) {  //check that the source is really a button
-		                int sliderBarLeftPos = (leftPos- ((HTMLPanel) soruce).getAbsoluteLeft());  //cast the source to a button
-		                moveCircle.getElement().setAttribute("style", "left:"+(sliderBarLeftPos-5)+Unit.PX+";");
-		            } 
-		            else 
-		            {
-		               // RootPanel.get().add(new Label("Not a Button, can't be..."));
-		            }
-				
-			}
-		});*/
-/*		slideBar.setStyleName(res.css().gwtSliderBarshell());*/
+
 		
 		List<String> mediaFeatureList = Arrays.asList(mediaFeatureStr.split(","));
 		for(int n=0; n<mediaFeatureList.size(); n++)
@@ -346,7 +316,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				System.out.println("standardsDo:"+standardsDo);
 				for(final String codeObj:standardsDo){
 					if(codeObj==standardCode){
 						String standardDelete="[\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"]";
@@ -371,7 +340,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	}
 	@UiHandler("kindergarden")
 	public void onKindergardenClick(ClickEvent click){
-		System.out.println("stylename::"+kindergarden.getStyleName().toString().contains("selected"));
 		if(kindergarden.getStyleName().toString().contains("selected"))
 		{
 			kindergarden.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
@@ -980,6 +948,14 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
+	public void closeFunction()
+	{
+		this.hide();
+		if(standardsPreferenceOrganizeToolTip.isShowing())
+			standardsPreferenceOrganizeToolTip.hide();
+		Window.enableScrolling(true);
+	}
+	
 	@UiHandler("cancelBtn")
 	public void onCancelClick(ClickEvent click)
 	{
@@ -1198,6 +1174,21 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		for(final String codeObj:standardsDo){
 			tagList.add("\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"");
 		}
+		
+		if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
+		{
+			tagList.add("\"" +mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText() +"\"");
+		}
+		
+		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			tagList.add("\"" +"Mobile Friendly"+" : "+mobileYes.getText() +"\"");
+		}
+		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			tagList.add("\"" +"Mobile Friendly"+" : "+mobileNo.getText() +"\"");
+		}
+		
 		addTagsServiceRequest(tagList.toString(), resourceId);
 	}
 	
@@ -1206,7 +1197,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
 			public void onSuccess(List<ResourceTagsDo> result) {
-				bindObjectsToUI(result);
+			//	bindObjectsToUI(result);
+				closeFunction();
 			}
 		});
 	
@@ -1257,6 +1249,35 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			{
 				setStandardObjectVal(resultResourceTags.get(objVal).getLabel());
 			}
+			if(resultResourceTags.get(objVal).getLabel().contains(mediaLabel.getText()))
+			{
+				setMediaFeatureObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains("Mobile Friendly"))
+			{
+				setMobileFriendlyObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+		}
+	}
+	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
+	{
+		if(mobileFriendlyVal.contains(mobileYes.getText()))
+		{
+			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		}
+		else if(mobileFriendlyVal.contains(mobileNo.getText()))
+		{
+			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		}
+	}
+	public void setMediaFeatureObjectVal(String mediaFeatureVal)
+	{
+		if(mediaFeatureVal != null)
+		{
+			mediaFeatureVal = mediaFeatureVal.replace(mediaLabel.getText()+" : ", "");
+			lblMediaPlaceHolder.setText(mediaFeatureVal);
 		}
 	}
 	public void setStandardObjectVal(String standardStr)
@@ -1267,27 +1288,27 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	}
 	public void setAccessHazardObjectVal(String accessHazardStr)
 	{
-		if(accessHazardStr.contains(flashing.getText()))
-		{
-			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
 		if(accessHazardStr.contains(flashingHazard.getText()))
 		{
 			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
-		if(accessHazardStr.contains(motionSimulation.getText()))
+		else if(accessHazardStr.contains(flashing.getText()))
+		{
+			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		else if(accessHazardStr.contains(motionSimulation.getText()))
 		{
 			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
-		if(accessHazardStr.contains(motionSimulationHazard.getText()))
+		else if(accessHazardStr.contains(motionSimulationHazard.getText()))
 		{
 			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
-		if(accessHazardStr.contains(sound.getText()))
+		else if(accessHazardStr.contains(sound.getText()))
 		{
 			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
-		if(accessHazardStr.contains(soundHazard.getText()))
+		else if(accessHazardStr.contains(soundHazard.getText()))
 		{
 			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
 		}
@@ -1563,12 +1584,23 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			String lexileStr = lexileHeader.getText() + " : " + level12.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		System.out.println("array lexileSelectedOptions:"+lexileSelectedOptions);
 		lexileLevelArr = lexileSelectedOptions.toArray(new String[lexileSelectedOptions.size()]);
-		
-		System.out.println("array added:"+lexileLevelArr);
 		return lexileLevelArr;
 		
+	}
+	
+	@UiHandler("mobileYes")
+	public void onmobileYesClick(ClickEvent click)
+	{
+		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+	}
+	
+	@UiHandler("mobileNo")
+	public void onmobileNoClick(ClickEvent click)
+	{
+		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 	}
 	
 	
