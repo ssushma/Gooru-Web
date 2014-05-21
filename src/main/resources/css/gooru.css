@@ -1895,4 +1895,6 @@ fieldset {
 	background-color:#CFE3F1;
 }
 
-
+.textTransform{
+	text-transform: uppercase;
+}

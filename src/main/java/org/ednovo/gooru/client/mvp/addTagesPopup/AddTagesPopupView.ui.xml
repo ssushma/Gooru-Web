@@ -13,24 +13,39 @@
 		      <br />
 		      <g:Label styleName="{res.css.h5}" ui:field="headerEducationalUse">Educational Use</g:Label>
 		      <g:Label styleName="{res.css.li} {res.css.selected}" ui:field="activity">Activity </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="handout">Handout </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="homework">Homework </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="game"> Game </g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="handout">Handout</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="homework">Homework</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="game">Game</g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="presentation">Presentation</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="refMaterial"> Reference Material</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="quiz">Quiz </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="currPlan">Curriculum Plan </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="lessonPlan">Lesson Plan </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="unitPlan">Unit Plan </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="projectPlan">Project Plan </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="reading"> Reading </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="textbook"> Textbook </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="article"> Article </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="book"> Book</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="refMaterial">Reference Material</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="quiz">Quiz</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="currPlan">Curriculum Plan</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="lessonPlan">Lesson Plan</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="unitPlan">Unit Plan</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="projectPlan">Project Plan</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="reading">Reading</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="textbook">Textbook</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="article">Article</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="book">Book</g:Label>
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
-		      <g:HTMLPanel styleName="{res.css.h5} {res.css.qmark}">Standards<br />
+		      <!-- <g:HTMLPanel styleName="{res.css.h5} {res.css.qmark}">Standards<br />
 		        <g:TextBox styleName="{res.css.inputtype}" />
-		      </g:HTMLPanel>
+		      </g:HTMLPanel> -->
+		      <!-- Standards Start -->
+			 <g:FlowPanel ui:field="standardContainer">
+					<g:Label styleName="{res.css.addQuestionStandard}"	ui:field="standardsDefaultText"></g:Label>
+					<g:FlowPanel styleName="{res.css.shelfCourseSubject}">
+						<g:FlowPanel styleName="{res.css.addResourceSuggestedBoxForQuestion}">
+							<g:FlowPanel styleName="{res.css.standardsCont}">
+								<gg:AppSuggestBox ui:field="standardSgstBox" width="271px" height="19px" />
+								<g:Label styleName="{res.css.standardMaxHide}" ui:field="standardMaxMsg" />
+								<g:FlowPanel ui:field="standardsPanel"
+									styleName="{res.css.collectionStandardsMargin}" />
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+				</g:FlowPanel>
+       		 <!-- Standards End -->
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.levelType}">
 		        <g:Label  styleName="{res.css.h5}" ui:field="lexileHeader">Lexile Level</g:Label >
@@ -42,22 +57,22 @@
 		        </gg:HTMLEventPanel> -->
 		        <g:HTMLPanel styleName="{res.css.levels}">
 		          <g:Label styleName="{res.css.levelnumbers} {res.css.selected}" ui:field="kindergarden">Kindergarden </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level1">1 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level2">2 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level3">3 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level4">4 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level5">5 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level6">6 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level1">1</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level2">2</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level3">3</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level4">4</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level5">5</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level6">6</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level7">7</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level8">8 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level9">9 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level8">8</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level9">9</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level10">10</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level11">11 </g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level12">12 </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level11">11</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level12">12</g:Label>
 		        </g:HTMLPanel>
 		      </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
-		      <g:Label styleName="{res.css.h5}">Ads</g:Label>
+		      <g:Label styleName="{res.css.h5}" ui:field="AdsHeader">Ads</g:Label>
 		      <g:Label styleName="{res.css.li} {res.css.selected}" ui:field="noAds">No Advertisement </g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="modAds">Moderate Advertisements </g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="aggreAds"> Aggressive Advertisements</g:Label>
@@ -65,8 +80,8 @@
 		      <br />
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		      <g:Label styleName="{res.css.h5}" ui:field="accessHazard">Access Hazard</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashing">Flashing </g:Label>
-		      <g:Label styleName="{res.css.li} {res.css.select}" ui:field="flashingHazard">Flashing Hazard </g:Label>
+		      <g:Label styleName="{res.css.li} {res.css.select}" ui:field="flashing">Flashing </g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard">Flashing Hazard </g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="motionSimulation"> Motion Simulation </g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"> Motion Simulation Hazard </g:Label>
 		      <g:Label styleName="{res.css.li}" ui:field="sound"> Sound </g:Label>

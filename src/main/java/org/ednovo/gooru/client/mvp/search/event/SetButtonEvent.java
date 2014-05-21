@@ -22,14 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.study;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
-public interface IsClassCodeView extends IsViewWithHandlers<ClassCodeUiHandlers>  {
+import com.google.gwt.event.shared.GwtEvent;
 
-	
-//	public Label getErrorLbl();
-//	
-//	void clearAll();
+/**
+ * @author Search Team
+ * 
+ */
+public class SetButtonEvent extends GwtEvent<SetButtonHandler> {
+
+	public static final Type<SetButtonHandler> TYPE = new Type<SetButtonHandler>();
+
+	/**
+	 * Class constructor
+	 */
+	public SetButtonEvent() {
+	}
+
+	@Override
+	public Type<SetButtonHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetButtonHandler handler) {
+		handler.setButtonVisibility();
+	}
+
+
 }

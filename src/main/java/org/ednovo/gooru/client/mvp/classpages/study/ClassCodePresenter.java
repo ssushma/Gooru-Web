@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-import com.google.gwt.dom.client.Style.Display;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -73,14 +72,14 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	@Override
 	public void onBind() {
 		super.onBind();
-		getView().clearAll();
+//		getView().clearAll();
 		setcollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {
 				
 				if(result.getGooruOid()==null){
-					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
+//					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
 				}
 				else{
 					Map<String, String> params = new HashMap<String, String>();
@@ -109,7 +108,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	@Override
 	protected void onReset() {
 		super.onReset();
-		getView().clearAll();
+//		getView().clearAll();
 	}
 	
 	@Override
