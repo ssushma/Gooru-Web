@@ -36,6 +36,7 @@ public class PartnerFolderListDo implements Serializable
 	private static final long serialVersionUID = 1L;
 	private ArrayList<PartnerFolderDo> searchResult;
 	private Integer count;
+	private ArrayList<ConceptDo> collections;
 	
 	public PartnerFolderListDo() {}
 
@@ -66,4 +67,19 @@ public class PartnerFolderListDo implements Serializable
 	public void setCount(Integer count) {
 		this.count = count;
 	}
+
+	/**
+	 * @return the collections
+	 */
+	public ArrayList<ConceptDo> getCollections() {
+		return collections;
+	}
+
+	/**
+	 * @param collections the collections to set
+	 */
+	public void setCollections(ArrayList<ConceptDo> collections) {
+		this.collections = collections;
+	}
+	
 }
