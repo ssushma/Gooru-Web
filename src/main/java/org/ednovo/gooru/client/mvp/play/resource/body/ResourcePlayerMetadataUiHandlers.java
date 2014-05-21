@@ -25,12 +25,13 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 
-public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler {
+public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler,OpenReviewPopUpEventHandler {
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
 
