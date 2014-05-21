@@ -2,29 +2,52 @@ package org.ednovo.gooru.client.mvp.addTagesPopup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
+import org.ednovo.gooru.client.uc.AppSuggestBox;
+import org.ednovo.gooru.client.uc.CloseLabel;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
+import org.ednovo.gooru.client.uc.StandardsPreferenceOrganizeToolTip;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
+import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SuggestOracle;
+import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddTagesPopupView extends PopupPanel implements MessageProperties{
+public class AddTagesPopupView extends PopupPanel implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 
 	public PopupPanel appPopUp;
 	
@@ -38,7 +61,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 	@UiField(provided = true)
 	AddTagesCBundle res;
 	
-	@UiField Label lexileHeader, kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
+	@UiField Label lexileHeader,AdsHeader, kindergarden, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12;
 	
 	@UiField Label headerEducationalUse, handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	
@@ -50,9 +73,28 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 	
 	@UiField Label mediaLabel,lblMediaPlaceHolder,lblMediaFeatureArrow;
 	
-	@UiField Label noAds,modAds,aggreAds;
+	@UiField Label noAds,modAds,aggreAds,standardMaxMsg,standardsDefaultText;
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
+	
+	
+	
+	@UiField(provided = true)
+	AppSuggestBox standardSgstBox;
+	
+	@UiField FlowPanel standardContainer,standardsPanel;
+	private AppMultiWordSuggestOracle standardSuggestOracle;
+	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
+	private static final String FLT_CODE_ID = "id";
+	List<String> standardPreflist;
+	private Map<String, String> standardCodesMap = new HashMap<String, String>();
+	String courseCode="";
+	boolean isEditResource=true;
+	ArrayList<String> standardsDo=new ArrayList<String>();
+	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
+	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	private static final String USER_META_ACTIVE_FLAG = "0";
+	String ads="",accessHazardString="";
 	
 	String mediaFeatureStr = GL1767;
 	String resourceId=null;
@@ -71,11 +113,16 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		slideBar.setCurrentValue(1);
 		slideBar.setNumTicks(12);
 		slideBar.setNumLabels(12);*/
-		
+		initializeAutoSuggestedBox();
 		this.res = AddTagesCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
+		this.setGlassEnabled(true);
+		this.center();
+		Window.enableScrolling(false);
+		standardsDefaultText.setText(GL1682);
+		ads=noAds.getText();
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		
 		spanelMediaFeaturePanel.setVisible(false);
@@ -101,7 +148,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			}
 		});
 		
-		getTagsServiceRequest("");
+		getTagsServiceRequest(resourceId);
 		
 /*		barSlider.addClickHandler(new ClickHandler() 
 		{
@@ -145,26 +192,202 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 						spanelMediaFeaturePanel.setVisible(false);
 						lblMediaPlaceHolder.getElement().setId(titleLabel.getElement().getId());
 						lblMediaPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
-
-
-							lblMediaPlaceHolder.setText(optionSelected);
-				
+						lblMediaPlaceHolder.setText(optionSelected);
 					}
 				});
 				htmlMediaFeatureListContainer.add(titleLabel);
-				
-			
 		}
-		
+		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
+			@Override
+			public void onSuccess(ProfileDo profileObj) {
+			if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId()!=null){
+					if(profileObj.getUser().getMeta().getTaxonomyPreference().getCodeId().size()==0){
+						standardContainer.setVisible(false);
+					}else
+					{
+						standardContainer.setVisible(true);
+						standardPreflist=new ArrayList<String>();
+						for (String code : profileObj.getUser().getMeta().getTaxonomyPreference().getCode()) {
+							standardPreflist.add(code);
+							standardPreflist.add(code.substring(0, 2));
+						 }
+					}
+				}else{
+					standardContainer.setVisible(false);
+				}
+			}
+		});
 	}
-	
-	
+	public void initializeAutoSuggestedBox(){
+		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
+		standardSearchDo.setPageSize(10);
+		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
+			@Override
+			public void keyAction(String text) {
+				text=text.toUpperCase();
+				standardsPreferenceOrganizeToolTip.hide();
+				standardSearchDo.setSearchResults(null);
+				boolean standardsPrefDisplayPopup = false;
+				standardSgstBox.hideSuggestionList();
+				if(!courseCode.isEmpty()) {
+					Map<String,String> filters = new HashMap<String, String>();
+					filters.put(FLT_CODE_ID,courseCode);
+					standardSearchDo.setFilters(filters);
+				}
+				standardSearchDo.setQuery(text);
+				if (text != null && text.trim().length() > 0) {
+					standardsPreferenceOrganizeToolTip.hide();
+					if(standardPreflist!=null){
+						for(int count=0; count<standardPreflist.size();count++) {
+							if(text.contains(standardPreflist.get(count))) {
+								standardsPrefDisplayPopup = true;
+								break;
+							} else {
+								standardsPrefDisplayPopup = false;
+							}
+						}						
+					}
+					if(standardsPrefDisplayPopup){
+						standardsPreferenceOrganizeToolTip.hide();
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+							@Override
+							public void onSuccess(SearchDo<CodeDo> result) {
+								setStandardSuggestions(result);
+							}
+							@Override
+							public void onFailure(Throwable caught) {
+							}
+						});
+						
+						standardSgstBox.showSuggestionList();
+						}
+					else{
+						standardSgstBox.hideSuggestionList();
+						standardSuggestOracle.clear();
+						standardsPreferenceOrganizeToolTip.show();
+						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
+						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
+						//standardSuggestOracle.add(GL1613);
+					}
+					}
+			}
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				return null;
+			}
+		};
+		standardSgstBox.addSelectionHandler(this);
+		BlurHandler blurHandler=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing())
+				standardsPreferenceOrganizeToolTip.show();
+			}
+		};
+		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
+	}
+	public void setStandardSuggestions(SearchDo<CodeDo> standardSearchDo) {
+		standardSuggestOracle.clear();
+		this.standardSearchDo = standardSearchDo;
+		if (this.standardSearchDo.getSearchResults() != null) {
+			List<String> sources = getAddedStandards(standardsPanel);
+			for (CodeDo code : standardSearchDo.getSearchResults()) {
+				if (!sources.contains(code.getCode())) {
+					standardSuggestOracle.add(code.getCode());
+				}
+				standardCodesMap.put(code.getCodeId() + "", code.getLabel());
+			}
+		}
+		standardSgstBox.showSuggestionList();
+	}
+	/**
+	 * get the standards are added for collection
+	 * 
+	 * @param flowPanel
+	 *            having all added standards label
+	 * @return standards text in list which are added for the collection
+	 */
+	private List<String> getAddedStandards(FlowPanel flowPanel) {
+		List<String> suggestions = new ArrayList<String>();
+		for (Widget widget : flowPanel) {
+			if (widget instanceof DownToolTipWidgetUc) {
+				suggestions.add(((CloseLabel) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return suggestions;
+	}
+	@Override
+	public void onSelection(SelectionEvent<Suggestion> event) {
+		addStandard(standardSgstBox.getValue(), getCodeIdByCode(standardSgstBox.getValue(), standardSearchDo.getSearchResults()));
+		standardSgstBox.setText("");
+		standardSuggestOracle.clear();
+	}
+	/**
+	 * Adding new standard for the collection , will check it has more than
+	 * fifteen standards
+	 * 
+	 * @param standard
+	 *            which to be added for the collection
+	 */
+	public void addStandard(String standard, String id) {
+		if (standardsPanel.getWidgetCount() <5) {
+			if (standard != null && !standard.isEmpty()) {
+				standardsDo.add(standard);
+				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
+			}
+		} else {
+			standardMaxShow();
+			standardSgstBox.setText("");
+		}
+	}
+	public void standardMaxShow() {
+		standardSgstBox.addStyleName(CollectionCBundle.INSTANCE.css().standardTxtBox());
+		standardMaxMsg.setStyleName(CollectionCBundle.INSTANCE.css().standardMax());
+		standardsPanel.addStyleName(CollectionCBundle.INSTANCE.css().floatLeftNeeded());
+		new FadeInAndOut(standardMaxMsg.getElement(), 5000, 5000);
+	}
+	/**
+	 * new label is created for the standard which needs to be added
+	 * 
+	 * @param standardCode
+	 *            update standard code
+	 * @return instance of {@link DownToolTipWidgetUc}
+	 */
+	public DownToolTipWidgetUc createStandardLabel(final String standardCode, final String id, String description) {
+		CloseLabel closeLabel = new CloseLabel(standardCode) {
+
+			@Override
+			public void onCloseLabelClick(ClickEvent event) {
+				for(final String codeObj:standardsDo){
+					if(codeObj==standardCode){
+						String standardDelete="[\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"]";
+						deleteTagsServiceRequest(standardDelete);
+						standardsDo.remove(codeObj);
+					}
+				}
+				this.getParent().removeFromParent();
+			}
+		};
+		return new DownToolTipWidgetUc(closeLabel, description);
+	}
+	private static String getCodeIdByCode(String code, List<CodeDo> codes) {
+		if (codes != null) {
+			for (CodeDo codeDo : codes) {
+				if (code.equals(codeDo.getCode())) {
+					return codeDo.getCodeId() + "";
+				}
+			}
+		}
+		return null;
+	}
 	@UiHandler("kindergarden")
 	public void onKindergardenClick(ClickEvent click){
 		System.out.println("stylename::"+kindergarden.getStyleName().toString().contains("selected"));
 		if(kindergarden.getStyleName().toString().contains("selected"))
 		{
 			kindergarden.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+kindergarden.getText() +"\"]");
 		}
 		else
 		{
@@ -176,6 +399,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level1.getStyleName().toString().contains("selected"))
 		{
 			level1.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level1.getText() +"\"]");
 		}
 		else
 		{
@@ -187,6 +411,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level2.getStyleName().toString().contains("selected"))
 		{
 			level2.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level2.getText() +"\"]");
 		}
 		else
 		{
@@ -198,6 +423,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level3.getStyleName().toString().contains("selected"))
 		{
 			level3.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level3.getText() +"\"]");
 		}
 		else
 		{
@@ -209,6 +435,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level4.getStyleName().toString().contains("selected"))
 		{
 			level4.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level4.getText() +"\"]");
 		}
 		else
 		{
@@ -220,6 +447,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level5.getStyleName().toString().contains("selected"))
 		{
 			level5.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level5.getText() +"\"]");
 		}
 		else
 		{
@@ -231,6 +459,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level6.getStyleName().toString().contains("selected"))
 		{
 			level6.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level6.getText() +"\"]");
 		}
 		else
 		{
@@ -242,6 +471,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level7.getStyleName().toString().contains("selected"))
 		{
 			level7.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level7.getText() +"\"]");
 		}
 		else
 		{
@@ -253,6 +483,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level8.getStyleName().toString().contains("selected"))
 		{
 			level8.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level8.getText() +"\"]");
 		}
 		else
 		{
@@ -264,6 +495,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level9.getStyleName().toString().contains("selected"))
 		{
 			level9.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level9.getText() +"\"]");
 		}
 		else
 		{
@@ -275,6 +507,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level10.getStyleName().toString().contains("selected"))
 		{
 			level10.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level10.getText() +"\"]");
 		}
 		else
 		{
@@ -286,6 +519,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level11.getStyleName().toString().contains("selected"))
 		{
 			level11.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level11.getText() +"\"]");
 		}
 		else
 		{
@@ -297,6 +531,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(level12.getStyleName().toString().contains("selected"))
 		{
 			level12.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level12.getText() +"\"]");
 		}
 		else
 		{
@@ -309,6 +544,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(activity.getStyleName().toString().contains("selected"))
 		{
 			activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+activity.getText() +"\"]");
 		}
 		 else if (handout.getStyleName().toString().contains("selected")
 						|| homework.getStyleName().toString().contains("selected")
@@ -351,6 +587,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(handout.getStyleName().toString().contains("selected"))
 		{
 			handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+handout.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| homework.getStyleName().toString().contains("selected")
@@ -393,6 +630,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(homework.getStyleName().toString().contains("selected"))
 		{
 			homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+homework.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -435,6 +673,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(game.getStyleName().toString().contains("selected"))
 		{
 			game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+game.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -477,6 +716,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(presentation.getStyleName().toString().contains("selected"))
 		{
 			presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+presentation.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -519,6 +759,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(refMaterial.getStyleName().toString().contains("selected"))
 		{
 			refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+refMaterial.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -561,6 +802,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(quiz.getStyleName().toString().contains("selected"))
 		{
 			quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+quiz.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -603,6 +845,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(currPlan.getStyleName().toString().contains("selected"))
 		{
 			currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+currPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -645,6 +888,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(lessonPlan.getStyleName().toString().contains("selected"))
 		{
 			lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+lessonPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -687,6 +931,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(unitPlan.getStyleName().toString().contains("selected"))
 		{
 			unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+unitPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -729,6 +974,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(projectPlan.getStyleName().toString().contains("selected"))
 		{
 			projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+projectPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -771,6 +1017,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(reading.getStyleName().toString().contains("selected"))
 		{
 			reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+reading.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -813,6 +1060,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(textbook.getStyleName().toString().contains("selected"))
 		{
 			textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+textbook.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -855,6 +1103,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(article.getStyleName().toString().contains("selected"))
 		{
 			article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+article.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -871,7 +1120,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 				|| textbook.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
 	 
-			article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			 article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
@@ -897,6 +1146,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(book.getStyleName().toString().contains("selected"))
 		{
 			book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+book.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -913,7 +1163,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")) {
 	 
-			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			 book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
@@ -938,14 +1188,12 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 	public void onCancelClick(ClickEvent click)
 	{
 		this.hide();
-
+		if(standardsPreferenceOrganizeToolTip.isShowing())
+			standardsPreferenceOrganizeToolTip.hide();
+		Window.enableScrolling(true);
 	}
 	
 	private void OpenMediaFeatureDropdown() {
-		if (spanelMediaFeaturePanel.isVisible()){
-			spanelMediaFeaturePanel.setVisible(false);
-		}
-		
 		if (spanelMediaFeaturePanel.isVisible()){
 			spanelMediaFeaturePanel.setVisible(false);
 		}else{
@@ -957,12 +1205,14 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(noAds.getStyleName().toString().contains("selected"))
 		{
 			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +AdsHeader.getText()+" : "+noAds.getText() +"\"]");
 		}
 		else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
 		{
 			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			ads=noAds.getText();
 		}
 		else
 		{
@@ -974,12 +1224,14 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(modAds.getStyleName().toString().contains("selected"))
 		{
 			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +AdsHeader.getText()+" : "+modAds.getText() +"\"]");
 		}
 		else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
 		{
 			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			ads=modAds.getText();
 		}
 		else
 		{
@@ -991,16 +1243,18 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(aggreAds.getStyleName().toString().contains("selected"))
 		{
 			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			deleteTagsServiceRequest("[\"" +AdsHeader.getText()+" : "+aggreAds.getText() +"\"]");
 		}
 		else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
 		{
 			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			ads=aggreAds.getText();
 		}
 		else
 		{
-			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
 		}
 	}
 
@@ -1009,6 +1263,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(flashing.getStyleName().toString().contains("select"))
 		{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+flashing.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
 		{
@@ -1018,6 +1273,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			accessHazardString=flashing.getText();
 		}
 		else
 		{
@@ -1029,6 +1285,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(flashingHazard.getStyleName().toString().contains("select"))
 		{
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+flashingHazard.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
 		{
@@ -1038,6 +1295,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			accessHazardString=flashingHazard.getText();
 		}
 		else
 		{
@@ -1049,6 +1307,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(motionSimulation.getStyleName().toString().contains("select"))
 		{
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+motionSimulation.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
@@ -1058,6 +1317,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			accessHazardString=motionSimulation.getText();
 		}
 		else
 		{
@@ -1069,6 +1329,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(motionSimulationHazard.getStyleName().toString().contains("select"))
 		{
 			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+motionSimulationHazard.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
@@ -1078,6 +1339,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			accessHazardString=motionSimulationHazard.getText();
 		}
 		else
 		{
@@ -1089,6 +1351,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(sound.getStyleName().toString().contains("select"))
 		{
 			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+sound.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
@@ -1098,6 +1361,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			accessHazardString=sound.getText();
 		}
 		else
 		{
@@ -1109,6 +1373,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		if(soundHazard.getStyleName().toString().contains("select"))
 		{
 			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+soundHazard.getText() +"\"]");
 		}
 		else if(sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
@@ -1118,6 +1383,7 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+			accessHazardString=soundHazard.getText();
 		}
 		else
 		{
@@ -1147,9 +1413,12 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 				tagList.add("\"" + lexileMainarr[i].toString() +"\"");
 			}
 		}
-
+		tagList.add("\"" +AdsHeader.getText()+" : "+ads +"\"");
+		tagList.add("\"" +accessHazard.getText()+" : "+accessHazardString +"\"");
+		for(final String codeObj:standardsDo){
+			tagList.add("\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"");
+		}
 		addTagsServiceRequest(tagList.toString(), resourceId);
-	
 	}
 	
 	public void addTagsServiceRequest(String frameTagsStr, String resourceId)
@@ -1162,10 +1431,22 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 		});
 	
 	}
-	
+	public void deleteTagsServiceRequest(String frameTagsStr)
+	{
+		AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+		});
+	}
 	public void getTagsServiceRequest(String resourceId)
 	{
-		AppClientFactory.getInjector().getResourceService().getTagsToResource("fc81bf4f-1f62-4d30-8e2a-3f518bbc8ee4", new SimpleAsyncCallback<List<ResourceTagsDo>>() {
+		AppClientFactory.getInjector().getResourceService().getTagsToResource(resourceId, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
 			public void onSuccess(List<ResourceTagsDo> result) {
 				bindObjectsToUI(result);
@@ -1186,124 +1467,183 @@ public class AddTagesPopupView extends PopupPanel implements MessageProperties{
 			{
 				setLexileObjectVal(resultResourceTags.get(objVal).getLabel());
 			}
+			if(resultResourceTags.get(objVal).getLabel().contains(AdsHeader.getText()))
+			{
+				setAdsObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(accessHazard.getText()))
+			{
+				setAccessHazardObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains(standardsDefaultText.getText().toLowerCase()))
+			{
+				setStandardObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+		}
+	}
+	public void setStandardObjectVal(String standardStr)
+	{
+		String[] standardArray=standardStr.split(":");
+		standardsDo.add(standardArray[1]);
+		addStandard(standardArray[1], "0");
+	}
+	public void setAccessHazardObjectVal(String accessHazardStr)
+	{
+		if(accessHazardStr.contains(flashing.getText()))
+		{
+			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		if(accessHazardStr.contains(flashingHazard.getText()))
+		{
+			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		if(accessHazardStr.contains(motionSimulation.getText()))
+		{
+			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		if(accessHazardStr.contains(motionSimulationHazard.getText()))
+		{
+			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		if(accessHazardStr.contains(sound.getText()))
+		{
+			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+		if(accessHazardStr.contains(soundHazard.getText()))
+		{
+			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		}
+	}
+	public void setAdsObjectVal(String adsStr)
+	{
+		if(adsStr.contains(noAds.getText()))
+		{
+			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(adsStr.contains(modAds.getText()))
+		{
+			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+		}
+		if(adsStr.contains(aggreAds.getText()))
+		{
+			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
 	public void setLexileObjectVal(String lexileStr)
 	{
-		if(kindergarden.getText().contains(lexileStr))
+		if(lexileStr.contains(kindergarden.getText()))
 		{
 			kindergarden.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level1.getText().contains(lexileStr))
+		if(lexileStr.contains(level1.getText()))
 		{
 			level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level2.getText().contains(lexileStr))
+		if(lexileStr.contains(level2.getText()))
 		{
 			level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level3.getText().contains(lexileStr))
+		if(lexileStr.contains(level3.getText()))
 		{
 			level3.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level4.getText().contains(lexileStr))
+		if(lexileStr.contains(level4.getText()))
 		{
 			level4.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level5.getText().contains(lexileStr))
+		if(lexileStr.contains(level5.getText()))
 		{
 			level5.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level6.getText().contains(lexileStr))
+		if(lexileStr.contains(level6.getText()))
 		{
 			level6.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level7.getText().contains(lexileStr))
+		if(lexileStr.contains(level7.getText()))
 		{
 			level7.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level8.getText().contains(lexileStr))
+		if(lexileStr.contains(level8.getText()))
 		{
 			level8.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level9.getText().contains(lexileStr))
+		if(lexileStr.contains(level9.getText()))
 		{
 			level9.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level10.getText().contains(lexileStr))
+		if(lexileStr.contains(level10.getText()))
 		{
 			level10.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level11.getText().contains(lexileStr))
+		if(lexileStr.contains(level11.getText()))
 		{
 			level11.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		if(level12.getText().contains(lexileStr))
+		if(lexileStr.contains(level12.getText()))
 		{
 			level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		
 	}
 	
 	public void setEducationalObjectVal(String educationalStr)
 	{
-		if(activity.getText().contains(educationalStr))
+		if(educationalStr.contains(activity.getText()))
 		{
 			activity.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(handout.getText().contains(educationalStr))
+		else if(educationalStr.contains(handout.getText()))
 		{
 			handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());	
 		}
-		else if(homework.getText().contains(educationalStr))
+		else if(educationalStr .contains(homework.getText()))
 		{
 			homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(game.getText().contains(educationalStr))
+		else if( educationalStr.contains(game.getText()))
 		{
 			game.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(presentation.getText().contains(educationalStr))
+		else if(educationalStr.contains(presentation.getText()))
 		{
 			presentation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(refMaterial.getText().contains(educationalStr))
+		else if(educationalStr.contains(refMaterial.getText()))
 		{
 			refMaterial.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(quiz.getText().contains(educationalStr))
+		else if(educationalStr.contains(quiz.getText()))
 		{
 			quiz.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(currPlan.getText().contains(educationalStr))
+		else if(educationalStr.contains(currPlan.getText()))
 		{
 			currPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(lessonPlan.getText().contains(educationalStr))
+		else if(educationalStr.contains(lessonPlan.getText()))
 		{
 			lessonPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(unitPlan.getText().contains(educationalStr))
+		else if(educationalStr.contains(unitPlan.getText()))
 		{
 			unitPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(projectPlan.getText().contains(educationalStr))
+		else if(educationalStr.contains(projectPlan.getText()))
 		{
 			projectPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(reading.getText().contains(educationalStr))
+		else if(educationalStr.contains(reading.getText()))
 		{
 			reading.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(textbook.getText().contains(educationalStr))
+		else if(educationalStr.contains(textbook.getText()))
 		{
 			textbook.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(article.getText().contains(educationalStr))
+		else if(educationalStr.contains(article.getText()))
 		{
 			article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
-		else if(book.getText().contains(educationalStr))
+		else if(educationalStr.contains(book.getText()))
 		{
 			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
