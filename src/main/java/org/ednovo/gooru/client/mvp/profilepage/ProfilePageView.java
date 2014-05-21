@@ -250,7 +250,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		courseMaxMsg.setText(GL0822);
 		saveBtn.setText(GL0141);
 		cancelBtn.setText(GL0142);
-		addBioBtn.setText(GL0140);
+		addBioBtn.setText(GL1786);
 		aboutUsCharacterValidation.setText(GL0143);
 		btnSave.setText(GL0141);
 		biographyCancelButton.setText(GL0142);

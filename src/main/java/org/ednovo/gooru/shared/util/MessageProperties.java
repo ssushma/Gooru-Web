@@ -2268,6 +2268,6 @@ public interface MessageProperties {
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
     	String GL1785 = "Enter your class code";
-    	
+    	String GL1786 = "Edit My Bio";
    }
 
