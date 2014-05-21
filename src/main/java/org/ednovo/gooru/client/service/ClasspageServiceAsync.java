@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -171,4 +172,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	public void v2GetClassPartyCustomField(String gooruUid, AsyncCallback<ProfilePageDo> simpleAsyncCallback);
 	
 	public void getActiveAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType, AsyncCallback<StudentsAssociatedListDo> simpleAsyncCallback);
+	
+	public void v2GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
+	
 }

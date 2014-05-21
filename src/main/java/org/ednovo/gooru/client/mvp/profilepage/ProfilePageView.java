@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
-import org.ednovo.gooru.client.mvp.profilepage.content.ProfilePageLibraryView;
+import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
@@ -100,9 +100,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Anchor /* shareTabVc, */contentTabVc;
 
 	@UiField
-	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg,mySubjectsText;
+	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt;
 	
-	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText,shareWithOthersText;
+	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText;
 
 	@UiField
 	Image userProfilePic,errorImage;
@@ -128,15 +128,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
-			profilePageEditBioPanel,aboutMeTextContainer;
+			profilePageEditBioPanel;
 	
 	@UiField FlowPanel moreGradeCourseLbl;
 	
 	@UiField
 	UserSettingStyle settingsStyle;
-
-	@UiField
-	TextBox bitlyLink;
 
 	@UiField(provided = true)
 	ProfilePageDescriptionEditUc profileTextArea;
@@ -242,10 +239,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 			}
 		};
-		profileTextArea.getElement().getStyle().setWidth(650, Unit.PX);
+		profileTextArea.getElement().getStyle().setWidth(795, Unit.PX);
 
 		setWidget(uiBinder.createAndBindUi(this));
-		mySubjectsText.setText(GL1074);
 		addCourseGradeBtn.setText(GL1075);
 		editPencil.getElement().setInnerHTML(GL0140);
 		gradeText.setText(GL1076);
@@ -254,17 +250,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		courseMaxMsg.setText(GL0822);
 		saveBtn.setText(GL0141);
 		cancelBtn.setText(GL0142);
-		aboutMeTextContainer.getElement().setInnerHTML(GL1077);
 		addBioBtn.setText(GL0140);
 		aboutUsCharacterValidation.setText(GL0143);
 		btnSave.setText(GL0141);
 		biographyCancelButton.setText(GL0142);
 		profilePageViewMsg.setText(GL1078);
 		profilePageText.setText(GL1079);
-		profileOnButton.setText(GL0802);
-		profileOffButton.setText(GL0803);
-		shareWithOthersText.setText(GL1080);
-		bitlyLink.setText(GL1081);
+		profileOnButton.setText(GL_GRR_YES);
+		profileOffButton.setText(GL1735);
 		contentTabVc.setText(GL1082);
 		errorImage.setTitle(GL1091_1);
 		errorImage.setAltText(GL1091_1);
@@ -288,7 +281,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		addCourseGradeBtn.setVisible(false);
 		enableAddBioBtn("userBio");
 		addBioBtn.getElement().setId("btnBioEdit");
-		bitlyLink.getElement().setId("txtBitlyLink");
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			profileOnButton.addClickHandler(new ProfileOnClickEvent());
@@ -349,7 +341,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			socialView = new SocialShareView(shareDo);
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
-			bitlyLink.removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 			gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			
 			//update profile setting
@@ -367,7 +358,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		socialView = new SocialShareView(shareDo);
 		socialButtonContainer.clear();
 		socialButtonContainer.add(socialView);
-		bitlyLink.addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 		gooruSocialButtonsContainer.getElement().getStyle().setOpacity(0.6);
 
 		//update profile setting
@@ -413,10 +403,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			if(privatePublic.equalsIgnoreCase("private")) {
-				bitlyLink.addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(0.6);
 			} else {
-				bitlyLink.removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			}
 		} catch (Exception e) {
@@ -440,6 +428,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileDo.setAboutMe("");
 		}
 		this.profileDo = profileDo;
+		roleTxt.setText(profileDo.getUserType());
 		profileTextArea.cancel();
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
@@ -452,8 +441,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userProfilePic.setUrl(profileImageUrl);
 		userProfilePic.setAltText(profileDo.getUser().getUsername());
 		userProfilePic.setTitle(profileDo.getUser().getUsername());
-		userProfilePic.getElement().getStyle().setHeight(100, Unit.PX);
-		userProfilePic.getElement().getStyle().setWidth(100, Unit.PX);
+		userProfilePic.getElement().getStyle().setHeight(174, Unit.PX);
+		userProfilePic.getElement().getStyle().setWidth(175, Unit.PX);
 		userProfilePic.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -606,16 +595,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@Override
 	public void setShareData(ProfileDo profileDo, List<String> shortenUrl,
 			String profileUrl) {
-
-		bitlyLink.setReadOnly(true);
-		bitlyLink.addClickHandler(new OnTextBoxClick());
-		bitlyLink.setText(shortenUrl.get(2));
-		/*profileUrl = "http://qa.goorulearning.org/gooru-gwt/" + "%23"
-				+ profileUrl;
-		profileUrl = profileUrl.replaceAll("#", "%23");
-		profileUrl = profileUrl.replaceAll("&", "%26");
-		profileUrl = profileUrl.replaceAll("!", "%21");*/
-
 		shareDo = new SocialShareDo();
 		shareDo.setBitlylink(shortenUrl.get(0));
 		shareDo.setRawUrl(shortenUrl.get(1));
@@ -628,14 +607,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		shareDo.setOnlyIcon(true);
 		shareDo.setIsSearchShare(false);
 		setInitialProfileStatus(profileOnStatus);
-	}
-
-	public class OnTextBoxClick implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			bitlyLink.selectAll();
-			bitlyLink.setFocus(true);
-		}
 	}
 
 	@Override
@@ -667,7 +638,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userBio.setText("");
 		userProfilePic.setUrl("");
 		shareLinkFloPanel.clear();
-		bitlyLink.setText("");
 		socialButtonContainer.clear();
 		profileTextArea.setText("");
 	}
@@ -1171,15 +1141,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			bioMainContainer.setVisible(true);
 			userMetadata.setVisible(true);	
-			aboutMeTextContainer.setVisible(true);
 			bioMainContainer.getElement().setAttribute("style", "margin-top:0px");
 		} else {
 			if(about==""||about.equalsIgnoreCase("")) {
 				bioMainContainer.setVisible(false);
-				aboutMeTextContainer.setVisible(false);
 			} else {
 				bioMainContainer.getElement().setAttribute("style", "margin-top:8px");
-				aboutMeTextContainer.setVisible(true);
 				bioMainContainer.setVisible(true);
 			}
 			if(set.isEmpty()) {

@@ -82,6 +82,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	private static final String AVERAGE="average";
 	private static final String COUNT="count";
 	private static final String ASSOCIATE_GOORU_OID="assocGooruOid";
+	private static final String FREE_TEXT = "freeText";
 
 
 	@Override
@@ -1009,7 +1010,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	 *  @return StarRating model object {@link StarRatingsDo} 
 	 */
 	@Override
-	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue) {
+	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue,String userReview) {
 		JsonRepresentation jsonRep=null;
 		JSONObject jsonObject=null;
 		try {
@@ -1017,6 +1018,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			 JSONObject createStarRatingsJsonObj = new JSONObject();
 			 createStarRatingsJsonObj.put(ASSOCIATE_GOORU_OID, associateGooruOid);
 			 createStarRatingsJsonObj.put(SCORE, starRatingValue);
+			 if(userReview!=null || !userReview.equals("")){
+				 createStarRatingsJsonObj.put(FREE_TEXT, userReview);
+			 }
 			 createStarRatingsJsonObj.put("target",new JSONObject().put("value","content"));
 			 createStarRatingsJsonObj.put("type",new JSONObject().put("value","star"));
 			 JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url,getRestUsername(), getRestPassword(), createStarRatingsJsonObj.toString());
@@ -1040,8 +1044,9 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		StarRatingsDo starRatingsDo = new  StarRatingsDo(); 
 		try {
 			starRatingsDo.setAssocGooruOid(jsonObject.isNull("assocGooruOid")?"":jsonObject.getString("assocGooruOid"));
-			starRatingsDo.setDeleteReactionGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
-			starRatingsDo.setScore(jsonObject.getInt(SCORE)); 
+			starRatingsDo.setDeleteRatingGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
+			starRatingsDo.setScore(jsonObject.getInt(SCORE));
+			starRatingsDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1124,7 +1129,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	 */
 	
 	@Override
-	public StarRatingsDo updateResourceStarRatings(String gooruOid, int score) {
+	public ArrayList<StarRatingsDo> updateResourceStarRatings(String gooruOid, int score) {
 		JsonRepresentation jsonRepresentation=null;
 		JSONObject jsonObject = null;
 		try {
@@ -1133,12 +1138,44 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			updateStarRatingsJsonObj.put(SCORE,score);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateStarRatingsJsonObj.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
-			jsonObject= jsonRepresentation.getJsonObject();
+//			jsonObject= jsonRepresentation.getJsonObject();
 			
 		} catch (Exception e) {
 		}
 		
-		return deserializeResourceStarRatings(jsonObject);
+		return deserializeStarRatings(jsonRepresentation);
+	}
+	
+	public ArrayList<StarRatingsDo> deserializeStarRatings(JsonRepresentation jsonRep){ 
+		ArrayList<StarRatingsDo> ratingsList=new ArrayList<StarRatingsDo>();
+		try {
+			JSONArray jsonArray=jsonRep.getJsonArray();
+			for(int i=0;i<jsonArray.length();i++){
+				JSONObject jsonObject=jsonArray.getJSONObject(i);
+				StarRatingsDo reactionDo =deserializeUpdateRatings(jsonObject);
+				ratingsList.add(reactionDo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ratingsList;
+	}
+	
+	private StarRatingsDo deserializeUpdateRatings(JSONObject jsonObject) { 
+		StarRatingsDo starRatingsDo = new  StarRatingsDo(); 
+		String gooruReactionId="";
+		try {
+			starRatingsDo.setAssocGooruOid(jsonObject.isNull("assocGooruOid")?"":jsonObject.getString("assocGooruOid"));
+			starRatingsDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText")); 
+			starRatingsDo.setDeleteRatingGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
+			starRatingsDo.setScore(jsonObject.getInt(SCORE));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return starRatingsDo;
 	}
 	
 	/**
@@ -1224,6 +1261,25 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		}
 		
 		return starRatingsList;
+	}
+
+	@Override
+	public ArrayList<StarRatingsDo> updateResourceStarReviews(String deleteRatingGooruOid, Integer score, String userReview) {
+
+		JsonRepresentation jsonRepresentation=null;
+		JSONObject jsonObject = null;
+		try {
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_STAR_RATINGS,deleteRatingGooruOid, getLoggedInSessionToken());
+			JSONObject updateStarRatingsJsonObj = new JSONObject();
+			updateStarRatingsJsonObj.put(SCORE,score);
+			updateStarRatingsJsonObj.put(FREE_TEXT,userReview);
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateStarRatingsJsonObj.toString());
+			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
+			
+		} catch (Exception e) {
+		}
+		
+		return deserializeStarRatings(jsonRepresentation);
 	}
 
 }

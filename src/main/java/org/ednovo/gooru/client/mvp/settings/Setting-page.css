@@ -688,6 +688,8 @@ input.styled {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: rgb(81, 81, 81);
+	float: left;
+	margin-top: 8px;
 }
 
 .clear {
@@ -695,7 +697,8 @@ input.styled {
 }
 
 .publicProfileOnButtonContent {
-	margin: 10px 0px 30px 0px;
+	margin: 0px 0px 0px 9px;
+	float: left;
 }
 
 .publicProfileOnButtonContent button {
@@ -898,7 +901,8 @@ input.styled {
 
 .publicProfileSaveButtonContent {
 	float: right;
-	margin-bottom: 5px;
+	position: absolute;
+	right: 0;
 }
 
 .publicProfileSeePageButtonBg:hover {

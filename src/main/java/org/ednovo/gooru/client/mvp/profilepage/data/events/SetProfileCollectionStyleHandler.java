@@ -22,12 +22,44 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.profilepage.data.events;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.event.shared.EventHandler;
+/**
+ * 
+ * @fileName : SetConceptTitleStyleHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Dec 4, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 
-public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
-	public void getPartnerChildFolderItems(String folderId, int pageNumber);
-	public void getPartnerWorkspaceFolders();
-	void getIntoPartnerLibrarypage();
+public interface SetProfileCollectionStyleHandler extends EventHandler {
+
+	/**
+	 * 
+	 * @function setConceptTitleStyleHandler 
+	 * 
+	 * @created_date : 12-Dec-2013
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @parm(s) : @param conceptId
+	 * @parm(s) : @param topicId
+	 * @parm(s) : @param lessonId
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 */
+	void setProfileCollectionStyleHandler(String conceptId, Integer topicId, Integer lessonId);
 }

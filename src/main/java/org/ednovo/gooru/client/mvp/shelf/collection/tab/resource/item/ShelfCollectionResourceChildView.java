@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -55,11 +56,8 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.BodyElement;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -76,8 +74,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.logical.shared.InitializeEvent;
-import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -142,7 +138,7 @@ public class ShelfCollectionResourceChildView extends
 	FlowPanel narationFloPanel,resourceFlowPanel,ResourceEditButtonContainer,videoDisplay,narrationConatainer,videoImage,editPdfFlowPanel,actionVerPanelForUpdatePDF;
 
 	@UiField
-	Label pencilEditNarationLbl,updateResourceBtn;
+	Label pencilEditNarationLbl,updateResourceBtn,addTages;
 
 	@UiField
 	Label narrationAlertMessageLbl,videoTimeField,fromLblDisplayText,ToLbl,UpdateTextMessage,editStartPageLbl,editVideoTimeLbl;
@@ -180,7 +176,7 @@ public class ShelfCollectionResourceChildView extends
 	int narrationDataLength;
 	@UiField
 	Label copyResource, editInfoLbl;
-
+	AddTagesPopupView popup;
 	public Label getEditInfoLbl() {
 		return editInfoLbl;
 	}
@@ -344,6 +340,7 @@ public class ShelfCollectionResourceChildView extends
 		StartPageLbl.setText(GL0961);
 		EditBtn.setText(GL0140);
 		updateResourceBtn.setText(GL0962);
+		addTages.setText("Add Tages");
 		editInfoLbl.setText(GL0963);
 		editVideoTimeLbl.setText(GL0964);
 		editStartPageLbl.setText(GL0960);
@@ -383,6 +380,7 @@ public class ShelfCollectionResourceChildView extends
 		startpdfPageNumber.getElement().setAttribute("maxlength", "4");
 		EditBtn.getElement().setId("btnEdit");
 		updateResourceBtn.getElement().setId("lblUpdateResoure");
+		addTages.getElement().setId("lblAddTages");
 		copyResource.getElement().setId("lblCopyResource");
 		editInfoLbl.getElement().setId("lblEditInfo");
 		editStartPageLbl.getElement().setId("lblEditStartPage");
@@ -996,6 +994,14 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanel.setVisible(true);
 			editAndUpdateResource();
 		
+		
+	}
+	@UiHandler("addTages")
+	public void onAddTagesClick(ClickEvent clickEvent) {
+		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid());
+		popup.setGlassEnabled(true);
+		popup.show();
+		popup.center();
 		
 	}
 	/*
@@ -1800,5 +1806,6 @@ public class ShelfCollectionResourceChildView extends
 	public void setFolderItems(TreeItem item, FolderListDo folderListDo) {
 		copyConfirmPopupVc.setFolderItems(item,folderListDo);
 	}
+	
 	
 }

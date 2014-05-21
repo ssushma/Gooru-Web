@@ -29,7 +29,7 @@ public interface PlaceTokens {
 	String RESOURCE_SEARCH = "resource-search";
 	String COLLECTION_SEARCH = "collection-search";
 	String ERROR = "error";
-	String SHELF = "organize";
+	String SHELF = "mycollections";
 	String COLLECTION = "collection";
 	String RESOURCE_PLAY_OLD = "resource-play-old";
 	String COLLECTION_PLAY = "collection-play";

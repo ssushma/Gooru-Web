@@ -69,5 +69,7 @@ public interface LibraryStyleBundle extends CssResource {
 	String popularStarImage();
 	String math();
 	String partnerMenuPadding();
-	
+	String lessonTitleProfile();
+	String collectionSmall();
+	String conceptTitleLeft();
 }

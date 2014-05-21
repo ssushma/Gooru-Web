@@ -38,12 +38,12 @@
 	             
 	             <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gradesPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gradeTitle"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="gradesText"/>
+	              		 <g:Label styleName="{playerStyle.resource-info-title-grades}" ui:field="gradesText"/>
 	      		</g:HTMLPanel>
 	             
 	               <g:HTMLPanel ui:field="coursePanel">
 		           <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="courseText"></g:Label>
-		           <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="courseInfo"></g:HTMLPanel>
+		           <g:HTMLPanel styleName="{playerStyle.resource-info-title-grades}" ui:field="courseInfo"></g:HTMLPanel>
 	        	  </g:HTMLPanel>
 	        	  
 	        	<g:HTMLPanel styleName="{playerStyle.resource-info-stand-content}" ui:field="standardsContentContainer">
@@ -82,9 +82,14 @@
 	              <!--  </g:HTMLPanel> -->
 	            </g:FlowPanel>
 	            
-	            <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="licenceCodePanel">
+	            <!-- <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="licenceCodePanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="licenceCodeLbl"></g:Label>
 	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="licenceCodeType"/>
+	      		</g:HTMLPanel> -->
+	      		
+	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="oerPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="oerLbl"></g:Label>
+	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="oerAvailability"/>
 	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
@@ -131,15 +136,21 @@
 	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="readingLevelType"/>
 	      		</g:HTMLPanel>
 	      		
-	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gooruSubjectPanel">
-	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gooruSubjectLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="gooruSubjectInfo"/>
+	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="schoolLevelPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="schoolLevelLbl"></g:Label>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="schoolLevelType"/>
 	      		</g:HTMLPanel>
 	      		
-	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gooruCoursePanel">
-	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gooruCourseLbl"></g:Label>
-	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="gooruCourseInfo"/>
-	      		</g:HTMLPanel>
+	      		<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gooruSubjectPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gooruSubjectLbl"></g:Label>
+	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="gooruSubjectInfo"/>
+	      		</g:HTMLPanel> -->
+	      		
+	      		<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="CourseNumberPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="CourseNumberLbl"></g:Label>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="CourseNumberInfo"/>
+	      		</g:HTMLPanel> -->
+	      		
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
 	          	 <g:Label styleName="{playerStyle.resource-info-more-titleboarder}" ui:field="resourceInfoLbl"></g:Label>
@@ -175,14 +186,19 @@
 	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="copyRightType"/>
 	      		</g:HTMLPanel>
 	      		
-	      		  <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="contributorPanel">
+	      		 <!--  <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="contributorPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="contributorTitle"></g:Label>
 	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="contributorName"/>
-	      		</g:HTMLPanel>
+	      		</g:HTMLPanel> -->
 	      		
 	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="keyWordsPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="keywordsTitle"></g:Label>
 	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="keywordsInfo"/>
+	      		</g:HTMLPanel>
+	      		
+	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="addsPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="addsTitle"></g:Label>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="addsInfo"/>
 	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="accessibilityPanel">
@@ -214,7 +230,7 @@
 	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="acessHazardType"/>
 	      	 </g:HTMLPanel>
 	      	 
-	      	 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="hasAdaptationPanel">
+	      	 <!-- <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="hasAdaptationPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="hasAdaptationLbl"></g:Label>
 	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="hasAdaptationType"/>
 	      	 </g:HTMLPanel>
@@ -227,7 +243,7 @@
 	      	 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="accessibilityAPIPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="accessibilityAPILbl"></g:Label>
 	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="accessibilityAPIType"/>
-	      	 </g:HTMLPanel>
+	      	 </g:HTMLPanel> -->
 	      		
 	          <!-- <g:HTMLPanel styleName="{playerStyle.gradeContainer}"> -->
 	          <!--  <g:HTMLPanel styleName="{playerStyle.resource-info-grade-wrapper}">

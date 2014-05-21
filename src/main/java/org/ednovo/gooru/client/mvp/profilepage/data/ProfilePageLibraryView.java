@@ -22,24 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
-import org.ednovo.gooru.client.mvp.home.library.LibraryTopicListView;
-import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
-import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.profilepage.data.item.LeftMenuItemView;
+import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -53,14 +49,12 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView,MessageProperties {
 
-	@UiField HTMLPanel profilePageLibraryView;
+	@UiField HTMLPanel leftNav, contentScroll;
 	
-	LibraryView libraryView = null;
+	@UiField ProfilePageLibraryStyleBundle style;
 	
 	private static final String FOLDERID = "folderId";
 	
-	@UiField LibraryStyleBundle libraryStyleUc;
-
 	private String unitListId = "";
 	
 	ProfilePageLibraryPresenter profilePageLibraryPresenter = null;
@@ -78,61 +72,61 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public ProfilePageLibraryView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new ProfilePageLibraryPresenter(this));
-		libraryView = new LibraryView(PlaceTokens.PROFILE_PAGE);
-		profilePageLibraryView.add(libraryView);
-		profilePageLibraryView.getElement().getStyle().setMarginTop(20, Unit.PX);
 	}
 	
-	public void setData(String gooruUId) {
+	public void setData() {
 		getPresenter().getPartnerWorkspaceFolders();
 	}
 	
 	@Override
 	public void loadPartnersPage(String callBack, String placeToken) {
-		//libraryView.loadContributorsPage(callBack,placeToken);
+		
 	}
-
+	
 	@Override
 	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
-		libraryView.getLeftNav().clear();
-		libraryView.getContentScroll().clear();
+		leftNav.clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
 		int j = 0;
 		for(int i = 0; i<folderList.size(); i++) {
-			if(folderList.get(i).getType().equalsIgnoreCase("folder")) {
-				LibraryUnitMenuView libraryUnitMenuView = new LibraryUnitMenuView(folderList.get(i));
-				libraryView.getLeftNav().add(libraryUnitMenuView);
-				if(j==0&&folderId==null) {
-					j++;
-					loadingPanel(true);
-					libraryUnitMenuView.addStyleName(libraryStyleUc.unitLiActive());
-					unitListId = folderList.get(i).getGooruOid();
-					setTopicListData(folderList.get(i).getFolderItems(), unitListId);
-				}
+			LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
+			leftNav.add(leftMenuItemView);
+			if(folderList.get(i).getType().equals("scollection")) {
+				leftMenuItemView.addStyleName(style.collection());
+			}
+			if(j==0&&folderId==null) {
+				j++;
+				loadingPanel(true);
+				leftMenuItemView.addStyleName(style.open());
+				leftMenuItemView.addStyleName(style.active());
+				unitListId = folderList.get(i).getGooruOid();
+				setTopicListData(folderList.get(i).getFolderItems(), unitListId);
 			}
 		}
 		
-		final Iterator<Widget> widgets = libraryView.getLeftNav().iterator();
+		final Iterator<Widget> widgets = leftNav.iterator();
 		int widgetCount = 0;
 		while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
-			final LibraryUnitMenuView libraryUnitMenuView = ((LibraryUnitMenuView) widget);
+			final LeftMenuItemView leftMenuItemView = ((LeftMenuItemView) widget);
 			final int finalWidgetCount = widgetCount;
-			libraryUnitMenuView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
+			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					libraryView.getContentScroll().setVisible(false);
 					loadingPanel(true);
-					final Iterator<Widget> widgetsPanel = libraryView.getLeftNav().iterator();
+					final Iterator<Widget> widgetsPanel = leftNav.iterator();
 					while (widgetsPanel.hasNext()) {
-						widgetsPanel.next().removeStyleName(libraryStyleUc.unitLiActive());
+						final Widget widgetTxt = widgetsPanel.next();
+						widgetTxt.removeStyleName(style.active());
+						widgetTxt.removeStyleName(style.open());
 					}
-					widget.addStyleName(libraryStyleUc.unitLiActive());
-					unitListId = libraryUnitMenuView.getUnitId();
+					widget.addStyleName(style.open());
+					widget.addStyleName(style.active());
+					unitListId = leftMenuItemView.getUnitId();
 					if(finalWidgetCount==0) {
 						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
 					} else {
-						//getUiHandlers().getPartnerChildFolderItems(unitListId, 1);
+						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
 			});
@@ -142,30 +136,30 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 
 	@Override
 	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId) {
-		libraryView.getContentScroll().clear();
+		contentScroll.clear();
 		try {
 			int count = 0;
 			for(int i = 0; i <folderListDo.size(); i++) {
 				count++;
-				libraryView.getContentScroll().add(new LibraryTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+				contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
 			}
-			libraryView.getContentScroll().setVisible(true);
+			contentScroll.setVisible(true);
 			loadingPanel(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 			loadingPanel(false);
 		}
+
 	}
 	
 	@Override
 	public void loadingPanel(boolean isVisible) {
-		libraryView.getLoadingIconPanel().setVisible(isVisible);
+
 	}
 
 	@Override
 	public void clearPanels() {
-		libraryView.getContentScroll().clear();
-		libraryView.getLeftNav().clear();
+		
 	}	
 	
 	@Override

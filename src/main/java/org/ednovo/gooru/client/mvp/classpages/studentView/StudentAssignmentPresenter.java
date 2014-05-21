@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.classpages.studentView;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
@@ -46,7 +45,6 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.dom.client.Style.Display;
@@ -101,7 +99,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		super.onReveal();
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 //		if (!AppClientFactory.isAnonymous()){
 //			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.INLINE);
 //			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
@@ -116,14 +114,14 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			}else{
 				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
 				getView().getBackToEditPanel().setVisible(false);
-				AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
-				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+				AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
+				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 			}
 		}else{
 			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
 			getView().getBackToEditPanel().setVisible(false);
-			AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+			AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
+			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		}
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
@@ -189,14 +187,14 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			}else{
 				getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
 				getView().getBackToEditPanel().setVisible(false);
-				AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
-				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+				AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
+				AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 			}
 		}else{
 			getView().getBackToEditPanel().getElement().getStyle().setDisplay(Display.NONE);
 			getView().getBackToEditPanel().setVisible(false);
-			AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+			AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
+			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		}
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));

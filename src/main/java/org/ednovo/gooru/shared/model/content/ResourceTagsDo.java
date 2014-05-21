@@ -22,38 +22,68 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-/**
- * 
- */
-package org.ednovo.gooru.client.mvp.profilepage.content;
+package org.ednovo.gooru.shared.model.content;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import org.ednovo.gooru.client.child.IsChildView;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+@JsonInclude(Include.NON_NULL)
+public class ResourceTagsDo extends TaskDo {
 
-/**
- * @author SearchTeam
- * 
- */
-public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibraryPresenter> {
 	/**
-	 * Load Partners page {@link loadPartnersPage}
-	 * @param callBack
-	 * @param placeToken
+	 * 
 	 */
-	void loadPartnersPage(String callBack, String placeToken);
+	private static final long serialVersionUID = 7049532459286624939L;
 	
-	/**
-	 * Set Partners Unit Data {@link setUnitList}
-	 * @param folderList
-	 */
-	public void setUnitList(ArrayList<PartnerFolderDo> folderList);
+	private String tagGooruOid;
+	private String label;
+	
+	private String contentGooruOid;
+	private String associatedUid;
 
-	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, String folderId);
-	
-	public void loadingPanel(boolean isVisible);
-	
-	public void clearPanels();
 
+	public ResourceTagsDo(){}
+
+
+	public String getTagGooruOid() {
+		return tagGooruOid;
+	}
+
+
+	public void setTagGooruOid(String tagGooruOid) {
+		this.tagGooruOid = tagGooruOid;
+	}
+
+
+	public String getLabel() {
+		return label;
+	}
+
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+
+	public String getContentGooruOid() {
+		return contentGooruOid;
+	}
+
+
+	public void setContentGooruOid(String contentGooruOid) {
+		this.contentGooruOid = contentGooruOid;
+	}
+
+
+	public String getAssociatedUid() {
+		return associatedUid;
+	}
+
+
+	public void setAssociatedUid(String associatedUid) {
+		this.associatedUid = associatedUid;
+	}
+	
+	
+	
 }
