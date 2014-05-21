@@ -93,7 +93,7 @@ a:hover {
 }
 
 .userContent {
-	clear:both;
+	float: left;
 	border-bottom:1px solid #ddd;
 }
 
@@ -1185,7 +1185,7 @@ li.resources {
 
 .bioRightContainer {
 	float: left;
-	width: 755px;
+	width: 795px;
 }
 
 .metaDataContainer {
@@ -1268,7 +1268,7 @@ li.resources {
 	font-weight: bold;
 	padding: 10px 7px;
 	padding-left: 30px;
-	background: #4D9645 url(../_images/rating.png) 5px 8px no-repeat;
+	background: #4D9645 url('images/profilepage/rating.png') 5px 8px no-repeat;
 }
 
 .gooruSocialButtonsContainer {
@@ -1276,4 +1276,12 @@ li.resources {
 }
 .profilePageEditBioPanel {
 	position: relative;
+}
+
+.roleStyle {
+	display: inline-block;
+	font-size: 16px;
+	padding-left: 14px;
+	float: left;
+	padding-top: 3px;
 }

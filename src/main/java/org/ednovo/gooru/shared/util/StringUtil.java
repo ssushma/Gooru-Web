@@ -244,7 +244,7 @@ public class StringUtil {
 		} else if(partnerName.equalsIgnoreCase("ONR")) {
 			partnerName = "Office of Naval Research (ONR)";
 		} else if(partnerName.equalsIgnoreCase(PlaceTokens.FINCAPINC)) {
-			partnerName = "Fincap Inc.";
+			partnerName = "Center for Financial Capability, Inc.";
 		} else if(partnerName.equalsIgnoreCase(PlaceTokens.PSDPAL)) {
 			partnerName = "Partners for Sustainable Development (PSD)";
 		}

@@ -2242,7 +2242,10 @@ public interface MessageProperties {
 		
 		String GL1762_1 = "Enter a Class Code";
 
-
+    	String GL1763 = "Click here for the Partners for Sustainable Development (PSD) website";
+    	String GL1764 = "http://psdpal.org/";
+    	String GL1765 = "Click here for the Center for Financial Capability, Inc. website";
+    	String GL1766 = "http://financiallycapable.org/";
 
    }
 

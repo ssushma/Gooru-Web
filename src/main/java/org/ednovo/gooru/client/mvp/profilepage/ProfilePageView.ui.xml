@@ -19,6 +19,7 @@
 	            </panel:HTMLEventPanel>
 	            <g:HTMLPanel styleName="{ProfilePageStyle.aboutUserText}">
 	                <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userName"></g:Label>
+	                <g:Label styleName="{ProfilePageStyle.roleStyle}" ui:field="roleTxt"></g:Label>
 					<g:HTMLPanel styleName="{ProfilePageStyle.aboutUserTextRight}">
 					   <g:HTMLPanel styleName="{ProfilePageStyle.hoverButtons}">
 		 			   	  <g:Label ui:field="profilePageViewMsg" visible="false"></g:Label>
