@@ -25,38 +25,34 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.home.event;
+package org.ednovo.gooru.client.mvp.search.event;
+
+
+import com.google.gwt.event.shared.GwtEvent;
 
 /**
- * @author ClasspageTeam
+ * @author Search Team
  * 
  */
-public enum HeaderTabType {
+public class SetButtonEvent extends GwtEvent<SetButtonHandler> {
 
-	DISCOVER("discover"), ORGANIZE("organize"), TEACH("teach"), STUDY("myclasses"), USERNAME("username"), NONE("others");
-
-	String type;
+	public static final Type<SetButtonHandler> TYPE = new Type<SetButtonHandler>();
 
 	/**
 	 * Class constructor
 	 */
-	private HeaderTabType(String type) {
-		this.type = type;
+	public SetButtonEvent() {
 	}
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
+	@Override
+	public Type<SetButtonHandler> getAssociatedType() {
+		return TYPE;
 	}
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
+	@Override
+	protected void dispatch(SetButtonHandler handler) {
+		handler.setButtonVisibility();
 	}
+
 
 }
