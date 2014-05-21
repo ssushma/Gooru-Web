@@ -324,7 +324,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
-		return new ResourceDragWithImgUc(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getResourceTitle());
+		return new ResourceDragWithImgUc(resourceSearchResultDo.getResourceFormat().getValue(), resourceSearchResultDo.getResourceTitle());
 	}
 
 	/**

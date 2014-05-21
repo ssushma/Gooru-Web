@@ -243,6 +243,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		organizelbl.getElement().setInnerText(GL0180);
 		tabDropController = new ResourceDropController(this);
 		setShelfPosition(true);
+		
 		newCollectionShelf.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -950,7 +951,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
 				folderItemDo.setType(collectionItemDo.getItemType());
 				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
-				resourceFormatDo.setValue(collectionItemDo.getCategory());
+				resourceFormatDo.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 				folderItems.add(folderItemDo);
 			}
 			folderDo.setCollectionItems(folderItems);
@@ -967,7 +968,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			folderDo.setItemCount(collectionItemDo.getCollection().getCollectionItems().size());
 		}
 		ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
-		resourceFormatDo.setValue(collectionItemDo.getResource().getCategory());
+		resourceFormatDo.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 		folderDo.setResourceFormat(resourceFormatDo);  
 		return folderDo;
 	}

@@ -90,7 +90,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
@@ -100,7 +99,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Anchor /* shareTabVc, */contentTabVc;
 
 	@UiField
-	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt;
+	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage;
 	
 	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText;
 
@@ -250,7 +249,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		courseMaxMsg.setText(GL0822);
 		saveBtn.setText(GL0141);
 		cancelBtn.setText(GL0142);
-		addBioBtn.setText(GL0140);
+		addBioBtn.setText(GL1786);
 		aboutUsCharacterValidation.setText(GL0143);
 		btnSave.setText(GL0141);
 		biographyCancelButton.setText(GL0142);
@@ -435,6 +434,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		moreGradeCourseLbl.clear();
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+GL1083);
 		userName.setText(profileDo.getUser().getUsernameDisplay());
+		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1787);
 		userBio.setText(profileDo.getAboutMe());
 		profileTextArea.setText(profileDo.getAboutMe());
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
@@ -522,12 +522,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		List<String> moreGradeCourseLbls = new ArrayList<String>();
 		
 			int gradeWidth = 0;
+			int gradeCount = 1;
 			Iterator<Widget> gradeWidgets = userGradeList.iterator();
+			int widgetCount = userGradeList.getWidgetCount();
 			while (gradeWidgets.hasNext()) {
 				Widget widget = gradeWidgets.next();
+				String commaSeparator = "";
 				if (widget instanceof Label) {
+					String text = ((Label) widget).getText();
+					if(!(gradeCount==widgetCount)) {
+						text = concatenateGradeTxt(text);
+					}
 					if((gradeContainerWidth - gradeWidth)>widget.getOffsetWidth()) {
 						if(isValue){
+							if(!(gradeCount==widgetCount)) {
+								commaSeparator = GL_GRR_COMMA;
+							}
 							gradeWidth = gradeWidth + widget.getOffsetWidth() + RENDER_MARGIN_WIDTH;
 						}else {
 							isValue=false;
@@ -537,7 +547,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 						isValue=false;
 						moreGradeCourseLbls.add(((Label) widget).getText());
 					}
+					((Label) widget).setText(text+commaSeparator);
 				}
+				gradeCount++;
 			}
 			renderExtraGradeCourse(moreGradeCourseLbls);
 	}
@@ -754,7 +766,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		editPencil.addClickHandler(new OnGradeEditImageClick());
 		addCourseGradeBtn.getElement().getStyle().setWidth(163, Unit.PX);
 		addCourseGradeBtn.getElement().getStyle().setMarginTop(-3, Unit.PX);
-		addCourseGradeBtn.getElement().getStyle().setMarginLeft(9, Unit.PX);
 		addCourseGradeBtn.addClickHandler(new OnGradeEditImageClick());
 		editPencil.getElement().getStyle().setMarginTop(-3, Unit.PX);
 		editPencil.getElement().getStyle().setMarginLeft(0, Unit.PX);
@@ -1189,4 +1200,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		return profilePageLibraryView;
 	}
 
+	private String concatenateGradeTxt(String text) {
+		if(text.length()<3) {
+			if(text.equals("1")) {
+				text = text.concat("st "+GL0325);
+			} else if(text.equals("2")) {
+				text = text.concat("nd "+GL0325);
+			} else if(text.equals("3")) {
+				text = text.concat("rd "+GL0325);
+			} else {
+				text = text.concat("th "+GL0325);
+			} 
+		}
+		return text;
+	}	
 }

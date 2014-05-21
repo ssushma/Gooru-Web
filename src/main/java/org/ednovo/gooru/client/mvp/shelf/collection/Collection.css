@@ -959,14 +959,12 @@
 }
 
 .userNumber {
-	color: white;
-	background-color: #1076bb;
+	font-size: 16px;
 	border-radius: 4px;
-	padding: 3px 9px;
+	padding: 3px 0px;
 	border: none;
 	cursor: pointer;
 	display: inline-block;
-	background-color: rgb(135,186,221);
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -975,14 +973,13 @@
 }
 
 .userCourseName {
-	color: white;
+	font-size: 16px;
 	border-radius: 4px;
-	padding: 3px 9px;
+	padding: 3px 0px;
 	cursor: pointer;
 	border: none;
 	font-family: Arial, sans-serif;
 	display: inline-block;
-	background-color: rgb(81,81,81);
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;

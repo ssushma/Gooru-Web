@@ -22,30 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.resource.body;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
-import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
-import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.shared.GwtEvent;
 
-public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler,OpenReviewPopUpEventHandler {
-	
-	public void showQuestionView(CollectionItemDo collectionItemDo);
+/**
+ * @author Search Team
+ * 
+ */
+public class SetButtonEvent extends GwtEvent<SetButtonHandler> {
 
-	public void createReaction(String resourceId,String reactionText, String gooruReactionId, String collectionId, String createStudyPlayerReaction);
+	public static final Type<SetButtonHandler> TYPE = new Type<SetButtonHandler>();
 
-	public void deleteReaction(String gooruReactionId);   
-	
-	public void  triggerCreateReactionEvent(String resourceId,String reactionType,String eventName);
-	
-	public void createStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip,String userReview);   
-	
-	public boolean isOeAnswerSubmited();
+	/**
+	 * Class constructor
+	 */
+	public SetButtonEvent() {
+	}
 
-	public void updateStarRatings(String gooruOid, int starRatingValue, boolean showThankYouToolTip);
+	@Override
+	public Type<SetButtonHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview); 
+	@Override
+	protected void dispatch(SetButtonHandler handler) {
+		handler.setButtonVisibility();
+	}
+
+
 }
