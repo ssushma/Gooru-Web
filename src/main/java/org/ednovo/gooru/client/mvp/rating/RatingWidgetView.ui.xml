@@ -5,13 +5,13 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field= "style" src="ratingandreview.css"/>
 	<g:FlowPanel styleName="rating">
-		<g:InlineLabel styleName="star filled"></g:InlineLabel>
-		<g:InlineLabel styleName="star filled"></g:InlineLabel>
-		<g:InlineLabel styleName="star filled"></g:InlineLabel>
-		<g:InlineLabel styleName="star"></g:InlineLabel>
-		<g:InlineLabel styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_1" styleName="star"></g:InlineLabel> 
+		<g:InlineLabel ui:field="star_2" styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_3" styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_4" styleName="star"></g:InlineLabel>
+		<g:InlineLabel ui:field="star_5" styleName="star"></g:InlineLabel>
 		<g:InlineLabel styleName="">(</g:InlineLabel>
-		<g:InlineLabel styleName="{style.ratingCountLabel}" ui:field="ratingCountLabel">5</g:InlineLabel>
+		<g:InlineLabel styleName="{style.ratingCountLabel}" ui:field="ratingCountLabel"></g:InlineLabel>
 		<g:InlineLabel styleName="">)</g:InlineLabel>
 	</g:FlowPanel>
 </ui:UiBinder>

@@ -430,6 +430,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo);
+			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 			getContentReport(collectionItemDo.getResource().getGooruOid());
 		}
 		setUserAttemptedQuestionTypeAndStatus(false,0);
