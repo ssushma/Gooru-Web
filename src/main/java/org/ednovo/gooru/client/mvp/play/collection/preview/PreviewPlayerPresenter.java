@@ -597,7 +597,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			}
 		}
 		this.collectionMetadataId=collectionDo.getGooruOid();
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()))
 		getProfilUserVisibility(collectionDo.getUser().getGooruUId());
 		getView().setStudentViewLink();
 		clearIframeContent();

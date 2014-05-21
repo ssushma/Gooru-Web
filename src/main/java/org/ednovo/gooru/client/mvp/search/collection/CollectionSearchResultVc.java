@@ -205,7 +205,6 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		}else{
 			creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername());
 		}
-		
 		if ((collectionResultDo.getOwner().isProfileUserVisibility())){
 			if(StringUtil.isPartnerUser(collectionResultDo.getOwner().getUsername())) {
 				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
@@ -256,7 +255,24 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 					}
 				});
 			
+			}else{
+				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");
+				creatorNameLblValue.getElement().getStyle().setCursor(Cursor.POINTER);
+				
+				creatorNameLblValue.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						MixpanelUtil.Click_Username();
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("id", collectionResultDo.getOwner().getGooruUId());
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE,params);
+					}
+				});
 			}
+			
+			
+			
 		}/*else{
 			creatorNameLblValue.setText(" "+collectionResultDo.getOwner().getUsername());
 		}*/
