@@ -2241,12 +2241,16 @@ public interface MessageProperties {
 		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
 		
 		String GL1762_1 = "Enter a Class Code";
-		String GL1763 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
-
+		
     	String GL1763 = "Click here for the Partners for Sustainable Development (PSD) website";
     	String GL1764 = "http://psdpal.org/";
     	String GL1765 = "Click here for the Center for Financial Capability, Inc. website";
     	String GL1766 = "http://financiallycapable.org/";
+    	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
+    	
+    	String GL1768 = "An aggregator is a site that curates learning content from around the Web.";
+    	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
+    	String GL1770 = "Open educational resources (OER) are freely accessible, openly licensed documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
    }
 
