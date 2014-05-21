@@ -90,7 +90,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
@@ -100,7 +99,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Anchor /* shareTabVc, */contentTabVc;
 
 	@UiField
-	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt;
+	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage;
 	
 	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText;
 
@@ -435,6 +434,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		moreGradeCourseLbl.clear();
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+GL1083);
 		userName.setText(profileDo.getUser().getUsernameDisplay());
+		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1787);
 		userBio.setText(profileDo.getAboutMe());
 		profileTextArea.setText(profileDo.getAboutMe());
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
@@ -766,7 +766,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		editPencil.addClickHandler(new OnGradeEditImageClick());
 		addCourseGradeBtn.getElement().getStyle().setWidth(163, Unit.PX);
 		addCourseGradeBtn.getElement().getStyle().setMarginTop(-3, Unit.PX);
-		addCourseGradeBtn.getElement().getStyle().setMarginLeft(9, Unit.PX);
 		addCourseGradeBtn.addClickHandler(new OnGradeEditImageClick());
 		editPencil.getElement().getStyle().setMarginTop(-3, Unit.PX);
 		editPencil.getElement().getStyle().setMarginLeft(0, Unit.PX);
