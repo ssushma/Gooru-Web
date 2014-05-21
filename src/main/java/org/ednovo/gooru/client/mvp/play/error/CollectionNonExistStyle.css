@@ -124,12 +124,12 @@
 .player-bg {
 	text-align: center;
 	padding: 20px;
-	min-height: 425px;
+	min-height: 500px;
 	background-color: #efefef;
 }
 .resource-thumbnail {
 	position: relative;
-	padding: 40px 0px;
+	padding: 60px 0px;
 }
 .resource-image {
 	width: 80px;
@@ -148,7 +148,7 @@
 	font-size: 13px;
 	width: 451px;
 	margin-left: 246px;
-	margin-top: 15px;
+	margin-top: 25px;
 	
 }
 .readMore {

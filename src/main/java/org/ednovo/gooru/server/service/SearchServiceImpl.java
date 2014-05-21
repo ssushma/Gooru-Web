@@ -279,6 +279,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	public SearchDo<String> getSuggestSource(SearchDo<String> searchDo) {
 		JsonRepresentation jsonRep=null;
 		String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_SOURCE, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), searchDo.getPageSize() + "", searchDo.getPageNum() + "");
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		searchDo.setSearchResults(autoCompleteDeSerializer.deserializeSource(jsonRep));
@@ -455,6 +456,17 @@ public SearchDo<AutoSuggestKeywordSearchDo> getSuggestedAutokeyword(
 	searchDo.setSearchResults(autoSearchKeyWordDeSerializer.deserializeAutoKeyword(jsonRep));
 	return searchDo;
 
+}
+
+@Override
+public SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo)
+		throws GwtException {
+	JsonRepresentation jsonRep=null;
+	String url = UrlGenerator.generateUrl(getSearchEndPoint(), UrlToken.SEARCH_SUGGEST_AGGREGATOR, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), searchDo.getPageSize() + "", searchDo.getPageNum() + "");
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	searchDo.setSearchResults(autoCompleteDeSerializer.deserializeAggregator(jsonRep));
+	return searchDo;
 }
 
 /*@Override
