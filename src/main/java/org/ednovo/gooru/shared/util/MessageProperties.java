@@ -2257,9 +2257,9 @@ public interface MessageProperties {
     	String GL1772 = "It's easy to organize your collections and share them with your students.";
     	String GL1773 = "Access a Class";
     	String GL1774 = "Easy Access for Your Students";
-    	String GL1775 = "A unique Class Code is a hassle-free way to share with your students-- no log-in required!";
+    	String GL1775 = "Students don't need to log-in when they use the unique Class Code for your class.";
     	String GL1776 = "Manage Assignments ";
-    	String GL1777 = "Students will see a clear due date and your directions.";
+    	String GL1777 = "Students will see a clear due date and your directions for the collections you assign.";
     	String GL1778 = "Monitor Student Progress ";
     	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
     	String GL1780 = "See a sample report";
@@ -2267,7 +2267,7 @@ public interface MessageProperties {
     	String GL1782 = "Algebra I";
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
-    	String GL1785 = "Enter class code";
+    	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
    }
 

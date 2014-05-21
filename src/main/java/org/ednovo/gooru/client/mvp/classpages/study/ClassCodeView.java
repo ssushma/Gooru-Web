@@ -33,6 +33,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
+import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
@@ -89,13 +91,33 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 
 	}
 
+	
+	
+	
 	@Inject
 	public ClassCodeView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		setText();
-	}
+		
+		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
 
+			@Override
+			public void setButtonVisibility() {
+				setCreateClassVisibility();
+			}
+		};
+		AppClientFactory.getEventBus().addHandler(
+				SetButtonEvent.TYPE, setButtonVisibility);
+	}
+	private void setCreateClassVisibility() {
+		System.out.println("AppClientFactory.isAnonymous() :"+AppClientFactory.isAnonymous());
+		if (AppClientFactory.isAnonymous()){
+			btnCreateClass.setVisible(false);
+		}else{
+			btnCreateClass.setVisible(true);
+		}
+	}
 	/**
 	 * @function setText 
 	 * 
@@ -116,11 +138,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	
 	private void setText() {
 		
-		if (AppClientFactory.isAnonymous()){
-			btnCreateClass.setVisible(false);
-		}else{
-			btnCreateClass.setVisible(true);
-		}
+		setCreateClassVisibility();
 		
 		btnCreateClass.setText(GL1771);
 		btnEnter.setText(GL1065);
@@ -138,6 +156,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		lblMonitorStudentProgress.setText(GL1778);
 		lblMonitorDesc.setText(GL1779);
 		ancSampleReport.setText(GL1780);
+		ancSampleReport.setVisible(false);
 		lblFavoriteClasses.setText(GL1781);
 		lblClassOne.setText(GL1782);
 		lblClassTwo.setText(GL1783);
