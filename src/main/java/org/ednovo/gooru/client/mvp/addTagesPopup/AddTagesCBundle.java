@@ -33,6 +33,18 @@ public interface AddTagesCBundle extends ClientBundle{
 		String OffButtonsActive();
 		String okcancel();
 		String gwtSliderBarshell();
+		String selected();
+		String scrollPanelContainerInstructional();
+		String secondaryInfoContainer();
+		String gradeInfoTitleContainer();
+		String shelfGradeInfoTitle();
+		String shelfGradeInfoBottom();
+		String shelfGradeInfogardenContainer();
+		String dropdownContainerInstructional();
+		String placeHolderText();
+		String arrowInstructional();
+		String h5FloatLeft();
+
 		
 	}
 	@NotStrict
