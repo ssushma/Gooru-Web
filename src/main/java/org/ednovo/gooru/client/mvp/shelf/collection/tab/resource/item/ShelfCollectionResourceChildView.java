@@ -999,10 +999,8 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("addTages")
 	public void onAddTagesClick(ClickEvent clickEvent) {
 		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid());
-		popup.setGlassEnabled(true);
 		popup.show();
-		popup.center();
-		
+		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 	}
 	/*
 	 * This clickEvent is used to edit pdf

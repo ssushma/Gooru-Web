@@ -385,5 +385,5 @@ public interface ResourceService extends BaseService {
 	
 	public List<ResourceTagsDo> getTagsToResource(String resourceId)throws GwtException;
 	
-	
+	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException;
 }
