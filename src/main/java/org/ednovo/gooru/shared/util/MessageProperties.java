@@ -2252,5 +2252,22 @@ public interface MessageProperties {
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
     	String GL1770 = "Open educational resources (OER) are freely accessible, openly licensed documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
+    	
+    	String GL1771 = "Create a Class";
+    	String GL1772 = "It's easy to organize your collections and share them with your students.";
+    	String GL1773 = "Access a Class";
+    	String GL1774 = "Easy Access for Your Students";
+    	String GL1775 = "Students don't need to log-in when they use the unique Class Code for your class.";
+    	String GL1776 = "Manage Assignments ";
+    	String GL1777 = "Students will see a clear due date and your directions for the collections you assign.";
+    	String GL1778 = "Monitor Student Progress ";
+    	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
+    	String GL1780 = "See a sample report";
+    	String GL1781 = "A Few of Our Favorite Classes";
+    	String GL1782 = "Algebra I";
+    	String GL1783 = "Ancient Civilizations";
+    	String GL1784 = "English Language Arts";
+    	String GL1785 = "Enter your class code";
+    	String GL1786 = "Edit My Bio";
    }
 

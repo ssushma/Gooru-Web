@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.shared.model.content.LicenseDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
@@ -120,7 +121,10 @@ public class ResourceSearchResultDo implements Serializable {
 	private int resourceCount;
 	
 	private int questionCount;
+	
+	private SearchRatingsDo searchRatingsDo;
 
+	
 	/** 
 	 * This method is to get the mediaType
 	 */
@@ -462,6 +466,21 @@ public class ResourceSearchResultDo implements Serializable {
 	public void setScollectionCount(int scollectionCount) {
 		this.scollectionCount = scollectionCount;
 	}
+	
+	/**
+	 * @return the searchRatingsDo
+	 */
+	public SearchRatingsDo getSearchRatingsDo() {
+		return searchRatingsDo;
+	}
+
+	/**
+	 * @param searchRatingsDo the searchRatingsDo to set
+	 */
+	public void setSearchRatingsDo(SearchRatingsDo searchRatingsDo) {
+		this.searchRatingsDo = searchRatingsDo;
+	}
+
 	
 	
 	

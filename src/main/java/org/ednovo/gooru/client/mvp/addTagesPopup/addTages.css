@@ -7,6 +7,8 @@
 .popupInner {
 	border: 1px solid #DDD;
 	height:584px;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
 }
 .popupHeader {
 	padding: 10px 15px;
@@ -263,4 +265,35 @@ width: 50%;
 	margin-right: 7px;
 	border-bottom: none;
 	cursor: pointer;
+}
+
+.addQuestionStandard {
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+	float:left;
+	font-size: 12px;
+	color: #515151;
+	font-weight: bold;
+}
+.shelfCourseSubject {
+	width: 100%;
+	/*Mobile purpose added */
+	max-width: 332px;
+}
+.addResourceSuggestedBoxForQuestion {
+	color: #CCCCCC;
+	float: right;
+	font-size: 16px;
+    margin-right: 50px; 
+}
+.standardsCont {
+	float: left;
+	position: relative;
+}
+.standardMaxHide {
+	display: none;
+}
+.collectionStandardsMargin {
+	margin-top: 10px;
 }

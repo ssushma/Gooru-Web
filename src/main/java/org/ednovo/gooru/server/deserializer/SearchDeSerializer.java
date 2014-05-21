@@ -92,6 +92,9 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String MEDIA_TYPE = "mediaType";
 
 	public static final String RESOURCE_FORMAT = "resourceFormat";
+	
+	public static final String RATINGS = "ratings";
+	
 	/**
 	 * Deserialize the search json object
 	 * @param jsonRep instance of {@link JsonRepresentation}
