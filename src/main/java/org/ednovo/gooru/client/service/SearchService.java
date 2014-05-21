@@ -183,5 +183,7 @@ public interface SearchService extends BaseService {
 	String getGoogleSignin(String placeToken, Map<String, String> parms) throws GwtException;
 	
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo);
+	
+	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException;
 
 }

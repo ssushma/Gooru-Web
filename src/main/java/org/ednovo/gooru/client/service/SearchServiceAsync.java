@@ -79,4 +79,6 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	void getGoogleSignin(String placeToken, Map<String, String> parms, AsyncCallback<String> callback);
 	
 	public void getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo,AsyncCallback<SearchDo<CodeDo>> callback);
+	
+	void getSuggestedAggregator(SearchDo<String> searchDo, AsyncCallback<SearchDo<String>> callback);
 }

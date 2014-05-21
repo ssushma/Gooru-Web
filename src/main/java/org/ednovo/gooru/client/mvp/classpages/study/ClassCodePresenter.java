@@ -73,14 +73,14 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	@Override
 	public void onBind() {
 		super.onBind();
-		getView().clearAll();
+//		getView().clearAll();
 		setcollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {
 				
 				if(result.getGooruOid()==null){
-					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
+//					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
 				}
 				else{
 					Map<String, String> params = new HashMap<String, String>();
@@ -109,7 +109,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	@Override
 	protected void onReset() {
 		super.onReset();
-		getView().clearAll();
+//		getView().clearAll();
 	}
 	
 	@Override

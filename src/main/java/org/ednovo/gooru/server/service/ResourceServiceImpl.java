@@ -1430,5 +1430,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		}
 		return new  ArrayList<ResourceTagsDo>();
 	}
-	
+
+	@Override
+	public void deleteTagsServiceRequest(String resourceId, String addedTags)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
+		System.out.println("delete URL:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+	}
 }
