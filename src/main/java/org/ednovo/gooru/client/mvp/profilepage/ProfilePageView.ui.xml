@@ -107,6 +107,7 @@
 	        </g:HTMLPanel>
 			</g:FlowPanel>	        
         <g:HTMLPanel styleName="{ProfilePageStyle.userContent}">
+            <g:Label styleName="{ProfilePageStyle.userName} {ProfilePageStyle.userNameborder}" ui:field="userLibraryMessage"></g:Label>
             <g:HTMLPanel styleName="{ProfilePageStyle.tabs}">
                 <!-- Please dont make put these two anchor in different lines -->
                 <g:Anchor ui:field="contentTabVc"></g:Anchor><!-- <g:Anchor ui:field="shareTabVc">Share</g:Anchor> -->
