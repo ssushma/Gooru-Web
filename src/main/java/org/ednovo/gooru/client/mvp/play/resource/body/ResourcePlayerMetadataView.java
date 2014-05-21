@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.uc.NarrationUc;
 import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOut;
