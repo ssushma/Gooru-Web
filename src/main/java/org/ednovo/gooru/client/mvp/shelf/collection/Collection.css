@@ -186,7 +186,14 @@
 	margin: 10px 0px 10px 0px;
 	width: 100%;
 }
-
+.addQuestionStandard {
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+	float:left;
+	font-size: 12px;
+	color: #515151;
+}
 .shelfGradeTeacherTipTextTitle {
 	color: rgb(112, 109, 109);
 	margin: 10px 0px 10px 0px;
@@ -924,7 +931,7 @@
 	font-size: 12px;
 	padding: 8px 0px;
 	width: 85px;
-	margin-left: 6px;
+	margin-left: 45.5px;
 	float: left;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdfdfd', endColorstr='#dddddd');
 }
@@ -952,14 +959,12 @@
 }
 
 .userNumber {
-	color: white;
-	background-color: #1076bb;
+	font-size: 16px;
 	border-radius: 4px;
-	padding: 3px 9px;
+	padding: 3px 0px;
 	border: none;
 	cursor: pointer;
 	display: inline-block;
-	background-color: rgb(135,186,221);
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
@@ -968,14 +973,13 @@
 }
 
 .userCourseName {
-	color: white;
+	font-size: 16px;
 	border-radius: 4px;
-	padding: 3px 9px;
+	padding: 3px 0px;
 	cursor: pointer;
 	border: none;
 	font-family: Arial, sans-serif;
 	display: inline-block;
-	background-color: rgb(81,81,81);
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;

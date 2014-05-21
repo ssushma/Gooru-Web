@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
@@ -47,6 +48,8 @@ public class StringUtil {
 	 public static final int INDEX_NOT_FOUND = -1;
 	 
 	 public static final String EMPTY = "";
+	 
+	 public static boolean IPAD_MESSAGE_Close_Click = false;
 
 	public static boolean hasValidString(String string) {
 		return string != null && string.length() > 0 && !string.equalsIgnoreCase("null");
@@ -221,7 +224,7 @@ public class StringUtil {
 		boolean isPartner = false;
 		if(userName.equalsIgnoreCase("Autodesk") || userName.equalsIgnoreCase("Lessonopoly") || userName.equalsIgnoreCase("CommonSenseMedia") 
 				|| userName.equalsIgnoreCase("FTE") || userName.equalsIgnoreCase("WSPWH") || userName.equalsIgnoreCase("lisaNGC") || userName.equalsIgnoreCase("NGC")
-				|| userName.equalsIgnoreCase("ONR") ) {
+				|| userName.equalsIgnoreCase("ONR") || userName.equalsIgnoreCase(PlaceTokens.FINCAPINC) || userName.equalsIgnoreCase(PlaceTokens.PSDPAL) ) {
 			isPartner = true;
 		}
 		return isPartner;
@@ -240,6 +243,10 @@ public class StringUtil {
 			partnerName = "New Global Citizens (NGC)";
 		} else if(partnerName.equalsIgnoreCase("ONR")) {
 			partnerName = "Office of Naval Research (ONR)";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.FINCAPINC)) {
+			partnerName = "Center for Financial Capability, Inc.";
+		} else if(partnerName.equalsIgnoreCase(PlaceTokens.PSDPAL)) {
+			partnerName = "Partners for Sustainable Development (PSD)";
 		}
 		return partnerName;
 	}

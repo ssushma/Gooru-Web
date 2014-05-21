@@ -25,16 +25,18 @@
 
 package org.ednovo.gooru.client;
 
-public interface SeoTokens {
+import org.ednovo.gooru.shared.util.MessageProperties;
+
+public interface SeoTokens extends MessageProperties{
 	String HOME_TITLE_ANONYMOUS = "Featured Courses | Sign up, Sign in ";
 	String HOME_TITLE_LOGGEDIN = "Featured Courses";
 	String RESOURCE_PLAYER_TITLE = "";
 	String COLLECTION_PLAYER_TITLE = "";
 	String RESOURCE_SEARCH_TITLE = "Discover Resources | ";
 	String COLLECTION_SEARCH_TITLE = "Discover Collections | ";
-	String TEACH_TITLE = "Teach";
-	String STUDY_TITLE = "Study";
-	String WORKSPACE_TITLE = "Organize";
+	String TEACH_TITLE = GL1753;
+	String STUDY_TITLE = GL1753;
+	String WORKSPACE_TITLE = GL1752;
 	String SETTINGS_TITLE = "Settings";
 	String PROFILE_PAGE_TITLE = "";
 	String COURSE_PAGE_TITLE = "";

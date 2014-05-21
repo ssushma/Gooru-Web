@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceTabWidgetEvent;
 import org.ednovo.gooru.client.mvp.play.collection.event.ShowResourceViewEvent;
 import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoPresenter;
+import org.ednovo.gooru.client.mvp.play.error.ResourceNonExitView;
 import org.ednovo.gooru.client.mvp.play.resource.add.AddResourceCollectionPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.body.ResourcePlayerMetadataView;
@@ -67,6 +68,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -148,6 +150,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	private JSONObject hintIdsObject=new JSONObject();
 	
 	private JSONObject explanationIdsObject=new JSONObject();
+	
+	private List<List<JSONObject>> answerObjectArray=new ArrayList<List<JSONObject>>();
 	
 	private List<Integer> attemptTrySequenceArray=new ArrayList<Integer>();
 	
@@ -270,6 +274,14 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 */
 	public void setOpenEndedAnswerSubmited(boolean isOpenEndedAnswerSubmited) {
 		this.isOpenEndedAnswerSubmited = isOpenEndedAnswerSubmited;
+	}
+	
+	public List<List<JSONObject>> getAnswerObjectArray() {
+		return answerObjectArray;
+	}
+
+	public void setAnswerObjectArray(List<List<JSONObject>> answerObjectArray) {
+		this.answerObjectArray = answerObjectArray;
 	}
 	
     public static final  Object TAB_PRESENTER_SLOT = new Object(); 
@@ -418,6 +430,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		resoruceMetadataPresenter.showResourceWidget(collectionItemDo);
 		if(!AppClientFactory.isAnonymous()){
 			resoruceMetadataPresenter.setReaction(collectionItemDo);
+			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 			getContentReport(collectionItemDo.getResource().getGooruOid());
 		}
 		setUserAttemptedQuestionTypeAndStatus(false,0);
@@ -654,6 +667,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		hintIdsObject=new JSONObject();
 		explanationIdsObject=new JSONObject();
 		answerIdsObject=new JSONObject();
+		answerObjectArray.clear();
 		attemptStatusArray.clear();
 		attemptTrySequenceArray.clear();
 		attemptAnswersMap.clear();
@@ -827,12 +841,12 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	 * it will display resource not found error view.
 	 */
 	protected void showResourceErrorMessage(){
-		Label errorMessageLabel=new Label();
+		/*Label errorMessageLabel=new Label();
 		errorMessageLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getResourceErrorStyle());
-		enablePlayerButton(false, false, false,false);
+	*/	enablePlayerButton(false, false, false,false);
 		setOpenEndedAnswerSubmited(true);
 		getView().getPlayerBodyContainer().clear();
-		getView().getPlayerBodyContainer().add(errorMessageLabel);
+		getView().getPlayerBodyContainer().add(new ResourceNonExitView());
 	}
 	
 	public class ShowNewCollectionWidget implements ClickHandler{
@@ -957,7 +971,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,"", "", eventType, PlayerDataLogEvents.STUDY,questionTypeString,null,resourceId,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(resourceEndTime-resourceStartTime, getResourceScore()));
-		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount()));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 	public void triggerSaveOeAnswerTextDataEvent(String eventId,String resourceId,Long oeStartTime,Long oeEndTime,int score){
@@ -971,8 +985,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT, PlayerDataLogEvents.getDataLogContextObject(resourceId,"", resourceNewDataLogEventId, "", PlayerDataLogEvents.STUDY,"question",null,resourceId,null));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(oeEndTime-oeStartTime, 0));
-		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount()));
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getDataLogPayLoadObject(questionType,oeQuestionAnswerText,attemptStatusArray,attemptTrySequenceArray,answerIdsObject,hintIdsObject,explanationIdsObject,getAttemptCount(),answerObjectArray));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
+
+	
 	
 }

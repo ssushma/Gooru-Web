@@ -35,6 +35,10 @@ import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
+import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
@@ -66,12 +70,16 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	private boolean isPreviewPlayer=false;
 	
+	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	
 	@Inject
 	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
 		getView().setUiHandlers(this);
+		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
+		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -158,7 +166,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public void resetResourceMetaData(){
 		getView().getResourceWidgetContainer().clear();
 	}
-
+	public void removeRatingContainer(boolean flag){
+		getView().removeRatingContainer(flag);
+	}
 	@Override
 	public void createReaction(String resourceId,String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) {
 		AppClientFactory.getInjector().getPlayerAppService().createReaction(resourceId,reactionText,gooruReactionId,collectionId,createStudyPlayerReaction, new SimpleAsyncCallback<ReactionDo>() {
@@ -230,9 +240,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * @param clickEvent {@link ClickEvent}
 	 */
 	@Override
-	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip) {
-		AppClientFactory.getInjector().getPlayerAppService().createStarRatings(associateGooruOid,starRatingValue,new SimpleAsyncCallback<StarRatingsDo>() {
-
+	public void createStarRatings(String associateGooruOid, int starRatingValue, final boolean showThankYouToolTip,String userReview) {
+		AppClientFactory.getInjector().getPlayerAppService().createStarRatings(associateGooruOid,starRatingValue,userReview,new SimpleAsyncCallback<StarRatingsDo>() {
 			@Override
 			public void onSuccess(StarRatingsDo result) { 
 				getView().setUserStarRatings(result,showThankYouToolTip);
@@ -266,6 +275,42 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				
 			}
 		});
+	}
+
+	@Override
+	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
+		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
+	}
+
+	@Override
+	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip) {
+		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
+
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				if(result.size()>0){
+					getView().setUserStarRatings(result.get(0),true); 
+				}
+			}
+		}); 
+	}
+
+	@Override
+	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview) { 
+		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarReviews(deleteRatingGooruOid, score, userReview, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
+
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				if(result.size()>0){
+					getView().hideThankYouPopUp();
+				}
+			}
+		}); 
+	}
+
+	@Override
+	public void openReviewPopUp() {
+		addToPopupSlot(ratingAndReviewPopup);
 	}
 
 }

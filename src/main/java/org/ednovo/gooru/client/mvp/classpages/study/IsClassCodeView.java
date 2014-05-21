@@ -26,12 +26,10 @@ package org.ednovo.gooru.client.mvp.classpages.study;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
-import com.google.gwt.user.client.ui.Label;
-
 public interface IsClassCodeView extends IsViewWithHandlers<ClassCodeUiHandlers>  {
 
 	
-	public Label getErrorLbl();
-	
-	void clearAll();
+//	public Label getErrorLbl();
+//	
+//	void clearAll();
 }

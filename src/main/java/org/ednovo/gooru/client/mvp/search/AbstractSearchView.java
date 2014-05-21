@@ -225,6 +225,11 @@ public abstract class AbstractSearchView<T extends ResourceSearchResultDo> exten
 	}
 
 	@Override
+	public void setAggregatorSuggestions(SearchDo<String> aggregatorSuggestions) {
+		searchFilterVc.setAggregatorSuggestions(aggregatorSuggestions);
+	}
+	
+	@Override
 	public void setStandardsSuggestions(SearchDo<CodeDo> standardsSuggestions) {
 		searchFilterVc.setStandardSuggestions(standardsSuggestions);
 	}

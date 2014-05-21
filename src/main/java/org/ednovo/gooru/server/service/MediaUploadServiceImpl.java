@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.File;
+
 import org.ednovo.gooru.client.service.MediaUploadService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
@@ -76,6 +78,7 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.MEDIA_FILE_SAVE, gooruOid, getLoggedInSessionToken(),fileName);
+	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
 				getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -93,11 +96,13 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),
 				height, width, xPosition, yPosition);
+		
 		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
 				new Form());
 		if (imageUrl == null) {
 			return fileName;
-		} else {
+		} 
+		else {
 			return imageUrl;
 		}
 

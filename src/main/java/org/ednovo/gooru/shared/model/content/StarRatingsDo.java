@@ -11,8 +11,9 @@ public class StarRatingsDo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String assocGooruOid;
-	private String deleteReactionGooruOid=null;
+	private String deleteRatingGooruOid=null;
 	private Integer score;
+	private String freeText;
 	
 	public StarRatingsDo(){}
 	
@@ -31,14 +32,14 @@ public class StarRatingsDo implements Serializable {
 	/**
 	 * @return the deleteReactionGooruOid
 	 */
-	public String getDeleteReactionGooruOid() {
-		return deleteReactionGooruOid;
+	public String getDeleteRatingGooruOid() {
+		return deleteRatingGooruOid;
 	}
 	/**
 	 * @param deleteReactionGooruOid the deleteReactionGooruOid to set
 	 */
-	public void setDeleteReactionGooruOid(String deleteReactionGooruOid) {
-		this.deleteReactionGooruOid = deleteReactionGooruOid;
+	public void setDeleteRatingGooruOid(String deleteRatingGooruOid) {
+		this.deleteRatingGooruOid = deleteRatingGooruOid;
 	}
 
 	/**
@@ -53,6 +54,20 @@ public class StarRatingsDo implements Serializable {
 	 */
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	/**
+	 * @return the freeText
+	 */
+	public String getFreeText() {
+		return freeText;
+	}
+
+	/**
+	 * @param freeText the freeText to set
+	 */
+	public void setFreeText(String freeText) {
+		this.freeText = freeText;
 	}
 
 

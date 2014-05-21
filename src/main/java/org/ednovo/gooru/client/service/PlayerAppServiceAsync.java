@@ -56,6 +56,8 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void getResourceCollectionItem(String apiKey,String resourceId,String tabView,AsyncCallback<CollectionItemDo> callback);
 	
+	public void getResourceObj(String resourceId,AsyncCallback<CollectionItemDo> callback);
+	
 	public void getShortenShareUrl(String contentGooruOid,  AsyncCallback<Map<String, String>> callback);
 	
 	public void updateViewCount(String gooruid,String viewCount,String resourceType,AsyncCallback<String> callback);
@@ -119,7 +121,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	 * @param starRatingValue {@link Integer} Input given by the user i.e score out of 5
 	 * @param callback {@link AsyncCallback}  The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method. 
 	 */
-	public void createStarRatings(String associateGooruOid,int starRatingValue,AsyncCallback<StarRatingsDo> callback);
+	public void createStarRatings(String associateGooruOid,int starRatingValue,String userReview,AsyncCallback<StarRatingsDo> callback);
 
 	/**
 	 * Gets the resource star ratings.
@@ -143,7 +145,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	 * @param score {@link Integer}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public void updateResourceStarRatings(String gooruOid,int score,AsyncCallback<StarRatingsDo> callback);
+	public void updateResourceStarRatings(String gooruOid,int score,AsyncCallback<ArrayList<StarRatingsDo>>callback);
 	
 	/**
 	 * Gets the user star ratings.
@@ -158,7 +160,15 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	 * @param gooruUid {@link String}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public void getResourceRatingWithReviews(String gooruOid, String gooruUid,AsyncCallback<ArrayList<StarRatingsDo>> callback); 
+	public void getResourceRatingWithReviews(String gooruOid, String gooruUid,AsyncCallback<ArrayList<StarRatingsDo>> callback);
+
+	/**
+	 * Updates resource star reviews.
+	 * @param gooruOid {@link String}
+	 * @param gooruUid {@link String}
+	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
+	 */
+	public void updateResourceStarReviews(String deleteRatingGooruOid,Integer score, String userReview,AsyncCallback<ArrayList<StarRatingsDo>> callback); 
 
 	
 	

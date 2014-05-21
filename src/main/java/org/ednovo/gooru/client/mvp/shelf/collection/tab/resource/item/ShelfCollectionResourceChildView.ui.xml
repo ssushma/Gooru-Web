@@ -20,7 +20,7 @@
 			<g:Label styleName="{res.css.pencilEditImage}" ui:field="pencilEditNarationLbl"/>
 			<g:FlowPanel ui:field="editFloPanel" styleName="{res.css.editPanel}">
 				<g:FlowPanel ui:field="narationFloPanel" styleName="resourceNarrationContainer">
-					 <g:RichTextArea styleName="{res.css.resourceNarrationEdit}"  ui:field="narrationTxtArea"/> 
+					 <g:TextArea styleName="{res.css.resourceNarrationEdit}"  ui:field="narrationTxtArea"/> 
 					<!-- <tinyMce:TinyMCE ui:field="narrationTxtArea"></tinyMce:TinyMCE> -->
 					<!-- <g:Label styleName="{res.css.pencilEditImage}" ui:field="pencilEditNaration"/> -->
 					<g:Label styleName="{res.css.narrationAlertMessage}" ui:field="narrationAlertMessageLbl" />
@@ -89,6 +89,7 @@
 		      <g:Label styleName="{res.css.editButtonText}" ui:field="editStartPageLbl" />
 		    <g:Label styleName="{res.css.editButtonText}" ui:field="copyResource" />
 			<g:Label styleName="{res.css.editButtonText}"  ui:field="confirmDeleteLbl" />
+				<g:Label styleName="{res.css.editButtonText}"  ui:field="addTages" />
 			</g:FlowPanel>
 		<g:Label styleName="{res.css.updateTextStyle}" ui:field="UpdateTextMessage"/>
 		 <g:FlowPanel styleName="{res.css.actionPanel}" ui:field="actionVerPanel">

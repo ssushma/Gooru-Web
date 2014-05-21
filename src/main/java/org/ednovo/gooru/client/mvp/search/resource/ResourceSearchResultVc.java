@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -105,6 +106,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	private ResourceSearchResultDo resourceSearchResultDo;
 	
+	private RatingWidgetView ratingWidgetView=null;
+	
 	
 	private static final String PLAYER_NAME = "resource";
 	
@@ -133,10 +136,15 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		imgNotFriendly.setTitle(GL0737);
 		imgNotFriendly.setAltText(GL0737);
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
-		setData(resourceSearchResultDo);
 		wrapperVcr.addStyleName("resourceSearchResultBox");
-		
-		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);		
+		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
+		ratingWidgetView=new RatingWidgetView();
+		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
+		setData(resourceSearchResultDo);
+	}
+	
+	public RatingWidgetView getRatingWidgetView(){
+		return ratingWidgetView;
 	}
 	/**
 	 * 
@@ -186,7 +194,9 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	 */
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		
+		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getSearchRatingsDo().getCount().toString()); 
+		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getSearchRatingsDo().getAverage()); 
+//		ratingWidgetView.setAvgStarRating(2); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		wrapperVcr.setData(resourceSearchResultDo);
         String description = resourceSearchResultDo.getDescription();
@@ -314,7 +324,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	@Override
 	public IsDraggableMirage initDraggableMirage() {
-		return new ResourceDragWithImgUc(resourceSearchResultDo.getCategory(), resourceSearchResultDo.getResourceTitle());
+		return new ResourceDragWithImgUc(resourceSearchResultDo.getResourceFormat().getValue(), resourceSearchResultDo.getResourceTitle());
 	}
 
 	/**

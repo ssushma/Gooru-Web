@@ -58,6 +58,10 @@ public interface PlayerAppService extends BaseService {
 	
 	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView);
 	
+	public CollectionItemDo getResourceObj(String resourceId);
+	
+	
+	
 	/**
 	 * Get shorten collection url
 	 * @param contentGooruOid of collection
@@ -129,7 +133,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param starRatingValue {@link Integer} Input given by the user i.e score out of 5
 	 * @param callback {@link AsyncCallback}  The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method. 
 	 */
-	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue);
+	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue,String userReview);
 	
 	/**
 	 * Gets the resource star ratings.
@@ -154,7 +158,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param score {@link Integer}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public StarRatingsDo updateResourceStarRatings(String gooruOid, int score);
+	public ArrayList<StarRatingsDo> updateResourceStarRatings(String gooruOid, int score);
 	
 
 	/**
@@ -171,5 +175,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
 	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid);
+	
+	public ArrayList<StarRatingsDo> updateResourceStarReviews(String deleteRatingGooruOid,Integer score, String userReview);
 	
 }

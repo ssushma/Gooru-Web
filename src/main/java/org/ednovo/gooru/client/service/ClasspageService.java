@@ -432,4 +432,29 @@ public interface ClasspageService extends BaseService {
 			throws GwtException;
 
 	public StudentsAssociatedListDo getActiveAssociatedStudentListByCode(String classCode, int offSet, int pageSize, String statusType) throws GwtException;
+
+	/**
+	 * @function v2GetAllClass 
+	 * 
+	 * @created_date : May 20, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param limit
+	 * @param offSet
+	 * @return
+	 * @throws GwtException
+	 * 
+	 * @return : ClasspageListDo
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	ClasspageListDo v2GetAllClass(String limit, String offSet)
+			throws GwtException;
 }

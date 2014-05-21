@@ -42,10 +42,12 @@ import org.ednovo.gooru.client.mvp.home.HomePresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.autodesk.AutodeskLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.fincapinc.CfciLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.fte.FteLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.lessonopoly.LessonopolyLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.ngc.NgcLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
+import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -55,6 +57,7 @@ import org.ednovo.gooru.client.mvp.player.CollectionPlayPresenter;
 import org.ednovo.gooru.client.mvp.player.ResourcePlayPresenter;
 import org.ednovo.gooru.client.mvp.prime.PrimePresenter;
 import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.register.RegisterPresenter;
 import org.ednovo.gooru.client.mvp.search.SearchRootPresenter;
 import org.ednovo.gooru.client.mvp.search.collection.CollectionSearchPresenter;
@@ -181,5 +184,11 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<NgcLibraryPresenter> getNgcLibraryPresenter();
 
 	AsyncProvider<WspwhLibraryPresenter> getWspwhLibraryPresenter();
+	
+	AsyncProvider<RatingAndReviewPopupPresenter> getRatingAndReviewPopupPresenter();
+
+	AsyncProvider<PsdpalLibraryPresenter> getPsdpalLibraryPresenter();
+
+	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
 
 }

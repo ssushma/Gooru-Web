@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
@@ -115,7 +116,8 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(lessonDo!=null) {
 			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+lessonDo.getLabel());
-			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
+			lessonTitle = getLessonTitleStyle(lessonTitle);
+			
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 				
 			} else {
@@ -128,7 +130,8 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 
 		if(partnerFolderDo!=null) {
 			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+partnerFolderDo.getTitle());
-			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
+			lessonTitle = getLessonTitleStyle(lessonTitle);
+
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 				
 			} else {
@@ -150,6 +153,10 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 			
 			Label conceptTitleLbl = new Label(conceptTitle);
 			conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitle());
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
+				conceptTitleLbl.addStyleName(libraryStyleUc.collectionSmall());
+				conceptTitleLbl.addStyleName(libraryStyleUc.conceptTitleLeft());
+			}
 			lessonList.add(conceptTitleLbl);
 			conceptTitles.put(conceptDo.getGooruOid(), conceptTitleLbl);
 			if(i==0&&isLessonHighlighted) {
@@ -168,6 +175,15 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 		}
 	}
 	
+	private HTML getLessonTitleStyle(HTML lessonTitle) {
+		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
+			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
+		} else {
+			lessonTitle.setStyleName(libraryStyleUc.lessonTitleProfile());
+		}
+		return lessonTitle;
+	}
+
 	/**
 	 * 
 	 * @function getConceptDetails 

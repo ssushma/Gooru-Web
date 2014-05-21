@@ -61,6 +61,7 @@ import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
@@ -1386,5 +1387,58 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				
 			}
 		}
+	}
+	
+	@Override
+	public List<ResourceTagsDo> addTagsToResource(String resourceId, String addedTags)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.ADD_TAGS, resourceId, getLoggedInSessionToken());
+		
+		System.out.println("addtags::"+url);
+		System.out.println("addtagsform::"+ResourceFormFactory.frameTagObject(addedTags).getValuesArray("data")[0]);
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
+				getRestPassword(), ResourceFormFactory.frameTagObject(addedTags).getValuesArray("data")[0]);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeResourceTags(jsonRep);
+	}
+	
+	@Override
+	public List<ResourceTagsDo> getTagsToResource(String resourceId)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.GET_TAGS, resourceId, getLoggedInSessionToken());
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeResourceTags(jsonRep);
+	}
+	
+	public List<ResourceTagsDo> deserializeResourceTags(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<List<ResourceTagsDo>>() {
+				});
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new  ArrayList<ResourceTagsDo>();
+	}
+
+	@Override
+	public void deleteTagsServiceRequest(String resourceId, String addedTags)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
+		System.out.println("delete URL:"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 	}
 }

@@ -40,7 +40,6 @@ import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
-import com.google.gwt.dom.client.Style.Display;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -66,19 +65,21 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 			IsClassCodeProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
-		getView().clearAll();
+//		getView().clearAll();
 		setcollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {
 				
 				if(result.getGooruOid()==null){
-					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
+//					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
 				}
 				else{
 					Map<String, String> params = new HashMap<String, String>();
@@ -98,7 +99,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		super.onReveal();
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.STUDY_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.STUDY));
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 		//Call Event for Setting Confirm popup
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
@@ -107,7 +108,7 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	@Override
 	protected void onReset() {
 		super.onReset();
-		getView().clearAll();
+//		getView().clearAll();
 	}
 	
 	@Override

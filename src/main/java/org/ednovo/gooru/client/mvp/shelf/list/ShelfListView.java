@@ -62,6 +62,7 @@ import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -79,6 +80,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -126,6 +128,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	};
 	
 	@UiField
+	static
 	FocusPanel shelfFocPanel;
 	
 	@UiField(provided = true)
@@ -240,6 +243,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		organizelbl.getElement().setInnerText(GL0180);
 		tabDropController = new ResourceDropController(this);
 		setShelfPosition(true);
+		
 		newCollectionShelf.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -269,6 +273,24 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		});
 		
 		myShelfVerPanelHolder.add(myShelfVerPanel);
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  shelfFocPanel.getElement().setAttribute("style", "position:relative;");
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  shelfFocPanel.getElement().setAttribute("style", "position:relative;");
+		  }
+		  else
+		  {
+			  shelfFocPanel.getElement().setAttribute("style", "position:fixed;");
+		  }
 		
 		folderLabel.addClickHandler(new CreateNewFolder());
 		collectionLabel.addClickHandler(new CreateNewCollection());
@@ -929,7 +951,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				folderItemDo.setTitle(collectionItemDo.getResourceTitle());
 				folderItemDo.setType(collectionItemDo.getItemType());
 				ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
-				resourceFormatDo.setValue(collectionItemDo.getCategory());
+				resourceFormatDo.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 				folderItems.add(folderItemDo);
 			}
 			folderDo.setCollectionItems(folderItems);
@@ -946,7 +968,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			folderDo.setItemCount(collectionItemDo.getCollection().getCollectionItems().size());
 		}
 		ResourceFormatDo resourceFormatDo = new ResourceFormatDo();
-		resourceFormatDo.setValue(collectionItemDo.getResource().getCategory());
+		resourceFormatDo.setValue(collectionItemDo.getResource().getResourceFormat().getValue());
 		folderDo.setResourceFormat(resourceFormatDo);  
 		return folderDo;
 	}
@@ -1939,6 +1961,11 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		shelfCollection.getCollectionDo().setIdeas(ideas);
 		shelfCollection.getCollectionDo().setPerformanceTasks(performanceTasks);
 		shelfCollection.getCollectionDo().setQuestions(questions);
+	}
+	
+	public static void onClosingAndriodorIpaddiv()
+	{
+		  shelfFocPanel.getElement().setAttribute("style", "position:fixed;");
 	}
 
 }

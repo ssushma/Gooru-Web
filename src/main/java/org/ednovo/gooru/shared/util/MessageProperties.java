@@ -170,7 +170,7 @@ public interface MessageProperties {
 	String GL0113 = "This assignment has already reached its 10 collection limit.";
 	String GL0114 = "This collection has already been added to this assignment.";
 	
-	String GL0115 = "New Class";
+	String GL0115 = "Create a New Class";
 	String GL0116 = "Class List";
 	String GL0117 = "You haven't started a Class yet!";
 	String GL0118 = "Classes are the simplest way to share collections with your students.";
@@ -256,7 +256,7 @@ public interface MessageProperties {
 	
 	//Header
 	String GL0179 = "Discover";
-	String GL0180 = "Organize";
+	String GL0180 = "My Collections";
 	String GL0181 = "Teach";
 	String GL0182 = "Study";
 	String GL0183 = "Hi Guest!";
@@ -646,7 +646,9 @@ public interface MessageProperties {
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
-	String GL0515 = "RUSD Library";
+	String GL0515 = "District Library";
+	String GL0515_1 = "RUSD Library";
+	
 	String GL0516 = "Community Library";
 	String GL0517 = "Assign to another Class";
 	String GL0518 = "Assign this collection";
@@ -694,7 +696,7 @@ public interface MessageProperties {
 	String GL0554 = "#$*@! Please find a G-rated way to express yourself!";
 	String GL0555 = "This message has been deleted.";
 	String GL0556 = "Flag this collection";
-	String GL0557 = "You'hv flagged this collection";
+	String GL0557 = "You've flagged this collection";
 	
 	String GL0558 = "Delete";
 	String GL0559 = "Are you sure you want to delete this?";
@@ -2166,7 +2168,7 @@ public interface MessageProperties {
     	String GL1705="Access Hazard";
     	String GL1706=	"Media Features";
     	String GL1707="Access Mode";
-    	String GL1708="GENERAL";
+    	String GL1708="GENERAL INFO";
 		String GL1709="e.g. I used this collection as an opportunity for my students to explore various reasons for the Fall of Rome. They completed a graphic organizer as they worked through this collection and were then accountable to making judgements on which reasons they thought were the most significant and why. It all led up to a Socratic Seminar answering the essential question,\"In what ways did the pinnacle and demise of Rome influence European culture and history?\"" ;
 		String GL1710="Image";
 		String GL1711="Video";
@@ -2214,8 +2216,59 @@ public interface MessageProperties {
 		String GL1743 = "Type the YouTube video URL in the text field above. If it's correct, you'll see an image preview below. Feel free to also edit the video start and stop time as well.";
 		String GL1744 = "We encourage you to incorporate videos that you have permission to use, or are otherwise part of the public domain. ";
 		String GL1745 = "Description : ";
-		String GL1746 ="Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
+		String GL1746 = "Activity,Handout,Homework,Game,Presentation,Quiz,Curriculum Plan,Lesson Plan,Unit Plan,Project Plan,Reading,TextBook,Article,Book";
 		
 		String GL1747 = "By";
+		String GL1748 = "Aggregator:";
+		String GL1749 = "e.g. YouTube";
+		
+		String GL1748_1 = "Libraries";
+		String GL1749_1 = "Community Library";
+		String GL1750 = "District Library";
+		String GL1751 = "Partner Library";
+		
+		String GL1752 = "My Collections";
+		String GL1753 = "My Classes";
+		String GL1754 =	"Collections";
+		String GL1755 =	"Resources";
+		String GL1756 =	"Info";
+		String GL1757 = "Create a Collection";
+		String GL1758 = "Create a Folder";
+		String GL1759 = "Edit my Collections";
+		
+		String GL1760 = "Oops! Looks like this resource is no longer available!";
+		String GL1761 = "Click the next arrow to keep going to the next resource!";
+		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
+		
+		String GL1762_1 = "Enter a Class Code";
+		
+    	String GL1763 = "Click here for the Partners for Sustainable Development (PSD) website";
+    	String GL1764 = "http://psdpal.org/";
+    	String GL1765 = "Click here for the Center for Financial Capability, Inc. website";
+    	String GL1766 = "http://financiallycapable.org/";
+    	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
+    	
+    	String GL1768 = "An aggregator is a site that curates learning content from around the Web.";
+    	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
+    	String GL1770 = "Open educational resources (OER) are freely accessible, openly licensed documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
+
+    	
+    	String GL1771 = "Create a Class";
+    	String GL1772 = "It's easy to organize your collections and share them with your students.";
+    	String GL1773 = "Access a Class";
+    	String GL1774 = "Easy Access for Your Students";
+    	String GL1775 = "Students don't need to log-in when they use the unique Class Code for your class.";
+    	String GL1776 = "Manage Assignments ";
+    	String GL1777 = "Students will see a clear due date and your directions for the collections you assign.";
+    	String GL1778 = "Monitor Student Progress ";
+    	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
+    	String GL1780 = "See a sample report";
+    	String GL1781 = "A Few of Our Favorite Classes";
+    	String GL1782 = "Algebra I";
+    	String GL1783 = "Ancient Civilizations";
+    	String GL1784 = "English Language Arts";
+    	String GL1785 = "Enter your class code";
+    	String GL1786 = "Edit My Bio";
+    	String GL1787 = "Library";
    }
 

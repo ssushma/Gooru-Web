@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.GetSearchKeyWordEvent;
 import org.ednovo.gooru.client.mvp.search.event.SourceSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionEvent;
+import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoEvent;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchEvent;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -125,7 +126,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	DisclosurePanelUc gradePanelUc;
 
 	@UiField
-	DisclosurePanelUc sourcePanelUc;
+	DisclosurePanelUc sourcePanelUc,aggregatorPanelUc;
 
 	@UiField
 	DisclosurePanelUc standardPanelUc;
@@ -146,28 +147,32 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
-
+	
+	@UiField(provided = true)
+	AppSuggestBox aggregatorSgstBox;
+	
 	@UiField
 	FlowPanel authorContainerFloPanel;
 
 	@UiField
-	FlowPanel sourceContainerFloPanel;
+	FlowPanel sourceContainerFloPanel,aggregatorContainerFloPanel;
 
 	@UiField
 	FlowPanel standardContainerFloPanel;
 
 	@UiField
-	Label sourcesNotFoundLbl,filtersText,notifyText;
+	Label sourcesNotFoundLbl,filtersText,notifyText,aggregatorNotFoundLbl;
 
 	@UiField
 	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label sourceHelpicon, standardHelpicon,clearAll;
+	Label sourceHelpicon, standardHelpicon,clearAll,aggregatorHelpicon;
 
 	@UiField
-	HTMLEventPanel sourceToolTip, standardToolTip;
+	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
 	
+	/*@UiField Image publisherTooltip;*/
 	CheckBox chkNotFriendly = null;
 	CheckBox chkOER = null;
 	@UiField
@@ -179,12 +184,16 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	private AppMultiWordSuggestOracle sourceSuggestOracle;
 
 	private AppMultiWordSuggestOracle standardSuggestOracle;
+	
+	private AppMultiWordSuggestOracle aggregatorSuggestOracle;
 
 	private SearchDo<CodeDo> standardSearchDo = new SearchDo<CodeDo>();
 
 	private SearchDo<CodeDo> standardsInfoSearchDo = new SearchDo<CodeDo>();
 
 	private SearchDo<String> sourceSearchDo = new SearchDo<String>();
+	
+	private SearchDo<String> aggregatorSearchDo = new SearchDo<String>();
 	
 	private Map<String,String> standardCodesMap = new HashMap<String, String>();
 
@@ -203,6 +212,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	private boolean isSourcePopupShowing=false;
 
 	private boolean isStandardPopupShowing=false;
+	
+	private DownToolTipUc aggregatortooltipPopUpUc;
 	
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	
@@ -306,6 +317,28 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				return null;
 			}
 		};
+		aggregatorSuggestOracle = new AppMultiWordSuggestOracle(true);
+		aggregatorSearchDo.setPageSize(10);	
+		aggregatorSgstBox = new AppSuggestBox(aggregatorSuggestOracle) {
+			
+			@Override
+			public HandlerRegistration addClickHandler(ClickHandler handler) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void keyAction(String text) {
+				if (resourceSearch) {
+					aggregatorSearchDo.setSearchResults(null);
+					aggregatorSearchDo.setQuery(text);
+					if (text != null && text.trim().length() > 0) {
+						AppClientFactory.fireEvent(new AggregatorSuggestionEvent(aggregatorSearchDo));
+					}
+				}
+				
+			}
+		};
 		
 /*	ClickHandler eve1=new ClickHandler() {
 			@Override
@@ -328,10 +361,15 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		};
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
 */
+		
 		sourceSgstBox.getElement().setAttribute("placeHolder", GL1464);
 		sourceSgstBox.getElement().setId("asSourceSgst");
+		sourceSgstBox.getElement().setAttribute("style","margin-top: 5px;");
 		standardSgstBox.addSelectionHandler(this);
-		standardSgstBox.getElement().setId("asStandardSgst");
+		aggregatorSgstBox.getElement().setId("asAggregatorSgst");
+		aggregatorSgstBox.getElement().setAttribute("placeHolder", GL1749);
+		aggregatorSgstBox.getElement().setAttribute("style","margin-top: 5px;");
+		
 		BlurHandler blurhander=new BlurHandler() {
 			@Override
 			public void onBlur(BlurEvent event) {
@@ -357,12 +395,87 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.setHeaderTitle(GL0226);
 		gradePanelUc.setHeaderTitle(GL0165);
 		clearAll.setText(GL0725);
-		oerPanel.setVisible(false);
+	//	oerPanel.setVisible(false);
+		aggregatorPanelUc.setHeaderTitle(GL1748);
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
+			aggregatorPanelUc.setVisible(true);
 			sourcesNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			sourceSgstBox.addSelectionHandler(this);
+			aggregatorSgstBox.addSelectionHandler(this);
+			aggregatorNotFoundLbl.getElement().getStyle().setOpacity(0.0);
+			
+			final Image publisherTooltip  = new Image();
+			publisherTooltip.setUrl("images/mos/questionmark.png");
+			publisherTooltip.getElement().getStyle().setMarginTop(-46, Unit.PX);
+			publisherTooltip.getElement().getStyle().setMarginLeft(73, Unit.PX);
+			publisherTooltip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			publisherTooltip.setAltText(GL0732);
+			publisherTooltip.setTitle(GL0732);
+			
+			final Image aggregatorTooltip = new Image();
+			aggregatorTooltip.setUrl("images/mos/questionmark.png");
+			aggregatorTooltip.getElement().getStyle().setMarginTop(-46, Unit.PX);
+			aggregatorTooltip.getElement().getStyle().setMarginLeft(85, Unit.PX);
+			aggregatorTooltip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+			
+			aggregatorTooltip.setAltText(GL0732);
+			aggregatorTooltip.setTitle(GL0732);
+			aggregatorPanelUc.getContent().add(aggregatorTooltip);
+			sourcePanelUc.getContent().add(publisherTooltip);
+			publisherTooltip.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip(GL1769);
+					toolTip.getLblLink().setVisible(false);
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(publisherTooltip.getAbsoluteLeft()-(50+22), publisherTooltip.getAbsoluteTop()+22);
+					toolTip.show();
+				}
+			});
+			publisherTooltip.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					EventTarget target = ((MouseOutEvent) event).getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }	
+					
+				}
+			});
+			aggregatorTooltip.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip(GL1768);
+					toolTip.getLblLink().setVisible(false);
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(aggregatorTooltip.getAbsoluteLeft()-(50+22), aggregatorTooltip.getAbsoluteTop()+22);
+					toolTip.show();
+					
+				}
+			});
+			aggregatorTooltip.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					EventTarget target = ((MouseOutEvent) event).getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }	
+					
+				}
+			});
+			
 		} else {
 			authorPanelUc.setVisible(true);
 			authorTxtBox.getElement().setId("tbAuthor");
@@ -534,9 +647,10 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		chkOER.setText(value);
 		chkOER.setName(key);
 		disclosurePanelVc.add(chkOER);
-		if(value.equalsIgnoreCase("Show only OER")){
+		if(value.equalsIgnoreCase("OER")){
+			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
-			//chkOER.getElement().getStyle().setMarginTop(20, Unit.PX);
+			chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 		}
 		chkOER.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
@@ -619,6 +733,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		} else {
 			sourceToolTip.setVisible(true);
 			standardToolTip.setVisible(false);
+			aggregatorToolTip.setVisible(false);
 		}
 		isSourcePopupShowing = true;
 	}
@@ -635,10 +750,27 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		} else {
 			sourceToolTip.setVisible(false);
 			standardToolTip.setVisible(true);
+			aggregatorToolTip.setVisible(false);
 		}
 		isStandardPopupShowing = true;
 	}
-	
+	@UiHandler("aggregatorHelpicon")
+	public void onAggregatorHelpiconClicked(ClickEvent event) {
+		if(!(aggregatorToolTip.getWidgetCount()>0)) {
+			aggregatortooltipPopUpUc = new DownToolTipUc();
+			aggregatortooltipPopUpUc.setContent(new HTML(GL0247));
+			aggregatorToolTip.add(aggregatortooltipPopUpUc);
+		}
+		if(aggregatorToolTip.isVisible()) {
+			aggregatorToolTip.setVisible(false);
+		} else {
+			sourceToolTip.setVisible(false);
+			standardToolTip.setVisible(false);
+			aggregatorToolTip.setVisible(true);
+		}
+	//	isStandardPopupShowing = true;
+		
+	}
 	public class QuestionTypeFilter extends Composite{
 		
 		FlowPanel flowPanel;
@@ -694,7 +826,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
-			renderOERCheckBox(oerPanel, "not_show_OER", "Show only OER");
+			
 			resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
@@ -738,6 +870,43 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			});
 			panelNotMobileFriendly.add(imgNotFriendly);
 			panelNotMobileFriendly.setVisible(true);
+			//added for OER search
+			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
+			final Image oer = new Image("images/mos/questionmark.png");
+			oer.getElement().getStyle().setLeft(85, Unit.PX);
+			oer.getElement().getStyle().setTop(-20, Unit.PX);
+			oer.getElement().getStyle().setPosition(Position.RELATIVE);
+			oer.getElement().getStyle().setCursor(Cursor.POINTER);
+			oer.setAltText(GL0732);
+			oer.setTitle(GL0732);
+			oer.addMouseOverHandler(new MouseOverHandler() {
+				
+				@Override
+				public void onMouseOver(MouseOverEvent event) {
+					toolTip = new ToolTip(GL1770);
+					toolTip.getLblLink().setVisible(false);
+					toolTip.getElement().getStyle().setBackgroundColor("transparent");
+					toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+					toolTip.setPopupPosition(oer.getAbsoluteLeft()-(50+22), oer.getAbsoluteTop()+22);
+					toolTip.show();
+				}
+			
+			});
+			oer.addMouseOutHandler(new MouseOutHandler() {
+				
+				@Override
+				public void onMouseOut(MouseOutEvent event) {
+					EventTarget target = event.getRelatedTarget();
+					  if (Element.is(target)) {
+						  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+							  toolTip.hide();
+						  }
+					  }
+					
+				}
+			});
+			oerPanel.add(oer);
+			oerPanel.setVisible(true);
 		}else{
 			collectionLinkLbl.addStyleName(style.active());
 			resourceLinkLbl.removeStyleName(style.active());
@@ -777,7 +946,11 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if (resourceSearch) {
 			String sourceSgsts = getSuggestions(sourceContainerFloPanel);
 			if (!sourceSgsts.isEmpty()) {
-				filterMap.put(IsSearchView.SOURCE_FLT, sourceSgsts);
+				filterMap.put(IsSearchView.PUBLISHER_FLT, sourceSgsts);
+			}
+			String aggregatorSgsts = getSuggestions(aggregatorContainerFloPanel);
+			if (!aggregatorSgsts.isEmpty()) {
+				filterMap.put(IsSearchView.AGGREGATOR_FLT, aggregatorSgsts);
 			}
 		} else {
 			String authorSgsts = getSuggestions(authorContainerFloPanel);
@@ -850,7 +1023,24 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		return suggestions;
 	}
-
+	/**
+	 * Get added suggestion filters
+	 * @param flowPanel instance of {@link FlowPanel} which has all filter value as widget
+	 * @return filter suggestions as string
+	 */
+	public List<String> getAggregatorAsList(FlowPanel flowPanel) {
+		List<String> aggregations = new ArrayList<String>();
+		Iterator<Widget> widgets = flowPanel.iterator();
+		while (widgets.hasNext()) {
+			Widget widget = widgets.next();
+			if (widget instanceof FilterLabelVc) {
+				aggregations.add(((FilterLabelVc) widget).getSourceText());
+			} else if (widget instanceof DownToolTipWidgetUc) {
+				aggregations.add(((FilterLabelVc) ((DownToolTipWidgetUc) widget).getWidget()).getSourceText());
+			}
+		}
+		return aggregations;
+	}
 	/**
 	 * @param filterDisclosurePanell instance of {@link DisclosurePanelUc}
 	 * @return selected filterDisclosurePanell name
@@ -919,14 +1109,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardSgstBox.setText("");
 		sourceSgstBox.setText("");
 		authorTxtBox.setText("");
+		aggregatorSgstBox.setText("");
 		String standards = filter.get(IsSearchView.STANDARD_FLT);
 		if (standards != null) {
 			setFilterSuggestionData(standardContainerFloPanel, standards.split(COMMA_SEPARATOR), true);
 		}
 		if (resourceSearch) {
-			String sources = filter.get(IsSearchView.SOURCE_FLT);
+			String sources = filter.get(IsSearchView.PUBLISHER_FLT);
 			if (sources != null) {
 				setFilterSuggestionData(sourceContainerFloPanel, sources.split(COMMA_SEPARATOR), false);
+			}
+			String aggregator = filter.get(IsSearchView.AGGREGATOR_FLT);
+		if (aggregator != null) {
+				setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
 			}
 			
 		} else {
@@ -1134,6 +1329,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		standardContainerFloPanel.clear();
 		authorContainerFloPanel.clear();
 		standardCodesMap.clear();
+		aggregatorContainerFloPanel.clear();
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 			chkNotFriendly.setValue(false);
 			chkOER.setValue(false);
@@ -1150,13 +1346,14 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		sourceContainerFloPanel.clear();
 		standardContainerFloPanel.clear();
 		authorContainerFloPanel.clear();
+		aggregatorContainerFloPanel.clear();
 		standardCodesMap.clear();
 		AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
 	}
 
 	@Override
 	public void onSelection(SelectionEvent<SuggestOracle.Suggestion> event) {
-		if (event.getSource().equals(sourceSgstBox)) {
+	if (event.getSource().equals(sourceSgstBox)) {
 			String text = sourceSgstBox.getValue();
 			if (text.equals(NO_MATCH_FOUND)) {
 				new FadeInAndOut(sourcesNotFoundLbl.getElement(), 5000, 5000);
@@ -1166,7 +1363,20 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 			sourceSgstBox.setText("");
 			sourceSuggestOracle.clear();
-		} else {
+			
+		} else if(event.getSource().equals(aggregatorSgstBox)){
+			String text = aggregatorSgstBox.getValue();
+			if (text.equals(NO_MATCH_FOUND)) {
+				new FadeInAndOut(aggregatorNotFoundLbl.getElement(), 5000, 5000);
+			} else {
+				aggregatorContainerFloPanel.add(new FilterLabelVc(text,true));
+				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+			}
+			aggregatorSgstBox.setText("");
+			aggregatorSuggestOracle.clear();
+		}
+			
+			else {
 			String text = standardSgstBox.getValue();
 			if (text.equals(NO_MATCH_FOUND)) {
 				new FadeInAndOut(standardsNotFoundLbl.getElement(), 5000, 5000);
@@ -1236,7 +1446,19 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		}
 		sourceSgstBox.showSuggestionList();
 	}
-	
+	public void setAggregatorSuggestions(SearchDo<String> aggregatorSearchDo) {
+		aggregatorSuggestOracle.clear();
+		this.aggregatorSearchDo=aggregatorSearchDo;
+		if(this.aggregatorSearchDo.getSearchResults() != null){
+			this.aggregatorSearchDo.getSearchResults().removeAll(getAggregatorAsList(aggregatorContainerFloPanel));
+		}
+		if (this.aggregatorSearchDo.getSearchResults() != null && this.aggregatorSearchDo.getSearchResults().size() > 0) {
+			aggregatorSuggestOracle.setAll(aggregatorSearchDo.getSearchResults());
+		} else {
+			aggregatorSuggestOracle.add(NO_MATCH_FOUND);
+		}
+		aggregatorSgstBox.showSuggestionList();
+	}
 	public void getUserStandardPrefCodeId()
 	{
 		/**
@@ -1269,5 +1491,5 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	{
 		standardPanelUc.setVisible(true);
 	}
-
+	
 }

@@ -41,6 +41,7 @@
 	font-size:14px;
 	border-left:1px solid #ddd;
 	cursor:default;
+	width: 9.1%;
 }
 
 #courseTabs .tabsLi.math {
@@ -657,7 +658,8 @@
 	color: #515151;
 }
 
-.conceptTitleActive {
+.
+ {
 	background-color:#CFE3F1;
 	color: #515151;
 }
@@ -954,5 +956,37 @@ margin-bottom: 15px;
 	padding: 0 19px !important;
 }
 
-/* end 
- */
+.lessonTitleProfile {
+	padding: 8px 63px;
+	margin: 7px 0px;
+	font-weight:bold;
+	cursor:default;
+		/* Old browsers */
+	background: rgb(239,239,239);
+	
+	/* Safari 4-5, Chrome 1-9 */
+	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -webkit-gradient(linear, 0% 0%, 0% 100%, from(FFFFFF), to(FFFFFF));
+
+	/* Safari 5.1, Chrome 10+ */
+	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -webkit-linear-gradient(top, #FFFFFF, #FFFFFF);
+
+	/* Firefox 3.6+ */
+	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -moz-linear-gradient(top, #FFFFFF, #FFFFFF);
+
+	/* IE 10 */
+	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -ms-linear-gradient(top, #FFFFFF, #FFFFFF);
+
+	/* Opera 11.10+ */
+	background: url('../images/folders/panel/folder-icon-open.png') no-repeat 24px 8px, -o-linear-gradient(top, #FFFFFF, #FFFFFF);
+
+	/* IE 6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
+	
+}
+
+.collectionSmall {
+	background: url('../images/folders/panel/collection-icon-small.png') 50px 0px no-repeat;
+}
+.conceptTitleLeft {
+	padding-left: 85px;
+}

@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
+import org.ednovo.gooru.client.mvp.search.event.AggregatorSuggestionEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.PostSearchEvent;
@@ -104,6 +105,8 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 	private SearchAsyncCallback<SearchDo<CodeDo>> standardSuggestionInfoAsyncCallback;
 
 	private SearchAsyncCallback<SearchDo<String>> sourceSuggestionAsyncCallback;
+	
+	private SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback;
 
 	protected static final String ALL = "*";
 
@@ -132,6 +135,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		addRegisteredHandler(ConsumeShelfCollectionsEvent.TYPE, this);
 		if (getViewToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
 			addRegisteredHandler(SourceSuggestionEvent.TYPE, this);
+			addRegisteredHandler(AggregatorSuggestionEvent.TYPE, this);
 		}
 	}
 
@@ -187,6 +191,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestSource(searchDo, this);
+				
 				}
 
 				@Override
@@ -194,6 +199,22 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					getView().setSourceSuggestions(result);
 				}
 			});
+			setAggregatorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
+
+				@Override
+				protected void run(SearchDo<String> searchDo) {
+					getSearchService().getSuggestedAggregator(searchDo, this);
+					
+				}
+
+				@Override
+				public void onCallSuccess(SearchDo<String> result) {
+					getView().setAggregatorSuggestions(result);
+					
+				}
+				
+			});
+			
 		}
 	}
 
@@ -351,7 +372,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		if(getPlaceManager().getRequestParameter(QUERY) != null)
 		{
 			queryVal = getPlaceManager().getRequestParameter(QUERY);	
-			queryVal = queryVal.replaceAll("%5C1", "&");
+			/*queryVal = queryVal.replaceAll("%5C1", "&");*/
 		}
 		try
 		{
@@ -373,7 +394,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		if(getPlaceManager().getRequestParameter(QUERY) != null)
 		{
 			queryVal = getPlaceManager().getRequestParameter(QUERY);	
-			queryVal = queryVal.replaceAll("%5C1", "&");
+			/*queryVal = queryVal.replaceAll("%5C1", "&");*/
 		}
 		try
 		{
@@ -482,6 +503,15 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 		this.sourceSuggestionAsyncCallback = sourceSuggestionAsyncCallback;
 	}
 
+	public SearchAsyncCallback<SearchDo<String>> getAggregatorSuggestionAsyncCallback() {
+		return aggregatorSuggestionAsyncCallback;
+	}
+
+	public void setAggregatorSuggestionAsyncCallback(
+			SearchAsyncCallback<SearchDo<String>> aggregatorSuggestionAsyncCallback) {
+		this.aggregatorSuggestionAsyncCallback = aggregatorSuggestionAsyncCallback;
+	}
+
 	@Override
 	public void requestStandardsSuggestion(SearchDo<CodeDo> searchDo) {
 		if (isCurrentView()) {
@@ -495,7 +525,12 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 			getSourceSuggestionAsyncCallback().execute(searchDo);
 		}
 	}
-
+	@Override
+	public void requestAggregatorSuggestion(SearchDo<String> searchDo) {
+		if (isCurrentView()) {
+			getAggregatorSuggestionAsyncCallback().execute(searchDo);
+		}
+	}
 	protected abstract void requestSearch(SearchDo<T> searchDo, SearchAsyncCallback<SearchDo<T>> searchAsyncCallback);
 
 	@Override

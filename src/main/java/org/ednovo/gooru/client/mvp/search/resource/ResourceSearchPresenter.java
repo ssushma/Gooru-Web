@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
@@ -58,7 +59,9 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * 
  */
 public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSearchResultDo, CollectionSearchResultDo, IsResourceSearchView, ResourceSearchPresenter.IsResourceSearchProxy> implements SearchUiHandlers {
-
+	
+	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RESOURCE_SEARCH)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -72,8 +75,9 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter) {
+	public ResourceSearchPresenter(IsResourceSearchView view, IsResourceSearchProxy proxy,SignUpPresenter signUpViewPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(view, proxy, signUpViewPresenter);
+		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 	}
 
@@ -93,9 +97,13 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	@Override
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = super.getSearchFilters();
-		String source = getPlaceManager().getRequestParameter(IsSearchView.SOURCE_FLT);
+		String source = getPlaceManager().getRequestParameter(IsSearchView.PUBLISHER_FLT);
 		if (source != null) {
-			filters.put(IsSearchView.SOURCE_FLT, source);
+			filters.put(IsSearchView.PUBLISHER_FLT, source);
+		}
+		String aggregator = getPlaceManager().getRequestParameter(IsSearchView.AGGREGATOR_FLT);
+		if (aggregator != null) {
+			filters.put(IsSearchView.AGGREGATOR_FLT, source);
 		}
 		return filters;
 	}
@@ -126,5 +134,9 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 			 AppClientFactory.setEnableScroll(false);
 	    }
 
+	}
+	public void showRatingAndReviewPopup(){
+		Window.enableScrolling(false);
+		addToPopupSlot(ratingAndReviewPopup);
 	}
 }

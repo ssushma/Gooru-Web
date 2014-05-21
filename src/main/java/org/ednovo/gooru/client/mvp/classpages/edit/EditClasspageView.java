@@ -14,12 +14,16 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
+import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
@@ -264,7 +268,7 @@ public class EditClasspageView extends
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.addClickHandler(new ClassListTabClicked());
 		
-		reportsTab.setVisible(false);
+		//reportsTab.setVisible(false);
 		
 		reportsTab.addClickHandler(new reportsTabClicked());
 		
@@ -425,6 +429,9 @@ public class EditClasspageView extends
 		
 		/*//panelCode.setVisible(false);
 		panelWebLink.setVisible(false);*/
+		
+		
+		
 		panelUpdateActionContols.getElement().setId("panelUpdateActionContols");
 		
 		btnEditImage.setText(GL0138);
@@ -463,8 +470,26 @@ public class EditClasspageView extends
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
+			
 	}
+	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
 
+		@Override
+		public void getStudentJoinList(int joinClassList) {
+			if(joinClassList==0){
+				reportsTab.setEnabled(false);
+				reportsTab.getElement().setAttribute("style", "color:#999 !important");
+			}
+			else
+			{
+				reportsTab.setEnabled(true);
+				reportsTab.getElement().setAttribute("style", "color:#515151 !important");
+			}
+			
+		}
+		
+	};
 	public class hideEditPencil implements MouseOverHandler {
 
 		@Override
@@ -627,7 +652,7 @@ public class EditClasspageView extends
 		imgClasspageImage.setAltText(classpageDo.getTitle());
 		imgClasspageImage.setTitle(classpageDo.getTitle());
 		btnCollectionEditImage.setVisible(false);
-		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl() == "" ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
+		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 	}
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){

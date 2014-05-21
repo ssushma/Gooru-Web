@@ -39,7 +39,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.item.ProfilePageItemChildView;
+import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
@@ -90,8 +90,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
@@ -101,9 +99,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Anchor /* shareTabVc, */contentTabVc;
 
 	@UiField
-	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg,mySubjectsText;
+	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage;
 	
-	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText,shareWithOthersText;
+	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText;
 
 	@UiField
 	Image userProfilePic,errorImage;
@@ -112,11 +110,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	HTMLPanel profileOnContainerPanel, profileOffContainerPanel;
 
 	@UiField
-	SimplePanel shelfTabSimPanel;
-
-	@UiField
-	HTMLPanel publicPPRightContainer, contentview, shareLinkFloPanel,
-			contentNavigationPanel, socialButtonContainer, bioMainContainer;
+	HTMLPanel contentview, shareLinkFloPanel,
+			socialButtonContainer, bioMainContainer;
 
 	@UiField
 	HTMLPanel loadingPanel, userGradeList, userCourseList, metaDataContainer;
@@ -132,15 +127,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
-			profilePageEditBioPanel,aboutMeTextContainer;
+			profilePageEditBioPanel;
 	
 	@UiField FlowPanel moreGradeCourseLbl;
 	
 	@UiField
 	UserSettingStyle settingsStyle;
-
-	@UiField
-	TextBox bitlyLink;
 
 	@UiField(provided = true)
 	ProfilePageDescriptionEditUc profileTextArea;
@@ -154,6 +146,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField
 	FlowPanel courseData, collectionCourseLstPanel, coursesPanel;
 
+	@UiField
+	ProfilePageLibraryView profilePageLibraryView;
+	
 	Label noCollectionMsgPanel = new Label();
 
 	private Label editImageButton = new Label(GL0800);
@@ -243,10 +238,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 			}
 		};
-		profileTextArea.getElement().getStyle().setWidth(650, Unit.PX);
+		profileTextArea.getElement().getStyle().setWidth(795, Unit.PX);
 
 		setWidget(uiBinder.createAndBindUi(this));
-		mySubjectsText.setText(GL1074);
 		addCourseGradeBtn.setText(GL1075);
 		editPencil.getElement().setInnerHTML(GL0140);
 		gradeText.setText(GL1076);
@@ -255,31 +249,24 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		courseMaxMsg.setText(GL0822);
 		saveBtn.setText(GL0141);
 		cancelBtn.setText(GL0142);
-		aboutMeTextContainer.getElement().setInnerHTML(GL1077);
-		addBioBtn.setText(GL0140);
+		addBioBtn.setText(GL1786);
 		aboutUsCharacterValidation.setText(GL0143);
 		btnSave.setText(GL0141);
 		biographyCancelButton.setText(GL0142);
 		profilePageViewMsg.setText(GL1078);
 		profilePageText.setText(GL1079);
-		profileOnButton.setText(GL0802);
-		profileOffButton.setText(GL0803);
-		shareWithOthersText.setText(GL1080);
-		bitlyLink.setText(GL1081);
+		profileOnButton.setText(GL_GRR_YES);
+		profileOffButton.setText(GL1735);
 		contentTabVc.setText(GL1082);
 		errorImage.setTitle(GL1091_1);
 		errorImage.setAltText(GL1091_1);
 		errorImage.setUrl("images/404_message.png");
 		profileOnContainerPanel.setVisible(false);
 		profileOffContainerPanel.setVisible(false);
-		loadingPanel.setVisible(true);
+		loadingPanel.setVisible(false);
 		addCourseGradeBtn.getElement().setId("btnAddCourseGrade");
 		addCourseBtn.getElement().setId("btnAddCourse");
 		editImageButton.getElement().setId("btnEditImage");
-		int clientHeight = Window.getClientHeight();
-		clientHeight = clientHeight - DEFAULT_PROFILE_LIST_VIEW_HEIGHT;
-		contentNavigationPanel.getElement().getStyle().setHeight(clientHeight, Unit.PX);
-		publicPPRightContainer.getElement().getStyle().setHeight(clientHeight, Unit.PX);
 		editImageButton.setStyleName(CollectionCBundle.INSTANCE.css().profileEditImageButton());
 		userCoursePopup.setVisible(false);
 		profileOnButton.getElement().setAttribute("id", "btnProfileOn");
@@ -293,7 +280,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		addCourseGradeBtn.setVisible(false);
 		enableAddBioBtn("userBio");
 		addBioBtn.getElement().setId("btnBioEdit");
-		bitlyLink.getElement().setId("txtBitlyLink");
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			profileOnButton.addClickHandler(new ProfileOnClickEvent());
@@ -354,7 +340,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			socialView = new SocialShareView(shareDo);
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
-			bitlyLink.removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 			gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			
 			//update profile setting
@@ -372,7 +357,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		socialView = new SocialShareView(shareDo);
 		socialButtonContainer.clear();
 		socialButtonContainer.add(socialView);
-		bitlyLink.addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 		gooruSocialButtonsContainer.getElement().getStyle().setOpacity(0.6);
 
 		//update profile setting
@@ -418,10 +402,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			if(privatePublic.equalsIgnoreCase("private")) {
-				bitlyLink.addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(0.6);
 			} else {
-				bitlyLink.removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 				gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
 			}
 		} catch (Exception e) {
@@ -434,7 +416,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
 			if (slot == ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW) {
-				shelfTabSimPanel.setWidget(content);
+				
 			}
 		}
 	}
@@ -445,20 +427,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			profileDo.setAboutMe("");
 		}
 		this.profileDo = profileDo;
+		roleTxt.setText(profileDo.getUserType());
 		profileTextArea.cancel();
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
 		moreGradeCourseLbl.clear();
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+GL1083);
 		userName.setText(profileDo.getUser().getUsernameDisplay());
+		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1787);
 		userBio.setText(profileDo.getAboutMe());
 		profileTextArea.setText(profileDo.getAboutMe());
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
 		userProfilePic.setUrl(profileImageUrl);
 		userProfilePic.setAltText(profileDo.getUser().getUsername());
 		userProfilePic.setTitle(profileDo.getUser().getUsername());
-		userProfilePic.getElement().getStyle().setHeight(100, Unit.PX);
-		userProfilePic.getElement().getStyle().setWidth(100, Unit.PX);
+		userProfilePic.getElement().getStyle().setHeight(174, Unit.PX);
+		userProfilePic.getElement().getStyle().setWidth(175, Unit.PX);
 		userProfilePic.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -538,12 +522,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		List<String> moreGradeCourseLbls = new ArrayList<String>();
 		
 			int gradeWidth = 0;
+			int gradeCount = 1;
 			Iterator<Widget> gradeWidgets = userGradeList.iterator();
+			int widgetCount = userGradeList.getWidgetCount();
 			while (gradeWidgets.hasNext()) {
 				Widget widget = gradeWidgets.next();
+				String commaSeparator = "";
 				if (widget instanceof Label) {
+					String text = ((Label) widget).getText();
+					if(!(gradeCount==widgetCount)) {
+						text = concatenateGradeTxt(text);
+					}
 					if((gradeContainerWidth - gradeWidth)>widget.getOffsetWidth()) {
 						if(isValue){
+							if(!(gradeCount==widgetCount)) {
+								commaSeparator = GL_GRR_COMMA;
+							}
 							gradeWidth = gradeWidth + widget.getOffsetWidth() + RENDER_MARGIN_WIDTH;
 						}else {
 							isValue=false;
@@ -553,7 +547,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 						isValue=false;
 						moreGradeCourseLbls.add(((Label) widget).getText());
 					}
+					((Label) widget).setText(text+commaSeparator);
 				}
+				gradeCount++;
 			}
 			renderExtraGradeCourse(moreGradeCourseLbls);
 	}
@@ -595,58 +591,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	@Override
 	public void setContentItemData(List<CollectionItemDo> collectionItemDo) {
-		if (collectionItemDo.size() > 0) {
 
-			Iterator<CollectionItemDo> iterator = collectionItemDo.iterator();
-			while (iterator.hasNext()) {
-				CollectionItemDo collectionItem = iterator.next();
-				if (collectionItem.getResource().getResourceType().getName()
-						.equalsIgnoreCase(WORKSPACE_FOLDER)) {
-					publicPPRightContainer.add(new ProfilePageItemChildView(
-							collectionItem));
-				} else if (collectionItem.getResource().getResourceType()
-						.getName().equalsIgnoreCase(WORKSPACE_COLLECTION)) {
-					publicPPRightContainer.add(new PPPCollectionResult(
-							collectionItem));
-				}
-			}
-		} else {
-			noCollectionMsgPanel.setStyleName(res.css()
-					.noCollectionMessageRight());
-			noCollectionMsgPanel.getElement().getStyle()
-					.setHeight(300, Unit.PX);
-			publicPPRightContainer.add(noCollectionMsgPanel);
-			footerUc.getElement().getStyle().setMarginBottom(50, Unit.PX);
-		}
-		loadingPanel.setVisible(false);
-		displayFooter();
-		publicPPRightContainer.add(footerUc);
 	}
 
 	@Override
 	public void clearContentItemData() {
-		publicPPRightContainer.clear();
+
 	}
 
 	@Override
 	public void setMetaData(CollectionItemDo collectionItemDo) {
-		publicPPRightContainer.add(new ProfilePageCollectionMetaData(
-				collectionItemDo));
+		
 	}
 
 	@Override
 	public void setShareData(ProfileDo profileDo, List<String> shortenUrl,
 			String profileUrl) {
-
-		bitlyLink.setReadOnly(true);
-		bitlyLink.addClickHandler(new OnTextBoxClick());
-		bitlyLink.setText(shortenUrl.get(2));
-		/*profileUrl = "http://qa.goorulearning.org/gooru-gwt/" + "%23"
-				+ profileUrl;
-		profileUrl = profileUrl.replaceAll("#", "%23");
-		profileUrl = profileUrl.replaceAll("&", "%26");
-		profileUrl = profileUrl.replaceAll("!", "%21");*/
-
 		shareDo = new SocialShareDo();
 		shareDo.setBitlylink(shortenUrl.get(0));
 		shareDo.setRawUrl(shortenUrl.get(1));
@@ -661,14 +621,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setInitialProfileStatus(profileOnStatus);
 	}
 
-	public class OnTextBoxClick implements ClickHandler {
-		@Override
-		public void onClick(ClickEvent event) {
-			bitlyLink.selectAll();
-			bitlyLink.setFocus(true);
-		}
-	}
-
 	@Override
 	public HTMLPanel getOnProfileContainer() {
 		return profileOnContainerPanel;
@@ -681,12 +633,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@Override
 	public void setCollectionData(CollectionItemDo collectionItemDo) {
-		PPPCollectionResult pppCollectionResult = new PPPCollectionResult(
-				collectionItemDo);
-		publicPPRightContainer.add(pppCollectionResult);
+		PPPCollectionResult pppCollectionResult = new PPPCollectionResult(collectionItemDo);
 		pppCollectionResult.openDisclosurePanel();
 		displayFooter();
-		publicPPRightContainer.add(footerUc);
 	}
 
 	public void displayFooter() {
@@ -700,9 +649,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userName.setText("");
 		userBio.setText("");
 		userProfilePic.setUrl("");
-		publicPPRightContainer.clear();
 		shareLinkFloPanel.clear();
-		bitlyLink.setText("");
 		socialButtonContainer.clear();
 		profileTextArea.setText("");
 	}
@@ -819,7 +766,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		editPencil.addClickHandler(new OnGradeEditImageClick());
 		addCourseGradeBtn.getElement().getStyle().setWidth(163, Unit.PX);
 		addCourseGradeBtn.getElement().getStyle().setMarginTop(-3, Unit.PX);
-		addCourseGradeBtn.getElement().getStyle().setMarginLeft(9, Unit.PX);
 		addCourseGradeBtn.addClickHandler(new OnGradeEditImageClick());
 		editPencil.getElement().getStyle().setMarginTop(-3, Unit.PX);
 		editPencil.getElement().getStyle().setMarginLeft(0, Unit.PX);
@@ -1206,15 +1152,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			bioMainContainer.setVisible(true);
 			userMetadata.setVisible(true);	
-			aboutMeTextContainer.setVisible(true);
 			bioMainContainer.getElement().setAttribute("style", "margin-top:0px");
 		} else {
 			if(about==""||about.equalsIgnoreCase("")) {
 				bioMainContainer.setVisible(false);
-				aboutMeTextContainer.setVisible(false);
 			} else {
 				bioMainContainer.getElement().setAttribute("style", "margin-top:8px");
-				aboutMeTextContainer.setVisible(true);
 				bioMainContainer.setVisible(true);
 			}
 			if(set.isEmpty()) {
@@ -1246,4 +1189,29 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
 		}
 	}
+	
+	@Override
+	public void onLoad() {
+		Window.enableScrolling(true);
+	}
+
+	@Override
+	public ProfilePageLibraryView getContentView() {
+		return profilePageLibraryView;
+	}
+
+	private String concatenateGradeTxt(String text) {
+		if(text.length()<3) {
+			if(text.equals("1")) {
+				text = text.concat("st "+GL0325);
+			} else if(text.equals("2")) {
+				text = text.concat("nd "+GL0325);
+			} else if(text.equals("3")) {
+				text = text.concat("rd "+GL0325);
+			} else {
+				text = text.concat("th "+GL0325);
+			} 
+		}
+		return text;
+	}	
 }

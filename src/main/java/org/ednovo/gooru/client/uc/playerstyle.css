@@ -254,9 +254,9 @@
 .resource-type-info-interactive,.resource-type-info-question,.resource-type-info-website,.resource-type-info-textbook,
 .resource-type-info-handout,.resource-type-info-lesson,.resource-type-info-exam,.resource-type-info-audio,.resource-type-info-imageIcon,.resource-type-info-other,.resource-type-info-text{
 	background:url("images/resource-type-icons.png") no-repeat;
-	width: 27px;
+	width: 34px;
 	height: 20px;
-	margin-left: 7px;
+	margin-left: 4px;
 	margin-top: -4px;
 	float:left;
 }
@@ -812,6 +812,23 @@ float: left;
 	background-color: #0D0E0D;;
 	margin-left: -22px;
 	margin-top: 4px;
+}
+.label-collection-title{
+ 	position: relative;
+ 	top: 14px;
+ 	font-weight: bold;
+ 	max-width: 58%;
+ 	min-width: 10%;
+ 	float: left;
+ 	white-space: nowrap !important;
+ 	overflow: hidden;
+ 	text-overflow: ellipsis;
+ 	margin-left: 10px;
+ }
+.label-collection-title span.AM img {
+	max-height: 31px;
+	height: 31px;
+	margin-top:-10px;
 }
 .add-button-active:hover, .add-button-normal:hover,
 .info-button-active:hover, .info-button-normal:hover,

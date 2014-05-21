@@ -51,6 +51,8 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String CATEGORY="category";
 	public static String COURSENAMES = "courseNames";
 	public static String RESOURCE_DESCRIPTION = "description";
+	public static String COLLECTIONCOUNT = "scollectionCount";
+	public static String RESOURCESCOUNT = "collectionItemCount";
 	public static String TOTALVIEWS = "viewCount";
 	public static final String OWNER_FIRST_NAME = "userFirstName";
 	public static final String OWNER_LAST_NAME = "userLastName";
@@ -90,6 +92,9 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String MEDIA_TYPE = "mediaType";
 
 	public static final String RESOURCE_FORMAT = "resourceFormat";
+	
+	public static final String RATINGS = "ratings";
+	
 	/**
 	 * Deserialize the search json object
 	 * @param jsonRep instance of {@link JsonRepresentation}

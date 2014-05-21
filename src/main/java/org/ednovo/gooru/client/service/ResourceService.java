@@ -38,6 +38,7 @@ import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -379,4 +380,10 @@ public interface ResourceService extends BaseService {
 	public void deleteTaxonomyResource(String resourceId,Integer codeId)throws GwtException;
 	
 	public void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj)throws GwtException;
+	
+	public List<ResourceTagsDo> addTagsToResource(String resourceId, String addedTags)throws GwtException;
+	
+	public List<ResourceTagsDo> getTagsToResource(String resourceId)throws GwtException;
+	
+	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException;
 }

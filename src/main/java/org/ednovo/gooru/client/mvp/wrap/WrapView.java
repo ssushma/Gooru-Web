@@ -24,16 +24,32 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.wrap;
 
+import java.util.HashMap;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseView;
 import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
+import org.ednovo.gooru.client.mvp.home.library.LibraryView;
+import org.ednovo.gooru.client.mvp.shelf.ShelfView;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
+import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
+import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
+import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.PlayerConstants;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
+import com.anotherbigidea.flash.movie.Image;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -55,7 +71,9 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField
 	HeaderUc headerUc;
 
-	@UiField HTMLPanel panelWrapper;
+	@UiField HTMLPanel panelWrapper,ipadSectiondiv,androidSectiondiv;
+	
+	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	
 	/**
 	 * Class constructor 
@@ -63,7 +81,41 @@ public class WrapView extends BaseView implements IsWrapView {
 	public WrapView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		panelWrapper.getElement().setId("wrapper");
+		panelWrapper.getElement().setId("wrapper");		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+/*		  
+		  System.out.println("dectordevice:"+detector.detectMobileQuick());*/
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  ipadSectiondiv.setVisible(true);
+			  androidSectiondiv.setVisible(false);
+			  ipadSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
+			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:relative;");
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(true);
+			  androidSectiondiv.getElement().setAttribute("style", "margin-top:-20px;");
+			  wrapperPanel.getElement().setAttribute("style", "margin-top:0px;");
+			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:relative;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+		  else
+		  {
+			  ipadSectiondiv.setVisible(false);
+			  androidSectiondiv.setVisible(false);
+			  wrapperPanel.getElement().setAttribute("style", "margin-top:38px;");
+			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  }
+
 	}
 
 	@Override
@@ -84,6 +136,31 @@ public class WrapView extends BaseView implements IsWrapView {
 	@Override
 	public void activateClassicButton(boolean activate) {
 		headerUc.setClassicButtonEnabled(activate);
+	}
+	
+	@UiHandler("closeIpadBtn")
+	public void onIpadCloseClick(ClickEvent clickEvent){
+		  ipadSectiondiv.setVisible(false);
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  androidSectiondiv.setVisible(false);
+		  wrapperPanel.getElement().setAttribute("style", "margin-top:38px;");
+		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  LibraryView.onClosingAndriodorIpaddiv();
+		  ShelfListView.onClosingAndriodorIpaddiv();
+		  ShelfView.onClosingAndriodorIpaddiv();
+		  DiscoverToolTip.onclickOfAndriodorIpadcloseDiv();
+	}
+	@UiHandler("closeAndriodBtn")
+	public void onAndriodCloseClick(ClickEvent clickEvent){
+		  ipadSectiondiv.setVisible(false);
+		  StringUtil.IPAD_MESSAGE_Close_Click = true;
+		  androidSectiondiv.setVisible(false);
+		  wrapperPanel.getElement().setAttribute("style", "margin-top:38px;");
+		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
+		  LibraryView.onClosingAndriodorIpaddiv();
+		  ShelfListView.onClosingAndriodorIpaddiv();
+		  ShelfView.onClosingAndriodorIpaddiv();
+		  DiscoverToolTip.onclickOfAndriodorIpadcloseDiv();
 	}
 
 	@Override

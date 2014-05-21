@@ -117,4 +117,10 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
 
 	}
+
+	@Override
+	public void showRatingAndReviewPopup() {
+		// TODO Auto-generated method stub
+		
+	}
 }

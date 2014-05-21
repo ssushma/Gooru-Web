@@ -36,6 +36,7 @@ import java.util.Set;
 
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.SearchResourceFormatDO;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
@@ -81,6 +82,10 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			SearchResourceFormatDO resourceFormatDO =JsonDeserializer.deserialize(resourceFormat.toString(), SearchResourceFormatDO.class);
 			resourceSearchResultDo.setResourceFormat(resourceFormatDO);
 			
+			JSONObject resourceRating = recordJsonObject.getJSONObject(RATINGS);
+			SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+			resourceSearchResultDo.setSearchRatingsDo(searchRatingsDo);
+			
 		} catch (JSONException e1) {
 			
 		}
@@ -96,6 +101,9 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		}
 		resourceSearchResultDo.setResourceTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceSearchResultDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
+		
+		resourceSearchResultDo.setScollectionCount(getJsonInteger(recordJsonObject, COLLECTIONCOUNT));
+		
 		if(resourceSearchResultDo.getResourceType().getName().equals(ASSESSMENT_QUESTION)){
 			resourceSearchResultDo.setDurationInSec(getJsonString(recordJsonObject, TIME_TO_COMPLETE_IN_SEC));
 			resourceSearchResultDo.setQuestionType(getJsonString(recordJsonObject, QUESTION_TYPE_NAME));

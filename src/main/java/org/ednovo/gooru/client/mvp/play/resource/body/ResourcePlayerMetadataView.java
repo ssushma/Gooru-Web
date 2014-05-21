@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationCo
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.uc.NarrationUc;
+import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOut;
+import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOver;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -41,6 +43,8 @@ import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -53,15 +57,19 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
+import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -73,11 +81,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static FlowPanel wrapperContainerField;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer/*ratingsContainer*/;
-	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive;
+	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer,ratingsContainer;
+	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
+	@UiField RadioButton one_star,two_star,three_star,four_star,five_star;
+	
+	/*@UiField SimpleRadioButton rating1;
+	@UiField SimpleRadioButton rating2;
+	@UiField SimpleRadioButton rating3;
+	@UiField SimpleRadioButton rating4;
+	@UiField SimpleRadioButton rating5;*/
 	
 	/*@UiField SimpleCheckBox starFive,starFour,starThree,starTwo,starOne;*/
 	
@@ -100,10 +115,33 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private CollectionItemDo collectionItemDo=null;
 	private String gooruReactionId="";
 	private UserStarRatingsWidget userStarRatings = null;
+	
+	private static final String ONE_STAR="oneStar";
+	private static final String TWO_STAR="twoStar";
+	private static final String THREE_STAR="threeStar";
+	private static final String FOUR_STAR="fourStar";
+	private static final String FIVE_STAR="fiveStar";
+	
+	private static final String POOR="Poor";
+	private static final String FAIR="Fair";
+	private static final String GOOD="Good";
+	private static final String VERY_GOOD="Very Good";
+	private static final String EXCELLENT="Excellent";
+	private static final String REACTIONS_WIDGET="Contentreactions";
+	private static final String RATINGS_WIDGET="Contentratings";
+	private StarRatingsDo starRatingsDo;
+	ThankYouResourceStarRatings thankYouResourceStarRatings;
+	private boolean isRated=false;
+	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
 	}
+	
+	/*@UiFactory
+	public SimpleRadioButton createRadioButton() {
+	    return new SimpleRadioButton("");
+	}*/
 
 	@Inject
 	public ResourcePlayerMetadataView(){
@@ -118,21 +156,51 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		reactionToolTipFour.setText(GL0584); 
 		reactionToolTipFive.setText(GL0585); 
 		
-//		starValue.setVisible(false);
+		/*rating1 = new SimpleRadioButton("rating");
+		rating2 = new SimpleRadioButton("rating");
+		rating3 = new SimpleRadioButton("rating");
+		rating4 = new SimpleRadioButton("rating");
+		rating5 = new SimpleRadioButton("rating");*/
+		
+		starValue.setVisible(false);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+			emoticsContainer.removeFromParent();
+//			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		
-		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-//			collectionContainer.add(starRatingsUc);
-		}*/
-		/*if(AppClientFactory.isAnonymous()){
-			userStarRatings = new UserStarRatingsWidget();
-			ratingsContainer.clear();
-			ratingsContainer.add(userStarRatings);
-		}*/
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+			 
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
+		  }
+		  else
+		  {
+			  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+			  
+		  }
+		  
+			one_star.addMouseOverHandler(new OnStarMouseOver(ONE_STAR));
+			two_star.addMouseOverHandler(new OnStarMouseOver(TWO_STAR));
+			three_star.addMouseOverHandler(new OnStarMouseOver(THREE_STAR));
+			four_star.addMouseOverHandler(new OnStarMouseOver(FOUR_STAR));
+			five_star.addMouseOverHandler(new OnStarMouseOver(FIVE_STAR));
+			
+			one_star.addMouseOutHandler(new OnStarMouseOut(ONE_STAR));
+			two_star.addMouseOutHandler(new OnStarMouseOut(TWO_STAR));
+			three_star.addMouseOutHandler(new OnStarMouseOut(THREE_STAR));
+			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
+			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
+		
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -290,7 +358,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiHandler("canExplainEmoticButton")
 	public void clickOnCanExplainEmoticButtonEmotic(ClickEvent clickEvent){
 		if(AppClientFactory.isAnonymous()){
-			showLoginPopupWidget();
+			showLoginPopupWidget(REACTIONS_WIDGET);
 		}else{
 			if(isCanExplainSelected){
 				canExplainEmoticButton.setStyleName(playerStyle.spriteType());
@@ -317,7 +385,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiHandler("understandEmoticButton")
 	public void clickOnUnderstandEmotic(ClickEvent clickEvent){
 		if(AppClientFactory.isAnonymous()){
-			showLoginPopupWidget();
+			showLoginPopupWidget(REACTIONS_WIDGET);
 		}else{
 			/**
 			 * If user clicks on selected emotic again, it will de-select and will call delete API, else it will highlight the selected emotic 
@@ -347,7 +415,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiHandler("mehEmoticButton")
 	public void clickOnMehEmoticButton(ClickEvent clickEvent){
 		if(AppClientFactory.isAnonymous()){
-			showLoginPopupWidget();
+			showLoginPopupWidget(REACTIONS_WIDGET);
 		}else{
 			/**
 			 * If user clicks on selected emotic again, it will de-select and will call delete API, else it will highlight the selected emotic 
@@ -378,7 +446,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiHandler("doNotUnderstandEmoticButton")
 	public void clickOnDoNotUnderstandEmoticButton(ClickEvent clickEvent){
 		if(AppClientFactory.isAnonymous()){
-			showLoginPopupWidget();
+			showLoginPopupWidget(REACTIONS_WIDGET);
 		}else{
 			/**
 			 * If user clicks on selected emotic again, it will de-select and will call delete API, else it will highlight the selected emotic 
@@ -407,7 +475,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiHandler("needHelpButton")
 	public void clickOnNeedHelpButtonEmoticButton(ClickEvent clickEvent){
 		if(AppClientFactory.isAnonymous()){
-			showLoginPopupWidget();
+			showLoginPopupWidget(REACTIONS_WIDGET);
 		}else{
 			/**
 			 * If user clicks on selected emotic again, it will de-select and will call delete API, else it will highlight the selected emotic 
@@ -442,9 +510,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			getUiHandlers().triggerCreateReactionEvent(collectionItemDo.getResource().getGooruOid(), REACTION_NEED_HELP,PlayerDataLogEvents.REACTION_DELETE);
 		}
 	}
-	private void showLoginPopupWidget() { 
+	private void showLoginPopupWidget(String widgetType) { 
 		LoginPopupUc popup =new LoginPopupUc();
-		popup.setWidgetMode("reactionWidget");
+		if(widgetType.equals(REACTIONS_WIDGET)){
+			popup.setWidgetMode("reactionWidget");
+		}else if(widgetType.equals(RATINGS_WIDGET)){
+			popup.setWidgetMode("ratingWidget");
+		}
+		
 		popup.setGlassEnabled(true);
 	}
 
@@ -771,12 +844,21 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip) {
-		/**
-		 * Do not un comment for 6.2 release.
-		 */
-		/*userStarRatings = new UserStarRatingsWidget(result,showThankYouToolTip);
-		ratingsContainer.clear();
-		ratingsContainer.add(userStarRatings);*/
+		if(result!=null){
+			this.starRatingsDo=result;
+			isRated=true; 
+		}else{
+			isRated=false;
+		}
+		if(thankYouResourceStarRatings!=null){
+			if(thankYouResourceStarRatings.isVisible()){
+				thankYouResourceStarRatings.hide();
+			}
+		}
+		setRatings(result,showThankYouToolTip);
+//		setUserRatings(result);
+//		ratingsContainer.clear();
+//		ratingsContainer.add(userStarRatings);
 	}
 	
 	@Override
@@ -801,7 +883,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		public UserStarRatingsWidget(StarRatingsDo result, boolean showThankYouToolTip) { 
 			this.ratingsDo=result;
 			this.showThankYouToolTip=showThankYouToolTip;
-			setRatings(result,showThankYouToolTip);
+//			setRatings(result,showThankYouToolTip);
 		}
 		/**
 		 * Class constructor
@@ -823,24 +905,26 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		@Override
 		public void crateStarRating(String selectedStar) {
 			if(selectedStar.equals("starOne")){
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,null);
 			}else if(selectedStar.equals("starTwo")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,null);
 			}else if(selectedStar.equals("starThree")){                                          
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,null);
 			}else if(selectedStar.equals("starFour")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,null);
 			}else if(selectedStar.equals("starFive")){                                           
-				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true);
+				getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,null);
 			}
 		}
+		
+	
 		
 		/**
 		 * Sets the Star rating based on the API result.
 		 * @param result {@link StarRatingsDo}
 		 * @param showThankYouToolTip {@link Boolean} 
 		 */
-		private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
+		/*private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
 			if(showThankYouToolTip){
 				ThankYouResourceStarRatings thankYouResourceStarRatings = new ThankYouResourceStarRatings();
 				thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
@@ -849,7 +933,342 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				thankYouResourceStarRatings.setAutoHideEnabled(true);
 			}
 			setUserRatings(result);
+		}*/
+	}
+	
+	public void removeRatingContainer(boolean flag){
+		if(flag){
+			ratingsContainer.removeFromParent();
+		}else{
+			emoticsContainer.removeFromParent();
 		}
+	}
+	
+	/**
+	 * On click of Star 1 sets the rating on view.
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@UiHandler("one_star")
+	public void onStarOneclicked(ClickEvent event){
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget(RATINGS_WIDGET);
+		}else{
+			if(isRated){
+				updateStarRating(ONE_STAR);
+			}else{
+				isRated=true;
+				crateStarRating(ONE_STAR);
+			}
+		}
+		
+		
+	}
+	
+	/**
+	 * On click of Star 2 sets the rating on view.
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@UiHandler("two_star")
+	public void onStarTwoclicked(ClickEvent event){
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget(RATINGS_WIDGET);
+		}else{
+			if(isRated){
+				updateStarRating(TWO_STAR);
+			}else{
+				isRated=true;
+				crateStarRating(TWO_STAR);
+			}
+		}
+		
+	}
+	
+	/**
+	 * On click of Star 3 sets the rating on view.
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@UiHandler("three_star")
+	public void onStarThreeclicked(ClickEvent event){
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget(RATINGS_WIDGET);
+		}else{
+			if(isRated){
+				updateStarRating(THREE_STAR);
+			}else{
+				isRated=true;
+				crateStarRating(THREE_STAR);
+			}
+		}
+	}
+	
+	/**
+	 * On click of Star 4 sets the rating on view.
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@UiHandler("four_star")
+	public void onStarFourclicked(ClickEvent event){
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget(RATINGS_WIDGET);
+		}else{
+			if(isRated){
+				updateStarRating(FOUR_STAR);
+			}else{
+				isRated=true;
+				crateStarRating(FOUR_STAR);
+			}
+		}
+		
+	}
+	
+	/**
+	 * On click of Star 5 sets the rating on view.
+	 * @param clickEvent {@link ClickEvent}
+	 */
+	@UiHandler("five_star")
+	public void onStarFiveclicked(ClickEvent event){
+		if(AppClientFactory.isAnonymous()){
+			getDefaultRatings();
+			showLoginPopupWidget(RATINGS_WIDGET);
+		}else{
+			if(isRated){
+				updateStarRating(FIVE_STAR);
+			}else{
+				isRated=true;
+				crateStarRating(FIVE_STAR);
+			}
+		}
+		
+	}
+	
+	/**
+	 * Sets the Star rating based on the API result.
+	 * @param result {@link StarRatingsDo}
+	 * @param showThankYouToolTip {@link Boolean} 
+	 */
+	private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
+		if(showThankYouToolTip){
+			thankYouResourceStarRatings = new ThankYouResourceStarRatings(result.getAssocGooruOid(),result.getScore(),result.getFreeText()); 
+			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+			thankYouResourceStarRatings.show();
+			thankYouResourceStarRatings.setAutoHideEnabled(true);
+		}
+		setUserRatings(result);
+	}
+	
+	
+	/**
+	 * default rating will get set
+	 */
+	public void getDefaultRatings(){
+		one_star.setValue(false);
+		two_star.setValue(false);
+		three_star.setValue(false);
+		four_star.setValue(false);
+		five_star.setValue(false);
+	}
+	
+	
+	/**
+	 * In this create API will be called based the rating selected.
+	 * @param selectedStar {@link String}
+	 */
+	public void crateStarRating(String selectedStar) {
+		if(selectedStar.equals(ONE_STAR)){
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),1,true,"");
+		}else if(selectedStar.equals(TWO_STAR)){                                           
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),2,true,"");
+		}else if(selectedStar.equals(THREE_STAR)){                                          
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),3,true,"");
+		}else if(selectedStar.equals(FOUR_STAR)){                                           
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),4,true,"");
+		}else if(selectedStar.equals(FIVE_STAR)){                                           
+			getUiHandlers().createStarRatings(collectionItemDo.getResource().getGooruOid(),5,true,"");
+		}
+	}
+	
+	/**
+	 * In this update API will be called based the rating selected.
+	 * @param selectedStar {@link String}
+	 */
+	public void updateStarRating(String selectedStar) {
+		if(selectedStar.equals(ONE_STAR)){
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),1,true);
+		}else if(selectedStar.equals(TWO_STAR)){                                           
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),2,true);
+		}else if(selectedStar.equals(THREE_STAR)){                                          
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),3,true);
+		}else if(selectedStar.equals(FOUR_STAR)){                                           
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),4,true);
+		}else if(selectedStar.equals(FIVE_STAR)){                                           
+			getUiHandlers().updateStarRatings(starRatingsDo.getDeleteRatingGooruOid(),5,true);
+		}
+	}
+	
+	
+	/**
+	 * Resource ratings will get set based on the respective scores.
+	 * 
+	 * @param result {@link StarRatingsDo}
+	 */
+	public void setUserRatings(StarRatingsDo result){
+		if(result!=null){
+			if(result.getScore()==1){
+				starValue.setVisible(true);
+				starValue.setText(POOR);
+				setStarRatingValue(1); 
+			}else if(result.getScore()==2){
+				starValue.setVisible(true);
+				starValue.setText(FAIR);
+				setStarRatingValue(2); 
+			}else if(result.getScore()==3){
+				starValue.setVisible(true);
+				starValue.setText(GOOD);
+				setStarRatingValue(3);
+			}else if(result.getScore()==4){
+				starValue.setVisible(true);
+				starValue.setText(VERY_GOOD);
+				setStarRatingValue(4);
+				
+			}else if(result.getScore()==5){
+				starValue.setVisible(true);
+				starValue.setText(EXCELLENT);
+				setStarRatingValue(5);
+			}else{
+				setStarRatingValue(0);
+			}
+		}else{
+			starValue.setVisible(true);
+			starValue.setText("Rate this resource");
+			setStarRatingValue(0);
+		}
+		
+	}
+	
+	/**
+	 * Sets the stars on view based on the scores.
+	 * @param starRating {@link Integer}
+	 */
+	private void setStarRatingValue(int starRating) {
+		if(starRating==1){
+			one_star.setValue(true); 
+			two_star.setValue(false);
+			three_star.setValue(false);
+			four_star.setValue(false);
+			five_star.setValue(false);
+		}else if(starRating==2){
+			one_star.setValue(true);
+			two_star.setValue(true);
+			three_star.setValue(false);
+			four_star.setValue(false);
+			five_star.setValue(false);
+		}else if(starRating==3){
+			one_star.setValue(true);
+			two_star.setValue(true);
+			three_star.setValue(true);
+			four_star.setValue(false);
+			five_star.setValue(false);
+		}else if(starRating==4){
+			one_star.setValue(true);
+			two_star.setValue(true);
+			three_star.setValue(true);
+			four_star.setValue(true);
+			five_star.setValue(false);
+		}else if(starRating==5){
+			one_star.setValue(true);
+			two_star.setValue(true);
+			three_star.setValue(true);
+			four_star.setValue(true);
+			five_star.setValue(true);
+		}else{
+			one_star.setValue(false);
+			two_star.setValue(false);
+			three_star.setValue(false);
+			four_star.setValue(false);
+			five_star.setValue(false);
+		}
+	}
+	
+	
+	public class OnStarMouseOver implements MouseOverHandler{
+		private String starScore="";
+		public OnStarMouseOver(String starScore) {
+			this.starScore=starScore;
+		}
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			if(starScore.equalsIgnoreCase(ONE_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(POOR);
+			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(FAIR);
+			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(GOOD);
+			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(VERY_GOOD);
+			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
+				starValue.setVisible(false);
+				mouseOverStarValue.setText(EXCELLENT);
+			}
+		}
+		
+	}
+	
+	public class OnStarMouseOut implements MouseOutHandler{
+		private String starScore="";
+		public OnStarMouseOut(String starScore) {
+			this.starScore=starScore;
+		}
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			
+			if(starScore.equalsIgnoreCase(ONE_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
+				starValue.setVisible(true);
+				mouseOverStarValue.setText("");
+			}
+		}
+	}
+	
+	
+	public static void onClosingAndriodorIpaddiv()
+	{
+		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
+	}
+
+	@Override
+	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
+		if(isUpdate){
+			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview);
+		}else{
+			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview);
+		}
+		
+	}
+
+	@Override
+	public void hideThankYouPopUp() {
+		thankYouResourceStarRatings.hide();
 	}
 	
 }

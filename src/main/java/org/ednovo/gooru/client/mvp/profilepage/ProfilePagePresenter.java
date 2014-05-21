@@ -43,10 +43,10 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter.IsProfilePag
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
-import org.ednovo.gooru.client.mvp.profilepage.list.ProfilePageListPresenter;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.service.ProfilePageServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -82,9 +82,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	
 //	private SimpleAsyncCallback<List<CollectionDo>> userCollectionAsyncCallback;
 
-	@Inject 
-	private ProfilePageListPresenter profilePageListPresenter;
-	
 	private ImageUploadPresenter imageUploadPresenter;
 
 	private ProfileDo profileDo;
@@ -117,11 +114,10 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	private boolean isRefresh = false;
 	
 	@Inject
-	public ProfilePagePresenter(ProfilePageListPresenter profilePageListPresenter, IsProfilePageView view, IsProfilePageProxy proxy,ImageUploadPresenter imageUploadPresenter, SignUpPresenter signUpViewPresenter) {
+	public ProfilePagePresenter(IsProfilePageView view, IsProfilePageProxy proxy,ImageUploadPresenter imageUploadPresenter, SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
-		this.profilePageListPresenter = profilePageListPresenter;
 		this.imageUploadPresenter=imageUploadPresenter;
 		addRegisteredHandler(RequestFolderOpenEvent.TYPE, this);
 		addRegisteredHandler(RequestCollectionOpenEvent.TYPE, this);
@@ -187,8 +183,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		} else {
 			getProfilePageService().getUserWorkSpace(userId, getGetWorkSpaceAsyncCallback());
 		}
-		
-		
 	}
 	
 	@Override
@@ -219,8 +213,9 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 							profileDo = result;
 							AppClientFactory.setBrowserWindowTitle(SeoTokens.PROFILE_PAGE_TITLE + profileDo.getUser().getUsernameDisplay());
 							getView().setProfileData(profileDo);
-							setInSlot(TYPE_PUBLIC_SHELF_VIEW, profilePageListPresenter);
-							profilePageListPresenter.setUserData(profileDo.getUser().getUsernameDisplay());
+							
+							/** New Library Layout Data **/
+							getView().getContentView().setData();
 							
 							if(userId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())&&!isChildUser(result)) {
 								getView().enableEditableData(profileOptionvalue);
@@ -340,7 +335,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				}
 				getView().setContentItemData(collectionItemDo);
 				if(callBack.equalsIgnoreCase("reveal")) {
-					profilePageListPresenter.setShelfListData(collectionItemDo);
+					/*new Library Layout data */
 				}
 			}
 		});
@@ -348,7 +343,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		setFolderItemsAsyncCallback(new SimpleAsyncCallback<List<CollectionItemDo>>() {
 			@Override
 			public void onSuccess(List<CollectionItemDo> collectionItemDo) {
-				profilePageListPresenter.setShelfListData(collectionItemDo);
+				/*new Library Layout data */
 			}
 		});
 	}

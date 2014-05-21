@@ -29,7 +29,7 @@ public interface PlaceTokens {
 	String RESOURCE_SEARCH = "resource-search";
 	String COLLECTION_SEARCH = "collection-search";
 	String ERROR = "error";
-	String SHELF = "organize";
+	String SHELF = "mycollections";
 	String COLLECTION = "collection";
 	String RESOURCE_PLAY_OLD = "resource-play-old";
 	String COLLECTION_PLAY = "collection-play";
@@ -44,7 +44,7 @@ public interface PlaceTokens {
 	String CREATEFOLDER = "createfolder";
 	String REGISTER="registration";
 	String STUDENT = "students-view";
-	String STUDY = "study";
+	String STUDY = "myclasses";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";
 	
@@ -56,4 +56,7 @@ public interface PlaceTokens {
 	String LESSONOPOLY = "Lessonopoly";
 	String NGC = "NGC";
 	String WSPWH = "WSPWH";
+	String PSDPAL = "PSDPAL";
+	String FINCAPINC = "fincapinc";
+	
 }

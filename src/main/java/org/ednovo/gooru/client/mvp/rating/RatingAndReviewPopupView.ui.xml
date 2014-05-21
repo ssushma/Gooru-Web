@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="style" src="ratingandreview.css"/>
+	<g:HTMLPanel styleName="{style.popup} userInput">
+            <div class="{style.popupInner}">
+                <div class="{style.popupHeader}">
+                    <h1>Reviews for &lt;Resource Title&gt;</h1>
+                    <g:Label styleName="{style.closeButton}" ui:field="closeButton"></g:Label>
+                </div>
+                <div class="{style.popupContent}">
+                    <div class="{style.ratingVisualizations}">
+                        <div class="{style.distribution} {style.barGraph}">
+                            <h3>Rating Distribution</h3>
+                                <div class="{style.label}">Excellent</div>
+                                <div id="data-one" class="{style.bar}" style="width: 60%"></div> <div class="count">(2)</div>
+                                <br/>
+                                <div class="{style.label}">Very Good</div>
+                                <div id="data-two" class="{style.bar}" style="width: 100%"></div> <div class="{style.count}">(100)</div>
+                                <br/>
+                                <div class="{style.label}">Good</div>
+                                <div id="data-three" class="{style.bar}" style="width: 60%"></div> <div class="{style.count}">(2)</div>
+                                <br/>
+                                <div class="{style.label}">Fair</div>
+                                <div id="data-four" class="{style.bar}" style="width: 30%"></div> <div class="{style.count}">(1)</div>
+                                <br/>
+                                <div class="{style.label}">Poor</div>
+                                <div id="data-four" class="{style.bar}" style="width: 20%"></div> <div class="{style.count}">(0)</div>
+                                <br/>
+                        </div>
+                        <div class="{style.average}">
+                            <h3>Average Rating</h3>
+                            <div class="{style.rating}">
+                                   <span class="{style.star} {style.filled}"></span><!--
+                                --><span class="{style.star} {style.filled}"></span><!--
+                                --><span class="{style.star} {style.filled}"></span><!--
+                                --><span class="{style.star} {style.filled}"></span><!--
+                                --><span class="{style.star}"></span>
+                                (5)
+                            </div>
+                        </div>
+                    </div>
+                     <div class="{style.userRating}">
+                        Do you want to rate this resource?
+                        <button class="secondary">Preview and Rate Resource</button>
+                    </div>
+                    <div class="{style.reviewContainer}">
+                        <h3 class="{style.username}">&lt;Username&gt;</h3>
+                        <div class="{style.timestamp}">1 day ago</div>
+                        <hr/>
+                        <div class="{style.rating}">
+                               <span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star}"></span><!--
+                            --><span class="{style.star}"></span>
+                        </div>
+                        <p class="{style.review}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in dui libero. Nullam in iaculis metus.</p>
+                    </div>
+                   <div class="{style.reviewContainer}">
+                        <h3 class="{style.username}">&lt;Username&gt;</h3>
+                        <div class="{style.timestamp}">1 day ago</div>
+                        <hr/>
+                        <div class="{style.rating}">
+                               <span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star}"></span><!--
+                            --><span class="{style.star}"></span>
+                        </div>
+                        <p class="{style.review}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in dui libero. Nullam in iaculis metus.</p>
+                    </div>
+                    <div class="{style.reviewContainer}">
+                        <h3 class="{style.username}">&lt;Username&gt;</h3>
+                        <div class="{style.timestamp}">1 day ago</div>
+                        <hr/>
+                        <div class="{style.rating}">
+                               <span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star} {style.filled}"></span><!--
+                            --><span class="{style.star}"></span><!--
+                            --><span class="{style.star}"></span>
+                        </div>
+                        <p class="{style.review}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in dui libero. Nullam in iaculis metus.</p>
+                    </div>
+                </div>
+            </div>
+        </g:HTMLPanel>
+</ui:UiBinder>

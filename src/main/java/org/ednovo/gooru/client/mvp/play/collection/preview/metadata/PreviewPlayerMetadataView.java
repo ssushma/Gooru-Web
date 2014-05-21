@@ -55,6 +55,7 @@ import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -71,6 +72,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -87,6 +89,8 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlayerMetadataUiHandlers> implements IsPreviewPlayerMetadataView, MessageProperties{
 
 	@UiField FlowPanel metadataContainer,standardsContainer,teamContainer,courseTitle;
+	@UiField
+	static FlowPanel mainPlayerContainer;
 	@UiField Label userNameLabel,viewsCountLabel,successPostMsg,commentCount,seeMoreButton,characterLimit,noCommentsLbl,orText,toCommentText;
 	@UiField Label lblWhatsNext, lblSeeOtherRelatedConcepts,lblAuthor, lblCourse, lblStandards, lblRelatedConcepts,loginMessagingText;
 	@UiField Image profileThumbnailImage,userPhoto;
@@ -167,6 +171,27 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
 		seeMoreButton.setVisible(false);
 		setLabelAndIds();
+		
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+			 
+		  }
+		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:0px;");
+		  }
+		  else
+		  {
+			  mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
+			  
+		  }
 	}
 	
 	@Override
@@ -314,7 +339,12 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
-		anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}else{
+			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid;
+			anchor.setHref(token);
+		}
 		anchor.setText(userName);
 		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		anchor.setTarget("_blank");
@@ -1159,5 +1189,10 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		lbllanguageObjective.setText("");
 		seeMoreAnchor.setVisible(false);
 		lbllanguageObjective.setText(languageObjectiveValue);
+	}
+	
+	public static void onClosingAndriodorIpaddiv()
+	{
+		 mainPlayerContainer.getElement().setAttribute("style", "margin-top:50px;");
 	}
 }

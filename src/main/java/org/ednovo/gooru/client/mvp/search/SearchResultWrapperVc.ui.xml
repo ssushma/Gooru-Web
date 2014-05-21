@@ -1,19 +1,27 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+xmlns:s="urn:import:org.ednovo.gooru.client.mvp.search" xmlns:rating="urn:import:org.ednovo.gooru.client.mvp.rating">
 	<ui:with type="org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle" field="res" />
 	<g:FlowPanel >
 		<g:FocusPanel ui:field="dragHandleFocPanel" styleName="{res.css.searchResultWrapper}" >
 			<g:FlowPanel>
-				<g:SimplePanel styleName="{res.css.contentPanel}" ui:field="contentSimPanel" />
-				<g:Label styleName="{res.css.statusLbl}" ui:field="addedStatusLbl" />
+				<g:SimplePanel styleName="{res.css.contentPanel}" ui:field="contentSimPanel" />			
+				<g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
+					<g:Label styleName="{res.css.statusLbl}" ui:field="addedStatusLbl" />
 			</g:FlowPanel>
 		</g:FocusPanel>
 		<g:Label ui:field="resourcePlayerClickPanel"></g:Label>
 		<g:FlowPanel styleName="{res.css.disclosureMainHeader}">
 			<g:FlowPanel ui:field="disclosureHeaderFloPanel" styleName="{res.css.disclosureHeader}">
+				<!-- <g:FocusPanel ui:field="infoLblFocPanel">
+					<g:Label styleName="{res.css.infoLbl}" ui:field="infoLbl" />
+				</g:FocusPanel> -->
 				<g:FocusPanel ui:field="moreInfoLinkFocPanel">
-					<g:Label styleName="{res.css.moreInfo}" ui:field="moreInfoLbl" />
+					<g:Label styleName="{res.css.infoLbl}" ui:field="moreInfoLbl" />
 				</g:FocusPanel>
+				<g:FocusPanel ui:field="collectionFocPanel">
+					<g:Label styleName="{res.css.moreInfo}" ui:field="collcResLbl" />
+				</g:FocusPanel> 
 				<g:FocusPanel ui:field="shareLinkFocPanel">
 					<g:Label styleName="{res.css.share}" ui:field="shareLbl" />
 				</g:FocusPanel>
