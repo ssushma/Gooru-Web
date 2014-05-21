@@ -22,36 +22,68 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.data;
-/**
- * @fileName : ProfilePageLibraryStyleBundle.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: 02-Dec-2013
- *
- * @Author Gooru Team
- *
- * @Reviewer: 
- */
+package org.ednovo.gooru.shared.model.content;
 
-import com.google.gwt.resources.client.CssResource;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
+public class ResourceTagsDo extends TaskDo {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7049532459286624939L;
+	
+	private String tagGooruOid;
+	private String label;
+	
+	private String contentGooruOid;
+	private String associatedUid;
 
 
-public interface ProfilePageLibraryStyleBundle extends CssResource {
-	String open();
-	String active();
-	String resourceImage();
-	String conceptTitle();
-	String collectionSmall();
-	String conceptActive();
-	String lessonTitle();
-	String collection();
-	String collectionViewerSubStyle();
-	String collectionInfoSubStyle();
-	String resourcesInsideSubStyle();
+	public ResourceTagsDo(){}
 
+
+	public String getTagGooruOid() {
+		return tagGooruOid;
+	}
+
+
+	public void setTagGooruOid(String tagGooruOid) {
+		this.tagGooruOid = tagGooruOid;
+	}
+
+
+	public String getLabel() {
+		return label;
+	}
+
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+
+	public String getContentGooruOid() {
+		return contentGooruOid;
+	}
+
+
+	public void setContentGooruOid(String contentGooruOid) {
+		this.contentGooruOid = contentGooruOid;
+	}
+
+
+	public String getAssociatedUid() {
+		return associatedUid;
+	}
+
+
+	public void setAssociatedUid(String associatedUid) {
+		this.associatedUid = associatedUid;
+	}
+	
+	
+	
 }

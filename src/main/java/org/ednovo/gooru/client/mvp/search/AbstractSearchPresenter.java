@@ -191,6 +191,7 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 				@Override
 				protected void run(SearchDo<String> searchDo) {
 					getSearchService().getSuggestSource(searchDo, this);
+				
 				}
 
 				@Override
@@ -198,11 +199,11 @@ public abstract class AbstractSearchPresenter<T extends ResourceSearchResultDo, 
 					getView().setSourceSuggestions(result);
 				}
 			});
-		setAggregatorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
+			setAggregatorSuggestionAsyncCallback(new SearchAsyncCallback<SearchDo<String>>() {
 
 				@Override
 				protected void run(SearchDo<String> searchDo) {
-					getSearchService().getSuggestSource(searchDo, this);
+					getSearchService().getSuggestedAggregator(searchDo, this);
 					
 				}
 

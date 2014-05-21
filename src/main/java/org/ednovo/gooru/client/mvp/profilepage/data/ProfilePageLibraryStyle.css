@@ -1,7 +1,7 @@
 .container {
 	width:1000px;
 	margin:auto;
-	margin-top: 30px;
+	margin-top: 20px;
 }
 
 .leftNav {
@@ -276,4 +276,18 @@
 .noCollectionLbl {
 	float: left;
 	margin-left: 150px;
+}
+.collectionViewerSubStyle {
+	width: 94% !important;
+	margin-top: 25px !important;
+}
+.collectionInfoSubStyle {
+	float: left !important;
+	width: 370px !important;
+}
+.resourcesInsideSubStyle {
+	width: 263px !important;
+	padding-left: 20px !important;
+	border-left: 1px solid rgb(221,221,221) !important;
+	margin-top: 0px !important;
 }

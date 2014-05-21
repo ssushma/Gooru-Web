@@ -24,8 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.collection.info;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -91,9 +94,7 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 		//This is used for to enable partner names hyperlinks (FTE, Lessonopoly, and Autodesk)
 		
 		String ownerUserName = resourceSearchResultDo.getOwner().getUsername();
-		
-		if(StringUtil.isPartnerUser(ownerUserName)) {
-			AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(resourceSearchResultDo.getGooruOid(), new SimpleAsyncCallback<Boolean>() {
+			AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(resourceSearchResultDo.getGooruUId(), new SimpleAsyncCallback<Boolean>() {
 				@Override
 				public void onSuccess(Boolean result) {
 					if(result){
@@ -104,9 +105,12 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 					}
 				}
 			});
-		}else{
+		
+		if(resourceSearchResultDo.getOwner().isProfileUserVisibility()){
 			setUserNameDisplay(resourceSearchResultDo.getOwner().getUsername());
+			setUserProfileName(resourceSearchResultDo.getGooruUId());
 		}
+		
 		setCollectionMetadata();
 		setCollectionLink();
 	}
@@ -138,8 +142,13 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 	
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor=new Anchor();
-		String userNameText=userName.getText();
-		anchor.setHref("#"+userNameText);
+		String userNameText=resourceSearchResultDo.getOwner().getUsername();
+		if(StringUtil.isPartnerUser(userNameText)){
+			anchor.setHref("#"+userNameText);
+		}else{
+            String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid;
+			anchor.setHref(token);
+		}
 		anchor.setText(userNameText);
 		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		anchor.setTarget("_blank");

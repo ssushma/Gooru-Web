@@ -46,6 +46,7 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 	private static final String CODE = "code";
 	private static final String LABEL = "label";
 	private static final String CODE_ID = "codeId";
+	private static final String AGGREGATOR = "values";
 
 	/**
 	 * Deserialize json object into search query as List
@@ -108,5 +109,27 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 			e.printStackTrace();
 		}
 		return sources;
+	}
+	/**
+	 * Deserialize json object to list of resource source
+	 * @param jsonRep instance of {@link JsonRepresentation}
+	 * @return  list of source
+	 */
+	public List<String> deserializeAggregator(JsonRepresentation jsonRep) {
+		List<String> aggregator = new ArrayList<String>();
+		try {
+			if(jsonRep!=null){
+			if (jsonRep.getSize() > 0) {
+				JSONArray aggregatorJsonArray = jsonRep.getJsonArray();
+				for (int aggregatorCount = 0; aggregatorCount < aggregatorJsonArray.length(); aggregatorCount++) {
+					JSONObject aggregatorObj = aggregatorJsonArray.getJSONObject(aggregatorCount);
+					aggregator.add(aggregatorObj.getString(AGGREGATOR));
+				}
+			}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return aggregator;
 	}
 }
