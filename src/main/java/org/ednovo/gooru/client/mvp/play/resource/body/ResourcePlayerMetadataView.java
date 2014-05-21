@@ -165,7 +165,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		starValue.setVisible(false);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+			emoticsContainer.removeFromParent();
+//			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");

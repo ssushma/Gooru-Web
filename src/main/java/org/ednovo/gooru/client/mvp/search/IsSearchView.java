@@ -53,14 +53,17 @@ public interface IsSearchView<T extends ResourceSearchResultDo> extends IsViewWi
 	
 	String GRADE_FLT = "flt.grade";
 	
-	String SOURCE_FLT = "flt.source";
+	/*String SOURCE_FLT = "flt.source";*/
+	
+	String PUBLISHER_FLT = "flt.publisher";
 	
 	String OWNER_FLT = "flt.owner";
 	
 	String MEDIATYPE_FLT = "fltNot.mediaType";
 	
-	//String OER_FLT = "flt.license";
 	String OER_FLT = "flt.isOer";
+	
+	String AGGREGATOR_FLT = "flt.aggregator";
 	
 	/**
 	 * Set post search view
