@@ -444,4 +444,8 @@ color: black;
 	float: right;
 	margin-right: 12px;
 	margin-top: -24px;
+	background-color: #4E9746;
+	padding: 5px;
+	border-radius: 4px;
+	color: white;
 }

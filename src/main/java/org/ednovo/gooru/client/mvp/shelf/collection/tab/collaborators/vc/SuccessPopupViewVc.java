@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.Collection
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -54,7 +55,7 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 	@UiField
 	Button btnPositive;
 	
-	@UiField Label lblTitle, lblDescription;
+	@UiField Label lblTitle, lblDescription,tagImageForTagging;
 	
 	@UiTemplate("SuccessPopupViewVc.ui.xml")
 	interface Binder extends UiBinder<Widget, SuccessPopupViewVc> {
@@ -72,7 +73,7 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 		collaborators.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-
+		tagImageForTagging.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
                 
@@ -149,7 +150,9 @@ public abstract class SuccessPopupViewVc extends PopupPanel implements MessagePr
 	public void setPopupTitle(String title) {
 		lblTitle.setText(title);
 	}
-	
+	public void enableTaggingImage() {
+		tagImageForTagging.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+	}
 	public void setDescText(String desc){
 		lblDescription.getElement().setInnerHTML(desc);
 	}

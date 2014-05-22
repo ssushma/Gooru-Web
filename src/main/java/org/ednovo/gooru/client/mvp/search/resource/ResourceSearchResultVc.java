@@ -211,8 +211,14 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		
 		
 		String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
-		SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
-				SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
+	
+		if(resourceSearchResultDo.getPublisher()!=null){
+			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, resourceSearchResultDo.getPublisher() ,null, shortenMetaLength ? 15 : 25);
+		}
+		if(resourceSearchResultDo.getAggregator()!=null){
+		SearchUiUtil.renderSourceMetadata(metaDataFloPanel, resourceSearchResultDo.getAggregator() ,null, shortenMetaLength ? 15 : 25);
+		}
+		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
         SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));

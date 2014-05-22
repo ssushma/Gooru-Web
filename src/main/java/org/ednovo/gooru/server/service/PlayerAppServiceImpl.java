@@ -1075,7 +1075,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 
 	/**
-	 * Gets the over all content star ratings for each resource by calling an API.
+	 * Gets the over all content star ratings and average for each resource by calling an API.
 	 * 
 	 * @param associateGooruOid {@link String}
 	 * @param gooruUid {@link String}

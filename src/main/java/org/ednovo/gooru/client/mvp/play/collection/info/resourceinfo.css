@@ -40,6 +40,10 @@
 	float: right;
 	margin-right: 12px;
 	margin-top: 10px;
+	background-color: #4E9746;
+	padding: 5px;
+	border-radius: 4px;
+	color: white;
 }
 .resource-info-title{
 	float: left;
@@ -450,4 +454,7 @@
 .gradeContainer{
 	float: left;
 	width: 100%;
+}
+.resourceTagsGlassPanel{
+	z-index: 99999;
 }
