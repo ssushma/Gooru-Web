@@ -4,6 +4,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface OpenReviewPopUpEventHandler extends EventHandler {
 
-	void openReviewPopUp(); 
+	void openReviewPopUp(String assocGooruOId); 
 
 }
