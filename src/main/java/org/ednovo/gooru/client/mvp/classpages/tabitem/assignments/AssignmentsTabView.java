@@ -32,6 +32,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
+import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
+import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListHandler;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -167,6 +169,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	String assignmentId = null;
 
 	static int totalCollection;
+	
+	private int activeMemberCounter;
 
 	private static AssignmentsTabViewUiBinder uiBinder = GWT
 			.create(AssignmentsTabViewUiBinder.class);
@@ -377,7 +381,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 		@Override
 		public void onClick(ClickEvent event) {
-
+			
+		
 			addCollections = new AddCollectionsPopupVc() {
 				// to retrive all users collections and display
 				@Override
@@ -390,7 +395,9 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 				@Override
 				@UiHandler("btnAdd")
 				public void onAddClick(ClickEvent clickEvent) {
-
+					if(totalSelfCollection==0){
+						AppClientFactory.fireEvent(new GetStudentJoinListEvent(activeMemberCounter));
+					}
 					if (addCollections.collectionFirstElement.getText() == "Please choose one of the following..."
 							|| addCollections.collectionFirstElement
 									.getText()
@@ -872,5 +879,11 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		
 		
 	}
-
+	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
+			
+			@Override
+			public void getStudentJoinList(int joinClassList) {
+				activeMemberCounter=joinClassList;
+			}
+	};
 }
