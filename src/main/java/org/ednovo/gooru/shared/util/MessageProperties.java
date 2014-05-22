@@ -52,6 +52,14 @@ public interface MessageProperties {
 	String GL_GRR_NUMERIC_THREE = "3";
 	String GL_GRR_NUMERIC_FOUR = "4";
 	String GL_GRR_NUMERIC_FIVE = "5";
+	String GL_GRR_NUMERIC_SIX = "6";
+	String GL_GRR_NUMERIC_SEVEN= "7";
+	String GL_GRR_NUMERIC_EIGHT = "8";
+	String GL_GRR_NUMERIC_NINE = "9";
+	String GL_GRR_NUMERIC_TEN = "10";
+	String GL_GRR_NUMERIC_ELEVEN = "11";
+	String GL_GRR_NUMERIC_TWELVE = "12";
+	
 	String GL_GRR_Close ="X";
 	
 	String GL0001="Invalid Request specified";
@@ -2279,5 +2287,20 @@ public interface MessageProperties {
     	String GL1794 = "OFF: No one but you will be able to access your profile page.";
     	String GL1795 ="Add Tages";
     	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
-
+    	String GL1797="Add as many tags as you’d like by clicking on the words within each category.";
+    	String GL1798="Lexile Level";
+    	String GL1799="Kindergarden";
+    	String GL1800="Ads";
+    	String GL1801="No Advertisement";
+    	String GL1802="Moderate Advertisements";
+    	String GL1803="Aggressive Advertisements";
+    	String GL1804="Access Hazard";
+    	String GL1805="Flashing";
+    	String GL1806="Flashing Hazard";
+    	String GL1807="Motion Simulation";
+    	String GL1808="Motion Simulation Hazard";
+    	String GL1809="Sound";
+    	String GL1810="Sound Hazard";
+    	String GL1811="Mobile Friendly";
+    	
    }
