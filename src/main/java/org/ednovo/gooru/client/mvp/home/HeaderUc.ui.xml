@@ -108,6 +108,7 @@
 		.teachUserNameTextContainerAddAssignment
 		{
 			float:right;
+			margin-right:-25px;
 		}
 		.teachUserNameTextContainerAddAssignmentRight
 		{
@@ -347,8 +348,9 @@
 		}
 		.helpAndSettingsContainer
 		{
-			float: left;
+			float: right;
 			width: 29px;
+			margin-right: -18px;
 		}
 		.loginInfo{
 	         float: right;
@@ -376,6 +378,7 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			padding: 8px;
+			padding-right:0px;
 		}
 	   .resourceRightsPopupContainer{
 	        margin: 0 auto;

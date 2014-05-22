@@ -483,7 +483,7 @@ public class EditClasspageView extends
 		
 		@Override
 		public void getStudentJoinList(int joinClassList) {
-			toolTip = new ToolTip(GL1788);
+			toolTip = new ToolTip(GL1797);
 			if(joinClassList==0){
 				if(reportHandler!=null) {
 					reportHandler.removeHandler();

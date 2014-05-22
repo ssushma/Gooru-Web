@@ -101,6 +101,7 @@ public interface CollectionCollaboratorsCBundle extends ClientBundle{
 		String pleaseWait();
 		String deleteTextBox();
 		String deleteContainer();
+		String tag();
 	}
 	@Source("CollectionCollaborators.css")
 	CollaboratorsCss css();

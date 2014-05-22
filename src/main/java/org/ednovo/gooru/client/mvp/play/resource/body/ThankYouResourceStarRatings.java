@@ -28,16 +28,22 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
@@ -65,27 +71,59 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
-	@UiField Label totalStars;
-	@UiField SimpleCheckBox ThankyouStarOne,ThankyouStarTwo,ThankyouStarThree,ThankyouStarFour,ThankyouStarFive;
+	@UiField public FlowPanel ratingWidgetPanel;
+	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review;
-	Integer score;
+	Integer score,count;
+	double average;
 	
 	/**
 	 * Class Constructor
+	 * @param assocGooruOId 
+	 * @param score 
 	 * @param review 
-	 * @param integer 
-	 * @param string 
+	 * @param average 
+	 * @param count 
 	 */
-	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review){  
+	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count){   
 		this.assocGooruOId = assocGooruOId;
 		this.score = score;
 		this.review = review;
+		this.average=average;
+		this.count=count;
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
+		setAvgRatingWidget();
 		
 	}
 	
+	/**
+	 * Average star ratings widget will get integrated.
+	 */
+	private void setAvgRatingWidget() {
+		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountLabel().setText(count.toString());
+		ratingWidgetView.setAvgStarRating(average);
+		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.add(ratingWidgetView);
+	}
+	
+	/**
+	 * 
+	 * Inner class implementing {@link ClickEvent}
+	 *
+	 */
+	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			/**
+			 * OnClick of count label event to invoke Review pop-pup
+			 */
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+		}
+	}
+
 	/**
 	 * On click Post button user entered review will get posted.
 	 * @param clickEvent {@link ClickEvent}
@@ -108,6 +146,10 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		hide();
 	}
 	
+	/**
+	 * Sets the user review on text area if available.
+	 * @param review
+	 */
 	private void setUserReview(String review) {
 		if(!review.equals("")){
 			btnPost.setText("Save");

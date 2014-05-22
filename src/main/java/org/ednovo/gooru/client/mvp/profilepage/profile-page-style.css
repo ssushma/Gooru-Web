@@ -101,6 +101,7 @@ a:hover {
 	height: 35px;
 	width: 100%;
 	border:1px solid #ddd;
+	display: none;
 	background: rgb(239,239,239); /* Old browsers */
 	/* Safari 4-5, Chrome 1-9 */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FDFDFD), to(#EDEDED));
@@ -210,7 +211,7 @@ a:hover {
 }	
 
 .contentView {
-	border-top: 1px solid #ddd;
+	
 }
 
 .folderBlock {
@@ -1074,7 +1075,6 @@ li.resources {
 	padding: 4px 0px;
 }
 .aboutUserTextRight {
-	overflow: hidden;
 	float: right;
 }
 .gooru-social-buttons {
@@ -1199,6 +1199,7 @@ li.resources {
 	float: left;
 }
 .userMetaDataContainer {
+	width: 1000px;
 	float:left;
 	margin-bottom: 20px;
 	margin-top:28px;
@@ -1284,4 +1285,94 @@ li.resources {
 	padding-left: 14px;
 	float: left;
 	padding-top: 3px;
+}
+
+.userNameborder {
+	width: 100%;
+	float: left;
+	border-bottom: 1px solid #ddd;
+}
+.qmark {
+	position: relative;
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	margin-top: 7px;
+	background: url('images/mos/questionmark.png') no-repeat;
+	margin-left: 5px;
+}
+.qmark:hover .profileVisiblityPopup {
+	display: block;
+}
+.qmark:hover .userLibraryPopup {
+	display: block;
+}
+.profileVisiblityPopup {
+	position: absolute;
+	left: -93px;
+	top: 14px;
+	display: none;
+	text-align: left;
+}
+
+.bubble-arrow-style {
+	width: 0;
+	height: 0;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: 1px;
+	margin: auto;
+	border-top: none;
+	z-index: 100000;
+	left: 0;
+	right: 0;
+}
+
+.standards-inner {
+	color: #515151;
+	background-color: #FFF;
+	border: 1px solid #DDD;
+	font-size: 12px;
+	padding: 30px;
+	width: 369px;
+	min-height: 110px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.2);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+.standards-Popup {
+	width: 200px;
+	height: 150px;
+	padding: 20px;
+}
+
+.userLibraryPopup {
+	position: absolute;
+	left: -142px;
+	top: 14px;
+	display: none;
+	z-index: 10000;
+}
+.marginTop10 {
+	margin-top: -10px;
+}
+.popup-left {
+	left: 27px;
+	top: -47px;
+}
+
+.arrow-left {
+	left: -188px;
+	top: 50px;
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
 }

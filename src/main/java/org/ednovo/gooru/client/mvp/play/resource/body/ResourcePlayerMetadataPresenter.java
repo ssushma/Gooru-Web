@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import java.util.ArrayList;
 
+import org.apache.xpath.operations.Bool;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -35,10 +36,13 @@ import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
@@ -68,13 +72,17 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	private boolean isPreviewPlayer=false;
 	
+	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	
 	@Inject
-	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter) {
+	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
+		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
+		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -228,7 +236,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	
 	/**
-	 * Creates the ratings based on the user input and triggers the API.
+	 * API call to create the ratings based on the user input and triggers the API.
 	 * 
 	 * @param associateGooruOid {@link String}
 	 * @param starRatingValue {@link Integer}
@@ -245,7 +253,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 
 	/**
-	 * Sets the Ratings for a resource.
+	 * API call to set Ratings for a resource.
 	 * 
 	 * @param collectionItemDo {@link CollectionItemDo}
 	 */
@@ -272,11 +280,21 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		});
 	}
 
+	/**
+	 * Receiving event to post the review. 
+	 */
 	@Override
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		getView().postReview(assocGooruOId,userReview,score,isUpdate);	
 	}
 
+	/**
+	 * API call to updats the Ratings for a resource.
+	 * 
+	 * @param gooruOid {@link String}
+	 * @param starRatingValue {@link Integer}
+	 * @param showThankYouToolTip {@link Boolean} 
+	 */
 	@Override
 	public void updateStarRatings(String gooruOid, int starRatingValue,boolean showThankYouToolTip) {
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarRatings(gooruOid, starRatingValue, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
@@ -290,6 +308,13 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		}); 
 	}
 
+	/**
+	 * Updates the Reviews for a resource.
+	 * 
+	 * @param gooruOid {@link String}
+	 * @param starRatingValue {@link Integer}
+	 * @param showThankYouToolTip {@link Boolean} 
+	 */
 	@Override
 	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview) { 
 		AppClientFactory.getInjector().getPlayerAppService().updateResourceStarReviews(deleteRatingGooruOid, score, userReview, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
@@ -301,6 +326,34 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				}
 			}
 		}); 
+	}
+
+	/**
+	 * Receiving event to open review pop-up
+	 * 
+	 */
+	@Override
+	public void openReviewPopUp(String assocGooruOId) {
+		addToPopupSlot(ratingAndReviewPopup); 
+		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
+	}
+
+	/**
+	 * API call to get a avg rating and total count.
+	 * 
+	 * @param assocGooruOid {@link String}
+	 * @param score {@link Integer}
+	 * @param review {@link String} 
+	 */
+	@Override
+	public void getAvgRatingAndCount(final String assocGooruOid,final Integer score, final String review) {
+		AppClientFactory.getInjector().getPlayerAppService().getContentStarRatings(assocGooruOid, new SimpleAsyncCallback<ContentStarRatingsDo>() {
+
+			@Override
+			public void onSuccess(ContentStarRatingsDo result) {
+				getView().setRatingMetaData(assocGooruOid,score,review,result.getAverage(),result.getCount());
+			}
+		});
 	}
 
 }

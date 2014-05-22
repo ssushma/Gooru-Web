@@ -4,6 +4,11 @@
 	<ui:style field="style" src="ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
 
 	<g:HTMLPanel styleName="{style.container}">
+	   <g:HTMLPanel ui:field="emptyContainer" styleName="{style.emptyContainer}">
+	       <g:Label ui:field="noCollectionsMsg" styleName="{style.noCollectionsMsg}"></g:Label>
+	       <g:Label ui:field="collectionsRedirectionMsg" styleName="{style.collectionsRedirectionMsg}"></g:Label>
+	       <g:Button ui:field="myCollectionsBtn" styleName="secondary"></g:Button>
+	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{style.leftNav}" ui:field="leftNav"/>
 	   <g:HTMLPanel styleName="{style.contentScroll}" ui:field="contentScroll"/>
 	</g:HTMLPanel>
