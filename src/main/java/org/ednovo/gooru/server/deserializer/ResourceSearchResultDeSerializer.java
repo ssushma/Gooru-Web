@@ -117,7 +117,8 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		resourceSearchResultDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		resourceSearchResultDo.setCategory(getJsonString(recordJsonObject, CATEGORY));
 		resourceSearchResultDo.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
-		resourceSearchResultDo.setNumOfPages(getJsonString(recordJsonObject, NO_OF_PAGES));
+		resourceSearchResultDo.setAggregator(getJsonString(recordJsonObject, AGGREGATOR));
+		resourceSearchResultDo.setPublisher(getJsonString(recordJsonObject, PUBLISHER));
 		
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
