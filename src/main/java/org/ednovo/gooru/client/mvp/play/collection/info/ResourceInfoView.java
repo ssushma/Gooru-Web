@@ -467,7 +467,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				  			generalLbl.setVisible(true);	
 				 			}
 				  		else{
-				  			//System.out.println("final else loop:::::");
 				  			generalLbl.setVisible(false);
 				  		}
 		}

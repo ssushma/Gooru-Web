@@ -86,8 +86,6 @@ public class WrapView extends BaseView implements IsWrapView {
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-/*		  
-		  System.out.println("dectordevice:"+detector.detectMobileQuick());*/
 		  
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
