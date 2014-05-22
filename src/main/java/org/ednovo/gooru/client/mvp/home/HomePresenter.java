@@ -515,7 +515,6 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		getStandardSuggestionAsyncCallback().execute(searchDo);
 	}
 	public void showMarketingPopup(UserDo userDo){
-		System.out.println("showMarketingPopup");
 		new ImprovedGooruPopUpView();
 //		 AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 7, new SimpleAsyncCallback<UserDo>() {
 //				@Override

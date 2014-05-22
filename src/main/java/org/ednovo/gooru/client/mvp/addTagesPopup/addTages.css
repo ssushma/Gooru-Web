@@ -2,11 +2,13 @@
 	background-color: #FFF;
 	width: 590px;
 	padding: 3px;
-	height:587px;
+	height:640px;
 }
 .popupInner {
 	border: 1px solid #DDD;
-	height:584px;
+	height:630px;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
 }
 .popupHeader {
 	padding: 10px 15px;
@@ -26,7 +28,6 @@
 .okcancel {
 	margin: auto;
 	text-align: center;
-	margin-top:50px;
 }
 .tag {
 	display: inline-block;
@@ -134,7 +135,7 @@
 }
 .fRight {
 	float: right;
-	margin-top: -27px;
+	margin-top: -65px;
 }
 .OnButtonDeActive {
 	font-size: 12px;
@@ -150,6 +151,7 @@
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
 	background: -o-linear-gradient(top, #fdfdfd, #ddd);
 	border: 1px solid #DDD;
+	margin-left:-4px;
 }
 .OnButtonDeActive:hover, .OffButtonsDeActive:hover {
 	cursor: pointer;
@@ -237,7 +239,7 @@ width: 50%;
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:1px;
 	border-style:solid;
-	position: absolute;
+	position: relative;
 }
 .placeHolderText{
 	font-family:Arial, Helvetica, sans-serif;
@@ -263,4 +265,35 @@ width: 50%;
 	margin-right: 7px;
 	border-bottom: none;
 	cursor: pointer;
+}
+
+.addQuestionStandard {
+	color: rgb(112, 109, 109);
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+	float:left;
+	font-size: 12px;
+	color: #515151;
+	font-weight: bold;
+}
+.shelfCourseSubject {
+	width: 100%;
+	/*Mobile purpose added */
+	max-width: 332px;
+}
+.addResourceSuggestedBoxForQuestion {
+	color: #CCCCCC;
+	float: right;
+	font-size: 16px;
+    margin-right: 50px; 
+}
+.standardsCont {
+	float: left;
+	position: relative;
+}
+.standardMaxHide {
+	display: none;
+}
+.collectionStandardsMargin {
+	margin-top: 10px;
 }

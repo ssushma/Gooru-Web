@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.mvp.play.collection.end.CollectionEndPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -68,13 +70,17 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	
 	private boolean isPreviewPlayer=false;
 	
+	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+	
 	@Inject
-	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter) {
+	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
+		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
+		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -301,6 +307,12 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				}
 			}
 		}); 
+	}
+
+	@Override
+	public void openReviewPopUp() {
+		addToPopupSlot(ratingAndReviewPopup); 
+		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
 	}
 
 }

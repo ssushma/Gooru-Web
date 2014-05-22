@@ -64,7 +64,12 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 			
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
-				getView().setUnitList(result.getSearchResult());
+				if(result.getSearchResult().size()>0 || result.getCollections()!=null) {
+					getView().setEmptyContainer(false);
+					getView().setUnitList(result);
+				} else {
+					getView().setEmptyContainer(true);
+				}
 			}
 		});
 	}
@@ -74,7 +79,7 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
- 				getView().setTopicListData(result.getSearchResult(), folderId);
+ 				getView().setTopicListData(result.getSearchResult(), null, folderId);
 			}
 			
 			@Override

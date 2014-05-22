@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -166,4 +167,6 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void addTagsToResource(String resourceId, String addedTags,AsyncCallback<List<ResourceTagsDo>> asyncCallback);
 	
 	void getTagsToResource(String resourceId, AsyncCallback<List<ResourceTagsDo>> asyncCallback);
+	
+	void deleteTagsServiceRequest(String resourceId, String addedTags,AsyncCallback<Void> callback);
 }

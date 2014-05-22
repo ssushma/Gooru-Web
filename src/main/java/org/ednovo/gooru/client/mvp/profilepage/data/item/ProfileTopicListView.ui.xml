@@ -3,15 +3,13 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="../ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
 	      <g:HTMLPanel styleName="{style.topicBlock}" ui:field="topicBlock">
-	         <g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}" ui:field="topicTitleLbl">Topic 1: Developmental authorities leading in india</g:Label>
-
+	         <g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}" ui:field="topicTitleLbl"/>
 	         <g:ScrollPanel styleName="{style.conceptList}" ui:field="lessonScrollPanel">
 	             <g:HTMLPanel ui:field="conceptList"/>
 	         </g:ScrollPanel>
 	         <g:HTMLPanel styleName="loadingImage {style.loadingIcon}" ui:field="loadingImage"></g:HTMLPanel>
 	         <g:HTMLPanel styleName="{style.collectionViewer}" ui:field="collectionViewer">
 	            <g:HTMLPanel styleName="{style.collectionInfo}" ui:field="collectionInfo">
-	               <g:HTMLPanel ui:field="standardsDescription" styleName="{style.standardsDescription}"></g:HTMLPanel>
 	               <g:Image styleName="{style.collectionImage}" ui:field="collectionImage"></g:Image>
 	               <g:HTMLPanel styleName="{style.collectionMetaData}">
 		               <g:HTML styleName="{style.collectionTitle}" ui:field="collectionTitleLbl"/>

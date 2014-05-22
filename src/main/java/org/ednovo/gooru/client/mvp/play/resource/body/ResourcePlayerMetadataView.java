@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.uc.NarrationUc;
 import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOut;
@@ -165,7 +166,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		starValue.setVisible(false);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
-			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+			emoticsContainer.removeFromParent();
+//			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
@@ -200,15 +202,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			four_star.addMouseOutHandler(new OnStarMouseOut(FOUR_STAR));
 			five_star.addMouseOutHandler(new OnStarMouseOut(FIVE_STAR));
 		
-		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			emoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-//			collectionContainer.add(starRatingsUc);
-		}*/
-		/*if(AppClientFactory.isAnonymous()){
-			userStarRatings = new UserStarRatingsWidget();
-			ratingsContainer.clear();
-			ratingsContainer.add(userStarRatings);
-		}*/
 	}
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){

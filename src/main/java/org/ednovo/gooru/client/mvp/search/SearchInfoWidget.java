@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -25,6 +26,7 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -32,7 +34,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -76,6 +81,10 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 	@UiField static  HTMLPanel standardsContentContainer;
 	@UiField static Label standaInfo;
+	
+	@UiField Button addTagsBtn;
+	
+	AddTagesPopupView popup;
 
 	ToolTipPopUp toolTip ; 
 
@@ -221,14 +230,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	public void setData(){
-		System.out.println("gooruid::"+searchResultDo.getGooruOid());
 		AppClientFactory.getInjector().getPlayerAppService().getResourceCollectionItem(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
 				// TODO Auto-generated method stub
-				System.out.println("onSucess:"+collectionItemDo.getGrade());
-				System.out.println("onSucess:"+collectionItemDo.getResource().getGrade());
 				setGrades(collectionItemDo.getResource().getGrade());
 				setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():
 					null,collectionItemDo.getResource().getTaxonomySet());
@@ -255,7 +261,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	 * @param licenseDo instance of {@link LicenseDo}
 	 */
 	public void setResourceLicenceLogo(String assetUrl,LicenseDo licenseDo){
-		System.out.println("setlicencelogo"+assetUrl);
 		if(licenseDo!=null){
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
@@ -321,7 +326,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	public String getGrades(String grade){
-		System.out.println("getgrades");
 		if (grade != null) {
 			grade = grade.replace("null,", "").replace("null ,", "").replace("null", "");
 
@@ -942,7 +946,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				generalLbl.setVisible(true);	
 			}
 			else{
-				//System.out.println("final else loop:::::");
 				generalLbl.setVisible(false);
 			}
 		}
@@ -1001,6 +1004,22 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}
 			}
 		}
+	}
+	
+	@UiHandler("addTagsBtn")
+	public void onAddTagsBtnClicked(ClickEvent clickEvent) 
+	{
+		System.out.println("resourceIdforaddingtags::"+searchResultDo.getGooruOid());
+		popup=new AddTagesPopupView(searchResultDo.getGooruOid()) {
+			
+			@Override
+			public void closePoup() {
+				Window.enableScrolling(true);
+		        this.hide();
+			}
+		};
+		popup.show();
+		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 	}
 
 

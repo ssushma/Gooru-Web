@@ -97,9 +97,13 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	@Override
 	protected Map<String, String> getSearchFilters() {
 		Map<String, String> filters = super.getSearchFilters();
-		String source = getPlaceManager().getRequestParameter(IsSearchView.SOURCE_FLT);
+		String source = getPlaceManager().getRequestParameter(IsSearchView.PUBLISHER_FLT);
 		if (source != null) {
-			filters.put(IsSearchView.SOURCE_FLT, source);
+			filters.put(IsSearchView.PUBLISHER_FLT, source);
+		}
+		String aggregator = getPlaceManager().getRequestParameter(IsSearchView.AGGREGATOR_FLT);
+		if (aggregator != null) {
+			filters.put(IsSearchView.AGGREGATOR_FLT, source);
 		}
 		return filters;
 	}

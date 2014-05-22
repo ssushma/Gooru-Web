@@ -340,7 +340,7 @@ public class ShelfCollectionResourceChildView extends
 		StartPageLbl.setText(GL0961);
 		EditBtn.setText(GL0140);
 		updateResourceBtn.setText(GL0962);
-		addTages.setText("Add Tages");
+		addTages.setText("Add Tags");
 		editInfoLbl.setText(GL0963);
 		editVideoTimeLbl.setText(GL0964);
 		editStartPageLbl.setText(GL0960);
@@ -998,11 +998,16 @@ public class ShelfCollectionResourceChildView extends
 	}
 	@UiHandler("addTages")
 	public void onAddTagesClick(ClickEvent clickEvent) {
-		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid());
-		popup.setGlassEnabled(true);
+		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()){
+			
+			@Override
+			public void closePoup() {
+				Window.enableScrolling(true);
+		        this.hide();
+			}
+		};
 		popup.show();
-		popup.center();
-		
+		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 	}
 	/*
 	 * This clickEvent is used to edit pdf
