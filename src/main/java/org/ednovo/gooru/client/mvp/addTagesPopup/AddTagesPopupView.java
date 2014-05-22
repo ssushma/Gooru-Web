@@ -78,7 +78,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
 	
-	@UiField InlineLabel addTagesTitle;
+	@UiField InlineLabel addTagesTitle,popupContentText,moblieFriendly;
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
@@ -119,6 +119,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.center();
 		
 		addTagesTitle.setText(GL1795);
+		popupContentText.setText(GL1812);
+		moblieFriendly.setText(GL1811);
 		headerEducationalUse.setText(GL1664);
 		activity.setText(GL1665);
 		handout.setText(GL0907);
@@ -135,7 +137,35 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		textbook.setText(GL0909);
 		article.setText(GL1676);
 		book.setText(GL1677);
-		
+		lexileHeader.setText(GL1798);
+		kindergarden.setText(GL1799);
+		level1.setText(GL_GRR_NUMERIC_ONE);
+		level2.setText(GL_GRR_NUMERIC_TWO);
+		level3.setText(GL_GRR_NUMERIC_THREE);
+		level4.setText(GL_GRR_NUMERIC_FOUR);
+		level5.setText(GL_GRR_NUMERIC_FIVE);
+		level6.setText(GL_GRR_NUMERIC_SIX);
+		level7.setText(GL_GRR_NUMERIC_SEVEN);
+		level8.setText(GL_GRR_NUMERIC_EIGHT);
+		level9.setText(GL_GRR_NUMERIC_NINE);
+		level10.setText(GL_GRR_NUMERIC_TEN);
+		level11.setText(GL_GRR_NUMERIC_ELEVEN);
+		level12.setText(GL_GRR_NUMERIC_TWELVE);
+		AdsHeader.setText(GL1800);
+		noAds.setText(GL1801);
+		modAds.setText(GL1802);
+		aggreAds.setText(GL1803);
+		accessHazard.setText(GL1804);
+		flashing.setText(GL1805);
+		flashingHazard.setText(GL1806);
+		motionSimulation.setText(GL1807);
+		motionSimulationHazard.setText(GL1808);
+		sound.setText(GL1809);
+		soundHazard.setText(GL1810);
+		cancelBtn.setText(GL0142);
+		addTagsBtn.setText(GL1795);
+		mobileYes.setText(GL_GRR_YES);
+		mobileNo.setText(GL1735);
 		
 		standardsDefaultText.setText(GL1682);
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
