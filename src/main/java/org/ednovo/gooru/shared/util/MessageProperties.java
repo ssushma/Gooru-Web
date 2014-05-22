@@ -2270,5 +2270,9 @@ public interface MessageProperties {
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
+    	String GL1788 = "Go to \"My Collections\" to share your collections in this library with others.";
+    	String GL1789 = "Go to My Collections";
+    	String GL1790 = "You do not have any public collections yet!";
+    	String GL1791 = "does not have any public collections!";
    }
 

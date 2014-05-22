@@ -26,7 +26,13 @@
 					   <!--  Profile On/Off container start -->
 					   		<g:HTMLPanel ui:field="gooruProfileOnOffContainer" styleName="{ProfilePageStyle.gooruProfileOnOffContainer}">
 					   		    <g:Label styleName="{settingsStyle.publicProfileTitle}" ui:field="profilePageText"></g:Label>
-								<g:HTMLPanel styleName="{settingsStyle.publicProfileOnButtonContent}">
+								<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
+							        <g:HTMLPanel styleName="{ProfilePageStyle.profileVisiblityPopup}">
+							          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style}"></g:HTMLPanel>
+							          <g:HTMLPanel styleName="{ProfilePageStyle.standards-inner}">This is the description of the standard.</g:HTMLPanel>
+							        </g:HTMLPanel>
+							    </g:HTMLPanel>
+					   		    <g:HTMLPanel styleName="{settingsStyle.publicProfileOnButtonContent}">
 										<g:Button styleName="{settingsStyle.publicProfileOnButtonActive}" ui:field="profileOnButton"></g:Button>
 										<g:Button styleName="{settingsStyle.publicProfileOffButtonsDeActive}" ui:field="profileOffButton"></g:Button>
 								</g:HTMLPanel>
@@ -105,9 +111,16 @@
 		                 </g:HTMLPanel>
 	                </g:HTMLPanel>
 	        </g:HTMLPanel>
-			</g:FlowPanel>	        
+			</g:FlowPanel>
         <g:HTMLPanel styleName="{ProfilePageStyle.userContent}">
-            <g:Label styleName="{ProfilePageStyle.userName} {ProfilePageStyle.userNameborder}" ui:field="userLibraryMessage"></g:Label>
+            <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userLibraryMessage"></g:Label>
+			<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
+		        <g:HTMLPanel styleName="{ProfilePageStyle.userLibraryPopup}">
+		          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style}"></g:HTMLPanel>
+		          <g:HTMLPanel styleName="{ProfilePageStyle.standards-inner} {ProfilePageStyle.marginTop10}">This is the description of the standard.</g:HTMLPanel>
+		        </g:HTMLPanel>
+		    </g:HTMLPanel>
+            <g:HTMLPanel styleName="{ProfilePageStyle.userNameborder}"/>
             <g:HTMLPanel styleName="{ProfilePageStyle.tabs}">
                 <!-- Please dont make put these two anchor in different lines -->
                 <g:Anchor ui:field="contentTabVc"></g:Anchor><!-- <g:Anchor ui:field="shareTabVc">Share</g:Anchor> -->

@@ -57,5 +57,7 @@ public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibrary
 	public void loadingPanel(boolean isVisible);
 	
 	public void clearPanels();
+	
+	public void setEmptyContainer(boolean isEmpty);
 
 }
