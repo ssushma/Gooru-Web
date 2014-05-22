@@ -40,6 +40,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -76,6 +77,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField Label noAds,modAds,aggreAds,standardMaxMsg,standardsDefaultText;
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
+	
+	@UiField InlineLabel addTagesTitle;
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
@@ -114,7 +117,26 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
-
+		
+		addTagesTitle.setText(GL1795);
+		headerEducationalUse.setText(GL1664);
+		activity.setText(GL1665);
+		handout.setText(GL0907);
+		homework.setText(GL1666);
+		game.setText(GL1667);
+		presentation.setText(GL1668);
+		refMaterial.setText(GL1669);
+		quiz.setText(GL1670);
+		currPlan.setText(GL1671);
+		lessonPlan.setText(GL1672);
+		unitPlan.setText(GL1673);
+		projectPlan.setText(GL1674);
+		reading.setText(GL1675);
+		textbook.setText(GL0909);
+		article.setText(GL1676);
+		book.setText(GL1677);
+		
+		
 		standardsDefaultText.setText(GL1682);
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		spanelMediaFeaturePanel.setVisible(false);
