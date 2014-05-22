@@ -998,7 +998,14 @@ public class ShelfCollectionResourceChildView extends
 	}
 	@UiHandler("addTages")
 	public void onAddTagesClick(ClickEvent clickEvent) {
-		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid());
+		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()){
+			
+			@Override
+			public void closePoup() {
+				Window.enableScrolling(true);
+		        this.hide();
+			}
+		};
 		popup.show();
 		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 	}

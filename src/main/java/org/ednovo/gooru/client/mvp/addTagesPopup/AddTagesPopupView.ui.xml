@@ -62,13 +62,13 @@
 		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level3">3</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level4">4</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level5">5</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level6">6</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level7">7</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level8">8</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level9">9</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level10">10</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level11">11</g:Label>
-		          <g:Label styleName="{res.css.levelnumbers}"  ui:field="level12">12</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level6">6</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level7">7</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level8">8</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level9">9</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level10">10</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level11">11</g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level12">12</g:Label>
 		        </g:HTMLPanel>
 		      </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>

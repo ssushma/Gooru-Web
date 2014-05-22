@@ -11,6 +11,7 @@ import java.util.Set;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -47,7 +48,7 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddTagesPopupView extends PopupPanel implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
+public abstract class AddTagesPopupView extends PopupPanel implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 
 	public PopupPanel appPopUp;
 	
@@ -109,8 +110,12 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
-		this.center();
 		Window.enableScrolling(false);
+		this.getElement().setAttribute("style", "z-index:99999;");
+		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
+		this.center();
+
 		standardsDefaultText.setText(GL1682);
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		spanelMediaFeaturePanel.setVisible(false);
@@ -921,19 +926,13 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	}
 	public void closeFunction()
 	{
-		this.hide();
-		if(standardsPreferenceOrganizeToolTip.isShowing())
-			standardsPreferenceOrganizeToolTip.hide();
-		Window.enableScrolling(true);
+		closePoup();
 	}
 	
 	@UiHandler("cancelBtn")
 	public void onCancelClick(ClickEvent click)
 	{
-		this.hide();
-		if(standardsPreferenceOrganizeToolTip.isShowing())
-			standardsPreferenceOrganizeToolTip.hide();
-		Window.enableScrolling(true);
+		closePoup();
 	}
 	
 	private void OpenMediaFeatureDropdown() {
@@ -1636,4 +1635,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		
 		return null;
 	}
+	
+	public abstract void closePoup();
 }
