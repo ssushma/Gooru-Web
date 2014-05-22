@@ -73,10 +73,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
 	
 	@Inject
-	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter) {
+	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
 		super(eventBus, view);
 		this.questionResourcePresenter=questionResourcePresenter;
 		this.collectionEndPresenter=collectionEndPresenter;
+		this.ratingAndReviewPopup = ratingAndReviewPopup;
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
@@ -310,7 +311,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 
 	@Override
 	public void openReviewPopUp() {
-		addToPopupSlot(ratingAndReviewPopup);
+		addToPopupSlot(ratingAndReviewPopup); 
+		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
 	}
 
 }
