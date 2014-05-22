@@ -36,11 +36,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -78,6 +78,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
 	
+	@UiField InlineLabel addTagesTitle,popupContentText,moblieFriendly;
+	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
 	@UiField(provided = true)
@@ -96,7 +98,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 
-	
+	boolean isCancelclicked=false;
 	String mediaFeatureStr = GL1767;
 	String resourceId=null;
 
@@ -110,12 +112,61 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
-		Window.enableScrolling(false);
+		//Window.enableScrolling(false);
 		this.getElement().setAttribute("style", "z-index:99999;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
-
+		
+		addTagesTitle.setText(GL1795);
+		popupContentText.setText(GL1812);
+		moblieFriendly.setText(GL1811);
+		headerEducationalUse.setText(GL1664);
+		activity.setText(GL1665);
+		handout.setText(GL0907);
+		homework.setText(GL1666);
+		game.setText(GL1667);
+		presentation.setText(GL1668);
+		refMaterial.setText(GL1669);
+		quiz.setText(GL1670);
+		currPlan.setText(GL1671);
+		lessonPlan.setText(GL1672);
+		unitPlan.setText(GL1673);
+		projectPlan.setText(GL1674);
+		reading.setText(GL1675);
+		textbook.setText(GL0909);
+		article.setText(GL1676);
+		book.setText(GL1677);
+		lexileHeader.setText(GL1798);
+		kindergarden.setText(GL1799);
+		level1.setText(GL_GRR_NUMERIC_ONE);
+		level2.setText(GL_GRR_NUMERIC_TWO);
+		level3.setText(GL_GRR_NUMERIC_THREE);
+		level4.setText(GL_GRR_NUMERIC_FOUR);
+		level5.setText(GL_GRR_NUMERIC_FIVE);
+		level6.setText(GL_GRR_NUMERIC_SIX);
+		level7.setText(GL_GRR_NUMERIC_SEVEN);
+		level8.setText(GL_GRR_NUMERIC_EIGHT);
+		level9.setText(GL_GRR_NUMERIC_NINE);
+		level10.setText(GL_GRR_NUMERIC_TEN);
+		level11.setText(GL_GRR_NUMERIC_ELEVEN);
+		level12.setText(GL_GRR_NUMERIC_TWELVE);
+		AdsHeader.setText(GL1800);
+		noAds.setText(GL1801);
+		modAds.setText(GL1802);
+		aggreAds.setText(GL1803);
+		accessHazard.setText(GL1804);
+		flashing.setText(GL1805);
+		flashingHazard.setText(GL1806);
+		motionSimulation.setText(GL1807);
+		motionSimulationHazard.setText(GL1808);
+		sound.setText(GL1809);
+		soundHazard.setText(GL1810);
+		cancelBtn.setText(GL0142);
+		addTagsBtn.setText(GL1795);
+		mobileYes.setText(GL_GRR_YES);
+		mobileNo.setText(GL1735);
+		
 		standardsDefaultText.setText(GL1682);
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		spanelMediaFeaturePanel.setVisible(false);
@@ -926,13 +977,15 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	public void closeFunction()
 	{
-		closePoup();
+		isCancelclicked=false;
+		closePoup(isCancelclicked);
 	}
 	
 	@UiHandler("cancelBtn")
 	public void onCancelClick(ClickEvent click)
 	{
-		closePoup();
+		isCancelclicked=true;
+		closePoup(isCancelclicked);
 	}
 	
 	private void OpenMediaFeatureDropdown() {
@@ -1157,8 +1210,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
-		
-
 	}
 	
 	public void addTagsServiceRequest(String frameTagsStr, String resourceId)
@@ -1636,5 +1687,5 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		return null;
 	}
 	
-	public abstract void closePoup();
+	public abstract void closePoup(boolean isCancelclicked);
 }

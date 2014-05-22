@@ -2,13 +2,11 @@
 	background-color: #FFF;
 	width: 590px;
 	padding: 3px;
-	height:640px;
+	height:580px;
 }
 .popupInner {
 	border: 1px solid #DDD;
-	height:630px;
-	overflow-y: auto !important;
-	overflow-x: hidden !important;
+	height:580px;
 }
 .popupHeader {
 	padding: 10px 15px;
@@ -24,10 +22,14 @@
 }
 .popupContent {
 	padding: 15px;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	height: 504px;
 }
 .okcancel {
 	margin: auto;
 	text-align: center;
+	padding-top: 20px;
 }
 .tag {
 	display: inline-block;

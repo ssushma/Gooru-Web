@@ -139,7 +139,7 @@
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="eduAllignLbl"></g:Label>
 					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="eduAllignType" />
+						ui:field="eduAllignType"/>
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
@@ -199,20 +199,20 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
-					ui:field="gooruSubjectPanel">
+					ui:field="schLevelPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
-						ui:field="gooruSubjectLbl"></g:Label>
+						ui:field="schLevelLbl"></g:Label>
 					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="gooruSubjectInfo" />
+						ui:field="schLevelInfo" />
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
+				<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
 					ui:field="gooruCoursePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="gooruCourseLbl"></g:Label>
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="gooruCourseInfo" />
-				</g:HTMLPanel>
+				</g:HTMLPanel> -->
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
