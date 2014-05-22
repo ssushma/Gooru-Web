@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AutoCompleteDeSerializer extends DeSerializer {
 
-	private static final String ATTRIBUTION = "attribution";
+	private static final String ATTRIBUTION = "values";
 	private static final String SEARCH_RESULTS = "searchResults";
 	private static final String CODE = "code";
 	private static final String LABEL = "label";

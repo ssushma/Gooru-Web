@@ -23,6 +23,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.util.CollResInfo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -65,26 +66,26 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 	eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
 	hasAdaptationType,hasAdaptationLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,isAdaptationLbl,isAdaptationType,
-	copyRightType,copyRightLbl,hostType,hostLbl,gooruCourseLbl,accessibilityAPILbl,controlType,controlLbl,
+	copyRightType,copyRightLbl,hostType,hostLbl,accessibilityAPILbl,controlType,controlLbl,
 	acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 	thumbnailText,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,dateCreatedLbl,
-	createdDateInfo,authorLbl,authorName,contributorName,gooruSubjectLbl,gooruSubjectInfo,keywordsTitle,
+	createdDateInfo,authorLbl,authorName,contributorName,schLevelLbl,schLevelInfo,keywordsTitle,
 	momentsoflearningLbl,resourceTypeImage;
 
 	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,coursePanel,gradesPanel,
 	contributorPanel,mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
-	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,gooruCoursePanel,
+	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,dateCreatedPanel,
-	authorPanel,gooruSubjectPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,gooruCourseInfo,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
+	authorPanel,schLevelPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
 	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue;
 
 	@UiField FlowPanel licenceContainer,standardsInfoConatiner;
 
 	@UiField static  HTMLPanel standardsContentContainer;
 	@UiField static Label standaInfo;
-	
+
 	@UiField Button addTagsBtn;
-	
+
 	AddTagesPopupView popup;
 
 	ToolTipPopUp toolTip ; 
@@ -112,12 +113,12 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	public SearchInfoWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
-		setGenealInfoData();
+		setResourceInfoData();
 
 
 	}
 
-	private void setGenealInfoData() {
+	private void setResourceInfoData() {
 		publisherText.setText(GL0566);
 		courseText.setText(GL0616);
 		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
@@ -126,9 +127,39 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		gradeTitle.setText(GL0325+ ""+GL_SPL_SEMICOLON);
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
 		generalLbl.setText(GL1708);
-		resourceInfoLbl.setText(GL1716);
-		educationallLbl.setText(GL1720);
+		hostLbl.setText(GL1700+ ""+GL_SPL_SEMICOLON);
 		legalText.setText("License:");
+		
+		//Educational static data
+		educationallLbl.setText(GL1720);
+		eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
+		eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+		eduRoleLbl.setText("Educational Role:");
+		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
+		ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
+		momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
+		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+		schLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+		
+		//Resource Info Static data
+		resourceInfoLbl.setText(GL1716);
+		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
+		countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
+		languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
+		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
+		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
+		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
+		keywordsTitle.setText("Keywords"+GL_SPL_SEMICOLON);
+		
+		//Accessibility Static data
+		accesibilityLbl.setText("Accessibility");
+		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
+		accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
+		mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
+		controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
+		acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
+		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
+		
 	}
 
 	/**
@@ -231,6 +262,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	public void setData(){
+		System.out.println("gooruoid::"+searchResultDo.getGooruOid());
 		AppClientFactory.getInjector().getPlayerAppService().getResourceCollectionItem(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
@@ -250,10 +282,21 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				if(collectionItemDo.getResource().getCreatedOn()!=null){
 					setCreatedDate(collectionItemDo.getResource().getCreatedOn());
 				}
-
+                setGeneralResourceInfo(collectionItemDo);
 				setEducationInfoDetails(collectionItemDo);
 			}
 		});
+	}
+
+	protected void setGeneralResourceInfo(CollectionItemDo CollectiongenealInfo) {
+		// TODO Auto-generated method stub
+		hostPanel.setVisible(true);
+		if(CollectiongenealInfo.getResource()!=null && CollectiongenealInfo.getResource().getCustomFieldValues()!=null &&
+				CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost()!=null){
+			hostType.setText(CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+		}else{
+			hostPanel.setVisible(false);
+		}
 	}
 
 	/**
@@ -759,7 +802,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}
 	}
 
-	private void setDepthofknowledgeDetails(List<String> depthOfKnowledgedetails) {
+	/*private void setDepthofknowledgeDetails(List<String> depthOfKnowledgedetails) {
 		// TODO Auto-generated method stub
 		dKnowledgeType.clear();
 		if(depthOfKnowledgedetails == null || depthOfKnowledgedetails.size() == 0 || depthOfKnowledgedetails.contains(null) || depthOfKnowledgedetails.contains("") ){
@@ -794,9 +837,9 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			}
 		}
 
-	}
+	}*/
 
-	private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
+	/*private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
 		momentsoflearningType.clear();
 		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
 			momentsoflearningPanel.setVisible(false);
@@ -820,7 +863,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}
 
 	}
-
+*/
 
 
 	private Widget getCommonwidget(List<String> commonList) {
@@ -869,7 +912,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 							depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
 						}
 					}
-					setDepthofknowledgeDetails(depthofknowledgedetails);
+					CollResInfo.setDepthofknowledgeDetails(depthofknowledgedetails, dKnowledgeType, dKnowledgeLbl, dKnowledgePanel);
 					//dKnowledgePanel.setVisible(true);
 				}else{
 					dKnowledgePanel.setVisible(false);
@@ -889,7 +932,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 							momentoflearningdetails.add(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
 						}
 					}
-					setmonentoflearningDetails(momentoflearningdetails);
+					CollResInfo.setDepthofknowledgeDetails(momentoflearningdetails,momentsoflearningType,momentsoflearningLbl,momentsoflearningPanel);
 					//momentsoflearningPanel.setVisible(true);
 				}else{
 					momentsoflearningPanel.setVisible(false);	
@@ -1006,14 +1049,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			}
 		}
 	}
-	
+
 	@UiHandler("addTagsBtn")
 	public void onAddTagsBtnClicked(ClickEvent clickEvent) 
 	{
-		System.out.println("resourceIdforaddingtags::"+searchResultDo.getGooruOid());
 		Window.enableScrolling(false);
 		popup=new AddTagesPopupView(searchResultDo.getGooruOid()) {
-			
+
 			@Override
 			public void closePoup(boolean isCancelclicked) {
 				 this.hide();

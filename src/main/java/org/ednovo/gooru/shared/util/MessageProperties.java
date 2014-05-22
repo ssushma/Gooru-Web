@@ -2287,7 +2287,7 @@ public interface MessageProperties {
     	String GL1794 = "OFF: No one but you will be able to access your profile page.";
     	String GL1795 ="Add Tages";
     	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
-    	String GL1797="Add as many tags as you’d like by clicking on the words within each category.";
+    	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
     	String GL1798="Lexile Level";
     	String GL1799="Kindergarden";
     	String GL1800="Ads";
@@ -2302,5 +2302,10 @@ public interface MessageProperties {
     	String GL1809="Sound";
     	String GL1810="Sound Hazard";
     	String GL1811="Mobile Friendly";
+    	String GL1812="Add as many tags as you’d like by clicking on the words within each category.";
+    	
+    	
+
+
     	
    }

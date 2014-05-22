@@ -157,7 +157,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		resourceInfoText.setText(GL0621);
 		gradeTitle.setText(GL0165+ ""+GL_SPL_SEMICOLON);
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
-
 		generalLbl.setText(GL1708);
 		resourceInfoLbl.setText(GL1716);
 		educationallLbl.setText(GL1720);
@@ -196,9 +195,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
 		}
 		
-		if(collectionItemDo.getResource().getCreatedOn()!=null){
+		/*if(collectionItemDo.getResource().getCreatedOn()!=null){
 			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
-		}
+		}*/
 
 		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			lblcollectionName.setVisible(true);
@@ -211,13 +210,69 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			lblcollectionName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			lblcollectionName.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTitleStyleName());
 			
-		collectionItemDo.getResource().setHost("HippoCampus");
 		//setHostDetails(collectionItemDo.getResource().getHost());
-		setHostDetails("");
+			if(collectionItemDo.getResource().getCustomFieldValues()!=null ){
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null){
+					System.out.println("host:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfHost());
+				setHostDetails(collectionItemDo.getResource().getCustomFieldValues().getCfHost());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfOER()!=null){
+					System.out.println("oer:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfOER());
+				setOerDetails(collectionItemDo.getResource().getCustomFieldValues().getCfOER());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()!=null){
+					System.out.println("edallign:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());
+					setedAlignDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser()!=null){
+					System.out.println("edrole::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());
+				   seteducationalRoleDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode()!=null){
+					System.out.println("lmode:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());
+					setinteractivityTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfAge()!=null){
+					System.out.println("age:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAge());
+					setageRangeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAge());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode()!=null){
+					System.out.println("countrycode:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());
+					setCountryCodeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode()!=null){
+					System.out.println("lcode:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());
+					setlanguageDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfDataType()!=null){
+					System.out.println("datatype:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfDataType());
+					setdataTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfDataType());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor()!=null){
+					System.out.println("author:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());
+					setAuthorDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder()!=null){
+					System.out.println("copyright:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());
+					setCopyRightHolderDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()!=null){
+					System.out.println("controlflex:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());
+					setcontrolflexibilityDetails(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()!=null){
+					System.out.println(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
+					setAcessHazardDetails("ahazard:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
+				}
+				
+				
+			}
 		
-		collectionItemDo.getResource().setEducationalAlignment("Teaches");
-		//setedAlignDetails(collectionItemDo.getResource().getEducationalAlignment());
-		setedAlignDetails("");
+		/*System.out.println("host values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfOER());
+		setOerDetails(collectionItemDo.getResource().getCustomFieldValues().getCfOER());*/
+		
+		/*System.out.println("educational allign values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());
+		setedAlignDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());*/
 		
 		List<String> eduUsedetails = new ArrayList<String>();
 
@@ -278,79 +333,62 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			dKnowledgePanel.setVisible(false);
 		}
 		
+		/*System.out.println("enduser values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());
+		seteducationalRoleDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());*/
 		
-		collectionItemDo.getResource().setEducationalRole("Student");
-		//seteducationalRoleDetails(collectionItemDo.getResource().getEducationalRole());
-		seteducationalRoleDetails("");
+		/*System.out.println("interactivity values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());
+		setinteractivityTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());*/
 		
-		collectionItemDo.getResource().setInteractivityType("Exposive");
-		//setinteractivityTypeDetails(collectionItemDo.getResource().getInteractivityType());
-		setinteractivityTypeDetails("");
+		/*System.out.println("age values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAge());
+		setageRangeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAge());*/
 		
-		collectionItemDo.getResource().setAgeRange("10-14");
-		//setageRangeDetails(collectionItemDo.getResource().getAgeRange());
-		setageRangeDetails("");
-		
-		List<String> readingLeveldetails = new ArrayList<String>();
+		/*List<String> readingLeveldetails = new ArrayList<String>();
 		readingLeveldetails.add(0, "6");
 		readingLeveldetails.add(1, "7");
 		readingLeveldetails.add(2, "8");
-		collectionItemDo.getResource().setReadinglevel(readingLeveldetails);
-		//showreadingLevelDetails(collectionItemDo.getResource().getReadinglevel());
-		showreadingLevelDetails(null);
+		showreadingLevelDetails(null);*/
 		
-		collectionItemDo.getResource().setCountryCode("USA");
-		//setCountryCodeDetails(collectionItemDo.getResource().getCountryCode());
-		setCountryCodeDetails("");
+		/*System.out.println("countrycode values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());
+		setCountryCodeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());*/
 		
-		collectionItemDo.getResource().setLanguage("English");
-		//setlanguageDetails(collectionItemDo.getResource().getLanguage());
-		setlanguageDetails("");
+		/*System.out.println("language values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());
+		setlanguageDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());*/
 		
-		collectionItemDo.getResource().setDataType("Data Type");
-		//setdataTypeDetails(collectionItemDo.getResource().getDataType());
-		setdataTypeDetails("");
+		/*System.out.println("dattype values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfDataType());
+		setdataTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfDataType());*/
 		
-		collectionItemDo.getResource().setAuthor("Bill Gates");
-		//setAuthorDetails(collectionItemDo.getResource().getAuthor());
-		setAuthorDetails("");
+		/*System.out.println("author values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());
+		setAuthorDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());*/
 		
-		collectionItemDo.getResource().setCopyRightHolder("Bill Gates");
-		//setCopyRightHolderDetails(collectionItemDo.getResource().getCopyRightHolder());
-		setCopyRightHolderDetails("");
+		/*System.out.println("copyright values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());
+		setCopyRightHolderDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());*/
 		
 		List<String> keyworddetails = new ArrayList<String>();
-		keyworddetails.add(0, "nouns");
-		keyworddetails.add(1, "plural");
-		keyworddetails.add(2, "singular");
-		collectionItemDo.getResource().setKeywords(keyworddetails);
-		//setkeywordsDetails(collectionItemDo.getResource().getKeywords());
-		setkeywordsDetails(null);
+		String[] keywordslist=collectionItemDo.getResource().getGrade().split(",");										
+		for(int i=0;i<keywordslist.length;i++){
+			keyworddetails.add(keywordslist[i]);
+		}
+		collectionItemDo.getResource().getCustomFieldValues().setCfKeywords(collectionItemDo.getResource().getGrade());
+		setkeywordsDetails(keyworddetails);
 		
 		//setmobilefriendlynessdetails(collectionItemDo.getResource().getMobilefriendlyness());
 		setmobilefriendlynessdetails(collectionItemDo.getResource().getMediaType());
 		
-		List<String> acessmodedetails = new ArrayList<String>();
+		/*List<String> acessmodedetails = new ArrayList<String>();
 		acessmodedetails.add(0, "Visual");
 		acessmodedetails.add(1, "Auditory");
-		collectionItemDo.getResource().setAcessmode(acessmodedetails);
-		//setacessmodeDetails(collectionItemDo.getResource().getAcessmode());
 		setacessmodeDetails(null);
 		
 		List<String> mediafeaturesdetails = new ArrayList<String>();
 		mediafeaturesdetails.add(0, "Alternativetext");
 		mediafeaturesdetails.add(1, "Annotations");
-		collectionItemDo.getResource().setMediaFeatures(mediafeaturesdetails);
-		//setmediafeaturesDetails(collectionItemDo.getResource().getMediaFeatures());
-		setmediafeaturesDetails(null);
+		setmediafeaturesDetails(null);*/
 		
-		collectionItemDo.getResource().setControlflexibility("Full Keyboard Control");
-		//setcontrolflexibilityDetails(collectionItemDo.getResource().getControlflexibility());
-		setcontrolflexibilityDetails("");
+		/*System.out.println("controlflexibility values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());
+		setcontrolflexibilityDetails(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());*/
 		
-		collectionItemDo.getResource().setAccesshazard("Motion Simulation");
-		//setAcessHazardDetails(collectionItemDo.getResource().getAccesshazard());
-		setAcessHazardDetails("");
+		/*System.out.println("access hazard values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
+		setAcessHazardDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());*/
 		
 		resourceTypeImage.getElement().setAttribute("style", "position: relative;margin-top:10px;margin-bottom: 10px;");
 
@@ -413,19 +451,49 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			mediaFeatureType.setVisible(false);
 			accessibilityAPIType.setVisible(false);
 		}*/
-		
-		if(collectionItemDo.getResource().getCreatedOn()!=null){
-			resourceInfoLbl.setText(GL1716);
-			resourceInfoLbl.setVisible(true);
-		}else{
+		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
+		if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode() == null
+		&& collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode() ==null
+		&& collectionItemDo.getResource().getCustomFieldValues().getCfDataType() ==null
+		&& collectionItemDo.getResource().getCustomFieldValues().getCfAuthor() ==null
+		&& collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder() ==null
+		&& collectionItemDo.getResource().getCustomFieldValues().getCfKeywords() ==null
+		&& collectionItemDo.getResource().getCustomFieldValues().getCfAds() ==null){
 			resourceInfoLbl.setVisible(false);
+		}else{
+			if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}
+			else if(collectionItemDo.getResource().getCustomFieldValues().getCfDataType()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfDataType().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfDataType().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}
+			else if(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAuthor().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAuthor().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}
+			else if(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}
+			else if(collectionItemDo.getResource().getCustomFieldValues().getCfKeywords()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfKeywords().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfKeywords().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}
+			else if(collectionItemDo.getResource().getCustomFieldValues().getCfAds()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAds().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAds().equalsIgnoreCase("null")){
+				resourceInfoLbl.setVisible(true);
+			}else{
+				resourceInfoLbl.setVisible(false);
+			}
+		}
 		}
 		
 		if(collectionItemDo.getResource().getGrade()==null
 				&& collectionItemDo.getResource().getUrl()==null 
-				&& collectionItemDo.getResource().getThumbnailUrl()==null
 				&& collectionItemDo.getResource().getTaxonomySet()==null
-				&& collectionItemDo.getResource().getLicense() ==null && collectionItemDo.getStandards()==null){
+				&& collectionItemDo.getResource().getLicense() ==null 
+				&& collectionItemDo.getStandards()==null 
+				&& collectionItemDo.getResource().getResourceSource()==null
+				&& collectionItemDo.getResource().getCustomFieldValues().getCfHost()==null
+				&& collectionItemDo.getResource().getCustomFieldValues().getCfOER()==null){
 			generalLbl.setVisible(false);
 		}else{
 			  if(collectionItemDo.getResource().getGrade()!=null && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("")&&!collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")){
@@ -467,6 +535,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				  		else if(collectionItemDo.getResource().getResourceSource()!=null && collectionItemDo.getResource().getResourceSource().getAttribution()!=null && !collectionItemDo.getResource().getResourceSource().getAttribution().equalsIgnoreCase("") && !collectionItemDo.getResource().getResourceSource().getAttribution().equalsIgnoreCase("null")){
 				  			generalLbl.setVisible(true);	
 				 			}
+				  		else if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfHost().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfHost().equalsIgnoreCase("null")){
+				  			generalLbl.setVisible(true);	
+				 			}
+				  		else if(collectionItemDo.getResource().getCustomFieldValues().getCfOER()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfOER().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfOER().equalsIgnoreCase("null")){
+				  			generalLbl.setVisible(true);
+				  		}
 				  		else{
 				  			generalLbl.setVisible(false);
 				  		}
@@ -538,6 +612,17 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		timeRequiredLabel.setVisible(false);
 	}
 	
+	private void setOerDetails(String oerdetails) {
+		// TODO Auto-generated method stub
+		if(oerdetails!=null&&!oerdetails.equalsIgnoreCase("")&&!oerdetails.equalsIgnoreCase("null")){
+			oerPanel.setVisible(true);
+			oerLbl.setText(GL1705+GL_SPL_SEMICOLON);
+			oerAvailability.setText(oerdetails);
+		}else{
+			oerPanel.setVisible(false);
+		}
+	}
+
 	private void setmonentoflearningDetails(List<String> momentoflearningdetails) {
 		momentsoflearningType.clear();
 		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
@@ -633,23 +718,23 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setAcessHazardDetails(String accesshazard) {
 		// TODO Auto-generated method stub
-		if(accesshazard==""||accesshazard==null ){
-			accessHazardPanel.setVisible(false);
+		if(accesshazard!=null&&!accesshazard.equalsIgnoreCase("")&&!accesshazard.equalsIgnoreCase("null")){
+			accessHazardPanel.setVisible(true);
+			acessHazardType.setText(accesshazard);
+			acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
 		}else{
-		accessHazardPanel.setVisible(true);
-		acessHazardType.setText(accesshazard);
-		acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
+		accessHazardPanel.setVisible(false);
 		}
 	}
 
 	private void setcontrolflexibilityDetails(String controlflexibility) {
 		// TODO Auto-generated method stub
-		if(controlflexibility==""||controlflexibility==null ){
-			controlPanel.setVisible(false);
+		if(controlflexibility!=null&&!controlflexibility.equalsIgnoreCase("")&&!controlflexibility.equalsIgnoreCase("null")){
+			controlPanel.setVisible(true);
+			controlType.setText(controlflexibility);
+			controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
 		}else{
-		controlPanel.setVisible(true);
-		controlType.setText(controlflexibility);
-		controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
+			controlPanel.setVisible(false);
 		}
 	}
 
@@ -761,18 +846,30 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			keyWordsPanel.setVisible(false);
 		}else{
 		if(keywords.size()>0){
-			keywordsTitle.setText("Keywords");
-			final Label keywordLabel=new Label(keywords.get(0)+","+keywords.get(1));
-			keywordLabel.getElement().setAttribute("style", "float: left;");
-			keywordsInfo.add(keywordLabel);
-			keyWordsPanel.setVisible(true);
+			if(keywords.size()==1){
+				keywordsTitle.setText("Keywords:");
+				final Label keywordLabel=new Label(keywords.get(0));
+				keywordLabel.getElement().setAttribute("style", "float: left;");
+				keywordsInfo.add(keywordLabel);
+				keyWordsPanel.setVisible(true);
+			} if(keywords.size()==2){
+				keywordsTitle.setText("Keywords:");
+				final Label keywordLabel=new Label(keywords.get(0)+","+keywords.get(1));
+				keywordLabel.getElement().setAttribute("style", "float: left;");
+				keywordsInfo.add(keywordLabel);
+				keyWordsPanel.setVisible(true);
+			}
 		}
 		if(keywords.size()>2){
+			keywordsTitle.setText("Keywords:");
 			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
 			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label keywordsLabelNew=new Label(keywords.get(0)+","+keywords.get(1));
+			keywordsLabelNew.getElement().setAttribute("style", "float:left;");
+			keywordsInfo.add(keywordsLabelNew);
 			keywordsInfo.add(keywordCountLabel);
-			Widget keywordswidget = getCommonwidget(keywords);
-			keywordCountLabel.addMouseOverHandler(new MouseOverShowToolTip(keywordswidget));
+			Widget keywordwidget = getCommonwidget(keywords);
+			keywordCountLabel.addMouseOverHandler(new MouseOverShowToolTip(keywordwidget));
 			keywordCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			keyWordsPanel.setVisible(true);
 		}
@@ -781,119 +878,119 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setCopyRightHolderDetails(String copyRightHolder) {
 		// TODO Auto-generated method stub
-		if(copyRightHolder==""||copyRightHolder==null ){
-			copyRightPanel.setVisible(false);
+		if(copyRightHolder!=null&&!copyRightHolder.equalsIgnoreCase("")&&!copyRightHolder.equalsIgnoreCase("null")){
+			copyRightPanel.setVisible(true);
+			copyRightType.setText(copyRightHolder);
+			copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
 		}else{
-		copyRightPanel.setVisible(true);
-		copyRightType.setText(copyRightHolder);
-		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
+			copyRightPanel.setVisible(false);
 		}
 	}
 
 	private void setAuthorDetails(String author) {
 		// TODO Auto-generated method stub
-		if(author==""||author==null ){
-			authorPanel.setVisible(false);
+		if(author!=null&&!author.equalsIgnoreCase("")&&!author.equalsIgnoreCase("null")){
+			authorPanel.setVisible(true);
+			authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
+			authorName.setText(author);
 		}else{
-		authorPanel.setVisible(true);
-		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
-		authorName.setText(author);
+			authorPanel.setVisible(false);
 		}
 	}
 
 	private void setdataTypeDetails(String dataType) {
 		// TODO Auto-generated method stub
-		if(dataType==""||dataType==null ){
-			DataTypePanel.setVisible(false);
+		if(dataType!=null&&!dataType.equalsIgnoreCase("")&&!dataType.equalsIgnoreCase("null")){
+			DataTypePanel.setVisible(true);
+			dataTypeFormat.setText(dataType);
+			dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
 		}else{
-		DataTypePanel.setVisible(true);
-		dataTypeFormat.setText(dataType);
-		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
+			DataTypePanel.setVisible(false);
 		}
 	}
 
 	private void setlanguageDetails(String language) {
 		// TODO Auto-generated method stub
-		if(language==""||language==null ){
-			languagePanel.setVisible(false);
+		if(language!=null&&!language.equalsIgnoreCase("")&&!language.equalsIgnoreCase("null")){
+			languagePanel.setVisible(true);
+			languageType.setText(language);
+			languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
 		}else{
-		languagePanel.setVisible(true);
-		languageType.setText(language);
-		languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
+			languagePanel.setVisible(false);
 		}
 	}
 
 	private void setCountryCodeDetails(String countryCode) {
 		// TODO Auto-generated method stub
-		if(countryCode==""||countryCode==null ){
-			countryCodePanel.setVisible(false);
+		if(countryCode!=null&&!countryCode.equalsIgnoreCase("")&&!countryCode.equalsIgnoreCase("null")){
+			countryCodePanel.setVisible(true);
+			countryCodeType.setText(countryCode);
+			countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
 		}else{
-		countryCodePanel.setVisible(true);
-		countryCodeType.setText(countryCode);
-		countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
+			countryCodePanel.setVisible(false);
 		}
 	}
 
 	private void setageRangeDetails(String ageRange) {
 		// TODO Auto-generated method stub
-		if(ageRange==""||ageRange==null ){
-			ageRangePanel.setVisible(false);
+		if(ageRange!=null&&!ageRange.equalsIgnoreCase("")&&!ageRange.equalsIgnoreCase("null")){
+			ageRangePanel.setVisible(true);
+			ageRangeType.setText(ageRange);
+			ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
 		}else{
-		ageRangePanel.setVisible(true);
-		ageRangeType.setText(ageRange);
-		ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
+			ageRangePanel.setVisible(false);
 		}
 	}
 
 	private void setinteractivityTypeDetails(String interactivityType) {
 		// TODO Auto-generated method stub
-		if(interactivityType==""||interactivityType==null ){
-			interactivityTypePanel.setVisible(false);
+		if(interactivityType!=null&&!interactivityType.equalsIgnoreCase("")&&!interactivityType.equalsIgnoreCase("null")){
+			interactivityTypePanel.setVisible(true);
+			interactiveType.setText(interactivityType);
+			interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
 		}else{
-		interactivityTypePanel.setVisible(true);
-		interactiveType.setText(interactivityType);
-		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
+			interactivityTypePanel.setVisible(false);
 		}
 	}
 
 	private void seteducationalRoleDetails(String educationalRole) {
-		if(educationalRole==""||educationalRole==null ){
-			eduRolePanel.setVisible(false);
+		if(educationalRole!=null&&!educationalRole.equalsIgnoreCase("")&&!educationalRole.equalsIgnoreCase("null")){
+			eduRolePanel.setVisible(true);
+			eduRoleType.setText(educationalRole);
+			eduRoleLbl.setText(GL1691+GL_SPL_SEMICOLON);
 		}else{
-		eduRolePanel.setVisible(true);
-		eduRoleType.setText(educationalRole);
-		eduRoleLbl.setText(GL1691+GL_SPL_SEMICOLON);
+			eduRolePanel.setVisible(false);
 		}
 	}
 
 
 	private void setedAlignDetails(String educationalAlignment) {
-		if(educationalAlignment==""|| educationalAlignment==null){
-			eduAllignPanel.setVisible(false);
-		}else{
+		if(educationalAlignment!=null&&!educationalAlignment.equalsIgnoreCase("")&&!educationalAlignment.equalsIgnoreCase("null")){
 			eduAllignPanel.setVisible(true);
 			eduAllignType.setText(educationalAlignment);
 			eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
+		}else{
+			eduAllignPanel.setVisible(false);
 		}
 	}
 
 	private void setHostDetails(String host) {
-		if(host==""||host==null ){
-			hostPanel.setVisible(false);
-		}else{
+		if(host!=null&&!host.equalsIgnoreCase("")&&!host.equalsIgnoreCase("null")){
 			hostPanel.setVisible(true);
 			hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
 			hostType.setText(host);
+		}else{
+			hostPanel.setVisible(false);
 		}
 	}
 
-	private void setCreatedDate(Date createdOn) {
+	/*private void setCreatedDate(Date createdOn) {
 		
 		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(createdOn);
 		dateCreatedPanel.setVisible(true);
 		createdDateInfo.setText(dateString);
 		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
-	}
+	}*/
 
 	private void setThumbnailUrl(String url) {
 		thumbnailurlValue.clear();
