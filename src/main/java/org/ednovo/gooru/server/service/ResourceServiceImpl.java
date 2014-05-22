@@ -606,14 +606,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr,getLoggedInSessionToken(),  URLEncoder.encode(titleStr).toString(), urlStr, categoryStr, URLEncoder.encode(descriptionStr).toString(), thumbnailImgSrcStr, String.valueOf(endTime));
-	//		String form = ResourceFormFactory.generateDataForm(newResourceDo, RESOURCE);
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
 		
-		//ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data")[0]
-		
-		System.out.println("resourceUrl::"+url);
-		System.out.println("resourceForm::"+form);
-		
+	
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -1437,7 +1432,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
-		System.out.println("delete URL:"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 	}

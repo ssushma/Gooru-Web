@@ -871,3 +871,9 @@ float: left;
 .flagButtonDisable{
 	opacity: 0.4;
 }
+
+.btnGreen{
+	float: right;
+	margin-right: 12px;
+	margin-top: 10px;
+}

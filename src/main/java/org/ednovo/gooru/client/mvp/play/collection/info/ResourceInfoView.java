@@ -37,6 +37,7 @@ import java.util.Set;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -62,7 +63,9 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -108,6 +111,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	@UiField HTML resourceInfoSeparator,resourcetypeSeparator,lblcollectionName;
 	@UiField
 	HTMLEventPanel hideButton;
+	
+	@UiField Button addTagsBtn;
+	
+	AddTagesPopupView popup;
+	
+	CollectionItemDo collectionItemDoGlobal = new CollectionItemDo();
 	
 	ToolTipPopUp toolTip ; 
 	
@@ -161,6 +170,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
+		collectionItemDoGlobal = collectionItemDo;
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
@@ -1536,6 +1546,26 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void setCollectionTitle(String mycollectionTitle) {
 		// TODO Auto-generated method stub
 		this.title =mycollectionTitle;
+	}
+	
+	@UiHandler("addTagsBtn")
+	public void onAddTagsBtnClicked(ClickEvent clickEvent) 
+	{
+/*		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+		String resourceIdVal = collectionRequest.getParameter("rid", null);*/
+		
+
+		System.out.println("resourceIdaddTagsBtn:::"+collectionItemDoGlobal.getResource().getGooruOid());
+		popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
+			
+			@Override
+			public void closePoup() {
+				Window.enableScrolling(true);
+		        this.hide();
+			}
+		};
+		popup.show();
+		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
 	}
 
 }
