@@ -385,6 +385,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 							}else{
 								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 							}
+							AppClientFactory.fireEvent(new SetButtonEvent());
 							//Call shelf api to load the first collection.
 						}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
 							Window.enableScrolling(true);

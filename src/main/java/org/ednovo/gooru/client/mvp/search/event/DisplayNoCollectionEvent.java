@@ -25,38 +25,34 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.home.event;
+package org.ednovo.gooru.client.mvp.search.event;
+
+
+import com.google.gwt.event.shared.GwtEvent;
 
 /**
- * @author ClasspageTeam
+ * @author Search Team
  * 
  */
-public enum HeaderTabType {
+public class DisplayNoCollectionEvent extends GwtEvent<DisplayNoCollectionHandler> {
 
-	DISCOVER("discover"), ORGANIZE("mycollections"), TEACH("teach"), STUDY("myclasses"), USERNAME("username"), NONE("others");
-
-	String type;
+	public static final Type<DisplayNoCollectionHandler> TYPE = new Type<DisplayNoCollectionHandler>();
 
 	/**
 	 * Class constructor
 	 */
-	private HeaderTabType(String type) {
-		this.type = type;
+	public DisplayNoCollectionEvent() {
 	}
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
+	@Override
+	public Type<DisplayNoCollectionHandler> getAssociatedType() {
+		return TYPE;
 	}
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
+	@Override
+	protected void dispatch(DisplayNoCollectionHandler handler) {
+		handler.showNoCollections();
 	}
+
 
 }

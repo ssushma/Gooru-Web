@@ -36,6 +36,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCollaboratorTabVc;
@@ -74,9 +76,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -386,6 +386,19 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		};
 		
+		DisplayNoCollectionHandler displayNoCollections = new DisplayNoCollectionHandler() {
+
+			@Override
+			public void showNoCollections() {
+				setNoDataCollection();
+			}
+
+		
+		};
+
+		AppClientFactory.getEventBus().addHandler(
+				DisplayNoCollectionEvent.TYPE, displayNoCollections);
+		
 		collectionDescriptionUc.setPlaceholder(WHAT_IS_THIS_COLLECTION_ABOUT);
 		// collectionDescriptionUc.getElement().setAttribute("placeholder",
 		// WHAT_IS_THIS_COLLECTION_ABOUT);
@@ -573,7 +586,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		});
 		
-		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
+		noCollectionResetPanel.setVisible(false);
 		collPopup.setVisible(false);
 		statPopup.setVisible(false);
 		statisticsTabVc.addClickHandler(new AnalyticsClickEvent());
@@ -629,7 +642,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void setCollection(CollectionDo collection) {
-		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
+		noCollectionResetPanel.setVisible(false);
 		this.collectionDo = collection;
 		panelFoooter.setVisible(true);
 		editPanel.getElement().getStyle().setBackgroundColor("white");
@@ -741,11 +754,27 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		if (content != null) {
-			if (slot == ShelfUiHandlers.TYPE_SHELF_TAB) {
-				shelfTabSimPanel.setWidget(content);
-			} else if(slot == ShelfUiHandlers.TYPE_FOLDERS_SLOT) {
-				folderListPanel.setWidget(content);
+		System.out.println("setInSlot");
+		if (AppClientFactory.isAnonymous()){
+			shelfTabSimPanel.setVisible(false);
+			folderListPanel.setVisible(false);
+			loadingImageLabel.setVisible(false);
+			editPanel.setVisible(false);
+			noCollectionResetPanel.setVisible(true);
+			scrollContainer.setVisible(false);
+		}else{
+			scrollContainer.setVisible(true);
+			noCollectionResetPanel.setVisible(false);
+			shelfTabSimPanel.setVisible(true);
+			folderListPanel.setVisible(true);
+			loadingImageLabel.setVisible(false);
+			editPanel.setVisible(true);
+			if (content != null) {
+				if (slot == ShelfUiHandlers.TYPE_SHELF_TAB) {
+					shelfTabSimPanel.setWidget(content);
+				} else if(slot == ShelfUiHandlers.TYPE_FOLDERS_SLOT) {
+					folderListPanel.setWidget(content);
+				}
 			}
 		}
 	}
@@ -1591,35 +1620,37 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		//temporary fix
 //		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
 		////
-		noCollectionResetPanel.clear();
-		Label noCollectionMessage = new Label(NO_COLLECTION_MESSAGE);
-		noCollectionMessage.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-		noCollectionMessage.getElement().getStyle().setMarginBottom(30, Unit.PX);
-		noCollectionMessage.getElement().getStyle().setMarginTop(30, Unit.PX);
-		noCollectionMessage.getElement().getStyle().setColor("#999999");
-		noCollectionMessage.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
-		editPanel.getElement().getStyle().setBackgroundColor("white");
-		editPanel.getElement().getStyle().setBackgroundColor("white");
-//		noCollectionResetPanel.add(noCollectionMessage);
+		noCollectionResetPanel.clear();
 		noCollectionResetPanel.add(new FoldersWelcomePage());
+		shelfTabSimPanel.setVisible(false);
+		folderListPanel.setVisible(false);
+		loadingImageLabel.setVisible(false);
+		editPanel.setVisible(false);
+		noCollectionResetPanel.setVisible(true);
+		panelFoooter.setVisible(false);
+		scrollContainer.setVisible(false);
 		getLoadingImageInvisible();
 	}
 	
 	@Override
 	public void setOnlyNoDataCollection() {
 		
-//		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.NONE);
-//		noCollectionResetPanel.clear();
-//		noCollectionResetPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-//		folderListPanel.getElement().getStyle().setDisplay(Display.NONE);
-//		noCollectionResetPanel.clear();
-//		editPanel.getElement().getStyle().setDisplay(Display.NONE);
+		getLoadingImageInvisible();
+		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		
-//		noCollectionResetPanel.add(new FoldersWelcomePage());
-//		noCollectionResetPanel.add(new FooterUc());
-//		getLoadingImageInvisible();
+		shelfTabSimPanel.setVisible(false);
+		folderListPanel.setVisible(false);
+		loadingImageLabel.setVisible(false);
+		editPanel.setVisible(false);
 		panelFoooter.setVisible(false);
+		scrollContainer.setVisible(false);
+		noCollectionResetPanel.clear();
+		noCollectionResetPanel.add(new FoldersWelcomePage());
+		noCollectionResetPanel.setVisible(true);
 	}
 
 	@Override

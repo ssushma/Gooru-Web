@@ -25,38 +25,18 @@
 /**
  * 
  */
-package org.ednovo.gooru.client.mvp.home.event;
+package org.ednovo.gooru.client.mvp.search.event;
+
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.EventHandler;
 
 /**
- * @author ClasspageTeam
+ * @author Search Team
  * 
  */
-public enum HeaderTabType {
+public interface DisplayNoCollectionHandler extends EventHandler, BaseUiHandlers {
 
-	DISCOVER("discover"), ORGANIZE("mycollections"), TEACH("teach"), STUDY("myclasses"), USERNAME("username"), NONE("others");
-
-	String type;
-
-	/**
-	 * Class constructor
-	 */
-	private HeaderTabType(String type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+	void showNoCollections();
 
 }
