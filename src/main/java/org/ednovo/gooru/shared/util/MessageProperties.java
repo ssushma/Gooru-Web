@@ -2063,7 +2063,7 @@ public interface MessageProperties {
     	String GL1622="Your class is open! This means that anyone with the Class Code or Class URL can access and join this class.  Switch to Invite Only to limit access.";
     	String GL1623="Assignments";
     	String GL1624="Students";
-    	String GL1625="It's so quiet in this class. Start assigning collections!";
+    	String GL1625=GL0147;
     	
     	//study player text
     	String GL1626="Your Collection Summary";
@@ -2223,8 +2223,8 @@ public interface MessageProperties {
 		String GL1749 = "e.g. YouTube";
 		
 		String GL1748_1 = "Libraries";
-		String GL1749_1 = "Community Library";
-		String GL1750 = "District Libraries";
+		String GL1749_1 = GL0516;
+		String GL1750 = GL0515;
 		String GL1751 = "Partner Libraries";
 		
 		String GL1752 = "My Collections";
