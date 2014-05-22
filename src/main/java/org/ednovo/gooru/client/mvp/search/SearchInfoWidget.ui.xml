@@ -244,7 +244,7 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
-					ui:field="DataTypePanel">
+					ui:field="dataTypePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="dataTypeLbl"></g:Label>
 					<g:Label styleName="{playerStyle.resource-info-title}"
@@ -268,19 +268,19 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
-					ui:field="contributorPanel">
-					<g:Label styleName="{playerStyle.resource-info-more-title}"
-						ui:field="contributorTitle"></g:Label>
-					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="contributorName" />
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
 					ui:field="keyWordsPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="keywordsTitle"></g:Label>
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="keywordsInfo" />
+				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
+					ui:field="adsPanel">
+					<g:Label styleName="{playerStyle.resource-info-more-title}"
+						ui:field="adsTitle"></g:Label>
+					<g:Label styleName="{playerStyle.resource-info-title}"
+						ui:field="adsName" />
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
