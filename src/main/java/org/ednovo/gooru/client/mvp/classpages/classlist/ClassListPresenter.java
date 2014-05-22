@@ -129,7 +129,6 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	
 	@Override
 	public void removeUserFromClass(final ClasspageDo classpageDo, String emailId, final int pendingOffSet, final boolean pendingFlag){
-		System.out.println("pendingOffSet:::"+pendingOffSet);
 		AppClientFactory.getInjector().getClasspageService().removeStudentFromClass(classpageDo.getClasspageCode(), classpageDo.getSharing(), emailId,  new SimpleAsyncCallback<Void>() {
 
 			@Override

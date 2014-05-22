@@ -101,7 +101,6 @@ public class uploadServlet extends UploadAction{
 					try {
 					
 						responsedata = webInvokeForImage("POST", requestData,"multipart/form-data", request,uploadedFileItem.get(), fileName,uploadedFileItem.getSize(),url);
-						System.out.println("response data::"+responsedata);
 						jsonArray = new JSONArray(responsedata);
 						
 					} catch (UnsupportedEncodingException e) {

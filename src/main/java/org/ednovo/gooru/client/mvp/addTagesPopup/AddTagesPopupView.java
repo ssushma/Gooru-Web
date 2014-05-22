@@ -371,7 +371,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	}
 	@UiHandler("kindergarden")
 	public void onKindergardenClick(ClickEvent click){
-		System.out.println("stylename::"+kindergarden.getStyleName().toString().contains("selected"));
 		if(kindergarden.getStyleName().toString().contains("selected"))
 		{
 			kindergarden.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());

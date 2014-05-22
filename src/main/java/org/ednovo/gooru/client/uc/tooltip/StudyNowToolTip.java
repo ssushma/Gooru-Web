@@ -422,9 +422,7 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 					public void onSuccess(ClasspageListDo result) {
 						classpageListDo = result;
 						totalHitCount=result.getTotalHitCount();
-						
-						System.out.println("classpageListDo.getSearchResults().size()::"+result.getSearchResults().size());
-						
+												
 						lblLoading.setVisible(false);
 						isApiCalling = false;
 						if(classList!=null){

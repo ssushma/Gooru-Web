@@ -424,7 +424,6 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 							String confirmStatus = AppClientFactory.getPlaceManager()
 									.getRequestParameter("confirmStatus");
 							if(newMailId!=null && userId!=null && confirmStatus!=null){
-								System.out.println("login");
 								Map<String, String> params = new HashMap<String, String>();
 								params.put("confirmStatus", confirmStatus);
 								params.put("newMailId", newMailId);

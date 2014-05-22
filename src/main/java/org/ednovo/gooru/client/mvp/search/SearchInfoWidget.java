@@ -221,14 +221,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	public void setData(){
-		System.out.println("gooruid::"+searchResultDo.getGooruOid());
 		AppClientFactory.getInjector().getPlayerAppService().getResourceCollectionItem(null, searchResultDo.getGooruOid(), null, new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
 			public void onSuccess(CollectionItemDo collectionItemDo) {
 				// TODO Auto-generated method stub
-				System.out.println("onSucess:"+collectionItemDo.getGrade());
-				System.out.println("onSucess:"+collectionItemDo.getResource().getGrade());
 				setGrades(collectionItemDo.getResource().getGrade());
 				setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():
 					null,collectionItemDo.getResource().getTaxonomySet());
@@ -255,7 +252,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	 * @param licenseDo instance of {@link LicenseDo}
 	 */
 	public void setResourceLicenceLogo(String assetUrl,LicenseDo licenseDo){
-		System.out.println("setlicencelogo"+assetUrl);
 		if(licenseDo!=null){
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
@@ -321,7 +317,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	public String getGrades(String grade){
-		System.out.println("getgrades");
 		if (grade != null) {
 			grade = grade.replace("null,", "").replace("null ,", "").replace("null", "");
 
@@ -942,7 +937,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				generalLbl.setVisible(true);	
 			}
 			else{
-				//System.out.println("final else loop:::::");
 				generalLbl.setVisible(false);
 			}
 		}
