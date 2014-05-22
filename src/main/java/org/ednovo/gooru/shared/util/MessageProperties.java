@@ -2269,5 +2269,6 @@ public interface MessageProperties {
     	String GL1784 = "English Language Arts";
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
+    	String GL1788 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
    }
 
