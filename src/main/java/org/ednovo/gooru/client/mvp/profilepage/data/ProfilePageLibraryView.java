@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.profilepage.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.LeftMenuItemView;
@@ -42,7 +43,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -51,9 +55,13 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView,MessageProperties {
 
-	@UiField HTMLPanel leftNav, contentScroll;
+	@UiField HTMLPanel leftNav, contentScroll, emptyContainer;
 	
 	@UiField ProfilePageLibraryStyleBundle style;
+	
+	@UiField Label noCollectionsMsg, collectionsRedirectionMsg;
+	
+	@UiField Button myCollectionsBtn;
 	
 	private static final String FOLDERID = "folderId";
 	
@@ -74,6 +82,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public ProfilePageLibraryView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new ProfilePageLibraryPresenter(this));
+		emptyContainer.setVisible(false);
+		setMetaData();
+	}
+	
+	private void setMetaData() {
+		myCollectionsBtn.setText(GL1789);
+		collectionsRedirectionMsg.setText(GL1788);
 	}
 	
 	public void setData() {
@@ -185,5 +200,32 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	@Override
 	public ProfilePageLibraryPresenter getPresenter() {
 		return profilePageLibraryPresenter;
+	}
+	
+	@UiHandler("myCollectionsBtn")
+	public void clickMyCollectionsBtn(ClickEvent event) {
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+	}
+
+	@Override
+	public void setEmptyContainer(boolean isEmpty) {
+		emptyContainer.setVisible(isEmpty);
+		leftNav.setVisible(!isEmpty);
+		contentScroll.setVisible(!isEmpty);
+		if(isEmpty) {
+			setUserNoContentMsg();
+		}
+	}
+	
+	private void setUserNoContentMsg() {
+		if(AppClientFactory.getPlaceManager().getRequestParameter("id").equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
+			noCollectionsMsg.setText(GL1790);
+			collectionsRedirectionMsg.setVisible(true);
+			myCollectionsBtn.setVisible(true);
+		} else {
+			noCollectionsMsg.setText("\""+AppClientFactory.getPlaceManager().getRequestParameter("user")+"\" "+GL1791);
+			collectionsRedirectionMsg.setVisible(false);
+			myCollectionsBtn.setVisible(false);
+		}
 	}
 }
