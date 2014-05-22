@@ -91,15 +91,12 @@ public abstract class SocialShareWidget extends Composite implements MessageProp
 			if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("assessment-question")){
 				resourceThumbnail=getQuestionImage();
 				resourceHiddenImage.setUrl(resourceThumbnail);
-				System.out.println("resourceThumbnail==>"+resourceThumbnail);
 			}else if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("video/youtube")){
 				resourceThumbnail=ResourceImageUtil.youtubeImageLink(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()),Window.Location.getProtocol());
 				resourceHiddenImage.setUrl(resourceThumbnail);
-				System.out.println("resourceThumbnail==>"+resourceThumbnail);
 			}else{
 				resourceThumbnail=collectionItemDo.getResource().getThumbnails().getUrl();
 				resourceHiddenImage.setUrl(resourceThumbnail);
-				System.out.println("resourceThumbnail==>"+resourceThumbnail);
 			}
 		}
 	}

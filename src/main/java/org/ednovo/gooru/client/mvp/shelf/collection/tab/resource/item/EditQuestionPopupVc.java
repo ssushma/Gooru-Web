@@ -293,12 +293,12 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		// Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
 		
-/*		 System.out.println("eduinfo::"+collectionItemDo.getResource().getEducationalUse());
+/*		 
 		 
 		 if( collectionItemDo.getResource().getEducationalUse()!=null){
 				for (checkboxSelectedDo item : collectionItemDo.getResource().getEducationalUse()) {
 					 
-					 System.out.println("item.getValue()::"+item.getValue());
+					 
 					   if(item.isSelected()){
 						    resourceEducationalLabel.setText(item.getValue());
 							educationalUsePanel.setVisible(false);
