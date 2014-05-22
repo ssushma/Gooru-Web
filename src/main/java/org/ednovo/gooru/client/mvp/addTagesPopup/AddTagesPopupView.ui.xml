@@ -6,27 +6,28 @@
 		field="res" />
 	<g:HTMLPanel styleName="{res.css.popup}">
 		  <g:HTMLPanel  styleName="{res.css.popupInner}">
-		    <g:HTMLPanel styleName="{res.css.popupHeader}"> Add Tags
+		    <g:HTMLPanel styleName="{res.css.popupHeader}" > 
+		   	 <g:InlineLabel ui:field="addTagesTitle"></g:InlineLabel>
 		      <g:Label styleName="{res.css.tag}"></g:Label>
 		    </g:HTMLPanel >
 		    <g:HTMLPanel  styleName="{res.css.popupContent}">Add as many tags as you’d like by clicking on the words within each category.<br />
 		      <br />
-		      <g:Label styleName="{res.css.h5}" ui:field="headerEducationalUse">Educational Use</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="activity">Activity </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="handout">Handout</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="homework">Homework</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="game">Game</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="presentation">Presentation</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="refMaterial">Reference Material</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="quiz">Quiz</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="currPlan">Curriculum Plan</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="lessonPlan">Lesson Plan</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="unitPlan">Unit Plan</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="projectPlan">Project Plan</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="reading">Reading</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="textbook">Textbook</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="article">Article</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="book">Book</g:Label>
+		      <g:Label styleName="{res.css.h5}" ui:field="headerEducationalUse"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="activity"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="handout"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="homework"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="game"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="presentation"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="refMaterial"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="quiz"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="currPlan"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="lessonPlan"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="unitPlan"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="projectPlan"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="reading"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="textbook"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="article"></g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="book"></g:Label>
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
 		      <!-- <g:HTMLPanel styleName="{res.css.h5} {res.css.qmark}">Standards<br />
 		        <g:TextBox styleName="{res.css.inputtype}" />
@@ -56,7 +57,7 @@
 		          <g:HTMLPanel styleName="{res.css.sliderCircle}" ui:field="moveCircle"></g:HTMLPanel>
 		        </gg:HTMLEventPanel> -->
 		        <g:HTMLPanel styleName="{res.css.levels}">
-		          <g:Label styleName="{res.css.levelnumbers}" ui:field="kindergarden">Kindergarden </g:Label>
+		          <g:Label styleName="{res.css.levelnumbers}" ui:field="kindergarden">Kindergarden</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level1">1</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level2">2</g:Label>
 		          <g:Label styleName="{res.css.levelnumbers}" ui:field="level3">3</g:Label>
@@ -73,19 +74,19 @@
 		      </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.clearfix}"></g:HTMLPanel>
 		      <g:Label styleName="{res.css.h5}" ui:field="AdsHeader">Ads</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="noAds">No Advertisement </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="modAds">Moderate Advertisements </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="aggreAds"> Aggressive Advertisements</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="noAds">No Advertisement</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="modAds">Moderate Advertisements</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="aggreAds">Aggressive Advertisements</g:Label>
 		      <br />
 		      <br />
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		      <g:Label styleName="{res.css.h5}" ui:field="accessHazard">Access Hazard</g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashing">Flashing </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard">Flashing Hazard </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="motionSimulation"> Motion Simulation </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard"> Motion Simulation Hazard </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="sound"> Sound </g:Label>
-		      <g:Label styleName="{res.css.li}" ui:field="soundHazard"> Sound Hazard</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="flashing">Flashing</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="flashingHazard">Flashing Hazard</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="motionSimulation">Motion Simulation</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="motionSimulationHazard">Motion Simulation Hazard</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="sound">Sound</g:Label>
+		      <g:Label styleName="{res.css.li}" ui:field="soundHazard">Sound Hazard</g:Label>
 		      <g:Label styleName="{res.css.clearfix}"></g:Label>
 		      <br />
 			  <g:Label styleName="{res.css.h5}" ui:field="mediaLabel" />
@@ -102,10 +103,10 @@
 		        <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes">Yes</g:Button>
 		        <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo">No</g:Button>
 		      </g:HTMLPanel>
-		    </g:HTMLPanel>
-		    <g:HTMLPanel styleName="{res.css.okcancel}">
+		      <g:HTMLPanel styleName="{res.css.okcancel}">
 		      <g:Button styleName="secondary" ui:field="cancelBtn">Cancel</g:Button>
 		      <g:Button styleName="primary" ui:field="addTagsBtn">Add Tags</g:Button>
+		    </g:HTMLPanel>
 		    </g:HTMLPanel>
 		  </g:HTMLPanel>
 	</g:HTMLPanel>

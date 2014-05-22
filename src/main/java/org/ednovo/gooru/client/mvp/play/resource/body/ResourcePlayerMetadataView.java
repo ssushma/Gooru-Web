@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
+import org.apache.xpath.operations.Bool;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -1052,16 +1053,16 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
 		if(showThankYouToolTip){
-			thankYouResourceStarRatings = new ThankYouResourceStarRatings(result.getAssocGooruOid(),result.getScore(),result.getFreeText()); 
-			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
-			thankYouResourceStarRatings.show();
-			thankYouResourceStarRatings.setAutoHideEnabled(true);
+			getAvgRatingAndCount(result.getAssocGooruOid(),result.getScore(),result.getFreeText());
 		}
 		setUserRatings(result);
 	}
 	
 	
+	private void getAvgRatingAndCount(String assocGooruOid, Integer score, String review) {
+		getUiHandlers().getAvgRatingAndCount(assocGooruOid,score,review);
+	}
+
 	/**
 	 * default rating will get set
 	 */
@@ -1194,9 +1195,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * Inner class which implements mouse over handler.
+	 *
+	 */
 	public class OnStarMouseOver implements MouseOverHandler{
 		private String starScore="";
+		/**
+		 * Class Constructor.
+		 * @param starScore {@link String}
+		 */
 		public OnStarMouseOver(String starScore) {
 			this.starScore=starScore;
 		}
@@ -1257,6 +1266,15 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
+	/**
+	 * API call to update or to create review.
+	 * User review will get created or if already reviewed and edited, review will get updated.
+	 * 
+	 * @param assocGooruOid {@link String}
+	 * @param userReview {@link String}
+	 * @param score {@link Integer}
+	 * @param isUpdate {@link Boolean}
+	 */
 	@Override
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		if(isUpdate){
@@ -1267,9 +1285,29 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 
+	/**
+	 * Thank you too-tip will get closed, if it i opened.
+	 */
 	@Override
 	public void hideThankYouPopUp() {
 		thankYouResourceStarRatings.hide();
+	}
+
+	/**
+	 * Invokes Thankyou tool tip after user rated a resource and sets the metadata.
+	 * @param assocGooruOid {@link String}
+	 * @param score {@link Integer}
+	 * @param review {@link String}
+	 * @param average {@link Integer}
+	 * @param count {@link Integer}
+	 */
+	@Override
+	public void setRatingMetaData(String assocGooruOid, Integer score,String review, double average, Integer count) {
+		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count); 
+		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		thankYouResourceStarRatings.show();
+		thankYouResourceStarRatings.setAutoHideEnabled(true);
 	}
 	
 }

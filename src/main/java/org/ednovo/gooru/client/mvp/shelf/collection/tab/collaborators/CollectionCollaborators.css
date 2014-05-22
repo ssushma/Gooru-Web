@@ -389,3 +389,15 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 	margin: 10px 3px 0px 3px;
 	background-color: #f9f9f9;
 }
+.tag {
+	display: inline-block;
+	vertical-align: top;
+	width: 25px;
+	height: 21px;
+	cursor: pointer;
+	background: url(../images/tag.png) left no-repeat;
+	z-index: 555555;
+	bottom: 28px;
+	position: relative;
+	left: 100px;
+}

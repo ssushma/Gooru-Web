@@ -64,7 +64,12 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 			
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
-				getView().setUnitList(result);
+				if(result.getSearchResult().size()>0 || result.getCollections()!=null) {
+					getView().setEmptyContainer(false);
+					getView().setUnitList(result);
+				} else {
+					getView().setEmptyContainer(true);
+				}
 			}
 		});
 	}

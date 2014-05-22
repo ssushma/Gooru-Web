@@ -8,6 +8,7 @@
 		<g:HTMLPanel styleName="{collaborators.css.popupInner}">
 			<g:Label styleName="{collaborators.css.popupHeader}"
 				ui:field="lblTitle" />
+			<g:Label styleName="{collaborators.css.tag}" ui:field="tagImageForTagging"></g:Label>
 			<g:HTMLPanel styleName="{collaborators.css.popupContent}">
 				<g:HTMLPanel styleName="{collaborators.css.icon} {collaborators.css.complete}"
 					ui:field="imgSuccessIcon"></g:HTMLPanel>
