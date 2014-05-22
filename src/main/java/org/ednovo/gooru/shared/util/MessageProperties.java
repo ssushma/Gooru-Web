@@ -2304,7 +2304,20 @@ public interface MessageProperties {
     	String GL1811="Mobile Friendly";
     	String GL1812="Add as many tags as youâ€™d like by clicking on the words within each category.";
     	
-    	
+    	String GL1813 = "Start Creating Collections";
+		String GL1814 = "A collection is a ÒplaylistÓ of learning resources that you can remix. Customize existing collections or start from scratch!";
+		String GL1815 = "Create a Collection";
+		String GL1816 = "View Walkthrough Collection";
+		String GL1817 = "Upload your own resources";
+		String GL1818 = "Customize collections with your own tried-and-true materials";
+		String GL1819 = "Collaborate with fellow teachers";
+		String GL1820 = "Go further together--add another user to collaborate on a collection.";
+		String GL1821 = "Assess understanding with Questions";
+		String GL1822 = "Add questions to your collections to check understanding and encourage inquiry.";
+		String GL1823 = "Guide with Narration";
+		String GL1824 = "Add narration before a resource to give students direction and focus their attention";
+		String GL1825 = "Customize Existing Resources";
+		String GL1826 = "Edit start and stop times for videos, reorder resources, and more.";
 
 
     	
