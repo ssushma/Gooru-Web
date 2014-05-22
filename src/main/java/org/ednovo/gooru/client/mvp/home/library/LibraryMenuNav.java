@@ -139,8 +139,13 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		socialSciencesText.setText(GL1002);
 		languageArtsText.setText(GL1003);
 		standardsText.setText(GL0575);
-		aboutGooruAnr.setText(GL1024);
-		aboutGooruAnr.setHref("http://about.goorulearning.org/");
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+			aboutGooruAnr.setText(GL1827);
+			aboutGooruAnr.setHref(GL1828);
+		} else {
+			aboutGooruAnr.setText(GL1024);
+			aboutGooruAnr.setHref(GL1829);
+		}
 		aboutGooruAnr.setTarget("_blank");
 		aboutGooruAnr.addStyleName(libraryStyleUc.aboutGooruAnrPadding());
 		aboutGooruAnr.addClickHandler(new MixPanelEventClick());

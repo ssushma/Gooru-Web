@@ -64,6 +64,6 @@ public interface IsCollectionPlayerMetadataView extends IsViewWithHandlers<Colle
 	
 	public void clearDashBoardIframe();
 	
-	public void setClasspageInsightsUrl(String classpageId);
+	public void setClasspageInsightsUrl(String classpageId, String sessionId);
 	
 }

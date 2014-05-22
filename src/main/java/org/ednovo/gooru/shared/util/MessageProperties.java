@@ -52,6 +52,14 @@ public interface MessageProperties {
 	String GL_GRR_NUMERIC_THREE = "3";
 	String GL_GRR_NUMERIC_FOUR = "4";
 	String GL_GRR_NUMERIC_FIVE = "5";
+	String GL_GRR_NUMERIC_SIX = "6";
+	String GL_GRR_NUMERIC_SEVEN= "7";
+	String GL_GRR_NUMERIC_EIGHT = "8";
+	String GL_GRR_NUMERIC_NINE = "9";
+	String GL_GRR_NUMERIC_TEN = "10";
+	String GL_GRR_NUMERIC_ELEVEN = "11";
+	String GL_GRR_NUMERIC_TWELVE = "12";
+	
 	String GL_GRR_Close ="X";
 	
 	String GL0001="Invalid Request specified";
@@ -2063,7 +2071,7 @@ public interface MessageProperties {
     	String GL1622="Your class is open! This means that anyone with the Class Code or Class URL can access and join this class.  Switch to Invite Only to limit access.";
     	String GL1623="Assignments";
     	String GL1624="Students";
-    	String GL1625="It's so quiet in this class. Start assigning collections!";
+    	String GL1625=GL0147;
     	
     	//study player text
     	String GL1626="Your Collection Summary";
@@ -2223,8 +2231,8 @@ public interface MessageProperties {
 		String GL1749 = "e.g. YouTube";
 		
 		String GL1748_1 = "Libraries";
-		String GL1749_1 = "Community Library";
-		String GL1750 = "District Libraries";
+		String GL1749_1 = GL0516;
+		String GL1750 = GL0515;
 		String GL1751 = "Partner Libraries";
 		
 		String GL1752 = "My Collections";
@@ -2279,10 +2287,42 @@ public interface MessageProperties {
     	String GL1794 = "OFF: No one but you will be able to access your profile page.";
     	String GL1795 ="Add Tages";
     	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
-
     	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
+    	String GL1798="Lexile Level";
+    	String GL1799="Kindergarden";
+    	String GL1800="Ads";
+    	String GL1801="No Advertisement";
+    	String GL1802="Moderate Advertisements";
+    	String GL1803="Aggressive Advertisements";
+    	String GL1804="Access Hazard";
+    	String GL1805="Flashing";
+    	String GL1806="Flashing Hazard";
+    	String GL1807="Motion Simulation";
+    	String GL1808="Motion Simulation Hazard";
+    	String GL1809="Sound";
+    	String GL1810="Sound Hazard";
+    	String GL1811="Mobile Friendly";
+    	String GL1812="Add as many tags as you’d like by clicking on the words within each category.";
+    	
+    	String GL1813 = "Start Creating Collections";
+		String GL1814 = "A collection is a \"playlist\" of learning resources that you can remix. Customize existing collections or start from scratch!";
+		String GL1815 = "Create a Collection";
+		String GL1816 = "View Walkthrough Collection";
+		String GL1817 = "Upload your own resources";
+		String GL1818 = "Customize collections with your own tried-and-true materials";
+		String GL1819 = "Collaborate with fellow teachers";
+		String GL1820 = "Go further together--add another user to collaborate on a collection.";
+		String GL1821 = "Assess understanding with Questions";
+		String GL1822 = "Add questions to your collections to check understanding and encourage inquiry.";
+		String GL1823 = "Guide with Narration";
+		String GL1824 = "Add narration before a resource to give students direction and focus their attention";
+		String GL1825 = "Customize Existing Resources";
+		String GL1826 = "Edit start and stop times for videos, reorder resources, and more.";
+    	
+		String GL1827 = "About RUSD";
+    	String GL1828 = "http://www.rusdlink.org/site/default.aspx?PageID=1";
+    	String GL1829 = "http://about.goorulearning.org/";
 
-    
 
-
+    	
    }
