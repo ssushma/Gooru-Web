@@ -2270,5 +2270,7 @@ public interface MessageProperties {
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
+    	String GL1788 ="Add Tages";
+    	String GL1789 ="Thank you for tagging and contributing to our resource metadata!";
    }
 
