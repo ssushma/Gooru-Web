@@ -2305,11 +2305,11 @@ public interface MessageProperties {
     	String GL1812="Add as many tags as you’d like by clicking on the words within each category.";
     	
     	String GL1813 = "Start Creating Collections";
-		String GL1814 = "A collection is a \"playlist\" of learning resources that you can remix. Customize existing collections or start from scratch!";
+		String GL1814 = "A collection is a playlist of learning resources that you can remix. Customize existing collections or start from scratch!";
 		String GL1815 = "Create a Collection";
-		String GL1816 = "View Walkthrough Collection";
+		String GL1816 = "See for yourself!";
 		String GL1817 = "Upload your own resources";
-		String GL1818 = "Customize collections with your own tried-and-true materials";
+		String GL1818 = "Customize collections by adding your own tried-and-true handouts, worksheets, or other materials.";
 		String GL1819 = "Collaborate with fellow teachers";
 		String GL1820 = "Go further together--add another user to collaborate on a collection.";
 		String GL1821 = "Assess understanding with Questions";
@@ -2317,12 +2317,12 @@ public interface MessageProperties {
 		String GL1823 = "Guide with Narration";
 		String GL1824 = "Add narration before a resource to give students direction and focus their attention";
 		String GL1825 = "Customize Existing Resources";
-		String GL1826 = "Edit start and stop times for videos, reorder resources, and more.";
+		String GL1826 = "Edit start & stop times for videos, reorder resources, and more.";
     	
 		String GL1827 = "About RUSD";
     	String GL1828 = "http://www.rusdlink.org/site/default.aspx?PageID=1";
     	String GL1829 = "http://about.goorulearning.org/";
 
-
+    	String GL1830 = "Walk through a <br>sample collection.";
     	
    }
