@@ -36,7 +36,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -96,7 +95,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
 
-	
+	boolean isCancelclicked=false;
 	String mediaFeatureStr = GL1767;
 	String resourceId=null;
 
@@ -110,7 +109,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
-		Window.enableScrolling(false);
+		//Window.enableScrolling(false);
 		this.getElement().setAttribute("style", "z-index:99999;");
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
@@ -926,13 +925,15 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	public void closeFunction()
 	{
-		closePoup();
+		isCancelclicked=false;
+		closePoup(isCancelclicked);
 	}
 	
 	@UiHandler("cancelBtn")
 	public void onCancelClick(ClickEvent click)
 	{
-		closePoup();
+		isCancelclicked=true;
+		closePoup(isCancelclicked);
 	}
 	
 	private void OpenMediaFeatureDropdown() {
@@ -1157,8 +1158,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		
 		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
-		
-
 	}
 	
 	public void addTagsServiceRequest(String frameTagsStr, String resourceId)
@@ -1636,5 +1635,5 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		return null;
 	}
 	
-	public abstract void closePoup();
+	public abstract void closePoup(boolean isCancelclicked);
 }

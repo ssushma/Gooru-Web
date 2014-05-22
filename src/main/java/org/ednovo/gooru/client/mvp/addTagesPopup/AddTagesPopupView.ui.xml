@@ -102,10 +102,10 @@
 		        <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileYes">Yes</g:Button>
 		        <g:Button styleName="{res.css.OnButtonDeActive}" ui:field="mobileNo">No</g:Button>
 		      </g:HTMLPanel>
-		    </g:HTMLPanel>
-		    <g:HTMLPanel styleName="{res.css.okcancel}">
+		      <g:HTMLPanel styleName="{res.css.okcancel}">
 		      <g:Button styleName="secondary" ui:field="cancelBtn">Cancel</g:Button>
 		      <g:Button styleName="primary" ui:field="addTagsBtn">Add Tags</g:Button>
+		    </g:HTMLPanel>
 		    </g:HTMLPanel>
 		  </g:HTMLPanel>
 	</g:HTMLPanel>

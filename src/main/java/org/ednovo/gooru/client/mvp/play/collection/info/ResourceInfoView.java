@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -1552,15 +1553,30 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	{
 /*		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 		String resourceIdVal = collectionRequest.getParameter("rid", null);*/
-		
-
-		System.out.println("resourceIdaddTagsBtn:::"+collectionItemDoGlobal.getResource().getGooruOid());
 		popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
 			
 			@Override
-			public void closePoup() {
-				Window.enableScrolling(true);
+			public void closePoup(boolean isCancelclicked) {
 		        this.hide();
+		        if(!isCancelclicked){
+		        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+							@Override
+							public void onClickPositiveButton(ClickEvent event) {
+								this.hide();
+							}
+						};
+						success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
+						success.setHeight("253px");
+						success.setWidth("450px");
+						success.setPopupTitle(GL1795);
+						success.setDescText(GL1796);
+						success.enableTaggingImage();
+						success.setPositiveButtonText(GL0190);
+						success.center();
+						success.show();
+						success.getElement().getStyle().setZIndex(99999);
+		        }
 			}
 		};
 		popup.show();

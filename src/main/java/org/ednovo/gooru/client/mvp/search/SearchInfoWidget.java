@@ -14,6 +14,7 @@ import java.util.Set;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -1010,12 +1011,33 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	public void onAddTagsBtnClicked(ClickEvent clickEvent) 
 	{
 		System.out.println("resourceIdforaddingtags::"+searchResultDo.getGooruOid());
+		Window.enableScrolling(false);
 		popup=new AddTagesPopupView(searchResultDo.getGooruOid()) {
 			
 			@Override
-			public void closePoup() {
-				Window.enableScrolling(true);
-		        this.hide();
+			public void closePoup(boolean isCancelclicked) {
+				 this.hide();
+				 if(!isCancelclicked){
+			        SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+						@Override
+						public void onClickPositiveButton(ClickEvent event) {
+							this.hide();
+							Window.enableScrolling(true);
+						}
+						
+					};
+					success.setHeight("253px");
+					success.setWidth("450px");
+					success.setPopupTitle(GL1795);
+					success.setDescText(GL1796);
+					success.enableTaggingImage();
+					success.setPositiveButtonText(GL0190);
+					success.center();
+					success.show();
+				 }else{
+					 Window.enableScrolling(true);
+				 }
 			}
 		};
 		popup.show();
