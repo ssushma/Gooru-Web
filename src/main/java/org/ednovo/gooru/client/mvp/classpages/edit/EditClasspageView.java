@@ -14,7 +14,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListHandler;
@@ -23,13 +22,13 @@ import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEven
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
+import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
@@ -41,7 +40,10 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -52,6 +54,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -154,6 +157,8 @@ public class EditClasspageView extends
 	NewClasspagePopupView newPopup = null;
 	private  ClasspageDo classpageDo =null;
 
+	private HandlerRegistration reportHandler;
+	private HandlerRegistration reportMouseOverHandler;
 	
 	DeleteConfirmPopupVc deleteConfirmVc =null;
 	
@@ -190,8 +195,10 @@ public class EditClasspageView extends
 	private int pageNumber=1;
 
 	private final String START_PAGE = "1";
+	ToolTip toolTip = null;
 	
 	ClassListPresenter classlistPresenter;
+	
 	List<CollectionItemDo> collectionItemList = new ArrayList<CollectionItemDo>();
 
 	private static EditClassPageViewUiBinder uiBinder = GWT
@@ -268,10 +275,7 @@ public class EditClasspageView extends
 		assignmentsTab.addClickHandler(new AssignmentsTabClicked());
 		classListTab.addClickHandler(new ClassListTabClicked());
 		
-		//reportsTab.setVisible(false);
-		
-		reportsTab.addClickHandler(new reportsTabClicked());
-		
+			
 		shareTabContainerPanel.clear();
 		shareTabContainerPanel.setVisible(false);
 
@@ -442,13 +446,12 @@ public class EditClasspageView extends
 		titleAlertMessageLbl.setText(GL0143);
 		btnNewAssignment.setText(GL0144);
 		btnDeleteClasspage.setText(GL0145);
-		noAssignmentsMessageLblTwo.setText(GL0147);
+		//noAssignmentsMessageLblTwo.setText(GL0147);
 		backArrowButton.setText(GL1617);
 		monitorProgress.setText(GL1586);
 		assignmentsTab.setText(GL1623);
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
-		noAssignmentsMessageLblTwo.setText(GL1625);
 		
 		//htmlShareText.setHTML(GL0229 + GL0230);
 		//lblPopupTitle.setText(GL0230);
@@ -473,18 +476,56 @@ public class EditClasspageView extends
 		AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
 			
 	}
+	
 	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
-
+		
 		@Override
 		public void getStudentJoinList(int joinClassList) {
-			if(joinClassList==0){
-				reportsTab.setEnabled(false);
-				reportsTab.getElement().setAttribute("style", "color:#999 !important");
+			toolTip = new ToolTip(GL1797);
+			if(joinClassList==0 || totalHitCount==0){
+				if(reportHandler!=null) {
+					reportHandler.removeHandler();
+				}
+				reportsTab.getElement().setAttribute("style","opacity: 0.6 !important");
+				reportMouseOverHandler=reportsTab.addMouseOverHandler(new MouseOverHandler() {
+					
+					@Override
+					public void onMouseOver(MouseOverEvent event) {
+						toolTip.getLblLink().setVisible(false);
+						toolTip.getElement().getStyle().setBackgroundColor("transparent");
+						toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
+						toolTip.setPopupPosition(reportsTab.getAbsoluteLeft(), reportsTab.getAbsoluteTop()+40);
+						toolTip.show();
+					}
+				});
+				reportsTab.addMouseOutHandler(new MouseOutHandler() {
+					
+					@Override
+					public void onMouseOut(MouseOutEvent event) {
+						EventTarget target = ((MouseOutEvent) event).getRelatedTarget();
+						  if (Element.is(target)) {
+							  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
+								  toolTip.hide();
+							  }
+						  }	
+										
+					}
+				});
 			}
 			else
 			{
-				reportsTab.setEnabled(true);
-				reportsTab.getElement().setAttribute("style", "color:#515151 !important");
+				if(reportMouseOverHandler!=null) {
+					reportMouseOverHandler.removeHandler();
+				}
+				toolTip.hide();
+				reportsTab.getElement().setAttribute("style","opacity: 1 !important");
+				if(reportHandler!=null) {
+					reportHandler.removeHandler();
+				}
+				
+				reportHandler=reportsTab.addClickHandler(new reportsTabClicked());
+				
+				
 			}
 			
 		}

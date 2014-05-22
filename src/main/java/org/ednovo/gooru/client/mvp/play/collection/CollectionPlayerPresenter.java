@@ -679,7 +679,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		resetAnswerLists();
 		stopCollectionDataLog();
 		//insightsScheduler.schedule(3000);
-		metadataPresenter.setDataInsightsSummaryUrl(sessionId);
+		setClassCollectionDataInsightsUrl();
 		updateSession(sessionId);
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
@@ -702,12 +702,12 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				getClassPageId(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
 			}
 		}else{
-			metadataPresenter.setDataInsightsUrl();
+			metadataPresenter.setDataInsightsSummaryUrl(sessionId);
 		}
 	}
 	
 	public void setClasspageInsightsUrl(){
-		metadataPresenter.setClasspageInsightsUrl(classpageId);
+		metadataPresenter.setClasspageInsightsUrl(classpageId,sessionId);
 	}
 	
 	public void setDataInsighsUrl(){
