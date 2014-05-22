@@ -75,7 +75,6 @@ public class CollaboratorsUc extends Composite implements MessageProperties {
 			@Override
 			public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
 		     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
-		     	System.out.println("sucess");
 			}
 			
 			@Override

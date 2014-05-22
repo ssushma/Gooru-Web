@@ -111,7 +111,6 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 				SetButtonEvent.TYPE, setButtonVisibility);
 	}
 	private void setCreateClassVisibility() {
-		System.out.println("AppClientFactory.isAnonymous() :"+AppClientFactory.isAnonymous());
 		if (AppClientFactory.isAnonymous()){
 			btnCreateClass.setVisible(false);
 		}else{

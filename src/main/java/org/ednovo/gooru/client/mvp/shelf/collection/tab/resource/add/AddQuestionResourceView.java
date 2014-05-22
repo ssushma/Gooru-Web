@@ -697,7 +697,6 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		
 	}
 	public void selectNoOption(HTMLPanel questionAnswerChoiceContainer,AddQuestionAnswerChoice addQuestionAnswerChoice){
-		System.out.println("iam selectNoOption::");
 			if(addQuestionAnswerChoice.optionNoButton.getStyleName().equals(addWebResourceStyle.answerDeselected())){
 				addQuestionAnswerChoice.optionNoButton.setStyleName(addWebResourceStyle.answerSelected());
 				addQuestionAnswerChoice.optionSelectedButton.setStyleName(addWebResourceStyle.answerDeselected());
@@ -1474,10 +1473,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
              AddQuestionAnswerChoice addQuestionAnswerChoice=(AddQuestionAnswerChoice)questionAnswerChoiceContainer.getWidget(i);
              if(addQuestionAnswerChoice.optionSelectedButton.getStyleName().equals(addWebResourceStyle.answerSelected())||
             		 addQuestionAnswerChoice.optionNoButton.getStyleName().equals(addWebResourceStyle.answerSelected())){
-            	 System.out.println("true....;;;");
                     isAnswerChoiceSelected=true;
              }else{
-            	 System.out.println("false;;;");
             	 return false;
              }
          }
