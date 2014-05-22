@@ -1029,8 +1029,8 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 					};
 					success.setHeight("253px");
 					success.setWidth("450px");
-					success.setPopupTitle(GL1788);
-					success.setDescText(GL1789);
+					success.setPopupTitle(GL1792);
+					success.setDescText(GL1793);
 					success.enableTaggingImage();
 					success.setPositiveButtonText(GL0190);
 					success.center();
