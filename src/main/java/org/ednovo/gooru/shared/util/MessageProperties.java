@@ -2305,7 +2305,7 @@ public interface MessageProperties {
     	String GL1812="Add as many tags as you’d like by clicking on the words within each category.";
     	
     	String GL1813 = "Start Creating Collections";
-		String GL1814 = "A collection is a �playlist� of learning resources that you can remix. Customize existing collections or start from scratch!";
+		String GL1814 = "A collection is a \"playlist\" of learning resources that you can remix. Customize existing collections or start from scratch!";
 		String GL1815 = "Create a Collection";
 		String GL1816 = "View Walkthrough Collection";
 		String GL1817 = "Upload your own resources";
