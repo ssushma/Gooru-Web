@@ -144,6 +144,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String TAXONOMY_PREFERENCES = "taxonomy.preferences";
 	
+	private static final String SIGNED_USER_DOB = "signed-user-dob";
+	
 	public BaseServiceImpl() {
 
 	}
@@ -411,12 +413,14 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		getHttpResponse().addCookie(cookie);
 	}
 
-	protected void setLoggedInInfo(String sessionToken, String loggedInUserUid, String loggedInEmailId) {
+	protected void setLoggedInInfo(String sessionToken, String loggedInUserUid, String loggedInEmailId,String dateOfBirth) {
 		setLoggedInSessionToken(sessionToken);
 		setLoggedInUserUid(loggedInUserUid);
 		setLoggedInEmailId(loggedInEmailId);
+		setLoggedInDateOfBirth(dateOfBirth);
 		setUserActiveStatus("active");
 	}
+
 
 	protected void deleteLoggedInInfo() {
 		Cookie[] cookies = getHttpRequest().getCookies();
@@ -456,7 +460,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		if (user != null) {
 			deleteLoggedInInfo();
 			loggedInUserUid = user.getGooruUId();
-			setLoggedInInfo(cookieSessionToken == null ? user.getToken() : cookieSessionToken, user.getGooruUId(),getLoggedInEmailId());
+			setLoggedInInfo(cookieSessionToken == null ? user.getToken() : cookieSessionToken, user.getGooruUId(),getLoggedInEmailId(),getLoggedInDateOfBirth());
 		}
 		return loggedInUserUid;
 	}
@@ -481,6 +485,19 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			getHttpRequest().getSession().removeAttribute(SIGNED_USER_EMAILID);
 		}
 	}
+	
+	protected String getLoggedInDateOfBirth() {
+		String loggedInDob = (String) getHttpRequest().getSession().getAttribute(SIGNED_USER_DOB);
+		return loggedInDob;
+	}
+	
+	protected void setLoggedInDateOfBirth(String dateOfBirth) {
+		if (dateOfBirth != null) {
+			getHttpRequest().getSession().setAttribute(SIGNED_USER_DOB, dateOfBirth);
+		} else {
+			getHttpRequest().getSession().removeAttribute(SIGNED_USER_DOB);
+		}
+	}
 
 	protected boolean isLoggedInUserAnonymous() {
 		return getLoggedInUserUid() == null || getLoggedInUserUid().equals(GOORU_ANONYMOUS);
@@ -497,6 +514,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			user = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), UserDo.class);
 			setLoggedInUserUid(user.getGooruUId());
 			setLoggedInEmailId("");
+			setLoggedInDateOfBirth("");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -595,6 +613,7 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			user.setToken(v2UserDo.getToken());
 			setLoggedInUserUid(user.getGooruUId());
 			setLoggedInEmailId("");
+			setLoggedInDateOfBirth("");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
