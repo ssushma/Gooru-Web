@@ -2280,4 +2280,9 @@ public interface MessageProperties {
     	String GL1795 ="Add Tages";
     	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
 
+    	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
+
+    
+
+
    }
