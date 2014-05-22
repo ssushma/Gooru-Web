@@ -70,7 +70,7 @@ public class RatingWidgetView extends Composite{
 			star_2.addStyleName("filled");
 			star_3.addStyleName("filled");
 			star_4.addStyleName("filled");
-		}else if(roundOffAvg==4){
+		}else if(roundOffAvg==5){
 			star_1.addStyleName("filled");
 			star_2.addStyleName("filled");
 			star_3.addStyleName("filled");
