@@ -964,17 +964,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private boolean isChildAccount() {
 		Date convertedDOB = null;
 		boolean isChild=false;
-		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
+		int loggedInUserAge = 0;
 		com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss.S");
-		if(userDo.getDateOfBirth()!=null&&!userDo.getDateOfBirth().equals("")){
-			convertedDOB = dateFormat.parse(userDo.getDateOfBirth());
+		if(AppClientFactory.getLoggedInUser().getDateOfBirth()!=null&&!AppClientFactory.getLoggedInUser().getDateOfBirth().equals("")){
+			convertedDOB = dateFormat.parse(AppClientFactory.getLoggedInUser().getDateOfBirth());
+			loggedInUserAge = getAge(convertedDOB);
+			if(loggedInUserAge<=CHILD_AGE){
+				isChild=true;
+			}else if(loggedInUserAge>CHILD_AGE){
+				isChild=false;
+			}
 		}
-		int loggedInUserAge = getAge(convertedDOB);
-		if(loggedInUserAge<=CHILD_AGE){
-			isChild=true;
-		}else if(loggedInUserAge>CHILD_AGE){
-			isChild=false;
-		}
+		
 		return isChild;
 	}
 
