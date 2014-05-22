@@ -36,6 +36,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.home.FooterOrganizeUc;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCollaboratorTabVc;
@@ -383,6 +385,19 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				}
 			}
 		};
+		
+		DisplayNoCollectionHandler displayNoCollections = new DisplayNoCollectionHandler() {
+
+			@Override
+			public void showNoCollections() {
+				setNoDataCollection();
+			}
+
+		
+		};
+
+		AppClientFactory.getEventBus().addHandler(
+				DisplayNoCollectionEvent.TYPE, displayNoCollections);
 		
 		collectionDescriptionUc.setPlaceholder(WHAT_IS_THIS_COLLECTION_ABOUT);
 		// collectionDescriptionUc.getElement().setAttribute("placeholder",
@@ -1633,6 +1648,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editPanel.setVisible(false);
 		panelFoooter.setVisible(false);
 		scrollContainer.setVisible(false);
+		noCollectionResetPanel.clear();
 		noCollectionResetPanel.add(new FoldersWelcomePage());
 		noCollectionResetPanel.setVisible(true);
 	}
