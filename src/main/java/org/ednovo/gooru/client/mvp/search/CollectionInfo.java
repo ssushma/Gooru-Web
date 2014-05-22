@@ -119,7 +119,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 		lblLearningSkills.setText(GL1722+GL_SPL_SEMICOLON);
 		lblAudience.setText(GL1723+GL_SPL_SEMICOLON);
 		lblInstructional.setText(GL1724+GL_SPL_SEMICOLON);
-		lblOer.setText("OER:");
+//		lblOer.setText("OER:");
 	}
 
 
@@ -137,12 +137,12 @@ public class CollectionInfo extends Composite implements MessageProperties{
 				if(collectionDo.getMetaInfo()!=null && collectionDo.getMetaInfo().getStandards()!=null){
 					renderStandards(standardsInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getStandards()));
 				}
-				setDepthOfKnlze(collectionDo);
-				setLearningSkills(collectionDo);
+				setDepthOfKnlze();
+				setLearningSkills();
 				setAudienceInfo();
 				setInstructionalInfo();
 				setLanguageObjectiveText();
-//				setOerInfo();
+				setOerInfo();
 
 			}
 
@@ -173,15 +173,15 @@ public class CollectionInfo extends Composite implements MessageProperties{
 		}
 	}
 
-	protected void setDepthOfKnlze(CollectionDo collection) {
+	protected void setDepthOfKnlze() {
 		List<String> depthofknowledgedetails = new ArrayList<String>();
 
-		if(collection.getDepthOfKnowledges()!=null){
-			if(collection.getDepthOfKnowledges().size()>0){
-				for(int i=0;i<collection.getDepthOfKnowledges().size();i++){
-					if(collection.getDepthOfKnowledges().get(i).isSelected())
+		if(collectionDo.getDepthOfKnowledges()!=null){
+			if(collectionDo.getDepthOfKnowledges().size()>0){
+				for(int i=0;i<collectionDo.getDepthOfKnowledges().size();i++){
+					if(collectionDo.getDepthOfKnowledges().get(i).isSelected())
 					{
-						depthofknowledgedetails.add(collection.getDepthOfKnowledges().get(i).getValue());
+						depthofknowledgedetails.add(collectionDo.getDepthOfKnowledges().get(i).getValue());
 					}
 				}
 				CollResInfo.setDepthofknowledgeDetails(depthofknowledgedetails, dKnowledgeType, lblDepthKnowledge, dKnowledgePanel);
@@ -265,15 +265,15 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	}
 
 
-	protected void setLearningSkills(CollectionDo collection) {
+	protected void setLearningSkills() {
 		List<String> learningSkillsDetails = new ArrayList<String>();
 
-		if(collection.getLearningSkills()!=null){
-			if(collection.getDepthOfKnowledges().size()>0){
-				for(int i=0;i<collection.getLearningSkills().size();i++){
-					if(collection.getLearningSkills().get(i).isSelected())
+		if(collectionDo.getLearningSkills()!=null){
+			if(collectionDo.getDepthOfKnowledges().size()>0){
+				for(int i=0;i<collectionDo.getLearningSkills().size();i++){
+					if(collectionDo.getLearningSkills().get(i).isSelected())
 					{
-						learningSkillsDetails.add(collection.getLearningSkills().get(i).getValue());
+						learningSkillsDetails.add(collectionDo.getLearningSkills().get(i).getValue());
 					}
 				}
 				CollResInfo.setDepthofknowledgeDetails(learningSkillsDetails, learningSkillsPanel, lblLearningSkills, learningSkillsMainPanel);
@@ -288,7 +288,6 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	}
 	
 	protected void setAudienceInfo(){
-		  System.out.println("setAudienceInfo;"+collectionDo.getAudience().size());
 		  lblAudience.setVisible(true);
 		if(collectionDo.getAudience()!=null){
 			if(collectionDo.getAudience().size()>0){
@@ -312,7 +311,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	}
 	
 	protected void setInstructionalInfo(){
-         System.out.println("instructional"+collectionDo.getInstructionalMethod());
+		panelInstructional.setVisible(true);
 		if(collectionDo.getInstructionalMethod()!=null){
 			if(collectionDo.getInstructionalMethod().size()>0){
 				for(int i=0;i<collectionDo.getInstructionalMethod().size();i++){
@@ -334,5 +333,8 @@ public class CollectionInfo extends Composite implements MessageProperties{
 		}
 	}
 	
+	protected void setOerInfo() {
+		
+	}
 
 }
