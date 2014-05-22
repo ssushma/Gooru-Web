@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.Button;
@@ -48,6 +49,7 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 		super(eventBus, view);
 		this.signUpViewPresenter = signUpViewPresenter;
 		getView().setUiHandlers(this);
+		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
 	}
 	public void setCollectionMetadata(CollectionDo collectionDo){
 		getView().setCollectionMetadata(collectionDo);
@@ -92,6 +94,9 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 		if(collectionPlayerPresenter!=null){
 			collectionPlayerPresenter.resetcollectionActivityEventId();
 		}
+	}
+	@Override
+	public void openReviewPopUp(String assocGooruOId) {
 	}
 
 }
