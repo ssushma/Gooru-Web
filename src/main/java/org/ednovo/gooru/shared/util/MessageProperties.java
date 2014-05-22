@@ -646,7 +646,7 @@ public interface MessageProperties {
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
-	String GL0515 = "District Library";
+	String GL0515 = "District Libraries";
 	String GL0515_1 = "RUSD Library";
 	
 	String GL0516 = "Community Library";
@@ -2224,8 +2224,8 @@ public interface MessageProperties {
 		
 		String GL1748_1 = "Libraries";
 		String GL1749_1 = "Community Library";
-		String GL1750 = "District Library";
-		String GL1751 = "Partner Library";
+		String GL1750 = "District Libraries";
+		String GL1751 = "Partner Libraries";
 		
 		String GL1752 = "My Collections";
 		String GL1753 = "My Classes";
@@ -2241,11 +2241,43 @@ public interface MessageProperties {
 		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
 		
 		String GL1762_1 = "Enter a Class Code";
-
+		
     	String GL1763 = "Click here for the Partners for Sustainable Development (PSD) website";
     	String GL1764 = "http://psdpal.org/";
     	String GL1765 = "Click here for the Center for Financial Capability, Inc. website";
     	String GL1766 = "http://financiallycapable.org/";
+    	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
+    	
+    	String GL1768 = "An aggregator is a site that curates learning content from around the Web.";
+    	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
+    	String GL1770 = "Open educational resources (OER) are freely accessible, openly licensed documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
+
+    	
+    	String GL1771 = "Create a Class";
+    	String GL1772 = "It's easy to organize your collections and share them with your students.";
+    	String GL1773 = "Access a Class";
+    	String GL1774 = "Easy Access for Your Students";
+    	String GL1775 = "Students don't need to log-in when they use the unique Class Code for your class.";
+    	String GL1776 = "Manage Assignments ";
+    	String GL1777 = "Students will see a clear due date and your directions for the collections you assign.";
+    	String GL1778 = "Monitor Student Progress ";
+    	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
+    	String GL1780 = "See a sample report";
+    	String GL1781 = "A Few of Our Favorite Classes";
+    	String GL1782 = "Algebra I";
+    	String GL1783 = "Ancient Civilizations";
+    	String GL1784 = "English Language Arts";
+    	String GL1785 = "Enter your class code";
+    	String GL1786 = "Edit My Bio";
+    	String GL1787 = "Library";
+    	String GL1788 = "Go to \"My Collections\" to share your collections in this library with others.";
+    	String GL1789 = "Go to My Collections";
+    	String GL1790 = "You do not have any public collections yet!";
+    	String GL1791 = "does not have any public collections!";
+    	String GL1792 = "Your library is made of your publicly shared collections. Please put your collections in nested folders (Unit, Topic, Lesson) just like other libraries in Gooru so that they would be better organized in a library view.";
+    	String GL1793 = "ON: You will be sharing your profile info & library with others.";
+    	String GL1794 = "OFF: No one but you will be able to access your profile page.";
+    	String GL1795 ="Add Tages";
+    	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
 
    }
-

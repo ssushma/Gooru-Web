@@ -27,12 +27,15 @@ package org.ednovo.gooru.client.mvp.profilepage.data;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.LeftMenuItemView;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -40,7 +43,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -49,9 +55,13 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView,MessageProperties {
 
-	@UiField HTMLPanel leftNav, contentScroll;
+	@UiField HTMLPanel leftNav, contentScroll, emptyContainer;
 	
 	@UiField ProfilePageLibraryStyleBundle style;
+	
+	@UiField Label noCollectionsMsg, collectionsRedirectionMsg;
+	
+	@UiField Button myCollectionsBtn;
 	
 	private static final String FOLDERID = "folderId";
 	
@@ -72,6 +82,13 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	public ProfilePageLibraryView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new ProfilePageLibraryPresenter(this));
+		emptyContainer.setVisible(false);
+		setMetaData();
+	}
+	
+	private void setMetaData() {
+		myCollectionsBtn.setText(GL1789);
+		collectionsRedirectionMsg.setText(GL1788);
 	}
 	
 	public void setData() {
@@ -84,10 +101,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	}
 	
 	@Override
-	public void setUnitList(final ArrayList<PartnerFolderDo> folderList) {
+	public void setUnitList(final PartnerFolderListDo partnerFolderListDo) {
 		leftNav.clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
 		int j = 0;
+		final ArrayList<PartnerFolderDo> folderList = partnerFolderListDo.getSearchResult();
 		for(int i = 0; i<folderList.size(); i++) {
 			LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
 			leftNav.add(leftMenuItemView);
@@ -100,7 +118,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				leftMenuItemView.addStyleName(style.open());
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
-				setTopicListData(folderList.get(i).getFolderItems(), unitListId);
+				if(folderList.get(i).getType().equals("scollection")) {
+					setTopicListData(null,partnerFolderListDo.getCollections().get(i) , unitListId);
+				} else {
+					setTopicListData(folderList.get(i).getFolderItems(), null, unitListId);
+				}
 			}
 		}
 		
@@ -124,7 +146,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					widget.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
 					if(finalWidgetCount==0) {
-						setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), unitListId);
+						if(folderList.get(finalWidgetCount).getType().equals("scollection")) {
+							setTopicListData(null, partnerFolderListDo.getCollections().get(finalWidgetCount), unitListId);
+						} else {
+							setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), null, unitListId);
+						}
 					} else {
 						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
@@ -135,13 +161,17 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	}
 
 	@Override
-	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, String folderId) {
+	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, ConceptDo conceptDo, String folderId) {
 		contentScroll.clear();
 		try {
 			int count = 0;
-			for(int i = 0; i <folderListDo.size(); i++) {
-				count++;
-				contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+			if(conceptDo!=null) {
+				contentScroll.add(new ProfileTopicListView(conceptDo, count, AppClientFactory.getCurrentPlaceToken()));
+			} else {
+				for(int i = 0; i <folderListDo.size(); i++) {
+					count++;
+					contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+				}
 			}
 			contentScroll.setVisible(true);
 			loadingPanel(false);
@@ -170,5 +200,32 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	@Override
 	public ProfilePageLibraryPresenter getPresenter() {
 		return profilePageLibraryPresenter;
+	}
+	
+	@UiHandler("myCollectionsBtn")
+	public void clickMyCollectionsBtn(ClickEvent event) {
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+	}
+
+	@Override
+	public void setEmptyContainer(boolean isEmpty) {
+		emptyContainer.setVisible(isEmpty);
+		leftNav.setVisible(!isEmpty);
+		contentScroll.setVisible(!isEmpty);
+		if(isEmpty) {
+			setUserNoContentMsg();
+		}
+	}
+	
+	private void setUserNoContentMsg() {
+		if(AppClientFactory.getPlaceManager().getRequestParameter("id").equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
+			noCollectionsMsg.setText(GL1790);
+			collectionsRedirectionMsg.setVisible(true);
+			myCollectionsBtn.setVisible(true);
+		} else {
+			noCollectionsMsg.setText("\""+AppClientFactory.getPlaceManager().getRequestParameter("user")+"\" "+GL1791);
+			collectionsRedirectionMsg.setVisible(false);
+			myCollectionsBtn.setVisible(false);
+		}
 	}
 }

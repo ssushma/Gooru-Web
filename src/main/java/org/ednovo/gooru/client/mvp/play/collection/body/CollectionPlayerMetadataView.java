@@ -405,7 +405,6 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 //	@UiHandler("insightsFrame")
 //	public void ifrmaeContentLoaded(LoadEvent laodEvent){
-//		System.out.println("ifrmecontent loaded");
 //		loginPopupTimer.schedule(500);
 //	}
 	

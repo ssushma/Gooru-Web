@@ -169,9 +169,6 @@ public class SearchInfoTabVc extends Composite implements MessageProperties {
 				if(collectionItemDo.getResource().getTitle()!=null){
 					lblResourceName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 				}
-				System.out.println("collectionItemDo:::"+collectionItemDo.getResource().getDescription());
-				System.out.println("collectionItemDo1:::"+collectionItemDo.getResource().getResourceFormat().getDisplayName());
-				System.out.println("collectionItemDo2:::"+collectionItemDo.getResource().getTitle());
 				
 			/*	if(collectionItemDo.getStatusCode() != 200){
 					showResourceErrorMessage();

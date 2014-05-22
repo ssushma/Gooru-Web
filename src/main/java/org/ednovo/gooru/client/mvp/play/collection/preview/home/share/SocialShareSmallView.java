@@ -223,7 +223,6 @@ IsSocialShareSmallView, MessageProperties {
 	}
 	@UiHandler("categoryImage")
 	public void setDafaultImage(ErrorEvent event){
-		System.out.println("error image"+category);
 		if(category==null||category.equals("")){
 			categoryImage.setUrl(DEFULT_IMAGE);
 		}

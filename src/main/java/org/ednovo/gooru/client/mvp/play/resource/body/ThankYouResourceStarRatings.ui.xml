@@ -10,21 +10,7 @@
                 <h1>Thank you for rating!</h1>
                   <g:HTMLPanel styleName="{playerStyle.rating}">
                         Average Rating<br/>
-                    <!--  <span styleName="{playerStyle.star} {playerStyle.filled}"></span>
-                   <span styleName="{playerStyle.star} {playerStyle.filled}"></span>
-                   <span styleName="{playerStyle.star} {playerStyle.filled}"></span>
-                   <span styleName="{playerStyle.star} {playerStyle.filled}"></span>
-                   <span styleName="{playerStyle.star}"></span> -->
-                   <g:HTMLPanel styleName="{playerStyle.rating}">
-                	<g:Label styleName="{playerStyle.rating}" ui:field="starValue"></g:Label>
-                    <g:SimpleCheckBox ui:field="ThankyouStarOne"  name="rating" styleName="{playerStyle.rating}"/>
-                    <g:SimpleCheckBox ui:field="ThankyouStarTwo"  name="rating" styleName="{playerStyle.rating}"/>
-                    <g:SimpleCheckBox ui:field="ThankyouStarThree"  name="rating" styleName="{playerStyle.rating}"/>
-                    <g:SimpleCheckBox ui:field="ThankyouStarFour"  name="rating" styleName="{playerStyle.rating}"/>
-                    <g:SimpleCheckBox ui:field="ThankyouStarFive"  name="rating" styleName="{playerStyle.rating}"/>
-                     <g:Label ui:field="totalStars">(5)</g:Label>
-                     <!-- (<a href="#">5</a>) -->
-                  </g:HTMLPanel>
+                   <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     </g:HTMLPanel>
                     <g:Label>Tell us what you think!</g:Label>
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>

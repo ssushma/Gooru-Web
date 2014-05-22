@@ -782,7 +782,6 @@ public class HeaderUc extends Composite implements MessageProperties,
 					new SimpleAsyncCallback<ClasspageListDo>() {
 						@Override
 						public void onSuccess(ClasspageListDo result) {
-							System.out.println("result :"+result.getSearchResults().size());
 							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
 							if (result.getSearchResults().size()>0){
 								classpageId = result.getSearchResults().get(0).getGooruOid();
@@ -1571,7 +1570,6 @@ public class HeaderUc extends Composite implements MessageProperties,
 		if (classpageListVc == null) {
 			classpageListVc = new ClasspageListVc(false,null);
 		}
-		System.out.println("showTeachPanelAsPopup");
 		classpageListVc.setWidth("202px !important");
 		classpageListVc.setHeight("246px !important");
 		classpageListVc.setStyleName(HomeCBundle.INSTANCE.css()

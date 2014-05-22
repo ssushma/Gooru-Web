@@ -613,8 +613,10 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		if(sharingType!=null){
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
+		if(collectionType!=null){
+			sessionToken=sessionToken+"&collectionType="+collectionType;
+		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"");
-		System.out.println(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFolderList(jsonRep);
@@ -628,6 +630,9 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		
 		if(sharingType!=null){
 			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		if(collectionType!=null){
+			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset+"", limit+"");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
@@ -660,14 +665,17 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				count = jsonRep.getJsonObject().getInt(COUNT);
 				for(int i=0;i<firstLevelArray.length();i++) {
 					PartnerFolderDo folderFirstLevelDo = JsonDeserializer.deserialize(firstLevelArray.getJSONObject(i).toString(), PartnerFolderDo.class);
-					//ArrayList<PartnerFolderDo> secondLevelFolders = new ArrayList<PartnerFolderDo>();
 					if(i==0) {
-						JSONArray secondLevelArray = firstLevelArray.getJSONObject(i).getJSONArray(COLLECTION_ITEMS);
-						folderFirstLevelDo.setFolderItems(getDeserializedPartnerList(secondLevelArray, i));
+						if(firstLevelArray.getJSONObject(i).get("type").equals("scollection")) {
+							ArrayList<ConceptDo> conceptDoList = new ArrayList<ConceptDo>();
+							ConceptDo conceptDo = JsonDeserializer.deserialize(firstLevelArray.getJSONObject(i).toString(), ConceptDo.class);
+							conceptDoList.add(conceptDo);
+							searchResults.setCollections(conceptDoList);
+						} else {
+							JSONArray secondLevelArray = firstLevelArray.getJSONObject(i).getJSONArray(COLLECTION_ITEMS);
+							folderFirstLevelDo.setFolderItems(getDeserializedPartnerList(secondLevelArray, i));
+						}
 					}
-					/*if(i==0) {
-						folderFirstLevelDo.setFolderItems(secondLevelFolders);
-					}*/
 					firstLevelFolders.add(folderFirstLevelDo);
 				}
 				searchResults.setCount(count);
@@ -687,76 +695,58 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				for(int j=0;j<secondLevelArray.length();j++) {
 					JSONObject secondLevelJsonObject = secondLevelArray.getJSONObject(j);
 					PartnerFolderDo folderTwoLevelDo = JsonDeserializer.deserialize(secondLevelJsonObject.toString(), PartnerFolderDo.class);
-					JSONArray thirdLevelArray = secondLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
-					ArrayList<ConceptDo> thirdLevelConcepts = new ArrayList<ConceptDo>();
-					ArrayList<PartnerFolderDo> thirdLevelFolders = new ArrayList<PartnerFolderDo>();
-					if(thirdLevelArray.length()>0) {
-						for(int k=0;k<thirdLevelArray.length();k++) {
-							JSONObject thirdLevelJsonObject = thirdLevelArray.getJSONObject(k);
-							if(thirdLevelJsonObject.getString(TYPE).equalsIgnoreCase(FOLDER)) {
-								PartnerFolderDo folderThirdLevelDo = JsonDeserializer.deserialize(thirdLevelJsonObject.toString(), PartnerFolderDo.class);
-								JSONArray fourthLevelArray = thirdLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
-								ArrayList<ConceptDo> fourthLevelConcepts = new ArrayList<ConceptDo>();
-								if(fourthLevelArray.length()>0) {
-									for(int m=0;m<fourthLevelArray.length();m++) {
-										ConceptDo conceptDo = new ConceptDo();
-										JSONObject fourthLevelJsonObject = fourthLevelArray.getJSONObject(m);
-										if(!fourthLevelJsonObject.isNull(GOALS)) {
-											conceptDo.setGoals(fourthLevelJsonObject.getString(GOALS));
-										} else {
-											conceptDo.setGoals("");
-										}
-										
-										conceptDo.setTitle(fourthLevelJsonObject.getString(TITLE));
-										conceptDo.setGooruOid(fourthLevelJsonObject.getString(GOORUOID));
-										conceptDo.setThumbnails(JsonDeserializer.deserialize(fourthLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
-										if(m==0) {
-											JSONArray resourceArray = fourthLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
-											ArrayList<LibraryCollectionItemDo> collectionItems = new ArrayList<LibraryCollectionItemDo>();
-											for(int l=0;l<resourceArray.length();l++) {
-												LibraryCollectionItemDo libraryCollectionItemDo = new LibraryCollectionItemDo();
-												libraryCollectionItemDo.setResource(JsonDeserializer.deserialize(resourceArray.getJSONObject(l).toString(), LibraryResourceDo.class));
-												collectionItems.add(libraryCollectionItemDo);
+					if(!secondLevelJsonObject.isNull(COLLECTION_ITEMS)) {
+						JSONArray thirdLevelArray = secondLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
+						ArrayList<ConceptDo> thirdLevelConcepts = new ArrayList<ConceptDo>();
+						ArrayList<PartnerFolderDo> thirdLevelFolders = new ArrayList<PartnerFolderDo>();
+						if(thirdLevelArray.length()>0) {
+							for(int k=0;k<thirdLevelArray.length();k++) {
+								JSONObject thirdLevelJsonObject = thirdLevelArray.getJSONObject(k);
+								if(thirdLevelJsonObject.getString(TYPE).equalsIgnoreCase(FOLDER)) {
+									PartnerFolderDo folderThirdLevelDo = JsonDeserializer.deserialize(thirdLevelJsonObject.toString(), PartnerFolderDo.class);
+									JSONArray fourthLevelArray = thirdLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
+									ArrayList<ConceptDo> fourthLevelConcepts = new ArrayList<ConceptDo>();
+									if(fourthLevelArray.length()>0) {
+										for(int m=0;m<fourthLevelArray.length();m++) {
+											ConceptDo conceptDo = new ConceptDo();
+											JSONObject fourthLevelJsonObject = fourthLevelArray.getJSONObject(m);
+											if(!fourthLevelJsonObject.isNull(GOALS)) {
+												conceptDo.setGoals(fourthLevelJsonObject.getString(GOALS));
+											} else {
+												conceptDo.setGoals("");
 											}
-											conceptDo.setCollectionItems(collectionItems);
+											
+											conceptDo.setTitle(fourthLevelJsonObject.getString(TITLE));
+											conceptDo.setGooruOid(fourthLevelJsonObject.getString(GOORUOID));
+											conceptDo.setThumbnails(JsonDeserializer.deserialize(fourthLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
+											if(m==0) {
+												JSONArray resourceArray = fourthLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
+												ArrayList<LibraryCollectionItemDo> collectionItems = new ArrayList<LibraryCollectionItemDo>();
+												for(int l=0;l<resourceArray.length();l++) {
+													LibraryCollectionItemDo libraryCollectionItemDo = new LibraryCollectionItemDo();
+													libraryCollectionItemDo.setResource(JsonDeserializer.deserialize(resourceArray.getJSONObject(l).toString(), LibraryResourceDo.class));
+													collectionItems.add(libraryCollectionItemDo);
+												}
+												conceptDo.setCollectionItems(collectionItems);
+											}
+											fourthLevelConcepts.add(conceptDo);
 										}
-										fourthLevelConcepts.add(conceptDo);
 									}
-								}
-								folderThirdLevelDo.setCollections(fourthLevelConcepts);
-								thirdLevelFolders.add(folderThirdLevelDo);
-							} else {
-								ConceptDo conceptDo = new ConceptDo();
-								if(thirdLevelJsonObject.isNull(GOALS)) {
-									
+									folderThirdLevelDo.setCollections(fourthLevelConcepts);
+									thirdLevelFolders.add(folderThirdLevelDo);
 								} else {
-									conceptDo.setGoals(thirdLevelJsonObject.getString(GOALS));
+									thirdLevelConcepts.add(getConceptDeserialization(thirdLevelJsonObject,k));
 								}
-								
-								conceptDo.setTitle(thirdLevelJsonObject.getString(TITLE));
-								conceptDo.setGooruOid(thirdLevelJsonObject.getString(GOORUOID));
-								conceptDo.setThumbnails(JsonDeserializer.deserialize(thirdLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
-								if(k==0) {
-									JSONArray resourceArray = thirdLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
-									ArrayList<LibraryCollectionItemDo> collectionItems = new ArrayList<LibraryCollectionItemDo>();
-									for(int l=0;l<resourceArray.length();l++) {
-										LibraryCollectionItemDo libraryCollectionItemDo = new LibraryCollectionItemDo();
-										libraryCollectionItemDo.setResource(JsonDeserializer.deserialize(resourceArray.getJSONObject(l).toString(), LibraryResourceDo.class));
-										collectionItems.add(libraryCollectionItemDo);
-									}
-									conceptDo.setCollectionItems(collectionItems);
-								}
-								thirdLevelConcepts.add(conceptDo);
+							}
+							if(thirdLevelArray.getJSONObject(0).getString(TYPE).equalsIgnoreCase(FOLDER)) {
+								folderTwoLevelDo.setFolderItems(thirdLevelFolders);
+							} else {
+								folderTwoLevelDo.setCollections(thirdLevelConcepts);
 							}
 						}
-						if(thirdLevelArray.getJSONObject(0).getString(TYPE).equalsIgnoreCase(FOLDER)) {
-							folderTwoLevelDo.setFolderItems(thirdLevelFolders);
-						} else {
-							folderTwoLevelDo.setCollections(thirdLevelConcepts);
+						if(thirdLevelArray.length()>0) {
+							secondLevelFolders.add(folderTwoLevelDo);
 						}
-					}
-					if(thirdLevelArray.length()>0) {
-						secondLevelFolders.add(folderTwoLevelDo);
 					}
 				}
 			}
@@ -764,6 +754,34 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			e.printStackTrace();
 		}
 		return secondLevelFolders;
+	}
+	
+	public ConceptDo getConceptDeserialization(JSONObject thirdLevelJsonObject, int k) {
+		ConceptDo conceptDo = new ConceptDo();
+		try {
+			if(thirdLevelJsonObject.isNull(GOALS)) {
+				
+			} else {
+				conceptDo.setGoals(thirdLevelJsonObject.getString(GOALS));
+			}
+			
+			conceptDo.setTitle(thirdLevelJsonObject.getString(TITLE));
+			conceptDo.setGooruOid(thirdLevelJsonObject.getString(GOORUOID));
+			conceptDo.setThumbnails(JsonDeserializer.deserialize(thirdLevelJsonObject.getJSONObject(THUMBNAILS).toString(), ThumbnailDo.class));
+			if(k==0) {
+				JSONArray resourceArray = thirdLevelJsonObject.getJSONArray(COLLECTION_ITEMS);
+				ArrayList<LibraryCollectionItemDo> collectionItems = new ArrayList<LibraryCollectionItemDo>();
+				for(int l=0;l<resourceArray.length();l++) {
+					LibraryCollectionItemDo libraryCollectionItemDo = new LibraryCollectionItemDo();
+					libraryCollectionItemDo.setResource(JsonDeserializer.deserialize(resourceArray.getJSONObject(l).toString(), LibraryResourceDo.class));
+					collectionItems.add(libraryCollectionItemDo);
+				}
+				conceptDo.setCollectionItems(collectionItems);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return conceptDo;
 	}
 	
 	public PartnerConceptListDo deserializePartnerFolderList(JsonRepresentation jsonRep) {

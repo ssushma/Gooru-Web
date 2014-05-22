@@ -27,6 +27,9 @@
  */
 package org.ednovo.gooru.server.form;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.server.serializer.JsonSerializer;
 import org.ednovo.gooru.shared.model.library.LessonDo;
@@ -55,6 +58,7 @@ public class ResourceFormFactory {
 		form.add("data", data);
 		return form;
 	}
+
 	/**
 	 * Generate form object, respect to individual object 
 	 * @param object instance of the {@link Object} 
@@ -362,6 +366,24 @@ public class ResourceFormFactory {
 		String data =  collectionObject.toString();
 	
 		form.add("data", data);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		return form;
+	}
+	
+	public static Form frameTagObject(String tagsStr) {
+		Form form = new Form();
+		try
+		{
+		
+/*		List<String> mediaFeatureList = Arrays.asList(tagsStr.split(","));*/
+			
+			
+
+		form.add("data", tagsStr);
 		}
 		catch(Exception ex)
 		{

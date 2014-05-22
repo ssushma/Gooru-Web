@@ -61,6 +61,7 @@ import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
@@ -605,14 +606,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.ADD_NEW_RESOURCE, idStr,getLoggedInSessionToken(),  URLEncoder.encode(titleStr).toString(), urlStr, categoryStr, URLEncoder.encode(descriptionStr).toString(), thumbnailImgSrcStr, String.valueOf(endTime));
-	//		String form = ResourceFormFactory.generateDataForm(newResourceDo, RESOURCE);
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
-		
 		//ResourceFormFactory.updateCollectionInfo(collectionDo.getTitle(), teacherTips).getValuesArray("data")[0]
-		
-		System.out.println("resourceUrl::"+url);
-		System.out.println("resourceForm::"+form);
-		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), form);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -623,7 +618,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		
 		JsonRepresentation jsonRep = null;
 		String urlStr = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_INFO, getLoggedInSessionToken(), url);
-		System.out.println("resourcemetadata::"+urlStr);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(urlStr);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceMetaInfo(jsonRep);
@@ -677,10 +671,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		collectionAddQuestionItemDo.setQuestion(collectionQuestionItemDo);
 		collectionAddQuestionItemDo.setMediaFileName(mediafileName);
 		String collectionQuestionData=ResourceFormFactory.generateStringDataForm(collectionAddQuestionItemDo, null);
-		
-		System.out.println("urladd::"+url);
-		System.out.println("urladddata::"+collectionQuestionData);
-		
+				
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), collectionQuestionData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeCollectionItem(jsonRep);
@@ -693,15 +684,12 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		if(thumbnailUrl!=null){
 			updateQuestionImage(collectionItemDo.getResource().getGooruOid(),thumbnailUrl);
 		}
-		System.out.println("url::"+url);
-		System.out.println("urldata::"+ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question"));
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.generateDataForm(collectionQuestionItemDo, "question"));
-		try {
-			System.out.println("jsonrep::"+jsonResponseRep.getJsonRepresentation().getText());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		ResourceDo resourceDo=deserializeResourceDoItem(jsonRep);
 		return convertResourceToCollectionItemDo(resourceDo,collectionItemDo);
@@ -747,18 +735,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		newResourceDo.setEducationalUse(collectionItemDo.getResource().getEducationalUse());
 		newResourceDo.setTaxonomySet(collectionItemDo.getResource().getTaxonomySet());
 		newResourceDo.setMomentsOfLearning(collectionItemDo.getResource().getMomentsOfLearning());
-		System.out.println("getMomentsOfLearning::"+collectionItemDo.getResource().getMomentsOfLearning());
-		
-		for(int i=0;i<collectionItemDo.getResource().getMomentsOfLearning().size();i++)
-		{
-			System.out.println("getMomentsOfLearning::"+collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
-		}
-		
 		
 		String form = ResourceFormFactory.generateStringDataForm(newResourceDo, RESOURCE);
-		
-		System.out.println("update url::"+url);
-		System.out.println("update form::"+form);
 		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),form);
 		//JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
@@ -1375,8 +1353,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 
 				taxonomySetObj.put("taxonomySet", codeIdJsonArray);
 				taxonomyObject.put("resource", taxonomySetObj);
-			    System.out.println("url:"+url);
-			    System.out.println("taxonomy udate:"+taxonomyObject.toString());
 				JsonResponseRepresentation jsonResponseRep = ServiceProcessor
 						.put(url, getRestUsername(), getRestPassword(),
 								taxonomyObject.toString());
@@ -1386,5 +1362,54 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				
 			}
 		}
+	}
+	
+	@Override
+	public List<ResourceTagsDo> addTagsToResource(String resourceId, String addedTags)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.ADD_TAGS, resourceId, getLoggedInSessionToken());
+		
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(),
+				getRestPassword(), ResourceFormFactory.frameTagObject(addedTags).getValuesArray("data")[0]);
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeResourceTags(jsonRep);
+	}
+	
+	@Override
+	public List<ResourceTagsDo> getTagsToResource(String resourceId)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.GET_TAGS, resourceId, getLoggedInSessionToken());
+
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeResourceTags(jsonRep);
+	}
+	
+	public List<ResourceTagsDo> deserializeResourceTags(JsonRepresentation jsonRep) {
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			try {
+				return JsonDeserializer.deserialize(jsonRep.getJsonArray()
+						.toString(), new TypeReference<List<ResourceTagsDo>>() {
+				});
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new  ArrayList<ResourceTagsDo>();
+	}
+
+	@Override
+	public void deleteTagsServiceRequest(String resourceId, String addedTags)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.DELETE_TAGS, resourceId, getLoggedInSessionToken(),addedTags);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
 	}
 }

@@ -802,7 +802,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 			@Override
 			public void onSuccess(Boolean value) {
-				System.out.println("error value"+value);
 				
 				if(!value)
 				{

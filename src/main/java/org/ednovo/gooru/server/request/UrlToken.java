@@ -80,7 +80,7 @@ public enum UrlToken {
 					"/search/searchquery?sessionToken={0}&query={1}&pageSize={2}&queryType={3}&pageNum={4}"),
 
 	SEARCH_SUGGEST_SOURCE(
-			"/search/attribution?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
+			"/search/publisher?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
 
 	CREATE_COLLLECTION("/scollection?sessionToken={0}"),
 
@@ -528,7 +528,16 @@ public enum UrlToken {
 	
 	UPDATE_TAXONOMY_RESOURCE("/v2/resource/{0}?sessionToken={1}"),
 	
-	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}");
+	ADD_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
+	
+	GET_TAGS("/v2/content/{0}/tag?sessionToken={1}"),
+	
+	DELETE_TAGS("/v2/content/{0}/tag?sessionToken={1}&data={2}"),
+	
+	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
+	
+	SEARCH_SUGGEST_AGGREGATOR(
+			"/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}");
 	
 	
 	private String url;

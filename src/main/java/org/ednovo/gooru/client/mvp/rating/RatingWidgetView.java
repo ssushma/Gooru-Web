@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.rating;
 
+
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -34,20 +36,46 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class RatingWidgetView extends Composite{
-	
-	@UiField InlineLabel ratingCountLabel;
-	
+
+	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;
+
+
 	private static RatingWidgetViewUiBinder uiBinder = GWT.create(RatingWidgetViewUiBinder.class);
 
 	interface RatingWidgetViewUiBinder extends UiBinder<Widget, RatingWidgetView> {
-		
+
 	}
-	
+
 	public RatingWidgetView(){
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-	
+
 	public InlineLabel getRatingCountLabel(){
 		return ratingCountLabel;
+	}
+
+	public void setAvgStarRating(double averageRating) {
+		Integer roundOffAvg = (int) Math.round(averageRating);
+		if(roundOffAvg==1){
+			star_1.addStyleName("filled");
+		}else if(roundOffAvg==2){
+			star_1.addStyleName("filled");
+			star_2.addStyleName("filled");
+		}else if(roundOffAvg==3){
+			star_1.addStyleName("filled");
+			star_2.addStyleName("filled");
+			star_3.addStyleName("filled");
+		}else if(roundOffAvg==4){
+			star_1.addStyleName("filled");
+			star_2.addStyleName("filled");
+			star_3.addStyleName("filled");
+			star_4.addStyleName("filled");
+		}else if(roundOffAvg==5){
+			star_1.addStyleName("filled");
+			star_2.addStyleName("filled");
+			star_3.addStyleName("filled");
+			star_4.addStyleName("filled");
+			star_5.addStyleName("filled");
+		}
 	}
 }

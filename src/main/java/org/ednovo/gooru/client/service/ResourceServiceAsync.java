@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -37,6 +38,7 @@ import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -161,4 +163,10 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void deleteTaxonomyResource(String resourceId,Integer codeId,AsyncCallback<Void> asyncCallback);
 	
 	void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj,AsyncCallback<Void> asyncCallback);
+	
+	void addTagsToResource(String resourceId, String addedTags,AsyncCallback<List<ResourceTagsDo>> asyncCallback);
+	
+	void getTagsToResource(String resourceId, AsyncCallback<List<ResourceTagsDo>> asyncCallback);
+	
+	void deleteTagsServiceRequest(String resourceId, String addedTags,AsyncCallback<Void> callback);
 }
