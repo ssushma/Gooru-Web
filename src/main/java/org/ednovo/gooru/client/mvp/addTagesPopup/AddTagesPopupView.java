@@ -40,6 +40,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -76,6 +77,8 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	@UiField Label noAds,modAds,aggreAds,standardMaxMsg,standardsDefaultText;
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
+	
+	@UiField InlineLabel addTagesTitle,popupContentText,moblieFriendly;
 	
 	List<String> tagListGlobal = new ArrayList<String>();
 	
@@ -114,7 +117,56 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
-
+		
+		addTagesTitle.setText(GL1795);
+		popupContentText.setText(GL1812);
+		moblieFriendly.setText(GL1811);
+		headerEducationalUse.setText(GL1664);
+		activity.setText(GL1665);
+		handout.setText(GL0907);
+		homework.setText(GL1666);
+		game.setText(GL1667);
+		presentation.setText(GL1668);
+		refMaterial.setText(GL1669);
+		quiz.setText(GL1670);
+		currPlan.setText(GL1671);
+		lessonPlan.setText(GL1672);
+		unitPlan.setText(GL1673);
+		projectPlan.setText(GL1674);
+		reading.setText(GL1675);
+		textbook.setText(GL0909);
+		article.setText(GL1676);
+		book.setText(GL1677);
+		lexileHeader.setText(GL1798);
+		kindergarden.setText(GL1799);
+		level1.setText(GL_GRR_NUMERIC_ONE);
+		level2.setText(GL_GRR_NUMERIC_TWO);
+		level3.setText(GL_GRR_NUMERIC_THREE);
+		level4.setText(GL_GRR_NUMERIC_FOUR);
+		level5.setText(GL_GRR_NUMERIC_FIVE);
+		level6.setText(GL_GRR_NUMERIC_SIX);
+		level7.setText(GL_GRR_NUMERIC_SEVEN);
+		level8.setText(GL_GRR_NUMERIC_EIGHT);
+		level9.setText(GL_GRR_NUMERIC_NINE);
+		level10.setText(GL_GRR_NUMERIC_TEN);
+		level11.setText(GL_GRR_NUMERIC_ELEVEN);
+		level12.setText(GL_GRR_NUMERIC_TWELVE);
+		AdsHeader.setText(GL1800);
+		noAds.setText(GL1801);
+		modAds.setText(GL1802);
+		aggreAds.setText(GL1803);
+		accessHazard.setText(GL1804);
+		flashing.setText(GL1805);
+		flashingHazard.setText(GL1806);
+		motionSimulation.setText(GL1807);
+		motionSimulationHazard.setText(GL1808);
+		sound.setText(GL1809);
+		soundHazard.setText(GL1810);
+		cancelBtn.setText(GL0142);
+		addTagsBtn.setText(GL1795);
+		mobileYes.setText(GL_GRR_YES);
+		mobileNo.setText(GL1735);
+		
 		standardsDefaultText.setText(GL1682);
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		spanelMediaFeaturePanel.setVisible(false);
@@ -293,7 +345,6 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
-				standardsDo.add(standard);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
@@ -319,10 +370,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(final String codeObj:standardsDo){
-					if(codeObj==standardCode){
-						String standardDelete="[\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"]";
-						standardsDo.remove(codeObj);
+				for(int i=0;i<standardsDo.size();i++){
+					if(standardsDo.get(i).toString().equalsIgnoreCase(standardCode)){
+						standardsDo.remove(standardsDo.get(i).toString());
 					}
 				}
 				this.getParent().removeFromParent();
@@ -1198,9 +1248,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void bindObjectsToUI(List<ResourceTagsDo> resultResourceTags)
 	{
 		tagListGlobal.clear();
+		standardsDo.clear();
 		for(int objVal=0;objVal<resultResourceTags.size();objVal++)
 		{
-			tagListGlobal.add("\"" +resultResourceTags.get(objVal).getLabel() +"\"");
+			tagListGlobal.add("\""+resultResourceTags.get(objVal).getLabel()+"\"");
 			if(resultResourceTags.get(objVal).getLabel().contains(headerEducationalUse.getText()))
 			{
 				setEducationalObjectVal(resultResourceTags.get(objVal).getLabel());
@@ -1260,29 +1311,32 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	public void setAccessHazardObjectVal(String accessHazardStr)
 	{
-		if(accessHazardStr.contains(flashingHazard.getText()))
-		{
-			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else if(accessHazardStr.contains(flashing.getText()))
-		{
-			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else if(accessHazardStr.contains(motionSimulation.getText()))
-		{
-			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else if(accessHazardStr.contains(motionSimulationHazard.getText()))
-		{
-			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else if(accessHazardStr.contains(sound.getText()))
-		{
-			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		else if(accessHazardStr.contains(soundHazard.getText()))
-		{
-			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		String[] stringArry=accessHazardStr.split(":");
+		if(stringArry.length!=0){
+			if(stringArry[1].trim().equalsIgnoreCase(flashingHazard.getText()))
+			{
+					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(flashing.getText()))
+			{
+				flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(motionSimulation.getText()))
+			{
+				motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(motionSimulationHazard.getText()))
+			{
+				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(sound.getText()))
+			{
+				sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(soundHazard.getText()))
+			{
+				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
 		}
 	}
 	public void setAdsObjectVal(String adsStr)
@@ -1308,11 +1362,17 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		}
 		if(lexileStr.contains(level1.getText()))
 		{
-			level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			String[] stringArry=lexileStr.split(":");
+			if(stringArry[1].trim().equalsIgnoreCase(GL_GRR_NUMERIC_ONE)){
+				level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			}
 		}
 		if(lexileStr.contains(level2.getText()))
 		{
-			level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			String[] stringArry=lexileStr.split(":");
+			if(stringArry[1].trim().equalsIgnoreCase(GL_GRR_NUMERIC_TWO)){
+				level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			}
 		}
 		if(lexileStr.contains(level3.getText()))
 		{

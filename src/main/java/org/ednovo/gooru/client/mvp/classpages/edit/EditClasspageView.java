@@ -14,7 +14,6 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
-import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListHandler;
@@ -23,7 +22,6 @@ import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEven
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
-import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
@@ -198,6 +196,7 @@ public class EditClasspageView extends
 
 	private final String START_PAGE = "1";
 	ToolTip toolTip = null;
+	
 	ClassListPresenter classlistPresenter;
 	
 	List<CollectionItemDo> collectionItemList = new ArrayList<CollectionItemDo>();
@@ -447,13 +446,12 @@ public class EditClasspageView extends
 		titleAlertMessageLbl.setText(GL0143);
 		btnNewAssignment.setText(GL0144);
 		btnDeleteClasspage.setText(GL0145);
-		noAssignmentsMessageLblTwo.setText(GL0147);
+		//noAssignmentsMessageLblTwo.setText(GL0147);
 		backArrowButton.setText(GL1617);
 		monitorProgress.setText(GL1586);
 		assignmentsTab.setText(GL1623);
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
-		noAssignmentsMessageLblTwo.setText(GL1625);
 		
 		//htmlShareText.setHTML(GL0229 + GL0230);
 		//lblPopupTitle.setText(GL0230);
@@ -484,7 +482,7 @@ public class EditClasspageView extends
 		@Override
 		public void getStudentJoinList(int joinClassList) {
 			toolTip = new ToolTip(GL1797);
-			if(joinClassList==0){
+			if(joinClassList==0 || totalHitCount==0){
 				if(reportHandler!=null) {
 					reportHandler.removeHandler();
 				}

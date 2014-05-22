@@ -15,7 +15,6 @@
             <g:FlowPanel styleName="{ProfilePageStyle.userMetaDataContainer}">
 	            <panel:HTMLEventPanel styleName="{ProfilePageStyle.avatar}" ui:field="profileImageContainer">
 	                <g:Image ui:field="userProfilePic"></g:Image>
-	                <g:HTMLPanel styleName="{ProfilePageStyle.starBg}">Gooru Featured Teacher</g:HTMLPanel>
 	            </panel:HTMLEventPanel>
 	            <g:HTMLPanel styleName="{ProfilePageStyle.aboutUserText}">
 	                <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userName"></g:Label>
