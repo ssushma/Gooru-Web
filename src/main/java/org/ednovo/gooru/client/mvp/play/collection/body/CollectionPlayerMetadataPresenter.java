@@ -215,8 +215,8 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 	public void clearDashBoardIframe(){
 		getView().clearDashBoardIframe();
 	}
-	public void setClasspageInsightsUrl(String classpageId){
-		getView().setClasspageInsightsUrl(classpageId);
+	public void setClasspageInsightsUrl(String classpageId, String sessionId){
+		getView().setClasspageInsightsUrl(classpageId, sessionId);
 	}
 	
 

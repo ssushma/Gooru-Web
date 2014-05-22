@@ -427,7 +427,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		}
 	}
 	
-	public void setClasspageInsightsUrl(String classpageId){
+	public void setClasspageInsightsUrl(String classpageId, String sessionId){
+		if(sessionId==null) {
+			sessionId = "";
+		}
 		String page=AppClientFactory.getPlaceManager().getRequestParameter("page", null);
 		if(AppClientFactory.isAnonymous()){
 			frameContainer.clear();
@@ -442,7 +445,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			frameContainer.setVisible(true);
 			messageContainer.setVisible(false);
 			frameContainer.add(new DataInsightsIframe(StringUtil.generateMessage(AppClientFactory.getLoggedInUser().getSettings().getAnalyticsEndPoint()+DataInsightsUrlTokens.PLAYER_CLASS_PREVIOUS_DATA,
-					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),AppClientFactory.getLoginSessionToken())));
+					classpageId,collectionDo.getGooruOid(),AppClientFactory.getGooruUid(),sessionId,AppClientFactory.getLoginSessionToken())));
 		}
 	}
 	
