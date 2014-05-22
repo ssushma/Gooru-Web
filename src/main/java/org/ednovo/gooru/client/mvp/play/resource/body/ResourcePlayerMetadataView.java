@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
+import java.util.Date;
+
 import org.apache.xpath.operations.Bool;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -43,6 +45,7 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -131,6 +134,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final String EXCELLENT="Excellent";
 	private static final String REACTIONS_WIDGET="Contentreactions";
 	private static final String RATINGS_WIDGET="Contentratings";
+	private static final int CHILD_AGE=13;
 	private StarRatingsDo starRatingsDo;
 	ThankYouResourceStarRatings thankYouResourceStarRatings;
 	private boolean isRated=false;
@@ -940,12 +944,40 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void removeRatingContainer(boolean flag){
 		if(flag){
-			ratingsContainer.removeFromParent();
+//			ratingsContainer.removeFromParent();
+			ratingsContainer.setVisible(false);
 		}else{
+			if(isChildAccount()){
+//				ratingsContainer.removeFromParent();
+				ratingsContainer.setVisible(false);
+			}else{
+				ratingsContainer.setVisible(true);
+			}
 			emoticsContainer.removeFromParent();
 		}
 	}
 	
+	/**
+	 * Checks weather the logged in user is child or not.
+	 * @return isChild {@link Boolean} 
+	 */
+	private boolean isChildAccount() {
+		Date convertedDOB = null;
+		boolean isChild=false;
+		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
+		com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss.S");
+		if(userDo.getDateOfBirth()!=null&&!userDo.getDateOfBirth().equals("")){
+			convertedDOB = dateFormat.parse(userDo.getDateOfBirth());
+		}
+		int loggedInUserAge = getAge(convertedDOB);
+		if(loggedInUserAge<=CHILD_AGE){
+			isChild=true;
+		}else if(loggedInUserAge>CHILD_AGE){
+			isChild=false;
+		}
+		return isChild;
+	}
+
 	/**
 	 * On click of Star 1 sets the rating on view.
 	 * @param clickEvent {@link ClickEvent}
@@ -1308,6 +1340,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
 		thankYouResourceStarRatings.show();
 		thankYouResourceStarRatings.setAutoHideEnabled(true);
+	}
+	
+	
+	private int getAge(Date birthDate) {
+		long ageInMillis = new Date().getTime() - birthDate.getTime();
+		Date age = new Date(ageInMillis);
+		return age.getYear() - 70;
 	}
 	
 }
