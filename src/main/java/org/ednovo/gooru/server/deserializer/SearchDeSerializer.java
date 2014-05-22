@@ -95,6 +95,11 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	
 	public static final String RATINGS = "ratings";
 	
+	public static final String AGGREGATOR = "aggregator";
+	
+	public static final String PUBLISHER = "publisher";
+	
+	
 	/**
 	 * Deserialize the search json object
 	 * @param jsonRep instance of {@link JsonRepresentation}
