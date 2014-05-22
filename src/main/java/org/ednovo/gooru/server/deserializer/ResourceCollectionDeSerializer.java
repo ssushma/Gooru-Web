@@ -49,6 +49,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
+import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
@@ -168,6 +169,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String RESOURCE_COUNT="resourceCount";
 
 	public static final String QUESTION_COUNT="questionCount";
+	
+	public static final String CUSTOM_FIELDS="customFieldValues";
 
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
@@ -319,6 +322,11 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setEducationalUse(getJsonArray(recordJsonObject, EDUCATIONALUSE));
 		resourceDo.setMomentsOfLearning(getJsonArray(recordJsonObject, MOMENTSOFLEARNING));
 		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
+		try{
+			resourceDo.setCustomFieldValues(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(CUSTOM_FIELDS).toString(), customFieldValuesDO.class));
+		}catch(Exception e){
+			
+		}
 		try{
 			resourceDo.setResourceFormat(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RESOURCE_FORMAT).toString(), ResourceFormatDo.class));
 		}catch(Exception e){
