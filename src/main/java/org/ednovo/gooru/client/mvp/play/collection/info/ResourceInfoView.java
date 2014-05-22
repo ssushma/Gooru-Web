@@ -1569,8 +1569,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 						success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
 						success.setHeight("253px");
 						success.setWidth("450px");
-						success.setPopupTitle(GL1792);
-						success.setDescText(GL1793);
+						success.setPopupTitle(GL1795);
+						success.setDescText(GL1796);
 						success.enableTaggingImage();
 						success.setPositiveButtonText(GL0190);
 						success.center();
