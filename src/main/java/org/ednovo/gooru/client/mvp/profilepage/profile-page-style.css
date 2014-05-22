@@ -1075,7 +1075,6 @@ li.resources {
 	padding: 4px 0px;
 }
 .aboutUserTextRight {
-	overflow: hidden;
 	float: right;
 }
 .gooru-social-buttons {
@@ -1313,9 +1312,10 @@ li.resources {
 }
 .profileVisiblityPopup {
 	position: absolute;
-	left: 10px;
-	top: 23px;
+	left: -93px;
+	top: 14px;
 	display: none;
+	text-align: left;
 }
 
 .bubble-arrow-style {
@@ -1324,7 +1324,7 @@ li.resources {
 	border: 10px solid;
 	border-color: transparent transparent white transparent;
 	position: relative;
-	top:-9px;
+	top: 1px;
 	margin: auto;
 	border-top: none;
 	z-index: 100000;
@@ -1338,7 +1338,7 @@ li.resources {
 	border: 1px solid #DDD;
 	font-size: 12px;
 	padding: 30px;
-	width: 300px;
+	width: 369px;
 	min-height: 110px;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -1348,13 +1348,31 @@ li.resources {
 	border-radius: 4px;
 }
 
+.standards-Popup {
+	width: 200px;
+	height: 150px;
+	padding: 20px;
+}
+
 .userLibraryPopup {
 	position: absolute;
 	left: -142px;
-	top: 23px;
+	top: 14px;
 	display: none;
 	z-index: 10000;
 }
 .marginTop10 {
 	margin-top: -10px;
+}
+.popup-left {
+	left: 27px;
+	top: -47px;
+}
+
+.arrow-left {
+	left: -188px;
+	top: 50px;
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
 }

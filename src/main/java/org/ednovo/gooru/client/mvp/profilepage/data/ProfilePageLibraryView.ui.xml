@@ -7,7 +7,7 @@
 	   <g:HTMLPanel ui:field="emptyContainer" styleName="{style.emptyContainer}">
 	       <g:Label ui:field="noCollectionsMsg" styleName="{style.noCollectionsMsg}"></g:Label>
 	       <g:Label ui:field="collectionsRedirectionMsg" styleName="{style.collectionsRedirectionMsg}"></g:Label>
-	       <g:Button ui:field="myCollectionsBtn" styleName="secondary">Go to My Collections</g:Button>
+	       <g:Button ui:field="myCollectionsBtn" styleName="secondary"></g:Button>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{style.leftNav}" ui:field="leftNav"/>
 	   <g:HTMLPanel styleName="{style.contentScroll}" ui:field="contentScroll"/>

@@ -75,36 +75,52 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review;
-	Integer score;
+	Integer score,count;
+	double average;
 	
 	/**
 	 * Class Constructor
+	 * @param assocGooruOId 
+	 * @param score 
 	 * @param review 
-	 * @param integer 
-	 * @param string 
+	 * @param average 
+	 * @param count 
 	 */
-	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review){  
+	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count){   
 		this.assocGooruOId = assocGooruOId;
 		this.score = score;
 		this.review = review;
+		this.average=average;
+		this.count=count;
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
 		setAvgRatingWidget();
 		
 	}
 	
+	/**
+	 * Average star ratings widget will get integrated.
+	 */
 	private void setAvgRatingWidget() {
 		ratingWidgetView=new RatingWidgetView();
-		ratingWidgetView.getRatingCountLabel().setText("0");
-		ratingWidgetView.setAvgStarRating(2);
+		ratingWidgetView.getRatingCountLabel().setText(count.toString());
+		ratingWidgetView.setAvgStarRating(average);
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
+	/**
+	 * 
+	 * Inner class implementing {@link ClickEvent}
+	 *
+	 */
 	private class ShowRatingPopupEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent()); 
+			/**
+			 * OnClick of count label event to invoke Review pop-pup
+			 */
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
 		}
 	}
 
@@ -130,6 +146,10 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		hide();
 	}
 	
+	/**
+	 * Sets the user review on text area if available.
+	 * @param review
+	 */
 	private void setUserReview(String review) {
 		if(!review.equals("")){
 			btnPost.setText("Save");

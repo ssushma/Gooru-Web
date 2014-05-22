@@ -82,27 +82,12 @@ public class ResourceDo extends ContentDo {
 
 
     /** need to change these after api is finalized  **/
-    private String host;
-   
-	private String educationalAlignment;
-	
+
 	private String  educationalRole;
 	
 	private String interactivityType;
 	
-	private String ageRange;
-	
 	private String gooruSubject;
-	
-	private String countryCode;
-	
-	private String language;
-	
-	private String dataType;
-	
-	private String author;
-	
-	private String copyRightHolder;
 	
 	private String contributor;
 	
@@ -118,26 +103,25 @@ public class ResourceDo extends ContentDo {
 	
 	private List<String> mediaFeatures;
 	
-	private String controlflexibility;
-	
-	private String accesshazard;
-	
 	private List<String> accessibilityAPI;
+	
+	private customFieldValuesDO customFieldValues;
 	
 	
 
+	public customFieldValuesDO getCustomFieldValues() {
+		return customFieldValues;
+	}
+	public void setCustomFieldValues(customFieldValuesDO customFieldValues) {
+		this.customFieldValues = customFieldValues;
+	}
 	public List<String> getAccessibilityAPI() {
 		return accessibilityAPI;
 	}
 	public void setAccessibilityAPI(List<String> accessibilityAPI) {
 		this.accessibilityAPI = accessibilityAPI;
 	}
-	public String getAccesshazard() {
-		return accesshazard;
-	}
-	public void setAccesshazard(String accesshazard) {
-		this.accesshazard = accesshazard;
-	}
+	
 	public String getHasadaptation() {
 		return hasadaptation;
 	}
@@ -155,12 +139,6 @@ public class ResourceDo extends ContentDo {
 	
 	private String isadaptation;
 	
-	public String getControlflexibility() {
-		return controlflexibility;
-	}
-	public void setControlflexibility(String controlflexibility) {
-		this.controlflexibility = controlflexibility;
-	}
 	public List<String> getMediaFeatures() {
 		return mediaFeatures;
 	}
@@ -203,36 +181,6 @@ public class ResourceDo extends ContentDo {
 	public void setContributor(String contributor) {
 		this.contributor = contributor;
 	}
-	public String getCopyRightHolder() {
-		return copyRightHolder;
-	}
-	public void setCopyRightHolder(String copyRightHolder) {
-		this.copyRightHolder = copyRightHolder;
-	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-	public String getDataType() {
-		return dataType;
-	}
-	public void setDataType(String dataType) {
-		this.dataType = dataType;
-	}
-	public String getLanguage() {
-		return language;
-	}
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-	public String getCountryCode() {
-		return countryCode;
-	}
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
 	public String getGooruSubject() {
 		return gooruSubject;
 	}
@@ -240,12 +188,6 @@ public class ResourceDo extends ContentDo {
 		this.gooruSubject = gooruSubject;
 	}
 	
-	public String getAgeRange() {
-		return ageRange;
-	}
-	public void setAgeRange(String ageRange) {
-		this.ageRange = ageRange;
-	}
 	public String getInteractivityType() {
 		return interactivityType;
 	}
@@ -259,21 +201,6 @@ public class ResourceDo extends ContentDo {
 		this.educationalRole = educationalRole;
 	}
 	
-	
-	
-	public String getEducationalAlignment() {
-		return educationalAlignment;
-	}
-	public void setEducationalAlignment(String educationalAlignment) {
-		this.educationalAlignment = educationalAlignment;
-	}
-	public String getHost() {
-		return host;
-	}
-	public void setHost(String host) {
-		this.host = host;
-	}
-
 	/** need to change the above **/
 	
 
