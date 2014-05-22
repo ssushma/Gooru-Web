@@ -29,7 +29,7 @@
 								<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
 							        <g:HTMLPanel styleName="{ProfilePageStyle.profileVisiblityPopup}">
 							          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style}"></g:HTMLPanel>
-							          <g:HTMLPanel styleName="{ProfilePageStyle.standards-inner}">This is the description of the standard.</g:HTMLPanel>
+							          <g:HTML styleName="{ProfilePageStyle.standards-inner} {ProfilePageStyle.standards-Popup}" ui:field="profileVisiblityMessage"></g:HTML>
 							        </g:HTMLPanel>
 							    </g:HTMLPanel>
 					   		    <g:HTMLPanel styleName="{settingsStyle.publicProfileOnButtonContent}">
@@ -115,9 +115,9 @@
         <g:HTMLPanel styleName="{ProfilePageStyle.userContent}">
             <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userLibraryMessage"></g:Label>
 			<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
-		        <g:HTMLPanel styleName="{ProfilePageStyle.userLibraryPopup}">
-		          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style}"></g:HTMLPanel>
-		          <g:HTMLPanel styleName="{ProfilePageStyle.standards-inner} {ProfilePageStyle.marginTop10}">This is the description of the standard.</g:HTMLPanel>
+		        <g:HTMLPanel styleName="{ProfilePageStyle.userLibraryPopup} {ProfilePageStyle.popup-left}">
+		          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style} {ProfilePageStyle.arrow-left}"></g:HTMLPanel>
+		          <g:Label styleName="{ProfilePageStyle.standards-inner} {ProfilePageStyle.marginTop10}" ui:field="libraryMessage"></g:Label>
 		        </g:HTMLPanel>
 		    </g:HTMLPanel>
             <g:HTMLPanel styleName="{ProfilePageStyle.userNameborder}"/>

@@ -85,6 +85,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -99,7 +100,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Anchor /* shareTabVc, */contentTabVc;
 
 	@UiField
-	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage;
+	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage, libraryMessage;
 	
 	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText;
 
@@ -148,6 +149,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	ProfilePageLibraryView profilePageLibraryView;
+	
+	@UiField HTML profileVisiblityMessage;
 	
 	Label noCollectionMsgPanel = new Label();
 
@@ -435,6 +438,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+GL1083);
 		userName.setText(profileDo.getUser().getUsernameDisplay());
 		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1787);
+		libraryMessage.setText(GL1792);
+		profileVisiblityMessage.setHTML(GL1793+"<br/><br/>"+GL1794);
 		userBio.setText(profileDo.getAboutMe());
 		profileTextArea.setText(profileDo.getAboutMe());
 		profileImageUrl=profileDo.getUser().getProfileImageUrl() + "?p="+ Math.random();
