@@ -20,13 +20,13 @@
 			<g:HTMLPanel  styleName="{ratingstyle.ratingContainer}" ui:field="ratingsContainer">
 			    <g:Label styleName="{playerStyle.ratingValue}" ui:field="starValue"></g:Label>
                 <g:Label styleName="{playerStyle.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
-                <g:HTMLPanel styleName="{ratingstyle.subRatingContainer}">
+                <g:HTMLPanel styleName="{ratingstyle.subRatingContainer} rating">
 
-                    <g:RadioButton name="rating" ui:field="five_star" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" ui:field="four_star" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" ui:field="three_star" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" ui:field="two_star" styleName="rating"></g:RadioButton>
-                    <g:RadioButton name="rating" ui:field="one_star" styleName="rating"></g:RadioButton>
+                    <g:InlineHTML ui:field="one_star" styleName="ratingItems star"></g:InlineHTML>
+                    <g:InlineHTML ui:field="two_star" styleName="ratingItems star"></g:InlineHTML>
+                    <g:InlineHTML ui:field="three_star" styleName="ratingItems star"></g:InlineHTML>
+                    <g:InlineHTML ui:field="four_star" styleName="ratingItems star"></g:InlineHTML>
+                    <g:InlineHTML ui:field="five_star" styleName="ratingItems star"></g:InlineHTML>
 
                     <!-- <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
                     <g:SimpleRadioButton name="rating" styleName="rating"></g:SimpleRadioButton>
