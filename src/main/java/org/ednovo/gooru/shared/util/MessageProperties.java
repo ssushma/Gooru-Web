@@ -321,7 +321,7 @@ public interface MessageProperties {
 	String GL0218 = "Gooru - {0}";
 	String GL0218_1 = "{0} has shared their class {1} with you";
 	String GL0219 = "{0} <div><br/></div><div> {1} </div><div><br/></div><div>Sent using Gooru. Visit {2} for more great resources and collections. It's free!</div>";
-	String GL0219_1 = "Hello there! <div><br/></div>Your teacher, {0} has shared the class: {1} with you. Please access the class by clicking the link below or by entering in the Class Code under the Study tab." +
+	String GL0219_1 = "Hello there! <div><br/></div>Your teacher, {0} has shared the class: {1} with you. Please access the class by clicking the link below or by entering in the Class Code under the My Classes tab." +
 			" <div><br/></div><div> {2} </div><div><br/></div><div>ClassCode: {3} </div><div><br/></div><div>Sent using Gooru. Visit {4} for more great resources and collections. It's free!</div>";
 	String GL0220 = "Check out {0} Gooru profile and fantastic collections";
 	String GL0221 = "{0} is an active member of the Gooru community! Take a look and browse through all their great collections - {1} <div><br/></div><div>Gooru is a free search engine for learning used by thousands of teachers around the world to discover, organize and create teaching materials.</div><div><br/></div><div>Experience Gooru today at {2} </div>";
@@ -339,7 +339,7 @@ public interface MessageProperties {
 	String GL0230 ="Class Code";
 	String GL0231 ="a Web Link";
 	String GL0232 ="Web Link";
-	String GL0233 ="Class Codes are an easy way to share Classes with your students in the classroom.<br></br>Ask your students to enter the Class Code in the Study tab to find their assigned collections.";
+	String GL0233 ="Class Codes are an easy way to share classes with your students in the classroom.<br></br>Simply have students enter the class code in the My Classes tab to find their assignments";
 	String GL0234 ="Use Web Links if you want to share Classes via email or other online channels.<br></br>Ask your students to click directly on the link to find their assigned collections.";
 	String GL0235 ="Please select a due date.";
 	String GL0236 ="Please enter directions.";
@@ -1773,7 +1773,7 @@ public interface MessageProperties {
 
 		//share tab view in class pages
 		String GL1413="This link takes students directly to this Classpage.";
-		String GL1414="Ask students to enter in this code in the Study tab to view this Classpage.";
+		String GL1414="Ask students to enter in this code in the My Classes tab to view this Classpage.";
 		
 		//Home Presenter.
 		String GL1415="Oh! No";
@@ -2038,7 +2038,7 @@ public interface MessageProperties {
     	String GL1590="Invite students to your class";
     	String GL1591="Enter email addresses";
     	String GL1592="Share in Your Classroom";
-    	String GL1593="Class Codes are an easy way to share classes with your students in the classroom. Simply have students enter the class code in the Study tab to find their assignments.";
+    	String GL1593="Class Codes are an easy way to share classes with your students in the classroom. Simply have students enter the class code in the My Classes tab to find their assignments.";
     	String GL1594="Share via E-mail or Online";
     	String GL1595="Use Web Links if you want to share classes via email or other online channels. Ask your students to click directly on the link to find their assignments.";
     	String GL1596="Once your students join, you can";
