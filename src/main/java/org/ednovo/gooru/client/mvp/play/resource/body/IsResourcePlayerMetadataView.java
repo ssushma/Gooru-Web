@@ -29,7 +29,6 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -47,5 +46,6 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void removeRatingContainer(boolean flag);
 	public void postReview(String assocGooruOId, String userReview, Integer score, boolean isUpdate);
 	public void hideThankYouPopUp();
-	public void setRatingMetaData(String assocGooruOid, Integer score,String review, double average, Integer count);   
+	public void setRatingMetaData(String assocGooruOid, Integer score,String review, double average, Integer count);  
+	public void displaySuccessPopup();
 }
