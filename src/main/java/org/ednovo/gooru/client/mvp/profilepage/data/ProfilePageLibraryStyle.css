@@ -285,11 +285,11 @@
 .collectionInfoSubStyle {
 	float: left !important;
 	width: 370px !important;
+	border-right: 1px solid rgb(221,221,221) !important;
 }
 .resourcesInsideSubStyle {
 	width: 263px !important;
 	padding-left: 20px !important;
-	border-left: 1px solid rgb(221,221,221) !important;
 	margin-top: 0px !important;
 }
 .emptyContainer {
@@ -304,4 +304,8 @@
 	font-size: 18px;
 	padding-bottom: 20px;
 	color: #999;
+}
+.emptyFolderContainer {
+	height: 234px;
+	background: url("images/folders/panel/empty-folder-large.png") 248px 43px white no-repeat;
 }

@@ -135,7 +135,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param collectionType
 	 * @throws : GwtException
 	 */
-	public PartnerFolderListDo getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType) throws GwtException;
+	public PartnerFolderListDo getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken) throws GwtException;
 	
 	/**
 	 * Get Folders of the second level and third level by User
