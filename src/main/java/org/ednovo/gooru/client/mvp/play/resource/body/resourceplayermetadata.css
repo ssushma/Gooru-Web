@@ -261,7 +261,6 @@
 content:”…”;
 }
 
-
 /*//////////////////// ratings and reviews ////////*/
 .ratingVisualizations {
 	overflow: hidden;
@@ -645,6 +644,7 @@ fieldset {
 
 .saveCancelContainer {
 	text-align: center;
+	float:right;
 }
 
 .saveCancelContainer button {
@@ -783,4 +783,21 @@ fieldset {
 	margin-left: 15px;
 	margin-bottom: 2px;
 	font-style: italic;
+}
+.ratingConfirmationContainer .icon {
+    width:55px;
+    height:55px;
+    margin:10px auto 20px auto;
+}
+
+.ratingConfirmationContainer .icon.delete {
+    background: url('images/popup/exclamation-mark.png') no-repeat center;
+    position: relative;
+}
+.ratingConfirmationContainer .icon.complete {
+    background: url('images/popup/checkmark.png') no-repeat center;
+    position: relative;
+}
+.okContainer{
+	text-align: center;
 }

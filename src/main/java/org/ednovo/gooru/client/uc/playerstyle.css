@@ -917,9 +917,8 @@ float: left;
 }
 .ratingUserName
 {
-margin-top: 15px;
-font-weight: bold;
-position: absolute;
+	margin-top: 15px;
+	font-weight: bold;
 }
 .htmlUserReviewContainer{
 background: #f0f0f0;

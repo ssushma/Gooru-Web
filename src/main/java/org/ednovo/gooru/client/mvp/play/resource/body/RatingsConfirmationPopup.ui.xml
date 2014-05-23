@@ -7,17 +7,14 @@
 	    <g:HTMLPanel styleName="{playerStyle.ratingConfirmationContainer}">
         	<g:HTMLPanel styleName="{playerStyle.arrowBorder}"></g:HTMLPanel>
             <g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
-                <h1>Thank you for rating!</h1>
+            <g:HTMLPanel styleName="{playerStyle.icon} {playerStyle.complete}" ui:field="imgSuccessIcon"></g:HTMLPanel>
+                <h3>Thank you for reviewing this resource!</h3>
                   <g:HTMLPanel styleName="{playerStyle.rating}">
                         Average Rating<br/>
                    <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     </g:HTMLPanel>
-                    <g:Label>Tell us what you think!</g:Label>
-                    <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
-                    <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
-                    <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}" ui:field="buttonsContainer">
-                        <g:Button ui:field="btnSkip" styleName="secondary">Skip</g:Button>
-                        <g:Button ui:field="btnPost" styleName="primary"></g:Button>
+                    <g:HTMLPanel styleName="{playerStyle.okContainer}" ui:field="buttonsContainer">
+                        <g:Button ui:field="btnOk" styleName="primary">OK</g:Button>
                     </g:HTMLPanel>
                     <g:Label ui:field="saveAndPsotLbl"></g:Label>
                 </g:HTMLPanel>

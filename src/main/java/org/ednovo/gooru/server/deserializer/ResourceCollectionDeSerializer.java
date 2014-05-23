@@ -174,6 +174,10 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String CUSTOM_FIELDS="customFieldValues";
 	
 	public static final String RATINGS = "ratings";
+	
+	public static final String AGGREGATOR="aggregator";
+	
+	public static final String PUBLISHER="publisher";
 
 	public static ResourceSearchResultDo deserializeRecord(JSONObject recordJsonObject) {
 		ResourceSearchResultDo resourceSearchResultDo = new ResourceSearchResultDo();
@@ -287,7 +291,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setTitle(getJsonString(recordJsonObject, RESOURCE_TITLE));
 		resourceDo.setFolder((getJsonString(recordJsonObject, FOLDER)));
 		resourceDo.setDescription(getJsonString(recordJsonObject, RESOURCE_DESCRIPTION));
-		
+	
 		try {
 			if (getJsonString(recordJsonObject, RESOURCE_TAXONOMY_DATA_SET) != null) {
 				JSONObject taxonomyDataSet = new JSONObject(getJsonString(recordJsonObject, RESOURCE_TAXONOMY_DATA_SET));
@@ -326,6 +330,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setEducationalUse(getJsonArray(recordJsonObject, EDUCATIONALUSE));
 		resourceDo.setMomentsOfLearning(getJsonArray(recordJsonObject, MOMENTSOFLEARNING));
 		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
+		
 		try{
 			resourceDo.setCustomFieldValues(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(CUSTOM_FIELDS).toString(), customFieldValuesDO.class));
 		}catch(Exception e){
@@ -409,7 +414,29 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 					}	
 				}
 				resourceDo.setAssets(assetsList);
+				
+				
+				List<String> aggregatorList=new ArrayList<String>();
+				JSONArray aggregatorArray=recordJsonObject.isNull(AGGREGATOR)?null:recordJsonObject.getJSONArray(AGGREGATOR);
+				if(aggregatorArray!=null){
+					for(int i=0;i<aggregatorArray.length();i++){
+						aggregatorList.add(aggregatorArray.get(i).toString());
+					}	
+				}
+				resourceDo.setAggregator(aggregatorList);
+			
+				List<String> publisherList=new ArrayList<String>();
+				JSONArray publisherArray=recordJsonObject.isNull(PUBLISHER)?null:recordJsonObject.getJSONArray(PUBLISHER);
+				if(publisherArray!=null){
+					for(int i=0;i<publisherArray.length();i++){
+						publisherList.add(publisherArray.get(i).toString());
+					}	
+				}
+				resourceDo.setAggregator(publisherList);
+			
 			}
+			
+			
 			
 		}catch(Exception e){
 			e.printStackTrace();

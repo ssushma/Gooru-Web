@@ -73,6 +73,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	private boolean isPreviewPlayer=false;
 	
 	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
+
+	private String resourceTitle = null;
 	
 	@Inject
 	public ResourcePlayerMetadataPresenter(EventBus eventBus, IsResourcePlayerMetadataView view,QuestionResourcePresenter questionResourcePresenter,CollectionEndPresenter collectionEndPresenter,RatingAndReviewPopupPresenter ratingAndReviewPopup) {
@@ -334,7 +336,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 */
 	@Override
 	public void openReviewPopUp(String assocGooruOId) {
-		addToPopupSlot(ratingAndReviewPopup); 
+		addToPopupSlot(ratingAndReviewPopup);
+		ratingAndReviewPopup.displayPopup(resourceTitle, assocGooruOId);
 		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
 	}
 
@@ -354,6 +357,11 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				getView().setRatingMetaData(assocGooruOid,score,review,result.getAverage(),result.getCount());
 			}
 		});
+	}
+
+	@Override
+	public void setResourceMetaData(String resourceTitle) {
+		this.resourceTitle = resourceTitle;
 	}
 
 }

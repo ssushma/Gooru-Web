@@ -1300,7 +1300,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRep=null;
 		JSONObject jsonObject = null;
 		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),gooruUid);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken());
 			System.out.println("urlVal::"+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonObject = jsonResponseRep.getJsonRepresentation().getJsonObject();
@@ -1323,7 +1323,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			if(jsonObject.getInt("totalHitCount")>0){
 				JSONArray jsonArray=jsonObject.getJSONArray("searchResults"); 
 				for(int i=0;i<jsonArray.length();i++){
-					JSONObject resourceRatingsJsonObject=jsonArray.getJSONObject(0); 
+					JSONObject resourceRatingsJsonObject=jsonArray.getJSONObject(i);
 					StarRatingsDo starRatingsDo =deserializeResourceStarRatings(resourceRatingsJsonObject);
 					starRatingsList.add(starRatingsDo);
 				}	

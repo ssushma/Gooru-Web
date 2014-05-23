@@ -65,14 +65,14 @@
 	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title}" ui:field="thumbnailurlValue"/>
 	      		</g:HTMLPanel>
 	          
-	           	<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="publisherPanel">
-	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="publisherText"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title-grades}" ui:field="lblPublisher"/>
-	      		</g:HTMLPanel>
-	      		
-	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="aggregatorPanel">
+	          <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="aggregatorPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="aggregatorText"></g:Label>
 	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title-grades}" ui:field="aggregatorVal"/>
+	      		</g:HTMLPanel>
+	      		
+	           	<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="publisherPanel">
+	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="publisherText"></g:Label>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title-grades}" ui:field="lblPublisher"/>
 	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="hostPanel">

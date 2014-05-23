@@ -27,16 +27,20 @@
 
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
-import org.ednovo.gooru.client.gin.AppClientFactory;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -44,9 +48,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -72,12 +76,15 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField public FlowPanel ratingWidgetPanel;
+	@UiField HTMLPanel buttonsContainer;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords;
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review;
 	Integer score,count;
 	double average;
-	
+	final String saving="Saving..";
+	final String posting="Posting..";
 	/**
 	 * Class Constructor
 	 * @param assocGooruOId 
@@ -95,7 +102,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
 		setAvgRatingWidget();
-		
+		saveAndPsotLbl.setVisible(false);
+		buttonsContainer.setVisible(true);
 	}
 	
 	/**
@@ -130,11 +138,26 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 */
 	@UiHandler("btnPost")
 	public void onRatingReviewPostclick(ClickEvent clickEvent){
-		if(btnPost.getText().equalsIgnoreCase("Save")){
-			AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-		}else if(btnPost.getText().equalsIgnoreCase("Post")){
-			AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
-		}
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", ratingCommentTxtArea.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean value) {
+					if(!value){
+						saveAndPsotLbl.setText("");
+						saveAndPsotLbl.setVisible(true);
+						buttonsContainer.setVisible(false);
+						if(btnPost.getText().equalsIgnoreCase("Save")){
+							saveAndPsotLbl.setText(saving);
+							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
+						}else if(btnPost.getText().equalsIgnoreCase("Post")){
+							saveAndPsotLbl.setText(posting);
+							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+						}
+					}
+					SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
+			}
+		});
 	}
 	
 	/**
@@ -159,5 +182,4 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		}
 		
 	}
-
 }
