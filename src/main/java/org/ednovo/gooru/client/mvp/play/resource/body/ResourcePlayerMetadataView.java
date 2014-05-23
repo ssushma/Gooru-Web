@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -65,8 +64,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -83,7 +82,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
-	@UiField RadioButton one_star,two_star,three_star,four_star,five_star;
+	
+//	@UiField(provided = true)
+	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
 	
 	/*@UiField SimpleRadioButton rating1;
 	@UiField SimpleRadioButton rating2;
@@ -128,24 +129,36 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final String RATINGS_WIDGET="Contentratings";
 	private static final int CHILD_AGE=13;
 	private StarRatingsDo starRatingsDo;
+	
+	private static final String FILLED_BLUE = "filled filledBlue";
 	ThankYouResourceStarRatings thankYouResourceStarRatings;
 	RatingsConfirmationPopup ratingsConfirmationPopup;
 	private boolean isRated=false,isFromThanksPopup=false;
 	String assocGooruOId;
 	Integer score,count;
 	double average;
+	
+	int currentRating=0;
+	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
 	}
 	
-	/*@UiFactory
-	public SimpleRadioButton createRadioButton() {
-	    return new SimpleRadioButton("");
-	}*/
+//	@UiFactory
+//	public SimpleRadioButton createRadioButton() {
+//	    return new SimpleRadioButton("");
+//	}
 
 	@Inject
 	public ResourcePlayerMetadataView(){
+		
+//		one_star = new SimpleRadioButton("");
+//		two_star = new SimpleRadioButton("");
+//		three_star = new SimpleRadioButton("");
+//		four_star = new SimpleRadioButton("");
+//		five_star = new SimpleRadioButton("");
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -1099,11 +1112,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 * default rating will get set
 	 */
 	public void getDefaultRatings(){
-		one_star.setValue(false);
-		two_star.setValue(false);
-		three_star.setValue(false);
-		four_star.setValue(false);
-		five_star.setValue(false);
+//		one_star.setValue(false);
+//		two_star.setValue(false);
+//		three_star.setValue(false);
+//		four_star.setValue(false);
+//		five_star.setValue(false);
 	}
 	
 	
@@ -1151,6 +1164,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void setUserRatings(StarRatingsDo result){
 		if(result!=null){
+			currentRating = result.getScore();
 			if(result.getScore()==1){
 				starValue.setVisible(true);
 				starValue.setText(POOR);
@@ -1183,47 +1197,44 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	
+	public void clearAllStars(){
+		one_star.getElement().removeClassName(FILLED_BLUE);
+		two_star.getElement().removeClassName(FILLED_BLUE);
+		three_star.getElement().removeClassName(FILLED_BLUE);
+		four_star.getElement().removeClassName(FILLED_BLUE);
+		five_star.getElement().removeClassName(FILLED_BLUE);
+	}
+	
+	
 	/**
 	 * Sets the stars on view based on the scores.
 	 * @param starRating {@link Integer}
 	 */
 	private void setStarRatingValue(int starRating) {
+		
+		clearAllStars();
 		if(starRating==1){
-			one_star.setValue(true); 
-			two_star.setValue(false);
-			three_star.setValue(false);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==2){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(false);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==3){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(true);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
+			three_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==4){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(true);
-			four_star.setValue(true);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
+			three_star.getElement().addClassName(FILLED_BLUE);
+			four_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==5){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(true);
-			four_star.setValue(true);
-			five_star.setValue(true);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
+			three_star.getElement().addClassName(FILLED_BLUE);
+			four_star.getElement().addClassName(FILLED_BLUE);
+			five_star.getElement().addClassName(FILLED_BLUE);
 		}else{
-			one_star.setValue(false);
-			two_star.setValue(false);
-			three_star.setValue(false);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			clearAllStars();
 		}
 	}
 	
@@ -1239,26 +1250,49 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		 * @param starScore {@link String}
 		 */
 		public OnStarMouseOver(String starScore) {
+			
 			this.starScore=starScore;
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
+			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(POOR);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(FAIR);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(GOOD);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
+				three_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(VERY_GOOD);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
+				three_star.getElement().addClassName(FILLED_BLUE);
+				four_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(EXCELLENT);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
+				three_star.getElement().addClassName(FILLED_BLUE);
+				four_star.getElement().addClassName(FILLED_BLUE);
+				five_star.getElement().addClassName(FILLED_BLUE);
 			}
 		}
 		
@@ -1272,7 +1306,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			
+			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
@@ -1289,6 +1323,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
 			}
+			setStarRatingValue(currentRating);
+			
 		}
 	}
 	

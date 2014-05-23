@@ -30,7 +30,7 @@
                                 <div id="data-four" class="{style.bar}" style="width: 20%"></div> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
                                 <br/>
                         </div>
-                        <g:Label> Average Rating</g:Label>
+                        <h3> Average Rating</h3>
                          <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                         <!-- <div class="{style.average}">
                             <h3>Average Rating</h3>
@@ -45,10 +45,12 @@
                         </div> -->
                     </div>
                        <button class="secondary {style.userRatingPreviewBtn}">Preview Resource</button>
+					<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
+					   <g:Label styleName="{style.rateMsg}" ui:field="rateMsg">Do you want to rate this resource?</g:Label>
+					   <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn">Preview and Rate Resource</g:Button>
+					</g:HTMLPanel>
                     <g:HTMLPanel ui:field="reviewsContainer">
                     </g:HTMLPanel>
-    
-             
                 </div>
             </div>
         </g:HTMLPanel>
