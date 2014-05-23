@@ -28,4 +28,8 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
 public interface RatingAndReviewPopupUiHandlers extends BaseUiHandlers{
 
+	void getAverageRatingForContent(String resourceId);
+
+	void getUserRatingsReviews(String resourceId);   
+
 }
