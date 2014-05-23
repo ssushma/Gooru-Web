@@ -25,8 +25,12 @@
 package org.ednovo.gooru.client.mvp.rating;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+
 import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsRatingAndReviewPopupView extends PopupView, IsViewWithHandlers<RatingAndReviewPopupUiHandlers>{
+
+	void displayPopUp(ResourceSearchResultDo searchResultDo);
 	
 }

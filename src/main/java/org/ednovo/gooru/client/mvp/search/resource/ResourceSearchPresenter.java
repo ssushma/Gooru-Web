@@ -135,8 +135,9 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 	    }
 
 	}
-	public void showRatingAndReviewPopup(){
+	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo){
 		Window.enableScrolling(false);
+		ratingAndReviewPopup.displayPopup(searchResultDo);
 		addToPopupSlot(ratingAndReviewPopup);
 	}
 }

@@ -2285,7 +2285,7 @@ public interface MessageProperties {
     	String GL1792 = "Your library is made of your publicly shared collections. Please put your collections in nested folders (Unit, Topic, Lesson) just like other libraries in Gooru so that they would be better organized in a library view.";
     	String GL1793 = "ON: You will be sharing your profile info & library with others.";
     	String GL1794 = "OFF: No one but you will be able to access your profile page.";
-    	String GL1795 ="Add Tages";
+    	String GL1795 ="Add Tags";
     	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
     	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
     	String GL1798="Lexile Level";

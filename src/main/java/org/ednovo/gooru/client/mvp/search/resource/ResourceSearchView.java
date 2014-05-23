@@ -54,18 +54,24 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	}
 
 	@Override
-	public IsDraggable renderSearchResult(ResourceSearchResultDo searchResultDo) {
+	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
 		ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
-		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				System.out.println("methodhit::");
+				getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+			}
+		});
 		return resourceSearchResultVc;
 	}
 	
-	private class ShowRatingPopupEvent implements ClickHandler{
+/*	private class ShowRatingPopupEvent implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
-			getUiHandlers().showRatingAndReviewPopup();
+			
 		}
-	}
+	}*/
 
 	@Override
 	protected void refreshShelfCollections(List<FolderDo> shelfCollections) {

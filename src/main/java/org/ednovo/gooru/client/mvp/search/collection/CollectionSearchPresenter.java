@@ -118,8 +118,14 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 
 	}
 
-	@Override
+/*	@Override
 	public void showRatingAndReviewPopup() {
+		// TODO Auto-generated method stub
+		
+	}*/
+
+	@Override
+	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo) {
 		// TODO Auto-generated method stub
 		
 	}
