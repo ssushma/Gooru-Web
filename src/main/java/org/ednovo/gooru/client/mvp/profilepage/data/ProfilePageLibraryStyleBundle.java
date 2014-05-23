@@ -53,5 +53,5 @@ public interface ProfilePageLibraryStyleBundle extends CssResource {
 	String collectionViewerSubStyle();
 	String collectionInfoSubStyle();
 	String resourcesInsideSubStyle();
-
+	String emptyFolderContainer();
 }

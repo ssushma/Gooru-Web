@@ -22,55 +22,49 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.data.item;
+package org.ednovo.gooru.shared.model.library;
 
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-public class LeftMenuItemView extends Composite {
-
-	@UiField Label unitMenuItem;
+@JsonInclude(Include.NON_NULL)
+public class ProfileLibraryListDo implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	private ArrayList<ProfileLibraryDo> searchResult;
+	private Integer count;
 	
-	private String unitId;
-	
-	private Integer childCount;
-	
-	
-	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
-			.create(LibraryUnitMenuViewUiBinder.class);
+	public ProfileLibraryListDo() {}
 
-	interface LibraryUnitMenuViewUiBinder extends
-			UiBinder<Widget, LeftMenuItemView> {
+	/** 
+	 * This method is to get the searchResult
+	 */
+	public ArrayList<ProfileLibraryDo> getSearchResult() {
+		return searchResult;
 	}
 
-	public LeftMenuItemView(ProfileLibraryDo profileLibraryDo) {
-		initWidget(uiBinder.createAndBindUi(this));
-		unitMenuItem.setText(profileLibraryDo.getTitle());
-		setUnitId(profileLibraryDo.getGooruOid());
+	/** 
+	 * This method is to set the searchResult
+	 */
+	public void setSearchResult(ArrayList<ProfileLibraryDo> searchResult) {
+		this.searchResult = searchResult;
 	}
 
-	public Label getUnitMenuItemPanel() {
-		return unitMenuItem;
+	/** 
+	 * This method is to get the count
+	 */
+	public Integer getCount() {
+		return count;
 	}
 
-	public String getUnitId() {
-		return unitId;
+	/** 
+	 * This method is to set the count
+	 */
+	public void setCount(Integer count) {
+		this.count = count;
 	}
 
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
-	}
-	public Integer getChildCount() {
-		return childCount;
-	}
-
-	public void setChildCount(Integer childCount) {
-		this.childCount = childCount;
-	}
 }
