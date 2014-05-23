@@ -70,7 +70,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	Label lblDepthKnowledge,lblOer,lblOerValue,lblInstructionalValue,lblInstructional;
 
 	@UiField
-	HTMLPanel panelStandrads,panelDesc,loadingImagePanel;
+	HTMLPanel panelStandrads,panelDesc,loadingImagePanel,panelOer;
 
 	@UiField
 	HTMLPanel gradesPanel,panelAudience,panelInstructional;
@@ -118,12 +118,12 @@ public class CollectionInfo extends Composite implements MessageProperties{
 		lblLearningSkills.setText(GL1722+GL_SPL_SEMICOLON);
 		lblAudience.setText(GL1723+GL_SPL_SEMICOLON);
 		lblInstructional.setText(GL1724+GL_SPL_SEMICOLON);
-//		lblOer.setText("OER:");
+    	lblOer.setText(GL1834+GL_SPL_SEMICOLON);
 	}
 
 
 	public void setInfoData(String gooruOid){
-		String collectionId= gooruOid;
+		
 		AppClientFactory.getInjector().getPlayerAppService().getSimpleCollectionDetils(null, gooruOid, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -327,6 +327,13 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	}
 	
 	protected void setOerInfo() {
+		
+		if(collectionDo.getCustomFieldValues()!=null && collectionDo.getCustomFieldValues().getCfOER()!=null){
+			lblOerValue.setText(collectionDo.getCustomFieldValues().getCfOER());
+			panelOer.setVisible(true);
+		}else{
+			panelOer.setVisible(false);
+		}
 		
 	}
 
