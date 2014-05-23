@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
@@ -172,6 +173,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	
 	public static final String CUSTOM_FIELDS="customFieldValues";
 	
+	public static final String RATINGS = "ratings";
+	
 	public static final String AGGREGATOR="aggregator";
 	
 	public static final String PUBLISHER="publisher";
@@ -272,6 +275,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			JSONObject resourceSourceJson = recordJsonObject.isNull(RESOURCE_SOURCE)?null:recordJsonObject.getJSONObject(RESOURCE_SOURCE);
 			ResourceSourceDo resourceSourceDo=resourceSourceJson==null?null:JsonDeserializer.deserialize(resourceSourceJson.toString(), ResourceSourceDo.class);
 			resourceDo.setResourceSource(resourceSourceDo);
+			
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
@@ -337,6 +341,14 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		}catch(Exception e){
 			
 		}
+		try{
+			resourceDo.setSearchRatingsDo(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RATINGS).toString(), SearchRatingsDo.class));
+		}catch(Exception e){
+			
+		}
+		/*JSONObject resourceRating = recordJsonObject.getJSONObject(RATINGS);
+		SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+		resourceDo.setSearchRatingsDo(searchRatingsDo);*/
 		try{
 			resourceDo.setHasFrameBreaker(recordJsonObject.isNull(HAS_FRAME_BREAKER)?null:recordJsonObject.getBoolean(HAS_FRAME_BREAKER));
 		}catch(Exception e){

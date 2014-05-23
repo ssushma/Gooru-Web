@@ -20,6 +20,7 @@ import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
+import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
@@ -58,7 +59,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	UiBinder<Widget, SearchInfoWidget> {
 	}
 
-	@UiField Label lblPublisher,publisherText,courseText,legalText,
+	@UiField Label publisherText,courseText,legalText,
 	standardsText,gradeTitle,gradesText,originalUrlTitle,adsTitle,mbFriendlyLbl,
 	mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 	eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
@@ -67,14 +68,17 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 	thumbnailText,licenceCodeLbl,licenceCodeType,educationallLbl,resourceInfoLbl,
 	authorLbl,authorName,adsName,schLevelLbl,schLevelInfo,keywordsTitle,
-	momentsoflearningLbl,resourceTypeImage;
+	momentsoflearningLbl,resourceTypeImage,lblAggregation;
 
-	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,coursePanel,gradesPanel,
+	@UiField HTMLPanel rightsLogoContainer,courseInfo,originalUrlText,publisherPanel,publisherType,coursePanel,gradesPanel,
 	adsPanel,mobileFriendlyPanel,dataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,
 	authorPanel,schLevelPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel;
+	
+	@UiField
+	HTMLPanel aggregationPanel,aggregationType;
 
 	@UiField FlowPanel licenceContainer,standardsInfoConatiner;
 
@@ -84,6 +88,8 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	@UiField Button addTagsBtn;
 
 	AddTagesPopupView popup;
+	
+	List<String> coursesList;
 
 	ToolTipPopUp toolTip ; 
 
@@ -263,17 +269,10 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			public void onSuccess(CollectionItemDo collectionItemDo) {
 				
 				getLoadingImagePanel().setVisible(false);
-				setGrades(collectionItemDo.getResource().getGrade());
-				setResourceAttribution(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():
-					null,collectionItemDo.getResource().getTaxonomySet());
-				renderStandards(standardsInfoConatiner,collectionItemDo.getStandards());
-				setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
-						collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
-				setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
-				setPublisher(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"",collectionItemDo.getResource().getUrl());
-				if(collectionItemDo.getResource().getThumbnails()!=null){
+//				setPublisher(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"",collectionItemDo.getResource().getUrl());
+				/*if(collectionItemDo.getResource().getThumbnails()!=null){
 					setThumbnailUrl(collectionItemDo.getResource().getThumbnails().getUrl());
-				}
+				}*/
 				/*if(collectionItemDo.getResource().getCreatedOn()!=null){
 					setCreatedDate(collectionItemDo.getResource().getCreatedOn());
 				}*/
@@ -289,13 +288,74 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 	protected void setGeneralResourceInfo(CollectionItemDo CollectiongenealInfo) {
 		
-		hostPanel.setVisible(true);
-		if(CollectiongenealInfo.getResource()!=null && CollectiongenealInfo.getResource().getCustomFieldValues()!=null &&
-				CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost()!=null){
-			hostType.setText(CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+		if(CollectiongenealInfo.getResource()!=null){
+			 ResourceDo resourceDo= CollectiongenealInfo.getResource();
+			String grade = resourceDo.getGrade()!=null ? resourceDo.getGrade() : null;
+			String url = resourceDo.getUrl()!=null ? resourceDo.getUrl() : null;
+			String host = (resourceDo.getCustomFieldValues()!=null && resourceDo.getCustomFieldValues().getCfHost()!=null) ?
+					       resourceDo.getCustomFieldValues().getCfHost() : null;
+	        String licence= (resourceDo.getLicense()!=null && resourceDo.getLicense().getIcon()!=null) ? resourceDo.getLicense().getIcon() :null;		       
+			
+			if(grade!=null && !grade.equals("")){
+				gradesPanel.setVisible(true);
+				gradeTitle.setVisible(true);
+				gradesText.setText(InfoUtil.getGrades(grade));
+			}else{
+				gradesPanel.setVisible(false);
+				gradeTitle.setVisible(false);
+			}
+			setResourceAttribution(CollectiongenealInfo.getResource().getResourceSource()!=null?CollectiongenealInfo.getResource().getResourceSource().getAttribution():
+				null,CollectiongenealInfo.getResource().getTaxonomySet());
+			
+			renderStandards(standardsInfoConatiner,CollectiongenealInfo.getStandards());
+			
+			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
+					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
+			
+			
+			if(resourceDo.getPublisher()!=null){
+				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
+			}else{
+				publisherPanel.setVisible(false);
+			}
+			
+			if(resourceDo.getAggregator()!=null){
+//				setAggregatorvalues(collectionItemDo.getResource().getAggregator());
+				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getAggregator(), aggregationType, lblAggregation, aggregationPanel);
+			}else{
+				aggregationPanel.setVisible(false);
+			}
+			
+			if(host!=null && !host.equals("")){
+				hostPanel.setVisible(true);
+				hostType.setText(CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+			}else{
+				hostPanel.setVisible(false);
+			}
+			
+			setResourceLicenceLogo(CollectiongenealInfo.getResource().getAssetURI(), CollectiongenealInfo.getResource().getLicense());
+			
+			if(grade==null && coursesList.isEmpty() && CollectiongenealInfo.getStandards().isEmpty() && url==null &&
+					resourceDo.getPublisher().isEmpty() && resourceDo.getAggregator().isEmpty() && host==null && licence==null ){
+				System.out.println("ININ");
+				generalLbl.setVisible(false);
+				generalPanel.setVisible(false);
+			}
 		}else{
+			generalLbl.setVisible(false);
+			gradesPanel.setVisible(false);
+			generalPanel.setVisible(false);
 			hostPanel.setVisible(false);
+			aggregationPanel.setVisible(false);
+			originalUrlTitle.setVisible(false);
+			originalUrlText.setVisible(false);
+			publisherPanel.setVisible(false);
+			coursePanel.setVisible(false);
+			standardsContentContainer.setVisible(false);
+			licenceContainer.setVisible(false);
 		}
+		
+		
 	}
 
 	/**
@@ -350,20 +410,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}
 
 	}
-	/**
-	 * To set Resource Grades
-	 * @param gradesText  {@value String}
-	 */
-	public void setGrades(String gradesText){
-
-		if(gradesText!=null&&!gradesText.equalsIgnoreCase("")&&!gradesText.equalsIgnoreCase("null")){
-			this.gradesText.setText(InfoUtil.getGrades(gradesText));
-			gradesPanel.setVisible(true);
-		}else{
-			gradesPanel.setVisible(false);
-		}
-	}
-	
+		
 	/**
 	 * To show Standards Information
 	 * @param standardsContainer
@@ -452,39 +499,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			this.originalUrlText.setVisible(false);
 		}
 	}
-	/**
-	 * To set the Resource publisherName
-	 * @param publisherName
-	 * @param resourceUrl
-	 */
-	public void setPublisher(String publisherName,String resourceUrl){
-		if(publisherName==null||publisherName.equalsIgnoreCase("")||publisherName.equalsIgnoreCase("null")){
-			//lblPublisher.setText(GL0977);
-			publisherPanel.setVisible(false);
-		}
-		else{
-			if((!resourceUrl.startsWith("https://docs.google.com"))&&(!resourceUrl.startsWith("http://docs.google.com"))){
-				lblPublisher.setText(publisherName);
-				publisherPanel.setVisible(true);
-			}
-			else{
-				//	lblPublisher.setText(GL0977);	
-				publisherPanel.setVisible(false);
-			}
-		}
-	}
-	/**
-	 * 
-	 * @param url
-	 */
-	private void setThumbnailUrl(String url) {
-		thumbnailurlValue.clear();
-		if(url==null||url.equalsIgnoreCase("")||url.equalsIgnoreCase("null")){
-			thumbnailPanel.setVisible(false);
-		}else{
-			thumbnailPanel.setVisible(false);
-		}
-	}
+	
 	/**
 	 * 
 	 * @param code
@@ -517,7 +532,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	 */
 	public void setResourceAttribution(String attribution,Set<CodeDo> taxonomoyList){
 
-		List<String> coursesList=new ArrayList<String>();
+		coursesList=new ArrayList<String>();
 		if(taxonomoyList!=null){
 			Iterator<CodeDo> taxonomyIterator=taxonomoyList.iterator();
 			while (taxonomyIterator.hasNext()) {
@@ -546,10 +561,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 		}
 		if(coursesList.size()==0){
-			/*Label courseInfoLabel=new Label();
-			 courseInfoLabel.setText(GL0977);
-			 courseInfo.clear();
-			 courseInfo.add(courseInfoLabel);*/
 			coursePanel.setVisible(false);
 		}
 
@@ -667,6 +678,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}else{
 					dKnowledgePanel.setVisible(false);
 				}
+				momentsoflearningPanel.setVisible(false);	
 			}
 			else{
 				momentoflearningdetails = new ArrayList<String>();
@@ -686,6 +698,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}else{
 					momentsoflearningPanel.setVisible(false);
 				}
+				dKnowledgePanel.setVisible(false);
 			}
              
 
@@ -738,11 +751,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}
 
 				if(learningMode==null && educationRole==null && age==null && readingLevel==null && schLevel==null
-						&& alignType==null && depthofknowledgedetails.isEmpty() && momentoflearningdetails.isEmpty()){
+						&& alignType==null && depthofknowledgedetails.isEmpty() && momentoflearningdetails.isEmpty() && eduUsedetails.isEmpty()){
 					educationallLbl.setVisible(false);
 				}
 			}else{
-				if(depthofknowledgedetails.isEmpty() && depthofknowledgedetails.isEmpty()){
+				if(depthofknowledgedetails.isEmpty() && momentoflearningdetails.isEmpty() && eduUsedetails.isEmpty()){
 					educationallLbl.setVisible(false);
 				}
 			}

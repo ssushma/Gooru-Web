@@ -1781,14 +1781,18 @@ li.token-input-input-token-gooru {
     vertical-align:middle;
     line-height: 1.4em;
 }
-
-.rating:not(:checked) > input {
+.ratingItems{
+	font-size: 16px;
+	cursor: pointer;
+}
+.rating:not(:checked) > input,
+.rating .ratingItems:not(:checked) > input {
     position:absolute;
     top:-9999px;
     clip:rect(0,0,0,0);
 }
-
-.rating:not(:checked) > label {
+.rating:not(:checked) > label,
+.rating .ratingItems:not(:checked) > label {
     float:right;
     width:16px;
     overflow:hidden;
@@ -1799,8 +1803,8 @@ li.token-input-input-token-gooru {
     font-size:16px;
     transition: color .2s;
 }
-
-.rating:not(:checked) > label:before {
+.rating:not(:checked) > label:before,
+.rating .ratingItems:not(:checked) > label:before {
     line-height: 1;
     display: inline-block;
     text-decoration: inherit;
@@ -1813,10 +1817,12 @@ li.token-input-input-token-gooru {
     -moz-osx-font-smoothing: grayscale;
     content:'\f006';
 }
-
 .rating > input:checked ~ label:before,
 .rating:not(:checked) > label:hover:before,
-.rating:not(:checked) > label:hover ~ label:before{
+.rating:not(:checked) > label:hover ~ label:before,
+.rating .ratingItems > input:checked ~ label:before,
+.rating .ratingItems:not(:checked) > label:hover:before,
+.rating .ratingItems:not(:checked) > label:hover ~ label:before{
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
@@ -1824,23 +1830,29 @@ li.token-input-input-token-gooru {
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content:'\f005';;
+    content:'\f005';
 }
-
-.rating > input:checked ~ label {
+.rating > input:checked ~ label,
+.rating .ratingItems> input:checked ~ label {
     color: #579ECF;
 }
-
 .rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
+.rating:not(:checked) > label:hover ~ label,
+.rating .ratingItems:not(:checked) > label:hover,
+.rating .ratingItems:not(:checked) > label:hover ~ label {
     color: #1076BB;
 }
 
-.rating > input:checked + label:hover,
-.rating > input:checked + label:hover ~ label,
-.rating > input:checked ~ label:hover,
-.rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
+.rating  > input:checked + label:hover,
+.rating  > input:checked + label:hover ~ label,
+.rating  > input:checked ~ label:hover,
+.rating  > input:checked ~ label:hover ~ label,
+.rating  > label:hover ~ input:checked ~ label,
+.rating .ratingItems > input:checked + label:hover,
+.rating .ratingItems > input:checked + label:hover ~ label,
+.rating .ratingItems > input:checked ~ label:hover,
+.rating .ratingItems > input:checked ~ label:hover ~ label,
+.rating .ratingItems > label:hover ~ input:checked ~ label {
     color: #1076BB;
 }
 
@@ -1848,14 +1860,17 @@ fieldset {
     border:none;
     display:inline-block;
 }
-
-.rating .star, .userRating .star {
+.rating .star,
+.rating .ratingItems .star, .userRating .star {
     font-size:14px;
     color:#999;
 }
-
-.rating .star.filled {
+.rating .star.filled,
+.rating .ratingItems .star.filled {
     color:#4e9746;
+}
+.filledBlue {
+	color: #579ECF;
 }
 
 /* //.rating .star:before, .userRating .star:before {content:'\2606';}

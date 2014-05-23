@@ -101,7 +101,7 @@
 			<g:Label styleName="{style.title}" ui:field="lblInstructional"></g:Label>
 			<g:Label styleName="{style.normal}" ui:field="lblInstructionalValue"></g:Label>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{style.standardDiv}">
+		<g:HTMLPanel styleName="{style.standardDiv}" ui:field="panelOer">
 			<g:Label styleName="{style.title}" ui:field="lblOer"></g:Label>
 			<g:Label styleName="{style.normal}" ui:field="lblOerValue"></g:Label>
 		</g:HTMLPanel>

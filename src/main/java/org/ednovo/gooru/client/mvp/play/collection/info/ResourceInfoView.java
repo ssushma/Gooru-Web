@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.collection.info;
 
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
@@ -39,6 +40,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
@@ -54,13 +57,17 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.resources.css.ast.CssProperty.Value;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -107,7 +114,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 	@UiField static Label standaInfo;
 	
-	@UiField FlowPanel standardsInfoConatiner,licenceContainer;
+	@UiField FlowPanel standardsInfoConatiner,licenceContainer,ratingWidgetPanel;
 	
 	@UiField HTML resourceInfoSeparator,resourcetypeSeparator,lblcollectionName;
 	@UiField
@@ -148,6 +155,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     
     boolean isTimeDuration =false;
     
+    private RatingWidgetView ratingWidgetView=null;
     boolean isAggregator =false;
   
     boolean isPublisher =false;
@@ -180,6 +188,35 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		//resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
 		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 	}
+	
+	/**
+	 * Average star ratings widget will get integrated.
+	 */
+	private void setAvgRatingWidget() {
+		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountLabel().setText("2");
+		ratingWidgetView.setAvgStarRating(2);
+		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.getElement().getStyle().setFloat(Float.RIGHT);
+		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
+		ratingWidgetPanel.add(ratingWidgetView);
+	}
+	
+	/**
+	 * 
+	 * Inner class implementing {@link ClickEvent}
+	 *
+	 */
+	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			/**
+			 * OnClick of count label event to invoke Review pop-pup
+			 */
+//			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+		}
+	}
+
 
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
@@ -194,6 +231,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		isPublisher=false;
 		
 		collectionItemDoGlobal = collectionItemDo;
+		setAvgRatingWidget();
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
 				mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
