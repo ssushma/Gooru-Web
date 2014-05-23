@@ -29,15 +29,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
-import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleHandler;
+import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -71,18 +70,22 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	interface LibraryLessonUcUiBinder extends UiBinder<Widget, PartnerLessonUc> {
 	}
 
-	public PartnerLessonUc(ArrayList<ConceptDo> conceptDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ArrayList<ProfileLibraryDo> profileLibraryDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, null, conceptDoList, isLessonHighlighted,lessonNumber);
+		setLessonData(null, null, profileLibraryDoList, isLessonHighlighted,lessonNumber);
 	}
 
-	public PartnerLessonUc(PartnerFolderDo partnerFolderDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ProfileLibraryDo profileLibraryDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, partnerFolderDo,partnerFolderDo.getCollections(),isLessonHighlighted,lessonNumber);
+		if(profileLibraryDo.getType().equals("scollection")) {
+			setCollectionData(profileLibraryDo, isLessonHighlighted, lessonNumber);
+		} else {
+			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber);
+		}
 	}
 	/**
 	 * 
@@ -103,9 +106,9 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	 * @throws : <Mentioned if any exceptions>	 
 	 * 
 	 */
-	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, boolean isLessonHighlighted, Integer lessonNumber) {
-		if(partnerFolderDo!=null) {
-			lessonTitle.setHTML(partnerFolderDo.getTitle());
+	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber) {
+		if(profileLibraryDo!=null) {
+			lessonTitle.setHTML(profileLibraryDo.getTitle());
 			lessonTitle.addStyleName(style.lessonTitle());
 			if(lessonNumber == 1) {
 				lessonTitle = setOpenStyle(true);
@@ -116,16 +119,16 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 			lessonId = lessonNumber;
 		}
 		lessonTitle.addClickHandler(new OpenLessonHandler());
-		for(int i = 0; i<conceptDoList.size(); i++) {
+		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
-			final ConceptDo conceptDo = conceptDoList.get(i);
-			conceptTitle = conceptDo.getTitle();
+			final ProfileLibraryDo profileLibrary = profileLibraryDoList.get(i);
+			conceptTitle = profileLibrary.getTitle();
 			
 			Label conceptTitleLbl = new Label(conceptTitle);
 			conceptTitleLbl.addStyleName(style.conceptTitle());
 			conceptTitleLbl.addStyleName(style.collectionSmall());
 			conceptList.add(conceptTitleLbl);
-			conceptTitles.put(conceptDo.getGooruOid(), conceptTitleLbl);
+			conceptTitles.put(profileLibrary.getGooruOid(), conceptTitleLbl);
 			if(i==0&&isLessonHighlighted) {
 				conceptTitleLbl.addStyleName(style.conceptActive());
 				isLessonHighlighted = false;
@@ -133,7 +136,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 			conceptTitleLbl.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					conceptId = conceptDo.getGooruOid();
+					conceptId = profileLibrary.getGooruOid();
 					AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
 					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
 					getConceptDetails(conceptId);
@@ -148,6 +151,34 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 		}
 	}
 
+	public void setCollectionData(final ProfileLibraryDo profileLibraryDo, boolean isLessonHighlighted, Integer lessonNumber) {
+		if(profileLibraryDo!=null) {
+			lessonTitle.setHTML(profileLibraryDo.getTitle());
+			lessonTitle.addStyleName(style.lessonTitle());
+			lessonTitle.addStyleName(style.collection());
+			lessonList.add(lessonTitle);
+			lessonId = lessonNumber;
+			conceptId = profileLibraryDo.getGooruOid();
+		}
+		if(lessonNumber==1&&isLessonHighlighted) {
+			lessonTitle.addStyleName(style.conceptActive());
+			isLessonHighlighted = false;
+		}
+		openCollection();
+		lessonTitle.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				openCollection();
+			}
+		});
+	}
+	
+	private void openCollection() {
+		AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
+		AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
+		getConceptDetails(conceptId);
+	}
+	
 	/**
 	 * 
 	 * @function getConceptDetails 
@@ -164,10 +195,10 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	 *
 	 */
 	private void getConceptDetails(String gooruOid) {
-		AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new AsyncCallback<ConceptDo>() {
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryCollection(gooruOid, false, new AsyncCallback<ProfileLibraryDo>() {
 			@Override
-			public void onSuccess(ConceptDo conceptDo) {
-				AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
+			public void onSuccess(ProfileLibraryDo profileLibraryDo) {
+				AppClientFactory.fireEvent(new OpenProfileCollectionEvent(profileLibraryDo,topicId,lessonId+"",lessonLabel,lessonCode));
 			}
 			
 			@Override

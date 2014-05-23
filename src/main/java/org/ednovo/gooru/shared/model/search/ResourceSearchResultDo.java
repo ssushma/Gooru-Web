@@ -124,9 +124,9 @@ public class ResourceSearchResultDo implements Serializable {
 	
 	private SearchRatingsDo searchRatingsDo;
 	
-	private String publisher;
+	private List<String> publisher;
 	
-	private String aggregator;
+	private List<String> aggregator;
 
 	
 	/** 
@@ -485,21 +485,23 @@ public class ResourceSearchResultDo implements Serializable {
 		this.searchRatingsDo = searchRatingsDo;
 	}
 
-	public String getPublisher() {
+	public List<String> getPublisher() {
 		return publisher;
 	}
 
-	public void setPublisher(String publisher) {
+	public void setPublisher(List<String> publisher) {
 		this.publisher = publisher;
 	}
 
-	public String getAggregator() {
+	public List<String> getAggregator() {
 		return aggregator;
 	}
 
-	public void setAggregator(String aggregator) {
+	public void setAggregator(List<String> aggregator) {
 		this.aggregator = aggregator;
 	}
+
+	
 
 	
 	

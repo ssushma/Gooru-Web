@@ -30,4 +30,6 @@ public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
 	public void getPartnerChildFolderItems(String folderId, int pageNumber);
 	public void getPartnerWorkspaceFolders();
 	void getIntoPartnerLibrarypage();
+	public void getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems);
+	
 }

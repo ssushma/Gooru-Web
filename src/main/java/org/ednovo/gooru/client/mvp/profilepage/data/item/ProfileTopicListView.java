@@ -10,13 +10,13 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
-import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
-import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingHandler;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
+import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
+import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionHandler;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -28,10 +28,8 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
-import org.ednovo.gooru.shared.model.library.LibraryCollectionItemDo;
-import org.ednovo.gooru.shared.model.library.LibraryResourceDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -88,7 +86,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	
 	private boolean isCustomizePopup = false;
 	
-	private ConceptDo conceptDo;
+	private ProfileLibraryDo profileLibraryDo;
 	
 	private String searchTitle="";
 	
@@ -145,26 +143,26 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public ProfileTopicListView(PartnerFolderDo partnerFolderDo, int topicNumber, String placeToken) {
+	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, int topicNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(GL0104);
 		customizeCollectionBtn.setText(GL0631);
 		noCollectionLbl.setText(GL1170);
-		topicTitleLbl.setText(partnerFolderDo.getTitle());
+		topicTitleLbl.setText(profileFolderDo.getTitle());
 		
-		if(partnerFolderDo.getCollections()!=null) {
-			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount());
+		if(profileFolderDo.getCollections()!=null) {
+			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
 			try {
-				setConceptData(partnerFolderDo.getCollections().get(0),topicId, null, null,null);
+				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
 			}
 		} else {
-			setPartnerLibraryLessonData(partnerFolderDo.getFolderItems());
+			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems());
 			try {
-				setConceptData(partnerFolderDo.getFolderItems().get(0).getCollections().get(0),topicId, null, null,null);
+				setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
 			}
@@ -183,24 +181,24 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		}else{
 			standardsFloPanel.setVisible(true);
 		}
-		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
+		AppClientFactory.getEventBus().addHandler(OpenProfileCollectionEvent.TYPE, openProfileCollectionHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 	}
 	
 
-	public ProfileTopicListView(ConceptDo conceptDo, Integer conceptNumber, String placeToken) {
+	public ProfileTopicListView(ProfileLibraryDo profileFolderDo, Integer conceptNumber, String placeToken, String collectionType) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(GL0104);
 		customizeCollectionBtn.setText(GL0631);
-		topicTitleLbl.setText(conceptDo.getTitle());
+		topicTitleLbl.setText(profileFolderDo.getTitle());
 		topicTitleLbl.addStyleName(style.collection());
-		searchTitle=conceptDo.getTitle();
+		searchTitle=profileFolderDo.getTitle();
 
 		try {
-			setConceptData(conceptDo,conceptNumber,null, null,null);
+			setConceptData(profileFolderDo,conceptNumber,null, null,null);
 		} catch(Exception e) {
 			collectionInfo.setVisible(false);
 			resourcesInside.setVisible(false);
@@ -232,7 +230,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
 	}
 	
-	private void setOnlyConceptData(ArrayList<ConceptDo> conceptDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
+	private void setOnlyConceptData(ArrayList<ProfileLibraryDo> profileFolderDoList, boolean isTopicCalled, final String parentId, final int partnerItemCount) {
 		boolean isLessonHighlighted = true;
 		int pageCount = 0;
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
@@ -243,10 +241,10 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			LESSON_PAGE_INITIAL_LIMIT = 20;
 			pageCount = partnerItemCount;
 		} else {
-			pageCount = conceptDoList.size();
+			pageCount = profileFolderDoList.size();
 		}
 		if(pageCount>=LESSON_PAGE_INITIAL_LIMIT) {
-			conceptList.add(new PartnerLessonUc(conceptDoList,topicId,isLessonHighlighted, 0));
+			conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted, 0));
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
 				@Override
@@ -264,7 +262,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 										if(LESSON_PAGE_INITIAL_LIMIT < partnerItemCount) {
 											isScrollable = true;
 										}
-										conceptList.add(new PartnerLessonUc(result.getSearchResult(),topicId,false, 0));
+										//conceptList.add(new PartnerLessonUc(result.getSearchResult(),topicId,false, 0));
 									}
 									@Override
 									public void onFailure(Throwable caught) {
@@ -282,7 +280,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 								public void onSuccess(ArrayList<LessonDo> lessonDoList) {
 									for(int i=0;i<lessonDoList.size();i++) {
 										isScrollable = false;
-										conceptList.add(new PartnerLessonUc(lessonDoList.get(i).getCollection(),topicId,false, 0));
+										//conceptList.add(new PartnerLessonUc(lessonDoList.get(i).getCollection(),topicId,false, 0));
 									}
 								}
 							});
@@ -293,7 +291,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		} else {
 			int conceptSize = 1;
 			if(isTopicCalled) {
-				conceptSize = conceptDoList.size();
+				conceptSize = profileFolderDoList.size();
 			}
 			for(int i=0;i<conceptSize;i++) {
 				if(i==0) {
@@ -301,19 +299,17 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(conceptDoList,topicId,isLessonHighlighted,(i+1)));
+				conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted,(i+1)));
 			}
 		}
 	}
 	
-	public void setConceptData(final ConceptDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
+	public void setConceptData(final ProfileLibraryDo conceptDo, Integer topicId, final String lessonId, String lessonLabel,String lessonCode) {
 			setConceptDo(conceptDo);
 			this.lessonCode=lessonCode;
 			if(this.topicId==topicId) {
 				String id = null;
-				if(conceptDo.getId()!=null)	{
-					id=conceptDo.getId();
-				} else if(conceptDo.getGooruOid()!=null){
+				if(conceptDo.getGooruOid()!=null){
 					id=conceptDo.getGooruOid();
 				}
 				if(id!=null) {
@@ -358,7 +354,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 					}
 					setMetaDataInfo(conceptDo); 
 					resourcesInside.clear();
-					ArrayList<LibraryCollectionItemDo> libraryResources =  conceptDo.getCollectionItems();
+					ArrayList<ProfileLibraryDo> libraryResources =  profileLibraryDo.getCollectionItems();
 					if(libraryResources!=null) {
 						int resourceCount = libraryResources.size();
 						int resources=resourceCount<=4?resourceCount:4;
@@ -366,14 +362,17 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 						resourcesInside.add(resourceCountLbl);
 						for(int i=0;i<resources;i++) {
 							try {
-								final LibraryCollectionItemDo libraryItem = libraryResources.get(i);
-								final LibraryResourceDo libraryResourceDo = libraryItem.getResource();
+								ProfileLibraryDo profileLibraryTemp = new ProfileLibraryDo();
+								if(libraryResources.get(i).getResource()!=null) {
+									profileLibraryTemp = libraryResources.get(i).getResource();
+								} else {
+									profileLibraryTemp = libraryResources.get(i);
+								}
+								final ProfileLibraryDo profileLibraryItem = profileLibraryTemp;
 								
 								String categoryString = "";
-								if(libraryResourceDo.getCategory()!=null) {
-									categoryString = libraryResourceDo.getCategory();
-								} else if(libraryResourceDo.getResourceFormat()!=null){
-									categoryString = libraryResourceDo.getResourceFormat().getDisplayName();
+								if(profileLibraryItem.getResourceFormat()!=null){
+									categoryString = profileLibraryItem.getResourceFormat().getDisplayName();
 								}
 								
 								final String category = categoryString;
@@ -385,18 +384,18 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 								resourceImage.setHeight("60px");
 								try
 								{
-									String resourceTitle = libraryResourceDo.getTitle().replaceAll("\\<[^>]*>","");
-									libraryResourceDo.setTitle(resourceTitle);
+									String resourceTitle = profileLibraryItem.getTitle().replaceAll("\\<[^>]*>","");
+									profileLibraryItem.setTitle(resourceTitle);
 								} catch (Exception e){
 								}
-								resourceImage.setAltText(libraryResourceDo.getTitle());
-								resourceImage.setTitle(libraryResourceDo.getTitle());
+								resourceImage.setAltText(profileLibraryItem.getTitle());
+								resourceImage.setTitle(profileLibraryItem.getTitle());
 								
 								final String categoryImage=categoryString;
 								
 								String sourceAttribution = "";
-								if(libraryResourceDo.getResourceSource()!=null&&libraryResourceDo.getResourceSource().getAttribution()!=null) {
-									sourceAttribution = libraryResourceDo.getResourceSource().getAttribution();
+								if(profileLibraryItem.getResourceSource()!=null&&profileLibraryItem.getResourceSource().getAttribution()!=null) {
+									sourceAttribution = profileLibraryItem.getResourceSource().getAttribution();
 								}
 								final String attribution = sourceAttribution;
 								resourceImage.addMouseOverHandler(new MouseOverHandler() {
@@ -404,7 +403,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 									@Override
 									public void onMouseOver(MouseOverEvent event) {
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();
@@ -415,19 +414,19 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 									
 									@Override
 									public void onMouseOut(MouseOutEvent event) {
-									toolTipPopupPanel.hide();
+										toolTipPopupPanel.hide();
 									}
 								});
 								try {
-									if(libraryResourceDo.getResourceType()!=null&&libraryResourceDo.getResourceType().getName().equalsIgnoreCase("video/youtube")) {
-										String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(libraryResourceDo.getUrl());
+									if(profileLibraryItem.getResourceTypeDo()!=null&&profileLibraryItem.getResourceTypeDo().getName()!=null&&profileLibraryItem.getResourceTypeDo().getName().equalsIgnoreCase("video/youtube")) {
+										String youTubeIbStr = ResourceImageUtil.getYoutubeVideoId(profileLibraryItem.getUrl());
 										String thumbnailUrl = ResourceImageUtil.youtubeImageLink(youTubeIbStr,Window.Location.getProtocol());
 										resourceImage.setUrl(thumbnailUrl);
 									} else {
-										if(libraryResourceDo.getThumbnails()!=null&&libraryResourceDo.getThumbnails().getUrl()!=null&&libraryResourceDo.getThumbnails().getUrl().isEmpty()) {
+										if(profileLibraryItem.getThumbnails()!=null&&profileLibraryItem.getThumbnails().getUrl()!=null&&profileLibraryItem.getThumbnails().getUrl().isEmpty()) {
 											resourceImage.setUrl(DEFULT_IMAGE_PREFIX +getDetaultResourceImage(category.toLowerCase()) + PNG);
 										} else {
-											resourceImage.setUrl(libraryResourceDo.getThumbnails().getUrl());
+											resourceImage.setUrl(profileLibraryItem.getThumbnails().getUrl());
 										}
 									}
 									resourceImage.addErrorHandler(new ErrorHandler() {
@@ -438,8 +437,8 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 									});
 								} catch (Exception e){
 									resourceImage.setUrl(DEFULT_IMAGE_PREFIX + getDetaultResourceImage(category.toLowerCase()) + PNG);
-									resourceImage.setAltText(libraryResourceDo.getTitle());
-									resourceImage.setTitle(libraryResourceDo.getTitle());
+									resourceImage.setAltText(profileLibraryItem.getTitle());
+									resourceImage.setTitle(profileLibraryItem.getTitle());
 								}
 								
 								resourcePanel.addClickHandler(new ClickHandler() {
@@ -454,9 +453,9 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 										Map<String, String> params = new HashMap<String, String>();
 										params.put("id", conceptDo.getGooruOid());
 										
-										String resourceId = libraryItem.getCollectionItemId();
+										String resourceId = profileLibraryItem.getCollectionItemId();
 										if(resourceId==null) {
-											resourceId = libraryResourceDo.getCollectionItemId();
+											resourceId = profileLibraryItem.getCollectionItemId();
 										}
 										params.put("rid", resourceId);
 										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
@@ -509,16 +508,16 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		noCollectionLbl.setVisible(true);
 	}
 
-	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
+	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList) {
 		boolean isLessonHighlighted = true;
-		if(lessonDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
+		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
 			for(int i=0;i<LESSON_PAGE_INITIAL_LIMIT;i++) {
 				if(i==0) {
 					isLessonHighlighted = true;
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted, (i+1)));
+				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted, (i+1)));
 			}
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
@@ -543,13 +542,13 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				}
 			});
 		} else {
-			for(int i=0;i<lessonDoList.size();i++) {
+			for(int i=0;i<profileLibraryDoList.size();i++) {
 				if(i==0) {
 					isLessonHighlighted = true;
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(lessonDoList.get(i),topicId,isLessonHighlighted,(i+1)));
+				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted,(i+1)));
 			}
 		}
 	}
@@ -557,12 +556,12 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	/** 
 	 * This method is to set the conceptDo
 	 */
-	public void setConceptDo(ConceptDo conceptDo) {
-		this.conceptDo = conceptDo;
+	public void setConceptDo(ProfileLibraryDo profileLibraryDo) {
+		this.profileLibraryDo = profileLibraryDo;
 	}
 	
-	private ConceptDo getConceptDo() {
-		return conceptDo;
+	private ProfileLibraryDo getProfileLibraryDo() {
+		return profileLibraryDo;
 	}
 
 	protected void getStandardPrefCode(List<String> standPrefCode) {
@@ -570,8 +569,8 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			if(standPrefCode!=null){ 
 				this.standPrefCode=standPrefCode;
 				standardsFloPanel.setVisible(true);
-				if(conceptDo!=null){
-					setMetaDataInfo(conceptDo);
+				if(profileLibraryDo!=null){
+					setMetaDataInfo(profileLibraryDo);
 				}
 				
 			}else{
@@ -579,17 +578,17 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			}
 		}else{
 			standardsFloPanel.setVisible(true);
-			if(conceptDo!=null){
-				setMetaDataInfo(conceptDo);
+			if(profileLibraryDo!=null){
+				setMetaDataInfo(profileLibraryDo);
 			}
 			
 		}
 	}
 
-	OpenLessonConceptHandler openLessonConceptHandler = new OpenLessonConceptHandler() {
+	OpenProfileCollectionHandler openProfileCollectionHandler = new OpenProfileCollectionHandler() {
 		@Override
-		public void openLessonConcept(ConceptDo conceptDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
-			setConceptData(conceptDo, topicId, lessonId, lessonLabel,lessonCode);
+		public void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode) {
+			setConceptData(profileLibraryDo, topicId, lessonId, lessonLabel,lessonCode);
 		}
 	};
 	
@@ -680,15 +679,15 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		return categoryIcon.toLowerCase();
 	}
 
-	private void setMetaDataInfo(ConceptDo conceptDo) {
+	private void setMetaDataInfo(ProfileLibraryDo profileLibraryDo) {
 		if(AppClientFactory.isAnonymous()){
 			standardsFloPanel.clear();
 			standardsFloPanel.setVisible(true);
 		}
-		if(conceptDo.getMetaInfo()!=null){
-			if(conceptDo.getMetaInfo().getStandards()!=null) {
+		if(profileLibraryDo.getMetaInfo()!=null){
+			if(profileLibraryDo.getMetaInfo().getStandards()!=null) {
 				standardsFloPanel.clear();
-				List<StandardFo> standardFoList = conceptDo.getMetaInfo().getStandards();
+				List<StandardFo> standardFoList = profileLibraryDo.getMetaInfo().getStandards();
 				List<Map<String, String>> standardMap = new ArrayList<Map<String, String>>();
 				List<Map<String, String>> tempStandardMap = new ArrayList<Map<String, String>>();
 				
@@ -724,9 +723,9 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			}
 			else 
 			{
-				if(conceptDo.getStandards() != null){
+				if(profileLibraryDo.getStandards() != null){
 					standardsFloPanel.clear();
-					List<Map<String, String>> standardMap = conceptDo.getStandards();
+					List<Map<String, String>> standardMap = profileLibraryDo.getStandards();
 					Iterator<Map<String, String>> iterator2 = standardMap.iterator();
 					int removeCount = 0;
 					while (iterator2.hasNext()) {
@@ -830,7 +829,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 			}
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", conceptDo.getGooruOid());
+			params.put("id", profileLibraryDo.getGooruOid());
 			params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 			params.put("lessonId", lessonId);
 			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
@@ -846,10 +845,10 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 
 	@UiHandler("assignCollectionBtn")
 	public void onassignCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = getConceptDo().getGooruOid();
+		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isAssignPopup){
 			isAssignPopup=true;
-			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getConceptDo().getTitle(), getConceptDo().getGoals()) {
+			AssignPopupVc successPopupVc = new AssignPopupVc(collectionId, getProfileLibraryDo().getTitle(), getProfileLibraryDo().getGoals()) {
 				@Override
 				public void closePoup() {
 					Window.enableScrolling(true);
@@ -873,7 +872,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	
 	@UiHandler("customizeCollectionBtn")
 	public void oncustomizeCollectionBtnClicked(ClickEvent clickEvent) {
-		String collectionId = getConceptDo().getGooruOid();
+		String collectionId = getProfileLibraryDo().getGooruOid();
 		if(!isCustomizePopup){
 			isCustomizePopup=true;
 		Boolean loginFlag = false;
@@ -882,7 +881,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		} else {
 			loginFlag = false;
 		}
-		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getConceptDo().getTitle()) {
+		RenameAndCustomizeLibraryPopUp successPopupVc = new RenameAndCustomizeLibraryPopUp(collectionId, loginFlag, getProfileLibraryDo().getTitle()) {
 			@Override
 			public void closePoup() {
 				Window.enableScrolling(true);
