@@ -164,7 +164,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		publisherText.setText(GL0566);
 		courseText.setText(GL1701);
 		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
-		standardsText.setText("Standards Code:");
+		standardsText.setText(GL1877+GL_SPL_SEMICOLON);
 		collectionsText.getElement().setInnerHTML(GL0620);
 		hideText.setText(GL0592);
 		resourceInfoText.setText(GL0621);
@@ -657,7 +657,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 			if(isAggregator){
 				aggregatorPanel.setVisible(true);
-				aggregatorText.setText("Aggregator"+GL_SPL_SEMICOLON);
+				aggregatorText.setText(GL1748);
 				aggregatorText.setVisible(true);
 				aggregatorVal.setVisible(true);
 			}else{
@@ -750,7 +750,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		String[] 	spiltTimeAfterColon = spiltTimeBySpace[1].split(":");
 		if(spiltTimeAfterColon.length>2){
 			if(spiltTimeAfterColon[2].length()>2){
-				timeRequiredvalue.setText(spiltTimeAfterColon[1]+"min"+" "+spiltTimeAfterColon[2].substring(0, 2)+"sec");
+				timeRequiredvalue.setText(spiltTimeAfterColon[1]+GL0958+" "+spiltTimeAfterColon[2].substring(0, 2)+GL0959);
 				isTimeDuration =true;
 			}
 		}
@@ -762,7 +762,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(addsdetails == null || addsdetails.size() == 0 || addsdetails.contains(null) || addsdetails.contains("") ){
 			addsPanel.setVisible(false);
 		}else{
-			addsTitle.setText("Adds:");
+			addsTitle.setText(GL1878+GL_SPL_SEMICOLON);
 		if(addsdetails.size()>0){
 			if(addsdetails.size()==1){
 				final Label addsLabel=new Label(addsdetails.get(0));
@@ -798,7 +798,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(cfSchoolLevel!=null&&!cfSchoolLevel.equalsIgnoreCase("")&&!cfSchoolLevel.equalsIgnoreCase("null")){
 			schoolLevelPanel.setVisible(true);
-			schoolLevelLbl.setText("School Level:");
+			schoolLevelLbl.setText(GL1868+GL_SPL_SEMICOLON);
 			schoolLevelType.setText(cfSchoolLevel);
 		}else{
 			schoolLevelPanel.setVisible(false);
@@ -844,7 +844,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
 			momentsoflearningPanel.setVisible(false);
 		}else{
-			momentsoflearningLbl.setText("Moments Of Learning:");
+			momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
 		if(momentoflearningdetails.size()>0){
 			final Label momentsofLabel=new Label(momentoflearningdetails.get(0));
 			momentsofLabel.getElement().setAttribute("style", "float: left;");
@@ -1033,12 +1033,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(mediaType.equals(NOT_FRIENDY_TAG)){
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-				mbFriendlyText.setText("NO");
+				mbFriendlyText.setText(GL1735.toUpperCase());
 				isAccessibilityInfo=true;
 			}else{
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-				mbFriendlyText.setText("YES");
+				mbFriendlyText.setText(GL_GRR_YES.toUpperCase());
 				isAccessibilityInfo=true;
 			}
 		}else{
@@ -1092,13 +1092,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 		if(keywords.size()>0){
 			if(keywords.size()==1){
-				keywordsTitle.setText("Keywords:");
+				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 				final Label keywordLabel=new Label(keywords.get(0));
 				keywordLabel.getElement().setAttribute("style", "float: left;");
 				keywordsInfo.add(keywordLabel);
 				keyWordsPanel.setVisible(true);
 			} if(keywords.size()==2){
-				keywordsTitle.setText("Keywords:");
+				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 				final Label keywordLabel=new Label(keywords.get(0)+","+keywords.get(1));
 				keywordLabel.getElement().setAttribute("style", "float: left;");
 				keywordsInfo.add(keywordLabel);
@@ -1106,7 +1106,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 		if(keywords.size()>2){
-			keywordsTitle.setText("Keywords:");
+			keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
 			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
 			final Label keywordsLabelNew=new Label(keywords.get(0)+","+keywords.get(1));
@@ -1268,7 +1268,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(resourceDescription.length()>415){
 				resourceDescription =(resourceDescription.substring(0, 415))+"...";
 				this.resourceDescription.add(setText(resourceDescription));
-				this.resourceDescriptionTitle.add(setText("About:"));
+				this.resourceDescriptionTitle.add(setText(GL1242+GL_SPL_SEMICOLON));
 			}
 			else{
 				
@@ -1280,7 +1280,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					this.resourceDescriptionTitle.setVisible(true);
 					//this.resourceDescriptionTitle.setVisible(false);
 					this.resourceDescription.add(setText(resourceDescription));
-					this.resourceDescriptionTitle.add(setText("About:"));
+					this.resourceDescriptionTitle.add(setText(GL1242+GL_SPL_SEMICOLON));
 				}
 				
 			}
@@ -1352,7 +1352,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		return toolTipwidgets;
 	}
 	public void setResourceViewsCount(String viewCount){
-		String viewCountLabel=viewCount.equals("1")?viewCount+" View":viewCount+" Views";
+		String viewCountLabel=viewCount.equals("1")?viewCount+" "+GL1428:viewCount+" "+GL0934;
 		resourceView.setText(viewCountLabel);
 		//resourceViewsCount.setText(viewCountLabel);
 	}
