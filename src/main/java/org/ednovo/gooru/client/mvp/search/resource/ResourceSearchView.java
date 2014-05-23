@@ -59,7 +59,6 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				System.out.println("methodhit::");
 				getUiHandlers().showRatingAndReviewPopup(searchResultDo);
 			}
 		});
