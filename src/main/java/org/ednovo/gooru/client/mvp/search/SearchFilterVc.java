@@ -396,7 +396,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradePanelUc.setHeaderTitle(GL0165);
 		clearAll.setText(GL0725);
 	//	oerPanel.setVisible(false);
-		aggregatorPanelUc.setHeaderTitle(GL1748);
+		aggregatorPanelUc.setHeaderTitle(GL1628);
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
