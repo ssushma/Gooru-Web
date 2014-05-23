@@ -88,7 +88,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	readingLevelPanel,languagePanel,countryCodePanel,copyRightPanel,hostPanel,
 	accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,dateCreatedPanel,
 	authorPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,schoolLevelType,addsPanel,addsInfo;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -103,7 +103,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					acessHazardlLbl,acessHazardType,mediaFeatureLbl,accessModelLbl,accesibilityLbl,generalLbl,
 					thumbnailText,educationallLbl,resourceInfoLbl,dateCreatedLbl,
 					createdDateInfo,authorLbl,authorName,keywordsTitle,timeRequiredvalue,
-					momentsoflearningLbl,oerLbl,oerAvailability,schoolLevelLbl,addsTitle;
+					momentsoflearningLbl,oerLbl,oerAvailability,schoolLevelLbl,addsTitle,schoolLevelType;
 	
 	@UiField static Label standaInfo;
 	
@@ -138,6 +138,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     
     private String gooruResourceOId;
     
+    boolean isEducationalInfo=false;
    
 	private static ResourceInfoViewUiBinder uiBinder = GWT.create(ResourceInfoViewUiBinder.class);
 
@@ -170,6 +171,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
+		isEducationalInfo=false;
 		collectionItemDoGlobal = collectionItemDo;
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
@@ -212,68 +214,96 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 		//setHostDetails(collectionItemDo.getResource().getHost());
 			if(collectionItemDo.getResource().getCustomFieldValues()!=null ){
+				clearALlPanels();
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null){
-					System.out.println("host:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfHost());
 				setHostDetails(collectionItemDo.getResource().getCustomFieldValues().getCfHost());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfOER()!=null){
-					System.out.println("oer:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfOER());
 				setOerDetails(collectionItemDo.getResource().getCustomFieldValues().getCfOER());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()!=null){
-					System.out.println("edallign:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());
 					setedAlignDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser()!=null){
-					System.out.println("edrole::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());
 				   seteducationalRoleDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode()!=null){
-					System.out.println("lmode:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());
 					setinteractivityTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfAge()!=null){
-					System.out.println("age:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAge());
 					setageRangeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAge());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode()!=null){
-					System.out.println("countrycode:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());
 					setCountryCodeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode()!=null){
-					System.out.println("lcode:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());
 					setlanguageDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfDataType()!=null){
-					System.out.println("datatype:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfDataType());
 					setdataTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfDataType());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor()!=null){
-					System.out.println("author:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());
 					setAuthorDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder()!=null){
-					System.out.println("copyright:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());
 					setCopyRightHolderDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()!=null){
-					System.out.println("controlflex:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());
 					setcontrolflexibilityDetails(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()!=null){
-					System.out.println(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
-					setAcessHazardDetails("ahazard:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
+					setAcessHazardDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel()!=null){
+					setSchoolLevelDetails(collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel()!=null){
+					List<String> readingLeveldetails = new ArrayList<String>();
+					String[] readinglevellist=collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel().split(",");
+					for(int rlevel=0;rlevel<readinglevellist.length;rlevel++){
+						readingLeveldetails.add(readinglevellist[rlevel]);
+					}
+					showreadingLevelDetails(readingLeveldetails);
 				}
 				
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfKeywords()!=null){
+				List<String> keyworddetails = new ArrayList<String>();
+				String[] keywordslist=collectionItemDo.getResource().getCustomFieldValues().getCfKeywords().split(",");										
+				for(int klevel=0;klevel<keywordslist.length;klevel++){
+					keyworddetails.add(keywordslist[klevel]);
+				}
+				setkeywordsDetails(keyworddetails);
+				}
 				
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfAds()!=null){
+				List<String> addsdetails = new ArrayList<String>();
+				String[] addslist=collectionItemDo.getResource().getCustomFieldValues().getCfAds().split(",");										
+				for(int alevel=0;alevel<addslist.length;alevel++){
+					addsdetails.add(addslist[alevel]);
+				}
+				setaddsDetails(addsdetails);
+				}
+				
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()!=null){
+				List<String> acessmodedetails = new ArrayList<String>();
+				String[] accesslist=collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().split(",");	
+				for(int accesslevel=0;accesslevel<accesslist.length;accesslevel++){
+					acessmodedetails.add(accesslist[accesslevel]);
+				}
+				setacessmodeDetails(acessmodedetails);
+				}
+				
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()!=null){
+				List<String> mediafeaturesdetails = new ArrayList<String>();
+				String[] mediafeaturelist=collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().split(",");	
+				for(int mflevel=0;mflevel<mediafeaturelist.length;mflevel++){
+					mediafeaturesdetails.add(mediafeaturelist[mflevel]);
+				}
+				setmediafeaturesDetails(mediafeaturesdetails);
+				}
+			
 			}
-		
-		/*System.out.println("host values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfOER());
-		setOerDetails(collectionItemDo.getResource().getCustomFieldValues().getCfOER());*/
-		
-		/*System.out.println("educational allign values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());
-		setedAlignDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment());*/
-		
+	
 		List<String> eduUsedetails = new ArrayList<String>();
 
 		if(collectionItemDo.getResource().getEducationalUse()!=null){
@@ -332,63 +362,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 			dKnowledgePanel.setVisible(false);
 		}
-		
-		/*System.out.println("enduser values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());
-		seteducationalRoleDetails(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser());*/
-		
-		/*System.out.println("interactivity values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());
-		setinteractivityTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode());*/
-		
-		/*System.out.println("age values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAge());
-		setageRangeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAge());*/
-		
-		/*List<String> readingLeveldetails = new ArrayList<String>();
-		readingLeveldetails.add(0, "6");
-		readingLeveldetails.add(1, "7");
-		readingLeveldetails.add(2, "8");
-		showreadingLevelDetails(null);*/
-		
-		/*System.out.println("countrycode values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());
-		setCountryCodeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode());*/
-		
-		/*System.out.println("language values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());
-		setlanguageDetails(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode());*/
-		
-		/*System.out.println("dattype values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfDataType());
-		setdataTypeDetails(collectionItemDo.getResource().getCustomFieldValues().getCfDataType());*/
-		
-		/*System.out.println("author values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());
-		setAuthorDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor());*/
-		
-		/*System.out.println("copyright values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());
-		setCopyRightHolderDetails(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder());*/
-		
-		List<String> keyworddetails = new ArrayList<String>();
-		String[] keywordslist=collectionItemDo.getResource().getGrade().split(",");										
-		for(int i=0;i<keywordslist.length;i++){
-			keyworddetails.add(keywordslist[i]);
-		}
-		collectionItemDo.getResource().getCustomFieldValues().setCfKeywords(collectionItemDo.getResource().getGrade());
-		setkeywordsDetails(keyworddetails);
-		
-		//setmobilefriendlynessdetails(collectionItemDo.getResource().getMobilefriendlyness());
 		setmobilefriendlynessdetails(collectionItemDo.getResource().getMediaType());
-		
-		/*List<String> acessmodedetails = new ArrayList<String>();
-		acessmodedetails.add(0, "Visual");
-		acessmodedetails.add(1, "Auditory");
-		setacessmodeDetails(null);
-		
-		List<String> mediafeaturesdetails = new ArrayList<String>();
-		mediafeaturesdetails.add(0, "Alternativetext");
-		mediafeaturesdetails.add(1, "Annotations");
-		setmediafeaturesDetails(null);*/
-		
-		/*System.out.println("controlflexibility values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());
-		setcontrolflexibilityDetails(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility());*/
-		
-		/*System.out.println("access hazard values:::::"+collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());
-		setAcessHazardDetails(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard());*/
 		
 		resourceTypeImage.getElement().setAttribute("style", "position: relative;margin-top:10px;margin-bottom: 10px;");
 
@@ -451,6 +425,42 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			mediaFeatureType.setVisible(false);
 			accessibilityAPIType.setVisible(false);
 		}*/
+	
+		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
+		if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()==null
+				&& collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()==null
+				&& collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()==null
+				&& collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()==null){
+			accesibilityLbl.setVisible(false);
+			accessibilityPanel.setVisible(false);
+		}else{
+			if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("null")){
+				accesibilityLbl.setText(GL1703);
+				accesibilityLbl.setVisible(true);
+				accessibilityPanel.setVisible(true);
+			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("null")){
+				accesibilityLbl.setText(GL1703);
+				accesibilityLbl.setVisible(true);
+				accessibilityPanel.setVisible(true);
+			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("null")){
+				accesibilityLbl.setText(GL1703);
+				accesibilityLbl.setVisible(true);
+				accessibilityPanel.setVisible(true);
+			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("null")){
+				accesibilityLbl.setText(GL1703);
+				accesibilityLbl.setVisible(true);
+				accessibilityPanel.setVisible(true);
+			}else{
+				accesibilityLbl.setVisible(false);
+				accessibilityPanel.setVisible(false);
+			}
+		}
+	}
+		
+		
+		
+		
+		
 		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
 		if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode() == null
 		&& collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode() ==null
@@ -492,8 +502,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				&& collectionItemDo.getResource().getLicense() ==null 
 				&& collectionItemDo.getStandards()==null 
 				&& collectionItemDo.getResource().getResourceSource()==null
-				&& collectionItemDo.getResource().getCustomFieldValues().getCfHost()==null
-				&& collectionItemDo.getResource().getCustomFieldValues().getCfOER()==null){
+				&& collectionItemDo.getResource().getCustomFieldValues()==null){
 			generalLbl.setVisible(false);
 		}else{
 			  if(collectionItemDo.getResource().getGrade()!=null && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("")&&!collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")){
@@ -545,73 +554,149 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				  			generalLbl.setVisible(false);
 				  		}
 		}
-		if(collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")){
-			if(depthofknowledgedetails == null && eduUsedetails==null){
-				educationallLbl.setVisible(false);
-				eduUsePanel.setVisible(false);
-				dKnowledgePanel.setVisible(false);
-			}else if(depthofknowledgedetails!=null && eduUsedetails!=null){
-				if(depthofknowledgedetails.size()>0 || eduUsedetails.size()>0){
-					educationallLbl.setVisible(true);
-					if(eduUsedetails.size()>0){
-						eduUsePanel.setVisible(true);
-					}else if(depthofknowledgedetails.size()>0){
-						dKnowledgePanel.setVisible(true);
+		
+		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()==null
+					&& collectionItemDo.getResource().getCustomFieldValues().getCfEndUser()==null
+					&& collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode()==null
+					&& collectionItemDo.getResource().getCustomFieldValues().getCfAge()==null
+					&& collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel()==null
+					&& collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel()==null ){
+				}else{
+					if(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment().equalsIgnoreCase("null")){
+						educationallLbl.setVisible(true);
+						isEducationalInfo=true;
 					}
-					//eduUsePanel.setVisible(true);
-				}else if(depthofknowledgedetails.size()==0 && eduUsedetails.size()==0){
-					educationallLbl.setVisible(false);
-					eduUsePanel.setVisible(false);
+					else if(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfEndUser().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfEndUser().equalsIgnoreCase("null")){
+						educationallLbl.setVisible(true);
+						isEducationalInfo=true;
+					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode().equalsIgnoreCase("null")){
+						educationallLbl.setVisible(true);
+						isEducationalInfo=true;
+					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfAge()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAge().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAge().equalsIgnoreCase("null")){
+						educationallLbl.setVisible(true);
+						isEducationalInfo=true;
+					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel().equalsIgnoreCase("null")){
+						educationallLbl.setVisible(true);
+						isEducationalInfo=true;
+					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel().equalsIgnoreCase("null")){
+						educationallLbl.setVisible(true);
+						isEducationalInfo=true;
+					}
+				}
+			}
+			if (collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")) {
+				if (depthofknowledgedetails != null	&& depthofknowledgedetails.size() > 0) {
+					educationallLbl.setVisible(true);
+					dKnowledgePanel.setVisible(true);
+					isEducationalInfo = true;
+				} else {
 					dKnowledgePanel.setVisible(false);
 				}
-			}
-			else{
-				if(depthofknowledgedetails ==null || eduUsedetails==null){
-					if(depthofknowledgedetails!=null && depthofknowledgedetails.size()>0){
-						educationallLbl.setVisible(true);
-						dKnowledgePanel.setVisible(true);
-					}else if(eduUsedetails!=null && eduUsedetails.size()>0){
-						educationallLbl.setVisible(true);
-						eduUsePanel.setVisible(true);
-					}
-				}
-					
-			}
-		}else{
-			if(momentoflearningdetails==null  && eduUsedetails==null){
-				educationallLbl.setVisible(false);
-				eduUsePanel.setVisible(false);
 				momentsoflearningPanel.setVisible(false);
-			}else if(momentoflearningdetails!=null && eduUsedetails!=null){
-				if(momentoflearningdetails.size()>0 || eduUsedetails.size()>0){
-					educationallLbl.setVisible(true);
-					if(momentoflearningdetails.size()>0){
-						momentsoflearningPanel.setVisible(true);
-					}else if(eduUsedetails.size()>0){
-						eduUsePanel.setVisible(true);
-					}
-				}else if(momentoflearningdetails.size()==0 && eduUsedetails.size()==0){
-					educationallLbl.setVisible(false);
-					eduUsePanel.setVisible(false);
-					momentsoflearningPanel.setVisible(false);
-				}
-			}
-			else{
-				if(momentoflearningdetails==null || eduUsedetails==null){
-				if(momentoflearningdetails!=null && momentoflearningdetails.size()>0){
+			} else {
+				if (momentoflearningdetails != null	&& momentoflearningdetails.size() > 0) {
 					educationallLbl.setVisible(true);
 					momentsoflearningPanel.setVisible(true);
-				}else if(eduUsedetails!=null && eduUsedetails.size()>0){
+					isEducationalInfo = true;
+				}else{
+					momentsoflearningPanel.setVisible(false);
+				}
+				dKnowledgePanel.setVisible(false);
+			}
+			
+			if(eduUsedetails!=null && eduUsedetails.size()>0){ 
 					educationallLbl.setVisible(true);
 					eduUsePanel.setVisible(true);
-				}
+					isEducationalInfo=true;
+			}else{
+				eduUsePanel.setVisible(false);
 			}
+			if(isEducationalInfo){
+				educationallLbl.setVisible(true);
+			}else{
+				educationallLbl.setVisible(false);
 			}
-		}
+		
+		
+	
 		timeRequiredvalue.setVisible(false);
 		timeRequiredLabel.setVisible(false);
 	}
 	
+	private void setaddsDetails(List<String> addsdetails) {
+
+		// TODO Auto-generated method stub
+		addsInfo.clear();
+		if(addsdetails == null || addsdetails.size() == 0 || addsdetails.contains(null) || addsdetails.contains("") ){
+			addsPanel.setVisible(false);
+		}else{
+			addsTitle.setText("Adds:");
+		if(addsdetails.size()>0){
+			if(addsdetails.size()==1){
+				final Label addsLabel=new Label(addsdetails.get(0));
+				addsLabel.getElement().setAttribute("style", "float: left;");
+				addsInfo.add(addsLabel);
+				addsPanel.setVisible(true);
+			} if(addsdetails.size()==2){
+				final Label addsLabel=new Label(addsdetails.get(0)+","+addsdetails.get(1));
+				addsLabel.getElement().setAttribute("style", "float: left;");
+				addsInfo.add(addsLabel);
+				addsPanel.setVisible(true);
+			}
+			
+		}
+		if(addsdetails.size()>2){
+			final Label addscountLabel=new Label("+"+(addsdetails.size()-2)); 
+			addscountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label addsLabelNew=new Label(addsdetails.get(0)+","+addsdetails.get(1));
+			addsLabelNew.getElement().setAttribute("style", "float:left;");
+			addsInfo.add(addsLabelNew);
+			addsInfo.add(addscountLabel);
+			Widget addswidget = getCommonwidget(addsdetails);
+			addscountLabel.addMouseOverHandler(new MouseOverShowToolTip(addswidget));
+			addscountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			addsPanel.setVisible(true);
+		}
+		}
+		
+	
+	}
+
+	private void setSchoolLevelDetails(String cfSchoolLevel) {
+		// TODO Auto-generated method stub
+		if(cfSchoolLevel!=null&&!cfSchoolLevel.equalsIgnoreCase("")&&!cfSchoolLevel.equalsIgnoreCase("null")){
+			schoolLevelPanel.setVisible(true);
+			schoolLevelLbl.setText("School Level:");
+			schoolLevelType.setText(cfSchoolLevel);
+		}else{
+			schoolLevelPanel.setVisible(false);
+		}
+	}
+
+	private void clearALlPanels() {
+		// TODO Auto-generated method stub
+		hostPanel.setVisible(false);
+		oerPanel.setVisible(false);
+		eduAllignPanel.setVisible(false);
+		eduRolePanel.setVisible(false);
+		interactivityTypePanel.setVisible(false);
+		ageRangePanel.setVisible(false);
+		countryCodePanel.setVisible(false);
+		languagePanel.setVisible(false);
+		DataTypePanel.setVisible(false);
+		authorPanel.setVisible(false);
+		copyRightPanel.setVisible(false);
+		controlPanel.setVisible(false);
+		accessHazardPanel.setVisible(false);
+		schoolLevelPanel.setVisible(false);
+		readingLevelPanel.setVisible(false);
+		keyWordsPanel.setVisible(false);
+		addsPanel.setVisible(false);
+		accessModePanel.setVisible(false);
+		mediaFeaturePanel.setVisible(false);
+	}
+
 	private void setOerDetails(String oerdetails) {
 		// TODO Auto-generated method stub
 		if(oerdetails!=null&&!oerdetails.equalsIgnoreCase("")&&!oerdetails.equalsIgnoreCase("null")){
@@ -746,17 +831,29 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
 		if(mediaFeatures.size()>0){
-			final Label mediafeatureLabel=new Label(mediaFeatures.get(0)+","+mediaFeatures.get(1));
-			mediafeatureLabel.getElement().setAttribute("style", "float: left;");
-			mediaFeatureType.add(mediafeatureLabel);
-			mediaFeaturePanel.setVisible(true);
+			
+			if(mediaFeatures.size()==1){
+				final Label mediafeatureLabel=new Label(mediaFeatures.get(0));
+				mediafeatureLabel.getElement().setAttribute("style", "float: left;");
+				mediaFeatureType.add(mediafeatureLabel);
+				mediaFeaturePanel.setVisible(true);
+			} if(mediaFeatures.size()==2){
+				final Label mediafeatureLabel=new Label(mediaFeatures.get(0)+","+mediaFeatures.get(1));
+				mediafeatureLabel.getElement().setAttribute("style", "float: left;");
+				mediaFeatureType.add(mediafeatureLabel);
+				mediaFeaturePanel.setVisible(true);
+			}
 		}
 		if(mediaFeatures.size()>2){
+			
 			final Label mediafetureCountLabel=new Label("+"+(mediaFeatures.size()-2)); 
 			mediafetureCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label mediafeatureLabelNew=new Label(mediaFeatures.get(0)+","+mediaFeatures.get(1));
+			mediafeatureLabelNew.getElement().setAttribute("style", "float:left;");
+			mediaFeatureType.add(mediafeatureLabelNew);
 			mediaFeatureType.add(mediafetureCountLabel);
-			Widget mediafeaturewidget = getCommonwidget(mediaFeatures);
-			mediafetureCountLabel.addMouseOverHandler(new MouseOverShowToolTip(mediafeaturewidget));
+			Widget mfwidget = getCommonwidget(mediaFeatures);
+			mediafetureCountLabel.addMouseOverHandler(new MouseOverShowToolTip(mfwidget));
 			mediafetureCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			mediaFeaturePanel.setVisible(true);
 		}
@@ -770,17 +867,29 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
 		if(acessmode.size()>0){
-			final Label accessmodeLabel=new Label(acessmode.get(0)+","+acessmode.get(1));
-			accessmodeLabel.getElement().setAttribute("style", "float: left;");
-			accessModeType.add(accessmodeLabel);
-			accessModePanel.setVisible(true);
+			
+			if(acessmode.size()==1){
+				final Label accessmodeLabel=new Label(acessmode.get(0));
+				accessmodeLabel.getElement().setAttribute("style", "float: left;");
+				accessModeType.add(accessmodeLabel);
+				accessModePanel.setVisible(true);
+			} if(acessmode.size()==2){
+				final Label accessmodeLabel=new Label(acessmode.get(0)+","+acessmode.get(1));
+				accessmodeLabel.getElement().setAttribute("style", "float: left;");
+				accessModeType.add(accessmodeLabel);
+				accessModePanel.setVisible(true);
+			}
 		}
 		if(acessmode.size()>2){
+			
 			final Label acessmodeCountLabel=new Label("+"+(acessmode.size()-2)); 
 			acessmodeCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label accessmodeLabelNew=new Label(acessmode.get(0)+","+acessmode.get(1));
+			accessmodeLabelNew.getElement().setAttribute("style", "float:left;");
+			accessModeType.add(accessmodeLabelNew);
 			accessModeType.add(acessmodeCountLabel);
-			Widget acessmodewidget = getCommonwidget(acessmode);
-			acessmodeCountLabel.addMouseOverHandler(new MouseOverShowToolTip(acessmodewidget));
+			Widget accesswidget = getCommonwidget(acessmode);
+			acessmodeCountLabel.addMouseOverHandler(new MouseOverShowToolTip(accesswidget));
 			acessmodeCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
 			accessModePanel.setVisible(true);
 		}
@@ -794,42 +903,45 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 				mbFriendlyText.setText("NO");
-				accessibilityPanel.setVisible(true);
-				accesibilityLbl.setText(GL1703);
-				accesibilityLbl.setVisible(true);
 			}else{
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 				mbFriendlyText.setText("YES");
-				accessibilityPanel.setVisible(true);
-				accesibilityLbl.setText(GL1703);
-				accesibilityLbl.setVisible(true);
 			}
-			
 		}else{
 			mobileFriendlyPanel.setVisible(false);
-			accessibilityPanel.setVisible(false);
-			accesibilityLbl.setVisible(false);
-			accesibilityLbl.setVisible(false);
 		}
 	}
 
 	private void showreadingLevelDetails(List<String> readinglevel) {
 		// TODO Auto-generated method stub
 		readingLevelType.clear();
-		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
 		if(readinglevel == null || readinglevel.size() == 0 || readinglevel.contains(null) || readinglevel.contains("") ){
 			readingLevelPanel.setVisible(false);
 		}else{
 		if(readinglevel.size()>0){
-			final Label readingLabel=new Label(readinglevel.get(0)+","+readinglevel.get(1));
-			readingLabel.getElement().setAttribute("style", "float: left;");
-			readingLevelType.add(readingLabel);
-			readingLevelPanel.setVisible(true);
+			if(readinglevel.size()==1){
+				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+				final Label readingLabel=new Label(readinglevel.get(0));
+				readingLabel.getElement().setAttribute("style", "float: left;");
+				readingLevelType.add(readingLabel);
+				readingLevelPanel.setVisible(true);
+			} if(readinglevel.size()==2){
+				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
+				final Label readingLabel=new Label(readinglevel.get(0)+","+readinglevel.get(1));
+				readingLabel.getElement().setAttribute("style", "float: left;");
+				readingLevelType.add(readingLabel);
+				readingLevelPanel.setVisible(true);
+			}
 		}
 		if(readinglevel.size()>2){
+			
+			readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
 			final Label readingCountLabel=new Label("+"+(readinglevel.size()-2)); 
 			readingCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label readingLabelNew=new Label(readinglevel.get(0)+","+readinglevel.get(1));
+			readingLabelNew.getElement().setAttribute("style", "float:left;");
+			readingLevelType.add(readingLabelNew);
 			readingLevelType.add(readingCountLabel);
 			Widget readingwidget = getCommonwidget(readinglevel);
 			readingCountLabel.addMouseOverHandler(new MouseOverShowToolTip(readingwidget));

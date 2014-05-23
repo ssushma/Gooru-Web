@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CollResInfo implements MessageProperties {
+public class InfoUtil implements MessageProperties {
 
 	public static final String ALL_GRADES = "ALL GRADES";
 

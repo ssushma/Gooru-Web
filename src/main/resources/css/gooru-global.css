@@ -95,10 +95,28 @@ button.primary {
 	/* Opera 11.10+ */
 	background: -o-linear-gradient(top, #4C98CC, #1076BB);
 }
+button.green {
+	color: white;
+	background-color: rgb(78, 151, 70);
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: 1px solid rgb(78, 151, 70);
+	font-family: Arial, sans-serif;
+	display:inline-block;
+	
+	/* Old browsers */ 
+	background:rgb(78, 151, 70);
+	
+}
 
 button.primary:hover {
 	color:white;
 	background:#1076BB;
+	cursor:pointer;
+}
+button.green:hover {
+	color:white;
+	background:rgb(78, 151, 70);
 	cursor:pointer;
 }
 

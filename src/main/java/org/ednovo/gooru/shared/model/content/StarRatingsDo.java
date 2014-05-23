@@ -2,6 +2,8 @@ package org.ednovo.gooru.shared.model.content;
 
 import java.io.Serializable;
 
+import org.ednovo.gooru.shared.model.user.CreatorDo;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -14,6 +16,7 @@ public class StarRatingsDo implements Serializable {
 	private String deleteRatingGooruOid=null;
 	private Integer score;
 	private String freeText;
+	private CreatorDo creator;
 	
 	public StarRatingsDo(){}
 	
@@ -68,6 +71,14 @@ public class StarRatingsDo implements Serializable {
 	 */
 	public void setFreeText(String freeText) {
 		this.freeText = freeText;
+	}
+
+	public CreatorDo getCreator() {
+		return creator;
+	}
+
+	public void setCreator(CreatorDo creator) {
+		this.creator = creator;
 	}
 
 

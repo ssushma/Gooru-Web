@@ -58,7 +58,7 @@
     white-space:normal;
     border-radius:4px;
     position:absolute;
-    margin:-45px 0px 0px 15px;
+    margin:-6px 0px 0px 15px;
     visibility:hidden;
     transition:visibility 0s linear 0.2s,opacity 0.2s linear;
     opacity:0;

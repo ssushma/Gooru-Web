@@ -746,24 +746,12 @@ public class HeaderUc extends Composite implements MessageProperties,
 			if (stockStore != null) {
 				stockStore.setItem("tabKey", "resourceTab");
 			}
-			if (userDo != null && !userDo.getUserUid().equals(AppClientFactory.GOORU_ANONYMOUS)) {
-				Window.enableScrolling(true);
-				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, true));
-				Element e = null;
-				if ((e = event.getRelativeElement()) != null) {
-					if (e.getInnerHTML() != null && e.getInnerHTML().contains("gwt-Label"))
-						MixpanelUtil.Click_Organize_LandingPage();
-				}
-				manageDotsMenuSelection(organizeLink);
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-			} else {
-				name = "organize";
-//				AppClientFactory.fireEvent(new InvokeLoginEvent());
-				//TODO need to show new logout page....
-			}
-			
+			name = "organize";
+			Window.enableScrolling(true);
+			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
+			manageDotsMenuSelection(organizeLink);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
 		}
-
 	}
 
 	public class OnClickTeachEventHandler implements ClickHandler {

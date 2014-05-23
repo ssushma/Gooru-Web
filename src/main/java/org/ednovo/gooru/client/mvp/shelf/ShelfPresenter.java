@@ -35,7 +35,6 @@ import org.ednovo.gooru.client.event.ActivateSearchBarEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
-import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
@@ -263,27 +262,17 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			}
 		}, ClickEvent.getType());
 		
+		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
+		AppClientFactory.setBrowserWindowTitle(SeoTokens.WORKSPACE_TITLE);
+		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
+		
 		if(AppClientFactory.isAnonymous()){
-			
-			
 			getView().setOnlyNoDataCollection();
-			Window.enableScrolling(false);
-			AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-//			getView().setNoDataCollection();
-			LoginPopupUc popup = new LoginPopupUc();
-			popup.setGlassEnabled(true);
-			popup.center();
-			popup.show();
-			
-//			Map<String, String> params = new HashMap<String, String>();
-//			params.put("loginEvent","true");
-//			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, params);
 		} else {
 			getView().setBackToSearch();
-			AppClientFactory.setBrowserWindowTitle(SeoTokens.WORKSPACE_TITLE);
-			AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
+			
 			fireEvent(new ActivateSearchBarEvent(true));
-			AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
+			
 			String id = getPlaceManager().getRequestParameter("id", "INVALID");
 			if(id.equalsIgnoreCase("INVALID") && !AppClientFactory.isAnonymous())
 			{
@@ -345,6 +334,8 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			}
 			setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
 			AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+		}else{
+//			getView().setOnlyNoDataCollection();
 		}
 	}
 	

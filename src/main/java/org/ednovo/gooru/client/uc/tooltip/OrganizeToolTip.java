@@ -150,7 +150,7 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 			@Override
 			public void onSuccess(FolderDo folderDo) {
 				folderDo.setType("folder");
-				AppClientFactory.fireEvent(new UpdateFolderItemEvent(folderDo, parentId, params));
+//				AppClientFactory.fireEvent(new UpdateFolderItemEvent(folderDo, parentId, params));
 				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params));
 			}
 			@Override

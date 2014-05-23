@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionHandler;
 import org.ednovo.gooru.client.mvp.search.event.StandardsSuggestionInfoHandler;
 import org.ednovo.gooru.client.mvp.search.event.SwitchSearchHandler;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropHandler;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
 /**
  * @author Search Team
@@ -51,6 +52,6 @@ public interface SearchUiHandlers extends BaseUiHandlers, SearchPaginationHandle
 	 */
 	void initiateSearch();
 	
-	public void showRatingAndReviewPopup();
+	public void showRatingAndReviewPopup(ResourceSearchResultDo searchResultDo);
 	
 }

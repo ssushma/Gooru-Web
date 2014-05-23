@@ -22,15 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.rating;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-import com.gwtplatform.mvp.client.PopupView;
+import com.google.gwt.event.shared.GwtEvent;
 
-public interface IsRatingAndReviewPopupView extends PopupView, IsViewWithHandlers<RatingAndReviewPopupUiHandlers>{
+/**
+ * @author Search Team
+ * 
+ */
+public class DisplayNoCollectionEvent extends GwtEvent<DisplayNoCollectionHandler> {
 
-	void displayPopUp(ResourceSearchResultDo searchResultDo);
-	
+	public static final Type<DisplayNoCollectionHandler> TYPE = new Type<DisplayNoCollectionHandler>();
+
+	/**
+	 * Class constructor
+	 */
+	public DisplayNoCollectionEvent() {
+	}
+
+	@Override
+	public Type<DisplayNoCollectionHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(DisplayNoCollectionHandler handler) {
+		handler.showNoCollections();
+	}
+
+
 }
