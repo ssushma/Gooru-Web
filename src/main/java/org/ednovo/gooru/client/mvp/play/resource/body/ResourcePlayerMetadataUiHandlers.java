@@ -50,4 +50,6 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	public void updateReview(String deleteRatingGooruOid, Integer score,String userReview);
 
 	public void getAvgRatingAndCount(String assocGooruOid, Integer score, String review);   
+	
+	public void setResourceMetaData(String resourceTitle);
 }

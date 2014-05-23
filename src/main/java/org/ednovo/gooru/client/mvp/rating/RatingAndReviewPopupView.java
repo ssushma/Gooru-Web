@@ -116,43 +116,21 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	}
 
 	@Override
-	public void displayPopUp(ResourceSearchResultDo searchResultDo) {
-		System.out.println("titlereceived::"+searchResultDo.getResourceTitle());
-		lblResourceTitle.setText("Reviews for "+searchResultDo.getResourceTitle());
-		getAverageRatingForContent(searchResultDo.getGooruOid());
-		getUserRatingsAndReviews(searchResultDo.getGooruOid());
+	public void displayPopUp(String resourceTitle, String gooruOid) {
+		System.out.println("titlereceived::"+resourceTitle);
+		lblResourceTitle.setText("Reviews for "+resourceTitle);
+		getAverageRatingForContent(gooruOid);
+		getUserRatingsAndReviews(gooruOid);
 	}
 
 	public void getUserRatingsAndReviews(String resourceId)
 	{
 		getUiHandlers().getUserRatingsReviews(resourceId);
-
-		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(resourceId,AppClientFactory.getLoggedInUser().getGooruUId(), new AsyncCallback<ArrayList<StarRatingsDo>>() {
-
-			@Override
-			public void onSuccess(ArrayList<StarRatingsDo> result) {}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	public void getAverageRatingForContent(String resourceId)
 	{
 		getUiHandlers().getAverageRatingForContent(resourceId);
-		AppClientFactory.getInjector().getPlayerAppService().getContentStarRatings(resourceId, new AsyncCallback<ContentStarRatingsDo>() {
-
-			@Override
-			public void onSuccess(ContentStarRatingsDo result) {
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-		});
 	}
 
 	@Override
