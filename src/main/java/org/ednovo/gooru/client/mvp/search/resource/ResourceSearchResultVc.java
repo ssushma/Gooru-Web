@@ -215,8 +215,12 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 		if(resourceSearchResultDo.getAggregator()!=null){
 			for (String aggregator: resourceSearchResultDo.getAggregator()) {
-				if(resourceSearchResultDo.getAggregator().size()>0){
+				if(resourceSearchResultDo.getAggregator().size()>1){
 					aggregatorData = aggregatorData+aggregator+",";
+				}
+				else
+				{
+					aggregatorData = aggregator;
 				}
 			}
 			if(aggregatorData.endsWith(",")){
@@ -227,8 +231,11 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		
 		if(resourceSearchResultDo.getPublisher()!=null){
 			for (String publisher: resourceSearchResultDo.getPublisher()) {
-				if(resourceSearchResultDo.getPublisher().size()>0){
+				if(resourceSearchResultDo.getPublisher().size()>1){
 					publisherData = publisherData+publisher+",";
+				}else
+				{
+					publisherData = publisher;
 				}
 			
 			}
