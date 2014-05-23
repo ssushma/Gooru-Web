@@ -150,7 +150,7 @@ h3 {
     vertical-align:middle;
 }
 
-.barGraph .bar:nth-child(7) {
+.data-two {
     background-color: #57B53B;
 }
 
@@ -178,7 +178,7 @@ h3 {
     background:#f0f0f0;
     padding:10px 15px;
     margin: 15px 0px;
-    height:29px;
+    height:33px;
 }
 
 .userRating.reviewContainer {
@@ -193,23 +193,25 @@ h3 {
 }
 
 .userRatingPreviewBtn {
-float: right;
-margin-right: 11px;
-margin-top: -34px;
-width: 168px;
+	float: right;
+	margin-right: 11px;
+	margin-top: -34px;
+	width: 168px;
 }
 
 .reviewContainer button {
     float:none;
     display:block;
     visibility:hidden;
+    position: absolute;
+    margin-left: 100px;
     opacity:0;
     -webkit-transition: visibility 0.2s linear, opacity 0.2s linear;
     -moz-transition: visibility 0.2s linear, opacity 0.2s linear;
     -o-transition: visibility 0.2s linear, opacity 0.2s linear;
 }
 
-.reviewContainer:hover button {
+.reviewContainer:hover .editReview {
     visibility:visible;
     opacity:1;
 }
@@ -240,8 +242,8 @@ width: 168px;
 }
 
 .reviewContainer {
-    margin-bottom:25px;
     position:relative;
+    padding: 15px;
 }
 
 .reviewContainer .username,
@@ -531,4 +533,24 @@ left: -9px;
 
 .ratingCountLabel{
 	cursor: pointer;
+}
+
+.userNameLbl {
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.creatorReviewPanel {
+	background: #f0f0f0;
+	margin-top: 15px;
+}
+
+.rateMsg {
+	float: left;
+	margin-top: 10px;
+}
+
+.floatRight {
+	float: right;
 }
