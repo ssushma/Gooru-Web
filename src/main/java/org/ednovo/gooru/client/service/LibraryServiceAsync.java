@@ -52,7 +52,7 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 	void getTopicsOnPagination(String subjectId, String unitId, String libraryName, int offset, String standardId, AsyncCallback<ArrayList<TopicDo>> callback);
 	void getLibraryCollections(String courseType, String lessonId, String libraryName, AsyncCallback<ArrayList<ConceptDo>> callback);
 	void getPopularCollectionsData(String courseId, AsyncCallback<ArrayList<ConceptDo>> callback);
-	void getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType, AsyncCallback<PartnerFolderListDo> callback);
+	void getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken, AsyncCallback<PartnerFolderListDo> callback);
 	void getPartnerChildFolders(String gooruUid, int offset, int limit,String parentId,String sharingType, String collectionType, AsyncCallback<PartnerConceptListDo> callback);
 	void getPartnerPaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<PartnerFolderListDo> callback);
 	void getPartners(AsyncCallback<ArrayList<LibraryUserDo>> callback) throws GwtException;

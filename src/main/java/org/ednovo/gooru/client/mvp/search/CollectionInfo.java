@@ -21,7 +21,7 @@ import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.util.CollResInfo;
+import org.ednovo.gooru.shared.util.InfoUtil;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -70,8 +70,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	Label lblDepthKnowledge,lblOer,lblOerValue,lblInstructionalValue,lblInstructional;
 
 	@UiField
-	static
-	HTMLPanel panelStandrads,panelDesc;
+	HTMLPanel panelStandrads,panelDesc,loadingImagePanel;
 
 	@UiField
 	HTMLPanel gradesPanel,panelAudience,panelInstructional;
@@ -125,14 +124,12 @@ public class CollectionInfo extends Composite implements MessageProperties{
 
 	public void setInfoData(String gooruOid){
 		String collectionId= gooruOid;
-		System.out.println("collectionId::"+collectionId);
 		AppClientFactory.getInjector().getPlayerAppService().getSimpleCollectionDetils(null, gooruOid, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {
 				collectionDo=result;
-				// TODO Auto-generated method stub
-				System.out.println("grades::"+result.getGrade());
+				loadingImagePanel.setVisible(false);
 				setGradeText(collectionDo.getGrade());
 				if(collectionDo.getMetaInfo()!=null && collectionDo.getMetaInfo().getStandards()!=null){
 					renderStandards(standardsInfoConatiner,getStandardsMap(collectionDo.getMetaInfo().getStandards()));
@@ -165,7 +162,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	protected void setGradeText(String gradesText) {
 
 		if(gradesText!=null&&!gradesText.equalsIgnoreCase("")&&!gradesText.equalsIgnoreCase("null")){
-			this.gradesText.setText(CollResInfo.getGrades(gradesText));
+			this.gradesText.setText(InfoUtil.getGrades(gradesText));
 			gradesPanel.setVisible(true);
 		}else{
 			gradesPanel.setVisible(false);
@@ -184,7 +181,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 						depthofknowledgedetails.add(collectionDo.getDepthOfKnowledges().get(i).getValue());
 					}
 				}
-				CollResInfo.setDepthofknowledgeDetails(depthofknowledgedetails, dKnowledgeType, lblDepthKnowledge, dKnowledgePanel);
+				InfoUtil.setDepthofknowledgeDetails(depthofknowledgedetails, dKnowledgeType, lblDepthKnowledge, dKnowledgePanel);
 				//dKnowledgePanel.setVisible(true);
 			}else{
 				dKnowledgePanel.setVisible(false);
@@ -248,14 +245,10 @@ public class CollectionInfo extends Composite implements MessageProperties{
 					panelStandrads.setVisible(true);
 				}
 			}
-			if(standardsList.size()==0)
+			if(standardsList.isEmpty())
 			{
 				panelStandrads.getElement().getStyle().setDisplay(Display.NONE);
 				lblStandrads.setVisible(false);
-			}
-			if(standardsContainer.equals("")){
-				System.out.println("standards");
-				panelStandrads.setVisible(false);
 			}
 		}
 		else{
@@ -276,7 +269,7 @@ public class CollectionInfo extends Composite implements MessageProperties{
 						learningSkillsDetails.add(collectionDo.getLearningSkills().get(i).getValue());
 					}
 				}
-				CollResInfo.setDepthofknowledgeDetails(learningSkillsDetails, learningSkillsPanel, lblLearningSkills, learningSkillsMainPanel);
+				InfoUtil.setDepthofknowledgeDetails(learningSkillsDetails, learningSkillsPanel, lblLearningSkills, learningSkillsMainPanel);
 				//dKnowledgePanel.setVisible(true);
 			}else{
 				learningSkillsMainPanel.setVisible(false);
