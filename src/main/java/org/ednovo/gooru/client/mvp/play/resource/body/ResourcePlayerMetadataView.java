@@ -25,9 +25,9 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.xpath.operations.Bool;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -35,17 +35,12 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
-import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
-import org.ednovo.gooru.client.uc.NarrationUc;
-import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOut;
-import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOver;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -62,7 +57,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -73,8 +67,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.SimpleCheckBox;
-import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -137,8 +129,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final int CHILD_AGE=13;
 	private StarRatingsDo starRatingsDo;
 	ThankYouResourceStarRatings thankYouResourceStarRatings;
-	private boolean isRated=false;
-	
+	RatingsConfirmationPopup ratingsConfirmationPopup;
+	private boolean isRated=false,isFromThanksPopup=false;
+	String assocGooruOId;
+	Integer score,count;
+	double average;
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
@@ -859,6 +854,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(thankYouResourceStarRatings!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
 			}
 		}
 		setRatings(result,showThankYouToolTip);
@@ -1313,6 +1311,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(isUpdate){
 			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview);
 		}else{
+			if(ratingsConfirmationPopup!=null && ratingsConfirmationPopup.isVisible()){
+				ratingsConfirmationPopup.hide();
+			}
+			isFromThanksPopup=true;
 			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview);
 		}
 		
@@ -1324,6 +1326,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void hideThankYouPopUp() {
 		thankYouResourceStarRatings.hide();
+		displaySuccessPopup();
 	}
 
 	/**
@@ -1336,6 +1339,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void setRatingMetaData(String assocGooruOid, Integer score,String review, double average, Integer count) {
+		this.assocGooruOId=assocGooruOid;
+		this.score=score;
+		this.count=count;
+		this.average=average;
 		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
@@ -1348,6 +1355,19 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		long ageInMillis = new Date().getTime() - birthDate.getTime();
 		Date age = new Date(ageInMillis);
 		return age.getYear() - 70;
+	}
+
+	@Override
+	public void displaySuccessPopup() {
+		if(ratingsConfirmationPopup!=null && ratingsConfirmationPopup.isVisible()){
+			ratingsConfirmationPopup.hide();
+		}
+		isFromThanksPopup=false;
+		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average);
+		ratingsConfirmationPopup.show();
+		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
+		ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+		ratingsConfirmationPopup.setAutoHideEnabled(true);
 	}
 	
 }

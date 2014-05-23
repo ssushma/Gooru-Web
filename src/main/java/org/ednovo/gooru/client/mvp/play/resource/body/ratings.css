@@ -544,3 +544,6 @@ left: -10px;
 	font-style: italic;
 	min-height: 6px;
 }
+.subRatingContainer{
+	width: 92px;
+}
