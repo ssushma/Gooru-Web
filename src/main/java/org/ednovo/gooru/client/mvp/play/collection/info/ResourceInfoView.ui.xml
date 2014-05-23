@@ -34,6 +34,7 @@
 	            </g:HTMLPanel>
 	            
 	             <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
+	                  <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
           	 <g:Label styleName="{playerStyle.resource-info-more-titleboarder}" ui:field="generalLbl"></g:Label>
            </g:HTMLPanel>
 	             
