@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -223,7 +224,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			collectionsRedirectionMsg.setVisible(true);
 			myCollectionsBtn.setVisible(true);
 		} else {
-			noCollectionsMsg.setText("\""+AppClientFactory.getPlaceManager().getRequestParameter("user")+"\" "+GL1791);
+//			noCollectionsMsg.setText("\""+AppClientFactory.getPlaceManager().getRequestParameter("user")+"\" "+GL1791);
+			noCollectionsMsg.setText(StringUtil.generateMessage(GL1791,AppClientFactory.getPlaceManager().getRequestParameter("user")));
 			collectionsRedirectionMsg.setVisible(false);
 			myCollectionsBtn.setVisible(false);
 		}

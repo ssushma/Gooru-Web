@@ -72,12 +72,12 @@ public class CollectionNonExistView extends Composite implements MessageProperti
 	 */
 	public CollectionNonExistView(){
 		initWidget(collectionNonExistViewUiBinder.createAndBindUi(this));
-		btnLibrary.setText(GL0506);
+		btnLibrary.setText(GL1831);
 		noLongerText.getElement().setInnerHTML(GL0655);
 		recycleImage.setUrl("images/collection_error.png");
 		madePrivateOrDeletedText.getElement().setInnerHTML(GL0656);
 		meanTimetext.getElement().setInnerHTML(GL0657);
-		btnLibrary.setText(GL0506);
+		btnLibrary.setText(GL1831);
 		btnLibrary.getElement().getStyle().setMarginLeft(50, Unit.PX);
 //		getFeaturedCollections();
 	}

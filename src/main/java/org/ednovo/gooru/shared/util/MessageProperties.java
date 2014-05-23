@@ -850,8 +850,9 @@ public interface MessageProperties {
 	//collection does not exists.
 	String GL0655=	"This collection is no longer available."; //HTMLPanel
 	String GL0656=	"It’s either been deleted or made private by the creator";//HTMLPanel
-	String GL0657=	"In the meantime, why don't you browse the courses in our library.";//HTMLPanel
+	String GL0657=	"Looking for other collections to use? Why don't you browse the courses in our library?";//HTMLPanel
 	String GL0697 ="NoHeader";
+	String GL1831 ="Browse the Library";
 	
 	//Add to an existing collection
 	String GL0658=	"Add to an existing collection";//Label
@@ -2265,9 +2266,9 @@ public interface MessageProperties {
     	String GL1772 = "It's easy to organize your collections and share them with your students.";
     	String GL1773 = "Access a Class";
     	String GL1774 = "Easy Access for Your Students";
-    	String GL1775 = "Students don't need to log-in when they use the unique Class Code for your class.";
+    	String GL1775 = "All students need to get started is the unique Class Code for your class.";
     	String GL1776 = "Manage Assignments ";
-    	String GL1777 = "Students will see a clear due date and your directions for the collections you assign.";
+    	String GL1777 = "Provide students with a clear due date and your directions for the collections you assign.";
     	String GL1778 = "Monitor Student Progress ";
     	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
     	String GL1780 = "See a sample report";
@@ -2280,13 +2281,13 @@ public interface MessageProperties {
     	String GL1787 = "Library";
     	String GL1788 = "Go to \"My Collections\" to share your collections in this library with others.";
     	String GL1789 = "Go to My Collections";
-    	String GL1790 = "You do not have any public collections yet!";
-    	String GL1791 = "does not have any public collections!";
+    	String GL1790 = "You don't have any public collections yet.";
+    	String GL1791 = "It looks like \"{0}\" hasn't shared any collections yet.";
     	String GL1792 = "Your library is made of your publicly shared collections. Please put your collections in nested folders (Unit, Topic, Lesson) just like other libraries in Gooru so that they would be better organized in a library view.";
-    	String GL1793 = "ON: You will be sharing your profile info & library with others.";
-    	String GL1794 = "OFF: No one but you will be able to access your profile page.";
+    	String GL1793 = "ON: Your profile page may be viewed by others on Gooru.";
+    	String GL1794 = "OFF: No one but you will be able to view your profile page.";
     	String GL1795 ="Add Tags";
-    	String GL1796 ="Thank you for tagging and contributing to our resource metadata!";
+    	String GL1796 ="Thank you for tagging this resource!";
     	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
     	String GL1798="Lexile Level";
     	String GL1799="Kindergarden";
@@ -2313,7 +2314,7 @@ public interface MessageProperties {
 		String GL1819 = "Collaborate with fellow teachers";
 		String GL1820 = "Go further together--add another user to collaborate on a collection.";
 		String GL1821 = "Assess understanding with Questions";
-		String GL1822 = "Add questions to your collections to check understanding and encourage inquiry.";
+		String GL1822 = "Add questions to your collections to check student understanding.";
 		String GL1823 = "Guide with Narration";
 		String GL1824 = "Add narration before a resource to give students direction and focus their attention";
 		String GL1825 = "Customize Existing Resources";
@@ -2325,4 +2326,54 @@ public interface MessageProperties {
 
     	String GL1830 = "Walk through a <br>sample collection.";
     	
+    	String GL1832 = "It's either been deleted or made private by the collection owner.";
+    	String GL1833 = "You are seeing this page because the resource is temporarily unavailable, or has been removed from our site.";
+    	String GL1834 = "OER";
+    	String GL1835 = "Publisher";
+    	String GL1836 = "General Info";
+    	String GL1837 = "Educational Info";
+    	String GL1838 = "Add as many tags as you'd like by clicking on the words within each category.";
+    	String GL1839 = "Textbook";
+    	
+    	//Ratings and Reviews
+    	
+    	String GL1840 = "Reviews for";
+    	String GL1841 = "Rating Distribution";
+    	String GL1842 = "Excellent";
+    	String GL1843 = "Very Good";
+    	String GL1844 = "Good";
+    	String GL1845 = "Fair";
+    	String GL1846 = "Poor";
+    	String GL1847 = "Would you like to rate this resource?";
+    	String GL1848 = "Average Rating";
+    	String GL1849 = "Preview and Rate Resource";
+    	String GL1850 = "Your rating and review:";
+    	String GL1851 = "Edit your rating and review";
+    	String GL1852 = "Delete rating and review";
+    	String GL1853 = "Review has been deleted";
+    	String GL1854 = "Thank you for rating!";
+    	String GL1855 = "Tell us what you think!";
+    	String GL1856 = "Thank you for reviewing this resource!";
+    	String GL1857 = "What do you think about this resource?";
+    	String GL1858 = "You've already reviewed this resource. Here's what you said last time:";
+    	String GL1859 = "Please log in to rate this resource!";
+    	String GL1860 = "Edit Review";
+    	
+    	String GL1861 = "Delete Review";
+    	String GL1862 = "Log In";
+    	String GL1863 = "Go further together--add another user as a collaborator on your collection.";
+    	String GL1864 = "Add narration before a resource to give students direction and focus their attention.";
+    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
+    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
+    	String GL1867 = "Educational Role:";
+    	String GL1868 = "School Level";
+    	String GL1869 = "Share this class code with your students";
+    	String GL1870 = "Narrow report information by collection and student:";
+    	
+    	String GL1871 = "All Collections";
+    	String GL1872 = "All Students";
+    	String GL1873 = "Class Reports";
+    	String GL1874 = "Class Gradebook";
+    	String GL1875 = "This report is based on the students' first attempts on these collections.";
+    	String GL1876 = "Keywords";
    }
