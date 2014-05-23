@@ -10,7 +10,10 @@
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
 		<g:HTMLPanel styleName="{playerStyle.resource-info-metadata-wrapper}">
-
+            <g:HTMLPanel styleName="{playerStyle.loadingImageMainDivShare}"
+				  ui:field="loadingImagePanel">
+				  <g:Label styleName="{playerStyle.loadingImageForShare}" ui:field="lblloadingImage"/>
+		    </g:HTMLPanel>
 			<g:HTMLPanel styleName="{playerStyle.resource-info-metadata-innerwrapper}">
 			<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />
 			<g:HTML ui:field="lblcollectionName" styleName="{playerStyle.labelTitle}"></g:HTML>
@@ -46,7 +49,6 @@
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="resourceDescription" />
 				</g:HTMLPanel> -->
-
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="generalLbl"></g:Label>
