@@ -25,16 +25,18 @@
 package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -48,12 +50,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -70,11 +69,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
 
-	@UiField HTMLPanel reviewsContainer, userRatingContainer;
+	@UiField HTMLPanel reviewsContainer, userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
 
 	@UiField FlowPanel ratingWidgetPanel;
 
 	@UiField Button rateResourceBtn;
+	
+	private String gooruOid = null;
 	
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();;
 
@@ -118,6 +119,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@Override
 	public void displayPopUp(String resourceTitle, String gooruOid) {
+		this.gooruOid = gooruOid;
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setText("Reviews for "+resourceTitle);
 		getAverageRatingForContent(gooruOid);
@@ -143,6 +145,15 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	}
 
 	private void setContentGraph(ContentStarRatingsDo result) {
+		
+		int totalReviewCount = result.getScores().getFive() + result.getScores().getFour() + result.getScores().getThree() + result.getScores().getTwo() + result.getScores().getOne();
+		
+		dataFive.getElement().getStyle().setWidth(getBarGraphWidth(result.getScores().getFive(), totalReviewCount), Unit.PCT);
+		dataFour.getElement().getStyle().setWidth(getBarGraphWidth(result.getScores().getFour(), totalReviewCount), Unit.PCT);
+		dataThree.getElement().getStyle().setWidth(getBarGraphWidth(result.getScores().getThree(), totalReviewCount), Unit.PCT);
+		dataTwo.getElement().getStyle().setWidth(getBarGraphWidth(result.getScores().getTwo(), totalReviewCount), Unit.PCT);
+		dataOne.getElement().getStyle().setWidth(getBarGraphWidth(result.getScores().getOne(), totalReviewCount), Unit.PCT);
+		
 		excellentScore.setText("("+result.getScores().getFive()+")");
 		verygoodScore.setText("("+result.getScores().getFour()+")");
 		goodScore.setText("("+result.getScores().getThree()+")");
@@ -150,6 +161,14 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		poorScore.setText("("+result.getScores().getOne()+")");
 	}
 
+	private double getBarGraphWidth(Integer count, Integer totalCount) {
+		double width = 0.0;
+		if(totalCount>0) {
+			width = ((double)count / (double)totalCount);
+		}
+		return (width * 100);
+	}
+	
 	@Override
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
 		reviewsContainer.clear();
@@ -287,6 +306,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	}
 
-
+	@UiHandler("rateResourceBtn")
+	public void openResourcePlayer(ClickEvent event) {
+		hide();
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", gooruOid);
+		params.put("pn", "resource");
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
+	}
 
 }
