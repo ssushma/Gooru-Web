@@ -307,7 +307,10 @@ h3 {
 
 .rating > input:checked ~ label:before,
 .rating:not(:checked) > label:hover:before,
-.rating:not(:checked) > label:hover ~ label:before{
+.rating:not(:checked) > label:hover ~ label:before,
+.rating > input:selected ~ label:before,
+.rating:not(:selected) > label:hover:before,
+.rating:not(:selected) > label:hover ~ label:before{
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
@@ -318,12 +321,12 @@ h3 {
     content:'\f005';;
 }
 
-.rating > input:checked ~ label {
+.rating > input:checked ~ label, .rating > input:selected ~ label {
     color: #579ECF;
 }
 
-.rating:not(:checked) > label:hover,
-.rating:not(:checked) > label:hover ~ label {
+.rating:not(:checked) > label:hover, .rating:not(:selected) > label:hover,
+.rating:not(:checked) > label:hover ~ label, .rating:not(:selected) > label:hover ~ label {
     color: #1076BB;
 }
 
@@ -331,7 +334,13 @@ h3 {
 .rating > input:checked + label:hover ~ label,
 .rating > input:checked ~ label:hover,
 .rating > input:checked ~ label:hover ~ label,
-.rating > label:hover ~ input:checked ~ label {
+.rating > label:hover ~ input:checked ~ label,
+
+.rating > input:selected + label:hover,
+.rating > input:selected + label:hover ~ label,
+.rating > input:selected ~ label:hover,
+.rating > input:selected ~ label:hover ~ label,
+.rating > label:hover ~ input:selected ~ label {
     color: #1076BB;
 }
 
@@ -533,6 +542,7 @@ left: -10px;
 	margin-left: 15px;
 	margin-bottom: 2px;
 	font-style: italic;
+	min-height: 6px;
 }
 .subRatingContainer{
 	width: 92px;
