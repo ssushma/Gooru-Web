@@ -23,21 +23,25 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.rating;
+/**
+ * @fileName : RatingAndReviewStyleBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 02-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
 
-import java.util.ArrayList;
+import com.google.gwt.resources.client.CssResource;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
-import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 
-import com.gwtplatform.mvp.client.PopupView;
-
-public interface IsRatingAndReviewPopupView extends PopupView, IsViewWithHandlers<RatingAndReviewPopupUiHandlers>{
-
-	void displayPopUp(String resourceTitle, String gooruOId);
-
-	void setGraphAndAvgContentRating(ContentStarRatingsDo result);
-
-	void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result);  
-	
+public interface RatingAndReviewStyleBundle extends CssResource {
+	String creatorReviewPanel();
+	String editReview();
 }

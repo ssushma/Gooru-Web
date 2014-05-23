@@ -221,10 +221,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.collectionItemDo = collectionItemDo;
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
-			
 		}else{
 			resourceTitleLbl.setHTML("");
 		}
+		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 		if(collectionItemDo.getResource().getResourceSource()!=null){
 			String attributionName=collectionItemDo.getResource().getResourceSource().getAttribution();
 			attributionName = attributionName.trim();
@@ -282,6 +282,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				resourceTitleLbl.setHTML("");
 			}
+			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 			if(collectionItemDo.getResource().getResourceSource()!=null){
 				if(collectionItemDo.getResource().getResourceSource().getAttribution()!=null){
 					String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();

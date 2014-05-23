@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style field="style" src="ratingandreview.css" type="org.ednovo.gooru.client.mvp.rating.RatingAndReviewStyleBundle" />
+<g:HTMLPanel styleName="{style.reviewContainer}" ui:field="reviewContainer">
+   <g:Label styleName="{style.username} {style.userNameLbl}" ui:field="userName"></g:Label>
+   <g:Label styleName="{style.timestamp}" ui:field="timeStamp"></g:Label>
+   <g:Button styleName="secondary {style.editReview}" ui:field="editReview">Edit your rating and review</g:Button>
+   <hr/>
+   <g:HTMLPanel styleName="{style.rating}">
+      <g:InlineHTML styleName="{style.star} {style.filled}"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star} {style.filled}"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star} {style.filled}"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}"></g:InlineHTML>
+   </g:HTMLPanel>
+   <g:Label styleName="{style.review}" ui:field="review"></g:Label>
+</g:HTMLPanel>
+</ui:UiBinder>
