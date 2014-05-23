@@ -105,10 +105,25 @@ public class ResourceDo extends ContentDo {
 	
 	private List<String> accessibilityAPI;
 	
+	private List<String> aggregator;
+	
+	private List<String> publisher;
+	
 	private customFieldValuesDO customFieldValues;
 	
+	public List<String> getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(List<String> publisher) {
+		this.publisher = publisher;
+	}
 	
-
+	public List<String> getAggregator() {
+		return aggregator;
+	}
+	public void setAggregator(List<String> aggregator) {
+		this.aggregator = aggregator;
+	}
 	public customFieldValuesDO getCustomFieldValues() {
 		return customFieldValues;
 	}
