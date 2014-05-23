@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.rating;
 
 
 
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+
 import com.google.inject.Inject;
 import com.google.gwt.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -36,5 +38,9 @@ public class RatingAndReviewPopupPresenter extends PresenterWidget<IsRatingAndRe
 	public RatingAndReviewPopupPresenter(EventBus eventBus, IsRatingAndReviewPopupView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+	}
+	
+	public void displayPopup(ResourceSearchResultDo searchResultDo) {
+		getView().displayPopUp(searchResultDo);
 	}
 }

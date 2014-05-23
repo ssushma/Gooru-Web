@@ -11,6 +11,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.folders.FoldersWelcomePage;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
+import org.ednovo.gooru.client.mvp.search.event.DisplayNoCollectionEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
@@ -283,8 +284,9 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				if (ele!=null){
 					ele.removeFromParent();
 				}
-				folderContentBlock.add(new FoldersWelcomePageToolTip());
-				folderContentBlock.add(new FoldersWelcomePage());
+//				folderContentBlock.add(new FoldersWelcomePageToolTip());
+//				folderContentBlock.add(new FoldersWelcomePage());
+				AppClientFactory.fireEvent(new DisplayNoCollectionEvent());
 				
 			}else{
 				folderContentBlock.clear();

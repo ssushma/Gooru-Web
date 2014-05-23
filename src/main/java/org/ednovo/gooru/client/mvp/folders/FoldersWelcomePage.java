@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.folders;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -33,27 +35,28 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FoldersWelcomePage extends Composite implements MessageProperties{
-
-	@UiField
-	Label newCollectionUIHandler,needHelpLbl;
-	
-	@UiField
-	Anchor supportCenterAnr;
-	
-	@UiField HTMLPanel createLbl,gettingStartedLbl,createTextLbl,selectedLbl,customizeLbl,guideStudentsLbl,shareLbl,assignLbl;
-	
-	@UiField Image roundedOneLbl,workSpaceLbl,roundedTwoLbl,narrationLbl,roundedThreeLbl,shareAssignLbl;
+public class FoldersWelcomePage extends Composite implements MessageProperties {
 
 	private static FoldersWelcomePageUiBinder uiBinder = GWT
 			.create(FoldersWelcomePageUiBinder.class);
+
+	@UiField
+	Label lblStartCreateingCollection, lblCollectionDesc, lblViewWalkthrough,
+			lblUpload, lblCustomizeCollections, lblCollaborate, lblFurther,
+			lblAssess, lblAddQuestion, lblGuideWith, lblGuideNarration,
+			lblCustomizeResource, lblEditStart, lblOne, lblTwo, lblThree,
+			lblFour, lblFive;
+	
+	@UiField HTML htmlWalkSampleCollection;
+	
+	@UiField
+	Button btnCreateCollection;
 
 	interface FoldersWelcomePageUiBinder extends
 			UiBinder<Widget, FoldersWelcomePage> {
@@ -61,45 +64,76 @@ public class FoldersWelcomePage extends Composite implements MessageProperties{
 
 	public FoldersWelcomePage() {
 		initWidget(uiBinder.createAndBindUi(this));
-		//supportCenterAnr.setHref("http://support.goorulearning.org/home");
-		supportCenterAnr.setTarget("_blank");
-		createLbl.getElement().setInnerText(GL1508);
-		gettingStartedLbl.getElement().setInnerText(GL1509);
-		roundedOneLbl.setTitle(GL1398);
-		roundedOneLbl.setAltText(GL1398);
-		roundedOneLbl.setUrl("images/rounded-one.png");
-		createTextLbl.getElement().setInnerText(GL1335);
-		selectedLbl.getElement().setInnerText(GL1510);
-		workSpaceLbl.setTitle(GL1511);
-		workSpaceLbl.setAltText(GL1511);
-		workSpaceLbl.setUrl("images/folders/workspace-image.png");
-		roundedTwoLbl.setTitle(GL1400);
-		roundedTwoLbl.setAltText(GL1400);
-		roundedTwoLbl.setUrl("images/rounded-two.png");
-		customizeLbl.getElement().setInnerText(GL0631);
-		guideStudentsLbl.getElement().setInnerText(GL1512);
-		narrationLbl.setTitle(GL1036);
-		narrationLbl.setAltText(GL1036);
-		narrationLbl.setUrl("images/folders/narration-image.png");
-		roundedThreeLbl.setTitle(GL1403);
-		roundedThreeLbl.setAltText(GL1403);
-		roundedThreeLbl.setUrl("images/rounded-three.png");
-		shareLbl.getElement().setInnerText(GL0526);
-		assignLbl.getElement().setInnerText(GL1513);
-		shareAssignLbl.setTitle(GL1514);
-		shareAssignLbl.setAltText(GL1514);
-		shareAssignLbl.setUrl("images/folders/share-assign-image.png");
-		needHelpLbl.setText(GL1405);
-		needHelpLbl.getElement().setAttribute("style", "float: left;margin-left: 27%;");
-		supportCenterAnr.setText(GL1406);
-		supportCenterAnr.getElement().setAttribute("style", "float: left;padding-left: 5px;");
-		supportCenterAnr.setHref("http://support.goorulearning.org/hc/en-us");
+
+		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
+
+			@Override
+			public void setButtonVisibility() {
+				setVisibility();
+			}
+		};
+		AppClientFactory.getEventBus().addHandler(
+				SetButtonEvent.TYPE, setButtonVisibility);
+		
+		
+		setText();
 	}
 
-	@UiHandler("newCollectionUIHandler")
+	/**
+	 * @function setText 
+	 * 
+	 * @created_date : May 22, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	private void setText() {
+		lblStartCreateingCollection.setText(GL1813);
+		lblCollectionDesc.setText(GL1814);
+		btnCreateCollection.setText(GL1815);
+		lblViewWalkthrough.setText(GL1816);
+		lblUpload.setText(GL1817);
+		lblCustomizeCollections.setText(GL1818);
+		lblCollaborate.setText(GL1819);
+		lblFurther.setText(GL1820);
+		lblAssess.setText(GL1821);
+		lblAddQuestion.setText(GL1822);
+		lblGuideWith.setText(GL1823);
+		lblGuideNarration.setText(GL1824);
+		lblCustomizeResource.setText(GL1825);
+		lblEditStart.setText(GL1826);
+		
+		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblFour.setText(GL_GRR_NUMERIC_FOUR);
+		lblFive.setText(GL_GRR_NUMERIC_FIVE);
+		
+		htmlWalkSampleCollection.setHTML(GL1830);
+		
+		setVisibility();
+	}
+
+	private void setVisibility(){
+		if (AppClientFactory.isAnonymous()){
+			btnCreateCollection.setVisible(false);
+		}else{
+			btnCreateCollection.setVisible(true);
+		}
+	}
+	
+	@UiHandler("btnCreateCollection")
 	public void OnClickNewCollection(ClickEvent event) {
-		AppClientFactory.getPlaceManager()
-		.revealPlace(PlaceTokens.COLLECTION);
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
 	}
-
 }

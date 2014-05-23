@@ -275,9 +275,7 @@
 .noCollectionMessage {
 	min-height: 700px;
 	float: left;
-	margin: 0 auto;
-	/* padding-left: 100px; */
-	padding-left: 67px;
+	margin: 0px auto;
 }
 
 /*AddShelfResource*/
