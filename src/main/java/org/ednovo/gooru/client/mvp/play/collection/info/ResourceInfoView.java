@@ -139,6 +139,14 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     private String gooruResourceOId;
     
     boolean isEducationalInfo=false;
+    
+    boolean isAccessibilityInfo=false;
+    
+    boolean isResourceInfo=false;
+    
+    boolean isGeneralInfo=false;
+    
+    boolean isTimeDuration =false;
    
 	private static ResourceInfoViewUiBinder uiBinder = GWT.create(ResourceInfoViewUiBinder.class);
 
@@ -171,7 +179,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	@Override
 	public void setResourceMedaDataInfo(CollectionItemDo collectionItemDo) {
+		
 		isEducationalInfo=false;
+		isAccessibilityInfo=false;
+		isResourceInfo=false;
+		isGeneralInfo=false;
+		isTimeDuration =false;
+		
 		collectionItemDoGlobal = collectionItemDo;
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
@@ -256,6 +270,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel()!=null){
 					setSchoolLevelDetails(collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel());
+				}
+				if(collectionItemDo.getResource().getCustomFieldValues().getCfDuration()!=null){
+					setTimeDurationDetails(collectionItemDo.getResource().getCustomFieldValues().getCfDuration());
 				}
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel()!=null){
 					List<String> readingLeveldetails = new ArrayList<String>();
@@ -362,6 +379,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 			dKnowledgePanel.setVisible(false);
 		}
+	
 		setmobilefriendlynessdetails(collectionItemDo.getResource().getMediaType());
 		
 		resourceTypeImage.getElement().setAttribute("style", "position: relative;margin-top:10px;margin-bottom: 10px;");
@@ -431,35 +449,26 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				&& collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()==null
 				&& collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()==null
 				&& collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()==null){
-			accesibilityLbl.setVisible(false);
-			accessibilityPanel.setVisible(false);
 		}else{
 			if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode().equalsIgnoreCase("null")){
-				accesibilityLbl.setText(GL1703);
-				accesibilityLbl.setVisible(true);
-				accessibilityPanel.setVisible(true);
+				isAccessibilityInfo=true;
 			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature().equalsIgnoreCase("null")){
-				accesibilityLbl.setText(GL1703);
-				accesibilityLbl.setVisible(true);
-				accessibilityPanel.setVisible(true);
+				isAccessibilityInfo=true;
 			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfControlFlexibility().equalsIgnoreCase("null")){
-				accesibilityLbl.setText(GL1703);
-				accesibilityLbl.setVisible(true);
-				accessibilityPanel.setVisible(true);
+				isAccessibilityInfo=true;
 			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAccessHazard().equalsIgnoreCase("null")){
-				accesibilityLbl.setText(GL1703);
-				accesibilityLbl.setVisible(true);
-				accessibilityPanel.setVisible(true);
-			}else{
-				accesibilityLbl.setVisible(false);
-				accessibilityPanel.setVisible(false);
+				isAccessibilityInfo=true;
 			}
 		}
 	}
-		
-		
-		
-		
+		if(isAccessibilityInfo){
+			accesibilityLbl.setText(GL1703);
+			accesibilityLbl.setVisible(true);
+			accessibilityPanel.setVisible(true);
+		}else{
+			accesibilityLbl.setVisible(false);
+			accessibilityPanel.setVisible(false);
+		}	
 		
 		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
 		if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode() == null
@@ -469,31 +478,34 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		&& collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder() ==null
 		&& collectionItemDo.getResource().getCustomFieldValues().getCfKeywords() ==null
 		&& collectionItemDo.getResource().getCustomFieldValues().getCfAds() ==null){
-			resourceInfoLbl.setVisible(false);
+			
 		}else{
 			if(collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfCountryCode().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
+				isResourceInfo=true;
 			}else if(collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfLanguageCode().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
+				isResourceInfo=true;
 			}
 			else if(collectionItemDo.getResource().getCustomFieldValues().getCfDataType()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfDataType().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfDataType().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
+				isResourceInfo=true;
 			}
 			else if(collectionItemDo.getResource().getCustomFieldValues().getCfAuthor()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAuthor().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAuthor().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
+				isResourceInfo=true;
 			}
 			else if(collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfCopyrightHolder().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
+				isResourceInfo=true;
 			}
 			else if(collectionItemDo.getResource().getCustomFieldValues().getCfKeywords()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfKeywords().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfKeywords().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
+				isResourceInfo=true;
 			}
 			else if(collectionItemDo.getResource().getCustomFieldValues().getCfAds()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAds().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAds().equalsIgnoreCase("null")){
-				resourceInfoLbl.setVisible(true);
-			}else{
-				resourceInfoLbl.setVisible(false);
+				isResourceInfo=true;
 			}
 		}
+		}
+		if(isResourceInfo){
+			resourceInfoLbl.setVisible(true);
+		}else{
+			resourceInfoLbl.setVisible(false);
 		}
 		
 		if(collectionItemDo.getResource().getGrade()==null
@@ -503,13 +515,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				&& collectionItemDo.getStandards()==null 
 				&& collectionItemDo.getResource().getResourceSource()==null
 				&& collectionItemDo.getResource().getCustomFieldValues()==null){
-			generalLbl.setVisible(false);
-		}else{
-			  if(collectionItemDo.getResource().getGrade()!=null && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("")&&!collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")){
-				  			generalLbl.setVisible(true);
+		     }else{
+						if(collectionItemDo.getResource().getGrade()!=null && !collectionItemDo.getResource().getGrade().equalsIgnoreCase("")&&!collectionItemDo.getResource().getGrade().equalsIgnoreCase("null")){
+							isGeneralInfo=true;
 				  		}
 				  		else if(collectionItemDo.getResource().getUrl()!=null&&!collectionItemDo.getResource().getUrl().equalsIgnoreCase("")&&!collectionItemDo.getResource().getUrl().equalsIgnoreCase("null")){
-				  			generalLbl.setVisible(true);
+				  			isGeneralInfo=true;
 				  		}else if(collectionItemDo.getResource().getTaxonomySet()!=null && collectionItemDo.getResource().getTaxonomySet().size()>0){
 				  			List<String> coursesList=new ArrayList<String>();
 				  			Set<CodeDo>	taxonomoyList = collectionItemDo.getResource().getTaxonomySet();
@@ -523,7 +534,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				  				}
 				  			}
 				  			if(coursesList.size()>0){
-				  				generalLbl.setVisible(true);	
+				  				isGeneralInfo=true;
 				  			}
 				  		}else if(collectionItemDo.getStandards()!=null && collectionItemDo.getStandards().size()>0){
 				  			List<Map<String,String>> standardsList1	=collectionItemDo.getStandards();
@@ -536,24 +547,27 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				  				count++;
 				  			}
 				  			if(standardsList1.size()>0){
-				  				generalLbl.setVisible(true);	
+				  				isGeneralInfo=true;	
 				  			}
 				 			}else if(collectionItemDo.getResource().getLicense()!=null && collectionItemDo.getResource().getLicense().getIcon()!=null &&!collectionItemDo.getResource().getLicense().getIcon().trim().equals("") ){
-				  			 generalLbl.setVisible(true);	
+				 				isGeneralInfo=true;	
 				 			}
 				  		else if(collectionItemDo.getResource().getResourceSource()!=null && collectionItemDo.getResource().getResourceSource().getAttribution()!=null && !collectionItemDo.getResource().getResourceSource().getAttribution().equalsIgnoreCase("") && !collectionItemDo.getResource().getResourceSource().getAttribution().equalsIgnoreCase("null")){
-				  			generalLbl.setVisible(true);	
+				  				isGeneralInfo=true;
 				 			}
-				  		else if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfHost().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfHost().equalsIgnoreCase("null")){
-				  			generalLbl.setVisible(true);	
+				  		else if(collectionItemDo.getResource().getCustomFieldValues()!=null && collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfHost().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfHost().equalsIgnoreCase("null")){
+				  			isGeneralInfo=true;	
 				 			}
-				  		else if(collectionItemDo.getResource().getCustomFieldValues().getCfOER()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfOER().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfOER().equalsIgnoreCase("null")){
-				  			generalLbl.setVisible(true);
-				  		}
-				  		else{
-				  			generalLbl.setVisible(false);
+				  		else if(collectionItemDo.getResource().getCustomFieldValues()!=null && collectionItemDo.getResource().getCustomFieldValues().getCfOER()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfOER().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfOER().equalsIgnoreCase("null")){
+				  			isGeneralInfo=true;
 				  		}
 		}
+		if(isGeneralInfo){
+			generalLbl.setVisible(true);
+		}else{
+			generalLbl.setVisible(false);
+		}
+		
 		
 		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()==null
@@ -564,30 +578,23 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 					&& collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel()==null ){
 				}else{
 					if(collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment().equalsIgnoreCase("null")){
-						educationallLbl.setVisible(true);
 						isEducationalInfo=true;
 					}
 					else if(collectionItemDo.getResource().getCustomFieldValues().getCfEndUser()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfEndUser().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfEndUser().equalsIgnoreCase("null")){
-						educationallLbl.setVisible(true);
 						isEducationalInfo=true;
 					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode().equalsIgnoreCase("null")){
-						educationallLbl.setVisible(true);
 						isEducationalInfo=true;
 					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfAge()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfAge().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfAge().equalsIgnoreCase("null")){
-						educationallLbl.setVisible(true);
 						isEducationalInfo=true;
 					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfReadingLevel().equalsIgnoreCase("null")){
-						educationallLbl.setVisible(true);
 						isEducationalInfo=true;
 					}else if(collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel()!=null && !collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel().equalsIgnoreCase("")&&!collectionItemDo.getResource().getCustomFieldValues().getCfSchoolLevel().equalsIgnoreCase("null")){
-						educationallLbl.setVisible(true);
 						isEducationalInfo=true;
 					}
 				}
 			}
 			if (collectionItemDo.getResource().getResourceFormat().getValue().equalsIgnoreCase("question")) {
 				if (depthofknowledgedetails != null	&& depthofknowledgedetails.size() > 0) {
-					educationallLbl.setVisible(true);
 					dKnowledgePanel.setVisible(true);
 					isEducationalInfo = true;
 				} else {
@@ -596,7 +603,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				momentsoflearningPanel.setVisible(false);
 			} else {
 				if (momentoflearningdetails != null	&& momentoflearningdetails.size() > 0) {
-					educationallLbl.setVisible(true);
 					momentsoflearningPanel.setVisible(true);
 					isEducationalInfo = true;
 				}else{
@@ -606,7 +612,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 			
 			if(eduUsedetails!=null && eduUsedetails.size()>0){ 
-					educationallLbl.setVisible(true);
 					eduUsePanel.setVisible(true);
 					isEducationalInfo=true;
 			}else{
@@ -617,15 +622,26 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}else{
 				educationallLbl.setVisible(false);
 			}
-		
-		
+			if(isTimeDuration){
+				timeRequiredLabel.setVisible(true);
+				timeRequiredvalue.setVisible(true);
+			}else{
+				timeRequiredLabel.setVisible(false);
+				timeRequiredvalue.setVisible(false);
+			}
+	}
 	
-		timeRequiredvalue.setVisible(false);
-		timeRequiredLabel.setVisible(false);
+	private void setTimeDurationDetails(String cfDuration) {
+		// TODO Auto-generated method stub
+		String[] spiltTimeBySpace	= cfDuration.split(" ");
+		String[] 	spiltTimeAfterColon = spiltTimeBySpace[1].split(":");
+		if(spiltTimeAfterColon.length>2){
+		timeRequiredvalue.setText(spiltTimeAfterColon[1]+"min"+" "+spiltTimeAfterColon[2].substring(0, 2)+"sec");
+		isTimeDuration =true;
+		}
 	}
 	
 	private void setaddsDetails(List<String> addsdetails) {
-
 		// TODO Auto-generated method stub
 		addsInfo.clear();
 		if(addsdetails == null || addsdetails.size() == 0 || addsdetails.contains(null) || addsdetails.contains("") ){
@@ -903,10 +919,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 				mbFriendlyText.setText("NO");
+				isAccessibilityInfo=true;
 			}else{
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 				mbFriendlyText.setText("YES");
+				isAccessibilityInfo=true;
 			}
 		}else{
 			mobileFriendlyPanel.setVisible(false);
