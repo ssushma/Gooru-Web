@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -49,10 +49,10 @@ public class LeftMenuItemView extends Composite {
 			UiBinder<Widget, LeftMenuItemView> {
 	}
 
-	public LeftMenuItemView(PartnerFolderDo folderDo) {
+	public LeftMenuItemView(ProfileLibraryDo profileLibraryDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		unitMenuItem.setText(folderDo.getTitle());
-		setUnitId(folderDo.getGooruOid());
+		unitMenuItem.setText(profileLibraryDo.getTitle());
+		setUnitId(profileLibraryDo.getGooruOid());
 	}
 
 	public Label getUnitMenuItemPanel() {

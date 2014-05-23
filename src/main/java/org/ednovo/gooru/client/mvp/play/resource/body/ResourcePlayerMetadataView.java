@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
 
+import java.util.Date;
+
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -33,9 +35,6 @@ import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
-import org.ednovo.gooru.client.uc.NarrationUc;
-import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOut;
-import org.ednovo.gooru.client.uc.StarRatingsUc.OnStarMouseOver;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -57,7 +56,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
@@ -66,10 +64,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.SimpleCheckBox;
-import com.google.gwt.user.client.ui.SimpleRadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -86,7 +82,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
 	@UiField HTML resourceTitleLbl;
-	@UiField RadioButton one_star,two_star,three_star,four_star,five_star;
+	
+//	@UiField(provided = true)
+	@UiField InlineHTML one_star,two_star,three_star,four_star,five_star;
 	
 	/*@UiField SimpleRadioButton rating1;
 	@UiField SimpleRadioButton rating2;
@@ -129,22 +127,38 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final String EXCELLENT="Excellent";
 	private static final String REACTIONS_WIDGET="Contentreactions";
 	private static final String RATINGS_WIDGET="Contentratings";
+	private static final int CHILD_AGE=13;
 	private StarRatingsDo starRatingsDo;
+	
+	private static final String FILLED_BLUE = "filled filledBlue";
 	ThankYouResourceStarRatings thankYouResourceStarRatings;
-	private boolean isRated=false;
+	RatingsConfirmationPopup ratingsConfirmationPopup;
+	private boolean isRated=false,isFromThanksPopup=false;
+	String assocGooruOId;
+	Integer score,count;
+	double average;
+	
+	int currentRating=0;
 	
 	private static ResourcePlayerMetadataViewUiBinder uiBinder = GWT.create(ResourcePlayerMetadataViewUiBinder.class);
 
 	interface ResourcePlayerMetadataViewUiBinder extends UiBinder<Widget, ResourcePlayerMetadataView> {
 	}
 	
-	/*@UiFactory
-	public SimpleRadioButton createRadioButton() {
-	    return new SimpleRadioButton("");
-	}*/
+//	@UiFactory
+//	public SimpleRadioButton createRadioButton() {
+//	    return new SimpleRadioButton("");
+//	}
 
 	@Inject
 	public ResourcePlayerMetadataView(){
+		
+//		one_star = new SimpleRadioButton("");
+//		two_star = new SimpleRadioButton("");
+//		three_star = new SimpleRadioButton("");
+//		four_star = new SimpleRadioButton("");
+//		five_star = new SimpleRadioButton("");
+		
 		setWidget(uiBinder.createAndBindUi(this));
 		allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
@@ -207,10 +221,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.collectionItemDo = collectionItemDo;
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
-			
 		}else{
 			resourceTitleLbl.setHTML("");
 		}
+		getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 		if(collectionItemDo.getResource().getResourceSource()!=null){
 			String attributionName=collectionItemDo.getResource().getResourceSource().getAttribution();
 			attributionName = attributionName.trim();
@@ -268,6 +282,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}else{
 				resourceTitleLbl.setHTML("");
 			}
+			getUiHandlers().setResourceMetaData(resourceTitleLbl.getHTML());
 			if(collectionItemDo.getResource().getResourceSource()!=null){
 				if(collectionItemDo.getResource().getResourceSource().getAttribution()!=null){
 					String resourceSource=collectionItemDo.getResource().getResourceSource().getAttribution();
@@ -853,6 +868,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		if(thankYouResourceStarRatings!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
 			}
 		}
 		setRatings(result,showThankYouToolTip);
@@ -938,12 +956,41 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void removeRatingContainer(boolean flag){
 		if(flag){
-			ratingsContainer.removeFromParent();
+//			ratingsContainer.removeFromParent();
+			ratingsContainer.setVisible(false);
 		}else{
+			if(isChildAccount()){
+//				ratingsContainer.removeFromParent();
+				ratingsContainer.setVisible(false);
+			}else{
+				ratingsContainer.setVisible(true);
+			}
 			emoticsContainer.removeFromParent();
 		}
 	}
 	
+	/**
+	 * Checks weather the logged in user is child or not.
+	 * @return isChild {@link Boolean} 
+	 */
+	private boolean isChildAccount() {
+		Date convertedDOB = null;
+		boolean isChild=false;
+		int loggedInUserAge = 0;
+		com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss.S");
+		if(AppClientFactory.getLoggedInUser().getDateOfBirth()!=null&&!AppClientFactory.getLoggedInUser().getDateOfBirth().equals("")){
+			convertedDOB = dateFormat.parse(AppClientFactory.getLoggedInUser().getDateOfBirth());
+			loggedInUserAge = getAge(convertedDOB);
+			if(loggedInUserAge<=CHILD_AGE){
+				isChild=true;
+			}else if(loggedInUserAge>CHILD_AGE){
+				isChild=false;
+			}
+		}
+		
+		return isChild;
+	}
+
 	/**
 	 * On click of Star 1 sets the rating on view.
 	 * @param clickEvent {@link ClickEvent}
@@ -1051,25 +1098,25 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
 		if(showThankYouToolTip){
-			thankYouResourceStarRatings = new ThankYouResourceStarRatings(result.getAssocGooruOid(),result.getScore(),result.getFreeText()); 
-			thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
-			thankYouResourceStarRatings.show();
-			thankYouResourceStarRatings.setAutoHideEnabled(true);
+			getAvgRatingAndCount(result.getAssocGooruOid(),result.getScore(),result.getFreeText());
 		}
 		setUserRatings(result);
 	}
 	
 	
+	private void getAvgRatingAndCount(String assocGooruOid, Integer score, String review) {
+		getUiHandlers().getAvgRatingAndCount(assocGooruOid,score,review);
+	}
+
 	/**
 	 * default rating will get set
 	 */
 	public void getDefaultRatings(){
-		one_star.setValue(false);
-		two_star.setValue(false);
-		three_star.setValue(false);
-		four_star.setValue(false);
-		five_star.setValue(false);
+//		one_star.setValue(false);
+//		two_star.setValue(false);
+//		three_star.setValue(false);
+//		four_star.setValue(false);
+//		five_star.setValue(false);
 	}
 	
 	
@@ -1117,6 +1164,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void setUserRatings(StarRatingsDo result){
 		if(result!=null){
+			currentRating = result.getScore();
 			if(result.getScore()==1){
 				starValue.setVisible(true);
 				starValue.setText(POOR);
@@ -1149,74 +1197,102 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	
+	public void clearAllStars(){
+		one_star.getElement().removeClassName(FILLED_BLUE);
+		two_star.getElement().removeClassName(FILLED_BLUE);
+		three_star.getElement().removeClassName(FILLED_BLUE);
+		four_star.getElement().removeClassName(FILLED_BLUE);
+		five_star.getElement().removeClassName(FILLED_BLUE);
+	}
+	
+	
 	/**
 	 * Sets the stars on view based on the scores.
 	 * @param starRating {@link Integer}
 	 */
 	private void setStarRatingValue(int starRating) {
+		
+		clearAllStars();
 		if(starRating==1){
-			one_star.setValue(true); 
-			two_star.setValue(false);
-			three_star.setValue(false);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==2){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(false);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==3){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(true);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
+			three_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==4){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(true);
-			four_star.setValue(true);
-			five_star.setValue(false);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
+			three_star.getElement().addClassName(FILLED_BLUE);
+			four_star.getElement().addClassName(FILLED_BLUE);
 		}else if(starRating==5){
-			one_star.setValue(true);
-			two_star.setValue(true);
-			three_star.setValue(true);
-			four_star.setValue(true);
-			five_star.setValue(true);
+			one_star.getElement().addClassName(FILLED_BLUE);
+			two_star.getElement().addClassName(FILLED_BLUE);
+			three_star.getElement().addClassName(FILLED_BLUE);
+			four_star.getElement().addClassName(FILLED_BLUE);
+			five_star.getElement().addClassName(FILLED_BLUE);
 		}else{
-			one_star.setValue(false);
-			two_star.setValue(false);
-			three_star.setValue(false);
-			four_star.setValue(false);
-			five_star.setValue(false);
+			clearAllStars();
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * Inner class which implements mouse over handler.
+	 *
+	 */
 	public class OnStarMouseOver implements MouseOverHandler{
 		private String starScore="";
+		/**
+		 * Class Constructor.
+		 * @param starScore {@link String}
+		 */
 		public OnStarMouseOver(String starScore) {
+			
 			this.starScore=starScore;
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
+			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(POOR);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(FAIR);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(GOOD);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
+				three_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(VERY_GOOD);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
+				three_star.getElement().addClassName(FILLED_BLUE);
+				four_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				starValue.setVisible(false);
 				mouseOverStarValue.setText(EXCELLENT);
+				
+				one_star.getElement().addClassName(FILLED_BLUE);
+				two_star.getElement().addClassName(FILLED_BLUE);
+				three_star.getElement().addClassName(FILLED_BLUE);
+				four_star.getElement().addClassName(FILLED_BLUE);
+				five_star.getElement().addClassName(FILLED_BLUE);
 			}
 		}
 		
@@ -1230,7 +1306,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			
+			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
@@ -1247,6 +1323,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
 			}
+			setStarRatingValue(currentRating);
+			
 		}
 	}
 	
@@ -1256,19 +1334,77 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		  wrapperContainerField.getElement().setAttribute("style", "margin-top:50px;");
 	}
 
+	/**
+	 * API call to update or to create review.
+	 * User review will get created or if already reviewed and edited, review will get updated.
+	 * 
+	 * @param assocGooruOid {@link String}
+	 * @param userReview {@link String}
+	 * @param score {@link Integer}
+	 * @param isUpdate {@link Boolean}
+	 */
 	@Override
 	public void postReview(String assocGooruOId, String userReview, Integer score,boolean isUpdate) {
 		if(isUpdate){
 			getUiHandlers().updateReview(starRatingsDo.getDeleteRatingGooruOid(), score,userReview);
 		}else{
+			if(ratingsConfirmationPopup!=null && ratingsConfirmationPopup.isVisible()){
+				ratingsConfirmationPopup.hide();
+			}
+			isFromThanksPopup=true;
 			getUiHandlers().createStarRatings(assocGooruOId,score,false,userReview);
 		}
 		
 	}
 
+	/**
+	 * Thank you too-tip will get closed, if it i opened.
+	 */
 	@Override
 	public void hideThankYouPopUp() {
 		thankYouResourceStarRatings.hide();
+		displaySuccessPopup();
+	}
+
+	/**
+	 * Invokes Thankyou tool tip after user rated a resource and sets the metadata.
+	 * @param assocGooruOid {@link String}
+	 * @param score {@link Integer}
+	 * @param review {@link String}
+	 * @param average {@link Integer}
+	 * @param count {@link Integer}
+	 */
+	@Override
+	public void setRatingMetaData(String assocGooruOid, Integer score,String review, double average, Integer count) {
+		this.assocGooruOId=assocGooruOid;
+		this.score=score;
+		this.count=count;
+		this.average=average;
+		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count); 
+		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		thankYouResourceStarRatings.show();
+		thankYouResourceStarRatings.setAutoHideEnabled(true);
+	}
+	
+	
+	private int getAge(Date birthDate) {
+		long ageInMillis = new Date().getTime() - birthDate.getTime();
+		Date age = new Date(ageInMillis);
+		return age.getYear() - 70;
+	}
+
+	@Override
+	public void displaySuccessPopup() {
+		if(ratingsConfirmationPopup!=null && ratingsConfirmationPopup.isVisible()){
+			ratingsConfirmationPopup.hide();
+		}
+		isFromThanksPopup=false;
+		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average);
+		ratingsConfirmationPopup.show();
+		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
+		ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+		ratingsConfirmationPopup.setAutoHideEnabled(true);
 	}
 	
 }

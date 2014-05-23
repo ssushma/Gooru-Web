@@ -28,12 +28,12 @@ package org.ednovo.gooru.server.service;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.service.LibraryService;
 import org.ednovo.gooru.server.annotation.ServiceURL;
+import org.ednovo.gooru.server.deserializer.ProfileLibraryDeserializer;
 import org.ednovo.gooru.server.request.JsonResponseRepresentation;
 import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
@@ -605,7 +605,8 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 
 	//Partner Library APIs
 	@Override
-	public PartnerFolderListDo getLibraryPartnerWorkspace(String gooruUid, int limit, String sharingType, String collectionType) throws GwtException {
+	public PartnerFolderListDo getLibraryPartnerWorkspace(String gooruUid, int limit, String sharingType, String collectionType, String placeToken) throws GwtException {
+		PartnerFolderListDo partnerFolderListDo = new PartnerFolderListDo();
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		String sessionToken = getLoggedInSessionToken();
@@ -617,10 +618,14 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"");
-		System.out.println(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		return deserializeFolderList(jsonRep);
+		if(placeToken.equals(PlaceTokens.PROFILE_PAGE)) {
+			//partnerFolderListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
+		} else {
+			partnerFolderListDo = deserializeFolderList(jsonRep);
+		}
+		return partnerFolderListDo;
 	}
 	
 	@Override

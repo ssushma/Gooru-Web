@@ -61,6 +61,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		if (!isLoggedInUserAnonymous()) {
 			user = getUserInfo(userUid);
 			user.setToken(getLoggedInSessionToken());
+			user.setDateOfBirth(getLoggedInDateOfBirth()); 
 //			user.setEmailId(getLoggedInEmailId());
 		}
 		if (user == null) {
@@ -95,7 +96,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				
 				setUserFilterProperties(user);
 				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId());
+				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
 				return user;
 			}
 		} catch (Exception e) {
@@ -155,7 +156,7 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 				
 				setUserFilterProperties(user);
 				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId());
+				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
 				AppClientFactory.setLoggedInUser(user);
 				return user;
 			}

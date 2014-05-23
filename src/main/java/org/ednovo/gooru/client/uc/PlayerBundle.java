@@ -393,6 +393,18 @@ public interface PlayerBundle extends ClientBundle {
 		
 		@ClassName("studyPlayer")
 		public String studyPlayer();
+		
+		public String btnGreen();
+		public String resourceTagsGlassPanel();
+		
+		public String filled();
+		public String star();
+		public String ratingUserName();
+		public String htmlUserReviewContainer();
+		public String editRatingBtn();
+		public String textAreaRating();
+		
+		
 	}
 	@NotStrict
 	@Source("playerstyle.css")

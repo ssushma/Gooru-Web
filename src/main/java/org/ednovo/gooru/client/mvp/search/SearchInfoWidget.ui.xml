@@ -10,10 +10,14 @@
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
 		<g:HTMLPanel styleName="{playerStyle.resource-info-metadata-wrapper}">
-
+            <g:HTMLPanel styleName="{playerStyle.loadingImageMainDivShare}"
+				  ui:field="loadingImagePanel">
+				  <g:Label styleName="{playerStyle.loadingImageForShare}" ui:field="lblloadingImage"/>
+		    </g:HTMLPanel>
 			<g:HTMLPanel styleName="{playerStyle.resource-info-metadata-innerwrapper}">
 			<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />
 			<g:HTML ui:field="lblcollectionName" styleName="{playerStyle.labelTitle}"></g:HTML>
+			<g:Button styleName="green {playerStyle.btnGreen}" ui:field="addTagsBtn">Add Tags</g:Button>
 				<!-- <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />
 				<g:HTML ui:field="lblcollectionName"></g:HTML> -->
 				<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-type-image}">
@@ -45,8 +49,7 @@
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="resourceDescription" />
 				</g:HTMLPanel> -->
-
-				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
+				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="generalPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="generalLbl"></g:Label>
 				</g:HTMLPanel>
@@ -91,13 +94,22 @@
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="thumbnailurlValue" />
 				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
+					ui:field="aggregationPanel">
+					<g:Label styleName="{playerStyle.resource-info-stand-text}"
+						ui:field="lblAggregation"></g:Label>
+					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
+						ui:field="aggregationType"/>
+				</g:HTMLPanel>
+				
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
 					ui:field="publisherPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="publisherText"></g:Label>
-					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="lblPublisher" />
+					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
+						ui:field="publisherType" />
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
@@ -138,7 +150,7 @@
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="eduAllignLbl"></g:Label>
 					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="eduAllignType" />
+						ui:field="eduAllignType"/>
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
@@ -198,20 +210,20 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
-					ui:field="gooruSubjectPanel">
+					ui:field="schLevelPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
-						ui:field="gooruSubjectLbl"></g:Label>
+						ui:field="schLevelLbl"></g:Label>
 					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="gooruSubjectInfo" />
+						ui:field="schLevelInfo" />
 				</g:HTMLPanel>
 
-				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
+				<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
 					ui:field="gooruCoursePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="gooruCourseLbl"></g:Label>
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="gooruCourseInfo" />
-				</g:HTMLPanel>
+				</g:HTMLPanel> -->
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
@@ -243,7 +255,7 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
-					ui:field="DataTypePanel">
+					ui:field="dataTypePanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="dataTypeLbl"></g:Label>
 					<g:Label styleName="{playerStyle.resource-info-title}"
@@ -267,19 +279,19 @@
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
-					ui:field="contributorPanel">
-					<g:Label styleName="{playerStyle.resource-info-more-title}"
-						ui:field="contributorTitle"></g:Label>
-					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="contributorName" />
-				</g:HTMLPanel>
-
-				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
 					ui:field="keyWordsPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="keywordsTitle"></g:Label>
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="keywordsInfo" />
+				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
+					ui:field="adsPanel">
+					<g:Label styleName="{playerStyle.resource-info-more-title}"
+						ui:field="adsTitle"></g:Label>
+					<g:Label styleName="{playerStyle.resource-info-title}"
+						ui:field="adsName" />
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"

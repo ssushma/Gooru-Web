@@ -14,10 +14,12 @@
                     </g:HTMLPanel>
                     <g:Label>Tell us what you think!</g:Label>
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
-                    <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}">
+                    <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
+                    <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}" ui:field="buttonsContainer">
                         <g:Button ui:field="btnSkip" styleName="secondary">Skip</g:Button>
                         <g:Button ui:field="btnPost" styleName="primary"></g:Button>
                     </g:HTMLPanel>
+                    <g:Label ui:field="saveAndPsotLbl"></g:Label>
                 </g:HTMLPanel>
 	    
 	    

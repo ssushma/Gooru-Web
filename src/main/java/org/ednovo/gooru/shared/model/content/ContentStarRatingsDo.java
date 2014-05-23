@@ -14,6 +14,7 @@ public class ContentStarRatingsDo implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private Integer count;
 	private double average;
+	private ContentStarRatingsDistributionDo scores;
 	
 	
 	/**
@@ -40,4 +41,12 @@ public class ContentStarRatingsDo implements Serializable {
 	public void setAverage(double average) {
 		this.average = average;
 	}
+	public ContentStarRatingsDistributionDo getScores() {
+		return scores;
+	}
+	public void setScores(ContentStarRatingsDistributionDo scores) {
+		this.scores = scores;
+	}
+	
+	
 }

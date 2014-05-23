@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AutoCompleteDeSerializer extends DeSerializer {
 
-	private static final String ATTRIBUTION = "attribution";
+	private static final String ATTRIBUTION = "values";
 	private static final String SEARCH_RESULTS = "searchResults";
 	private static final String CODE = "code";
 	private static final String LABEL = "label";
@@ -102,7 +102,11 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 				JSONArray soruceJsonArray = jsonRep.getJsonArray();
 				for (int sourceCount = 0; sourceCount < soruceJsonArray.length(); sourceCount++) {
 					JSONObject source = soruceJsonArray.getJSONObject(sourceCount);
-					sources.add(source.getString(ATTRIBUTION));
+					JSONArray publisherArrayObj = new JSONArray(getJsonString(source, ATTRIBUTION));
+					for(int i=0;i<publisherArrayObj.length();i++){
+						sources.add(publisherArrayObj.getString(i).toString());
+					}
+					//sources.add(source.getString(ATTRIBUTION));
 				}
 			}
 		} catch (JSONException e) {
@@ -121,9 +125,16 @@ public class AutoCompleteDeSerializer extends DeSerializer {
 			if(jsonRep!=null){
 			if (jsonRep.getSize() > 0) {
 				JSONArray aggregatorJsonArray = jsonRep.getJsonArray();
+				
 				for (int aggregatorCount = 0; aggregatorCount < aggregatorJsonArray.length(); aggregatorCount++) {
 					JSONObject aggregatorObj = aggregatorJsonArray.getJSONObject(aggregatorCount);
-					aggregator.add(aggregatorObj.getString(AGGREGATOR));
+					//	aggregator.add(aggregatorObj.getString(AGGREGATOR));
+					
+					JSONArray aggregatorArrayObj = new JSONArray(getJsonString(aggregatorObj, AGGREGATOR));
+					for(int i=0;i<aggregatorArrayObj.length();i++){
+								aggregator.add(aggregatorArrayObj.getString(i).toString());
+									
+					}
 				}
 			}
 			}

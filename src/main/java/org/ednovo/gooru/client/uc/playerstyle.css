@@ -871,3 +871,67 @@ float: left;
 .flagButtonDisable{
 	opacity: 0.4;
 }
+
+.btnGreen{
+	float: right;
+	margin-right: 12px;
+	margin-top: 10px;
+	background-color: #4E9746;
+	padding: 5px;
+	border-radius: 4px;
+	color: white;
+}
+.resourceTagsGlassPanel{
+	z-index: 99999;
+	background-color: #000;
+	opacity: 0.3;
+}
+.rating .star, .userRating .star {
+    font-size:14px;
+    color:#4e9746;
+}
+.filled {
+    color:#4e9746;
+}
+
+/* //.rating .star:before, .userRating .star:before {content:'\2606';}
+//.rating .star.filled:before, .userRating .star.filled:before {content:'\2605';}
+ */
+.star:before {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content:'\f006';
+}
+
+.star.filled:before {
+    content: "\f005";
+}
+
+.userRating .star.filled {
+    color:#1076BB;
+}
+.ratingUserName
+{
+	margin-top: 15px;
+	font-weight: bold;
+}
+.htmlUserReviewContainer{
+background: #f0f0f0;
+padding: 8px;
+padding-top: 2px;
+margin-top: 22px;
+}
+.editRatingBtn{
+float: right;
+margin-right: 2px;
+margin-top: 4px;
+}
+.textAreaRating{
+	width:96%;
+	
+}

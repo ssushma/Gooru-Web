@@ -168,6 +168,8 @@ public interface EditClasspageCBundle extends ClientBundle{
         String monitorButton();
         
         String backArrowButton();
+        
+        String labelCenterAlign();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

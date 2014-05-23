@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.rating;
 
 
 
+import org.ednovo.gooru.client.uc.PlayerBundle;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -56,26 +58,42 @@ public class RatingWidgetView extends Composite{
 
 	public void setAvgStarRating(double averageRating) {
 		Integer roundOffAvg = (int) Math.round(averageRating);
+		star_1.getElement().removeAttribute("class");
+		star_2.getElement().removeAttribute("class");
+		star_3.getElement().removeAttribute("class");
+		star_4.getElement().removeAttribute("class");
+		star_5.getElement().removeAttribute("class");
+		star_1.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+		star_2.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+		star_3.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+		star_4.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+		star_5.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
 		if(roundOffAvg==1){
-			star_1.addStyleName("filled");
+			star_1.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 		}else if(roundOffAvg==2){
-			star_1.addStyleName("filled");
-			star_2.addStyleName("filled");
+			star_1.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_2.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 		}else if(roundOffAvg==3){
-			star_1.addStyleName("filled");
-			star_2.addStyleName("filled");
-			star_3.addStyleName("filled");
+			star_1.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_2.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_3.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 		}else if(roundOffAvg==4){
-			star_1.addStyleName("filled");
-			star_2.addStyleName("filled");
-			star_3.addStyleName("filled");
-			star_4.addStyleName("filled");
-		}else if(roundOffAvg==4){
-			star_1.addStyleName("filled");
-			star_2.addStyleName("filled");
-			star_3.addStyleName("filled");
-			star_4.addStyleName("filled");
-			star_5.addStyleName("filled");
-		}
+			star_1.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_2.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_3.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_4.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+		}else if(roundOffAvg==5){
+			star_1.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_2.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_3.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_4.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_5.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+		}/*else{
+			star_1.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+			star_2.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+			star_3.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+			star_4.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+			star_5.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
+		}*/
 	}
 }

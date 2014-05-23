@@ -44,6 +44,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDistributionDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
@@ -53,6 +54,7 @@ import org.ednovo.gooru.shared.model.player.CommentsDo;
 import org.ednovo.gooru.shared.model.player.CommentsListDo;
 import org.ednovo.gooru.shared.model.player.FeaturedContentDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -147,7 +149,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
 		url+=getStandardId(rootNodeId);
-		System.out.println("getSimpleCollectionDetils:"+url);
+		System.out.println("----->>> preview player metadata  "+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -191,7 +193,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("getresource::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -229,7 +230,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
-		System.out.println("getresource::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -478,12 +478,10 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRep =null;
 		JSONObject jsonObject= null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE,gooruUid,getLoggedInSessionToken());
-		System.out.println("getUserProfileVisibility:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
 			jsonObject = jsonRep.getJsonObject();
-			System.out.println("optionalvalue::"+jsonObject.getBoolean("optionalValue"));
 			userProfileVisibility = jsonObject.getBoolean("optionalValue");
 		}catch(Exception exception){
 			
@@ -1045,6 +1043,18 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			starRatingsDo.setAssocGooruOid(jsonObject.isNull("assocGooruOid")?"":jsonObject.getString("assocGooruOid"));
 			starRatingsDo.setDeleteRatingGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
+			if(!jsonObject.isNull("creator"))
+			{
+				CreatorDo creatorObject = new CreatorDo();
+				JSONObject jsonCreatorObject = new JSONObject();
+				jsonCreatorObject = jsonObject.getJSONObject("creator");
+				creatorObject.setUsername(jsonCreatorObject.isNull("username")?"":jsonCreatorObject.getString("username"));
+				creatorObject.setFirstName(jsonCreatorObject.isNull("firstName")?"":jsonCreatorObject.getString("firstName"));
+				creatorObject.setLastName(jsonCreatorObject.isNull("lastName")?"":jsonCreatorObject.getString("lastName"));
+				creatorObject.setGooruUId(jsonCreatorObject.isNull("gooruUId")?"":jsonCreatorObject.getString("gooruUId"));
+				starRatingsDo.setCreator(creatorObject);
+			}
+			
 			starRatingsDo.setScore(jsonObject.getInt(SCORE));
 			starRatingsDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText"));
 		} catch (Exception e) {
@@ -1080,7 +1090,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	}
 
 	/**
-	 * Gets the over all content star ratings for each resource by calling an API.
+	 * Gets the over all content star ratings and average for each resource by calling an API.
 	 * 
 	 * @param associateGooruOid {@link String}
 	 * @param gooruUid {@link String}
@@ -1093,6 +1103,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JSONObject jsonObject = null;
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CONTENT_STAR_RATINGS,gooruOid,getLoggedInSessionToken());
+			System.out.println("urlVal:::"+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url,getRestUsername(), getRestPassword());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			jsonObject= jsonRepresentation.getJsonObject();
@@ -1109,9 +1120,71 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	 */
 	private ContentStarRatingsDo deserializeContentStarRatings(JSONObject jsonObject) {
 		ContentStarRatingsDo contentStarRatingsDo = new  ContentStarRatingsDo(); 
+		ContentStarRatingsDistributionDo contentRatingDistribution = new  ContentStarRatingsDistributionDo();
 		try {
 			contentStarRatingsDo.setAverage(jsonObject.getInt(AVERAGE));
 			contentStarRatingsDo.setCount(jsonObject.getInt(COUNT));
+			for(int i=1; i<6;i++)
+			{
+				JSONObject resourceCollectionObject=jsonObject.getJSONObject("scores");
+				try
+				{
+				if(!resourceCollectionObject.isNull(String.valueOf(i)))
+				{
+				if(i==1)
+				{
+					contentRatingDistribution.setOne(resourceCollectionObject.getInt(String.valueOf(i)));
+				}
+				else if(i==2)
+				{
+					contentRatingDistribution.setTwo(resourceCollectionObject.getInt(String.valueOf(i)));
+				}
+				else if(i==3)
+				{
+					contentRatingDistribution.setThree(resourceCollectionObject.getInt(String.valueOf(i)));
+				}
+				else if(i==4)
+				{
+					contentRatingDistribution.setFour(resourceCollectionObject.getInt(String.valueOf(i)));
+				}
+				else if(i==5)
+				{
+					contentRatingDistribution.setFive(resourceCollectionObject.getInt(String.valueOf(i)));
+				}
+				}
+				else
+				{
+					if(i==1)
+					{
+						contentRatingDistribution.setOne(0);
+					}
+					else if(i==2)
+					{
+						contentRatingDistribution.setTwo(0);
+					}
+					else if(i==3)
+					{
+						contentRatingDistribution.setThree(0);
+					}
+					else if(i==4)
+					{
+						contentRatingDistribution.setFour(0);
+					}
+					else if(i==5)
+					{
+						contentRatingDistribution.setFive(0);
+					}
+				}
+				}//try end
+				catch(Exception ex)
+				{
+					
+				}
+				
+			}//for end
+			
+			contentStarRatingsDo.setScores(contentRatingDistribution);
+					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1227,8 +1300,8 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRep=null;
 		JSONObject jsonObject = null;
 		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),gooruUid);
-			System.out.println("--- url get review ratings -- "+url);
+			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken());
+			System.out.println("urlVal::"+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonObject = jsonResponseRep.getJsonRepresentation().getJsonObject();
 		} catch (Exception e) {
@@ -1250,7 +1323,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			if(jsonObject.getInt("totalHitCount")>0){
 				JSONArray jsonArray=jsonObject.getJSONArray("searchResults"); 
 				for(int i=0;i<jsonArray.length();i++){
-					JSONObject resourceRatingsJsonObject=jsonArray.getJSONObject(0); 
+					JSONObject resourceRatingsJsonObject=jsonArray.getJSONObject(i);
 					StarRatingsDo starRatingsDo =deserializeResourceStarRatings(resourceRatingsJsonObject);
 					starRatingsList.add(starRatingsDo);
 				}	

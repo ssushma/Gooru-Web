@@ -122,6 +122,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	private static final String VIEWS = " "+GL0934;
 	
 	private static final String NULL = "null";
+	private static String publisherData = "";
+	private static String aggregatorData = "";
 	
 	/**
 	 * Class constructor, assign new instance of {@link ResourceSearchResultWrapperVc}, and call resource search result setData method
@@ -210,9 +212,40 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 		
 		
-		String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
-		SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
-				SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
+		//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
+		if(resourceSearchResultDo.getAggregator()!=null){
+			for (String aggregator: resourceSearchResultDo.getAggregator()) {
+				if(resourceSearchResultDo.getAggregator().size()>1){
+					aggregatorData = aggregatorData+aggregator+",";
+				}
+				else
+				{
+					aggregatorData = aggregator;
+				}
+			}
+			if(aggregatorData.endsWith(",")){
+				aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
+			}
+			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
+		}
+		
+		if(resourceSearchResultDo.getPublisher()!=null){
+			for (String publisher: resourceSearchResultDo.getPublisher()) {
+				if(resourceSearchResultDo.getPublisher().size()>1){
+					publisherData = publisherData+publisher+",";
+				}else
+				{
+					publisherData = publisher;
+				}
+			
+			}
+			if(publisherData.endsWith(",")){
+				publisherData=publisherData.substring(0, publisherData.length()-1);
+			}
+			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+		}
+		
+		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
         SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));

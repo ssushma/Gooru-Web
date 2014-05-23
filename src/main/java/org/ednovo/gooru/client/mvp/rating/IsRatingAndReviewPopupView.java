@@ -24,9 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.rating;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+
 import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsRatingAndReviewPopupView extends PopupView, IsViewWithHandlers<RatingAndReviewPopupUiHandlers>{
+
+	void displayPopUp(String resourceTitle, String gooruOId);
+
+	void setGraphAndAvgContentRating(ContentStarRatingsDo result);
+
+	void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result);  
 	
 }

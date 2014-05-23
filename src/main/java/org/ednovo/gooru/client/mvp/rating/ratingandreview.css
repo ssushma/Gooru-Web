@@ -15,10 +15,12 @@
 .rating .star, .userRating .star {
     font-size:14px;
     color:#999;
+    cursor: pointer;
 }
 
 .rating .star.filled {
     color:#4e9746;
+    cursor: pointer;
 }
 
 /* //.rating .star:before, .userRating .star:before {content:'\2606';}
@@ -33,14 +35,17 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     content:'\f006';
+    cursor: pointer;
 }
 
 .star.filled:before {
     content: "\f005";
+    cursor: pointer;
 }
 
 .userRating .star.filled {
     color:#1076BB;
+    cursor: pointer;
 }
 
 /*//////////////////////////////////////////////////// popups ////////////////*/
@@ -139,30 +144,29 @@ h3 {
 
 .barGraph .bar { 
     display:inline-block;
-    width:100px; /* this is the max width for the bars */
+    width:0px; /* this is the max width for the bars */
 }
 
 .bar {
     height:10px;
     background-color: #8CC63E;
-    //float:left;
     display:inline-block;
     vertical-align:middle;
 }
 
-.barGraph .bar:nth-child(7) {
+.data-two {
     background-color: #57B53B;
 }
 
-.barGraph .bar:nth-child(11) {
+.data-three {
     background-color: #4E9746;
 }
 
-.barGraph .bar:nth-child(15) {
+.data-four {
     background-color: #45843E;
 }
 
-.barGraph .bar:nth-child(19) {
+.data-five {
     background-color: #0F7A42;
 }
 
@@ -178,7 +182,7 @@ h3 {
     background:#f0f0f0;
     padding:10px 15px;
     margin: 15px 0px;
-    line-height:29px;
+    height:33px;
 }
 
 .userRating.reviewContainer {
@@ -192,21 +196,16 @@ h3 {
     padding:15px;
 }
 
-.userRating button {
-    float:right;
+.userRatingPreviewBtn {
+	float: right;
+	margin-right: 11px;
+	margin-top: -34px;
+	width: 168px;
 }
 
-.reviewContainer button {
-    float:none;
-    display:block;
-    visibility:hidden;
-    opacity:0;
-    -webkit-transition: visibility 0.2s linear, opacity 0.2s linear;
-    -moz-transition: visibility 0.2s linear, opacity 0.2s linear;
-    -o-transition: visibility 0.2s linear, opacity 0.2s linear;
-}
 
-.reviewContainer:hover button {
+
+.reviewContainer:hover .editReview {
     visibility:visible;
     opacity:1;
 }
@@ -237,8 +236,8 @@ h3 {
 }
 
 .reviewContainer {
-    margin-bottom:25px;
     position:relative;
+    padding: 15px;
 }
 
 .reviewContainer .username,
@@ -528,4 +527,29 @@ left: -9px;
 
 .ratingCountLabel{
 	cursor: pointer;
+}
+
+.userNameLbl {
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.creatorReviewPanel {
+	background: #f0f0f0;
+	margin-top: 15px;
+}
+
+.rateMsg {
+	float: left;
+	margin-top: 10px;
+}
+
+.floatRight {
+	float: right;
+}
+.textAreaReviewEdit
+{
+	width:96%;
+	resize: none;
 }

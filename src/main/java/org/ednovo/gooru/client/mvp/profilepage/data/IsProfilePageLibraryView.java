@@ -30,9 +30,8 @@ package org.ednovo.gooru.client.mvp.profilepage.data;
 import java.util.ArrayList;
 
 import org.ednovo.gooru.client.child.IsChildView;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
 /**
  * @author SearchTeam
@@ -50,12 +49,16 @@ public interface IsProfilePageLibraryView extends IsChildView<ProfilePageLibrary
 	 * Set Partners Unit Data {@link setUnitList}
 	 * @param folderList
 	 */
-	public void setUnitList(PartnerFolderListDo result);
+	public void setUnitList(ProfileLibraryListDo result);
 
-	public void setTopicListData(ArrayList<PartnerFolderDo> searchResult, ConceptDo conceptDo, String folderId);
+	public void setTopicListData(ArrayList<ProfileLibraryDo> searchResult, String folderId);
 	
+	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId);
+
 	public void loadingPanel(boolean isVisible);
 	
 	public void clearPanels();
+	
+	public void setEmptyContainer(boolean isEmpty);
 
 }

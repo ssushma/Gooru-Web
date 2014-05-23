@@ -123,6 +123,10 @@ public class ResourceSearchResultDo implements Serializable {
 	private int questionCount;
 	
 	private SearchRatingsDo searchRatingsDo;
+	
+	private List<String> publisher;
+	
+	private List<String> aggregator;
 
 	
 	/** 
@@ -480,6 +484,24 @@ public class ResourceSearchResultDo implements Serializable {
 	public void setSearchRatingsDo(SearchRatingsDo searchRatingsDo) {
 		this.searchRatingsDo = searchRatingsDo;
 	}
+
+	public List<String> getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(List<String> publisher) {
+		this.publisher = publisher;
+	}
+
+	public List<String> getAggregator() {
+		return aggregator;
+	}
+
+	public void setAggregator(List<String> aggregator) {
+		this.aggregator = aggregator;
+	}
+
+	
 
 	
 	

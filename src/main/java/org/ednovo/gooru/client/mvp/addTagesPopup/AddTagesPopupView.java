@@ -11,6 +11,7 @@ import java.util.Set;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
@@ -35,11 +36,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -47,7 +48,7 @@ import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
 
-public class AddTagesPopupView extends PopupPanel implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
+public abstract class AddTagesPopupView extends PopupPanel implements SelectionHandler<SuggestOracle.Suggestion>,MessageProperties{
 
 	public PopupPanel appPopUp;
 	
@@ -65,7 +66,7 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	
 	@UiField Label headerEducationalUse, handout, homework, game, presentation, refMaterial, quiz, currPlan, lessonPlan, unitPlan, projectPlan, reading, textbook, article, book, activity;
 	
-	@UiField Button cancelBtn,addTagsBtn;
+	@UiField Button cancelBtn,addTagsBtn,mobileYes,mobileNo;
 	
 	@UiField HTMLPanel htmlMediaFeatureListContainer;
 	
@@ -77,7 +78,9 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	
 	@UiField Label accessHazard,flashing,flashingHazard,motionSimulation,motionSimulationHazard,sound,soundHazard;
 	
+	@UiField InlineLabel addTagesTitle,popupContentText,moblieFriendly;
 	
+	List<String> tagListGlobal = new ArrayList<String>();
 	
 	@UiField(provided = true)
 	AppSuggestBox standardSgstBox;
@@ -94,89 +97,99 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	private static final String USER_META_ACTIVE_FLAG = "0";
-	String ads="",accessHazardString="";
-	
+
+	boolean isCancelclicked=false;
 	String mediaFeatureStr = GL1767;
 	String resourceId=null;
-/*	
-	@UiField(provided = true)
-	SlideBarView slideBar;*/
-	
-/*	@UiField HTMLEventPanel barSlider;
-	
-	@UiField HTMLPanel moveCircle;*/
+
 
 	public AddTagesPopupView(String resourceId) {
 		super(false);
-/*		slideBar=new SlideBarView(1,12);
-		slideBar.setStepSize(1.0);
-		slideBar.setCurrentValue(1);
-		slideBar.setNumTicks(12);
-		slideBar.setNumLabels(12);*/
+
 		initializeAutoSuggestedBox();
 		this.res = AddTagesCBundle.INSTANCE;
 		res.css().ensureInjected();
 		add(uiBinder.createAndBindUi(this));
 		this.resourceId=resourceId;
 		this.setGlassEnabled(true);
+		//Window.enableScrolling(false);
+		this.getElement().setAttribute("style", "z-index:99999;");
+		this.getGlassElement().setAttribute("style", "z-index:99999; position:absolute; left:0px; top:0px;");
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
-		Window.enableScrolling(false);
+		
+		addTagesTitle.setText(GL1795);
+		popupContentText.setText(GL1812);
+		moblieFriendly.setText(GL1811);
+		headerEducationalUse.setText(GL1664);
+		activity.setText(GL1665);
+		handout.setText(GL0907);
+		homework.setText(GL1666);
+		game.setText(GL1667);
+		presentation.setText(GL1668);
+		refMaterial.setText(GL1669);
+		quiz.setText(GL1670);
+		currPlan.setText(GL1671);
+		lessonPlan.setText(GL1672);
+		unitPlan.setText(GL1673);
+		projectPlan.setText(GL1674);
+		reading.setText(GL1675);
+		textbook.setText(GL0909);
+		article.setText(GL1676);
+		book.setText(GL1677);
+		lexileHeader.setText(GL1798);
+		kindergarden.setText(GL1799);
+		level1.setText(GL_GRR_NUMERIC_ONE);
+		level2.setText(GL_GRR_NUMERIC_TWO);
+		level3.setText(GL_GRR_NUMERIC_THREE);
+		level4.setText(GL_GRR_NUMERIC_FOUR);
+		level5.setText(GL_GRR_NUMERIC_FIVE);
+		level6.setText(GL_GRR_NUMERIC_SIX);
+		level7.setText(GL_GRR_NUMERIC_SEVEN);
+		level8.setText(GL_GRR_NUMERIC_EIGHT);
+		level9.setText(GL_GRR_NUMERIC_NINE);
+		level10.setText(GL_GRR_NUMERIC_TEN);
+		level11.setText(GL_GRR_NUMERIC_ELEVEN);
+		level12.setText(GL_GRR_NUMERIC_TWELVE);
+		AdsHeader.setText(GL1800);
+		noAds.setText(GL1801);
+		modAds.setText(GL1802);
+		aggreAds.setText(GL1803);
+		accessHazard.setText(GL1804);
+		flashing.setText(GL1805);
+		flashingHazard.setText(GL1806);
+		motionSimulation.setText(GL1807);
+		motionSimulationHazard.setText(GL1808);
+		sound.setText(GL1809);
+		soundHazard.setText(GL1810);
+		cancelBtn.setText(GL0142);
+		addTagsBtn.setText(GL1795);
+		mobileYes.setText(GL_GRR_YES);
+		mobileNo.setText(GL1735);
+		
 		standardsDefaultText.setText(GL1682);
-		ads=noAds.getText();
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
-		
 		spanelMediaFeaturePanel.setVisible(false);
-		
 		mediaLabel.setText("Media Feature");
-		
-		
 		lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
-		
 		lblMediaFeatureArrow.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				OpenMediaFeatureDropdown();
 			}
 		});
-		
 		lblMediaPlaceHolder.addClickHandler(new ClickHandler() {
-			
 			@Override
 			public void onClick(ClickEvent event) {
 				OpenMediaFeatureDropdown();
 			}
 		});
-		
 		getTagsServiceRequest(resourceId);
-		
-/*		barSlider.addClickHandler(new ClickHandler() 
-		{
-			
-			@Override
-			public void onClick(ClickEvent event) 
-			{
-		
-			     Object soruce = event.getSource();			     
-			     int leftPos = event.getNativeEvent().getClientX();
-		            if (soruce instanceof HTMLPanel) {  //check that the source is really a button
-		                int sliderBarLeftPos = (leftPos- ((HTMLPanel) soruce).getAbsoluteLeft());  //cast the source to a button
-		                moveCircle.getElement().setAttribute("style", "left:"+(sliderBarLeftPos-5)+Unit.PX+";");
-		            } 
-		            else 
-		            {
-		               // RootPanel.get().add(new Label("Not a Button, can't be..."));
-		            }
-				
-			}
-		});*/
-/*		slideBar.setStyleName(res.css().gwtSliderBarshell());*/
+
 		
 		List<String> mediaFeatureList = Arrays.asList(mediaFeatureStr.split(","));
-		
 		for(int n=0; n<mediaFeatureList.size(); n++)
 		{
-
 				String mediaTitleVal = mediaFeatureList.get(n);
 				
 				final Label titleLabel = new Label(mediaTitleVal);
@@ -184,7 +197,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				titleLabel.getElement().setAttribute("id", mediaTitleVal);
 				//Set Click event for title
 				titleLabel.addClickHandler(new ClickHandler() {
-					
 					@Override
 					public void onClick(ClickEvent event) {		
 						String optionSelected = titleLabel.getElement().getId();
@@ -333,7 +345,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
-				standardsDo.add(standard);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
@@ -359,11 +370,9 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
-				for(final String codeObj:standardsDo){
-					if(codeObj==standardCode){
-						String standardDelete="[\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"]";
-						deleteTagsServiceRequest(standardDelete);
-						standardsDo.remove(codeObj);
+				for(int i=0;i<standardsDo.size();i++){
+					if(standardsDo.get(i).toString().equalsIgnoreCase(standardCode)){
+						standardsDo.remove(standardsDo.get(i).toString());
 					}
 				}
 				this.getParent().removeFromParent();
@@ -383,11 +392,9 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	}
 	@UiHandler("kindergarden")
 	public void onKindergardenClick(ClickEvent click){
-		System.out.println("stylename::"+kindergarden.getStyleName().toString().contains("selected"));
 		if(kindergarden.getStyleName().toString().contains("selected"))
 		{
 			kindergarden.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+kindergarden.getText() +"\"]");
 		}
 		else
 		{
@@ -399,7 +406,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level1.getStyleName().toString().contains("selected"))
 		{
 			level1.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level1.getText() +"\"]");
 		}
 		else
 		{
@@ -411,7 +417,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level2.getStyleName().toString().contains("selected"))
 		{
 			level2.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level2.getText() +"\"]");
 		}
 		else
 		{
@@ -423,7 +428,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level3.getStyleName().toString().contains("selected"))
 		{
 			level3.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level3.getText() +"\"]");
 		}
 		else
 		{
@@ -435,7 +439,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level4.getStyleName().toString().contains("selected"))
 		{
 			level4.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level4.getText() +"\"]");
 		}
 		else
 		{
@@ -447,7 +450,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level5.getStyleName().toString().contains("selected"))
 		{
 			level5.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level5.getText() +"\"]");
 		}
 		else
 		{
@@ -459,7 +461,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level6.getStyleName().toString().contains("selected"))
 		{
 			level6.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level6.getText() +"\"]");
 		}
 		else
 		{
@@ -471,7 +472,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level7.getStyleName().toString().contains("selected"))
 		{
 			level7.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level7.getText() +"\"]");
 		}
 		else
 		{
@@ -483,7 +483,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level8.getStyleName().toString().contains("selected"))
 		{
 			level8.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level8.getText() +"\"]");
 		}
 		else
 		{
@@ -495,7 +494,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level9.getStyleName().toString().contains("selected"))
 		{
 			level9.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level9.getText() +"\"]");
 		}
 		else
 		{
@@ -507,7 +505,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level10.getStyleName().toString().contains("selected"))
 		{
 			level10.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level10.getText() +"\"]");
 		}
 		else
 		{
@@ -519,7 +516,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level11.getStyleName().toString().contains("selected"))
 		{
 			level11.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level11.getText() +"\"]");
 		}
 		else
 		{
@@ -531,12 +527,28 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(level12.getStyleName().toString().contains("selected"))
 		{
 			level12.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +lexileHeader.getText()+" : "+level12.getText() +"\"]");
 		}
 		else
 		{
 			level12.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
+	}
+	public void removeClassNameForAllEducationalUse(){
+		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
+		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 	}
 	
 	@UiHandler("activity")
@@ -544,7 +556,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(activity.getStyleName().toString().contains("selected"))
 		{
 			activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+activity.getText() +"\"]");
 		}
 		 else if (handout.getStyleName().toString().contains("selected")
 						|| homework.getStyleName().toString().contains("selected")
@@ -560,22 +571,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 						|| textbook.getStyleName().toString().contains("selected")
 						|| article.getStyleName().toString().contains("selected")
 						|| book.getStyleName().toString().contains("selected")) {
-			 
+			 removeClassNameForAllEducationalUse();
 			 activity.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -587,7 +584,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(handout.getStyleName().toString().contains("selected"))
 		{
 			handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+handout.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| homework.getStyleName().toString().contains("selected")
@@ -603,22 +599,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 					|| textbook.getStyleName().toString().contains("selected")
 					|| article.getStyleName().toString().contains("selected")
 					|| book.getStyleName().toString().contains("selected")) {
-		 
-		 handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			 removeClassNameForAllEducationalUse();
+			 handout.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		 }
 		else
 		{
@@ -630,7 +612,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(homework.getStyleName().toString().contains("selected"))
 		{
 			homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+homework.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -646,22 +627,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 					|| textbook.getStyleName().toString().contains("selected")
 					|| article.getStyleName().toString().contains("selected")
 					|| book.getStyleName().toString().contains("selected")) {
-		 
-		 homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+			 removeClassNameForAllEducationalUse();
+		     homework.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		 }
 		else
 		{
@@ -673,7 +640,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(game.getStyleName().toString().contains("selected"))
 		{
 			game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+game.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -689,22 +655,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 					|| textbook.getStyleName().toString().contains("selected")
 					|| article.getStyleName().toString().contains("selected")
 					|| book.getStyleName().toString().contains("selected")) {
-		 
+			 removeClassNameForAllEducationalUse();
 		 game.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		 }
 		else
 		{
@@ -716,7 +668,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(presentation.getStyleName().toString().contains("selected"))
 		{
 			presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+presentation.getText() +"\"]");
 		}
 		 else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -732,22 +683,9 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 					|| textbook.getStyleName().toString().contains("selected")
 					|| article.getStyleName().toString().contains("selected")
 					|| book.getStyleName().toString().contains("selected")) {
-		 
+			
+	     removeClassNameForAllEducationalUse();
 		 presentation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		 }
 		else
 		{
@@ -759,7 +697,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(refMaterial.getStyleName().toString().contains("selected"))
 		{
 			refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+refMaterial.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 					|| handout.getStyleName().toString().contains("selected")
@@ -775,22 +712,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 					|| textbook.getStyleName().toString().contains("selected")
 					|| article.getStyleName().toString().contains("selected")
 					|| book.getStyleName().toString().contains("selected")) {
-		 
+			 removeClassNameForAllEducationalUse();
 		 refMaterial.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-		 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-		 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		 }
 		else
 		{
@@ -802,7 +725,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(quiz.getStyleName().toString().contains("selected"))
 		{
 			quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+quiz.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -818,22 +740,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 quiz.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -845,7 +753,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(currPlan.getStyleName().toString().contains("selected"))
 		{
 			currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+currPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -861,22 +768,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 currPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -888,7 +781,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(lessonPlan.getStyleName().toString().contains("selected"))
 		{
 			lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+lessonPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -904,22 +796,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 lessonPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -931,7 +809,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(unitPlan.getStyleName().toString().contains("selected"))
 		{
 			unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+unitPlan.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -947,22 +824,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 unitPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -974,7 +837,7 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(projectPlan.getStyleName().toString().contains("selected"))
 		{
 			projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+projectPlan.getText() +"\"]");
+
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -990,22 +853,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 projectPlan.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -1017,7 +866,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(reading.getStyleName().toString().contains("selected"))
 		{
 			reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+reading.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -1033,22 +881,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 reading.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -1060,7 +894,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(textbook.getStyleName().toString().contains("selected"))
 		{
 			textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+textbook.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -1076,22 +909,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| reading.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			textbook.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -1103,7 +922,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(article.getStyleName().toString().contains("selected"))
 		{
 			article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+article.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -1119,22 +937,8 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| reading.getStyleName().toString().contains("selected")
 				|| textbook.getStyleName().toString().contains("selected")
 				|| book.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 article.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
@@ -1146,7 +950,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(book.getStyleName().toString().contains("selected"))
 		{
 			book.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +headerEducationalUse.getText()+" : "+book.getText() +"\"]");
 		}
 		else if (activity.getStyleName().toString().contains("selected")
 				|| handout.getStyleName().toString().contains("selected")
@@ -1162,35 +965,25 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				|| reading.getStyleName().toString().contains("selected")
 				|| textbook.getStyleName().toString().contains("selected")
 				|| article.getStyleName().toString().contains("selected")) {
-	 
+			 removeClassNameForAllEducationalUse();
 			 book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 activity.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 handout.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 homework.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 game.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 presentation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 refMaterial.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 quiz.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 currPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 lessonPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 unitPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 projectPlan.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());			 
-			 reading.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 textbook.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			 article.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 		else
 		{
 			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
 	}
+	public void closeFunction()
+	{
+		isCancelclicked=false;
+		closePoup(isCancelclicked);
+	}
+	
 	@UiHandler("cancelBtn")
 	public void onCancelClick(ClickEvent click)
 	{
-		this.hide();
-		if(standardsPreferenceOrganizeToolTip.isShowing())
-			standardsPreferenceOrganizeToolTip.hide();
-		Window.enableScrolling(true);
+		isCancelclicked=true;
+		closePoup(isCancelclicked);
 	}
 	
 	private void OpenMediaFeatureDropdown() {
@@ -1200,19 +993,21 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			spanelMediaFeaturePanel.setVisible(true);
 		}
 	}
+	public void removeClassNameForAllAds(){
+		noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+		aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
+	}
 	@UiHandler("noAds")
 	public void onnoAdsClick(ClickEvent click){
 		if(noAds.getStyleName().toString().contains("selected"))
 		{
 			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +AdsHeader.getText()+" : "+noAds.getText() +"\"]");
 		}
 		else if(modAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
 		{
+			removeClassNameForAllAds();
 			noAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			ads=noAds.getText();
 		}
 		else
 		{
@@ -1224,14 +1019,12 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(modAds.getStyleName().toString().contains("selected"))
 		{
 			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +AdsHeader.getText()+" : "+modAds.getText() +"\"]");
 		}
 		else if(noAds.getStyleName().toString().contains("selected") || aggreAds.getStyleName().toString().contains("selected"))
 		{
+			removeClassNameForAllAds();
 			modAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			ads=modAds.getText();
+
 		}
 		else
 		{
@@ -1243,37 +1036,36 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(aggreAds.getStyleName().toString().contains("selected"))
 		{
 			aggreAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			deleteTagsServiceRequest("[\"" +AdsHeader.getText()+" : "+aggreAds.getText() +"\"]");
 		}
 		else if(noAds.getStyleName().toString().contains("selected") || modAds.getStyleName().toString().contains("selected"))
 		{
+			removeClassNameForAllAds();
 			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
-			noAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			modAds.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().selected());
-			ads=aggreAds.getText();
 		}
 		else
 		{
 			aggreAds.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());		
 		}
 	}
-
+	
+	public void removeClassNamesForAllAccessHazard(){
+		flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+		motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
+	}
 	@UiHandler("flashing")
 	public void onflashingClick(ClickEvent click){
 		if(flashing.getStyleName().toString().contains("select"))
 		{
 			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+flashing.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
 		{
+			removeClassNamesForAllAccessHazard();
 			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			accessHazardString=flashing.getText();
 		}
 		else
 		{
@@ -1285,17 +1077,11 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(flashingHazard.getStyleName().toString().contains("select"))
 		{
 			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+flashingHazard.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || motionSimulation.getStyleName().toString().contains("select"))
 		{
+			removeClassNamesForAllAccessHazard();
 			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			accessHazardString=flashingHazard.getText();
 		}
 		else
 		{
@@ -1307,17 +1093,11 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(motionSimulation.getStyleName().toString().contains("select"))
 		{
 			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+motionSimulation.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
+			removeClassNamesForAllAccessHazard();
 			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			accessHazardString=motionSimulation.getText();
 		}
 		else
 		{
@@ -1329,17 +1109,11 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(motionSimulationHazard.getStyleName().toString().contains("select"))
 		{
 			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+motionSimulationHazard.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||sound.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
+			removeClassNamesForAllAccessHazard();
 			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			accessHazardString=motionSimulationHazard.getText();
 		}
 		else
 		{
@@ -1351,17 +1125,11 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(sound.getStyleName().toString().contains("select"))
 		{
 			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+sound.getText() +"\"]");
 		}
 		else if(soundHazard.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
+			removeClassNamesForAllAccessHazard();
 			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			accessHazardString=sound.getText();
 		}
 		else
 		{
@@ -1373,17 +1141,11 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		if(soundHazard.getStyleName().toString().contains("select"))
 		{
 			soundHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			deleteTagsServiceRequest("[\"" +accessHazard.getText()+" : "+soundHazard.getText() +"\"]");
 		}
 		else if(sound.getStyleName().toString().contains("select") ||motionSimulationHazard.getStyleName().toString().contains("select") ||motionSimulation.getStyleName().toString().contains("select") || flashing.getStyleName().toString().contains("select") || flashingHazard.getStyleName().toString().contains("select"))
 		{
+			removeClassNamesForAllAccessHazard();
 			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-			sound.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulationHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashing.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			flashingHazard.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			motionSimulation.getElement().removeClassName(AddTagesCBundle.INSTANCE.css().select());
-			accessHazardString=soundHazard.getText();
 		}
 		else
 		{
@@ -1396,9 +1158,9 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	{
 		String frameTagsStr = "";
 		String educationStr = "";
-		
+		String adsStr = "";
+		String hazardStr = "";
 		List<String> tagList = new ArrayList<String>();
-		
 		educationStr = setEducationalUseString();
 		if(!educationStr.isEmpty())
 		{
@@ -1413,30 +1175,60 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				tagList.add("\"" + lexileMainarr[i].toString() +"\"");
 			}
 		}
-		tagList.add("\"" +AdsHeader.getText()+" : "+ads +"\"");
-		tagList.add("\"" +accessHazard.getText()+" : "+accessHazardString +"\"");
+		adsStr = setAdsString();
+		
+		if(!adsStr.isEmpty())
+		{
+			tagList.add("\"" + adsStr +"\"");
+		}
+		
+		hazardStr = setAccessHazards();
+		
+		if(!hazardStr.isEmpty())
+		{
+			tagList.add("\"" + hazardStr +"\"");
+		}
+		
 		for(final String codeObj:standardsDo){
 			tagList.add("\"" +standardsDefaultText.getText()+"  :"+codeObj+"\"");
 		}
-		addTagsServiceRequest(tagList.toString(), resourceId);
+		
+		if(!lblMediaPlaceHolder.getText().equalsIgnoreCase("Choose a Media Feature Option:"))
+		{
+			tagList.add("\"" +mediaLabel.getText()+" : "+lblMediaPlaceHolder.getText() +"\"");
+		}
+		
+		if(mobileYes.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			tagList.add("\"" +"Mobile Friendly"+" : "+mobileYes.getText() +"\"");
+		}
+		else if(mobileNo.getStyleName().contains(AddTagesCBundle.INSTANCE.css().OffButtonsActive()))
+		{
+			tagList.add("\"" +"Mobile Friendly"+" : "+mobileNo.getText() +"\"");
+		}
+		
+		deleteTagsServiceRequest(tagListGlobal.toString(), tagList.toString());
 	}
 	
 	public void addTagsServiceRequest(String frameTagsStr, String resourceId)
 	{
+		
 		AppClientFactory.getInjector().getResourceService().addTagsToResource(resourceId, frameTagsStr, new SimpleAsyncCallback<List<ResourceTagsDo>>() {
 			@Override
 			public void onSuccess(List<ResourceTagsDo> result) {
-				bindObjectsToUI(result);
+			//	bindObjectsToUI(result);
+				closeFunction();
 			}
 		});
 	
 	}
-	public void deleteTagsServiceRequest(String frameTagsStr)
+	public void deleteTagsServiceRequest(String frameTagsStr, final String addingNewTags)
 	{
 		AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
+				addTagsServiceRequest(addingNewTags.toString(), resourceId);
 			}
 			
 			@Override
@@ -1452,13 +1244,14 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 				bindObjectsToUI(result);
 			}
 		});
-	
 	}
-	
 	public void bindObjectsToUI(List<ResourceTagsDo> resultResourceTags)
 	{
+		tagListGlobal.clear();
+		standardsDo.clear();
 		for(int objVal=0;objVal<resultResourceTags.size();objVal++)
 		{
+			tagListGlobal.add("\""+resultResourceTags.get(objVal).getLabel()+"\"");
 			if(resultResourceTags.get(objVal).getLabel().contains(headerEducationalUse.getText()))
 			{
 				setEducationalObjectVal(resultResourceTags.get(objVal).getLabel());
@@ -1475,10 +1268,39 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			{
 				setAccessHazardObjectVal(resultResourceTags.get(objVal).getLabel());
 			}
-			if(resultResourceTags.get(objVal).getLabel().contains(standardsDefaultText.getText().toLowerCase()))
+			if(resultResourceTags.get(objVal).getLabel().contains(standardsDefaultText.getText()))
 			{
 				setStandardObjectVal(resultResourceTags.get(objVal).getLabel());
 			}
+			if(resultResourceTags.get(objVal).getLabel().contains(mediaLabel.getText()))
+			{
+				setMediaFeatureObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+			if(resultResourceTags.get(objVal).getLabel().contains("Mobile Friendly"))
+			{
+				setMobileFriendlyObjectVal(resultResourceTags.get(objVal).getLabel());
+			}
+		}
+	}
+	public void setMobileFriendlyObjectVal(String mobileFriendlyVal)
+	{
+		if(mobileFriendlyVal.contains(mobileYes.getText()))
+		{
+			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		}
+		else if(mobileFriendlyVal.contains(mobileNo.getText()))
+		{
+			mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+			mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+		}
+	}
+	public void setMediaFeatureObjectVal(String mediaFeatureVal)
+	{
+		if(mediaFeatureVal != null)
+		{
+			mediaFeatureVal = mediaFeatureVal.replace(mediaLabel.getText()+" : ", "");
+			lblMediaPlaceHolder.setText(mediaFeatureVal);
 		}
 	}
 	public void setStandardObjectVal(String standardStr)
@@ -1489,29 +1311,32 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 	}
 	public void setAccessHazardObjectVal(String accessHazardStr)
 	{
-		if(accessHazardStr.contains(flashing.getText()))
-		{
-			flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		if(accessHazardStr.contains(flashingHazard.getText()))
-		{
-			flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		if(accessHazardStr.contains(motionSimulation.getText()))
-		{
-			motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		if(accessHazardStr.contains(motionSimulationHazard.getText()))
-		{
-			motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		if(accessHazardStr.contains(sound.getText()))
-		{
-			sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
-		}
-		if(accessHazardStr.contains(soundHazard.getText()))
-		{
-			soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+		String[] stringArry=accessHazardStr.split(":");
+		if(stringArry.length!=0){
+			if(stringArry[1].trim().equalsIgnoreCase(flashingHazard.getText()))
+			{
+					flashingHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(flashing.getText()))
+			{
+				flashing.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(motionSimulation.getText()))
+			{
+				motionSimulation.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(motionSimulationHazard.getText()))
+			{
+				motionSimulationHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(sound.getText()))
+			{
+				sound.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
+			if(stringArry[1].trim().equalsIgnoreCase(soundHazard.getText()))
+			{
+				soundHazard.getElement().addClassName(AddTagesCBundle.INSTANCE.css().select());
+			}
 		}
 	}
 	public void setAdsObjectVal(String adsStr)
@@ -1537,11 +1362,17 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		}
 		if(lexileStr.contains(level1.getText()))
 		{
-			level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			String[] stringArry=lexileStr.split(":");
+			if(stringArry[1].trim().equalsIgnoreCase(GL_GRR_NUMERIC_ONE)){
+				level1.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			}
 		}
 		if(lexileStr.contains(level2.getText()))
 		{
-			level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			String[] stringArry=lexileStr.split(":");
+			if(stringArry[1].trim().equalsIgnoreCase(GL_GRR_NUMERIC_TWO)){
+				level2.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
+			}
 		}
 		if(lexileStr.contains(level3.getText()))
 		{
@@ -1647,6 +1478,58 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		{
 			book.getElement().addClassName(AddTagesCBundle.INSTANCE.css().selected());
 		}
+	}
+	
+	public String setAdsString()
+	{
+		String adsStr = "";
+		
+		if(noAds.getElement().getClassName().contains("selected"))
+		{
+			adsStr = AdsHeader.getText()+" : "+noAds.getText();
+		}
+		else if(modAds.getElement().getClassName().contains("selected"))
+		{
+			adsStr = AdsHeader.getText()+" : "+modAds.getText();
+		}
+		else if(aggreAds.getElement().getClassName().contains("selected"))
+		{
+			adsStr = AdsHeader.getText()+" : "+aggreAds.getText();
+		}
+		
+		return adsStr;
+	}
+	
+	public String setAccessHazards()
+	{
+		String hazardsStr = "";
+		
+		if(flashing.getElement().getClassName().contains("select"))
+		{
+			hazardsStr = accessHazard.getText()+" : "+flashing.getText();
+		}
+		else if(flashingHazard.getElement().getClassName().contains("select"))
+		{
+			hazardsStr = accessHazard.getText()+" : "+flashingHazard.getText();
+		}
+		else if(motionSimulation.getElement().getClassName().contains("select"))
+		{
+			hazardsStr = accessHazard.getText()+" : "+motionSimulation.getText();
+		}
+		else if(motionSimulationHazard.getElement().getClassName().contains("select"))
+		{
+			hazardsStr = accessHazard.getText()+" : "+motionSimulationHazard.getText();
+		}
+		else if(sound.getElement().getClassName().contains("select"))
+		{
+			hazardsStr = accessHazard.getText()+" : "+sound.getText();
+		}
+		else if(soundHazard.getElement().getClassName().contains("select"))
+		{
+			hazardsStr = accessHazard.getText()+" : "+soundHazard.getText();
+		}
+		
+		return hazardsStr;
 	}
 	
 	public String setEducationalUseString()
@@ -1785,12 +1668,23 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 			String lexileStr = lexileHeader.getText() + " : " + level12.getText();
 			lexileSelectedOptions.add(lexileStr);
 		}
-		System.out.println("array lexileSelectedOptions:"+lexileSelectedOptions);
 		lexileLevelArr = lexileSelectedOptions.toArray(new String[lexileSelectedOptions.size()]);
-		
-		System.out.println("array added:"+lexileLevelArr);
 		return lexileLevelArr;
 		
+	}
+	
+	@UiHandler("mobileYes")
+	public void onmobileYesClick(ClickEvent click)
+	{
+		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
+	}
+	
+	@UiHandler("mobileNo")
+	public void onmobileNoClick(ClickEvent click)
+	{
+		mobileNo.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OffButtonsActive());
+		mobileYes.getElement().setClassName(AddTagesCBundle.INSTANCE.css().OnButtonDeActive());
 	}
 	
 	
@@ -1800,4 +1694,6 @@ public class AddTagesPopupView extends PopupPanel implements SelectionHandler<Su
 		
 		return null;
 	}
+	
+	public abstract void closePoup(boolean isCancelclicked);
 }

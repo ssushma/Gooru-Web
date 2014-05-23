@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -115,6 +116,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 
 	private SearchShareVc searchShareVc;
 
+	private CollectionInfo collectionInfo;
 	
 	private SearchInfoWidget searchInfoWidget;
 
@@ -160,7 +162,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			disclosureHeaderFloPanel.setVisible(false);
 		}
 		searchShareVc = new SearchShareVc();
-
+		collectionInfo = new CollectionInfo();
 		searchInfoWidget = new SearchInfoWidget();
 		addStyleName(UcCBundle.INSTANCE.css().userDefaultSelectDisable());
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
@@ -224,9 +226,14 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 			moreInfoLbl.addStyleName(res.css().moreInfoActive());
 			shareLbl.removeStyleName(res.css().shareActive());
 			disclosureContentSimPanel.clear();
-			disclosureContentSimPanel.setWidget(getSearchInfoWidget());
-			getSearchInfoWidget().setData(this.searchResultDo);
-			getSearchInfoWidget().setData();
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				disclosureContentSimPanel.setWidget(getSearchInfoWidget());
+				getSearchInfoWidget().setData(this.searchResultDo);
+				getSearchInfoWidget().setData();
+			}else{
+				disclosureContentSimPanel.setWidget(getCollectionInfo());
+				getCollectionInfo().setInfoData(this.searchResultDo.getGooruOid());
+			}
 			onDisclosureOpen();
 			MixpanelUtil.Click_moreInfo();
 		} else {
@@ -414,7 +421,13 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public SearchInfoWidget getSearchInfoWidget() {
 		return searchInfoWidget;
 	}
-
+	
+	/**
+	 * @return the collectionInfo
+	 */
+	public CollectionInfo getCollectionInfo() {
+		return collectionInfo;
+	}
 
 	/**
 	 * @return dragHandlePanel instance of {@link FocusPanel}

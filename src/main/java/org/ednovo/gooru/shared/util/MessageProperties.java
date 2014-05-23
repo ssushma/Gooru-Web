@@ -52,6 +52,14 @@ public interface MessageProperties {
 	String GL_GRR_NUMERIC_THREE = "3";
 	String GL_GRR_NUMERIC_FOUR = "4";
 	String GL_GRR_NUMERIC_FIVE = "5";
+	String GL_GRR_NUMERIC_SIX = "6";
+	String GL_GRR_NUMERIC_SEVEN= "7";
+	String GL_GRR_NUMERIC_EIGHT = "8";
+	String GL_GRR_NUMERIC_NINE = "9";
+	String GL_GRR_NUMERIC_TEN = "10";
+	String GL_GRR_NUMERIC_ELEVEN = "11";
+	String GL_GRR_NUMERIC_TWELVE = "12";
+	
 	String GL_GRR_Close ="X";
 	
 	String GL0001="Invalid Request specified";
@@ -313,7 +321,7 @@ public interface MessageProperties {
 	String GL0218 = "Gooru - {0}";
 	String GL0218_1 = "{0} has shared their class {1} with you";
 	String GL0219 = "{0} <div><br/></div><div> {1} </div><div><br/></div><div>Sent using Gooru. Visit {2} for more great resources and collections. It's free!</div>";
-	String GL0219_1 = "Hello there! <div><br/></div>Your teacher, {0} has shared the class: {1} with you. Please access the class by clicking the link below or by entering in the Class Code under the Study tab." +
+	String GL0219_1 = "Hello there! <div><br/></div>Your teacher, {0} has shared the class: {1} with you. Please access the class by clicking the link below or by entering in the Class Code under the My Classes tab." +
 			" <div><br/></div><div> {2} </div><div><br/></div><div>ClassCode: {3} </div><div><br/></div><div>Sent using Gooru. Visit {4} for more great resources and collections. It's free!</div>";
 	String GL0220 = "Check out {0} Gooru profile and fantastic collections";
 	String GL0221 = "{0} is an active member of the Gooru community! Take a look and browse through all their great collections - {1} <div><br/></div><div>Gooru is a free search engine for learning used by thousands of teachers around the world to discover, organize and create teaching materials.</div><div><br/></div><div>Experience Gooru today at {2} </div>";
@@ -331,7 +339,7 @@ public interface MessageProperties {
 	String GL0230 ="Class Code";
 	String GL0231 ="a Web Link";
 	String GL0232 ="Web Link";
-	String GL0233 ="Class Codes are an easy way to share Classes with your students in the classroom.<br></br>Ask your students to enter the Class Code in the Study tab to find their assigned collections.";
+	String GL0233 ="Class Codes are an easy way to share classes with your students in the classroom.<br></br>Simply have students enter the class code in the My Classes tab to find their assignments";
 	String GL0234 ="Use Web Links if you want to share Classes via email or other online channels.<br></br>Ask your students to click directly on the link to find their assigned collections.";
 	String GL0235 ="Please select a due date.";
 	String GL0236 ="Please enter directions.";
@@ -637,7 +645,7 @@ public interface MessageProperties {
 	String GL0504 = "Click on the Teach tab above to create one and to start assigning Collections to your students.";//duplicate for GL0108 GL0109
 	String GL0505 = "Copying...";
 	//5.12 Messages
-	String GL0506 = "Browse our Library";		//No search Results.
+	String GL0506 = "Browse the Library";		//No search Results.
 	String GL0507 = "No result for";
 	String GL0508 = "See more";
 	String GL0509 = "See less";
@@ -646,7 +654,7 @@ public interface MessageProperties {
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
-	String GL0515 = "District Library";
+	String GL0515 = "District Libraries";
 	String GL0515_1 = "RUSD Library";
 	
 	String GL0516 = "Community Library";
@@ -841,9 +849,10 @@ public interface MessageProperties {
 	
 	//collection does not exists.
 	String GL0655=	"This collection is no longer available."; //HTMLPanel
-	String GL0656=	"It’s either been deleted or made private by the creator";//HTMLPanel
-	String GL0657=	"In the meantime, why don't you browse the courses in our library.";//HTMLPanel
+	String GL0656=	"It's either been deleted or made private by the collection owner.";//HTMLPanel
+	String GL0657=	"Looking for other collections to use? Why don't you browse the courses in our library?";//HTMLPanel
 	String GL0697 ="NoHeader";
+	String GL1831 ="Browse the Library";
 	
 	//Add to an existing collection
 	String GL0658=	"Add to an existing collection";//Label
@@ -1764,7 +1773,7 @@ public interface MessageProperties {
 
 		//share tab view in class pages
 		String GL1413="This link takes students directly to this Classpage.";
-		String GL1414="Ask students to enter in this code in the Study tab to view this Classpage.";
+		String GL1414="Ask students to enter in this code in the My Classes tab to view this Classpage.";
 		
 		//Home Presenter.
 		String GL1415="Oh! No";
@@ -2029,7 +2038,7 @@ public interface MessageProperties {
     	String GL1590="Invite students to your class";
     	String GL1591="Enter email addresses";
     	String GL1592="Share in Your Classroom";
-    	String GL1593="Class Codes are an easy way to share classes with your students in the classroom. Simply have students enter the class code in the Study tab to find their assignments.";
+    	String GL1593="Class Codes are an easy way to share classes with your students in the classroom. Simply have students enter the class code in the My Classes tab to find their assignments.";
     	String GL1594="Share via E-mail or Online";
     	String GL1595="Use Web Links if you want to share classes via email or other online channels. Ask your students to click directly on the link to find their assignments.";
     	String GL1596="Once your students join, you can";
@@ -2063,7 +2072,7 @@ public interface MessageProperties {
     	String GL1622="Your class is open! This means that anyone with the Class Code or Class URL can access and join this class.  Switch to Invite Only to limit access.";
     	String GL1623="Assignments";
     	String GL1624="Students";
-    	String GL1625="It's so quiet in this class. Start assigning collections!";
+    	String GL1625=GL0147;
     	
     	//study player text
     	String GL1626="Your Collection Summary";
@@ -2223,9 +2232,9 @@ public interface MessageProperties {
 		String GL1749 = "e.g. YouTube";
 		
 		String GL1748_1 = "Libraries";
-		String GL1749_1 = "Community Library";
-		String GL1750 = "District Library";
-		String GL1751 = "Partner Library";
+		String GL1749_1 = GL0516;
+		String GL1750 = GL0515;
+		String GL1751 = "Partner Libraries";
 		
 		String GL1752 = "My Collections";
 		String GL1753 = "My Classes";
@@ -2238,7 +2247,7 @@ public interface MessageProperties {
 		
 		String GL1760 = "Oops! Looks like this resource is no longer available!";
 		String GL1761 = "Click the next arrow to keep going to the next resource!";
-		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
+		String GL1762 = "You are seeing this page because the resource is temporarily unavailable, or has been removed from our site.";
 		
 		String GL1762_1 = "Enter a Class Code";
 		
@@ -2248,18 +2257,18 @@ public interface MessageProperties {
     	String GL1766 = "http://financiallycapable.org/";
     	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
     	
-    	String GL1768 = "An aggregator is a site that curates learning content from around the Web.";
+    	String GL1768 = "An aggregator is a site that collects learning content from around the Web.";
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
-    	String GL1770 = "Open educational resources (OER) are freely accessible, openly licensed documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
+    	String GL1770 = "Open educational resources (OER) are <b>freely accessible</b>, <b>openly licensed</b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
     	
     	String GL1771 = "Create a Class";
     	String GL1772 = "It's easy to organize your collections and share them with your students.";
     	String GL1773 = "Access a Class";
     	String GL1774 = "Easy Access for Your Students";
-    	String GL1775 = "Students don't need to log-in when they use the unique Class Code for your class.";
+    	String GL1775 = "All students need to get started is the unique Class Code for your class.";
     	String GL1776 = "Manage Assignments ";
-    	String GL1777 = "Students will see a clear due date and your directions for the collections you assign.";
+    	String GL1777 = "Provide students with a clear due date and your directions for the collections you assign.";
     	String GL1778 = "Monitor Student Progress ";
     	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
     	String GL1780 = "See a sample report";
@@ -2270,5 +2279,103 @@ public interface MessageProperties {
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
-   }
+    	String GL1788 = "Go to \"My Collections\" to share your collections in this library with others.";
+    	String GL1789 = "Go to My Collections";
+    	String GL1790 = "You don't have any public collections yet.";
+    	String GL1791 = "It looks like \"{0}\" hasn't shared any collections yet.";
+    	String GL1792 = "Your library is made of your publicly shared collections. Please put your collections in nested folders (Unit, Topic, Lesson) just like other libraries in Gooru so that they would be better organized in a library view.";
+    	String GL1793 = "ON: Your profile page may be viewed by others on Gooru.";
+    	String GL1794 = "OFF: No one but you will be able to view your profile page.";
+    	String GL1795 ="Add Tags";
+    	String GL1796 ="Thank you for tagging this resource!";
+    	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
+    	String GL1798="Lexile Level";
+    	String GL1799="Kindergarden";
+    	String GL1800="Ads";
+    	String GL1801="No Advertisement";
+    	String GL1802="Moderate Advertisements";
+    	String GL1803="Aggressive Advertisements";
+    	String GL1804="Access Hazard";
+    	String GL1805="Flashing";
+    	String GL1806="Flashing Hazard";
+    	String GL1807="Motion Simulation";
+    	String GL1808="Motion Simulation Hazard";
+    	String GL1809="Sound";
+    	String GL1810="Sound Hazard";
+    	String GL1811="Mobile Friendly";
+    	String GL1812="Add as many tags as you’d like by clicking on the words within each category.";
+    	
+    	String GL1813 = "Start Creating Collections";
+		String GL1814 = "A collection is a playlist of learning resources that you can remix. Customize existing collections or start from scratch!";
+		String GL1815 = "Create a Collection";
+		String GL1816 = "See for yourself!";
+		String GL1817 = "Upload your own resources";
+		String GL1818 = "Customize collections by adding your own tried-and-true handouts, worksheets, or other materials.";
+		String GL1819 = "Collaborate with fellow teachers";
+		String GL1820 = "Go further together--add another user to collaborate on a collection.";
+		String GL1821 = "Assess understanding with Questions";
+		String GL1822 = "Add questions to your collections to check student understanding.";
+		String GL1823 = "Guide with Narration";
+		String GL1824 = "Add narration before a resource to give students direction and focus their attention";
+		String GL1825 = "Customize Existing Resources";
+		String GL1826 = "Edit start & stop times for videos, reorder resources, and more.";
+    	
+		String GL1827 = "About RUSD";
+    	String GL1828 = "http://www.rusdlink.org/site/default.aspx?PageID=1";
+    	String GL1829 = "http://about.goorulearning.org/";
 
+    	String GL1830 = "Walk through a <br>sample collection.";
+    	
+    	String GL1832 = "It's either been deleted or made private by the collection owner.";
+    	String GL1833 = "You are seeing this page because the resource is temporarily unavailable, or has been removed from our site.";
+    	String GL1834 = "OER";
+    	String GL1835 = "Publisher";
+    	String GL1836 = "General Info";
+    	String GL1837 = "Educational Info";
+    	String GL1838 = "Add as many tags as you'd like by clicking on the words within each category.";
+    	String GL1839 = "Textbook";
+    	
+    	//Ratings and Reviews
+    	
+    	String GL1840 = "Reviews for";
+    	String GL1841 = "Rating Distribution";
+    	String GL1842 = "Excellent";
+    	String GL1843 = "Very Good";
+    	String GL1844 = "Good";
+    	String GL1845 = "Fair";
+    	String GL1846 = "Poor";
+    	String GL1847 = "Would you like to rate this resource?";
+    	String GL1848 = "Average Rating";
+    	String GL1849 = "Preview and Rate Resource";
+    	String GL1850 = "Your rating and review:";
+    	String GL1851 = "Edit your rating and review";
+    	String GL1852 = "Delete rating and review";
+    	String GL1853 = "Review has been deleted";
+    	String GL1854 = "Thank you for rating!";
+    	String GL1855 = "Tell us what you think!";
+    	String GL1856 = "Thank you for reviewing this resource!";
+    	String GL1857 = "What do you think about this resource?";
+    	String GL1858 = "You've already reviewed this resource. Here's what you said last time:";
+    	String GL1859 = "Please log in to rate this resource!";
+    	String GL1860 = "Edit Review";
+    	
+    	String GL1861 = "Delete Review";
+    	String GL1862 = "Log In";
+    	String GL1863 = "Go further together--add another user as a collaborator on your collection.";
+    	String GL1864 = "Add narration before a resource to give students direction and focus their attention.";
+    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
+    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
+    	String GL1867 = "Educational Role:";
+    	String GL1868 = "School Level";
+    	String GL1869 = "Share this class code with your students";
+    	String GL1870 = "Narrow report information by collection and student:";
+    	
+    	String GL1871 = "All Collections";
+    	String GL1872 = "All Students";
+    	String GL1873 = "Class Reports";
+    	String GL1874 = "Class Gradebook";
+    	String GL1875 = "This report is based on the students' first attempts on these collections.";
+    	String GL1876 = "Keywords";
+    	String GL1877 =	"Standards Code";
+    	String GL1878 ="Adds";
+   }

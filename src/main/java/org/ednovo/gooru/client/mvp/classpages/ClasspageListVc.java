@@ -902,15 +902,33 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 * 
 	 */
-	private void OpenClasspageEdit(String gooruOId) {
+	private void OpenClasspageEdit(final String gooruOId) {
 		setClassapageItemSeleted(gooruOId);
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
-		params.put("pageNum", "0");
-		params.put("pageSize", "10");
-		params.put("pos", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getInjector().getClasspageService().v2GetClasspageById(gooruOId, new SimpleAsyncCallback<CollectionDo>() {
+			@Override
+			public void onSuccess(CollectionDo result) {
+				if(result.getCreator().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId()))
+				{
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("classpageid", gooruOId);
+					params.put("pageNum", "0");
+					params.put("pageSize", "10");
+					params.put("pos", "1");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.EDIT_CLASSPAGE, params);
+				}
+				else
+				{
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", gooruOId);
+					params.put("pageNum", "0");
+					params.put("pageSize", "10");
+					params.put("pos", "1");
+				AppClientFactory.getPlaceManager().revealPlace(
+						PlaceTokens.STUDENT, params);
+				}
+			}
+		});
 	}
 
 	/**

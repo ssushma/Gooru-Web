@@ -26,8 +26,17 @@ package org.ednovo.gooru.client.mvp.rating;
 
 
 
+import java.util.ArrayList;
+
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+
 import com.google.inject.Inject;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class RatingAndReviewPopupPresenter extends PresenterWidget<IsRatingAndReviewPopupView> implements RatingAndReviewPopupUiHandlers{
@@ -36,5 +45,34 @@ public class RatingAndReviewPopupPresenter extends PresenterWidget<IsRatingAndRe
 	public RatingAndReviewPopupPresenter(EventBus eventBus, IsRatingAndReviewPopupView view) {
 		super(eventBus, view);
 		getView().setUiHandlers(this);
+	}
+	
+	public void displayPopup(String resourceTitle, String gooruOid) {
+		getView().displayPopUp(resourceTitle, gooruOid);
+	}
+
+	@Override
+	public void getAverageRatingForContent(String resourceId) {
+		AppClientFactory.getInjector().getPlayerAppService().getContentStarRatings(resourceId, new SimpleAsyncCallback<ContentStarRatingsDo>() {
+
+			@Override
+			public void onSuccess(ContentStarRatingsDo result) {
+				getView().setGraphAndAvgContentRating(result);
+			}
+			
+		});
+	}
+
+	@Override
+	public void getUserRatingsReviews(String resourceId) {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(resourceId,AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				getView().setUserRatingsAndReviews(result);
+			}
+			
+		});
+			
 	}
 }

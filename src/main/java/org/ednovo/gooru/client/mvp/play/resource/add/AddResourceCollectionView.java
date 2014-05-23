@@ -154,7 +154,6 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
 				    if(!folderTreeItemWidget.isApiCalled()){
 				    	folderTreeItemWidget.setApiCalled(true);
-				    	System.out.println("");
 				    	getFolderItems(item,folderTreeItemWidget.getGooruOid());
 				    }
 				    if(parent != null)

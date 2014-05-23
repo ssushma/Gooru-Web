@@ -65,11 +65,13 @@
 				</g:HTMLPanel> </g:HTMLPanel> -->
 			<g:HTMLPanel ui:field="mainContainer">
 			<g:HTMLPanel styleName="{res.css.teachTab}">
-			    <g:Button ui:field="reportsTab" styleName=""></g:Button>
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
+				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 				
 			</g:HTMLPanel>
+			
+			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}">Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it appear below collections that do.</g:Label>
 
 			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
 				<g:HTMLPanel>

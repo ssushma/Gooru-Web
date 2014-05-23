@@ -396,7 +396,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		gradePanelUc.setHeaderTitle(GL0165);
 		clearAll.setText(GL0725);
 	//	oerPanel.setVisible(false);
-		aggregatorPanelUc.setHeaderTitle(GL1748);
+		aggregatorPanelUc.setHeaderTitle(GL1628);
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
@@ -873,8 +873,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			//added for OER search
 			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			final Image oer = new Image("images/mos/questionmark.png");
-			oer.getElement().getStyle().setLeft(85, Unit.PX);
-			oer.getElement().getStyle().setTop(-20, Unit.PX);
+			oer.getElement().getStyle().setLeft(144, Unit.PX);
+			oer.getElement().getStyle().setTop(-18, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(GL0732);

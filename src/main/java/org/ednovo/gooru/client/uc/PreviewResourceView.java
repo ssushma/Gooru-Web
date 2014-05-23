@@ -3,7 +3,10 @@ package org.ednovo.gooru.client.uc;
 
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -33,6 +36,10 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 	@UiField Label resourceTypeImage,resourceCategory,resourceSourceName,resourceIndex,resourceNumber;
 	@UiField HTML resourceTitle,resourceHoverTitle;
 	@UiField FlowPanel resourceImageContainer,resourceThumbContainer;
+	@UiField public FlowPanel ratingWidgetPanel;
+	
+	private RatingWidgetView ratingWidgetView=null;
+	
 	private CollectionItemDo collectionItemDo=null;
 	
 	private String collectionItemId=null;
@@ -58,7 +65,37 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 		setReourceSourceName();
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
+		setAvgRatingWidget();
 	}
+	
+	
+	
+	/**
+	 * Average star ratings widget will get integrated.
+	 */
+	private void setAvgRatingWidget() {
+		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountLabel().setText("2");
+		ratingWidgetView.setAvgStarRating(3);
+		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.add(ratingWidgetView);
+	}
+	
+	/**
+	 * 
+	 * Inner class implementing {@link ClickEvent}
+	 *
+	 */
+	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			/**
+			 * OnClick of count label event to invoke Review pop-pup
+			 */
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent("Vinay")); 
+		}
+	}
+
 	
 	@UiHandler("resourceThumbnail")
 	public void onErrorResourceImage(ErrorEvent errorEvent){

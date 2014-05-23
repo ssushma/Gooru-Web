@@ -117,10 +117,34 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		resourceSearchResultDo.setGooruOid(getJsonString(recordJsonObject, GOORU_OID));
 		resourceSearchResultDo.setCategory(getJsonString(recordJsonObject, CATEGORY));
 		resourceSearchResultDo.setTotalViews(stringtoInteger(recordJsonObject, TOTALVIEWS, 0));
-		resourceSearchResultDo.setNumOfPages(getJsonString(recordJsonObject, NO_OF_PAGES));
 		
+		if (getJsonString(recordJsonObject, AGGREGATOR) != null) {
+			try {
+				JSONArray aggregatorArrayObj = new JSONArray(getJsonString(recordJsonObject, AGGREGATOR));
+				List<String> aggregatorList=new ArrayList<String>();
+				for(int i=0;i<aggregatorArrayObj.length();i++){
+					aggregatorList.add(aggregatorArrayObj.getString(i).toString());
+				
+				}
+				resourceSearchResultDo.setAggregator(aggregatorList);
+			} catch (JSONException e) {
+			}
+		}
+		if (getJsonString(recordJsonObject, PUBLISHER) != null) {
+			try {
+				JSONArray publisherArrayObj = new JSONArray(getJsonString(recordJsonObject, PUBLISHER));
+				List<String> bublisherList=new ArrayList<String>();
+				for(int i=0;i<publisherArrayObj.length();i++){
+					bublisherList.add(publisherArrayObj.getString(i).toString());
+				
+				}
+				resourceSearchResultDo.setPublisher(bublisherList);
+			} catch (JSONException e) {
+			}
+		}
 		resourceSearchResultDo.setAssetURI(getJsonString(recordJsonObject, ASSETURI));
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
+		
 
 		UserDo ownerDo = new UserDo();
 		ownerDo.setFirstName(getJsonString(recordJsonObject, OWNER_FIRST_NAME));
