@@ -2376,4 +2376,6 @@ public interface MessageProperties {
     	String GL1874 = "Class Gradebook";
     	String GL1875 = "This report is based on the students' first attempts on these collections.";
     	String GL1876 = "Keywords";
+    	String GL1877 =	"Standards Code";
+    	String GL1878 ="Adds";
    }
