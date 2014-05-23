@@ -178,7 +178,7 @@ h3 {
     background:#f0f0f0;
     padding:10px 15px;
     margin: 15px 0px;
-    line-height:29px;
+    height:29px;
 }
 
 .userRating.reviewContainer {
@@ -192,8 +192,11 @@ h3 {
     padding:15px;
 }
 
-.userRating button {
-    float:right;
+.userRatingPreviewBtn {
+float: right;
+margin-right: 11px;
+margin-top: -34px;
+width: 168px;
 }
 
 .reviewContainer button {
