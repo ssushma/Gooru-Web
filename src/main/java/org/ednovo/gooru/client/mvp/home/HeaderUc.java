@@ -918,7 +918,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 				toolTipPopupPanel.hide();
 				EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
-					if (!classpageListVc.getElement().isOrHasChild(Element.as(target))){
+					if (classpageListVc!=null && !classpageListVc.getElement().isOrHasChild(Element.as(target))){
 						classpageListVc.hide();
 					}
 				}
