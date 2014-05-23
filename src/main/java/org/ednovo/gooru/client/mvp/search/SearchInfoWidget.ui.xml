@@ -49,7 +49,7 @@
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="resourceDescription" />
 				</g:HTMLPanel> -->
-				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
+				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="generalPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-titleboarder}"
 						ui:field="generalLbl"></g:Label>
 				</g:HTMLPanel>
@@ -94,13 +94,22 @@
 					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="thumbnailurlValue" />
 				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
+					ui:field="aggregationPanel">
+					<g:Label styleName="{playerStyle.resource-info-stand-text}"
+						ui:field="lblAggregation"></g:Label>
+					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
+						ui:field="aggregationType"/>
+				</g:HTMLPanel>
+				
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
 					ui:field="publisherPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="publisherText"></g:Label>
-					<g:Label styleName="{playerStyle.resource-info-title}"
-						ui:field="lblPublisher" />
+					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
+						ui:field="publisherType" />
 				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}"
