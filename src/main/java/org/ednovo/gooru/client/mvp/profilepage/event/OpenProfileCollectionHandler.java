@@ -22,55 +22,43 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.data.item;
+package org.ednovo.gooru.client.mvp.profilepage.event;
 
+import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.shared.EventHandler;
+/**
+ * 
+ * @fileName : OpenLessonConceptHandler.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: Dec 4, 2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer:
+ */
 
-public class LeftMenuItemView extends Composite {
-
-	@UiField Label unitMenuItem;
+public interface OpenProfileCollectionHandler extends EventHandler {
+	/**
+	 * @function openLessonConcept 
+	 * 
+	 * @created_date : 04-Dec-2013
+	 * 
+	 * @description
+	 * 
+	 * @parm(s) : @param conceptDo
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	*/
 	
-	private String unitId;
-	
-	private Integer childCount;
-	
-	
-	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
-			.create(LibraryUnitMenuViewUiBinder.class);
+	void openProfileCollection(ProfileLibraryDo profileLibraryDo, Integer topicId, String lessonId, String lessonLabel, String lessonCode);
 
-	interface LibraryUnitMenuViewUiBinder extends
-			UiBinder<Widget, LeftMenuItemView> {
-	}
-
-	public LeftMenuItemView(ProfileLibraryDo profileLibraryDo) {
-		initWidget(uiBinder.createAndBindUi(this));
-		unitMenuItem.setText(profileLibraryDo.getTitle());
-		setUnitId(profileLibraryDo.getGooruOid());
-	}
-
-	public Label getUnitMenuItemPanel() {
-		return unitMenuItem;
-	}
-
-	public String getUnitId() {
-		return unitId;
-	}
-
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
-	}
-	public Integer getChildCount() {
-		return childCount;
-	}
-
-	public void setChildCount(Integer childCount) {
-		this.childCount = childCount;
-	}
 }
