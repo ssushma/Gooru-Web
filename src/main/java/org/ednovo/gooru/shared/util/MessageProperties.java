@@ -2256,9 +2256,9 @@ public interface MessageProperties {
     	String GL1766 = "http://financiallycapable.org/";
     	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
     	
-    	String GL1768 = "An aggregator is a site that curates learning content from around the Web.";
+    	String GL1768 = "An aggregator is a site that collects learning content from around the Web.";
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
-    	String GL1770 = "Open educational resources (OER) are freely accessible, openly licensed documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
+    	String GL1770 = "Open educational resources (OER) are<b> freely accessible, openly licensed </b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
     	
     	String GL1771 = "Create a Class";
