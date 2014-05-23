@@ -101,7 +101,7 @@ public class EditClasspageView extends
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label noAssignmentsMessageLblTwo;
+	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel;
 	
 	@UiField Image imgClasspageImage;
 	
@@ -1218,6 +1218,7 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			assignmentsTab.addStyleName(res.css().selected());
+			assignmentsDirectionsLabel.setVisible(true);
 
 			classListTab.getElement().setClassName("");
 			
@@ -1254,6 +1255,7 @@ public class EditClasspageView extends
 	public class ClassListTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			assignmentsDirectionsLabel.setVisible(false);
 			classListTab.addStyleName(res.css().selected());
 			reportsTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
@@ -1286,6 +1288,7 @@ public class EditClasspageView extends
 	public class reportsTabClicked implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			assignmentsDirectionsLabel.setVisible(false);
 			reportsTab.addStyleName(res.css().selected());
 			classListTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");

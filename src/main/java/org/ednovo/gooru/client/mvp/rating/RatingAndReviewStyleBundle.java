@@ -44,4 +44,5 @@ import com.google.gwt.resources.client.CssResource;
 public interface RatingAndReviewStyleBundle extends CssResource {
 	String creatorReviewPanel();
 	String editReview();
+	String filled();
 }

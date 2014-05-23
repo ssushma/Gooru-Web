@@ -57,6 +57,7 @@
 							</g:HTMLPanel>
 							<g:HTMLPanel ui:field="duedateContainer">
 								</g:HTMLPanel>
+								<g:Label>Reminder: In your Class, assignments are sorted by most recent due date. Assignments with no due dates will appear at the bottom of the page.</g:Label>
 						</g:HTMLPanel>
 
 						
