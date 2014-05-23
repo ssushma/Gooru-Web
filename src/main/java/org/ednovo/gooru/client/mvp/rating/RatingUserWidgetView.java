@@ -36,7 +36,7 @@ public class RatingUserWidgetView extends Composite {
 	
 	public void setData(StarRatingsDo starRatingsDo) {
 		userName.setText(starRatingsDo.getCreator().getUsername());
-		timeStamp.setText("3 days ago");
+		//timeStamp.setText("3 days ago");
 		review.setText(starRatingsDo.getFreeText());
 		
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {

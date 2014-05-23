@@ -15,36 +15,24 @@
                         <div class="{style.distribution} {style.barGraph}">
                             <h3>Rating Distribution</h3>
                                 <div class="{style.label}">Excellent</div>
-                                <div id="data-one" class="{style.bar}" style="width: 60%"></div> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
+                                <g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <div class="{style.label}">Very Good</div>
-                                <div id="data-two" class="{style.bar}" style="width: 100%"></div> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
+                                <g:HTMLPanel styleName="{style.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <div class="{style.label}">Good</div>
-                                <div id="data-three" class="{style.bar}" style="width: 60%"></div> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
+                                <g:HTMLPanel styleName="{style.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <div class="{style.label}">Fair</div>
-                                <div id="data-four" class="{style.bar}" style="width: 30%"></div> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
+                                <g:HTMLPanel styleName="{style.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <div class="{style.label}">Poor</div>
-                                <div id="data-four" class="{style.bar}" style="width: 20%"></div> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
+                                <g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
                                 <br/>
                         </div>
                         <h3> Average Rating</h3>
                          <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
-                        <!-- <div class="{style.average}">
-                            <h3>Average Rating</h3>
-                            <div class="{style.rating}">
-                                   <g:InlineLabel styleName="{style.star}" ui:field="oneStar"></g:InlineLabel>
-                               <g:InlineLabel styleName="{style.star}" ui:field="twoStar"></g:InlineLabel>
-                               <g:InlineLabel styleName="{style.star}" ui:field="threeStar"></g:InlineLabel>
-                               <g:InlineLabel styleName="{style.star}" ui:field="fourStar"></g:InlineLabel>
-                               <g:InlineLabel styleName="{style.star}" ui:field="fiveStar"></g:InlineLabel>
-                                <g:InlineLabel ui:field="averageStarRating"></g:InlineLabel>
-                            </div>
-                        </div> -->
                     </div>
-                       <button class="secondary {style.userRatingPreviewBtn}">Preview Resource</button>
 					<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
 					   <g:Label styleName="{style.rateMsg}" ui:field="rateMsg">Do you want to rate this resource?</g:Label>
 					   <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn">Preview and Rate Resource</g:Button>

@@ -139,13 +139,12 @@ h3 {
 
 .barGraph .bar { 
     display:inline-block;
-    width:100px; /* this is the max width for the bars */
+    width:0px; /* this is the max width for the bars */
 }
 
 .bar {
     height:10px;
     background-color: #8CC63E;
-    //float:left;
     display:inline-block;
     vertical-align:middle;
 }
@@ -154,15 +153,15 @@ h3 {
     background-color: #57B53B;
 }
 
-.barGraph .bar:nth-child(11) {
+.data-three {
     background-color: #4E9746;
 }
 
-.barGraph .bar:nth-child(15) {
+.data-four {
     background-color: #45843E;
 }
 
-.barGraph .bar:nth-child(19) {
+.data-five {
     background-color: #0F7A42;
 }
 
