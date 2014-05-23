@@ -31,6 +31,8 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -90,5 +92,36 @@ public interface ProfilePageService extends BaseService {
 	
 	void deleteCourseUserProfile(CodeDo codeDo, String userLevel);
 	
+	/**
+	 * @function getProfileLibraryWorkspace
+	 * @return : ProfileLibraryListDo
+	 * @description: Get the list of the workspace of the partners
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param sharingType
+	 * @parm(s) : @param collectionType
+	 * @throws : GwtException
+	 */
+	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken) throws GwtException;
 	
+	/**
+	 * Get paginated workspace API
+	 * @return serialized created {@link ProfileLibraryListDo}
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param parentId
+	 * @parm(s) : @param sharingType
+	 * @throws GwtException
+	 */
+	public ProfileLibraryListDo getProfilePaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException;
+	
+	/**
+	 * @function getConcept 
+	 * @return : ConceptDo
+	 * @description: Get the Collection data for a concept
+	 * @param: gooruOid
+	 * @param: skipCollectionItems
+	 * @throws : GwtException
+	 */
+	public ProfileLibraryDo getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException;
+
 }
