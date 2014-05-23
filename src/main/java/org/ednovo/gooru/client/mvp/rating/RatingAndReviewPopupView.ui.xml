@@ -30,17 +30,19 @@
                                 <div id="data-four" class="{style.bar}" style="width: 20%"></div> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
                                 <br/>
                         </div>
-                        <div class="{style.average}">
+                        <g:Label> Average Rating</g:Label>
+                         <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
+                        <!-- <div class="{style.average}">
                             <h3>Average Rating</h3>
                             <div class="{style.rating}">
-                                   <g:InlineLabel styleName="{style.star}" ui:field="oneStar"></g:InlineLabel><!--
-                                --><g:InlineLabel styleName="{style.star}" ui:field="twoStar"></g:InlineLabel><!--
-                                --><g:InlineLabel styleName="{style.star}" ui:field="threeStar"></g:InlineLabel><!--
-                                --><g:InlineLabel styleName="{style.star}" ui:field="fourStar"></g:InlineLabel><!--
-                                --><g:InlineLabel styleName="{style.star}" ui:field="fiveStar"></g:InlineLabel>
+                                   <g:InlineLabel styleName="{style.star}" ui:field="oneStar"></g:InlineLabel>
+                               <g:InlineLabel styleName="{style.star}" ui:field="twoStar"></g:InlineLabel>
+                               <g:InlineLabel styleName="{style.star}" ui:field="threeStar"></g:InlineLabel>
+                               <g:InlineLabel styleName="{style.star}" ui:field="fourStar"></g:InlineLabel>
+                               <g:InlineLabel styleName="{style.star}" ui:field="fiveStar"></g:InlineLabel>
                                 <g:InlineLabel ui:field="averageStarRating"></g:InlineLabel>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                        <button class="secondary {style.userRatingPreviewBtn}">Preview Resource</button>
                     <g:HTMLPanel ui:field="reviewsContainer">

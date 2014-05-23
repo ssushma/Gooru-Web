@@ -2258,7 +2258,7 @@ public interface MessageProperties {
     	
     	String GL1768 = "An aggregator is a site that collects learning content from around the Web.";
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
-    	String GL1770 = "Open educational resources (OER) are<b> freely accessible, openly licensed </b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
+    	String GL1770 = "Open educational resources (OER) are <b>freely accessible</b>, <b>openly licensed</b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
     	
     	String GL1771 = "Create a Class";
