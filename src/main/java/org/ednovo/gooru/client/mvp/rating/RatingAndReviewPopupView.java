@@ -26,12 +26,12 @@ package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -46,7 +46,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -71,10 +70,12 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
 
-	@UiField HTMLPanel reviewsContainer;
+	@UiField HTMLPanel reviewsContainer, userRatingContainer;
 
 	@UiField FlowPanel ratingWidgetPanel;
 
+	@UiField Button rateResourceBtn;
+	
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();;
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
@@ -117,7 +118,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@Override
 	public void displayPopUp(String resourceTitle, String gooruOid) {
-		System.out.println("titlereceived::"+resourceTitle);
+		userRatingContainer.setVisible(false);
 		lblResourceTitle.setText("Reviews for "+resourceTitle);
 		getAverageRatingForContent(gooruOid);
 		getUserRatingsAndReviews(gooruOid);
@@ -152,9 +153,15 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	@Override
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
 		reviewsContainer.clear();
+		if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			userRatingContainer.setVisible(true);
+		} else {
+			userRatingContainer.setVisible(false);
+		}
+		
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
-			HTMLEventPanel reviewContainer = new HTMLEventPanel("");
+/*			HTMLEventPanel reviewContainer = new HTMLEventPanel("");
 			HTMLPanel pnlHeader = new HTMLPanel("");
 			final HTMLPanel htmlEdittingContainer = new HTMLPanel("");
 			final HTMLPanel ratingPanel = new HTMLPanel("");
@@ -215,7 +222,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			ratingPanel.add(reviewsLabel);
 			reviewContainer.add(ratingPanel);
 			reviewContainer.add(htmlEdittingContainer);
-			reviewsContainer.add(reviewContainer);
+*/			
+			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews)));
 
 		}
 
