@@ -1222,7 +1222,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	}
 
 	public void getPartnerWorkspaceFolders(String partnerName) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, COLLECTION_TYPE, new AsyncCallback<PartnerFolderListDo>(){
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, null, getPlaceToken(), new AsyncCallback<PartnerFolderListDo>(){
 			@Override
 			public void onFailure(Throwable caught) {}
 			
