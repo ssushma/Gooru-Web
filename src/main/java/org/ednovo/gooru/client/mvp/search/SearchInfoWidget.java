@@ -129,12 +129,12 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		educationallLbl.setText(GL1720);
 		eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
 		eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
-		eduRoleLbl.setText("Educational Role:");
+		eduRoleLbl.setText(GL1867);
 		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
 		ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
 		momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
 		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
-		schLevelLbl.setText("School Level"+GL_SPL_SEMICOLON);
+		schLevelLbl.setText(GL1868+GL_SPL_SEMICOLON);
 		
 		//Resource Info Static data
 		resourceInfoLbl.setText(GL1716);
@@ -144,7 +144,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
 		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
 		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
-		keywordsTitle.setText("Keywords"+GL_SPL_SEMICOLON);
+		keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 		adsTitle.setText(GL1800+GL_SPL_SEMICOLON);
 		//Accessibility Static data
 		accesibilityLbl.setText(GL1703);
