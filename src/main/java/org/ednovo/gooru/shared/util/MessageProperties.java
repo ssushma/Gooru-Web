@@ -645,7 +645,7 @@ public interface MessageProperties {
 	String GL0504 = "Click on the Teach tab above to create one and to start assigning Collections to your students.";//duplicate for GL0108 GL0109
 	String GL0505 = "Copying...";
 	//5.12 Messages
-	String GL0506 = "Browse our Library";		//No search Results.
+	String GL0506 = "Browse the Library";		//No search Results.
 	String GL0507 = "No result for";
 	String GL0508 = "See more";
 	String GL0509 = "See less";
@@ -849,7 +849,7 @@ public interface MessageProperties {
 	
 	//collection does not exists.
 	String GL0655=	"This collection is no longer available."; //HTMLPanel
-	String GL0656=	"It’s either been deleted or made private by the creator";//HTMLPanel
+	String GL0656=	"It's either been deleted or made private by the collection owner.";//HTMLPanel
 	String GL0657=	"Looking for other collections to use? Why don't you browse the courses in our library?";//HTMLPanel
 	String GL0697 ="NoHeader";
 	String GL1831 ="Browse the Library";
@@ -2247,7 +2247,7 @@ public interface MessageProperties {
 		
 		String GL1760 = "Oops! Looks like this resource is no longer available!";
 		String GL1761 = "Click the next arrow to keep going to the next resource!";
-		String GL1762 = "You are seeing this page because this resource no longer exists or has been deleted by the owner. ";
+		String GL1762 = "You are seeing this page because the resource is temporarily unavailable, or has been removed from our site.";
 		
 		String GL1762_1 = "Enter a Class Code";
 		
@@ -2259,7 +2259,7 @@ public interface MessageProperties {
     	
     	String GL1768 = "An aggregator is a site that collects learning content from around the Web.";
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
-    	String GL1770 = "Open educational resources (OER) are<b> freely accessible, openly licensed </b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
+    	String GL1770 = "Open educational resources (OER) are <b>freely accessible</b>, <b>openly licensed</b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
     	
     	String GL1771 = "Create a Class";

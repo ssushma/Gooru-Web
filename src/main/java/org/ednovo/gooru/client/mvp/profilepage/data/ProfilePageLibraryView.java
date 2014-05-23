@@ -33,9 +33,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.LeftMenuItemView;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
-import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -102,11 +101,11 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	}
 	
 	@Override
-	public void setUnitList(final PartnerFolderListDo partnerFolderListDo) {
+	public void setUnitList(final ProfileLibraryListDo profileLibraryListDo) {
 		leftNav.clear();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
 		int j = 0;
-		final ArrayList<PartnerFolderDo> folderList = partnerFolderListDo.getSearchResult();
+		final ArrayList<ProfileLibraryDo> folderList = profileLibraryListDo.getSearchResult();
 		for(int i = 0; i<folderList.size(); i++) {
 			LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
 			leftNav.add(leftMenuItemView);
@@ -120,9 +119,9 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				leftMenuItemView.addStyleName(style.active());
 				unitListId = folderList.get(i).getGooruOid();
 				if(folderList.get(i).getType().equals("scollection")) {
-					setTopicListData(null,partnerFolderListDo.getCollections().get(i) , unitListId);
+					setTopicListData(folderList.get(i),  unitListId);
 				} else {
-					setTopicListData(folderList.get(i).getFolderItems(), null, unitListId);
+					setTopicListData(folderList.get(i).getCollectionItems(),  unitListId);
 				}
 			}
 		}
@@ -148,31 +147,54 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					unitListId = leftMenuItemView.getUnitId();
 					if(finalWidgetCount==0) {
 						if(folderList.get(finalWidgetCount).getType().equals("scollection")) {
-							setTopicListData(null, partnerFolderListDo.getCollections().get(finalWidgetCount), unitListId);
+							setTopicListData(folderList.get(finalWidgetCount),  unitListId);
 						} else {
-							setTopicListData(folderList.get(finalWidgetCount).getFolderItems(), null, unitListId);
+							setTopicListData(folderList.get(finalWidgetCount).getCollectionItems(), unitListId);
 						}
 					} else {
-						getPresenter().getPartnerChildFolderItems(unitListId, 1);
+						if(folderList.get(finalWidgetCount).getType().equals("scollection")) {
+							getPresenter().getProfileLibraryCollection(unitListId, false);
+						} else {
+							getPresenter().getPartnerChildFolderItems(unitListId, 1);
+						}
 					}
 				}
 			});
 			widgetCount++;
 		}
 	}
+	
+	@Override
+	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
+		contentScroll.clear();
+		try {
+			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection"));
+			contentScroll.setVisible(true);
+			loadingPanel(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			loadingPanel(false);
+		}
+	}
 
 	@Override
-	public void setTopicListData(ArrayList<PartnerFolderDo> folderListDo, ConceptDo conceptDo, String folderId) {
+	public void setTopicListData(ArrayList<ProfileLibraryDo> folderListDo, String folderId) {
 		contentScroll.clear();
 		try {
 			int count = 0;
-			if(conceptDo!=null) {
-				contentScroll.add(new ProfileTopicListView(conceptDo, count, AppClientFactory.getCurrentPlaceToken()));
-			} else {
+			if(folderListDo.size()>0) {
 				for(int i = 0; i <folderListDo.size(); i++) {
 					count++;
-					contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+					if(folderListDo.get(i).getType().equals("scollection")) {
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
+					} else {
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+					}
 				}
+			} else {
+				HTMLPanel emptyContainer = new HTMLPanel("");
+				emptyContainer.setStyleName(style.emptyFolderContainer());
+				contentScroll.add(emptyContainer);
 			}
 			contentScroll.setVisible(true);
 			loadingPanel(false);
@@ -180,7 +202,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			e.printStackTrace();
 			loadingPanel(false);
 		}
-
 	}
 	
 	@Override
@@ -230,4 +251,5 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			myCollectionsBtn.setVisible(false);
 		}
 	}
+
 }
