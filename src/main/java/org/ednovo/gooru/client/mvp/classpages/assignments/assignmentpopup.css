@@ -251,6 +251,7 @@
 .assignmentControlsContainer {
 	margin: 16px 24px 0px 0px;
 	float:left;
+	width:100%;
 }
 
 .assignmentDirectionsContainer {
@@ -368,13 +369,13 @@
 .popupContainer{
 	width:450px;
 	padding:3px;
-	height:400px;
+	height:430px;
 	background: white;
 	z-index: 999;
 }
 .popupContainer .popupContent{
 	border:1px solid #DDD;
-	height:400px;
+	height:420px;
 }
 
 .copyResourcePopupContainer{

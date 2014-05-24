@@ -7,13 +7,26 @@
    <g:Label styleName="{style.timestamp}" ui:field="timeStamp"></g:Label>
    <g:Button styleName="secondary {style.editReview}" ui:field="editReview">Edit your rating and review</g:Button>
    <hr/>
+   <g:HTMLPanel ui:field="editReviewLabelContainer">
    <g:HTMLPanel styleName="{style.rating}">
-      <g:InlineHTML styleName="{style.star} {style.filled}"></g:InlineHTML>
-      <g:InlineHTML styleName="{style.star} {style.filled}"></g:InlineHTML>
-      <g:InlineHTML styleName="{style.star} {style.filled}"></g:InlineHTML>
-      <g:InlineHTML styleName="{style.star}"></g:InlineHTML>
-      <g:InlineHTML styleName="{style.star}"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="starOne"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="starTwo"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="starThree"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="starFour"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="starFive"></g:InlineHTML>
    </g:HTMLPanel>
    <g:Label styleName="{style.review}" ui:field="review"></g:Label>
+   </g:HTMLPanel>
+   <g:HTMLPanel ui:field="editReviewTextareaContainer">
+      <g:HTMLPanel styleName="{style.rating}">
+      <g:InlineHTML styleName="{style.star}" ui:field="userratingOne"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="userratingTwo"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="userratingThree"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="userratingFour"></g:InlineHTML>
+      <g:InlineHTML styleName="{style.star}" ui:field="userratingFive"></g:InlineHTML>
+   </g:HTMLPanel>
+   <g:TextArea styleName="{style.textAreaReviewEdit}" ui:field="editReviewText"></g:TextArea>
+   <g:Button styleName="primary" ui:field="editReviewBtn">Edit</g:Button><g:Button styleName="secondary" ui:field="cancelReviewBtn">Cancel</g:Button>
+   </g:HTMLPanel>
 </g:HTMLPanel>
 </ui:UiBinder>

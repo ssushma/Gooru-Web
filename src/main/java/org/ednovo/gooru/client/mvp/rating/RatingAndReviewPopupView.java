@@ -26,12 +26,15 @@ package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -172,76 +175,18 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	@Override
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
 		reviewsContainer.clear();
+		if(result.size()>0)
+		{
 		if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
 			userRatingContainer.setVisible(true);
 		} else {
 			userRatingContainer.setVisible(false);
 		}
+		}
 		
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
-/*			HTMLEventPanel reviewContainer = new HTMLEventPanel("");
-			HTMLPanel pnlHeader = new HTMLPanel("");
-			final HTMLPanel htmlEdittingContainer = new HTMLPanel("");
-			final HTMLPanel ratingPanel = new HTMLPanel("");
-			HTML hrTag = new HTML("<hr/>");
-			Label usernameLabel = new Label();
-			usernameLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ratingUserName());
-			if(result.get(userReviews).getCreator() != null)
-			{
-				if(result.get(userReviews).getCreator().getUsername().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getUsername()))
-				{
-					pnlHeader.getElement().setAttribute("style", "height:38px;");
-					reviewContainer.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().htmlUserReviewContainer());
-					final Button btnEditRating = new Button();
-					btnEditRating.setText("Edit your rating and review");						
-					btnEditRating.setStyleName("secondary");
-					btnEditRating.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().editRatingBtn());
-
-					TextArea txtArea = new TextArea();
-					txtArea.setText(result.get(userReviews).getFreeText());
-					txtArea.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().textAreaRating());
-					Button btnEditReview = new Button();
-					Button btnCancel = new Button();
-
-					btnEditReview.setText("Edit");
-					btnEditReview.setStyleName("primary");
-					btnCancel.setText("Cancel");
-					btnCancel.setStyleName("secondary");
-
-					htmlEdittingContainer.add(txtArea);
-					htmlEdittingContainer.add(btnEditReview);		
-					htmlEdittingContainer.add(btnCancel);
-					htmlEdittingContainer.setVisible(false);
-
-					btnEditRating.addClickHandler(new OnClickEditRatingButton(htmlEdittingContainer,ratingPanel)); 
-					btnCancel.addClickHandler(new OnClickCancelRatingButton(htmlEdittingContainer,ratingPanel));
-					reviewContainer.addMouseOverHandler(new OnRatingReviewContainerMouseOver(btnEditRating)); 
-					reviewContainer.addMouseOutHandler(new OnRatingReviewContainerMouseOut(btnEditRating));
-					
-					pnlHeader.add(btnEditRating);
-					usernameLabel.setText("Your rating and review");	
-				}
-				else
-				{
-					usernameLabel.setText(result.get(userReviews).getCreator().getUsername());	
-				}
-			}
-			pnlHeader.add(usernameLabel);
-			reviewContainer.add(pnlHeader);
-			RatingWidgetView ratingWidgetView=new RatingWidgetView();
-			ratingWidgetView.getRatingCountLabel().setText(result.get(userReviews).getScore().toString());
-			ratingWidgetView.setAvgStarRating(result.get(userReviews).getScore());
-			//reviewsContainer.add(reviewContainer);
-			reviewContainer.add(hrTag);					
-			InlineLabel reviewsLabel = new InlineLabel();
-			reviewsLabel.setText(result.get(userReviews).getFreeText());		
-
-			ratingPanel.add(ratingWidgetView);
-			ratingPanel.add(reviewsLabel);
-			reviewContainer.add(ratingPanel);
-			reviewContainer.add(htmlEdittingContainer);
-*/			
+		
 			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews)));
 
 		}
@@ -314,5 +259,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		params.put("pn", "resource");
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
 	}
+	
+
 
 }
