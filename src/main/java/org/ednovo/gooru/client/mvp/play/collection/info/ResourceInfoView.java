@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
@@ -1929,38 +1930,40 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	}
 	
 	@UiHandler("addTagsBtn")
-	public void onAddTagsBtnClicked(ClickEvent clickEvent) 
-	{
-/*		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
-		String resourceIdVal = collectionRequest.getParameter("rid", null);*/
-		popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
-			
-			@Override
-			public void closePoup(boolean isCancelclicked) {
-		        this.hide();
-		        if(!isCancelclicked){
-		        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
+	public void onAddTagsBtnClicked(ClickEvent clickEvent) {
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			/*		PlaceRequest collectionRequest = AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
+			String resourceIdVal = collectionRequest.getParameter("rid", null);*/
+			popup=new AddTagesPopupView(collectionItemDoGlobal.getResource().getGooruOid()) {
+				
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        	 SuccessPopupViewVc success = new SuccessPopupViewVc() {
 
-							@Override
-							public void onClickPositiveButton(ClickEvent event) {
-								this.hide();
-							}
-						};
-						success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
-						success.setHeight("253px");
-						success.setWidth("450px");
-						success.setPopupTitle(GL1795);
-						success.setDescText(GL1796);
-						success.enableTaggingImage();
-						success.setPositiveButtonText(GL0190);
-						success.center();
-						success.show();
-						success.getElement().getStyle().setZIndex(99999);
-		        }
-			}
-		};
-		popup.show();
-		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+								@Override
+								public void onClickPositiveButton(ClickEvent event) {
+									this.hide();
+								}
+							};
+							success.setGlassStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTagsGlassPanel());
+							success.setHeight("253px");
+							success.setWidth("450px");
+							success.setPopupTitle(GL1795);
+							success.setDescText(GL1796);
+							success.enableTaggingImage();
+							success.setPositiveButtonText(GL0190);
+							success.center();
+							success.show();
+							success.getElement().getStyle().setZIndex(99999);
+			        }
+				}
+			};
+			popup.show();
+			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
 	}
-
 }
