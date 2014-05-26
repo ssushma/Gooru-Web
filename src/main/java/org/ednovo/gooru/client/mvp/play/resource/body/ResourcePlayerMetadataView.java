@@ -176,7 +176,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		rating4 = new SimpleRadioButton("rating");
 		rating5 = new SimpleRadioButton("rating");*/
 		
-		starValue.setVisible(false);
+//		starValue.setVisible(false);
+		starValue.setVisible(true);
+		starValue.setText(GL1879);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
@@ -1191,7 +1193,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			starValue.setVisible(true);
-			starValue.setText("Rate this resource");
+			starValue.setText(GL1879);
 			setStarRatingValue(0);
 		}
 		
@@ -1258,26 +1260,26 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		public void onMouseOver(MouseOverEvent event) {
 			clearAllStars();
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
-				starValue.setVisible(false);
+//				starValue.setVisible(false);
 				mouseOverStarValue.setText(POOR);
 				
 				one_star.getElement().addClassName(FILLED_BLUE);
 				
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
-				starValue.setVisible(false);
+//				starValue.setVisible(false);
 				mouseOverStarValue.setText(FAIR);
 				
 				one_star.getElement().addClassName(FILLED_BLUE);
 				two_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
-				starValue.setVisible(false);
+//				starValue.setVisible(false);
 				mouseOverStarValue.setText(GOOD);
 				
 				one_star.getElement().addClassName(FILLED_BLUE);
 				two_star.getElement().addClassName(FILLED_BLUE);
 				three_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
-				starValue.setVisible(false);
+//				starValue.setVisible(false);
 				mouseOverStarValue.setText(VERY_GOOD);
 				
 				one_star.getElement().addClassName(FILLED_BLUE);
@@ -1285,7 +1287,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				three_star.getElement().addClassName(FILLED_BLUE);
 				four_star.getElement().addClassName(FILLED_BLUE);
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
-				starValue.setVisible(false);
+//				starValue.setVisible(false);
 				mouseOverStarValue.setText(EXCELLENT);
 				
 				one_star.getElement().addClassName(FILLED_BLUE);

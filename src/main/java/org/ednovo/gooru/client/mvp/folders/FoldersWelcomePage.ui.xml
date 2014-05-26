@@ -21,7 +21,7 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>	
 						<g:HTMLPanel styleName="{WelcomePage.collectionContainer}">
-							<g:Image styleName="{WelcomePage.thumbnailImage}" url="images/EmptyPages/thumbnail.png" width="119"
+							<g:Image ui:field="imgSampleCollection" styleName="{WelcomePage.thumbnailImage}" url="images/EmptyPages/thumbnail.png" width="119"
 								height="74" />
 						</g:HTMLPanel>
 				</g:HTMLPanel>

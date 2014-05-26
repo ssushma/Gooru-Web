@@ -2378,4 +2378,6 @@ public interface MessageProperties {
     	String GL1876 = "Keywords";
     	String GL1877 =	"Standards Code";
     	String GL1878 ="Adds";
+    	
+    	String GL1879 = "Rate this resource";
    }
