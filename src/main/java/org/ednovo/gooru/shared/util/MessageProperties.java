@@ -745,7 +745,7 @@ public interface MessageProperties {
 	
 	//Add collection view messages.
 	
-	String GL0589 =	"View the collection in the Organize tab";
+	String GL0589 =	"View the collection in the My Collections tab";
 	String GL0590 =	"Add";
 	String GL0591 ="Adding....";
 	String GL0592 ="Hide";
@@ -1875,8 +1875,8 @@ public interface MessageProperties {
 		String GL1469=	"Like this resource?";
 		String GL1470="Top Collections that Use this Resource";
 		String GL1471="Pages";
-		String GL1472=	"Edit this folder in Organize";
-		String GL1473=	"Edit this collection in Organize";
+		String GL1472=	"Edit this folder in My Collections";
+		String GL1473=	"Edit this collection in My Collections";
 		String GL1474=	"Get started by creating a collection!";
 		String GL1475="Please select a collection.";
 		
@@ -2079,7 +2079,7 @@ public interface MessageProperties {
     	String GL1627="You are currently logged out! Please log in to view your data on this collection.";
     	String GL1628 = "Aggregator";
     	String GL1629 = "e.g. YouTube";
-    	String GL1630 = "View in Organize";
+    	String GL1630 = "View in My Collections";
     	String GL1631="Back to the class";
     	String GL1632 = "Looks like this class does not exist!";
     	
