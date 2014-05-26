@@ -32,12 +32,15 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -54,6 +57,8 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 			lblFour, lblFive;
 	
 	@UiField HTML htmlWalkSampleCollection;
+	
+	@UiField Image imgSampleCollection;
 	
 	@UiField
 	Button btnCreateCollection;
@@ -77,6 +82,15 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 		
 		
 		setText();
+		
+		
+		imgSampleCollection.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.open("#preview-play&id=7ab93f76-bae6-4971-8f15-c08801e3a4c7", "_blank", "");
+			}
+		});
 	}
 
 	/**
