@@ -778,6 +778,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());
+			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
@@ -820,7 +821,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.add(imgNotFriendly);
 			panelNotMobileFriendly.setVisible(true);
 			//added for OER search
-			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
+			
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(144, Unit.PX);
 			oer.getElement().getStyle().setTop(-18, Unit.PX);
