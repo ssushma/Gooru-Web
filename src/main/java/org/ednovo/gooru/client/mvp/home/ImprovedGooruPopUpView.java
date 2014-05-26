@@ -76,16 +76,16 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 	HTMLEventPanel closeButton;
 
 	@UiField
-	Anchor lblSupportLink, mobileLearnMore, termsofuselearnmore, descLinkThree, descLinkFive;
+	Anchor lblSupportLink, mobileLearnMore, termsofuselearnmore, descLinkThree, descLinkFive,descLinkSix,descLinkSeven,descLinkEight;
 
 	@UiField
-	InlineLabel contenttextlbl, termsofusetxt, aboutThree, aboutFour, aboutFive;
+	InlineLabel contenttextlbl, termsofusetxt, aboutThree, aboutFour, aboutFive,aboutSix,aboutSeven,aboutEight;
 
 	@UiField
 	HTMLPanel GooruLinkOutercontainer;
 	@UiField
 	Label headertext, subtext, goorutext, headersubtext, contenttext,
-			termsofuselbl, lblTitleThree, lblTitleFour, lblTitleFive;
+			termsofuselbl, lblTitleThree, lblTitleFour, lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight;
 
 	@UiField
 	HTML questiontxt;
@@ -141,6 +141,19 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		
 		lblTitleFour.setText(GL0630);
 		aboutFour.setText(GL0627);
+		
+		lblTitleSix.setText(GL1880);
+		aboutSix.setText(GL1881);
+		descLinkSix.setText(GL1239);
+		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202222123");
+		
+		lblTitleSeven.setText(GL1882);
+		aboutSeven.setText(GL1883);
+
+		lblTitleEight.setText(GL1884);
+		aboutEight.setText(GL1885);
+		descLinkEight.setText(GL1239);
+		descLinkEight.setHref("http://support.goorulearning.org/hc/en-us/articles/200941223");
 		
 //		lblTitleFive.setText(GL0630_1);
 //		aboutFive.setText(GL0627_1);
