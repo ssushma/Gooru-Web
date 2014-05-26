@@ -81,7 +81,7 @@ public class ResourceDo extends ContentDo {
     private Date createdOn;
     
 	private SearchRatingsDo searchRatingsDo;
-
+	private SearchRatingsDo ratings;
 
     /** need to change these after api is finalized  **/
 
@@ -536,4 +536,11 @@ public class ResourceDo extends ContentDo {
 	public void setSearchRatingsDo(SearchRatingsDo searchRatingsDo) {
 		this.searchRatingsDo = searchRatingsDo;
 	}
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
+	}
+	
 }

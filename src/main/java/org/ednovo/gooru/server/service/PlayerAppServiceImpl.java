@@ -1207,8 +1207,10 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JSONObject jsonObject = null;
 		try {
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_STAR_RATINGS,gooruOid, getLoggedInSessionToken());
+			System.out.println("---->>>> update -- "+url); 
 			JSONObject updateStarRatingsJsonObj = new JSONObject();
 			updateStarRatingsJsonObj.put(SCORE,score);
+			System.out.println("--- pay load -- "+updateStarRatingsJsonObj.toString()); 
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(),updateStarRatingsJsonObj.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 //			jsonObject= jsonRepresentation.getJsonObject();
@@ -1299,8 +1301,13 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid) {
 		JsonRepresentation jsonRep=null;
 		JSONObject jsonObject = null;
+		String url=null;
 		try {
-			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken());
+			if(gooruUid!=null&& !gooruUid.equals("")){
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_LOGGED_IN_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken(),gooruUid);
+			}else{
+				url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_RATINGS_REVIEWS,resourceId,getLoggedInSessionToken());
+			}
 			System.out.println("urlVal::"+url);
 			JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonObject = jsonResponseRep.getJsonRepresentation().getJsonObject();
