@@ -123,12 +123,21 @@ public class ResourceSearchResultDo implements Serializable {
 	private int questionCount;
 	
 	private SearchRatingsDo searchRatingsDo;
+	private SearchRatingsDo ratings;
 	
 	private List<String> publisher;
 	
 	private List<String> aggregator;
 
 	
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
+	}
+
 	/** 
 	 * This method is to get the mediaType
 	 */

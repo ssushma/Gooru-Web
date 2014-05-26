@@ -30,6 +30,7 @@
 			white-space: nowrap;
 			cursor: pointer;
 			float: left;
+			width: 100%;
 		}
 		
 		.resourceThumbnail {
@@ -65,7 +66,10 @@
 			float: left;
 			cursor: pointer;
 		}
-
+		.ratingsPanel{
+			width: 100%;
+			float: left;
+		}
 	</ui:style>
 	<g:HTMLPanel>
 		<g:FlowPanel styleName="{style.resourceThumbnailPanel}" ui:field="internalPanel1">
@@ -77,6 +81,7 @@
 			</g:HTMLPanel>
 				<g:Image styleName="{style.imgHeight}" ui:field="imgNotFriendly"></g:Image>
 				<g:FlowPanel styleName="{style.metaDataPanel}" ui:field="metaDataFloPanel" />
+				<g:FlowPanel styleName="{style.ratingsPanel}" ui:field="ratingWidgetPanel"></g:FlowPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>
 	</g:HTMLPanel>
