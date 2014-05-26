@@ -56,12 +56,14 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	@Override
 	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
 		ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
-		resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				getUiHandlers().showRatingAndReviewPopup(searchResultDo);
-			}
-		});
+		if(searchResultDo.getSearchRatingsDo().getCount()>0){
+			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					getUiHandlers().showRatingAndReviewPopup(searchResultDo);
+				}
+			});
+		}
 		return resourceSearchResultVc;
 	}
 	

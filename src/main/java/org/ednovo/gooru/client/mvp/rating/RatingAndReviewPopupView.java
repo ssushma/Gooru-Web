@@ -194,11 +194,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 					userRatingContainer.setVisible(true);
 				}
 			}
-		/*if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			userRatingContainer.setVisible(true);
-		} else {
-			userRatingContainer.setVisible(false);
-		}*/
 		}else{
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				userRatingContainer.setVisible(true);
