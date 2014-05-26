@@ -60,7 +60,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		editReviewText.setText(starRatingsDo.getFreeText());
 		editReview.setVisible(false);
 		editReviewTextareaContainer.setVisible(false);
-		if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
+		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 			userName.setText(starRatingsDo.getCreator().getUsername());
@@ -105,10 +105,57 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				starFive.addStyleName(style.filled());
 			}
 		}else{
-			reviewContainer.setVisible(false);
-			userName.setText(starRatingsDo.getCreator().getUsername());
-			editReviewLabelContainer.setVisible(false);
+			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
+				reviewContainer.setVisible(true);
+				editReviewLabelContainer.setVisible(true);
+				userName.setText(starRatingsDo.getCreator().getUsername());
+				if(starRatingsDo.getScore() == 1)
+				{
+					starOne.addStyleName(style.filled());
+					starTwo.removeStyleName(style.filled());
+					starThree.removeStyleName(style.filled());
+					starFour.removeStyleName(style.filled());
+					starFive.removeStyleName(style.filled());
+				}
+				else if(starRatingsDo.getScore() == 2)
+				{
+					starOne.addStyleName(style.filled());
+					starTwo.addStyleName(style.filled());
+					starThree.removeStyleName(style.filled());
+					starFour.removeStyleName(style.filled());
+					starFive.removeStyleName(style.filled());
+				}
+				else if(starRatingsDo.getScore() == 3)
+				{
+					starOne.addStyleName(style.filled());
+					starTwo.addStyleName(style.filled());
+					starThree.addStyleName(style.filled());
+					starFour.removeStyleName(style.filled());
+					starFive.removeStyleName(style.filled());
+				}
+				else if(starRatingsDo.getScore() == 4)
+				{
+					starOne.addStyleName(style.filled());
+					starTwo.addStyleName(style.filled());
+					starThree.addStyleName(style.filled());
+					starFour.addStyleName(style.filled());
+					starFive.removeStyleName(style.filled());
+				}
+				else if(starRatingsDo.getScore() == 5)
+				{
+					starOne.addStyleName(style.filled());
+					starTwo.addStyleName(style.filled());
+					starThree.addStyleName(style.filled());
+					starFour.addStyleName(style.filled());
+					starFive.addStyleName(style.filled());
+				}
+			}else{
+				reviewContainer.setVisible(false);
+				userName.setText(starRatingsDo.getCreator().getUsername());
+				editReviewLabelContainer.setVisible(false);
+			}
 		}
+		
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
 			reviewContainer.addStyleName(style.creatorReviewPanel());
 			editReview.addStyleName(style.editReview());
