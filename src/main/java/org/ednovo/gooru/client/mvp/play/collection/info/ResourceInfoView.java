@@ -197,8 +197,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void setAvgRatingWidget() {
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
-		ratingWidgetView.getRatingCountLabel().setText("2");
-		ratingWidgetView.setAvgStarRating(2);
+		ratingWidgetView.getRatingCountLabel().setText(collectionItemDoGlobal.getResource().getRatings().getCount().toString());
+		ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.getElement().getStyle().setFloat(Float.RIGHT);
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
@@ -216,7 +216,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-//			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+		AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid())); 
 		}
 	}
 
