@@ -15,6 +15,7 @@ public class StarRatingsDo implements Serializable {
 	private String assocGooruOid;
 	private String deleteRatingGooruOid=null;
 	private Integer score;
+	private long createdDate;
 	private String freeText;
 	private CreatorDo creator;
 	
@@ -79,6 +80,20 @@ public class StarRatingsDo implements Serializable {
 
 	public void setCreator(CreatorDo creator) {
 		this.creator = creator;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public long getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(long createdDate) {
+		this.createdDate = createdDate;
 	}
 
 
