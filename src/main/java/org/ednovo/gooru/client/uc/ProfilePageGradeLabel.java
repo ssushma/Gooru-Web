@@ -69,6 +69,9 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		addDomHandler(this, ClickEvent.getType());
 		this.profileDo = profileDo;
 		this.setStyleName("profileGradeList");
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
+			this.getElement().getStyle().setMargin(8, Unit.PX);
+		}
 		if(label.equals(KIDER_GARTEN)){
 			this.addStyleName(CollectionCBundle.INSTANCE.css().profileKinderGartenGrade());
             if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
@@ -76,15 +79,6 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 				this.getElement().getStyle().setMarginTop(30, Unit.PX);
 			}
 		}
-		/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
-			
-			if(label.equals(KIDER_GARTEN)){
-				this.addStyleName(Settings.profileKinderGartenGrade());
-			}
-			if(label.equals(HIGHER_EDUCATION)){
-				this.addStyleName(Settings.profileHigherEducationGrade());
-			}
-		}*/
 		
 		if(label.equals(HIGHER_EDUCATION)){
 			this.addStyleName(CollectionCBundle.INSTANCE.css().profileHigherEducationGrade());
@@ -173,22 +167,6 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		});
 	}
 
-	/*Unused Method
-	 * private String join(List<?> list,String separator){
-		StringBuilder builder =null;
-		if(list != null){
-			builder = new StringBuilder();
-			for(Object value:list){
-				if(builder.length() > 0){
-					builder.append(separator);
-				}
-				builder.append(value);
-			}
-		}
-		return builder.toString();
-	}*/
-	
-	
 	private String generateGrade(String gradeTxt){
 		String tmpGradeTxt = "";
 		if (gradeTxt.indexOf("-") > 0){
@@ -238,5 +216,4 @@ public class ProfilePageGradeLabel extends Label implements ClickHandler {
 		}
 		return gradeStr.toString();
 	}
-	
 }
