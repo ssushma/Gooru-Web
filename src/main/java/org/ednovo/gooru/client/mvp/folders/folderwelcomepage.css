@@ -626,6 +626,7 @@ text-decoration: none;
 	vertical-align: top;
 	margin-left: 15px;
 	text-align: right;
+	cursor: pointer;
 }
 
 .sampleCollection{

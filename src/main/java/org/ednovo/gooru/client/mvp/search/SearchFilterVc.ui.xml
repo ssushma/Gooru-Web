@@ -50,6 +50,30 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 			cursor: pointer;
 			font-size: 11px;
 		}
+		.helpIconBtnAggregator {
+			position: absolute;
+			right: 0;
+			margin-top: -14px;
+			margin-right: 58px;
+			color: #0f76bb;
+			cursor: pointer;
+			font-size: 11px;
+			background: url(images/mos/questionmark.png) no-repeat;
+			width: 18px;
+			height: 15px;
+		}
+		.helpIconBtnPublisher {
+			position: absolute;
+			right: 0;
+			margin-top: -14px;
+			margin-right: 65px;
+			color: #0f76bb;
+			cursor: pointer;
+			font-size: 11px;
+			background: url(images/mos/questionmark.png) no-repeat;
+			width: 18px;
+			height: 15px;
+		}
 		.sourceToolTip {
 			position: absolute;
 			margin-top: -10px;
@@ -125,13 +149,15 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		
 		
 		<uc:DisclosurePanelUc  ui:field="aggregatorPanelUc" visible="false">
-		 
+		 <uc:add>
+			 	<g:Label styleName="{style.helpIconBtnAggregator}" ui:field="aggregatorTooltip"/>
+			</uc:add>
 			<uc:add>
 				<uc:AppSuggestBox ui:field="aggregatorSgstBox" width="130px" />
 			</uc:add>
-			<uc:add>
+			<!-- <uc:add>
 			 	<g:Label styleName="{style.helpIconBtn}" ui:field="aggregatorHelpicon" visible="false"/>
-			</uc:add>
+			</uc:add> -->
 			<uc:add>
 			 	<panel:HTMLEventPanel ui:field="aggregatorToolTip" visible="false" styleName="{style.sourceToolTip}"/>
 			</uc:add>
@@ -144,12 +170,15 @@ xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 		</uc:DisclosurePanelUc>
 		
 			<uc:DisclosurePanelUc  ui:field="sourcePanelUc" visible="false">
+			  <uc:add>
+			 	<g:Label styleName="{style.helpIconBtnPublisher}" ui:field="publisherTooltip"/>
+			</uc:add> 
 			<uc:add>
 				<uc:AppSuggestBox ui:field="sourceSgstBox" width="130px" />
 			</uc:add>
-			<uc:add>
+			<!-- <uc:add>
 			 	<g:Label styleName="{style.helpIconBtn}" ui:field="sourceHelpicon" visible="false"/>
-			</uc:add>
+			</uc:add> -->
 			<uc:add>
 			 	<panel:HTMLEventPanel ui:field="sourceToolTip" visible="false" styleName="{style.sourceToolTip}"/>
 			</uc:add>
