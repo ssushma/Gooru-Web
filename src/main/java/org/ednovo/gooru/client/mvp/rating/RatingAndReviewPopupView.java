@@ -80,7 +80,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	private String gooruOid = null;
 	
-	private RatingWidgetView ratingWidgetView= new RatingWidgetView();;
+	private boolean isRated=false;
+	
+	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
 
@@ -177,18 +179,35 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		reviewsContainer.clear();
 		if(result.size()>0)
 		{
-		if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
+			for(int i=0;i<result.size();i++){
+				if(result.get(i).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+					isRated=true;
+					break;
+				}
+			}
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				if(isRated){
+					isRated=false;
+					userRatingContainer.setVisible(false);
+					
+				}else{
+					userRatingContainer.setVisible(true);
+				}
+			}
+		/*if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
 			userRatingContainer.setVisible(true);
 		} else {
 			userRatingContainer.setVisible(false);
-		}
+		}*/
+		}else{
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				userRatingContainer.setVisible(true);
+			}
 		}
 		
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
-		
 			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews)));
-
 		}
 
 	}
