@@ -128,6 +128,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	private static final String REACTIONS_WIDGET="Contentreactions";
 	private static final String RATINGS_WIDGET="Contentratings";
 	private static final int CHILD_AGE=13;
+	private static final String DEFAULT_RATING_TEXT="Rate this resource";
 	private StarRatingsDo starRatingsDo;
 	
 	private static final String FILLED_BLUE = "filled filledBlue";
@@ -997,6 +998,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@UiHandler("one_star")
 	public void onStarOneclicked(ClickEvent event){
+		System.out.println("---- "+isRated); 
 		if(AppClientFactory.isAnonymous()){
 			getDefaultRatings();
 			showLoginPopupWidget(RATINGS_WIDGET);
@@ -1191,7 +1193,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			starValue.setVisible(true);
-			starValue.setText("Rate this resource");
+			starValue.setText(DEFAULT_RATING_TEXT);
 			setStarRatingValue(0);
 		}
 		
@@ -1256,43 +1258,55 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			clearAllStars();
+			if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+				clearAllStars();
+				starValue.setVisible(false);
+			}else{
+				starValue.setVisible(true);
+			}
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
-				starValue.setVisible(false);
-				mouseOverStarValue.setText(POOR);
-				
-				one_star.getElement().addClassName(FILLED_BLUE);
-				
+				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					one_star.getElement().addClassName(FILLED_BLUE);
+					mouseOverStarValue.setText(POOR);
+				}else{
+					starValue.setVisible(true);
+				}
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
-				starValue.setVisible(false);
-				mouseOverStarValue.setText(FAIR);
-				
-				one_star.getElement().addClassName(FILLED_BLUE);
-				two_star.getElement().addClassName(FILLED_BLUE);
+				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					one_star.getElement().addClassName(FILLED_BLUE);
+					two_star.getElement().addClassName(FILLED_BLUE);
+					mouseOverStarValue.setText(FAIR);
+				}else{
+					starValue.setVisible(true);
+				}
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
-				starValue.setVisible(false);
-				mouseOverStarValue.setText(GOOD);
-				
-				one_star.getElement().addClassName(FILLED_BLUE);
-				two_star.getElement().addClassName(FILLED_BLUE);
-				three_star.getElement().addClassName(FILLED_BLUE);
+				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					one_star.getElement().addClassName(FILLED_BLUE);
+					two_star.getElement().addClassName(FILLED_BLUE);
+					three_star.getElement().addClassName(FILLED_BLUE);
+					mouseOverStarValue.setText(GOOD);
+				}else{
+					starValue.setVisible(true);
+				}
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
-				starValue.setVisible(false);
-				mouseOverStarValue.setText(VERY_GOOD);
-				
-				one_star.getElement().addClassName(FILLED_BLUE);
-				two_star.getElement().addClassName(FILLED_BLUE);
-				three_star.getElement().addClassName(FILLED_BLUE);
-				four_star.getElement().addClassName(FILLED_BLUE);
+				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					one_star.getElement().addClassName(FILLED_BLUE);
+					two_star.getElement().addClassName(FILLED_BLUE);
+					three_star.getElement().addClassName(FILLED_BLUE);
+					four_star.getElement().addClassName(FILLED_BLUE);
+					mouseOverStarValue.setText(VERY_GOOD);
+				}else{
+					starValue.setVisible(true);
+				}
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
-				starValue.setVisible(false);
-				mouseOverStarValue.setText(EXCELLENT);
-				
-				one_star.getElement().addClassName(FILLED_BLUE);
-				two_star.getElement().addClassName(FILLED_BLUE);
-				three_star.getElement().addClassName(FILLED_BLUE);
-				four_star.getElement().addClassName(FILLED_BLUE);
-				five_star.getElement().addClassName(FILLED_BLUE);
+				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					one_star.getElement().addClassName(FILLED_BLUE);
+					two_star.getElement().addClassName(FILLED_BLUE);
+					three_star.getElement().addClassName(FILLED_BLUE);
+					four_star.getElement().addClassName(FILLED_BLUE);
+					five_star.getElement().addClassName(FILLED_BLUE);
+					mouseOverStarValue.setText(EXCELLENT);
+				}
 			}
 		}
 		
