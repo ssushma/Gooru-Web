@@ -332,6 +332,39 @@
 							ui:field="descLinkFive" target="_blank"></g:Anchor>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
+					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
+						<g:Label styleName="{style.improveGooruBlueText}"
+							ui:field="lblTitleSix"></g:Label>
+						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
+							ui:field="aboutSix"></g:InlineLabel>
+						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
+							ui:field="descLinkSix" target="_blank"></g:Anchor>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
+					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
+						<g:Label styleName="{style.improveGooruBlueText}"
+							ui:field="lblTitleSeven"></g:Label>
+						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
+							ui:field="aboutSeven"></g:InlineLabel>
+						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
+							ui:field="descLinkSeven" target="_blank"></g:Anchor>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
+					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
+						<g:Label styleName="{style.improveGooruBlueText}"
+							ui:field="lblTitleEight"></g:Label>
+						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
+							ui:field="aboutEight"></g:InlineLabel>
+						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
+							ui:field="descLinkEight" target="_blank"></g:Anchor>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
 
 				<g:HTMLPanel styleName="{style.improveGooruLinkOuter}"
 					ui:field="GooruLinkOutercontainer">

@@ -2378,4 +2378,15 @@ public interface MessageProperties {
     	String GL1876 = "Keywords";
     	String GL1877 =	"Standards Code";
     	String GL1878 ="Adds";
+    	
+    	String GL1879 = "Rate this resource";
+    	
+    	//What's New Popup
+    	String GL1880 ="Rate and Review Resources";
+    	String GL1881 =	"With our new resource ratings feature, you can let other teachers know which resources dazzle and which disappoint.";
+    	String GL1882 ="New K-4 Courses and Partner Libraries";
+    	String GL1883 ="Great news for K-4 teachers! Now you can find courses tailored to K-4 learning in our Community Library. We've also added 2 new partner libraries to explore!";
+    	String GL1884 =	"New Question Type: Multiple Answer Questions";
+    	String GL1885 =	"Because sometimes a question has more than one correct answer. Learn more about our question types.";
+    	
    }

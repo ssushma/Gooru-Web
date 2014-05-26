@@ -368,7 +368,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			if(licenseDo.getIcon()!=null&&!licenseDo.getIcon().trim().equals("")){
 				Image image=new Image();
 				image.setUrl(assetUrl+licenseDo.getIcon());
-				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()+"         "+licenseDo.getName()));
+				image.addMouseOverHandler(new MouseOverShowStandardToolTip(licenseDo.getCode()+"<br><br>"+licenseDo.getName()));
 				image.addMouseOutHandler(new MouseOutHideToolTip());
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();

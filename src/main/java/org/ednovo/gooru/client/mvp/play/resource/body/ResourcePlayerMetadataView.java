@@ -177,7 +177,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		rating4 = new SimpleRadioButton("rating");
 		rating5 = new SimpleRadioButton("rating");*/
 		
-		starValue.setVisible(false);
+//		starValue.setVisible(false);
+		starValue.setVisible(true);
+		starValue.setText(GL1879);
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
@@ -1193,7 +1195,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}else{
 			starValue.setVisible(true);
-			starValue.setText(DEFAULT_RATING_TEXT);
+			starValue.setText(GL1879);
 			setStarRatingValue(0);
 		}
 		
@@ -1307,6 +1309,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					five_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(EXCELLENT);
 				}
+
 			}
 		}
 		

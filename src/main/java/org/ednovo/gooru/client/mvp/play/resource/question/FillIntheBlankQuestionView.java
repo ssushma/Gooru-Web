@@ -208,11 +208,10 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		attemptStatusArray.add(isFibStatus?1:0);
 		int score=0;
 		boolean isFirstAttempt=false;
-		if(!isFirstTry){
-			isFirstTry=true;
-			isFirstAttempt=true;
-			score=isFibStatus?1:0;
-		}
+		isFirstTry=true;
+		isFirstAttempt=true;
+		score=isFibStatus?1:0;
+		
 		userAttemptedAnswerObject(userAttemptedOptionsList);
 		String attemptStatus=isFibStatus==true?"correct":"wrong";
 		createSesstionItemAttemptOe(attemptAnswerIds,attemptedAnswersList,attemptStatus);

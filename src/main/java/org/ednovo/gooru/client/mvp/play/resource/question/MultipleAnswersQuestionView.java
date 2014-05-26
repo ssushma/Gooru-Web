@@ -259,11 +259,13 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					if(checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 						answerAttemptDo.setStatus("1");
+						answerAttemptDo.setText("1");
 						if(mutipleAnswerChoiceStatus){
 							mutipleAnswerChoiceStatus=true;
 						}
 					}else{
 						answerAttemptDo.setStatus("0");
+						answerAttemptDo.setText("1");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
@@ -273,12 +275,14 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), false);
 					if(!checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
 						answerAttemptDo.setStatus("1");
+						answerAttemptDo.setText("1");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 						if(mutipleAnswerChoiceStatus){
 							mutipleAnswerChoiceStatus=true;
 						}
 					}else{
 						answerAttemptDo.setStatus("0");
+						answerAttemptDo.setText("1");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
@@ -301,10 +305,9 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 		setAttemptStatus(collectionItemDo.getCollectionItemId(),attempteAnswersDo);
 		int score=0;
 		boolean isFirstTry=isChekcAnswerButtonClicked;
-		if(!isChekcAnswerButtonClicked){
-			isChekcAnswerButtonClicked=true;
-			score=mutipleAnswerChoiceStatus?1:0;
-		}
+		isChekcAnswerButtonClicked=true;
+		score=mutipleAnswerChoiceStatus?1:0;
+		
 		String attemptStatus=mutipleAnswerChoiceStatus==true?"correct":"wrong";
 		userAttemptedValue(userAttemptedValueList);
 		setAnswersDetailsWitithTime(answerIds,mutipleAnswerChoiceStatus?1:0,1,score,!isFirstTry);

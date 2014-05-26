@@ -196,10 +196,9 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 					increaseUserAttemptCount();
 					int score=0;
 					boolean isFirstTry=isChekcAnswerButtonClicked;
-					if(!isChekcAnswerButtonClicked){
-						isChekcAnswerButtonClicked=true;
-						score=questionAnswerOptionView.isAnswerCorrect()?1:0;
-					}
+					isChekcAnswerButtonClicked=true;
+					score=questionAnswerOptionView.isAnswerCorrect()?1:0;
+					
 					setAnswersDetailsWitithTime(questionAnswerOptionView.getAnswerId(),questionAnswerOptionView.isAnswerCorrect()?1:0,(i+1),score,!isFirstTry);
 					if(questionAnswerOptionView.isAnswerCorrect()){
 						questionAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
