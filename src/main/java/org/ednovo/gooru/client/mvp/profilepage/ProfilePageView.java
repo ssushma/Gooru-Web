@@ -102,7 +102,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField
 	Label userName, userBio, aboutUsCharacterValidation, courseMaxMsg,profilePageViewMsg, roleTxt, userLibraryMessage, libraryMessage;
 	
-	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText;
+	@UiField Label cancelBtn,gradeText,courseLabel,profilePageText, courseGradeLbl;
 
 	@UiField
 	Image userProfilePic,errorImage;
@@ -151,6 +151,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	ProfilePageLibraryView profilePageLibraryView;
 	
 	@UiField HTML profileVisiblityMessage;
+	
+	@UiField ProfilePageCBundle ProfilePageStyle;
 	
 	Label noCollectionMsgPanel = new Label();
 
@@ -261,6 +263,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		profileOnButton.setText(GL_GRR_YES);
 		profileOffButton.setText(GL1735);
 		contentTabVc.setText(GL1082);
+		courseGradeLbl.setText(GL1886);
 		errorImage.setTitle(GL1091_1);
 		errorImage.setAltText(GL1091_1);
 		errorImage.setUrl("images/404_message.png");
@@ -535,9 +538,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				String commaSeparator = "";
 				if (widget instanceof Label) {
 					String text = ((Label) widget).getText();
-					if(!(gradeCount==widgetCount)) {
-						text = concatenateGradeTxt(text);
-					}
+					text = concatenateGradeTxt(text);
 					if((gradeContainerWidth - gradeWidth)>widget.getOffsetWidth()) {
 						if(isValue){
 							if(!(gradeCount==widgetCount)) {
@@ -1029,8 +1030,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	 */
 	protected CloseLabel createCourseLabel(final String courseLabel,
 			final String courseCode) {
-		return new CloseLabel(courseLabel) {
-
+		CloseLabel closeLabel = new CloseLabel(courseLabel) {
 			@Override
 			public void onCloseLabelClick(ClickEvent event) {
 				this.removeFromParent();
@@ -1039,6 +1039,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				getUiHandlers().deleteCourse(codeDo);
 			}
 		};
+		closeLabel.addStyleName(ProfilePageStyle.margin5());
+		return closeLabel;
 	}
 
 	/**
@@ -1069,9 +1071,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 					profileCodeDo.setCode(codeDo);
 					profileCodeDoSet.add(profileCodeDo);
 					getUiHandlers().addCourse(profileCodeDoSet);
-	
-					coursesPanel
-							.add(createCourseLabel(courseCodeLabel, courseCode));
+					coursesPanel.add(createCourseLabel(courseCodeLabel, courseCode));
 					collectionCourseLst.setSelectedIndex(0);
 				}
 				courseMaxHide();
@@ -1190,6 +1190,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setGradeList(profileDo.getGrade());
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();
+		Label addedLabel = new Label("Added Courses");
+		addedLabel.setStyleName(ProfilePageStyle.addedCourseLbl());
+		coursesPanel.add(addedLabel);
 		for (ProfileCodeDo code : codeDo) {
 			coursesPanel.add(createCourseLabel(code.getCode().getLabel(), code.getCode().getCodeId() + ""));
 		}

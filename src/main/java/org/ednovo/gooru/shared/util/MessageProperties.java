@@ -2389,4 +2389,5 @@ public interface MessageProperties {
     	String GL1884 =	"New Question Type: Multiple Answer Questions";
     	String GL1885 =	"Because sometimes a question has more than one correct answer. Learn more about our question types.";
     	
+    	String GL1886 = "Please select one or more grades & courses.";
    }
