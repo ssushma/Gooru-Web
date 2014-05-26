@@ -2390,4 +2390,5 @@ public interface MessageProperties {
     	String GL1885 =	"Because sometimes a question has more than one correct answer. Learn more about our question types.";
     	
     	String GL1886 = "Please select one or more grades & courses.";
+    	String GL1887 = "Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it will appear below collections that do.";
    }
