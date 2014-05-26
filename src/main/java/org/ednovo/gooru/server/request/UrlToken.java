@@ -536,8 +536,9 @@ public enum UrlToken {
 	
 	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
 	
-	SEARCH_SUGGEST_AGGREGATOR(
-			"/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}");
+	SEARCH_SUGGEST_AGGREGATOR("/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
+			
+	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"); 
 	
 	
 	private String url;

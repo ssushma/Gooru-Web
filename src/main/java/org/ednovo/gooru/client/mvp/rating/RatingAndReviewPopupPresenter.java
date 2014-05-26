@@ -65,7 +65,7 @@ public class RatingAndReviewPopupPresenter extends PresenterWidget<IsRatingAndRe
 
 	@Override
 	public void getUserRatingsReviews(String resourceId) {
-		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(resourceId,AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(resourceId,null, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<StarRatingsDo> result) {
