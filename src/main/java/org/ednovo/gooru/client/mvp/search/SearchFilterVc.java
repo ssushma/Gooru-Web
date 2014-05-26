@@ -167,7 +167,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	Label standardsNotFoundLbl;
 	
 	@UiField
-	Label sourceHelpicon, standardHelpicon,clearAll,aggregatorHelpicon;
+	Label publisherTooltip, standardHelpicon,clearAll,aggregatorTooltip;
 
 	@UiField
 	HTMLEventPanel sourceToolTip, standardToolTip,aggregatorToolTip;
@@ -386,7 +386,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		collectionLinkLbl.setText(GL0175);
 		categoryPanelUc.setHeaderTitle(GL0721);
 		sourcePanelUc.setHeaderTitle(GL0566);
-		sourceHelpicon.setText(GL_SPL_QUESTION);
+		//sourceHelpicon.setText(GL_SPL_QUESTION);
 		sourcesNotFoundLbl.setText(GL0723);
 		authorPanelUc.setHeaderTitle(GL0573);
 		standardPanelUc.setHeaderTitle(GL0724);
@@ -395,8 +395,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		subjectPanelUc.setHeaderTitle(GL0226);
 		gradePanelUc.setHeaderTitle(GL0165);
 		clearAll.setText(GL0725);
-	//	oerPanel.setVisible(false);
-		aggregatorPanelUc.setHeaderTitle(GL1628);
+	
+		aggregatorPanelUc.setHeaderTitle(GL1628+GL_SPL_SEMICOLON);
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
@@ -406,24 +406,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			aggregatorSgstBox.addSelectionHandler(this);
 			aggregatorNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			
-			final Image publisherTooltip  = new Image();
-			publisherTooltip.setUrl("images/mos/questionmark.png");
-			publisherTooltip.getElement().getStyle().setMarginTop(-46, Unit.PX);
-			publisherTooltip.getElement().getStyle().setMarginLeft(73, Unit.PX);
-			publisherTooltip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			publisherTooltip.setAltText(GL0732);
-			publisherTooltip.setTitle(GL0732);
 			
-			final Image aggregatorTooltip = new Image();
-			aggregatorTooltip.setUrl("images/mos/questionmark.png");
-			aggregatorTooltip.getElement().getStyle().setMarginTop(-46, Unit.PX);
-			aggregatorTooltip.getElement().getStyle().setMarginLeft(85, Unit.PX);
-			aggregatorTooltip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-			
-			aggregatorTooltip.setAltText(GL0732);
-			aggregatorTooltip.setTitle(GL0732);
-			aggregatorPanelUc.getContent().add(aggregatorTooltip);
-			sourcePanelUc.getContent().add(publisherTooltip);
 			publisherTooltip.addMouseOverHandler(new MouseOverHandler() {
 				
 				@Override
@@ -721,23 +704,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	}
 	
 	
-	@UiHandler("sourceHelpicon")
-	public void onSourceHelpIconClicked(ClickEvent event) {
-		if(!(sourceToolTip.getWidgetCount()>0)) {
-			sourcetooltipPopUpUc = new DownToolTipUc();
-			sourcetooltipPopUpUc.setContent(new HTML(GL0246));
-			sourceToolTip.add(sourcetooltipPopUpUc);
-		}
-		if(sourceToolTip.isVisible()) {
-			sourceToolTip.setVisible(false);
-		} else {
-			sourceToolTip.setVisible(true);
-			standardToolTip.setVisible(false);
-			aggregatorToolTip.setVisible(false);
-		}
-		isSourcePopupShowing = true;
-	}
-	
 	@UiHandler("standardHelpicon")
 	public void onStandardHelpiconClicked(ClickEvent event) {
 		if(!(standardToolTip.getWidgetCount()>0)) {
@@ -753,23 +719,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			aggregatorToolTip.setVisible(false);
 		}
 		isStandardPopupShowing = true;
-	}
-	@UiHandler("aggregatorHelpicon")
-	public void onAggregatorHelpiconClicked(ClickEvent event) {
-		if(!(aggregatorToolTip.getWidgetCount()>0)) {
-			aggregatortooltipPopUpUc = new DownToolTipUc();
-			aggregatortooltipPopUpUc.setContent(new HTML(GL0247));
-			aggregatorToolTip.add(aggregatortooltipPopUpUc);
-		}
-		if(aggregatorToolTip.isVisible()) {
-			aggregatorToolTip.setVisible(false);
-		} else {
-			sourceToolTip.setVisible(false);
-			standardToolTip.setVisible(false);
-			aggregatorToolTip.setVisible(true);
-		}
-	//	isStandardPopupShowing = true;
-		
 	}
 	public class QuestionTypeFilter extends Composite{
 		
@@ -829,6 +778,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			resourceLinkLbl.addStyleName(style.active());
 			collectionLinkLbl.removeStyleName(style.active());
+			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
 			renderCheckBox(panelNotMobileFriendly, "not_ipad_friendly", "Mobile Friendly");
 			final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 			imgNotFriendly.getElement().getStyle().setLeft(114, Unit.PX);
@@ -871,7 +821,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			panelNotMobileFriendly.add(imgNotFriendly);
 			panelNotMobileFriendly.setVisible(true);
 			//added for OER search
-			renderOERCheckBox(oerPanel, "not_show_OER", "OER");
+			
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(144, Unit.PX);
 			oer.getElement().getStyle().setTop(-18, Unit.PX);

@@ -103,7 +103,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		}
 		String aggregator = getPlaceManager().getRequestParameter(IsSearchView.AGGREGATOR_FLT);
 		if (aggregator != null) {
-			filters.put(IsSearchView.AGGREGATOR_FLT, source);
+			filters.put(IsSearchView.AGGREGATOR_FLT, aggregator);
 		}
 		return filters;
 	}
