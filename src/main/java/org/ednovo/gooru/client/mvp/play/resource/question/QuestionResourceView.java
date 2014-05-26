@@ -249,9 +249,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		public void setAnswersDetailsWitithTime(int answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
 			getUiHandlers().setAnswerIdWithTime(answerId, answerStatus, answerSequence);
-			if(isFirstTry&&attemptedAnswerDo==null){
-				getUiHandlers().setResourceScore(score);
-			}
+			getUiHandlers().setResourceScore(score);
 		}
 		public void increaseUserAttemptCount(){
 			getUiHandlers().increaseUserAttemptCount();
@@ -282,9 +280,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 		}
 		public void setAnswersDetailsWitithTime(List<Integer> answerId,int answerStatus,int answerSequence,int score,boolean isFirstTry){
 			getUiHandlers().setAnswerIdWithTimeForMa(answerId, answerStatus, answerSequence);
-			if(isFirstTry&&attemptedAnswerDo==null){
-				getUiHandlers().setResourceScore(score);
-			}
+			getUiHandlers().setResourceScore(score);
 		}
 		public void increaseUserAttemptCount(){
 			getUiHandlers().increaseUserAttemptCount();
@@ -401,9 +397,7 @@ public class QuestionResourceView extends BaseViewWithHandlers<QuestionResourceU
 			}
 			getUiHandlers().setOeQuestionAnswerText(attemptedAnswersText);
 			getUiHandlers().setFibAnswerIdsWithTime(attemptAnswerIds,attemptTrySequenceArray,attemptStatusArray);
-			if(isFirstAttempt&&attemptedAnswerDo==null){
-				getUiHandlers().setResourceScore(score);
-			}
+			getUiHandlers().setResourceScore(score);
 		}
 		public void userAttemptedAnswerObject(List<AnswerAttemptDo> answerOptionAttemptList){
 			getUiHandlers().userAttemptedAnswerObject(answerOptionAttemptList);
