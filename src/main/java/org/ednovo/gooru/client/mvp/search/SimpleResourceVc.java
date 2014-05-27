@@ -24,13 +24,12 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.search;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
@@ -61,7 +60,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 /**
  * @author Search Team
@@ -86,14 +84,14 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	Label positionLbl;
 
 	@UiField
-	FlowPanel metaDataFloPanel;
+	FlowPanel metaDataFloPanel,ratingWidgetPanel;
 	
 	@UiField Image imgNotFriendly;
 
 	ToolTip toolTip = null;
 	
 	private ResourceSearchResultDo resourceSearchResultDo;
-	
+	private RatingWidgetView ratingWidgetView=null;
 	private CollectionItemSearchResultDo collectionItemSearchResultDo;
 	
 	private static final String VIEWS_PREFIX_NAME = "Views";  
@@ -117,6 +115,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	 * @param resourceSearchResultDo instance of {@link ResourceSearchResultDo}
 	 */
 	public void setData(CollectionItemSearchResultDo resourceSearchResultDo) {
+		
 		this.resourceSearchResultDo = resourceSearchResultDo;
 		this.collectionItemSearchResultDo = resourceSearchResultDo;
 		/*resourceTitleLbl.setText(StringUtil.truncateText(resourceSearchResultDo.getResourceTitle(), 30));*/
@@ -180,9 +179,32 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 			}
 		});
 		imgNotFriendly.setVisible(setVisibility);
-		
+		setAvgRatingWidget(resourceSearchResultDo);
 	}
-	
+	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
+		ratingWidgetView=new RatingWidgetView();
+		if(resourceSearchResultDo.getRatings()!=null){
+			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
+			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
+		}
+		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.add(ratingWidgetView);
+	}
+
+	/**
+	 * 
+	 * Inner class implementing {@link ClickEvent}
+	 *
+	 */
+	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			/**
+			 * OnClick of count label event to invoke Review pop-pup
+			 */
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(resourceSearchResultDo.getGooruOid())); 
+		}
+	}
 	public void setResourcePlayLink(){
 		Anchor resourceAnchor=new Anchor();
 		resourceAnchor.setHref(getResourceLink());

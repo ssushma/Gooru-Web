@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
@@ -999,37 +1000,41 @@ public class ShelfCollectionResourceChildView extends
 	}
 	@UiHandler("addTages")
 	public void onAddTagesClick(ClickEvent clickEvent) {
-		Window.enableScrolling(false);
-		popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()){
-			
-			@Override
-			public void closePoup(boolean isCancelclicked) {
-		        this.hide();
-		        if(!isCancelclicked){
-		        SuccessPopupViewVc success = new SuccessPopupViewVc() {
+		if(AppClientFactory.isAnonymous()) {
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+		} else {
+			Window.enableScrolling(false);
+			popup=new AddTagesPopupView(collectionItemDo.getResource().getGooruOid()){
+				
+				@Override
+				public void closePoup(boolean isCancelclicked) {
+			        this.hide();
+			        if(!isCancelclicked){
+			        SuccessPopupViewVc success = new SuccessPopupViewVc() {
 
-					@Override
-					public void onClickPositiveButton(ClickEvent event) {
-						this.hide();
-						Window.enableScrolling(true);
-					}
-					
-				};
-				success.setHeight("253px");
-				success.setWidth("450px");
-				success.setPopupTitle(GL1795);
-				success.setDescText(GL1796);
-				success.enableTaggingImage();
-				success.setPositiveButtonText(GL0190);
-				success.center();
-				success.show();
-		        }else{
-		        	Window.enableScrolling(true);
-		        }
-			}
-		};
-		popup.show();
-		popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+						@Override
+						public void onClickPositiveButton(ClickEvent event) {
+							this.hide();
+							Window.enableScrolling(true);
+						}
+						
+					};
+					success.setHeight("253px");
+					success.setWidth("450px");
+					success.setPopupTitle(GL1795);
+					success.setDescText(GL1796);
+					success.enableTaggingImage();
+					success.setPositiveButtonText(GL0190);
+					success.center();
+					success.show();
+			        }else{
+			        	Window.enableScrolling(true);
+			        }
+				}
+			};
+			popup.show();
+			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
 	}
 	/*
 	 * This clickEvent is used to edit pdf

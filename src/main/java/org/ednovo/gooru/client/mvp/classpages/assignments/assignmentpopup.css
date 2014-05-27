@@ -606,6 +606,7 @@
 	text-align: left;
 	margin-top:3px;
 	float:left;
+	width: 95%;
  }
  .assignmentErrorMessage{
  	font-family: Arial, Helvetica, sans-serif;
