@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.play.resource.question.QuestionResourcePresen
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -50,6 +51,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -85,6 +87,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		getView().setUiHandlers(this);
 		addRegisteredHandler(PostUserReviewEvent.TYPE, this);
 		addRegisteredHandler(OpenReviewPopUpEvent.TYPE, this);
+		addRegisteredHandler(UpdateUserStarReviewEvent.TYPE,this);
 	}
 	
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
@@ -364,5 +367,30 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	public void setResourceMetaData(String resourceTitle) {
 		this.resourceTitle = resourceTitle;
 	}
+
+	@Override
+	public void updateStarRatingAndreviews(
+			ArrayList<StarRatingsDo> starRatingsDo) {
+		// TODO Auto-generated method stub
+		getView().setUserStarRatings(starRatingsDo.get(0),false); 
+	}
+
+	/*@Override
+	public void updateStarRatingAndreviews(String assocGooruOId,
+			String loogedInGooruOId, ArrayList<StarRatingsDo> starRatingsDo) {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(assocGooruOId, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				if(result.size()>0){
+					getView().setUserStarRatings(result.get(0),false); 
+				}else{
+					getView().setUserStarRatings(null,false); 
+				}
+				
+			}
+		});
+		
+	}*/
 
 }
