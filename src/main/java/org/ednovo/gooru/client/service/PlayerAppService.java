@@ -178,4 +178,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public ArrayList<StarRatingsDo> updateResourceStarReviews(String deleteRatingGooruOid,Integer score, String userReview);
 	
+	public void deleteRating(String deleteRatingGooruOid);
+	
 }

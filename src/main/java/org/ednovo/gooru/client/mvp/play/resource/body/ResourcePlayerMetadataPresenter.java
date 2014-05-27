@@ -335,9 +335,9 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * 
 	 */
 	@Override
-	public void openReviewPopUp(String assocGooruOId) {
+	public void openReviewPopUp(String assocGooruOId,String createrName) {
 		addToPopupSlot(ratingAndReviewPopup);
-		ratingAndReviewPopup.displayPopup(resourceTitle, assocGooruOId);
+		ratingAndReviewPopup.displayPopup(resourceTitle, assocGooruOId,createrName);
 		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
 	}
 
