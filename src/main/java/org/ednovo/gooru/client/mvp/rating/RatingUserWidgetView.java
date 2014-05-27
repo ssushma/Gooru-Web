@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import java.util.Date;
 import java.util.Iterator;
@@ -71,11 +72,11 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	private static final String FIVE_STAR="fiveStar";
 	
 	private StarRatingsDo starRatingsDo;
-	private static final String POOR="Poor";
-	private static final String FAIR="Fair";
-	private static final String GOOD="Good";
-	private static final String VERY_GOOD="Very Good";
-	private static final String EXCELLENT="Excellent";
+	private static final String POOR=GL1846;
+	private static final String FAIR=GL1845;
+	private static final String GOOD=GL1844;
+	private static final String VERY_GOOD=GL1843;
+	private static final String EXCELLENT=GL1842;
 	
 	int currentRating=0,clickedRating;
 	private static final String FILLED_BLUE = "filled filledBlue";
@@ -330,8 +331,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				editReviewLabelContainer.setVisible(true);
 				editReviewBtn.removeStyleName(style.editReview());
 				cancelReviewBtn.removeStyleName(style.editReview());
-				System.out.println(result.get(0));
 				updateStars(result.get(0));
+				AppClientFactory.fireEvent(new UpdateRatingsGraphEvent(starRatingsDo.getAssocGooruOid()));  
+				
 			}
 		}
 	}); 
