@@ -1563,6 +1563,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		classpageListVc.setStyleName(HomeCBundle.INSTANCE.css()
 				.classpageListContainer());
 		classpageListVc.setPopupPosition(left, top);
+		classpageListVc.getElement().getStyle().setZIndex(98);
 		classpageListVc.show();
 		// classpageListVc.getAllClasspages();
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
