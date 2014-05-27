@@ -990,7 +990,6 @@ li.resources {
 	padding-top: 5px;
 }
 .userCount {
-	width: 462px;
 	float: left;
 	text-align: center;
 	margin-right: 5px;
@@ -1157,6 +1156,11 @@ li.resources {
 	opacity: 0.6;
 }
 
+.profileGradeHigherContainer {
+	float: left;
+	width: 135px;
+}
+
 .addedCoursesList {
 	float: left;
 	width: 385px;
@@ -1192,8 +1196,8 @@ li.resources {
 
 .metaDataContainer {
 	float: left;
-	max-width: 530px;
-	min-height: 40px;
+	max-width: 700px;
+	margin-bottom: 5px;
 }
 
 .bioTextAreaContainer {
@@ -1238,7 +1242,8 @@ li.resources {
 }
 
 .moreGradeCourseLbl {
-	margin-top: 5px;
+	margin-top: 8px;
+	margin-right: 5px;
 	margin-left: 0px;
 	float: left;
 	color: #4c98cc;
@@ -1388,7 +1393,7 @@ li.resources {
 	float: left;
 }
 .addCourseBtnStyle {
-	padding: 7px 9px;
+	margin: 5px 9px;
 }
 .addedCourseLbl {
 	font-size: 14px;

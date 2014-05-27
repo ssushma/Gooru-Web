@@ -345,6 +345,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void addStandard(String standard, String id) {
 		if (standardsPanel.getWidgetCount() <5) {
 			if (standard != null && !standard.isEmpty()) {
+				standardsDo.add(standard);
 				standardsPanel.add(createStandardLabel(standard, id, standardCodesMap.get(id)));
 			}
 		} else {
@@ -1306,7 +1307,7 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	public void setStandardObjectVal(String standardStr)
 	{
 		String[] standardArray=standardStr.split(":");
-		standardsDo.add(standardArray[1]);
+		//standardsDo.add(standardArray[1]);
 		addStandard(standardArray[1], "0");
 	}
 	public void setAccessHazardObjectVal(String accessHazardStr)

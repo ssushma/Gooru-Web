@@ -47,8 +47,8 @@ public class RatingAndReviewPopupPresenter extends PresenterWidget<IsRatingAndRe
 		getView().setUiHandlers(this);
 	}
 	
-	public void displayPopup(String resourceTitle, String gooruOid) {
-		getView().displayPopUp(resourceTitle, gooruOid);
+	public void displayPopup(String resourceTitle, String gooruOid,String createrName) {
+		getView().displayPopUp(resourceTitle, gooruOid,createrName);
 	}
 
 	@Override

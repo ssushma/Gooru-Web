@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.profilepage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -130,7 +131,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
 			profilePageEditBioPanel;
 	
-	@UiField FlowPanel moreGradeCourseLbl;
+	@UiField FlowPanel moreGradeCourseLbl, moreCourseLbl;
 	
 	@UiField
 	UserSettingStyle settingsStyle;
@@ -230,8 +231,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 					
 				userBio.setText(text);
+				String gender = "";
+				if(profileDo.getGender()!=null&&profileDo.getGender().getGenderId()!=null) {
+					gender = profileDo.getGender().getGenderId();
+				}
 				getUiHandlers().updateUserBiography(profileDo.getUser().getGooruUId(), text,profileDo.getUserType(),profileDo.getUser().getFirstName(),
-						profileDo.getUser().getLastName(),profileDo.getGender().getGenderId());
+						profileDo.getUser().getLastName(),gender);
 			}
 
 			@Override
@@ -260,8 +265,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		biographyCancelButton.setText(GL0142);
 		profilePageViewMsg.setText(GL1078);
 		profilePageText.setText(GL1079);
-		profileOnButton.setText(GL_GRR_YES);
-		profileOffButton.setText(GL1735);
+		profileOnButton.setText(GL0802);
+		profileOffButton.setText(GL0803);
 		contentTabVc.setText(GL1082);
 		courseGradeLbl.setText(GL1886);
 		errorImage.setTitle(GL1091_1);
@@ -438,6 +443,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		btnSave.setVisible(false);
 		biographyCancelButton.setVisible(false);
 		moreGradeCourseLbl.clear();
+		moreCourseLbl.clear();
 		noCollectionMsgPanel.setText(profileDo.getUser().getUsernameDisplay()+" "+GL1083);
 		userName.setText(profileDo.getUser().getUsernameDisplay());
 		userLibraryMessage.setText(profileDo.getUser().getUsernameDisplay()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1787);
@@ -463,7 +469,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		gooruSocialButtonsContainer.setVisible(true);
 		setUserGradeList(profileDo.getGrade());
 		setUserCourseList(profileDo.getCourses());
-		setMetaDataContainerWidth();
+		setMetaDataContainerWidth("grade");
+		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
 		
@@ -472,105 +479,126 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private void setUserCourseList(Set<ProfileCodeDo> codeList) {
 		profileDo.setCourses(codeList);
 		userCourseList.clear();
+		int count = 0;
+		List<String> moreCourseLbls = new ArrayList<String>();
 		for (ProfileCodeDo profileCodeDo : codeList) {
-			Label courseLabel = new Label(profileCodeDo.getCode().getLabel());
-			courseLabel.addClickHandler(new OnGradeEditImageClick());
-			courseLabel.setStyleName(CollectionCBundle.INSTANCE.css().userCourseName());
-			userGradeList.add(courseLabel);
+			if(count<2) {
+				Label courseLabel = new Label(profileCodeDo.getCode().getLabel());
+				courseLabel.addClickHandler(new OnGradeEditImageClick());
+				courseLabel.setStyleName(CollectionCBundle.INSTANCE.css().userCourseName());
+				userCourseList.add(courseLabel);
+				count++;
+			} else {
+				moreCourseLbls.add(profileCodeDo.getCode().getLabel());
+			}
 		}
+		renderExtraGradeCourse(moreCourseLbls, "course");
 	}
 
 	private void setUserGradeList(String grade) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
-
-	if(grade!=null && !grade.isEmpty()) {
-		boolean isHigherEducation = false;
-		if(grade.contains("Kindergarten")) {
-			Label gradeLabel = new Label(GL0850);
-			grade = grade.replaceAll("Kindergarten", "");
-			gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
-			gradeLabel.addClickHandler(new OnGradeEditImageClick());
-			userGradeList.add(gradeLabel);
-		}
-		if(grade.contains("Higher Education")) {
-			isHigherEducation = true;
-			grade = grade.replaceAll("Higher Education", "");
+		String[] grades = grade.split(",");
+		List<String> moreGradeCourseLbls = new ArrayList<String>();
+		int gradeLength = grades.length;
+		for(int i = 0; i < gradeLength; i ++) {
+			if(!grades[i].isEmpty()) {
+				moreGradeCourseLbls.add(grades[i]);
+			}
 		}
 		
-		String[] grades = grade.split(",");
-		Set set= new HashSet();
-		for(int i = 0; i < grades.length; i ++) {
-					if(!grades[i].isEmpty()) {
-						set.add(Integer.parseInt(grades[i]));
-					}
-		}
-		Iterator gradeLbl = set.iterator();
-		while(gradeLbl.hasNext()) {
-				Label gradeLabel = new Label(gradeLbl.next().toString());
+		if(grade!=null && !grade.isEmpty()) {
+			boolean isKinderGartnen = false;
+			boolean isHigherEducation = false;
+			if(grade.contains(GL0850)) {
+				isKinderGartnen = true;
+				Label gradeLabel = new Label(GL0850);
+				moreGradeCourseLbls.remove(GL0850);
 				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
 				gradeLabel.addClickHandler(new OnGradeEditImageClick());
 				userGradeList.add(gradeLabel);
-		}
-		
-		if(isHigherEducation == true) {
-			Label gradeLabel = new Label(GL0169);
-			gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
-			gradeLabel.addClickHandler(new OnGradeEditImageClick());
-			userGradeList.add(gradeLabel);
-		}
+			}
+			if(grade.contains("Higher Education")) {
+				isHigherEducation = true;
+			}
+			Set set= new HashSet();
+			gradeLength = 0;
+			if(isKinderGartnen&&grades.length>2) {
+				gradeLength = 2;
+				isHigherEducation = false;
+			} else if(!isKinderGartnen&&grades.length>3) {
+				gradeLength = 3;
+				isHigherEducation = false;
+			} else {
+				gradeLength = grades.length;
+			}
+			for(int i = 0; i < gradeLength; i ++) {
+				if(!grades[i].isEmpty()) {
+					set.add(Integer.parseInt(grades[i]));
+				}
+			}
+			Iterator gradeLbl = set.iterator();
+			while(gradeLbl.hasNext()) {
+				String label = gradeLbl.next().toString();
+				moreGradeCourseLbls.remove(label);
+				label = concatenateGradeTxt(label);
+				Label gradeLabel = new Label(label);
+				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
+				gradeLabel.addClickHandler(new OnGradeEditImageClick());
+				userGradeList.add(gradeLabel);
+			}
+			if(isHigherEducation == true) {
+				Label gradeLabel = new Label(GL0169);
+				moreGradeCourseLbls.remove(GL0169);
+				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
+				gradeLabel.addClickHandler(new OnGradeEditImageClick());
+				userGradeList.add(gradeLabel);
+			}
+			renderExtraGradeCourse(moreGradeCourseLbls,"grade");
 		}
 	}
 
-	public void setMetaDataContainerWidth() {
-		int gradeContainerWidth = userGradeList.getOffsetWidth();
-//		int courseContainerWidth = userCourseList.getOffsetWidth();
-//		int metaDataContainerWidth = metaDataContainer.getOffsetWidth();
-		boolean isValue=true;
-		List<String> moreGradeCourseLbls = new ArrayList<String>();
-		
-			int gradeWidth = 0;
-			int gradeCount = 1;
-			Iterator<Widget> gradeWidgets = userGradeList.iterator();
-			int widgetCount = userGradeList.getWidgetCount();
+	public void setMetaDataContainerWidth(String type) {
+			int gradeCount = 0;
+			int limit = 0;
+			Iterator<Widget> gradeWidgets;
+			if(type.equals("grade")) {
+				gradeWidgets = userGradeList.iterator();
+				limit = 2;
+			} else {
+				gradeWidgets = userCourseList.iterator();
+				limit = 1;
+			}
 			while (gradeWidgets.hasNext()) {
 				Widget widget = gradeWidgets.next();
 				String commaSeparator = "";
 				if (widget instanceof Label) {
 					String text = ((Label) widget).getText();
-					text = concatenateGradeTxt(text);
-					if((gradeContainerWidth - gradeWidth)>widget.getOffsetWidth()) {
-						if(isValue){
-							if(!(gradeCount==widgetCount)) {
-								commaSeparator = GL_GRR_COMMA;
-							}
-							gradeWidth = gradeWidth + widget.getOffsetWidth() + RENDER_MARGIN_WIDTH;
-						}else {
-							isValue=false;
-							moreGradeCourseLbls.add(((Label) widget).getText());
-						}
-					} else {
-						isValue=false;
-						moreGradeCourseLbls.add(((Label) widget).getText());
+					if(gradeCount<limit) {
+						commaSeparator = GL_GRR_COMMA;
 					}
 					((Label) widget).setText(text+commaSeparator);
 				}
 				gradeCount++;
 			}
-			renderExtraGradeCourse(moreGradeCourseLbls);
 	}
 	
-	public void renderExtraGradeCourse(List<String> datas) {
+	public void renderExtraGradeCourse(List<String> datas, String type) {
 		if (datas.size() > 0) {
 			FlowPanel toolTipwidgets = new FlowPanel();
 			for (int count = 0; count < datas.size(); count++) {
-				Label label = new Label(datas.get(count));
+				String text = concatenateGradeTxt(datas.get(count));
+				Label label = new Label(text);
 				label.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
 				toolTipwidgets.add(label);
 			}
 			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + datas.size() +" "+GL1152), toolTipwidgets);
 			toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLinkPad());
-			moreGradeCourseLbl.add(toolTipUc);
+			if(type.equals("grade")) {
+				moreGradeCourseLbl.add(toolTipUc);
+			} else {
+				moreCourseLbl.add(toolTipUc);
+			}
 		}
 	}
 
@@ -870,11 +898,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				public void onSuccess(ProfileDo result) {
 					setUserGradeList(result.getGrade());
 					setUserCourseList(result.getCourses());
-					setMetaDataContainerWidth();
+					setMetaDataContainerWidth("grade");
+					setMetaDataContainerWidth("course");
 					setAddGradeCourseBtnVisibility();
 				}
 			});
 			moreGradeCourseLbl.clear();
+			moreCourseLbl.clear();
 			userCoursePopup.setVisible(false);
 		}
 	}
@@ -1053,7 +1083,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("addCourseBtn")
 	public void onAddCourseClick(ClickEvent clickEvent) {
 		if (enableEdit){
-			if (coursesPanel.getWidgetCount() < 5) {
+			if (coursesPanel.getWidgetCount() < 6) {
 				final String courseCodeLabel = collectionCourseLst
 						.getItemText(collectionCourseLst.getSelectedIndex());
 				final String courseCode = collectionCourseLst
@@ -1090,8 +1120,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	 */
 	protected boolean validateCourse(String course) {
 		for (Widget widget : coursesPanel) {
-			if (course.equals(((CloseLabel) widget).getSourceText())) {
-				return true;
+			if (widget instanceof CloseLabel) {
+				if (course.equals(((CloseLabel) widget).getSourceText())) {
+					return true;
+				}
 			}
 		}
 		return false;

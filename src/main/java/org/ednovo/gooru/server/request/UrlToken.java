@@ -538,7 +538,9 @@ public enum UrlToken {
 	
 	SEARCH_SUGGEST_AGGREGATOR("/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
 			
-	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"); 
+	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
+	
+	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"); 
 	
 	
 	private String url;
