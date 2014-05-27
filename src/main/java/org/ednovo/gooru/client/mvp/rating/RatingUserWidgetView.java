@@ -97,13 +97,10 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		//timeStamp.setText("3 days ago");
 		currentRating = starRatingsDo.getScore();
 		this.createrName=createrName;
+		this.starRatingsDo = starRatingsDo;
 		deleteReview.setVisible(false);
 		setData(starRatingsDo,createrName);
-	
-		
 	}
-	
-
 	
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
@@ -124,7 +121,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			userName.setText(starRatingsDo.getCreator().getUsername());
 			if(starRatingsDo.getScore() == 1)
 			{
-				System.out.println("here1");
 				clearAllStarsReadOnly();
 				starOne.addStyleName(style.filled());
 				starTwo.removeStyleName(style.filled());
@@ -273,7 +269,38 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public void editReview(ClickEvent event) {
 		editReviewTextareaContainer.setVisible(true);
 		editReviewLabelContainer.setVisible(false);
-		getStarsData(Integer.toString(currentRating));
+		if(currentRating==1){
+			userratingOne.getElement().addClassName(FILLED_BLUE);
+			userratingTwo.removeStyleName(FILLED_BLUE);
+			userratingThree.removeStyleName(FILLED_BLUE);
+			userratingFour.removeStyleName(FILLED_BLUE);
+			userratingFive.removeStyleName(FILLED_BLUE);
+		}else if(currentRating==2){
+			userratingOne.getElement().addClassName(FILLED_BLUE);
+			userratingTwo.getElement().addClassName(FILLED_BLUE);
+			userratingThree.removeStyleName(FILLED_BLUE);
+			userratingFour.removeStyleName(FILLED_BLUE);
+			userratingFive.removeStyleName(FILLED_BLUE);
+		}else if(currentRating==3){
+			userratingOne.getElement().addClassName(FILLED_BLUE);
+			userratingTwo.getElement().addClassName(FILLED_BLUE);
+			userratingThree.getElement().addClassName(FILLED_BLUE);
+			userratingFour.removeStyleName(FILLED_BLUE);
+			userratingFive.removeStyleName(FILLED_BLUE);
+		}else if(currentRating==4){
+			userratingOne.getElement().addClassName(FILLED_BLUE);
+			userratingTwo.getElement().addClassName(FILLED_BLUE);
+			userratingThree.getElement().addClassName(FILLED_BLUE);
+			userratingFour.getElement().addClassName(FILLED_BLUE);
+			userratingFive.removeStyleName(FILLED_BLUE);
+		}else if(currentRating==5){
+			userratingOne.getElement().addClassName(FILLED_BLUE);
+			userratingTwo.getElement().addClassName(FILLED_BLUE);
+			userratingThree.getElement().addClassName(FILLED_BLUE);
+			userratingFour.getElement().addClassName(FILLED_BLUE);
+			userratingFive.getElement().addClassName(FILLED_BLUE);
+		}
+		
 		userratingOne.addMouseOverHandler(new OnStarMouseOver(ONE_STAR));
 		userratingTwo.addMouseOverHandler(new OnStarMouseOver(TWO_STAR));
 		userratingThree.addMouseOverHandler(new OnStarMouseOver(THREE_STAR));
@@ -289,37 +316,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		cancelReviewBtn.removeStyleName(style.editReview());
 	}
 
-	private void getStarsData(String starScore) {
-		clearAllStars();
-		if(starScore.equalsIgnoreCase(ONE_STAR)){
-			mouseOverStarValue.setText(POOR);
-			userratingOne.getElement().addClassName(FILLED_BLUE);
-		}else if(starScore.equalsIgnoreCase(TWO_STAR)){
-			mouseOverStarValue.setText(FAIR);
-			userratingOne.getElement().addClassName(FILLED_BLUE);
-			userratingTwo.getElement().addClassName(FILLED_BLUE);
-		}else if(starScore.equalsIgnoreCase(THREE_STAR)){
-			mouseOverStarValue.setText(GOOD);
-			userratingOne.getElement().addClassName(FILLED_BLUE);
-			userratingTwo.getElement().addClassName(FILLED_BLUE);
-			userratingThree.getElement().addClassName(FILLED_BLUE);
-		}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
-			mouseOverStarValue.setText(VERY_GOOD);
-			userratingOne.getElement().addClassName(FILLED_BLUE);
-			userratingTwo.getElement().addClassName(FILLED_BLUE);
-			userratingThree.getElement().addClassName(FILLED_BLUE);
-			userratingFour.getElement().addClassName(FILLED_BLUE);
-		}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
-			mouseOverStarValue.setText(EXCELLENT);
-			userratingOne.getElement().addClassName(FILLED_BLUE);
-			userratingTwo.getElement().addClassName(FILLED_BLUE);
-			userratingThree.getElement().addClassName(FILLED_BLUE);
-			userratingFour.getElement().addClassName(FILLED_BLUE);
-			userratingFive.getElement().addClassName(FILLED_BLUE);
-		}
-	
-		
-	}
 	@UiHandler("editReviewBtn")
 	public void editReviewForEditingReview(ClickEvent event) {
 	AppClientFactory.getInjector().getPlayerAppService().updateResourceStarReviews(starRatingsDo.getDeleteRatingGooruOid(),this.currentRating, editReviewText.getText(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
@@ -333,8 +329,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				editReviewBtn.removeStyleName(style.editReview());
 				cancelReviewBtn.removeStyleName(style.editReview());
 				updateStars(result.get(0));
+				starRatingsDo.setScore(result.get(0).getScore());
+				starRatingsDo.setFreeText(result.get(0).getFreeText());
 				AppClientFactory.fireEvent(new UpdateRatingsGraphEvent(starRatingsDo.getAssocGooruOid()));  
-				
 			}
 		}
 	}); 
@@ -346,7 +343,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		// TODO Auto-generated method stub
 		if(starRatingsDo.getScore() == 1)
 		{
-			System.out.println("here1");
 			starOne.addStyleName(style.filled());
 			starTwo.removeStyleName(style.filled());
 			starThree.removeStyleName(style.filled());
@@ -355,7 +351,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		}
 		else if(starRatingsDo.getScore() == 2)
 		{
-			
 			starOne.addStyleName(style.filled());
 			starTwo.addStyleName(style.filled());
 			starThree.removeStyleName(style.filled());
@@ -364,7 +359,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		}
 		else if(starRatingsDo.getScore() == 3)
 		{
-			
 			starOne.addStyleName(style.filled());
 			starTwo.addStyleName(style.filled());
 			starThree.addStyleName(style.filled());
@@ -392,7 +386,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	
 	@UiHandler("userratingOne")
 	public void userratingOne(ClickEvent event) {
-		clickedRating=1;
 		this.currentRating =1;
 		userratingOne.addStyleName(FILLED_BLUE);
 		userratingTwo.removeStyleName(FILLED_BLUE);
@@ -441,6 +434,8 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	}
 	@UiHandler("cancelReviewBtn")
 	public void cancelReview(ClickEvent event) {
+		this.currentRating =starRatingsDo.getScore();
+		editReviewText.setText(starRatingsDo.getFreeText());
 		editReviewTextareaContainer.setVisible(false);
 		editReviewLabelContainer.setVisible(true);
 		editReviewBtn.removeStyleName(style.editReview());
@@ -450,7 +445,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiHandler("deleteReview")
 	public void onClickDeleteReview(ClickEvent event){
 		AppClientFactory.getInjector().getPlayerAppService().deleteRating(id, new AsyncCallback<Void>() {
-			
 			@Override
 			public void onSuccess(Void result) {
 				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
