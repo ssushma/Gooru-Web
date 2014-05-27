@@ -231,8 +231,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 					
 				userBio.setText(text);
+				String gender = "";
+				if(profileDo.getGender()!=null&&profileDo.getGender().getGenderId()!=null) {
+					gender = profileDo.getGender().getGenderId();
+				}
 				getUiHandlers().updateUserBiography(profileDo.getUser().getGooruUId(), text,profileDo.getUserType(),profileDo.getUser().getFirstName(),
-						profileDo.getUser().getLastName(),profileDo.getGender().getGenderId());
+						profileDo.getUser().getLastName(),gender);
 			}
 
 			@Override
