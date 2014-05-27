@@ -567,3 +567,13 @@ left: -9px;
 	width:96%;
 	resize: none;
 }
+.deleteButtonAlign{
+	float: right;
+	margin-right: 30px;
+}
+.deletePanel{
+	height:80p;
+	float: left;
+	margin-left: 101px;
+	margin-top:25px;
+}
