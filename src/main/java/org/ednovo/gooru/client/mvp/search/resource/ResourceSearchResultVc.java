@@ -32,6 +32,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
@@ -140,6 +142,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		wrapperVcr.addStyleName("resourceSearchResultBox");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
+		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
 		ratingWidgetView=new RatingWidgetView();
 		wrapperVcr.ratingWidgetPanel.add(ratingWidgetView);
 		setData(resourceSearchResultDo);
@@ -310,6 +313,17 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		SearchUiUtil.renderStandards(standardsFloPanel, resourceSearchResultDo);
 	}
 
+	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
+		@Override
+		public void setResourceRatingCount(String resourceId) { 
+			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
+				Integer count = resourceSearchResultDo.getSearchRatingsDo().getCount()+1;
+				ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
+			}
+		}
+		
+	};
+	
 	UpdateSearchResultMetaDataHandler setUpdateMetaData =new UpdateSearchResultMetaDataHandler(){
 
 		@Override
