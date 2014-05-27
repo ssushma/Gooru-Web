@@ -773,7 +773,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
 							if (result.getSearchResults().size()>0){
 								classpageId = result.getSearchResults().get(0).getGooruOid();
-								OpenClasspageEdit(classpageId);
+								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+								OpenClasspageEdit(classpageId, userId);
 							}else{
 								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 							}
@@ -1751,15 +1752,18 @@ public class HeaderUc extends Composite implements MessageProperties,
 	 * 
 	 * 
 	 */
-	private void OpenClasspageEdit(String gooruOId) {
+	private void OpenClasspageEdit(String gooruOId, String gooruUid) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
-		params.put("context", "header");
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.EDIT_CLASSPAGE, params);
+		if(gooruUid.equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
+			params.put("classpageid", gooruOId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE, params);
+		} else {
+			params.put("id", gooruOId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+		}
 	}
 	
 }
