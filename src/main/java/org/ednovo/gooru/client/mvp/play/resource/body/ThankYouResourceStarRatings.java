@@ -129,7 +129,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId, "")); 
 		}
 	}
 

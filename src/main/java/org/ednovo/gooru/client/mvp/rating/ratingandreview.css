@@ -527,6 +527,14 @@ left: -9px;
 
 .ratingCountLabel{
 	cursor: pointer;
+	text-decoration:none !important;
+	color:#1076bb;
+}
+
+.ratingCountLabel:hover {
+	text-decoration:none !important;
+	opacity:.6;
+	cursor:pointer;
 }
 
 .userNameLbl {

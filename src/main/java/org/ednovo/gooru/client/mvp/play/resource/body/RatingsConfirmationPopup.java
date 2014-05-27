@@ -58,7 +58,7 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId, "")); 
 		}
 	}
 	

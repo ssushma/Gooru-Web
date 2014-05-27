@@ -101,8 +101,11 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@UiHandler("closeButton")
 	public void closeRatingAndReviewPopup(ClickEvent event){
+		String currentToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		hide();
-		Window.enableScrolling(true);
+		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			Window.enableScrolling(true);
+		}
 	}
 
 	@Override

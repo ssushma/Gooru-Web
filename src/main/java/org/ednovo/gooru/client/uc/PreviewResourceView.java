@@ -2,8 +2,8 @@ package org.ednovo.gooru.client.uc;
 
 
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
@@ -65,7 +65,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 		setReourceSourceName();
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
-		setAvgRatingWidget();
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			setAvgRatingWidget();
+		}
 	}
 	
 	
@@ -92,7 +94,7 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid())); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid(), collectionItemDo.getResource().getTitle())); 
 		}
 	}
 
