@@ -50,8 +50,9 @@
 					   <g:HTMLPanel styleName="{ProfilePageStyle.metaDataContainer}" ui:field="metaDataContainer">
 					   	   <g:Button ui:field="addCourseGradeBtn" visible="false" styleName="{ProfilePageStyle.edit-Button}"></g:Button>
 						   <g:HTMLPanel styleName="{ProfilePageStyle.userCount}" ui:field="userGradeList"/>
-						   <g:HTMLPanel styleName="{ProfilePageStyle.userCourse}" ui:field="userCourseList"/>
 						   <g:FlowPanel styleName="{ProfilePageStyle.moreGradeCourseLbl}" ui:field="moreGradeCourseLbl"/>
+						   <g:HTMLPanel styleName="{ProfilePageStyle.userCourse}" ui:field="userCourseList"/>
+						   <g:FlowPanel styleName="{ProfilePageStyle.moreGradeCourseLbl}" ui:field="moreCourseLbl"/>
 					   </g:HTMLPanel>
 					   <g:HTMLPanel styleName="{ProfilePageStyle.gradeCourseEditBtnContainer}">
 						   <panel:HTMLEventPanel styleName="{ProfilePageStyle.edit-Button}" ui:field="editPencil"></panel:HTMLEventPanel>
