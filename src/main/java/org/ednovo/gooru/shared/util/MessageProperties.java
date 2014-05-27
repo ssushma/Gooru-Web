@@ -2156,7 +2156,7 @@ public interface MessageProperties {
     	//Added new fields for player metadata.
     	String GL1685="Time Required";
     	String GL1686="Contributor";
-    	String GL1687="Mobile-friendlyness";
+    	String GL1687="Mobile-friendliness";
     	String GL1688="Data Type";
     	String GL1689="Interactivity Type";
     	String GL1690="Educational Alignment";
