@@ -15,6 +15,7 @@
                     <g:Label ui:field ="reviewTextAreaTitle"></g:Label> 
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
                     <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
+                    <g:Label styleName="{playerStyle.errorLblBottomText}" ui:field="errorLbl"></g:Label>
                     <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}" ui:field="buttonsContainer">
                         <g:Button ui:field="btnSkip" styleName="secondary">Skip</g:Button>
                         <g:Button ui:field="btnPost" styleName="primary"></g:Button>
