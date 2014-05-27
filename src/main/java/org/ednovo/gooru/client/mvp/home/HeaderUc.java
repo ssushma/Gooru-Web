@@ -1555,7 +1555,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		// });
 	}
 
-	public void showTeachPanelAsPopup(int left, int top) {
+	public void showTeachPanelAsPopup(final int left, int top) {
 		if (classpageListVc == null) {
 			classpageListVc = new ClasspageListVc(false,null);
 		}
@@ -1570,7 +1570,6 @@ public class HeaderUc extends Composite implements MessageProperties,
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 			public void onWindowScroll(Window.ScrollEvent scrollEvent) {
 				classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
-				classpageListVc.setPopupPosition(777,51);
 			}
 		});
 	}
