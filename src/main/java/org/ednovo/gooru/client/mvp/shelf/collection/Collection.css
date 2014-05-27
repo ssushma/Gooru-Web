@@ -328,7 +328,6 @@
 	margin: 0 auto;
 	opacity: 0.6;
 	text-align: center;
-	width: 250px;
 }
 
 .gradeList {
@@ -944,18 +943,19 @@
 	font-size: 14px;
 	text-align: center;
 	width: 102px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	margin-left: 5px;
+	padding-top: 4px;
+	margin: 8px;
+	margin-left: 0px !important;
+	height: 20px;
 }
 
 .profileHigherEducationGrade {
 	font-size: 14px;
 	text-align: center;
 	width: 126px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	margin-left: 5px;
+	padding-bottom: 4px;
+	margin-left: 0px !important;
+	height: 20px;
 }
 
 .userNumber {

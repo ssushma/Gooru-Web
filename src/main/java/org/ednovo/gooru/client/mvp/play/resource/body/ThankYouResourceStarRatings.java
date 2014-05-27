@@ -77,10 +77,10 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField public FlowPanel ratingWidgetPanel;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
 	private RatingWidgetView ratingWidgetView=null;
 	
-	String assocGooruOId,review;
+	String assocGooruOId,review,createrName;
 	Integer score,count;
 	double average;
 	final String saving="Saving..";
@@ -93,17 +93,20 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 * @param average 
 	 * @param count 
 	 */
-	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count){   
+	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count,String createrName){   
 		this.assocGooruOId = assocGooruOId;
 		this.score = score;
 		this.review = review;
 		this.average=average;
 		this.count=count;
+		this.createrName = createrName;
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
 		setAvgRatingWidget();
+		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
+		
 	}
 	
 	/**
@@ -128,7 +131,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId,createrName)); 
 		}
 	}
 
@@ -175,11 +178,39 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 */
 	private void setUserReview(String review) {
 		if(!review.equals("")){
+			reviewTextAreaTitle.setText(GL1858);
 			btnPost.setText("Save");
 			ratingCommentTxtArea.setText(review.trim());
 		}else{
+			reviewTextAreaTitle.setText(GL1855);
 			btnPost.setText("Post");
 		}
-		
+	}
+	
+	@Override
+	public void hide(boolean autoClose) {
+		super.hide(true);
+		if(autoClose){
+			Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", ratingCommentTxtArea.getText());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						if(!value){
+							saveAndPsotLbl.setText("");
+							saveAndPsotLbl.setVisible(true);
+							buttonsContainer.setVisible(false);
+							if(btnPost.getText().equalsIgnoreCase("Save")){
+								saveAndPsotLbl.setText(saving);
+								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
+							}else if(btnPost.getText().equalsIgnoreCase("Post")){
+								saveAndPsotLbl.setText(posting);
+								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+							}
+						}
+						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
+				}
+			});
+		}
 	}
 }

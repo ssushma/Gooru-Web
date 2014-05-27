@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.ActivateSearchBarEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
@@ -141,7 +142,11 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	
 	private String parentId, id=null;
 	
+	SignUpPresenter signUpViewPresenter = null;
+	
 	Map<String,String> folderMetaData = new HashMap<String,String>();
+	
+	private static final String CALLBACK = "callback";
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SHELF)
@@ -169,10 +174,11 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	 *            {@link Proxy}
 	 */
 	@Inject
-	public ShelfPresenter(ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, IsShelfView view, IsShelfProxy proxy) {
+	public ShelfPresenter(SignUpPresenter signUpViewPresenter,ImageUploadPresenter imageUploadPresenter, ShelfListPresenter shelfTabPresenter, CollectionResourceTabPresenter collectionResourceTabPresenter, CollectionInfoTabPresenter collectionInfoTabPresenter, CollectionAssignTabPresenter collectionAssignTabPresenter,CollectionCollaboratorsTabPresenter collectionCollaboratorsTabPresenter, FolderItemTabPresenter folderItemTabPresenter, IsShelfView view, IsShelfProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		getView().getLoadingImageVisible();
+		this.signUpViewPresenter = signUpViewPresenter;
 		this.shelfListPresenter = shelfTabPresenter;
 		this.collectionResourceTabPresenter = collectionResourceTabPresenter;
 		this.collectionInfoTabPresenter = collectionInfoTabPresenter;
@@ -210,8 +216,24 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		callBackMethods();
 	}
 
+	private void callBackMethods(){
+		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
+		}
+	}
+	
+	
 	@Override
 	public void onBind() {
 		super.onBind();

@@ -581,7 +581,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		this.collectionMetadataId=collectionDo.getGooruOid();
 		clearIframeContent();
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername()))
 		getProfilUserVisibility(collectionDo.getUser().getGooruUId());
 //	    enablePlayerButton(true,false, isSharable, false, true,false);
 		if(!AppClientFactory.isAnonymous()){
@@ -670,9 +669,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		}
 		clearDashBoardIframe();
 		clearIframeContent();
-		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-			getProfilUserVisibility(collectionDo.getUser().getGooruUId());
-		}
+		getProfilUserVisibility(collectionDo.getUser().getGooruUId());
 		metadataPresenter.setStudyEndPage();
 		clearSlot(COLLECTION_PLAYER_TOC_PRESENTER_SLOT);
 		stopResourceDataLog();

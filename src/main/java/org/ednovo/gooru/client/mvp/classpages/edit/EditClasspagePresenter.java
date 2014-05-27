@@ -395,7 +395,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
-					}else{
+					} else {
 						ErrorPopup error = new ErrorPopup(GL0341);
 						error.center();
 						error.show();

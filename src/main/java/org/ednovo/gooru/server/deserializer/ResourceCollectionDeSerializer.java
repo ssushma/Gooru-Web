@@ -52,6 +52,7 @@ import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.user.CreatorDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,6 +92,8 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 	public static final String OWNER_FIRST_NAME = "userFirstName";
 	public static final String OWNER_LAST_NAME = "userLastName";
 	public static final String OWNER_NAME_DISPLAY = "usernameDisplay";
+	public static final String USERNAME = "username";
+	public static final String CREATOR = "creator";
 	public static final String OWNER_PROFILE_USER_VISIBILITY = "profileUserVisibility";
 	public static final String OWNER_GOORU_UID = "gooruUId";
 	public static final String STANDARD_CODE = "code";
@@ -228,6 +231,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		ownerDo.setFirstName(getJsonString(recordJsonObject, OWNER_FIRST_NAME));
 		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));
 		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
+		
 		resourceSearchResultDo.setOwner(ownerDo);
 
 		try {
@@ -330,7 +334,14 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setEducationalUse(getJsonArray(recordJsonObject, EDUCATIONALUSE));
 		resourceDo.setMomentsOfLearning(getJsonArray(recordJsonObject, MOMENTSOFLEARNING));
 		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
-		
+		UserDo ownerDo = new UserDo();
+			try {
+				JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));
+				ownerDo.setUsername(getJsonString(createrObject,USERNAME));
+				resourceDo.setUser(ownerDo);
+			} catch (JSONException e1) {
+					e1.printStackTrace();
+			}
 		try{
 			resourceDo.setCustomFieldValues(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(CUSTOM_FIELDS).toString(), customFieldValuesDO.class));
 		}catch(Exception e){

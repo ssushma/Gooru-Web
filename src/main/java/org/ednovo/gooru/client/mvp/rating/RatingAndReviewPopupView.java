@@ -79,6 +79,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	@UiField Button rateResourceBtn;
 	
 	private String gooruOid = null;
+	private String createrName = null;
 	
 	private boolean isRated=false;
 	
@@ -123,8 +124,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	}
 
 	@Override
-	public void displayPopUp(String resourceTitle, String gooruOid) {
+	public void displayPopUp(String resourceTitle, String gooruOid,String createrName) {
 		this.gooruOid = gooruOid;
+		this.createrName = createrName;
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setText("Reviews for "+resourceTitle);
 		getAverageRatingForContent(gooruOid);
@@ -194,11 +196,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 					userRatingContainer.setVisible(true);
 				}
 			}
-		/*if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			userRatingContainer.setVisible(true);
-		} else {
-			userRatingContainer.setVisible(false);
-		}*/
 		}else{
 			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				userRatingContainer.setVisible(true);
@@ -207,7 +204,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
-			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews)));
+			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
 		}
 
 	}
@@ -215,6 +212,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public class OnClickEditRatingButton implements ClickHandler{
 		HTMLPanel htmlEdittingContainer;
 		HTMLPanel ratingPanel;
+		
 		public OnClickEditRatingButton(HTMLPanel htmlEdittingContainer,HTMLPanel ratingPanel) {
 			this.htmlEdittingContainer=htmlEdittingContainer;
 			this.ratingPanel=ratingPanel;
@@ -246,13 +244,16 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	public class OnRatingReviewContainerMouseOver implements MouseOverHandler{
 		Button btnEditRating;
-		public OnRatingReviewContainerMouseOver(Button btnEditRating) {
+		
+		public OnRatingReviewContainerMouseOver(Button btnEditRating,Button btnDeleteRating) {
 			this.btnEditRating=btnEditRating;
+			
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			btnEditRating.setVisible(true); 
+			btnEditRating.setVisible(true);
+			
 		}
 
 	}
