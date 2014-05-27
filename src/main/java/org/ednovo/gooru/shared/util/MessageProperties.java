@@ -2270,7 +2270,7 @@ public interface MessageProperties {
     	String GL1776 = "Manage Assignments ";
     	String GL1777 = "Provide students with a clear due date and your directions for the collections you assign.";
     	String GL1778 = "Monitor Student Progress ";
-    	String GL1779 = "See student reactions and responses to questions to intervene in real-time";
+    	String GL1779 = "When students log in, you can see reactions and responses to intervene in real time.";
     	String GL1780 = "See a sample report";
     	String GL1781 = "A Few of Our Favorite Classes";
     	String GL1782 = "Algebra I";
@@ -2290,7 +2290,7 @@ public interface MessageProperties {
     	String GL1796 ="Thank you for tagging this resource!";
     	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
     	String GL1798="Lexile Level";
-    	String GL1799="Kindergarden";
+    	String GL1799="Kindergarten";
     	String GL1800="Ads";
     	String GL1801="No Advertisement";
     	String GL1802="Moderate Advertisements";
@@ -2312,13 +2312,13 @@ public interface MessageProperties {
 		String GL1817 = "Upload your own resources";
 		String GL1818 = "Customize collections by adding your own tried-and-true handouts, worksheets, or other materials.";
 		String GL1819 = "Collaborate with fellow teachers";
-		String GL1820 = "Go further together--add another user to collaborate on a collection.";
+		String GL1820 = "Go further together--add another user as a collaborator on your collection.";
 		String GL1821 = "Assess understanding with Questions";
 		String GL1822 = "Add questions to your collections to check student understanding.";
 		String GL1823 = "Guide with Narration";
 		String GL1824 = "Add narration before a resource to give students direction and focus their attention";
 		String GL1825 = "Customize Existing Resources";
-		String GL1826 = "Edit start & stop times for videos, reorder resources, and more.";
+		String GL1826 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
     	
 		String GL1827 = "About RUSD";
     	String GL1828 = "http://www.rusdlink.org/site/default.aspx?PageID=1";
@@ -2361,10 +2361,10 @@ public interface MessageProperties {
     	
     	String GL1861 = "Delete Review";
     	String GL1862 = "Log In";
-    	String GL1863 = "Go further together--add another user as a collaborator on your collection.";
+//    	String GL1863 = "Go further together--add another user as a collaborator on your collection.";
     	String GL1864 = "Add narration before a resource to give students direction and focus their attention.";
-    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
-    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
+//    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
+//    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
     	String GL1867 = "Educational Role:";
     	String GL1868 = "School Level";
     	String GL1869 = "Share this class code with your students";

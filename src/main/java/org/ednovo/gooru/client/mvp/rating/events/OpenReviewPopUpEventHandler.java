@@ -3,7 +3,6 @@ package org.ednovo.gooru.client.mvp.rating.events;
 import com.google.gwt.event.shared.EventHandler;
 
 public interface OpenReviewPopUpEventHandler extends EventHandler {
-
 	/**
 	 * @function openReviewPopUp 
 	 * 
@@ -24,6 +23,6 @@ public interface OpenReviewPopUpEventHandler extends EventHandler {
 	 * 
 	*/
 	
-	void openReviewPopUp(String assocGooruOId, String title); 
+	void openReviewPopUp(String assocGooruOId, String title,String createrName); 
 
 }

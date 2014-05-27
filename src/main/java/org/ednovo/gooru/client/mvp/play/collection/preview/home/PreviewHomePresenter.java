@@ -101,7 +101,7 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 	@Override
 	public void openReviewPopUp(String assocGooruOId, String title) {
 		addToPopupSlot(ratingAndReviewPopup);
-		ratingAndReviewPopup.displayPopup(title, assocGooruOId);
+		ratingAndReviewPopup.displayPopup(title, assocGooruOId, "");
 		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
 	}
 

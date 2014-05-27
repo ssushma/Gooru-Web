@@ -8,10 +8,11 @@ public class OpenReviewPopUpEvent extends GwtEvent<OpenReviewPopUpEventHandler> 
 	
 	String assocGooruOId;
 	String title;
-	
-	public OpenReviewPopUpEvent(String assocGooruOId, String title){ 
+	String createrName;
+	public OpenReviewPopUpEvent(String assocGooruOId, String title, String createrName){ 
 		this.assocGooruOId=assocGooruOId;
 		this.title = title;
+		this.createrName = createrName;
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class OpenReviewPopUpEvent extends GwtEvent<OpenReviewPopUpEventHandler> 
 
 	@Override
 	protected void dispatch(OpenReviewPopUpEventHandler handler) {
-		handler.openReviewPopUp(assocGooruOId, title);
+		handler.openReviewPopUp(assocGooruOId, title,createrName);
 	} 
 
 }
