@@ -452,6 +452,7 @@ public class EditClasspageView extends
 		assignmentsTab.setText(GL1623);
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
+		assignmentsDirectionsLabel.setText(GL1887);
 		
 		//htmlShareText.setHTML(GL0229 + GL0230);
 		//lblPopupTitle.setText(GL0230);

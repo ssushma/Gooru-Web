@@ -12,7 +12,7 @@
                         Average Rating<br/>
                    <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     </g:HTMLPanel>
-                    <g:Label>Tell us what you think!</g:Label>
+                    <g:Label ui:field ="reviewTextAreaTitle"></g:Label> 
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
                     <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
                     <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}" ui:field="buttonsContainer">

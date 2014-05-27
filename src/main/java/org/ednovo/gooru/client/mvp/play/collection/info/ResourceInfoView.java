@@ -197,8 +197,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void setAvgRatingWidget() {
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
-		ratingWidgetView.getRatingCountLabel().setText(collectionItemDoGlobal.getResource().getRatings().getCount().toString());
-		ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
+		if(collectionItemDoGlobal.getResource().getRatings()!=null){
+			ratingWidgetView.getRatingCountLabel().setText(collectionItemDoGlobal.getResource().getRatings().getCount().toString());
+			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
+		}
 		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.getElement().getStyle().setFloat(Float.RIGHT);
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
