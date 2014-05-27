@@ -134,6 +134,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	private static final String FILLED_BLUE = "filled filledBlue";
 	ThankYouResourceStarRatings thankYouResourceStarRatings;
+	ThankYouResourceStarRatingsPoor thankYouResourceStarRatingsPoor;
 	RatingsConfirmationPopup ratingsConfirmationPopup;
 	private boolean isRated=false,isFromThanksPopup=false;
 	String assocGooruOId;
@@ -188,6 +189,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
@@ -197,7 +199,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
 			 
 		  }
-		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
 		  }
@@ -863,15 +865,23 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip) {
+		
+		
 		if(result!=null){
 			this.starRatingsDo=result;
 			isRated=true; 
 		}else{
 			isRated=false;
 		}
-		if(thankYouResourceStarRatings!=null){
+		if(thankYouResourceStarRatings!=null || thankYouResourceStarRatingsPoor!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
+			}
+			else if(thankYouResourceStarRatingsPoor.isVisible()){
+				thankYouResourceStarRatingsPoor.hide();
 				if(isFromThanksPopup){
 					displaySuccessPopup();
 				}
@@ -1397,11 +1407,22 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
+		if(score > 1)
+		{
 		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
 		thankYouResourceStarRatings.show();
 		thankYouResourceStarRatings.setAutoHideEnabled(true);
+		}
+		else
+		{
+			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.setPopupPosition(300,Window.getScrollTop()+48);
+			thankYouResourceStarRatingsPoor.show();
+			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
+		}
 	}
 	
 	

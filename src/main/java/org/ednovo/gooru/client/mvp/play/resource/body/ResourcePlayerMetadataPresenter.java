@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
@@ -309,6 +310,36 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 				}
 			}
 		}); 
+	}
+	
+	
+	@Override
+	public void createCollectionContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids) {
+		AppClientFactory.getInjector().getPlayerAppService().createContentReport(associatedGooruOid, freeText, contentReportList, deleteContentReportGooruOids, new SimpleAsyncCallback<ContentReportDo>() {
+			
+			@Override
+			public void onSuccess(ContentReportDo result) {
+				//getView().showSuccesmessagePopup();
+				String chkViewPage = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view", null);			
+				if(chkViewPage == null)
+				{
+				if(isPreviewPlayer){
+					previewPlayerPresenter.updateFlagImageOnHomeView();
+				}else if(isCollectionPlayer){
+					collectionPlayerPresenter.updateFlagImageOnHomeView();
+				}
+				}
+				else
+				{
+					if(isPreviewPlayer){
+						previewPlayerPresenter.updateFlagImageOnHomeView();
+					}else if(isCollectionPlayer){
+						collectionPlayerPresenter.updateFlagImageOnHomeView();
+					}
+				}
+			}
+		});	
+		
 	}
 
 	/**

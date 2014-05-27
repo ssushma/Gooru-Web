@@ -24,6 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
@@ -53,4 +55,8 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	public void getAvgRatingAndCount(String assocGooruOid, Integer score, String review);   
 	
 	public void setResourceMetaData(String resourceTitle);
+
+	void createCollectionContentReport(String associatedGooruOid,
+			String freeText, ArrayList<String> contentReportList,
+			String deleteContentReportGooruOids);
 }
