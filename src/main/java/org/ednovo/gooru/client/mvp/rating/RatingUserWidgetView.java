@@ -65,7 +65,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public RatingUserWidgetView(StarRatingsDo starRatingsDo,String createrName) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.createrName=createrName;
+		deleteReview.setVisible(false);
 		setData(starRatingsDo,createrName);
+	
 		
 	}
 	
@@ -74,16 +76,15 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		timeStamp.setText(commentTime);
-		deleteReview.setVisible(false);
+		
 		deleteReview.setText("Delete Review");
 		
 		review.setText(starRatingsDo.getFreeText());
 		id = starRatingsDo.getDeleteRatingGooruOid();
 		editReviewText.setText(starRatingsDo.getFreeText());
 		editReview.setVisible(false);
+		deleteReview.addStyleName(style.deleteButtonAlign());
 		
-		deleteReview.getElement().setAttribute("style", "float: right");
-		deleteReview.getElement().setAttribute("style", "margin-right: 30px");
 		editReviewTextareaContainer.setVisible(false);
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
 			reviewContainer.setVisible(true);
@@ -294,8 +295,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
 				reviewContainer.clear();
 				final HTMLPanel deletePanel = new HTMLPanel(MessageProperties.GL1853);
-				deletePanel.getElement().setAttribute("style", "height:40px");
+				deletePanel.setStyleName(style.deletePanel());
 				reviewContainer.add(deletePanel);
+				reviewContainer.getElement().setAttribute("style", "height:80px");
 						
 				new FadeInAndOut(deletePanel.getElement(), 1000);
 				Timer timer = new Timer()
