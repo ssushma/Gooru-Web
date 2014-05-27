@@ -96,7 +96,7 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 		}
 	}
 	@Override
-	public void openReviewPopUp(String assocGooruOId) {
+	public void openReviewPopUp(String assocGooruOId,String createrName) {
 	}
 
 }

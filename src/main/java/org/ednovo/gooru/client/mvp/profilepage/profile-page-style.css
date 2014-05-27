@@ -1156,6 +1156,11 @@ li.resources {
 	opacity: 0.6;
 }
 
+.profileGradeHigherContainer {
+	float: left;
+	width: 135px;
+}
+
 .addedCoursesList {
 	float: left;
 	width: 385px;

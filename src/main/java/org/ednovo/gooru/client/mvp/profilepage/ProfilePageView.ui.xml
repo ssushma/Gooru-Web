@@ -67,7 +67,7 @@
 									<g:FlowPanel styleName="{ProfilePageStyle.profileGradeGartenContainer}" ui:field="KinderGarten" />
 									<g:FlowPanel styleName="{ccb.css.gradeListCont}">
 										<g:FlowPanel ui:field="gradeTopList" styleName="{ProfilePageStyle.gradeBoxStyle}"/>
-										<g:FlowPanel styleName="{ProfilePageStyle.profileGradeGartenContainer}" ui:field="higherEducation" />
+										<g:FlowPanel styleName="{ProfilePageStyle.profileGradeHigherContainer}" ui:field="higherEducation" />
 										<g:FlowPanel ui:field="gradeMiddleList" styleName="{ProfilePageStyle.gradeBoxStyle}"/>
 									</g:FlowPanel>
 								</g:FlowPanel>

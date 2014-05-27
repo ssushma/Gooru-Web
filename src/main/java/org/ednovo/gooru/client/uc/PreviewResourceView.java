@@ -92,7 +92,9 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid())); 
+
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getUser().getUsername())); 
+
 		}
 	}
 

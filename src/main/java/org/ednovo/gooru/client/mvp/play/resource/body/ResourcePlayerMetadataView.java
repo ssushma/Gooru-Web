@@ -1000,7 +1000,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@UiHandler("one_star")
 	public void onStarOneclicked(ClickEvent event){
-		System.out.println("---- "+isRated); 
 		if(AppClientFactory.isAnonymous()){
 			getDefaultRatings();
 			showLoginPopupWidget(RATINGS_WIDGET);
@@ -1397,7 +1396,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
-		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count); 
+		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
 		thankYouResourceStarRatings.show();
@@ -1417,7 +1416,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			ratingsConfirmationPopup.hide();
 		}
 		isFromThanksPopup=false;
-		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average);
+		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average,collectionItemDo.getResource().getUser().getUsername());
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
