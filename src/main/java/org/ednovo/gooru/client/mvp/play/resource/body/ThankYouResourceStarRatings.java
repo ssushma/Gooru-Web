@@ -43,6 +43,7 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -77,7 +78,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField public FlowPanel ratingWidgetPanel;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl;
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review,createrName;
@@ -133,6 +134,23 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			 */
 
 			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId, "",createrName)); 
+		}
+	}
+	
+	
+	@UiHandler("ratingCommentTxtArea")
+	public void keyRatingTextArea(KeyUpEvent event){
+		String review=ratingCommentTxtArea.getText();
+		errorLbl.setText("");
+		if(review.length()>0){
+			errorLbl.setText("");
+		}
+		if(review.length()==500){
+			errorLbl.setText(GL0143);
+			errorLbl.setVisible(true);
+		//	fieldValidationStaus=false;
+		}else{
+			errorLbl.setVisible(false);
 		}
 	}
 
