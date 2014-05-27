@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
@@ -1000,7 +1001,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@UiHandler("one_star")
 	public void onStarOneclicked(ClickEvent event){
-		System.out.println("---- "+isRated); 
 		if(AppClientFactory.isAnonymous()){
 			getDefaultRatings();
 			showLoginPopupWidget(RATINGS_WIDGET);
@@ -1422,6 +1422,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
 		ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
 		ratingsConfirmationPopup.setAutoHideEnabled(true);
+	}
+
+	@Override
+	public void updateRatingOnSearch(StarRatingsDo starRatingsDo) {
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid()));
+		}
+		
 	}
 	
 }
