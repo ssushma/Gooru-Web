@@ -318,9 +318,8 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	public abstract void setAttemptStatus(String collectionItemId,AttemptedAnswersDo attemptAnswerDo);
 	public abstract void setAnswerAttemptSequence(int attemptSequence,int attemptStatus, int answerId);
 	public void isUserAnswerAttempted(boolean isUserAttemptedResult){}
-	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){
-		
-	}
+	public void setAnswersDetailsWitithTime(List<Integer> answerIds,int answerStatus,int answerSequence,int score,boolean isFirstTry){}
+	
 	public abstract void increaseUserAttemptCount();
 	public abstract void userAttemptedValue(List<String> userAttemptedValueList);
 	public abstract void createSesstionItemAttemptForMultipleAnswer(List<Integer> answerIds,List<String> userAttemptedAnswers,String attemptStatus);
