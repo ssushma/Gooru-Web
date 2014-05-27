@@ -38,6 +38,8 @@ public interface IsRatingAndReviewPopupView extends PopupView, IsViewWithHandler
 
 	void setGraphAndAvgContentRating(ContentStarRatingsDo result);
 
-	void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result);  
+	void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result);
+
+	void getAverageRatingForContent(String string);  
 	
 }

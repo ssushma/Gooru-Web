@@ -53,6 +53,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -66,9 +67,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@UiField Label closeButton;
 
-	@UiField Label lblResourceTitle;
+	@UiField HTML lblResourceTitle;
 
-	@UiField Label excellentScore, verygoodScore, goodScore, fairScore, poorScore;
+	@UiField Label excellentScore, verygoodScore, goodScore, fairScore, poorScore,excellentLbl,veryGoodLbl,goodLbl,fairLbl,poorLbl,avgLbl,rateMsg,ratingDistributionLbl;
 
 	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
 
@@ -131,9 +132,22 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
 		userRatingContainer.setVisible(false);
-		lblResourceTitle.setText("Reviews for "+resourceTitle);
+		lblResourceTitle.setHTML(GL1840+" "+resourceTitle);
+		setStaticText();
 		getAverageRatingForContent(gooruOid);
 		getUserRatingsAndReviews(gooruOid);
+	}
+
+	private void setStaticText() {
+		excellentLbl.setText(GL1842);
+		veryGoodLbl.setText(GL1843);
+		goodLbl.setText(GL1844);
+		fairLbl.setText(GL1845);
+		poorLbl.setText(GL1846);
+		avgLbl.setText(GL1848);
+		rateResourceBtn.setText(GL1849);
+		ratingDistributionLbl.setText(GL1841);
+//		rateMsg.setText(text);
 	}
 
 	public void getUserRatingsAndReviews(String resourceId)
