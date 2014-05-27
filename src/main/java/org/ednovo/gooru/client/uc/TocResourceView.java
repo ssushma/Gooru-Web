@@ -127,6 +127,7 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
+			
 			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getResource().getUser().getUsername())); 
 		}
 	}

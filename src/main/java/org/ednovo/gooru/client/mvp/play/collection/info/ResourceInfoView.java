@@ -218,7 +218,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-		AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid(),collectionItemDoGlobal.getResource().getUser().getUsername())); 
+			
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid(),collectionItemDoGlobal.getResource().getUser().getUsername())); 
 		}
 	}
 
