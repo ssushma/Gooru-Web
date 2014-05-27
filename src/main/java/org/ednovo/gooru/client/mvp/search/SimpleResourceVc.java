@@ -202,7 +202,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(resourceSearchResultDo.getGooruOid())); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(resourceSearchResultDo.getGooruOid(),resourceSearchResultDo.getOwner().getUsername())); 
 		}
 	}
 	public void setResourcePlayLink(){
