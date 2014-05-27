@@ -28,7 +28,6 @@ package org.ednovo.gooru.client.mvp.play.resource.body;
 
 import java.util.ArrayList;
 
-import org.apache.xpath.operations.Bool;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
@@ -40,7 +39,6 @@ import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderMetaDataEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
@@ -51,7 +49,6 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -339,7 +336,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * 
 	 */
 	@Override
-	public void openReviewPopUp(String assocGooruOId,String createrName) {
+
+	public void openReviewPopUp(String assocGooruOId, String title,String createrName) {
 		addToPopupSlot(ratingAndReviewPopup);
 		ratingAndReviewPopup.displayPopup(resourceTitle, assocGooruOId,createrName);
 		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);

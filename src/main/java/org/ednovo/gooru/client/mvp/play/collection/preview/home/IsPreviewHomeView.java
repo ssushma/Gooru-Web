@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.user.client.ui.Button;
 
