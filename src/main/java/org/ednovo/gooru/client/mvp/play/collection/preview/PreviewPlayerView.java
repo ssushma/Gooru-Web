@@ -142,7 +142,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			  androidSectiondiv.setVisible(false);
 
 		  }
-		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  else if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);
