@@ -1870,7 +1870,7 @@ fieldset {
     color:#4e9746;
 }
 .filledBlue {
-	color: #579ECF;
+	color: #579ECF !important;
 }
 
 /* //.rating .star:before, .userRating .star:before {content:'\2606';}

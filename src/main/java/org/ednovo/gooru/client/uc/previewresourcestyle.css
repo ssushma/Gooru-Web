@@ -115,6 +115,7 @@
 	border: 1px solid #EEE;
 	background-color: #F7F7F7;
 	text-align: center;
+	height: 103px;
 }
 .resourceContainer:hover .resourceBlock {
     cursor:pointer;
@@ -125,6 +126,10 @@
 	font-weight: bold;
 	color: #999;
 }
+.resourceBlock{ 
+	border-bottom: none !important;
+}
+
 .resourceBlock .restitle {
 	white-space: normal;
 	color: #515151 !important;
@@ -140,6 +145,16 @@
 	opacity:1 !important;	
 }
 
-*{
-	-webkit-font-smoothing: antialiased !important;
+.container{
+	float: left;
+}
+
+.ratingContainer{
+	text-align: center;
+	overflow: visible;
+	border: 1px solid #eee;
+	background-color: #f7f7f7;
+	border-top: none;
+	width: 138px;
+	padding-bottom: 10px;
 }
