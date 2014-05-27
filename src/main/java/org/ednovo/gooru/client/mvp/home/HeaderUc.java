@@ -1757,6 +1757,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
+		params.put("context", "header");
 		AppClientFactory.getPlaceManager().revealPlace(
 				PlaceTokens.EDIT_CLASSPAGE, params);
 	}

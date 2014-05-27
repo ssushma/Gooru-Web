@@ -386,6 +386,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					});
 				
 				if(classpageDo!=null){
+					String context = AppClientFactory.getPlaceManager().getRequestParameter("context","");
 					if(classpageDo.getPermissions()!=null&&classpageDo.getPermissions().contains("edit")&& classpageDo.getClasspageId() != null){
 						offset=0;
 						limit=20;
@@ -395,7 +396,14 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
-					}else{
+					} else if(context.equals("header")){
+						Map<String, String> params = new HashMap<String, String>();
+						params.put("id", classpageDo.getClasspageId());
+						params.put("pageNum", "0");
+						params.put("pageSize", "10");
+						params.put("pos", "1");
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+					} else {
 						ErrorPopup error = new ErrorPopup(GL0341);
 						error.center();
 						error.show();
