@@ -80,7 +80,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
 	private RatingWidgetView ratingWidgetView=null;
 	
-	String assocGooruOId,review;
+	String assocGooruOId,review,createrName;
 	Integer score,count;
 	double average;
 	final String saving="Saving..";
@@ -93,18 +93,20 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 * @param average 
 	 * @param count 
 	 */
-	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count){   
+	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count,String createrName){   
 		this.assocGooruOId = assocGooruOId;
 		this.score = score;
 		this.review = review;
 		this.average=average;
 		this.count=count;
+		this.createrName = createrName;
 		setWidget(uiBinder.createAndBindUi(this));
 		setUserReview(review);
 		setAvgRatingWidget();
 		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
+		
 	}
 	
 	/**
@@ -129,7 +131,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId,createrName)); 
 		}
 	}
 
