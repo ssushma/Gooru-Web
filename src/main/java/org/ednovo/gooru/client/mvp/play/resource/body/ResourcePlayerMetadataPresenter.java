@@ -250,6 +250,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			@Override
 			public void onSuccess(StarRatingsDo result) { 
 				getView().setUserStarRatings(result,showThankYouToolTip);
+				getView().updateRatingOnSearch(result); 
 			}
 		});
 	}

@@ -588,7 +588,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			//toolTip = new ToolTipPopUp(widget,getWidget().getAbsoluteLeft() + (getWidget().getOffsetWidth() / 2) - (tooltipPopUpUc.getOffsetWidth() / 2), getWidget().getAbsoluteTop() + getWidget().getOffsetHeight());	
-			toolTip = new ToolTipPopUp(widget,(event.getRelativeElement().getAbsoluteLeft()-55),(event.getRelativeElement().getAbsoluteTop()+5)); 
+			toolTip = new ToolTipPopUp(widget,(event.getRelativeElement().getAbsoluteLeft()-106),(event.getRelativeElement().getAbsoluteTop()+9)); 
 			toolTip.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().courseTooltip());
 			toolTip.show();
 		}
