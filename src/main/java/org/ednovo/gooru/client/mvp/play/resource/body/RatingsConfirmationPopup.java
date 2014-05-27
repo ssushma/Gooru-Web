@@ -21,7 +21,7 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 	@UiField Button btnOk;
 	@UiField public FlowPanel ratingWidgetPanel;
 	private RatingWidgetView ratingWidgetView=null;
-	String assocGooruOId;
+	String assocGooruOId,createrName;
 	
 	private static RatingsConfirmationPopupUiBinder uiBinder = GWT
 			.create(RatingsConfirmationPopupUiBinder.class);
@@ -31,15 +31,16 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 	}
 	
 	public RatingsConfirmationPopup(String assocGooruOId, Integer score,
-			Integer count, double average) {
+			Integer count, double average,String createrName) {
 			setWidget(uiBinder.createAndBindUi(this));
 			this.assocGooruOId=assocGooruOId;
-			setAvgRatingWidget(assocGooruOId,score,count,average);
+			this.createrName = createrName;
+			setAvgRatingWidget(assocGooruOId,score,count,average,createrName);
 	}
 	/**
 	 * Average star ratings widget will get integrated.
 	 */
-	private void setAvgRatingWidget(String assocGooruOId, Integer score,Integer count, double average){
+	private void setAvgRatingWidget(String assocGooruOId, Integer score,Integer count, double average,String createrName){
 		ratingWidgetView=new RatingWidgetView();
 		if(count!=null)
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
@@ -58,7 +59,7 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId)); 
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId,createrName)); 
 		}
 	}
 	
