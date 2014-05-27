@@ -48,6 +48,8 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -184,7 +186,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
+			resourceTitleLbl.setVisible(false);
+			resourcePublisher.setVisible(false);
+			ratingsContainer.getElement().getStyle().setFloat(Float.RIGHT);
+			ratingsContainer.getElement().getStyle().setMarginRight(430,Unit.PX);
 //			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+		}else{
+			resourceTitleLbl.setVisible(true);
+			resourcePublisher.setVisible(true);
 		}
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
@@ -1168,6 +1177,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void setUserRatings(StarRatingsDo result){
 		if(result!=null){
+			setStyle();
 			currentRating = result.getScore();
 			if(result.getScore()==1){
 				starValue.setVisible(true);
@@ -1201,6 +1211,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	
+	private void setStyle() {
+		if(!starValue.getText().equalsIgnoreCase(DEFAULT_RATING_TEXT)){
+			starValue.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+		}
+	}
+
 	public void clearAllStars(){
 		one_star.getElement().removeClassName(FILLED_BLUE);
 		two_star.getElement().removeClassName(FILLED_BLUE);
@@ -1268,6 +1284,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(POOR);
 				}else{
@@ -1275,6 +1292,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(FAIR);
@@ -1283,6 +1301,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
@@ -1292,6 +1311,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
@@ -1302,6 +1322,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
@@ -1340,8 +1361,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
 			}
-			setStarRatingValue(currentRating);
 			
+			if(!starValue.getText().equals(DEFAULT_RATING_TEXT)){
+				setStarRatingValue(currentRating);
+			}
 		}
 	}
 	
