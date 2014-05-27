@@ -1079,7 +1079,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("addCourseBtn")
 	public void onAddCourseClick(ClickEvent clickEvent) {
 		if (enableEdit){
-			if (coursesPanel.getWidgetCount() < 5) {
+			if (coursesPanel.getWidgetCount() < 6) {
 				final String courseCodeLabel = collectionCourseLst
 						.getItemText(collectionCourseLst.getSelectedIndex());
 				final String courseCode = collectionCourseLst
@@ -1116,8 +1116,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	 */
 	protected boolean validateCourse(String course) {
 		for (Widget widget : coursesPanel) {
-			if (course.equals(((CloseLabel) widget).getSourceText())) {
-				return true;
+			if (widget instanceof CloseLabel) {
+				if (course.equals(((CloseLabel) widget).getSourceText())) {
+					return true;
+				}
 			}
 		}
 		return false;
