@@ -1,9 +1,10 @@
 package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.Date;
+import java.util.Iterator;
 
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -21,6 +22,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -64,6 +66,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.createrName=createrName;
 		setData(starRatingsDo,createrName);
+		
 	}
 	
 
@@ -71,12 +74,14 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		timeStamp.setText(commentTime);
-
+		deleteReview.setVisible(false);
+		deleteReview.setText("Delete Review");
+		
 		review.setText(starRatingsDo.getFreeText());
 		id = starRatingsDo.getDeleteRatingGooruOid();
 		editReviewText.setText(starRatingsDo.getFreeText());
 		editReview.setVisible(false);
-		deleteReview.setVisible(false);
+		
 		deleteReview.getElement().setAttribute("style", "float: right");
 		deleteReview.getElement().setAttribute("style", "margin-right: 30px");
 		editReviewTextareaContainer.setVisible(false);
@@ -183,10 +188,12 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			cancelReviewBtn.removeStyleName(style.editReview());
 			//editReview.setVisible(true);
 			userName.setText("Your Review!");
+			deleteReview.removeStyleName(style.editReview());
 			
 	
 		} else {
 			editReview.removeStyleName(style.editReview());
+			deleteReview.removeStyleName(style.editReview());
 			
 		}
 		reviewContainer.addMouseOverHandler(new MouseOverHandler() {
@@ -195,14 +202,11 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			public void onMouseOver(MouseOverEvent event) {
 				if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
 				editReview.setVisible(true);
-				
-				deleteReview.setText("Delete rating and review");
+			
 				}
 				if(AppClientFactory.getLoggedInUser().getUsername().equalsIgnoreCase(createrName))
 				{
 					deleteReview.setVisible(true);
-					deleteReview.setText("Delete Review");
-					
 				}
 				
 			}
@@ -287,15 +291,26 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			
 			@Override
 			public void onSuccess(Void result) {
+				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
 				reviewContainer.clear();
-				Label deleteMsg=new Label();
-				deleteMsg.getElement().setAttribute("style","float: left");
-				deleteMsg.getElement().setAttribute("style","margin-left: 101px;");
-				deleteMsg.setText(MessageProperties.GL1853);
-				reviewContainer.add(deleteMsg);
-				reviewContainer.getElement().setAttribute("style", "height: 30px");
-				
-				
+				final HTMLPanel deletePanel = new HTMLPanel(MessageProperties.GL1853);
+				deletePanel.getElement().setAttribute("style", "height:40px");
+				reviewContainer.add(deletePanel);
+						
+				new FadeInAndOut(deletePanel.getElement(), 1000);
+				Timer timer = new Timer()
+		        {
+		            @Override
+		            public void run()
+		            {
+		            	int deleteIndex = reviewContainer.getWidgetIndex(deletePanel);
+		            	reviewContainer.remove(deleteIndex);
+		            	reviewContainer.setVisible(false);
+					
+		            }
+		        };
+		        timer.schedule(1000);
+		     
 				
 			}
 			
