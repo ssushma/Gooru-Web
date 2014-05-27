@@ -5,7 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
 	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.data">
 	
-	<ui:style field="ProfilePageStyle" src="profile-page-style.css"/>
+	<ui:style field="ProfilePageStyle" src="profile-page-style.css" type="org.ednovo.gooru.client.mvp.profilepage.ProfilePageCBundle"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle" field="ccb" />
 	<ui:style field="settingsStyle" src="../settings/Setting-page.css" type="org.ednovo.gooru.client.mvp.settings.UserSettingStyle" />
@@ -50,13 +50,15 @@
 					   <g:HTMLPanel styleName="{ProfilePageStyle.metaDataContainer}" ui:field="metaDataContainer">
 					   	   <g:Button ui:field="addCourseGradeBtn" visible="false" styleName="{ProfilePageStyle.edit-Button}"></g:Button>
 						   <g:HTMLPanel styleName="{ProfilePageStyle.userCount}" ui:field="userGradeList"/>
-						   <g:HTMLPanel styleName="{ProfilePageStyle.userCourse}" ui:field="userCourseList"/>
 						   <g:FlowPanel styleName="{ProfilePageStyle.moreGradeCourseLbl}" ui:field="moreGradeCourseLbl"/>
+						   <g:HTMLPanel styleName="{ProfilePageStyle.userCourse}" ui:field="userCourseList"/>
+						   <g:FlowPanel styleName="{ProfilePageStyle.moreGradeCourseLbl}" ui:field="moreCourseLbl"/>
 					   </g:HTMLPanel>
 					   <g:HTMLPanel styleName="{ProfilePageStyle.gradeCourseEditBtnContainer}">
 						   <panel:HTMLEventPanel styleName="{ProfilePageStyle.edit-Button}" ui:field="editPencil"></panel:HTMLEventPanel>
 					   </g:HTMLPanel>
 					   <panel:HTMLEventPanel styleName="{ProfilePageStyle.userCoursePopup}" ui:field="userCoursePopup">
+							<g:Label styleName="{ProfilePageStyle.paddinBottom15}" ui:field="courseGradeLbl"></g:Label>
 							<g:FlowPanel styleName="{ProfilePageStyle.profileGradeInfoContainer}">
 								<g:FlowPanel styleName="{ProfilePageStyle.profileGradeInfoTitleContainer}">
 									<g:Label styleName="{ProfilePageStyle.profileGradeInfoTitle}" ui:field="gradeText"/>
@@ -64,10 +66,10 @@
 								<g:FlowPanel styleName="{ProfilePageStyle.profileGradeContentContainer}">
 									<g:FlowPanel styleName="{ProfilePageStyle.profileGradeGartenContainer}" ui:field="KinderGarten" />
 									<g:FlowPanel styleName="{ccb.css.gradeListCont}">
-										<g:FlowPanel ui:field="gradeTopList" />
-										<g:FlowPanel ui:field="gradeMiddleList" />
+										<g:FlowPanel ui:field="gradeTopList" styleName="{ProfilePageStyle.gradeBoxStyle}"/>
+										<g:FlowPanel styleName="{ProfilePageStyle.profileGradeGartenContainer}" ui:field="higherEducation" />
+										<g:FlowPanel ui:field="gradeMiddleList" styleName="{ProfilePageStyle.gradeBoxStyle}"/>
 									</g:FlowPanel>
-									<g:FlowPanel styleName="{ProfilePageStyle.profileGradeGartenContainer}" ui:field="higherEducation" />
 								</g:FlowPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="{ProfilePageStyle.profileGradeInfoContainer}">
@@ -76,7 +78,7 @@
 								</g:FlowPanel>
 								<g:FlowPanel styleName="{ProfilePageStyle.floatLeftCollectionInputBox}" ui:field="courseData">
 									<g:FlowPanel styleName="{ccb.css.collectionCourseLstPanel}" ui:field="collectionCourseLstPanel" />
-									<g:Button styleName="{ccb.css.infoAddButton}" ui:field="addCourseBtn" />
+									<g:Button styleName="secondary {ProfilePageStyle.addCourseBtnStyle}" ui:field="addCourseBtn" />
 									<g:Label styleName="{ccb.css.courseMaxMsg}" ui:field="courseMaxMsg" />
 								</g:FlowPanel>	
 								<g:FlowPanel styleName="{ProfilePageStyle.addedCoursesList}" ui:field="coursesPanel">

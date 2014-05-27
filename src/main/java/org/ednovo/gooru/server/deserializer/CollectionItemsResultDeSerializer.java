@@ -38,6 +38,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -71,6 +72,8 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 	private static final String ITEM_SEQUENCE="itemSequence";
 	
 	private static final String VIEWS="views";
+	
+	private static final String RATINGS="ratings";
 
 	@Override
 	public CollectionItemSearchResultDo deserializeRecord(JSONObject collectionItemJsonObject) {
@@ -82,7 +85,9 @@ public class CollectionItemsResultDeSerializer extends SearchDeSerializer<Collec
 			collectionItemSearchResultDo.setItemSequence(stringtoInteger(collectionItemJsonObject, ITEM_SEQUENCE));
 			try {
 				
-	
+				JSONObject ratingsObj = recordJsonObject.getJSONObject(RATINGS);
+				collectionItemSearchResultDo.setRatings(JsonDeserializer.deserialize(ratingsObj.toString(), SearchRatingsDo.class));
+				
 				JSONObject resourceType = recordJsonObject.getJSONObject(RESOURCE_TYPE);
 				collectionItemSearchResultDo.setResourceType(JsonDeserializer.deserialize(resourceType.toString(), ResourceTypeDo.class));
 				collectionItemSearchResultDo.setResourceTypeString((String) resourceType.get(RESOURCE_TYPE_NAME));

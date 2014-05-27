@@ -32,17 +32,21 @@ import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter.IsClassCodeProxy;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.event.HomeEvent;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 
 public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsClassCodeProxy> implements ClassCodeUiHandlers {
@@ -53,6 +57,9 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	
 	private SimpleAsyncCallback<CollectionDo> collectionAsyncCallback;
 	
+	private static final String CALLBACK = "callback";
+	
+	SignUpPresenter signUpViewPresenter = null;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDY)
@@ -61,10 +68,11 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 	
 	
 	@Inject
-	public ClassCodePresenter(IsClassCodeView view,
+	public ClassCodePresenter(SignUpPresenter signUpViewPresenter,IsClassCodeView view,
 			IsClassCodeProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.signUpViewPresenter = signUpViewPresenter;
 		
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
@@ -94,6 +102,21 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		
 	}
 
+	private void callBackMethods(){
+		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
+		}
+	}
+	
+	
 	@Override
 	protected void onReveal() {
 		super.onReveal();
@@ -105,6 +128,11 @@ public class ClassCodePresenter extends BasePlacePresenter<IsClassCodeView, IsCl
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 	}
 
+	@Override
+	public void prepareFromRequest(PlaceRequest request) {
+		callBackMethods();
+	}
+	
 	@Override
 	protected void onReset() {
 		super.onReset();
