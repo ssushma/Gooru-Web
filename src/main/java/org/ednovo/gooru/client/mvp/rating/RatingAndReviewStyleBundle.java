@@ -45,4 +45,6 @@ public interface RatingAndReviewStyleBundle extends CssResource {
 	String creatorReviewPanel();
 	String editReview();
 	String filled();
+	String deleteButtonAlign();
+	String deletePanel();
 }

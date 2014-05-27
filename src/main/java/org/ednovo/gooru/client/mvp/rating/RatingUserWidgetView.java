@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import java.util.Date;
 import java.util.Iterator;
@@ -71,11 +72,11 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	private static final String FIVE_STAR="fiveStar";
 	
 	private StarRatingsDo starRatingsDo;
-	private static final String POOR="Poor";
-	private static final String FAIR="Fair";
-	private static final String GOOD="Good";
-	private static final String VERY_GOOD="Very Good";
-	private static final String EXCELLENT="Excellent";
+	private static final String POOR=GL1846;
+	private static final String FAIR=GL1845;
+	private static final String GOOD=GL1844;
+	private static final String VERY_GOOD=GL1843;
+	private static final String EXCELLENT=GL1842;
 	
 	int currentRating=0,clickedRating;
 	private static final String FILLED_BLUE = "filled filledBlue";
@@ -96,7 +97,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		//timeStamp.setText("3 days ago");
 		currentRating = starRatingsDo.getScore();
 		this.createrName=createrName;
+		deleteReview.setVisible(false);
 		setData(starRatingsDo,createrName);
+	
 		
 	}
 	
@@ -105,16 +108,15 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		timeStamp.setText(commentTime);
-		deleteReview.setVisible(false);
+		
 		deleteReview.setText("Delete Review");
 		
 		review.setText(starRatingsDo.getFreeText());
 		id = starRatingsDo.getDeleteRatingGooruOid();
 		editReviewText.setText(starRatingsDo.getFreeText());
 		editReview.setVisible(false);
+		deleteReview.addStyleName(style.deleteButtonAlign());
 		
-		deleteReview.getElement().setAttribute("style", "float: right");
-		deleteReview.getElement().setAttribute("style", "margin-right: 30px");
 		editReviewTextareaContainer.setVisible(false);
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
 			reviewContainer.setVisible(true);
@@ -330,8 +332,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				editReviewLabelContainer.setVisible(true);
 				editReviewBtn.removeStyleName(style.editReview());
 				cancelReviewBtn.removeStyleName(style.editReview());
-				System.out.println(result.get(0));
 				updateStars(result.get(0));
+				AppClientFactory.fireEvent(new UpdateRatingsGraphEvent(starRatingsDo.getAssocGooruOid()));  
+				
 			}
 		}
 	}); 
@@ -453,8 +456,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
 				reviewContainer.clear();
 				final HTMLPanel deletePanel = new HTMLPanel(MessageProperties.GL1853);
-				deletePanel.getElement().setAttribute("style", "height:40px");
+				deletePanel.setStyleName(style.deletePanel());
 				reviewContainer.add(deletePanel);
+				reviewContainer.getElement().setAttribute("style", "height:80px");
 						
 				new FadeInAndOut(deletePanel.getElement(), 1000);
 				Timer timer = new Timer()

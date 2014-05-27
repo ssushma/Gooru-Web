@@ -664,6 +664,11 @@
 	color: #515151;
 }
 
+.conceptTitleActive {
+	background-color:#CFE3F1;
+	color: #515151;
+}
+
 .conceptTitleActive:hover {
 	background-color:#CFE3F1;
 	color: #515151;

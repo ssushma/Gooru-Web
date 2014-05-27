@@ -1555,7 +1555,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		// });
 	}
 
-	public void showTeachPanelAsPopup(int left, int top) {
+	public void showTeachPanelAsPopup(final int left, int top) {
 		if (classpageListVc == null) {
 			classpageListVc = new ClasspageListVc(false,null);
 		}
