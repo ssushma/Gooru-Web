@@ -522,7 +522,7 @@ public enum UrlToken {
 	
 	GET_USER_STAR_RATINGS("/v2/user/{0}/rating/star/count?sessionToken={1}"),
 	
-	GET_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}"),
+	GET_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&offset={2}&limit={3}"),
 	
 	DELETE_TAXONOMY_RESOURCE("/v2/resource/{0}/taxonomy?sessionToken={1}"),
 	
