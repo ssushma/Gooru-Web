@@ -102,7 +102,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		timeStamp.setText(commentTime);
 		
-		deleteReview.setText("Delete Review");
+		deleteReview.setText(GL1861);
 		
 		review.setText(starRatingsDo.getFreeText());
 		editReviewText.setText(starRatingsDo.getFreeText());
