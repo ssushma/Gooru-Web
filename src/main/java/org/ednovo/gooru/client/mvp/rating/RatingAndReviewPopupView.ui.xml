@@ -5,6 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="ratingandreview.css"/>
 	<g:HTMLPanel styleName="{style.popup} userInput">
+	    <g:ScrollPanel ui:field="reviewScrollPanel">
             <g:HTMLPanel styleName="{style.popupInner}">
                 <g:HTMLPanel styleName="{style.popupHeader}">
                     <g:HTML styleName="{style.truncate}"  ui:field="lblResourceTitle"></g:HTML>
@@ -14,21 +15,30 @@
                     <g:HTMLPanel styleName="{style.ratingVisualizations}">
                         <g:HTMLPanel styleName="{style.distribution} {style.barGraph}">
                             <g:Label styleName="{style.userNameLbl}" ui:field="ratingDistributionLbl"></g:Label>
+                            <g:HTMLPanel ui:field="panelRatingLabels" styleName="{style.panelRatingLabels}">
                                 <g:Label styleName="{style.label}" ui:field="excellentLbl"></g:Label>
-                                <g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <g:Label styleName="{style.label}" ui:field="veryGoodLbl"></g:Label>
-                                <g:HTMLPanel styleName="{style.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <g:Label styleName="{style.label}" ui:field="goodLbl"></g:Label>
-                                <g:HTMLPanel styleName="{style.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <g:Label styleName="{style.label}" ui:field="fairLbl"></g:Label>
-                                <g:HTMLPanel styleName="{style.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
                                 <br/>
                                 <g:Label styleName="{style.label}" ui:field="poorLbl"></g:Label>
-                                <g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
                                 <br/>
+                             </g:HTMLPanel>
+                             <g:HTMLPanel ui:field="panelRatingValues" styleName="{style.panelRatingValues}">
+                                	<g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
+                                	<br/>
+                                	<g:HTMLPanel styleName="{style.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
+                                	<br/>
+                                	<g:HTMLPanel styleName="{style.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
+                                	<br/>
+                                	<g:HTMLPanel styleName="{style.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
+                                	<br />
+                                	<g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
+                                	<br />
+                             </g:HTMLPanel>
                         </g:HTMLPanel>
                         <g:Label styleName="{style.userNameLbl}" ui:field="avgLbl"></g:Label>
                          <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
@@ -42,5 +52,6 @@
                     </g:VerticalPanel>
                 </g:HTMLPanel>
             </g:HTMLPanel>
+            </g:ScrollPanel>
         </g:HTMLPanel>
 </ui:UiBinder>

@@ -270,7 +270,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			}
 		});*/
 		
-		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(),0, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<StarRatingsDo> result) {
