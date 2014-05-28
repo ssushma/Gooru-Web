@@ -3,7 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="ratingandreview.css"
 		type="org.ednovo.gooru.client.mvp.rating.RatingAndReviewStyleBundle" />
-
 		<panel:HTMLEventPanel styleName="{style.reviewContainer}"
 			ui:field="reviewContainer">
 			<g:Label styleName="{style.username} {style.userNameLbl}"
@@ -38,6 +37,8 @@
 				</g:HTMLPanel>
 				<g:TextArea styleName="{style.textAreaReviewEdit}"
 					ui:field="editReviewText"></g:TextArea>
+					 <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
+  					 <g:Label styleName="{style.errorLblBottomText}" ui:field="errorLbl"></g:Label>
 				<div style="margin-left: 68%;">
 					<g:Button styleName="primary" ui:field="editReviewBtn"></g:Button>
 					<g:Button styleName="secondary" ui:field="cancelReviewBtn">Cancel</g:Button>
