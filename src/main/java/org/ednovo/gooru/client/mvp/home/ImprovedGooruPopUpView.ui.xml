@@ -37,7 +37,7 @@
 		line-height: 120%;
 		color: #4d9645;
 		text-align: left;
-		padding: 163px 0px 0px 0px;
+		padding: 105px 0px 0px 0px;
 		font-weight: bold;
 		text-align: center;
 		}
@@ -175,7 +175,7 @@
 		.improvedGooruPopupLine {
 		float: left;
 		width: 1px;
-		height: 326px;
+		height: 238px;
 		margin: 20px 10px 0px 10px;
 		background-color: #DDDDDD;
 		}
