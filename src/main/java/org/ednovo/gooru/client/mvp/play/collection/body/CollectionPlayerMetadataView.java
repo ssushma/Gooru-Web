@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.DataInsightsUrlTokens;
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
@@ -120,6 +121,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		SearchResultWrapperCBundle.INSTANCE.css().ensureInjected();
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
@@ -129,7 +131,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
 			 
 		  }
-		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  studyMainContianer.getElement().setAttribute("style", "margin-top:0px;");
 		  }
@@ -244,7 +246,12 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
 		String userName = userNameLabel.getText();
-		anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}else{
+			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid;
+			anchor.setHref(token);
+		}
 		anchor.setText(userName);
 		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		anchor.setTarget("_blank");

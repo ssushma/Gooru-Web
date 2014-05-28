@@ -773,7 +773,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
 							if (result.getSearchResults().size()>0){
 								classpageId = result.getSearchResults().get(0).getGooruOid();
-								OpenClasspageEdit(classpageId);
+								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+								OpenClasspageEdit(classpageId, userId);
 							}else{
 								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 							}
@@ -791,7 +792,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 	public void OpenClasspageList() {
 		int left = teachLinkContainer.getAbsoluteLeft();
-		int top = teachLinkContainer.getAbsoluteTop() + 51;
+		int top = teachLinkContainer.getAbsoluteTop() + 50;
 		showTeachPanelAsPopup(left, top);
 	}
 
@@ -1554,7 +1555,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		// });
 	}
 
-	public void showTeachPanelAsPopup(int left, int top) {
+	public void showTeachPanelAsPopup(final int left, int top) {
 		if (classpageListVc == null) {
 			classpageListVc = new ClasspageListVc(false,null);
 		}
@@ -1563,12 +1564,15 @@ public class HeaderUc extends Composite implements MessageProperties,
 		classpageListVc.setStyleName(HomeCBundle.INSTANCE.css()
 				.classpageListContainer());
 		classpageListVc.setPopupPosition(left, top);
+		classpageListVc.getElement().getStyle().setZIndex(98);
 		classpageListVc.show();
 		// classpageListVc.getAllClasspages();
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 			public void onWindowScroll(Window.ScrollEvent scrollEvent) {
-				classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
-				classpageListVc.setPopupPosition(777,51);
+				if (classpageListVc!=null){
+					classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
+					classpageListVc.setPopupPosition(777,51);
+				}
 			}
 		});
 	}
@@ -1750,14 +1754,18 @@ public class HeaderUc extends Composite implements MessageProperties,
 	 * 
 	 * 
 	 */
-	private void OpenClasspageEdit(String gooruOId) {
+	private void OpenClasspageEdit(String gooruOId, String gooruUid) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.EDIT_CLASSPAGE, params);
+		if(gooruUid.equals(AppClientFactory.getLoggedInUser().getGooruUId())) {
+			params.put("classpageid", gooruOId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE, params);
+		} else {
+			params.put("id", gooruOId);
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
+		}
 	}
 	
 }

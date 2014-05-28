@@ -53,9 +53,11 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -66,21 +68,26 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@UiField Label closeButton;
 
-	@UiField Label lblResourceTitle;
+	@UiField HTML lblResourceTitle;
 
-	@UiField Label excellentScore, verygoodScore, goodScore, fairScore, poorScore;
+	@UiField Label excellentScore, verygoodScore, goodScore, fairScore, poorScore,excellentLbl,veryGoodLbl,goodLbl,fairLbl,poorLbl,avgLbl,rateMsg,ratingDistributionLbl;
 
 	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
 
-	@UiField HTMLPanel reviewsContainer, userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
+	@UiField HTMLPanel userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
+	
+	@UiField VerticalPanel reviewsContainer;
 
 	@UiField FlowPanel ratingWidgetPanel;
 
 	@UiField Button rateResourceBtn;
 	
 	private String gooruOid = null;
+	private String createrName = null;
 	
-	private RatingWidgetView ratingWidgetView= new RatingWidgetView();;
+	private boolean isRated=false;
+	
+	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
 	private static ResourceNarrationViewUiBinder uiBinder = GWT.create(ResourceNarrationViewUiBinder.class);
 
@@ -99,8 +106,11 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@UiHandler("closeButton")
 	public void closeRatingAndReviewPopup(ClickEvent event){
+		String currentToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		hide();
-		Window.enableScrolling(true);
+		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+			Window.enableScrolling(true);
+		}
 	}
 
 	@Override
@@ -121,12 +131,26 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	}
 
 	@Override
-	public void displayPopUp(String resourceTitle, String gooruOid) {
+	public void displayPopUp(String resourceTitle, String gooruOid,String createrName) {
 		this.gooruOid = gooruOid;
+		this.createrName = createrName;
 		userRatingContainer.setVisible(false);
-		lblResourceTitle.setText("Reviews for "+resourceTitle);
+		lblResourceTitle.setHTML(GL1840+" "+resourceTitle);
+		setStaticText();
 		getAverageRatingForContent(gooruOid);
 		getUserRatingsAndReviews(gooruOid);
+	}
+
+	private void setStaticText() {
+		excellentLbl.setText(GL1842);
+		veryGoodLbl.setText(GL1843);
+		goodLbl.setText(GL1844);
+		fairLbl.setText(GL1845);
+		poorLbl.setText(GL1846);
+		avgLbl.setText(GL1848);
+		rateResourceBtn.setText(GL1849);
+		ratingDistributionLbl.setText(GL1841);
+//		rateMsg.setText(text);
 	}
 
 	public void getUserRatingsAndReviews(String resourceId)
@@ -177,18 +201,39 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		reviewsContainer.clear();
 		if(result.size()>0)
 		{
-		if(result.get(0).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername()) && AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)) {
-			userRatingContainer.setVisible(true);
-		} else {
-			userRatingContainer.setVisible(false);
-		}
+			for(int i=0;i<result.size();i++){
+				if(result.get(i).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+					isRated=true;
+					break;
+				}
+			}
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				rateResourceBtn.setVisible(true);
+//				userRatingContainer.setVisible(true);
+				/*if(isRated){
+					isRated=false;
+					userRatingContainer.setVisible(false);
+					
+				}else{
+					userRatingContainer.setVisible(true);
+				}*/
+			}else{
+				rateResourceBtn.setVisible(false);
+			}
+		}else{
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				userRatingContainer.setVisible(true);
+			}
 		}
 		
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
-		
-			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews)));
-
+			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				reviewsContainer.insert(new RatingUserWidgetView(result.get(userReviews),createrName),0);
+			}else{
+				reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
+			}
+			
 		}
 
 	}
@@ -196,6 +241,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public class OnClickEditRatingButton implements ClickHandler{
 		HTMLPanel htmlEdittingContainer;
 		HTMLPanel ratingPanel;
+		
 		public OnClickEditRatingButton(HTMLPanel htmlEdittingContainer,HTMLPanel ratingPanel) {
 			this.htmlEdittingContainer=htmlEdittingContainer;
 			this.ratingPanel=ratingPanel;
@@ -227,13 +273,16 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	public class OnRatingReviewContainerMouseOver implements MouseOverHandler{
 		Button btnEditRating;
-		public OnRatingReviewContainerMouseOver(Button btnEditRating) {
+		
+		public OnRatingReviewContainerMouseOver(Button btnEditRating,Button btnDeleteRating) {
 			this.btnEditRating=btnEditRating;
+			
 		}
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			btnEditRating.setVisible(true); 
+			btnEditRating.setVisible(true);
+			
 		}
 
 	}

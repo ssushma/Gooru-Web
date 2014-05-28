@@ -5,41 +5,42 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="ratingandreview.css"/>
 	<g:HTMLPanel styleName="{style.popup} userInput">
-            <div class="{style.popupInner}">
-                <div class="{style.popupHeader}">
-                    <g:Label ui:field="lblResourceTitle"></g:Label>
+            <g:HTMLPanel styleName="{style.popupInner}">
+                <g:HTMLPanel styleName="{style.popupHeader}">
+                    <g:HTML styleName="{style.truncate}"  ui:field="lblResourceTitle"></g:HTML>
                     <g:Label styleName="{style.closeButton}" ui:field="closeButton"></g:Label>
-                </div>
-                <div class="{style.popupContent}">
-                    <div class="{style.ratingVisualizations}">
-                        <div class="{style.distribution} {style.barGraph}">
-                            <h3>Rating Distribution</h3>
-                                <div class="{style.label}">Excellent</div>
+                </g:HTMLPanel>
+                <g:HTMLPanel styleName="{style.popupContent}">
+                    <g:HTMLPanel styleName="{style.ratingVisualizations}">
+                        <g:HTMLPanel styleName="{style.distribution} {style.barGraph}">
+                            <g:Label ui:field="ratingDistributionLbl"></g:Label>
+                                <g:Label styleName="{style.label}" ui:field="excellentLbl"></g:Label>
                                 <g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
                                 <br/>
-                                <div class="{style.label}">Very Good</div>
+                                <g:Label styleName="{style.label}" ui:field="veryGoodLbl"></g:Label>
                                 <g:HTMLPanel styleName="{style.bar} {style.data-two}" ui:field="dataFour"></g:HTMLPanel> <g:Label ui:field="verygoodScore" styleName="{style.count}"></g:Label>
                                 <br/>
-                                <div class="{style.label}">Good</div>
+                                <g:Label styleName="{style.label}" ui:field="goodLbl"></g:Label>
                                 <g:HTMLPanel styleName="{style.bar} {style.data-three}" ui:field="dataThree"></g:HTMLPanel> <g:Label ui:field="goodScore" styleName="{style.count}"></g:Label>
                                 <br/>
-                                <div class="{style.label}">Fair</div>
+                                <g:Label styleName="{style.label}" ui:field="fairLbl"></g:Label>
                                 <g:HTMLPanel styleName="{style.bar} {style.data-four}" ui:field="dataTwo"></g:HTMLPanel> <g:Label ui:field="fairScore" styleName="{style.count}"></g:Label>
                                 <br/>
-                                <div class="{style.label}">Poor</div>
+                                <g:Label styleName="{style.label}" ui:field="poorLbl"></g:Label>
                                 <g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
                                 <br/>
-                        </div>
-                        <h3> Average Rating</h3>
+                        </g:HTMLPanel>
+                        <g:Label ui:field="avgLbl"></g:Label>
                          <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
-                    </div>
+                         <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button>
+                    </g:HTMLPanel>
 					<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
 					   <g:Label styleName="{style.rateMsg}" ui:field="rateMsg">Do you want to rate this resource?</g:Label>
-					   <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn">Preview and Rate Resource</g:Button>
+					   <!-- <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button> -->
 					</g:HTMLPanel>
-                    <g:HTMLPanel ui:field="reviewsContainer">
-                    </g:HTMLPanel>
-                </div>
-            </div>
+                    <g:VerticalPanel ui:field="reviewsContainer">
+                    </g:VerticalPanel>
+                </g:HTMLPanel>
+            </g:HTMLPanel>
         </g:HTMLPanel>
 </ui:UiBinder>

@@ -1214,7 +1214,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			}
 			
 		};
-		success.setHeight("235px");
+		success.setHeight("253px");
 		success.setWidth("450px");
 		success.setPopupTitle(GL1556);
 		if (listSize>1){

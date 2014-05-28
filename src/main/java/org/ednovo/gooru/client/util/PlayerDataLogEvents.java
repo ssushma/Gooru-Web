@@ -241,15 +241,12 @@ public class PlayerDataLogEvents {
 	}
 	
 	public static String getAnswerObjectArrayInString(List<List<JSONObject>> answerObjectArray){
-		String attemptedAnswersObject="";
+		JSONObject attemptedAnswersArray=new JSONObject();
 		for(int i=0;i<answerObjectArray.size();i++){
 			List<JSONObject> jsonArray=answerObjectArray.get(i);
-			attemptedAnswersObject=attemptedAnswersObject+jsonArray;
-			if((i+1)!=answerObjectArray.size()){
-				attemptedAnswersObject=attemptedAnswersObject+",";
-			}
+			attemptedAnswersArray.put("attempt"+(i+1), new JSONString(jsonArray.toString()));
 		}
-		return attemptedAnswersObject;
+		return attemptedAnswersArray.toString();
 	}
 	
 	public static JSONArray createJsniIntArray(List<Integer> attemptTrySequence){

@@ -31,6 +31,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -59,14 +61,16 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 public class TocResourceView extends Composite implements HasClickHandlers,MessageProperties{
 
 	@UiField Image resourceThumbnail;
-	@UiField Label resourceTypeImage;
+	@UiField Label resourceTypeImage,resourceIndex,resourceCategory,resourceSourceName;
 	@UiField HTMLPanel resourceTitle;
-	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer;
+	@UiField HTML resourceHoverTitle;
+	@UiField FlowPanel tocResourceImageContainer,tocResourceContainer,ratingWidgetPanel;
 	private CollectionItemDo collectionItemDo=null;
 	
 	private String collectionItemId=null;
 	
 	private HTML contentHtml=new HTML();
+	private RatingWidgetView ratingWidgetView=null;
 	
 	private static TocResourceViewUiBinder uiBinder = GWT.create(TocResourceViewUiBinder.class);
 
@@ -94,6 +98,71 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 		}else{
 			//this.addClickHandler(new ResourceRequest());
 		}
+		setResourceSequence(itemIndex);
+		setResourceCategory();
+		setReourceSourceName();
+		setAvgRatingWidget();
+	}
+	/**
+	 * Average star ratings widget will get integrated.
+	 */
+	private void setAvgRatingWidget() {
+		ratingWidgetView=new RatingWidgetView();
+		if(collectionItemDo.getResource().getRatings()!=null){
+			ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount()!=null ?collectionItemDo.getResource().getRatings().getCount().toString(): "0");
+			ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
+		}
+//		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.add(ratingWidgetView);
+	}
+
+	/**
+	 * 
+	 * Inner class implementing {@link ClickEvent}
+	 *
+	 */
+	private class ShowRatingPopupEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			/**
+			 * OnClick of count label event to invoke Review pop-pup
+			 */
+			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDo.getResource().getGooruOid(),"",collectionItemDo.getResource().getUser().getUsername())); 
+		}
+	}
+
+	public void setReourceSourceName(){
+		if(collectionItemDo.getResource().getResourceSource()!=null){
+			if((!collectionItemDo.getResource().getUrl().startsWith("https://docs.google.com"))&&(!collectionItemDo.getResource().getUrl().startsWith("http://docs.google.com"))){
+			resourceSourceName.setText(collectionItemDo.getResource().getResourceSource().getAttribution()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"");
+			}
+			}else{
+			resourceSourceName.setText("");
+		}
+		
+	}
+	public void setResourceCategory(){
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			String resourceType=collectionItemDo.getResource().getResourceFormat().getDisplayName();
+			resourceType=resourceType.toLowerCase();
+			
+			if(resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("textbook")||resourceType.equalsIgnoreCase("handout"))
+			{
+				resourceType=resourceType.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
+			}
+			if(resourceType.equalsIgnoreCase("slide"))
+			{
+				resourceType=resourceType.replaceAll("slide","image");
+			}
+			if(resourceType.equalsIgnoreCase("exam")||resourceType.equalsIgnoreCase("website")|| resourceType.equalsIgnoreCase("challenge"))
+			{
+				resourceType=resourceType.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
+			}
+			resourceCategory.setText(resourceType);
+		}
+	}
+	public void setResourceSequence(int itemIndex){
+		resourceIndex.setText(itemIndex<10?"0"+itemIndex:""+itemIndex);
 	}
 	
 	public void setResourceTitleColor(){
@@ -181,9 +250,11 @@ public class ResourceRequest implements ClickHandler{
 	
 	public void setNavigationResourceTitle(String title){
 		resourceTitle.add(getHTML(title));
+		resourceHoverTitle.setHTML(getHTML(title).toString());
 	}
 	public void setNavigationResourceTitle(String title,Integer itemIndex){
 		resourceTitle.add(getHTML(itemIndex+". "+title));
+		resourceHoverTitle.setHTML(title.toString());
 	}
 	
 	public HandlerRegistration addClickHandler(ClickHandler handler) {
@@ -307,5 +378,4 @@ public class ResourceRequest implements ClickHandler{
 		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
 		return contentHtml;
 	}
-	
 }

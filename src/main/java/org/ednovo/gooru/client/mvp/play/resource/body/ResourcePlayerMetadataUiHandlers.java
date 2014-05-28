@@ -24,14 +24,17 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEventHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEventHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 
-public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler,OpenReviewPopUpEventHandler {
+public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUserReviewEventHandler,OpenReviewPopUpEventHandler,UpdateUserStarReviewEventHandler {
 	
 	public void showQuestionView(CollectionItemDo collectionItemDo);
 
@@ -52,4 +55,8 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	public void getAvgRatingAndCount(String assocGooruOid, Integer score, String review);   
 	
 	public void setResourceMetaData(String resourceTitle);
+
+	void createCollectionContentReport(String associatedGooruOid,
+			String freeText, ArrayList<String> contentReportList,
+			String deleteContentReportGooruOids);
 }

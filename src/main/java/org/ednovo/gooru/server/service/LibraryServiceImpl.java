@@ -617,7 +617,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		if(collectionType!=null){
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"");
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"","0","20");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if(placeToken.equals(PlaceTokens.PROFILE_PAGE)) {

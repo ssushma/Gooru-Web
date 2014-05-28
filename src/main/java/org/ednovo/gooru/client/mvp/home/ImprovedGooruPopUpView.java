@@ -76,16 +76,16 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 	HTMLEventPanel closeButton;
 
 	@UiField
-	Anchor lblSupportLink, mobileLearnMore, termsofuselearnmore, descLinkThree, descLinkFive;
+	Anchor lblSupportLink,  descLinkFive,descLinkSix,descLinkSeven,descLinkEight;
 
 	@UiField
-	InlineLabel contenttextlbl, termsofusetxt, aboutThree, aboutFour, aboutFive;
+	InlineLabel    aboutFive,aboutSix,aboutSeven,aboutEight;
 
 	@UiField
 	HTMLPanel GooruLinkOutercontainer;
 	@UiField
-	Label headertext, subtext, goorutext, headersubtext, contenttext,
-			termsofuselbl, lblTitleThree, lblTitleFour, lblTitleFive;
+	Label headertext, subtext, goorutext, headersubtext,
+			   lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight;
 
 	@UiField
 	HTML questiontxt;
@@ -116,7 +116,7 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		goorutext.setText(GL0287);
 		headersubtext.setText(GL0288);
 
-		contenttext.setText(GL0292);
+		/*contenttext.setText(GL0292);
 		contenttextlbl.setText(GL0293);
 		
 		mobileLearnMore.setText(GL1239);
@@ -140,7 +140,20 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		
 		
 		lblTitleFour.setText(GL0630);
-		aboutFour.setText(GL0627);
+		aboutFour.setText(GL0627);*/
+		
+		lblTitleSix.setText(GL1880);
+		aboutSix.setText(GL1881);
+		descLinkSix.setText(GL1239);
+		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202222123");
+		
+		lblTitleSeven.setText(GL1882);
+		aboutSeven.setText(GL1883);
+
+		lblTitleEight.setText(GL1884);
+		aboutEight.setText(GL1885);
+		descLinkEight.setText(GL1239);
+		descLinkEight.setHref("http://support.goorulearning.org/hc/en-us/articles/200941223");
 		
 //		lblTitleFive.setText(GL0630_1);
 //		aboutFive.setText(GL0627_1);
@@ -157,7 +170,7 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 	@UiHandler("closeButton")
 	public void oncloseButton(ClickEvent clickEvent) {
 		MixpanelUtil.New_in_Gooru_x();
-		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 9, new SimpleAsyncCallback<UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 10, new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo newUser) {
 				UserDo user = AppClientFactory.getLoggedInUser();

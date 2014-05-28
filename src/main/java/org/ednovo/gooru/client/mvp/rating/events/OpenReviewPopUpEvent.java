@@ -1,17 +1,18 @@
 package org.ednovo.gooru.client.mvp.rating.events;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
 
 public class OpenReviewPopUpEvent extends GwtEvent<OpenReviewPopUpEventHandler> {
 	
 	public static final Type<OpenReviewPopUpEventHandler> TYPE = new Type<OpenReviewPopUpEventHandler>();
 	
 	String assocGooruOId;
-	
-	public OpenReviewPopUpEvent(String assocGooruOId){ 
+	String title;
+	String createrName;
+	public OpenReviewPopUpEvent(String assocGooruOId, String title, String createrName){ 
 		this.assocGooruOId=assocGooruOId;
-		
+		this.title = title;
+		this.createrName = createrName;
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class OpenReviewPopUpEvent extends GwtEvent<OpenReviewPopUpEventHandler> 
 
 	@Override
 	protected void dispatch(OpenReviewPopUpEventHandler handler) {
-		handler.openReviewPopUp(assocGooruOId);
+		handler.openReviewPopUp(assocGooruOId, title,createrName);
 	} 
 
 }

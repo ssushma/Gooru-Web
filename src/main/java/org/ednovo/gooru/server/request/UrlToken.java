@@ -231,7 +231,7 @@ public enum UrlToken {
 	
 	CREATE_CLASSPAGE_ITEM_V2("/v2/classpage/{0}/item?sessionToken={1}"),
 	
-	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}&orderBy=associationDate"),
+	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
 	
 	UPDATE_CLASSPAGE_ITEMS_V2("/v2/collection/item/{0}?sessionToken={1}"),
 	
@@ -502,7 +502,7 @@ public enum UrlToken {
 	
 	V2_GET_CLASSPAGE_COLL_DETAILS("/v2/classpage/item/{0}?sessionToken={1}"),
 	
-	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}"),
+	V2_PARTNER_WORKSPACE("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&itemLimit={2}&offset={3}&limit={4}"),
 	
 	GET_CLASSPARTY_CUSTOMFIELD("/v2/party/{0}/custom-field/classpage_welcome_popup_is_autoopen?sessionToken={1}"),
 	
@@ -536,8 +536,11 @@ public enum UrlToken {
 	
 	TEACH_STUDY("/v2/class/my/teach-study?sessionToken={0}&limit={1}&offset={2}"),
 	
-	SEARCH_SUGGEST_AGGREGATOR(
-			"/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}");
+	SEARCH_SUGGEST_AGGREGATOR("/search/aggregator?sessionToken={0}&query={1}&pageSize={2}&pageNum={3}"),
+			
+	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
+	
+	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"); 
 	
 	
 	private String url;

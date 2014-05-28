@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -81,7 +82,7 @@ public class ResourceDo extends ContentDo {
     private Date createdOn;
     
 	private SearchRatingsDo searchRatingsDo;
-
+	private SearchRatingsDo ratings;
 
     /** need to change these after api is finalized  **/
 
@@ -112,6 +113,8 @@ public class ResourceDo extends ContentDo {
 	private List<String> publisher;
 	
 	private customFieldValuesDO customFieldValues;
+	
+	private UserDo user;
 	
 	public List<String> getPublisher() {
 		return publisher;
@@ -536,4 +539,19 @@ public class ResourceDo extends ContentDo {
 	public void setSearchRatingsDo(SearchRatingsDo searchRatingsDo) {
 		this.searchRatingsDo = searchRatingsDo;
 	}
+
+	public UserDo getUser() {
+		return user;
+	}
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
+
+	}
+	
 }

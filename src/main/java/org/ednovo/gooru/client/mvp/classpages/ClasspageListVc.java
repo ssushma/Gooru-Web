@@ -57,6 +57,8 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -346,6 +348,14 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 
 		enterLbl.addClickHandler(new OnEnterClassCodeClick());
 		enterLbl.setText(GL1065);
+		
+		classCodeTxtBox.addKeyPressHandler(new KeyPressHandler() {
+			
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				setButtonStatus("active");
+			}
+		});
 
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
@@ -363,7 +373,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			setButtonStatus("");
+			setButtonStatus("active");
 			if (classCodeTxtBox.getText().trim().equalsIgnoreCase("")
 					|| classCodeTxtBox.getText().trim() == null) {
 				alertMessageUc = new AlertMessageUc(GL0061, new Label(GL0243));
@@ -733,8 +743,14 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	public void generateClasspageList() {
 		htmlPanelClasspageList.clear();
 		for (int i = 0; i < listClasspage.size(); i++) {
-			String classpageTitle = classpageList.get(listClasspage.get(i))
-					.getTitle();
+			String classpageTitle = "";
+			String title = classpageList.get(listClasspage.get(i)).getTitle();
+			title = title.length() > 30 ? title.substring(0, 19) + "..." : title;
+			if(classpageList.get(listClasspage.get(i)).getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())){
+				classpageTitle = title + " (Owner)";
+			}else{
+				classpageTitle = title + " (Joined)";
+			}
 			htmlPanelClasspageList.add(createClasspageTitleLabel(
 					classpageTitle, listClasspage.get(i), false));
 		}
