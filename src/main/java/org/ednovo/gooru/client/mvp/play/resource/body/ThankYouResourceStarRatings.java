@@ -78,7 +78,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField public FlowPanel ratingWidgetPanel;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl,thankYouRatingLbl,avgRatingLbl;
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review,createrName;
@@ -105,6 +105,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		setUserReview(review);
 		setAvgRatingWidget();
 		setGlassEnabled(true);
+		thankYouRatingLbl.setText(GL1854);
+		avgRatingLbl.setText(GL1848);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 		
@@ -196,7 +198,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 * @param review
 	 */
 	private void setUserReview(String review) {
-		if(!review.equals("")){
+		btnSkip.setText(GL1004);
+ 		if(!review.equals("")){
 			reviewTextAreaTitle.setText(GL1858);
 			btnPost.setText("Save");
 			ratingCommentTxtArea.setText(review.trim());
@@ -209,7 +212,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@Override
 	public void hide(boolean autoClose) {
 		super.hide(true);
-		if(autoClose){
+		if(autoClose&& !ratingCommentTxtArea.getText().equals("")){
 			Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", ratingCommentTxtArea.getText());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
