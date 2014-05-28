@@ -29,8 +29,8 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEventHandler;
 
 public interface RatingAndReviewPopupUiHandlers extends BaseUiHandlers,UpdateRatingsGraphEventHandler{
 
-	void getAverageRatingForContent(String resourceId);
+	void getAverageRatingForContent(String resourceId); 
 
-	void getUserRatingsReviews(String resourceId);   
+	void getUserRatingsReviews(String resourceId,int offSet);   
 
 }

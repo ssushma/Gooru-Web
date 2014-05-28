@@ -25,6 +25,12 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,6 +43,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -57,7 +64,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiField InlineHTML userratingOne,userratingTwo,userratingThree,userratingFour,userratingFive;
 	
 	@UiField RatingAndReviewStyleBundle style;
-
+	
 	private String id;
 	
 	
@@ -123,43 +130,23 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.removeStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				setStarRatings(starRatingsDo);
 			}
 			else if(starRatingsDo.getScore() == 2)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.removeStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				setStarRatings(starRatingsDo);
 			}
 			else if(starRatingsDo.getScore() == 3)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.removeStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				setStarRatings(starRatingsDo);
 			}
 			else if(starRatingsDo.getScore() == 4)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.removeStyleName(style.filled());
+				setStarRatings(starRatingsDo);
 			}
 			else if(starRatingsDo.getScore() == 5)
 			{
-				starOne.addStyleName(style.filled());
-				starTwo.addStyleName(style.filled());
-				starThree.addStyleName(style.filled());
-				starFour.addStyleName(style.filled());
-				starFive.addStyleName(style.filled());
+				setStarRatings(starRatingsDo);
 			}
 			
 		  if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
@@ -264,6 +251,110 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		
 	}
 	
+	private void setStarRatings(StarRatingsDo starRatingsDo) {
+		if(starRatingsDo.getScore()==1){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.removeStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+				starTwo.removeStyleName(FILLED_BLUE);
+				starThree.removeStyleName(FILLED_BLUE);
+				starFour.removeStyleName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.removeStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		}else if(starRatingsDo.getScore()==2){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+				starThree.removeStyleName(FILLED_BLUE);
+				starFour.removeStyleName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		}else if(starRatingsDo.getScore()==3){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.getElement().addClassName(FILLED_BLUE);
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+				starFour.removeStyleName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		} else if(starRatingsDo.getScore()==4){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.getElement().addClassName(FILLED_BLUE);
+				starFour.getElement().addClassName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		}else if(starRatingsDo.getScore()==5){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.getElement().addClassName(FILLED_BLUE);
+				starFour.getElement().addClassName(FILLED_BLUE);
+				starFive.getElement().addClassName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.addStyleName(style.filled());
+			}
+		}
+	}
+
+
 	@UiHandler("editReview")
 	public void editReview(ClickEvent event) {
 		editReviewTextareaContainer.setVisible(true);
@@ -652,4 +743,5 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		}
 		return msg;
 	}
+	
 }
