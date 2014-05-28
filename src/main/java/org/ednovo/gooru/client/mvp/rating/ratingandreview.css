@@ -19,6 +19,13 @@
 	font-style: italic;
 }
 
+.ratingValuemouseover{
+	text-align: left;
+	margin-bottom: 2px;
+	font-style: italic;
+	display:inline-block;
+}
+
 .rating .star,.userRating .star {
 	font-size: 14px;
 	color: #999;
@@ -572,7 +579,7 @@ fieldset {
 	width:230px; */
 	margin-right: 61px;
 	float: right;
-
+}
 
 .editReviewBtn{
 	position: absolute;

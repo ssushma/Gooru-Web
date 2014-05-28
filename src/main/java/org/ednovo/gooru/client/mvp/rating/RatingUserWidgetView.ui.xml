@@ -32,8 +32,8 @@
 					<g:InlineHTML styleName="ratingItems star" ui:field="userratingThree"></g:InlineHTML>
 					<g:InlineHTML styleName="ratingItems star" ui:field="userratingFour"></g:InlineHTML>
 					<g:InlineHTML styleName="ratingItems star" ui:field="userratingFive"></g:InlineHTML>
-					<g:Label styleName="{style.ratingValue}" ui:field="starValue"></g:Label>
-					<g:Label styleName="{style.ratingValue}" ui:field="mouseOverStarValue"></g:Label>
+					<g:Label styleName="{style.ratingValuemouseover}" ui:field="starValue"></g:Label>
+					<g:Label styleName="{style.ratingValuemouseover}" ui:field="mouseOverStarValue"></g:Label>
 				</g:HTMLPanel>
 				<g:TextArea styleName="{style.textAreaReviewEdit}"
 					ui:field="editReviewText"></g:TextArea>
