@@ -108,12 +108,13 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		lblGooruLibrary.setText(GL0516);
 		
 		lblPartnerLibrary.add(new Label(GL1751));
+		partnerLibContainer.getElement().addClassName("setVisible");
+		districtLibContainer.getElement().addClassName("setVisible");
+		
 		lblPartnerLibrary.addMouseOverHandler(new OpenPartnerMenu());
 		partnerLibContainer.addMouseOutHandler(new ClosePartnerMenu());
 		
 		lblGooruLibrary.addMouseOverHandler(new CloseOtherMenus());
-		partnerLibContainer.setVisible(false);
-		districtLibContainer.setVisible(false);
 		lblDistrictLibrary.addMouseOverHandler(new OpenDistrictMenus());
 		
 		final Label partnerTitle = new Label(GL0515_1);
@@ -197,8 +198,9 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		public void onMouseOver(MouseOverEvent event) {
 			lblPartnerLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
 			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
-			partnerLibContainer.setVisible(true);
-			districtLibContainer.setVisible(false);
+			
+			partnerLibContainer.getElement().removeClassName("setVisible");
+			districtLibContainer.getElement().addClassName("setVisible");
 		}
 	}
 
@@ -207,26 +209,29 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		public void onMouseOut(MouseOutEvent event) {
 			lblPartnerLibrary.getElement().getStyle().clearBackgroundColor();
 			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
-			partnerLibContainer.setVisible(false);
-			districtLibContainer.setVisible(false);
+			
+			partnerLibContainer.getElement().addClassName("setVisible");
+			districtLibContainer.getElement().addClassName("setVisible");
 		}
 	}
 	private class OpenDistrictMenus implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			lblPartnerLibrary.getElement().getStyle().clearBackgroundColor();
-			partnerLibContainer.setVisible(false);
 			lblDistrictLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
-			districtLibContainer.setVisible(true);
+			
+			partnerLibContainer.getElement().addClassName("setVisible");
+			districtLibContainer.getElement().removeClassName("setVisible");
 		}
 	}
 	private class CloseOtherMenus implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			lblPartnerLibrary.getElement().getStyle().clearBackgroundColor();
-			partnerLibContainer.setVisible(false);
 			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
-			districtLibContainer.setVisible(false);
+			
+			partnerLibContainer.getElement().addClassName("setVisible");
+			districtLibContainer.getElement().addClassName("setVisible");
 		}
 	}
 	
