@@ -10,6 +10,7 @@
 	       <g:Button ui:field="myCollectionsBtn" styleName="secondary"></g:Button>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{style.leftNav}" ui:field="leftNav"/>
+		<g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage"></g:HTMLPanel>   	   
 	   <g:HTMLPanel styleName="{style.contentScroll}" ui:field="contentScroll"/>
 	</g:HTMLPanel>
 

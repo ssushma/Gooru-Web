@@ -55,7 +55,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresenter> implements IsProfilePageLibraryView,MessageProperties {
 
-	@UiField HTMLPanel leftNav, contentScroll, emptyContainer;
+	@UiField HTMLPanel leftNav, contentScroll, emptyContainer, loadingIconPanel;
 	
 	@UiField ProfilePageLibraryStyleBundle style;
 	
@@ -169,7 +169,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		contentScroll.clear();
 		try {
 			contentScroll.add(new ProfileTopicListView(profileLibraryDo, 0, AppClientFactory.getCurrentPlaceToken(), "scollection"));
-			contentScroll.setVisible(true);
 			loadingPanel(false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,7 +195,6 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 				emptyContainer.setStyleName(style.emptyFolderContainer());
 				contentScroll.add(emptyContainer);
 			}
-			contentScroll.setVisible(true);
 			loadingPanel(false);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,7 +204,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	@Override
 	public void loadingPanel(boolean isVisible) {
-
+		loadingIconPanel.setVisible(isVisible);
+		contentScroll.setVisible(!isVisible);
 	}
 
 	@Override

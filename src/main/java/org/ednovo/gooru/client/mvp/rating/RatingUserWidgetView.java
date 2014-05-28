@@ -59,7 +59,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiField InlineHTML userratingOne,userratingTwo,userratingThree,userratingFour,userratingFive;
 	
 	@UiField RatingAndReviewStyleBundle style;
-	private String createrName;
+
 	private String id;
 	
 	
@@ -90,18 +90,14 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 
 	public RatingUserWidgetView(StarRatingsDo starRatingsDo,String createrName) {
 		initWidget(uiBinder.createAndBindUi(this));
-		setData(starRatingsDo);
-		this.starRatingsDo = starRatingsDo;
-	}
-	public void setData(StarRatingsDo starRatingsDo) {
-		//timeStamp.setText("3 days ago");
-		currentRating = starRatingsDo.getScore();
-		this.createrName=createrName;
-		this.starRatingsDo = starRatingsDo;
-		deleteReview.setVisible(false);
 		setData(starRatingsDo,createrName);
+		this.starRatingsDo = starRatingsDo;
+
+		deleteReview.setVisible(false);
+		
 	}
 	
+
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		timeStamp.setText(commentTime);
@@ -109,7 +105,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		deleteReview.setText("Delete Review");
 		
 		review.setText(starRatingsDo.getFreeText());
-		id = starRatingsDo.getDeleteRatingGooruOid();
 		editReviewText.setText(starRatingsDo.getFreeText());
 		editReview.setVisible(false);
 		deleteReview.addStyleName(style.deleteButtonAlign());
@@ -343,6 +338,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		// TODO Auto-generated method stub
 		if(starRatingsDo.getScore() == 1)
 		{
+
 			starOne.addStyleName(style.filled());
 			starTwo.removeStyleName(style.filled());
 			starThree.removeStyleName(style.filled());
@@ -444,7 +440,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 
 	@UiHandler("deleteReview")
 	public void onClickDeleteReview(ClickEvent event){
-		AppClientFactory.getInjector().getPlayerAppService().deleteRating(id, new AsyncCallback<Void>() {
+
+		AppClientFactory.getInjector().getPlayerAppService().deleteRating(starRatingsDo.getDeleteRatingGooruOid(), new AsyncCallback<Void>() {
+			
 			@Override
 			public void onSuccess(Void result) {
 				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
