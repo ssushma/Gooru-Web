@@ -3,14 +3,13 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="style" src="ratingandreview.css"
 		type="org.ednovo.gooru.client.mvp.rating.RatingAndReviewStyleBundle" />
-
 		<panel:HTMLEventPanel styleName="{style.reviewContainer}"
 			ui:field="reviewContainer">
 			<g:Label styleName="{style.username} {style.userNameLbl}"
 				ui:field="userName"></g:Label>
 			<g:Label styleName="{style.timestamp}" ui:field="timeStamp"></g:Label>
 
-			<hr />
+			<g:Label styleName="{style.hrline}"/>
 			<g:HTMLPanel ui:field="editReviewLabelContainer">
 
 				<g:HTMLPanel styleName="{style.rating}">
@@ -33,11 +32,13 @@
 					<g:InlineHTML styleName="ratingItems star" ui:field="userratingThree"></g:InlineHTML>
 					<g:InlineHTML styleName="ratingItems star" ui:field="userratingFour"></g:InlineHTML>
 					<g:InlineHTML styleName="ratingItems star" ui:field="userratingFive"></g:InlineHTML>
-					<g:Label styleName="{style.ratingValue}" ui:field="starValue"></g:Label>
-					<g:Label styleName="{style.ratingValue}" ui:field="mouseOverStarValue"></g:Label>
+					<g:Label styleName="{style.ratingValuemouseover}" ui:field="starValue"></g:Label>
+					<g:Label styleName="{style.ratingValuemouseover}" ui:field="mouseOverStarValue"></g:Label>
 				</g:HTMLPanel>
 				<g:TextArea styleName="{style.textAreaReviewEdit}"
 					ui:field="editReviewText"></g:TextArea>
+					 <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
+  					 <g:Label styleName="{style.errorLblBottomText}" ui:field="errorLbl"></g:Label>
 				<div style="margin-left: 64%;">
 					<g:Button styleName="primary" ui:field="editReviewBtn"></g:Button>
 					<g:Button styleName="secondary {style.posValue}" ui:field="cancelReviewBtn">Cancel</g:Button>

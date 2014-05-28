@@ -30,10 +30,13 @@ import java.util.Date;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.play.collection.body.GwtEarthWidget;
 import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationConfirmPopup;
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -269,8 +272,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			backwardButton.removeFromParent();
 		}
 		previewResouceWidget(collectionItemDo);
+		AppClientFactory.getEventBus().addHandler(UpdateRatingOnDeleteEvent.TYPE, updateRatingOnDeleteHandler);
 	}
+	UpdateRatingOnDeleteHandler updateRatingOnDeleteHandler = new UpdateRatingOnDeleteHandler(){
 
+		@Override
+		public void updateRating(boolean isDeleted) {
+		if(isDeleted){
+			clearAllStars();
+		}
+	}
+		
+	};
 	public void showResourceWidget(PlaceRequest previousResourceRequest){	
 		
 		collectionContainer.setVisible(false);
