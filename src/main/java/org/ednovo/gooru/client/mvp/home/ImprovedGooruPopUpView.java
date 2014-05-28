@@ -170,7 +170,7 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 	@UiHandler("closeButton")
 	public void oncloseButton(ClickEvent clickEvent) {
 		MixpanelUtil.New_in_Gooru_x();
-		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 9, new SimpleAsyncCallback<UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateUserViewFlag(AppClientFactory.getLoggedInUser().getGooruUId(), 10, new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo newUser) {
 				UserDo user = AppClientFactory.getLoggedInUser();
