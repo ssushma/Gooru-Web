@@ -99,7 +99,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			}
 			
 		});
-		
 	}
 	
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
