@@ -57,6 +57,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
@@ -73,7 +74,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	/*@UiField InlineLabel oneStar,twoStar,threeStar,fourStar,fiveStar,averageStarRating;*/
 
-	@UiField HTMLPanel reviewsContainer, userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
+	@UiField HTMLPanel userRatingContainer, dataOne, dataTwo, dataThree, dataFour, dataFive;
+	
+	@UiField VerticalPanel reviewsContainer;
 
 	@UiField FlowPanel ratingWidgetPanel;
 
@@ -221,7 +224,12 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		
 		for(int userReviews=0; userReviews<result.size(); userReviews++)
 		{
-			reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
+			if(result.get(userReviews).getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				reviewsContainer.insert(new RatingUserWidgetView(result.get(userReviews),createrName),0);
+			}else{
+				reviewsContainer.add(new RatingUserWidgetView(result.get(userReviews),createrName));
+			}
+			
 		}
 
 	}
