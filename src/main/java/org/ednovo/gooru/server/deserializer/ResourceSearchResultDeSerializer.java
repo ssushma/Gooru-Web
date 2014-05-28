@@ -146,11 +146,15 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		resourceSearchResultDo.setMediaType(getJsonString(recordJsonObject, MEDIA_TYPE));
 		
 
-		UserDo ownerDo = new UserDo();
-		ownerDo.setFirstName(getJsonString(recordJsonObject, OWNER_FIRST_NAME));
-		ownerDo.setLastName(getJsonString(recordJsonObject, OWNER_LAST_NAME));
-		ownerDo.setUsername(getJsonString(recordJsonObject, OWNER_NAME_DISPLAY));
-		resourceSearchResultDo.setOwner(ownerDo);
+			
+		/*UserDo ownerDo = new UserDo();
+		try {
+			JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));
+			ownerDo.setUsername(getJsonString(createrObject,OWNER_USERNAME));
+			resourceSearchResultDo.setOwner(ownerDo);
+		} catch (JSONException e1) {
+				e1.printStackTrace();
+		}*/
 
 		try {
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {

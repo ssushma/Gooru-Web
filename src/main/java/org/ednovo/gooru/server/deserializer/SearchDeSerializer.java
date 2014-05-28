@@ -57,6 +57,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String OWNER_FIRST_NAME = "userFirstName";
 	public static final String OWNER_LAST_NAME = "userLastName";
 	public static final String OWNER_NAME_DISPLAY = "usernameDisplay";
+	public static final String OWNER_USERNAME = "username";
 	public static final String OWNER_PROFILE_USER_VISIBILITY = "profileUserVisibility";
 	public static final String OWNER_GOORU_UID = "gooruUId";
 	public static final String STANDARD_CODE = "code";
@@ -98,6 +99,9 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String AGGREGATOR = "aggregator";
 	
 	public static final String PUBLISHER = "publisher";
+	
+	public static final String CREATOR = "creator";
+	
 	
 	
 	/**
