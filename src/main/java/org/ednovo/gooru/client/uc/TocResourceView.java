@@ -112,7 +112,7 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 			ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount()!=null ?collectionItemDo.getResource().getRatings().getCount().toString(): "0");
 			ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		}
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+//		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 

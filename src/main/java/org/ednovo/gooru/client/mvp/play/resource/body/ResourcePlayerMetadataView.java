@@ -1422,7 +1422,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.average=average;
 		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
+		}else{
+			thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
+		}
+		
 		thankYouResourceStarRatings.show();
 		thankYouResourceStarRatings.setAutoHideEnabled(true);
 	}
@@ -1443,7 +1448,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		ratingsConfirmationPopup=new RatingsConfirmationPopup(assocGooruOId,score,count,average,collectionItemDo.getResource().getUser().getUsername());
 		ratingsConfirmationPopup.show();
 		ratingsConfirmationPopup.getElement().getStyle().setZIndex(99999);
-		ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			ratingsConfirmationPopup.setPopupPosition(685,Window.getScrollTop()+60);
+		}else{
+			ratingsConfirmationPopup.setPopupPosition(314,Window.getScrollTop()+60);
+		}
+		
 		ratingsConfirmationPopup.setAutoHideEnabled(true);
 	}
 
