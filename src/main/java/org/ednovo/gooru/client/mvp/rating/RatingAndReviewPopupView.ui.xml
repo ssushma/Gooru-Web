@@ -13,7 +13,7 @@
                 <g:HTMLPanel styleName="{style.popupContent}">
                     <g:HTMLPanel styleName="{style.ratingVisualizations}">
                         <g:HTMLPanel styleName="{style.distribution} {style.barGraph}">
-                            <g:Label ui:field="ratingDistributionLbl"></g:Label>
+                            <g:Label styleName="{style.userNameLbl}" ui:field="ratingDistributionLbl"></g:Label>
                                 <g:Label styleName="{style.label}" ui:field="excellentLbl"></g:Label>
                                 <g:HTMLPanel styleName="{style.bar}" ui:field="dataFive"></g:HTMLPanel> <g:Label ui:field="excellentScore" styleName="{style.count}"></g:Label>
                                 <br/>
@@ -30,7 +30,7 @@
                                 <g:HTMLPanel styleName="{style.bar} {style.data-five}" ui:field="dataOne"></g:HTMLPanel> <g:Label ui:field="poorScore" styleName="{style.count}"></g:Label>
                                 <br/>
                         </g:HTMLPanel>
-                        <g:Label ui:field="avgLbl"></g:Label>
+                        <g:Label styleName="{style.userNameLbl}" ui:field="avgLbl"></g:Label>
                          <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                          <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button>
                     </g:HTMLPanel>
