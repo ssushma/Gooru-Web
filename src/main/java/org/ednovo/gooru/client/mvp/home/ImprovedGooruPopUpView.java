@@ -76,16 +76,16 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 	HTMLEventPanel closeButton;
 
 	@UiField
-	Anchor lblSupportLink, mobileLearnMore, termsofuselearnmore, descLinkThree, descLinkFive,descLinkSix,descLinkSeven,descLinkEight;
+	Anchor lblSupportLink,  descLinkFive,descLinkSix,descLinkSeven,descLinkEight;
 
 	@UiField
-	InlineLabel contenttextlbl, termsofusetxt, aboutThree, aboutFour, aboutFive,aboutSix,aboutSeven,aboutEight;
+	InlineLabel    aboutFive,aboutSix,aboutSeven,aboutEight;
 
 	@UiField
 	HTMLPanel GooruLinkOutercontainer;
 	@UiField
-	Label headertext, subtext, goorutext, headersubtext, contenttext,
-			termsofuselbl, lblTitleThree, lblTitleFour, lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight;
+	Label headertext, subtext, goorutext, headersubtext,
+			   lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight;
 
 	@UiField
 	HTML questiontxt;
@@ -116,7 +116,7 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		goorutext.setText(GL0287);
 		headersubtext.setText(GL0288);
 
-		contenttext.setText(GL0292);
+		/*contenttext.setText(GL0292);
 		contenttextlbl.setText(GL0293);
 		
 		mobileLearnMore.setText(GL1239);
@@ -140,7 +140,7 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		
 		
 		lblTitleFour.setText(GL0630);
-		aboutFour.setText(GL0627);
+		aboutFour.setText(GL0627);*/
 		
 		lblTitleSix.setText(GL1880);
 		aboutSix.setText(GL1881);
