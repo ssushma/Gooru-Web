@@ -48,7 +48,7 @@
 }
 
 .contentPanel {
-	width: 456px;
+	width: 420px;
 	float: left;
 	padding: 10px 10px 0px;
 }
@@ -59,6 +59,7 @@
 	margin: 10px 0 0 0;
 	float: right;
 	width: 74px;
+	min-height: 15px;
 }
 
 .hiddenPanel {
@@ -196,4 +197,10 @@
 
 .tagText {
 	color: #1076ba;
+}
+
+.ratingWidgetPanel{
+	float: right;
+	padding-top: 10px;	
+	padding-right: 8px;
 }

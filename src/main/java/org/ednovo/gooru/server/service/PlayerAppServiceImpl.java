@@ -86,6 +86,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	private static final String ASSOCIATE_GOORU_OID="assocGooruOid";
 	private static final String FREE_TEXT = "freeText";
 	private static final String CREATE_DATE = "createdDate";
+	private static final String LAST_MODIFIED_ON = "lastModifiedOn";
 
 
 	@Override
@@ -1062,6 +1063,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			
 			starRatingsDo.setScore(jsonObject.getInt(SCORE));
 			starRatingsDo.setCreatedDate(jsonObject.getLong(CREATE_DATE));
+			starRatingsDo.setLastModifiedOn(jsonObject.isNull(LAST_MODIFIED_ON) ? 0 : jsonObject.getLong(LAST_MODIFIED_ON));
 			starRatingsDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText"));
 		} catch (Exception e) {
 			e.printStackTrace();

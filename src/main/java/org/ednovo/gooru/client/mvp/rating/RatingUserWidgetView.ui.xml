@@ -38,9 +38,9 @@
 				</g:HTMLPanel>
 				<g:TextArea styleName="{style.textAreaReviewEdit}"
 					ui:field="editReviewText"></g:TextArea>
-				<div style="margin-left: 68%;">
+				<div style="margin-left: 64%;">
 					<g:Button styleName="primary" ui:field="editReviewBtn"></g:Button>
-					<g:Button styleName="secondary" ui:field="cancelReviewBtn">Cancel</g:Button>
+					<g:Button styleName="secondary {style.posValue}" ui:field="cancelReviewBtn">Cancel</g:Button>
 				</div>
 			</g:HTMLPanel>
 		</panel:HTMLEventPanel>
