@@ -16,7 +16,7 @@
       <g:InlineHTML styleName="{style.star}" ui:field="starThree"></g:InlineHTML>
       <g:InlineHTML styleName="{style.star}" ui:field="starFour"></g:InlineHTML>
       <g:InlineHTML styleName="{style.star}" ui:field="starFive"></g:InlineHTML>
-      <g:Button styleName="secondary {style.editReview}" ui:field="editReview">Edit Review</g:Button>
+      <g:Button styleName="secondary {style.editReview}" ui:field="editReview"></g:Button>
   	  <g:Button styleName="secondary {style.editReview}" ui:field="deleteReview"/>
    </g:HTMLPanel>
    <g:Label styleName="{style.review}" ui:field="review"></g:Label>
@@ -32,7 +32,7 @@
        <g:Label styleName="{style.ratingValue}" ui:field="mouseOverStarValue"></g:Label> 
    </g:HTMLPanel>
    <g:TextArea styleName="{style.textAreaReviewEdit}" ui:field="editReviewText"></g:TextArea>
-   <div style="margin-left: 68%;"><g:Button styleName="primary" ui:field="editReviewBtn">Save</g:Button><g:Button styleName="secondary" ui:field="cancelReviewBtn">Cancel</g:Button></div>
+   <div style="margin-left: 68%;"><g:Button styleName="primary" ui:field="editReviewBtn"></g:Button><g:Button styleName="secondary" ui:field="cancelReviewBtn">Cancel</g:Button></div>
    </g:HTMLPanel>
 </panel:HTMLEventPanel>
 </ui:UiBinder>
