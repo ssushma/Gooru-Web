@@ -147,14 +147,14 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		
 
 			
-		UserDo ownerDo = new UserDo();
+		/*UserDo ownerDo = new UserDo();
 		try {
 			JSONObject createrObject = new JSONObject(getJsonString(recordJsonObject, CREATOR));
 			ownerDo.setUsername(getJsonString(createrObject,OWNER_USERNAME));
 			resourceSearchResultDo.setOwner(ownerDo);
 		} catch (JSONException e1) {
 				e1.printStackTrace();
-		}
+		}*/
 
 		try {
 			if (getJsonString(recordJsonObject, TAXONOMY_DATA_SET) != null) {

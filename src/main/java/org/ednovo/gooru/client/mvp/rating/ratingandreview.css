@@ -555,8 +555,21 @@ fieldset {
 	margin-right: 30px;
 }
 .deletePanel{
-	height:80p;
+	height:80px;
 	float: left;
-	margin-left: 101px;
+	/* margin-left: 101px;
+	margin-top:25px; */
+	background: #f0f0f0;
+	width: 396px;
+}
+.hrline
+{
+	clear: both;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	margin: 3px 0px;
+}
+.lbldeleteMsg{
+ 	margin-left: 101px;
 	margin-top:25px;
 }

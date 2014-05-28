@@ -6,8 +6,7 @@
 <panel:HTMLEventPanel styleName="{style.reviewContainer}" ui:field="reviewContainer">
    <g:Label styleName="{style.username} {style.userNameLbl}" ui:field="userName"></g:Label>
    <g:Label styleName="{style.timestamp}" ui:field="timeStamp"></g:Label>
-  
-   <hr/>
+	<g:Label styleName="{style.hrline}"/>
    <g:HTMLPanel ui:field="editReviewLabelContainer">
       
    <g:HTMLPanel styleName="{style.rating}">
