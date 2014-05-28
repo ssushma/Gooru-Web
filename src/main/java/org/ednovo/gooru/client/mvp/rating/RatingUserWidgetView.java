@@ -103,7 +103,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				editReviewText.getElement().setAttribute("style", "border-color: rgb(169, 169, 169);");
 				mandatoryDescLblForSwareWords.setVisible(false);
 			}
-			
 		});
 	}
 	
