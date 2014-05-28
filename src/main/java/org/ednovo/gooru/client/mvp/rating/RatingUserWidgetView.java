@@ -99,6 +99,8 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	
 
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
+		editReview.setText(GL1860);
+		editReviewBtn.setText(GL0141);
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		timeStamp.setText(commentTime);
 		
