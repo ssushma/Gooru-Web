@@ -102,7 +102,7 @@ public interface ProfilePageService extends BaseService {
 	 * @parm(s) : @param collectionType
 	 * @throws : GwtException
 	 */
-	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken) throws GwtException;
+	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken, int offset) throws GwtException;
 	
 	/**
 	 * Get paginated workspace API

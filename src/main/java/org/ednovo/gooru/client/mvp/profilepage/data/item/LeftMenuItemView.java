@@ -41,6 +41,9 @@ public class LeftMenuItemView extends Composite {
 	
 	private Integer childCount;
 	
+	private Integer widgetCount;
+	
+	private String type;
 	
 	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
 			.create(LibraryUnitMenuViewUiBinder.class);
@@ -73,4 +76,21 @@ public class LeftMenuItemView extends Composite {
 	public void setChildCount(Integer childCount) {
 		this.childCount = childCount;
 	}
+
+	public Integer getWidgetCount() {
+		return widgetCount;
+	}
+
+	public void setWidgetCount(Integer widgetCount) {
+		this.widgetCount = widgetCount;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 }
