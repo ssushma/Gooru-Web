@@ -4,6 +4,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field= "headerStyle" src="collectionHeader.css"/>
 	<ui:with type="org.ednovo.gooru.client.uc.PlayerBundle" field="palyerBundle" />
+	
 	<g:FlowPanel styleName="{headerStyle.header}">
 		<g:FlowPanel styleName="{headerStyle.header-inner}">
 			<g:HTML styleName="{headerStyle.player-resource-title}" ui:field="resourceTitle"></g:HTML>
