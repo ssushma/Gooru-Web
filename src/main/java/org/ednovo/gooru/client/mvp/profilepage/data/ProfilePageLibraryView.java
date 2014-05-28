@@ -100,6 +100,8 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	}
 	
 	public void setData() {
+		leftNav.clear();
+		loadingPanel(true);
 		getPresenter().getPartnerWorkspaceFolders(0);
 	}
 	
