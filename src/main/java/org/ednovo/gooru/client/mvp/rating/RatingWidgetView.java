@@ -50,6 +50,7 @@ public class RatingWidgetView extends Composite{
 
 	public RatingWidgetView(){
 		initWidget(uiBinder.createAndBindUi(this));
+		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 	}
 
 	public InlineLabel getRatingCountLabel(){

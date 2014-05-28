@@ -30,7 +30,6 @@ package org.ednovo.gooru.client.mvp.profilepage.data;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
@@ -58,9 +57,9 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 	}
 	
 	@Override
-	public void getPartnerWorkspaceFolders() {
+	public void getPartnerWorkspaceFolders(int offset) {
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
-		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), new AsyncCallback<ProfileLibraryListDo>(){
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new AsyncCallback<ProfileLibraryListDo>(){
 			@Override
 			public void onFailure(Throwable caught) {}
 			
@@ -95,7 +94,7 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 			getView().clearPanels();
 			getView().loadingPanel(true);
 			getIntoPartnerLibrarypage();
-			getPartnerWorkspaceFolders();
+			getPartnerWorkspaceFolders(0);
 		} else {
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
 		}

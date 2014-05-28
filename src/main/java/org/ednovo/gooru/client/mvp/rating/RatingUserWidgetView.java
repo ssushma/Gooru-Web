@@ -1,23 +1,19 @@
 package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
-import java.util.Date;
-import java.util.Iterator;
-
-import org.ednovo.gooru.client.effects.FadeInAndOut;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -29,7 +25,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -117,6 +112,8 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			clearAllStarsReadOnly();
+			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
 			{
 				setStarRatings(starRatingsDo);
@@ -148,58 +145,58 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		}
 			
 		}else{
+			userName.setText(starRatingsDo.getCreator().getUsername());
+			clearAllStarsReadOnly();
+			this.currentRating = starRatingsDo.getScore();
+			if(starRatingsDo.getScore() == 1)
+			{
+				starOne.addStyleName(style.filled());
+				starTwo.removeStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			else if(starRatingsDo.getScore() == 2)
+			{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			else if(starRatingsDo.getScore() == 3)
+			{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			else if(starRatingsDo.getScore() == 4)
+			{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			else if(starRatingsDo.getScore() == 5)
+			{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.addStyleName(style.filled());
+			}
 			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
 				reviewContainer.setVisible(true);
 				editReviewLabelContainer.setVisible(true);
-				userName.setText(starRatingsDo.getCreator().getUsername());
-				if(starRatingsDo.getScore() == 1)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.removeStyleName(style.filled());
-					starThree.removeStyleName(style.filled());
-					starFour.removeStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 2)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.removeStyleName(style.filled());
-					starFour.removeStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 3)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.addStyleName(style.filled());
-					starFour.removeStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 4)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.addStyleName(style.filled());
-					starFour.addStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 5)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.addStyleName(style.filled());
-					starFour.addStyleName(style.filled());
-					starFive.addStyleName(style.filled());
-				}
 			}else{
 				reviewContainer.setVisible(false);
-				userName.setText(starRatingsDo.getCreator().getUsername());
 				editReviewLabelContainer.setVisible(false);
 			}
 		}
 		
-
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
 			reviewContainer.addStyleName(style.creatorReviewPanel());
 			editReview.addStyleName(style.editReview());
