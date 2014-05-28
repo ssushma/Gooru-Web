@@ -5,6 +5,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="style" src="ratingandreview.css"/>
 	<g:HTMLPanel styleName="{style.popup} userInput">
+	    <g:ScrollPanel ui:field="reviewScrollPanel">
             <g:HTMLPanel styleName="{style.popupInner}">
                 <g:HTMLPanel styleName="{style.popupHeader}">
                     <g:HTML styleName="{style.truncate}"  ui:field="lblResourceTitle"></g:HTML>
@@ -42,5 +43,6 @@
                     </g:VerticalPanel>
                 </g:HTMLPanel>
             </g:HTMLPanel>
+            </g:ScrollPanel>
         </g:HTMLPanel>
 </ui:UiBinder>

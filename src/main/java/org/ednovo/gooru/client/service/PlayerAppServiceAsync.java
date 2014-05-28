@@ -160,7 +160,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	 * @param gooruUid {@link String}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public void getResourceRatingWithReviews(String gooruOid, String gooruUid,AsyncCallback<ArrayList<StarRatingsDo>> callback);
+	public void getResourceRatingWithReviews(String gooruOid, String gooruUid,int offSet,AsyncCallback<ArrayList<StarRatingsDo>> callback);
 
 	/**
 	 * Updates resource star reviews.
