@@ -38,6 +38,7 @@
 
 .resource-image {
 	float: left;
+	margin-top:2px;
 }
 
 .resource-info-title {
@@ -479,6 +480,10 @@
 .labelTitle {
 	font-weight: bold;
 	color: black;
+	width:375px;
+	overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 }
 
 .loadingImageMainDivShare {
@@ -503,9 +508,9 @@
 .btnGreen {
 	float: right;
 	margin-right: 12px;
-	margin-top: -24px;
 	background-color: #4E9746;
 	padding: 5px;
 	border-radius: 4px;
 	color: white;
+	margin-top:-21px;
 }

@@ -161,16 +161,23 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
         
         
         Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+        Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
 		  
 		if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click){
-			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
-		}else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click){
-			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;top:-3px;");
+			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;margin-top:-53px;");
+			districtLibContainer.getElement().setAttribute("style", "margin-top:-4px;");
+			partnerLibContainer.getElement().setAttribute("style", "margin-top:20px;");
+		}else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click){
+			panelCode.getElement().getFirstChildElement().setAttribute("style", "position:relative;margin-top:-53px;");
+			districtLibContainer.getElement().setAttribute("style", "margin-top:-4px;");
+			partnerLibContainer.getElement().setAttribute("style", "margin-top:20px;");
 		}else{
 			panelCode.getElement().getFirstChildElement().removeAttribute("style");
+			districtLibContainer.getElement().removeAttribute("style");
+			partnerLibContainer.getElement().removeAttribute("style");
 		}
         
 	}

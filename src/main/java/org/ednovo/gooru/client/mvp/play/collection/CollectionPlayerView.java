@@ -132,6 +132,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
@@ -143,7 +144,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			 androidSectiondiv.setVisible(false);
 
 		  }
-		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  headerView.getElement().setAttribute("style", "position:relative;");
 			  ipadSectiondiv.setVisible(false);

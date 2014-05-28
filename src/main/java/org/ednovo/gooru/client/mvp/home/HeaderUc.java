@@ -792,7 +792,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 	public void OpenClasspageList() {
 		int left = teachLinkContainer.getAbsoluteLeft();
-		int top = teachLinkContainer.getAbsoluteTop() + 51;
+		int top = teachLinkContainer.getAbsoluteTop() + 50;
 		showTeachPanelAsPopup(left, top);
 	}
 
@@ -1555,7 +1555,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		// });
 	}
 
-	public void showTeachPanelAsPopup(int left, int top) {
+	public void showTeachPanelAsPopup(final int left, int top) {
 		if (classpageListVc == null) {
 			classpageListVc = new ClasspageListVc(false,null);
 		}
@@ -1569,8 +1569,10 @@ public class HeaderUc extends Composite implements MessageProperties,
 		// classpageListVc.getAllClasspages();
 		Window.addWindowScrollHandler(new Window.ScrollHandler() {
 			public void onWindowScroll(Window.ScrollEvent scrollEvent) {
-				classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
-				classpageListVc.setPopupPosition(777,51);
+				if (classpageListVc!=null){
+					classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
+					classpageListVc.setPopupPosition(777,51);
+				}
 			}
 		});
 	}

@@ -48,6 +48,8 @@ import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Float;
+import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -134,6 +136,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	private static final String FILLED_BLUE = "filled filledBlue";
 	ThankYouResourceStarRatings thankYouResourceStarRatings;
+	ThankYouResourceStarRatingsPoor thankYouResourceStarRatingsPoor;
 	RatingsConfirmationPopup ratingsConfirmationPopup;
 	private boolean isRated=false,isFromThanksPopup=false;
 	String assocGooruOId;
@@ -184,10 +187,18 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			emoticsContainer.removeFromParent();
+			resourceTitleLbl.setVisible(false);
+			resourcePublisher.setVisible(false);
+			ratingsContainer.getElement().getStyle().setFloat(Float.RIGHT);
+			ratingsContainer.getElement().getStyle().setMarginRight(430,Unit.PX);
 //			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+		}else{
+			resourceTitleLbl.setVisible(true);
+			resourcePublisher.setVisible(true);
 		}
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
@@ -197,7 +208,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
 			 
 		  }
-		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  wrapperContainerField.getElement().setAttribute("style", "margin-top:0px;");
 		  }
@@ -863,15 +874,23 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	@Override
 	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip) {
+		
+		
 		if(result!=null){
 			this.starRatingsDo=result;
 			isRated=true; 
 		}else{
 			isRated=false;
 		}
-		if(thankYouResourceStarRatings!=null){
+		if(thankYouResourceStarRatings!=null || thankYouResourceStarRatingsPoor!=null){
 			if(thankYouResourceStarRatings.isVisible()){
 				thankYouResourceStarRatings.hide();
+				if(isFromThanksPopup){
+					displaySuccessPopup();
+				}
+			}
+			else if(thankYouResourceStarRatingsPoor.isVisible()){
+				thankYouResourceStarRatingsPoor.hide();
 				if(isFromThanksPopup){
 					displaySuccessPopup();
 				}
@@ -1168,6 +1187,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 */
 	public void setUserRatings(StarRatingsDo result){
 		if(result!=null){
+			setStyle();
 			currentRating = result.getScore();
 			if(result.getScore()==1){
 				starValue.setVisible(true);
@@ -1201,6 +1221,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 	}
 	
+	private void setStyle() {
+		if(!starValue.getText().equalsIgnoreCase(DEFAULT_RATING_TEXT)){
+			starValue.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+		}
+	}
+
 	public void clearAllStars(){
 		one_star.getElement().removeClassName(FILLED_BLUE);
 		two_star.getElement().removeClassName(FILLED_BLUE);
@@ -1268,6 +1294,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 			if(starScore.equalsIgnoreCase(ONE_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(POOR);
 				}else{
@@ -1275,6 +1302,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(TWO_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					mouseOverStarValue.setText(FAIR);
@@ -1283,6 +1311,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(THREE_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
@@ -1292,6 +1321,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(FOUR_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
@@ -1302,6 +1332,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}else if(starScore.equalsIgnoreCase(FIVE_STAR)){
 				if(starValue.getText().equals(DEFAULT_RATING_TEXT)){
+					clearAllStars();
 					one_star.getElement().addClassName(FILLED_BLUE);
 					two_star.getElement().addClassName(FILLED_BLUE);
 					three_star.getElement().addClassName(FILLED_BLUE);
@@ -1340,8 +1371,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				starValue.setVisible(true);
 				mouseOverStarValue.setText("");
 			}
-			setStarRatingValue(currentRating);
 			
+			if(!starValue.getText().equals(DEFAULT_RATING_TEXT)){
+				setStarRatingValue(currentRating);
+			}
 		}
 	}
 	
@@ -1397,11 +1430,22 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		this.score=score;
 		this.count=count;
 		this.average=average;
+		if(score > 1)
+		{
 		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
 		thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
 		thankYouResourceStarRatings.show();
 		thankYouResourceStarRatings.setAutoHideEnabled(true);
+		}
+		else
+		{
+			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
+			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatingsPoor.setPopupPosition(300,Window.getScrollTop()+48);
+			thankYouResourceStarRatingsPoor.show();
+			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	
+		}
 	}
 	
 	

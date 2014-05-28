@@ -27,6 +27,7 @@
 
 package org.ednovo.gooru.client.mvp.play.resource.body;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +37,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.PostUserReviewEvent;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -43,11 +45,11 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -68,17 +70,26 @@ import com.google.gwt.user.client.ui.Widget;
 * 
 * @Reviewer: Gooru Team.
 */
-public class ThankYouResourceStarRatings extends PopupPanel implements MessageProperties {
+public class ThankYouResourceStarRatingsPoor extends PopupPanel implements MessageProperties {
 	
 	private static ThankYouResourceStarRatingsUiBinder uiBinder = GWT.create(ThankYouResourceStarRatingsUiBinder.class);
 
-	interface ThankYouResourceStarRatingsUiBinder extends UiBinder<Widget, ThankYouResourceStarRatings> {}
+	interface ThankYouResourceStarRatingsUiBinder extends UiBinder<Widget, ThankYouResourceStarRatingsPoor> {}
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField public FlowPanel ratingWidgetPanel;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
+	
+	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
+	
+	ArrayList<String> reourceContentReportList=new ArrayList<String>();
+	
+	@UiField
+	CheckBox resourceCheckBox1, resourceCheckBox2, resourceCheckBox3,
+			resourceCheckBox4;
+	
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review,createrName;
@@ -94,7 +105,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 * @param average 
 	 * @param count 
 	 */
-	public ThankYouResourceStarRatings(String assocGooruOId, Integer score, String review, double average, Integer count,String createrName){   
+	public ThankYouResourceStarRatingsPoor(String assocGooruOId, Integer score, String review, double average, Integer count,String createrName){   
 		this.assocGooruOId = assocGooruOId;
 		this.score = score;
 		this.review = review;
@@ -102,6 +113,13 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		this.count=count;
 		this.createrName = createrName;
 		setWidget(uiBinder.createAndBindUi(this));
+		
+		
+		incorporateresourceText.setText(GL0612);
+		unavailableresourceText.setText(GL0613);
+		inaccurateTextresource.setText(GL0614);
+		otherReason.setText(GL0606);
+		
 		setUserReview(review);
 		setAvgRatingWidget();
 		setGlassEnabled(true);
@@ -136,23 +154,6 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId, "",createrName)); 
 		}
 	}
-	
-	
-	@UiHandler("ratingCommentTxtArea")
-	public void keyRatingTextArea(KeyUpEvent event){
-		String review=ratingCommentTxtArea.getText();
-		errorLbl.setText("");
-		if(review.length()>0){
-			errorLbl.setText("");
-		}
-		if(review.length()==500){
-			errorLbl.setText(GL0143);
-			errorLbl.setVisible(true);
-		//	fieldValidationStaus=false;
-		}else{
-			errorLbl.setVisible(false);
-		}
-	}
 
 	/**
 	 * On click Post button user entered review will get posted.
@@ -174,7 +175,34 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
 						}else if(btnPost.getText().equalsIgnoreCase("Post")){
 							saveAndPsotLbl.setText(posting);
-							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+							
+							if(resourceCheckBox1.isChecked())
+							{
+								reourceContentReportList.add("missing-concept");
+							}
+							if(resourceCheckBox2.isChecked())
+							{
+								reourceContentReportList.add("not-loading");
+							}
+							if(resourceCheckBox3.isChecked())
+							{
+								reourceContentReportList.add("inappropriate");
+							}
+							if(resourceCheckBox4.isChecked())
+							{
+								reourceContentReportList.add("other");
+							}
+							
+							AppClientFactory.getInjector().getPlayerAppService().createContentReport(assocGooruOId, ratingCommentTxtArea.getText().trim(), reourceContentReportList, "", new SimpleAsyncCallback<ContentReportDo>() {
+								
+								@Override
+								public void onSuccess(ContentReportDo result) {
+									//getView().showSuccesmessagePopup();
+									AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));
+
+								}
+							});	
+							  
 						}
 					}
 					SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
