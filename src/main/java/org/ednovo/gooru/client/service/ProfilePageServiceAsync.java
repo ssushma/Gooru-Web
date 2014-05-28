@@ -57,7 +57,7 @@ public interface ProfilePageServiceAsync extends BaseServiceAsync {
 	void deleteCourseUserProfile(CodeDo codeDo, String userLevel,
 			AsyncCallback<Void> callback);
 
-	void getProfileLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken, AsyncCallback<ProfileLibraryListDo> callback);
+	void getProfileLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken, int offset, AsyncCallback<ProfileLibraryListDo> callback);
 
 	void getProfilePaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<ProfileLibraryListDo> callback);
 	

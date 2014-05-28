@@ -44,6 +44,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -69,6 +72,10 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	ProfilePageLibraryPresenter profilePageLibraryPresenter = null;
 	
+	private int totalLeftPanelCount = 0;
+	
+	private boolean isApiProgress  = true;
+	
 	private static ProfilePageLibraryViewUiBinder uiBinder = GWT.create(ProfilePageLibraryViewUiBinder.class);
 
 	interface ProfilePageLibraryViewUiBinder extends UiBinder<Widget, ProfilePageLibraryView> {}
@@ -84,6 +91,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		setPresenter(new ProfilePageLibraryPresenter(this));
 		emptyContainer.setVisible(false);
 		setMetaData();
+		Window.addWindowScrollHandler(new LeftPanelScroll());
 	}
 	
 	private void setMetaData() {
@@ -92,7 +100,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	}
 	
 	public void setData() {
-		getPresenter().getPartnerWorkspaceFolders();
+		getPresenter().getPartnerWorkspaceFolders(0);
 	}
 	
 	@Override
@@ -102,18 +110,20 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 	
 	@Override
 	public void setUnitList(final ProfileLibraryListDo profileLibraryListDo) {
-		leftNav.clear();
+		totalLeftPanelCount = profileLibraryListDo.getCount();
 		String folderId = AppClientFactory.getPlaceManager().getRequestParameter(FOLDERID);
-		int j = 0;
+		int firstWidgetCount = leftNav.getWidgetCount();
 		final ArrayList<ProfileLibraryDo> folderList = profileLibraryListDo.getSearchResult();
 		for(int i = 0; i<folderList.size(); i++) {
 			LeftMenuItemView leftMenuItemView = new LeftMenuItemView(folderList.get(i));
 			leftNav.add(leftMenuItemView);
+			leftMenuItemView.setWidgetCount(leftNav.getWidgetCount()+1);
+			leftMenuItemView.setType(folderList.get(i).getType());
 			if(folderList.get(i).getType().equals("scollection")) {
 				leftMenuItemView.addStyleName(style.collection());
 			}
-			if(j==0&&folderId==null) {
-				j++;
+			if(firstWidgetCount==0&&folderId==null) {
+				firstWidgetCount++;
 				loadingPanel(true);
 				leftMenuItemView.addStyleName(style.open());
 				leftMenuItemView.addStyleName(style.active());
@@ -127,14 +137,16 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		}
 		
 		final Iterator<Widget> widgets = leftNav.iterator();
-		int widgetCount = 0;
+		
 		while (widgets.hasNext()) {
 			final Widget widget = widgets.next();
 			final LeftMenuItemView leftMenuItemView = ((LeftMenuItemView) widget);
-			final int finalWidgetCount = widgetCount;
 			leftMenuItemView.getUnitMenuItemPanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					if(leftMenuItemView.getWidgetCount()>10) {
+						Window.scrollTo(0, 0);
+					}
 					loadingPanel(true);
 					final Iterator<Widget> widgetsPanel = leftNav.iterator();
 					while (widgetsPanel.hasNext()) {
@@ -145,23 +157,15 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 					widget.addStyleName(style.open());
 					widget.addStyleName(style.active());
 					unitListId = leftMenuItemView.getUnitId();
-					if(finalWidgetCount==0) {
-						if(folderList.get(finalWidgetCount).getType().equals("scollection")) {
-							setTopicListData(folderList.get(finalWidgetCount),  unitListId);
-						} else {
-							setTopicListData(folderList.get(finalWidgetCount).getCollectionItems(), unitListId);
-						}
+					if(leftMenuItemView.getType().equals("scollection")) {
+						getPresenter().getProfileLibraryCollection(unitListId, false);
 					} else {
-						if(folderList.get(finalWidgetCount).getType().equals("scollection")) {
-							getPresenter().getProfileLibraryCollection(unitListId, false);
-						} else {
-							getPresenter().getPartnerChildFolderItems(unitListId, 1);
-						}
+						getPresenter().getPartnerChildFolderItems(unitListId, 1);
 					}
 				}
 			});
-			widgetCount++;
 		}
+		isApiProgress = true;
 	}
 	
 	@Override
@@ -210,7 +214,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 
 	@Override
 	public void clearPanels() {
-		
+		leftNav.clear();
 	}	
 	
 	@Override
@@ -250,5 +254,15 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 			myCollectionsBtn.setVisible(false);
 		}
 	}
-
+	
+	public class LeftPanelScroll implements ScrollHandler{
+		@Override
+		public void onWindowScroll(ScrollEvent event) {
+			if(leftNav.getWidgetCount()<totalLeftPanelCount&&isApiProgress) {
+				isApiProgress = false;
+				System.out.println("Inside this");
+				getPresenter().getPartnerWorkspaceFolders(leftNav.getWidgetCount());
+			}
+		}
+	}
 }

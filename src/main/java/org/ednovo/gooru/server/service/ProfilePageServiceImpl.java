@@ -228,7 +228,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 	}
 
 	@Override
-	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit, String sharingType, String collectionType, String placeToken) throws GwtException {
+	public ProfileLibraryListDo getProfileLibraryWorkspace(String gooruUid, int limit, String sharingType, String collectionType, String placeToken, int offset) throws GwtException {
 		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
 		JsonRepresentation jsonRep = null;
 		String url = null;
@@ -240,7 +240,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		if(collectionType!=null){
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"");
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
 		System.out.println(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
