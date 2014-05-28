@@ -43,6 +43,7 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -109,7 +110,6 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		avgRatingLbl.setText(GL1848);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
-		
 	}
 	
 	/**
@@ -144,8 +144,19 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	public void keyRatingTextArea(KeyUpEvent event){
 		String review=ratingCommentTxtArea.getText();
 		errorLbl.setText("");
-		if(review.length()>0){
+		if(ratingCommentTxtArea.getText().length()>0){
+			btnPost.setEnabled(true);
+			btnPost.getElement().removeClassName("disabled");
 			errorLbl.setText("");
+		}else{
+			if(btnPost.getText().equalsIgnoreCase("Save")){
+				btnPost.setEnabled(true);
+				btnPost.getElement().removeClassName("disabled");
+			}else{
+				btnPost.setEnabled(false);
+				btnPost.getElement().addClassName("disabled");
+			}
+			
 		}
 		if(review.length()==500){
 			errorLbl.setText(GL0143);
@@ -153,6 +164,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		//	fieldValidationStaus=false;
 		}else{
 			errorLbl.setVisible(false);
+			
 		}
 	}
 
@@ -162,26 +174,33 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 */
 	@UiHandler("btnPost")
 	public void onRatingReviewPostclick(ClickEvent clickEvent){
-		Map<String, String> parms = new HashMap<String, String>();
-		parms.put("text", ratingCommentTxtArea.getText());
-		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-			@Override
-			public void onSuccess(Boolean value) {
-					if(!value){
-						saveAndPsotLbl.setText("");
-						saveAndPsotLbl.setVisible(true);
-						buttonsContainer.setVisible(false);
-						if(btnPost.getText().equalsIgnoreCase("Save")){
-							saveAndPsotLbl.setText(saving);
-							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
-						}else if(btnPost.getText().equalsIgnoreCase("Post")){
-							saveAndPsotLbl.setText(posting);
-							AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+		if(ratingCommentTxtArea.getText().equals("")&& !btnPost.getText().equalsIgnoreCase("Save")){  
+			btnPost.setEnabled(false);
+			btnPost.getElement().addClassName("disabled");
+		}else{
+			btnPost.setEnabled(true);
+			btnPost.getElement().removeClassName("disabled");
+			Map<String, String> parms = new HashMap<String, String>();
+			parms.put("text", ratingCommentTxtArea.getText());
+			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+				@Override
+				public void onSuccess(Boolean value) {
+						if(!value){
+							saveAndPsotLbl.setText("");
+							saveAndPsotLbl.setVisible(true);
+							buttonsContainer.setVisible(false);
+							if(btnPost.getText().equalsIgnoreCase("Save")){
+								saveAndPsotLbl.setText(saving);
+								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,true));  
+							}else if(btnPost.getText().equalsIgnoreCase("Post")){
+								saveAndPsotLbl.setText(posting);
+								AppClientFactory.fireEvent(new PostUserReviewEvent(assocGooruOId,ratingCommentTxtArea.getText().trim(),score,false));  
+							}
 						}
-					}
-					SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
-			}
-		});
+						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
+				}
+			});
+		}
 	}
 	
 	/**
