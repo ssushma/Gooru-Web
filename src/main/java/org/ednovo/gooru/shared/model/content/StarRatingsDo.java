@@ -18,7 +18,7 @@ public class StarRatingsDo implements Serializable {
 	private long createdDate;
 	private String freeText;
 	private CreatorDo creator;
-	
+	private long lastModifiedOn;
 	public StarRatingsDo(){}
 	
 	/**
@@ -94,6 +94,20 @@ public class StarRatingsDo implements Serializable {
 	 */
 	public void setCreatedDate(long createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	/** 
+	 * This method is to get the lastModifiedOn
+	 */
+	public long getLastModifiedOn() {
+		return lastModifiedOn;
+	}
+
+	/** 
+	 * This method is to set the lastModifiedOn
+	 */
+	public void setLastModifiedOn(long lastModifiedOn) {
+		this.lastModifiedOn = lastModifiedOn;
 	}
 
 

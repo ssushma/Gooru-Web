@@ -1,44 +1,50 @@
 package org.ednovo.gooru.client.mvp.rating;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
-import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
-import java.util.Date;
-import java.util.Iterator;
-
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -46,7 +52,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 
 	@UiField HTMLEventPanel reviewContainer;
 	
-	@UiField Label userName, timeStamp, review,mouseOverStarValue,starValue;
+	@UiField Label userName, timeStamp, review,mouseOverStarValue,starValue,mandatoryDescLblForSwareWords,errorLbl;
 	
 	@UiField Button editReview,editReviewBtn,cancelReviewBtn,deleteReview;
 	
@@ -60,8 +66,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	
 	@UiField RatingAndReviewStyleBundle style;
 
-	private String id;
-	
 	
 	private static final String DATE_FORMAT="MMMM dd, yyyy";
 	
@@ -80,7 +84,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	
 	int currentRating=0,clickedRating;
 	private static final String FILLED_BLUE = "filled filledBlue";
-	
+	private static final String CONTENT_ADMIN_ROLE = "Content_Admin";
 	private static RatingUserWidgetViewUiBinder uiBinder = GWT
 			.create(RatingUserWidgetViewUiBinder.class);
 
@@ -92,18 +96,22 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(starRatingsDo,createrName);
 		this.starRatingsDo = starRatingsDo;
-
 		deleteReview.setVisible(false);
-		
+		editReviewText.addKeyUpHandler(new KeyUpHandler(){
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				editReviewText.getElement().setAttribute("style", "border-color: rgb(169, 169, 169);");
+				mandatoryDescLblForSwareWords.setVisible(false);
+			}
+		});
 	}
 	
-
 	public void setData(final StarRatingsDo starRatingsDo,final String createrName) {
 		editReview.setText(GL1860);
 		editReviewBtn.setText(GL0141);
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
-		timeStamp.setText(commentTime);
-		
+		long lastModifiedOn = starRatingsDo.getLastModifiedOn();
+		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + GL_GRR_Hyphen + " " + GL1434 : ""));
 		deleteReview.setText(GL1861);
 		
 		review.setText(starRatingsDo.getFreeText());
@@ -116,9 +124,44 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 			userName.setText(starRatingsDo.getCreator().getUsername());
+			clearAllStarsReadOnly();
+			this.currentRating = starRatingsDo.getScore();
 			if(starRatingsDo.getScore() == 1)
 			{
-				clearAllStarsReadOnly();
+				setStarRatings(starRatingsDo);
+			}
+			else if(starRatingsDo.getScore() == 2)
+			{
+				setStarRatings(starRatingsDo);
+			}
+			else if(starRatingsDo.getScore() == 3)
+			{
+				setStarRatings(starRatingsDo);
+			}
+			else if(starRatingsDo.getScore() == 4)
+			{
+				setStarRatings(starRatingsDo);
+			}
+			else if(starRatingsDo.getScore() == 5)
+			{
+				setStarRatings(starRatingsDo);
+			}
+			
+		  if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
+			reviewContainer.setVisible(true);
+			editReviewLabelContainer.setVisible(true);
+		  }else{
+			reviewContainer.setVisible(false);
+			userName.setText(starRatingsDo.getCreator().getUsername());
+			editReviewLabelContainer.setVisible(false);
+		}
+			
+		}else{
+			userName.setText(starRatingsDo.getCreator().getUsername());
+			clearAllStarsReadOnly();
+			this.currentRating = starRatingsDo.getScore();
+			if(starRatingsDo.getScore() == 1)
+			{
 				starOne.addStyleName(style.filled());
 				starTwo.removeStyleName(style.filled());
 				starThree.removeStyleName(style.filled());
@@ -127,7 +170,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			}
 			else if(starRatingsDo.getScore() == 2)
 			{
-				clearAllStarsReadOnly();
 				starOne.addStyleName(style.filled());
 				starTwo.addStyleName(style.filled());
 				starThree.removeStyleName(style.filled());
@@ -136,7 +178,6 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			}
 			else if(starRatingsDo.getScore() == 3)
 			{
-				clearAllStarsReadOnly();
 				starOne.addStyleName(style.filled());
 				starTwo.addStyleName(style.filled());
 				starThree.addStyleName(style.filled());
@@ -159,69 +200,15 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				starFour.addStyleName(style.filled());
 				starFive.addStyleName(style.filled());
 			}
-			
-		  if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
-			reviewContainer.setVisible(true);
-			editReviewLabelContainer.setVisible(true);
-		  }else{
-			reviewContainer.setVisible(false);
-			userName.setText(starRatingsDo.getCreator().getUsername());
-			editReviewLabelContainer.setVisible(false);
-		}
-			
-		}else{
 			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
 				reviewContainer.setVisible(true);
 				editReviewLabelContainer.setVisible(true);
-				userName.setText(starRatingsDo.getCreator().getUsername());
-				if(starRatingsDo.getScore() == 1)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.removeStyleName(style.filled());
-					starThree.removeStyleName(style.filled());
-					starFour.removeStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 2)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.removeStyleName(style.filled());
-					starFour.removeStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 3)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.addStyleName(style.filled());
-					starFour.removeStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 4)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.addStyleName(style.filled());
-					starFour.addStyleName(style.filled());
-					starFive.removeStyleName(style.filled());
-				}
-				else if(starRatingsDo.getScore() == 5)
-				{
-					starOne.addStyleName(style.filled());
-					starTwo.addStyleName(style.filled());
-					starThree.addStyleName(style.filled());
-					starFour.addStyleName(style.filled());
-					starFive.addStyleName(style.filled());
-				}
 			}else{
 				reviewContainer.setVisible(false);
-				userName.setText(starRatingsDo.getCreator().getUsername());
 				editReviewLabelContainer.setVisible(false);
 			}
 		}
 		
-
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
 			reviewContainer.addStyleName(style.creatorReviewPanel());
 			editReview.addStyleName(style.editReview());
@@ -240,14 +227,12 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
-				editReview.setVisible(true);
-			
-				}
-				if(AppClientFactory.getLoggedInUser().getUsername().equalsIgnoreCase(createrName))
-				{
-					deleteReview.setVisible(true);
+					editReview.setVisible(true);
 				}
 				
+				if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
+					deleteReview.setVisible(true);     
+				}
 			}
 		});
 		reviewContainer.addMouseOutHandler(new MouseOutHandler() {
@@ -262,6 +247,110 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		
 	}
 	
+	private void setStarRatings(StarRatingsDo starRatingsDo) {
+		if(starRatingsDo.getScore()==1){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.removeStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+				starTwo.removeStyleName(FILLED_BLUE);
+				starThree.removeStyleName(FILLED_BLUE);
+				starFour.removeStyleName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.removeStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		}else if(starRatingsDo.getScore()==2){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+				starThree.removeStyleName(FILLED_BLUE);
+				starFour.removeStyleName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.removeStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		}else if(starRatingsDo.getScore()==3){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.getElement().addClassName(FILLED_BLUE);
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+				starFour.removeStyleName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.removeStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		} else if(starRatingsDo.getScore()==4){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.getElement().addClassName(FILLED_BLUE);
+				starFour.getElement().addClassName(FILLED_BLUE);
+				starFive.removeStyleName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.removeStyleName(style.filled());
+			}
+			
+		}else if(starRatingsDo.getScore()==5){
+			clearAllStarsReadOnly();
+			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.addStyleName(style.filled());
+				starOne.getElement().addClassName(FILLED_BLUE);
+				starTwo.getElement().addClassName(FILLED_BLUE);
+				starThree.getElement().addClassName(FILLED_BLUE);
+				starFour.getElement().addClassName(FILLED_BLUE);
+				starFive.getElement().addClassName(FILLED_BLUE);
+			}else{
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
+				starFive.addStyleName(style.filled());
+			}
+		}
+	}
+
+
 	@UiHandler("editReview")
 	public void editReview(ClickEvent event) {
 		editReviewTextareaContainer.setVisible(true);
@@ -312,27 +401,52 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		editReviewBtn.removeStyleName(style.editReview());
 		cancelReviewBtn.removeStyleName(style.editReview());
 	}
-
+	@UiHandler("editReviewText")
+	public void keyRatingTextArea(KeyUpEvent event){
+		String review=editReviewText.getText();
+		errorLbl.setText("");
+		if(review.length()>0){
+			errorLbl.setText("");
+		}
+		if(review.length()==500){
+			errorLbl.setText(GL0143);
+			errorLbl.setVisible(true);
+		//	fieldValidationStaus=false;
+		}else{
+			errorLbl.setVisible(false);
+		}
+	}
 	@UiHandler("editReviewBtn")
 	public void editReviewForEditingReview(ClickEvent event) {
-	AppClientFactory.getInjector().getPlayerAppService().updateResourceStarReviews(starRatingsDo.getDeleteRatingGooruOid(),this.currentRating, editReviewText.getText(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
-		@Override
-		public void onSuccess(ArrayList<StarRatingsDo> result) {
-			if(result.size()>0){
-				AppClientFactory.fireEvent(new UpdateUserStarReviewEvent(result));
-				editReviewTextareaContainer.setVisible(false);
-				review.setText(result.get(0).getFreeText());
-				editReviewLabelContainer.setVisible(true);
-				editReviewBtn.removeStyleName(style.editReview());
-				cancelReviewBtn.removeStyleName(style.editReview());
-				updateStars(result.get(0));
-				starRatingsDo.setScore(result.get(0).getScore());
-				starRatingsDo.setFreeText(result.get(0).getFreeText());
-				AppClientFactory.fireEvent(new UpdateRatingsGraphEvent(starRatingsDo.getAssocGooruOid()));  
+		Map<String, String> parms = new HashMap<String, String>();
+		parms.put("text", editReviewText.getText());
+		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+			@Override
+			public void onSuccess(Boolean result) {
+				if(!result){
+				// TODO Auto-generated method stub
+				AppClientFactory.getInjector().getPlayerAppService().updateResourceStarReviews(starRatingsDo.getDeleteRatingGooruOid(),currentRating, editReviewText.getText(), new SimpleAsyncCallback<ArrayList<StarRatingsDo>>(){
+					@Override
+					public void onSuccess(ArrayList<StarRatingsDo> result) {
+						if(result.size()>0){
+							AppClientFactory.fireEvent(new UpdateUserStarReviewEvent(result));
+							editReviewTextareaContainer.setVisible(false);
+							review.setText(result.get(0).getFreeText());
+							editReviewLabelContainer.setVisible(true);
+							editReviewBtn.removeStyleName(style.editReview());
+							cancelReviewBtn.removeStyleName(style.editReview());
+							updateStars(result.get(0));
+							starRatingsDo.setScore(result.get(0).getScore());
+							starRatingsDo.setFreeText(result.get(0).getFreeText());
+							AppClientFactory.fireEvent(new UpdateRatingsGraphEvent(starRatingsDo.getAssocGooruOid()));  
+						}
+					}
+				}); 
 			}
-		}
-	}); 
-		
+				SetStyleForProfanity.SetStyleForProfanityForTextArea(editReviewText, mandatoryDescLblForSwareWords, result);
+	   }
+			
+		});
 	}
 	
 	private void updateStars(StarRatingsDo starRatingsDo) {
@@ -447,13 +561,14 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			
 			@Override
 			public void onSuccess(Void result) {
-				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
 				reviewContainer.clear();
-				final HTMLPanel deletePanel = new HTMLPanel(MessageProperties.GL1853);
-				deletePanel.setStyleName(style.deletePanel());
+				reviewContainer.addStyleName(style.deletePanel());
+				final HTMLPanel deletePanel = new HTMLPanel("");
+				Label deleteMsg = new Label();
+				deleteMsg.setText(MessageProperties.GL1853);
+				deleteMsg.setStyleName(style.lbldeleteMsg());
+				deletePanel.add(deleteMsg);
 				reviewContainer.add(deletePanel);
-				reviewContainer.getElement().setAttribute("style", "height:80px");
-						
 				new FadeInAndOut(deletePanel.getElement(), 1000);
 				Timer timer = new Timer()
 		        {
@@ -463,17 +578,16 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            	int deleteIndex = reviewContainer.getWidgetIndex(deletePanel);
 		            	reviewContainer.remove(deleteIndex);
 		            	reviewContainer.setVisible(false);
+		            	AppClientFactory.fireEvent(new UpdateRatingOnDeleteEvent(true)); 
 					
 		            }
 		        };
 		        timer.schedule(1000);
-		     
-				
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+			
 				
 			}
 		});
@@ -625,4 +739,5 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		}
 		return msg;
 	}
+	
 }

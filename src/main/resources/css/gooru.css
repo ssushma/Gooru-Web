@@ -1913,3 +1913,7 @@ fieldset {
 .textTransform{
 	text-transform: uppercase;
 }
+
+.setVisible{
+	display : none;
+}

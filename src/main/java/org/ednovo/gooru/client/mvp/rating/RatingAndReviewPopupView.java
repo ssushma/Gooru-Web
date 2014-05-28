@@ -46,6 +46,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -57,6 +58,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -82,10 +84,14 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	@UiField Button rateResourceBtn;
 	
+	@UiField ScrollPanel reviewScrollPanel;
+	
 	private String gooruOid = null;
 	private String createrName = null;
 	
 	private boolean isRated=false;
+	
+	private boolean apiInprogress=true;
 	
 	private RatingWidgetView ratingWidgetView= new RatingWidgetView();
 
@@ -108,7 +114,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	public void closeRatingAndReviewPopup(ClickEvent event){
 		String currentToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 		hide();
-		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+		if (!currentToken.equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY) && !currentToken.equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			Window.enableScrolling(true);
 		}
 	}
@@ -137,8 +143,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setHTML(GL1840+" "+resourceTitle);
 		setStaticText();
+		clearContainer();
 		getAverageRatingForContent(gooruOid);
 		getUserRatingsAndReviews(gooruOid);
+	}
+
+	private void clearContainer() {
+		reviewsContainer.clear();
 	}
 
 	private void setStaticText() {
@@ -155,7 +166,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 
 	public void getUserRatingsAndReviews(String resourceId)
 	{
-		getUiHandlers().getUserRatingsReviews(resourceId);
+		getUiHandlers().getUserRatingsReviews(resourceId,0);
 	}
 
 	public void getAverageRatingForContent(String resourceId)
@@ -198,7 +209,6 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	
 	@Override
 	public void setUserRatingsAndReviews(ArrayList<StarRatingsDo> result) {
-		reviewsContainer.clear();
 		if(result.size()>0)
 		{
 			for(int i=0;i<result.size();i++){
@@ -235,6 +245,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			}
 			
 		}
+		
+		apiInprogress=false;
 
 	}
 
@@ -309,6 +321,14 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
 	}
 	
+	
+	@UiHandler("reviewScrollPanel")
+	public void onScrollReviews(ScrollEvent event){
+		if(!apiInprogress){
+			apiInprogress=true;
+			getUiHandlers().getUserRatingsReviews(gooruOid,reviewsContainer.getWidgetCount());
+		}
+	}
 
 
 }
