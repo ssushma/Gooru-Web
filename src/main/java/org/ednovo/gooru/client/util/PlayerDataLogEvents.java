@@ -244,9 +244,12 @@ public class PlayerDataLogEvents {
 		JSONObject attemptedAnswersArray=new JSONObject();
 		for(int i=0;i<answerObjectArray.size();i++){
 			List<JSONObject> jsonArray=answerObjectArray.get(i);
-			attemptedAnswersArray.put("attempt"+(i+1), new JSONString(jsonArray.toString()));
+			attemptedAnswersArray.put("attempt"+(i+1), new JSONString(jsonArray+""));
 		}
-		return attemptedAnswersArray.toString();
+		String tempArray = attemptedAnswersArray+"";
+		tempArray = tempArray.replaceAll("\\\\", "");
+		System.out.println("tempArray 2 "+tempArray);
+		return tempArray;
 	}
 	
 	public static JSONArray createJsniIntArray(List<Integer> attemptTrySequence){
