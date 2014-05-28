@@ -1447,6 +1447,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		{
 		thankYouResourceStarRatings = new ThankYouResourceStarRatings(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 		thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
+		thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 			thankYouResourceStarRatings.setPopupPosition(685,Window.getScrollTop()+48);
 		}else{
@@ -1460,6 +1461,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		{
 			thankYouResourceStarRatingsPoor = new ThankYouResourceStarRatingsPoor(assocGooruOid,score,review,average,count,collectionItemDo.getResource().getUser().getUsername()); 
 			thankYouResourceStarRatingsPoor.getElement().getStyle().setZIndex(999999);
+			thankYouResourceStarRatings.getElement().getStyle().setPadding(0, Unit.PX);
 			thankYouResourceStarRatingsPoor.setPopupPosition(300,Window.getScrollTop()+48);
 			thankYouResourceStarRatingsPoor.show();
 			thankYouResourceStarRatingsPoor.setAutoHideEnabled(true);	

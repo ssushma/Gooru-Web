@@ -357,7 +357,7 @@ body.popupBG {
 }
 
 .popupContent {
-	padding: 15px;
+	padding: 12px;
 	height: 400px;
 	overflow: auto;
 }
@@ -811,6 +811,10 @@ fieldset {
 	/* margin-right: 72px;
 	float: right;
 	width:230px; */
-	margin-right: 61px;
-	float: right;
+}
+
+.thankYouLbl{
+	font-style: normal;
+	font-size: 16px;
+	margin-bottom: 11px;
 }

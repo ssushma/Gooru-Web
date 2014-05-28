@@ -353,20 +353,25 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private HashMap<String, SubjectDo> getThirdPartyPartnerData(HashMap<String, SubjectDo> subjectList, String subjectName) {
 		ArrayList<CourseDo> data = subjectList.get(subjectName).getData();
 		CourseDo courseDo = new CourseDo();
-		for(int i=0;i<data.size();i++) {
-			if(data.get(i).getLabel().equalsIgnoreCase(EXCLUDED_COURSE)) {
-				courseDo = data.get(i);
-				courseDo.setLabel(INCLUDED_COURSE);
-				courseDo.setParentId(AUTODESK_GOORU_UID);
-				courseDo.getThumbnails().setUrl(COURSE_100_75_IMG);
-				courseDo.getCreator().setGender(MALE);
-				courseDo.getCreator().setLastName(RUSD_LAST_NAME);
-				courseDo.getCreator().setUsername(RUSDLEARNS);
-				courseDo.getCreator().setGooruUId(AUTODESK_GOORU_UID);
-				courseDo.setUser(null);
-				data.remove(i);
+		courseDo.setLabel(INCLUDED_COURSE);
+		courseDo.setParentId(AUTODESK_GOORU_UID);
+		ThumbnailDo thumbnailDo = new ThumbnailDo();
+		thumbnailDo.setUrl(COURSE_100_75_IMG);
+		courseDo.setThumbnails(thumbnailDo);
+		LibraryUserDo libraryUserDo = new LibraryUserDo();
+		libraryUserDo.setGender(MALE);
+		libraryUserDo.setLastName(RUSD_LAST_NAME);
+		libraryUserDo.setUsername(RUSDLEARNS);
+		libraryUserDo.setGooruUId(AUTODESK_GOORU_UID);
+		courseDo.setCreator(libraryUserDo);
+		courseDo.setUser(null);
+		try {
+			for(int i=0;i<data.size();i++) {
+				if(data.get(i).getLabel().equalsIgnoreCase(EXCLUDED_COURSE)) {
+					data.remove(i);
+				}
 			}
-		}
+		} catch (Exception e) {}
 		data.add(0, courseDo);
 		subjectList.get(subjectName).setData(data);
 		return subjectList;
