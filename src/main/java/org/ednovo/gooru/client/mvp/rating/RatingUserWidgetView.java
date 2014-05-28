@@ -110,8 +110,8 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		editReview.setText(GL1860);
 		editReviewBtn.setText(GL0141);
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
-		timeStamp.setText(commentTime);
-		
+		long lastModifiedOn = starRatingsDo.getLastModifiedOn();
+		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + GL_GRR_Hyphen + " " + GL1434 : ""));
 		deleteReview.setText(GL1861);
 		
 		review.setText(starRatingsDo.getFreeText());
