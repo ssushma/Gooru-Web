@@ -8,6 +8,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -64,9 +65,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiField InlineHTML userratingOne,userratingTwo,userratingThree,userratingFour,userratingFive;
 	
 	@UiField RatingAndReviewStyleBundle style;
-	
-	private String id;
-	
+
 	
 	private static final String DATE_FORMAT="MMMM dd, yyyy";
 	
@@ -85,7 +84,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	
 	int currentRating=0,clickedRating;
 	private static final String FILLED_BLUE = "filled filledBlue";
-	
+	private static final String CONTENT_ADMIN_ROLE = "Content_Admin";
 	private static RatingUserWidgetViewUiBinder uiBinder = GWT
 			.create(RatingUserWidgetViewUiBinder.class);
 
@@ -228,14 +227,12 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
-				editReview.setVisible(true);
-			
-				}
-				if(AppClientFactory.getLoggedInUser().getUsername().equalsIgnoreCase(createrName))
-				{
-					deleteReview.setVisible(true);
+					editReview.setVisible(true);
 				}
 				
+				if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
+					deleteReview.setVisible(true);     
+				}
 			}
 		});
 		reviewContainer.addMouseOutHandler(new MouseOutHandler() {
@@ -564,13 +561,14 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			
 			@Override
 			public void onSuccess(Void result) {
-				reviewContainer.getElement().setAttribute("style", "background: #f0f0f0");
 				reviewContainer.clear();
-				final HTMLPanel deletePanel = new HTMLPanel(MessageProperties.GL1853);
-				deletePanel.setStyleName(style.deletePanel());
+				reviewContainer.addStyleName(style.deletePanel());
+				final HTMLPanel deletePanel = new HTMLPanel("");
+				Label deleteMsg = new Label();
+				deleteMsg.setText(MessageProperties.GL1853);
+				deleteMsg.setStyleName(style.lbldeleteMsg());
+				deletePanel.add(deleteMsg);
 				reviewContainer.add(deletePanel);
-				reviewContainer.getElement().setAttribute("style", "height:80px");
-						
 				new FadeInAndOut(deletePanel.getElement(), 1000);
 				Timer timer = new Timer()
 		        {
@@ -580,17 +578,16 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            	int deleteIndex = reviewContainer.getWidgetIndex(deletePanel);
 		            	reviewContainer.remove(deleteIndex);
 		            	reviewContainer.setVisible(false);
+		            	AppClientFactory.fireEvent(new UpdateRatingOnDeleteEvent(true)); 
 					
 		            }
 		        };
 		        timer.schedule(1000);
-		     
-				
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+			
 				
 			}
 		});
