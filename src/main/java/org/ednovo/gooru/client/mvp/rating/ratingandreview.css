@@ -96,7 +96,7 @@ body.popupBG {
 }
 
 .popupContent {
-	padding: 15px;
+	padding: 12px;
 	height: 400px;
 	overflow: auto;
 }
@@ -118,10 +118,10 @@ body.popupBG {
 /*//////////////////////////////// distribution graph////////////*/
 .distribution {
 	float: left;
-	width: 120px;
+	/* width: 120px; */
 	white-space: nowrap;
 	vertical-align: middle;
-	margin-right: 120px;
+	/* margin-right: 65px; */
 }
 
 .average {
@@ -559,4 +559,20 @@ fieldset {
 	float: left;
 	margin-left: 101px;
 	margin-top:25px;
+}
+
+.editReviewBtn{
+	position: absolute;
+	left: 179px;
+	top: 23px;
+}
+
+.panelRatingLabels{
+	float: left;	
+}
+
+.panelRatingValues{
+	border-left: #ccc 1px solid;
+	float: left;
+	width: 170px;	
 }
