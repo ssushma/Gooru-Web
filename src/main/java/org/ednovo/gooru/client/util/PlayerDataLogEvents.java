@@ -248,7 +248,6 @@ public class PlayerDataLogEvents {
 		}
 		String tempArray = attemptedAnswersArray+"";
 		tempArray = tempArray.replaceAll("\\\\", "");
-		System.out.println("tempArray 2 "+tempArray);
 		return tempArray;
 	}
 	
