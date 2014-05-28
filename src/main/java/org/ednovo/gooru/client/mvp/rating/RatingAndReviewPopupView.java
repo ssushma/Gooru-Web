@@ -143,8 +143,13 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		userRatingContainer.setVisible(false);
 		lblResourceTitle.setHTML(GL1840+" "+resourceTitle);
 		setStaticText();
+		clearContainer();
 		getAverageRatingForContent(gooruOid);
 		getUserRatingsAndReviews(gooruOid);
+	}
+
+	private void clearContainer() {
+		reviewsContainer.clear();
 	}
 
 	private void setStaticText() {
