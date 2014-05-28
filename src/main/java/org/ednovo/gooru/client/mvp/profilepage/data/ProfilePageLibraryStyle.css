@@ -56,8 +56,9 @@
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.1);
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 	border-radius:4px;
-	height:300px;
+	min-height:300px;
 	margin-bottom:25px;
+	float: left;
 }
 
 .topicTitle {
@@ -208,6 +209,10 @@
 .collectionAuthor, .collectionDescription {
 	margin-bottom:7px;
 	line-height:1.2em;
+}
+
+.collectionInfo {
+	float: left;
 }
 
 .collectionInfo button {

@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderI
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,7 +48,9 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -76,12 +80,33 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 	
 	@UiField Label lblCreateFolder,lblCreateCollection, lblEditMyCollections;
 	
+	@UiField HTMLPanel tooltipPanel;
+	
 	public OrganizeToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
 		lblCreateCollection.setText(GL1757);
 		lblCreateFolder.setText(GL1758);
 		lblEditMyCollections.setText(GL1759);
 		lblEditMyCollections.setVisible(false);
+		
+		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
+		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
+		  
+		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
+		  
+		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  tooltipPanel.getElement().setAttribute("style", "position:relative;top:-3px;");
+		  }
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  {
+			  tooltipPanel.getElement().setAttribute("style", "position:relative;top:-3px;");
+		  }		  
+		  else
+		  {
+			  tooltipPanel.getElement().setAttribute("style", "position:fixed;top:50px;");
+		  }
 		
 		lblCreateFolder.addClickHandler(new ClickHandler() {
 			@Override

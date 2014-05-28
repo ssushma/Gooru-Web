@@ -184,6 +184,7 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		if(getSearchEndPoint().contains(MessageProperties.HTTPS)){
 			url = appendHttpsURL(url);
 		}
+		System.out.println("url:::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		try{
