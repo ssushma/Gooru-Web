@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.model.content.CollectionMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -64,6 +65,7 @@ public class ProfileLibraryDo implements Serializable{
 	private ProfileLibraryDo resource;
 	private ResourceTypeDo resourceType;
 	private String url;
+	private SearchRatingsDo ratings;
 	
 	public ProfileLibraryDo(){}
 
@@ -331,6 +333,14 @@ public class ProfileLibraryDo implements Serializable{
 	 */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
 	}
 	
 }

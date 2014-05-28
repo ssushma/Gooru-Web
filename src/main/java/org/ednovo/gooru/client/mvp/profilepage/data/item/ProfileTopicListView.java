@@ -26,7 +26,7 @@ import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.StandardFo;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
+
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
@@ -403,7 +403,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 									@Override
 									public void onMouseOver(MouseOverEvent event) {
 										toolTipPopupPanel.clear();
-										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution));
+										toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(profileLibraryItem.getTitle(),categoryImage,attribution,profileLibraryItem.getRatings().getCount(),profileLibraryItem.getRatings().getAverage()));
 										toolTipPopupPanel.setStyleName("");
 										toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 										toolTipPopupPanel.show();

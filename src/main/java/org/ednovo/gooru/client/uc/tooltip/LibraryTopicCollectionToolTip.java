@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -27,21 +28,23 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 	
 	@UiField HTML descPanel;
 	
-	@UiField FlowPanel textFlowPanel,organizePopupTextContainer;
+	@UiField FlowPanel textFlowPanel,organizePopupTextContainer,ratingWidgetPanel;
 	
 	@UiField Label sourceLbl;
 	
 	@UiField HTML categoryLbl;
-
+	private RatingWidgetView ratingWidgetView=null;
 	public LibraryTopicCollectionToolTip(){
 		initWidget(discoverToolTipUiBinder.createAndBindUi(this));
 		arowPanel.setVisible(false);
 		descPanel.setHTML(GL0532);
 		categoryLbl.setHTML(GL1063);
+	
 	}
 	
-	public LibraryTopicCollectionToolTip(String title, String category, String source){
+	public LibraryTopicCollectionToolTip(String title, String category, String source,int ratingCount,double average){
 		initWidget(discoverToolTipUiBinder.createAndBindUi(this));
+		
 		if(category!=null){
 			if(category.equalsIgnoreCase("Lesson") ||category.equalsIgnoreCase("Textbook")|| category.equalsIgnoreCase("Handout") )
 			{
@@ -62,6 +65,7 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 		descPanel.setHTML(title);
 		categoryLbl.setHTML(category);
 		sourceLbl.setText(source);
+		setAvgRatingWidget(ratingCount,average);
 	}
 	
 	public LibraryTopicCollectionToolTip(String content){
@@ -86,6 +90,13 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 					"margin-left: -132px;padding: 0px;");
 			categoryLbl.setHTML(content);
 		}
+	}
+	private void setAvgRatingWidget(int ratingCount,double averageRating ) {
+		ratingWidgetPanel.clear();
+		ratingWidgetView=new RatingWidgetView();
+		ratingWidgetView.getRatingCountLabel().setText(ratingCount+"");
+		ratingWidgetView.setAvgStarRating(averageRating);
+		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
 }

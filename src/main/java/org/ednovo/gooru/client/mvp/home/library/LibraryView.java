@@ -290,6 +290,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	public void onLoad() {
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
+		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
@@ -298,7 +299,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		  {
 			  courseTabs.getElement().setAttribute("style", "position:relative;"); 
 		  }
-		  else if(detector.detectMobileQuick() && !StringUtil.IPAD_MESSAGE_Close_Click)
+		  else if(isAndriod && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  courseTabs.getElement().setAttribute("style", "position:relative;");
 		  }

@@ -743,8 +743,14 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	public void generateClasspageList() {
 		htmlPanelClasspageList.clear();
 		for (int i = 0; i < listClasspage.size(); i++) {
-			String classpageTitle = classpageList.get(listClasspage.get(i))
-					.getTitle();
+			String classpageTitle = "";
+			String title = classpageList.get(listClasspage.get(i)).getTitle();
+			title = title.length() > 30 ? title.substring(0, 19) + "..." : title;
+			if(classpageList.get(listClasspage.get(i)).getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())){
+				classpageTitle = title + " (Owner)";
+			}else{
+				classpageTitle = title + " (Joined)";
+			}
 			htmlPanelClasspageList.add(createClasspageTitleLabel(
 					classpageTitle, listClasspage.get(i), false));
 		}
