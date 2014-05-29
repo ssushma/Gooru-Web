@@ -106,10 +106,8 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 	@Inject
 	public RatingAndReviewPopupView(EventBus eventsBus){
 		super(eventsBus);
-
-			
-
 		appPopUp.setGlassEnabled(true);
+		appPopUp.setGlassStyleName("setGlassPanelZIndex");
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));	
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 
