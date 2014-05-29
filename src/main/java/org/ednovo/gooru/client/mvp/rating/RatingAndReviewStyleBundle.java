@@ -51,5 +51,6 @@ public interface RatingAndReviewStyleBundle extends CssResource {
 	String lbldeleteMsg();
 
 	String editReviewBtn();
+	String ratingCountLabelHighlighted();
 
 }

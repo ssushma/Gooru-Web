@@ -151,9 +151,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
 		  }else{
-			reviewContainer.setVisible(false);
+			//reviewContainer.setVisible(false);
 			userName.setText(starRatingsDo.getCreator().getUsername());
-			editReviewLabelContainer.setVisible(false);
+			//editReviewLabelContainer.setVisible(false);
 		}
 			
 		}else{
@@ -204,13 +204,13 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				reviewContainer.setVisible(true);
 				editReviewLabelContainer.setVisible(true);
 			}else{
-				reviewContainer.setVisible(false);
-				editReviewLabelContainer.setVisible(false);
+				//reviewContainer.setVisible(false);
+				//editReviewLabelContainer.setVisible(false);
 			}
 		}
 		
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
-			reviewContainer.addStyleName(style.creatorReviewPanel());
+			//reviewContainer.addStyleName(style.creatorReviewPanel());
 			editReview.addStyleName(style.editReview());
 			editReviewBtn.removeStyleName(style.editReview());
 			cancelReviewBtn.removeStyleName(style.editReview());
@@ -222,7 +222,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			deleteReview.removeStyleName(style.editReview());
 			
 		}
-		reviewContainer.addMouseOverHandler(new MouseOverHandler() {
+/*		reviewContainer.addMouseOverHandler(new MouseOverHandler() {
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -234,8 +234,8 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 					deleteReview.setVisible(true);     
 				}
 			}
-		});
-		reviewContainer.addMouseOutHandler(new MouseOutHandler() {
+		});*/
+/*		reviewContainer.addMouseOutHandler(new MouseOutHandler() {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
@@ -243,7 +243,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				deleteReview.setVisible(false);
 				
 			}
-		});
+		});*/
 		
 	}
 	
@@ -354,7 +354,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiHandler("editReview")
 	public void editReview(ClickEvent event) {
 		editReviewTextareaContainer.setVisible(true);
-		editReviewLabelContainer.setVisible(false);
+		//editReviewLabelContainer.setVisible(false);
 		if(currentRating==1){
 			userratingOne.getElement().addClassName(FILLED_BLUE);
 			userratingTwo.removeStyleName(FILLED_BLUE);
@@ -577,7 +577,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            {
 		            	int deleteIndex = reviewContainer.getWidgetIndex(deletePanel);
 		            	reviewContainer.remove(deleteIndex);
-		            	reviewContainer.setVisible(false);
+		            	//reviewContainer.setVisible(false);
 		            	AppClientFactory.fireEvent(new UpdateRatingOnDeleteEvent(true)); 
 					
 		            }

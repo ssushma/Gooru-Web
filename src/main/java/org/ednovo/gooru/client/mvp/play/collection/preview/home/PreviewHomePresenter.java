@@ -102,9 +102,9 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 	@Override
 	public void openReviewPopUp(String assocGooruOId, String title,
 			String createrName) {
-		addToPopupSlot(ratingAndReviewPopup);
+/*		addToPopupSlot(ratingAndReviewPopup);
 		ratingAndReviewPopup.displayPopup(title, assocGooruOId, createrName);
-		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
+		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);*/
 	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.play.collection.preview.home.PreviewHomeUiHandlers#openReviewPopUp(java.lang.String, java.lang.String)

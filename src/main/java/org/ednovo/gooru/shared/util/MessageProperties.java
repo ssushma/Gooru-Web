@@ -2352,7 +2352,7 @@ public interface MessageProperties {
     	String GL1852 = "Delete rating and review";
     	String GL1853 = "Review has been deleted";
     	String GL1854 = "Thank you for rating!";
-    	String GL1855 = "Tell us what you think!";
+    	String GL1855 = "Post your review!";
     	String GL1856 = "Thank you for reviewing this resource!";
     	String GL1857 = "What do you think about this resource?";
     	String GL1858 = "You've already reviewed this resource. Here's what you said last time:";

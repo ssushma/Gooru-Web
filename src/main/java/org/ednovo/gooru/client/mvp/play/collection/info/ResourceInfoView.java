@@ -41,6 +41,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -67,6 +69,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.css.ast.CssProperty.Value;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -101,6 +104,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	@UiField static  HTMLPanel standardsContentContainer;
 	
 	@UiField ScrollPanel scrollPanel;
+	
+
 	
 	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
 					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,mbFriendlyLbl,
@@ -199,9 +204,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		ratingWidgetView=new RatingWidgetView();
 		if(collectionItemDoGlobal.getResource().getRatings()!=null){
 			ratingWidgetView.getRatingCountLabel().setText(collectionItemDoGlobal.getResource().getRatings().getCount().toString());
+			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
+			{
+				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+			}
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		
+	
 		ratingWidgetPanel.getElement().getStyle().setFloat(Float.RIGHT);
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
 		ratingWidgetPanel.add(ratingWidgetView);
@@ -218,6 +230,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
+	
+
 			
 			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid(),"",collectionItemDoGlobal.getResource().getUser().getUsername())); 
 		}
@@ -242,7 +256,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		if(collectionItemDo.getResource().getMediaType()!=null){
 			if(collectionItemDo.getResource().getMediaType().equals(NOT_FRIENDY_TAG)){	
-				mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
+				//mobileFriendly.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().ipadFriendlyIconBlock());
 			}
 		}
 		if(collectionItemDo.getResource().getResourceFormat()!=null){

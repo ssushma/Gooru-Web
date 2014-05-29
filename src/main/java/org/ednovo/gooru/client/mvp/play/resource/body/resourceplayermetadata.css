@@ -258,7 +258,7 @@
   text-overflow: ellipsis;
 }
 .truncate:after{
-content:”…”;
+content:â€�â€¦â€�;
 }
 
 /*//////////////////// ratings and reviews ////////*/
@@ -817,4 +817,7 @@ fieldset {
 	font-style: normal;
 	font-size: 16px;
 	margin-bottom: 11px;
+}
+.alignTextleft{
+	text-align:left;
 }

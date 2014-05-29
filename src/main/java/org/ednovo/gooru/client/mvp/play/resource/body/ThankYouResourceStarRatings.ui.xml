@@ -9,11 +9,11 @@
             <g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
                 <g:Label styleName="{playerStyle.thankYouLbl}" ui:field="thankYouRatingLbl"></g:Label>
                   <g:HTMLPanel styleName="{playerStyle.rating}">
-                    <g:Label ui:field="avgRatingLbl"></g:Label>
+                <!--     <g:Label ui:field="avgRatingLbl"></g:Label> -->
                        <!--  Average Rating<br/> -->
-                   <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
+                <!--    <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel> -->
                     </g:HTMLPanel>
-                    <g:Label ui:field ="reviewTextAreaTitle"></g:Label> 
+                    <g:Label styleName="{playerStyle.alignTextleft}" ui:field="reviewTextAreaTitle"></g:Label> 
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
                     <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
                     <g:Label styleName="{playerStyle.errorLblBottomText}" ui:field="errorLbl"></g:Label>
