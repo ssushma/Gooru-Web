@@ -148,7 +148,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		this.gooruOid = gooruOid;
 		this.createrName = createrName;
 		userRatingContainer.setVisible(false);
-		lblResourceTitle.setHTML(GL1840+" "+resourceTitle);
+		lblResourceTitle.setHTML(GL1840+" "+removeHtmlTags(resourceTitle));
 		setStaticText();
 		clearContainer();
 		getAverageRatingForContent(gooruOid);
@@ -336,6 +336,9 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 			getUiHandlers().getUserRatingsReviews(gooruOid,reviewsContainer.getWidgetCount());
 		}
 	}
-
+	private String removeHtmlTags(String html){
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+        return html;
+	}
 
 }
