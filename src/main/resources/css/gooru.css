@@ -1108,7 +1108,7 @@ td.datePickerMonth{
 }
 
 .gwt-PopupPanelGlass {
-	 z-index: 99999; 
+	 z-index: 99; 
 }
 .titleAlertMessageActive{
 	display: block !important;

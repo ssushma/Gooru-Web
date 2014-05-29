@@ -2391,4 +2391,5 @@ public interface MessageProperties {
     	
     	String GL1886 = "Please select one or more grades & courses.";
     	String GL1887 = "Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it will appear below collections that do.";
+    	String GL1888 = "Public Collections";
    }
