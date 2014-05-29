@@ -85,7 +85,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Label dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,
-					addCollectionPopupHeader,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel;
+					addCollectionPopupHeader,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl;
 	@UiField TextArea assignmentDirectionsTxtArea;
 	private int offset=0;
 	private int limit=20;
@@ -182,6 +182,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		addingText.setText(GL1172);
 		assignmentDirectionsTxtArea.setText(GL1389);
 		assignmentDueDateLabel.setText(GL1380);
+		remainderLbl.setText(GL1889);
 	}
 	
 	public void setSelectedCollectionTitle(){

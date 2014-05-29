@@ -25,8 +25,8 @@
 package org.ednovo.gooru.client.util;
 
 import java.util.List;
-import org.ednovo.gooru.client.gin.AppClientFactory;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
@@ -227,7 +227,9 @@ public class PlayerDataLogEvents {
 		}catch(Exception e){
 			
 		}
-		return new JSONString(payLoadMap.toString());
+		String payLoad = payLoadMap.toString();
+		payLoad = payLoad.replaceAll("\\\\\"\\[", "[").replaceAll("\\]\\\\\"", "]");
+		return new JSONString(payLoad);
 	}
 	
 	public static  JSONString getDataLogPayLoadObject(String reactionType){

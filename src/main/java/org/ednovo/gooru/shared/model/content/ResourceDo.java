@@ -81,7 +81,6 @@ public class ResourceDo extends ContentDo {
     
     private Date createdOn;
     
-	private SearchRatingsDo searchRatingsDo;
 	private SearchRatingsDo ratings;
 
     /** need to change these after api is finalized  **/
@@ -526,18 +525,6 @@ public class ResourceDo extends ContentDo {
 	}
 	public void setDepthOfKnowledges(List<checkboxSelectedDo> depthOfKnowledges) {
 		this.depthOfKnowledges = depthOfKnowledges;
-	}
-	/**
-	 * @return the searchRatingsDo
-	 */
-	public SearchRatingsDo getSearchRatingsDo() {
-		return searchRatingsDo;
-	}
-	/**
-	 * @param searchRatingsDo the searchRatingsDo to set
-	 */
-	public void setSearchRatingsDo(SearchRatingsDo searchRatingsDo) {
-		this.searchRatingsDo = searchRatingsDo;
 	}
 
 	public UserDo getUser() {

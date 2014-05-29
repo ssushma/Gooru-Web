@@ -199,8 +199,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	 */
 	public void setData(ResourceSearchResultDo resourceSearchResultDo) {
 		this.resourceSearchResultDo = resourceSearchResultDo;
-		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getSearchRatingsDo().getCount().toString()); 
-		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getSearchRatingsDo().getAverage()); 
+		ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount().toString()); 
+		ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage()); 
 //		ratingWidgetView.setAvgStarRating(2); 
 		String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 		wrapperVcr.setData(resourceSearchResultDo);
@@ -317,7 +317,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		@Override
 		public void setResourceRatingCount(String resourceId) { 
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
-				Integer count = resourceSearchResultDo.getSearchRatingsDo().getCount()+1;
+				Integer count = resourceSearchResultDo.getRatings().getCount()+1;
 				ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
 			}
 		}

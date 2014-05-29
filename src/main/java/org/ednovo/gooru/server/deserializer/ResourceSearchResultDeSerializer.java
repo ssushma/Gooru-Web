@@ -84,7 +84,7 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 			
 			JSONObject resourceRating = recordJsonObject.getJSONObject(RATINGS);
 			SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
-			resourceSearchResultDo.setSearchRatingsDo(searchRatingsDo);
+			resourceSearchResultDo.setRatings(searchRatingsDo);
 			
 		} catch (JSONException e1) {
 			

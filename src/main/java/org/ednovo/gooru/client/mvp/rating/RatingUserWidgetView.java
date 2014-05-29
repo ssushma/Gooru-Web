@@ -215,7 +215,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			editReviewBtn.removeStyleName(style.editReview());
 			cancelReviewBtn.removeStyleName(style.editReview());
 			//editReview.setVisible(true);
-			userName.setText("Your Review!");
+			userName.setText(GL1850);
 			deleteReview.removeStyleName(style.editReview());
 		} else {
 			editReview.removeStyleName(style.editReview());
@@ -314,10 +314,15 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		} else if(starRatingsDo.getScore()==4){
 			clearAllStarsReadOnly();
 			if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())){
+				starOne.addStyleName(style.filled());
+				starTwo.addStyleName(style.filled());
+				starThree.addStyleName(style.filled());
+				starFour.addStyleName(style.filled());
 				starOne.getElement().addClassName(FILLED_BLUE);
 				starTwo.getElement().addClassName(FILLED_BLUE);
 				starThree.getElement().addClassName(FILLED_BLUE);
 				starFour.getElement().addClassName(FILLED_BLUE);
+				starFive.removeStyleName(style.filled());
 				starFive.removeStyleName(FILLED_BLUE);
 			}else{
 				starOne.addStyleName(style.filled());

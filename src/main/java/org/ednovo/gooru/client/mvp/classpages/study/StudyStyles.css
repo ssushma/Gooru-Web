@@ -121,8 +121,9 @@
 	float: right;
 }
 .title {
-	font-family: 'Myriad Pro, Arial, Helvetica, sans-serif';
-	font-size: 30px;
+	font-family: 'Arvo', serif !important;
+	font-weight: bold;
+	font-size: 29px;
 	padding: 10px 0px;
 }
 .subtitle {
@@ -140,6 +141,7 @@
 	background: #f1efef;
 }
 .codeTitle {
+	font-family: 'Arvo', serif !important;
 	font-size: 20px;
 	line-height: 200%;
 	font-weight: bold;
@@ -181,6 +183,7 @@
 	font-size: 20px;
 	text-align: left;
 	font-weight: bold;
+	font-family: 'Arvo', serif !important;
 }
 .navBox .desc {
 	font-size: 12px;
@@ -240,9 +243,11 @@
 	padding: 20px;
 }
 .classSection .h5 {
-	font-size: 30px;
+	font-size: 29px;
 	text-align: center;
 	padding-bottom: 10px;
+	font-weight: bold;
+	font-family: 'Arvo', serif !important;
 }
 .hoverTitle {
 	position: relative;
