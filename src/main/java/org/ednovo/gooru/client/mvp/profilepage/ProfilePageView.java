@@ -498,63 +498,65 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private void setUserGradeList(String grade) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
-		String[] grades = grade.split(",");
-		List<String> moreGradeCourseLbls = new ArrayList<String>();
-		int gradeLength = grades.length;
-		for(int i = 0; i < gradeLength; i ++) {
-			if(!grades[i].isEmpty()) {
-				moreGradeCourseLbls.add(grades[i]);
-			}
-		}
-		
-		if(grade!=null && !grade.isEmpty()) {
-			boolean isKinderGartnen = false;
-			boolean isHigherEducation = false;
-			if(grade.contains(GL0850)) {
-				isKinderGartnen = true;
-				Label gradeLabel = new Label(GL0850);
-				moreGradeCourseLbls.remove(GL0850);
-				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
-				gradeLabel.addClickHandler(new OnGradeEditImageClick());
-				userGradeList.add(gradeLabel);
-			}
-			if(grade.contains("Higher Education")) {
-				isHigherEducation = true;
-			}
-			Set set= new HashSet();
-			gradeLength = 0;
-			if(isKinderGartnen&&grades.length>2) {
-				gradeLength = 2;
-				isHigherEducation = false;
-			} else if(!isKinderGartnen&&grades.length>3) {
-				gradeLength = 3;
-				isHigherEducation = false;
-			} else {
-				gradeLength = grades.length;
-			}
+		if(grade!=null) {
+			String[] grades = grade.split(",");
+			List<String> moreGradeCourseLbls = new ArrayList<String>();
+			int gradeLength = grades.length;
 			for(int i = 0; i < gradeLength; i ++) {
 				if(!grades[i].isEmpty()) {
-					set.add(Integer.parseInt(grades[i]));
+					moreGradeCourseLbls.add(grades[i]);
 				}
 			}
-			Iterator gradeLbl = set.iterator();
-			while(gradeLbl.hasNext()) {
-				String label = gradeLbl.next().toString();
-				moreGradeCourseLbls.remove(label);
-				label = concatenateGradeTxt(label);
-				Label gradeLabel = new Label(label);
-				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
-				gradeLabel.addClickHandler(new OnGradeEditImageClick());
-				userGradeList.add(gradeLabel);
+			
+			if(grade!=null && !grade.isEmpty()) {
+				boolean isKinderGartnen = false;
+				boolean isHigherEducation = false;
+				if(grade.contains(GL0850)) {
+					isKinderGartnen = true;
+					Label gradeLabel = new Label(GL0850);
+					moreGradeCourseLbls.remove(GL0850);
+					gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
+					gradeLabel.addClickHandler(new OnGradeEditImageClick());
+					userGradeList.add(gradeLabel);
+				}
+				if(grade.contains("Higher Education")) {
+					isHigherEducation = true;
+				}
+				Set set= new HashSet();
+				gradeLength = 0;
+				if(isKinderGartnen&&grades.length>2) {
+					gradeLength = 2;
+					isHigherEducation = false;
+				} else if(!isKinderGartnen&&grades.length>3) {
+					gradeLength = 3;
+					isHigherEducation = false;
+				} else {
+					gradeLength = grades.length;
+				}
+				for(int i = 0; i < gradeLength; i ++) {
+					if(!grades[i].isEmpty()) {
+						set.add(Integer.parseInt(grades[i]));
+					}
+				}
+				Iterator gradeLbl = set.iterator();
+				while(gradeLbl.hasNext()) {
+					String label = gradeLbl.next().toString();
+					moreGradeCourseLbls.remove(label);
+					label = concatenateGradeTxt(label);
+					Label gradeLabel = new Label(label);
+					gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
+					gradeLabel.addClickHandler(new OnGradeEditImageClick());
+					userGradeList.add(gradeLabel);
+				}
+				if(isHigherEducation == true) {
+					Label gradeLabel = new Label(GL0169);
+					moreGradeCourseLbls.remove(GL0169);
+					gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
+					gradeLabel.addClickHandler(new OnGradeEditImageClick());
+					userGradeList.add(gradeLabel);
+				}
+				renderExtraGradeCourse(moreGradeCourseLbls,"grade");
 			}
-			if(isHigherEducation == true) {
-				Label gradeLabel = new Label(GL0169);
-				moreGradeCourseLbls.remove(GL0169);
-				gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
-				gradeLabel.addClickHandler(new OnGradeEditImageClick());
-				userGradeList.add(gradeLabel);
-			}
-			renderExtraGradeCourse(moreGradeCourseLbls,"grade");
 		}
 	}
 
