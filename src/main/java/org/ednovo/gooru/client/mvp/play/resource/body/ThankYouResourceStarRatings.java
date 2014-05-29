@@ -230,7 +230,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	@Override
 	public void hide(boolean autoClose) {
 		super.hide(true);
-		if(autoClose&& !ratingCommentTxtArea.getText().equals("")){
+		if(autoClose && !ratingCommentTxtArea.getText().equals("") && !btnPost.getText().equalsIgnoreCase("Save")){
 			Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", ratingCommentTxtArea.getText());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
