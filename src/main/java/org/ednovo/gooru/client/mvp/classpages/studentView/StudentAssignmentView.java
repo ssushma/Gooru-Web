@@ -199,7 +199,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		studentViewImage.setUrl(classpageDo.getThumbnailUrl() == "" ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
 		imgProfileImage.setUrl(classpageDo.getCreatorProfileImage());
-		lblUserName.setText(classpageDo.getCreatorUsername());
+		lblUserName.setText(classpageDo.getCreatorUsername() + "'s " + GL0102.toLowerCase());
 		
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 			
