@@ -159,10 +159,12 @@
 							<!-- <div class="policySubTitleTerms" id="termsOfUse" style="text-align:center;">
 								<b>GOORU WEBSITE TERMS OF USE</b>
 							</div> -->
-							<div class="lastUpdated">Last Updated Date: January 21, 2013</div>
+							<div class="lastUpdated">Last Updated Date: May 22, 2014</div>
 							<div class="{style.termsOfUseContert},{style.textContentDiv}">
-
-								<span class="{style.policyTextLine}" style="margin-top:20px;">
+							<div style="margin-top:10px;">
+							<a href="http://support.goorulearning.org/hc/en-us/articles/200688506" target="_blank">Community Guidelines</a>
+								</div>
+								<span class="{style.policyTextLine}" style="margin-top:5px;">
 									Ednovo, Inc., referred to as Ednovo ("
 									Ednovo
 									" or "
@@ -180,7 +182,7 @@
 									Application
 									"). Please read carefully the following terms and conditions ("
 									Terms of Use
-									"). These Terms of Use govern your access to and use of the Site, Services, Application and certain Content (defined below), and constitute a
+									") and <a href="http://support.goorulearning.org/hc/en-us/articles/200688506" target="_blank">Community Guidelines</a>. These Terms of Use and <a href="http://support.goorulearning.org/hc/en-us/articles/200688506" target="_blank">Community Guidelines</a> govern your access to and use of the Site, Services, Application and certain Content (defined below), and constitute a
 									binding legal agreement between you and Ednovo.
 								</span>
 
