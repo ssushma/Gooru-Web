@@ -123,7 +123,6 @@ public class PlayerDataLogEvents {
 	
 	
 	public static void collectionStartStopEvent(JSONObject collectionDataLogEventMap){
-		System.out.println(collectionDataLogEventMap+"");
 		triggerDataLogCall(collectionDataLogEventMap);
 	}
 	public static void collectionItemStartStopEvent(){
