@@ -240,7 +240,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		if(collectionType!=null){
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
-		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
