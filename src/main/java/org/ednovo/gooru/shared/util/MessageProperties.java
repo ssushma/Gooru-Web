@@ -2279,7 +2279,7 @@ public interface MessageProperties {
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
-    	String GL1788 = "Go to \"My Collections\" to share your collections in this library with others.";
+    	String GL1788 = "You can share collections here by setting the collection visibility to \"Public.\"";
     	String GL1789 = "Go to My Collections";
     	String GL1790 = "You don't have any public collections yet.";
     	String GL1791 = "It looks like \"{0}\" hasn't shared any collections yet.";
