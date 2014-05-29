@@ -291,7 +291,16 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	
 	public void setUserName(String userName){
-		userNameLabel.setText(userName);
+		Anchor anchor = new Anchor();
+		//userNameLabel.setText(userName);
+		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}
+		anchor.setText(userName);
+		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+		anchor.setTarget("_blank");
+		userNameLabel.setText("");
+		userNameLabel.getElement().appendChild(anchor.getElement());
 	}
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?v="+Math.random());
@@ -339,18 +348,17 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@Override
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
-		String userName = userNameLabel.getText();
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+			//anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		}else{
 			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid;
 			anchor.setHref(token);
 		}
-		anchor.setText(userName);
-		anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+		//anchor.setText(userName);
+		//anchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		anchor.setTarget("_blank");
-		userNameLabel.setText("");
-		userNameLabel.getElement().appendChild(anchor.getElement());
+		//userNameLabel.setText("");
+		//userNameLabel.getElement().appendChild(anchor.getElement());
 	}
 	public void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
