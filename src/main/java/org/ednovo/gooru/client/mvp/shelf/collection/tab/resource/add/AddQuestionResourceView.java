@@ -133,7 +133,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField BlueButtonUc addbutton;
 	/*@UiField TextArea explainationTextArea;*/
 	@UiField TinyMCE questionNameTextArea,explainationTextArea;
-	@UiField FlowPanel standardContainer,answerchoiceTitleContainer;
+	@UiField FlowPanel standardContainer,answerchoiceTitleContainer,explanationContainer;
 	
 	/*@UiField Button questionNameTextAreaToolBarButton;*/
 	@UiField Button cancelButton;
@@ -1074,7 +1074,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
 						fieldValidationCheck = false;
 						ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
+						explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 						isAddBtnClicked=true;
+					}else{
+						explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 					}
 			
 			}
@@ -1088,8 +1091,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					ansChoiceErrMsg.setText(errorMessage);
+					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
+				}else{
+					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
     	} else if(getQuestionType().equalsIgnoreCase("MA")){
@@ -1102,8 +1108,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					ansChoiceErrMsg.setText(errorMessage);
+					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
+				}else{
+					explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
 				}
 			}
     	}
@@ -1180,8 +1189,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
     												fieldValidationStaus = false;
     												ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
+    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												isAddBtnClicked=true;
     											}else{
+    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												profanityCheckForHints(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -1198,9 +1209,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
+    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
     											}else{
+    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
@@ -1217,9 +1230,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
+    												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
     											}else{
+    												explanationContainer.getElement().setAttribute("style", "padding-top: 0px;");
     												isProfanityCheckForAnswerChoice(fieldValidationStaus,answersListFIB,mediaFileName);
     											}
     										}
