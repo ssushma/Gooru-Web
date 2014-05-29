@@ -469,8 +469,9 @@ text-decoration: none;
 	float: right;
 }
 .title {
-	font-family: 'Myriad Pro, Arial, Helvetica, sans-serif';
-	font-size: 30px;
+	font-family: 'Arvo', serif !important;
+	font-weight: bold;
+	font-size: 29px;
 	padding: 10px 0px;
 }
 .subtitle {
@@ -527,6 +528,7 @@ text-decoration: none;
 	font-size: 20px;
 	text-align: left;
 	font-weight: bold;
+	font-family: 'Arvo', serif !important;
 }
 .navBox .desc {
 	font-size: 12px;
@@ -611,6 +613,7 @@ text-decoration: none;
 	font-size: 20px;
 	font-weight: bold;
 	color: #515151;
+	font-family: 'Arvo', serif !important;
 }
 .desc-emphasis {
 	color: #4E9746;
@@ -631,13 +634,15 @@ text-decoration: none;
 
 .sampleCollection{
 	color: #4e9746;
-	font-size: 16px;
+	font-size: 13px;
 	float: left;
 	margin-top: 10px;
+	font-weight: bold;
+	font-family: 'Arvo', serif !important;
 }
 
 .arrowContainer{
-	margin-top: 18px;
+	margin-top: 12px;
 }
 
 .thumbnailImage{
