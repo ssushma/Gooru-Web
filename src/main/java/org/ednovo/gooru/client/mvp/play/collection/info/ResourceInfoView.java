@@ -214,7 +214,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		
 	
-		ratingWidgetPanel.getElement().getStyle().setFloat(Float.RIGHT);
 		ratingWidgetPanel.getElement().getStyle().setMarginRight(10, Unit.PX);
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
