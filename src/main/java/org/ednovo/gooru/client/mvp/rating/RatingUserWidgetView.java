@@ -215,7 +215,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			editReviewBtn.removeStyleName(style.editReview());
 			cancelReviewBtn.removeStyleName(style.editReview());
 			//editReview.setVisible(true);
-			userName.setText("Your Review!");
+			userName.setText(GL1850);
 			deleteReview.removeStyleName(style.editReview());
 		} else {
 			editReview.removeStyleName(style.editReview());
