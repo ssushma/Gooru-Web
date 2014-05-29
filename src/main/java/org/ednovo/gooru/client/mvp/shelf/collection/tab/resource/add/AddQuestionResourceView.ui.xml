@@ -49,9 +49,9 @@
         <g:Anchor styleName="{addWebResourceStyle.addResourceBottmTitle}" ui:field="addAnswerChoice"></g:Anchor>
         <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputBottomTextOuterdiv}">
           <g:Label text="" ui:field="errorMessageForAnsCheck" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>
-          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomText}"/>   
+          <g:Label text="" ui:field="ansChoiceErrMsg" styleName="{addWebResourceStyle.addResourceFormInputBottomTextAnswerChoice}"/>   
         </g:HTMLPanel>
-        <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}">
+        <g:FlowPanel styleName="{addWebResourceStyle.addResourceFormContent}" ui:field="explanationContainer">
           <g:Label styleName="{addWebResourceStyle.addResourceFormTitle}" ui:field="explanationLabel"></g:Label>
           <g:HTMLPanel styleName="{addWebResourceStyle.addResourceFormInputControl} questionTextcontainer">
           <tinyMce:TinyMCE ui:field="explainationTextArea" characterLimit="400"></tinyMce:TinyMCE>
