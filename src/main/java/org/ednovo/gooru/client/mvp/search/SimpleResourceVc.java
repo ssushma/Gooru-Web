@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
+import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -184,10 +185,11 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	private void setAvgRatingWidget(CollectionItemSearchResultDo resourceSearchResultDo) {
 		ratingWidgetView=new RatingWidgetView();
 		if(resourceSearchResultDo.getRatings()!=null){
+
 			ratingWidgetView.getRatingCountLabel().setText(resourceSearchResultDo.getRatings().getCount()!=null?resourceSearchResultDo.getRatings().getCount().toString():"0");
 			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		}
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 

@@ -45,11 +45,13 @@ import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
+import org.ednovo.gooru.shared.util.DOMUtils;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
@@ -369,9 +371,12 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	@Override
 
 	public void openReviewPopUp(String assocGooruOId, String title,String createrName) {
-		addToPopupSlot(ratingAndReviewPopup);
+		
+		Window.enableScrolling(false);		
 		ratingAndReviewPopup.displayPopup(resourceTitle, assocGooruOId,createrName);
 		ratingAndReviewPopup.getWidget().getElement().getStyle().setZIndex(999999);
+		addToPopupSlot(ratingAndReviewPopup);
+
 	}
 
 	/**

@@ -45,7 +45,7 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 		if(count!=null)
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
 		ratingWidgetView.setAvgStarRating(average);
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+	//	ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	/**

@@ -29,12 +29,10 @@
 .rating .star,.userRating .star {
 	font-size: 14px;
 	color: #999;
-	cursor: pointer;
 }
 
 .rating .star.filled {
 	color: #4e9746;
-	cursor: pointer;
 }
 
 /* //.rating .star:before, .userRating .star:before {content:'\2606';}
@@ -512,15 +510,15 @@ fieldset {
 }
 
 .ratingCountLabel {
+	cursor: none !important;
+	text-decoration: none !important;
+	color: grey;
+}
+
+.ratingCountLabelHighlighted {
 	cursor: pointer;
 	text-decoration: none !important;
 	color: #1076bb;
-}
-
-.ratingCountLabel:hover {
-	text-decoration: none !important;
-	opacity: .6;
-	cursor: pointer;
 }
 
 .userNameLbl {
