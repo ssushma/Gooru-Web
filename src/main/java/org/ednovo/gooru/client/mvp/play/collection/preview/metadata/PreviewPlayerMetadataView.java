@@ -147,7 +147,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	private boolean isConceptsVisible = false;
 	
 	private String languageObjectiveValue, depthofKnowledgeValue;
-	
+	private Anchor usernameAnchor;
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, PreviewPlayerMetadataView> {
@@ -291,7 +291,16 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	}
 	
 	public void setUserName(String userName){
-		userNameLabel.setText(userName);
+		usernameAnchor = new Anchor();
+		//userNameLabel.setText(userName);
+		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}
+		usernameAnchor.setText(userName);
+		usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+		usernameAnchor.setTarget("_blank");
+		userNameLabel.setText("");
+		userNameLabel.getElement().appendChild(usernameAnchor.getElement());
 	}
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?v="+Math.random());
@@ -339,7 +348,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	@Override
 	public void setUserProfileName(String gooruUid) {
 		Anchor anchor = new Anchor();
-		String userName = userNameLabel.getText();
+		String userName=usernameAnchor.getText();
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
 			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		}else{
