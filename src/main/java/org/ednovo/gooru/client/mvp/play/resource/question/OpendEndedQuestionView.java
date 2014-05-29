@@ -156,7 +156,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 		answerAttemptDo.setText(openEndedAnswerTextArea.getValue()); 
 		answerAttemptDo.setAnswerId(0);
 		answerAttemptDo.setOrder("");
-		answerAttemptDo.setStatus("pending");
+		answerAttemptDo.setStatus("1");
 		userAttemptedOptionsList.add(answerAttemptDo);
 		userAttemptedAnswerObject(userAttemptedOptionsList);
 	}
