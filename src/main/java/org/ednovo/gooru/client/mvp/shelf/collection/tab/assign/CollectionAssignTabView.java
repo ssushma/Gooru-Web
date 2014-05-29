@@ -124,7 +124,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	//Labels
 	@UiField Label lblAssignCollectionTitle,lblClasspages,lblClasspagePlaceHolder, lblClasspagesArrow,lblDirections,directionsErrorLbl,directionsErrorLength;
 	
-	@UiField Label lblAssignCollectionPrivate,lblDuedate;
+	@UiField Label lblAssignCollectionPrivate,lblDuedate,remainderLbl;
 	
 	@UiField BlueButtonUc btnAssign;
 	
@@ -285,6 +285,7 @@ public class CollectionAssignTabView extends BaseViewWithHandlers<CollectionAssi
 	 */
 	public void setLabelsAndIds(){
 		
+		remainderLbl.setText(GL1889);
 		lblAssignCollectionPrivate.setText(GL0112);
 		lblAssignCollectionPrivate.setVisible(false);
 		

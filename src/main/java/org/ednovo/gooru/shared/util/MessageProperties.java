@@ -2283,7 +2283,7 @@ public interface MessageProperties {
     	String GL1789 = "Go to My Collections";
     	String GL1790 = "You don't have any public collections yet.";
     	String GL1791 = "It looks like \"{0}\" hasn't shared any collections yet.";
-    	String GL1792 = "Your library is made of your publicly shared collections. Please put your collections in nested folders (Unit, Topic, Lesson) just like other libraries in Gooru so that they would be better organized in a library view.";
+    	String GL1792 = "Your library showcases each of your public collections.If you've organized your public collections into folders, those folders will appear here as well.";
     	String GL1793 = "ON: Your profile page may be viewed by others on Gooru.";
     	String GL1794 = "OFF: No one but you will be able to view your profile page.";
     	String GL1795 ="Add Tags";
@@ -2347,7 +2347,7 @@ public interface MessageProperties {
     	String GL1847 = "Would you like to rate this resource?";
     	String GL1848 = "Average Rating";
     	String GL1849 = "Preview and Rate Resource";
-    	String GL1850 = "Your rating and review:";
+    	String GL1850 = "Your rating and review";
     	String GL1851 = "Edit your rating and review";
     	String GL1852 = "Delete rating and review";
     	String GL1853 = "Review has been deleted";
@@ -2391,5 +2391,7 @@ public interface MessageProperties {
     	
     	String GL1886 = "Please select one or more grades & courses.";
     	String GL1887 = "Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it will appear below collections that do.";
-    	String GL1888 = "Public Collections";
+    	String GL1888 = "Library";
+    	
+    	String GL1889 = "Reminder: Assigments are sorted by due date in your Class. If you don't add a due date, this colleciton will appear at the bottom of the page.";
    }
