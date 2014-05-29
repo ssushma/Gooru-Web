@@ -474,11 +474,12 @@ public class EditClasspageView extends
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
+		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());
+		//AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
 			
 	}
 	
-	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
+/*	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
 		
 		@Override
 		public void getStudentJoinList(int joinClassList) {
@@ -524,14 +525,14 @@ public class EditClasspageView extends
 					reportHandler.removeHandler();
 				}
 				
-				reportHandler=reportsTab.addClickHandler(new reportsTabClicked());
+	
 				
 				
 			}
 			
 		}
 		
-	};
+	};*/
 	public class hideEditPencil implements MouseOverHandler {
 
 		@Override

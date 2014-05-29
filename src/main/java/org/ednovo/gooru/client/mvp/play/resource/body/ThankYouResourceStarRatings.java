@@ -77,9 +77,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
-	@UiField public FlowPanel ratingWidgetPanel;
 	@UiField HTMLPanel buttonsContainer;
-	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl,thankYouRatingLbl,avgRatingLbl;
+	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle,errorLbl,thankYouRatingLbl;
 	private RatingWidgetView ratingWidgetView=null;
 	
 	String assocGooruOId,review,createrName;
@@ -107,7 +106,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		setAvgRatingWidget();
 		setGlassEnabled(true);
 		thankYouRatingLbl.setText(GL1854);
-		avgRatingLbl.setText(GL1848);
+		//avgRatingLbl.setText(GL1848);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
 	}
@@ -119,8 +118,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
 		ratingWidgetView.setAvgStarRating(average);
-		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
-		ratingWidgetPanel.add(ratingWidgetView);
+		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		//ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
 	/**

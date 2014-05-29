@@ -57,6 +57,8 @@ public class ResourceSearchView extends AbstractSearchView<ResourceSearchResultD
 	public IsDraggable renderSearchResult(final ResourceSearchResultDo searchResultDo) {
 		ResourceSearchResultVc resourceSearchResultVc=new ResourceSearchResultVc(searchResultDo, dragController);
 		if(searchResultDo.getSearchRatingsDo().getCount()>0){
+			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().removeAttribute("class");
+			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 			resourceSearchResultVc.getRatingWidgetView().getRatingCountLabel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {

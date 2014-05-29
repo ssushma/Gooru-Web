@@ -448,6 +448,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		shareTabVc.getElement().setId("lblShareTab");
 		assignTabVc.getElement().setId("lblAssignTab");
 		statisticsTabVc.getElement().setId("lblStatisticsTab");
+		statisticsTabVc.setVisible(false);
 		collaboratorTabVc.getElement().setId("lblCollaboratorTab");
 		collectionPreviewBtn.getElement().setId("btnCollectionPreview");
 		copyCollectionLbl.getElement().setId("lblCopyCollection");
