@@ -353,7 +353,7 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 			
 		}
 		try{
-			resourceDo.setSearchRatingsDo(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RATINGS).toString(), SearchRatingsDo.class));
+			resourceDo.setRatings(JsonDeserializer.deserialize(recordJsonObject.getJSONObject(RATINGS).toString(), SearchRatingsDo.class));
 		}catch(Exception e){
 			
 		}

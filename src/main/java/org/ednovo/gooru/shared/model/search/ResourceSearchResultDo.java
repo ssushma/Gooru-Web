@@ -122,7 +122,6 @@ public class ResourceSearchResultDo implements Serializable {
 	
 	private int questionCount;
 	
-	private SearchRatingsDo searchRatingsDo;
 	private SearchRatingsDo ratings;
 	
 	private List<String> publisher;
@@ -480,19 +479,7 @@ public class ResourceSearchResultDo implements Serializable {
 		this.scollectionCount = scollectionCount;
 	}
 	
-	/**
-	 * @return the searchRatingsDo
-	 */
-	public SearchRatingsDo getSearchRatingsDo() {
-		return searchRatingsDo;
-	}
-
-	/**
-	 * @param searchRatingsDo the searchRatingsDo to set
-	 */
-	public void setSearchRatingsDo(SearchRatingsDo searchRatingsDo) {
-		this.searchRatingsDo = searchRatingsDo;
-	}
+	
 
 	public List<String> getPublisher() {
 		return publisher;
