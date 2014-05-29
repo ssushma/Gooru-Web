@@ -51,6 +51,7 @@ import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
+import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -373,15 +374,18 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						{
 							if(collectionDo.getInstructionalMethod().size()>0)
 							{
-								if(collectionDo.getInstructionalMethod().get(0).getValue() != null && !collectionDo.getInstructionalMethod().get(0).getValue().isEmpty())
+								for(int i=0;i<collectionDo.getInstructionalMethod().size();i++)
 								{
-								AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, collectionDo.getInstructionalMethod().get(0).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
-									@Override
-									public void onSuccess(CollectionDo result) {
-										
+									if(collectionDo.getInstructionalMethod().get(i).isSelected()){
+									AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, collectionDo.getInstructionalMethod().get(i).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
+										@Override
+										public void onSuccess(CollectionDo result) {
+											
+										}
+									});	
 									}
-								});
 								}
+								
 							}
 						}
 						
@@ -389,9 +393,7 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 							AppClientFactory.getInjector().getResourceService().updateCollectionInstructionalMethod(collectionDo, optionSelected,true, new SimpleAsyncCallback<CollectionDo>() {
 								@Override
 								public void onSuccess(CollectionDo result) {
-									
-							
-								}
+							}
 							});
 
 							lblInstructionalPlaceHolder.setText(optionSelected);
@@ -429,15 +431,19 @@ public class CollectionInfoTabView extends BaseViewWithHandlers<CollectionInfoTa
 						{
 							if(collectionDo.getAudience().size()>0)
 							{
-								if(collectionDo.getAudience().get(0).getValue() != null && !collectionDo.getAudience().get(0).getValue().isEmpty())
+								for(int j=0;j<collectionDo.getAudience().size();j++)
 								{
-								AppClientFactory.getInjector().getResourceService().updateCollectionAudience(collectionDo, collectionDo.getAudience().get(0).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
-									@Override
-									public void onSuccess(CollectionDo result) {
+									if(collectionDo.getAudience().get(j).isSelected()){
+									AppClientFactory.getInjector().getResourceService().updateCollectionAudience(collectionDo, collectionDo.getAudience().get(j).getValue(),false, new SimpleAsyncCallback<CollectionDo>() {
+										@Override
+										public void onSuccess(CollectionDo result) {
 										
+										}
+									});
+									
 									}
-								});
 								}
+											
 							}
 						}
 						
