@@ -41,8 +41,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
-import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
-import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupView;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -60,7 +58,7 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Float;
+
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -207,8 +205,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
 			{
 				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
-				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey;");
+				//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			}
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}
@@ -229,9 +227,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
-	
 
-			
 			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(collectionItemDoGlobal.getResource().getGooruOid(),"",collectionItemDoGlobal.getResource().getUser().getUsername())); 
 		}
 	}
