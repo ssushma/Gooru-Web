@@ -2325,7 +2325,7 @@ public interface MessageProperties {
     	String GL1828 = "http://www.rusdlink.org/site/default.aspx?PageID=1";
     	String GL1829 = "http://about.goorulearning.org/";
 
-    	String GL1830 = "Walk through a <br>sample collection.";
+    	String GL1830 = "Walk through a <br>collection on <br>Personalized <br>Learning.";
     	
     	String GL1832 = "It's either been deleted or made private by the collection owner.";
     	String GL1833 = "You are seeing this page because the resource is temporarily unavailable, or has been removed from our site.";
