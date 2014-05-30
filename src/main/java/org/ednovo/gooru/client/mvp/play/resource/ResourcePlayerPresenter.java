@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.resource;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
+import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.PlayerConstants;
@@ -162,6 +164,10 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 	private Integer attemptCount=0;
 	
 	private boolean isOpenEndedAnswerSubmited=false;
+	
+	private static String Star_Rating_Widget = "ratingWidget";
+	 
+	private static final int CHILD_AGE=13;
 	
 	
     /**
@@ -822,7 +828,9 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		  else if(isLoginRequestCancel){
 			  PlaceRequest request=new PlaceRequest(PlaceTokens.RESOURCE_PLAY).with("id", resourceId);
 		      AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-		  }
+		  }else if(!isLoginRequestCancel&&widgetMode.equalsIgnoreCase(Star_Rating_Widget)){
+				isResourceContentRating(collectionItemDo.getResource().getGooruOid());
+			}
 	}
 	public void  getResource(String resourceId){
 		this.playerAppService.getResourceCollectionItem(null,resourceId,null, new SimpleAsyncCallback<CollectionItemDo>() {
@@ -991,6 +999,67 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 
+	/**
+	 * Gets the respective resource ratings rated by the user.
+	 * @param resourceGooruId {@link String} 
+	 */
+	private void isResourceContentRating(String resourceGooruId) {
+		if(!AppClientFactory.isAnonymous()){
+			if(isChildAccount()){
+				resoruceMetadataPresenter.childLoggedIn(true); 
+			}else{
+				resoruceMetadataPresenter.childLoggedIn(false); 
+				getContentRating(resourceGooruId);
+			}
+		}
+	}
+	
+	/**
+	 * Checks weather the logged in user is child or not.
+	 * @return isChild {@link Boolean} 
+	 */
+	private boolean isChildAccount() {
+		Date convertedDOB = null;
+		boolean isChild=false;
+		int loggedInUserAge = 0;
+		com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss.S");
+		if(AppClientFactory.getLoggedInUser().getDateOfBirth()!=null&&!AppClientFactory.getLoggedInUser().getDateOfBirth().equals("")){
+			convertedDOB = dateFormat.parse(AppClientFactory.getLoggedInUser().getDateOfBirth());
+			loggedInUserAge = getAge(convertedDOB);
+			if(loggedInUserAge<=CHILD_AGE){
+				isChild=true;
+			}else if(loggedInUserAge>CHILD_AGE){
+				isChild=false;
+			}
+		}
+		
+		return isChild;
+	}
+	
+	private int getAge(Date birthDate) {
+		long ageInMillis = new Date().getTime() - birthDate.getTime();
+		Date age = new Date(ageInMillis);
+		return age.getYear() - 70;
+	}
+	
+	/**
+	 * Get ratings API is called and gets respective ratings.
+	 * @param resourceGooruId {@link String}
+	 */
+	private void getContentRating(String resourceGooruId) {
+		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(),0, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
+			@Override
+			public void onSuccess(ArrayList<StarRatingsDo> result) {
+				if(result.size()>0){
+					resoruceMetadataPresenter.getView().setUserStarRatings(result.get(0),false); 
+				}else{
+					resoruceMetadataPresenter.getView().setUserStarRatings(null,false); 
+				}
+				
+			}
+		});
+		
+	}
 	
 	
 }

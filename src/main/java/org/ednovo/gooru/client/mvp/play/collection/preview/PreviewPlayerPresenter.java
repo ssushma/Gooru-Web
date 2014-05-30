@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.collection.preview;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -228,6 +229,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
     private static final String PRIVATE="private";
     
     private static String Star_Rating_Widget = "ratingWidget";
+    
+	private static final int CHILD_AGE=13;
     
 
     /**
@@ -1551,7 +1554,12 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	 */
 	private void isResourceContentRating(String resourceGooruId) {
 		if(!AppClientFactory.isAnonymous()){
-			getContentRating(resourceGooruId);
+			if(isChildAccount()){
+				resoruceMetadataPresenter.childLoggedIn(true); 
+			}else{
+				resoruceMetadataPresenter.childLoggedIn(false); 
+				getContentRating(resourceGooruId);
+			}
 		}
 	}
 	
@@ -1919,5 +1927,33 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			Long currentTime=System.currentTimeMillis();
 			totalTimeSpentOnSummaryPage=totalTimeSpentOnSummaryPage+(currentTime-collectionEndTime);
 		}
+	}
+	
+	/**
+	 * Checks weather the logged in user is child or not.
+	 * @return isChild {@link Boolean} 
+	 */
+	private boolean isChildAccount() {
+		Date convertedDOB = null;
+		boolean isChild=false;
+		int loggedInUserAge = 0;
+		com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat.getFormat("yyyy-MM-dd hh:mm:ss.S");
+		if(AppClientFactory.getLoggedInUser().getDateOfBirth()!=null&&!AppClientFactory.getLoggedInUser().getDateOfBirth().equals("")){
+			convertedDOB = dateFormat.parse(AppClientFactory.getLoggedInUser().getDateOfBirth());
+			loggedInUserAge = getAge(convertedDOB);
+			if(loggedInUserAge<=CHILD_AGE){
+				isChild=true;
+			}else if(loggedInUserAge>CHILD_AGE){
+				isChild=false;
+			}
+		}
+		
+		return isChild;
+	}
+	
+	private int getAge(Date birthDate) {
+		long ageInMillis = new Date().getTime() - birthDate.getTime();
+		Date age = new Date(ageInMillis);
+		return age.getYear() - 70;
 	}
 }

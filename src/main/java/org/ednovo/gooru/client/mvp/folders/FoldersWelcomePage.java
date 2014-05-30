@@ -88,7 +88,7 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("#preview-play&id=7ab93f76-bae6-4971-8f15-c08801e3a4c7", "_blank", "");
+				Window.open("#preview-play&id=b2dc729a-4a18-494e-8696-b06bc704bc98", "_blank", "");
 			}
 		});
 	}
@@ -115,7 +115,7 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 		lblStartCreateingCollection.setText(GL1813);
 		lblCollectionDesc.setText(GL1814);
 		btnCreateCollection.setText(GL1815);
-		lblViewWalkthrough.setText(GL1816);
+		//lblViewWalkthrough.setText(GL1816);
 		lblUpload.setText(GL1817);
 		lblCustomizeCollections.setText(GL1818);
 		lblCollaborate.setText(GL1819);

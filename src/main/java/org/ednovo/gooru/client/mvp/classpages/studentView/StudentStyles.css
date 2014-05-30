@@ -461,3 +461,14 @@ margin-left:-33px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.usernameCssName{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    color: #515151;
+    padding-left: 8px;
+    margin-top: 19px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
