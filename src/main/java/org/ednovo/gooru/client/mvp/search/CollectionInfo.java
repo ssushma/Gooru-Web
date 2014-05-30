@@ -148,8 +148,8 @@ public class CollectionInfo extends Composite implements MessageProperties{
 	}
 
 	protected void setLanguageObjectiveText() {
-		if(collectionDo.getDescription()!=null){
-			lblLanguageText.setText(collectionDo.getDescription());
+		if(collectionDo.getLanguageObjective()!=null){
+			lblLanguageText.setText(collectionDo.getLanguageObjective());
 		}else{
 			panelDesc.setVisible(false);
 		}

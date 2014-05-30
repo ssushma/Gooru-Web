@@ -1969,4 +1969,36 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		  shelfFocPanel.getElement().setAttribute("style", "position:fixed;");
 	}
 
+	@Override
+	public void setCollectionActiveStyle() {
+		 
+		String gooruOid = null;
+		String o1 = AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL);
+		String o2 = AppClientFactory.getPlaceManager().getRequestParameter(O2_LEVEL);
+		String o3 = AppClientFactory.getPlaceManager().getRequestParameter(O3_LEVEL);
+		String id = AppClientFactory.getPlaceManager().getRequestParameter(ID);
+		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget(); 
+		
+		if(shelfCollection==null || organizeRootPnl.getStyleName().contains(folderStyle.active())) {
+			if(id!=null) {
+				gooruOid = id;
+			} else {
+				gooruOid = o1;
+			}
+			for(int i = 0; i < myShelfVerPanel.getItemCount(); i++) { 
+				TreeItem item = myShelfVerPanel.getItem(i);
+				checkFolderItemStyle(item, gooruOid);
+			}
+		} else {
+			if(id!=null) {
+				gooruOid = id;
+			}
+			for(int i = 0; i < myShelfVerPanel.getItemCount(); i++) { 
+				TreeItem item = myShelfVerPanel.getItem(i);
+				checkFolderItemStyle(item, gooruOid);
+			}
+		}
+	
+	}
+
 }

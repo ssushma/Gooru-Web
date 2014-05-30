@@ -417,6 +417,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
 			image.setAltText(GL0730);
 			image.setTitle(GL0730);
+			rightsLbl.getElement().setAttribute("style", "padding-left: 309px;");
 			StandardSgItemVc standardItem = null;
 			LicencegItemVc licencegItemVcObj=null;
 			if (searchResultDo.getLicense().getCode() != null&& !searchResultDo.getLicense().getCode().equalsIgnoreCase(NULL)) {
