@@ -56,20 +56,20 @@
 			<g:Label styleName="{StudyStyle.h5}" ui:field="lblFavoriteClasses"></g:Label>
 			<g:HTMLPanel styleName="{StudyStyle.classContent}">
 				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassOne">
-					<g:Image url="images/EmptyPages/resources.png" width="158" height="132"></g:Image>
+					<g:Image url="images/EmptyPages/algebra.png" width="158" height="132"></g:Image>
 						<g:Label styleName="{StudyStyle.hoverTitle}" ui:field="lblClassOne"></g:Label>
 				</panel:HTMLEventPanel>
 				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassTwo">
-					<g:Image url="images/EmptyPages/collctions.png" width="158" height="132"></g:Image>
-						<g:Label styleName="{StudyStyle.hoverTitle}" ui:field="lblClassTwo"></g:Label>
+					<g:Image url="images/EmptyPages/ancientcivilization.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitleTwoLine}" ui:field="lblClassTwo"></g:Label>
 				</panel:HTMLEventPanel>
 				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassThree">
-					<g:Image url="images/EmptyPages/resources.png" width="158" height="132"></g:Image>
-						<g:Label styleName="{StudyStyle.hoverTitle}"> Physics</g:Label>
+					<g:Image url="images/EmptyPages/physics.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitle}" ui:field="lblClassFour"></g:Label>
 				</panel:HTMLEventPanel>
 				<panel:HTMLEventPanel styleName="{StudyStyle.imgBlock}" ui:field="panelClassFour">
-					<g:Image url="images/EmptyPages/collctions.png" width="158" height="132"></g:Image>
-						<g:Label styleName="{StudyStyle.hoverTitle}" ui:field="lblClassThree"></g:Label>
+					<g:Image url="images/EmptyPages/english.png" width="158" height="132"></g:Image>
+						<g:Label styleName="{StudyStyle.hoverTitleTwoLine}" ui:field="lblClassThree"></g:Label>
 				</panel:HTMLEventPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>

@@ -73,7 +73,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	
 	@UiField Label lblCreateAClass,lblEasyToOrganize,lblAccessAClass,lblEasyAccessForStudents,lblUniqueClassCode, lblOne, lblTwo, lblThree;
 	
-	@UiField Label lblManageAssignments,lblClearDue,lblMonitorStudentProgress,lblMonitorDesc, lblFavoriteClasses, lblClassOne, lblClassTwo, lblClassThree;
+	@UiField Label lblManageAssignments,lblClearDue,lblMonitorStudentProgress,lblMonitorDesc, lblFavoriteClasses, lblClassOne, lblClassTwo, lblClassThree, lblClassFour;
 	
 	@UiField Anchor ancSampleReport;
 	
@@ -160,6 +160,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		lblClassOne.setText(GL1782);
 		lblClassTwo.setText(GL1783);
 		lblClassThree.setText(GL1784);	
+		lblClassFour.setText( GL1784_1);
 		
 		txtCode.setPlaceholder(GL1785);
 		
@@ -189,21 +190,21 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 	
 	@UiHandler("panelClassOne")
 	public void OpenFirstClass(ClickEvent event){
-		OpenClasspageEdit("18c2e8db-ffcc-471e-960b-78b5ae30b98d", PlaceTokens.STUDENT);
+		OpenClasspageEdit("272e9c46-c0a9-427a-9a0d-f31eb051ce3a", PlaceTokens.STUDENT);
 	}
 	
 	@UiHandler("panelClassTwo")
 	public void OpenSecondClass(ClickEvent event){
-		OpenClasspageEdit("6b2fbea8-b3e9-4b74-937b-28e209049eec", PlaceTokens.STUDENT);
+		OpenClasspageEdit("087ddf35-6b2b-4411-9832-d8e789a25888", PlaceTokens.STUDENT);
 	}
 
 	@UiHandler("panelClassThree")
 	public void OpenThreeClass(ClickEvent event){
-		OpenClasspageEdit("272e9c46-c0a9-427a-9a0d-f31eb051ce3a", PlaceTokens.STUDENT);
+		OpenClasspageEdit("6b2fbea8-b3e9-4b74-937b-28e209049eec", PlaceTokens.STUDENT);
 	}
 	@UiHandler("panelClassFour")
 	public void OpenFourClass(ClickEvent event){
-		OpenClasspageEdit("087ddf35-6b2b-4411-9832-d8e789a25888", PlaceTokens.STUDENT);
+		OpenClasspageEdit("18c2e8db-ffcc-471e-960b-78b5ae30b98d", PlaceTokens.STUDENT);
 	}
 	
 	
