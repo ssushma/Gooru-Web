@@ -169,7 +169,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		imgQuestionImage.setAltText(GL0732);
 		imgQuestionImage.setUrl("images/mos/questionmark.png");
 		resourceSearchGradeFieldVc.setToolTip(GL0325);
-
+		rightsLbl.setVisible(false);
 
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<C>>() {
 
@@ -203,7 +203,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 		}
 	
-		rightsLbl.setVisible(false);
+		/*rightsLbl.setVisible(false);
 		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
 		//	metaInfoFloPanel.setVisible(false);
 			rightsLbl.setVisible(true);
@@ -212,9 +212,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 //			resourceScrPanel.setStyleName(res.css().moreInfoResourceSearchRightPanel());
 		}
 		else{
-	/*		metaInfoFloPanel.setVisible(true);
-			shareField.setVisible(false);*/
-		}
+			metaInfoFloPanel.setVisible(true);
+			shareField.setVisible(false);
+		}*/
 		setHandler();
 	}
 
@@ -426,7 +426,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			DownToolTipWidgetUc widget = new DownToolTipWidgetUc(image,	standardItem);
 			DownToolTipWidgetUc widget1 = new DownToolTipWidgetUc(image,licencegItemVcObj);
 			widget1.setStyleName("rightsToolTip");
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				rightsLbl.setVisible(true);
 				resourceSearchRightsFieldVc.addWidget(widget1);
 				widget.setStyleName("rightsToolTip");
@@ -435,9 +435,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 				//rightsFieldVc.addWidget(widget1);
 				widget.setStyleName("rightsToolTip");
 				//rightsFieldVc.addWidget(widget);
-			}
-			
-			
+			}*/
 			
 		} else if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getTag() == OER|| (searchResultDo.getUrl() != null && searchResultDo.getUrl().indexOf(OERCOMMONS_ORG) >= 0)) {
 			Image image = new Image(LICENSE_FOLDER + OER_PNG_IMG);
@@ -447,12 +445,12 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			standardItem.setHeight("100px");
 			DownToolTipWidgetUc widget = new DownToolTipWidgetUc(image,	standardItem);
 			widget.setStyleName("rightsToolTip");
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+			/*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
 				rightsLbl.setVisible(true);
 				resourceSearchRightsFieldVc.addWidget(widget);
 			}else{
 				//rightsFieldVc.addWidget(widget);
-			}
+			}*/
 			
 		} else {
 			rightsLbl.setVisible(false);
