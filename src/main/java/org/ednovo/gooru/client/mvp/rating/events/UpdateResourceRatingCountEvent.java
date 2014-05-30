@@ -10,9 +10,13 @@ public class UpdateResourceRatingCountEvent extends GwtEvent<UpdateResourceRatin
 	
 	Integer score;
 	private String resourceId;
-	public UpdateResourceRatingCountEvent(String resourceId){ 
+	private double avg;
+	private Integer count;
+	public UpdateResourceRatingCountEvent(String resourceId,double avg,Integer count){ 
 		this.score=score;
 		this.resourceId=resourceId;
+		this.avg=avg;
+		this.count=count;
 	}
 
 	@Override
@@ -22,7 +26,7 @@ public class UpdateResourceRatingCountEvent extends GwtEvent<UpdateResourceRatin
 
 	@Override
 	protected void dispatch(UpdateResourceRatingCountEventHandler handler) {
-		handler.setResourceRatingCount(resourceId);
+		handler.setResourceRatingCount(resourceId,avg,count);
 	}
 
 }
