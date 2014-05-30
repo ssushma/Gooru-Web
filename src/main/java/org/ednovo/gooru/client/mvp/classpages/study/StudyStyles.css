@@ -251,9 +251,9 @@
 }
 .hoverTitle {
 	position: relative;
-	top: -70px;
+	top: -80px;
 	color: #FFF;
-	font-size: 14px;
+	font-size: 22px;
 	text-align: center;
 }
 .imgBlock {
@@ -272,4 +272,12 @@
 
 .textTransform{
 	text-transform: uppercase;
+}
+
+.hoverTitleTwoLine {
+	position: relative;
+	top: -92px;
+	color: #FFF;
+	font-size: 22px;
+	text-align: center;
 }

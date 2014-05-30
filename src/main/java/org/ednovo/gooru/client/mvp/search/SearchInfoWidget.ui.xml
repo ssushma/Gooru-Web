@@ -18,6 +18,7 @@
 			<g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />
 			<g:HTML ui:field="lblcollectionName" styleName="{playerStyle.labelTitle}"></g:HTML>
 			<g:Button styleName="green {playerStyle.btnGreen}" ui:field="addTagsBtn">Add Tags</g:Button>
+			<g:Label ui:field="noInfoAvailable"></g:Label>
 				<!-- <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage" />
 				<g:HTML ui:field="lblcollectionName"></g:HTML> -->
 				<!-- <g:HTMLPanel styleName="{playerStyle.resource-info-type-image}">

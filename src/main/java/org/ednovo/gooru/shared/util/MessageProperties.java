@@ -406,9 +406,9 @@ public interface MessageProperties {
 	//Collection Share Tab... Please dont use this...
 	
 	//ImproveGoorupopup
-	String	GL0285	= "We've Improved Gooru!";
+	String	GL0285	= "What's new in Gooru?";
 	String	GL0286	= "Gooru just got better!";
-	String	GL0287	= "We are excited to announce that we have added more features to Gooru!";
+	String	GL0287	= "Gooru just got better! Learn more about our new features.";
 	String	GL0288	= "What's new?";
 	String	GL0289	= "A new question type: Multiple Answer";
 	String	GL0290	= "Because sometimes a question can have more than one correct answer. &nbsp;";
@@ -2276,6 +2276,7 @@ public interface MessageProperties {
     	String GL1782 = "Algebra I";
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
+    	String GL1784_1 = "Physics";
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
@@ -2391,7 +2392,7 @@ public interface MessageProperties {
     	
     	String GL1886 = "Please select one or more grades & courses.";
     	String GL1887 = "Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it will appear below collections that do.";
-    	String GL1888 = "Library";
+    	String GL1888 = "Public Collections";
     	
     	String GL1889 = "Reminder: Assigments are sorted by due date in your Class. If you don't add a due date, this colleciton will appear at the bottom of the page.";
    }

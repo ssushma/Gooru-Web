@@ -235,7 +235,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		while (widgets.hasNext()) {
 			Widget widget = widgets.next();
 			if (widget.getElement().getId().equalsIgnoreCase(classpageId)) {
-				widget.getElement().setInnerHTML(classpageTitle);
+				widget.getElement().setInnerHTML(createTitle(classpageTitle, null));
 			}
 		}
 
@@ -743,17 +743,23 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	public void generateClasspageList() {
 		htmlPanelClasspageList.clear();
 		for (int i = 0; i < listClasspage.size(); i++) {
-			String classpageTitle = "";
 			String title = classpageList.get(listClasspage.get(i)).getTitle();
-			title = title.length() >= 19 ? title.substring(0, 19) + "..." : title;
-			if(classpageList.get(listClasspage.get(i)).getUser().getGooruUId().equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())){
-				classpageTitle = title + " (Owner)";
-			}else{
-				classpageTitle = title + " (Joined)";
-			}
+			title = createTitle(title, classpageList.get(listClasspage.get(i)).getUser().getGooruUId());
 			htmlPanelClasspageList.add(createClasspageTitleLabel(
-					classpageTitle, listClasspage.get(i), false));
+					title, listClasspage.get(i), false));
 		}
+	}
+	
+	private String createTitle(String title, String classpageOwnerId){
+		String tmptitle = "";
+		title = title.length() >= 18 ? title.substring(0, 18) + "..." : title;
+		if(classpageOwnerId==null || classpageOwnerId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())){
+			tmptitle = title + " (Owner)";
+		}else{
+			tmptitle = title + " (Joined)";
+		}
+		
+		return tmptitle;
 	}
 
 	/**
