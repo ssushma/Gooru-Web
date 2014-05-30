@@ -535,7 +535,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 				for(int i = 0; i < gradeLength; i ++) {
 					if(!grades[i].isEmpty()) {
-						set.add(Integer.parseInt(grades[i]));
+						set.add(grades[i]);
 					}
 				}
 				Iterator gradeLbl = set.iterator();
