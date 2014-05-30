@@ -196,6 +196,7 @@ public class GooruEntry implements EntryPoint {
 		BrowserAgent.loadCssFile(cdnEndPoint+"/css/gooru-global.css?r=59","css");
 		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js","js");
 		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js","js");
+		BrowserAgent.loadCssFile(cdnEndPoint+"/scripts/errorImageFunction.js","js");
 	}
 	/*Timer t = new Timer() {
 		@Override

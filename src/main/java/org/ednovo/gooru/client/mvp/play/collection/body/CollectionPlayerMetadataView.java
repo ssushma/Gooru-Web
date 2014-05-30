@@ -105,7 +105,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public static final String STANDARD_CODE = "code";
 	
 	public static final String STANDARD_DESCRIPTION = "description";
-	
+	private Anchor usernameAnchor;
 	private static CollectionPlayerMetadataViewUiBinder uiBinder = GWT.create(CollectionPlayerMetadataViewUiBinder.class);
 
 	interface CollectionPlayerMetadataViewUiBinder extends UiBinder<Widget, CollectionPlayerMetadataView> {
@@ -203,6 +203,16 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	
 	public void setUserName(String userName){
 		userNameLabel.setText(userName);
+		usernameAnchor = new Anchor();
+		//userNameLabel.setText(userName);
+		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}
+		usernameAnchor.setText(userName);
+		usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+		usernameAnchor.setTarget("_blank");
+		userNameLabel.setText("");
+		userNameLabel.getElement().appendChild(usernameAnchor.getElement());
 	}
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?p="+Math.random());

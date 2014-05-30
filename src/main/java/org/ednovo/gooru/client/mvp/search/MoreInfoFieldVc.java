@@ -73,7 +73,7 @@ public class MoreInfoFieldVc extends Composite {
 			imageIconSimPanel.setVisible(false);
 			contentFloPanel.getElement().getStyle().setFloat(Float.RIGHT);
 			contentFloPanel.getElement().getStyle().setPosition(Position.RELATIVE);
-			contentFloPanel.getElement().getStyle().setMarginRight(-45, Unit.PX);
+			contentFloPanel.getElement().getStyle().setMarginRight(22, Unit.PX);
 //			contentFloPanel.getElement().getStyle().setTop(70, Unit.PX);
 		}
 		

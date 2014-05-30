@@ -400,7 +400,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		if (resourceSearch) {
 			sourcePanelUc.setVisible(true);
-			//aggregatorPanelUc.setVisible(true);
+			aggregatorPanelUc.setVisible(true);
 			sourcesNotFoundLbl.getElement().getStyle().setOpacity(0.0);
 			sourceSgstBox.addSelectionHandler(this);
 			aggregatorSgstBox.addSelectionHandler(this);
