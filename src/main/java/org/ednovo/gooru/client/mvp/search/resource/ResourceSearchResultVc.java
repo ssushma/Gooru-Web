@@ -55,6 +55,7 @@ import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -315,10 +316,22 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
 		@Override
-		public void setResourceRatingCount(String resourceId) { 
+		public void setResourceRatingCount(String resourceId,double avg,Integer count) { 
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
-				Integer count = resourceSearchResultDo.getRatings().getCount()+1;
-				ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
+				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
+				ratingWidgetView.setAvgStarRating(avg);
+				if(count==1){
+					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
+
+						@Override
+						public void onClick(ClickEvent event) {
+							
+						}
+						
+					});
+				}
 			}
 		}
 		

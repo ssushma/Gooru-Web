@@ -253,7 +253,8 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			@Override
 			public void onSuccess(StarRatingsDo result) { 
 				getView().setUserStarRatings(result,showThankYouToolTip);
-				getView().updateRatingOnSearch(result); 
+//				getView().updateRatingOnSearch(result); 
+				
 			}
 		});
 	}
@@ -398,12 +399,15 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	@Override
 	public void updateStarRatingAndreviews(
 			ArrayList<StarRatingsDo> starRatingsDo) {
-		// TODO Auto-generated method stub
 		getView().setUserStarRatings(starRatingsDo.get(0),false); 
 	}
 
 	public void clearStarRatings() {
 		getView().clearAllStarsForAnnonymous();
+	}
+
+	public void childLoggedIn(boolean isChild) { 
+		getView().childLoggedIn(isChild);
 	}
 
 	/*@Override

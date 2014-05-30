@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.model.content.ContentStarRatingsDistributionDo;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.ResoruceCollectionDo;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.model.content.UserStarRatingsDo;
 import org.ednovo.gooru.shared.model.player.CommentsDo;
@@ -1049,6 +1050,12 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			starRatingsDo.setAssocGooruOid(jsonObject.isNull("assocGooruOid")?"":jsonObject.getString("assocGooruOid"));
 			starRatingsDo.setDeleteRatingGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
+			if(!jsonObject.isNull("ratings")){
+				JSONObject resourceRating = jsonObject.getJSONObject("ratings");
+				SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+				starRatingsDo.setRatings(searchRatingsDo);
+			}
+			
 			if(!jsonObject.isNull("creator"))
 			{
 				CreatorDo creatorObject = new CreatorDo();
@@ -1253,6 +1260,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			starRatingsDo.setFreeText(jsonObject.isNull("freeText")?"":jsonObject.getString("freeText")); 
 			starRatingsDo.setDeleteRatingGooruOid(jsonObject.isNull("gooruOid")?"":jsonObject.getString("gooruOid"));
 			starRatingsDo.setScore(jsonObject.getInt(SCORE));
+			if(!jsonObject.isNull("ratings")){
+				JSONObject resourceRating = jsonObject.getJSONObject("ratings");
+				SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+				starRatingsDo.setRatings(searchRatingsDo);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
