@@ -194,6 +194,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourcePublisher.setVisible(false);
 			ratingsContainer.getElement().getStyle().setFloat(Float.RIGHT);
 			ratingsContainer.getElement().getStyle().setMarginRight(430,Unit.PX);
+			if(isChildAccount()){
+				collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+			}else{
+				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+			}
 //			collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}else{
 			resourceTitleLbl.setVisible(true);
@@ -237,6 +242,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 
 	public void showResourceWidget(CollectionItemDo collectionItemDo){
 		this.collectionItemDo = collectionItemDo;
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
+			if(isChildAccount()){
+				collectionContainer.getElement().getStyle().setDisplay(Display.NONE);
+			}else{
+				collectionContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+			}
+		}
 		if(collectionItemDo.getResource().getTitle()!=null){
 			resourceTitleLbl.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 		}else{
@@ -888,7 +900,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	@Override
 	public void setUserStarRatings(StarRatingsDo result, boolean showThankYouToolTip) {
 		
-		
 		if(result!=null){
 			this.starRatingsDo=result;
 			isRated=true; 
@@ -902,17 +913,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					displaySuccessPopup();
 				}
 			}
-//			else if(thankYouResourceStarRatingsPoor.isVisible()){
-//				thankYouResourceStarRatingsPoor.hide();
-//				if(isFromThanksPopup){
-//					displaySuccessPopup();
-//				}
-//			}
 		}
 		setRatings(result,showThankYouToolTip);
-//		setUserRatings(result);
-//		ratingsContainer.clear();
-//		ratingsContainer.add(userStarRatings);
 	}
 	
 	@Override
@@ -1199,6 +1201,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	 * @param result {@link StarRatingsDo}
 	 */
 	public void setUserRatings(StarRatingsDo result){
+
 		if(result!=null){
 			setStyle();
 			currentRating = result.getScore();
@@ -1231,7 +1234,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			starValue.setText(GL1879);
 			setStarRatingValue(0);
 		}
-		
+	
 	}
 	
 	private void setStyle() {
@@ -1293,7 +1296,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		 * @param starScore {@link String}
 		 */
 		public OnStarMouseOver(String starScore) {
-			
 			this.starScore=starScore;
 		}
 
@@ -1499,6 +1501,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid()));
 		}
 		
+	}
+
+	@Override
+	public void clearAllStarsForAnnonymous() {
+		starValue.setText(DEFAULT_RATING_TEXT);
+		clearAllStars();
 	}
 	
 }
