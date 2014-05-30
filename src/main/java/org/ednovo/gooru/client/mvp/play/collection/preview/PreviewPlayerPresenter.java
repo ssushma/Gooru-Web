@@ -660,6 +660,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			resoruceMetadataPresenter.removeRatingContainer(false);
 			resoruceMetadataPresenter.setReaction(collectionItemDo); 
 			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
+		}else{
+			resoruceMetadataPresenter.clearStarRatings();
 		}
 		setOpenEndedAnswerSubmited(true);
 		setInSlot(METADATA_PRESENTER_SLOT, resoruceMetadataPresenter);

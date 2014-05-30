@@ -37,6 +37,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -443,6 +445,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 						}
 					}
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, parametesMap);
+					AppClientFactory.fireEvent(new ActivateCollectionStyleEvent());
 				}
 			}
 		});

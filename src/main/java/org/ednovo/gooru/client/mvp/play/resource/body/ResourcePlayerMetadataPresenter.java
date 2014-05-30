@@ -264,13 +264,6 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	 * @param collectionItemDo {@link CollectionItemDo}
 	 */
 	public void setResourceStarRatings(CollectionItemDo collectionItemDo) { 
-		/*AppClientFactory.getInjector().getPlayerAppService().getResourceStarRatings(collectionItemDo.getResource().getGooruOid(),AppClientFactory.getGooruUid(),new SimpleAsyncCallback<StarRatingsDo>() {
-
-			@Override
-			public void onSuccess(StarRatingsDo result) {
-				getView().setUserStarRatings(result,null);
-			}
-		});*/
 		
 		AppClientFactory.getInjector().getPlayerAppService().getResourceRatingWithReviews(collectionItemDo.getResource().getGooruOid(), AppClientFactory.getGooruUid(),0, new SimpleAsyncCallback<ArrayList<StarRatingsDo>>() {
 
@@ -407,6 +400,10 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 			ArrayList<StarRatingsDo> starRatingsDo) {
 		// TODO Auto-generated method stub
 		getView().setUserStarRatings(starRatingsDo.get(0),false); 
+	}
+
+	public void clearStarRatings() {
+		getView().clearAllStarsForAnnonymous();
 	}
 
 	/*@Override

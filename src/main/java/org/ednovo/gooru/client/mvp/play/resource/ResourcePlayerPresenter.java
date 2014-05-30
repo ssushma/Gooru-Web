@@ -432,6 +432,8 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 			resoruceMetadataPresenter.setReaction(collectionItemDo);
 			resoruceMetadataPresenter.setResourceStarRatings(collectionItemDo);
 			getContentReport(collectionItemDo.getResource().getGooruOid());
+		}else{
+			resoruceMetadataPresenter.clearStarRatings();
 		}
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setOpenEndedAnswerSubmited(true);

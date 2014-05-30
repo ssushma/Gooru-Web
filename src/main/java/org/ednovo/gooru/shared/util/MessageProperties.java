@@ -2276,6 +2276,7 @@ public interface MessageProperties {
     	String GL1782 = "Algebra I";
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
+    	String GL1784_1 = "Physics";
     	String GL1785 = "Enter your class code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
