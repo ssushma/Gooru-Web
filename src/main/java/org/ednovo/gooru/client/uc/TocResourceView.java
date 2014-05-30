@@ -29,6 +29,7 @@ package org.ednovo.gooru.client.uc;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
@@ -101,7 +102,10 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 		setResourceSequence(itemIndex);
 		setResourceCategory();
 		setReourceSourceName();
-		setAvgRatingWidget();
+		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
+			setAvgRatingWidget();
+		}
+		
 	}
 	/**
 	 * Average star ratings widget will get integrated.
