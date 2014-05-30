@@ -1969,6 +1969,10 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		  shelfFocPanel.getElement().setAttribute("style", "position:fixed;");
 	}
 
+	
+	/**
+	 * Setting the active style when opened from the player.
+	 */
 	@Override
 	public void setCollectionActiveStyle() {
 		 
