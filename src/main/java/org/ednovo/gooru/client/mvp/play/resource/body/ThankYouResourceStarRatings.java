@@ -86,6 +86,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	double average;
 	final String saving="Saving..";
 	final String posting="Posting..";
+	private int totalLength=0;
 	/**
 	 * Class Constructor
 	 * @param assocGooruOId 
@@ -109,6 +110,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		//avgRatingLbl.setText(GL1848);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
+		ratingCommentTxtArea.getElement().setAttribute("maxlength", "500");
 	}
 	
 	/**
@@ -141,7 +143,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	
 	@UiHandler("ratingCommentTxtArea")
 	public void keyRatingTextArea(KeyUpEvent event){
-		String review=ratingCommentTxtArea.getText();
+		String review=ratingCommentTxtArea.getText().trim();
+		totalLength=ratingCommentTxtArea.getText().trim().length();
 		errorLbl.setText("");
 		if(ratingCommentTxtArea.getText().length()>0){
 			btnPost.setEnabled(true);
@@ -160,10 +163,11 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 		if(review.length()==500){
 			errorLbl.setText(GL0143);
 			errorLbl.setVisible(true);
-		//	fieldValidationStaus=false;
+			
+					
 		}else{
 			errorLbl.setVisible(false);
-			
+				
 		}
 	}
 
@@ -173,7 +177,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 	 */
 	@UiHandler("btnPost")
 	public void onRatingReviewPostclick(ClickEvent clickEvent){
-		if(ratingCommentTxtArea.getText().equals("")&& !btnPost.getText().equalsIgnoreCase("Save")){  
+	if(totalLength!=500){
+		if(ratingCommentTxtArea.getText().trim().equals("")&& !btnPost.getText().equalsIgnoreCase("Save")){  
 			btnPost.setEnabled(false);
 			btnPost.getElement().addClassName("disabled");
 		}else{
@@ -199,6 +204,7 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 						SetStyleForProfanity.SetStyleForProfanityForTextArea(ratingCommentTxtArea, mandatoryDescLblForSwareWords, value);
 				}
 			});
+		}
 		}
 	}
 	
