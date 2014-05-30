@@ -791,7 +791,7 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 }
 .usernameCss{
     display: inline-block;
-    width: 65%;
+    width: 30%;
     vertical-align: top;
     color: #515151;
     padding-left: 15px;
