@@ -19,6 +19,7 @@ public class StarRatingsDo implements Serializable {
 	private String freeText;
 	private CreatorDo creator;
 	private long lastModifiedOn;
+	private SearchRatingsDo ratings;
 	public StarRatingsDo(){}
 	
 	/**
@@ -108,6 +109,20 @@ public class StarRatingsDo implements Serializable {
 	 */
 	public void setLastModifiedOn(long lastModifiedOn) {
 		this.lastModifiedOn = lastModifiedOn;
+	}
+
+	/**
+	 * @return the ratings
+	 */
+	public SearchRatingsDo getRatings() {
+		return ratings;
+	}
+
+	/**
+	 * @param ratings the ratings to set
+	 */
+	public void setRatings(SearchRatingsDo ratings) {
+		this.ratings = ratings;
 	}
 
 
