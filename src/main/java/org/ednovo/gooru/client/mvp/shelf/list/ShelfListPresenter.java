@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.search.event.ConsumeShelfCollectionsEvent;
 import org.ednovo.gooru.client.mvp.search.event.RequestShelfCollectionEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ActivateCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.InsertMovedCollectionEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.OpenParentFolderEvent;
@@ -151,6 +152,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		addRegisteredHandler(SetFolderCollectionStyleEvent.TYPE, this); 
 		addRegisteredHandler(OpenParentFolderEvent.TYPE, this); 
 		addRegisteredHandler(UpdateShelfFolderMetaDataEvent.TYPE, this);
+		addRegisteredHandler(ActivateCollectionStyleEvent.TYPE, this);
 	}
 
 	@Override
@@ -511,5 +513,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	@Override
 	public void updateShelfFolderMetaData(String ideas, String performanceTasks, String questions) {
 		getView().updateShelfFolderMetaData(ideas, performanceTasks, questions);
+	}
+
+	@Override
+	public void activecollectionStyle() {
+		getView().setCollectionActiveStyle();
 	}
 }
