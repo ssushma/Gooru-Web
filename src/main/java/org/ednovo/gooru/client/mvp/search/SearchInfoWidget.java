@@ -84,7 +84,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	@UiField FlowPanel licenceContainer,standardsInfoConatiner;
 
 	@UiField HTMLPanel standardsContentContainer,loadingImagePanel;
-	@UiField Label standaInfo;
+	@UiField Label standaInfo,noInfoAvailable;
 
 	@UiField Button addTagsBtn;
 
@@ -103,6 +103,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 	@UiField HTML lblcollectionName;
 
+	boolean isGeneralInfo=false;
+	boolean isEducationalInfo=false;
+	boolean isResourceInfo=false;
+	boolean isAccessibilityInfo=false;
+	
 	/**
 	 * Because this class has a default constructor, it can
 	 * be used as a binder template. In other words, it can be used in other
@@ -117,6 +122,10 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	public SearchInfoWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
+		isGeneralInfo=false;
+		isEducationalInfo=false;
+		isResourceInfo=false;
+		isAccessibilityInfo=false;
 		setResourceInfoData();
 	}
 
@@ -281,14 +290,25 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				setEducationInfoDetails(collectionItemDo);
 				setResourceInfoDetails(collectionItemDo);
 				setAccessibilityDetails(collectionItemDo);
-				
+				if(isAccessibilityInfo==false  
+						&& isGeneralInfo==false
+						&& isEducationalInfo==false
+						&& isResourceInfo==false){
+							noInfoAvailable.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().noresourcesAvailable());
+							noInfoAvailable.setText("No information available for this resource");
+							noInfoAvailable.setVisible(true);
+						}else{
+							noInfoAvailable.setVisible(false);
+						}
 			}
 		});
+		
+		
+		
 	}
 
 
 	protected void setGeneralResourceInfo(CollectionItemDo CollectiongenealInfo) {
-		
 		if(CollectiongenealInfo.getResource()!=null){
 			 ResourceDo resourceDo= CollectiongenealInfo.getResource();
 			String grade = resourceDo.getGrade()!=null ? resourceDo.getGrade() : null;
@@ -301,6 +321,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				gradesPanel.setVisible(true);
 				gradeTitle.setVisible(true);
 				gradesText.setText(InfoUtil.getGrades(grade));
+				isGeneralInfo=true;
 			}else{
 				gradesPanel.setVisible(false);
 				gradeTitle.setVisible(false);
@@ -315,14 +336,20 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			
 			
 			if(resourceDo.getPublisher()!=null){
+				if(resourceDo.getPublisher().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
+				isGeneralInfo=true;
+				}
 			}else{
 				publisherPanel.setVisible(false);
 			}
 			
 			if(resourceDo.getAggregator()!=null){
 //				setAggregatorvalues(collectionItemDo.getResource().getAggregator());
+				if(resourceDo.getAggregator().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getAggregator(), aggregationType, lblAggregation, aggregationPanel);
+				isGeneralInfo=true;
+				}
 			}else{
 				aggregationPanel.setVisible(false);
 			}
@@ -330,6 +357,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			if(host!=null && !host.equals("")){
 				hostPanel.setVisible(true);
 				hostType.setText(CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+				isGeneralInfo=true;
 			}else{
 				hostPanel.setVisible(false);
 			}
@@ -338,7 +366,6 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			
 			if(grade==null && coursesList.isEmpty() && CollectiongenealInfo.getStandards().isEmpty() && url==null &&
 					resourceDo.getPublisher().isEmpty() && resourceDo.getAggregator().isEmpty() && host==null && licence==null ){
-				System.out.println("ININ");
 				generalLbl.setVisible(false);
 				generalPanel.setVisible(false);
 			}
@@ -355,8 +382,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			standardsContentContainer.setVisible(false);
 			licenceContainer.setVisible(false);
 		}
-		
-		
+		if(isGeneralInfo){
+			generalLbl.setVisible(true);
+		}else{
+			generalLbl.setVisible(false);
+		}
 	}
 
 	/**
@@ -374,6 +404,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				licenceContainer.setVisible(true);
 				rightsLogoContainer.clear();
 				rightsLogoContainer.add(image);
+				isGeneralInfo=true;
 			}
 			else{
 				licenceContainer.setVisible(false);
@@ -432,11 +463,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				String stdCode = standard.get(STANDARD_CODE);
 				String stdDec = standard.get(STANDARD_DESCRIPTION);
 				if (count > 2) {
+					isGeneralInfo=true;
 					if (count < 18){
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
 						toolTipwidgets.add(standardItem);
 					}
 				} else {
+					isGeneralInfo=true;
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standardsList);
 					toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().getstandardMoreInfo());
 					standardsContainer.add(toolTipUc);
@@ -444,11 +477,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				count++;
 			}
 			if (standardsList.size()>18){
+				isGeneralInfo=true;
 				final Label left = new Label("+"+(standardsList.size() - 18));
 				toolTipwidgets.add(left);
 				standardsContentContainer.setVisible(true);
 			}
 			if (standardsList.size() > 2) {
+				isGeneralInfo=true;
 				Integer moreStandardsCount = standardsList.size() - 3;
 				if (moreStandardsCount >0){
 					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label("+" + moreStandardsCount), toolTipwidgets, standardsList);
@@ -495,6 +530,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			this.originalUrlText.add(originalUrlAnchor);
 			this.originalUrlTitle.setVisible(true);
 			this.originalUrlText.setVisible(true);
+			isGeneralInfo=true;
 		}else{
 			this.originalUrlTitle.setVisible(false);
 			this.originalUrlText.setVisible(false);
@@ -546,12 +582,14 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}
 		courseInfo.clear();
 		if(coursesList.size()>0){
+			isGeneralInfo=true;
 			final Label courseInfoLabel=new Label(coursesList.get(0));
 			courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
 			courseInfo.add(courseInfoLabel);
 			coursePanel.setVisible(true);
 		}
 		if(coursesList.size()>1){
+			isGeneralInfo=true;
 			final Label courseCountLabel=new Label("+"+(coursesList.size()-1)); 
 			courseCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
 			courseInfo.add(courseCountLabel);
@@ -602,6 +640,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}else{
 			educationallLbl.setText(GL1720);
 			if(eduUsedetails.size()>0){
+				isEducationalInfo=true;
 				final Label eduUseLabel=new Label(eduUsedetails.get(0));
 				eduUseLabel.getElement().setAttribute("style", "float: left;");
 				eduUseType.add(eduUseLabel);
@@ -611,6 +650,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				educationallLbl.setVisible(true);
 			}
 			if(eduUsedetails.size()>2){
+				isEducationalInfo=true;
 				final Label eduUseLabel=new Label("+"+(eduUsedetails.size()-2)); 
 				eduUseLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
 				eduUseType.add(eduUseLabel);
@@ -671,7 +711,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 								depthofknowledgedetails.add(collectionItemDo.getResource().getDepthOfKnowledges().get(i).getValue());
 							}
 						}
+						if(depthofknowledgedetails.size()>0){
+						isEducationalInfo=true;
+						dKnowledgeLbl.setVisible(true);
 						InfoUtil.setDepthofknowledgeDetails(depthofknowledgedetails, dKnowledgeType, dKnowledgeLbl, dKnowledgePanel);
+						}else{
+							dKnowledgeLbl.setVisible(false);
+						}
 						//dKnowledgePanel.setVisible(true);
 					}else{
 						dKnowledgePanel.setVisible(false);
@@ -691,7 +737,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 								momentoflearningdetails.add(collectionItemDo.getResource().getMomentsOfLearning().get(i).getValue());
 							}
 						}
+						if(momentoflearningdetails.size()>0){
+						momentsoflearningLbl.setVisible(true);
+						isEducationalInfo=true;
 						InfoUtil.setDepthofknowledgeDetails(momentoflearningdetails,momentsoflearningType,momentsoflearningLbl,momentsoflearningPanel);
+						}else{
+							momentsoflearningLbl.setVisible(false);
+						}
 						//momentsoflearningPanel.setVisible(true);
 					}else{
 						momentsoflearningPanel.setVisible(false);	
@@ -701,10 +753,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}
 				dKnowledgePanel.setVisible(false);
 			}
-             
-
 			if(collectionItemDo.getResource().getCustomFieldValues()!=null){
-
 				String learningMode = collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode()!=null ? collectionItemDo.getResource().getCustomFieldValues().getCfLearningMode() : null;
 				String educationRole= collectionItemDo.getResource().getCustomFieldValues().getCfEndUser()!=null ? collectionItemDo.getResource().getCustomFieldValues().getCfEndUser() : null ;
 				String age = collectionItemDo.getResource().getCustomFieldValues().getCfAge()!=null ? collectionItemDo.getResource().getCustomFieldValues().getCfAge() : null ;
@@ -713,24 +762,28 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				String alignType = collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment()!=null ? collectionItemDo.getResource().getCustomFieldValues().getCfEducationalAlignment() : null;
 
 				if(alignType!=null && !alignType.equals("")){
+					isEducationalInfo=true;
 					eduAllignType.setText(alignType);
 					eduAllignPanel.setVisible(true);
 				}else{
 					eduAllignPanel.setVisible(false);
 				}
 				if(educationRole!=null && !educationRole.equals("")){
+					isEducationalInfo=true;
 					eduRoleType.setText(educationRole);
 					eduRolePanel.setVisible(true);
 				}else{
 					eduRolePanel.setVisible(false);
 				}
 				if(learningMode!=null && !learningMode.equals("")){
+					isEducationalInfo=true;
 					interactiveType.setText(learningMode);
 					interactivityTypePanel.setVisible(true);
 				}else{
 					interactivityTypePanel.setVisible(false);
 				}
 				if(age!=null && !age.equals("")){
+					isEducationalInfo=true;
 					ageRangeType.setText(age);
 					ageRangePanel.setVisible(true);
 				}else{
@@ -738,6 +791,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}
 
 				if(readingLevel!=null && !readingLevel.equals("")){
+					isEducationalInfo=true;
 					readingLevelType.getElement().setInnerText(readingLevel);
 					readingLevelPanel.setVisible(true);
 				}else{
@@ -745,6 +799,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				}
 
 				if(schLevel!=null && !schLevel.equals("")){
+					isEducationalInfo=true;
 					schLevelInfo.setText(schLevel);
 					schLevelPanel.setVisible(true);
 				}else{
@@ -772,6 +827,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			momentsoflearningPanel.setVisible(false);
 			dKnowledgePanel.setVisible(false);
 		}
+		if(isEducationalInfo){
+			educationallLbl.setVisible(true);
+		}else{
+			educationallLbl.setVisible(false);
+		}
 	}
 	
 	/**
@@ -795,42 +855,49 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			
 			
 			if(countryCode!=null && !countryCode.equals("")){
+				isResourceInfo=true;
 				countryCodeType.setText(countryCode);
 				countryCodePanel.setVisible(true);
 			}else{
 				countryCodePanel.setVisible(false);
 			}
 			if(language!=null && !language.equals("")){
+				isResourceInfo=true;
 				languageType.setText(language);
 				languagePanel.setVisible(true);
 			}else{
 				languagePanel.setVisible(false);
 			}
 			if(dataType!=null && !dataType.equals("")){
+				isResourceInfo=true;
 				dataTypeFormat.setText(dataType);
 				dataTypePanel.setVisible(true);
 			}else{
 				dataTypePanel.setVisible(false);
 			}
 			if(copyrightHolder!=null && !copyrightHolder.equals("")){
+				isResourceInfo=true;
 				copyRightType.setText(copyrightHolder);
 				copyRightPanel.setVisible(true);
 			}else{
 				copyRightPanel.setVisible(false);
 			}
 			if(author!=null && !author.equals("")){
+				isResourceInfo=true;
 				authorName.setText(author);
 				authorPanel.setVisible(true);
 			}else{
 				authorPanel.setVisible(false);
 			}
 			if(keywords!=null && !keywords.equals("")){
+				isResourceInfo=true;
 				keywordsInfo.getElement().setInnerText(keywords);
 				keyWordsPanel.setVisible(true);
 			}else{
 				keyWordsPanel.setVisible(false);
 			}
 			if(ads!=null && !ads.equals("")){
+				isResourceInfo=true;
 				adsName.setText(ads);
 				adsPanel.setVisible(true);
 			}else{
@@ -852,6 +919,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			languagePanel.setVisible(false);
 			resourceInfoLbl.setVisible(false);
 		}
+		if(isResourceInfo){
+			resourceInfoLbl.setVisible(true);
+		}else{
+			resourceInfoLbl.setVisible(false);
+		}
 	}
 	
 	/**
@@ -870,9 +942,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				if(mobileFriendly.equalsIgnoreCase(IPAD_FRIENDLY)){
 					mobileFriendlyPanel.setVisible(true);
 					mbFriendlyText.setText(GL_GRR_YES);
+					isAccessibilityInfo=true;
 				}else{
 					mobileFriendlyPanel.setVisible(true);
 					mbFriendlyText.setText(GL1735);
+					isAccessibilityInfo=true;
 				}
 			}else{
 				mobileFriendlyPanel.setVisible(false);
@@ -889,24 +963,28 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				if(accessMode!=null && !accessMode.equals("")){
 					accessModeType.getElement().setInnerText(accessMode);
 					accessModePanel.setVisible(true);
+					isAccessibilityInfo=true;
 				}else{
 					accessModePanel.setVisible(false);
 				}
 				if(mediaFeature!=null && !mediaFeature.equals("")){
 					mediaFeatureType.getElement().setInnerText(mediaFeature);
 					mediaFeaturePanel.setVisible(true);
+					isAccessibilityInfo=true;
 				}else{
 					mediaFeaturePanel.setVisible(false);
 				}
 				if(controlFlexibility!=null && !controlFlexibility.equals("")){
 					controlType.setText(controlFlexibility);
 					controlPanel.setVisible(true);
+					isAccessibilityInfo=true;
 				}else{
 					controlPanel.setVisible(false);
 				}
 				if(accessHazard!=null && !accessHazard.equals("")){
 					acessHazardType.setText(accessHazard);
 					accessHazardPanel.setVisible(true);
+					isAccessibilityInfo=true;
 				}else{
 					accessHazardPanel.setVisible(false);
 				}
@@ -924,8 +1002,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			accessModePanel.setVisible(false);
 			mobileFriendlyPanel.setVisible(false);
 		}
-		
+		if(isAccessibilityInfo){
+			accesibilityLbl.setVisible(true);	
+		}else{
+			accesibilityLbl.setVisible(false);
+		}
 	}
+	
 	
 	/**
 	 * @return the loadingImageLabel

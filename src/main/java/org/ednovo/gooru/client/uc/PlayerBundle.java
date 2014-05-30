@@ -403,6 +403,7 @@ public interface PlayerBundle extends ClientBundle {
 		public String htmlUserReviewContainer();
 		public String editRatingBtn();
 		public String textAreaRating();
+		public String noresourcesAvailable();
 		
 		
 	}
