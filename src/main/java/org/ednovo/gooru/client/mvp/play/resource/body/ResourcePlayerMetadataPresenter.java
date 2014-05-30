@@ -403,7 +403,7 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 	}
 
 	public void clearStarRatings() {
-//		getView().clearAllStarsForAnnonymous();
+		getView().clearAllStarsForAnnonymous();
 	}
 
 	/*@Override
