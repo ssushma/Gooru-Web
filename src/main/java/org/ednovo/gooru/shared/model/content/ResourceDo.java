@@ -359,6 +359,9 @@ public class ResourceDo extends ContentDo {
     }
 
     public void setUrl(String url) {
+    	if(url==null) {
+    		url = "";
+    	}
         this.url = url;
     }
 
