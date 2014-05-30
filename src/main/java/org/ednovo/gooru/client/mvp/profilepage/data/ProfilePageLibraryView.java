@@ -236,6 +236,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 
 	@Override
 	public void setEmptyContainer(boolean isEmpty) {
+		loadingPanel(!isEmpty);
 		emptyContainer.setVisible(isEmpty);
 		leftNav.setVisible(!isEmpty);
 		contentScroll.setVisible(!isEmpty);
