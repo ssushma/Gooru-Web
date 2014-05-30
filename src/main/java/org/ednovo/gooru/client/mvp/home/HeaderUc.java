@@ -1179,11 +1179,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 			imgUserProfile.setVisible(true);
 			LoginLinkContainer.setVisible(true);
 			loggedInfoLbl.setVisible(true);
-			if (userDo.getUsername().length() >= 15){
+/*			if (userDo.getUsername().length() >= 15){
 				LoginLinkContainer.getElement().getStyle().setWidth(155, Unit.PX);
 			}else if (userDo.getUsername().length() <= 5){
-				LoginLinkContainer.getElement().getStyle().setWidth(70, Unit.PX);
-			}
+				LoginLinkContainer.getElement().getStyle().setWidth(100, Unit.PX);
+			}*/
 			logoutDownArrowLbl.setVisible(true);
 			logInfoFloPanel.setVisible(false);
 			if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 0) {
