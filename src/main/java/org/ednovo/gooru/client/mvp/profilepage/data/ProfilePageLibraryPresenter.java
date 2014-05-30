@@ -61,11 +61,13 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new AsyncCallback<ProfileLibraryListDo>(){
 			@Override
-			public void onFailure(Throwable caught) {}
+			public void onFailure(Throwable caught) {
+				getView().setEmptyContainer(true);
+			}
 			
 			@Override
 			public void onSuccess(ProfileLibraryListDo result) {
-				if(result.getSearchResult().size()>0) {
+				if(result!=null && result.getSearchResult()!=null && result.getSearchResult().size()>0) {
 					getView().setEmptyContainer(false);
 					getView().setUnitList(result);
 				} else {
