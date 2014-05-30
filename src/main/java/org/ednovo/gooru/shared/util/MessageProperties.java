@@ -406,9 +406,9 @@ public interface MessageProperties {
 	//Collection Share Tab... Please dont use this...
 	
 	//ImproveGoorupopup
-	String	GL0285	= "We've Improved Gooru!";
+	String	GL0285	= "What's new in Gooru?";
 	String	GL0286	= "Gooru just got better!";
-	String	GL0287	= "We are excited to announce that we have added more features to Gooru!";
+	String	GL0287	= "Gooru just got better! Learn more about our new features.";
 	String	GL0288	= "What's new?";
 	String	GL0289	= "A new question type: Multiple Answer";
 	String	GL0290	= "Because sometimes a question can have more than one correct answer. &nbsp;";
