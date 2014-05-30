@@ -49,4 +49,5 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void setRatingMetaData(String assocGooruOid, Integer score,String review, double average, Integer count);  
 	public void displaySuccessPopup();
 	public void updateRatingOnSearch(StarRatingsDo starRatingsDo);
+	public void clearAllStarsForAnnonymous();
 }
