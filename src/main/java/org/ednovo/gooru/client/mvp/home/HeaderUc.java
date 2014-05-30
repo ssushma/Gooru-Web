@@ -1173,6 +1173,9 @@ public class HeaderUc extends Composite implements MessageProperties,
 			 
 			loggedInfoLbl.setText(userDo.getUsername());
 			imgUserProfile.setUrl(userDo.getProfileImageUrl() != "" && userDo.getProfileImageUrl() !=null ? userDo.getProfileImageUrl() : null);
+			
+			imgUserProfile.getElement().setAttribute("onerror","imgError(this);");
+			
 			imgUserProfile.setVisible(true);
 			LoginLinkContainer.setVisible(true);
 			loggedInfoLbl.setVisible(true);
