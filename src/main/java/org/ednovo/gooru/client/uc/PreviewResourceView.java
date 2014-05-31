@@ -7,6 +7,9 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -65,18 +68,31 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 		setReourceSourceName();
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
+		ratingWidgetView=new RatingWidgetView();
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
 		}
 	}
 	
 	
+	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {
+		
+		@Override
+		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
+			if(collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
+				System.out.println("-- inside --");
+				ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
+				ratingWidgetView.setAvgStarRating(average);
+			}
+			
+		}
+	};
 	
 	/**
 	 * Average star ratings widget will get integrated.
 	 */
 	private void setAvgRatingWidget() {
-		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount().toString());
 		ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());

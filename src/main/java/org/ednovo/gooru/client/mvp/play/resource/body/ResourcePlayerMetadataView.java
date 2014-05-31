@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationCo
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -907,6 +908,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
+			}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+				if(result.getRatings()!=null){
+					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+				}
 			}
 		}else{
 			isRated=false;
