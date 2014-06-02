@@ -55,6 +55,8 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.uc.BrowserAgent;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
@@ -243,6 +245,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
 	
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
@@ -325,6 +328,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		}
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
 
 
@@ -375,6 +379,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		AppClientFactory.getEventBus().addHandler(OpenLessonConceptEvent.TYPE, openLessonConceptHandler);
 		AppClientFactory.getEventBus().addHandler(SetLoadingIconEvent.TYPE, setLoadingIconHandler);
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
 
 	private void setPartnerLibraryLessonData(final ArrayList<PartnerFolderDo> lessonDoList) {
@@ -1259,4 +1264,12 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		}
 		return categoryIcon.toLowerCase();
 	}
+	
+	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
+
+		@Override
+		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
+			
+		}
+	};
 }
