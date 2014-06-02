@@ -2170,7 +2170,7 @@ public interface MessageProperties {
     	String GL1698="Is Adaptation";
     	String GL1699="Copyright Holder";
     	String GL1700="Host";
-    	String GL1701="Gooru Course : ";
+    	String GL1701="Gooru Course";
     	String GL1702="Accessbility API";
     	String GL1703="ACCESSIBILITY";
     	String GL1704="Control Flexibility";
