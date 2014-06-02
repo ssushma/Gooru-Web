@@ -876,7 +876,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	}
 	
 	private String removeHtmlTags(String html){
-        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
+		html = html.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
+        html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "").replaceAll("<p class=\"p1\">", "");
         return html;
 	}
 	public boolean isProtocolMatched(String sourceUrl){
