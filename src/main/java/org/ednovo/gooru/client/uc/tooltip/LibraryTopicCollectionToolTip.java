@@ -1,6 +1,9 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -66,6 +69,7 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 		categoryLbl.setHTML(category);
 		sourceLbl.setText(source);
 		setAvgRatingWidget(ratingCount,average);
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
 	
 	public LibraryTopicCollectionToolTip(String content){
@@ -91,7 +95,7 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 			categoryLbl.setHTML(content);
 		}
 	}
-	private void setAvgRatingWidget(int ratingCount,double averageRating ) {
+	private void setAvgRatingWidget(int ratingCount,double averageRating) {
 		ratingWidgetPanel.clear();
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.getRatingCountLabel().setText(ratingCount+"");
@@ -99,4 +103,14 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
+	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
+
+		@Override
+		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
+		}
+	};
+	protected void setUpdatedRatingWidget(Integer count, double average) { 
+		
+	}
+
 }

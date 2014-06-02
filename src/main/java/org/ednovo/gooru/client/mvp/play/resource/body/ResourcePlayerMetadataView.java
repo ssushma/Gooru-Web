@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.NavigationCo
 import org.ednovo.gooru.client.mvp.play.resource.framebreaker.ResourceFrameBreakerView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteHandler;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.uc.StarRatingsUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
@@ -905,8 +906,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.RESOURCE_PLAY)){
 				if(result.getRatings()!=null){
 					AppClientFactory.fireEvent(new UpdateResourceRatingCountEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
 				}
 				
+			}else if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+				if(result.getRatings()!=null){
+					AppClientFactory.fireEvent(new UpdateRatingsInRealTimeEvent(collectionItemDo.getResource().getGooruOid(),result.getRatings().getAverage(),result.getRatings().getCount()));
+				}
 			}
 		}else{
 			isRated=false;
@@ -978,23 +984,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 		
-	
-		
-		/**
-		 * Sets the Star rating based on the API result.
-		 * @param result {@link StarRatingsDo}
-		 * @param showThankYouToolTip {@link Boolean} 
-		 */
-		/*private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
-			if(showThankYouToolTip){
-				ThankYouResourceStarRatings thankYouResourceStarRatings = new ThankYouResourceStarRatings();
-				thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-				thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
-				thankYouResourceStarRatings.show();
-				thankYouResourceStarRatings.setAutoHideEnabled(true);
-			}
-			setUserRatings(result);
-		}*/
 	}
 	
 	public void removeRatingContainer(boolean flag){

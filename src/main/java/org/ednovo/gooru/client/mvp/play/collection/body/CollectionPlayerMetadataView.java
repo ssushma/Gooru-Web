@@ -208,6 +208,10 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
 			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		}
+	else{
+		String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId();
+		usernameAnchor.setHref(token);
+	}
 		usernameAnchor.setText(userName);
 		usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
 		usernameAnchor.setTarget("_blank");

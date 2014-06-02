@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
@@ -127,6 +128,8 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	private static final String NULL = "null";
 	private static String publisherData = "";
 	private static String aggregatorData = "";
+	private boolean isRatingUpdated=true;
+	
 	
 	/**
 	 * Class constructor, assign new instance of {@link ResourceSearchResultWrapperVc}, and call resource search result setData method
@@ -179,8 +182,41 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 			
-			String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
+			//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
+			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
+			if(resourceSearchResultDo.getAggregator()!=null){
+				 String aggregatorData = "";
+				for (String aggregator: resourceSearchResultDo.getAggregator()) {
+					if(resourceSearchResultDo.getAggregator().size()>1){
+						aggregatorData = aggregatorData+aggregator+",";
+					}
+					else
+					{
+						aggregatorData = aggregator;
+					}
+				}
+				if(aggregatorData.endsWith(",")){
+					aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
+				}
+				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
+			}
+			
+			if(resourceSearchResultDo.getPublisher()!=null){
+				String publisherData = "";
+				for (String publisher: resourceSearchResultDo.getPublisher()) {
+					if(resourceSearchResultDo.getPublisher().size()>1){
+						publisherData = publisherData+publisher+",";
+					}else
+					{
+						publisherData = publisher;
+					}
+				
+				}
+				if(publisherData.endsWith(",")){
+					publisherData=publisherData.substring(0, publisherData.length()-1);
+				}
+				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			}
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
 			
 	        SearchUiUtil.renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
@@ -218,6 +254,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		
 		//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 		if(resourceSearchResultDo.getAggregator()!=null){
+			 String aggregatorData = "";
 			for (String aggregator: resourceSearchResultDo.getAggregator()) {
 				if(resourceSearchResultDo.getAggregator().size()>1){
 					aggregatorData = aggregatorData+aggregator+",";
@@ -234,6 +271,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 		}
 		
 		if(resourceSearchResultDo.getPublisher()!=null){
+			String publisherData = "";
 			for (String publisher: resourceSearchResultDo.getPublisher()) {
 				if(resourceSearchResultDo.getPublisher().size()>1){
 					publisherData = publisherData+publisher+",";
@@ -320,14 +358,15 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
 				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
 				ratingWidgetView.setAvgStarRating(avg);
-				if(count==1){
+				if(count>0 && isRatingUpdated){
+					isRatingUpdated=false;
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
 
 						@Override
 						public void onClick(ClickEvent event) {
-							
+							AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo)); 
 						}
 						
 					});
