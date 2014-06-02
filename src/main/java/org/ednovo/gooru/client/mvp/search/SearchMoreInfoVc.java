@@ -163,13 +163,14 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		
 		setWidget(uiBinder.createAndBindUi(this));
 
-		rightsLbl.setText(GL0731);
+		rightsLbl.setText("");
 		resourceSearchRightsFieldVc.setToolTip(GL0730);
 		imgQuestionImage.setTitle(GL0732);
 		imgQuestionImage.setAltText(GL0732);
 		imgQuestionImage.setUrl("images/mos/questionmark.png");
 		resourceSearchGradeFieldVc.setToolTip(GL0325);
 		rightsLbl.setVisible(false);
+		
 
 		setUsedInResourcesAsyncCallback(new SimpleAsyncCallback<SearchDo<C>>() {
 
