@@ -68,10 +68,10 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 		setReourceSourceName();
 		setResourceSequence(itemIndex+1);
 		setResourcePlayLink();
-		ratingWidgetView=new RatingWidgetView();
-		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
+		
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
 			setAvgRatingWidget();
+			AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		}
 	}
 	
@@ -81,9 +81,11 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 		@Override
 		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
 			if(collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
-				System.out.println("-- inside --");
-				ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
-				ratingWidgetView.setAvgStarRating(average);
+				collectionItemDo.getResource().getRatings().setCount(count);
+                collectionItemDo.getResource().getRatings().setAverage(average);
+				setAvgRatingWidget();
+				
+				
 			}
 			
 		}
@@ -93,9 +95,11 @@ public class PreviewResourceView extends Composite implements HasClickHandlers,M
 	 * Average star ratings widget will get integrated.
 	 */
 	private void setAvgRatingWidget() {
+		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetView.getRatingCountLabel().setText(collectionItemDo.getResource().getRatings().getCount().toString());
 		ratingWidgetView.setAvgStarRating(collectionItemDo.getResource().getRatings().getAverage());
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.clear();
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	
