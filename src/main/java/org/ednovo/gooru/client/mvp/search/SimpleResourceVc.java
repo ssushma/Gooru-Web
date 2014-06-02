@@ -30,6 +30,8 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
@@ -109,6 +111,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 		imgNotFriendly.setAltText(GL0737);
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		setData(resourceSearchResultDo);
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 	}
 
 	/**
@@ -190,8 +193,23 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 			ratingWidgetView.setAvgStarRating(resourceSearchResultDo.getRatings().getAverage());
 		}
 		//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		ratingWidgetPanel.clear();
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
+	
+	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
+
+		@Override
+		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
+			if(collectionItemSearchResultDo.getGooruOid().equals(gooruOid)){
+				collectionItemSearchResultDo.getRatings().setCount(count);
+				collectionItemSearchResultDo.getRatings().setAverage(average);
+				setAvgRatingWidget(collectionItemSearchResultDo);
+			}
+			/*ratingWidgetView.getRatingCountLabel().setText(collectionItemSearchResultDo.getRatings().getCount()!=null?collectionItemSearchResultDo.getRatings().getCount().toString():"0");
+			ratingWidgetView.setAvgStarRating(collectionItemSearchResultDo.getRatings().getAverage());*/
+		}
+	};
 
 	/**
 	 * 
@@ -261,4 +279,6 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	public int getDragLeftCorrection() {
 		return 11;
 	}
+	
+	
 }
