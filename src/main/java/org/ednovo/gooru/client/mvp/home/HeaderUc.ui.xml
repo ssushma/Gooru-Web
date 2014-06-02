@@ -261,7 +261,6 @@
 		div#LinkheaderElement5 {
 			padding: 10px;
 			padding-right: 5px;
-			width: 100px;
 		}
 		
 		.menu{
