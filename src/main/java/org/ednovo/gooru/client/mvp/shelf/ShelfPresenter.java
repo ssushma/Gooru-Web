@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.ActivateSearchBarEvent;
+import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
@@ -287,8 +288,11 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.WORKSPACE_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
-		
-		if(AppClientFactory.isAnonymous()){
+		String idParm = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+		if (idParm != null && AppClientFactory.isAnonymous()){
+			AppClientFactory.fireEvent(new InvokeLoginEvent());
+			
+		}else if(AppClientFactory.isAnonymous()){
 			getView().setOnlyNoDataCollection();
 		} else {
 			getView().setBackToSearch();
