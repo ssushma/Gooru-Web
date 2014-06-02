@@ -177,7 +177,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
 		publisherText.setText(GL0566);
-		courseText.setText(GL1701);
+		courseText.setText(GL1701+ ""+GL_SPL_SEMICOLON);
 		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
 		standardsText.setText(GL1877+GL_SPL_SEMICOLON);
 		collectionsText.getElement().setInnerHTML(GL0620);
