@@ -358,7 +358,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
 				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
 				ratingWidgetView.setAvgStarRating(avg);
-				if(count>0 && isRatingUpdated){
+				if(count==1 && isRatingUpdated){
 					isRatingUpdated=false;
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
