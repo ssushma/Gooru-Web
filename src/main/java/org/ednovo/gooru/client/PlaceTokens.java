@@ -56,7 +56,7 @@ public interface PlaceTokens {
 	String LESSONOPOLY = "Lessonopoly";
 	String NGC = "NGC";
 	String WSPWH = "WSPWH";
-	String PSDPAL = "PSDPAL";
-	String FINCAPINC = "fincapinc";
+	String PSDPAL = "PSD";
+	String FINCAPINC = "CFCI";
 	
 }

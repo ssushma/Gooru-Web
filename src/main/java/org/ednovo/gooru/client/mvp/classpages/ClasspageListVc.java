@@ -756,7 +756,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		if(classpageOwnerId==null || classpageOwnerId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getGooruUId())){
 			tmptitle = title + " (Owner)";
 		}else{
-			tmptitle = title + " (Joined)";
+			tmptitle = title + " (Member)";
 		}
 		
 		return tmptitle;

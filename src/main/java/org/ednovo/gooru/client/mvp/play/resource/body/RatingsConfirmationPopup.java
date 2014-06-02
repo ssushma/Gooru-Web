@@ -45,7 +45,12 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 		if(count!=null)
 		ratingWidgetView.getRatingCountLabel().setText(count.toString());
 		ratingWidgetView.setAvgStarRating(average);
-	//	ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		if(count>0)
+		{
+		ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+		ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+		ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+		}
 		ratingWidgetPanel.add(ratingWidgetView);
 	}
 	/**
@@ -59,8 +64,14 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 			/**
 			 * OnClick of count label event to invoke Review pop-pup
 			 */
+			closeAction();
 			AppClientFactory.fireEvent(new OpenReviewPopUpEvent(assocGooruOId, "",createrName)); 
 		}
+	}
+	
+	public void closeAction()
+	{
+		this.hide();
 	}
 	
 	@UiHandler("btnOk")

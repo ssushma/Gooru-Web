@@ -110,7 +110,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  {
 			  ipadSectiondiv.setVisible(false);
 			  androidSectiondiv.setVisible(false);
-			  wrapperPanel.getElement().setAttribute("style", "margin-top:38px;");
+			  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
@@ -142,7 +142,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  ipadSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
 		  androidSectiondiv.setVisible(false);
-		  wrapperPanel.getElement().setAttribute("style", "margin-top:38px;");
+		  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  LibraryView.onClosingAndriodorIpaddiv();
 		  ShelfListView.onClosingAndriodorIpaddiv();
@@ -154,7 +154,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  ipadSectiondiv.setVisible(false);
 		  StringUtil.IPAD_MESSAGE_Close_Click = true;
 		  androidSectiondiv.setVisible(false);
-		  wrapperPanel.getElement().setAttribute("style", "margin-top:38px;");
+		  wrapperPanel.getElement().setAttribute("style", "margin-top:36px;");
 		  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  LibraryView.onClosingAndriodorIpaddiv();
 		  ShelfListView.onClosingAndriodorIpaddiv();

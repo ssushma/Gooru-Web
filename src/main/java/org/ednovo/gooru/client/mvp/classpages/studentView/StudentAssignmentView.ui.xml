@@ -31,7 +31,7 @@
 		<g:HTMLPanel styleName="{StudentStyle.classpageClasscode}">
 		<g:HTMLPanel styleName="{StudentStyle.usernameDivContianer}">
 		<g:Image styleName="{StudentStyle.radioButtonImg}" ui:field="imgProfileImage"/>
-		<g:Label styleName="{StudentStyle.usernameCss}" ui:field="lblUserName" />
+		<g:Label styleName="{StudentStyle.usernameCssName}" ui:field="lblUserName" />
 		</g:HTMLPanel>
 			<g:HTMLPanel styleName="{StudentStyle.classpageCodeShareInput}">
 				<g:Button styleName="primary {StudentStyle.classpageHoverButton}"

@@ -34,6 +34,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -105,6 +107,7 @@ public class TocResourceView extends Composite implements HasClickHandlers,Messa
 		if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY)){
 			setAvgRatingWidget();
 		}
+		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		
 	}
 	/**
@@ -382,4 +385,17 @@ public class ResourceRequest implements ClickHandler{
 		contentHtml.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setEllipses());
 		return contentHtml;
 	}
+	
+	UpdateRatingsInRealTimeHandler setRatingWidgetMetaData = new UpdateRatingsInRealTimeHandler() {	
+		
+		@Override
+		public void updateRatingInRealTime(String gooruOid, double average,Integer count) {
+			if(collectionItemDo.getResource()!=null){
+				if(collectionItemDo.getResource().getGooruOid().equals(gooruOid)){
+					ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
+					ratingWidgetView.setAvgStarRating(average);
+				}
+			}
+		}
+	};
 }
