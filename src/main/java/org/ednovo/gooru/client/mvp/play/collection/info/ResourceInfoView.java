@@ -208,8 +208,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(collectionItemDoGlobal.getResource().getRatings().getCount()>0)
 			{
 				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
-				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey;");
-				//ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+				ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
 			}
 			ratingWidgetView.setAvgStarRating(collectionItemDoGlobal.getResource().getRatings().getAverage());
 		}

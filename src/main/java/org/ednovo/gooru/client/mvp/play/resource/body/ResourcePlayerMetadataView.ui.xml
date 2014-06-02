@@ -50,25 +50,11 @@
 				   	 </g:HTMLPanel>
 				   		 
 				    <g:HTMLPanel  ui:field="allEmoticsContainer">
-						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-							<g:Button ui:field="canExplainEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_i}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipOne"></g:Label>
-								</g:HTMLPanel>
-						</g:HTMLPanel>
-						<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-							<g:Button ui:field="understandEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}"></g:Button>
-								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
-									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipTwo"></g:Label>
-								</g:HTMLPanel>
-							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-								<g:Button  ui:field="mehEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_viii}"></g:Button>
+								<g:Button  ui:field="needHelpButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iv}"></g:Button>
 								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
 									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipThree"></g:Label>
+									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipFive"></g:Label>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
@@ -79,12 +65,26 @@
 								</g:HTMLPanel>
 							</g:HTMLPanel>
 							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
-								<g:Button  ui:field="needHelpButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iv}"></g:Button>
+								<g:Button  ui:field="mehEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_viii}"></g:Button>
 								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
 									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
-									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipFive"></g:Label>
+									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipThree"></g:Label>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
+							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+							<g:Button ui:field="understandEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_ii}"></g:Button>
+								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipTwo"></g:Label>
+								</g:HTMLPanel>
+							</g:HTMLPanel>
+							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
+							<g:Button ui:field="canExplainEmoticButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_i}"></g:Button>
+								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
+									<g:HTMLPanel styleName="{playerStyle.spriteType} {playerStyle.emoticonArrow}"></g:HTMLPanel>
+									<g:Label styleName="{playerStyle.emoticonPopupInner}" ui:field="reactionToolTipOne"></g:Label>
+								</g:HTMLPanel>
+						</g:HTMLPanel>
 					</g:HTMLPanel>
 			    </htmlevents:HTMLEventPanel>
 			   
