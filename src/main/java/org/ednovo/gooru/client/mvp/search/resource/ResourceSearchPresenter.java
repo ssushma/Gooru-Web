@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.SearchAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
 import org.ednovo.gooru.client.mvp.search.AbstractSearchPresenter;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
 import org.ednovo.gooru.client.mvp.search.SearchUiHandlers;
@@ -79,6 +81,7 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		super(view, proxy, signUpViewPresenter);
 		this.ratingAndReviewPopup=ratingAndReviewPopup;
 		getView().setUiHandlers(this);
+		addRegisteredHandler(UpdateRatingsInSearchEvent.TYPE,this);
 	}
 
 //	@Override
@@ -139,5 +142,10 @@ public class ResourceSearchPresenter extends AbstractSearchPresenter<ResourceSea
 		Window.enableScrolling(false);
 		ratingAndReviewPopup.displayPopup(searchResultDo.getResourceTitle(), searchResultDo.getGooruOid(),null);
 		addToPopupSlot(ratingAndReviewPopup);
+	}
+
+	@Override
+	public void updateRatingInSearch(ResourceSearchResultDo searchResultDo) {
+		showRatingAndReviewPopup(searchResultDo);
 	}
 }

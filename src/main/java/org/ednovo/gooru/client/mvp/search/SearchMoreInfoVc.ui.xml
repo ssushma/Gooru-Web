@@ -14,7 +14,7 @@
                </g:FlowPanel> -->
              <!--   <g:Label styleName="{res.css.moreInfoResourcesCountLblTxt}" text="Liciense" /> -->
             
-             <g:Label ui:field="rightsLbl" styleName="{res.css.moreInfoRightsLbl}"></g:Label>
+             <g:Label ui:field="rightsLbl" styleName="{res.css.moreInfoRightsLbl}" visible="false"></g:Label>
              <s:MoreInfoFieldVc imageStyle="{res.css.rightsIcon}"  ui:field="resourceSearchRightsFieldVc"/>
             
 				
