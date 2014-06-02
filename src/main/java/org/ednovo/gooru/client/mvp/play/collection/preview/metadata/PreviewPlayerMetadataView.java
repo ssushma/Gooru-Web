@@ -293,8 +293,13 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	public void setUserName(String userName){
 		usernameAnchor = new Anchor();
 		//userNameLabel.setText(userName);
+		
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
 			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		}
+		else{
+			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId();
+			usernameAnchor.setHref(token);
 		}
 		usernameAnchor.setText(userName);
 		usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
