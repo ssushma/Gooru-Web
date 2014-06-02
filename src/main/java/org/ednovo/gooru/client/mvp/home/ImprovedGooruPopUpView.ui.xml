@@ -339,8 +339,10 @@
 							ui:field="lblnavigation"></g:Label>
 						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
 							ui:field="aboutNavigation"></g:InlineLabel>
+							<g:HTMLPanel>
 						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
 							ui:field="descLinkNavigation" target="_blank"></g:Anchor>
+							</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				
