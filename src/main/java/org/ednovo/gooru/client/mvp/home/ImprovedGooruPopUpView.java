@@ -76,16 +76,16 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 	HTMLEventPanel closeButton;
 
 	@UiField
-	Anchor lblSupportLink,  descLinkFive,descLinkSix,descLinkSeven,descLinkEight;
+	Anchor lblSupportLink,  descLinkFive,descLinkSix,descLinkSeven,descLinkEight,descLinkNavigation;
 
 	@UiField
-	InlineLabel    aboutFive,aboutSix,aboutSeven,aboutEight;
+	InlineLabel    aboutFive,aboutSix,aboutSeven,aboutEight,aboutNavigation;
 
 	@UiField
 	HTMLPanel GooruLinkOutercontainer;
 	@UiField
 	Label headertext, subtext, goorutext, headersubtext,
-			   lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight;
+			   lblTitleFive,lblTitleSix,lblTitleSeven,lblTitleEight,lblnavigation;
 
 	@UiField
 	HTML questiontxt;
@@ -143,7 +143,11 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		aboutFour.setText(GL0627);*/
 		
 		lblTitleSix.setText(GL1880);
+		lblnavigation.setText(GL1890);
 		aboutSix.setText(GL1881);
+		aboutNavigation.setText(GL1891);
+		descLinkNavigation.setText(GL1239);
+		descLinkNavigation.setHref("http://support.goorulearning.org/hc/en-us/articles/203395927");
 		descLinkSix.setText(GL1239);
 		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202222123");
 		
