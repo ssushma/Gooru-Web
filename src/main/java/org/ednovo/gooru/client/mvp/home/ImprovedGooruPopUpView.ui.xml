@@ -175,7 +175,7 @@
 		.improvedGooruPopupLine {
 		float: left;
 		width: 1px;
-		height: 238px;
+		height: 316px;
 		margin: 20px 10px 0px 10px;
 		background-color: #DDDDDD;
 		}
@@ -330,6 +330,19 @@
 							ui:field="aboutFive"></g:InlineLabel>
 						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
 							ui:field="descLinkFive" target="_blank"></g:Anchor>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				
+				<g:HTMLPanel styleName="{style.improveGooruContneOuterDiv}">
+					<g:HTMLPanel styleName="{style.improveGooruContneOuter}">
+						<g:Label styleName="{style.improveGooruBlueText}"
+							ui:field="lblnavigation"></g:Label>
+						<g:InlineLabel styleName="{style.improveGooruBlueTextDesc}"
+							ui:field="aboutNavigation"></g:InlineLabel>
+							<g:HTMLPanel>
+						<g:Anchor styleName="{style.improveGooruHyperlinkText}"
+							ui:field="descLinkNavigation" target="_blank"></g:Anchor>
+							</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 				
