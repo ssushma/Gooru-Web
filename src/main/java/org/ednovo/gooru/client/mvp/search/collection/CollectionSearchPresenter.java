@@ -129,4 +129,10 @@ public class CollectionSearchPresenter extends AbstractSearchPresenter<Collectio
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateRatingInSearch(ResourceSearchResultDo searchResultDo) {
+		// TODO Auto-generated method stub
+		
+	}
 }
