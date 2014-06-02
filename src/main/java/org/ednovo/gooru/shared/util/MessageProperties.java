@@ -2395,4 +2395,6 @@ public interface MessageProperties {
     	String GL1888 = "Public Collections";
     	
     	String GL1889 = "Reminder: Assigments are sorted by due date in your Class. If you don't add a due date, this colleciton will appear at the bottom of the page.";
+    	String GL1890 ="New Navigation Tabs";
+    	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.<br></br>";
    }

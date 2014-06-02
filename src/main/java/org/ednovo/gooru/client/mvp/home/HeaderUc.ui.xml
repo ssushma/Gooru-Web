@@ -383,6 +383,7 @@
 			text-overflow: ellipsis;
 			padding: 8px;
 			padding-right:0px;
+			float:left;
 		}
 	   .resourceRightsPopupContainer{
 	        margin: 0 auto;
