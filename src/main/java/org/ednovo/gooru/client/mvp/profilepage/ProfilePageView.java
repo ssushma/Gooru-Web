@@ -513,11 +513,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				boolean isHigherEducation = false;
 				if(grade.contains(GL0850)) {
 					isKinderGartnen = true;
-					Label gradeLabel = new Label(GL0850);
+					/*Label gradeLabel = new Label(GL0850);
 					moreGradeCourseLbls.remove(GL0850);
 					gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
 					gradeLabel.addClickHandler(new OnGradeEditImageClick());
-					userGradeList.add(gradeLabel);
+					userGradeList.add(gradeLabel);*/
 				}
 				if(grade.contains("Higher Education")) {
 					isHigherEducation = true;
@@ -549,11 +549,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 					userGradeList.add(gradeLabel);
 				}
 				if(isHigherEducation == true) {
-					Label gradeLabel = new Label(GL0169);
+					/*Label gradeLabel = new Label(GL0169);
 					moreGradeCourseLbls.remove(GL0169);
 					gradeLabel.setStyleName(CollectionCBundle.INSTANCE.css().userNumber());
 					gradeLabel.addClickHandler(new OnGradeEditImageClick());
-					userGradeList.add(gradeLabel);
+					userGradeList.add(gradeLabel);*/
 				}
 				renderExtraGradeCourse(moreGradeCourseLbls,"grade");
 			}
