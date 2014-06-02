@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggable;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
@@ -125,7 +126,9 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 	private static final String VIEWS = " "+GL0934;
 	
 	private static final String NULL = "null";
-
+	private static String publisherData = "";
+	private static String aggregatorData = "";
+	private boolean isRatingUpdated=true;
 	
 	
 	/**
@@ -355,14 +358,15 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			if(resourceSearchResultDo.getGooruOid().equals(resourceId)){
 				ratingWidgetView.getRatingCountLabel().setText(Integer.toString(count)); 
 				ratingWidgetView.setAvgStarRating(avg);
-				if(count==1){
+				if(count>0 && isRatingUpdated){
+					isRatingUpdated=false;
 					ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
 					ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
 					ratingWidgetView.getRatingCountLabel().addClickHandler(new ClickHandler(){
 
 						@Override
 						public void onClick(ClickEvent event) {
-							
+							AppClientFactory.fireEvent(new UpdateRatingsInSearchEvent(resourceSearchResultDo)); 
 						}
 						
 					});
