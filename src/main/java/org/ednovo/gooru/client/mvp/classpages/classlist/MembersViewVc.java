@@ -138,6 +138,13 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 		btnRemove.getElement().setId("" + position);
 		
 
+		imgProfileImage.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				imgProfileImage.setUrl(defaultProfileImage);
+			}
+		});
 
 		if (status.equalsIgnoreCase("pending")){
 			lblEmailId.setText(emailId != null ? emailId : email);
