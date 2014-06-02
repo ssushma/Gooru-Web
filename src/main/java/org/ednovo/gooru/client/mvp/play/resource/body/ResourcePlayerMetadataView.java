@@ -984,23 +984,6 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			}
 		}
 		
-	
-		
-		/**
-		 * Sets the Star rating based on the API result.
-		 * @param result {@link StarRatingsDo}
-		 * @param showThankYouToolTip {@link Boolean} 
-		 */
-		/*private void setRatings(StarRatingsDo result,boolean showThankYouToolTip) {
-			if(showThankYouToolTip){
-				ThankYouResourceStarRatings thankYouResourceStarRatings = new ThankYouResourceStarRatings();
-				thankYouResourceStarRatings.getElement().getStyle().setZIndex(999999);
-				thankYouResourceStarRatings.setPopupPosition(300,Window.getScrollTop()+48);
-				thankYouResourceStarRatings.show();
-				thankYouResourceStarRatings.setAutoHideEnabled(true);
-			}
-			setUserRatings(result);
-		}*/
 	}
 	
 	public void removeRatingContainer(boolean flag){
