@@ -97,8 +97,16 @@ public class MediaUploadServiceImpl extends BaseServiceImpl implements
 				UrlToken.IMAGE_CROP, fileName, getLoggedInSessionToken(),
 				height, width, xPosition, yPosition);
 		
+		try
+		{
 		ServiceProcessor.put(url, getRestUsername(), getRestPassword(),
 				new Form());
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		
 		if (imageUrl == null) {
 			return fileName;
 		} 

@@ -261,7 +261,6 @@
 		div#LinkheaderElement5 {
 			padding: 10px;
 			padding-right: 5px;
-			width: 100px;
 		}
 		
 		.menu{
@@ -384,6 +383,7 @@
 			text-overflow: ellipsis;
 			padding: 8px;
 			padding-right:0px;
+			float:left;
 		}
 	   .resourceRightsPopupContainer{
 	        margin: 0 auto;
