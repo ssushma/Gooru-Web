@@ -633,7 +633,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("OER")){
 			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
-			chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
+			//chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 		}
 		chkOER.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
