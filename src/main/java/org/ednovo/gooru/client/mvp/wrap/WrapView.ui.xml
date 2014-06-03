@@ -98,7 +98,7 @@
 	<g:HTMLPanel styleName="{style.tabSection}" ui:field="androidSectiondiv">
   <g:HTMLPanel styleName="{style.imgSection}"><g:Image url="images/tablet.png" width="129" height="73"/></g:HTMLPanel>
   <g:HTMLPanel styleName="{style.info}"><g:HTMLPanel>Welcome to the Gooru Mobile Site! </g:HTMLPanel>
-    For most optimized Gooru experience, please visit goorlearning.org via computer.</g:HTMLPanel>
+    For most optimized Gooru experience, please visit www.goorulearning.org via computer.</g:HTMLPanel>
     <g:Image url="images/close.png" width="20" height="20" ui:field="closeAndriodBtn" styleName="{style.close}"/>
 </g:HTMLPanel>
 	<g:HTMLPanel styleName="{style.tabSection}" ui:field="ipadSectiondiv">
