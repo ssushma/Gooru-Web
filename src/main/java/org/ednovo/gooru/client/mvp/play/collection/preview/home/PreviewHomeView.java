@@ -93,6 +93,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	private HandlerRegistration previewClickHandler;
+	private String collectionTitle;
 	interface PreviewHomeViewUiBinder extends UiBinder<Widget, PreviewHomeView> {
 	}
 	
@@ -125,6 +126,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		setCollectionImage(collectionDo.getThumbnails().getUrl());
 		setCollectionEndImage(collectionDo.getThumbnails().getUrl());
 		setCollectionGoal(collectionDo.getGoals());
+		collectionTitle = collectionDo.getTitle();
 		assignCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
@@ -328,7 +330,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			{
 				loginFlag = false;
 			}
-			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag) {
+			RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionTitle) {
 
 				@Override
 				public void closePoup() {

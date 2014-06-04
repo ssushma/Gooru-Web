@@ -228,6 +228,8 @@ public class ThankYouResourceStarRatings extends PopupPanel implements MessagePr
 			btnPost.setText("Save");
 			ratingCommentTxtArea.setText(review.trim());
 		}else{
+			btnPost.setEnabled(false);
+			btnPost.getElement().addClassName("disabled");
 			reviewTextAreaTitle.setText(GL1855);
 			btnPost.setText("Post");
 		}

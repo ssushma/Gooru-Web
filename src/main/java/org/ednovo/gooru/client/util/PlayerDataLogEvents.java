@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.util;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
@@ -213,11 +214,10 @@ public class PlayerDataLogEvents {
 	public static  JSONString getDataLogPayLoadObject(String questionType,String oeAnswerText, List<Integer> attemptStatus, List<Integer> attemptTrySequence,
 										JSONObject answerIdsObject, JSONObject hintIdsObject,JSONObject explanationIdsObject,Integer attemptCount,List<List<JSONObject>> answerObjectArray){
 		JSONObject payLoadMap=new JSONObject();
-		oeAnswerText = oeAnswerText.replaceAll("\"", "\\\"");
 		try{
 			payLoadMap.put(QUESTIONTYPE, new JSONString(questionType));
 			payLoadMap.put(TOTALNOOFCHARACTER,new JSONNumber(oeAnswerText.length()));
-			payLoadMap.put(TEXT,new JSONString(oeAnswerText));
+			payLoadMap.put(TEXT,new JSONString(StringUtil.replaceSpecial(oeAnswerText)));
 			payLoadMap.put(ATTEMPTSTATUS, new JSONString(createJsniIntArray(attemptStatus).toString()));
 			payLoadMap.put(ATTEMPTTRYSEQUENCE, new JSONString(createJsniIntArray(attemptTrySequence).toString()));
 			payLoadMap.put(ANSWERS, new JSONString(answerIdsObject.toString()));
@@ -230,6 +230,7 @@ public class PlayerDataLogEvents {
 		}
 		String payLoad = payLoadMap.toString();
 		payLoad = payLoad.replaceAll("\\\\\"\\[", "[").replaceAll("\\]\\\\\"", "]");
+		System.out.println("payLoad : "+payLoad);
 		return new JSONString(payLoad);
 	}
 	
@@ -247,10 +248,12 @@ public class PlayerDataLogEvents {
 		JSONObject attemptedAnswersArray=new JSONObject();
 		for(int i=0;i<answerObjectArray.size();i++){
 			List<JSONObject> jsonArray=answerObjectArray.get(i);
-			attemptedAnswersArray.put("attempt"+(i+1), new JSONString(jsonArray+"".replaceAll("\"", "\\\"")));
+			System.out.println("jsonArray+- : "+jsonArray+"");
+			attemptedAnswersArray.put("attempt"+(i+1), new JSONString(jsonArray+""));
 		}
 		String tempArray = attemptedAnswersArray+"";
 		tempArray = tempArray.replaceAll("\\\\", "");
+		System.out.println("tempArray : "+tempArray);
 		return tempArray;
 	}
 	
@@ -338,7 +341,7 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("attemptStatus", createJsniIntArray(attemptStatus));
 		eventJsonObject.put("answerId", createJsniIntArray(answerId));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
-		eventJsonObject.put("openEndedText", new JSONString(openEndedText.replaceAll("\"", "\\\"")));
+		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("hintId", new JSONNumber(hintId));
 		//triggerDataLogCall(eventJsonObject);
  	}
@@ -366,7 +369,7 @@ public class PlayerDataLogEvents {
 		eventJsonObject.put("attemptStatus", createJsniIntArray(attemptStatus));
 		eventJsonObject.put("answerId", createJsniIntArray(answerId));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
-		eventJsonObject.put("openEndedText", new JSONString(openEndedText.replaceAll("\"", "\\\"")));
+		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		//triggerDataLogCall(eventJsonObject);
  	}
 	
@@ -387,7 +390,7 @@ public class PlayerDataLogEvents {
 /*		eventJsonObject.put("attemptTrySequence", createJsniIntArray(attemptTrySequence));
 		eventJsonObject.put("attemptStatus", createJsniIntArray(attemptStatus));
 		eventJsonObject.put("answerId", createJsniIntArray(answerId));*/
-		eventJsonObject.put("openEndedText", new JSONString(openEndedText.replaceAll("\"", "\\\"")));
+		eventJsonObject.put("openEndedText", new JSONString(openEndedText));
 		eventJsonObject.put("totalNoCharacters", new JSONNumber(totalNoCharacters));
 		eventJsonObject.put("parentGooruId", new JSONString(parentGooruOid));
 		//triggerDataLogCall(eventJsonObject);

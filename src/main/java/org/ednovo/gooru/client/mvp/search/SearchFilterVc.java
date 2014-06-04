@@ -583,7 +583,36 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			}
 		});
 	}
+	public void renderOERCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
+		chkOER = new CheckBox();	
+		chkOER.setText(value);
+		chkOER.setName(key);
+		
+		if(value.equalsIgnoreCase("OER")){
+			disclosurePanelVc.setStyleName("oerContainer");
+			chkOER.getElement().setId("chkOer");
+		}
+			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
+			chkOER.addStyleName(value.toLowerCase());
+			disclosurePanelVc.add(chkOER);
 	
+		chkOER.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				System.out.println("on click");
+				if (chkOER.getValue()){
+					MixpanelUtil.mixpanelEvent("checks the OER filter box");
+
+				}else{
+					MixpanelUtil.mixpanelEvent("unchecks the OER filter box");
+				}
+				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
+				
+			}
+		});
+		
+	}
 	/**
 	 * @param disclosurePanelVc instance of DisclosurePanelUc which gets added widget
 	 * @param key check box name
@@ -599,14 +628,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
 			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
-			/*chkNotFriendly.getElement().getStyle().setMarginLeft(9, Unit.PX);
-			chkNotFriendly.getElement().getStyle().setWidth(102, Unit.PX);*/
+	
 		}
-		/*if(value.equalsIgnoreCase("Show only OER")){
-			chkNotFriendly.getElement().setId("chkOer");
-			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
-			chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
-		}*/
 		chkNotFriendly.setStyleName(CssTokens.FILTER_CHECKBOX);
 		chkNotFriendly.addStyleName(value.toLowerCase());
 		disclosurePanelVc.add(chkNotFriendly);
@@ -625,32 +648,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		});
 		
 	}
-	public void renderOERCheckBox(HTMLPanel disclosurePanelVc, String key, final String value) {
-		chkOER = new CheckBox();	
-		chkOER.setText(value);
-		chkOER.setName(key);
-		disclosurePanelVc.add(chkOER);
-		if(value.equalsIgnoreCase("OER")){
-			disclosurePanelVc.setStyleName("oerContainer");
-			chkOER.getElement().setId("chkOer");
-			chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
-			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
-		}
-		chkOER.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-			@Override
-			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				if (chkOER.getValue()){
-					MixpanelUtil.mixpanelEvent("checks the OER filter box");
-
-				}else{
-					MixpanelUtil.mixpanelEvent("unchecks the OER filter box");
-				}
-				AppClientFactory.fireEvent(new GetSearchKeyWordEvent());
-				
-			}
-		});
-	}
+	
 	/*public void renderRadioButtons(final DisclosurePanelUc disclosurePanelVc, String key, String value){
 		final QuestionTypeFilter questionTypeFilter=new QuestionTypeFilter(key);
 		questionTypeFilter.radioButton.addClickHandler(new ClickHandler() {
@@ -824,7 +822,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			
 			final Image oer = new Image("images/mos/questionmark.png");
 			oer.getElement().getStyle().setLeft(144, Unit.PX);
-			oer.getElement().getStyle().setTop(-18, Unit.PX);
+			oer.getElement().getStyle().setTop(-23, Unit.PX);
 			oer.getElement().getStyle().setPosition(Position.RELATIVE);
 			oer.getElement().getStyle().setCursor(Cursor.POINTER);
 			oer.setAltText(GL0732);

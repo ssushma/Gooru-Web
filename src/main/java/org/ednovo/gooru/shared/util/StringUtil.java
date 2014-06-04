@@ -264,4 +264,20 @@ public class StringUtil {
 		}
 		return folderMetaData;
 	}
+	
+	public static String replaceSpecial(String originalString){
+		String str = "";
+		
+		str = originalString.replaceAll("\"", "%22").replaceAll("'", "%27");
+		
+		return str;
+	}
+	
+	public static String replaceQuotes(String originalString){
+		String str = "";
+		
+		str = originalString.replaceAll("%22", "\"").replaceAll("%27", "'");
+		
+		return str;
+	}
 }

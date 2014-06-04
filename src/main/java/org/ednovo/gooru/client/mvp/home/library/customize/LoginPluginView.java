@@ -108,6 +108,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
 
 	CollectionDo collectionObject = new CollectionDo();
+	String collectionTitle="";
 
 	private static final String OOPS =GL0061;
 	private static final String LOGIN_ERROR =GL0347;
@@ -122,10 +123,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	/**
 	 * Class constructor
 	 */
-	public LoginPluginView(CollectionDo collectionObject) {
+	public LoginPluginView(CollectionDo collectionObject,String collectionTitle) {
 
 		res = AssignPopUpCBundle.INSTANCE;
 		this.collectionObject = collectionObject;
+		this.collectionTitle = collectionTitle;
 		AssignPopUpCBundle.INSTANCE.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		setLabelsAndIds();
@@ -191,6 +193,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void onLoginClicked(ClickEvent clickEvent) {
 
 		if (isCookieEnabled()) {
+			
 
 			String username = loginTxtBox.getText().trim();
 			String password = passwordTxtBox.getText().trim();
@@ -221,16 +224,16 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 												.fireEvent(new SetUserDetailsInCollectionPlayEvent(
 														result.getToken(),
 														result.getGooruUId()));
-
-										AppClientFactory
+										/*AppClientFactory
 												.getInjector()
 												.getResourceService()
 												.copyCollection(
 														collectionObject,
 														"true",
 														null,
-														getSaveCollectionAsyncCallback());
+														getSaveCollectionAsyncCallback());*/
 										
+										showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
 										MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
 									}
 
@@ -348,7 +351,8 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 				@Override
 				public void onSuccess(CollectionDo result) {
-					showSuccessMsgfromChild(result.getGooruOid());
+					
+					showSuccessMsgfromChild(result.getGooruOid(),collectionTitle);
 				}
 			};
 		}
@@ -362,6 +366,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	
 	public abstract void closePoupfromChild();
 	
-	public abstract void showSuccessMsgfromChild(String collectionId);
+	public abstract void showSuccessMsgfromChild(String collectionId,String collectionTitle );
 	
 }

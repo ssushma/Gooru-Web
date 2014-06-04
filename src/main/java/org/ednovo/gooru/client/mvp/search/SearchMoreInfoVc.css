@@ -86,6 +86,8 @@ grade modification......
 	height: 212px;
 	float: left;
 	padding-left: 10px;
+	overflow-y: scroll !important;
+	overflow-x: hidden !important;
 }
 
 
@@ -127,7 +129,7 @@ grade modification......
 }
 /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
 .moreInfoRightScrollPanel::-webkit-scrollbar-corner {
-	background-color: red;
+	/* background-color: red; */
 }
 
 .moreInfoRightPanel {
@@ -261,7 +263,7 @@ grade modification......
 .questionMark{
 	float:left;
 	cursor: pointer;
-	position: absolute;
+	/* position: absolute; */
 	top: 39px;
 	left: 50px;
 }

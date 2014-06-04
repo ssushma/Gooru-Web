@@ -65,6 +65,7 @@ public class CheckBoxAnswerOptionView extends Composite{
 		return contentHtml;
 	}
 	private String removeHtmlTags(String text){
+		text = text.replaceAll("(<\\w+)[^>]*(>)", "$1$2");
 		text=text.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		return text;
 	}

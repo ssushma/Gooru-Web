@@ -107,7 +107,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 	/**
 	 * 
 	 */
-	public RenameCustomizePopUp(String collectionId, final Boolean loginFlag) {
+	public RenameCustomizePopUp(String collectionId, final Boolean loginFlag,final String collectionTitle) {
 		super(false);
 		this.res = AssignPopUpCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -171,7 +171,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
-					LoginPluginView assignWidget = new LoginPluginView(result) {
+					LoginPluginView assignWidget = new LoginPluginView(result,collectionTitle) {
 
 						@Override
 						public void closePoupfromChild() {
@@ -179,7 +179,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 						}
 
 						@Override
-						public void showSuccessMsgfromChild(String collectionId) {
+						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
 							showSuccessMsg(collectionId);
 
 						}
@@ -324,14 +324,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 									closePoup();
 								if(!isCustomizePopup){
 									isCustomizePopup=true;
-								Boolean loginFlag = false;
-								if (AppClientFactory.isAnonymous()){
-									loginFlag = true;
-								}
-								else
-								{
-									loginFlag = false;
-								}
+								
 								collectionDo.setTitle(collectionTitle);
 								AppClientFactory.getInjector().getResourceService().copyCollection(collectionDo, "true", null,getSaveCollectionAsyncCallback());
 							}
