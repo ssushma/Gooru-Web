@@ -167,6 +167,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(true));
 		
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
+		
+		
 	}
 	
 		
@@ -255,6 +257,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	protected void onReset() {
 //		setInSlot(TYPE_SHELF_TAB, shelfListPresenter);
+		
 		AppClientFactory.setBrowserWindowTitle(SeoTokens.TEACH_TITLE);
 		AppClientFactory.setMetaDataDescription(SeoTokens.HOME_META_DESCRIPTION);
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));
@@ -262,6 +265,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if(isTab==null){
 			getView().clearPanel();
 		}
+		getClasspage();
+		
 	}
 	
 	
@@ -408,6 +413,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	}
 	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId){
 		this.classpageService.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
