@@ -152,6 +152,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
 		url+=getStandardId(rootNodeId);
+		System.out.println("getSimpleCollectionDetils::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -185,6 +186,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 	public ResoruceCollectionDo getResourceCollectionsList(String gooruOid,String pageNum,String pageSize) {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.RESOURCE_COLLECTION_LIST, getLoggedInSessionToken(),pageNum, pageSize, gooruOid);
+		System.out.println("urlresourceinfotab::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
 		jsonRep=jsonResponseRep.getJsonRepresentation();
 		return deserializeResourceCollection(jsonRep);
@@ -195,6 +197,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
+		System.out.println("urlcollectionItem::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {
@@ -232,6 +235,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		CollectionItemDo collectionItemDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_RESOURCE_DETAILS,resourceId, getLoggedInSessionToken());
+		System.out.println("getResourceObj::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		try {

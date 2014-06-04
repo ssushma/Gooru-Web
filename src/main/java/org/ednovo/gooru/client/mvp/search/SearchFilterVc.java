@@ -599,6 +599,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
 			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
+			disclosurePanelVc.getElement().getStyle().setMarginBottom(-10, Unit.PX);
 			/*chkNotFriendly.getElement().getStyle().setMarginLeft(9, Unit.PX);
 			chkNotFriendly.getElement().getStyle().setWidth(102, Unit.PX);*/
 		}

@@ -147,17 +147,14 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				setStarRatings(starRatingsDo);
 			}
 			
-/*		  if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals(""))
-		  {*/
+		  if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
 			reviewContainer.setVisible(true);
 			editReviewLabelContainer.setVisible(true);
-/*		  }
-		  else
-		  {
+		  }else{
 			//reviewContainer.setVisible(false);
 			userName.setText(starRatingsDo.getCreator().getUsername());
 			//editReviewLabelContainer.setVisible(false);
-		  }*/
+		}
 			
 		}else{
 			userName.setText(starRatingsDo.getCreator().getUsername());
@@ -203,13 +200,13 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 				starFour.addStyleName(style.filled());
 				starFive.addStyleName(style.filled());
 			}
-/*			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){*/
+			if(starRatingsDo.getFreeText()!=null && !starRatingsDo.getFreeText().equals("")){
 				reviewContainer.setVisible(true);
 				editReviewLabelContainer.setVisible(true);
-		/*	}else{
+			}else{
 				//reviewContainer.setVisible(false);
 				//editReviewLabelContainer.setVisible(false);
-			}*/
+			}
 		}
 		
 		if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
