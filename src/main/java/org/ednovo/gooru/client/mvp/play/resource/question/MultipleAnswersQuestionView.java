@@ -265,7 +265,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 						}
 					}else{
 						answerAttemptDo.setStatus("0");
-						answerAttemptDo.setText("1");
+						answerAttemptDo.setText("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
@@ -282,7 +282,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 						}
 					}else{
 						answerAttemptDo.setStatus("0");
-						answerAttemptDo.setText("1");
+						answerAttemptDo.setText("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
