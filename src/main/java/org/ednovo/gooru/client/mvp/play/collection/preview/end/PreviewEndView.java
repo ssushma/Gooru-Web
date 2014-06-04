@@ -82,7 +82,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	
 	private PopupPanel toolTipPopupPanel=new PopupPanel();
 	
-	
+	private String collectionTitle;
 	private static PreviewEndViewUiBinder uiBinder = GWT.create(PreviewEndViewUiBinder.class);
 
 	interface PreviewEndViewUiBinder extends UiBinder<Widget, PreviewEndView> {
@@ -117,6 +117,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 		customizeCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		shareCollectionBtn.getElement().setAttribute("collectionId", collectionDo.getGooruOid());
 		setReplyLink();
+		collectionTitle = collectionDo.getTitle();
 	}
 	public void setReplyLink(){
 		Anchor resourceAnchor=new Anchor();
@@ -244,7 +245,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				{
 					loginFlag = false;
 				}
-				RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag) {
+				RenameCustomizePopUp successPopupVc = new RenameCustomizePopUp(collectionId, loginFlag,collectionTitle) {
 
 					@Override
 					public void closePoup() {

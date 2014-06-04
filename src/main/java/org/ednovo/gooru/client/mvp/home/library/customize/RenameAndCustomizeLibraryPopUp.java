@@ -81,7 +81,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 	/**
 	 * 
 	 */
-	public RenameAndCustomizeLibraryPopUp(String collectionId, final Boolean loginFlag, String collectionTitle) {
+	public RenameAndCustomizeLibraryPopUp(String collectionId, final Boolean loginFlag, final String collectionTitle) {
 		super(false);
 		this.res = AssignPopUpCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -106,7 +106,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
-				LoginPluginView assignWidget = new LoginPluginView(result) {
+				LoginPluginView assignWidget = new LoginPluginView(result,collectionTitle) {
 						
 						@Override
 						public void closePoupfromChild() {
@@ -114,8 +114,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 						}
 
 						@Override
-						public void showSuccessMsgfromChild(String collectionId) {
-							showSuccessMsg(collectionId);
+						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
+							showSuccessMsg(collectionId,collectionTitle);
 							
 						}
 					};
@@ -187,7 +187,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		this.resourceService = resourceService;
 	}
 
-	public void showSuccessMsg(String collectionId) {
+	public void showSuccessMsg(String collectionId,String collectionTitle) {
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);

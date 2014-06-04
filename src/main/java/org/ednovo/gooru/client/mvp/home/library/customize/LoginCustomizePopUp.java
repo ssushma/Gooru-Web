@@ -72,7 +72,6 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 
 	@Inject
 	private ResourceServiceAsync resourceService;
-
 	private SimpleAsyncCallback<CollectionDo> saveCollectionAsyncCallback;
 
 	@UiTemplate("LoginCustomizePopUp.ui.xml")
@@ -85,7 +84,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 	/**
 	 * 
 	 */
-	public LoginCustomizePopUp(String collectionId, final Boolean loginFlag) {
+	public LoginCustomizePopUp(String collectionId, final Boolean loginFlag,final String collectionTitle) {
 		super(false);
 		this.res = AssignPopUpCBundle.INSTANCE;
 		res.css().ensureInjected();
@@ -115,7 +114,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 				if (loginFlag) {
 					loginCustom.setVisible(true);
 					copyCollectionSuccess.setVisible(false);
-				LoginPluginView assignWidget = new LoginPluginView(result) {
+				LoginPluginView assignWidget = new LoginPluginView(result,collectionTitle) {
 						
 						@Override
 						public void closePoupfromChild() {
@@ -123,7 +122,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 						}
 
 						@Override
-						public void showSuccessMsgfromChild(String collectionId) {
+						public void showSuccessMsgfromChild(String collectionId,String collectionTitle) {
 							showSuccessMsg(collectionId);
 							
 						}
