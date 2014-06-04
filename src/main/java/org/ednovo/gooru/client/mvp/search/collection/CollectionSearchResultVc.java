@@ -266,6 +266,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 						MixpanelUtil.Click_Username();
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id", collectionResultDo.getOwner().getGooruUId());
+						params.put("user", collectionResultDo.getOwner().getUsername());
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE,params);
 					}
 				});
