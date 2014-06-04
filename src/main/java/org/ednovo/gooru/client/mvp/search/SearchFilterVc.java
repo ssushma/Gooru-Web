@@ -599,6 +599,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			disclosurePanelVc.setStyleName("mobilefriendlyContainer");
 			chkNotFriendly.getElement().setId("chkNotFriendly");
 			chkNotFriendly.getElement().getStyle().setMarginTop(20, Unit.PX);
+			disclosurePanelVc.getElement().getStyle().setMarginBottom(-10, Unit.PX);
 			/*chkNotFriendly.getElement().getStyle().setMarginLeft(9, Unit.PX);
 			chkNotFriendly.getElement().getStyle().setWidth(102, Unit.PX);*/
 		}
@@ -633,7 +634,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		if(value.equalsIgnoreCase("OER")){
 			disclosurePanelVc.setStyleName("oerContainer");
 			chkOER.getElement().setId("chkOer");
-			chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
+			//chkOER.getElement().getStyle().setMarginTop(-10, Unit.PX);
 			chkOER.setStyleName(CssTokens.FILTER_CHECKBOX);
 		}
 		chkOER.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
