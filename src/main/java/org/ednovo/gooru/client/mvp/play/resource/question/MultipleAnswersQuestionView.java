@@ -253,38 +253,34 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 				answerAttemptDo.setOrder(i+1+"");
 				answerIds.add(checkBoxAnswerOptionView.getAnswerId());
 				if(checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
+					answerAttemptDo.setText("1");
+					userAttemptedValueList.add("1");
 					//createSessionItemAttempt(checkBoxAnswerOptionView.getAnswerId(), checkBoxAnswerOptionView.isAnswerCorrect()?"correct":"wrong");
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), true);
 					if(checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionYesRadioButton.getValue()){
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 						answerAttemptDo.setStatus("1");
-						answerAttemptDo.setText("1");
-						userAttemptedValueList.add("1");
 						if(mutipleAnswerChoiceStatus){
 							mutipleAnswerChoiceStatus=true;
 						}
 					}else{
 						answerAttemptDo.setStatus("0");
-						answerAttemptDo.setText("0");
-						userAttemptedValueList.add("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
 				}
 				if(checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
+					answerAttemptDo.setText("0");
+					userAttemptedValueList.add("0");
 					answerOptionResult.put(checkBoxAnswerOptionView.getAnswerId(), false);
 					if(!checkBoxAnswerOptionView.isAnswerCorrect()==checkBoxAnswerOptionView.answerOptionNoRadioButton.getValue()){
 						answerAttemptDo.setStatus("1");
-						answerAttemptDo.setText("1");
-						userAttemptedValueList.add("1");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerRightIcon());
 						if(mutipleAnswerChoiceStatus){
 							mutipleAnswerChoiceStatus=true;
 						}
 					}else{
 						answerAttemptDo.setStatus("0");
-						answerAttemptDo.setText("0");
-						userAttemptedValueList.add("0");
 						checkBoxAnswerOptionView.answerChoiceResult.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
 						mutipleAnswerChoiceStatus=false;
 					}
