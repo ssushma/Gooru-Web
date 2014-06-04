@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -153,7 +154,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	public void userAnswerObject(){
 		List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 		AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-		answerAttemptDo.setText(openEndedAnswerTextArea.getValue()); 
+		answerAttemptDo.setText(StringUtil.replaceSpecial(openEndedAnswerTextArea.getValue())); 
 		answerAttemptDo.setAnswerId(0);
 		answerAttemptDo.setOrder("");
 		answerAttemptDo.setStatus("1");
