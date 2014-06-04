@@ -37,6 +37,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -58,7 +59,7 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 	
 	@UiField HTML htmlWalkSampleCollection;
 	
-	@UiField Image imgSampleCollection;
+	@UiField Anchor imgSampleCollection;
 	
 	@UiField
 	Button btnCreateCollection;
@@ -83,14 +84,30 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 		
 		setText();
 		
+		imgSampleCollection.setHref("#preview-play&id=b2dc729a-4a18-494e-8696-b06bc704bc98");
+		imgSampleCollection.setTarget("_blank");
 		
+		Image imgComponent = new Image();
+		imgComponent.setUrl("images/EmptyPages/thumbnail.png");
+		imgComponent.setWidth("119");
+		imgComponent.setHeight("74");
+		
+		imgSampleCollection.getElement().appendChild(imgComponent.getElement());
+		
+		
+		
+		
+	/*	<g:Image styleName="{WelcomePage.thumbnailImage}" url="images/EmptyPages/thumbnail.png" width="119"
+				height="74" />*/
+		
+/*		
 		imgSampleCollection.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				Window.open("#preview-play&id=b2dc729a-4a18-494e-8696-b06bc704bc98", "_blank", "");
 			}
-		});
+		});*/
 	}
 
 	/**
