@@ -698,12 +698,15 @@ public class EditClasspageView extends
 		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
 	}
-	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){
+	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){
 		this.classlistPresenter = classlistPresenter;
+		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
+		classpageItemsList.clear();
+		classpageItemsList.addAll(classpageItemsList1);
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
-			
+			assignmentsDirectionsLabel.setVisible(false);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
@@ -768,7 +771,8 @@ public class EditClasspageView extends
 			monitorProgress.setText("");
 			monitorProgress.setVisible(false);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
-				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
+				assignmentsContainerPanel.clear();
+					for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
 					assignmentTabView = showClasspageItem(classpageItemDo);
 					this.totalHitCount=classpageItemDo.getTotalHitCount();
