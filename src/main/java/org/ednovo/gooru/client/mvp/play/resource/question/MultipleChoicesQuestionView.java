@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -207,7 +208,7 @@ public abstract class  MultipleChoicesQuestionView extends Composite implements 
 					}
 					List<AnswerAttemptDo> userAttemptedOptionsList=new ArrayList<AnswerAttemptDo>();
 					AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-					answerAttemptDo.setText(questionAnswerOptionView.getAnswerText()); 
+					answerAttemptDo.setText(StringUtil.replaceSpecial(questionAnswerOptionView.getAnswerText())); 
 					answerAttemptDo.setAnswerId(questionAnswerOptionView.getAnswerId());
 					answerAttemptDo.setOrder(i+1+"");
 					answerAttemptDo.setStatus(questionAnswerOptionView.isAnswerCorrect()?"1":"0");
