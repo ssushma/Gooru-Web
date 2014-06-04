@@ -37,6 +37,7 @@ import org.ednovo.gooru.shared.model.content.QuestionAnswerDo;
 import org.ednovo.gooru.shared.model.player.AnswerAttemptDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -142,7 +143,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		if(attemptedAnswerDo!=null){
 			String[] previoustAttemptedResult=attemptedAnswerDo.getFibAnswersList();
 			for(int i=0;i<textBoxArray.size();i++){
-				textBoxArray.get(i).setText(previoustAttemptedResult[i]);
+				textBoxArray.get(i).setText(StringUtil.replaceSpecial(previoustAttemptedResult[i]));
 			}
 		}
 	}
@@ -179,11 +180,12 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 			String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText().trim();
 		  	String 	textBoxAnswerDoAnswerText	=	textBoxArray.get(i).getText().trim();
 		  	questionAnswerDoAnswerText 	=questionAnswerDoAnswerText.replaceAll("<[^>]*>", "");
+		  	questionAnswerDoAnswerText = StringUtil.replaceSpecial(questionAnswerDoAnswerText);
 		  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
 		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
 		  	attemptTrySequenceArray.add(i+1);
 		  	AnswerAttemptDo answerAttemptDo=new AnswerAttemptDo();
-			answerAttemptDo.setText(textBoxAnswerDoAnswerText);
+			answerAttemptDo.setText(StringUtil.replaceSpecial(textBoxAnswerDoAnswerText));
 			answerAttemptDo.setAnswerId(questionAnswerDo.getAnswerId());
 			answerAttemptDo.setOrder(i+1+"");
 			userAttemptedOptionsList.add(answerAttemptDo);
@@ -200,7 +202,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 				answerAttemptDo.setStatus("0");
 				isFibStatus=false;
 				textBoxArray.get(i).addStyleName(oeStyle.answerWrongTextBox());
-				showResultPanel(i,questionAnswerDo.getAnswerText());
+				showResultPanel(i,StringUtil.replaceSpecial(questionAnswerDo.getAnswerText()));
 			}
 			textBoxArray.get(i).setReadOnly(true);
 			i++;
@@ -227,8 +229,8 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		List<Integer> attemptAnswerIds=new ArrayList<Integer>();
 		while(answersIterator.hasNext()){
 			QuestionAnswerDo questionAnswerDo=answersIterator.next();
-			String 	questionAnswerDoAnswerText	=	questionAnswerDo.getAnswerText().trim();
-		  	String 	textBoxAnswerDoAnswerText	=	textBoxArray.get(i).getText().trim();
+			String 	questionAnswerDoAnswerText	=	StringUtil.replaceSpecial(questionAnswerDo.getAnswerText().trim());
+		  	String 	textBoxAnswerDoAnswerText	=	StringUtil.replaceSpecial(textBoxArray.get(i).getText().trim());
 		  	attemptedAnswersList.add(textBoxAnswerDoAnswerText);
 		  	attemptAnswerIds.add(questionAnswerDo.getAnswerId());
 			if(questionAnswerDoAnswerText.equalsIgnoreCase(textBoxAnswerDoAnswerText)){
@@ -253,7 +255,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 						enableCheckAnswerButton();
 					}
 				}
-				enteredAnswerText[i]=textBoxArray.get(i).getText().trim();
+				enteredAnswerText[i]=StringUtil.replaceSpecial(textBoxArray.get(i).getText().trim());
 			}
 			isUserAnswerAttempted(true);
 		}
