@@ -319,7 +319,7 @@ public interface MessageProperties {
 	String GL0216_1 = "Please specify at least one student email id";
 	String GL0217 = "Enter recipient's email";
 	String GL0218 = "Gooru - {0}";
-	String GL0218_1 = "{0} has shared their class {1} with you";
+	String GL0218_1 = "{0} has shared the class {1} with you";
 	String GL0219 = "{0} <div><br/></div><div> {1} </div><div><br/></div><div>Sent using Gooru. Visit {2} for more great resources and collections. It's free!</div>";
 	String GL0219_1 = "Hello there! <div><br/></div>Your teacher, {0} has shared the class: {1} with you. Please access the class by clicking the link below or by entering in the Class Code under the My Classes tab." +
 			" <div><br/></div><div> {2} </div><div><br/></div><div>ClassCode: {3} </div><div><br/></div><div>Sent using Gooru. Visit {4} for more great resources and collections. It's free!</div>";
