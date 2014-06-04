@@ -285,6 +285,7 @@ public class SimpleCollectionVc extends Composite implements IsDraggable,Message
 						MixpanelUtil.Click_Resource_Username();
 						Map<String, String> params = new HashMap<String, String>();
 						params.put("id", collectionSearchResultDo.getOwner().getGooruUId());
+						params.put("user", collectionSearchResultDo.getOwner().getUsername());
 						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.PROFILE_PAGE,params);
 					}
 				});

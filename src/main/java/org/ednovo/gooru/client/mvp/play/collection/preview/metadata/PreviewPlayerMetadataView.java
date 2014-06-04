@@ -298,7 +298,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 			usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		}
 		else{
-			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId();
+			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
 			usernameAnchor.setHref(token);
 		}
 		usernameAnchor.setText(userName);
@@ -357,7 +357,7 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 		if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
 			anchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
 		}else{
-			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid;
+			String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+collectionDo.getUser().getUsername();
 			anchor.setHref(token);
 		}
 		anchor.setText(userName);
