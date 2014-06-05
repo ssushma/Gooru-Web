@@ -725,7 +725,7 @@ public class EditClasspageView extends
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			getClassListContainer().setVisible(false);
-			
+			assignmentsDirectionsLabel.setVisible(false);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			
@@ -770,6 +770,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 			monitorProgress.setText("");
 			monitorProgress.setVisible(false);
+			assignmentsDirectionsLabel.setVisible(true);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsContainerPanel.clear();
 					for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
