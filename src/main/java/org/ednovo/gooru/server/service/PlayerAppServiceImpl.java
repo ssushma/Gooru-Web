@@ -203,6 +203,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		try {
 			if(jsonResponseRep.getStatusCode()==200){
 				collectionItemDo=ResourceCollectionDeSerializer.deserializeCollectionItemDo(jsonRepresentation.getJsonObject());
+				System.out.println("collitem::"+collectionItemDo.getResource().getPublisher());
 				collectionItemDo.setStatusCode(jsonResponseRep.getStatusCode());
 				String decodeUrl=collectionItemDo.getResource().getUrl();
 				if(decodeUrl!=null&&!decodeUrl.equals("")&&!decodeUrl.equals("null")){

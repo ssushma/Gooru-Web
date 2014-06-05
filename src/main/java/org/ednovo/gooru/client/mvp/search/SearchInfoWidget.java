@@ -131,6 +131,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 	private void setResourceInfoData() {
 		publisherText.setText(GL0566);
+		lblAggregation.setText(GL1628+ ""+GL_SPL_SEMICOLON);
 		courseText.setText(GL0616);
 		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
 		standardsText.setText(GL0619);
@@ -334,11 +335,16 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			setOriginalUrl(CollectiongenealInfo.getResource().getAssetURI(),CollectiongenealInfo.getResource().getFolder(),
 					CollectiongenealInfo.getResource().getUrl(),CollectiongenealInfo.getResource().getResourceType().getName());
 			
+			System.out.println("publisherPanel11::"+resourceDo.getPublisher());
+			System.out.println("publisherPanel::"+CollectiongenealInfo.getResource().getPublisher());
 			
 			if(resourceDo.getPublisher()!=null){
 				if(resourceDo.getPublisher().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getPublisher(), publisherType, publisherText, publisherPanel);
 				isGeneralInfo=true;
+				}
+				else{
+					publisherPanel.setVisible(false);
 				}
 			}else{
 				publisherPanel.setVisible(false);
@@ -349,6 +355,9 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				if(resourceDo.getAggregator().size()>0){
 				InfoUtil.setDepthofknowledgeDetails(CollectiongenealInfo.getResource().getAggregator(), aggregationType, lblAggregation, aggregationPanel);
 				isGeneralInfo=true;
+				}
+				else{
+					aggregationPanel.setVisible(false);
 				}
 			}else{
 				aggregationPanel.setVisible(false);
