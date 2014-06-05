@@ -1579,7 +1579,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 			public void onWindowScroll(Window.ScrollEvent scrollEvent) {
 				if (classpageListVc!=null){
 					classpageListVc.getElement().getStyle().setPosition(Position.FIXED);	
-					classpageListVc.setPopupPosition(777,51);
+					classpageListVc.setPopupPosition(left,51);
 				}
 			}
 		});

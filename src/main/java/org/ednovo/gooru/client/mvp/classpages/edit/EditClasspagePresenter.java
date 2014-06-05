@@ -265,7 +265,9 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if(isTab==null){
 			getView().clearPanel();
 		}
-		getClasspage();
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+			getClasspage();
+		}
 		
 	}
 	
