@@ -325,7 +325,9 @@ public interface MessageProperties {
 			" <div><br/></div><div> {2} </div><div><br/></div><div>ClassCode: {3} </div><div><br/></div><div>Sent using Gooru. Visit {4} for more great resources and collections. It's free!</div>";
 	
 	String GL0220 = "Learn with my collections on Gooru!";
-	String GL0221 = "Check out the collections on  <a href='{1}' target='_blank'>my Gooru profile page!</a> <div><br/></div><div>Gooru is a free personalized learning solution that helps me quickly find topic-relevant, standards-aligned learning materials from the best educational websites. I can organize these learning materials into teachable and sharable playlists, called â \"collections\", all in one place. With millions of resources across all core subjects, Gooru makes it easy for me to find high-quality, teacher-vetted resources and assign them to my students.</div><div><br/></div><div>Go to www.goorulearning.org to start browsing and creating collections. Happy learning!</div>";
+
+	String GL0221 = "Check out the collections on  <a href='{1}' target='_blank'>my Gooru profile page!</a> <div><br/></div><div>Gooru is a free personalized learning solution that helps me quickly find topic-relevant, standards-aligned learning materials from the best educational websites. I can organize these learning materials into teachable and sharable playlists, called, \"collections\", all in one place. With millions of resources across all core subjects, Gooru makes it easy for me to find high-quality, teacher-vetted resources and assign them to my students.</div><div><br/></div><div>Go to www.goorulearning.org to start browsing and creating collections. Happy learning!</div>";
+	
 	String GL0222 = "Email to Friend";
 	String GL0222_1 = "Share this class";
 	String GL0223 = "From";
