@@ -269,7 +269,7 @@ public class StringUtil {
 		String str = "";
 		
 		str = originalString.replaceAll("\"", "%22").replaceAll("'", "%27");
-		
+		str = originalString.replaceAll("<", "%3C").replaceAll(">", "%3E");		
 		return str;
 	}
 	
