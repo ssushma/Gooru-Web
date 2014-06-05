@@ -28,6 +28,7 @@
 package org.ednovo.gooru.server.deserializer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gwt.dev.jjs.ast.js.JsonObject;
 
 /**
@@ -333,6 +335,21 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 		resourceDo.setGrade(getJsonString(recordJsonObject, GRADE));
 		resourceDo.setEducationalUse(getJsonArray(recordJsonObject, EDUCATIONALUSE));
 		resourceDo.setMomentsOfLearning(getJsonArray(recordJsonObject, MOMENTSOFLEARNING));
+
+		try {
+			resourceDo.setPublisher(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(PUBLISHER).toString(), new TypeReference<List<String>>() {
+			}));
+		} catch (JSONException e2) {
+			e2.printStackTrace();
+		}
+
+		try {
+			resourceDo.setAggregator(JsonDeserializer.deserialize(recordJsonObject.getJSONArray(AGGREGATOR).toString(), new TypeReference<List<String>>() {
+			}));
+		} catch (JSONException e2) {
+			e2.printStackTrace();
+		}
+		
 		resourceDo.setDepthOfKnowledges(getJsonArray(recordJsonObject, DEPTHOFKNOWLEDGE));
 		UserDo ownerDo = new UserDo();
 			try {
@@ -425,32 +442,14 @@ public class ResourceCollectionDeSerializer extends DeSerializer{
 					}	
 				}
 				resourceDo.setAssets(assetsList);
-				
-				
-				List<String> aggregatorList=new ArrayList<String>();
-				JSONArray aggregatorArray=recordJsonObject.isNull(AGGREGATOR)?null:recordJsonObject.getJSONArray(AGGREGATOR);
-				if(aggregatorArray!=null){
-					for(int i=0;i<aggregatorArray.length();i++){
-						aggregatorList.add(aggregatorArray.get(i).toString());
-					}	
-				}
-				resourceDo.setAggregator(aggregatorList);
-			
-				List<String> publisherList=new ArrayList<String>();
-				JSONArray publisherArray=recordJsonObject.isNull(PUBLISHER)?null:recordJsonObject.getJSONArray(PUBLISHER);
-				if(publisherArray!=null){
-					for(int i=0;i<publisherArray.length();i++){
-						publisherList.add(publisherArray.get(i).toString());
-					}	
-				}
-				resourceDo.setAggregator(publisherList);
-			
+					
 			}
 			
 			
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			System.out.println("incatch:::");
 		}
 		
 		

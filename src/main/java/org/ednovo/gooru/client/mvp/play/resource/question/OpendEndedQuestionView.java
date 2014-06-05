@@ -141,7 +141,7 @@ public abstract class OpendEndedQuestionView extends Composite implements Messag
 	
 	public void showSubmitedText(){
 		submittedText.setText("");
-		answetTextAfterSubmission.add(new HTML(openEndedAnswerTextArea.getValue()));
+		answetTextAfterSubmission.add(new HTML(openEndedAnswerTextArea.getValue().replaceAll("<", "&lt;").replaceAll(">", "&gt;")));
 		createSesstionItemAttemptOe("",openEndedAnswerTextArea.getValue());
 		saveOeAnswerData();
 		openEndedAnswerTextArea.removeFromParent();

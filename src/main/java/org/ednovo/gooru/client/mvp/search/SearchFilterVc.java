@@ -600,7 +600,6 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 
 			@Override
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
-				System.out.println("on click");
 				if (chkOER.getValue()){
 					MixpanelUtil.mixpanelEvent("checks the OER filter box");
 
@@ -1044,38 +1043,62 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 */
 	public void setFilter(Map<String, String> filter) {
 		String grade = filter.get(IsSearchView.GRADE_FLT);
+		
 		String notFriendly = filter.get(IsSearchView.MEDIATYPE_FLT);
+		
 		String oer = filter.get(IsSearchView.OER_FLT);
-		setSelectedFilter(gradePanelUc, grade);
+		
 		String categories = filter.get(IsSearchView.CATEGORY_FLT);
+		
+		String aggregator = filter.get(IsSearchView.AGGREGATOR_FLT);
+		
+		String authors = filter.get(IsSearchView.OWNER_FLT);
+		
+		String subjects = filter.get(IsSearchView.SUBJECT_FLT);
+		
+		String standards = filter.get(IsSearchView.STANDARD_FLT);
+		
 		if(categories==null){
 			clearAllFields();
 		}
 		setSelectedFilter(categoryPanelUc, categories);
-		String subjects = filter.get(IsSearchView.SUBJECT_FLT);
 		setSelectedFilter(subjectPanelUc, subjects, "~~");
+		setSelectedFilter(gradePanelUc, grade);
 		standardSgstBox.setText("");
 		sourceSgstBox.setText("");
 		authorTxtBox.setText("");
 		aggregatorSgstBox.setText("");
-		String standards = filter.get(IsSearchView.STANDARD_FLT);
+		
 		if (standards != null) {
 			setFilterSuggestionData(standardContainerFloPanel, standards.split(COMMA_SEPARATOR), true);
+		}
+		else
+		{
+			standardContainerFloPanel.clear();
 		}
 		if (resourceSearch) {
 			String sources = filter.get(IsSearchView.PUBLISHER_FLT);
 			if (sources != null) {
 				setFilterSuggestionData(sourceContainerFloPanel, sources.split(COMMA_SEPARATOR), false);
 			}
-			String aggregator = filter.get(IsSearchView.AGGREGATOR_FLT);
-		if (aggregator != null) {
-				setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
+			else{
+				sourceContainerFloPanel.clear();	
 			}
 			
-		} else {
-			String authors = filter.get(IsSearchView.OWNER_FLT);
+			if (aggregator != null) {
+					setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
+				}
+			else
+			{
+				aggregatorContainerFloPanel.clear();
+			}
+		}else{
 			if (authors != null) {
 				setFilterSuggestionData(authorContainerFloPanel, authors.split(COMMA_SEPARATOR), false);
+			}
+			else
+			{
+				authorContainerFloPanel.clear();
 			}
 		}
 		if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.RESOURCE_SEARCH)){
@@ -1092,7 +1115,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 					
 				}
 			}
-			if(oer!=null)
+		if(oer!=null)
 			{
 				try{
 				chkOER.setValue(true);
@@ -1103,6 +1126,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				chkOER.setValue(false);
 				}catch(Exception e){}
 			}
+		
+		}
+		if(grade == null){
+			clearFilter(gradePanelUc);
+		}
+		if(subjects == null){
+			clearFilter(subjectPanelUc);
 		}
 	}
 
@@ -1234,6 +1264,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 	 * @param filterFlowPanel instance {@link DisclosurePanelUc} which has selected filter values
 	 */
 	public void clearFilter(DisclosurePanelUc filterFlowPanel) {
+		
 	//	if(resourceSearch){
 			for (Widget filterWidget : filterFlowPanel.getContent()) {
 				if (filterWidget instanceof CheckBox) {
