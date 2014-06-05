@@ -242,6 +242,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		if(isEmpty) {
 			setUserNoContentMsg();
 		}
+		loadingIconPanel.setVisible(false);
 	}
 	
 	private void setUserNoContentMsg() {
