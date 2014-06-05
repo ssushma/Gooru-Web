@@ -61,7 +61,7 @@
 					ui:field="mandatoryCategoryLbl"></g:Label>
 			</g:HTMLPanel>
 		
-					 <g:HTMLPanel styleName="" ui:field="resourceTypePanel">
+					 <g:HTMLPanel styleName="{res.css.myFolderCollectionFolderUpdateDropdownPanel}" ui:field="resourceTypePanel">
 			<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderUpdateDropdown}">
 				<uc:HTMLEventPanel
 					styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}"
