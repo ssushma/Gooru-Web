@@ -269,7 +269,7 @@ public interface MessageProperties {
 	String GL0182 = "Study";
 	String GL0183 = "Hi Guest!";
 	String GL0184 = "Class Code";
-	String GL0185 = "Study";
+	String GL0185 = "Study";	//Not used
 	String GL0186 = "Sign Up";		// Regiseter Page also.
 	String GL0186_1 = GL_SPL_EXCLAMATION;
 	String GL0187 = "Log in";		// Used in Login Popup also.
