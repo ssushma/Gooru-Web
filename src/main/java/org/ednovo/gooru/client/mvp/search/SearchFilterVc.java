@@ -1056,6 +1056,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		
 		String subjects = filter.get(IsSearchView.SUBJECT_FLT);
 		
+		String standards = filter.get(IsSearchView.STANDARD_FLT);
+		
 		if(categories==null){
 			clearAllFields();
 		}
@@ -1066,7 +1068,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		sourceSgstBox.setText("");
 		authorTxtBox.setText("");
 		aggregatorSgstBox.setText("");
-		String standards = filter.get(IsSearchView.STANDARD_FLT);
+		
 		if (standards != null) {
 			setFilterSuggestionData(standardContainerFloPanel, standards.split(COMMA_SEPARATOR), true);
 		}
@@ -1083,13 +1085,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				sourceContainerFloPanel.clear();	
 			}
 			
-		if (aggregator != null) {
-				setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
+			if (aggregator != null) {
+					setFilterSuggestionData(aggregatorContainerFloPanel, aggregator.split(COMMA_SEPARATOR), false);
+				}
+			else
+			{
+				aggregatorContainerFloPanel.clear();
 			}
-		else
-		{
-			aggregatorContainerFloPanel.clear();
-		}
 		}else{
 			if (authors != null) {
 				setFilterSuggestionData(authorContainerFloPanel, authors.split(COMMA_SEPARATOR), false);
@@ -1124,12 +1126,13 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 				chkOER.setValue(false);
 				}catch(Exception e){}
 			}
+		
+		}
 		if(grade == null){
 			clearFilter(gradePanelUc);
 		}
-		if(subjects == null)
-		clearFilter(subjectPanelUc);
-			
+		if(subjects == null){
+			clearFilter(subjectPanelUc);
 		}
 	}
 
