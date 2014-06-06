@@ -2694,3 +2694,7 @@ margin-top: 18px; */
 	top: -52px;
 	right: 10px;
 }
+.myFolderCollectionFolderUpdateDropdownPanel{
+	position: relative;
+	float: left;
+}

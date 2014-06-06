@@ -374,7 +374,10 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")){
 			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
 				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo));
-			}else{
+			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo));
+			}
+			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
 					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
 					resourceWidgetContainer.add(webResourceWidget);
