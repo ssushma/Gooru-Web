@@ -2704,3 +2704,7 @@ margin-top: 18px; */
 	zoom: 1; /* IE gain hasLayout */
 	z-index: 98;
 }
+.myFolderCollectionFolderUpdateDropdownPanel{
+	position: relative;
+	float: left;
+}
