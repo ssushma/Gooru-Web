@@ -72,7 +72,7 @@ public interface MessageProperties {
 	String GL0008="{0} must be {1} characters or shorter";
 	String GL0009="{0} should not be in future";
 	String GL0010="Specified {0} no longer exists";
-	String GL0011="Specified file format is not supported";
+	String GL0011="Specified file format is not supported ";
 	String GL0012="Essay file size exceeds the allowed size of 512 KB";
 	String GL0013="Specified content has request associated with it";
 	String GL0014="Unable to generate PDF document. Please contact system administrator";
