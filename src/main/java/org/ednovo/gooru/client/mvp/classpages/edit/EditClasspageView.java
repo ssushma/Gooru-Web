@@ -22,12 +22,15 @@ import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEven
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
+import org.ednovo.gooru.client.mvp.search.SearchInfoWidget.MouseOutHideToolTip;
+import org.ednovo.gooru.client.mvp.search.SearchInfoWidget.MouseOverShowStandardToolTip;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
+import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
@@ -42,6 +45,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
@@ -50,6 +54,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -67,9 +73,11 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import org.ednovo.gooru.client.uc.ToolTipPopUp;
 
 /**
  * @fileName : EditClasspageView.java
@@ -144,7 +152,7 @@ public class EditClasspageView extends
 	@UiField
 	Button classListTab,reportsTab;
 	
-	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel;
+	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel,questionMarkPanel;
 
 	@UiField FlowPanel paginationFocPanel,assignmentsContainerPanel,classListContainer;
 
@@ -153,7 +161,9 @@ public class EditClasspageView extends
 	@UiField FocusPanel simplePencilFocPanel, classPageTitle,collectionFloPanel;
 	
 	@UiField Button btnClasspageCancel, btnClasspageSave, btnDeleteClasspage;
-
+	
+	@UiField TextBox classCodeTextBox;
+	
 	NewClasspagePopupView newPopup = null;
 	private  ClasspageDo classpageDo =null;
 
@@ -196,6 +206,7 @@ public class EditClasspageView extends
 
 	private final String START_PAGE = "1";
 	ToolTip toolTip = null;
+	ToolTipPopUp toolTipPopup ; 
 	
 	ClassListPresenter classlistPresenter;
 	
@@ -562,6 +573,7 @@ public class EditClasspageView extends
 				btnCollectionEditImage.setVisible(false);
 				collectionTitleUc.switchToEdit();
 				panelUpdateActionContols.getElement().getStyle().setDisplay(Display.BLOCK);
+				panelUpdateActionContols.getElement().setAttribute("style", "right: 20%;position: relative;margin-right: 0px;");
 			}
 
 		}
@@ -692,6 +704,19 @@ public class EditClasspageView extends
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
 		noAssignmentsMessagePanel.setVisible(false);
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
+		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode() : "");
+	
+		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
+		imgNotFriendly.getElement().getStyle().setLeft(97.8, Unit.PCT);
+		imgNotFriendly.getElement().getStyle().setTop(24, Unit.PX);
+		imgNotFriendly.getElement().getStyle().setPosition(Position.ABSOLUTE);
+		imgNotFriendly.getElement().getStyle().setCursor(Cursor.POINTER);
+		imgNotFriendly.addMouseOverHandler(new MouseOverShowClassCodeToolTip(GL1869));
+		imgNotFriendly.addMouseOutHandler(new MouseOutHideToolTip());
+		
+		questionMarkPanel.clear();
+		questionMarkPanel.add(imgNotFriendly);
+		
 		imgClasspageImage.setAltText(classpageDo.getTitle());
 		imgClasspageImage.setTitle(classpageDo.getTitle());
 		btnCollectionEditImage.setVisible(false);
@@ -1360,7 +1385,31 @@ public class EditClasspageView extends
 		monitorProgress.setVisible(true);
 		monitorProgress.setText(GL1587);
 	}
+	public class MouseOverShowClassCodeToolTip implements MouseOverHandler
+	{
+		String desc=null;
 
+		public MouseOverShowClassCodeToolTip(String description) {
+			this.desc = description;
+		}
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopup = new ToolTipPopUp(desc, (event.getRelativeElement().getAbsoluteLeft()-83),(event.getRelativeElement().getAbsoluteTop()+22));
+			toolTipPopup.setStyleName("");
+			toolTipPopup.show();
+			toolTipPopup.getElement().getStyle().setZIndex(99999);
+		}
+	}
+
+	public class MouseOutHideToolTip implements MouseOutHandler
+	{
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopup.hide();
+		}
+
+	}
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpages.edit.IsEditClasspageView#getCollectionTitleUc()
 	 */
