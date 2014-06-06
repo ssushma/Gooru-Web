@@ -324,4 +324,8 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 			}
 		}
 	}
+
+	public void reorderCollectionItem(int widgetIndex) { 
+		
+	}
 }

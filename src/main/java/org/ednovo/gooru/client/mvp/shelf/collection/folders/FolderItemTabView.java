@@ -19,6 +19,8 @@ import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolder
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderDeleteView;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle.CollectionEditResourceCss;
 import org.ednovo.gooru.client.uc.EditableLabelUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
@@ -71,6 +73,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
 	@UiField FolderStyleBundle folderStyle;
 	@UiField HTMLPanel loadingImage;
+	@UiField FolderItemPanelVc folderItemPanel;
 	
 	@UiField
 	FolderItemMetaDataUc folderItemMetaDataUc;
@@ -103,6 +106,12 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private String O1_LEVEL_VALUE = null, O2_LEVEL_VALUE = null, O3_LEVEL_VALUE = null;
 	
+	private CollectionEditResourceCss css;
+	
+	private ShelfFolderItemChildView shelfFolderItemChildView;
+	
+	
+	
 	private static FolderItemTabViewUiBinder uiBinder = GWT.create(FolderItemTabViewUiBinder.class);
 	
 	interface FolderItemTabViewUiBinder extends UiBinder<Widget, FolderItemTabView> {
@@ -114,6 +123,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public FolderItemTabView() {
      	setFolderTitleValidations();
 		setWidget(uiBinder.createAndBindUi(this));
+		css = CollectionEditResourceCBundle.INSTANCE.css();
 		setStaticMsgs();
 		newFolderBtn.addClickHandler(new AddNewFolderClick());
 		newFolderBtn.addMouseOverHandler(new NewFolderMouseOver());
@@ -244,6 +254,15 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@Override
 	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId) { 
 		setFolderUrlParams();
+		
+		Label label = new Label("");
+		label.setStyleName(getCss().shelfFoldereDragdropSpacer());
+		folderItemPanel.superAdd(label);
+		
+		Label toplabel = new Label("");
+		toplabel.setStyleName(getCss().shelfFoldereDragdropSpacer());
+		folderItemPanel.add(toplabel);
+		
 		if(O1_LEVEL_VALUE==null&&O2_LEVEL_VALUE==null&&O3_LEVEL_VALUE==null) {
 			isRootFolder = true;
 			editButtonEventPanel.setVisible(false);
@@ -302,10 +321,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				folderContentBlock.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
+				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+				folderContentBlock.add(shelfFolderItemChildView);
+				folderItemPanel.addDraggable(shelfFolderItemChildView,2);
 			}
 		}
 		}
@@ -315,10 +337,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 				folderContentBlock.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
+				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+				folderContentBlock.add(shelfFolderItemChildView);
+				folderItemPanel.addDraggable(shelfFolderItemChildView,2);
 			}
 		}
 		loadingImage.setVisible(false);
@@ -617,5 +642,20 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		String performanceTasks = folderMetaData.get("performanceTasks")!=null?folderMetaData.get("performanceTasks"):"";
 		folderItemMetaDataUc.setMetaData(ideas, questions, performanceTasks);
 		folderItemMetaDataUc.showEditableMetaData(true);
+	}
+	
+	/**
+	 * @return css instance of {@link CollectionEditResourceCss}
+	 */
+	public CollectionEditResourceCss getCss() {
+		return css;
+	}
+
+	/**
+	 * @param css
+	 *            name the styles to set
+	 */
+	public void setCss(CollectionEditResourceCss css) {
+		this.css = css;
 	}
 }

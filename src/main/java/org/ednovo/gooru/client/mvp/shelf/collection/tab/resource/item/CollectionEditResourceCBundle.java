@@ -463,6 +463,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myEducationalPanelSubTitles();
 		String myEducationQuestionDropdown();
 		String myEducationEditDropdown();
+		
+		String shelfFoldereDragdropSpacer();
 	}
 
 	@Source("CollectionEditResource.css")

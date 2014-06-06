@@ -4,6 +4,7 @@ import org.ednovo.gooru.client.mvp.dnd.AppRepositionDragContainer;
 import org.ednovo.gooru.client.mvp.dnd.AppVerticalPanelDropController;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragController;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.item.ShelfFolderItemChildView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.ShelfCollectionResourceChildView;
 
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,8 +33,8 @@ public class FolderItemPanelVc extends AppRepositionDragContainer {
 
 	@Override
 	public void onDrop(Draggable draggable) {
-		ShelfCollectionResourceChildView resourceVc = (ShelfCollectionResourceChildView) draggable.getDraggableUc();
-		resourceVc.reorderCollectionItem(getWidgetIndex(draggable));
+		ShelfFolderItemChildView folderItem = (ShelfFolderItemChildView) draggable.getDraggableUc();
+		folderItem.reorderCollectionItem(getWidgetIndex(draggable));
 	}
 
 	@Override
