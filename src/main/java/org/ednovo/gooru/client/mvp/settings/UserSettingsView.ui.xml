@@ -86,6 +86,7 @@
 								ui:field="btnSeeMyProfile"></g:Button>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
+					<g:Button styleName="{Settings.adminStyle} primary" ui:field="btnViewAdmin">View Administrator Portal</g:Button>
 				</g:HTMLPanel>
 				<!-- end of user image part -->
 				<g:HTMLPanel styleName="{Settings.settingPageInfoContainerWrapper}">
