@@ -170,6 +170,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String backArrowButton();
         
         String labelCenterAlign();
+        String classcodeStyles();
 	}
 	@NotStrict
 	@Source("editclasspage.css")
