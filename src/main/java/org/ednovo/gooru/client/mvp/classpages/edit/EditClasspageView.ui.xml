@@ -34,7 +34,10 @@
 							<g:Button ui:field="btnClasspageCancel"
 								styleName="secondary {res.css.classpageTitleCancel}" />
 						</g:HTMLPanel>
-
+						<g:HTMLPanel>
+							<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
+							<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
+						</g:HTMLPanel>
 						<g:FlowPanel styleName="{res.css.titleAlertContainer}">
 							<g:Label styleName="{res.css.titleAlertMessage}"
 								ui:field="titleAlertMessageLbl" />
