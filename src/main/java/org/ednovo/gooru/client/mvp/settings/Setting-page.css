@@ -1369,3 +1369,9 @@ input.styled {
 	width: 285px;
 	margin: 2px 14px;
 }
+.adminStyle{
+	float: left;
+	margin-top: 32px;
+	padding: 7px 46px !important;
+	border-radius: 1px !important;
+}
