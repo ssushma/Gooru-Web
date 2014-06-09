@@ -42,6 +42,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -52,8 +53,10 @@ import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -73,6 +76,9 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	@UiField TextBox subTxt;
 
 	@UiField RichTextArea msgTxa;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 
 	private static boolean isvalid;
 
@@ -110,6 +116,11 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		cancelLbl.setText(GL0142);
 		
 		noteTxt.setText(GL1636);
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
+		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
 		
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.setVisible(false);

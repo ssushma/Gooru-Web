@@ -166,6 +166,9 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	Anchor ancParentRegister;
 	@UiField
 	InlineLabel lblAgree,andText;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 
 	ParentRegisterVc parentRegisterVc = null;
 
@@ -908,6 +911,10 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			rbParent.setChecked(false);
 			selectedRole = null;
 		}
+		
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
 
 	}
 
