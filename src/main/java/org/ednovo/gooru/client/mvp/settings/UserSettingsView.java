@@ -427,6 +427,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		californiaStandChk.setStyleName(Settings.standardsCheckBox());
 		texasChk.setStyleName(Settings.standardsCheckBox());
 		//ngssChk.setStyleName(Settings.standardsCheckBox());
+		//added in 6.4
+		
+		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
+			btnViewAdmin.setVisible(true);
+		}else{
+			btnViewAdmin.setVisible(false);
+			System.out.println("Admin::"+AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin"));
+		}
 		
 		standardSavingTextLabel.setText("");
 		standardsEditButton.setVisible(true);
@@ -1730,6 +1738,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			
 	}
 	
+	@UiHandler("btnViewAdmin")
+	public void clickOnAdmin(ClickEvent clickEvent){
+		
+	}
 	
 	@Override
 	public Label getStandardSavingTextLabel() {
