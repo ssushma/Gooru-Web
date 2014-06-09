@@ -116,9 +116,9 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		cancelLbl.setText(GL0142);
 		
 		noteTxt.setText(GL1636);
-		lblPii.setText("We will never share or sell your email address, your");
-		ancprivacy.setText("privacy is important");
-		toUsText.setText("to us.");
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
 		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
 		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
 		
