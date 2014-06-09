@@ -73,7 +73,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	@UiField Button editFolderSaveBtn,editFolderCancelBtn;
 	@UiField FolderStyleBundle folderStyle;
 	@UiField HTMLPanel loadingImage;
-	@UiField FolderItemPanelVc folderItemPanel;
+//	@UiField FolderItemPanelVc folderItemPanel;
 	
 	@UiField
 	FolderItemMetaDataUc folderItemMetaDataUc;
@@ -108,7 +108,8 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	private CollectionEditResourceCss css;
 	
-	private ShelfFolderItemChildView shelfFolderItemChildView;
+//	private ShelfFolderItemChildView shelfFolderItemChildView;
+	
 	
 	
 	
@@ -255,13 +256,13 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	public void setFolderData(List<FolderDo> folderList, String folderParentName, String presentFolderId) { 
 		setFolderUrlParams();
 		
-		Label label = new Label("");
+		/*Label label = new Label("");
 		label.setStyleName(getCss().shelfFoldereDragdropSpacer());
 		folderItemPanel.superAdd(label);
 		
 		Label toplabel = new Label("");
 		toplabel.setStyleName(getCss().shelfFoldereDragdropSpacer());
-		folderItemPanel.add(toplabel);
+		folderItemPanel.add(toplabel);*/
 		
 		if(O1_LEVEL_VALUE==null&&O2_LEVEL_VALUE==null&&O3_LEVEL_VALUE==null) {
 			isRootFolder = true;
@@ -318,16 +319,17 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		else{
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
+//				folderItemPanel.clear();
 				folderContentBlock.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
-				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
+//				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
-				folderContentBlock.add(shelfFolderItemChildView);
-				folderItemPanel.addDraggable(shelfFolderItemChildView,2);
+				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+//				folderContentBlock.add(shelfFolderItemChildView);
+//				folderItemPanel.addDraggable(shelfFolderItemChildView,i);
 			}
 		}
 		}
@@ -335,15 +337,16 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 			mainSection.removeStyleName(folderStyle.emptyFolder());
 			if(!isPaginated) {
 				folderContentBlock.clear();
+//				folderItemPanel.clear();
 			}
 			for(int i = 0; i<folderList.size(); i++) {
-				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
+//				shelfFolderItemChildView = new ShelfFolderItemChildView(folderList.get(i));
 				if(folderList.get(i).getType().equalsIgnoreCase("folder")){
 					isFolderType = false;
 				}
-//				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
-				folderContentBlock.add(shelfFolderItemChildView);
-				folderItemPanel.addDraggable(shelfFolderItemChildView,2);
+				folderContentBlock.add(new ShelfFolderItemChildView(folderList.get(i)));
+				/*folderContentBlock.add(shelfFolderItemChildView);
+				folderItemPanel.addDraggable(shelfFolderItemChildView,2);*/
 			}
 		}
 		loadingImage.setVisible(false);

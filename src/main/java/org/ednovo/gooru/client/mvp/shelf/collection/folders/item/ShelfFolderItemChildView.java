@@ -7,6 +7,8 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.client.mvp.dnd.IsDraggable.DRAG_TYPE;
+import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragUc;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.ChangeShelfPanelActiveStyleEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderCollectionStyleEvent;
@@ -225,16 +227,19 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 	@Override
 	public DRAG_TYPE getDragType() {
 		throw new RuntimeException("Not implemented");
+//		return DRAG_TYPE.COLLECTION_ITEM;
 	}
 
 	@Override
 	public int getDragTopCorrection() {
 		throw new RuntimeException("Not implemented");
+//		return 5;
 	}
 
 	@Override
 	public int getDragLeftCorrection() {
 		throw new RuntimeException("Not implemented");
+//		return 225;
 	}
 	
 	private HashMap<String,String> urlParams(String assetType, String folderId) {
@@ -325,7 +330,7 @@ public class ShelfFolderItemChildView extends ChildView<ShelfFolderItemChildPres
 		}
 	}
 
-	public void reorderCollectionItem(int widgetIndex) { 
+	/*public void reorderCollectionItem(int widgetIndex) { 
 		
-	}
+	}*/
 }
