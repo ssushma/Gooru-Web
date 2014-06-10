@@ -71,7 +71,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	
 	SignUpPresenter signUpViewPresenter = null;
 	private Integer offset=0;
-	private Integer limit=20;
+	private Integer limit=5;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT)
@@ -145,7 +145,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			public void onSuccess(ClasspageDo classpageDo) {
 				if(classpageDo!=null && classpageDo.getClasspageId() != null){
 						offset=0;
-						limit=20;
+						limit=5;
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString());
 						getView().setClasspageData(classpageDo);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
@@ -170,6 +170,10 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	}
 	@Override
 	public void getNextClasspageItems(Integer offset,Integer limit) {
+		
+		System.out.println("offset::"+offset);
+		System.out.println("limit::"+limit);
+		
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		getClasspageItems( classpageId,offset.toString(),limit.toString());
 	}
