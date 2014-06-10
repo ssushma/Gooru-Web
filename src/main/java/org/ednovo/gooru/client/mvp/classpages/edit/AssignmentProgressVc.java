@@ -90,11 +90,10 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
 		if (isLast){
-			panelMainContainer.getElement().getStyle().setWidth(32, Unit.PX);
+//			panelMainContainer.getElement().getStyle().setWidth(32, Unit.PX);
 			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
 			
 		}else{
-			panelMainContainer.getElement().getStyle().clearWidth();
 			lblAssignmentNo.getElement().getStyle().clearTextAlign();
 		}
 		
