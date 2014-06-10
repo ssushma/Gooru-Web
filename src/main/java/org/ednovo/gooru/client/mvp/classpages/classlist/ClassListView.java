@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.event.GetStudentJoinListEvent;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
@@ -61,6 +62,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineHTML;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SimpleCheckBox;
@@ -112,6 +114,9 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField Label lblErrorMessage, lblPleaseWait, lblPendingMembers,lblActiveMembers,lblText, lblPendingPleaseWait, lblActivePleaseWait,lblActiveMembersDesc;
 	@UiField InlineHTML publicDescTxt,publicTxtDesc,inviteDesc,inviteTextDesc,shareDesc,shareTxtDesc,privateMsgDesc;
 	AutoSuggestForm autoSuggetTextBox =null;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 		
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 
@@ -136,6 +141,8 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	private ClasspageDo classpageDo;
 	
 	private SocialShareDo shareDo;
+	
+	private TermsOfUse termsOfUse;
 	
 	private static final String PUBLIC="public";
 	private static final String SHORTEN_URL = "shortenUrl";
@@ -227,6 +234,11 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		
 		lblPleaseWait.setText(GL1137);
 		lblText.setText(StringUtil.generateMessage(GL1528, studentsLimitCount+""));
+		
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		
 		
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
@@ -1031,5 +1043,24 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	public void clearDataAndErrorMessages() {
 		createAutoSuggestBox();
         lblErrorMessage.setVisible(false);
+	}
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
 	}
 }
