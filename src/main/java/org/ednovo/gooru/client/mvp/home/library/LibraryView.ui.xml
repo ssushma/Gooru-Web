@@ -20,7 +20,7 @@
 		   </g:HTMLPanel>
 		   
 		   <g:HTMLPanel ui:field="courseBanner">
-		       <g:HTMLPanel ui:field="partnerLogo" styleName="{libraryStyle.partnerLogo}"/>
+		       <g:HTMLPanel ui:field="partnerLogo"/>
 		       <g:Image ui:field="courseImage"/>
 		       <g:Label styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
 		   </g:HTMLPanel>
@@ -36,6 +36,7 @@
 		   <g:HTMLPanel ui:field="leftNav"/>
 		   
 		   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
+		       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
 		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
 		       <g:HTMLPanel ui:field="contentScroll"/>
 		   </g:HTMLPanel>

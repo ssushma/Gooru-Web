@@ -2401,8 +2401,32 @@ public interface MessageProperties {
     	String GL1890 ="New Navigation Tabs";
     	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.   ";
     	
+    	String GL1891_1 = "Reorder your assignments the way that you want your students to view them. This dots order will reflect on the student's page as well.";
     	String GL1892 ="We will never share or sell your email address, your";
     	String GL1893 ="privacy is important";
     	String GL1894 ="to us.";
     	
-   }
+
+    	String GL1895 = "following";
+    	String GL1896 = "followers";
+    	String GL1897 = "Tags";
+    	
+    
+    	String GL1898 = "SAUSD Library";
+    	String GL1899 = "About SAUSD";
+    	String GL1900 = "http://www.sausd.us/site/default.aspx?PageID=1";
+    	String GL1901 = "SAUSD Featured Courses";
+    	String GL1902 = "Santa Ana Unified School District Library";
+    	String GL1903 = "This library showcases collections created by teachers from the Santa Ana Unified School District in California.";
+    	String GL1904 = "Find";
+    	String GL1905 = "standards-aligned, interactive learning materials tied to Common Core";
+    	String GL1906 = "Share";
+    	String GL1907 = "custom collections, personalized to meet the unique needs of your students";
+    	String GL1908 = "Measure";
+    	String GL1909 = "your students' engagement, comprehension, and progress";
+    	String GL1910 = "Contribute";
+    	String GL1911 = "to an active community of teachers and students";
+    	String GL1913 = "User Who Are Following Me";
+    	   
+
+}

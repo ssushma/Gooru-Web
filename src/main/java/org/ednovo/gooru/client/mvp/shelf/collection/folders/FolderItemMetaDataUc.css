@@ -134,3 +134,28 @@
 .errorLabel{
 	float: right;
 }
+.sausdMetaData {
+	margin: 0px auto;
+	width: 700px;
+	margin-right: 0;
+}
+.sausdContent {
+	width: 320px;
+	background: white;
+	margin-right: 6px;
+	margin-top: 0px;
+	height: 100px;
+	border: 1px solid #ddd;
+}
+.sausdContentLast {
+	width: 325px;
+	margin-top: 0px;
+	background: white;
+	height: 100px;
+	border: 1px solid #ddd;
+}
+.sausdContentBlock {
+	width: 680px;
+	background: white;
+	height: 65px;
+}

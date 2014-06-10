@@ -401,3 +401,7 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 	position: relative;
 	left: 100px;
 }
+
+.privacyAlignStyle{
+	margin-right: 2px;
+}

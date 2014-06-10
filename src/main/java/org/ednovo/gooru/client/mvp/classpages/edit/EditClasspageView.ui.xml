@@ -34,7 +34,7 @@
 							<g:Button ui:field="btnClasspageCancel"
 								styleName="secondary {res.css.classpageTitleCancel}" />
 						</g:HTMLPanel>
-						<g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classcodeContainer}">
 							<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
 							<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
 						</g:HTMLPanel>
@@ -73,7 +73,15 @@
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 				
 			</g:HTMLPanel>
-			
+			<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
+			    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
+			    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
+			    <g:HTMLPanel styleName="{res.css.path}">
+				    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
+				    <g:Label styleName="{res.css.line}"></g:Label> -->
+					<g:HTMLPanel styleName="{res.css.assignmentPath}" ui:field="panelAssignmentProgress" />
+				</g:HTMLPanel>
+			</g:HTMLPanel>
 			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
 
 			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">

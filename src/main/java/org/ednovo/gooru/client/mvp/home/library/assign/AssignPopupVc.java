@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.ForgotPasswordVc;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasPlaceHolderEvent;
@@ -59,6 +60,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -76,6 +78,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -117,6 +120,9 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 
 	@UiField
 	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 
 	private boolean isPrivate = false;
 	private static final String SWITCH_FULL_URL = GL0643;
@@ -150,6 +156,8 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 	String classpageId = null;
 	String assignmentId = null;
 	boolean isMoreThanLimit = false; // Limit = 10
+	private TermsOfUse termsOfUse;
+	
 	private static AssignPopupVcUiBinder uiBinder = GWT
 			.create(AssignPopupVcUiBinder.class);
 
@@ -302,6 +310,11 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 	 */
 	public void setLabelsAndIds() {
 
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		ancprivacy.getElement().getStyle().setMarginLeft(5, Unit.PX);
+		
 		forgotPwd.getElement().setId("lnkForgotPwd");
 		loginTxtBox.setPlaceholder(GL0202);
 		loginTxtBox.getElement().setAttribute("placeholder",
@@ -705,6 +718,25 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 			}
 		}
 	};
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
+	}
 
 	private static native boolean isCookieEnabled() /*-{
 													return navigator.cookieEnabled;

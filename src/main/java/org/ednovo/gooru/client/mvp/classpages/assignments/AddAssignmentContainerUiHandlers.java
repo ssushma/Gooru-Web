@@ -48,4 +48,5 @@ public interface AddAssignmentContainerUiHandlers extends BaseUiHandlers, EventH
 	public void getWorkspaceData(int offset,int limit,boolean clearShelfPanel);
 	public void getFolderItems(TreeItem item,String parentId);
 	public void addCollectionToAssign(String collectionId,String direction,String dueDate);
+	public void addCollectionToAssign(String collectionId);
 }

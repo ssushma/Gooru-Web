@@ -26,7 +26,6 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
-import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -96,19 +95,19 @@ public class EditClasspageView extends
 	@UiField(provided = true)
 	AssignmentEditLabelUc collectionTitleUc;
 	
-	
+	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
 	
 /*	@UiField TextBox  txtClasspageLinkShare; */
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel;
+	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel, lblAssignmentProgress;
 	
 	@UiField Image imgClasspageImage;
 	
 	@UiField FlowPanel mainFlowPanel;
 
-	@UiField HTMLPanel panelUpdateActionContols;
+	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath;
 
 	@UiField
 	static HTMLPanel frameDiv;
@@ -145,7 +144,7 @@ public class EditClasspageView extends
 	@UiField
 	Button classListTab,reportsTab;
 	
-	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel,questionMarkPanel;
+	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel;
 
 	@UiField FlowPanel paginationFocPanel,assignmentsContainerPanel,classListContainer;
 
@@ -157,6 +156,8 @@ public class EditClasspageView extends
 	
 	@UiField TextBox classCodeTextBox;
 	
+	@UiField HTMLPanel questionMarkPanel;
+
 	NewClasspagePopupView newPopup = null;
 	private  ClasspageDo classpageDo =null;
 
@@ -199,13 +200,10 @@ public class EditClasspageView extends
 
 	private final String START_PAGE = "1";
 	ToolTip toolTip = null;
-	ToolTipPopUp toolTipPopup ; 
 	
 	ClassListPresenter classlistPresenter;
 	
 	List<CollectionItemDo> collectionItemList = new ArrayList<CollectionItemDo>();
-	
-	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
 
 	private static EditClassPageViewUiBinder uiBinder = GWT
 			.create(EditClassPageViewUiBinder.class);
@@ -460,6 +458,9 @@ public class EditClasspageView extends
 		reportsTab.setText(GL1737);
 		assignmentsDirectionsLabel.setText(GL1887);
 		
+
+		lblAssignmentProgress.setText(GL1891_1);
+		
 		//htmlShareText.setHTML(GL0229 + GL0230);
 		//lblPopupTitle.setText(GL0230);
 	/*	lblOr.setText(GL0209.toUpperCase());
@@ -568,7 +569,6 @@ public class EditClasspageView extends
 				btnCollectionEditImage.setVisible(false);
 				collectionTitleUc.switchToEdit();
 				panelUpdateActionContols.getElement().getStyle().setDisplay(Display.BLOCK);
-				panelUpdateActionContols.getElement().setAttribute("style", "right: 20%;position: relative;margin-right: 0px;");
 			}
 
 		}
@@ -699,18 +699,22 @@ public class EditClasspageView extends
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
 		noAssignmentsMessagePanel.setVisible(false);
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
+		
 		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode() : "");
-	
+
 		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 		imgNotFriendly.getElement().getStyle().setLeft(97.8, Unit.PCT);
-		imgNotFriendly.getElement().getStyle().setTop(24, Unit.PX);
+		imgNotFriendly.getElement().getStyle().setTop(27, Unit.PX);
 		imgNotFriendly.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		imgNotFriendly.getElement().getStyle().setCursor(Cursor.POINTER);
 		imgNotFriendly.addMouseOverHandler(new MouseOverShowClassCodeToolTip());
 		imgNotFriendly.addMouseOutHandler(new MouseOutHideToolTip());
-		
+
 		questionMarkPanel.clear();
 		questionMarkPanel.add(imgNotFriendly);
+		
+		
+		
 		
 		imgClasspageImage.setAltText(classpageDo.getTitle());
 		imgClasspageImage.setTitle(classpageDo.getTitle());
@@ -793,12 +797,13 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(true);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsContainerPanel.clear();
-					for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
+				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
 					assignmentTabView = showClasspageItem(classpageItemDo);
 					this.totalHitCount=classpageItemDo.getTotalHitCount();
 					assignmentsContainerPanel.add(assignmentTabView);
 				}
+				displayAssignmentPath(classpageItemsList1);
 				setPagination();
 			}else{
 				noAssignmentsMessagePanel.setVisible(true);
@@ -1086,10 +1091,11 @@ public class EditClasspageView extends
 				}
 			}
 		} else if(result.getTotalHitCount()==0) {
+			panelAssignmentProgress.clear();
 			noAssignmentsMessagePanel.setVisible(true);
 		}
-		else
-		{
+		else{
+			panelAssignmentProgress.clear();
 			noAssignmentsMessagePanel.setVisible(false);
 		}
 
@@ -1254,6 +1260,7 @@ public class EditClasspageView extends
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
+			panelAssignmentPath.setVisible(true);
 			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
@@ -1289,7 +1296,7 @@ public class EditClasspageView extends
 			refresh=false;
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
-			
+			panelAssignmentPath.setVisible(false);
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
@@ -1325,7 +1332,7 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			getClassListContainer().setVisible(false);
-			
+			panelAssignmentPath.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
@@ -1381,35 +1388,43 @@ public class EditClasspageView extends
 		monitorProgress.setText(GL1587);
 	}
 
-	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
-
-		@Override
-		public void onMouseOver(MouseOverEvent event) {
-			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869,""));
-			toolTipPopupPanelNew.setStyleName("");
-			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+85, event.getRelativeElement().getAbsoluteTop()-48);
-			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-			toolTipPopupPanelNew.show();
-			
-		}
-		
-	}
-	
-	public class MouseOutHideToolTip implements MouseOutHandler{
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			toolTipPopupPanelNew.hide();
-		}
-	}
-	
 	/* (non-Javadoc)
 	 * @see org.ednovo.gooru.client.mvp.classpages.edit.IsEditClasspageView#getCollectionTitleUc()
 	 */
 	@Override
 	public AssignmentEditLabelUc getCollectionTitleUc() {
 		return collectionTitleUc;
+	}
+	
+	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageList){
+		panelAssignmentProgress.clear();
+		for (int i=0; i<classpageList.size(); i++){
+			panelAssignmentProgress.add(new AssignmentProgressVc(i == classpageList.size()-1 ? true : false, 
+					classpageList.get(i), i+1));
+		}
+	}
+	
+	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
+
+	@Override
+	public void onMouseOver(MouseOverEvent event) {
+	toolTipPopupPanelNew.clear();
+	toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869,""));
+	toolTipPopupPanelNew.setStyleName("");
+	toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+85, event.getRelativeElement().getAbsoluteTop()-48);
+	toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+	toolTipPopupPanelNew.show();
+
+	}
+
+	}
+
+	public class MouseOutHideToolTip implements MouseOutHandler{
+
+	@Override
+	public void onMouseOut(MouseOutEvent event) {
+	toolTipPopupPanelNew.hide();
+	}
 	}
 }
 
