@@ -184,18 +184,18 @@ public class EditClasspageView extends
 	
 	private CollectionsView assignmentTabView;
 
-	private int pageSize = 10;
+	private int pageSize = 5;
 
 	private int pageNum = 0;
 
 	private int pos = 0;
 
-	int noOfItems = 10;
+	int noOfItems = 5;
 
 	private int assignmentCount = 0;
 	
 	private int totalHitCount=0;
-	private int limit=20;
+	private int limit=5;
 	private int pageNumber=1;
 
 	private final String START_PAGE = "1";
@@ -665,7 +665,7 @@ public class EditClasspageView extends
 		params.put("id", classpageDo.getClasspageId());
 		params.put("b", "true");
 
-		params.put("pageSize", "10");
+		params.put("pageSize", "5");
 		params.put("pageNum", "0");
 		params.put("pos", "1");
 
@@ -842,7 +842,7 @@ public class EditClasspageView extends
 	}
 	
 	public void setPagination(){
-		if((pageNumber*limit)<this.totalHitCount){
+		if(this.totalHitCount>5){
 			showPaginationButton();
 		}else{
 			clearPaginationButton();
@@ -851,9 +851,27 @@ public class EditClasspageView extends
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
 		Label seeMoreLabel=new Label(GL0508);
-		seeMoreLabel.addClickHandler(new PaginationEvent());
+		//seeMoreLabel.addClickHandler(new PaginationEvent());
 		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
-		paginationFocPanel.add(seeMoreLabel);
+		int totalPages = (this.totalHitCount / 5)
+				+ ((this.totalHitCount % 5) > 0 ? 1 : 0);
+		//int pageNumCount = pageNum + 1;
+		if (totalPages > 1) {
+			if (pageNumber > 1) {
+				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
+			}
+		
+			int page = pageNumber < 5 ? 1 : pageNumber - 3;
+
+			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
+			{
+				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
+			}
+			if (pageNumber < totalPages) {
+				paginationFocPanel.add(new PaginationButtonUc(1, NEXT, this));
+			}
+		}
+		//paginationFocPanel.add(seeMoreLabel);
 	}
 	public void clearPaginationButton(){
 		paginationFocPanel.clear();
@@ -871,7 +889,7 @@ public class EditClasspageView extends
 		paginationFocPanel.clear();
 		assignmentsContainerPanel.clear();
 		assignmentsContainerPanel.add(setLoadingPanel());
-		limit=20;
+		limit=5;
 		pageNumber=1;
 
 	}
@@ -1004,7 +1022,18 @@ public class EditClasspageView extends
 	@Override
 	public void onClick(ClickEvent event) {
 		if (event.getSource() instanceof PaginationButtonUc) {
+			
 			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
+
+			int pageNumVal = (pagenumber - 1) * 5;
+			
+			pageNumber = pagenumber;
+			setPagination();
+			
+			assignmentsContainerPanel.add(setLoadingPanel());
+
+			getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
+			/*int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
 
 			pageNum = (pagenumber - 1) * pageSize;
 
@@ -1020,7 +1049,7 @@ public class EditClasspageView extends
 			params.put("pageNum", pageNum + "");
 			params.put("pos", pagenumber + "");
 			AppClientFactory.getPlaceManager().revealPlace(
-					PlaceTokens.EDIT_CLASSPAGE, params, true);
+					PlaceTokens.EDIT_CLASSPAGE, params, true);*/
 
 		} else {
 		}
@@ -1035,7 +1064,7 @@ public class EditClasspageView extends
 		params.put("pageSize", pageSize + "");
 	if (assignmentsContainerPanel.getWidgetCount() == 1
 				&& isPostDeleteAssignment) {
-			pageNum = pageNum == 0 ? 0 : pageNum - 10;
+			pageNum = pageNum == 0 ? 0 : pageNum - 5;
 					params.put("pageNum", pageNum + "");
 			params.put("pos", pos + "");
 	}
@@ -1080,8 +1109,8 @@ public class EditClasspageView extends
 					paginationFocPanel.add(new PaginationButtonUc(pos - 1,
 							PREVIOUS, this));
 				}
-				int page = pos < 10 ? 1 : pos - 10;
-				for (int count = 0; count < 10 && page <= assignmentCount; page++, ++count) {
+				int page = pos < 5 ? 1 : pos - 5;
+				for (int count = 0; count < 5 && page <= assignmentCount; page++, ++count) {
 					paginationFocPanel.add(new PaginationButtonUc(page,
 							page == pos, this));
 				}
