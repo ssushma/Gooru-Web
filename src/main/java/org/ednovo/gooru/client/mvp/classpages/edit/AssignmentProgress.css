@@ -1,0 +1,51 @@
+.circle{
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	/* margin: -8px 2px 0px 2px; */
+	background: #b9b9c8;
+	border-radius: 20px;
+	/* display: inline-block; */
+	vertical-align: top;
+	float: left;
+}
+
+.line{
+	height: 3px;
+	background: #B9B9C8 2px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	width: 10px;
+	float: left;
+}
+
+.leftMargin{
+	margin-left: 6px;
+}
+
+.rightMargin{
+	margin-right: 6px;
+}
+
+.container{
+	/* background: red; */
+	width: 47px;
+	float: left;
+}
+
+.circleContainer{
+	float: left;
+	width: 47px;
+	height: 17px;
+}
+
+.assignmentNumbers{
+	text-align: center;
+	font-size: 14px;
+	margin-top: 20px;
+}
+
+.viewedCircle{
+	background: #009E0F;
+	
+}
