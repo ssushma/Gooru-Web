@@ -413,7 +413,7 @@ padding-bottom: 18%;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:590px;
+	height:630px;
 }
 .assignContentLoginCustomize {
 	background-color: transparent;
@@ -554,7 +554,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#666666', EndC
 .btn {
 	width: 115px;
 	margin: auto;
-	margin-bottom: 15px;
+	margin-bottom: 6px;
 }
 button.LoginText {
 	margin-top:15px;
@@ -923,5 +923,18 @@ button.LoginText {
 }
 
 /*End Success popup */
+
+.privacyAlignStyle{
+	margin-right: 2px;
+}
+
+.privacyContainer{
+	margin: 0px;
+	text-align: left;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 70%;
+}
+
 
 

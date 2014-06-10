@@ -31,6 +31,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.RemoveCollaboratorObjectEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetCollabCountEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -58,8 +59,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle;
@@ -105,6 +108,9 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	@UiField Button btnInvite, btnRemoveSelectedInvities;
 	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
+	
 	AutoSuggestForm autoSuggetTextBox =null;
 	
 	MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
@@ -116,6 +122,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	int currentCollabCount=0;
 	
 	int overAllCollabCount = 0;
+	
+	private TermsOfUse termsOfUse;
 	
 //	@UiField TextBox txtCollaboratorsName;
 
@@ -195,6 +203,11 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		lblCurrentCollabTitle.setText(GL1113);
 		
 		btnInvite.setText(GL0944);
+		
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		
 		btnInvite.getElement().setId("btnInvite");
 		btnInvite.setEnabled(false);
 		panelActions.getElement().addClassName(res.css().buttonTooltip());
@@ -778,4 +791,25 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 //			toolTipPopupPanel.hide();
 //		}
 //	}
+	
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(true);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999);//To display the view in collection player.
+	}
+	
 }

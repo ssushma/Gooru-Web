@@ -199,7 +199,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("592px");
+				successPopupVc.setHeight("635px");
 
 				successPopupVc.show();
 				successPopupVc.center();
