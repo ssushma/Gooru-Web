@@ -54,6 +54,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetStandardDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetStandardDoHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
+import org.ednovo.gooru.client.mvp.library.sausd.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -111,7 +112,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	HTMLPanel leftNav;
 
 	@UiField
-	HTMLPanel contentScroll;
+	HTMLPanel contentScroll, libraryMetaDataContainer;
 
 	@UiField
 	HTMLPanel contributorsContainer;
@@ -356,6 +357,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	public void setLibraryTopicListData(final ArrayList<TopicDo> topicDoList) {
 		contentScroll.clear();
 		try {
+			setMetaDataContent();
 			for(int i = 0; i <topicDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(topicDoList.get(i), (i+1), getPlaceToken()));
 			}
@@ -369,6 +371,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	public void setLibraryConceptOnlyData(ArrayList<ConceptDo> conceptDoList, final Integer collectionTotalCount) {
 		contentScroll.clear();
 		try {
+			setMetaDataContent();
 			for(int i = 0; i <conceptDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(conceptDoList.get(i), (i+1), getPlaceToken()));
 			}
@@ -1320,5 +1323,15 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			e.printStackTrace();
 		}
 	}
-	
+
+	private void setMetaDataContent() {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+			libraryMetaDataContainer.setVisible(true);
+			libraryMetaDataContainer.clear();
+			libraryMetaDataContainer.add(new LibraryMetaDataContentUc());
+		} else {
+			libraryMetaDataContainer.setVisible(false);
+		}
+	}
+
 }
