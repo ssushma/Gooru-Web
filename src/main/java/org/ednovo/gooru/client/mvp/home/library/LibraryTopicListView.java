@@ -1079,7 +1079,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("592px");
+				successPopupVc.setHeight("635px");
 
 				successPopupVc.show();
 				successPopupVc.center();
@@ -1143,7 +1143,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				};
 				Window.scrollTo(0, 0);
 				successPopupVc.setWidth("500px");
-				successPopupVc.setHeight("405px");
+				successPopupVc.setHeight("440px");
 				successPopupVc.show();
 				successPopupVc.center();
 			}
