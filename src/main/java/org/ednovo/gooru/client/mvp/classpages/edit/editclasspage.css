@@ -855,6 +855,67 @@
 .labelCenterAlign{
 	text-align:center;
 }
+<<<<<<< HEAD
+
+.assignmentPath{
+	
+}
+.assignmentPathContainer{
+	height: 100px;
+	margin-bottom: 10px;
+	background-color:rgb(255,255,255);
+	width:100%;
+	height:109px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:8px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:8px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:8px;
+	padding : 5px;
+}
+
+.assignmentProgress{
+	text-align: center;
+	/* font-size: 24px; 
+	font-weight: bold;	*/
+	margin:5px;
+}
+
+.assignmentPath{
+	height: 15px;
+}
+
+.line{
+	height: 3px;
+	background: #515151 2px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	margin-left: 7px;
+	width: 10px;
+	float: left;
+}
+
+.squre {
+	width: 15px;
+	height: 15px;
+	background: #009E0F;
+	vertical-align: top;
+	float: left;
+	border: 1px black solid;
+}
+
+.progressStart{
+	background: url(images/Classpage/userIcon.png) no-repeat;
+	width: 29px;
+	height: 34px;
+	float: left;
+}
+
+.path{
+	margin-top: 15px;
+	margin-left: 8px;
+}
 .classcodeStyles{
 	display: block;
 	width: 70px !important;

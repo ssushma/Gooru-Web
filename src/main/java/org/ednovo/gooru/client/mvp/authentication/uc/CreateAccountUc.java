@@ -166,6 +166,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 	Anchor ancParentRegister;
 	@UiField
 	InlineLabel lblAgree,andText;
+	
 
 	ParentRegisterVc parentRegisterVc = null;
 

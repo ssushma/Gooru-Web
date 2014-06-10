@@ -111,6 +111,8 @@
 						<gg:TextBoxWithPlaceholder ui:field="txtChooseEmail" />
 					</g:HTMLPanel>
 					<gg:ErrorLabelUc ui:field="emailValidUc" />
+					
+					<!-- <g:Label ui:field="piiLbl">We will never share or sell your email address, your privacy is important to us.</g:Label> -->
 					<g:HTMLPanel styleName="{res.css.inputRow}">
 						<g:HTMLPanel styleName="{res.css.horizontalTooltipContainer}"
 							ui:field="panelPassword">
