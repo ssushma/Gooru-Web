@@ -36,6 +36,7 @@
 		   <g:HTMLPanel ui:field="leftNav"/>
 		   
 		   <g:HTMLPanel ui:field="scrollPanel" styleName="{libraryStyle.scrollPanel}">
+		       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
 		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {libraryStyle.loadingIconTopic}"></g:HTMLPanel>
 		       <g:HTMLPanel ui:field="contentScroll"/>
 		   </g:HTMLPanel>
