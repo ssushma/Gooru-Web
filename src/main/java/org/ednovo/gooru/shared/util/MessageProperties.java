@@ -2410,7 +2410,7 @@ public interface MessageProperties {
     	String GL1895 = "following";
     	String GL1896 = "followers";
     	String GL1897 = "Tags";
-    	
+ 
     
     	String GL1898 = "SAUSD Library";
     	String GL1899 = "About SAUSD";
@@ -2428,5 +2428,8 @@ public interface MessageProperties {
     	String GL1911 = "to an active community of teachers and students";
     	String GL1913 = "User Who Are Following Me";
     	   
+
+    	String GL1912 = "Move to position";
+
 
 }
