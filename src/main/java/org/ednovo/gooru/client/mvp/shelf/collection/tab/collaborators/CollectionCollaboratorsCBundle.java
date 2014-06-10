@@ -102,6 +102,8 @@ public interface CollectionCollaboratorsCBundle extends ClientBundle{
 		String deleteTextBox();
 		String deleteContainer();
 		String tag();
+		
+		String privacyAlignStyle();
 	}
 	@Source("CollectionCollaborators.css")
 	CollaboratorsCss css();

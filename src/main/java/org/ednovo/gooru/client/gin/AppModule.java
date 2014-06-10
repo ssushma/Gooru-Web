@@ -134,6 +134,10 @@ import org.ednovo.gooru.client.mvp.library.rusd.IsRusdView;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter.IsRusdProxy;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdView;
+import org.ednovo.gooru.client.mvp.library.sausd.IsSausdView;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter.IsSausdProxy;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdView;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter.IsCollectionPlayerProxy;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerView;
@@ -459,5 +463,6 @@ public class AppModule extends AppPresenterModule {
 		
 		
 
+		bindPresenter(SausdPresenter.class, IsSausdView.class, SausdView.class,IsSausdProxy.class);
 	}
 }

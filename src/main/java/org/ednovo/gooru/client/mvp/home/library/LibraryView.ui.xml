@@ -20,7 +20,7 @@
 		   </g:HTMLPanel>
 		   
 		   <g:HTMLPanel ui:field="courseBanner">
-		       <g:HTMLPanel ui:field="partnerLogo" styleName="{libraryStyle.partnerLogo}"/>
+		       <g:HTMLPanel ui:field="partnerLogo"/>
 		       <g:Image ui:field="courseImage"/>
 		       <g:Label styleName="{libraryStyle.courseTitle}" ui:field="courseTitle"/>
 		   </g:HTMLPanel>

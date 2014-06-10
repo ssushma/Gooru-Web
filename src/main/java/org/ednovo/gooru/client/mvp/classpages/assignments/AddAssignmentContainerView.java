@@ -80,13 +80,13 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	interface AddAssignmentContainerViewUiBinder extends UiBinder<Widget, AddAssignmentContainerView> {
 	}
 
-	@UiField SimplePanel datePanelContainer;
+//	@UiField SimplePanel datePanelContainer;
 	@UiField HTMLPanel floderTreeContainer;
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
-	@UiField Label dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,
-					addCollectionPopupHeader,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl;
-	@UiField TextArea assignmentDirectionsTxtArea;
+	@UiField Label /*dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,*/ 
+				addCollectionPopupHeader, addingText /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
+//	@UiField TextArea assignmentDirectionsTxtArea;
 	private int offset=0;
 	private int limit=20;
 	private int totalHitCount=0;
@@ -105,6 +105,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	};
 	private CollectionTreeItem cureentcollectionTreeItem=null;
 	private CollectionTreeItem previousSelectedItem=null;
+	private FolderTreeItem currentFolderSelectedTreeItem=null;
+	private FolderTreeItem previousFolderSelectedTreeItem=null;
+	
 	
 	
 	@Inject
@@ -115,18 +118,18 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		setStaticTexts();
-		assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
-		assignmentDirectionsTxtArea.getElement().setAttribute("maxlength", "400");
-		dropdownListContainerScrollPanel.setVisible(false);
+		//assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+		//assignmentDirectionsTxtArea.getElement().setAttribute("maxlength", "400");
+		//dropdownListContainerScrollPanel.setVisible(false);
 		addingText.setVisible(false);
 		appPopUp.setGlassEnabled(true);
 		appPopUp.setAutoHideOnHistoryEventsEnabled(true);
 		
-		datePanelContainer.clear();
+		//datePanelContainer.clear();
 		dateBoxUc = new DateBoxUcCustomizedForAssign(false, false,false);
-		datePanelContainer.add(dateBoxUc);
-		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
-		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
+		//datePanelContainer.add(dateBoxUc);
+		//dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
+		//dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
@@ -143,6 +146,11 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			    		folderTreeItemWidget.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().open());
 			    		folderTreeItemWidget.setOpen(true);
 			    	}
+			    	removePreviousSelectedItem();
+			    	currentFolderSelectedTreeItem=folderTreeItemWidget;
+			    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem;
+			    	currentFolderSelectedTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+			    	previousSelectedItem=cureentcollectionTreeItem=null;
 				    TreeItem parent = item.getParentItem();
 				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
 				    if(!folderTreeItemWidget.isApiCalled()){
@@ -153,14 +161,13 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				    	parent.setSelected(false);   // TODO FIX ME
 				    item.setState(!item.getState(), false);
 			    }else if(folderWidget instanceof CollectionTreeItem){
-			    	if(previousSelectedItem!=null){
-			    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
-			    	}
+			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
 			    	previousSelectedItem=cureentcollectionTreeItem;
 			    	cureentcollectionTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+			    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem=null;
 			    	setSelectedCollectionTitle();
-			    	closeDropDown();
+			    	//closeDropDown();
 			    }
 			  }
 			});
@@ -172,24 +179,32 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void setStaticTexts(){
 		addCollectionPopupHeader.setText(GL1375);
-		assignmentTitleLabel.setText(GL1376);
-		dropdownListPlaceHolder.setText(GL1377);
-		chooseCollectionHelpText.setText(GL1378);
-		assignmentDirectionLabel.setText(GL1379);
-		assignmentDueDateLabel.setText(GL1380);
+		//assignmentTitleLabel.setText(GL1376);
+//		dropdownListPlaceHolder.setText(GL1377);
+//		chooseCollectionHelpText.setText(GL1378);
+//		assignmentDirectionLabel.setText(GL1379);
+//		assignmentDueDateLabel.setText(GL1380);
 		cancelResourcePopupBtnLbl.setText(GL0142);
 		addResourceBtnLbl.setText(GL0104);
 		addingText.setText(GL1172);
-		assignmentDirectionsTxtArea.setText(GL1389);
-		assignmentDueDateLabel.setText(GL1380);
-		remainderLbl.setText(GL1889);
+//		assignmentDirectionsTxtArea.setText(GL1389);
+//		assignmentDueDateLabel.setText(GL1380);
+//		remainderLbl.setText(GL1889);
 	}
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
-			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
-			chooseCollectionErrorLabel.setText("");
+//			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
+//			chooseCollectionErrorLabel.setText("");
 		}
+	}
+	protected void removePreviousSelectedItem(){
+		if(previousFolderSelectedTreeItem!=null){
+    		previousFolderSelectedTreeItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+    	}
+		if(previousSelectedItem!=null){
+    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+    	}
 	}
 	public void closeDropDown(){
 		new CustomAnimation(dropdownListContainerScrollPanel).run(300);
@@ -207,84 +222,101 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
-		directionErrorLabel.setText("");
+		//directionErrorLabel.setText("");
 		hide();
 	}
-	@UiHandler("assignmentDirectionsTxtArea")
-	public void diectionFocusEvent(FocusEvent event){
-		String directionText=assignmentDirectionsTxtArea.getText().trim();
-		if(directionText.equalsIgnoreCase(GL1389)){
-			assignmentDirectionsTxtArea.setText("");
-		}
-		assignmentDirectionsTxtArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
-	}
-	@UiHandler("assignmentDirectionsTxtArea")
-	public void diectionKeyUpEvent(KeyUpEvent event){
-		String directionText=assignmentDirectionsTxtArea.getText().trim();
-		if(directionText.length()>=400){
-			directionErrorLabel.setText(GL0143);
-			//event.preventDefault();
-			
-		}else{
-			directionErrorLabel.setText("");
-		}
-	}
-	@UiHandler("assignmentDirectionsTxtArea")
-	public void diectionBlurEvent(BlurEvent event){
-		String directionText=assignmentDirectionsTxtArea.getText().trim();
-		if(!directionText.equalsIgnoreCase(GL1389)&&directionText.length()>0){
-			if(directionText.length()>=400){
-				directionErrorLabel.setText(GL0143);
-			}else{
-				Map<String, String> parms = new HashMap<String, String>();
-				parms.put("text", directionText);
-				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-					@Override
-					public void onSuccess(Boolean isFound) {
-						if(isFound && appPopUp.isShowing()){
-							directionErrorLabel.setText(GL0554);
-						}else{
-							directionErrorLabel.setText("");
-						}
-					}		
-				});
-			}
-		}else{
-			assignmentDirectionsTxtArea.setText(GL1389);
-			assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
-		}
-	}
+//	@UiHandler("assignmentDirectionsTxtArea")
+//	public void diectionFocusEvent(FocusEvent event){
+//		String directionText=assignmentDirectionsTxtArea.getText().trim();
+//		if(directionText.equalsIgnoreCase(GL1389)){
+//			assignmentDirectionsTxtArea.setText("");
+//		}
+//		assignmentDirectionsTxtArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+//	}
+//	@UiHandler("assignmentDirectionsTxtArea")
+//	public void diectionKeyUpEvent(KeyUpEvent event){
+//		String directionText=assignmentDirectionsTxtArea.getText().trim();
+//		if(directionText.length()>=400){
+//			directionErrorLabel.setText(GL0143);
+//			//event.preventDefault();
+//			
+//		}else{
+//			directionErrorLabel.setText("");
+//		}
+//	}
+//	@UiHandler("assignmentDirectionsTxtArea")
+//	public void diectionBlurEvent(BlurEvent event){
+//		String directionText=assignmentDirectionsTxtArea.getText().trim();
+//		if(!directionText.equalsIgnoreCase(GL1389)&&directionText.length()>0){
+//			if(directionText.length()>=400){
+//				directionErrorLabel.setText(GL0143);
+//			}else{
+//				Map<String, String> parms = new HashMap<String, String>();
+//				parms.put("text", directionText);
+//				AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+//					@Override
+//					public void onSuccess(Boolean isFound) {
+//						if(isFound && appPopUp.isShowing()){
+//							directionErrorLabel.setText(GL0554);
+//						}else{
+//							directionErrorLabel.setText("");
+//						}
+//					}		
+//				});
+//			}
+//		}else{
+//			assignmentDirectionsTxtArea.setText(GL1389);
+//			assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+//		}
+//	}
 	
 	public void addCollectionToAssign(){
+		
 		if(cureentcollectionTreeItem!=null){
-			final String directions=assignmentDirectionsTxtArea.getText().trim().equals(GL1389)?null:assignmentDirectionsTxtArea.getText().trim();
-			final String dueDate=dateBoxUc.getDateBox().getValue()==null||dateBoxUc.getDateBox().getValue().equals("")?null:dateBoxUc.getDateBox().getValue();
-			Map<String, String> parms = new HashMap<String, String>();
-			parms.put("text", assignmentDirectionsTxtArea.getText());
-			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
-				@Override
-				public void onSuccess(Boolean isFound) {
-					if(isFound){
-						directionErrorLabel.setText(GL0554);
-						addResourceBtnLbl.setVisible(true);
-						cancelResourcePopupBtnLbl.setVisible(true);
-						addingText.setVisible(false);
-						addResourceBtnLbl.setEnabled(true);
-					}else{
-						directionErrorLabel.setText("");
-						addResourceBtnLbl.setVisible(false);
-						cancelResourcePopupBtnLbl.setVisible(false);
-						addingText.setVisible(true);
-						getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid(), directions, dueDate);
-						addResourceBtnLbl.setEnabled(true);
-					}
-				}		
-			});
-		}else{
-			chooseCollectionErrorLabel.setText(GL1475);
-//			chooseCollectionErrorLabel.getElement().getStyle().setMarginTop(0, Unit.PX);
+			addResourceBtnLbl.setVisible(false);
+			cancelResourcePopupBtnLbl.setVisible(false);
+			addingText.setVisible(true);
+			getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid());
 			addResourceBtnLbl.setEnabled(true);
+		}else if(currentFolderSelectedTreeItem!=null){
+			addResourceBtnLbl.setVisible(false);
+			cancelResourcePopupBtnLbl.setVisible(false);
+			addingText.setVisible(true);
+			getUiHandlers().addCollectionToAssign(currentFolderSelectedTreeItem.getGooruOid());
+			addResourceBtnLbl.setEnabled(true);
+		}else{
+			
 		}
+		
+//		if(cureentcollectionTreeItem!=null){
+//			final String directions=assignmentDirectionsTxtArea.getText().trim().equals(GL1389)?null:assignmentDirectionsTxtArea.getText().trim();
+//			final String dueDate=dateBoxUc.getDateBox().getValue()==null||dateBoxUc.getDateBox().getValue().equals("")?null:dateBoxUc.getDateBox().getValue();
+//			Map<String, String> parms = new HashMap<String, String>();
+//			parms.put("text", assignmentDirectionsTxtArea.getText());
+//			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
+//				@Override
+//				public void onSuccess(Boolean isFound) {
+//					if(isFound){
+//						directionErrorLabel.setText(GL0554);
+//						addResourceBtnLbl.setVisible(true);
+//						cancelResourcePopupBtnLbl.setVisible(true);
+//						addingText.setVisible(false);
+//						addResourceBtnLbl.setEnabled(true);
+//					}else{
+//						directionErrorLabel.setText("");
+//						addResourceBtnLbl.setVisible(false);
+//						cancelResourcePopupBtnLbl.setVisible(false);
+//						addingText.setVisible(true);
+//						getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid(), directions, dueDate);
+//						addResourceBtnLbl.setEnabled(true);
+//					}
+//				}		
+//			});
+//		}else{
+//			chooseCollectionErrorLabel.setText(GL1475);
+////			chooseCollectionErrorLabel.getElement().getStyle().setMarginTop(0, Unit.PX);
+//			addResourceBtnLbl.setEnabled(true);
+//		}
 		
 	}
 	public class FolderTreeItem extends Composite{
@@ -509,26 +541,26 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 
 	public void hide(){
-		dropdownListContainerScrollPanel.setVisible(false);
-		addingText.setVisible(false);
+		dropdownListContainerScrollPanel.setVisible(true);
+		//addingText.setVisible(false);
 		addResourceBtnLbl.setVisible(true);
 		cancelResourcePopupBtnLbl.setVisible(true);
-		chooseCollectionErrorLabel.setText("");
-		directionErrorLabel.setText("");
-		assignmentDirectionsTxtArea.setText(GL1389);
-		assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
+//		chooseCollectionErrorLabel.setText("");
+//		directionErrorLabel.setText("");
+//		assignmentDirectionsTxtArea.setText(GL1389);
+//		assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 		dateBoxUc.getDateBox().setValue("");
 		Window.enableScrolling(true);
 		super.hide();
 	}
 	@Override
 	public void clearShelfData() {
-		addingText.setVisible(false);
+		//addingText.setVisible(false);
 		folderTreePanel.clear();
 		folderTreePanel.addItem(loadingTreeItem());
 		cureentcollectionTreeItem=null;
 		previousSelectedItem=null;
-		dropdownListPlaceHolder.setText(GL1377);
+		//dropdownListPlaceHolder.setText(GL1377);
 		offset=0;
 		limit=20;
 		totalHitCount=0;
