@@ -179,6 +179,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String squre();
         String progressStart();
         String path();
+        String classcodeContainer();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

@@ -34,7 +34,7 @@
 							<g:Button ui:field="btnClasspageCancel"
 								styleName="secondary {res.css.classpageTitleCancel}" />
 						</g:HTMLPanel>
-						<g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classcodeContainer}">
 							<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
 							<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
 						</g:HTMLPanel>

@@ -39,7 +39,7 @@
 	min-height: 500px;
 	margin: 0 auto;
 	height: 95%;
-	margin-top: 141px;
+	/* margin-top: 141px; */
 }
 .resourcePlayerRightArrowContainer{
 	margin-top: 100px;
@@ -68,8 +68,8 @@
 	width: 952px;
 	margin: 0 auto;
 	padding-bottom: 13px;
-	position: fixed;	
-    top: 42px;
+	/* position: fixed;	
+    top: 42px; */
 }
 
 .collectionHeader {
