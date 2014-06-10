@@ -26,6 +26,8 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 
 
 
+import java.util.ArrayList;
+
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
@@ -96,6 +98,21 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			public void onSuccess(ClasspageItemDo classpageItemDo) {
 				getView().hideAddCollectionPopup(classpageItemDo.getCollectionTitle());
 				getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
+			}
+		});
+	}
+	
+	public void addCollectionToAssign(String collectionId){
+		AppClientFactory.getInjector().getClasspageService().assignItemToClass(this.classpageId, collectionId, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
+				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
+					getView().hideAddCollectionPopup("");
+					for(int i=0;i<classpageItemDoList.size();i++){
+						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
+						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
+					}
+				}
 			}
 		});
 	}

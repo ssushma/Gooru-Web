@@ -564,6 +564,9 @@
 .foldercollection.selected {
     background-color:#CFE3F1;
 }
+.folderLevel.selected {
+    background-color:#CFE3F1;
+}
  .dropdowncontainer{
 	 width: 324px;
 	float: left;

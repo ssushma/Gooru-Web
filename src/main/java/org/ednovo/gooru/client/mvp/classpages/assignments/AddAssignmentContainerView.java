@@ -85,7 +85,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Label /*dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,*/ 
-				addCollectionPopupHeader /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
+				addCollectionPopupHeader, addingText /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
 //	@UiField TextArea assignmentDirectionsTxtArea;
 	private int offset=0;
 	private int limit=20;
@@ -105,6 +105,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	};
 	private CollectionTreeItem cureentcollectionTreeItem=null;
 	private CollectionTreeItem previousSelectedItem=null;
+	private FolderTreeItem currentFolderSelectedTreeItem=null;
+	private FolderTreeItem previousFolderSelectedTreeItem=null;
+	
 	
 	
 	@Inject
@@ -118,7 +121,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		//assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 		//assignmentDirectionsTxtArea.getElement().setAttribute("maxlength", "400");
 		//dropdownListContainerScrollPanel.setVisible(false);
-		//addingText.setVisible(false);
+		addingText.setVisible(false);
 		appPopUp.setGlassEnabled(true);
 		appPopUp.setAutoHideOnHistoryEventsEnabled(true);
 		
@@ -143,6 +146,11 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 			    		folderTreeItemWidget.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().open());
 			    		folderTreeItemWidget.setOpen(true);
 			    	}
+			    	removePreviousSelectedItem();
+			    	currentFolderSelectedTreeItem=folderTreeItemWidget;
+			    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem;
+			    	currentFolderSelectedTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+			    	previousSelectedItem=cureentcollectionTreeItem=null;
 				    TreeItem parent = item.getParentItem();
 				    item.getTree().setSelectedItem(parent, false); // TODO FIX ME
 				    if(!folderTreeItemWidget.isApiCalled()){
@@ -153,12 +161,11 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				    	parent.setSelected(false);   // TODO FIX ME
 				    item.setState(!item.getState(), false);
 			    }else if(folderWidget instanceof CollectionTreeItem){
-			    	if(previousSelectedItem!=null){
-			    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
-			    	}
+			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
 			    	previousSelectedItem=cureentcollectionTreeItem;
 			    	cureentcollectionTreeItem.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+			    	previousFolderSelectedTreeItem=currentFolderSelectedTreeItem=null;
 			    	setSelectedCollectionTitle();
 			    	//closeDropDown();
 			    }
@@ -179,7 +186,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 //		assignmentDueDateLabel.setText(GL1380);
 		cancelResourcePopupBtnLbl.setText(GL0142);
 		addResourceBtnLbl.setText(GL0104);
-//		addingText.setText(GL1172);
+		addingText.setText(GL1172);
 //		assignmentDirectionsTxtArea.setText(GL1389);
 //		assignmentDueDateLabel.setText(GL1380);
 //		remainderLbl.setText(GL1889);
@@ -190,6 +197,14 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 //			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
 //			chooseCollectionErrorLabel.setText("");
 		}
+	}
+	protected void removePreviousSelectedItem(){
+		if(previousFolderSelectedTreeItem!=null){
+    		previousFolderSelectedTreeItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+    	}
+		if(previousSelectedItem!=null){
+    		previousSelectedItem.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().selected());
+    	}
 	}
 	public void closeDropDown(){
 		new CustomAnimation(dropdownListContainerScrollPanel).run(300);
@@ -256,6 +271,23 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 //	}
 	
 	public void addCollectionToAssign(){
+		
+		if(cureentcollectionTreeItem!=null){
+			addResourceBtnLbl.setVisible(false);
+			cancelResourcePopupBtnLbl.setVisible(false);
+			addingText.setVisible(true);
+			getUiHandlers().addCollectionToAssign(cureentcollectionTreeItem.getGooruOid());
+			addResourceBtnLbl.setEnabled(true);
+		}else if(currentFolderSelectedTreeItem!=null){
+			addResourceBtnLbl.setVisible(false);
+			cancelResourcePopupBtnLbl.setVisible(false);
+			addingText.setVisible(true);
+			getUiHandlers().addCollectionToAssign(currentFolderSelectedTreeItem.getGooruOid());
+			addResourceBtnLbl.setEnabled(true);
+		}else{
+			
+		}
+		
 //		if(cureentcollectionTreeItem!=null){
 //			final String directions=assignmentDirectionsTxtArea.getText().trim().equals(GL1389)?null:assignmentDirectionsTxtArea.getText().trim();
 //			final String dueDate=dateBoxUc.getDateBox().getValue()==null||dateBoxUc.getDateBox().getValue().equals("")?null:dateBoxUc.getDateBox().getValue();
