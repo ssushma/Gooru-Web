@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.uc.tooltip;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -117,31 +118,21 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		lblGooruLibrary.addMouseOverHandler(new CloseOtherMenus());
 		lblDistrictLibrary.addMouseOverHandler(new OpenDistrictMenus());
 		
-		final Label partnerTitle = new Label(GL0515_1);
-		partnerTitle.addStyleName("courseOption");
-		partnerTitle.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				MixpanelUtil.mixpanelEvent("Community_Library_Click_RUSD");
-				setHeaderBrowserTitle(partnerTitle.getText());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RUSD_LIBRARY);
-			}
-		});
-		partnerTitle.addMouseOverHandler(new MouseOverHandler() {
-			
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				
-			}
-		});
-		partnerTitle.addMouseOutHandler(new MouseOutHandler() {
-			
-			@Override
-			public void onMouseOut(MouseOutEvent event) {
-				
-			}
-		});
-		districtLibContainer.add(partnerTitle);
+		final HashMap<String,String> publicPartnerList = getPublicLibraryPartners();
+		
+		for (final Object key : publicPartnerList.keySet()) {
+			final Label partnerTitle = new Label(key.toString());
+			partnerTitle.addStyleName("courseOption");
+			partnerTitle.addClickHandler(new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					MixpanelUtil.mixpanelEvent("Community_Library_Click_"+publicPartnerList.get(key));
+					setHeaderBrowserTitle(partnerTitle.getText());
+					AppClientFactory.getPlaceManager().revealPlace(publicPartnerList.get(key));
+				}
+			});
+			districtLibContainer.add(partnerTitle);
+		}
 		
 		getPartners();
 				
@@ -299,11 +290,18 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 
 		@Override
 		public void onClick(ClickEvent event) {
-			hide();
+																																													hide();
 			Map<String,String> params = new HashMap<String, String>();
 			params.put("pid", folderId);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
 		}
+	}
+	
+	private HashMap<String,String> getPublicLibraryPartners() {
+		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
+		publicPartners.put(GL0515_1,PlaceTokens.RUSD_LIBRARY);
+		publicPartners.put(GL1898,PlaceTokens.SAUSD_LIBRARY);
+		return publicPartners;
 	}
 	
 }

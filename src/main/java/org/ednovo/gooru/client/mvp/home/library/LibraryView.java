@@ -267,6 +267,12 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			featuredCousesLbl.setVisible(false);
 		} else {
 			if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.rusdPartnerLogo());
+				partnerLogo.setVisible(true);
+				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
+				landingBanner.setVisible(false);
+			} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+				partnerLogo.setStyleName(libraryStyleUc.sausdPartnerLogo());
 				partnerLogo.setVisible(true);
 				partnerLogo.getElement().getStyle().setRight(10, Unit.PX);
 				landingBanner.setVisible(false);
@@ -319,6 +325,9 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingRusdBanner");
 			featuredCousesLbl.setText(GL0588);
+		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
+			landingBanner.getElement().setId("landingSausdBanner");
+			featuredCousesLbl.setText(GL1901);
 		} else {
 			landingBanner.getElement().setId("landingBanner");
 			featuredCousesLbl.setText(GL0587);
@@ -603,7 +612,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
 							courseMap = subjectDoList;
 							libraryMenuNavigation.setSubjectPanelIds(courseMap);
-							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+							if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 								setFeaturedCourseWidgets(courseMap.get(featuredLabel).getData(), false);
 							}
 						}
@@ -640,7 +649,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				if(i==0&&(courseId==null)) {
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
 					defaultCourseId = ""+courseDoList.get(i).getCodeId();
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						if(partnerFolderList.size()>0) {
 							setThirdPartyCourseUnitData(partnerFolderList);
 						} else {
@@ -655,7 +664,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			} else if(isFeaturedCourseSelected&&courseId==null) {
 				if(i==0) {
 					featuredCourses.getWidget(i).addStyleName(ACTIVE_STYLE);
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						if(partnerFolderList.size()>0) {
 							setThirdPartyCourseUnitData(partnerFolderList);
 						} else {
@@ -680,7 +689,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			FeaturedCourseListView featuredCourseListView = ((FeaturedCourseListView) widget);
 			try {
 				if(courseId.equals(""+featuredCourseListView.getCourseId())) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						if(courseDoList.get(widgetCount).getParentId()!=null) {
 							if(partnerFolderList.size()>0) {
 								setThirdPartyCourseUnitData(partnerFolderList);
@@ -707,7 +716,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						widgetsPanel.next().removeStyleName(ACTIVE_STYLE);
 					}
 					widget.addStyleName(ACTIVE_STYLE);
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						if(courseDoList.get(widgetCountTemp).getParentId()!=null) {
 							if(partnerFolderList.size()>0) {
 								setThirdPartyCourseUnitData(partnerFolderList);
@@ -1022,7 +1031,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				
 				String libraryPage = AppClientFactory.getPlaceManager().getRequestParameter(LIBRARY_PAGE,"emptyPage");
 				if(!isUnitLoaded&&libraryPage.equals(COURSE_PAGE)) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						setUnitListData(courseDo.getUnit());
 					}
 					else{
@@ -1032,7 +1041,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 					isUnitLoaded=true;
 				}
 				if(courseDo.getUnit()!=null) {
-					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)){
+					if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)){
 						setUnitListData(courseDo.getUnit());
 					}
 					else{

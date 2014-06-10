@@ -28,15 +28,11 @@
 package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -90,9 +86,14 @@ public class LibraryBannerView extends Composite implements MessageProperties{
 		} else if(placeToken.contains(PlaceTokens.RUSD_LIBRARY)) {
 			setLandingBannerText(GL0532,GL0533,GL0534,GL0535,GL0536,GL0537,GL0538,GL0539,GL0540,GL0541);
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			partnerLogo.setStyleName(libraryStyle.rusdPartnerLogo());
+			partnerLogo.setVisible(true);
+		} else if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
+			setLandingBannerText(GL1902,GL1903,GL1904,GL1905,GL1906,GL1907,GL1908,GL1909,GL1910,GL1911);
+			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			partnerLogo.setStyleName(libraryStyle.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
 		}
-	
 	}
 	
 	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String findInlineMsg, String findMsg, String shareInlineMsg, String shareMsg, 

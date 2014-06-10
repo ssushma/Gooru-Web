@@ -861,7 +861,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 									params.put("rid", resourceId);
 									params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 									params.put("lessonId", lessonId);
-									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+									if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 										params.put("library", getPlaceToken());
 									}
 									String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
@@ -1013,7 +1013,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				params.put("id", conceptDo.getGooruOid());
 				params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 				params.put("lessonId", lessonId);
-				if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+				if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY) || getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 					params.put("library", getPlaceToken());
 				}
 				String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
