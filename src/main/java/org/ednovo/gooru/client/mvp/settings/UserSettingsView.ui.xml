@@ -86,6 +86,7 @@
 								ui:field="btnSeeMyProfile"></g:Button>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
+					<g:Button styleName="{Settings.adminStyle} primary" ui:field="btnViewAdmin">View Administrator Portal</g:Button>
 				</g:HTMLPanel>
 				<!-- end of user image part -->
 				<g:HTMLPanel styleName="{Settings.settingPageInfoContainerWrapper}">
@@ -360,7 +361,7 @@
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCommonCore"></g:Label>
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaScience"></g:Label>
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblTexas"></g:Label>
-								     <!-- <g:Label styleName="{Settings.standardsText}" ui:field="lblNgss"></g:Label> -->
+								    <g:Label styleName="{Settings.standardsText}" ui:field="lblNgss"></g:Label>
 								    <g:Label styleName="{Settings.defaultTextcss}" ui:field="lblUserMessage"></g:Label>
 								</g:HTMLPanel>
 							</g:HTMLPanel>

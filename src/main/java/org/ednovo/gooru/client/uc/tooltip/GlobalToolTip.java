@@ -72,7 +72,11 @@ public class GlobalToolTip extends Composite implements MessageProperties {
 
 		setArrowLeft();
 	}
-    
+    public GlobalToolTip(String description, String value){
+		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+		desLbl.setText(description);
+		setArrowDirections();
+	}
     public void setPanelPosition(){
     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     	/*if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
@@ -84,6 +88,10 @@ public class GlobalToolTip extends Composite implements MessageProperties {
     public void setArrowLeft(){
      	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     //	panelArrow.getElement().getStyle().setLeft(165, Unit.PX);
+     	
     }
-	
+    public void setArrowDirections(){
+     	confirmationPanel.getElement().setAttribute("style", "width: 149px;");
+     	panelArrow.getElement().setAttribute("style", "left: -158px;top: 22px;-webkit-transform: rotate(265deg);position:absolute;");
+    }
 }
