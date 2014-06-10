@@ -1901,6 +1901,7 @@ fieldset {
 .courseOption {
 	padding: 7px;
 	width: 100%;
+	background: white;
 	box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

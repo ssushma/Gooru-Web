@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
@@ -190,5 +191,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<PsdpalLibraryPresenter> getPsdpalLibraryPresenter();
 
 	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
+
+	AsyncProvider<SausdPresenter> getSausdPresenter();
 
 }
