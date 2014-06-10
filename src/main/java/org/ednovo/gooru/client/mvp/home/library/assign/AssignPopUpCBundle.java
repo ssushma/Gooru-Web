@@ -258,6 +258,12 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String dividerText();
 		
 		String dividerCustomize();
+		
+		String privacyAlignStyle();
+		
+		String privacyContainer();
+		
+		String privacyCustomizeContainer();
 	}
 
 	@Source("AssignPopUp.css")

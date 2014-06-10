@@ -41,6 +41,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
+
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
@@ -62,6 +64,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -94,9 +97,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
 
-public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers> implements IsProfilePageView,MessageProperties {
+public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers> implements IsProfilePageView,MessageProperties{
 	@UiField
 	Anchor /* shareTabVc, */contentTabVc;
 
@@ -129,7 +133,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
-			profilePageEditBioPanel;
+			profilePageEditBioPanel,mainContainer,followingContainer;
 	
 	@UiField FlowPanel moreGradeCourseLbl, moreCourseLbl;
 	
@@ -154,6 +158,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField HTML profileVisiblityMessage;
 	
 	@UiField ProfilePageCBundle ProfilePageStyle;
+	
+	@UiField
+	ProfilePageTabVc collectionsTabVc, followingTabVc, followersTabVc;
 	
 	Label noCollectionMsgPanel = new Label();
 
@@ -291,6 +298,28 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		addCourseGradeBtn.setVisible(false);
 		enableAddBioBtn("userBio");
 		addBioBtn.getElement().setId("btnBioEdit");
+		//added in 6.4
+		collectionsTabVc.setLabel(GL1754.toUpperCase());
+		followingTabVc.setLabel(GL1895.toUpperCase());
+		followersTabVc.setLabel(GL1896.toUpperCase());
+		
+	
+		collectionsTabVc.getElement().setId("collections");
+		followingTabVc.getElement().setId("following");
+		followersTabVc.getElement().setId("followers");
+		collectionsTabVc.setStyleName(ProfilePageStyle.tabAlign());
+		followingTabVc.setStyleName(ProfilePageStyle.tabAlign());
+		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
+		collectionsTabVc.setLabelCount(1+"");
+		followingTabVc.setLabelCount(1+"");
+		followersTabVc.setLabelCount(1+"");
+		
+		setTab(collectionsTabVc);
+		/*collectionsTabVc.addClickHandler(
+		followingTabVc.addClickHandler(this);
+		followersTabVc.addClickHandler(this);*/
+		
+		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
 			profileOnButton.addClickHandler(new ProfileOnClickEvent());
@@ -338,6 +367,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		};
 		RootPanel.get().addDomHandler(eve1, ClickEvent.getType());
+		
 		
 	}
 
@@ -426,9 +456,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@Override
 	public void setInSlot(Object slot, Widget content) {
 		if (content != null) {
-			if (slot == ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW) {
-				
+			if (slot == ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW) {
+				followingContainer.clear();
+				//followingContainer().setVisible(false);
+				if(content!=null){
+					followingContainer.add(content);
+				}	
 			}
+			
 		}
 	}
 
@@ -1256,4 +1291,88 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		return text;
 	}	
+	
+	
+	
+	public void onClick(ClickEvent event) {
+		Object source = event.getSource();
+		getUiHandlers().clearTabSlot();
+		setTab(source);
+		
+	}
+	@UiHandler("collectionsTabVc")
+	public void onClickCollectionsTabVc(ClickEvent event)
+	{
+		
+		setTab(collectionsTabVc);
+		Map<String,String> params = new HashMap<String,String>();
+		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+		
+		params.put("id", id);
+		params.put("user", user);
+		params.put("tab", "collections");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		
+	}
+	@UiHandler("followingTabVc")
+	public void onClickfollowingTabVc(ClickEvent event)
+	{
+		setTab(followingTabVc);
+		Map<String,String> params = new HashMap<String,String>();
+		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+		params.put("id", id);
+		params.put("user", user);
+		params.put("tab", "following");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				
+	}
+	@UiHandler("followersTabVc")
+	public void onClickfollowersTabVc(ClickEvent event)
+	{
+		
+		setTab(followersTabVc);	
+		Map<String,String> params = new HashMap<String,String>();
+		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+		
+		params.put("id", id);
+		params.put("user", user);
+		params.put("tab", "followers");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	}
+	public void setTab(Object tab) {
+		
+		if(tab!=null){
+				if (tab.equals(collectionsTabVc)) {
+				followingContainer.clear();
+				collectionsTabVc.setSelected(true);
+				mainContainer.setVisible(true);
+				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW);
+				
+			}
+			if (tab.equals(followingTabVc)) {
+				followingContainer.clear();
+				followingTabVc.setSelected(true);
+				mainContainer.setVisible(false);
+				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView();
+				followingContainer.add(profilePagefollowingView);
+				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
+			}
+			if (tab.equals(followersTabVc)) {
+				followingContainer.clear();
+				followingTabVc.setSelected(true);
+				mainContainer.setVisible(false);
+				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView();
+				followingContainer.add(profilePagefollowingView);
+			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
+				
+			}
+			
+	}
+}
 }

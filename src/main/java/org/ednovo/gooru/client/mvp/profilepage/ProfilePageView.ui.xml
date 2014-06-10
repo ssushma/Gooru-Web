@@ -3,7 +3,7 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui"
-	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.data">
+	xmlns:uc="urn:import:org.ednovo.gooru.client.uc" xmlns:libraryview="urn:import:org.ednovo.gooru.client.mvp.profilepage.data"  xmlns:profileUc="urn:import:org.ednovo.gooru.client.mvp.profilepage">
 	
 	<ui:style field="ProfilePageStyle" src="profile-page-style.css" type="org.ednovo.gooru.client.mvp.profilepage.ProfilePageCBundle"/>
 	<ui:with type="org.ednovo.gooru.client.mvp.shelf.ShelfCBundle" field="res" />
@@ -113,7 +113,16 @@
 	                </g:HTMLPanel>
 	        </g:HTMLPanel>
 			</g:FlowPanel>
-        <g:HTMLPanel styleName="{ProfilePageStyle.userContent}">
+			
+			<g:FlowPanel styleName="{ProfilePageStyle.userinfoContainer}">
+			  <g:HTMLPanel styleName="{ProfilePageStyle.tabContent}">
+			   		<profileUc:ProfilePageTabVc ui:field="collectionsTabVc" />
+					<profileUc:ProfilePageTabVc ui:field="followingTabVc" enabled="true"  />
+					<profileUc:ProfilePageTabVc ui:field="followersTabVc" enabled="true"/>
+					</g:HTMLPanel>
+				</g:FlowPanel>
+			
+        <g:HTMLPanel styleName="{ProfilePageStyle.userContent}" ui:field="mainContainer">
             <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userLibraryMessage"></g:Label>
 			<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
 		        <g:HTMLPanel styleName="{ProfilePageStyle.userLibraryPopup} {ProfilePageStyle.popup-left}">
@@ -132,6 +141,7 @@
                </g:HTMLPanel>
             <g:HTMLPanel ui:field="shareLinkFloPanel" styleName="{res.css.shareLinkFlowPanel}"></g:HTMLPanel>
         </g:HTMLPanel>
+        <g:HTMLPanel ui:field="followingContainer"/>
     </g:HTMLPanel>
     </g:HTMLPanel>
     <g:HTMLPanel  ui:field="profileOffContainerPanel" styleName="{ProfilePageStyle.profileOffConatinerStyle}"><g:Image ui:field="errorImage"/></g:HTMLPanel>
