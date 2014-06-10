@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEventHandler;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
@@ -57,6 +58,12 @@ public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpen
 	@ContentSlot
 	public static final Type<RevealContentHandler<?>> TYPE_PUBLIC_SHELF_VIEW = new Type<RevealContentHandler<?>>();
 	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLLOWING_VIEW = new Type<RevealContentHandler<?>>();
+	
+	@ContentSlot
+	public static final Type<RevealContentHandler<?>> TYPE_FOLLWER_VIEW = new Type<RevealContentHandler<?>>();
+	
 	void setShareView();
 	
 	void showUploadImageWidget();
@@ -71,4 +78,8 @@ public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpen
 	void deleteCourse(CodeDo codeDo);
 	
 	void getTaxonomyData();
+	
+	void revealTab(Type<RevealContentHandler<?>> tabType);
+
+	void clearTabSlot();
 }

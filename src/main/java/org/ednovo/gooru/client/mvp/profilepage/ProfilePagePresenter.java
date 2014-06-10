@@ -46,7 +46,6 @@ import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEv
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.shelf.ShelfView;
 import org.ednovo.gooru.client.service.ProfilePageServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -56,6 +55,7 @@ import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -63,6 +63,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 /**
  * @fileName : ProfilePagePresenter.java
@@ -83,7 +84,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 //	private SimpleAsyncCallback<List<CollectionDo>> userCollectionAsyncCallback;
 
 	private ImageUploadPresenter imageUploadPresenter;
-
+	
 	private ProfileDo profileDo;
 
 	private Date dob;
@@ -118,7 +119,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		super(view, proxy);
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
-		this.imageUploadPresenter=imageUploadPresenter;
+		this.imageUploadPresenter = imageUploadPresenter;
 		addRegisteredHandler(RequestFolderOpenEvent.TYPE, this);
 		addRegisteredHandler(RequestCollectionOpenEvent.TYPE, this);
 		addRegisteredHandler(SetUserPublicProfileImageEvent.TYPE, this);
@@ -351,6 +352,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		
+		
 	}
 
 	@Override
@@ -495,4 +498,30 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			});
 		}
 	}
+
+	@Override
+	public void revealTab(Type<RevealContentHandler<?>> tabType) {
+		if (tabType.equals(TYPE_PUBLIC_SHELF_VIEW)) {
+			addToSlot(TYPE_PUBLIC_SHELF_VIEW, this);
+			////collectionResourceTabPresenter.getView().setData(collectionDo);
+		} if (tabType.equals(TYPE_FOLLOWING_VIEW)) {
+			//addToSlot(TYPE_FOLLOWING_VIEW,profilePageFollowPresenter);
+			//profilePageFollowPresenter.getView().setView();
+			
+		}else if(tabType.equals(TYPE_FOLLWER_VIEW)){
+			//addToSlot(TYPE_FOLLWER_VIEW, profilePageFollowPresenter);
+			//profilePageFollowPresenter.getView().setView();
+			
+		}
+			
+	}
+
+	@Override
+	public void clearTabSlot() {
+		clearSlot(TYPE_FOLLOWING_VIEW);
+		clearSlot(TYPE_FOLLWER_VIEW);
+		
+		
+	}
+	
 }

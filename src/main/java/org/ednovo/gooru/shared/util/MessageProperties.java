@@ -2410,6 +2410,8 @@ public interface MessageProperties {
     	String GL1895 = "following";
     	String GL1896 = "followers";
     	String GL1897 = "Tags";
+    	String GL1898 = "User Who Are Following Me";
+
     
 
 }

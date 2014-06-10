@@ -1,0 +1,104 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: url("images/profilepage/gray_noise_25.png");
+	font-family: Arial, sans-serif;
+	color:#515151;
+	font-size:12px;
+}
+
+a {
+	text-decoration:none;
+	color:#1076BB;
+}
+
+a:hover {
+	color:#87BADD;
+}
+
+.profilepageFollwoingContent{
+	background-color: #fff;
+	min-height: 312px;
+}
+.profilepageFollwoingContentlabel{
+	float:left;
+}
+.profilepageTagContentMainDiv{
+	Width:90%;
+	float:left;
+}
+.profilepageTagContentMainDivconent{
+	float:left;
+	width:65%;
+	color:green;
+}
+.profilepageTagContentMainDivconentcount{
+	float:left;
+	width:25%;
+	color:green;
+}
+.infoSectionAuthor{
+    margin-top:15px;
+    padding-bottom:15px;
+    width:430px;
+    display:inline-block;
+    vertical-align: top;
+	background: #fff;
+	padding: 5px 60px;
+	box-sizing: border-box;	
+	-moz-box-sizing: border-box;		
+
+}
+.userImageContainer {
+    margin-right:10px;
+    width:40px;
+    height:40px;
+    border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+    border:3px solid #87BADD;
+}
+ .userImage{
+    width:40px;
+    height:40px;
+     border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+}
+.teacherTipOuterContainer
+{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+	
+}
+ .username {
+    display:block;
+    vertical-align:middle;
+    color:#1076bb;
+    font-weight: bold;
+	font-size: 14px;
+}
+.profilepageFollwoingContentText{
+	height: 32px;
+	padding-top: 15px;
+	font-weight: bold;
+    display:inline-block;
+    width:100%;
+}
+.profileFollowingUserNameDetails{
+	display: inline-block;
+	vertical-align: top;
+}
+.userDetails{
+	display:inline-block;
+    vertical-align:middle;
+}
+.clear
+{
+	clear:both;
+}
