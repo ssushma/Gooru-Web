@@ -28,7 +28,11 @@
 				<g:Button styleName="primary" ui:field="newFolderBtn" />
 			</g:HTMLPanel>
 			<g:HTMLPanel ui:field="loadingImage" styleName="loadingImage"/>
+			<g:HorizontalPanel>
 			<g:VerticalPanel ui:field="folderContentBlock"></g:VerticalPanel>
+			<!-- <meta:FolderItemPanelVc ui:field="folderItemPanel"/> -->
+			</g:HorizontalPanel>
 		</g:HTMLPanel>
+		
 	</g:FlowPanel>
 </ui:UiBinder>

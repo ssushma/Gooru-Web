@@ -54,7 +54,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -97,6 +99,9 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 
 	@UiField
 	RichTextArea msgTxa;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 
 	/*
 	 * @UiField CheckBox checkCopyEmail;
@@ -153,7 +158,11 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 		cancelLbl.setText(GL0142);
 		
 		fromTxt.setMaxLength(50);
-
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
+		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.setVisible(false);
 		

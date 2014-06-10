@@ -140,7 +140,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiField Label aboutUsCharacterValidation,lbMale,lbFemale,lbOther,lbShare,lbRole,lbName,lbUserName,lbUName,forgetPassword,forgetPasswordMsg;
 	@UiField HTMLPanel aboutUsContainer,profilePageText,aboutUsText,accountText,usernameText,nametext,genderText,securityText,settingsinfoText, panelHelp;
 	//@UiField TextBox tbLastName,tbFirstName;
-	@UiField Button settingsSaveButton,profileOnButton,profileOffButton, btnSave, btnSeeMyProfile;
+	@UiField Button settingsSaveButton,profileOnButton,profileOffButton, btnSave, btnSeeMyProfile,btnViewAdmin;
 	@UiField HTMLPanel radioButtonContainer,settingsText,appearText,emailtext;
 	@UiField UserSettingStyle Settings;
 	@UiField Label courseLabel,courseMaxMsg,courseLbl,gradeLbl,SavingTextLabel,EduSavingTextLabel,lbMaleText,lbFemaleText,lbOtherText;
@@ -426,7 +426,19 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		commonCoreChk.setStyleName(Settings.standardsCheckBox());
 		californiaStandChk.setStyleName(Settings.standardsCheckBox());
 		texasChk.setStyleName(Settings.standardsCheckBox());
+
 		ngssChk.setStyleName(Settings.standardsCheckBox());
+
+		//ngssChk.setStyleName(Settings.standardsCheckBox());
+		//added in 6.4
+		
+		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
+			btnViewAdmin.setVisible(true);
+		}else{
+			btnViewAdmin.setVisible(false);
+			System.out.println("Admin::"+AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin"));
+		}
+
 		
 		standardSavingTextLabel.setText("");
 		standardsEditButton.setVisible(true);
@@ -1729,7 +1741,12 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}
 			
 	}
-
+	
+	@UiHandler("btnViewAdmin")
+	public void clickOnAdmin(ClickEvent clickEvent){
+		
+	}
+	
 	@Override
 	public Label getStandardSavingTextLabel() {
 		return standardSavingTextLabel;

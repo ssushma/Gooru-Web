@@ -423,6 +423,8 @@ public interface UcCBundle extends ClientBundle {
 		
 		String txtAlignLeft();
 		
+		String privacyAlignStyle();
+		
 	}
 
 	@Source("Uc.css")
