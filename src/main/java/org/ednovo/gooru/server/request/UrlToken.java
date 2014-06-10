@@ -231,6 +231,8 @@ public enum UrlToken {
 	
 	CREATE_CLASSPAGE_ITEM_V2("/v2/classpage/{0}/item?sessionToken={1}"),
 	
+	ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2("/v2/class/{0}/assign/{1}?sessionToken={2}"),
+	
 	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
 	
 	UPDATE_CLASSPAGE_ITEMS_V2("/v2/collection/item/{0}?sessionToken={1}"),

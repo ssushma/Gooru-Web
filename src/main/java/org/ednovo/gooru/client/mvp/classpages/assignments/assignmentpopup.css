@@ -564,6 +564,9 @@
 .foldercollection.selected {
     background-color:#CFE3F1;
 }
+.folderLevel.selected {
+    background-color:#CFE3F1;
+}
  .dropdowncontainer{
 	 width: 324px;
 	float: left;
@@ -592,10 +595,11 @@
 	padding: 0;
 	margin: 0;
 	z-index: 9999;
-	max-height: 150px;
+	height: 275px;
 	width: 412px;
 	background-color: #F9F9F9;
-	position: absolute !important;
+	margin-top:20px;
+	/* position: absolute !important; */
  }
  .assignmentsystemMessage{
  	font-family: Arial, Helvetica, sans-serif;
