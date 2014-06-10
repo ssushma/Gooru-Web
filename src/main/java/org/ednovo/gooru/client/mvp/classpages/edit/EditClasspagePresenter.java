@@ -409,6 +409,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					}
 				}else{
 					//TODO NEED TO DISPLAY API CALL FAILED PAGE
+		
 				}
 			}
 		});
@@ -425,7 +426,10 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		});
 	}
 	@Override
-	public void getNextClasspageItems(Integer offset,Integer limit) {
+	public void getNextClasspageItems(Integer offset,Integer limit) 
+	{
+		System.out.println("offset::"+offset);
+		System.out.println("limit::"+limit);
 		String classpageId=getPlaceManager().getRequestParameter("classpageid");
 		String analyticsId=getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");

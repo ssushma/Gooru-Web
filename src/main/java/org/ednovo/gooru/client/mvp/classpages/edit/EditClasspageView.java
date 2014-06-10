@@ -456,7 +456,7 @@ public class EditClasspageView extends
 		assignmentsTab.setText(GL1623);
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
-		assignmentsDirectionsLabel.setText(GL1887);
+	//	assignmentsDirectionsLabel.setText(GL1887);
 		
 
 		lblAssignmentProgress.setText(GL1891_1);
@@ -728,6 +728,8 @@ public class EditClasspageView extends
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
+			panelAssignmentPath.setVisible(false);
+			paginationFocPanel.setVisible(false);
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
 			assignmentsDirectionsLabel.setVisible(false);
@@ -736,7 +738,6 @@ public class EditClasspageView extends
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			getClassListContainer().setVisible(true);
-			
 			frameDiv.setVisible(false);
 			
 			
@@ -752,6 +753,8 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(false);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
+			panelAssignmentPath.setVisible(false);
+			paginationFocPanel.setVisible(false);
 			
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
@@ -770,6 +773,8 @@ public class EditClasspageView extends
 			frameUrl.setUrl(frameAnalyticsUrl());
 			monitorProgress.setVisible(true);
 			monitorProgress.setText(GL1586);
+			panelAssignmentPath.setVisible(false);
+			paginationFocPanel.setVisible(false);
 		}
 		else if(monitorId!=null)
 		{
@@ -782,10 +787,14 @@ public class EditClasspageView extends
 			frameUrl.setUrl(frameAnalyticsUrlForMonitor());
 			monitorProgress.setVisible(true);
 			monitorProgress.setText(GL1587);
+			panelAssignmentPath.setVisible(false);
+			paginationFocPanel.setVisible(false);
 		}
 		else{
 			
 			removeLoadingPanel();
+			panelAssignmentPath.setVisible(true);
+			paginationFocPanel.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			mainContainer.setVisible(true);
@@ -868,7 +877,7 @@ public class EditClasspageView extends
 				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
 			}
 			if (pageNumber < totalPages) {
-				paginationFocPanel.add(new PaginationButtonUc(1, NEXT, this));
+				paginationFocPanel.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
 			}
 		}
 		//paginationFocPanel.add(seeMoreLabel);
@@ -1290,6 +1299,7 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
 			panelAssignmentPath.setVisible(true);
+			paginationFocPanel.setVisible(true);
 			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
@@ -1326,6 +1336,7 @@ public class EditClasspageView extends
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			panelAssignmentPath.setVisible(false);
+			paginationFocPanel.setVisible(false);
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
@@ -1362,6 +1373,7 @@ public class EditClasspageView extends
 			assignmentsTabContainerPanel.setVisible(false);
 			getClassListContainer().setVisible(false);
 			panelAssignmentPath.setVisible(false);
+			paginationFocPanel.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);

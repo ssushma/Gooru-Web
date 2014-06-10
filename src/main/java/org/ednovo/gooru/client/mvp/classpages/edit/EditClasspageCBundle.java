@@ -77,6 +77,8 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String editTitleButton();
 		
 		String searchResultContainer();
+		
+		String paginationContainer();
 
 		String paginationPanel();
 				
