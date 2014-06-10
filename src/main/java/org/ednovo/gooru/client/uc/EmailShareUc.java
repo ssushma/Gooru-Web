@@ -30,7 +30,9 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.HomeCBundle;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.service.ClasspageServiceAsync;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
@@ -54,7 +56,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -97,6 +101,9 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 
 	@UiField
 	RichTextArea msgTxa;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 
 	/*
 	 * @UiField CheckBox checkCopyEmail;
@@ -118,6 +125,8 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 	private String loggedEmailId;
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
 	private int count=0;
+	
+	private TermsOfUse termsOfUse;
 
 	private static final String AT_SYMBOL = "@";
 
@@ -153,7 +162,11 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 		cancelLbl.setText(GL0142);
 		
 		fromTxt.setMaxLength(50);
-
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
+		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.setVisible(false);
 		
@@ -472,7 +485,26 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 			
 		}else{
 			fromValidation.setVisible(false);
-		}
+		}	
+	}
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}
 	
 }

@@ -2293,7 +2293,7 @@ public interface MessageProperties {
     	String GL1795 ="Add Tags";
     	String GL1796 ="Thank you for tagging this resource!";
     	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
-    	String GL1798="Lexile Level";
+    	String GL1798="Reading Level";
     	String GL1799="Kindergarten";
     	String GL1800="Ads";
     	String GL1801="No Advertisement";
@@ -2400,4 +2400,16 @@ public interface MessageProperties {
     	String GL1889 = "Reminder: Assigments are sorted by due date in your Class. If you don't add a due date, this colleciton will appear at the bottom of the page.";
     	String GL1890 ="New Navigation Tabs";
     	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.   ";
-   }
+    	
+    	String GL1891_1 = "Reorder your assignments the way that you want your students to view them. This dots order will reflect on the student's page as well.";
+    	String GL1892 ="We will never share or sell your email address, your";
+    	String GL1893 ="privacy is important";
+    	String GL1894 ="to us.";
+    	
+
+    	String GL1895 = "following";
+    	String GL1896 = "followers";
+    	String GL1897 = "Tags";
+    
+
+}

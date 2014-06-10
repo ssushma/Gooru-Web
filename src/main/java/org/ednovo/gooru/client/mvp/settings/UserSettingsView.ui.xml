@@ -361,7 +361,7 @@
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCommonCore"></g:Label>
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblCaliforniaScience"></g:Label>
 								    <g:Label styleName="{Settings.standardsText}" ui:field="lblTexas"></g:Label>
-								     <!-- <g:Label styleName="{Settings.standardsText}" ui:field="lblNgss"></g:Label> -->
+								    <g:Label styleName="{Settings.standardsText}" ui:field="lblNgss"></g:Label>
 								    <g:Label styleName="{Settings.defaultTextcss}" ui:field="lblUserMessage"></g:Label>
 								</g:HTMLPanel>
 							</g:HTMLPanel>
