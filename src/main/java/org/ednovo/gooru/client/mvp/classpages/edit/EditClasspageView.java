@@ -449,6 +449,7 @@ public class EditClasspageView extends
 		reportsTab.setText(GL1737);
 		assignmentsDirectionsLabel.setText(GL1887);
 		
+
 		lblAssignmentProgress.setText(GL1891_1);
 		
 		//htmlShareText.setHTML(GL0229 + GL0230);
