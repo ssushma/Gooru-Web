@@ -171,6 +171,14 @@ public interface EditClasspageCBundle extends ClientBundle{
         
         String labelCenterAlign();
         String classcodeStyles();
+        String assignmentPath();
+        String assignmentProgress();
+        
+        String assignmentPathContainer();
+        String line();
+        String squre();
+        String progressStart();
+        String path();
 	}
 	@NotStrict
 	@Source("editclasspage.css")
