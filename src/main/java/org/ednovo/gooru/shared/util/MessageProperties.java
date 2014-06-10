@@ -2410,8 +2410,10 @@ public interface MessageProperties {
     	String GL1895 = "following";
     	String GL1896 = "followers";
     	String GL1897 = "Tags";
+    	
+    
     	String GL1898 = "SAUSD Library";
-		String GL1899 = "About SAUSD";
+    	String GL1899 = "About SAUSD";
     	String GL1900 = "http://www.sausd.us/site/default.aspx?PageID=1";
     	String GL1901 = "SAUSD Featured Courses";
     	String GL1902 = "Santa Ana Unified School District Library";
@@ -2424,5 +2426,7 @@ public interface MessageProperties {
     	String GL1909 = "your students' engagement, comprehension, and progress";
     	String GL1910 = "Contribute";
     	String GL1911 = "to an active community of teachers and students";
+    	String GL1913 = "User Who Are Following Me";
+    	   
 
 }
