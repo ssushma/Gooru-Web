@@ -936,5 +936,13 @@ button.LoginText {
 	line-height: 70%;
 }
 
+.privacyCustomizeContainer{
+	margin: 0px;
+	text-align: left;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 100%;
+}
+
 
 

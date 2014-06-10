@@ -341,7 +341,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("405px");
+			successPopupVc.setHeight("440px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}

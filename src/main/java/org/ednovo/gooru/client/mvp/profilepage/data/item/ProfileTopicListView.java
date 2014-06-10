@@ -858,7 +858,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("592px");
+			successPopupVc.setHeight("635px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -891,7 +891,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		};
 		Window.scrollTo(0, 0);
 		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("405px");
+		successPopupVc.setHeight("440px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}
