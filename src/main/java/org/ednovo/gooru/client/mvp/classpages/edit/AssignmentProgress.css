@@ -29,13 +29,13 @@
 
 .container{
 	/* background: red; */
-	width: 47px;
+	/* width: 47px; */
 	float: left;
 }
 
 .circleContainer{
 	float: left;
-	width: 47px;
+	/* width: 47px; */
 	height: 17px;
 }
 
