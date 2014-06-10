@@ -133,6 +133,8 @@ public interface ClasslistpageCBundle extends ClientBundle{
 		
 		String checkboxStyle();
 		String activeMembersDesc();
+		
+		String privacyAlignStyle();
 	}
 	@NotStrict
 	@Source("classlistPage.css")

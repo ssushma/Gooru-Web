@@ -31,6 +31,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.EmailShareUc.CheckProfanityInOnBlur;
@@ -53,6 +55,7 @@ import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -90,6 +93,8 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	String GL0219 = GL1444;
 	
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
+	
+	private TermsOfUse termsOfUse;
 	
 	private static CollectionEmailShareViewUiBinder uiBinder = GWT.create(CollectionEmailShareViewUiBinder.class);
 
@@ -351,6 +356,27 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 			fromValidation.setVisible(false);
 		}
 	}
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
+	}
+	
+	
 	
 	public  abstract void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message);
 }

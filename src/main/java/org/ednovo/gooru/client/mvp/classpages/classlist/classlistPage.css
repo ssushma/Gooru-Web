@@ -858,3 +858,7 @@ button[disable]:hover, .buttonTooltip:hover .tooltipContainer{
 	float: right;
 }
 
+
+.privacyAlignStyle{
+	margin-right: 2px;
+}
