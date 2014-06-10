@@ -43,6 +43,30 @@ public interface AssignmentProgressCBundle extends ClientBundle {
 		String rightMargin();
 		String assignmentNumbers();
 		String viewedCircle();
+		
+		String profileVisiblityPopup();
+		String bubblearrowstyle();
+		String standardsinner();
+		String standardsPopup();
+		String userLibraryPopup();
+		String title();
+		String move();
+		String myFolderCollectionCategoryDiv();
+
+		String myFolderCollectionCategoryInputDiv();
+
+		String myFolderCollectionCategoryDivText();
+
+		String resourceCategoryLabel();
+
+		String myFolderCollectionArrowleftContainer();
+		String myFolderCollectionPopupSprite();
+
+		String myFolderCollectionArrowleft();
+		String moveContainer();
+		String reorderLabelContainer();
+		String myFolderCollectionFolderDropdown();
+		String myFolderCollectionFolderVideoTitle();
 	}
 
 	@Source("AssignmentProgress.css")

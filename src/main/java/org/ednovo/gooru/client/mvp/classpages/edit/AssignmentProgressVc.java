@@ -30,10 +30,14 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -60,15 +64,20 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 
 	interface AssignmentProgressVcUiBinder extends UiBinder<Widget, AssignmentProgressVc> {
 	}
-
+	
 	@UiField(provided = true)
 	AssignmentProgressCBundle res;
 	
 	@UiField 
-	Label lblLineStart, lblLineEnd, lblCircle, lblAssignmentNo;
+	Label lblLineStart, lblLineEnd, lblAssignmentNo;
 	
-	@UiField FlowPanel panelMainContainer;
+	@UiField HTMLPanel panelCircle, resourceTypePanel;
 	
+	@UiField HTML htmlCollectiontitle;
+	
+	@UiField Label lblMoveTo, resoureDropDownLbl, resourceCategoryLabel;
+	
+	@UiField FlowPanel panelMainContainer;	
 	
 	boolean isLast;
 	ClasspageItemDo classpageList;
@@ -77,7 +86,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	/**
 	 * Class constructor
 	 */
-	public AssignmentProgressVc(boolean isLast, ClasspageItemDo classpageList, int assignmentNumber) {
+	public AssignmentProgressVc(boolean isLast, ClasspageItemDo classpageList, int assignmentNumber, int assignmentTotalCount) {
 		
 		this.isLast = isLast;
 		this.classpageList = classpageList;
@@ -90,9 +99,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
 		if (isLast){
-//			panelMainContainer.getElement().getStyle().setWidth(32, Unit.PX);
-			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);
-			
+			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
 		}else{
 			lblAssignmentNo.getElement().getStyle().clearTextAlign();
 		}
@@ -104,5 +111,53 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		}
 //		lblCircle.getElement().addClassName(res.css().viewedCircle());
 		lblAssignmentNo.setText(String.valueOf(assignmentNumber));
+
+		
+		htmlCollectiontitle.setHTML(classpageList.getCollectionTitle());
+		lblMoveTo.setText(GL1912);
+		
+		resourceTypePanel.setVisible(false);
+		resourceCategoryLabel.setText(String.valueOf(assignmentNumber));
+		
+		resoureDropDownLbl.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+			}
+		});
+		
+		resourceCategoryLabel.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+			}
+		});
+		
+		for (int i=0; i<assignmentTotalCount; i++){
+			resourceTypePanel.add(createLabel(""+(i+1)));
+		}
+	}
+	
+	public Label createLabel(String title){
+		Label lblLabel = new Label();
+		lblLabel.setText(title);
+		lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderDropdown());
+		lblLabel.getElement().addClassName(res.css().myFolderCollectionFolderVideoTitle());
+		lblLabel.getElement().setAttribute("alt", title);
+		lblLabel.getElement().setAttribute("title", title);
+		lblLabel.getElement().setAttribute("id", title);
+		lblLabel.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Label lbl = (Label)event.getSource();
+				resourceCategoryLabel.setText(lbl.getText());
+				
+				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+			}
+		});
+		return lblLabel;
 	}
 }

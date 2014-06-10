@@ -700,7 +700,7 @@ public class EditClasspageView extends
 		noAssignmentsMessagePanel.setVisible(false);
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
 		
-		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode() : "");
+		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 
 		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 		imgNotFriendly.getElement().getStyle().setLeft(97.8, Unit.PCT);
@@ -1400,31 +1400,31 @@ public class EditClasspageView extends
 		panelAssignmentProgress.clear();
 		for (int i=0; i<classpageList.size(); i++){
 			panelAssignmentProgress.add(new AssignmentProgressVc(i == classpageList.size()-1 ? true : false, 
-					classpageList.get(i), i+1));
+					classpageList.get(i), i+1, classpageList.size()));
 		}
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
 
-	@Override
-	public void onMouseOver(MouseOverEvent event) {
-	toolTipPopupPanelNew.clear();
-	toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869,""));
-	toolTipPopupPanelNew.setStyleName("");
-	toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+85, event.getRelativeElement().getAbsoluteTop()-48);
-	toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-	toolTipPopupPanelNew.show();
-
-	}
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+			toolTipPopupPanelNew.clear();
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869,""));
+			toolTipPopupPanelNew.setStyleName("");
+			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+85, event.getRelativeElement().getAbsoluteTop()-48);
+			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelNew.show();
+	
+		}
 
 	}
 
 	public class MouseOutHideToolTip implements MouseOutHandler{
 
-	@Override
-	public void onMouseOut(MouseOutEvent event) {
-	toolTipPopupPanelNew.hide();
-	}
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelNew.hide();
+		}
 	}
 }
 
