@@ -2293,7 +2293,7 @@ public interface MessageProperties {
     	String GL1795 ="Add Tags";
     	String GL1796 ="Thank you for tagging this resource!";
     	String GL1797 = "You can view class reports once you have assigned a collection and joined your students to class. Start assigning and adding your students to generate reports.";
-    	String GL1798="Lexile Level";
+    	String GL1798="Reading Level";
     	String GL1799="Kindergarten";
     	String GL1800="Ads";
     	String GL1801="No Advertisement";
