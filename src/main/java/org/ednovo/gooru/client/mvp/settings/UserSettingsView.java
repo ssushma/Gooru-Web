@@ -78,8 +78,6 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -1745,6 +1743,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiHandler("btnViewAdmin")
 	public void clickOnAdmin(ClickEvent clickEvent){
 		
+		Window.open("http://www.goorulearning.org/admin", "_blank", "");
 	}
 	
 	@Override
