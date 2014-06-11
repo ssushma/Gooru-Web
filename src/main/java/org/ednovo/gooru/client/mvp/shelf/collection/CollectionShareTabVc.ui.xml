@@ -33,7 +33,9 @@
 				<g:Label
 					styleName="{res.css.privateVisibleIcon} {res.css.privateVisibleIconBottom}" />
 			</uc:HTMLEventPanel>
-			
+			<g:HTMLPanel styleName="{res.css.publishPanel}" ui:field="rbPublicPanel">
+			    <g:Button styleName="{res.css.publishButton} primary" ui:field="rbPublic">Publish</g:Button>
+			</g:HTMLPanel>
 			<g:FlowPanel styleName="{res.css.collectionVisibilityMainDiv}">
 				<g:Label styleName="{res.css.collectionVisibilityMain}" ui:field="visibilityTextTeacherTip"/>
 				<g:FlowPanel styleName="{res.css.collectionVisibleShareLineSeparator}"></g:FlowPanel>
