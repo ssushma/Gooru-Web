@@ -17,6 +17,7 @@
 	top: 66px;
 	float: left;
 	left: 109px;
+	
 }
 
 .classPageArrContainer {
@@ -286,9 +287,11 @@
 	margin: 0px 0 0 15px;
 }
 .searchResultContainer {
-	width: 600px;
-	float: left;
-	/* margin-left: 14px; */
+	text-align: right;
+	width: 1000px;
+	margin: 0 auto;
+	margin-top:24px;
+	
 }
 
 .paginationPanel {

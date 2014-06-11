@@ -109,7 +109,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	AddAssignmentContainerPresenter assignmentContainer=null;
 	
 	private Integer offset=0;
-	private Integer limit=20;
+	private Integer limit=5;
 	
 	ClassListPresenter classlistPresenter;
 	
@@ -232,7 +232,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			@Override
 			public void onSuccess(AssignmentsListDo result) {
 				getView().listAssignments(result);
-				System.out.println("result.getTotalHitCount() : "+result.getTotalHitCount());
 			}
 		});
 	}
@@ -396,7 +395,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 				if(classpageDo!=null){
 					if(classpageDo.getPermissions()!=null&&classpageDo.getPermissions().contains("edit")&& classpageDo.getClasspageId() != null){
 						offset=0;
-						limit=20;
+						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),tab,analyticsId,monitorId);
                         getView().setClasspageData(classpageDo);
@@ -410,6 +409,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					}
 				}else{
 					//TODO NEED TO DISPLAY API CALL FAILED PAGE
+		
 				}
 			}
 		});
@@ -421,13 +421,15 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
 					getView().showClasspageItems(classpageItemsList, tab, analyticsId,monitorId,classlistPresenter);
-					System.out.println("classpageItemsList.size() : "+classpageItemsList.size());
 				}
 			}
 		});
 	}
 	@Override
-	public void getNextClasspageItems(Integer offset,Integer limit) {
+	public void getNextClasspageItems(Integer offset,Integer limit) 
+	{
+		System.out.println("offset::"+offset);
+		System.out.println("limit::"+limit);
 		String classpageId=getPlaceManager().getRequestParameter("classpageid");
 		String analyticsId=getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");

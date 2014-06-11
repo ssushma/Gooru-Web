@@ -127,7 +127,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		dynamicContainer.setVisible(false);
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.HOME)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)||AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			setPlaceToken(placeToken);
 		} else {
 			setPlaceToken(PlaceTokens.HOME);
@@ -142,6 +142,9 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			aboutGooruAnr.setText(GL1827);
 			aboutGooruAnr.setHref(GL1828);
+		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+			aboutGooruAnr.setText(GL1899);
+			aboutGooruAnr.setHref(GL1900);
 		} else {
 			aboutGooruAnr.setText(GL1024);
 			aboutGooruAnr.setHref(GL1829);
@@ -240,7 +243,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 //			elaPanel.removeStyleName(libraryStyleUc.tabsLi());
 //			elaPanel.addStyleName(libraryStyleUc.tabsLiInactive());
 //		}
-		if(!getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+		if(!(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY))) {
 			standardPanel.addMouseOverHandler(new MouseOverHandler() {
 				@Override
 				public void onMouseOver(MouseOverEvent event) {

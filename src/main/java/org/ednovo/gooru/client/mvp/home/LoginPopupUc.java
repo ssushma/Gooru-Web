@@ -416,6 +416,11 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 						    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RUSD_LIBRARY);
 						    }
 					    }
+					    if(result.getOrganizationName()!=null) {
+						    if (result.getOrganizationName().contains("sausd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY))){
+						    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
+						    }
+					    }
 					    
 					    /*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
 					    	String newMailId = AppClientFactory.getPlaceManager()

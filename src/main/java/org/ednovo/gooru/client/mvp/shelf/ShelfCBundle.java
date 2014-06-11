@@ -82,6 +82,8 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String userCollectionMetaResourceImage();
 		
+		String profileMetaDataTabTitleActive();
+		
 		String userCollectionMetaCollaboratorImage();
 		
 		String userCollectionMetaAssignImage();
@@ -391,6 +393,12 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String aleartDescText();
 		String collectionEditImageTeacherTip();
+		
+		String userprofilecount();
+		
+		String profileMetaDataTabTitle();
+		
+		String profileMetaDataTabTitleDisabled();
 	}
 	
 	@Source("Shelf.css")

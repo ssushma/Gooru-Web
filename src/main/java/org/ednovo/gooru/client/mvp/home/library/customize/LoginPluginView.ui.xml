@@ -14,6 +14,11 @@
 			    </g:HTMLPanel>
 		      <g:HTMLPanel styleName="{res.css.inputBlockOuter}">
 		       	<gg:TextBoxWithPlaceholder ui:field="loginTxtBox" setFocus="true"/>
+		       	<g:HTMLPanel styleName="{res.css.privacyCustomizeContainer}">
+					<g:InlineLabel ui:field="lblPii"></g:InlineLabel><br></br>
+					<g:Anchor ui:field="ancprivacy" styleName="{res.css.privacyAlignStyle}"></g:Anchor>
+					<g:InlineLabel ui:field="toUsText"></g:InlineLabel>
+				</g:HTMLPanel>
 				<gg:TextBoxWithPlaceholder ui:field="passwordTxtBox" password="true" />
 		        <g:HTMLPanel styleName="{res.css.pwdTxt}"><g:Anchor ui:field="forgotPwd"></g:Anchor></g:HTMLPanel>
 		      </g:HTMLPanel>

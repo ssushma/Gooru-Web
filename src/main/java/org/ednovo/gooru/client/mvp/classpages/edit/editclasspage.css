@@ -244,6 +244,12 @@
 	margin-top:-7px;
 }
 
+.paginationContainer {
+	width: 100%;
+	margin-top:22px;
+	text-align:right;
+}
+
 .paginationPanel {
 	text-align: center;
 	width: 70px;
@@ -855,7 +861,6 @@
 .labelCenterAlign{
 	text-align:center;
 }
-<<<<<<< HEAD
 
 .assignmentPath{
 	
@@ -864,7 +869,6 @@
 	height: 100px;
 	margin-bottom: 10px;
 	background-color:rgb(255,255,255);
-	width:100%;
 	height:109px;
 	/* Firefox v1.0+ */
 	-moz-border-radius:8px;

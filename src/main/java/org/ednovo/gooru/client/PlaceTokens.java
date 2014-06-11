@@ -45,6 +45,7 @@ public interface PlaceTokens {
 	String REGISTER="registration";
 	String STUDENT = "students-view";
 	String STUDY = "myclasses";
+	String CLASSHOME = "myclasseshome";
 	String PROFILE_PAGE = "profilepage";
 	String RUSD_LIBRARY = "rusd";
 	
@@ -58,5 +59,5 @@ public interface PlaceTokens {
 	String WSPWH = "WSPWH";
 	String PSDPAL = "PSD";
 	String FINCAPINC = "CFCI";
-	
+	String SAUSD_LIBRARY = "sausd";	
 }

@@ -54,7 +54,6 @@ public interface LibraryStyleBundle extends CssResource {
 	String blueLink();
 
 	String bannerSpanBlock();
-	String partnerLogo();
 	String resourcesInsideSubStyle();
 	String collectionInfoSubStyle();
 	String collectionViewerSubStyle();
@@ -72,4 +71,7 @@ public interface LibraryStyleBundle extends CssResource {
 	String lessonTitleProfile();
 	String collectionSmall();
 	String conceptTitleLeft();
+	
+	String rusdPartnerLogo();
+	String sausdPartnerLogo();
 }

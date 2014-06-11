@@ -73,6 +73,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.itextpdf.text.log.SysoCounter;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
@@ -885,9 +886,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			try {
 				if(jsonRep.getText()!=null){
-					if(jsonRep.getText().trim() != null && !jsonRep.getText().trim().equals("null")&&!jsonRep.getText().trim().equals(""))
-					{
-					classPageDo=deserializeClassPage(jsonRep.getJsonObject());
+					if(jsonRep.getText().trim() != null && !jsonRep.getText().trim().equals("null")&&!jsonRep.getText().trim().equals("")){
+						classPageDo=deserializeClassPage(jsonRep.getJsonObject());
 					}
 					else {
 						classPageDo=new ClasspageDo();
@@ -920,6 +920,16 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 		}
 		return classpageItemDo;
+	}
+	@Override
+	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String collectionOrFolderId){
+		ArrayList<ClasspageItemDo> classpageItemDoList=new ArrayList<ClasspageItemDo>();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.ASSIGN_COLLECTION_OR_FOLDER_TO_CLASS_V2, classpageId,collectionOrFolderId,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword());
+		if(jsonResponseRep.getStatusCode()==200){
+			classpageItemDoList=deserializeClassItems(jsonResponseRep.getJsonRepresentation());
+		}
+		return classpageItemDoList;
 	}
 	
 	
@@ -1092,6 +1102,24 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 								classpageItemDo.setTotalHitCount(totalHitCount);
 								classpageItemsList.add(classpageItemDo);
 							}
+						}
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		return classpageItemsList;
+	}
+	protected ArrayList<ClasspageItemDo> deserializeClassItems(JsonRepresentation jsonRep){
+		ArrayList<ClasspageItemDo> classpageItemsList=new ArrayList<ClasspageItemDo>();
+			try {
+				if(jsonRep!=null){
+					JSONArray classpageItemsArray=jsonRep.getJsonArray();
+					if(classpageItemsArray!=null&&classpageItemsArray.length()>0){
+						for(int i=0;i<classpageItemsArray.length();i++){
+							JSONObject classpageItemJsonObject=classpageItemsArray.getJSONObject(i);
+							ClasspageItemDo classpageItemDo=deserializeClassPageItem(classpageItemJsonObject,RESOURCE);
+							classpageItemsList.add(classpageItemDo);
 						}
 					}
 				}

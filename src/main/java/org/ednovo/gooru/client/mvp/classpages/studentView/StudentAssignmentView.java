@@ -36,7 +36,6 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
-import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
@@ -44,6 +43,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
+import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -143,6 +143,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	private static boolean isJoinPopupPrivateStatic = false;
 	
 	private static boolean isJoinPopupButtonclick = false;
+	
+	private static final String PREVIOUS = "PREVIOUS";
+
+	private static final String NEXT = "NEXT";
 	
 	private String DEFAULT_CLASSPAGE_IMAGE = "images/Classpage/default-classpage.png";
 	private int totalHitCount=0;
@@ -465,8 +469,13 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 	
 	@Override
-	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList){
+	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1){
 		removeLoadingPanel();
+		contentpanel.clear();
+		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
+		classpageItemsList.clear();
+		classpageItemsList.addAll(classpageItemsList1);
+		
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
 			noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
@@ -487,7 +496,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 	}
 	public void setPagination(){
-		if((pageNumber*limit)<this.totalHitCount){
+		if(this.totalHitCount>5){
 			showPaginationButton();
 		}else{
 			clearPaginationButton();
@@ -496,9 +505,26 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
 		Label seeMoreLabel=new Label(GL0508);
-		seeMoreLabel.addClickHandler(new PaginationEvent());
+		//seeMoreLabel.addClickHandler(new PaginationEvent());
 		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
-		paginationFocPanel.add(seeMoreLabel);
+		int totalPages = (this.totalHitCount / 5)
+				+ ((this.totalHitCount % 5) > 0 ? 1 : 0);
+		//int pageNumCount = pageNum + 1;
+		if (totalPages > 1) {
+			if (pageNumber > 1) {
+				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
+			}
+		
+			int page = pageNumber < 5 ? 1 : pageNumber - 3;
+
+			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
+			{
+				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
+			}
+			if (pageNumber < totalPages) {
+				paginationFocPanel.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
+			}
+		}
 	}
 	public void clearPaginationButton(){
 		paginationFocPanel.clear();
@@ -516,7 +542,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		paginationFocPanel.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
-		limit=20;
+		limit=5;
 		pageNumber=1;
 	}
 	public Label setLoadingPanel(){
@@ -558,7 +584,38 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	@Override
 	public void onClick(ClickEvent event) {
-		
+	if (event.getSource() instanceof PaginationButtonUc) {
+			
+			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
+
+			int pageNumVal = (pagenumber - 1) * 5;
+			
+			pageNumber = pagenumber;
+			setPagination();
+			
+			contentpanel.add(setLoadingPanel());
+
+			getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
+			/*int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
+
+			pageNum = (pagenumber - 1) * pageSize;
+
+			AssignmentsListDo assignmentListDo = new AssignmentsListDo();
+			assignmentListDo.setClasspageId(classpageId);
+			assignmentListDo.setPageNum(pageNum);
+			assignmentListDo.setPageSize(pageSize);
+			assignmentListDo.setPos(pagenumber);
+
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("classpageid", classpageDo.getClasspageId());
+			params.put("pageSize", pageSize + "");
+			params.put("pageNum", pageNum + "");
+			params.put("pos", pagenumber + "");
+			AppClientFactory.getPlaceManager().revealPlace(
+					PlaceTokens.EDIT_CLASSPAGE, params, true);*/
+
+		} else {
+		}
 	}
 	
 	@UiHandler("btnJoinClass")
@@ -678,7 +735,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		paginationFocPanel.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
-		limit=20;
+		limit=5;
 		pageNumber=1;
 	}
 

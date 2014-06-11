@@ -460,7 +460,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 										params.put("rid", resourceId);
 										params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 										params.put("lessonId", lessonId);
-										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+										if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 											params.put("library", getPlaceToken());
 										}
 										String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
@@ -832,7 +832,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			params.put("id", profileLibraryDo.getGooruOid());
 			params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 			params.put("lessonId", lessonId);
-			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 				params.put("library", getPlaceToken());
 			}
 			String standardId = AppClientFactory.getPlaceManager().getRequestParameter(STANDARD_ID);
@@ -858,7 +858,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			};
 			Window.scrollTo(0, 0);
 			successPopupVc.setWidth("500px");
-			successPopupVc.setHeight("592px");
+			successPopupVc.setHeight("635px");
 			successPopupVc.show();
 			successPopupVc.center();
 			if (AppClientFactory.isAnonymous()){
@@ -891,7 +891,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		};
 		Window.scrollTo(0, 0);
 		successPopupVc.setWidth("500px");
-		successPopupVc.setHeight("405px");
+		successPopupVc.setHeight("440px");
 			successPopupVc.show();
 			successPopupVc.center();
 		}
