@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -19,9 +22,9 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 			UiBinder<Widget, ProfilePageFollowersView> {
 	}
 	@UiField HTMLPanel followersTextMessage,followersUserConatiner;
-	UserFollowDo userFollowDo = new UserFollowDo();
+	List<UserFollowDo> userFollowDo = new ArrayList<UserFollowDo>();
 	String tab;
-	public ProfilePageFollowersView(UserFollowDo userFollowDo,String tab) {
+	public ProfilePageFollowersView(List<UserFollowDo> userFollowDo,String tab) {
 		this.tab = tab;
 		this.userFollowDo = userFollowDo;
 		initWidget(uiBinder.createAndBindUi(this));
@@ -31,9 +34,10 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	{
 		followersTextMessage.getElement().setInnerHTML(GL1914);
 		followersUserConatiner.clear();
-		
-			ProfilePageUserInfoWidget profilePageUserInfoWidget=new ProfilePageUserInfoWidget(userFollowDo,tab);
+		for(int i=0; i< userFollowDo.size(); i++){
+			ProfilePageUserInfoWidget profilePageUserInfoWidget=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);
 			followersUserConatiner.add(profilePageUserInfoWidget);
+		}
 		
 		
 	}

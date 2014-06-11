@@ -42,6 +42,7 @@
 							   		   </g:HTMLPanel>
 							   </g:HTMLPanel>
 							   <!--  Social container stop-->
+							   <g:Button styleName="bluePrimaryButton" ui:field="followButton"></g:Button>
 							</g:HTMLPanel>
 					   <!--  Profile On/Off container stop -->
 					   </g:HTMLPanel>

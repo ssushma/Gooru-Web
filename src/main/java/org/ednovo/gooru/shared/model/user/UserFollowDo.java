@@ -12,6 +12,7 @@ public class UserFollowDo implements Serializable{
 	private String username;
 	private String profileImageUrl;
 	private UserSummaryDo summary;
+	private int totalHintCount;
 	
 	public UserFollowDo(){}
 
@@ -45,6 +46,14 @@ public class UserFollowDo implements Serializable{
 
 	public void setSummary(UserSummaryDo summary) {
 		this.summary = summary;
+	}
+
+	public int getTotalHintCount() {
+		return totalHintCount;
+	}
+
+	public void setTotalHintCount(int totalHintCount) {
+		this.totalHintCount = totalHintCount;
 	}
 	
 }

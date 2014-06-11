@@ -551,6 +551,8 @@ public enum UrlToken {
 	
 	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}"),
 	
+	USER_FOLLOW("/v2/user/follow/{0}?sessionToken={1}"),
+	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"); 
 
 	

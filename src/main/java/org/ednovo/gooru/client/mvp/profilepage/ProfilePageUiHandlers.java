@@ -88,5 +88,6 @@ public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpen
 	
 	UserFollowDo getFollowerData();
 	
+	void followUser(String gooruUid);
 	
 }
