@@ -41,7 +41,9 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
 
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
@@ -160,7 +162,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField ProfilePageCBundle ProfilePageStyle;
 	
 	@UiField
-	ProfilePageTabVc collectionsTabVc, followingTabVc, followersTabVc;
+	ProfilePageTabVc collectionsTabVc, followingTabVc, followersTabVc,tagTabVc;
 	
 	Label noCollectionMsgPanel = new Label();
 
@@ -302,17 +304,20 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		collectionsTabVc.setLabel(GL1754.toUpperCase());
 		followingTabVc.setLabel(GL1895.toUpperCase());
 		followersTabVc.setLabel(GL1896.toUpperCase());
-		
+		tagTabVc.setLabel(GL1897.toUpperCase());
 	
 		collectionsTabVc.getElement().setId("collections");
 		followingTabVc.getElement().setId("following");
 		followersTabVc.getElement().setId("followers");
+		tagTabVc.getElement().setId("tags");
 		collectionsTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		followingTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
+		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		collectionsTabVc.setLabelCount(1+"");
 		followingTabVc.setLabelCount(1+"");
 		followersTabVc.setLabelCount(1+"");
+		tagTabVc.setLabelCount(1+"");
 		
 		setTab(collectionsTabVc);
 		/*collectionsTabVc.addClickHandler(
@@ -1345,8 +1350,22 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
 		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
-	public void setTab(Object tab) {
+	@UiHandler("tagTabVc")
+	public void onClickTagTabVc(ClickEvent event)
+	{
 		
+		setTab(tagTabVc);	
+		Map<String,String> params = new HashMap<String,String>();
+		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+		
+		params.put("id", id);
+		params.put("user", user);
+		params.put("tab", "tags");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	}
+	public void setTab(Object tab) {
 		if(tab!=null){
 				if (tab.equals(collectionsTabVc)) {
 				followingContainer.clear();
@@ -1365,10 +1384,19 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 			if (tab.equals(followersTabVc)) {
 				followingContainer.clear();
-				followingTabVc.setSelected(true);
+				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView();
-				followingContainer.add(profilePagefollowingView);
+				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView();
+				followingContainer.add(profilePageFollowersView);
+			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
+				
+			}
+			if (tab.equals(tagTabVc)) {
+				followingContainer.clear();
+				tagTabVc.setSelected(true);
+				mainContainer.setVisible(false);
+				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
+				followingContainer.add(profileUserTagView);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
