@@ -71,9 +71,9 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 //		gooruPublicShare.setUrl("images/gooru-public-share-popup.png");
 		privateResourceLbl.setText(GL0840);
 //		goBackBtn.setText(GL0841);
-		goBackBtn.setText("Go back and review");
+		goBackBtn.setText(GL1923);
 //		okButton.setText(GL0190);
-		okButton.setText("I'm ready to publish");
+		okButton.setText(GL1922);
 		okButton.getElement().setId("btnOk");
 		goBackBtn.getElement().setId("btnGoBack");
 	}
@@ -117,15 +117,15 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		isPrivateResource = true;
 		setVisibilityData(true, true);
 //		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
-		shareMsgTitle.setText("Publish");
+		shareMsgTitle.setText(GL1921);
 		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
 		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
-		shareMsgTxt.setText("It will be reviewed and your status will be pending until then.");
-		shareMsgLbl.setText("You can still edit the collection once you publish. You will be sent an email once your collection has been made public.");
+		shareMsgTxt.setText(GL1919);
+		shareMsgLbl.setText(GL1920 + GL1918);
 		gooruPublicShare.setVisible(true);
 		alertSuccessTxt.setVisible(true);
 		alertSuccessTitleTxt.setVisible(true);
-		okButton.setText("I'm ready to publish");
+		okButton.setText(GL1922);
 		goBackBtn.setVisible(true);
 	}
 	

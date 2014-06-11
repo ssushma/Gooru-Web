@@ -2432,6 +2432,17 @@ public interface MessageProperties {
     	String GL1914 = "My Followers";
     	String GL1915 = "My Tags";
     	String GL1916 ="Your Suggestions";
+    	
+    	//Make collection as Publish
+    	
+    	String GL1917 ="Thanks for publishing your Collection and contributing to Gooru.";
+    	String GL1918 ="You will sent an email once your collection has been made public.";
+    	String GL1919 ="It will be reviewed and your status will be pending until then.";
+    	String GL1920 ="You can still edit the collection once you publish.";
+    	String GL1921 ="Publish";
+    	String GL1922 ="I'm ready to publish";
+    	String GL1923 ="Go back and review";
+    	String GL1924 ="Publishing in Progress";
 
 
 }
