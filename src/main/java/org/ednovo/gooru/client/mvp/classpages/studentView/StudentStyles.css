@@ -475,3 +475,15 @@ margin-left:-33px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.assignmentDotsContainer{
+	margin-bottom: 10px;
+	background-color: #fff;
+	height: 109px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding: 5px;
+	width: 1000px;
+	margin: 0 auto;
+	margin-top: 20px;
+}

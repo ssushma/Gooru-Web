@@ -51,6 +51,7 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 	
 	void setClasspageData( ClasspageDo classpageDo);
 	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList);
+	void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList);
 
 			
 }

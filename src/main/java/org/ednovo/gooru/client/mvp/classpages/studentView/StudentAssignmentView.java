@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
@@ -112,7 +113,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField FlowPanel paginationFocPanel;
+	@UiField FlowPanel paginationFocPanel,panelAssignmentProgress;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -558,6 +559,20 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 		}
 	}
+	
+	@Override
+	public void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList) {
+		//TODO 
+		if(classpageItemsList!=null&&classpageItemsList.size()>0){
+			panelAssignmentProgress.clear();
+			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
+				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
+				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc(false,classpageItemDo,(itemIndex+1));
+				panelAssignmentProgress.add(assignmentProgressVc);
+				this.totalHitCount=classpageItemDo.getTotalHitCount();
+			}
+		}
+	}
 	@UiHandler("backToEditPanel")
 	public void onClickHandler(ClickEvent event){
 		//getPreviousPage();
@@ -900,7 +915,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			// TODO Auto-generated method stub
 			toolTipPopupPanel.hide();
 			
 		}
@@ -986,6 +1000,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		return mainContainerStatus;		
 	}
+
 	
 }
 	
