@@ -54,9 +54,11 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -113,6 +115,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	SignUpPresenter signUpViewPresenter = null;
 	
 	private boolean isRefresh = false;
+	UserFollowDo userFollowDo=new UserFollowDo();
 	
 	@Inject
 	public ProfilePagePresenter(IsProfilePageView view, IsProfilePageProxy proxy,ImageUploadPresenter imageUploadPresenter, SignUpPresenter signUpViewPresenter) {
@@ -523,5 +526,45 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		
 		
 	}
+
+	
+	@Override
+	public UserFollowDo getFollwingData() {
+		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<UserFollowDo>() {
+			
+			@Override
+			public void onSuccess(UserFollowDo result) {
+				userFollowDo=result;
+				getView().getFolloweingsObj(result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		return userFollowDo;
+	}
+
+	@Override
+	public UserFollowDo getFollowerData() {
+		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<UserFollowDo>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(UserFollowDo result) {
+				userFollowDo=result;
+				getView().getFollowersObj(result);	
+			}
+		});
+		return userFollowDo;
+	}
+	
+
+
 	
 }

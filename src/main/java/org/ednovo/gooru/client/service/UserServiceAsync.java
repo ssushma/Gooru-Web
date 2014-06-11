@@ -31,6 +31,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -89,5 +90,9 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void sendWelcomeMail(String gooruUId, String emailType, AsyncCallback<Object> callback);
    
    void updatePartyCustomField(String gooruUid,String optionKey,String optionValue,AsyncCallback<Void> callback);
+   
+   void getFollowedOnUsers(String gooruUid,AsyncCallback<UserFollowDo> callback);
+   
+   void getFollowedByUsers(String gooruUid,AsyncCallback<UserFollowDo> callback);
 
 }

@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
 
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -20,19 +21,23 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 	}
 	
 	@UiField HTMLPanel follwingTextMessage,userConatiner;
+	UserFollowDo userFollowDo;
+	String tab;
 	
-	public ProfilePagefollowingView() {
+	public ProfilePagefollowingView(UserFollowDo userFollowDo,String tab) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.userFollowDo = userFollowDo;
+		this.tab = tab;
 		setData();
 	}
 	public void setData(){
 		follwingTextMessage.getElement().setInnerHTML(GL1913);
 		userConatiner.clear();
-		for(int i=0;i<=4;i++){
-			ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget();
-			userConatiner.add(profilePageUserInfo);
+		ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget(userFollowDo,tab);
+		userConatiner.add(profilePageUserInfo);
 		
-		}
+		
+		
 	}
 	
 }

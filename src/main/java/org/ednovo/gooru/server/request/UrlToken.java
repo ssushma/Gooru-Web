@@ -544,7 +544,11 @@ public enum UrlToken {
 			
 	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
 	
-	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"); 
+	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	
+	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}"),
+	
+	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}"); 
 	
 	
 	private String url;

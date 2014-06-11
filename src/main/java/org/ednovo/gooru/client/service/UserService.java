@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -208,4 +209,11 @@ public interface UserService extends BaseService {
 	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException;
 	
 	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException;
+	
+	//followingUser
+	UserFollowDo getFollowedOnUsers(String gooruUid)throws GwtException;
+	
+	//followerUser
+	UserFollowDo getFollowedByUsers(String gooruUid)throws GwtException;
+	
 }

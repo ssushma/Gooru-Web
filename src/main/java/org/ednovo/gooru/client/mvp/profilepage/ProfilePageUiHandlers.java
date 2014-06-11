@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEv
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
@@ -82,4 +83,10 @@ public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpen
 	void revealTab(Type<RevealContentHandler<?>> tabType);
 
 	void clearTabSlot();
+	
+	UserFollowDo getFollwingData();
+	
+	UserFollowDo getFollowerData();
+	
+	
 }

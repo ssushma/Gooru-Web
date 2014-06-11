@@ -69,6 +69,8 @@ public class ProfileDo implements Serializable {
 	private String profileId;
 	private String externalId;
 	private GenderDo gender;
+	
+	
 	private Set<ProfileCodeDo> courses = new HashSet<ProfileCodeDo>();
 	
 	public ProfileDo(){}
@@ -265,4 +267,7 @@ public class ProfileDo implements Serializable {
 	public void setCourses(Set<ProfileCodeDo> courses) {
 		this.courses = courses;
 	}
+
+	
+	
 }
