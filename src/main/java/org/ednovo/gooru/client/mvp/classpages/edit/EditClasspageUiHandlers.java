@@ -70,4 +70,28 @@ public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandl
 	
 	void getNextClasspageItems(Integer offset,Integer limit);
 
+	/**
+	 * @function getAssignmentsProgress 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pageSize
+	 * @param pageNum
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getAssignmentsProgress(String classpageId, String offset,
+			String limit);
+
 }

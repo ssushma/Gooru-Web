@@ -24,6 +24,10 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -138,6 +142,8 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		for (int i=0; i<assignmentTotalCount; i++){
 			resourceTypePanel.add(createLabel(""+(i+1)));
 		}
+		
+		System.out.println("classpageList.getCollectionItemId() :"+classpageList.getCollectionItemId());
 	}
 	
 	public Label createLabel(String title){
@@ -155,7 +161,15 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 				Label lbl = (Label)event.getSource();
 				resourceCategoryLabel.setText(lbl.getText());
 				
-				resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+				
+				AppClientFactory.getInjector().getClasspageService().v2ChangeAssignmentSequence("", classpageList.getCollectionItemId(), Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<Void>() {
+
+					@Override
+					public void onSuccess(Void result) {
+						resourceTypePanel.setVisible(resourceTypePanel.isVisible() ? false : true);
+						AppClientFactory.fireEvent(new ResetProgressEvent());
+					}
+				});
 			}
 		});
 		return lblLabel;

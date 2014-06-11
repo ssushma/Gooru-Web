@@ -98,4 +98,25 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	public FlowPanel getClassListContainer();
 	
 	public AssignmentEditLabelUc getCollectionTitleUc();
+
+	/**
+	 * @function displayAssignmentPath 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageList
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageList);
 }
