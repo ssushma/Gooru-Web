@@ -2426,10 +2426,11 @@ public interface MessageProperties {
     	String GL1909 = "your students' engagement, comprehension, and progress";
     	String GL1910 = "Contribute";
     	String GL1911 = "to an active community of teachers and students";
-    	String GL1913 = "User Who Are Following Me";
-    	   
-
     	String GL1912 = "Move to position";
+    	
+    	String GL1913 = "User Who Are Following Me";
+    	String GL1914 = "My Followers";
+    	String GL1915 = "My Tags";
 
 
 }

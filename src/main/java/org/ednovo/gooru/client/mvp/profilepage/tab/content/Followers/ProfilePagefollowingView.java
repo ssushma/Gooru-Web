@@ -29,7 +29,7 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 		follwingTextMessage.getElement().setInnerHTML(GL1913);
 		userConatiner.clear();
 		for(int i=0;i<=4;i++){
-			ProfilePageUserInfo profilePageUserInfo=new ProfilePageUserInfo();
+			ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget();
 			userConatiner.add(profilePageUserInfo);
 		
 		}
