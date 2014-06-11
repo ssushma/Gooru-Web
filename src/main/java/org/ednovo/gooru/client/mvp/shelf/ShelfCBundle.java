@@ -391,6 +391,10 @@ public interface ShelfCBundle extends ClientBundle{
 		
 		String aleartDescText();
 		String collectionEditImageTeacherTip();
+		
+		String publishPanel();
+		String publishButton();
+		String shelfPublishTab();
 	}
 	
 	@Source("Shelf.css")
