@@ -14,6 +14,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.ClassCodeCopy;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.TextCopyHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
@@ -701,7 +703,9 @@ public class EditClasspageView extends
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
 		
 		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode() : "");
-
+		classCodeTextBox.setReadOnly(true);
+		classCodeTextBox.addClickHandler(new ClassCodeTextCopy());
+		
 		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 		imgNotFriendly.getElement().getStyle().setLeft(97.8, Unit.PCT);
 		imgNotFriendly.getElement().getStyle().setTop(27, Unit.PX);
@@ -721,6 +725,16 @@ public class EditClasspageView extends
 		btnCollectionEditImage.setVisible(false);
 		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
+	}
+	
+	public class ClassCodeTextCopy implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			classCodeTextBox.selectAll();
+			classCodeTextBox.setFocus(true);
+		}
+		
 	}
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){
 		this.classlistPresenter = classlistPresenter;
@@ -1409,9 +1423,9 @@ public class EditClasspageView extends
 	@Override
 	public void onMouseOver(MouseOverEvent event) {
 	toolTipPopupPanelNew.clear();
-	toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869,""));
+	toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
 	toolTipPopupPanelNew.setStyleName("");
-	toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+85, event.getRelativeElement().getAbsoluteTop()-48);
+	toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop());
 	toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
 	toolTipPopupPanelNew.show();
 
@@ -1423,7 +1437,7 @@ public class EditClasspageView extends
 
 	@Override
 	public void onMouseOut(MouseOutEvent event) {
-	toolTipPopupPanelNew.hide();
+	//toolTipPopupPanelNew.hide();
 	}
 	}
 }
