@@ -1742,8 +1742,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	@UiHandler("btnViewAdmin")
 	public void clickOnAdmin(ClickEvent clickEvent){
-		
-		Window.open("http://www.goorulearning.org/admin", "_blank", "");
+		String adminUrl=Window.Location.getProtocol()+"//"+Window.Location.getHost()+"/admin";
+//		Window.open("http://www.goorulearning.org/admin", "_blank", "");
+		Window.open(adminUrl, "_blank", "");
 	}
 	
 	@Override
