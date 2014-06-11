@@ -678,7 +678,7 @@ public interface MessageProperties {
 	String GL0530 = "Contribute";
 	String GL0531 = "to an active community of teachers and students";
 	
-	String GL0532 = "RUSD Community Library";
+	String GL0532 = "Riverside Unified School District Library";
 	String GL0533 = "This library showcases collections created by teachers from the Riverside Unified School District in California.";
 	String GL0534 = "Find";
 	String GL0535 = "standards-aligned, interactive learning materials tied to Common Core";
@@ -2410,6 +2410,28 @@ public interface MessageProperties {
     	String GL1895 = "following";
     	String GL1896 = "followers";
     	String GL1897 = "Tags";
+    	
     
+    	String GL1898 = "SAUSD Library";
+    	String GL1899 = "About SAUSD";
+    	String GL1900 = "http://www.sausd.us/site/default.aspx?PageID=1";
+    	String GL1901 = "SAUSD Featured Courses";
+    	String GL1902 = "Santa Ana Unified School District Library";
+    	String GL1903 = "This library showcases collections created by teachers from the Santa Ana Unified School District in California.";
+    	String GL1904 = "Find";
+    	String GL1905 = "standards-aligned, interactive learning materials tied to Common Core";
+    	String GL1906 = "Share";
+    	String GL1907 = "custom collections, personalized to meet the unique needs of your students";
+    	String GL1908 = "Measure";
+    	String GL1909 = "your students' engagement, comprehension, and progress";
+    	String GL1910 = "Contribute";
+    	String GL1911 = "to an active community of teachers and students";
+    	String GL1912 = "Move to position";
+    	
+    	String GL1913 = "User Who Are Following Me";
+    	String GL1914 = "My Followers";
+    	String GL1915 = "My Tags";
+    	String GL1916 ="Your Suggestions";
+
 
 }

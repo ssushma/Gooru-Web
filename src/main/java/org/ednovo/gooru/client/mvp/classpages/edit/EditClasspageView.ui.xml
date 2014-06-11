@@ -34,7 +34,7 @@
 							<g:Button ui:field="btnClasspageCancel"
 								styleName="secondary {res.css.classpageTitleCancel}" />
 						</g:HTMLPanel>
-						<g:HTMLPanel>
+						<g:HTMLPanel styleName="{res.css.classcodeContainer}">
 							<g:TextBox styleName="{res.css.classcodeStyles}" ui:field="classCodeTextBox"/>
 							<g:HTMLPanel ui:field="questionMarkPanel"></g:HTMLPanel>
 						</g:HTMLPanel>
@@ -83,7 +83,9 @@
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
-
+			<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel">
+				</g:FlowPanel>
 			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
 				<g:HTMLPanel>
 					<g:Button ui:field="btnNewAssignment" text=""
@@ -105,9 +107,7 @@
 					<!-- This container for Assignments -->
 
 				</g:FlowPanel>
-				<g:FlowPanel styleName="{res.css.searchResultContainer}"
-					ui:field="paginationFocPanel">
-				</g:FlowPanel>
+				
 				<g:HTMLPanel styleName="{res.css.classpageTopLine}">
 					<g:Button ui:field="btnDeleteClasspage"
 						styleName="secondary {res.css.classpageDeleteButton}"></g:Button>

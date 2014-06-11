@@ -33,4 +33,5 @@ import com.google.gwt.resources.client.CssResource;
 public interface ProfilePageCBundle extends CssResource {
 	String addedCourseLbl();
 	String margin5();
+	String tabAlign();
 }

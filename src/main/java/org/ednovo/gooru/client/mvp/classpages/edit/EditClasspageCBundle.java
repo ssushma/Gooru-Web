@@ -77,6 +77,8 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String editTitleButton();
 		
 		String searchResultContainer();
+		
+		String paginationContainer();
 
 		String paginationPanel();
 				
@@ -179,6 +181,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String squre();
         String progressStart();
         String path();
+        String classcodeContainer();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

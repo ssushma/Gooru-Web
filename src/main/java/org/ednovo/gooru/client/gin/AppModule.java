@@ -51,6 +51,10 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
 import org.ednovo.gooru.client.mvp.classpages.edit.IsEditClasspageView;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter.IsClassHomeProxy;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomeView;
+import org.ednovo.gooru.client.mvp.classpages.home.IsClassHomeView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.IsStudentAssignmentView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
@@ -134,6 +138,10 @@ import org.ednovo.gooru.client.mvp.library.rusd.IsRusdView;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter.IsRusdProxy;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdView;
+import org.ednovo.gooru.client.mvp.library.sausd.IsSausdView;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter.IsSausdProxy;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdView;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter.IsCollectionPlayerProxy;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerView;
@@ -380,6 +388,9 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(ClassCodePresenter.class, IsClassCodeView.class,
 				ClassCodeView.class, IsClassCodeProxy.class);
+		
+		bindPresenter(ClassHomePresenter.class, IsClassHomeView.class,
+				ClassHomeView.class, IsClassHomeProxy.class);
 
 		bindPresenter(StudentAssignmentPresenter.class,
 				IsStudentAssignmentView.class, StudentAssignmentView.class,
@@ -456,6 +467,9 @@ public class AppModule extends AppPresenterModule {
 		bindPresenterWidget(RatingAndReviewPopupPresenter.class, IsRatingAndReviewPopupView.class, RatingAndReviewPopupView.class);
 		bindPresenter(PsdpalLibraryPresenter.class, IsPsdpalView.class, PsdpalLibraryView.class,IsPsdpalLibraryProxy.class);
 		bindPresenter(CfciLibraryPresenter.class, IsCfciView.class, CfciLibraryView.class,IsCfciLibraryProxy.class);
+		
+		
 
+		bindPresenter(SausdPresenter.class, IsSausdView.class, SausdView.class,IsSausdProxy.class);
 	}
 }
