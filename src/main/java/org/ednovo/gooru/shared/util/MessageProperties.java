@@ -2443,6 +2443,7 @@ public interface MessageProperties {
     	String GL1922 ="I'm ready to publish";
     	String GL1923 ="Go back and review";
     	String GL1924 ="Publishing in Progress";
+    	String GL1925 = "Follow";
 
 
 }

@@ -132,7 +132,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
-			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton;
+			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton;
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
@@ -216,8 +216,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	private String profileImageUrl="images/profilepage/user-profile-pic.png";
 	
-	UserFollowDo userFollowingDo = new UserFollowDo();
-	UserFollowDo userFollowerDo = new UserFollowDo();
+	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
+	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
 	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -321,7 +321,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		
 		setTab(collectionsTabVc);
-		
+		followButton.setText(GL1925);
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -518,6 +518,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
+		
 		
 		
 	}
@@ -1213,11 +1214,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
+			followButton.setVisible(true);
 			editPencil.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}else{
 			gooruProfileOnOffContainer.setVisible(true);
+			followButton.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1232,6 +1235,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getEnableWidget(boolean toEnable,String about,Set<ProfileCodeDo> set) {
 		if(toEnable){
 			gooruProfileOnOffContainer.setVisible(true);
+			followButton.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1251,6 +1255,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				userMetadata.setVisible(true);	
 			}
 			gooruProfileOnOffContainer.setVisible(false);
+			followButton.setVisible(true);
 			editPencil.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
@@ -1304,12 +1309,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}	
 	
 	@Override
-	public void getFollowersObj(UserFollowDo userFollowDo) {
-		userFollowerDo=userFollowDo;
+	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
+		userFollowerDo.addAll(userFollowDo);
 	}
 	@Override
-	public void getFolloweingsObj(UserFollowDo userFollowDo) {
-		userFollowingDo=userFollowDo;
+	public void getFolloweingsObj(List<UserFollowDo> userFollowDo) {
+		userFollowingDo.addAll(userFollowDo);
 		
 	}
 	
@@ -1419,7 +1424,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			
 	}
 }
-
+	@UiHandler("followButton")
+	public void onClickFollowButton(ClickEvent event)
+	{
+	getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+	}
 	
 
 	

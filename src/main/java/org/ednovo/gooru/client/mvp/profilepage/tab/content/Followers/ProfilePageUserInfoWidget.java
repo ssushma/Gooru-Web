@@ -1,5 +1,8 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 
 import com.google.gwt.core.client.GWT;
@@ -56,16 +59,14 @@ public class ProfilePageUserInfoWidget extends Composite {
 		
 		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()+" Followers | " +userFollowDo.getSummary().getFollowing()+" Following");
 		
-		}
+		
+	}
 	public void clearAll()
 	{
 		profileThumbnailImage.setUrl("");
 		userNameLabel.setText("");
 		userCollections.setText("");
 		userFollowDetails.setText("");
-		
-		
-		
 		
 	}
 }
