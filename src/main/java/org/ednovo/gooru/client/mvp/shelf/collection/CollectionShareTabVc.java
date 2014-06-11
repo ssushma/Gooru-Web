@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionEditShareHandler;
@@ -68,6 +69,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -141,6 +143,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private boolean isSharable;
 	
 	@UiField Button rbPublic;
+	
+	@UiField Label lblPublishPending;
 	
 	private static final String GOORU_UID = "gooruuid";
 	
@@ -292,6 +296,10 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		linkFocPanel.add(shareViewShareableUc);
 		linkFocPanel.add(rbShareablePanel);
 		linkShareFloPanel.add(linkFocPanel);
+		
+		lblPublishPending.setVisible(false);
+		lblPublishPending.setText(GL1924);
+		
 		
 		privateFocPanel = new FlowPanel();
 		shareViewPrivateUc = new ShareViewUc(GL0333, GL0334); 
@@ -917,6 +925,20 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 					publicShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+					SuccessPopupViewVc success = new SuccessPopupViewVc() {
+
+						@Override
+						public void onClickPositiveButton(ClickEvent event) {
+							rbPublic.setVisible(false);
+							lblPublishPending.setVisible(true);
+							this.hide();
+							Window.enableScrolling(true);
+						}
+						
+					};
+					success.setPopupTitle(GL1921);
+                    success.setDescText(GL1917+"<br>"+GL1918);
+                    success.setPositiveButtonText(GL0190);
 					updateShare("public");
 					selectPrivateResource("public");
 				}

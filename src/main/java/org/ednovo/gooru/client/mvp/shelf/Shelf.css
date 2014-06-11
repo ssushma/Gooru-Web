@@ -1609,3 +1609,7 @@ padding-left: 11px;
 	padding: 9px 3.4%;
 	text-align: center;
 }
+.publishPending{
+	font-style: italic;
+	color: #515151;
+	}
