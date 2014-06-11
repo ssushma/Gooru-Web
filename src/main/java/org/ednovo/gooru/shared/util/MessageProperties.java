@@ -678,7 +678,7 @@ public interface MessageProperties {
 	String GL0530 = "Contribute";
 	String GL0531 = "to an active community of teachers and students";
 	
-	String GL0532 = "RUSD Community Library";
+	String GL0532 = "Riverside Unified School District Library";
 	String GL0533 = "This library showcases collections created by teachers from the Riverside Unified School District in California.";
 	String GL0534 = "Find";
 	String GL0535 = "standards-aligned, interactive learning materials tied to Common Core";
