@@ -22,42 +22,14 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client;
+package org.ednovo.gooru.client.mvp.classpages.home;
 
-public interface PlaceTokens {
-	String HOME = "discover";
-	String RESOURCE_SEARCH = "resource-search";
-	String COLLECTION_SEARCH = "collection-search";
-	String ERROR = "error";
-	String SHELF = "mycollections";
-	String COLLECTION = "collection";
-	String RESOURCE_PLAY_OLD = "resource-play-old";
-	String COLLECTION_PLAY = "collection-play";
-	String COLLECTION_PLAY_OLD = "collection-play-old";
-	String PREVIEW_PLAY = "preview-play";
-	String RESOURCE_PLAY="resource-play";
-	String TEACH = "no-teach";		//This is not used...
-	String FOLDERS = "organizee";
-	String EDIT_FOLDERS = "organize-folder";
-	String EDIT_CLASSPAGE = "teach";
-	String SETTINGS = "settings";
-	String CREATEFOLDER = "createfolder";
-	String REGISTER="registration";
-	String STUDENT = "students-view";
-	String STUDY = "myclasses";
-	String CLASSHOME = "myclasseshome";
-	String PROFILE_PAGE = "profilepage";
-	String RUSD_LIBRARY = "rusd";
+import org.ednovo.gooru.client.gin.IsViewWithHandlers;
+
+public interface IsClassHomeView extends IsViewWithHandlers<ClassHomeUiHandlers>  {
+
 	
-	String DEVICE_NOT_SUPPORTED = "not-supported";
-	
-	String FTE = "FTE";
-	String ONR = "ONR";
-	String AUTODESK = "Autodesk";
-	String LESSONOPOLY = "Lessonopoly";
-	String NGC = "NGC";
-	String WSPWH = "WSPWH";
-	String PSDPAL = "PSD";
-	String FINCAPINC = "CFCI";
-	String SAUSD_LIBRARY = "sausd";	
+//	public Label getErrorLbl();
+//	
+//	void clearAll();
 }
