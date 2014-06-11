@@ -86,8 +86,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
 	
-	private static final String KEY_OER = "OER";
-	private static final String VAL_OER = "Oer";
+	private static final String KEY_OER = "resourceLicense";
+	private static final String VAL_OER = "OER";
 	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
