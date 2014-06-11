@@ -39,6 +39,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 */
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -54,6 +55,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
@@ -83,6 +85,9 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	private SimpleAsyncCallback<CollectionItemDo> updateQuestionResourceAsyncCallback;
 	
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
+	
+	private static final String KEY_OER = "OER";
+	private static final String VAL_OER = "Oer";
 	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
@@ -187,7 +192,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
-				isCollResourceTabView.insertData(result);
+				tagResourceAsOER(result); 
+//				isCollResourceTabView.insertData(result);
 			}
 
 			@Override
@@ -202,7 +208,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			public void onSuccess(CollectionItemDo result) {
 				
 				getView().hide();
-				isCollResourceTabView.insertData(result);
+//				isCollResourceTabView.insertData(result);
+				tagResourceAsOER(result);
 				MixpanelUtil.AddResourceByUrl();
 				
 //				updateShare("private");
@@ -251,6 +258,19 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		});
 		
 	}
+	protected void tagResourceAsOER(final CollectionItemDo collectionItemDo) {
+		List<String> tagList = new ArrayList<String>();
+		tagList.add("\"" +KEY_OER+"  :"+VAL_OER+"\"");
+		AppClientFactory.getInjector().getResourceService().addTagsToResource(collectionItemDo.getGooruOid(), tagList.toString(), new SimpleAsyncCallback<List<ResourceTagsDo>>() {
+
+			@Override
+			public void onSuccess(List<ResourceTagsDo> result) {
+				isCollResourceTabView.insertData(collectionItemDo); 
+			}
+			
+		});
+	}
+
 	native void redirect(String url)
     /*-{
             $wnd.location.reload();
