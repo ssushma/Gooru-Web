@@ -235,7 +235,7 @@ public enum UrlToken {
 	
 	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
 	
-	UPDATE_CLASSPAGE_ITEMS_V2("/v2/collection/item/{0}?sessionToken={1}"),
+	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?sessionToken={1}"),
 	
 	DELETE_CLASSPAGE_ITEMS_V2("/v2/classpage/item/{0}?sessionToken={1}"),
 	
@@ -544,7 +544,9 @@ public enum UrlToken {
 			
 	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
 	
-	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"); 
+	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	
+	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"); 
 	
 	
 	private String url;

@@ -22,29 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+import org.ednovo.gooru.client.gin.BaseUiHandlers;
+
+import com.google.gwt.event.shared.EventHandler;
 
 /**
  * @author Search Team
  * 
  */
-public interface CollectionsCBundle extends ClientBundle {
+public interface ResetProgressHandler extends EventHandler, BaseUiHandlers {
 
-	static final CollectionsCBundle INSTANCE = GWT.create(CollectionsCBundle.class);
-
-	public interface CollectionsCss extends CssResource {
-		String classpageTextarea();
-		String dateText();
-		String systemMessage();
-		String dueDataIcon();
-		String openStateCollectionHeader();
-		String completeStateCollectionHeader();
-	}
-
-	@Source("collectionsstyles.css")
-	CollectionsCss css();
+	void callProgressAPI();
 }
