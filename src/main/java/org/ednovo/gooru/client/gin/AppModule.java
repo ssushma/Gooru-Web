@@ -51,6 +51,10 @@ import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter.IsEditClasspageProxy;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
 import org.ednovo.gooru.client.mvp.classpages.edit.IsEditClasspageView;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter.IsClassHomeProxy;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomeView;
+import org.ednovo.gooru.client.mvp.classpages.home.IsClassHomeView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.IsStudentAssignmentView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter.IsStudentAssignmentProxy;
@@ -384,6 +388,9 @@ public class AppModule extends AppPresenterModule {
 
 		bindPresenter(ClassCodePresenter.class, IsClassCodeView.class,
 				ClassCodeView.class, IsClassCodeProxy.class);
+		
+		bindPresenter(ClassHomePresenter.class, IsClassHomeView.class,
+				ClassHomeView.class, IsClassHomeProxy.class);
 
 		bindPresenter(StudentAssignmentPresenter.class,
 				IsStudentAssignmentView.class, StudentAssignmentView.class,

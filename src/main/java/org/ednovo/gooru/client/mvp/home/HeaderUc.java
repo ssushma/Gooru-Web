@@ -772,9 +772,10 @@ public class HeaderUc extends Composite implements MessageProperties,
 						public void onSuccess(ClasspageListDo result) {
 							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
 							if (result.getSearchResults().size()>0){
-								classpageId = result.getSearchResults().get(0).getGooruOid();
+								/*classpageId = result.getSearchResults().get(0).getGooruOid();
 								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
-								OpenClasspageEdit(classpageId, userId);
+								OpenClasspageEdit(classpageId, userId);*/
+								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.CLASSHOME);
 							}else{
 								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
 							}

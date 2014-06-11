@@ -713,9 +713,6 @@ public class EditClasspageView extends
 		questionMarkPanel.clear();
 		questionMarkPanel.add(imgNotFriendly);
 		
-		
-		
-		
 		imgClasspageImage.setAltText(classpageDo.getTitle());
 		imgClasspageImage.setTitle(classpageDo.getTitle());
 		btnCollectionEditImage.setVisible(false);
