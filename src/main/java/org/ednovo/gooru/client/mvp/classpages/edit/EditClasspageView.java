@@ -701,7 +701,7 @@ public class EditClasspageView extends
 		noAssignmentsMessagePanel.setVisible(false);
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
 		
-		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode() : "");
+		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
 		classCodeTextBox.setReadOnly(true);
 		classCodeTextBox.addClickHandler(new ClassCodeTextCopy());
 
