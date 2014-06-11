@@ -177,4 +177,6 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void v2GetAllClass(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 	
+	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence, AsyncCallback<Void> callback);
+	
 }
