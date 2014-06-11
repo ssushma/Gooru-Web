@@ -46,11 +46,7 @@ public class ProfilePageTabVc extends FocusPanel {
 		String activeCss;
 		
 		activeCss = ShelfCBundle.INSTANCE.css().profileMetaDataTabTitleActive();
-		if (title.equalsIgnoreCase("share")){
-			wrapperFloPanel.getElement().getStyle().setPaddingTop(9.0, Unit.PX);
-/*			wrapperFloPanel.getElement().getStyle().setPaddingRight(5.4, Unit.PCT);
-*/			wrapperFloPanel.getElement().getStyle().setPaddingBottom(9.0, Unit.PX);
-		}
+		
 		
 		if (enable) {
 			wrapperFloPanel.addStyleName(activeCss);

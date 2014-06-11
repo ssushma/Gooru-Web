@@ -86,6 +86,7 @@ public class LibraryBannerView extends Composite implements MessageProperties{
 		} else if(placeToken.contains(PlaceTokens.RUSD_LIBRARY)) {
 			setLandingBannerText(GL0532,GL0533,GL0534,GL0535,GL0536,GL0537,GL0538,GL0539,GL0540,GL0541);
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
+			fourSteps.setVisible(false);
 			partnerLogo.setStyleName(libraryStyle.rusdPartnerLogo());
 			partnerLogo.setVisible(true);
 		} else if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {

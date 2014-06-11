@@ -49,6 +49,8 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 
+				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
+					ui:field="paginationFocPanel"></g:FlowPanel>
 
 		<g:HTMLPanel styleName="{StudentStyle.classPageContainerforAssignment}">
 
@@ -56,8 +58,7 @@
 				<g:Label styleName="{StudentStyle.classPageNoAssignment}"
 					ui:field="noAssignmentMsg" visible="false"></g:Label>
 				<g:HTMLPanel ui:field="contentpanel" />
-				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
-					ui:field="paginationFocPanel"></g:FlowPanel>
+
 				<!-- <g:HTMLPanel styleName="{StudentStyle.classpageTopLine}"></g:HTMLPanel> -->
 			</g:HTMLPanel>
 		</g:HTMLPanel>

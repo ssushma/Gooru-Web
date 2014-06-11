@@ -167,12 +167,14 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 * @UiField FocusPanel simplePencilFocPanel;
 	 */
 	@UiField
-	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel;
+	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel,rbPublicPanel;
 
 	@UiField
 	FlowPanel shelfViewMainContainer;
 
 	@UiField Image imgNotFriendly;
+	
+	@UiField Button rbPublic;
 	
 	@UiField
 	HTMLEventPanel collectionTitleContainer,
@@ -701,6 +703,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}else{
 			editPanel.getElement().getStyle().clearMarginTop();
 		}
+		getCollectionShareTabVc();
 	}
 	public void setCollabCount(int count){
 		//	Set the count of Collaborators;
@@ -1845,6 +1848,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	public static void onClosingAndriodorIpaddiv()
 	{
 		  scrollContainer.getElement().setAttribute("style", "position:fixed;");
+	}
+	
+	@UiHandler("rbPublic")
+	public void clickOnPublish(ClickEvent clickEvent){
+		collectionShareTabVc.clickOnPublic();
 	}
 	
 	public static native void setFolderListHeight() /*-{

@@ -8,18 +8,18 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfilePageUserInfo extends Composite {
+public class ProfilePageUserInfoWidget extends Composite {
 
 	private static ProfilePageUserInfoUiBinder uiBinder = GWT
 			.create(ProfilePageUserInfoUiBinder.class);
 
 	interface ProfilePageUserInfoUiBinder extends
-			UiBinder<Widget, ProfilePageUserInfo> {
+			UiBinder<Widget, ProfilePageUserInfoWidget> {
 	}
 	@UiField Image profileThumbnailImage;
 	@UiField Label userNameLabel,userCollections,userFollowers,userTags,userFollowing;
 	
-	public ProfilePageUserInfo() {
+	public ProfilePageUserInfoWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 		SetData();
 	}

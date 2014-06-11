@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
@@ -145,6 +146,8 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<RegisterPresenter> getRegisterPresenter();
 	
 	AsyncProvider<ClassCodePresenter> getClassCodePresenter();
+	
+	AsyncProvider<ClassHomePresenter> getClassHomePresenter();
 	
 	AsyncProvider<StudentAssignmentPresenter> getStudentAssignmentPresenter();
 	
