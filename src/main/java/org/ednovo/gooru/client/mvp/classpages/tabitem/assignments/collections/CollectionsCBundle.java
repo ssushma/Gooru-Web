@@ -41,6 +41,8 @@ public interface CollectionsCBundle extends ClientBundle {
 		String dateText();
 		String systemMessage();
 		String dueDataIcon();
+		String openStateCollectionHeader();
+		String completeStateCollectionHeader();
 	}
 
 	@Source("collectionsstyles.css")

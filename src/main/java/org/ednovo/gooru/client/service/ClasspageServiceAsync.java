@@ -125,7 +125,7 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	
 	public void getClassPageItems(String classpageId,String offset,String limit, AsyncCallback<ArrayList<ClasspageItemDo>> callback);
 	
-	public void updateClasspageItem(String classpageItemId,String direction,String dueDate, AsyncCallback<String> callback);
+	public void updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus, AsyncCallback<String> callback);
 	
 	public void deleteClassPageItem(String collectionId, AsyncCallback<String> callback);
 	

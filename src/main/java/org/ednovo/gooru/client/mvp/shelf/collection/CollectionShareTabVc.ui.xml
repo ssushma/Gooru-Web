@@ -35,6 +35,7 @@
 			</uc:HTMLEventPanel>
 			<g:HTMLPanel styleName="{res.css.publishPanel}" ui:field="rbPublicPanel">
 			    <g:Button styleName="{res.css.publishButton} primary" ui:field="rbPublic">Publish</g:Button>
+			    <g:Label styleName="{res.css.publishPending}" ui:field="lblPublishPending"></g:Label>
 			</g:HTMLPanel>
 			<g:FlowPanel styleName="{res.css.collectionVisibilityMainDiv}">
 				<g:Label styleName="{res.css.collectionVisibilityMain}" ui:field="visibilityTextTeacherTip"/>
