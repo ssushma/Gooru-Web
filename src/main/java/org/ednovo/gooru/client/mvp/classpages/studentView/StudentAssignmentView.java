@@ -480,7 +480,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true){
+				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
 					public void resetPagination(){
 						setPagination();
 						contentpanel.add(setLoadingPanel());

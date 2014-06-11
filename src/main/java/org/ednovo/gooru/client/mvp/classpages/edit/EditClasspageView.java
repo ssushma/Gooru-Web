@@ -805,7 +805,7 @@ public class EditClasspageView extends
 				assignmentsContainerPanel.clear();
 				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-					assignmentTabView = showClasspageItem(classpageItemDo);
+					assignmentTabView = showClasspageItem(classpageItemDo,(itemIndex+1));
 					this.totalHitCount=classpageItemDo.getTotalHitCount();
 					assignmentsContainerPanel.add(assignmentTabView);
 				}
@@ -817,8 +817,8 @@ public class EditClasspageView extends
 			getClassListContainer().setVisible(false);
 		}
 	}
-	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo){
-		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo){
+	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
+		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
 			public void resetPagination(){
 				setPagination();
 				if((pageNumber*limit)<totalHitCount){
@@ -837,7 +837,7 @@ public class EditClasspageView extends
 	}
 	
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo){
-		assignmentTabView = showClasspageItem(classpageItemDo);
+		assignmentTabView = showClasspageItem(classpageItemDo,1);                             //TODO refresh the sequence....
 		totalHitCount++;
 		assignmentsContainerPanel.insert(assignmentTabView,0);
 		noAssignmentsMessagePanel.setVisible(false);
@@ -845,6 +845,7 @@ public class EditClasspageView extends
 			assignmentsContainerPanel.remove(assignmentsContainerPanel.getWidgetCount()-1);
 		}
 		setPagination();
+		
 	}
 	
 	public void setPagination(){

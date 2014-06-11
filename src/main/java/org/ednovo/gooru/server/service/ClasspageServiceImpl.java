@@ -131,6 +131,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	private static final String USERNAMEWDISPLAY="usernameDisplay";
 	private static final String PROFILEIMAGEURL="profileImageUrl";
 	private static final String USER="user";
+	private static final String ITEMSEQUENCE="itemSequence";
 
 	
 
@@ -910,7 +911,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction){
 		ClasspageItemDo classpageItemDo=new ClasspageItemDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.CREATE_CLASSPAGE_ITEM_V2, classpageId,getLoggedInSessionToken());
-		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject( collectionId, direction, dueDate,null);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.post(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		if(jsonResponseRep.getStatusCode()==200){
 			try{
@@ -936,6 +937,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,getLoggedInSessionToken(),offset,limit);
+		System.out.println("getClasspageItems API====>"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep=jsonResponseRep.getJsonRepresentation();
@@ -945,9 +947,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 	}
 	
-	public String updateClasspageItem(String classpageItemId,String direction,String dueDate){
+	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus){
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_CLASSPAGE_ITEMS_V2, classpageItemId,getLoggedInSessionToken());
-		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate);
+		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus);
+		System.out.println("API urlllll"+url);
+		System.out.println("input object.."+classPageItemJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		return jsonResponseRep.getStatusCode().toString();
 	}
@@ -1004,7 +1008,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return classpageItemDo;
 	}
 	
-	protected JSONObject createClasspageJsonObject(String collectionId,String direction,String dueDate){
+	protected JSONObject createClasspageJsonObject(String collectionId,String direction,String dueDate,String status){
 		JSONObject classPageItemJsonObject=new JSONObject();
 		JSONObject collectionJsonObject=new JSONObject();
 		try {
@@ -1014,6 +1018,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}
 			if(dueDate!=null){
 				collectionJsonObject.put(PLANNEDENDDATE, dueDate);
+			}
+			if(status!=null){
+				collectionJsonObject.put(STATUS, status);
 			}
 			classPageItemJsonObject.put(COLLECTIONITEM, collectionJsonObject);
 			if(collectionId!=null){
@@ -1133,6 +1140,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		try{
 			classpageItemDo.setCollectionItemId(classpageItemJsonObject.getString(COLLECTIONITEMID));
 			classpageItemDo.setDirection(classpageItemJsonObject.isNull(NARRATION)?null:classpageItemJsonObject.getString(NARRATION));
+			classpageItemDo.setStatus(classpageItemJsonObject.isNull(STATUS)?null:classpageItemJsonObject.getString(STATUS));
+			classpageItemDo.setSequenceNumber(classpageItemJsonObject.isNull(ITEMSEQUENCE)?0:classpageItemJsonObject.getInt(ITEMSEQUENCE));
 			classpageItemDo.setPlannedEndDate(convertMilliSecondsToDate(classpageItemJsonObject.isNull(PLANNEDENDDATE)?null:classpageItemJsonObject.getLong(PLANNEDENDDATE)));
 			JSONObject resourceJsonObject=classpageItemJsonObject.isNull(resourceType)?null:classpageItemJsonObject.getJSONObject(resourceType);
 			if(resourceJsonObject!=null){

@@ -235,7 +235,7 @@ public enum UrlToken {
 	
 	GET_CLASSPAGE_ITEMS_V2("/v2/classpage/{0}/item?sessionToken={1}&offset={2}&limit={3}"),
 	
-	UPDATE_CLASSPAGE_ITEMS_V2("/v2/collection/item/{0}?sessionToken={1}"),
+	UPDATE_CLASSPAGE_ITEMS_V2("/v2/class/item/{0}?sessionToken={1}"),
 	
 	DELETE_CLASSPAGE_ITEMS_V2("/v2/classpage/item/{0}?sessionToken={1}"),
 	

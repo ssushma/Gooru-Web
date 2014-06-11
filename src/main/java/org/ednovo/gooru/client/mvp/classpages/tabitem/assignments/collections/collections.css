@@ -1,7 +1,8 @@
 .classpageContainer {
 	float:left;
-	width: 998px;
+	width: 965px;
 	margin-bottom:20px;
+	margin-left: 10px;
 	background-color: rgb(255,255,255);
 	border-color: rgb(234,234,234);
 	border-width: 1px;
@@ -246,4 +247,11 @@ a.AnalyticsDropdownAnchor{
 	margin-top:8px;
 	font-style: italic;;
 	color:#999;
+}
+.assignmentIndex{
+	float: left;
+	font-size: 20px;
+	color: #515151;
+	margin-top: 10px;
+	width: 22px;
 }

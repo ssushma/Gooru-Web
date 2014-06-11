@@ -45,6 +45,7 @@ public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
 	public void updateDirection(String directionText);
 	public void updateDueDate(String dueDate);
 	public void removeClasspageItemWidget();
+	public void updateCollectionStatus(String readStatus);
 	
 }
 
