@@ -73,7 +73,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.itextpdf.text.log.SysoCounter;
 
 @Service("classpageService")
 @ServiceURL("/classpageService")
@@ -1427,6 +1426,21 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		return deserializeClasspageList(jsonRep);
 	}
 	
-	
+	@Override
+	public void v2ChangeAssignmentSequence(String classpageId, String classpageAssignmentId, int sequence) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_ASSIGNMENT_SEQUENCE, classpageAssignmentId, String.valueOf(sequence), getLoggedInSessionToken());
+		
+		try{
+			JSONObject jsonObject=new JSONObject();
+			JSONObject titleJsonObject= new JSONObject();
+			jsonObject.put(CLASSPAGE, titleJsonObject);
+			
+			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), jsonObject.toString());
+			jsonRep =jsonResponseRep.getJsonRepresentation();
+		}catch(Exception e){
+			
+		}
+	}	
 }
 

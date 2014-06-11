@@ -678,7 +678,7 @@ public interface MessageProperties {
 	String GL0530 = "Contribute";
 	String GL0531 = "to an active community of teachers and students";
 	
-	String GL0532 = "RUSD Community Library";
+	String GL0532 = "Riverside Unified School District Library";
 	String GL0533 = "This library showcases collections created by teachers from the Riverside Unified School District in California.";
 	String GL0534 = "Find";
 	String GL0535 = "standards-aligned, interactive learning materials tied to Common Core";
@@ -2410,7 +2410,7 @@ public interface MessageProperties {
     	String GL1895 = "following";
     	String GL1896 = "followers";
     	String GL1897 = "Tags";
- 
+    	
     
     	String GL1898 = "SAUSD Library";
     	String GL1899 = "About SAUSD";
@@ -2431,6 +2431,18 @@ public interface MessageProperties {
     	String GL1913 = "User Who Are Following Me";
     	String GL1914 = "My Followers";
     	String GL1915 = "My Tags";
+    	String GL1916 ="Your Suggestions";
+    	
+    	//Make collection as Publish
+    	
+    	String GL1917 ="Thanks for publishing your Collection and contributing to Gooru.";
+    	String GL1918 ="You will sent an email once your collection has been made public.";
+    	String GL1919 ="It will be reviewed and your status will be pending until then.";
+    	String GL1920 ="You can still edit the collection once you publish.";
+    	String GL1921 ="Publish";
+    	String GL1922 ="I'm ready to publish";
+    	String GL1923 ="Go back and review";
+    	String GL1924 ="Publishing in Progress";
 
 
 }

@@ -458,4 +458,29 @@ public interface ClasspageService extends BaseService {
 	
 	ClasspageListDo v2GetAllClass(String limit, String offSet)
 			throws GwtException;
+
+	/**
+	 * @function v2ChangeAssignmentSequence 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param classpageAssignmentId
+	 * @param sequence
+	 * @throws GwtException
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public void v2ChangeAssignmentSequence(String classpageId,
+			String classpageAssignmentId, int sequence) throws GwtException;
 }
