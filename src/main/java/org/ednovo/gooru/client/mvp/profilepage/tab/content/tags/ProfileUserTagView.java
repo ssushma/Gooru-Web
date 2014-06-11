@@ -18,7 +18,10 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 			UiBinder<Widget, ProfileUserTagView> {
 	}
 	@UiField HTMLPanel TagTextMessage,userTagsConatiner;
-	public ProfileUserTagView() {
+	String gooruUid;
+	
+	public ProfileUserTagView(String gooruUid) {
+		this.gooruUid = gooruUid;
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	public void setData(){

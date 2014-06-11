@@ -546,7 +546,13 @@ public enum UrlToken {
 	
 	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
 	
+
+	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}"),
+	
+	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}"),
+	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"); 
+
 	
 	
 	private String url;

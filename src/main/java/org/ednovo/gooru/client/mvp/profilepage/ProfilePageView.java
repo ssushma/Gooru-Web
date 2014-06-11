@@ -65,6 +65,7 @@ import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -215,6 +216,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	private String profileImageUrl="images/profilepage/user-profile-pic.png";
 	
+	UserFollowDo userFollowingDo = new UserFollowDo();
+	UserFollowDo userFollowerDo = new UserFollowDo();
+	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
 
@@ -314,15 +318,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
-		collectionsTabVc.setLabelCount(1+"");
-		followingTabVc.setLabelCount(1+"");
-		followersTabVc.setLabelCount(1+"");
-		tagTabVc.setLabelCount(1+"");
+		
 		
 		setTab(collectionsTabVc);
-		/*collectionsTabVc.addClickHandler(
-		followingTabVc.addClickHandler(this);
-		followersTabVc.addClickHandler(this);*/
 		
 		//end for 6.4
 
@@ -513,6 +511,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
+		
+		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
+		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()+"");
+		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
+		getUiHandlers().getFollowerData();
+		getUiHandlers().getFollwingData();
+		
 		
 	}
 
@@ -1297,7 +1303,15 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		return text;
 	}	
 	
-	
+	@Override
+	public void getFollowersObj(UserFollowDo userFollowDo) {
+		userFollowerDo=userFollowDo;
+	}
+	@Override
+	public void getFolloweingsObj(UserFollowDo userFollowDo) {
+		userFollowingDo=userFollowDo;
+		
+	}
 	
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();
@@ -1305,6 +1319,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setTab(source);
 		
 	}
+	
 	@UiHandler("collectionsTabVc")
 	public void onClickCollectionsTabVc(ClickEvent event)
 	{
@@ -1367,7 +1382,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}
 	public void setTab(Object tab) {
 		if(tab!=null){
-				if (tab.equals(collectionsTabVc)) {
+			String gooruUid = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			if (tab.equals(collectionsTabVc)) {
 				followingContainer.clear();
 				collectionsTabVc.setSelected(true);
 				mainContainer.setVisible(true);
@@ -1378,7 +1394,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				followingTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView();
+				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView(userFollowingDo,"following");
 				followingContainer.add(profilePagefollowingView);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
@@ -1386,7 +1402,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView();
+				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
@@ -1395,7 +1411,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				tagTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
+				ProfileUserTagView profileUserTagView = new ProfileUserTagView(gooruUid);
 				followingContainer.add(profileUserTagView);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
@@ -1403,4 +1419,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			
 	}
 }
+
+	
+
+	
 }

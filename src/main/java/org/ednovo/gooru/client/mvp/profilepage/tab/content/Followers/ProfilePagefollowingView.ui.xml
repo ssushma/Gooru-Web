@@ -5,7 +5,6 @@
 	<g:HTMLPanel>
 	<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContentText}" ui:field="follwingTextMessage"></g:HTMLPanel>
 	<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="userConatiner">
-	  
 	 
 	</g:HTMLPanel>
 	</g:HTMLPanel>

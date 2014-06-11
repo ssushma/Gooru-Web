@@ -46,12 +46,17 @@ import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.ProfileV2Do;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import org.json.JSONArray;
 
 /**
  * @author Search Team
@@ -295,6 +300,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		ProfilePageDo profilePageDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, userUid, getLoggedInSessionToken());
+		System.out.println("getUserProfilePage.."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -310,6 +316,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, gooruUid, getLoggedInSessionToken());
+		System.out.println("getUserPublicProfilePage"+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -351,7 +358,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		
+		System.out.println("getUserProfileV2Details"+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -486,5 +493,55 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		catch(Exception ex){}
 		
 	}
-
+	//followingUser
+	@Override
+	public UserFollowDo getFollowedOnUsers(String gooruUid) throws GwtException {
+		UserFollowDo userFollowDo = null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFollowingUser(jsonRep);
+	
+	}
+	//followerUser
+	@Override
+	public UserFollowDo getFollowedByUsers(String gooruUid) throws GwtException {
+		UserFollowDo userFollowDo = null;
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeFollowingUser(jsonRep);
+		
+	}
+	public UserFollowDo deserializeFollowingUser(JsonRepresentation jsonRep) {
+		UserFollowDo userFollowDo=new UserFollowDo();
+		UserSummaryDo userSummaryDo=new UserSummaryDo();
+		
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			
+			try {
+				
+				JSONObject followingUserObject=jsonRep.getJsonObject();
+				JSONArray followingList=followingUserObject.getJSONArray("searchResults");
+				for(int i=0;i<followingList.length();i++){
+				JSONObject resultObj = followingList.getJSONObject(i);
+				userFollowDo.setGooruUid(resultObj.getString("gooruUid"));
+				userFollowDo.setUsername(resultObj.getString("username"));
+				userFollowDo.setProfileImageUrl(resultObj.getString("profileImageUrl"));
+				JSONObject summaryObj = followingList.getJSONObject(i).getJSONObject("summary");
+				userSummaryDo.setCollection(summaryObj.getInt("collection"));
+				userSummaryDo.setFollowing(summaryObj.getInt("following"));
+				userSummaryDo.setFollowers(summaryObj.getInt("followers"));
+				userFollowDo.setSummary(userSummaryDo);
+				}
+				return userFollowDo;	
+				} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	
+		return new UserFollowDo();
+	}
 }
