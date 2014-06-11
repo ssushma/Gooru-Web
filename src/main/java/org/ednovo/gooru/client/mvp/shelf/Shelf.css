@@ -1558,7 +1558,19 @@ padding-left: 11px;
 	margin-right: 78px;
 	width: 14px;
 	cursor: pointer;
-
+}
+.publishPanel{
+	float: left;
+	margin-left: 74px;
+	margin-top: -51px;
+}
+.publishButton{
+	padding-right: 26px !important;
+    padding-left: 20px !important;
+}
+.shelfPublishTab{
+	float: left;
+	margin-left: 74px;
 }
 .userprofilecount {
 	font-weight: bold;
@@ -1571,8 +1583,8 @@ padding-left: 11px;
 	display: inline-block;
 	box-sizing: border-box;
 	height: 45px;
-width: 150px;
-margin-right: -3px;
+	width: 150px;
+	margin-right: -3px;
 }
 
 .profileMetaDataTabTitle:hover {
