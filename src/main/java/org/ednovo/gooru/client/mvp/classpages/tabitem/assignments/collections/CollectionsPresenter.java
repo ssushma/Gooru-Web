@@ -74,14 +74,16 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 		this.classpageService = classpageService;
 	}
 	
-	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate){
-		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,new SimpleAsyncCallback<String>() {
+	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate,final String readStatus){
+		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,readStatus,new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				if(directionText!=null){
 					getView().updateDirection(directionText);
-				}else{
+				}else if(dueDate!=null){
 					getView().updateDueDate(dueDate);
+				}else if(readStatus!=null){
+					getView().updateCollectionStatus(readStatus);
 				}
 			}
 		});

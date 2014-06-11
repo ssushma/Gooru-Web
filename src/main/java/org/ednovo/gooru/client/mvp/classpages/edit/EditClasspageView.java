@@ -14,12 +14,16 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.ClassCodeCopy;
+import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListView.TextCopyHandler;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshClasspageResourceItemListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageTitleEvent;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
@@ -483,63 +487,60 @@ public class EditClasspageView extends
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());
 		//AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
-			
+		
+		
+		ResetProgressHandler reset = new ResetProgressHandler() {
+
+			@Override
+			public void callProgressAPI() {
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), "0", "30" );
+			}
+		};
+		AppClientFactory.getEventBus().addHandler(ResetProgressEvent.TYPE,
+				reset);
+	}
+	/**
+	 * 
+	 * @function callAssignmentAPI 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pageSize
+	 * @param pageNum
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	public void callAssignmentAPI(String classpageId, String pageSize, String pageNum){
+//		getUiHandlers().getAssignmentsProgress(classpageId, pageSize, pageNum);
+		getUiHandlers().getAssignmentsProgress(classpageId, pageSize, pageNum);
 	}
 	
-/*	GetStudentJoinListHandler getStudentJoinListHandler = new GetStudentJoinListHandler(){
-		
-		@Override
-		public void getStudentJoinList(int joinClassList) {
-			toolTip = new ToolTip(GL1797);
-			if(joinClassList==0 || totalHitCount==0){
-				if(reportHandler!=null) {
-					reportHandler.removeHandler();
-				}
-				reportsTab.getElement().setAttribute("style","opacity: 0.6 !important");
-				reportMouseOverHandler=reportsTab.addMouseOverHandler(new MouseOverHandler() {
-					
-					@Override
-					public void onMouseOver(MouseOverEvent event) {
-						toolTip.getLblLink().setVisible(false);
-						toolTip.getElement().getStyle().setBackgroundColor("transparent");
-						toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
-						toolTip.setPopupPosition(reportsTab.getAbsoluteLeft(), reportsTab.getAbsoluteTop()+40);
-						toolTip.show();
-					}
-				});
-				reportsTab.addMouseOutHandler(new MouseOutHandler() {
-					
-					@Override
-					public void onMouseOut(MouseOutEvent event) {
-						EventTarget target = ((MouseOutEvent) event).getRelatedTarget();
-						  if (Element.is(target)) {
-							  if (!toolTip.getElement().isOrHasChild(Element.as(target))){
-								  toolTip.hide();
-							  }
-						  }	
-										
-					}
-				});
-			}
-			else
-			{
-				if(reportMouseOverHandler!=null) {
-					reportMouseOverHandler.removeHandler();
-				}
-				toolTip.hide();
-				reportsTab.getElement().setAttribute("style","opacity: 1 !important");
-				if(reportHandler!=null) {
-					reportHandler.removeHandler();
-				}
-				
 	
-				
-				
-			}
-			
-		}
-		
-	};*/
+	/**
+	 * 
+	 * @fileName : EditClasspageView.java
+	 *
+	 * @description : 
+	 *
+	 *
+	 * @version : 1.0
+	 *
+	 * @date: Jun 11, 2014
+	 *
+	 * @Author Gooru Team
+	 *
+	 * @Reviewer:
+	 */
 	public class hideEditPencil implements MouseOverHandler {
 
 		@Override
@@ -701,6 +702,8 @@ public class EditClasspageView extends
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
 		
 		classCodeTextBox.setText(classpageDo.getClasspageCode()!=null ? classpageDo.getClasspageCode().toUpperCase() : "");
+		classCodeTextBox.setReadOnly(true);
+		classCodeTextBox.addClickHandler(new ClassCodeTextCopy());
 
 		final Image imgNotFriendly = new Image("images/mos/questionmark.png");
 		imgNotFriendly.getElement().getStyle().setLeft(97.8, Unit.PCT);
@@ -718,6 +721,16 @@ public class EditClasspageView extends
 		btnCollectionEditImage.setVisible(false);
 		imgClasspageImage.setUrl(classpageDo.getThumbnailUrl().isEmpty() ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		//txtClasspageCodeShare.setText(classpageDo.getClasspageCode().toUpperCase());
+	}
+	
+	public class ClassCodeTextCopy implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			classCodeTextBox.selectAll();
+			classCodeTextBox.setFocus(true);
+		}
+		
 	}
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){
 		this.classlistPresenter = classlistPresenter;
@@ -805,11 +818,11 @@ public class EditClasspageView extends
 				assignmentsContainerPanel.clear();
 				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-					assignmentTabView = showClasspageItem(classpageItemDo);
+					assignmentTabView = showClasspageItem(classpageItemDo,(itemIndex+1));
 					this.totalHitCount=classpageItemDo.getTotalHitCount();
 					assignmentsContainerPanel.add(assignmentTabView);
 				}
-				displayAssignmentPath(classpageItemsList1);
+//				displayAssignmentPath(classpageItemsList1);
 				setPagination();
 			}else{
 				noAssignmentsMessagePanel.setVisible(true);
@@ -817,8 +830,8 @@ public class EditClasspageView extends
 			getClassListContainer().setVisible(false);
 		}
 	}
-	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo){
-		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo){
+	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
+		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
 			public void resetPagination(){
 				setPagination();
 				if((pageNumber*limit)<totalHitCount){
@@ -837,7 +850,7 @@ public class EditClasspageView extends
 	}
 	
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo){
-		assignmentTabView = showClasspageItem(classpageItemDo);
+		assignmentTabView = showClasspageItem(classpageItemDo,1);                             //TODO refresh the sequence....
 		totalHitCount++;
 		assignmentsContainerPanel.insert(assignmentTabView,0);
 		noAssignmentsMessagePanel.setVisible(false);
@@ -845,6 +858,7 @@ public class EditClasspageView extends
 			assignmentsContainerPanel.remove(assignmentsContainerPanel.getWidgetCount()-1);
 		}
 		setPagination();
+		
 	}
 	
 	public void setPagination(){
@@ -1433,7 +1447,7 @@ public class EditClasspageView extends
 	public AssignmentEditLabelUc getCollectionTitleUc() {
 		return collectionTitleUc;
 	}
-	
+	@Override
 	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageList){
 		panelAssignmentProgress.clear();
 		for (int i=0; i<classpageList.size(); i++){
@@ -1446,12 +1460,12 @@ public class EditClasspageView extends
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869,""));
-			toolTipPopupPanelNew.setStyleName("");
-			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft()+85, event.getRelativeElement().getAbsoluteTop()-48);
-			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-			toolTipPopupPanelNew.show();
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
+		toolTipPopupPanelNew.setStyleName("");
+		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop());
+		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+		toolTipPopupPanelNew.show();
 	
 		}
 

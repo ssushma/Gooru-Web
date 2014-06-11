@@ -98,8 +98,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private SimpleAsyncCallback<CollectionDo> assignmentListAsyncCallback;
 	
-	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;	
-
+	private SimpleAsyncCallback<AssignmentsListDo> assignmentsListAsyncCallback;
+	
 //	private ShelfListPresenter shelfListPresenter;
 	
 	private SimpleAsyncCallback<Map<String, String>> shareUrlGenerationAsyncCallback;
@@ -234,6 +234,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 				getView().listAssignments(result);
 			}
 		});
+		
 	}
 	/*@Override
 	private void generateShareLink(String classpageId){
@@ -398,6 +399,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),tab,analyticsId,monitorId);
+						getAssignmentsProgress(classpageDo.getClasspageId(), "0", "30");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
@@ -530,6 +532,21 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		classpageDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(0L, 0));
 		classpageDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getClassPagePayLoadObject(classCode));
 		PlayerDataLogEvents.collectionStartStopEvent(classpageDataLog);
+	}
+
+
+	@Override
+	public void getAssignmentsProgress(String classpageId, String offset,
+			String limit) {
+		this.classpageService.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
+				if(classpageItemsList!=null){
+					getView().displayAssignmentPath(classpageItemsList);
+				}
+			}
+		});
 	}
 
 }

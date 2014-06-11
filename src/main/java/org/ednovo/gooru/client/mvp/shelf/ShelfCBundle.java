@@ -394,6 +394,11 @@ public interface ShelfCBundle extends ClientBundle{
 		String aleartDescText();
 		String collectionEditImageTeacherTip();
 		
+		String publishPanel();
+		String publishButton();
+		String shelfPublishTab();
+		String publishPending();
+		
 		String userprofilecount();
 		
 		String profileMetaDataTabTitle();

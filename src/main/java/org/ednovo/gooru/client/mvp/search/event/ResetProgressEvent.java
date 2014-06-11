@@ -22,29 +22,36 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
+
+import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * @author Search Team
  * 
  */
-public interface CollectionsCBundle extends ClientBundle {
+public class ResetProgressEvent extends GwtEvent<ResetProgressHandler> {
 
-	static final CollectionsCBundle INSTANCE = GWT.create(CollectionsCBundle.class);
+	public static final Type<ResetProgressHandler> TYPE = new Type<ResetProgressHandler>();
 
-	public interface CollectionsCss extends CssResource {
-		String classpageTextarea();
-		String dateText();
-		String systemMessage();
-		String dueDataIcon();
-		String openStateCollectionHeader();
-		String completeStateCollectionHeader();
+	/**
+	 * Class constructor
+	 */
+	public ResetProgressEvent() {
 	}
 
-	@Source("collectionsstyles.css")
-	CollectionsCss css();
+	@Override
+	public Type<ResetProgressHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(ResetProgressHandler handler) {
+		handler.callProgressAPI();
+	}
+
 }
