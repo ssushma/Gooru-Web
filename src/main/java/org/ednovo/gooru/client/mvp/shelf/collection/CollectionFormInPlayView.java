@@ -209,7 +209,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		//buttonFloPanel.add(cancelAnr);
 		publicShareFloPanel.setVisible(false);
 		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
-		appPopUp.getElement().getStyle().setHeight(460, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
 		collectionTitleTxtBox.getElement().setAttribute("maxlength", "50");
 		radioButtonPublic.getElement().setId("rdPublic");
 		radioButtonShare.getElement().setId("rdShare");
@@ -221,6 +221,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 		mobileTxtLbl.getElement().getStyle().setPaddingTop(6, Unit.PX);*/
 		isCheckedValue=false;
 		appPopUp.setTitle(GL0993);
+		buttonFloPanel.setVisible(false);
 		/*imgQuestionImage.getElement().getStyle().setPaddingTop(16, Unit.PX);
 		imgQuestionImage.addMouseOverHandler(new MouseOverHandler() {
 
@@ -568,8 +569,8 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 			radioButtonPrivate.setChecked(false);
 		}else{
 			radioButtonPublic.setEnabled(true);
-			radioButtonPublic.setChecked(true);
-			radioButtonShare.setChecked(false);
+			radioButtonPublic.setChecked(false);
+			radioButtonShare.setChecked(true);
 			radioButtonPrivate.setChecked(false);
 		}
 	}

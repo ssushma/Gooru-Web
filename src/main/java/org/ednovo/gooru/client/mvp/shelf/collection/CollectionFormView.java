@@ -222,6 +222,8 @@ public class CollectionFormView extends
 		collectionTitleTxtBox.getElement().setId("txtCollectionTitle");
 		appPopUp.setTitle(GL0993);
 		
+		buttonFloPanel.setVisible(false);
+		
 		collectionTitleTxtBox.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -261,7 +263,7 @@ public class CollectionFormView extends
 		});
 		
 		appPopUp.getElement().getStyle().setWidth(521, Unit.PX);
-		appPopUp.getElement().getStyle().setHeight(460, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
 		
 		btnOk.addClickHandler(new ClickHandler() {
 			@Override
@@ -545,8 +547,8 @@ public class CollectionFormView extends
 			radioButtonPrivate.setChecked(false);
 		}else{
 			radioButtonPublic.setEnabled(true);
-			radioButtonPublic.setChecked(true);
-			radioButtonShare.setChecked(false);
+			radioButtonPublic.setChecked(false);
+			radioButtonShare.setChecked(true);
 			radioButtonPrivate.setChecked(false);
 		}
 		
@@ -567,8 +569,8 @@ public class CollectionFormView extends
 		lblVisibility.getElement().getStyle().setDisplay(Display.BLOCK);
 		gradeContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		courseContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		appPopUp.getElement().getStyle().setHeight(460, Unit.PX);
-		shelfItemContent.getElement().setAttribute("style", "min-height: 400px");	
+		appPopUp.getElement().getStyle().setHeight(320, Unit.PX);
+		shelfItemContent.getElement().setAttribute("style", "min-height: 316px");	
 	}
 
 /**
