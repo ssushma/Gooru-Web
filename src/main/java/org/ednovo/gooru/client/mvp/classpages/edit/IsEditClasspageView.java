@@ -143,4 +143,25 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	void callAssignmentAPI(String classpageId, String offsetProgress,
 			String limitProgress);
+
+	/**
+	 * @function getGlobalClasspageProcess 
+	 * 
+	 * @created_date : Jun 12, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : ArrayList<ClasspageItemDo>
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	ArrayList<ClasspageItemDo> getGlobalClasspageProcess();
 }

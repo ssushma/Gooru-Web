@@ -152,6 +152,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.res.css().ensureInjected();
 		this.classpageItemDo=classpageItemDo;
+		panelMainContainer.getElement().setAttribute("id", classpageItemDo.getCollectionItemId());
 		if (isLastCollection){
 			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
 		}else{

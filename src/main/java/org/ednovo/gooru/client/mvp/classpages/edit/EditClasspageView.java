@@ -99,6 +99,21 @@ public class EditClasspageView extends
 	
 	ArrayList<ClasspageItemDo> globalClasspageProcess;
 	
+	/** 
+	 * This method is to get the globalClasspageProcess
+	 */
+	@Override
+	public ArrayList<ClasspageItemDo> getGlobalClasspageProcess() {
+		return globalClasspageProcess;
+	}
+	/** 
+	 * This method is to set the globalClasspageProcess
+	 */
+	public void setGlobalClasspageProcess(
+			ArrayList<ClasspageItemDo> globalClasspageProcess) {
+		this.globalClasspageProcess = globalClasspageProcess;
+	}
+
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
 	
 /*	@UiField TextBox  txtClasspageLinkShare; */
@@ -1491,6 +1506,7 @@ public class EditClasspageView extends
 		}
 		
 		if (offsetProgress <= 0){
+//			globalClasspageProcess.clear();
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
