@@ -219,4 +219,6 @@ public interface UserService extends BaseService {
 	
 	void followUser(String gooruUid)throws GwtException;
 	
+	void unFollowUser(String gooruUid)throws GwtException;
+	
 }

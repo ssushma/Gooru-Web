@@ -142,6 +142,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		SettingDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
+		System.out.println("getUserProfileDetails.."+url);
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -567,5 +568,18 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
 		}catch(Exception ex){}
 		
+	}
+
+	@Override
+	public void unFollowUser(String gooruUid) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_UNFOLLOW, gooruUid,getLoggedInSessionToken());
+		System.out.println("unFollowUser.."+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try{
+			System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
+			}catch(Exception ex){}
+			
 	}
 }
