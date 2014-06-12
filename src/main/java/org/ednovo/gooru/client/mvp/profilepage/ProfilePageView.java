@@ -520,6 +520,46 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
+		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
+		{
+			collectionsTabVc.setEnabled(false);
+			collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			collectionsTabVc.setEnabled(true);
+			collectionsTabVc.addClickHandler(new clickOnCollection());
+		}
+		if(profileDo.getUser().getMeta().getSummary().getFollowing()==0)
+		{
+			followingTabVc.setEnabled(false);
+			followingTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			followingTabVc.setEnabled(true);
+			followingTabVc.addClickHandler(new clickOnFollowing());
+		}
+		if(profileDo.getUser().getMeta().getSummary().getFollowers()==0)
+		{
+			followersTabVc.setEnabled(false);
+			followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			followersTabVc.setEnabled(true);
+			followersTabVc.addClickHandler(new clickOnFollowers());
+		}
+		if(profileDo.getUser().getMeta().getSummary().getTags()==0)
+		{
+			tagTabVc.setEnabled(false);
+			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			tagTabVc.setEnabled(true);
+			tagTabVc.addClickHandler(new clickOnTags());
+		}
 		
 		
 		
@@ -1326,69 +1366,87 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setTab(source);
 		
 	}
-	
-	@UiHandler("collectionsTabVc")
-	public void onClickCollectionsTabVc(ClickEvent event)
+	@UiHandler("followButton")
+	public void onClickFollowButton(ClickEvent event)
 	{
-		
-		setTab(collectionsTabVc);
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "collections");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+	}
+	@UiHandler("UnFollowButton")
+	public void onClickUnFollowButton(ClickEvent event)
+	{
+		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+	}
+	public class clickOnCollection implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(collectionsTabVc);
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "collections");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			
+		}
 		
 	}
-	@UiHandler("followingTabVc")
-	public void onClickfollowingTabVc(ClickEvent event)
-	{
-		setTab(followingTabVc);
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "following");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
+	public class clickOnFollowing implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(followingTabVc);
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "following");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		
+		}
 	}
-	@UiHandler("followersTabVc")
-	public void onClickfollowersTabVc(ClickEvent event)
-	{
-		
-		setTab(followersTabVc);	
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "followers");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	public class clickOnFollowers implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(followersTabVc);	
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "followers");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
+			
+		}
 	}
-	@UiHandler("tagTabVc")
-	public void onClickTagTabVc(ClickEvent event)
-	{
-		
-		setTab(tagTabVc);	
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "tags");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	public class clickOnTags implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(tagTabVc);	
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "tags");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
+			
+		}
 	}
 	public void setTab(Object tab) {
 		if(tab!=null){
-			String gooruUid = AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			if (tab.equals(collectionsTabVc)) {
 				followingContainer.clear();
 				collectionsTabVc.setSelected(true);
@@ -1425,17 +1483,4 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			
 	}
 }
-	@UiHandler("followButton")
-	public void onClickFollowButton(ClickEvent event)
-	{
-		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-	}
-	@UiHandler("UnFollowButton")
-	public void onClickUnFollowButton(ClickEvent event)
-	{
-		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-	}
-	
-
-	
 }
