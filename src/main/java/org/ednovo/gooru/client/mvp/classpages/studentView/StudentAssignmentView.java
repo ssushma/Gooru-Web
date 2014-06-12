@@ -573,7 +573,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc(false,classpageItemDo,(itemIndex+1));
+				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc((itemIndex == classpageItemsList.size() - 1) ? true : false,classpageItemDo,(itemIndex+1));
 				assignmentsDotsMap.put(classpageItemDo.getCollectionItemId(), assignmentProgressVc);
 				panelAssignmentProgress.add(assignmentProgressVc);
 				this.totalHitCount=classpageItemDo.getTotalHitCount();

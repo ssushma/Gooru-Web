@@ -930,4 +930,13 @@ button.LoginText {
 	line-height: 70%;
 }
 
+.errorLabel {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(250,176,58);
+	text-align: right;
+	margin-right: -53px;
+	float: right;
+}
+
 

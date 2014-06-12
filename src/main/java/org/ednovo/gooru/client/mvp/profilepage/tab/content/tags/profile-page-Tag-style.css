@@ -42,6 +42,16 @@
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 }
+.tagBg:hover {
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 30px;
+	margin-right: 30px;
+	background: #78b271;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	cursor:pointer;
+}
 .tagTitle {
 	display: inline-block;
 	vertical-align: top;
@@ -79,7 +89,7 @@
 	cursor: pointer;
 	padding-bottom: 20px;
 }
-#tagresults {
+.tagresults {
 	width: 930px;
 	margin: 0 auto;
 	margin-top: 10px;
@@ -136,4 +146,8 @@
 	font-size: 16px;
 	border-bottom: 1px solid #ddd;
 	height: 268px;
+}
+.ratingContainer{
+	height: 18px;
+	width:82px;
 }

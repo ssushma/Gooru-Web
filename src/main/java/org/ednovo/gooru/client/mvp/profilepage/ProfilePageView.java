@@ -136,7 +136,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
-			profilePageEditBioPanel,mainContainer,followingContainer;
+			profilePageEditBioPanel,mainContainer,followingContainer,tagResourceContainer;
 	
 	@UiField FlowPanel moreGradeCourseLbl, moreCourseLbl;
 	
@@ -218,6 +218,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
+
 	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -550,7 +551,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			followersTabVc.setEnabled(true);
 			followersTabVc.addClickHandler(new clickOnFollowers());
 		}
-		if(profileDo.getUser().getMeta().getSummary().getTags()==0)
+		tagTabVc.addClickHandler(new clickOnTags());
+		/*if(profileDo.getUser().getMeta().getSummary().getTags()==0)
 		{
 			tagTabVc.setEnabled(false);
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
@@ -559,7 +561,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		{
 			tagTabVc.setEnabled(true);
 			tagTabVc.addClickHandler(new clickOnTags());
-		}
+		}*/
 		
 		
 		
