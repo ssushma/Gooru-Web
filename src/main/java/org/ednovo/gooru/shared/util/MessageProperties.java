@@ -2465,6 +2465,10 @@ public interface MessageProperties {
     	
     	
     	String GL1938 = "Admin has blocked your Gooru ID.";
+    	
+    	String GL1939 = "Unfollowed";
+    	String GL1940 = "You are no longer following ";
+    	
 
 
 }
