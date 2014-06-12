@@ -5,32 +5,33 @@
 	xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
 
 	<ui:style field="StudyStyle" src="StudyStyles.css" />
-	<ui:with
-	type="org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle"
-	field="res" />
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{StudyStyle.wrapper}">
+  <g:HTMLPanel styleName="{StudyStyle.content}">
+    <g:HTMLPanel styleName="{StudyStyle.content-inner}">
+      <g:HTMLPanel styleName="{StudyStyle.title}" ui:field="joinedContainerTitle"></g:HTMLPanel>
+      <g:HTMLPanel styleName="{StudyStyle.class-code}">
+        <txt:TextBoxWithPlaceholder name="" styleName="{StudyStyle.inputype}" ui:field="txtCode"/>
+        <g:Button styleName="{StudyStyle.btn}" ui:field="btnEnter"></g:Button>
+        <g:Button styleName="primary disabled" ui:field="disabledBtn"></g:Button>
+      </g:HTMLPanel>
+      <g:HTMLPanel styleName="{StudyStyle.clear}"></g:HTMLPanel>
+<g:HTMLPanel styleName="{StudyStyle.ownerClasses}" ui:field="joinedClassesContainer"></g:HTMLPanel>
 
+<g:HTMLPanel styleName="{StudyStyle.centerAlignBtn}"><g:Button styleName="secondary" ui:field="seeMorebtnJoined"></g:Button></g:HTMLPanel>
+    </g:HTMLPanel>
+    <g:HTMLPanel styleName="{StudyStyle.content-inner}">
+      <g:HTMLPanel styleName="{StudyStyle.title}" ui:field="teachContainerTitle"></g:HTMLPanel>
+      <g:HTMLPanel styleName="{StudyStyle.class-code} {StudyStyle.ext}">
+        <g:Label styleName="{StudyStyle.plus}" ui:field="lblCreateAClass"> +</g:Label>
+        <g:Button styleName="{StudyStyle.btnStyle}" ui:field="btnCreateClass"></g:Button></g:HTMLPanel>
+      <g:HTMLPanel styleName="{StudyStyle.clear}"></g:HTMLPanel>
 
-			
-	<g:HTMLPanel styleName="">
-		<g:HTMLPanel styleName="{StudyStyle.container} {StudyStyle.clearfix}">
-			<g:HTMLPanel styleName="{StudyStyle.startsection}">
-				<g:Label styleName="{StudyStyle.title}" ui:field="lblCreateAClass"></g:Label>
-				<g:Label styleName="{StudyStyle.subtitle}" ui:field="lblEasyToOrganize"></g:Label>
-				<br />
-				<g:Button ui:field="btnCreateClass" styleName="primary"></g:Button>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{StudyStyle.startsection} {StudyStyle.fright}">
-				<g:HTMLPanel styleName="{StudyStyle.codeBg}">
-					<g:Label styleName="{StudyStyle.codeTitle}" ui:field="lblAccessAClass"></g:Label>
-					<txt:TextBoxWithPlaceholder styleName="{StudyStyle.classCodeTxtBox}" ui:field="txtCode"/>
-					<g:Button styleName="primary" ui:field="btnEnter"></g:Button>
-					<g:Button styleName="primary disabled" ui:field="disabledBtn"></g:Button>
-				</g:HTMLPanel>
-			</g:HTMLPanel>
-			
-	
-			
-		</g:HTMLPanel>
+<g:HTMLPanel styleName="{StudyStyle.ownerClasses}" ui:field="ownerClassesContainer"></g:HTMLPanel>
+<g:HTMLPanel styleName="{StudyStyle.centerAlignBtn}"><g:Button styleName="secondary" ui:field="seeMorebtnOwner"></g:Button></g:HTMLPanel>
+    </g:HTMLPanel>
+    
+  </g:HTMLPanel></g:HTMLPanel>
 		
 		<sg:FooterUc />
 	</g:HTMLPanel>

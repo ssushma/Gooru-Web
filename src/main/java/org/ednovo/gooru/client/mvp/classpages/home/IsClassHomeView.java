@@ -28,6 +28,8 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 
 public interface IsClassHomeView extends IsViewWithHandlers<ClassHomeUiHandlers>  {
 
+	void callServiceRequestsToBindData();
+
 	
 //	public Label getErrorLbl();
 //	
