@@ -49,12 +49,18 @@ public class CollectionAssignShareEvent extends GwtEvent<CollectionAssignShareHa
 	public static final Type<CollectionAssignShareHandler> TYPE = new Type<CollectionAssignShareHandler>();
 	
 	String shareType=null;
+	
+	String publishStatus=null;
+	
+	boolean isPublish;
 
 	/**
 	 * Class constructor
 	 */
-	public CollectionAssignShareEvent(String shareType) {
+	public CollectionAssignShareEvent(String shareType,String publishStatus,boolean isPublish) {
 		this.shareType = shareType;
+		this.publishStatus = publishStatus;
+		this.isPublish = isPublish;
 	}
 
 	@Override
@@ -64,7 +70,7 @@ public class CollectionAssignShareEvent extends GwtEvent<CollectionAssignShareHa
 
 	@Override
 	protected void dispatch(CollectionAssignShareHandler handler) {
-		handler.updateShareType(shareType);
+		handler.updateShareType(shareType,publishStatus,isPublish);
 	}
 
 }

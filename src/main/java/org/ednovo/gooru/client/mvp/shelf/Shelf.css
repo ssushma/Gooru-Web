@@ -1570,7 +1570,7 @@ padding-left: 11px;
 }
 .shelfPublishTab{
 	float: left;
-	margin-left: 74px;
+	margin-left: 45px;
 }
 .userprofilecount {
 	font-weight: bold;
@@ -1614,3 +1614,7 @@ padding-left: 11px;
 	font-style: italic;
 	color: #515151;
 	}
+.published{
+	color:green;
+	display: inline-block;
+}	

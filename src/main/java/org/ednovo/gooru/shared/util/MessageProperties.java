@@ -2446,5 +2446,7 @@ public interface MessageProperties {
     	String GL1925 = "Follow";
     	String GL1926 = "Unfollow";
     	String GL1927 = "Click a tag to view all the resources that you tagged with that field.";
+    	String GL1928 = "Publish in Progress";
+    	String GL1929 = "Published";
 
 }
