@@ -182,6 +182,11 @@ public interface EditClasspageCBundle extends ClientBundle{
         String progressStart();
         String path();
         String classcodeContainer();
+        String containerProgress();
+        String next();
+        String previous();
+        String rightArrow();
+        String leftArrow();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

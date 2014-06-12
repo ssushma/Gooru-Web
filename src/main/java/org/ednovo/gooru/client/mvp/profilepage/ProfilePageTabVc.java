@@ -85,6 +85,11 @@ public class ProfilePageTabVc extends FocusPanel {
 		labelcount.setText(label);
 		
 	}
+	public Label getLabelCount()
+	{
+		return labelcount;
+		
+	}
 	/**
 	 * @param style for image panel
 	 */

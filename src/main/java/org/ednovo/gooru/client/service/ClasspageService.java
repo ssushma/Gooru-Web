@@ -170,6 +170,8 @@ public interface ClasspageService extends BaseService {
 	
 	public ClasspageListDo  v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException;
 	
+	public ClasspageListDo  v2GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException;
+	
 	public AssignmentDo v2CreateAssignment(AssignmentDo assignmentDo) throws GwtException;
 
 	/**

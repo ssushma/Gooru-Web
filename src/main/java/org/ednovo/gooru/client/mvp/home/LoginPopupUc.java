@@ -321,123 +321,130 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						MixpanelUtil.Regular_User_Logged_In();
-						if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
-						MixpanelUtil.Registration_turns13(); 
-						com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
-									.getFormat("yyyy-MM-dd hh:mm:ss.S");
-						Date convertedCurrentDate = null;
-						convertedCurrentDate = dateFormat.parse(result.getDateOfBirth());
-						age = getAge(convertedCurrentDate);
-						 if(age>=13){
-							 Map<String, String> map = StringUtil.splitQuery(Window.Location
-										.getHref());
-								map.put("callback", "turn13");
-								AppClientFactory.getPlaceManager().revealPlace(
-										AppClientFactory.getCurrentPlaceToken(), map);
-							  }
-						}
-						AppClientFactory.setLoggedInUser(result);
-						AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
-						AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
-						//to Set the Options butts visibility in Player for comments.
-						if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-							AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
-						}
-						if(getWidgetMode()!=null){
-							//AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
-						}
-						hide();
-						//headerUc.setLoggedInUser(result);
-					    AppClientFactory.fireEvent(new SetHeaderEvent(result));
-						//AppClientFactory.resetPlace();
-					    
-/*					    if(result.getUsername().equalsIgnoreCase("TexasTeacher")) {
-							AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
-							AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
-						}else{
-							AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
-							AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
-						}
-*/					    
-					    AppClientFactory.setUserflag(true);
-						AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
-					    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
-					    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
-					    }
-					    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
-					    	AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), false));
-					    }
-					    
-					    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
-					    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
-					    } 
-					    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
-					    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
-						}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
-							AppClientFactory.resetPlace();
-							Window.enableScrolling(true);
-							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-							AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
-							String id = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
-							if (id != null) {
-								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", id });
+//						if(result.getConfirmStatus()==1){
+
+							MixpanelUtil.Regular_User_Logged_In();
+							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
+							MixpanelUtil.Registration_turns13(); 
+							com.google.gwt.i18n.client.DateTimeFormat dateFormat = com.google.gwt.i18n.client.DateTimeFormat
+										.getFormat("yyyy-MM-dd hh:mm:ss.S");
+							Date convertedCurrentDate = null;
+							convertedCurrentDate = dateFormat.parse(result.getDateOfBirth());
+							age = getAge(convertedCurrentDate);
+							 if(age>=13){
+								 Map<String, String> map = StringUtil.splitQuery(Window.Location
+											.getHref());
+									map.put("callback", "turn13");
+									AppClientFactory.getPlaceManager().revealPlace(
+											AppClientFactory.getCurrentPlaceToken(), map);
+								  }
+							}
+							AppClientFactory.setLoggedInUser(result);
+							AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
+							AppClientFactory.fireEvent(new SetUserDetailsInCollectionPlayEvent(result.getToken(),result.getGooruUId()));
+							//to Set the Options butts visibility in Player for comments.
+							if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
+								AppClientFactory.fireEvent(new SetCommentsOptionsEvent());
+							}
+							if(getWidgetMode()!=null){
+								//AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
+							}
+							hide();
+							//headerUc.setLoggedInUser(result);
+						    AppClientFactory.fireEvent(new SetHeaderEvent(result));
+							//AppClientFactory.resetPlace();
+						    
+	/*					    if(result.getUsername().equalsIgnoreCase("TexasTeacher")) {
+								AppClientFactory.fireEvent(new SetTexasAccountEvent("failure"));
+								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(true));
 							}else{
-								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+								AppClientFactory.fireEvent(new SetTexasAccountEvent("success"));
+								AppClientFactory.fireEvent(new SetTexasPlaceHolderEvent(false));
 							}
-							AppClientFactory.fireEvent(new SetButtonEvent());
-							//Call shelf api to load the first collection.
-						}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
-							Window.enableScrolling(true);
-							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-							AppClientFactory.fireEvent(new SetButtonEvent());
-							openClasspage();
-						}else{
-							AppClientFactory.resetPlace();
-							Window.enableScrolling(true);
-							AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-						}
-					   
-					    showNewGooruTryOut(result);
-					    if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)) {
-					    	AppClientFactory.fireEvent(new SetLoginStatusEvent(true));
-					    }
-					    
-					    if(nameToken.equals(PlaceTokens.TEACH)) {
-//					    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
-					    }  else if(nameToken.equals(PlaceTokens.SHELF)){
-							getCollectionFirstItem();
-					    }
-					    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
-					    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
-					    }
-					    if(result.getOrganizationName()!=null) {
-						    if (result.getOrganizationName().contains("rusd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY))){
-						    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RUSD_LIBRARY);
+	*/					    
+						    AppClientFactory.setUserflag(true);
+							AppClientFactory.fireEvent(new StandardPreferenceSettingEvent(result.getMeta().getTaxonomyPreference().getCode()));
+						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY)){
+						    	AppClientFactory.fireEvent(new ShowCollectionTabWidgetEvent(getWidgetMode(), false));
 						    }
-					    }
-					    if(result.getOrganizationName()!=null) {
-						    if (result.getOrganizationName().contains("sausd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY))){
-						    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
+						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
+						    	AppClientFactory.fireEvent(new ShowPreviewTabWidgetEvent(getWidgetMode(), false));
 						    }
-					    }
-					    
-					    /*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
-					    	String newMailId = AppClientFactory.getPlaceManager()
-									.getRequestParameter("newMailId");
-							String userId = AppClientFactory.getPlaceManager().getRequestParameter(
-									"userId");
-							String confirmStatus = AppClientFactory.getPlaceManager()
-									.getRequestParameter("confirmStatus");
-							if(newMailId!=null && userId!=null && confirmStatus!=null){
-								Map<String, String> params = new HashMap<String, String>();
-								params.put("confirmStatus", confirmStatus);
-								params.put("newMailId", newMailId);
-								params.put("userId", userId);
-								PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SETTINGS, params);
-								AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
+						    
+						    if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.PREVIEW_PLAY)){
+						    	AppClientFactory.fireEvent(new SetPlayerLoginStatusEvent(true));
+						    } 
+						    else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_PLAY)){
+						    	AppClientFactory.fireEvent(new ShowResourceTabWidgetEvent(getWidgetMode(), false));
+							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+								AppClientFactory.resetPlace();
+								Window.enableScrolling(true);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+								AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.ORGANIZE));
+								String id = AppClientFactory.getPlaceManager().getRequestParameter("id") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("id").equalsIgnoreCase("") ? AppClientFactory.getPlaceManager().getRequestParameter("id") : null;
+								if (id != null) {
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF, new String[] { "id", id });
+								}else{
+									AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+								}
+								AppClientFactory.fireEvent(new SetButtonEvent());
+								//Call shelf api to load the first collection.
+							}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
+								Window.enableScrolling(true);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+								AppClientFactory.fireEvent(new SetButtonEvent());
+								openClasspage();
+							}else{
+								AppClientFactory.resetPlace();
+								Window.enableScrolling(true);
+								AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 							}
-					    }*/
+						   
+						    showNewGooruTryOut(result);
+						    if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equalsIgnoreCase(PlaceTokens.HOME)) {
+						    	AppClientFactory.fireEvent(new SetLoginStatusEvent(true));
+						    }
+						    
+						    if(nameToken.equals(PlaceTokens.TEACH)) {
+//						    	AppClientFactory.fireEvent(new OpenClasspageListEvent());
+						    }  else if(nameToken.equals(PlaceTokens.SHELF)){
+								getCollectionFirstItem();
+						    }
+						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
+						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
+						    }
+						    if(result.getOrganizationName()!=null) {
+							    if (result.getOrganizationName().contains("rusd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY))){
+							    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RUSD_LIBRARY);
+							    }
+						    }
+						    if(result.getOrganizationName()!=null) {
+							    if (result.getOrganizationName().contains("sausd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY))){
+							    	AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SAUSD_LIBRARY);
+							    }
+						    }
+						    
+						    /*if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SETTINGS)){
+						    	String newMailId = AppClientFactory.getPlaceManager()
+										.getRequestParameter("newMailId");
+								String userId = AppClientFactory.getPlaceManager().getRequestParameter(
+										"userId");
+								String confirmStatus = AppClientFactory.getPlaceManager()
+										.getRequestParameter("confirmStatus");
+								if(newMailId!=null && userId!=null && confirmStatus!=null){
+									Map<String, String> params = new HashMap<String, String>();
+									params.put("confirmStatus", confirmStatus);
+									params.put("newMailId", newMailId);
+									params.put("userId", userId);
+									PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SETTINGS, params);
+									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
+								}
+						    }*/
+//						}else if(result.getConfirmStatus()==0){
+							/*loginButton.setVisible(true);
+							lblPleaseWait.setVisible(false);
+							new AlertContentUc(OOPS, GL1938);*/
+//						}
 					}
 
 					

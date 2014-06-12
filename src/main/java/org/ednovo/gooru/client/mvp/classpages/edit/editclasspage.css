@@ -866,6 +866,7 @@
 	
 }
 .assignmentPathContainer{
+	float: left;
 	height: 100px;
 	margin-bottom: 10px;
 	background-color:rgb(255,255,255);
@@ -877,6 +878,8 @@
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:8px;
 	padding : 5px;
+	width: 94%;
+	margin: 0px auto;
 }
 
 .assignmentProgress{
@@ -884,7 +887,7 @@
 	font-size: 14px; 
 /*	font-weight: bold;	*/
 	margin:15px;
-	margin-bottom: 27px;
+	margin-bottom: 19px;
 }
 
 .assignmentPath{
@@ -938,4 +941,45 @@
 .classcodeContainer{
 	float: left;
 	
+}
+
+.containerProgress{
+	margin: 0px auto;
+}
+
+.next, .previous{
+	margin: 47px auto;
+	width: 2%;
+	float: left;
+}
+
+.rightArrow {
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-left: 15px solid #ddd;
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: -15px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.leftArrow {
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-right: 15px solid #ddd;
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: -15px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.rightArrow:hover{
+	border-left: 15px solid #999;
+}
+.leftArrow:hover{
+	border-right: 15px solid #999;
 }
