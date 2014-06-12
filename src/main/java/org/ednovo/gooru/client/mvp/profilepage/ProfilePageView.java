@@ -67,7 +67,7 @@ import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -1352,10 +1352,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	@Override
 	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
+		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
 	}
 	@Override
 	public void getFolloweingsObj(List<UserFollowDo> userFollowDo) {
+		userFollowingDo.clear();
 		userFollowingDo.addAll(userFollowDo);
 		
 	}

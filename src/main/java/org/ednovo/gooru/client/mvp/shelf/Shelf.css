@@ -1609,6 +1609,11 @@ padding-left: 11px;
 	float: left;
 	padding: 9px 3.4%;
 	text-align: center;
+	display: inline-block;
+	box-sizing: border-box;
+	height: 45px;
+	width: 150px;
+	margin-right: -3px;
 }
 .publishPending{
 	font-style: italic;
