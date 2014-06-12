@@ -84,7 +84,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	@UiField FlowPanel panelMainContainer;	
 	
 	boolean isLast;
-	ClasspageItemDo classpageList;
+	private ClasspageItemDo classpageItemDo;
 	int assignmentNumber;
 	
 	/**
@@ -93,7 +93,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	public AssignmentProgressVc(boolean isLast, ClasspageItemDo classpageList, int assignmentNumber, int assignmentTotalCount) {
 		
 		this.isLast = isLast;
-		this.classpageList = classpageList;
+		this.classpageItemDo = classpageList;
 		this.assignmentNumber = assignmentNumber;
 		
 		this.res = AssignmentProgressCBundle.INSTANCE;
@@ -146,6 +146,32 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		}
 	}
 	
+	
+	public AssignmentProgressVc(boolean isLastCollection, ClasspageItemDo classpageItemDo, int sequenceNumber) {
+		this.res = AssignmentProgressCBundle.INSTANCE;
+		initWidget(uiBinder.createAndBindUi(this));
+		this.res.css().ensureInjected();
+		this.classpageItemDo=classpageItemDo;
+		if (isLastCollection){
+			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
+		}else{
+			lblAssignmentNo.getElement().getStyle().clearTextAlign();
+		}
+		lblLineStart.setVisible(sequenceNumber == 1 ? false : true);
+		if (sequenceNumber >9){
+			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
+		}else{
+			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
+		}
+		lblAssignmentNo.setText(""+sequenceNumber);
+		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
+			panelCircle.setStyleName(this.res.css().bluecircle());
+		}else{
+			panelCircle.setStyleName(this.res.css().greencircle());
+		}
+	}
+	
+	
 	public Label createLabel(String title){
 		Label lblLabel = new Label();
 		lblLabel.setText(title);
@@ -162,7 +188,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 				resourceCategoryLabel.setText(lbl.getText());
 				
 				
-				AppClientFactory.getInjector().getClasspageService().v2ChangeAssignmentSequence("", classpageList.getCollectionItemId(), Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<Void>() {
+				AppClientFactory.getInjector().getClasspageService().v2ChangeAssignmentSequence("", classpageItemDo.getCollectionItemId(), Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<Void>() {
 
 					@Override
 					public void onSuccess(Void result) {

@@ -13,7 +13,36 @@
 	float: left;
 	vertical-align: top;
 }
-
+.bluecircle{
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	/* margin: -8px 2px 0px 2px; */
+	background: #1076bb;
+	border-radius: 20px;
+	/* display: inline-block; */
+	vertical-align: top;
+	float: left;
+	position: relative;
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+}
+.greencircle{
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	/* margin: -8px 2px 0px 2px; */
+	background: #4e9746;
+	border-radius: 20px;
+	/* display: inline-block; */
+	vertical-align: top;
+	float: left;
+	position: relative;
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+}
 .line{
 	height: 3px;
 	background: #B9B9C8 2px;

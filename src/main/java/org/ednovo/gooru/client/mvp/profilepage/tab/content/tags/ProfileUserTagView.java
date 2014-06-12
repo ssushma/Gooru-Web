@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProfileUserTagView extends Composite implements MessageProperties {
@@ -17,14 +18,21 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	interface ProfileUserTagViewUiBinder extends
 			UiBinder<Widget, ProfileUserTagView> {
 	}
-	@UiField HTMLPanel TagTextMessage,userTagsConatiner;
+	@UiField HTMLPanel userTagsConatiner,tagTextMessage;
+	@UiField Label TagTextMessage;
+	
+	
 	public ProfileUserTagView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setData();
 	}
 	public void setData(){
-		TagTextMessage.getElement().setInnerHTML(GL1915);
-		ProfileUserTagWidget profileUserTagWidget=new ProfileUserTagWidget();
-		userTagsConatiner.add(profileUserTagWidget);
+		TagTextMessage.setText(GL1915);
+		tagTextMessage.getElement().setInnerHTML(GL1937);
+		for(int i=0;i<7;i++){
+			ProfileUserTagWidget profileUserTagWidget=new ProfileUserTagWidget();
+			userTagsConatiner.add(profileUserTagWidget);
+		}
 	}
 
 }

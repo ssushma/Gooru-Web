@@ -74,35 +74,18 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 		getView().setUiHandlers(this);
 		this.signUpViewPresenter = signUpViewPresenter;
 		
-		AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
+		//AppClientFactory.fireEvent(new HomeEvent(HeaderTabType.TEACH));
 	}
 	
 	@Override
 	public void onBind() {
 		super.onBind();
-//		getView().clearAll();
-		setcollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
-			@Override
-			public void onSuccess(CollectionDo result) {
-				
-				if(result.getGooruOid()==null){
-//					getView().getErrorLbl().getElement().getStyle().setDisplay(Display.BLOCK);	
-				}
-				else{
-					Map<String, String> params = new HashMap<String, String>();
-					params.put("id",result.getGooruOid());
-					params.put("pageSize", "10");
-					params.put("pageNum", "0");
-					params.put("pos", "1");
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT,params);
-				}
-			}
-		});
 		
 	}
 
 	private void callBackMethods(){
+		getView().callServiceRequestsToBindData();
 		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
 			//To show SignUp (Registration popup)
 			if (AppClientFactory.isAnonymous()){
@@ -136,7 +119,7 @@ public class ClassHomePresenter extends BasePlacePresenter<IsClassHomeView, IsCl
 	@Override
 	protected void onReset() {
 		super.onReset();
-//		getView().clearAll();
+
 	}
 	
 	@Override
