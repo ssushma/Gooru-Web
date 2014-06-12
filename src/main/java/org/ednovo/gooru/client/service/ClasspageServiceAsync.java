@@ -84,6 +84,8 @@ public interface ClasspageServiceAsync extends BaseServiceAsync {
 	void v2GetAllClasspages(String limit, String offSet, AsyncCallback<ClasspageListDo> callback);
 	
 	void v2GetUserClasses(String limit, String offSet,String randomId, AsyncCallback<ClasspageListDo> callback);
+	
+	void v2GetUserStudyClasses(String limit, String offSet,String randomId, AsyncCallback<ClasspageListDo> callback);
 
 	void v2CreateAssignment(AssignmentDo assignmentDo,AsyncCallback<AssignmentDo> callback);
 	

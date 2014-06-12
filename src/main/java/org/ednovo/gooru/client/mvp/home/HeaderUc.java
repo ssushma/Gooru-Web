@@ -775,9 +775,9 @@ public class HeaderUc extends Composite implements MessageProperties,
 								/*classpageId = result.getSearchResults().get(0).getGooruOid();
 								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
 								OpenClasspageEdit(classpageId, userId);*/
-								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.CLASSHOME);
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
 							}else{
-								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
+								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
 							}
 						}
 				});

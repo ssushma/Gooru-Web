@@ -491,9 +491,25 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public ClasspageListDo v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
 
+		System.out.println("randomIdteach::"+randomId);
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
-				UrlToken.V2_GET_LISTCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+				UrlToken.V2_GET_LISTTEACHCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		System.out.println("v2GetUserClasses::"+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
+				getRestPassword());
+		jsonRep =jsonResponseRep.getJsonRepresentation();
+		return deserializeClasspageList(jsonRep);
+	}
+	
+	@Override
+	public ClasspageListDo v2GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException {
+
+		System.out.println("randomId::"+randomId);
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),
+				UrlToken.V2_GET_LISTSTUDYCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
+		System.out.println("v2GetUserClasses::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -540,6 +556,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
+		System.out.println("V2_GET_CLASSPAGE_BY_ID::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -882,6 +899,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageDo classPageDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
+		System.out.println("getClasspage:::"+url);
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			try {
