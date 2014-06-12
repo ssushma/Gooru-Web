@@ -1528,5 +1528,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			
 		}
 	}
+
+	@Override
+	public void deleteRatingsValue() {
+		isRated=false;
+		starValue.setText(DEFAULT_RATING_TEXT);
+		clearAllStars();
+	}
 	
 }
