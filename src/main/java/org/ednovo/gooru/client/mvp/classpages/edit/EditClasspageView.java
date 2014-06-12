@@ -99,6 +99,21 @@ public class EditClasspageView extends
 	
 	ArrayList<ClasspageItemDo> globalClasspageProcess;
 	
+	/** 
+	 * This method is to get the globalClasspageProcess
+	 */
+	@Override
+	public ArrayList<ClasspageItemDo> getGlobalClasspageProcess() {
+		return globalClasspageProcess;
+	}
+	/** 
+	 * This method is to set the globalClasspageProcess
+	 */
+	public void setGlobalClasspageProcess(
+			ArrayList<ClasspageItemDo> globalClasspageProcess) {
+		this.globalClasspageProcess = globalClasspageProcess;
+	}
+
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
 	
 /*	@UiField TextBox  txtClasspageLinkShare; */
@@ -1491,6 +1506,7 @@ public class EditClasspageView extends
 		}
 		
 		if (offsetProgress <= 0){
+//			globalClasspageProcess.clear();
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
@@ -1507,13 +1523,12 @@ public class EditClasspageView extends
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-		toolTipPopupPanelNew.clear();
-		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
-		toolTipPopupPanelNew.setStyleName("");
-		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop());
-		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-		toolTipPopupPanelNew.show();
-	
+			toolTipPopupPanelNew.clear();
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
+			toolTipPopupPanelNew.setStyleName("");
+			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 14, event.getRelativeElement().getAbsoluteTop());
+			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelNew.show();
 		}
 
 	}

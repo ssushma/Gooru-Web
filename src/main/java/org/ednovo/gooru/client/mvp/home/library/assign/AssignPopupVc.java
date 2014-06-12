@@ -119,7 +119,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 	@UiField Label lblOr;
 
 	@UiField
-	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC;
+	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAC,userBlockedLbl;
 	
 	@UiField InlineLabel lblPii,toUsText;
 	@UiField Anchor ancprivacy;
@@ -278,6 +278,18 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 
 	public abstract void closePoup();
 
+	@UiHandler("loginTxtBox")
+	public void onLogInTextField(KeyUpEvent keyUpEvent){
+		userBlockedLbl.setVisible(false);
+	}
+	
+	@UiHandler("passwordTxtBox")
+	public void onPasswordField(KeyUpEvent keyUpEvent){
+		userBlockedLbl.setVisible(false);
+	}
+	
+	
+	
 	/**
 	 * Added click handler to hide the login popup.
 	 * 
@@ -287,6 +299,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
 		closePoup();
+		
 	}
 
 	/**
@@ -581,6 +594,15 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
+										/*if(result.getConfirmStatus()==1){
+											
+										}else if(result.getConfirmStatus()==0){
+											loginButton.setVisible(true);
+											lblPleaseWait.setVisible(false);
+											userBlockedLbl.setText(GL1938);
+											userBlockedLbl.setVisible(true);
+										}*/
+										
 										MixpanelUtil.Regular_User_Logged_In();
 										AppClientFactory.setLoggedInUser(result);
 										AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));

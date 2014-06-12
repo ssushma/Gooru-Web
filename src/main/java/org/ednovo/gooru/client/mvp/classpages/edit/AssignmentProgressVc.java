@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.edit;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsCBundle;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -42,6 +43,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -75,13 +77,13 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	@UiField 
 	Label lblLineStart, lblLineEnd, lblAssignmentNo;
 	
-	@UiField HTMLPanel panelCircle, resourceTypePanel;
+	@UiField HTMLPanel panelCircle, resourceTypePanel,moveAssignmentPopup,dueDateContainer;
 	
-	@UiField HTML htmlCollectiontitle;
+	@UiField HTML htmlCollectiontitle,assignmentCollectiontitle;
 	
 	@UiField Label lblMoveTo, resoureDropDownLbl, resourceCategoryLabel;
 	
-	@UiField FlowPanel panelMainContainer;	
+	@UiField FlowPanel panelMainContainer,assignmentInfoPopup;	
 	
 	boolean isLast;
 	private ClasspageItemDo classpageItemDo;
@@ -99,9 +101,9 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		this.res = AssignmentProgressCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
+		assignmentInfoPopup.removeFromParent();
 		
 		panelMainContainer.getElement().setAttribute("id", classpageList.getCollectionItemId());
-		
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
 		if (isLast){
@@ -152,6 +154,10 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.res.css().ensureInjected();
 		this.classpageItemDo=classpageItemDo;
+		moveAssignmentPopup.removeFromParent();
+		setDueDateAndDirection();
+		assignmentCollectiontitle.setHTML(classpageItemDo.getCollectionTitle());
+		panelMainContainer.getElement().setAttribute("id", classpageItemDo.getCollectionItemId());
 		if (isLastCollection){
 			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
 		}else{
@@ -168,6 +174,37 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 			panelCircle.setStyleName(this.res.css().bluecircle());
 		}else{
 			panelCircle.setStyleName(this.res.css().greencircle());
+		}
+	}
+	
+	public void updateDotsCircle(String readStatus){
+		classpageItemDo.setStatus(readStatus);
+		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
+			panelCircle.setStyleName(this.res.css().bluecircle());
+		}else{
+			panelCircle.setStyleName(this.res.css().greencircle());
+		}
+	}
+	
+	public void setDueDateAndDirection(){
+		dueDateContainer.clear();
+		String dueDate=classpageItemDo.getPlannedEndDate();
+		if(dueDate!=null&&!dueDate.equals("")){
+			Label dueDateText=new Label(GL1390);
+			dueDateText.setStyleName(this.res.css().dueDataIcon());
+			Label dueDateLabel=new Label(dueDate.toString());
+			dueDateLabel.setStyleName(this.res.css().headerDueDate());
+			dueDateContainer.add(dueDateText);
+			dueDateContainer.add(dueDateLabel);
+		}
+		String directionDescription=classpageItemDo.getDirection();
+		if(directionDescription!=null&&!directionDescription.equals("")){
+			InlineLabel directionHeadLabel=new InlineLabel(GL1372);
+			directionHeadLabel.setStyleName(this.res.css().directionHeading());
+			InlineLabel directionTextLabel=new InlineLabel(directionDescription);
+			directionTextLabel.setStyleName(this.res.css().directionDesc());
+			dueDateContainer.add(directionHeadLabel);
+			dueDateContainer.add(directionTextLabel);
 		}
 	}
 	
