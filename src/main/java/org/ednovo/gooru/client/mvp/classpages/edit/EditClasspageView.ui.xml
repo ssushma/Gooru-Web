@@ -73,14 +73,22 @@
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 				
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-			    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
-			    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
-			    <g:HTMLPanel styleName="{res.css.path}">
-				    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
-				    <g:Label styleName="{res.css.line}"></g:Label> -->
-					<g:HTMLPanel styleName="{res.css.assignmentPath}" ui:field="panelAssignmentProgress" />
+			<g:HTMLPanel styleName="{res.css.containerProgress}">
+			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
+			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
+			    </uc:HTMLEventPanel>
+				<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
+				    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
+				    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
+				    <g:HTMLPanel styleName="{res.css.path}">
+					    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
+					    <g:Label styleName="{res.css.line}"></g:Label> -->
+						<g:HTMLPanel styleName="{res.css.assignmentPath}" ui:field="panelAssignmentProgress" />
+					</g:HTMLPanel>
 				</g:HTMLPanel>
+				<uc:HTMLEventPanel styleName="{res.css.previous}" ui:field="panelNext">
+				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
+				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
 			<g:FlowPanel styleName="{res.css.paginationContainer}"

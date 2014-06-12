@@ -67,6 +67,7 @@ public interface AssignmentProgressCBundle extends ClientBundle {
 		String reorderLabelContainer();
 		String myFolderCollectionFolderDropdown();
 		String myFolderCollectionFolderVideoTitle();
+		
 	}
 
 	@Source("AssignmentProgress.css")

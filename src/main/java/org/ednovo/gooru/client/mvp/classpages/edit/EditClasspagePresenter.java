@@ -266,7 +266,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if(isTab==null){
 			getView().clearPanel();
 		}
-		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getClasspage();
 		}
 		
@@ -368,14 +368,13 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			getView().resetEditClasspageView();
-			getClasspage();
+//			getClasspage();
 		}
 	}
 	public void getClasspage(){
 		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
 		this.analyticsId= getPlaceManager().getRequestParameter("analyticsId");
 		this.monitorId = getPlaceManager().getRequestParameter("monitorid");
-		
 		//here
 		this.tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
 		this.classpageService.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
@@ -399,7 +398,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),tab,analyticsId,monitorId);
-						getAssignmentsProgress(classpageDo.getClasspageId(), "0", "30");	// to display assignment progress.
+						getAssignmentsProgress(classpageId, "0", "30");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
@@ -430,8 +429,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void getNextClasspageItems(Integer offset,Integer limit) 
 	{
-		System.out.println("offset::"+offset);
-		System.out.println("limit::"+limit);
 		String classpageId=getPlaceManager().getRequestParameter("classpageid");
 		String analyticsId=getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");
@@ -536,9 +533,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 
 	@Override
-	public void getAssignmentsProgress(String classpageId, String offset,
-			String limit) {
-		this.classpageService.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+	public void getAssignmentsProgress(String classpageId, String offsetProgress, String limitProgress) {
+		this.classpageService.getClassPageItems(classpageId, offsetProgress, limitProgress, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
