@@ -8,6 +8,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingOnDeleteEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateUserStarReviewEvent;
@@ -603,6 +604,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			public void onSuccess(Void result) {
 				reviewContainer.clear();
 				reviewContainer.addStyleName(style.deletePanel());
+				AppClientFactory.fireEvent(new DeletePlayerStarReviewEvent());
 				final HTMLPanel deletePanel = new HTMLPanel("");
 				Label deleteMsg = new Label();
 				deleteMsg.setText(MessageProperties.GL1853);

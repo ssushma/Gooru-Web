@@ -50,5 +50,6 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void displaySuccessPopup();
 	public void updateRatingOnSearch(StarRatingsDo starRatingsDo);
 	public void clearAllStarsForAnnonymous();
-	public void childLoggedIn(boolean isChild); 
+	public void childLoggedIn(boolean isChild);
+	public void deleteRatingsValue(); 
 }
