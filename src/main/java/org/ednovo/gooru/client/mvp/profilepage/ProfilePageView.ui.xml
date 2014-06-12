@@ -42,9 +42,10 @@
 							   		   </g:HTMLPanel>
 							   </g:HTMLPanel>
 							   <!--  Social container stop-->
-							   <g:Button styleName="primary {ProfilePageStyle.followButton}" ui:field="followButton"></g:Button>
+							  	</g:HTMLPanel>
+							  	 <g:Button styleName="primary {ProfilePageStyle.followButton}" ui:field="followButton"></g:Button>
 							    <g:Button styleName="blackPrimaryButton {ProfilePageStyle.followButton}" ui:field="UnFollowButton"></g:Button>
-							</g:HTMLPanel>
+						
 					   <!--  Profile On/Off container stop -->
 					   </g:HTMLPanel>
 		        	</g:HTMLPanel>

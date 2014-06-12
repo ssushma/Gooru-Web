@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter.IsProfilePag
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageUnFollowPopUp;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -598,7 +599,9 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-			
+				ProfilePageUnFollowPopUp profilePageUnFollowPopUp=new ProfilePageUnFollowPopUp(); 
+				profilePageUnFollowPopUp.show();
+				profilePageUnFollowPopUp.center();
 				
 			}
 		});
