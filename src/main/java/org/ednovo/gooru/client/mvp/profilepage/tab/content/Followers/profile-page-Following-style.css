@@ -99,6 +99,13 @@ a:hover {
 	padding: 10px 0px;
 	font-size: 16px;
 	border-bottom: 1px solid #ddd;
+	height: 268px;
+}
+.profilepageFollowerContentText {
+	padding: 10px 0px;
+	font-size: 16px;
+	border-bottom: 1px solid #ddd;
+	height: 268px;
 }
 .hr {
 	border-bottom: 1px solid #ddd;
