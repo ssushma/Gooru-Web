@@ -43,6 +43,13 @@
 	float: left;
 	vertical-align: top;
 }
+
+.greencircle:hover .assignmentStudyPopup {
+	display: block;
+}
+.bluecircle:hover .assignmentStudyPopup {
+	display: block;
+}
 .line{
 	height: 3px;
 	background: #B9B9C8 2px;
@@ -105,6 +112,19 @@
 	right: 0;
 }
 
+.assignmentStudyPopupArrow{
+	width: 0;
+	height: 0;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: 1px;
+	margin: auto;
+	border-top: none;
+	z-index: 100000;
+	margin-left: 10px;
+}
+
 .standardsinner {
 	color: #515151;
 	background-color: #FFF;
@@ -125,6 +145,11 @@
 	float: left;
 }
 
+.studyPopup {
+	width: 250px;
+	padding: 10px;
+	float: left;
+}
 .profileVisiblityPopup {
 	position: absolute;
 	left: -42px;
@@ -133,6 +158,14 @@
 	text-align: left;
 	z-index: 999;
 	padding: 10px;
+}
+.assignmentStudyPopup{
+		position: absolute;
+	left: -12px;
+	top: 15px;
+	display: none;
+	text-align: left;
+	z-index: 999;
 }
 
 .title{
@@ -231,4 +264,40 @@
 	line-height: 120%;
 	color: rgb(153, 153, 153);
 	text-align: left;
+}
+.assignmentCollectionTitle{
+	color: #1076bb;
+	display: inline-block;
+	font-size: 16px;
+	width: 138px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.headerLeft {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+}
+.dueDataIcon {
+	display: inline-block;
+	vertical-align: top;
+	background: url(images/Classpage/calendar.png) no-repeat;
+	padding-left: 21px;
+	height: 18px;
+	margin-bottom: 5px;
+}
+.headerDueDate {
+	display: inline-block;
+	vertical-align: top;
+	width: 150px;
+}
+.directionHeading {
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: bold;
+	color: #515151;
+}
+.directionDesc {
+	color: #515151;
 }

@@ -1,30 +1,18 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
-import org.ednovo.gooru.shared.util.StringUtil;
-
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class ProfilePageUserInfoWidget extends Composite {
 

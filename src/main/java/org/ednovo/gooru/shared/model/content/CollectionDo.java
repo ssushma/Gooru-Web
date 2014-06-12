@@ -66,6 +66,7 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private Integer memberCount;
 	private TrackActivityDo trackActivity;
 	private String sharing;
+	private PublishDo publishStatus;
 	private String status;
 	private List<checkboxSelectedDo> depthOfKnowledges;
 	private List<checkboxSelectedDo> instructionalMethod;
@@ -322,6 +323,20 @@ public class CollectionDo extends ResourceDo implements Serializable{
 		this.languageObjective = languageObjective;
 	}
 
+	/**
+	 * @return the publishStatus
+	 */
+	public PublishDo getPublishStatus() {
+		return publishStatus;
+	}
+
+	/**
+	 * @param publishStatus the publishStatus to set
+	 */
+	public void setPublishStatus(PublishDo publishStatus) {
+		this.publishStatus = publishStatus;
+	}
+
 	public Integer getItemCount() {
 		return itemCount;
 	}
@@ -346,7 +361,4 @@ public class CollectionDo extends ResourceDo implements Serializable{
 		this.memberCount = memberCount;
 	}
 
-	
-	
-	
 }

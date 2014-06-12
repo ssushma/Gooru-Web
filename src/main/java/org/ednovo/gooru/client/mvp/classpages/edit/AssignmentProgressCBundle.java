@@ -69,6 +69,16 @@ public interface AssignmentProgressCBundle extends ClientBundle {
 		String myFolderCollectionFolderVideoTitle();
 		String bluecircle();
 		String greencircle();
+		String assignmentCollectionTitle();
+		String headerLeft();
+		String dueDataIcon();
+		String headerDueDate();
+		String directionHeading();
+		String directionDesc();
+		String studyPopup();
+		String assignmentStudyPopup();
+		String assignmentStudyPopupArrow();
+		
 	}
 
 	@Source("AssignmentProgress.css")

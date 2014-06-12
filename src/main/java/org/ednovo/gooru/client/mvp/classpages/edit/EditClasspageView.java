@@ -1523,13 +1523,12 @@ public class EditClasspageView extends
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-		toolTipPopupPanelNew.clear();
-		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
-		toolTipPopupPanelNew.setStyleName("");
-		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop());
-		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
-		toolTipPopupPanelNew.show();
-	
+			toolTipPopupPanelNew.clear();
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
+			toolTipPopupPanelNew.setStyleName("");
+			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 14, event.getRelativeElement().getAbsoluteTop());
+			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+			toolTipPopupPanelNew.show();
 		}
 
 	}
