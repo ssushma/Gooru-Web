@@ -119,7 +119,7 @@
 			
 			<g:FlowPanel styleName="{ProfilePageStyle.userinfoContainer}">
 			  <g:HTMLPanel styleName="{ProfilePageStyle.tabContent}">
-			   		<profileUc:ProfilePageTabVc ui:field="collectionsTabVc" />
+			   		<profileUc:ProfilePageTabVc ui:field="collectionsTabVc" enabled="true" />
 					<profileUc:ProfilePageTabVc ui:field="followingTabVc" />
 					<profileUc:ProfilePageTabVc ui:field="followersTabVc"/>
 					<profileUc:ProfilePageTabVc ui:field="tagTabVc"/>
