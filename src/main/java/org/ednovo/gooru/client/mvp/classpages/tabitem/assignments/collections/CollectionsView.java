@@ -166,7 +166,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
 	}
 	public void setCollectionItemIndex(int sequenceNum){
-		assignmentIndex.setText(""+sequenceNum);
+		assignmentIndex.setText(""+classpageItemDo.getSequenceNumber());
 	}
 	public void setStaticTexts(){
 		viewClassItemAnalyticsButton.setText(GL0510);
@@ -481,6 +481,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		classpageItemDo.setStatus(readStatus);
 		setReadStatus();
 		changeButtonText();
+		updateAssignmentCircleColor(classpageItemDo.getCollectionItemId(),readStatus);
 	}
 	public void editDirection(){
 		directionContentPanel.clear();
@@ -550,6 +551,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 
 	public void resetPagination(){
+		
+	}
+	
+	public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
 		
 	}
 	

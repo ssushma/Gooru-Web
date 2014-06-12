@@ -100,7 +100,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 
 	@UiField Anchor forgotPwd,ancRegisterHere;
 	
-	@UiField Label lblLoginHeading,lblDoYouHaveAccount,lblOr, lblPleaseWait, lblWelcomeBack,lblLoginWithGooru;
+	@UiField Label lblLoginHeading,lblDoYouHaveAccount,lblOr, lblPleaseWait, lblWelcomeBack,lblLoginWithGooru,userBlockedLbl;
 
 //	@UiField CheckBox lblKeepMeLogedIn;
 	
@@ -160,7 +160,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
         setTextAndIds();
         
 		lblPleaseWait.setVisible(false);
-        
+		userBlockedLbl.setVisible(false);
 		setHandlers();
         
 		this.center();
@@ -169,6 +169,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	public LoginPopupUc(String emailId){
 		this();
 		this.emailId = emailId;
+		userBlockedLbl.setVisible(false);
 	}
 
 	/**
@@ -191,7 +192,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 //        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
-
+		userBlockedLbl.setVisible(false);
 		setHandlers();
 		
 		this.center();		
@@ -271,6 +272,16 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
         lblLoginWithGooru.setText(GL0346);;
 	}
 
+	
+	@UiHandler("loginTxtBox")
+	public void onLogInTextField(KeyUpEvent keyUpEvent){
+		userBlockedLbl.setVisible(false);
+	}
+	
+	@UiHandler("passwordTxtBox")
+	public void onPasswordField(KeyUpEvent keyUpEvent){
+		userBlockedLbl.setVisible(false);
+	}
 	
 
 	/**
@@ -444,6 +455,9 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 							/*loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(OOPS, GL1938);*/
+						    
+						  /*  userBlockedLbl.setText(GL1938);
+							userBlockedLbl.setVisible(true);*/
 //						}
 					}
 
@@ -488,11 +502,12 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	 */
 	@UiHandler("cancelButton")
 	public void onCancelClicked(ClickEvent clickEvent) {
+		
 		StudentAssignmentView.islogin = false;
-		/*
-		 * Checks for parameter value if it is true then it will remove the parameter, so that it will avoid 
-		 * invoking login popup multiple times on refresh.
-		 */
+		
+		/* * Checks for parameter value if it is true then it will remove the parameter, so that it will avoid 
+		 * invoking login popup multiple times on refresh.*/
+		 
 		if(AppClientFactory.getPlaceManager().getRequestParameter(LOGINEVENT) != null && AppClientFactory.getPlaceManager().getRequestParameter(LOGINEVENT).equalsIgnoreCase("true")){
 			hide();
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);

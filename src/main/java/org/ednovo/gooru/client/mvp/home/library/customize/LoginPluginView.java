@@ -102,7 +102,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr;
+	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr,userBlockedLbl;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
 	
@@ -169,7 +169,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		lblPii.setText(GL1892);
 		ancprivacy.setText(GL1893);
 		toUsText.setText(GL1894);
-		
+		userBlockedLbl.setVisible(false);
 		
 		hangOnText.getElement().setInnerText(GL0740);
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
@@ -195,6 +195,16 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		gmailButton.getElement().setId("customizeGmailBtn");
 		lblPleaseWait.setVisible(false);
 
+	}
+	
+	@UiHandler("loginTxtBox")
+	public void onLogInTextField(KeyUpEvent keyUpEvent){
+		userBlockedLbl.setVisible(false);
+	}
+	
+	@UiHandler("passwordTxtBox")
+	public void onPasswordField(KeyUpEvent keyUpEvent){
+		userBlockedLbl.setVisible(false);
 	}
 
 	/**
@@ -230,6 +240,35 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
+										/*if(result.getConfirmStatus()==1){
+											lblPleaseWait.setText(GL0505);
+											AppClientFactory
+													.setLoggedInUser(result);
+											AppClientFactory
+													.fireEvent(new SetHeaderEvent(
+															result));
+											AppClientFactory
+													.fireEvent(new SetUserDetailsInCollectionPlayEvent(
+															result.getToken(),
+															result.getGooruUId()));
+											previously commented AppClientFactory
+													.getInjector()
+													.getResourceService()
+													.copyCollection(
+															collectionObject,
+															"true",
+															null,
+															getSaveCollectionAsyncCallback());
+											
+											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
+											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
+										}else if(result.getConfirmStatus()==0){
+											loginButton.setVisible(true);
+											lblPleaseWait.setVisible(false);
+											userBlockedLbl.setText(GL1938);
+											userBlockedLbl.setVisible(true);
+										}*/
+										
 										lblPleaseWait.setText(GL0505);
 										AppClientFactory
 												.setLoggedInUser(result);
