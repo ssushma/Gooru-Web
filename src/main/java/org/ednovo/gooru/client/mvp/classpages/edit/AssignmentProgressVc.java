@@ -24,21 +24,23 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.tools.ant.taskdefs.XSLTProcess.Param;
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsCBundle;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
-import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.TextAlign;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -75,15 +77,17 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	AssignmentProgressCBundle res;
 	
 	@UiField 
-	Label lblLineStart, lblLineEnd, lblAssignmentNo;
+	Label lblLineStart, lblLineEnd, lblAssignmentNo, lblCircle1;
 	
-	@UiField HTMLPanel panelCircle, resourceTypePanel,moveAssignmentPopup,dueDateContainer;
+	@UiField HTMLPanel panelCircle,panelCicle1, resourceTypePanel,moveAssignmentPopup,dueDateContainer;
 	
 	@UiField HTML htmlCollectiontitle,assignmentCollectiontitle;
 	
 	@UiField Label lblMoveTo, resoureDropDownLbl, resourceCategoryLabel;
 	
 	@UiField FlowPanel panelMainContainer,assignmentInfoPopup;	
+	
+	@UiField Button studyButtonText;
 	
 	boolean isLast;
 	private ClasspageItemDo classpageItemDo;
@@ -106,20 +110,19 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		panelMainContainer.getElement().setAttribute("id", classpageList.getCollectionItemId());
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
-		if (isLast){
-			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
-		}else{
-			lblAssignmentNo.getElement().getStyle().clearTextAlign();
-		}
+//		if (isLast){
+//			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
+//		}else{
+//			lblAssignmentNo.getElement().getStyle().clearTextAlign();
+//		}
 		
-		if (assignmentNumber >9){
-			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
-		}else{
-			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
-		}
+//		if (assignmentNumber >9){
+//			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
+//		}else{
+//			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
+//		}
 //		lblCircle.getElement().addClassName(res.css().viewedCircle());
 		lblAssignmentNo.setText(String.valueOf(assignmentNumber));
-
 		
 		htmlCollectiontitle.setHTML(classpageList.getCollectionTitle());
 		lblMoveTo.setText(GL1912);
@@ -149,7 +152,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	}
 	
 	
-	public AssignmentProgressVc(boolean isLastCollection, ClasspageItemDo classpageItemDo, int sequenceNumber) {
+	public AssignmentProgressVc(boolean isLastCollection, final ClasspageItemDo classpageItemDo, int sequenceNumber) {
 		this.res = AssignmentProgressCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		this.res.css().ensureInjected();
@@ -158,32 +161,51 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		setDueDateAndDirection();
 		assignmentCollectiontitle.setHTML(classpageItemDo.getCollectionTitle());
 		panelMainContainer.getElement().setAttribute("id", classpageItemDo.getCollectionItemId());
-		if (isLastCollection){
-			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
-		}else{
-			lblAssignmentNo.getElement().getStyle().clearTextAlign();
-		}
+//		if (isLastCollection){
+//			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
+//		}else{
+//			lblAssignmentNo.getElement().getStyle().clearTextAlign();
+//		}
 		lblLineStart.setVisible(sequenceNumber == 1 ? false : true);
 		lblLineEnd.setVisible(isLastCollection ? false : true);
-		if (sequenceNumber >9){
-			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
-		}else{
-			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
-		}
+//		if (sequenceNumber >9){
+//			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
+//		}else{
+//			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
+//		}
 		lblAssignmentNo.setText(""+sequenceNumber);
+		lblCircle1.setText(""+sequenceNumber);
 		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
 			panelCircle.setStyleName(this.res.css().bluecircle());
+			panelCicle1.setStyleName(this.res.css().bluecircle());
 		}else{
 			panelCircle.setStyleName(this.res.css().greencircle());
+			panelCicle1.setStyleName(this.res.css().greencircle());
 		}
+		studyButtonText.setText(GL0182);
+		studyButtonText.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Map<String, String> parms = new HashMap<String, String>();
+				parms.put("id", classpageItemDo.getCollectionId());
+				parms.put("cid", classpageItemDo.getCollectionItemId());
+				parms.put("page", "study");
+				
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
+			}
+		});
 	}
 	
 	public void updateDotsCircle(String readStatus){
 		classpageItemDo.setStatus(readStatus);
+		System.out.println("classpageItemDo.getStatus() : "+classpageItemDo.getStatus());
 		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
 			panelCircle.setStyleName(this.res.css().bluecircle());
+			panelCicle1.setStyleName(this.res.css().bluecircle());
 		}else{
 			panelCircle.setStyleName(this.res.css().greencircle());
+			panelCicle1.setStyleName(this.res.css().greencircle());
 		}
 	}
 	
