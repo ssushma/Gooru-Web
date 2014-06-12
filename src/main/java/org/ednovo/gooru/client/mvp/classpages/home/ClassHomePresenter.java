@@ -24,9 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.classpages.home;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
