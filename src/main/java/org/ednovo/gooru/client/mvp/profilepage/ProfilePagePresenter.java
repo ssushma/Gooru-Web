@@ -530,17 +530,19 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	
 	@Override
 	public UserFollowDo getFollwingData() {
-		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<UserFollowDo>() {
+		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<List<UserFollowDo>>() {
 			
-			@Override
-			public void onSuccess(UserFollowDo result) {
-				userFollowDo=result;
-				getView().getFolloweingsObj(result);
-			}
+			
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(List<UserFollowDo> result) {
+				getView().getFolloweingsObj(result);
 				
 			}
 		});
@@ -549,19 +551,58 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	public UserFollowDo getFollowerData() {
-		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<UserFollowDo>() {
+		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<List<UserFollowDo>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 			}
 
+
 			@Override
-			public void onSuccess(UserFollowDo result) {
-				userFollowDo=result;
+			public void onSuccess(List<UserFollowDo> result) {
 				getView().getFollowersObj(result);	
+				
 			}
 		});
 		return userFollowDo;
+	}
+
+	@Override
+	public void followUser(String gooruUid) {
+		AppClientFactory.getInjector().getUserService().followUser(profileDo.getUser().getGooruUId(), new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+
+	@Override
+	public void unFollowUser(String gooruUid) {
+		AppClientFactory.getInjector().getUserService().unFollowUser(gooruUid, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+			
+				
+			}
+		});
+		
 	}
 	
 

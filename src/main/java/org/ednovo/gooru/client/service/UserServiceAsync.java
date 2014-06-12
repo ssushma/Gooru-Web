@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.model.user.BiographyDo;
@@ -91,8 +92,11 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void updatePartyCustomField(String gooruUid,String optionKey,String optionValue,AsyncCallback<Void> callback);
    
-   void getFollowedOnUsers(String gooruUid,AsyncCallback<UserFollowDo> callback);
+   void getFollowedOnUsers(String gooruUid,AsyncCallback<List<UserFollowDo>> callback);
    
-   void getFollowedByUsers(String gooruUid,AsyncCallback<UserFollowDo> callback);
-
+   void getFollowedByUsers(String gooruUid,AsyncCallback<List<UserFollowDo>> callback);
+   
+   void followUser(String gooruUid,AsyncCallback<Void> callback);
+   
+   void unFollowUser(String gooruUid,AsyncCallback<Void> callback);
 }

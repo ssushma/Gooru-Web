@@ -27,6 +27,7 @@
  */
 package org.ednovo.gooru.client.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
@@ -211,9 +212,13 @@ public interface UserService extends BaseService {
 	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException;
 	
 	//followingUser
-	UserFollowDo getFollowedOnUsers(String gooruUid)throws GwtException;
+	List<UserFollowDo> getFollowedOnUsers(String gooruUid)throws GwtException;
 	
 	//followerUser
-	UserFollowDo getFollowedByUsers(String gooruUid)throws GwtException;
+	List<UserFollowDo> getFollowedByUsers(String gooruUid)throws GwtException;
+	
+	void followUser(String gooruUid)throws GwtException;
+	
+	void unFollowUser(String gooruUid)throws GwtException;
 	
 }
