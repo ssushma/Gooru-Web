@@ -260,6 +260,8 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		
 		String privacyContainer();
 		
+		String errorLabel();
+		
 	}
 	@Source("AssignPopUp.css")
 	CollectionAssignCss css();
