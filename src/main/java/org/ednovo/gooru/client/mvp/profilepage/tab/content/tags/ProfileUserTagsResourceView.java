@@ -23,10 +23,11 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 
 	public ProfileUserTagsResourceView() {
 		initWidget(uiBinder.createAndBindUi(this));
+		setData();
 	}
 	public void setData(){
 		TagTextMessage.setText(GL1915);
-		tagMessage.setText(GL1941);
+		tagMessage.setText(GL1943);
 		tagType.setText("handout");
 		tagCount.setText("60");
 		for(int i=0;i<7;i++){
