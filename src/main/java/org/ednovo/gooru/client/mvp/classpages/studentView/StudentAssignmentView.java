@@ -159,6 +159,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static boolean isloginPrivate = false;
 	public static boolean isloginButtonClick = false;
 	
+	private Map<String,AssignmentProgressVc> assignmentsDotsMap=new HashMap<String,AssignmentProgressVc>();
+	
 	
 	@Inject
 	public StudentAssignmentView() {
@@ -487,6 +489,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 						contentpanel.add(setLoadingPanel());
 						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
 					}
+					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
+						updateCircleColors(collectionItemId,readStatus);
+					}
 				};
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
 				contentpanel.add(collectionsView);
@@ -565,14 +570,25 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		//TODO 
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
 			panelAssignmentProgress.clear();
+			assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
 				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc(false,classpageItemDo,(itemIndex+1));
+				assignmentsDotsMap.put(classpageItemDo.getCollectionItemId(), assignmentProgressVc);
 				panelAssignmentProgress.add(assignmentProgressVc);
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
 			}
 		}
 	}
+	
+	public void updateCircleColors(String collectionItemId,String readStatus){
+		AssignmentProgressVc assignmentProgressVc=assignmentsDotsMap.get(collectionItemId);
+		if(assignmentProgressVc!=null){
+			assignmentProgressVc.updateDotsCircle(readStatus);
+		}
+	}
+	
+	
 	@UiHandler("backToEditPanel")
 	public void onClickHandler(ClickEvent event){
 		//getPreviousPage();
