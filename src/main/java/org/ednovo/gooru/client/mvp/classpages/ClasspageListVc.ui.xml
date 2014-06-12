@@ -17,7 +17,7 @@
 	        		</g:VerticalPanel>
 	            </g:ScrollPanel>
 		    </g:HTMLPanel> 
-		    <g:HTMLPanel styleName="{res.css.classpageBottomLine}"/>
+		    <!-- <g:HTMLPanel styleName="{res.css.classpageBottomLine}"/> -->
 		    <g:Anchor ui:field="ancNewClasspage" styleName="{res.css.newClasspageLink}"></g:Anchor>
 		    <g:HTMLPanel styleName="{res.css.inputContainer}">
 				<g:Label styleName="{res.css.tooltipContentTitle}" ui:field="lblTitle" />
