@@ -111,7 +111,11 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	@UiField Button addTeacherTip, cancelTeacherTip;
 	
-	@UiField HTMLPanel rbPublicPanel;
+	@UiField HTMLPanel rbPublicPanel,publishedPanel;
+	
+	@UiField Button rbPublic;
+	
+	@UiField Label lblPublishPending,lblPublish;
 
 	private FlowPanel publicFocPanel;
 
@@ -141,10 +145,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	private String rawUrl, embedLink;
 	
 	private boolean isSharable;
-	
-	@UiField Button rbPublic;
-	
-	@UiField Label lblPublishPending;
 	
 	private static final String GOORU_UID = "gooruuid";
 	
@@ -297,9 +297,11 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		linkFocPanel.add(rbShareablePanel);
 		linkShareFloPanel.add(linkFocPanel);
 		
+		rbPublic.setVisible(true);
 		lblPublishPending.setVisible(false);
+		publishedPanel.setVisible(false);
 		lblPublishPending.setText(GL1924);
-		
+		lblPublish.setText(GL1942);
 		
 		privateFocPanel = new FlowPanel();
 		shareViewPrivateUc = new ShareViewUc(GL0333, GL0334); 
@@ -325,19 +327,50 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-			selectPrivateResource("public");
+			if(collection.getPublishStatus()!=null){
+				if(collection.getPublishStatus().getValue().equalsIgnoreCase("reviewed")){
+					rbPublic.setVisible(false);
+					selectPrivateResource("public");
+					lblPublishPending.setVisible(false);
+					publishedPanel.setVisible(true);
+				}
+			}
 		} else if (collection.getSharing().equals("private")) {
 			privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = false;
-			selectPrivateResource("private");
+			if(collection.getPublishStatus()!=null){
+				if(collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+					selectPrivateResource("pending");
+					rbPublic.setVisible(false);
+					lblPublishPending.setVisible(true);
+					publishedPanel.setVisible(false);
+				}else{
+					selectPrivateResource("private");
+				}
+			}else{
+				selectPrivateResource("private");
+			}
+			
 		} else {
 			linkShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 			isSharable = true;
-			selectPrivateResource("shareable");
+			if(collection.getPublishStatus()!=null){
+				if(collection.getPublishStatus().getValue().equalsIgnoreCase("pending")){
+					selectPrivateResource("pending");
+					rbPublic.setVisible(false);
+					lblPublishPending.setVisible(true);
+					publishedPanel.setVisible(false);
+				}else{
+					selectPrivateResource("shareable");
+				}
+			}else{
+				selectPrivateResource("shareable");
+			}
+			
 		}
 
 		setShareUrlGenerationAsyncCallback(new SimpleAsyncCallback<Map<String, String>>() {
@@ -621,7 +654,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	 * 
 	 * @param share
 	 */
-	private void updateShare(String share) {
+	private void updateShare(final String share) {
+		
 		AppClientFactory.getInjector().getResourceService().updateCollectionMetadata(collection.getGooruOid(), null, null,
 						null, share, null, null, null, null, null, new SimpleAsyncCallback<CollectionDo>() {
 							@Override
@@ -631,16 +665,32 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 									socialShareLinksView.getshareLinkTxtBox().addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 									shareLinkFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									isSharable = false;
-								} else {
+								}else if (result.getSharing().equalsIgnoreCase("anyonewithlink")) {
 									socialShareLinksView.getshareLinkTxtBox().removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 									shareLinkFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									isSharable = true;
+								}else {
+									socialShareLinksView.getshareLinkTxtBox().removeStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
+									shareLinkFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+									isSharable = true;
+								}
+								if(result.getSharing().equalsIgnoreCase("private") || result.getSharing().equalsIgnoreCase("anyonewithlink")){
+									if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus().getValue()!=null){
+										if(!share.equalsIgnoreCase("public"))
+										    publishedPanel.setVisible(false);
+											rbPublic.setVisible(true);
+											lblPublishPending.setVisible(false);
+									}
+								}
+								
+								if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus().getValue()!=null){
+									AppClientFactory.fireEvent(new CollectionAssignShareEvent("",result.getPublishStatus().getValue(),true));
 								}
 								AppClientFactory.fireEvent(new EmbedEnableEvent(isSharable));
 
 								contentpanel.clear();
 								addSocialResource(result.getSharing());
-								AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing()));
+								AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),"",false));
 							}
 				});
 	}
@@ -861,13 +911,13 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		teacherTipTextarea.setText(collectionDo.getKeyPoints());
 		if(collectionDo.getKeyPoints() != null && !collectionDo.getKeyPoints().isEmpty())
 		{
-		userTeacherTipText.setText(collectionDo.getKeyPoints());
-		userTeacherTipText.getElement().removeAttribute("style");
+			userTeacherTipText.setText(collectionDo.getKeyPoints());
+			userTeacherTipText.getElement().removeAttribute("style");
 		}
 		else
 		{
-		userTeacherTipText.setText(GL1709);
-		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
+			userTeacherTipText.setText(GL1709);
+			userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 		
 	}
@@ -922,9 +972,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			collectionShareAlertPopup = new CollectionShareAlertPopup() {
 				@Override
 				public void setPublicFromAlert() {
-					publicShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+					/*publicShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 					privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
-					linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+					linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());*/
 					SuccessPopupViewVc success = new SuccessPopupViewVc() {
 
 						@Override
@@ -932,6 +982,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 							rbPublic.setVisible(false);
 							lblPublishPending.setVisible(true);
 							this.hide();
+							updateShare("public");
+							selectPrivateResource("public");
 							Window.enableScrolling(true);
 						}
 						
@@ -939,8 +991,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 					success.setPopupTitle(GL1921);
                     success.setDescText(GL1917+"<br>"+GL1918);
                     success.setPositiveButtonText(GL0190);
-					updateShare("public");
-					selectPrivateResource("public");
+					
 				}
 			};
 			collectionShareAlertPopup.setPublicMsgData(collection);
@@ -958,7 +1009,12 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			rbPrivate.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButtonSelected());
 			rbShareable.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButton());
 			socialShareLinksView.setIsPrivate(true);
-		} else {
+		} else if(visibilityType.equalsIgnoreCase("pending")) {
+//			rbPublic.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButton());
+			rbPrivate.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButton());
+			rbShareable.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButton());
+			socialShareLinksView.setIsPrivate(true);
+		}else {
 //			rbPublic.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButton());
 			rbPrivate.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButton());
 			rbShareable.setStyleName(ShelfCBundle.INSTANCE.css().visibilityRadioButtonSelected());

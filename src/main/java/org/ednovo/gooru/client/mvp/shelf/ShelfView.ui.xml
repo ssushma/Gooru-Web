@@ -113,7 +113,12 @@
 					<g:HTMLPanel ui:field="statPopup"></g:HTMLPanel>
 					<g:HTMLPanel styleName="{res.css.shelfPublishTab}" ui:field="rbPublicPanel">
 			           <g:Button styleName="{res.css.publishButton} primary" ui:field="rbPublic">Publish</g:Button>
+			           <g:Label styleName="{res.css.publishPending}" ui:field="lblPublishPending"></g:Label>
 			        </g:HTMLPanel>
+			        <g:HTMLPanel styleName="{res.css.shelfPublishTab}" ui:field="publishedPanel">
+			    		<g:Image url="images/right-mark.png"></g:Image>
+			    		<g:Label styleName="{res.css.published}" ui:field="lblPublish">Published</g:Label>
+					</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:SimplePanel ui:field="collectionMetaDataSimPanel"
 					styleName="{res.css.metaInfo}" />
