@@ -28,7 +28,7 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	}
 	public void setData(){
 		TagTextMessage.setText(GL1915);
-		tagTextMessage.getElement().setInnerHTML(GL1927);
+		tagTextMessage.getElement().setInnerHTML(GL1937);
 		for(int i=0;i<7;i++){
 			ProfileUserTagWidget profileUserTagWidget=new ProfileUserTagWidget();
 			userTagsConatiner.add(profileUserTagWidget);
