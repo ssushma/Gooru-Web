@@ -484,7 +484,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 		lblPublishPending.setVisible(false);
 		lblPublishPending.getElement().getStyle().setMarginTop(9, Unit.PX);
-		lblPublishPending.setText(GL1928);
+		lblPublishPending.setText(GL1941);
+		lblPublish.setText(GL1942);
 
 		handelChangeImageEvent();
 		// simplePencilFocPanel.addMouseOverHandler(new hideEditPencil());

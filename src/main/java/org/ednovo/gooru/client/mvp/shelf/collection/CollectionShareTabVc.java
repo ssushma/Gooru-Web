@@ -301,7 +301,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		lblPublishPending.setVisible(false);
 		publishedPanel.setVisible(false);
 		lblPublishPending.setText(GL1924);
-		lblPublish.setText(GL1929);
+		lblPublish.setText(GL1942);
 		
 		privateFocPanel = new FlowPanel();
 		shareViewPrivateUc = new ShareViewUc(GL0333, GL0334); 

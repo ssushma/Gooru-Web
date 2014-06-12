@@ -165,7 +165,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			public void refreshClasspage() {
 				toClear = true;
 				offSet = 0;
-				getAllClasspages(String.valueOf(offSet), false, null);
+//				getAllClasspages(String.valueOf(offSet), false, null);
 			}
 		};
 
@@ -174,7 +174,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			@Override
 			public void updateClasspageTitle(String classpageId,
 					String classpageTitle) {
-				updateTitle(classpageId, classpageTitle);
+//				updateTitle(classpageId, classpageTitle);
 			}
 		};
 
@@ -198,15 +198,15 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 					htmlPanelClasspageList.add(createClasspageTitleLabel(
 							"Loading...", "lblLoading", true));
 					isApiCalling = true;
-					getAllClasspages(String.valueOf(offSet), false, null);
+//					getAllClasspages(String.valueOf(offSet), false, null);
 				}
 			}
 		});
 		setLabels();
-		showLoading();
+//		showLoading();
 		toClear = true;
-		getAllClasspages(String.valueOf(offSet), isClasspageRefreshed,
-				deletedClasspageId);
+//		getAllClasspages(String.valueOf(offSet), isClasspageRefreshed,
+//				deletedClasspageId);
 	}
 
 	/**
@@ -363,6 +363,9 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		classCodeTxtBox.setPlaceholder(GL1762_1);
 
 		setButtonStatus("active");
+		
+		spanelCollectionList.setVisible(false);
+		htmlPanelContentContainer.setVisible(false);
 
 		// inLineLblGooruGuide.setText(MessageProperties.GL0119);
 		// inLineLblCreateOne.setText(MessageProperties.GL0120);

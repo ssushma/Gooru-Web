@@ -79,8 +79,8 @@ public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandl
 	 * 
 	 * 
 	 * @param classpageId
-	 * @param pageSize
-	 * @param pageNum
+	 * @param action
+	 * @param string 
 	 * 
 	 * @return : void
 	 *
@@ -91,7 +91,6 @@ public interface EditClasspageUiHandlers extends BaseUiHandlers, AssignmentHandl
 	 * 
 	*/
 	
-	void getAssignmentsProgress(String classpageId, String offset,
-			String limit);
+	void getAssignmentsProgress(String classpageId, String offSet, String limit);
 
 }

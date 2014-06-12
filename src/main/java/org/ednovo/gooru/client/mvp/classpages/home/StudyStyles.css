@@ -1,290 +1,148 @@
-.classPageContainer {
-	width: 1100px;
+.wrapper {
+	width: 1280px;
 	margin: 0 auto;
-	/* background-color: #eeecec; */
+	margin-top: 78px;
 }
-.classPageContentDiv {
-	width: 550px;
+.content {
+	width: 870px;
 	margin: 0 auto;
-	margin-bottom:300px;
 }
-.classPageContentDesc {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	line-height: 120%;
-	color: rgb(81,81,81);
-	text-align: left;
-	padding: 120px 0px 60px 43px;
+.spriteType {
+	background: url(../images/sprites.png);
 }
-.classPageSearchContainer {
-	overflow: hidden;
-	padding: 0px 0px 10px 60px;
-}
-.classPageSearchDesc {
-	float: left;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 120%;
-	color: rgb(81,81,81);
-	text-align: left;
-	padding: 7px 15px 0px 0px;
-}
-.classPageSearchInput {
-	float: left;
-	font-size: 12px;
-	background-color: rgb(255,255,255);
-	width: 200px;
-	height: 30px;
-	border-color: rgb(221,221,221);
-	border-width: 1px;
-	-moz-border-radius: 1px;
-	-webkit-border-radius: 1px;
-	border-radius: 1px;
-	border-style: solid;
-	margin: 0px 10px 0px 0px;
-	padding: 0px 0px 0px 6px;
-	text-transform:uppercase;
-	font-family: Tahoma, sans-serif !important;
-}
-.classPageButtonContainer {
-	float: left;
-	padding: 0px 0px 0px 0px;
-}
-.classPageSearchButton {
-	background-color: #1076bb;
-	background-image: -webkit-gradient(linear, 51% 3%, 51% 100%, color-stop(0, rgb(76,152,204)), color-stop(0.99, rgb(16,118,187)));
-	background-image: -webkit-linear-gradient(-90deg, rgb(76,152,204) 0%, rgb(16,118,187) 99%);
-	background-image: -o-linear-gradient(-90deg, rgb(76,152,204) 0%, rgb(16,118,187) 99%);
-	background-image: -ms-linear-gradient(-90deg, rgb(76,152,204) 0%, rgb(16,118,187) 99%);
-	width: 50px;
-	height: 30px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc,endColorstr=#ff1076bb,GradientType=0)";
- filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ff4c98cc, endColorstr=#ff1076bb, GradientType=0);
-}
-.classPageSearchButtonText {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 120%;
+.title {
+	display: inline-block;
+	font-size: 20px;
 	font-weight: bold;
-	color: rgb(255,255,255);
-	text-align: center;
-	padding: 8px 0px 0px 0px;
-	cursor:pointer;
+}
+.btnStyle {
+	display: inline-block;
+color: #515151;
+font-weight: bold;
+font-size: 16px;
+background:none;
+cursor: pointer;
+}
+.class-code {
+	display: inline-block;
+	float: right;
+	color: #515151;
+	font-weight: bold;
+	font-size: 16px;
+	height: 45px;
+}
+.ext {
+	height: 35px;
+}
+.content-inner {
+	margin-bottom: 20px;
+}
+.content-box {
+	display: inline-block;
+	vertical-align: top;
+	width: 422px;
+	background: #fff;
+	min-height: 100px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-moz-box-shadow: 0px 0px 10px rgba(81,81,81,0.3);
+	-webkit-box-shadow: 0px 0px 10px rgba(81,81,81,0.3);
+	box-shadow: 0px 0px 10px rgba(81,81,81,0.3);
+	cursor: pointer;
+}
+.content-box .h4 {
+	font-size: 16px;
+	font-weight: bold;
+	color: rgb(81,81,81);
+	display: inline-block;
+	float: right;
+	margin: 10px 20px;
+}
+.ownerClasses{
+	min-height:100px;
+	width:900px;
+}
+.joinedClasses{
+	min-height:200px;
 }
 .clear {
 	clear: both;
 }
-.classPageOrangeText {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 120%;
-	color: rgb(249,176,57);
-	text-align: left;
-	padding: 0px 53px 10px 0px;
-	width: 39%;
-	margin: 0 auto;
-	word-wrap: break-word;
+.content-box:last-child {
+	margin-right: 0px;
 }
-
-
-/* New Css */
-
-.container {
-	width: 1000px;
-	margin: auto;
-	min-height: 100%;
-	padding: 20px;
-	padding-top: 0px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
-
-.h1 {
-	font-weight: normal;
-	font-size: 20px;
-}
-.h2, .h3 {
-	margin-bottom: 10px;
-}
-
-.startsection {
-	float: left;
-	padding: 20px;
-	min-height: 100px;
-}
-.fright {
-	float: right;
-}
-.title {
-	font-family: 'Arvo', serif !important;
-	font-weight: bold;
-	font-size: 29px;
-	padding: 10px 0px;
-}
-.subtitle {
-	font-size: 16px;
-	width: 420px
-}
-#createClass {
-	font-size: 14px;
-	padding: 10px 12px;
-}
-.codeBg {
-	width: 300px;
-	text-align: center;
-	min-height: 100px;
-	background: #f1efef;
-}
-.codeTitle {
-	font-family: 'Arvo', serif !important;
-	font-size: 20px;
-	line-height: 200%;
-	font-weight: bold;
-}
-.classCodeTxtBox {
-	color: #515151;
-	outline: 0;
-	font-size: 14px;
-	padding: 6px;
-	border: 1px #E3E3E3 solid;
-	display: inline-block;
-	background-color: #f9f9f9;
-}
-.clearfix {
-	clear: both;
-	margin-bottom: 10px;
-}
-.leftPanel {
-	display: inline-block;
-	vertical-align: top;
-	width: 250px;
-	padding: 0px 10px 10px 10px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	min-height: 200px;
-}
-.navBox {
-	position: relative;
-	display: block;
-	padding: 30px 10px 30px 30px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	min-height: 200px;
-	margin-bottom: 20px;
-	background: #f1efef;
-	border: 1px solid #ddd;
-}
-.navBox .h3 {
-	font-size: 20px;
-	text-align: left;
-	font-weight: bold;
-	font-family: 'Arvo', serif !important;
-}
-.navBox .desc {
-	font-size: 12px;
-	text-align: left;
-	padding-top: 30px;
-}
-.hoverCircle {
-	position: absolute;
-	top: -12px;
-	left: -15px;
-	width: 40px;
-	height: 40px;
-	cursor: pointer;
-	background: #fbb03b;
-	border-radius: 20px;
-	-moz-border-radius: 20px;
-}
-.circleTitle {
-	color: #fff;
-	font-size: 20px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-}
-.rightPanel {
-	display: inline-block;
-	vertical-align: top;
-}
-#img {
-	padding-left: 10px;
-}
-.resourceImg {
+.inputype {
 	width: 140px;
-	line-height: 30px;
-	text-align: left;
-	display: inline-block;
-	padding-top: 5px;
+	height: 30px;
+	text-align: center;
+	margin-right: 5px;
+	border: 1px solid #dddddd;
+	background-color: #fff;
+	font-size: 12px;
 }
-.navLink {
+.btn {
+	color: #FFF;
+	border-radius: 4px;
+	padding: 7px 14px;
+	border: 1px solid #1076BB;
+	background: #1076BB;
+	background-color: #1076BB;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+	background: -webkit-linear-gradient(top, #4C98CC, #1076BB);
+	background: -moz-linear-gradient(top, #4C98CC, #1076BB);
+	background: -ms-linear-gradient(top, #4C98CC, #1076BB);
+	background: -o-linear-gradient(top, #4C98CC, #1076BB);
+}
+.btn:hover {
+	color: #FFF;
+	background: #1076BB;
 	cursor: pointer;
-	color: #1076bb;
-	position: relative;
-	top: 17px;
 }
-.classSection {
-	width: 1000px;
-	margin: 0 auto;
-	padding: 20px;
-	margin-top: 30px;
-	background: #fff;
-	min-height: 100px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-}
-.classContent {
-	text-align: center;
-	padding: 20px;
-}
-.classSection .h5 {
-	font-size: 29px;
-	text-align: center;
-	padding-bottom: 10px;
+.plus {
+	display: inline;
 	font-weight: bold;
-	font-family: 'Arvo', serif !important;
+	font-size: 20px;
 }
-.hoverTitle {
+.hover-section {
 	position: relative;
-	top: -80px;
-	color: #FFF;
-	font-size: 22px;
-	text-align: center;
 }
-.imgBlock {
-	margin: 0px 30px;
-	position: relative;
-	display: inline-block;
-	vertical-align: top;
-	width: 160px;
-	height: 134px;
-	cursor: pointer;
+.overlayBg 
+{
+color: #515151;
+font-weight: bold;
+width: 100%;
+bottom: 30px;
+height: 26px;
+padding-top: 5px;
+padding-left: 10px;
+position: absolute;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+text-align: center;
+font-size: 20px;
 }
-
-.imgBlock:hover{
-	opacity:0.6;	
+.profileImage
+{
+	border-radius: 50px;
+	box-shadow: 0 0 0 2px #87badd;
+	width: 30px;
+	height: 30px;
+	margin-left: 10px;
+	margin-top: 3px;
+	float: left;
 }
-
-.textTransform{
-	text-transform: uppercase;
+.profileImageText
+{
+	float: left;
+	margin-left: 10px;
+	font-size: 16px;
+font-weight: bold;
+color: #515151;
+display: inline-block;
+margin-top:10px;
 }
-
-.hoverTitleTwoLine {
-	position: relative;
-	top: -92px;
-	color: #FFF;
-	font-size: 22px;
-	text-align: center;
-}
-.leftPanel{
-	float:left;
-	width:50%;
-}
-.rightPanel{
-	float:right;
-	width:50%;
+.centerAlignBtn{
+	text-align:center;
 }

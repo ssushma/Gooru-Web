@@ -264,6 +264,8 @@ public interface AssignPopUpCBundle extends ClientBundle{
 		String privacyContainer();
 		
 		String privacyCustomizeContainer();
+		
+		String errorLabel();
 	}
 
 	@Source("AssignPopUp.css")

@@ -58,9 +58,12 @@ public class CollectionDo extends ResourceDo implements Serializable{
 	private CollectionMetaInfoDo metaInfo;
 	private MetaDO meta;
 	private Integer statusCode;
+	private Integer itemCount;
 	private String classpageCode;
 	private Date lastModified;
 	private UserDo lastModifiedUser;
+	private UserDo user;
+	private Integer memberCount;
 	private TrackActivityDo trackActivity;
 	private String sharing;
 	private PublishDo publishStatus;
@@ -334,5 +337,28 @@ public class CollectionDo extends ResourceDo implements Serializable{
 		this.publishStatus = publishStatus;
 	}
 
-	
+	public Integer getItemCount() {
+		return itemCount;
+	}
+
+	public void setItemCount(Integer itemCount) {
+		this.itemCount = itemCount;
+	}
+
+	public UserDo getUser() {
+		return user;
+	}
+
+	public void setUser(UserDo user) {
+		this.user = user;
+	}
+
+	public Integer getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(Integer memberCount) {
+		this.memberCount = memberCount;
+	}
+
 }
