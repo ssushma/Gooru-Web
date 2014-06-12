@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
 
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
@@ -320,8 +321,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		
-		
-		setTab(collectionsTabVc);
 		followButton.setText(GL1935);
 		UnFollowButton.setVisible(false);
 		UnFollowButton.setText(GL1936);
@@ -521,6 +520,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
+		
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
 			collectionsTabVc.setEnabled(false);
@@ -563,7 +563,21 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			tagTabVc.addClickHandler(new clickOnTags());
 		}*/
 		
-		
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("collection".equalsIgnoreCase(tabValue))
+			{
+				setTab(collectionsTabVc);
+			}
+			if("tags".equalsIgnoreCase(tabValue))
+			{
+				setTab(tagTabVc);
+			}
+		}
+		else{
+			setTab(collectionsTabVc);
+			
+		}
 		
 	}
 
@@ -1356,11 +1370,25 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("followers".equalsIgnoreCase(tabValue))
+			{
+				setTab(followersTabVc);
+			}
+		}
 	}
 	@Override
 	public void getFolloweingsObj(List<UserFollowDo> userFollowDo) {
 		userFollowingDo.clear();
 		userFollowingDo.addAll(userFollowDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("following".equalsIgnoreCase(tabValue))
+			{
+				setTab(followingTabVc);
+			}
+		}
 		
 	}
 	
@@ -1469,11 +1497,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
+				
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
 				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
+				
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
@@ -1483,7 +1513,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				mainContainer.setVisible(false);
 				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
 				followingContainer.add(profileUserTagView);
-			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
+			
+				//ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
+				//followingContainer.add(profileUserTagsResourceView);
 				
 			}
 			
