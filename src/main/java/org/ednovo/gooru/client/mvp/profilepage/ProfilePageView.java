@@ -132,7 +132,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
-			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton;
+			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
@@ -322,6 +322,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		setTab(collectionsTabVc);
 		followButton.setText(GL1925);
+		UnFollowButton.setVisible(false);
+		UnFollowButton.setText(GL1926);
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -1378,7 +1380,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		Map<String,String> params = new HashMap<String,String>();
 		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		
 		params.put("id", id);
 		params.put("user", user);
 		params.put("tab", "tags");
@@ -1416,7 +1417,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				tagTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfileUserTagView profileUserTagView = new ProfileUserTagView(gooruUid);
+				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
 				followingContainer.add(profileUserTagView);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
@@ -1427,7 +1428,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
 	{
-	getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+	}
+	@UiHandler("UnFollowButton")
+	public void onClickUnFollowButton(ClickEvent event)
+	{
+		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 	}
 	
 

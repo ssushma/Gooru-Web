@@ -569,7 +569,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	public void followUser(String gooruUid) {
-		AppClientFactory.getInjector().getUserService().followUser(gooruUid, new AsyncCallback<Void>() {
+		AppClientFactory.getInjector().getUserService().followUser(profileDo.getUser().getGooruUId(), new AsyncCallback<Void>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -580,6 +580,25 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 			@Override
 			public void onSuccess(Void result) {
 				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+
+	@Override
+	public void unFollowUser(String gooruUid) {
+		AppClientFactory.getInjector().getUserService().unFollowUser(gooruUid, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+			
 				
 			}
 		});

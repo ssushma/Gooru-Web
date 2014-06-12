@@ -90,4 +90,6 @@ public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpen
 	
 	void followUser(String gooruUid);
 	
+	void unFollowUser(String gooruUid);
+	
 }

@@ -3,13 +3,6 @@
 	padding: 0;
 }
 
-body {
-	background-image: url("images/profilepage/gray_noise_25.png");
-	font-family: Arial, sans-serif;
-	color:#515151;
-	font-size:12px;
-}
-
 a {
 	text-decoration:none;
 	color:#1076BB;
@@ -33,6 +26,7 @@ a:hover {
 .profilepageFollwoingContent {
 	width: 1045px;
 	min-height: 130px;
+	padding-top: 15px;
 	
 }
 .profilepageFollwoingContentlabel {
@@ -97,10 +91,14 @@ a:hover {
 	font-weight: bold;
 	font-size: 18px;
 }
+.username:hover{
+	cursor:pointer;
+}
 .profilepageFollwoingContentText {
 	font-weight: bold;
 	padding: 10px 0px;
 	font-size: 16px;
+	border-bottom: 1px solid #ddd;
 }
 .hr {
 	border-bottom: 1px solid #ddd;

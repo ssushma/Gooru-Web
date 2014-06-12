@@ -97,5 +97,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void getFollowedByUsers(String gooruUid,AsyncCallback<List<UserFollowDo>> callback);
    
    void followUser(String gooruUid,AsyncCallback<Void> callback);
-
+   
+   void unFollowUser(String gooruUid,AsyncCallback<Void> callback);
 }
