@@ -2429,7 +2429,7 @@ public interface MessageProperties {
     	String GL1912 = "Move to position";
     	
     	String GL1913 = "User Who Are Following Me";
-    	String GL1914 = "My Followers";
+    	String GL1914 = "<b>My Followers:</b> Followers have bookmarked your profile page.";
     	String GL1915 = "My Tags";
     	String GL1916 ="Your Suggestions";
     	
@@ -2443,6 +2443,7 @@ public interface MessageProperties {
     	String GL1922 ="I'm ready to publish";
     	String GL1923 ="Go back and review";
     	String GL1924 ="Publishing in Progress";
+
     	
     	//Classpage Home page
     	String GL1925 ="Classes I've Joined";
@@ -2455,6 +2456,11 @@ public interface MessageProperties {
     	String GL1932 ="Student";
     	String GL1933 ="Assignments";
     	String GL1934 ="Assignment";
+
+
+    	String GL1935 = "Follow";
+    	String GL1936 = "Unfollow";
+    	String GL1937 = "Click a tag to view all the resources that you tagged with that field.";
 
 
 }

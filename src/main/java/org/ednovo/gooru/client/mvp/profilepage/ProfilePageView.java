@@ -321,9 +321,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		
 		setTab(collectionsTabVc);
-		followButton.setText(GL1925);
+		followButton.setText(GL1935);
 		UnFollowButton.setVisible(false);
-		UnFollowButton.setText(GL1926);
+		UnFollowButton.setText(GL1936);
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
