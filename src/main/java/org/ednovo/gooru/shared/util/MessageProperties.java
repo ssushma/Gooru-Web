@@ -2466,9 +2466,14 @@ public interface MessageProperties {
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
-    	String GL1941 = "Back to all Tags";
+    
     	
     	String GL1942 = "Published";
+
+    	
+    	String GL1944 = "Back to all Tags";
+
     	String GL1943 = "Publish in Progress";
+
 
 }
