@@ -568,12 +568,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	@Override
 	public void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList) {
 		//TODO 
-		if(classpageItemsList!=null&&classpageItemsList.size()>0){
+		if(classpageItemsList != null && classpageItemsList.size() > 0){
 			panelAssignmentProgress.clear();
 			assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
-			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
+			for(int itemIndex=0;itemIndex<classpageItemsList.size(); itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc(false,classpageItemDo,(itemIndex+1));
+				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc((itemIndex == classpageItemsList.size() - 1) ? true : false,classpageItemDo,(itemIndex+1));
 				assignmentsDotsMap.put(classpageItemDo.getCollectionItemId(), assignmentProgressVc);
 				panelAssignmentProgress.add(assignmentProgressVc);
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
