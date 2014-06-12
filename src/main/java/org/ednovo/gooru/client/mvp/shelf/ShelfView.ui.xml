@@ -116,8 +116,8 @@
 			           <g:Label styleName="{res.css.publishPending}" ui:field="lblPublishPending"></g:Label>
 			        </g:HTMLPanel>
 			        <g:HTMLPanel styleName="{res.css.shelfPublishTab}" ui:field="publishedPanel">
-			    		<g:Image url="images/right-mark.png"></g:Image>
 			    		<g:Label styleName="{res.css.published}" ui:field="lblPublish">Published</g:Label>
+			    		<g:Image url="images/right-mark.png"></g:Image>
 					</g:HTMLPanel>
 				</g:FlowPanel>
 				<g:SimplePanel ui:field="collectionMetaDataSimPanel"
