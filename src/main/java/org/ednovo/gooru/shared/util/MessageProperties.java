@@ -2443,10 +2443,28 @@ public interface MessageProperties {
     	String GL1922 ="I'm ready to publish";
     	String GL1923 ="Go back and review";
     	String GL1924 ="Publishing in Progress";
-    	String GL1925 = "Follow";
-    	String GL1926 = "Unfollow";
-    	String GL1927 = "Click a tag to view all the resources that you tagged with that field.";
     	
-    	String GL1928 = "Admin has blocked your Gooru ID.";
+    	
+    	
+    	//Classpage Home page
+    	String GL1925 ="Classes I've Joined";
+    	String GL1926 ="Enter";
+    	String GL1927 ="Classes I Teach";
+    	String GL1928 ="Create a New Class";
+    	String GL1929 ="You do not have any Created Classes!";
+    	String GL1930 ="You have not joined any Classes yet!";
+    	String GL1931 ="Students";
+    	String GL1932 ="Student";
+    	String GL1933 ="Assignments";
+    	String GL1934 ="Assignment";
+
+
+    	String GL1935 = "Follow";
+    	String GL1936 = "Unfollow";
+    	String GL1937 = "Click a tag to view all the resources that you tagged with that field.";
+    	
+    	
+    	String GL1938 = "Admin has blocked your Gooru ID.";
+
 
 }

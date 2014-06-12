@@ -443,7 +443,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 //						}else if(result.getConfirmStatus()==0){
 							/*loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
-							new AlertContentUc(OOPS, GL1928);*/
+							new AlertContentUc(OOPS, GL1938);*/
 //						}
 					}
 
