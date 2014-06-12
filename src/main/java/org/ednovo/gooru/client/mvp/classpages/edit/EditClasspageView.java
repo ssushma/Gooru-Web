@@ -23,6 +23,7 @@ import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.Co
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
@@ -41,6 +42,9 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Position;
@@ -59,7 +63,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -124,7 +131,7 @@ public class EditClasspageView extends
 	
 	@UiField Image imgClasspageImage;
 	
-	@UiField FlowPanel mainFlowPanel;
+	@UiField FlowPanel mainFlowPanel,dropDownListContainer;
 
 	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath;
 
@@ -137,7 +144,7 @@ public class EditClasspageView extends
 	@UiField
 	static Frame frameUrl;
 	
-	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious;
+	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious,dropdownPlaceHolder;
 
 	@UiField Button btnStudentView;
 
@@ -539,8 +546,38 @@ public class EditClasspageView extends
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
 			}
 		};
-		AppClientFactory.getEventBus().addHandler(ResetProgressEvent.TYPE,
-				reset);
+		AppClientFactory.getEventBus().addHandler(ResetProgressEvent.TYPE,reset);
+		dropDownListContainer.setVisible(false);
+		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
+	}
+	
+	
+	public class SortDropDownEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			new CustomAnimation(dropDownListContainer).run(300);
+		}
+	}
+	public void hideDropDown(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		dropDownListContainer.setVisible(false);
+        	}
+    	}
+     }
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return dropDownListContainer.getElement().isOrHasChild(Element.as(target))||dropdownPlaceHolder.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 	/**
 	 * 

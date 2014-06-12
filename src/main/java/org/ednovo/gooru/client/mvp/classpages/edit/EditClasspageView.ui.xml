@@ -71,7 +71,6 @@
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
-				
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.containerProgress}">
 			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
@@ -91,14 +90,21 @@
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
-			<g:FlowPanel styleName="{res.css.paginationContainer}"
-					ui:field="paginationFocPanel">
-				</g:FlowPanel>
 			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
 				<g:HTMLPanel>
-					<g:Button ui:field="btnNewAssignment" text=""
-						styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
 				</g:HTMLPanel>
+				<g:FlowPanel styleName="{res.css.dropdowncontainer}">
+					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder">asending order</g:Label>
+					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
+						<g:Label styleName="{res.css.dropdownTextLabel}">asending order</g:Label>
+						<g:Label styleName="{res.css.dropdownTextLabel}">asending order</g:Label>		
+						<g:Label styleName="{res.css.dropdownTextLabel}">asending order</g:Label>
+					</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel">
+				</g:FlowPanel>
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->
