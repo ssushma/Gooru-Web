@@ -97,6 +97,8 @@ public class EditClasspageView extends
 	@UiField(provided = true)
 	AssignmentEditLabelUc collectionTitleUc;
 	
+	ArrayList<ClasspageItemDo> globalClasspageProcess;
+	
 	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
 	
 /*	@UiField TextBox  txtClasspageLinkShare; */
@@ -120,7 +122,7 @@ public class EditClasspageView extends
 	@UiField
 	static Frame frameUrl;
 	
-	@UiField Label titleAlertMessageLbl;
+	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious;
 
 	@UiField Button btnStudentView;
 
@@ -190,6 +192,9 @@ public class EditClasspageView extends
 
 	private int pageNum = 0;
 
+	private Integer offsetProgress=0;
+	private Integer limitProgress=30;
+	
 	private int pos = 0;
 
 	int noOfItems = 5;
@@ -218,7 +223,7 @@ public class EditClasspageView extends
 	@Inject
 	public EditClasspageView() {
 		this.res = EditClasspageCBundle.INSTANCE;
-
+		globalClasspageProcess =  new ArrayList<ClasspageItemDo>(); 
 		collectionTitleUc = new AssignmentEditLabelUc() {
 			@Override
 			public void onEditDisabled(String text) {
@@ -460,6 +465,7 @@ public class EditClasspageView extends
 		reportsTab.setText(GL1737);
 	//	assignmentsDirectionsLabel.setText(GL1887);
 		
+		lblPrevious.setVisible(false);
 
 		lblAssignmentProgress.setText(GL1891_1);
 		
@@ -487,11 +493,35 @@ public class EditClasspageView extends
 		//AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
 		
 		
+		lblNext.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				offsetProgress = offsetProgress +limitProgress;
+				
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+			}
+		});
+//		lblPrevious.addClickHandler(new ClickHandler() {
+//			
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				if (offsetProgress <=0){
+//					offsetProgress =0;
+//				}else{
+//					offsetProgress = offsetProgress - limitProgress;
+//				}
+//				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+//			}
+//		});
+		
+		
 		ResetProgressHandler reset = new ResetProgressHandler() {
 
 			@Override
 			public void callProgressAPI() {
-				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), "0", "30" );
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
 			}
 		};
 		AppClientFactory.getEventBus().addHandler(ResetProgressEvent.TYPE,
@@ -518,9 +548,9 @@ public class EditClasspageView extends
 	 *
 	 *
 	 */
-	public void callAssignmentAPI(String classpageId, String pageSize, String pageNum){
-//		getUiHandlers().getAssignmentsProgress(classpageId, pageSize, pageNum);
-		getUiHandlers().getAssignmentsProgress(classpageId, pageSize, pageNum);
+	@Override
+	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
+		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
 	}
 	
 	
@@ -1446,11 +1476,30 @@ public class EditClasspageView extends
 		return collectionTitleUc;
 	}
 	@Override
-	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageList){
+	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){
 		panelAssignmentProgress.clear();
-		for (int i=0; i<classpageList.size(); i++){
-			panelAssignmentProgress.add(new AssignmentProgressVc(i == classpageList.size()-1 ? true : false, 
-					classpageList.get(i), i+1, classpageList.size()));
+		//Store all classpage details in one global object.
+		for (int i=0; i<classpageProcess.size(); i++){
+			globalClasspageProcess.add(classpageProcess.get(i));
+		}
+		
+		//hide/show the next and previous buttons
+		if (classpageProcess.size() >= limitProgress){
+			lblNext.setVisible(true);
+		}else{
+			lblNext.setVisible(false);
+		}
+		
+		if (offsetProgress <= 0){
+			lblPrevious.setVisible(false);
+		}else{
+			lblPrevious.setVisible(true);
+		}
+		
+		//display the assignments progress (DOTS)
+		for (int i=0; i<globalClasspageProcess.size(); i++){
+			panelAssignmentProgress.add(new AssignmentProgressVc(i == globalClasspageProcess.size()-1 ? true : false, 
+					globalClasspageProcess.get(i), i+1, globalClasspageProcess.size()));
 		}
 	}
 	

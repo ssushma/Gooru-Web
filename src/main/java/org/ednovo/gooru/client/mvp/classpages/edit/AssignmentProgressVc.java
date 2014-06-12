@@ -100,6 +100,8 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
 		
+		panelMainContainer.getElement().setAttribute("id", classpageList.getCollectionItemId());
+		
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
 		if (isLast){
@@ -142,8 +144,6 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		for (int i=0; i<assignmentTotalCount; i++){
 			resourceTypePanel.add(createLabel(""+(i+1)));
 		}
-		
-		System.out.println("classpageList.getCollectionItemId() :"+classpageList.getCollectionItemId());
 	}
 	
 	
