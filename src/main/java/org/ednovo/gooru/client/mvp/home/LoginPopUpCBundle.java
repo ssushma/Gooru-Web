@@ -148,6 +148,8 @@ public interface LoginPopUpCBundle extends ClientBundle{
 		String separator();
 		
 		String green();
+		
+		String errorLabel();
 	}
 	@Source("Newlogin-popup.css")
 	LoginPopUpCss css();
