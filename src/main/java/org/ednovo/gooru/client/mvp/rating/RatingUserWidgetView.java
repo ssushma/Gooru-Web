@@ -231,9 +231,9 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 					editReview.setVisible(true);
 				}
 				
-				/*if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
+				if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
 					deleteReview.setVisible(true);     
-				}*/
+				}
 			}
 		});
 		reviewContainer.addMouseOutHandler(new MouseOutHandler() {
@@ -617,7 +617,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            {
 		            	int deleteIndex = reviewContainer.getWidgetIndex(deletePanel);
 		            	reviewContainer.remove(deleteIndex);
-		            	//reviewContainer.setVisible(false);
+		            	reviewContainer.setVisible(false);
 		            	AppClientFactory.fireEvent(new UpdateRatingOnDeleteEvent(true)); 
 					
 		            }
