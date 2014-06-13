@@ -110,6 +110,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private Integer offset=0;
 	private Integer limit=5;
+	private static Integer DEFAULT_OFFSETVALUE=5;
 	
 	ClassListPresenter classlistPresenter;
 	
@@ -126,6 +127,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private boolean isApiCalled = false;
 	public static boolean isLoggedInUser=false;
+	
+	private ClasspageDo classpageDo;
 	//ShelfListPresenter shelfTabPresenter
 	@Inject
 	public EditClasspagePresenter(IsEditClasspageView view, IsEditClasspageProxy proxy, AddAssignmentContainerPresenter assignmentContainer,ImageUploadPresenter imageUploadPresenter, ClassListPresenter classlistPresenter) {
@@ -268,7 +271,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		}
 		if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE) && AppClientFactory.getPlaceManager().refreshPlace()){
 			getView().getGlobalClasspageProcess().clear();
-			getClasspage();
+			//getClasspage();
 		}
 		
 	}
@@ -369,19 +372,21 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		super.prepareFromRequest(request);
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			getView().resetEditClasspageView();
-//			getClasspage();
 		}
+		getClasspage();
 	}
 	public void getClasspage(){
 		this.classpageId=getPlaceManager().getRequestParameter("classpageid");
 		this.analyticsId= getPlaceManager().getRequestParameter("analyticsId");
 		this.monitorId = getPlaceManager().getRequestParameter("monitorid");
+		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
 		//here
 		this.tab=AppClientFactory.getPlaceManager().getRequestParameter("tab", null);
-		this.classpageService.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
-			@Override
-			public void onSuccess(ClasspageDo classpageDo) {
-				//If the user is first time logged in user and he/she created the new class at that time it will display this welcome popup.
+		if(classpageDo==null){
+			this.classpageService.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
+				@Override
+				public void onSuccess(ClasspageDo classpageDo) {
+					//If the user is first time logged in user and he/she created the new class at that time it will display this welcome popup.
 					AppClientFactory.getInjector().getClasspageService().v2GetClassPartyCustomField(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<ProfilePageDo>() {
 						@Override
 						public void onSuccess(ProfilePageDo result) {
@@ -392,13 +397,12 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 							}
 						}
 					});
-				
-				if(classpageDo!=null){
+					EditClasspagePresenter.this.classpageDo=classpageDo;
 					if(classpageDo.getPermissions()!=null&&classpageDo.getPermissions().contains("edit")&& classpageDo.getClasspageId() != null){
 						offset=0;
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
-						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),tab,analyticsId,monitorId);
+						getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
 						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
@@ -409,15 +413,29 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						error.center();
 						error.show();
 					}
-				}else{
-					//TODO NEED TO DISPLAY API CALL FAILED PAGE
-		
 				}
-			}
-		});
+			});
+		}else{
+			getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
+		}
 	}
-	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId){
-		this.classpageService.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+	
+	public Integer getOffsetValue(){
+		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
+		int pageNumber=1;
+		try{
+			pageNumber=Integer.parseInt(pageNum);
+			if(pageNumber==0){
+				pageNumber=1;
+			}
+		}catch(Exception e){}
+		
+		return (((pageNumber-1)*DEFAULT_OFFSETVALUE))+1;
+		
+	}
+	
+	public void getClasspageItems(String classpageId,String offset,String limit, final String tab, final String analyticsId, final String monitorId,final String sortingOrder){
+		this.classpageService.getClassPageItems(classpageId, offset, limit,sortingOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
@@ -433,7 +451,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		String classpageId=getPlaceManager().getRequestParameter("classpageid");
 		String analyticsId=getPlaceManager().getRequestParameter("analyticsId");
 		String monitorId=getPlaceManager().getRequestParameter("monitorid");
-		getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId);
+		getClasspageItems( classpageId,offset.toString(),limit.toString(), tab, analyticsId,monitorId,null);
 	}
 	private void initParam() {
 		classpageId = getPlaceManager().getRequestParameter("classpageid");
@@ -535,7 +553,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 	@Override
 	public void getAssignmentsProgress(String classpageId, String offsetProgress, String limitProgress) {
-		this.classpageService.getClassPageItems(classpageId, offsetProgress, limitProgress, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+		this.classpageService.getClassPageItems(classpageId, offsetProgress, limitProgress,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
