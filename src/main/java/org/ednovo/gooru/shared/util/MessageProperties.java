@@ -2474,6 +2474,8 @@ public interface MessageProperties {
     	String GL1944 = "Back to all Tags";
 
     	String GL1943 = "Publish in Progress";
+    	
+    	
     	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
     	
     	String GL1946 = "View All";
@@ -2485,7 +2487,10 @@ public interface MessageProperties {
       	String GL1952 = "View All Completed";
       	String GL1953 = "View All InCompleted";
       	
-
+      	String GL1954 = "Are you sure you want to change the collection from public? Users will no longer be able to search for your collection or see it in your profile.";
+    	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
+    	
+    	String GL1956 = "Stay Public";
 
 
 }
