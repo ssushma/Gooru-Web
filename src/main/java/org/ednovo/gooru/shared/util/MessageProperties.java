@@ -2470,5 +2470,9 @@ public interface MessageProperties {
     	
     	String GL1942 = "Published";
     	String GL1943 = "Publish in Progress";
-
+    	
+    	String GL1950 = "Are you sure you want to change the collection from public? Users will no longer be able to search for your collection or see it in your profile.";
+    	String GL1951 = "You will have to republish the collection again if you desire to make it public.";
+    	
+    	String GL1952 = "Stay Public";
 }
