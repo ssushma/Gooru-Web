@@ -95,7 +95,7 @@
 				<g:HTMLPanel styleName="{res.css.btnContainer}">
 					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
 				</g:HTMLPanel>
-				<g:FlowPanel styleName="{res.css.dropdowncontainer}">
+				<g:FlowPanel ui:field="dropDownListDiv" styleName="{res.css.dropdowncontainer}">
 					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder"></g:Label>
 					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
 					</g:FlowPanel>
