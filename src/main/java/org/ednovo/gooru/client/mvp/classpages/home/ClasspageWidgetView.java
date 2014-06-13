@@ -94,19 +94,19 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 		{
 		if(collectionDoObj.getMemberCount() == 1)
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+GL1932);
+			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+GL1932);
 		}
 		else
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+GL1931);
+			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+GL1931);
 		}
 		if(collectionDoObj.getItemCount() == 1)
 		{
-			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1934);
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1934);
 		}
 		else
 		{
-			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1933);
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1933);
 		}
 		
 		imgUserProfile.setVisible(false);

@@ -484,7 +484,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 		lblPublishPending.setVisible(false);
 		lblPublishPending.getElement().getStyle().setMarginTop(9, Unit.PX);
-		lblPublishPending.setText(GL1941);
+		lblPublishPending.setText(GL1943);
 		lblPublish.setText(GL1942);
 
 		handelChangeImageEvent();
@@ -714,6 +714,10 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
 					rbPublic.setVisible(false);
 					lblPublishPending.setVisible(true);
+					publishedPanel.setVisible(false);
+				}else{
+					rbPublic.setVisible(true);
+					lblPublishPending.setVisible(false);
 					publishedPanel.setVisible(false);
 				}
 			}else{

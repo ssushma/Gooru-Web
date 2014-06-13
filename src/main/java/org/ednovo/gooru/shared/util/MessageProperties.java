@@ -2448,7 +2448,7 @@ public interface MessageProperties {
     	String GL1925 ="Classes I've Joined";
     	String GL1926 ="Enter";
     	String GL1927 ="Classes I Teach";
-    	String GL1928 ="Create a New Class";
+    	String GL1928 ="+ Create a New Class";
     	String GL1929 ="You do not have any Created Classes!";
     	String GL1930 ="You have not joined any Classes yet!";
     	String GL1931 ="Students";
@@ -2466,9 +2466,26 @@ public interface MessageProperties {
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
-    	String GL1941 = "Back to all Tags";
+    
     	
-    	String GL1941 = "Publish in Progress";
     	String GL1942 = "Published";
+
+    	
+    	String GL1944 = "Back to all Tags";
+
+    	String GL1943 = "Publish in Progress";
+    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	
+    	String GL1946 = "View All";
+      	String GL1947 = "All,Order Ascending,Order Descending";
+      	String GL1948 = "Ascending";
+      	String GL1949 = "Descending";
+      	String GL1950 = "Recently Added";
+      	String GL1951 = "Upcoming(by due date)";
+      	String GL1952 = "View All Completed";
+      	String GL1953 = "View All InCompleted";
+      	
+
+
 
 }

@@ -89,7 +89,15 @@ public class RatingWidgetView extends Composite{
 			star_3.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 			star_4.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
 			star_5.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
-		}/*else{
+		}else if(roundOffAvg==0){
+			star_1.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_2.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_3.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_4.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+			star_5.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().filled());
+		}
+			
+			/*else{
 			star_1.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
 			star_2.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
 			star_3.getElement().addClassName(PlayerBundle.INSTANCE.getPlayerStyle().star());
