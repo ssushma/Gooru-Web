@@ -2448,7 +2448,7 @@ public interface MessageProperties {
     	String GL1925 ="Classes I've Joined";
     	String GL1926 ="Enter";
     	String GL1927 ="Classes I Teach";
-    	String GL1928 ="Create a New Class";
+    	String GL1928 ="+ Create a New Class";
     	String GL1929 ="You do not have any Created Classes!";
     	String GL1930 ="You have not joined any Classes yet!";
     	String GL1931 ="Students";
@@ -2474,6 +2474,7 @@ public interface MessageProperties {
     	String GL1944 = "Back to all Tags";
 
     	String GL1943 = "Publish in Progress";
+    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
 
 
 }

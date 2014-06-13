@@ -1403,9 +1403,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	
 	@Override
 	public ProfilePageDo v2GetClassPartyCustomField(String gooruUid) throws GwtException {
-		ProfilePageDo profilePageDo = null;
+		ProfilePageDo profilePageDo = new ProfilePageDo();
 		String userUid = getLoggedInUserUid();
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSPARTY_CUSTOMFIELD, userUid, getLoggedInSessionToken());
+/*		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_CLASSPARTY_CUSTOMFIELD, userUid, getLoggedInSessionToken());
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -1413,7 +1413,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			profilePageDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), ProfilePageDo.class);
 		} catch (JSONException e) {
 			e.printStackTrace();
-		} 
+		} */
 		return profilePageDo;
 	}
 

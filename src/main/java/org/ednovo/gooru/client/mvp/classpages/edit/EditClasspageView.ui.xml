@@ -90,11 +90,11 @@
 				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
-			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
+			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlignText}"></g:Label>
 			<g:FlowPanel styleName="{res.css.paginationContainer}"
 					ui:field="paginationFocPanel">
 				</g:FlowPanel>
-			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
+			<g:HTMLPanel styleName="{res.css.labelCenterAlign}" ui:field="newAssignmentAndMsgPanel">
 				<g:HTMLPanel>
 					<g:Button ui:field="btnNewAssignment" text=""
 						styleName="secondary plusButton {res.css.addAssignment}"></g:Button>

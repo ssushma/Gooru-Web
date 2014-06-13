@@ -172,6 +172,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String backArrowButton();
         
         String labelCenterAlign();
+        String labelCenterAlignText();
         String classcodeStyles();
         String assignmentPath();
         String assignmentProgress();

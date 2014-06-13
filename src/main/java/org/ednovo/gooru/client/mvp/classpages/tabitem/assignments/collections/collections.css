@@ -1,8 +1,7 @@
 .classpageContainer {
-	float:left;
-	width: 965px;
+	display:inline-block;
+	width: 975px;
 	margin-bottom:20px;
-	margin-left: 10px;
 	background-color: rgb(255,255,255);
 	border-color: rgb(234,234,234);
 	border-width: 1px;

@@ -472,6 +472,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 
 	@Override
 	public void refreshAssignmentsList(boolean isPostDeleteAssignment) {
+		System.out.println("iam here in refresh resenter");
 		getView().onDeleteAssignment(isPostDeleteAssignment);
 	}
 	
