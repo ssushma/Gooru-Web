@@ -11,13 +11,9 @@
                     </g:HTMLPanel>
                     <g:HTMLPanel styleName="{ProfilePageStyle.profileFollowingUserNameDetails}">
                     <g:Label styleName="{ProfilePageStyle.username}" ui:field="userNameLabel"></g:Label>
-                      <g:Label styleName="{ProfilePageStyle.bold}" ui:field="userCollections"></g:Label>
+                      <g:Label styleName="{ProfilePageStyle.titleBold}" ui:field="userCollections"></g:Label>
                         <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowDetails"></g:Label>
-                         <!-- <g:HTMLPanel styleName="{ProfilePageStyle.clear}"/>
-                          <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowing"></g:Label>
-                        <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowers"></g:Label> -->
-                     
-                    </g:HTMLPanel>
+                          </g:HTMLPanel>
                 </g:HTMLPanel>  
 	
 </ui:UiBinder> 

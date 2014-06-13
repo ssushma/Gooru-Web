@@ -1,10 +1,6 @@
 * {
-	font-size: 12px;
-	color: #525252;
-}
-.container {
-	width: 1000px;
-	margin: 0 auto;
+	margin: 0;
+	padding: 0;
 }
 .content-box {
 	background-color: #FFF;
@@ -17,11 +13,6 @@
 }
 .content-inner {
 	width: 930px;
-}
-.h5 {
-	font-size: 16px;
-	font-weight: bold;
-	padding-bottom: 10px;
 }
 .normalTxt {
 	font-size: 13px;
@@ -56,14 +47,14 @@
 	display: inline-block;
 	vertical-align: top;
 }
-.tagBg label {
+.tagBg{
 	color: #fff;
 	font-size: 18px;
 	height: 40px;
 	line-height: 40px;
 	padding: 0px 15px;
 }
-.label {
+.taglabel {
 	color: #fff;
 	font-size: 18px;
 	height: 40px;
@@ -77,13 +68,13 @@
 	text-align: center;
 	background: #A6CBA2;
 }
-.tagRight label {
+.tagRight{
 	text-align: center;
 }
 .lastChld {
 	margin-right: 0px;
 }
-.link {
+.backlink {
 	font-size: 16px;
 	color: #1076bb;
 	cursor: pointer;
@@ -100,7 +91,7 @@
 	width: 308px;
 	height: 130px;
 }
-.tag-thumbnail {
+.tagthumbnail {
 	display: inline-block;
 	vertical-align: top;
 	width: 80px;
@@ -125,16 +116,13 @@
 	vertical-align: top;
 	margin-left: 5px;
 }
-.h6 {
-	font-size: 16px;
-	padding-bottom: 2px
-}
-.bold {
+
+.titleBold {
 	font-size: 12px;
 	font-weight: bold;
 	padding-bottom: 2px
 }
-.italic {
+.resourceSource {
 	font-style: italic;
 	color: #999;
 	padding-top: 5px;

@@ -34,14 +34,7 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 			profileUserTagWidget=new ProfileUserTagWidget();
 			userTagsConatiner.add(profileUserTagWidget);
 		}
-		profileUserTagWidget.getClickOnTags().addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
-				
-			}
-		});
+		
 	}
 
 }
