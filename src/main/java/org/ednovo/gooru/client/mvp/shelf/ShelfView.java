@@ -1880,7 +1880,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	}
 	
 	@Override
-	public void setPusblishStatus(String publishStatus) {
+	public void setPusblishStatus(String publishStatus, String shareType) {
 		
 		if(publishStatus!=null){
 			if(publishStatus.equalsIgnoreCase("pending")){
