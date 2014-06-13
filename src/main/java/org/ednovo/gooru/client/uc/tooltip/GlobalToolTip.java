@@ -24,11 +24,14 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
+import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -72,7 +75,11 @@ public class GlobalToolTip extends Composite implements MessageProperties {
 
 		setArrowLeft();
 	}
-    
+    public GlobalToolTip(String description, String value){
+		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
+		desLbl.setText(description);
+		setArrowDirections();
+	}
     public void setPanelPosition(){
     	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     	/*if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
@@ -80,10 +87,22 @@ public class GlobalToolTip extends Composite implements MessageProperties {
 		}else{
 			panelArrow.getElement().getStyle().clearPosition();
 		}*/
+    	
+    	if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.EDIT_CLASSPAGE)){
+    		confirmationPanel.getElement().getStyle().setLeft(-136, Unit.PX);
+			panelArrow.getElement().getStyle().setLeft(141, Unit.PX);
+		}else{
+			confirmationPanel.getElement().getStyle().clearLeft();
+			panelArrow.getElement().getStyle().clearLeft();
+		}
     }
     public void setArrowLeft(){
      	panelArrow.getElement().getStyle().setPosition(Position.ABSOLUTE);
     //	panelArrow.getElement().getStyle().setLeft(165, Unit.PX);
+     	
     }
-	
+    public void setArrowDirections(){
+     	confirmationPanel.getElement().setAttribute("style", "width: 149px;");
+     	panelArrow.getElement().setAttribute("style", "left: -158px;top: 22px;-webkit-transform: rotate(265deg);position:absolute;");
+    }
 }

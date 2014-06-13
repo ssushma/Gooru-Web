@@ -42,6 +42,8 @@ import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewEvent;
+import org.ednovo.gooru.client.mvp.rating.events.DeletePlayerStarReviewHandler;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
@@ -93,6 +95,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public static final String STANDARD_CODE = "code";
 	public static final String STANDARD_DESCRIPTION = "description";
 	private String title;
+	private boolean isRatingUpdated=true;
 	
 	@UiField HTMLPanel resourceDescription,resourceDescriptionTitle,rightsLogoContainer,courseInfo,reosourceReleatedCollections,mobileFriendly,collectionsText,originalUrlText,publisherPanel,coursePanel,gradesPanel,
 	mobileFriendlyPanel,DataTypePanel,interactivityTypePanel,eduAllignPanel,eduUsePanel,eduRolePanel,ageRangePanel,dKnowledgePanel,
@@ -195,6 +198,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		//resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
 		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
+		AppClientFactory.getEventBus().addHandler(DeletePlayerStarReviewEvent.TYPE,deleteStarRating);
 	}
 	
 	/**
@@ -2012,8 +2016,30 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				if(collectionItemDoGlobal.getResource().getGooruOid().equals(gooruOid)){
 					ratingWidgetView.getRatingCountLabel().setText(count.toString()); 
 					ratingWidgetView.setAvgStarRating(average);
+					if(count==1&&isRatingUpdated){
+						isRatingUpdated=false;
+						ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+						ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: pointer;text-decoration: none !important;color: #1076bb;");
+						ratingWidgetView.getRatingCountLabel().addClickHandler(new ShowRatingPopupEvent());
+					}
 				}
 			}
 		}
+	};
+	
+	
+	DeletePlayerStarReviewHandler deleteStarRating = new DeletePlayerStarReviewHandler(){
+
+		@Override
+		public void deleteStarRatings() {
+			String zeroCount = "0";
+			if(Integer.parseInt(ratingWidgetView.getRatingCountLabel().getText())==1){
+				ratingWidgetView.getRatingCountLabel().getElement().removeAttribute("class");
+				ratingWidgetView.getRatingCountLabel().getElement().setAttribute("style", "cursor: none;text-decoration: none !important;color: grey");
+				ratingWidgetView.setAvgStarRating(0);
+				ratingWidgetView.getRatingCountLabel().setText(zeroCount); 
+			}
+		}
+		
 	};
 }

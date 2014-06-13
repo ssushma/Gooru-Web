@@ -2694,3 +2694,17 @@ margin-top: 18px; */
 	top: -52px;
 	right: 10px;
 }
+
+.shelfFoldereDragdropSpacer {
+	float: left;
+	margin-bottom: 11px;
+	position: relative;
+	width: 620px;
+	height: 30px;
+	zoom: 1; /* IE gain hasLayout */
+	z-index: 98;
+}
+.myFolderCollectionFolderUpdateDropdownPanel{
+	position: relative;
+	float: left;
+}

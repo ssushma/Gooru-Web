@@ -185,5 +185,7 @@ public interface SearchService extends BaseService {
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo);
 	
 	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException;
+	
+	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid) throws GwtException;
 
 }

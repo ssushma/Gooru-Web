@@ -777,6 +777,10 @@ width: 114px;
 	float: left;
 	padding: 15px 10px;
 	border-left: 1px solid rgb(221,221,221);
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	max-height: 567px;
+	min-height: 300px;
 }
 
 .addSearchResourceFormContainer {
@@ -951,8 +955,19 @@ width: 114px;
 .suggestedResources {
 	margin: 25px 0px;
 	overflow: hidden;
-	width: 390px;
+	/* width: 390px; */
+	float: left;
+	border-bottom: none;
+	border-left: none;
+	border-style: solid;
+	border-color: #ddd;
+	border-left: none;
+	border-bottom: none;
+	background: url(../images/core/background-image.png) !important;
+	padding-bottom: 10px;
+	padding-right: 8px;
 }
+
 .addResourceButtonGray{
 	height: 30px;
 	background: -webkit-linear-gradient(top, #bbb, #999);

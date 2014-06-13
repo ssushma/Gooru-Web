@@ -31,6 +31,8 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.uc.EmailShareUc.CheckProfanityInOnBlur;
@@ -42,6 +44,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.IFrameElement;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -52,8 +55,11 @@ import com.google.gwt.event.logical.shared.InitializeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
@@ -73,6 +79,9 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	@UiField TextBox subTxt;
 
 	@UiField RichTextArea msgTxa;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
 
 	private static boolean isvalid;
 
@@ -84,6 +93,8 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	String GL0219 = GL1444;
 	
 	boolean isHavingBadWordsInTextbox=false,isHavingBadWordsInRichText=false;
+	
+	private TermsOfUse termsOfUse;
 	
 	private static CollectionEmailShareViewUiBinder uiBinder = GWT.create(CollectionEmailShareViewUiBinder.class);
 
@@ -110,6 +121,11 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		cancelLbl.setText(GL0142);
 		
 		noteTxt.setText(GL1636);
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		lblPii.getElement().getStyle().setMarginLeft(99, Unit.PX);
+		ancprivacy.getElement().getStyle().setMarginLeft(101, Unit.PX);
 		
 		mandatoryErrorLbl.setVisible(false);
 		mandatoryErrorRichTextArea.setVisible(false);
@@ -340,6 +356,27 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 			fromValidation.setVisible(false);
 		}
 	}
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
+	}
+	
+	
 	
 	public  abstract void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message);
 }

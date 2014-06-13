@@ -27,14 +27,18 @@
  */
 package org.ednovo.gooru.client.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -208,4 +212,18 @@ public interface UserService extends BaseService {
 	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException;
 	
 	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException;
+	
+	//followingUser
+	List<UserFollowDo> getFollowedOnUsers(String gooruUid)throws GwtException;
+	
+	//followerUser
+	List<UserFollowDo> getFollowedByUsers(String gooruUid)throws GwtException;
+	
+	void followUser(String gooruUid)throws GwtException;
+	
+	void unFollowUser(String gooruUid)throws GwtException;
+	
+	IsFollowDo isFollowedUser(String gooruUid)throws GwtException;
+	
+	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)throws GwtException;
 }

@@ -353,22 +353,25 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
 
 		@Override
-		public void updateShareType(String shareType) {
+		public void updateShareType(String shareType,String publishStatus,boolean isPublish) {
+			
+           if(!isPublish){
+        	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection")){
+   				if(titleFocPanel.getStyleName().contains(folderStyle.open())) {
+   					if(shareType.equalsIgnoreCase("public")){
+   						titleFocPanel.addStyleName(folderStyle.publicIcon());
+   						panelToolTip.getElement().getStyle().clearDisplay();
+   					}else{
+   						if(titleFocPanel.getStyleName().contains("public")){
+   							titleFocPanel.removeStyleName(folderStyle.publicIcon());
+   							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
+   						}
+   					}
 
-			if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection")){
-				if(titleFocPanel.getStyleName().contains(folderStyle.open())) {
-					if(shareType.equalsIgnoreCase("public")){
-						titleFocPanel.addStyleName(folderStyle.publicIcon());
-						panelToolTip.getElement().getStyle().clearDisplay();
-					}else{
-						if(titleFocPanel.getStyleName().contains("public")){
-							titleFocPanel.removeStyleName(folderStyle.publicIcon());
-							panelToolTip.getElement().getStyle().setDisplay(Display.NONE);
-						}
-					}
-
-				}
-			}
+   				}
+   			} 
+           }
+			
 		}
 	};
 

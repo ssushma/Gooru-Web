@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.mvp.authentication.afterthirteen.SignUpCompletePr
 import org.ednovo.gooru.client.mvp.classpages.ClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.classlist.ClassListPresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.home.ClassHomePresenter;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentPresenter;
 import org.ednovo.gooru.client.mvp.classpages.study.ClassCodePresenter;
 import org.ednovo.gooru.client.mvp.devicesupport.DeviceSupportPresenter;
@@ -50,6 +51,7 @@ import org.ednovo.gooru.client.mvp.library.partner.onr.OnrLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.psdpal.PsdpalLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.partner.wspwh.WspwhLibraryPresenter;
 import org.ednovo.gooru.client.mvp.library.rusd.RusdPresenter;
+import org.ednovo.gooru.client.mvp.library.sausd.SausdPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
@@ -145,6 +147,8 @@ public interface AppInjector extends ServiceInjector {
 	
 	AsyncProvider<ClassCodePresenter> getClassCodePresenter();
 	
+	AsyncProvider<ClassHomePresenter> getClassHomePresenter();
+	
 	AsyncProvider<StudentAssignmentPresenter> getStudentAssignmentPresenter();
 	
 	AsyncProvider<CollectionFormInPlayPresenter> getCollectionFormInPlayPresenter();
@@ -190,5 +194,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<PsdpalLibraryPresenter> getPsdpalLibraryPresenter();
 
 	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
+	
+	AsyncProvider<SausdPresenter> getSausdPresenter();
 
 }

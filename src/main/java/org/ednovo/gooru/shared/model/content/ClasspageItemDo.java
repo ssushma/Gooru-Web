@@ -23,6 +23,8 @@ public class ClasspageItemDo implements Serializable{
 	private String title;
 	private String userNameDispaly;
 	private String classpageId;
+	private String status;
+	private Integer sequenceNumber;
 	
 	
 	public String getUserNameDispaly() {
@@ -147,6 +149,18 @@ public class ClasspageItemDo implements Serializable{
 	}
 	public void setClasspageId(String classpageId) {
 		this.classpageId = classpageId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public Integer getSequenceNumber() {
+		return sequenceNumber;
+	}
+	public void setSequenceNumber(Integer sequenceNumber) {
+		this.sequenceNumber = sequenceNumber;
 	}
 	
 

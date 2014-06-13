@@ -345,7 +345,7 @@ text-align:center;
 	-webkit-border-radius: 1px;
 	border-radius: 1px;
 	border-style: solid;
-	height:590px;
+	height:630px;
 }
 .shareContent {
 	background-color: transparent;
@@ -917,5 +917,26 @@ button.LoginText {
 }
 
 /*End Success popup */
+
+.privacyAlignStyle{
+	margin-right: 2px;
+}
+
+.privacyContainer{
+	margin: 0px;
+	text-align: left;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: 70%;
+}
+
+.errorLabel {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: rgb(250,176,58);
+	text-align: right;
+	margin-right: -53px;
+	float: right;
+}
 
 

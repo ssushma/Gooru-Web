@@ -31,6 +31,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -67,10 +68,12 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 
 	public CollectionShareAlertPopup() {
 		setWidget(uiBinder.createAndBindUi(this));
-		gooruPublicShare.setUrl("images/gooru-public-share-popup.png");
+//		gooruPublicShare.setUrl("images/gooru-public-share-popup.png");
 		privateResourceLbl.setText(GL0840);
-		goBackBtn.setText(GL0841);
-		okButton.setText(GL0190);
+//		goBackBtn.setText(GL0841);
+		goBackBtn.setText(GL1923);
+//		okButton.setText(GL0190);
+		okButton.setText(GL1922);
 		okButton.getElement().setId("btnOk");
 		goBackBtn.getElement().setId("btnGoBack");
 	}
@@ -99,42 +102,71 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 			}
 		}
 		if(isPrivateResource) {
-			setVisibilityData(true, false);
+			setVisibilityData(false, false);
 			shareMsgTitle.setText(GL0363);
 			shareMsgTxt.setText(GL0364);
 			shareMsgLbl.setText(GL0365);
 			alertSuccessTitleTxt.setVisible(true);
 		} else {
 			setPublicMsgData();
-			setPublicFromAlert();
+//			setPublicFromAlert();
 		}
 	}
 	
 	public void setPublicMsgData() {
 		isPrivateResource = true;
-		setVisibilityData(false, true);
-		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
+		setVisibilityData(true, true);
+//		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
+		shareMsgTitle.setText(GL1921);
+		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
+		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
+		shareMsgTxt.setText(GL1919);
+		shareMsgLbl.setText(GL1920 + GL1918);
 		gooruPublicShare.setVisible(true);
-		alertSuccessTxt.setVisible(false);
-		alertSuccessTitleTxt.setVisible(false);
+		alertSuccessTxt.setVisible(true);
+		alertSuccessTitleTxt.setVisible(true);
+		okButton.setText(GL1922);
+		goBackBtn.setText(GL1923);
+		goBackBtn.setVisible(true);
 	}
 	
 	public void setPrivateMsgData() {
-		setVisibilityData(false, false);
+		setVisibilityData(true, false);
 		shareMsgTitle.setText(GL0362 + GL0700);
 		shareMsgTxt.setText(GL0688 + GL0687 + GL0333 +GL0686);
 		shareMsgLbl.setText(GL0366);
+		okButton.setText(GL0190);
+		goBackBtn.setVisible(false);
 	}
 
 	public void setShareableMsgData() {
-		setVisibilityData(false, false);
+		setVisibilityData(true, false);
 		shareMsgTitle.setText(GL0362 + GL0701);
 		shareMsgTxt.setText(GL0689 + GL0687 + GL0331 + GL0686);
 		shareMsgLbl.setText(GL0367);
+		okButton.setText(GL0190);
+		goBackBtn.setVisible(false);
+	}
+	
+	public void confirmPopup() {
+		isPrivateResource = true;
+		setVisibilityData(true, true);
+//		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
+		shareMsgTitle.setText(GL0748);
+		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
+		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
+		shareMsgTxt.setText(GL1954);
+		shareMsgLbl.setText(GL1955);
+		gooruPublicShare.setVisible(true);
+		alertSuccessTxt.setVisible(true);
+		alertSuccessTitleTxt.setVisible(true);
+		okButton.setText(GL0190);
+		goBackBtn.setText(GL1956);
+		goBackBtn.setVisible(true);
 	}
 	
 	public void setVisibilityData(boolean isVisible, boolean isPublicResource) {
-		if(isVisible==false) {
+		if(isVisible==true) {
 			shareAlertPopup.setWidth("350px");
 		} else {
 			shareAlertPopup.setWidth("450px");
@@ -147,10 +179,10 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		}
 		gooruPublicShare.setVisible(false);
 		alertSuccessTxt.setVisible(true);
-		privateResourceLbl.setVisible(isVisible);
-		resourceHeaderPanel.setVisible(isVisible);
-		alertSuccessTitleTxt.setVisible(!isVisible);
-		goBackBtn.setVisible(isVisible);
+		privateResourceLbl.setVisible(!isVisible);
+		resourceHeaderPanel.setVisible(!isVisible);
+		alertSuccessTitleTxt.setVisible(isVisible);
+//		goBackBtn.setVisible(isVisible);
 		showPopup();
 	}
 	

@@ -1207,7 +1207,7 @@ li.resources {
 .userMetaDataContainer {
 	width: 1000px;
 	float:left;
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	margin-top:28px;
 	background: white;
 }
@@ -1403,4 +1403,87 @@ li.resources {
 .margin5 {
 	margin: 5px !important;
 	padding: 5px !important;
+}
+.userinfoContainer{
+	clear: both;
+	float: left;
+	height: 45px;
+	position: relative;
+	width: 100%;
+	margin: 0 !important;
+	color: #515151 !important;
+	border-bottom: 1px solid #ddd !important;
+	border-top: 1px solid #eee !important;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fdfdfd), to(#ededed)) !important;
+	background: -moz-linear-gradient(center top, #fdfdfd, #ededed) repeat scroll 0 0 transparent !important;
+	background-color: #ededed;
+	padding: 0 !important;
+}
+.profilepageFollwoingContent{
+	Width:100%;
+	float:left;
+	
+}
+.profilepageFollwoingContentlabel{
+	float:left;
+}
+.profilepageTagContentMainDiv{
+	Width:90%;
+	float:left;
+}
+.profilepageTagContentMainDivconent{
+	float:left;
+	width:65%;
+	color:green;
+}
+.profilepageTagContentMainDivconentcount{
+	float:left;
+	width:25%;
+	color:green;
+}
+.infoSectionAuthor{
+    margin-top:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+
+}
+.rightPanel .userImageContainer {
+    margin-right:10px;
+    width:40px;
+    height:40px;
+    border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+    border:3px solid #87BADD;
+}
+.rightPanel .userImage{
+    width:40px;
+    height:40px;
+     border-radius:40px;
+    display:inline-block;
+    vertical-align:middle;
+}
+.teacherTipOuterContainer
+{
+	width:200px;
+	word-wrap:break-word;
+	padding:5px;
+	overflow:hidden;
+	
+}
+.rightPanel  .username {
+    display:inline-block;
+    vertical-align:middle;
+}
+.tabContent{
+	width: 65%;
+	margin: 0 auto;
+	padding-left: 90px;
+}
+.tabAlign{
+	display: inline-block;
+	vertical-align: top;
+}
+.followButton{
+	
 }

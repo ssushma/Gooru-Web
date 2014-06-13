@@ -46,6 +46,6 @@ import com.google.gwt.event.shared.EventHandler;
  */
 public interface CollectionAssignShareHandler extends EventHandler {
 	
-	void updateShareType(String shareType);
+	void updateShareType(String shareType, String publishStatus, boolean isPublish);
 
 }

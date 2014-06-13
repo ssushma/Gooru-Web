@@ -36,6 +36,7 @@ public class UserMetaDo implements Serializable {
 	private static final long serialVersionUID = 8598215298047619076L;
 	
 	private UserTaxonomyPreferenceDo taxonomyPreference;
+	private UserSummaryDo summary;
 	
 	public UserMetaDo(){}
 
@@ -45,6 +46,14 @@ public class UserMetaDo implements Serializable {
 
 	public void setTaxonomyPreference(UserTaxonomyPreferenceDo taxonomyPreference) {
 		this.taxonomyPreference = taxonomyPreference;
+	}
+
+	public UserSummaryDo getSummary() {
+		return summary;
+	}
+
+	public void setSummary(UserSummaryDo summary) {
+		this.summary = summary;
 	}
 	
 }

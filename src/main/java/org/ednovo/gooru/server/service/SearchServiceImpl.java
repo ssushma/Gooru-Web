@@ -100,6 +100,8 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 	
 	private static final String COURSE_CODE_ID = "id";
 	
+	private static final String COLLECTION_EDIT_EVENT ="collection-edit";
+	
 	@Autowired
 	private CollectionSearchResultDeSerializer collectionSearchResultDeSerializer;
 
@@ -468,6 +470,67 @@ public SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo)
 	jsonRep=jsonResponseRep.getJsonRepresentation();
 	searchDo.setSearchResults(autoCompleteDeSerializer.deserializeAggregator(jsonRep));
 	return searchDo;
+}
+
+@Override
+public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(
+		SearchDo<ResourceSearchResultDo> searchDo, String contentGorruOid)
+		throws GwtException {
+	// TODO Auto-generated method stub
+
+	SearchDo<ResourceSearchResultDo> searchDOEmpty = new SearchDo<ResourceSearchResultDo>();
+	String query1=searchDo.getSearchQuery();
+	 query= query1;
+	try{
+		if(searchDo.getFilters()!=null){
+			for (String key : searchDo.getFilters().keySet()) {
+			  String value = searchDo.getFilters().get(key);
+			  value = value.replaceAll("&", "%26");
+			  searchDo.getFilters().put(key, value);
+			 }
+		}
+			
+	JsonRepresentation jsonRep=null;
+	Map<String,String> filtersMap=searchDo.getFilters();
+	if(filtersMap!=null){
+        String category=filtersMap.get("category");
+        if(category!=null&&category.equalsIgnoreCase("All")){
+                filtersMap.remove("category");
+        }
+        else if(category!=null){
+        	if(category.equalsIgnoreCase("Website")){
+               	category=category.replaceAll("Website", "webpage");
+                filtersMap.remove("category");
+                filtersMap.put("flt.resourceFormat",category);
+        	}
+        	else {
+        		 filtersMap.remove("category");
+                 filtersMap.put("flt.resourceFormat",category);
+        	}
+        }
+	}
+	//String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,"8c20a619-8aba-4b10-ae2c-6cf71d469a80");
+	String url = UrlGenerator.generateUrl(getHomeEndPoint(), UrlToken.SEARCH_SUGGEST_RESOURCES, getLoggedInSessionToken(), URLEncoder.encode(searchDo.getSearchQuery()), COLLECTION_EDIT_EVENT ,contentGorruOid);
+
+	if(getSearchEndPoint().contains(MessageProperties.HTTPS)){
+		url = appendHttpsURL(url);
+	}
+	System.out.println("search end point url::::::"+url);
+	JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getSearchUsername(), getSearchPassword());
+	jsonRep=jsonResponseRep.getJsonRepresentation();
+	try{
+		resourceSearchResultDeSerializer.deserializeSuggestedResources(jsonRep, searchDo);	
+	}
+	catch(Exception e)
+	{
+		
+	}
+	return searchDo;
+	}catch(Exception e){
+	}
+	return searchDOEmpty;
+
+
 }
 
 /*@Override

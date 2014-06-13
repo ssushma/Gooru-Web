@@ -77,6 +77,8 @@ public interface EditClasspageCBundle extends ClientBundle{
 		String editTitleButton();
 		
 		String searchResultContainer();
+		
+		String paginationContainer();
 
 		String paginationPanel();
 				
@@ -170,6 +172,49 @@ public interface EditClasspageCBundle extends ClientBundle{
         String backArrowButton();
         
         String labelCenterAlign();
+        String labelCenterAlignText();
+        String classcodeStyles();
+        String assignmentPath();
+        String assignmentProgress();
+        
+        String assignmentPathContainer();
+        String line();
+        String squre();
+        String progressStart();
+        String path();
+        String classcodeContainer();
+        String containerProgress();
+        String next();
+        String previous();
+        String rightArrow();
+        String leftArrow();
+        
+        String dropdowncontainer();
+        String dropdownPlaceHolder();
+        String dropdownListContainerScrollPanel();
+        String dropdownTextLabel();
+        
+        
+        String dropdownContainerInstructional();
+        String placeHolderText();
+        String arrowInstructional();
+        String scrollPanelContainerInstructional();
+        String btnContainer();
+        
+        String subtitle();
+        String contentBox();
+        String h3();
+        String circleBlock();
+        String circleBg();
+        String circleTitle();
+        String desc();
+        String collectionView();
+        String img();
+        String btn();
+        String dropdowncontainerStudent();
+        String dropdownPlaceHolderStudent();
+        String dropdownListContainerScrollPanelStudent();
+
 	}
 	@NotStrict
 	@Source("editclasspage.css")

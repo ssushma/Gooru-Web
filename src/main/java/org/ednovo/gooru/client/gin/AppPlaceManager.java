@@ -333,7 +333,8 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 			String pageLocation=placeRequest.getNameToken();
 			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
 				if(getSearchMovedPlaceRequest()!=null){
-					if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)){
+					if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)
+							||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY)){
 						pageLocation="home-search";
 					}else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
 						pageLocation="shelf-search";
@@ -367,7 +368,7 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 					}else{
 						pageLocation="home";
 					}
-				}else if(pageLocation.equals(PlaceTokens.RUSD_LIBRARY)){
+				}else if(pageLocation.equals(PlaceTokens.RUSD_LIBRARY)||pageLocation.equals(PlaceTokens.SAUSD_LIBRARY)){
 					pageLocation="home";
 				}else if(pageLocation.equals(PlaceTokens.SHELF)){
 					pageLocation="shelf";

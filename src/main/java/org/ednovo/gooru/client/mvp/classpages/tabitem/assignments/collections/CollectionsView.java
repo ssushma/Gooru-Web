@@ -98,11 +98,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField Anchor classpageItemTitle;
 	
-	@UiField Label editDueDateButton,editDirectionButton,deleteItemButton,dueDateText,dueDate,editCollection,directionsLabel,learningObjective,moniterProgress,collectionSummary;
+	@UiField Label editDueDateButton,editDirectionButton,deleteItemButton,dueDateText,dueDate,editCollection,directionsLabel,learningObjective,moniterProgress,collectionSummary,assignmentIndex;
 	
 	@UiField Image collectionImage;
 	
 	@UiField FlowPanel headerRightPanel;
+	
+	private  Button changeStatusButton;
 	
 	private EditToolBarView editToolBarView=null;
 	
@@ -115,6 +117,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	private WaitPopupVc removeConfirmBox=null;
 	
+	private static final String OPEN="open";
+	private static final String COMPLETED="completed";
+	
+	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
 	public interface CollectionsViewUiBinder extends UiBinder<Widget, CollectionsView> {}
 	
@@ -122,7 +128,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		
 	}
 	
-	public CollectionsView(ClasspageItemDo classpageItemDo){
+	public CollectionsView(ClasspageItemDo classpageItemDo,int sequenceNum){
 		initWidget(uiBinder.createAndBindUi(this));
 		setStaticTexts();
 		setPresenter(new CollectionsPresenter(this));
@@ -139,6 +145,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	          }
 	    });
 		setClasspageItemDo();
+		setCollectionItemIndex(sequenceNum);
 		editClassItemButton.addClickHandler(new OpenDropdownPanelEvent());
 		viewClassItemAnalyticsButton.addClickHandler(new OpenAnalyticsDropdownPanelEvent());
 		editDirectionButton.addClickHandler(new EditDirectionEvent());
@@ -156,6 +163,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		 */
 		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
 	}
+	public void setCollectionItemIndex(int sequenceNum){
+		assignmentIndex.setText(""+classpageItemDo.getSequenceNumber());
+	}
 	public void setStaticTexts(){
 		viewClassItemAnalyticsButton.setText(GL0510);
 		editClassItemButton.setText(GL0140);
@@ -171,14 +181,17 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		
 		
 	}
-	public CollectionsView(ClasspageItemDo classpageItemDo,boolean isStudentView){
+	public CollectionsView(ClasspageItemDo classpageItemDo,boolean isStudentView,int sequenceNum){
 		initWidget(uiBinder.createAndBindUi(this));
 		setPresenter(new CollectionsPresenter(this));
 		CollectionsCBundle.INSTANCE.css().ensureInjected();
 		this.classpageItemDo=classpageItemDo;
-		headerRightPanel.removeFromParent();
+		headerRightPanel.clear();
+		createChangeStatusButton();
 		setClasspageItemDo();
+		setCollectionItemIndex(sequenceNum);
 		setStaticTexts();
+		setReadStatus();
 	}
 	
 	public void setClasspageItemDo(){
@@ -229,6 +242,36 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		thumbnailAnchor.setHref("#"+PlaceTokens.COLLECTION_PLAY+"&id="+classpageItemDo.getCollectionId()+"&cid="+classpageItemDo.getCollectionItemId()+"&page="+getCurrentPlaceToken());
 		thumbnailAnchor.getElement().appendChild(collectionImage.getElement());
 		thumbnailContainer.add(thumbnailAnchor);
+	}
+	
+	public void setReadStatus(){
+		if(classpageItemDo.getStatus().equalsIgnoreCase(OPEN)){
+			editButtonsToolBar.setStyleName(CollectionsCBundle.INSTANCE.css().openStateCollectionHeader());
+		}else{
+			editButtonsToolBar.setStyleName(CollectionsCBundle.INSTANCE.css().completeStateCollectionHeader());
+		}
+	}
+	
+	
+	public void createChangeStatusButton(){
+		changeStatusButton=new Button();
+		changeButtonText();
+		changeStatusButton.setStyleName("secondary");
+		changeStatusButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				changeCollectionStatus();
+			}
+		});
+		headerRightPanel.add(changeStatusButton);
+	}
+	public void changeCollectionStatus(){
+		String readStatus=classpageItemDo.getStatus().equalsIgnoreCase(OPEN)?COMPLETED:OPEN;
+		getPresenter().updateClasspageItem(classpageItemDo.getCollectionItemId(), null, null, readStatus);
+	}
+	public void changeButtonText(){
+		String buttonText=classpageItemDo.getStatus().equalsIgnoreCase(OPEN)?"Mark as Complete":"Mark as Incomplete";
+		changeStatusButton.setText(buttonText);
 	}
 	@UiHandler("collectionImage")
 	public void setErrorImage(ErrorEvent event){
@@ -366,7 +409,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			if(editToolBarView!=null){
 				hideButtons(true);
 				if(editToolBarView.dateBoxUc!=null&&editToolBarView.dateBoxUc.getValue()!=null&&!editToolBarView.dateBoxUc.getDateBox().getValue().equals("")&&editToolBarView.dateBoxUc.getDate()!=null&&!editToolBarView.dateBoxUc.getDate().trim().equals("")){
-					updateClasspageItem(null,editToolBarView.dateBoxUc.getDate());
+					updateClasspageItem(null,editToolBarView.dateBoxUc.getDate(),null);
 				}else{
 					//TODO display error message when direction.
 					resetEditContent();
@@ -405,7 +448,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 								hideButtons(false);
 							}else{
 								directionErrorLabel.setText("");
-								updateClasspageItem(directionTextAreaText,null);
+								updateClasspageItem(directionTextAreaText,null,null);
 							}
 						}		
 					});
@@ -415,8 +458,8 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			}
 		}
 	}
-	public void updateClasspageItem(String directionText,String dueDate){
-		getPresenter().updateClasspageItem(classpageItemDo.getCollectionItemId(), directionText, dueDate);
+	public void updateClasspageItem(String directionText,String dueDate,String readStatus){
+		getPresenter().updateClasspageItem(classpageItemDo.getCollectionItemId(), directionText,dueDate,readStatus);
 	}
 	@Override
 	public void updateDirection(String directionText) {
@@ -430,6 +473,13 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		setDueDate();
 		resetEditContent();
 		
+	}
+	@Override
+	public void updateCollectionStatus(String readStatus) {
+		classpageItemDo.setStatus(readStatus);
+		setReadStatus();
+		changeButtonText();
+		updateAssignmentCircleColor(classpageItemDo.getCollectionItemId(),readStatus);
 	}
 	public void editDirection(){
 		directionContentPanel.clear();
@@ -499,6 +549,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 
 	public void resetPagination(){
+		
+	}
+	
+	public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
 		
 	}
 	
@@ -588,4 +642,5 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			classpageItemDo.setGoal(description1);
 		}
 	};
+
 }

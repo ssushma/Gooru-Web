@@ -30,10 +30,12 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.home.ForgotPasswordVc;
 import org.ednovo.gooru.client.mvp.home.event.SetUserDetailsInCollectionPlayEvent;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
@@ -47,6 +49,7 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -61,6 +64,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -101,6 +105,10 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
+	
+	@UiField InlineLabel lblPii,toUsText;
+	@UiField Anchor ancprivacy;
+
 
 	@Inject
 	private ResourceServiceAsync resourceService;
@@ -113,6 +121,8 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	private static final String OOPS =GL0061;
 	private static final String LOGIN_ERROR =GL0347;
 	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =GL0348;
+	
+	private TermsOfUse termsOfUse;
 
 	private static LoginPluginUiBinder uiBinder = GWT
 			.create(LoginPluginUiBinder.class);
@@ -155,6 +165,11 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	 * 
 	 */
 	public void setLabelsAndIds() {
+		
+		lblPii.setText(GL1892);
+		ancprivacy.setText(GL1893);
+		toUsText.setText(GL1894);
+		
 		hangOnText.getElement().setInnerText(GL0740);
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
 		donotHaveAcount.setText(GL0634);
@@ -180,6 +195,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		lblPleaseWait.setVisible(false);
 
 	}
+	
 
 	/**
 	 * Added click handler to perform Login operation by taking entered user
@@ -214,27 +230,34 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										lblPleaseWait.setText(GL0505);
-										AppClientFactory
-												.setLoggedInUser(result);
-										AppClientFactory
-												.fireEvent(new SetHeaderEvent(
-														result));
-										AppClientFactory
-												.fireEvent(new SetUserDetailsInCollectionPlayEvent(
-														result.getToken(),
-														result.getGooruUId()));
-										/*AppClientFactory
-												.getInjector()
-												.getResourceService()
-												.copyCollection(
-														collectionObject,
-														"true",
-														null,
-														getSaveCollectionAsyncCallback());*/
+										if(result.getActive()==1){
+											lblPleaseWait.setText(GL0505);
+											AppClientFactory
+													.setLoggedInUser(result);
+											AppClientFactory
+													.fireEvent(new SetHeaderEvent(
+															result));
+											AppClientFactory
+													.fireEvent(new SetUserDetailsInCollectionPlayEvent(
+															result.getToken(),
+															result.getGooruUId()));
+											/*previously commented AppClientFactory
+													.getInjector()
+													.getResourceService()
+													.copyCollection(
+															collectionObject,
+															"true",
+															null,
+															getSaveCollectionAsyncCallback());*/
+											
+											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
+											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
+										}else if(result.getActive()==0){
+											loginButton.setVisible(true);
+											lblPleaseWait.setVisible(false);
+											new AlertContentUc(OOPS, GL1938);
+										}
 										
-										showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
-										MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
 									}
 
 									@Override
@@ -357,6 +380,25 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 			};
 		}
 		return saveCollectionAsyncCallback;
+	}
+	
+	@UiHandler("ancprivacy")
+	public void onClickPrivacyAnchor(ClickEvent clickEvent){
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+		termsOfUse=new TermsOfUse(){
+
+			@Override
+			public void openParentPopup() {
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+			}
+			
+		};
+		termsOfUse.show();
+		termsOfUse.setSize("902px", "300px");
+		termsOfUse.center();
+		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
 	}
 
 	private static native boolean isCookieEnabled() /*-{
