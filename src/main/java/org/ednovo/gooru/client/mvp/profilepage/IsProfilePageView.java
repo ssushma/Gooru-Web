@@ -110,5 +110,8 @@ public interface IsProfilePageView extends IsViewWithHandlers<ProfilePageUiHandl
 	ProfilePageLibraryView getContentView();
 	
 	public void getFollowersObj(List<UserFollowDo> userFollowDo);
+	
 	public void getFolloweingsObj(List<UserFollowDo> userFollowDo);
+	
+	void isFollow(String isFollow);
 }

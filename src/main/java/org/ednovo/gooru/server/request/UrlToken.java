@@ -557,6 +557,10 @@ public enum UrlToken {
 	
 	USER_UNFOLLOW("/v2/user/unfollow/{0}?sessionToken={1}"),
 	
+	USER_IS_FOLLOW("/v2/user/{0}/isfollow?sessionToken={1}"),
+	
+	USER_TAG("/v2/content/tag/my?sessionToken={1}"),
+	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"); 
 
 	
