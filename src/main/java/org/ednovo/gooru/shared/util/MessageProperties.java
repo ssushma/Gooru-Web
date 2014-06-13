@@ -2485,7 +2485,8 @@ public interface MessageProperties {
       	String GL1952 = "View All Completed";
       	String GL1953 = "View All InCompleted";
       	
-
-
+      	//suggestions for search.
+      	String GL1954 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
+      	String GL1955= "<b style='text-align: center;'><div>We have only 1 suggestion for this collection.</div><br/> <div>Use the search below to find more resources!</div><br/>   <div>Or</div><br/>   <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
 
 }

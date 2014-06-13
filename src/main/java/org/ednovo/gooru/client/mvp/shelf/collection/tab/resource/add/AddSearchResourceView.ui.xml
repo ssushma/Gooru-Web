@@ -11,7 +11,7 @@
 	      <g:Label styleName="{addWebResourceStyle.addSearchContentText}" ui:field="totalResources"/>
 	      <uc:HTMLEventPanel styleName="{addWebResourceStyle.suggestedResources}" ui:field="suggestedResourcesPanel"/>
 	      <g:HTMLPanel ui:field="noResultsPanel">
-	      <g:Label ui:field="noResultsLabel"></g:Label>
+	      <g:HTML ui:field="noResultsLabel"></g:HTML>
 	    </g:HTMLPanel>
    	</g:HTMLPanel>
    
