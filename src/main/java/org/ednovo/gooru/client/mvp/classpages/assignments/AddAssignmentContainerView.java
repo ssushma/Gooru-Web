@@ -555,7 +555,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@Override
 	public void clearShelfData() {
-		//addingText.setVisible(false);
+		addingText.setVisible(false);
 		folderTreePanel.clear();
 		folderTreePanel.addItem(loadingTreeItem());
 		cureentcollectionTreeItem=null;

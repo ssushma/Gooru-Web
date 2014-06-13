@@ -131,7 +131,7 @@
 .profileVisiblityPopup {
 	display: none;
 	text-align: left;
-	z-index: 9999999999999;
+	z-index: 9;
 	padding: 10px;
 	position: relative;
 	top: -11px;
