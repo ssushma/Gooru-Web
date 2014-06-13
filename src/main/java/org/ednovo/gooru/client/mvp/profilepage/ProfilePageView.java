@@ -68,6 +68,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 
@@ -247,7 +248,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
-
+	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -1439,7 +1440,19 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		
 	}
-	
+	@Override
+	public void getTagsObj(List<UserTagsDo> userTagsDo) {
+		userTagDo.clear();
+		userTagDo.addAll(userTagsDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("tags".equalsIgnoreCase(tabValue))
+			{
+				setTab(tagTabVc);
+			}
+		}
+		
+	}
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();
 		getUiHandlers().clearTabSlot();
@@ -1573,7 +1586,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				tagTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
+				ProfileUserTagView profileUserTagView = new ProfileUserTagView(userTagDo);
 				followingContainer.add(profileUserTagView);
 			
 				//ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
@@ -1583,6 +1596,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			
 	}
 }
+	
 
 	
 }
