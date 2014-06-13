@@ -91,6 +91,18 @@
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
 			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlignText}"></g:Label>
+			
+			<g:HTMLPanel ui:field="droplistContianer" styleName="{res.css.dropdownContainerInstructional}">
+					<g:Label ui:field="lblInstructionalPlaceHolder"
+						styleName="{res.css.placeHolderText}"></g:Label>
+					<g:Label ui:field="lblInstructionalArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+					<g:ScrollPanel ui:field="spanelInstructionalPanel"
+						styleName="{res.css.scrollPanelContainerInstructional}">
+						<g:HTMLPanel ui:field="htmlInstructionalListContainer"
+							styleName=""></g:HTMLPanel>
+					</g:ScrollPanel>
+			</g:HTMLPanel>
+				
 			<g:FlowPanel styleName="{res.css.paginationContainer}"
 					ui:field="paginationFocPanel">
 				</g:FlowPanel>

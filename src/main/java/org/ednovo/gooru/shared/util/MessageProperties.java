@@ -2475,6 +2475,10 @@ public interface MessageProperties {
 
     	String GL1943 = "Publish in Progress";
     	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	
+    	String GL1946 = "All";
+      	String GL1947 = "All,Order Ascending,Order Descending";
+
 
 
 }

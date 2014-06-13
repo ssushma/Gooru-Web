@@ -1,5 +1,5 @@
 .classpageContainer {
-	display:inline-block;
+	float:right;
 	width: 975px;
 	margin-bottom:20px;
 	background-color: rgb(255,255,255);
@@ -253,4 +253,7 @@ a.AnalyticsDropdownAnchor{
 	color: #515151;
 	margin-top: 10px;
 	width: 22px;
+}
+.assignmentContainerHt{
+	min-height:260px;
 }

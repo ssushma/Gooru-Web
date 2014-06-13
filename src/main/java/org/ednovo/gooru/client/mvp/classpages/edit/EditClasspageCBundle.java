@@ -188,6 +188,11 @@ public interface EditClasspageCBundle extends ClientBundle{
         String previous();
         String rightArrow();
         String leftArrow();
+        
+        String dropdownContainerInstructional();
+        String placeHolderText();
+        String arrowInstructional();
+        String scrollPanelContainerInstructional();
 	}
 	@NotStrict
 	@Source("editclasspage.css")
