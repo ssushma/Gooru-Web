@@ -1376,6 +1376,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	@Override
 	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
+		
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
@@ -1424,7 +1425,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		getUiHandlers().getFollowerData();
+	//	getUiHandlers().getFollowerData();
 		//getUiHandlers().getFollwingData();
 		followersTabVc.setLabelCount("");
 		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
@@ -1440,7 +1441,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		getUiHandlers().getFollowerData();
+		//getUiHandlers().getFollowerData();
 		//getUiHandlers().getFollwingData();
 		followersTabVc.setLabelCount("");
 		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()-1+"");
@@ -1537,7 +1538,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
-				
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);

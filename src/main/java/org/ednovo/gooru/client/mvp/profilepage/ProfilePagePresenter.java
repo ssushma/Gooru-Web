@@ -593,6 +593,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 						appPopUp.hide();
 						getView().getUnFollowButton().setVisible(true);
 						getView().getFollowButton().setVisible(false);
+						getFollowerData();
 					}
 				};
 				
@@ -620,6 +621,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 						getView().getFollowButton().setVisible(true);
 						Window.enableScrolling(true);
 						hide();
+						getFollowerData();
 					}
 				}; 
 				profilePageUnFollowPopUp.show();
