@@ -181,6 +181,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		getView().closeAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 		assignmentContainer.getView().onUnload();
+		this.classpageDo=null;
 		
 	}
 	

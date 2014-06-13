@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.studentView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -34,6 +35,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView.SortAssignmentEvents;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView.SortDropDownEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
@@ -41,6 +44,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.SetSelectedClasspageListEven
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
@@ -53,6 +57,9 @@ import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -65,7 +72,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -74,6 +84,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 /**
  * 
  * @fileName : StudentAssignmentView.java
@@ -113,7 +124,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField FlowPanel paginationFocPanel,panelAssignmentProgress;
+	@UiField FlowPanel paginationFocPanel,panelAssignmentProgress,dropDownListContainer;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -121,7 +132,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static Image userImage;
 	
 	@UiField
-	static Label lblWebHelp;
+	static Label lblWebHelp,dropdownPlaceHolder;
 
 	@UiField
 	static
@@ -161,6 +172,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	private Map<String,AssignmentProgressVc> assignmentsDotsMap=new HashMap<String,AssignmentProgressVc>();
 	
+	List<String> sortingOptionsList=new ArrayList<String>();
 	
 	@Inject
 	public StudentAssignmentView() {
@@ -179,6 +191,92 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		AppClientFactory.getEventBus().addHandler(OpenJoinClassPopupEvent.TYPE,openJoinClassPopupHandler);
 
+		addSortingOptionsToList();
+		addSortEventToText();
+		dropdownPlaceHolder.setText(GL1946);
+		dropDownListContainer.setVisible(false);
+		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
+	}
+	
+	private void addSortEventToText(){
+		if(sortingOptionsList.size()>0){
+			for(int i=0;i < sortingOptionsList.size();i++){
+				String sortType=sortingOptionsList.get(i);
+				Label sortingLabel=new Label(sortType);
+				sortingLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().dropdownTextLabel());
+				dropDownListContainer.add(sortingLabel);
+				sortingLabel.addClickHandler(new SortAssignmentEvents(sortType));
+			}
+		}
+		
+	}
+	public class SortDropDownEvent implements ClickHandler{
+		@Override
+		public void onClick(ClickEvent event) {
+			new CustomAnimation(dropDownListContainer).run(300);
+		}
+	}
+	
+	public class SortAssignmentEvents implements ClickHandler{
+		private String sortType=null;
+		public SortAssignmentEvents(){}
+		public SortAssignmentEvents(String sortType){
+			this.sortType=sortType;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			//TODO sorting
+			Window.alert("In progress...");
+			
+			/*if(!dropdownPlaceHolder.getText().equals(sortType)){
+				dropdownPlaceHolder.setText(sortType);
+				String sortingStringValue="";
+				if(sortType.equals(GL1948)){
+					sortingStringValue="asce";
+				}else if(sortType.equals(GL1949)){
+					sortingStringValue="desc";
+				}else if(sortType.equals(GL1950)){
+					sortingStringValue="recent";
+				}
+				contentpanel.clear();
+				contentpanel.add(setLoadingPanel());
+				dropDownListContainer.setVisible(false);
+				Map<String,String> params = new HashMap<String,String>();
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				params.put("classpageid", classpageid);
+				params.put("pageNum", pageNum);
+				params.put("order", sortingStringValue);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			}else{
+				dropDownListContainer.setVisible(false);
+			}*/
+
+		}
+	}
+	
+	
+	public void hideDropDown(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONCLICK){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		dropDownListContainer.setVisible(false);
+        	}
+    	}
+     }
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return dropDownListContainer.getElement().isOrHasChild(Element.as(target))||dropdownPlaceHolder.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 
 	private void setStaticData() {
@@ -1015,6 +1113,13 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			
 		}
 		return mainContainerStatus;		
+	}
+	
+	public void addSortingOptionsToList(){
+		sortingOptionsList.clear();
+		sortingOptionsList.add(GL1946);
+		sortingOptionsList.add(GL1952);
+		sortingOptionsList.add(GL1953);
 	}
 
 	
