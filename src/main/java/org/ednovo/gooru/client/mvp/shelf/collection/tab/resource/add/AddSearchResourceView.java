@@ -401,7 +401,7 @@ public abstract class AddSearchResourceView extends Composite implements Message
 		}*/
 		if(suggestedSearchResults.size()==0) {
 			suggestedResourcesPanel.setVisible(false);
-			noResultsLabel.setHTML(GL1954);
+			noResultsLabel.setHTML(GL1957);
 			noResultsPanel.setVisible(true);
 			noResultsLabel.setVisible(true);
 		} else {
@@ -410,7 +410,7 @@ public abstract class AddSearchResourceView extends Composite implements Message
 					if(suggestedSearchResults.size()<=2){
 						noResultsLabel.setVisible(true);
 						noResultsLabel.setHTML("");
-						noResultsLabel.setHTML(GL1955);
+						noResultsLabel.setHTML(GL1958);
 						}
 					if(i>3){
 						noResultsLabel.setVisible(false);

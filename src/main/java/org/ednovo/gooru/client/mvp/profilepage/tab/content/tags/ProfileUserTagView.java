@@ -1,5 +1,9 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.tags;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -20,18 +24,22 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	interface ProfileUserTagViewUiBinder extends
 			UiBinder<Widget, ProfileUserTagView> {
 	}
+	
+	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
+	
 	@UiField HTMLPanel userTagsConatiner,tagTextMessage;
 	@UiField Label TagTextMessage;
 	ProfileUserTagWidget profileUserTagWidget;
-	public ProfileUserTagView() {
+	public ProfileUserTagView(List<UserTagsDo> userTagDo) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.userTagDo=userTagDo;
 		setData();
 	}
 	public void setData(){
 		TagTextMessage.setText(GL1915);
 		tagTextMessage.getElement().setInnerHTML(GL1937);
-		for(int i=0;i<7;i++){
-			profileUserTagWidget=new ProfileUserTagWidget();
+		for(int i=0;i<userTagDo.size();i++){
+			profileUserTagWidget=new ProfileUserTagWidget(userTagDo.get(i));
 			userTagsConatiner.add(profileUserTagWidget);
 		}
 		
