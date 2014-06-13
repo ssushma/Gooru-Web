@@ -4,6 +4,7 @@
 package org.ednovo.gooru.client.mvp.classpages.edit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,8 @@ import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
+import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AssignmentEditLabelUc;
@@ -68,6 +71,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -122,13 +126,15 @@ public class EditClasspageView extends
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel, lblAssignmentProgress;
+	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel, lblAssignmentProgress,lblInstructionalPlaceHolder,lblInstructionalArrow;
 	
 	@UiField Image imgClasspageImage;
 	
 	@UiField FlowPanel mainFlowPanel;
 
-	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath;
+	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath,htmlInstructionalListContainer;
+	
+	@UiField ScrollPanel spanelInstructionalPanel;
 
 	@UiField
 	static HTMLPanel frameDiv;
@@ -221,6 +227,10 @@ public class EditClasspageView extends
 	private int totalHitCount=0;
 	private int limit=5;
 	private int pageNumber=1;
+	
+	String dropSortOptionsStr = GL1947;
+	
+	@UiField HTMLPanel droplistContianer;
 
 	private final String START_PAGE = "1";
 	ToolTip toolTip = null;
@@ -291,7 +301,10 @@ public class EditClasspageView extends
 
 		setWidget(uiBinder.createAndBindUi(this));
 		
+		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
+		
 		mainContainer.setVisible(true);
+		droplistContianer.setVisible(true);
 
 		frameDiv.setVisible(false);
 		/*txtClasspageLinkShare.setEnabled(true);
@@ -311,6 +324,9 @@ public class EditClasspageView extends
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentsTabContainerPanel.setVisible(true);
 		btnCollectionEditImage.setVisible(false);
+		
+		lblInstructionalPlaceHolder.setText(GL1946);
+		
 		/*txtClasspageCodeShare.getElement().setId("txtClasspageCodeShare");*/
 		/*txtClasspageLinkShare.getElement().setId("txtClasspageLinkShare");
 */
@@ -361,6 +377,14 @@ public class EditClasspageView extends
 			public void onClick(ClickEvent event) {
 				MixpanelUtil.ClickOnEditImage();
 				getUiHandlers().showImageUploadWidget();
+			}
+		});
+		
+		lblInstructionalArrow.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				OpenInstructionalDropdown();	
 			}
 		});
 		
@@ -482,6 +506,8 @@ public class EditClasspageView extends
 		reportsTab.setText(GL1737);
 		assignmentsDirectionsLabel.setText(GL1945);
 		
+		spanelInstructionalPanel.setVisible(false);
+		
 		lblPrevious.setVisible(false);
 
 		lblAssignmentProgress.setText(GL1891_1);
@@ -520,6 +546,38 @@ public class EditClasspageView extends
 				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
 			}
 		});
+		
+		List<String> sortOptionsList = Arrays.asList(dropSortOptionsStr.split(","));
+		
+		for(int k=0; k<sortOptionsList.size(); k++)
+		{
+			String sortTitle = sortOptionsList.get(k);			
+			final Label titleLabel = new Label(sortTitle);
+			titleLabel.setStyleName(CollectionAssignCBundle.INSTANCE.css().classpageTitleText());
+			titleLabel.getElement().setAttribute("id", sortTitle);
+			
+			titleLabel.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {		
+					String optionSelected = titleLabel.getElement().getId();
+					lblInstructionalPlaceHolder.setText(optionSelected);
+					spanelInstructionalPanel.setVisible(false);
+					lblInstructionalPlaceHolder.getElement().setId(titleLabel.getElement().getId());
+					lblInstructionalPlaceHolder.setStyleName(CollectionAssignCBundle.INSTANCE.css().selectedClasspageText());
+					
+	
+
+
+						lblInstructionalPlaceHolder.setText(optionSelected);
+			
+				}
+			});
+			
+			htmlInstructionalListContainer.add(titleLabel);
+		}
+		
+		
 //		lblPrevious.addClickHandler(new ClickHandler() {
 //			
 //			@Override
@@ -568,6 +626,17 @@ public class EditClasspageView extends
 	@Override
 	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
+	}
+	
+	private void OpenInstructionalDropdown() {
+		
+		if (spanelInstructionalPanel.isVisible()){
+			spanelInstructionalPanel.setVisible(false);
+		}else{
+			spanelInstructionalPanel.setVisible(true);
+		}
+		
+		
 	}
 	
 	
@@ -874,6 +943,7 @@ public class EditClasspageView extends
 				panelAssignmentPath.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(true);
+				droplistContianer.setVisible(false);
 			}
 			getClassListContainer().setVisible(false);
 		}
@@ -892,6 +962,7 @@ public class EditClasspageView extends
 						panelAssignmentPath.setVisible(false);
 						assignmentsDirectionsLabel.setVisible(true);
 						noAssignmentsMessagePanel.setVisible(true);
+						droplistContianer.setVisible(false);
 					}
 				}
 			}
@@ -906,6 +977,7 @@ public class EditClasspageView extends
 		panelAssignmentPath.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
 		noAssignmentsMessagePanel.setVisible(false);
+		droplistContianer.setVisible(true);
 		if(assignmentsContainerPanel.getWidgetCount()>limit){
 			assignmentsContainerPanel.remove(assignmentsContainerPanel.getWidgetCount()-1);
 		}
@@ -990,6 +1062,7 @@ public class EditClasspageView extends
 				panelAssignmentPath.setVisible(true);
 				assignmentsDirectionsLabel.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(false);
+				droplistContianer.setVisible(true);
 				collectionTitleUc.setText(collectionDo.getTitle() !=null ? collectionDo.getTitle() : "" );
 				imgClasspageImage.setAltText(collectionDo.getTitle());
 				imgClasspageImage.setTitle(collectionDo.getTitle());
@@ -1047,6 +1120,7 @@ public class EditClasspageView extends
 			boolean isNew, boolean isExpandable) {
 		panelAssignmentPath.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
+		droplistContianer.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentTabView = new CollectionsView();
 		assignmentsContainerPanel.add(assignmentTabView);
@@ -1134,9 +1208,6 @@ public class EditClasspageView extends
 	public void onDeleteAssignment(boolean isPostDeleteAssignment) {
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		
-		System.out.println("iam here executing");
-
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("classpageid",classpageDo.getClasspageId());
 		params.put("pageSize", pageSize + "");
@@ -1202,12 +1273,14 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(true);
 			noAssignmentsMessagePanel.setVisible(true);
+			droplistContianer.setVisible(false);
 		}
 		else{
 			panelAssignmentProgress.clear();
 			panelAssignmentPath.setVisible(true);
 			assignmentsDirectionsLabel.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(false);
+			droplistContianer.setVisible(true);
 		}
 
 	}
@@ -1366,10 +1439,12 @@ public class EditClasspageView extends
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsDirectionsLabel.setVisible(false);
 				panelAssignmentPath.setVisible(true);
+				droplistContianer.setVisible(true);
 			}
 			else{
 				assignmentsDirectionsLabel.setVisible(true);
 				panelAssignmentPath.setVisible(false);
+				droplistContianer.setVisible(false);
 			}
 			
 			
@@ -1416,6 +1491,7 @@ public class EditClasspageView extends
 			reportsTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;
+			droplistContianer.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			panelAssignmentPath.setVisible(false);
@@ -1450,6 +1526,7 @@ public class EditClasspageView extends
 			classListTab.getElement().setClassName("");
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;
+			droplistContianer.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
