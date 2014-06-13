@@ -155,13 +155,13 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		shareMsgTitle.setText(GL0748);
 		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
 		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
-		shareMsgTxt.setText(GL1950);
-		shareMsgLbl.setText(GL1951);
+		shareMsgTxt.setText(GL1954);
+		shareMsgLbl.setText(GL1955);
 		gooruPublicShare.setVisible(true);
 		alertSuccessTxt.setVisible(true);
 		alertSuccessTitleTxt.setVisible(true);
 		okButton.setText(GL0190);
-		goBackBtn.setText(GL1952);
+		goBackBtn.setText(GL1956);
 		goBackBtn.setVisible(true);
 	}
 	

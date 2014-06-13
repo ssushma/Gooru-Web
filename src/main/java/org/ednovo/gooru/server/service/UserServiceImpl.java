@@ -43,6 +43,7 @@ import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
+import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.ProfileV2Do;
@@ -50,6 +51,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserSummaryDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -581,5 +583,42 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
 			}catch(Exception ex){}
 			
+	}
+
+	@Override
+	public IsFollowDo isFollowedUser(String gooruUid) throws GwtException {
+		JsonRepresentation jsonRep = null;
+		IsFollowDo isFollowDo = new IsFollowDo();
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_IS_FOLLOW, gooruUid,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		
+		try{
+			if (jsonRep.getText().toString().trim().contains("true")){
+				isFollowDo.setIsFollow("true");
+			}else{
+				isFollowDo.setIsFollow("false");
+			}
+		}
+		catch(Exception ex){}
+	
+		return isFollowDo;
+	}
+
+	@Override
+	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken());
+		System.out.println("getUserAddedContentTagSummary.."+url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		//jsonRep = jsonResponseRep.getJsonRepresentation();
+		return deserializeTagsContent(jsonRep);
+	}
+	
+	public List<UserTagsDo> deserializeTagsContent(JsonRepresentation jsonRep) {
+		List<UserTagsDo> userTagsDo = null;
+		userTagsDo = new ArrayList<UserTagsDo>();
+		return userTagsDo;
 	}
 }

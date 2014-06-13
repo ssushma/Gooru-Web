@@ -39,6 +39,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 
 /**
  * 
@@ -108,6 +109,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
 				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
 					getView().hideAddCollectionPopup("");
+					AppClientFactory.fireEvent(new ResetPresentersEvent());
 					for(int i=0;i<classpageItemDoList.size();i++){
 						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
 						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);

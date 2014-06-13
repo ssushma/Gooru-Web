@@ -44,11 +44,13 @@ import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
 
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.DeleteFolderSuccessView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
@@ -134,6 +136,32 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
 			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
 
+	/** 
+	 * This method is to get the followButton
+	 */
+	@Override
+	public Button getFollowButton() {
+		return followButton;
+	}
+	/** 
+	 * This method is to set the followButton
+	 */
+	public void setFollowButton(Button followButton) {
+		this.followButton = followButton;
+	}
+	/** 
+	 * This method is to get the unFollowButton
+	 */
+	@Override
+	public Button getUnFollowButton() {
+		return UnFollowButton;
+	}
+	/** 
+	 * This method is to set the unFollowButton
+	 */
+	public void setUnFollowButton(Button unFollowButton) {
+		UnFollowButton = unFollowButton;
+	}
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
 			profilePageEditBioPanel,mainContainer,followingContainer,tagResourceContainer;
@@ -184,6 +212,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private SocialShareView socialView=null;
 	
 	boolean enableEdit = true;
+	private String isFollowUser ;
 
 	@UiField(provided = true)
 	ShelfCBundle res;
@@ -320,11 +349,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		
-		
-		setTab(collectionsTabVc);
 		followButton.setText(GL1935);
-		UnFollowButton.setVisible(false);
 		UnFollowButton.setText(GL1936);
+			
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -395,7 +422,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		
 	}
-
+	@Override
+	public void isFollow(String isFollow) {
+		this.isFollowUser=isFollow;
+		
+	}
 	@UiHandler("profileOffButton")
 	public void onClickOffButton(ClickEvent event) {
 		MixpanelUtil.Click_Off();
@@ -521,6 +552,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
+		
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
 			collectionsTabVc.setEnabled(false);
@@ -563,7 +595,21 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			tagTabVc.addClickHandler(new clickOnTags());
 		}*/
 		
-		
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("collection".equalsIgnoreCase(tabValue))
+			{
+				setTab(collectionsTabVc);
+			}
+			if("tags".equalsIgnoreCase(tabValue))
+			{
+				setTab(tagTabVc);
+			}
+		}
+		else{
+			setTab(collectionsTabVc);
+			
+		}
 		
 	}
 
@@ -1255,16 +1301,24 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@Override
 	public void editOptions(boolean toEnable){
 		enableEdit = toEnable;
-	
+		
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
-			followButton.setVisible(true);
+			if(isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false"){
+				followButton.setVisible(true);
+				UnFollowButton.setVisible(false);
+			}
+			else{
+				followButton.setVisible(false);
+				UnFollowButton.setVisible(true);
+			}
 			editPencil.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}else{
 			gooruProfileOnOffContainer.setVisible(true);
 			followButton.setVisible(false);
+			UnFollowButton.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1280,6 +1334,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if(toEnable){
 			gooruProfileOnOffContainer.setVisible(true);
 			followButton.setVisible(false);
+			UnFollowButton.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1299,7 +1354,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				userMetadata.setVisible(true);	
 			}
 			gooruProfileOnOffContainer.setVisible(false);
-			followButton.setVisible(true);
+			if("false".equalsIgnoreCase(isFollowUser)||isFollowUser=="false"){
+				followButton.setVisible(true);
+				UnFollowButton.setVisible(false);
+			}
+			else{
+				followButton.setVisible(false);
+				UnFollowButton.setVisible(true);
+			}
 			editPencil.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
@@ -1356,11 +1418,25 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("followers".equalsIgnoreCase(tabValue))
+			{
+				setTab(followersTabVc);
+			}
+		}
 	}
 	@Override
 	public void getFolloweingsObj(List<UserFollowDo> userFollowDo) {
 		userFollowingDo.clear();
 		userFollowingDo.addAll(userFollowDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("following".equalsIgnoreCase(tabValue))
+			{
+				setTab(followingTabVc);
+			}
+		}
 		
 	}
 	
@@ -1373,15 +1449,29 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
 	{
-		UnFollowButton.setVisible(true);
+		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+		getUiHandlers().getFollowerData();
+		getUiHandlers().getFollwingData();
+		
+		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+1+"");
+		
 	}
 	@UiHandler("UnFollowButton")
 	public void onClickUnFollowButton(ClickEvent event)
 	{
+		UnFollowButton.setVisible(false);
+		followButton.setVisible(false);
+		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+		getUiHandlers().getFollowerData();
+		getUiHandlers().getFollwingData();
+		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		
 	}
+	
+
 	public class clickOnCollection implements ClickHandler{
 
 		@Override
@@ -1469,11 +1559,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
+				
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
 				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
+				
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
@@ -1483,10 +1575,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				mainContainer.setVisible(false);
 				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
 				followingContainer.add(profileUserTagView);
-			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
+			
+				//ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
+				//followingContainer.add(profileUserTagsResourceView);
 				
 			}
 			
 	}
 }
+
+	
 }

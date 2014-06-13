@@ -102,7 +102,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	Anchor forgotPwd, ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr,userBlockedLbl;
+	Label lblPleaseWait, collectionDescription,donotHaveAcount,lblOr;
 	
 	@UiField HTMLPanel hangOnText,signUpPanel;
 	
@@ -169,7 +169,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		lblPii.setText(GL1892);
 		ancprivacy.setText(GL1893);
 		toUsText.setText(GL1894);
-		userBlockedLbl.setVisible(false);
 		
 		hangOnText.getElement().setInnerText(GL0740);
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
@@ -197,15 +196,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	}
 	
-	@UiHandler("loginTxtBox")
-	public void onLogInTextField(KeyUpEvent keyUpEvent){
-		userBlockedLbl.setVisible(false);
-	}
-	
-	@UiHandler("passwordTxtBox")
-	public void onPasswordField(KeyUpEvent keyUpEvent){
-		userBlockedLbl.setVisible(false);
-	}
 
 	/**
 	 * Added click handler to perform Login operation by taking entered user
@@ -240,7 +230,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										/*if(result.getConfirmStatus()==1){
+										if(result.getActive()==1){
 											lblPleaseWait.setText(GL0505);
 											AppClientFactory
 													.setLoggedInUser(result);
@@ -251,45 +241,23 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 													.fireEvent(new SetUserDetailsInCollectionPlayEvent(
 															result.getToken(),
 															result.getGooruUId()));
-											previously commented AppClientFactory
+											/*previously commented AppClientFactory
 													.getInjector()
 													.getResourceService()
 													.copyCollection(
 															collectionObject,
 															"true",
 															null,
-															getSaveCollectionAsyncCallback());
+															getSaveCollectionAsyncCallback());*/
 											
 											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
 											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
-										}else if(result.getConfirmStatus()==0){
+										}else if(result.getActive()==0){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
-											userBlockedLbl.setText(GL1938);
-											userBlockedLbl.setVisible(true);
-										}*/
+											new AlertContentUc(OOPS, GL1938);
+										}
 										
-										lblPleaseWait.setText(GL0505);
-										AppClientFactory
-												.setLoggedInUser(result);
-										AppClientFactory
-												.fireEvent(new SetHeaderEvent(
-														result));
-										AppClientFactory
-												.fireEvent(new SetUserDetailsInCollectionPlayEvent(
-														result.getToken(),
-														result.getGooruUId()));
-										/*AppClientFactory
-												.getInjector()
-												.getResourceService()
-												.copyCollection(
-														collectionObject,
-														"true",
-														null,
-														getSaveCollectionAsyncCallback());*/
-										
-										showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
-										MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
 									}
 
 									@Override

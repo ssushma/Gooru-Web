@@ -78,7 +78,8 @@ public interface AssignmentProgressCBundle extends ClientBundle {
 		String studyPopup();
 		String assignmentStudyPopup();
 		String assignmentStudyPopupArrow();
-		
+		String studyPlay();
+		String circleInside();
 	}
 
 	@Source("AssignmentProgress.css")
