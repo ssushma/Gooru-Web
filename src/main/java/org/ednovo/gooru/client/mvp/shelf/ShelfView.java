@@ -167,7 +167,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 * @UiField FocusPanel simplePencilFocPanel;
 	 */
 	@UiField
-	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel,rbPublicPanel;
+	HTMLPanel collPopup, statPopup,loadingImageLabel,panelFriendly,editPanel,rbPublicPanel,publishedPanel;
 
 	@UiField
 	FlowPanel shelfViewMainContainer;
@@ -187,7 +187,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	@UiField Image imgFriendly;
 	
-	@UiField Label lblFriendly;
+	@UiField Label lblFriendly,lblPublishPending,lblPublish;
 	
 	boolean collectionItemsNotFriendly = false;
 
@@ -481,6 +481,11 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 		assignTabVc.addClickHandler(this);
 		collaboratorTabVc.addClickHandler(this);
+		
+		lblPublishPending.setVisible(false);
+		lblPublishPending.getElement().getStyle().setMarginTop(9, Unit.PX);
+		lblPublishPending.setText(GL1943);
+		lblPublish.setText(GL1942);
 
 		handelChangeImageEvent();
 		// simplePencilFocPanel.addMouseOverHandler(new hideEditPencil());
@@ -703,6 +708,25 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		}else{
 			editPanel.getElement().getStyle().clearMarginTop();
 		}
+		if(collectionDo.getSharing()!=null){
+			String share=collectionDo.getSharing();
+			if(share.equalsIgnoreCase("private")||share.equalsIgnoreCase("anyonewithlink")){
+				if(collectionDo.getPublishStatus()!=null && collectionDo.getPublishStatus().getValue().equals("pending")){
+					rbPublic.setVisible(false);
+					lblPublishPending.setVisible(true);
+					publishedPanel.setVisible(false);
+				}else{
+					rbPublic.setVisible(true);
+					lblPublishPending.setVisible(false);
+					publishedPanel.setVisible(false);
+				}
+			}else{
+				rbPublic.setVisible(false);
+				lblPublishPending.setVisible(false);
+				publishedPanel.setVisible(true);
+			}
+		}
+		
 		getCollectionShareTabVc();
 	}
 	public void setCollabCount(int count){
@@ -1855,6 +1879,23 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		collectionShareTabVc.clickOnPublic();
 	}
 	
+	@Override
+	public void setPusblishStatus(String publishStatus) {
+		
+		if(publishStatus!=null){
+			if(publishStatus.equalsIgnoreCase("pending")){
+				rbPublic.setVisible(false);
+				lblPublishPending.setVisible(true);	
+				publishedPanel.setVisible(false);
+			}else{
+				rbPublic.setVisible(false);
+				lblPublishPending.setVisible(false);	
+				publishedPanel.setVisible(true);
+			}
+			
+		}
+	}
+	
 	public static native void setFolderListHeight() /*-{
 		var element = document.getElementById("wrapper");
 		if (element !=null){
@@ -1862,4 +1903,5 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			$wnd.element.parentNode.className = "wrapperParent";
 		}
 	}-*/;
+
 }

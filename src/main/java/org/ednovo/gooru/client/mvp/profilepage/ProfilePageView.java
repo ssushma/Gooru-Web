@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
 
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
@@ -65,8 +66,9 @@ import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
+
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
@@ -131,11 +133,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
-			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton;
+			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
 
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
-			profilePageEditBioPanel,mainContainer,followingContainer;
+			profilePageEditBioPanel,mainContainer,followingContainer,tagResourceContainer;
 	
 	@UiField FlowPanel moreGradeCourseLbl, moreCourseLbl;
 	
@@ -214,6 +216,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private boolean isGradeCourseBtnClick = false;
 	
 	private String profileImageUrl="images/profilepage/user-profile-pic.png";
+	
+	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
+	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
+
 	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -314,16 +320,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
-		collectionsTabVc.setLabelCount(1+"");
-		followingTabVc.setLabelCount(1+"");
-		followersTabVc.setLabelCount(1+"");
-		tagTabVc.setLabelCount(1+"");
 		
-		setTab(collectionsTabVc);
-		/*collectionsTabVc.addClickHandler(
-		followingTabVc.addClickHandler(this);
-		followersTabVc.addClickHandler(this);*/
-		
+		followButton.setText(GL1935);
+		UnFollowButton.setVisible(false);
+		UnFollowButton.setText(GL1936);
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -513,6 +513,71 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
+		
+		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
+		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()+"");
+		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
+		getUiHandlers().getFollowerData();
+		getUiHandlers().getFollwingData();
+		
+		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
+		{
+			collectionsTabVc.setEnabled(false);
+			collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			collectionsTabVc.setEnabled(true);
+			collectionsTabVc.addClickHandler(new clickOnCollection());
+		}
+		if(profileDo.getUser().getMeta().getSummary().getFollowing()==0)
+		{
+			followingTabVc.setEnabled(false);
+			followingTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			followingTabVc.setEnabled(true);
+			followingTabVc.addClickHandler(new clickOnFollowing());
+		}
+		if(profileDo.getUser().getMeta().getSummary().getFollowers()==0)
+		{
+			followersTabVc.setEnabled(false);
+			followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			followersTabVc.setEnabled(true);
+			followersTabVc.addClickHandler(new clickOnFollowers());
+		}
+		tagTabVc.addClickHandler(new clickOnTags());
+		/*if(profileDo.getUser().getMeta().getSummary().getTags()==0)
+		{
+			tagTabVc.setEnabled(false);
+			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			tagTabVc.setEnabled(true);
+			tagTabVc.addClickHandler(new clickOnTags());
+		}*/
+		
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("collection".equalsIgnoreCase(tabValue))
+			{
+				setTab(collectionsTabVc);
+			}
+			if("tags".equalsIgnoreCase(tabValue))
+			{
+				setTab(tagTabVc);
+			}
+		}
+		else{
+			setTab(collectionsTabVc);
+			
+		}
 		
 	}
 
@@ -1207,11 +1272,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
+			followButton.setVisible(true);
 			editPencil.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 		}else{
 			gooruProfileOnOffContainer.setVisible(true);
+			followButton.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1226,6 +1293,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getEnableWidget(boolean toEnable,String about,Set<ProfileCodeDo> set) {
 		if(toEnable){
 			gooruProfileOnOffContainer.setVisible(true);
+			followButton.setVisible(false);
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1245,6 +1313,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				userMetadata.setVisible(true);	
 			}
 			gooruProfileOnOffContainer.setVisible(false);
+			followButton.setVisible(true);
 			editPencil.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.HIDDEN);
@@ -1297,7 +1366,31 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		return text;
 	}	
 	
-	
+	@Override
+	public void getFollowersObj(List<UserFollowDo> userFollowDo) {
+		userFollowerDo.clear();
+		userFollowerDo.addAll(userFollowDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("followers".equalsIgnoreCase(tabValue))
+			{
+				setTab(followersTabVc);
+			}
+		}
+	}
+	@Override
+	public void getFolloweingsObj(List<UserFollowDo> userFollowDo) {
+		userFollowingDo.clear();
+		userFollowingDo.addAll(userFollowDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("following".equalsIgnoreCase(tabValue))
+			{
+				setTab(followingTabVc);
+			}
+		}
+		
+	}
 	
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();
@@ -1305,69 +1398,90 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setTab(source);
 		
 	}
-	@UiHandler("collectionsTabVc")
-	public void onClickCollectionsTabVc(ClickEvent event)
+	@UiHandler("followButton")
+	public void onClickFollowButton(ClickEvent event)
 	{
-		
-		setTab(collectionsTabVc);
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "collections");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		UnFollowButton.setVisible(true);
+		followButton.setVisible(false);
+		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+	}
+	@UiHandler("UnFollowButton")
+	public void onClickUnFollowButton(ClickEvent event)
+	{
+		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
+	}
+	public class clickOnCollection implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(collectionsTabVc);
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "collections");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			
+		}
 		
 	}
-	@UiHandler("followingTabVc")
-	public void onClickfollowingTabVc(ClickEvent event)
-	{
-		setTab(followingTabVc);
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "following");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
-				
+	public class clickOnFollowing implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(followingTabVc);
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "following");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		
+		}
 	}
-	@UiHandler("followersTabVc")
-	public void onClickfollowersTabVc(ClickEvent event)
-	{
-		
-		setTab(followersTabVc);	
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "followers");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	public class clickOnFollowers implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(followersTabVc);	
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "followers");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
+			
+		}
 	}
-	@UiHandler("tagTabVc")
-	public void onClickTagTabVc(ClickEvent event)
-	{
-		
-		setTab(tagTabVc);	
-		Map<String,String> params = new HashMap<String,String>();
-		String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-		String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
-		
-		params.put("id", id);
-		params.put("user", user);
-		params.put("tab", "tags");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+	public class clickOnTags implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			setTab(tagTabVc);	
+			Map<String,String> params = new HashMap<String,String>();
+			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
+			params.put("id", id);
+			params.put("user", user);
+			params.put("tab", "tags");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
+			
+		}
 	}
 	public void setTab(Object tab) {
 		if(tab!=null){
-				if (tab.equals(collectionsTabVc)) {
+			if (tab.equals(collectionsTabVc)) {
 				followingContainer.clear();
 				collectionsTabVc.setSelected(true);
 				mainContainer.setVisible(true);
@@ -1378,16 +1492,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				followingTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView();
+				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView(userFollowingDo,"following");
 				followingContainer.add(profilePagefollowingView);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
+				
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView();
+				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
+				
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
@@ -1397,7 +1513,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				mainContainer.setVisible(false);
 				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
 				followingContainer.add(profileUserTagView);
-			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
+			
+				//ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
+				//followingContainer.add(profileUserTagsResourceView);
 				
 			}
 			

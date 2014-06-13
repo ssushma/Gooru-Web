@@ -457,9 +457,45 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	public CollectionDo updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode, String mediaType,String action) {
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj= new CollectionDo();
-	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_COLLLECTION_METADATA, collectionId, getLoggedInSessionToken());
-	    
-	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), ResourceFormFactory.updateCollection(title, description, grade, sharing, vocabulary, taxonomyCode, updateTaxonomyByCode,mediaType, action));
+	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
+	    System.out.println("updateCollectionMetadata:"+url);
+	    JSONObject classPageJsonObject=new JSONObject();
+		JSONObject collectionTypeJsonObject=new JSONObject();
+		try{
+			if(title!=null){
+				collectionTypeJsonObject.put(TITLE, title);
+			}
+			if(description != null){
+				collectionTypeJsonObject.put("description", description);
+			}
+			if(grade!=null){
+				collectionTypeJsonObject.put(GRADE, grade);
+			}
+			if(sharing!=null){
+				collectionTypeJsonObject.put("sharing", sharing);
+			}
+			if(vocabulary!=null){
+				collectionTypeJsonObject.put("vocabulary", vocabulary);
+			}
+			if(taxonomyCode!=null){
+				collectionTypeJsonObject.put("taxonomyCode", taxonomyCode);
+			}
+			if(updateTaxonomyByCode!=null){
+				collectionTypeJsonObject.put("updateTaxonomyByCode", updateTaxonomyByCode);
+			}
+			if(mediaType!=null){
+				collectionTypeJsonObject.put("mediaType", mediaType);
+			}
+			if(action!=null){
+				collectionTypeJsonObject.put("action", action);
+			}
+			classPageJsonObject.put("collection", collectionTypeJsonObject);
+			  System.out.println("out"+classPageJsonObject.toString());
+			
+		}catch(Exception e){
+			
+		}
+	    JsonResponseRepresentation jsonResponseRep = ServiceProcessor.put(url, getRestUsername(), getRestPassword(), classPageJsonObject.toString());
 	    jsonRep = jsonResponseRep.getJsonRepresentation();
 	    if(jsonResponseRep.getStatusCode()==200){
 			collectionDoObj = deserializeCollection(jsonRep);

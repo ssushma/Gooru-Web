@@ -30,8 +30,12 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
+import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 
 
 /*
@@ -53,6 +57,8 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 
 	CollectionItemDo collectionItemDo = null;
 	ClasspageService classpageService=null;
+	
+	private EditClasspagePresenter editClasspagePresenter=null;
 		
 	public CollectionsPresenter(IsCollectionsView childView) {
 		super(childView);
@@ -74,14 +80,16 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 		this.classpageService = classpageService;
 	}
 	
-	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate){
-		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,new SimpleAsyncCallback<String>() {
+	public void updateClasspageItem(String classpageItemId,final String directionText,final String dueDate,final String readStatus){
+		AppClientFactory.getInjector().getClasspageService().updateClasspageItem(classpageItemId, directionText, dueDate,readStatus,new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String result) {
 				if(directionText!=null){
 					getView().updateDirection(directionText);
-				}else{
+				}else if(dueDate!=null){
 					getView().updateDueDate(dueDate);
+				}else if(readStatus!=null){
+					getView().updateCollectionStatus(readStatus);
 				}
 			}
 		});
@@ -92,8 +100,21 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 			@Override
 			public void onSuccess(String result) {
 				getView().removeClasspageItemWidget();
+				AppClientFactory.fireEvent(new ResetPresentersEvent());
+//				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 			}
 		});
+	}
+
+
+	public EditClasspagePresenter getEditClasspagePresenter() {
+		return editClasspagePresenter;
+	}
+
+
+	public void setEditClasspagePresenter(
+			EditClasspagePresenter editClasspagePresenter) {
+		this.editClasspagePresenter = editClasspagePresenter;
 	}
 	
 	

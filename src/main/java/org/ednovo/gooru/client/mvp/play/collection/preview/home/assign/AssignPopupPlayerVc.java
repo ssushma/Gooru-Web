@@ -473,7 +473,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 
 		return iframeText;
 	}
-
+	
 	/**
 	 * Switching between Url and Bitly link
 	 * 
@@ -585,47 +585,52 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 						new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						MixpanelUtil.Regular_User_Logged_In();
-						AppClientFactory
-						.setLoggedInUser(result);
-						AppClientFactory
-						.fireEvent(new SetUserDetailsInPlayEvent(
-								result.getToken()));
-						AppClientFactory
-						.fireEvent(new SetUserDetailsInCollectionPlayEvent(
-								result.getToken(),
-								result.getGooruUId()));
+						if(result.getActive()==1){
+							MixpanelUtil.Regular_User_Logged_In();
+							AppClientFactory
+							.setLoggedInUser(result);
+							AppClientFactory
+							.fireEvent(new SetUserDetailsInPlayEvent(
+									result.getToken()));
+							AppClientFactory
+							.fireEvent(new SetUserDetailsInCollectionPlayEvent(
+									result.getToken(),
+									result.getGooruUId()));
 
-						AppClientFactory
-						.fireEvent(new SetHeaderEvent(
-								result));
+							AppClientFactory
+							.fireEvent(new SetHeaderEvent(
+									result));
 
-						if (result.getUsername()
-								.equalsIgnoreCase(
-										"TexasTeacher")) {
-							AppClientFactory
-							.fireEvent(new SetTexasAccountEvent(
-									"failure"));
-							AppClientFactory
-							.fireEvent(new SetTexasPlaceHolderEvent(
-									true));
-						} else {
-							AppClientFactory
-							.fireEvent(new SetTexasAccountEvent(
-									"success"));
-							AppClientFactory
-							.fireEvent(new SetTexasPlaceHolderEvent(
-									false));
+							if (result.getUsername()
+									.equalsIgnoreCase(
+											"TexasTeacher")) {
+								AppClientFactory
+								.fireEvent(new SetTexasAccountEvent(
+										"failure"));
+								AppClientFactory
+								.fireEvent(new SetTexasPlaceHolderEvent(
+										true));
+							} else {
+								AppClientFactory
+								.fireEvent(new SetTexasAccountEvent(
+										"success"));
+								AppClientFactory
+								.fireEvent(new SetTexasPlaceHolderEvent(
+										false));
+							}
+
+							AppClientFactory.setUserflag(true);
+							AppClientFactory.resetPlace();
+
+							loadListContainers();
+							MixpanelUtil
+							.mixpanelEvent("Login_FromAssign_Pop-up");
+							// heeere add widget
+						}else if(result.getActive()==0){
+							loginButton.setVisible(true);
+							lblPleaseWait.setVisible(false);
+							new AlertContentUc(OOPS, GL1938);
 						}
-
-						AppClientFactory.setUserflag(true);
-						AppClientFactory.resetPlace();
-
-						loadListContainers();
-						MixpanelUtil
-						.mixpanelEvent("Login_FromAssign_Pop-up");
-						// heeere add widget
-
 					}
 
 					@Override
