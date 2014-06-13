@@ -246,7 +246,7 @@
 
 .paginationContainer {
 	width: 100%;
-	margin-top:22px;
+	margin-top:7px;
 	text-align:right;
 }
 
@@ -698,7 +698,6 @@ margin-left:-1px;
        text-align: center;
        padding-bottom: 20px;
        margin: 20px 0px;
-       border-bottom: 1px solid #ddd;
        margin-left:122px;
 }
 .teachTab .select {
@@ -859,7 +858,7 @@ margin-left:-1px;
 }
 .labelCenterAlign{
 	text-align:center;
-
+	font-size : 18px;
 }
 .labelCenterAlignText{
 	text-align:center;
@@ -948,10 +947,11 @@ margin-left:-1px;
 
 .containerProgress{
 	margin: 0px auto;
+	height: 115px;
 }
 
 .next, .previous{
-	margin: 47px auto;
+	margin: 55px auto;
 	width: 2%;
 	float: left;
 }
@@ -985,7 +985,7 @@ margin-left:-1px;
 	float: left;
 	margin-right: 10px;
 	margin-left: 32px;
-	margin-top: 3px;
+	margin-bottom: 15px;
 }
 
 .dropdownPlaceHolder {
@@ -1087,4 +1087,9 @@ margin-left:-1px;
 	left: -1px;
 	z-index: 9;
 	overflow-x:hidden !important;
+}
+
+.btnContainer{
+	text-align : center;
+	border-top: 1px solid #CCC;	
 }

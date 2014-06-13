@@ -589,6 +589,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 					public void onClickPositiveButton(ClickEvent event) {
 						Window.enableScrolling(true);
 						appPopUp.hide();
+						getView().getUnFollowButton().setVisible(true);
+						getView().getFollowButton().setVisible(false);
 					}
 				};
 				
@@ -609,11 +611,18 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-				ProfilePageUnFollowPopUp profilePageUnFollowPopUp=new ProfilePageUnFollowPopUp(); 
+				ProfilePageUnFollowPopUp profilePageUnFollowPopUp=new ProfilePageUnFollowPopUp(){
+					@Override
+					public void clickOnOk(ClickEvent event){
+						getView().getUnFollowButton().setVisible(false);
+						getView().getFollowButton().setVisible(true);
+						Window.enableScrolling(true);
+						hide();
+					}
+				}; 
 				profilePageUnFollowPopUp.show();
 				profilePageUnFollowPopUp.center();
 				Window.enableScrolling(false);
-				
 			}
 		});
 		
