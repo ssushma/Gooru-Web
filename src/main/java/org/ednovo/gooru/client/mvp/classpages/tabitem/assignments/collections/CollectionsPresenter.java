@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
+import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
+
 
 /*
  * 
@@ -98,7 +100,8 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 			@Override
 			public void onSuccess(String result) {
 				getView().removeClasspageItemWidget();
-				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
+				AppClientFactory.fireEvent(new ResetPresentersEvent());
+//				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 			}
 		});
 	}
