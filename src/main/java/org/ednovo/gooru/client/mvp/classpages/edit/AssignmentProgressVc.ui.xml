@@ -6,6 +6,7 @@
 		    <g:HTMLPanel styleName="{res.css.circleContainer}">
 		        <g:Label styleName="{res.css.line}" ui:field="lblLineStart"/>
 	 			<g:HTMLPanel styleName="{res.css.circle}" ui:field="panelCircle">
+	 			    <g:Label styleName="{res.css.assignmentNumbers}" ui:field="lblAssignmentNo"/>
 			        <g:HTMLPanel styleName="{res.css.profileVisiblityPopup}" ui:field="moveAssignmentPopup">
 			          	<g:HTMLPanel styleName="{res.css.bubblearrowstyle}"></g:HTMLPanel>
 			          	<g:HTMLPanel styleName=" {res.css.standardsinner} {res.css.standardsPopup}">
@@ -33,8 +34,11 @@
 			          <g:FlowPanel styleName="{res.css.assignmentStudyPopup}" ui:field="assignmentInfoPopup">
 			          	<g:HTMLPanel styleName="{res.css.assignmentStudyPopupArrow}"></g:HTMLPanel>
 			          	<g:HTMLPanel styleName=" {res.css.standardsinner} {res.css.studyPopup}">
+			          	    <g:HTMLPanel styleName="{res.css.circleInside}" ui:field="panelCicle1">
+			          	    	<g:Label styleName="{res.css.assignmentNumbers}" ui:field="lblCircle1"></g:Label>
+			          	    </g:HTMLPanel>
 							<g:HTML styleName="{res.css.assignmentCollectionTitle}" ui:field="assignmentCollectiontitle"></g:HTML>
-							<g:Button styleName="primary" ui:field="studyButtonText">Study</g:Button>
+							<g:Button styleName="{res.css.studyPlay}" ui:field="studyButtonText"></g:Button>
 							<g:HTMLPanel styleName="{res.css.headerLeft}" ui:field="dueDateContainer">
 							
 					        </g:HTMLPanel>					        
@@ -43,7 +47,7 @@
 	 			</g:HTMLPanel>
 	 			<g:Label styleName="{res.css.line}" ui:field="lblLineEnd"/>
  			</g:HTMLPanel>
- 			<g:Label styleName="{res.css.assignmentNumbers}" ui:field="lblAssignmentNo"/>
+ 			
  			
 		</g:FlowPanel>
 </ui:UiBinder> 

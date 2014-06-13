@@ -48,12 +48,12 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#EDEDED');
 }
 .completeStateCollectionHeader{
-	background: #4e9746;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4e9746), to(#4e9746));
-	background: -webkit-linear-gradient(top, #4e9746, #4e9746);
-	background: -moz-linear-gradient(top, #4e9746, #4e9746);
-	background: -ms-linear-gradient(top, #4e9746, #4e9746);
-	background: -o-linear-gradient(top, #4e9746, #4e9746);
+	background: rgba(78, 151, 70, 0.5);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(78, 151, 70, 0.5)), to(rgba(78, 151, 70, 0.5)));
+	background: -webkit-linear-gradient(top, rgba(78, 151, 70, 0.5), rgba(78, 151, 70, 0.5));
+	background: -moz-linear-gradient(top, rgba(78, 151, 70, 0.5), rgba(78, 151, 70, 0.5));
+	background: -ms-linear-gradient(top, rgba(78, 151, 70, 0.5), rgba(78, 151, 70, 0.5));
+	background: -o-linear-gradient(top, rgba(78, 151, 70, 0.5), rgba(78, 151, 70, 0.5));
 	/* padding: 15px; */
 	height:45px;
 	position: relative;

@@ -81,4 +81,6 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	public void getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo,AsyncCallback<SearchDo<CodeDo>> callback);
 	
 	void getSuggestedAggregator(SearchDo<String> searchDo, AsyncCallback<SearchDo<String>> callback);
+	
+	void getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
 }

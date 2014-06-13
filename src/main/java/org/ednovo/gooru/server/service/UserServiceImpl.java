@@ -590,13 +590,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		IsFollowDo isFollowDo = new IsFollowDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_IS_FOLLOW, gooruUid,getLoggedInSessionToken());
-		System.out.println("isFollowedUser.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
 		try{
-			System.out.println("isFollowedUser jsonRep.."+jsonRep.getText());
-			isFollowDo.setIsFollow(jsonRep.getText());
+			if (jsonRep.getText().toString().trim().contains("true")){
+				isFollowDo.setIsFollow("true");
+			}else{
+				isFollowDo.setIsFollow("false");
+			}
 		}
 		catch(Exception ex){}
 	

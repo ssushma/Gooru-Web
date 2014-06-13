@@ -115,7 +115,6 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 				new SimpleAsyncCallback<ClasspageListDo >() {
 					@Override
 					public void onSuccess(ClasspageListDo result) {
-						System.out.println("seeMorebtnOwner::"+result.getTotalHitCount());
 						if(result.getTotalHitCount()>pageInitialLimitOwner)
 						{
 							seeMorebtnOwner.setVisible(true);
@@ -127,6 +126,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 
 						if(result.getSearchResults().size()>0)
 						{
+							ownerClassesContainer.getElement().setInnerHTML("");
 						for(int i = 0; i<result.getSearchResults().size();i++) 
 						{
 							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
@@ -156,6 +156,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 						}
 						if(result.getSearchResults().size()>0)
 						{
+						joinedClassesContainer.getElement().setInnerHTML("");
 						for(int i = 0; i<result.getSearchResults().size();i++) 
 						{
 							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();

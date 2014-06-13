@@ -33,9 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.IsSearchView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
-import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -43,15 +41,10 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ErrorEvent;
-import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -61,12 +54,13 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -90,8 +84,10 @@ public abstract class AddSearchResourceView extends Composite implements Message
 	@UiField
 	HTMLEventPanel suggestedResourcesPanel;
 	
-	@UiField HTMLPanel searchResultspanel;
+	@UiField HTMLPanel searchResultspanel,noResultsPanel;
 	
+	@UiField Label noResultsLabel;
+	 
 	Map<String, String> filterMap = new HashMap<String, String>();
 	
 	HTMLPanel addResourceThumbnailContent;
@@ -130,16 +126,16 @@ public abstract class AddSearchResourceView extends Composite implements Message
 	
 	private static final String SMALL = GL0900;
 	private String category;
-	
+	PopupPanel appPopup;
 	public interface AddSearchResourceViewUiBinder extends UiBinder<Widget, AddSearchResourceView> {
 		
 	}
 	
 	public static AddSearchResourceViewUiBinder uiBinder=GWT.create(AddSearchResourceViewUiBinder.class);
 	
-	public AddSearchResourceView(CollectionDo collectionDo){
+	public AddSearchResourceView(CollectionDo collectionDo,PopupPanel popuppanel){
 		initWidget(uiBinder.createAndBindUi(this));
-		
+		this.appPopup=popuppanel;
 		final String collectionTitle = collectionDo.getTitle();
 		this.collectionTitle = collectionTitle;
 		searchtitleText.setText(GL0894);
@@ -195,7 +191,8 @@ public abstract class AddSearchResourceView extends Composite implements Message
 				filterSearchDo.setFilters(filterMap);
 			}
 			filterMap.put("fltNot.scollectionGooruOIds", collectionId);
-			getResourceSearchResults(filterSearchDo);
+			//getResourceSearchResults(filterSearchDo);
+			getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 		}
 	}
 	
@@ -228,11 +225,28 @@ public abstract class AddSearchResourceView extends Composite implements Message
 		}
 	}
 	
-	private void getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo) {
+/*	private void getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo) {
 		AppClientFactory.getInjector().getSearchService().getResourceSearchResults(searchDo, new SimpleAsyncCallback<SearchDo<ResourceSearchResultDo>>(){
 			@Override
 			public void onSuccess(SearchDo<ResourceSearchResultDo> result) {
 				setData(result);
+			}
+		});
+	}*/
+	
+	private void getSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo,final String contentGorruOid) {
+		AppClientFactory.getInjector().getSearchService().getCollectionSuggestedResourceSearchResults(searchDo,contentGorruOid, new AsyncCallback<SearchDo<ResourceSearchResultDo>>() {
+			
+			@Override
+			public void onSuccess(SearchDo<ResourceSearchResultDo> result) {
+				// TODO Auto-generated method stub
+				setData(result,contentGorruOid);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}
@@ -312,13 +326,15 @@ public abstract class AddSearchResourceView extends Composite implements Message
 			}
 		}
 		filterMap.put("fltNot.scollectionGooruOIds", collectionId);
-		getResourceSearchResults(filterSearchDo);
+		//getResourceSearchResults(filterSearchDo);
+		getSuggestedResourceSearchResults(filterSearchDo,collectionId);
 	}
 	
 	public abstract void hidePopup();
 
-	private void setData(SearchDo<ResourceSearchResultDo> result) {
-		if(result.getSearchHits()==0) {
+	private void setData(SearchDo<ResourceSearchResultDo> result,String collectiongooruOid) {
+	List<ResourceSearchResultDo> suggestedSearchResults = result.getSuggestResults();
+		/*if(result.getSearchHits()==0) {
 			searchResultspanel.setVisible(false);
 		} else {
 			searchResultspanel.setVisible(true);
@@ -365,7 +381,10 @@ public abstract class AddSearchResourceView extends Composite implements Message
 				
 				addResourceThumbnailContent.add(thumbnailContainer);
 				addResourceThumbnailContent.add(addResourceImgDesc);
-				suggestedResourcesPanel.add(addResourceThumbnailContent);
+				
+				AddSearchSuggestedResourceView addsearchobj = new AddSearchSuggestedResourceView(searchResults.get(i));
+				suggestedResourcesPanel.add(addsearchobj);
+			//	suggestedResourcesPanel.add(addResourceThumbnailContent);
 				
 				resourceThumbnail.addErrorHandler(new ErrorHandler(){
 					@Override
@@ -379,6 +398,33 @@ public abstract class AddSearchResourceView extends Composite implements Message
 			viewAllResourcesBtn.getElement().getStyle().setMarginLeft(-236, Unit.PX);
 			viewAllResourcesBtn.getElement().getStyle().setPosition(Position.ABSOLUTE);
 			viewAllResourcesBtn.getElement().getStyle().setMarginTop(33, Unit.PX);
+		}*/
+		if(suggestedSearchResults.size()==0) {
+			suggestedResourcesPanel.setVisible(false);
+			noResultsLabel.setText("We don't have any good suggestions for your collection. Use the search below to find more resources!   Or   Add your own resource from the Web or from your Computer.");
+			noResultsPanel.setVisible(true);
+			noResultsLabel.setVisible(true);
+		} else {
+			suggestedResourcesPanel.setVisible(true);
+				for(int i = 0; i < suggestedSearchResults.size(); i++) {
+					if(suggestedSearchResults.size()<=2){
+						noResultsLabel.setVisible(true);
+						noResultsLabel.setText("");
+						noResultsLabel.setText("We have only 1 suggestion for this collection. Use the search below to find more resources!   Or   Add your own resource from the Web or from your Computer.");
+						}
+					if(i>3){
+						noResultsLabel.setVisible(false);
+						break;
+					}
+				AddSearchSuggestedResourceView addsearchobj = new AddSearchSuggestedResourceView(suggestedSearchResults.get(i),collectiongooruOid) {
+					@Override
+					public void closePopup() {
+						appPopup.hide();
+					}
+				};
+				suggestedResourcesPanel.add(addsearchobj);
+				}
+			
 		}
 	}
 	

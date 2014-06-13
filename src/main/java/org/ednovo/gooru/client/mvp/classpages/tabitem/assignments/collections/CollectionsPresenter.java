@@ -30,8 +30,12 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
+
+import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 
 
 /*
@@ -53,6 +57,8 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 
 	CollectionItemDo collectionItemDo = null;
 	ClasspageService classpageService=null;
+	
+	private EditClasspagePresenter editClasspagePresenter=null;
 		
 	public CollectionsPresenter(IsCollectionsView childView) {
 		super(childView);
@@ -94,8 +100,21 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 			@Override
 			public void onSuccess(String result) {
 				getView().removeClasspageItemWidget();
+				AppClientFactory.fireEvent(new ResetPresentersEvent());
+//				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 			}
 		});
+	}
+
+
+	public EditClasspagePresenter getEditClasspagePresenter() {
+		return editClasspagePresenter;
+	}
+
+
+	public void setEditClasspagePresenter(
+			EditClasspagePresenter editClasspagePresenter) {
+		this.editClasspagePresenter = editClasspagePresenter;
 	}
 	
 	

@@ -76,6 +76,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -87,6 +88,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 
 	interface AddResourcePopupViewUiBinder extends
 			UiBinder<Widget, AddResourceView> {
+		
 	}
 	private static final String MESSAGE_HEADER = GL0748;
 	private static final String MESSAGE_CONTENT = GL0891;
@@ -147,7 +149,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.clear();
 		fromweb.setText(GL0887);
 		fromfile.setText(GL0888);
-		fromwsearch.setText(GL0889);
+		fromwsearch.setText(GL1916);
 		multiplechoice.setText(GL0305);
 		truefalase.setText(GL0306);
 		truefalseText.setText(GL0890);
@@ -209,7 +211,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
 				openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
 				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
-				addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails());
+				addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 				tabViewContainer.add(addSearchResourceWidget);
 				searchTabButton.setStyleName(res.css().buttonSelected());
 				questionTabButton.setStyleName(res.css().buttonDeSelected());
@@ -436,8 +438,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			myComputerTabButton.setStyleName(res.css().buttonSelected());
 		}
 		
-		public AddSearchResourceWidget(CollectionDo collectionDo){
-			super(collectionDo);
+		public AddSearchResourceWidget(CollectionDo collectionDo,PopupPanel popuppanel){
+			super(collectionDo,popuppanel);
 		}
 	}
 	
@@ -828,7 +830,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			Window.enableScrolling(true);
 			titleLbl.setText(GL0886);
 			tabViewContainer.clear();
-			addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails());
+			addSearchResourceWidget=new AddSearchResourceWidget(getUiHandlers().getParentCollectionDetails(),appPopUp);
 			tabViewContainer.add(addSearchResourceWidget);
 			searchTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());

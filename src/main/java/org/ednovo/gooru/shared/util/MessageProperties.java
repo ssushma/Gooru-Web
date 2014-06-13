@@ -1081,10 +1081,10 @@ public interface MessageProperties {
 		String GL0892	="Oops! You can't add a shortened URL as a resource.";
 		String GL0893	="Add a Question";
 		//Add search reource view in shelf
-		String GL0894	="Search from Gooru’s millions of resources";//Label
+		String GL0894	="Search from over 18M Resources";//Label
 		String GL0895	="Search for a keyword, then drag the resource you want from search results page into your collection";//Label
 		String GL0896	="Go to Search ";//Button
-		String GL0897	="Suggested Resources";//Label
+		String GL0897	="Suggested Resources for this Collection";//Label
 		String GL0898	="One More Step";
 		String GL0899	=".png";
 		String GL0900	="Small";
@@ -2448,7 +2448,7 @@ public interface MessageProperties {
     	String GL1925 ="Classes I've Joined";
     	String GL1926 ="Enter";
     	String GL1927 ="Classes I Teach";
-    	String GL1928 ="Create a New Class";
+    	String GL1928 ="+ Create a New Class";
     	String GL1929 ="You do not have any Created Classes!";
     	String GL1930 ="You have not joined any Classes yet!";
     	String GL1931 ="Students";
@@ -2462,7 +2462,7 @@ public interface MessageProperties {
     	String GL1937 = "Click a tag to view all the resources that you tagged with that field.";
     	
     	
-    	String GL1938 = "Admin has blocked your Gooru ID.";
+    	String GL1938 = "You have been blocked due to violation of community standards. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
@@ -2474,6 +2474,18 @@ public interface MessageProperties {
     	String GL1944 = "Back to all Tags";
 
     	String GL1943 = "Publish in Progress";
+    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	
+    	String GL1946 = "View All";
+      	String GL1947 = "All,Order Ascending,Order Descending";
+      	String GL1948 = "Ascending";
+      	String GL1949 = "Descending";
+      	String GL1950 = "Recently Added";
+      	String GL1951 = "Upcoming(by due date)";
+      	String GL1952 = "View All Completed";
+      	String GL1953 = "View All InCompleted";
+      	
+
 
 
 }

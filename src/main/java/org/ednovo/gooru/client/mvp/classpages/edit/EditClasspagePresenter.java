@@ -385,7 +385,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 					AppClientFactory.getInjector().getClasspageService().v2GetClassPartyCustomField(AppClientFactory.getLoggedInUser().getGooruUId(), new SimpleAsyncCallback<ProfilePageDo>() {
 						@Override
 						public void onSuccess(ProfilePageDo result) {
-							if(result!=null && result.getOptionalValue().equalsIgnoreCase("true")){
+							if(result!=null && result.getOptionalValue() !=null && result.getOptionalValue().equalsIgnoreCase("true")){
 								new WelcomeClassView(true);
 								isLoggedInUser=true;
 								Window.enableScrolling(false);
@@ -399,7 +399,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),tab,analyticsId,monitorId);
-						getAssignmentsProgress(classpageId, "0", "30");	// to display assignment progress.
+						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);

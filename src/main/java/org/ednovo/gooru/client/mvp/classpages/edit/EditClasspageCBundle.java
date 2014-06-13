@@ -172,6 +172,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String backArrowButton();
         
         String labelCenterAlign();
+        String labelCenterAlignText();
         String classcodeStyles();
         String assignmentPath();
         String assignmentProgress();
@@ -187,6 +188,18 @@ public interface EditClasspageCBundle extends ClientBundle{
         String previous();
         String rightArrow();
         String leftArrow();
+        
+        String dropdowncontainer();
+        String dropdownPlaceHolder();
+        String dropdownListContainerScrollPanel();
+        String dropdownTextLabel();
+        
+        
+        String dropdownContainerInstructional();
+        String placeHolderText();
+        String arrowInstructional();
+        String scrollPanelContainerInstructional();
+        String btnContainer();
 	}
 	@NotStrict
 	@Source("editclasspage.css")
