@@ -46,6 +46,11 @@
 				<g:FlowPanel styleName="{style.css.assignmentPath}" ui:field="panelAssignmentProgress" />
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+		<g:FlowPanel styleName="{style.css.dropdowncontainer}">
+					<g:Label styleName="{style.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder"></g:Label>
+					<g:FlowPanel styleName="{style.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
+					</g:FlowPanel>
+		</g:FlowPanel>
 
 				<g:FlowPanel styleName="{StudentStyle.searchResultContainer}"
 					ui:field="paginationFocPanel"></g:FlowPanel>
