@@ -399,7 +399,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),tab,analyticsId,monitorId);
-						getAssignmentsProgress(classpageId, "0", "30");	// to display assignment progress.
+						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
