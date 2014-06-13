@@ -598,9 +598,32 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO sorting
-			dropdownPlaceHolder.setText(sortType);
-			dropDownListContainer.setVisible(false);
-			Window.alert("In progresss");
+			
+			if(!dropdownPlaceHolder.getText().equals(sortType)){
+				dropdownPlaceHolder.setText(sortType);
+				String sortingStringValue="";
+				if(sortType.equals(GL1948)){
+					sortingStringValue="asce";
+				}else if(sortType.equals(GL1949)){
+					sortingStringValue="desc";
+				}else if(sortType.equals(GL1950)){
+					sortingStringValue="recent";
+				}
+				assignmentsContainerPanel.clear();
+				assignmentsContainerPanel.add(setLoadingPanel());
+				dropDownListContainer.setVisible(false);
+				Map<String,String> params = new HashMap<String,String>();
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				params.put("classpageid", classpageid);
+				params.put("pageNum", pageNum);
+				params.put("order", sortingStringValue);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			}else{
+				dropDownListContainer.setVisible(false);
+			}
+
 		}
 	}
 	
@@ -1204,9 +1227,10 @@ public class EditClasspageView extends
 			pageNumber = pagenumber;
 			setPagination();
 			
+			assignmentsContainerPanel.clear();
 			assignmentsContainerPanel.add(setLoadingPanel());
 
-			getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
+			//getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
 			/*int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
 
 			pageNum = (pagenumber - 1) * pageSize;
@@ -1215,15 +1239,17 @@ public class EditClasspageView extends
 			assignmentListDo.setClasspageId(classpageId);
 			assignmentListDo.setPageNum(pageNum);
 			assignmentListDo.setPageSize(pageSize);
-			assignmentListDo.setPos(pagenumber);
+			assignmentListDo.setPos(pagenumber);*/
 
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("classpageid", classpageDo.getClasspageId());
-			params.put("pageSize", pageSize + "");
-			params.put("pageNum", pageNum + "");
-			params.put("pos", pagenumber + "");
-			AppClientFactory.getPlaceManager().revealPlace(
-					PlaceTokens.EDIT_CLASSPAGE, params, true);*/
+			Map<String,String> params = new HashMap<String,String>();
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+			String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+			String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
+			params.put("order", order);
+			params.put("classpageid", classpageid);
+			params.put("pageNum", pagenumber+"");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 
 		} else {
 		}
@@ -1676,7 +1702,7 @@ public class EditClasspageView extends
 		sortingOptionsList.add(GL1948);
 		sortingOptionsList.add(GL1949);
 		sortingOptionsList.add(GL1950);
-		sortingOptionsList.add(GL1951);
+		//sortingOptionsList.add(GL1951);
 	}
 }
 

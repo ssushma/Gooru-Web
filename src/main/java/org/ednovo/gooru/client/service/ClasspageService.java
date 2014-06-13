@@ -294,7 +294,7 @@ public interface ClasspageService extends BaseService {
 	public ClasspageDo getClasspage(String classpageId);
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction);
 	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId);
-	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit);
+	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus);
 	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus);
 	public String deleteClassPageItem(String collectionId);
 	

@@ -951,9 +951,24 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	
-	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit){
+	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,getLoggedInSessionToken(),offset,limit);
+		if(sortingOrder!=null){
+			if(sortingOrder.equalsIgnoreCase("asce")){
+				sortingOrder="sequence";
+			}else if(sortingOrder.equalsIgnoreCase("desc")){
+				sortingOrder="sequence-desc";
+			}else if(sortingOrder.equalsIgnoreCase("recent")){
+				sortingOrder="recent-desc";
+			}
+			url=url+"&orderBy="+sortingOrder;
+		}else{
+			url=url+"&orderBy=sequence";
+		}
+		if(studyStatus!=null){
+			url=url+"&status="+studyStatus;
+		}
 		System.out.println("getClasspageItems API====>"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){

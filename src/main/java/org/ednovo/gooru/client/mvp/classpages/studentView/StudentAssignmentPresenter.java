@@ -162,7 +162,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		});
 	}
 	public void getClasspageItems(String classpageId,String offset,String limit,final boolean isForAssignmentPath){
-		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit,null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
