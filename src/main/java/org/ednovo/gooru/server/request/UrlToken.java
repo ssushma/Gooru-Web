@@ -544,7 +544,10 @@ public enum UrlToken {
 			
 	GET_LOGGED_IN_USER_RATINGS_REVIEWS("/v2/content/{0}/rating/star?sessionToken={1}&creatorUId={2}"),
 	
-	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"); 
+	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
+	
+	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}&searchTerm={1}&event={2}&contentGooruOid={3}");
+
 	
 	
 	private String url;

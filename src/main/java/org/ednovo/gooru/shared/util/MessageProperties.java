@@ -1081,10 +1081,10 @@ public interface MessageProperties {
 		String GL0892	="Oops! You can't add a shortened URL as a resource.";
 		String GL0893	="Add a Question";
 		//Add search reource view in shelf
-		String GL0894	="Search from Gooru’s millions of resources";//Label
+		String GL0894	="Search from over 18M Resources";//Label
 		String GL0895	="Search for a keyword, then drag the resource you want from search results page into your collection";//Label
 		String GL0896	="Go to Search ";//Button
-		String GL0897	="Suggested Resources";//Label
+		String GL0897	="Suggested Resources for this Collection";//Label
 		String GL0898	="One More Step";
 		String GL0899	=".png";
 		String GL0900	="Small";
