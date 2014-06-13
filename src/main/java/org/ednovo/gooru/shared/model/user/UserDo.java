@@ -74,6 +74,7 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private String loginType;
 	private String usernameDisplay;
 	private List<CustomFieldDo> customFields;
+	private Integer active;
 	
 	private String createdOn;
 	
@@ -387,6 +388,22 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+
+	/**
+	 * @return the active
+	 */
+	public Integer getActive() {
+		return active;
+	}
+
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Integer active) {
+		this.active = active;
 	}
 	
 	

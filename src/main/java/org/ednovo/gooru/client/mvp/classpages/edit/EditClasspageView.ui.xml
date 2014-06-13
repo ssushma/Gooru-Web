@@ -71,7 +71,6 @@
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
-				
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.containerProgress}">
 			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
@@ -90,7 +89,11 @@
 				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
-			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlignText}"></g:Label>
+
+			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
+			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
+<!-- ======= -->
+			<!-- <g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlignText}"></g:Label>
 			
 			<g:HTMLPanel ui:field="droplistContianer" styleName="{res.css.dropdownContainerInstructional}">
 					<g:Label ui:field="lblInstructionalPlaceHolder"
@@ -106,11 +109,20 @@
 			<g:FlowPanel styleName="{res.css.paginationContainer}"
 					ui:field="paginationFocPanel">
 				</g:FlowPanel>
-			<g:HTMLPanel styleName="{res.css.labelCenterAlign}" ui:field="newAssignmentAndMsgPanel">
+			<g:HTMLPanel styleName="{res.css.labelCenterAlign}" ui:field="newAssignmentAndMsgPanel"> -->
+<!-- >>>>>>> ef568a2fc6dc6fb1554e7be84e67bb730a335ef7 -->
 				<g:HTMLPanel>
-					<g:Button ui:field="btnNewAssignment" text=""
-						styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
 				</g:HTMLPanel>
+				<g:FlowPanel styleName="{res.css.dropdowncontainer}">
+					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder">Ascending</g:Label>
+					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
+						
+					</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel">
+				</g:FlowPanel>
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->

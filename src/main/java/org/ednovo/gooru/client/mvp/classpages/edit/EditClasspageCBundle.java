@@ -189,6 +189,12 @@ public interface EditClasspageCBundle extends ClientBundle{
         String rightArrow();
         String leftArrow();
         
+        String dropdowncontainer();
+        String dropdownPlaceHolder();
+        String dropdownListContainerScrollPanel();
+        String dropdownTextLabel();
+        
+        
         String dropdownContainerInstructional();
         String placeHolderText();
         String arrowInstructional();

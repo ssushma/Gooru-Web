@@ -100,7 +100,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 
 	@UiField Anchor forgotPwd,ancRegisterHere;
 	
-	@UiField Label lblLoginHeading,lblDoYouHaveAccount,lblOr, lblPleaseWait, lblWelcomeBack,lblLoginWithGooru,userBlockedLbl;
+	@UiField Label lblLoginHeading,lblDoYouHaveAccount,lblOr, lblPleaseWait, lblWelcomeBack,lblLoginWithGooru;
 
 //	@UiField CheckBox lblKeepMeLogedIn;
 	
@@ -160,7 +160,6 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
         setTextAndIds();
         
 		lblPleaseWait.setVisible(false);
-		userBlockedLbl.setVisible(false);
 		setHandlers();
         
 		this.center();
@@ -169,7 +168,6 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	public LoginPopupUc(String emailId){
 		this();
 		this.emailId = emailId;
-		userBlockedLbl.setVisible(false);
 	}
 
 	/**
@@ -192,7 +190,6 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 //        lblKeepMeLogedIn.getElement().setId("chkLogin");
 		setTextAndIds();
 		lblPleaseWait.setVisible(false);
-		userBlockedLbl.setVisible(false);
 		setHandlers();
 		
 		this.center();		
@@ -273,16 +270,6 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	}
 
 	
-	@UiHandler("loginTxtBox")
-	public void onLogInTextField(KeyUpEvent keyUpEvent){
-		userBlockedLbl.setVisible(false);
-	}
-	
-	@UiHandler("passwordTxtBox")
-	public void onPasswordField(KeyUpEvent keyUpEvent){
-		userBlockedLbl.setVisible(false);
-	}
-	
 
 	/**
 	 * User login popup allows to sign in if correct credentials and set user
@@ -332,7 +319,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-//						if(result.getConfirmStatus()==1){
+						if(result.getActive()==1){
 
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
@@ -451,14 +438,11 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 								}
 						    }*/
-//						}else if(result.getConfirmStatus()==0){
-							/*loginButton.setVisible(true);
+						}else if(result.getConfirmStatus()==0){
+							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
-							new AlertContentUc(OOPS, GL1938);*/
-						    
-						  /*  userBlockedLbl.setText(GL1938);
-							userBlockedLbl.setVisible(true);*/
-//						}
+							new AlertContentUc(OOPS, GL1938);
+						}
 					}
 
 					

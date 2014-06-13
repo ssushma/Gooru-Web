@@ -2476,8 +2476,15 @@ public interface MessageProperties {
     	String GL1943 = "Publish in Progress";
     	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
     	
-    	String GL1946 = "All";
+    	String GL1946 = "View All";
       	String GL1947 = "All,Order Ascending,Order Descending";
+      	String GL1948 = "Ascending";
+      	String GL1949 = "Descending";
+      	String GL1950 = "Recently Added";
+      	String GL1951 = "Upcoming(by due date)";
+      	String GL1952 = "View All Completed";
+      	String GL1953 = "View All InCompleted";
+      	
 
 
 
