@@ -216,7 +216,7 @@ public class EditClasspageView extends
 	private int pageNum = 0;
 
 	private Integer offsetProgress=0;
-	private Integer limitProgress=30;
+	private Integer limitProgress=20;
 	
 	private int pos = 0;
 
@@ -450,44 +450,6 @@ public class EditClasspageView extends
 			}
 		});
 		
-//		btnEditImage.addMouseOverHandler(new MouseOverHandler() {
-//			
-//			@Override
-//			public void onMouseOver(MouseOverEvent event) {
-//				btnEditImage.setVisible(true);
-//			}
-//		});
-//		btnEditImage.addMouseOutHandler(new MouseOutHandler() {
-//			
-//			@Override
-//			public void onMouseOut(MouseOutEvent event) {
-//				btnEditImage.setVisible(false);
-//			}
-//		});
-/*//		
-		txtClasspageCodeShare.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				txtClasspageCodeShare.selectAll();
-				txtClasspageCodeShare.setFocus(true);
-			}
-		});*/
-		
-		/*txtClasspageLinkShare.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				txtClasspageLinkShare.selectAll();
-				txtClasspageLinkShare.setFocus(true);
-			}
-		});*/
-		
-		/*//panelCode.setVisible(false);
-		panelWebLink.setVisible(false);*/
-		
-		
-		
 		panelUpdateActionContols.getElement().setId("panelUpdateActionContols");
 		
 		btnEditImage.setText(GL0138);
@@ -511,15 +473,7 @@ public class EditClasspageView extends
 		lblPrevious.setVisible(false);
 
 		lblAssignmentProgress.setText(GL1891_1);
-		
-		//htmlShareText.setHTML(GL0229 + GL0230);
-		//lblPopupTitle.setText(GL0230);
-	/*	lblOr.setText(GL0209.toUpperCase());
-		lblAWebLink.setText(GL0231);
-		lblWebLink.setText(GL0232);
-		//htmlPopupTitleDesc.setHTML(GL0233);
-		htmlWebLinkTitleDesc.setHTML(GL0234);*/
-		
+				
 		backArrowButton.getElement().setId("backArrowButton");
 		
 		btnEditImage.getElement().setId("btnEditImage");
@@ -532,9 +486,7 @@ public class EditClasspageView extends
 		
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());
-		//AppClientFactory.getEventBus().addHandler(GetStudentJoinListEvent.TYPE, getStudentJoinListHandler);
-		
+		reportHandler=reportsTab.addClickHandler(new reportsTabClicked());		
 		
 		lblNext.addClickHandler(new ClickHandler() {
 			
@@ -951,23 +903,27 @@ public class EditClasspageView extends
 	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
 		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
 			public void resetPagination(){
-				setPagination();
-				if((pageNumber*limit)<totalHitCount){
-					assignmentsContainerPanel.add(setLoadingPanel());
-					getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
-				}else{
-					totalHitCount--;
-					setPagination();
-					if(totalHitCount==0){
-						panelAssignmentPath.setVisible(false);
-						assignmentsDirectionsLabel.setVisible(true);
-						noAssignmentsMessagePanel.setVisible(true);
-						droplistContianer.setVisible(false);
-					}
-				}
+				restingPagination();
 			}
 		};
 		return assignmentCollectionView;
+	}
+	
+	public void restingPagination(){
+		setPagination();
+		if((pageNumber*limit)<totalHitCount){
+			assignmentsContainerPanel.add(setLoadingPanel());
+			getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
+		}else{
+			totalHitCount--;
+			setPagination();
+			if(totalHitCount==0){
+				panelAssignmentPath.setVisible(false);
+				assignmentsDirectionsLabel.setVisible(true);
+				noAssignmentsMessagePanel.setVisible(true);
+				droplistContianer.setVisible(false);
+			}
+		}
 	}
 	
 	public void setClasspageItemOnTop(ClasspageItemDo classpageItemDo){
@@ -1208,26 +1164,26 @@ public class EditClasspageView extends
 	public void onDeleteAssignment(boolean isPostDeleteAssignment) {
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("classpageid",classpageDo.getClasspageId());
-		params.put("pageSize", pageSize + "");
-	if (assignmentsContainerPanel.getWidgetCount() == 1
-				&& isPostDeleteAssignment) {
-			pageNum = pageNum == 0 ? 0 : pageNum - 5;
-					params.put("pageNum", pageNum + "");
-			params.put("pos", pos + "");
-	}
-		else {
-			pageNum = isPostDeleteAssignment ? pageNum : 0;
-			params.put("pageNum", pageNum + "");
-			if(pageNum==0){
-			    params.put("pos", START_PAGE);
-			}else{
-				params.put("pos", pos + "");
-			}
-		}
-		AppClientFactory.getPlaceManager().revealPlace(
-				PlaceTokens.EDIT_CLASSPAGE, params, true);
+		restingPagination();
+//		Map<String, String> params = new HashMap<String, String>();
+//		params.put("classpageid",classpageDo.getClasspageId());
+//		params.put("pageSize", pageSize + "");
+//		if (assignmentsContainerPanel.getWidgetCount() == 1
+//					&& isPostDeleteAssignment) {
+//				pageNum = pageNum == 0 ? 0 : pageNum - 5;
+//				params.put("pageNum", pageNum + "");
+//				params.put("pos", pos + "");
+//		}else {
+//			pageNum = isPostDeleteAssignment ? pageNum : 0;
+//			params.put("pageNum", pageNum + "");
+//			if(pageNum==0){
+//			    params.put("pos", START_PAGE);
+//			}else{
+//				params.put("pos", pos + "");
+//			}
+//		}
+//		AppClientFactory.getPlaceManager().revealPlace(
+//				PlaceTokens.EDIT_CLASSPAGE, params, true);
 	}
 /**
  * This method is used to get the assignment by classpageId
