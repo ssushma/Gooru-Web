@@ -96,12 +96,15 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	private static final String SMALL = GL0900;
 
 	private static final String PNG = GL0899;
+	
+	boolean suggestFlag;
 
 	public ResourceImageUc() {
 		this.res = UcCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		addDomHandler(this, ClickEvent.getType());
+		suggestFlag=false;
 	}
 
 	/**
@@ -145,7 +148,21 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 		}
 		
 	}
-	
+	public void renderSearch(String category, String thumbnailUrl, String realUrl, String gooruOid, String playerName, String title, boolean generateYoutube, String collectionId, String suggestedtype) {
+			final String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
+		resourceType.addStyleName(categoryString + SMALL);
+		suggestFlag=true;
+		setUrl(thumbnailUrl, realUrl, categoryString, title, generateYoutube);
+		setResourceId(gooruOid);
+		setPlayerName(playerName);
+		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
+			if(!collectionId.equalsIgnoreCase("") || !collectionId.isEmpty())
+			{
+				setCollectionId(collectionId);
+			}
+		}
+		
+	}
 	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId,String title, boolean youtube, String narration) {
 		String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
 		resourceType.addStyleName(categoryString + SMALL);
@@ -227,28 +244,34 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 		}
 		else
 		{
+			if(suggestFlag){
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("id", getResourceId());
+				params.put("pn", getPlayerName());
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
+			}else{
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
+					String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
+						
+						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
+						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+					}else{
+						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid);
+						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+					}
+				}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
+						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
+						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+					}else{
+						PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
+						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+					}
+				}
 			
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-				String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-					
-					PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
-					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-				}else{
-					PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", collectionId).with("rid", gooruOid);
-					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-				}
-			}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
-				if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-					PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
-					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-				}else{
-					PlaceRequest request=new PlaceRequest(PlaceTokens.PREVIEW_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
-					AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-				}
+			
 			}
-			
-			
 		}
 /*		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", getResourceId());
@@ -301,7 +324,7 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 	public String getProfilePageMoreInfoCollectionId() {
 		return profilePageMoreInfoCollectionId;
 	}
-
+	
 	/**
 	 * @param profilePageMoreInfoCollectionId the profilePageMoreInfoCollectionId to set
 	 */
@@ -309,4 +332,5 @@ public class ResourceImageUc extends Composite implements ClickHandler,MessagePr
 			String profilePageMoreInfoCollectionId) {
 		this.profilePageMoreInfoCollectionId = profilePageMoreInfoCollectionId;
 	}
+
 }

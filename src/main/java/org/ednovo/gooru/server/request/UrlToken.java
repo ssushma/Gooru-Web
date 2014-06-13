@@ -548,6 +548,7 @@ public enum UrlToken {
 	
 	DELETE_RATINGS("/v2/rating/{0}?sessionToken={1}"),
 	
+	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}&searchTerm={1}&event={2}&contentGooruOid={3}"),
 
 	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}"),
 	
@@ -562,6 +563,7 @@ public enum UrlToken {
 	USER_TAG("/v2/content/tag/my?sessionToken={1}"),
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"); 
+
 
 	
 	
