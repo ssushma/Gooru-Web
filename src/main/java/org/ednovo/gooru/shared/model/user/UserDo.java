@@ -52,6 +52,7 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String username;
+	private String userName;
 	private String emailId = "";
 	private Integer confirmStatus;
 	private String registerToken;
@@ -73,6 +74,7 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private String loginType;
 	private String usernameDisplay;
 	private List<CustomFieldDo> customFields;
+	private Integer active;
 	
 	private String createdOn;
 	
@@ -376,6 +378,32 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 
 	public void setMeta(UserMetaDo meta) {
 		this.meta = meta;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	/**
+	 * @return the active
+	 */
+	public Integer getActive() {
+		return active;
+	}
+
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Integer active) {
+		this.active = active;
 	}
 	
 	

@@ -7,15 +7,15 @@
                       <g:HTMLPanel styleName="{ProfilePageStyle.userImageContainer}">
                     	<g:Image styleName="{ProfilePageStyle.userImage}" ui:field="profileThumbnailImage"></g:Image>
                     	<g:HTMLPanel styleName="{ProfilePageStyle.teacherTipOuterContainer}">
-                    	<g:Label ui:field="teacherTipLabel"></g:Label></g:HTMLPanel>                  	
+                    	</g:HTMLPanel>                  	
                     </g:HTMLPanel>
                     <g:HTMLPanel styleName="{ProfilePageStyle.profileFollowingUserNameDetails}">
                     <g:Label styleName="{ProfilePageStyle.username}" ui:field="userNameLabel"></g:Label>
-                      <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userCollections"></g:Label>
-                        <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userTags"></g:Label>
-                         <g:HTMLPanel styleName="{ProfilePageStyle.clear}"/>
+                      <g:Label styleName="{ProfilePageStyle.bold}" ui:field="userCollections"></g:Label>
+                        <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowDetails"></g:Label>
+                         <!-- <g:HTMLPanel styleName="{ProfilePageStyle.clear}"/>
                           <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowing"></g:Label>
-                        <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowers"></g:Label>
+                        <g:Label styleName="{ProfilePageStyle.userDetails}" ui:field="userFollowers"></g:Label> -->
                      
                     </g:HTMLPanel>
                 </g:HTMLPanel>  

@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter.IsProfilePag
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageUnFollowPopUp;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
@@ -54,9 +55,11 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
+import org.ednovo.gooru.shared.model.user.UserFollowDo;
 
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -113,6 +116,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	SignUpPresenter signUpViewPresenter = null;
 	
 	private boolean isRefresh = false;
+	UserFollowDo userFollowDo=new UserFollowDo();
 	
 	@Inject
 	public ProfilePagePresenter(IsProfilePageView view, IsProfilePageProxy proxy,ImageUploadPresenter imageUploadPresenter, SignUpPresenter signUpViewPresenter) {
@@ -523,5 +527,88 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		
 		
 	}
+
+	
+	@Override
+	public UserFollowDo getFollwingData() {
+		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<List<UserFollowDo>>() {
+			
+			
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(List<UserFollowDo> result) {
+				getView().getFolloweingsObj(result);
+				
+			}
+		});
+		return userFollowDo;
+	}
+
+	@Override
+	public UserFollowDo getFollowerData() {
+		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<List<UserFollowDo>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+
+
+			@Override
+			public void onSuccess(List<UserFollowDo> result) {
+				getView().getFollowersObj(result);	
+				
+			}
+		});
+		return userFollowDo;
+	}
+
+	@Override
+	public void followUser(String gooruUid) {
+		AppClientFactory.getInjector().getUserService().followUser(profileDo.getUser().getGooruUId(), new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+
+	@Override
+	public void unFollowUser(String gooruUid) {
+		AppClientFactory.getInjector().getUserService().unFollowUser(gooruUid, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				ProfilePageUnFollowPopUp profilePageUnFollowPopUp=new ProfilePageUnFollowPopUp(); 
+				profilePageUnFollowPopUp.show();
+				profilePageUnFollowPopUp.center();
+				
+			}
+		});
+		
+	}
+	
+
+
 	
 }

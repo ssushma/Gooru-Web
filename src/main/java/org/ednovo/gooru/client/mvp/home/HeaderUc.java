@@ -765,22 +765,23 @@ public class HeaderUc extends Composite implements MessageProperties,
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //				OpenClasspageList();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 				
-				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",
-					new SimpleAsyncCallback<ClasspageListDo>() {
-						@Override
-						public void onSuccess(ClasspageListDo result) {
-							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
-							if (result.getSearchResults().size()>0){
-								/*classpageId = result.getSearchResults().get(0).getGooruOid();
-								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
-								OpenClasspageEdit(classpageId, userId);*/
-								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.CLASSHOME);
-							}else{
-								AppClientFactory.getPlaceManager().redirectPlace(PlaceTokens.STUDY);
-							}
-						}
-				});
+//				AppClientFactory.getInjector().getClasspageService().v2GetAllClass("10", "0",
+//					new SimpleAsyncCallback<ClasspageListDo>() {
+//						@Override
+//						public void onSuccess(ClasspageListDo result) {
+//							hasClasses = result.getSearchResults().size() > 0 ? true : false; 
+//							if (result.getSearchResults().size()>0){
+//								/*classpageId = result.getSearchResults().get(0).getGooruOid();
+//								String userId = result.getSearchResults().get(0).getUser().getGooruUId();
+//								OpenClasspageEdit(classpageId, userId);*/
+//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME,null,true);
+//							}else{
+//								AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDY);
+//							}
+//						}
+//				});
 			} else {
 				name = "teach";
 //				onLinkPopupClicked(null);

@@ -42,7 +42,10 @@
 							   		   </g:HTMLPanel>
 							   </g:HTMLPanel>
 							   <!--  Social container stop-->
-							</g:HTMLPanel>
+							  	</g:HTMLPanel>
+							  	 <g:Button styleName="primary {ProfilePageStyle.followButton}" ui:field="followButton"></g:Button>
+							    <g:Button styleName="blackPrimaryButton {ProfilePageStyle.followButton}" ui:field="UnFollowButton"></g:Button>
+						
 					   <!--  Profile On/Off container stop -->
 					   </g:HTMLPanel>
 		        	</g:HTMLPanel>
@@ -116,7 +119,7 @@
 			
 			<g:FlowPanel styleName="{ProfilePageStyle.userinfoContainer}">
 			  <g:HTMLPanel styleName="{ProfilePageStyle.tabContent}">
-			   		<profileUc:ProfilePageTabVc ui:field="collectionsTabVc" />
+			   		<profileUc:ProfilePageTabVc ui:field="collectionsTabVc" enabled="true" />
 					<profileUc:ProfilePageTabVc ui:field="followingTabVc" />
 					<profileUc:ProfilePageTabVc ui:field="followersTabVc"/>
 					<profileUc:ProfilePageTabVc ui:field="tagTabVc"/>
@@ -143,6 +146,7 @@
             <g:HTMLPanel ui:field="shareLinkFloPanel" styleName="{res.css.shareLinkFlowPanel}"></g:HTMLPanel>
         </g:HTMLPanel>
         <g:HTMLPanel ui:field="followingContainer"/>
+          <g:HTMLPanel ui:field="tagResourceContainer"/>
     </g:HTMLPanel>
     </g:HTMLPanel>
     <g:HTMLPanel  ui:field="profileOffContainerPanel" styleName="{ProfilePageStyle.profileOffConatinerStyle}"><g:Image ui:field="errorImage"/></g:HTMLPanel>

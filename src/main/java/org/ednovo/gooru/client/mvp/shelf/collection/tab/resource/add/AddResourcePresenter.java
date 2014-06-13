@@ -86,8 +86,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	
 	private SimpleAsyncCallback<Void> removeQuestionImageAsyncCallback; 
 	
-	private static final String KEY_OER = "OER";
-	private static final String VAL_OER = "Oer";
+	private static final String KEY_OER = "resourceLicense";
+	private static final String VAL_OER = "OER";
 	
 	public SimpleAsyncCallback<CollectionItemDo> getAddQuestionResourceAsyncCallback() {
 		return addQuestionResourceAsyncCallback;
@@ -192,8 +192,8 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			@Override
 			public void onSuccess(CollectionItemDo result) {
 				getView().hide();
-				tagResourceAsOER(result); 
-//				isCollResourceTabView.insertData(result);
+//				tagResourceAsOER(result); 
+				isCollResourceTabView.insertData(result);
 			}
 
 			@Override
@@ -208,8 +208,11 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			public void onSuccess(CollectionItemDo result) {
 				
 				getView().hide();
-//				isCollResourceTabView.insertData(result);
-				tagResourceAsOER(result);
+				isCollResourceTabView.insertData(result);
+				/**
+				 * De-scoped for 6.4 release
+				 */
+//				tagResourceAsOER(result);
 				MixpanelUtil.AddResourceByUrl();
 				
 //				updateShare("private");

@@ -397,6 +397,8 @@ public interface ShelfCBundle extends ClientBundle{
 		String publishPanel();
 		String publishButton();
 		String shelfPublishTab();
+		String publishPending();
+		String published();
 		
 		String userprofilecount();
 		

@@ -71,26 +71,58 @@
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
-				
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
-			    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
-			    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
-			    <g:HTMLPanel styleName="{res.css.path}">
-				    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
-				    <g:Label styleName="{res.css.line}"></g:Label> -->
-					<g:HTMLPanel styleName="{res.css.assignmentPath}" ui:field="panelAssignmentProgress" />
+			<g:HTMLPanel styleName="{res.css.containerProgress}">
+			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
+			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
+			    </uc:HTMLEventPanel>
+				<g:HTMLPanel styleName="{res.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
+				    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
+				    <g:Label styleName="{res.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
+				    <g:HTMLPanel styleName="{res.css.path}">
+					    <!-- <g:HTMLPanel styleName="{res.css.squre}"></g:HTMLPanel>
+					    <g:Label styleName="{res.css.line}"></g:Label> -->
+						<g:HTMLPanel styleName="{res.css.assignmentPath}" ui:field="panelAssignmentProgress" />
+					</g:HTMLPanel>
 				</g:HTMLPanel>
+				<uc:HTMLEventPanel styleName="{res.css.previous}" ui:field="panelNext">
+				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
+				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
+
 			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
+			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
+<!-- ======= -->
+			<!-- <g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlignText}"></g:Label>
+			
+			<g:HTMLPanel ui:field="droplistContianer" styleName="{res.css.dropdownContainerInstructional}">
+					<g:Label ui:field="lblInstructionalPlaceHolder"
+						styleName="{res.css.placeHolderText}"></g:Label>
+					<g:Label ui:field="lblInstructionalArrow" styleName="{res.css.arrowInstructional}"></g:Label>
+					<g:ScrollPanel ui:field="spanelInstructionalPanel"
+						styleName="{res.css.scrollPanelContainerInstructional}">
+						<g:HTMLPanel ui:field="htmlInstructionalListContainer"
+							styleName=""></g:HTMLPanel>
+					</g:ScrollPanel>
+			</g:HTMLPanel>
+				
 			<g:FlowPanel styleName="{res.css.paginationContainer}"
 					ui:field="paginationFocPanel">
 				</g:FlowPanel>
-			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
+			<g:HTMLPanel styleName="{res.css.labelCenterAlign}" ui:field="newAssignmentAndMsgPanel"> -->
+<!-- >>>>>>> ef568a2fc6dc6fb1554e7be84e67bb730a335ef7 -->
 				<g:HTMLPanel>
-					<g:Button ui:field="btnNewAssignment" text=""
-						styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
 				</g:HTMLPanel>
+				<g:FlowPanel styleName="{res.css.dropdowncontainer}">
+					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder">Ascending</g:Label>
+					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
+						
+					</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel">
+				</g:FlowPanel>
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->

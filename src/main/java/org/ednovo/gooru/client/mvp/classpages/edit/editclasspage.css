@@ -609,8 +609,7 @@
 
 .assignmentsContainer{
 	overflow: hidden;
-	min-height: 400px;
-	height: auto;
+margin-left:-1px;
 }
 
 .classpageCodeInnerPopup {
@@ -757,7 +756,7 @@
 }
 .classpageHover {
 	width: 1002px;
-    height:241px;
+    height:735px;
 	margin: 0 auto;
     border-radius:4px;
     -moz-box-shadow: 0 0 10px rgba(0,0,0,.1);
@@ -860,15 +859,19 @@
 }
 .labelCenterAlign{
 	text-align:center;
+
+}
+.labelCenterAlignText{
+	text-align:center;
+	font-size:20px;
 }
 
 .assignmentPath{
 	
 }
 .assignmentPathContainer{
-	height: 100px;
 	margin-bottom: 10px;
-	background-color:rgb(255,255,255);
+	/* background-color:rgb(255,255,255); */
 	height:109px;
 	/* Firefox v1.0+ */
 	-moz-border-radius:8px;
@@ -877,6 +880,9 @@
 	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
 	border-radius:8px;
 	padding : 5px;
+	width: 94%;
+	margin: 0px auto;
+	float: left;
 }
 
 .assignmentProgress{
@@ -884,7 +890,7 @@
 	font-size: 14px; 
 /*	font-weight: bold;	*/
 	margin:15px;
-	margin-bottom: 27px;
+	margin-bottom: 19px;
 }
 
 .assignmentPath{
@@ -938,4 +944,147 @@
 .classcodeContainer{
 	float: left;
 	
+}
+
+.containerProgress{
+	margin: 0px auto;
+}
+
+.next, .previous{
+	margin: 47px auto;
+	width: 2%;
+	float: left;
+}
+
+.rightArrow {
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-left: 15px solid #999;
+	display: inline-block;
+	margin-left: 10px;
+	margin-right: -15px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.leftArrow {
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-right: 15px solid #999;
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: -15px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.dropdowncontainer {
+	width: 130px;
+	float: left;
+	margin-right: 10px;
+	margin-left: 32px;
+	margin-top: 3px;
+}
+
+.dropdownPlaceHolder {
+	background: url(images/dropdownMenuArrow.png) no-repeat;
+	background-color: white;
+	background-position: right center;
+	color: #999;
+	padding: 5px 25px 5px 5px;
+	border-bottom: 1px solid #ddd;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	display: block;
+	width: 100px;
+	height: auto;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif, Calibri;
+}
+.dropdownListContainerScrollPanel {
+	border: 1px solid #ddd;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	z-index: 9999;
+	width: 130px;
+	position:absolute;
+	background-color: #ffffff;
+}
+.dropdownTextLabel{
+	float: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 120%;
+	color: #999;
+	text-align: left;
+	position: relative;
+	background-color: #fff;
+	z-index: 1;
+	width: 91%;
+	padding: 5px 5px 5px 7px;
+}
+.dropdownTextLabel:hover{
+	background-color: #cfe3f1;
+	cursor: pointer;
+}
+.dropdownContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:145px;
+	height:28px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	position: absolute;
+	margin-top:11px;
+}
+.placeHolderText{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:120%;
+	color:rgb(153,153,153);
+	text-align:left;
+	padding-top: 8px;
+	padding-left: 5px;
+	float: left;
+	cursor: pointer;
+	width: 90%;
+}
+.arrowInstructional {
+    width: 0;
+	height: 0;
+	border: 8px solid;
+	border-color: rgb(153,153,153) transparent transparent transparent;
+	left: 130px;
+	float: right;
+	margin-top: -11px;
+	margin-right: 7px;
+	border-bottom: none;
+	cursor: pointer;
+}
+.scrollPanelContainerInstructional{
+	background-color:rgb(255,255,255);
+	width:145px;
+	height:82px;
+	border-color:rgb(221,221,221);
+	border-width:1px;
+	/* Firefox v1.0+ */
+	-moz-border-radius:1px;
+	/* Safari v3.0+ and by Chrome v0.2+ */
+	-webkit-border-radius:1px;
+	/* Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+ */
+	border-radius:1px;
+	border-style:solid;
+	top: 7px;
+	left: -1px;
+	z-index: 9;
+	overflow-x:hidden !important;
 }

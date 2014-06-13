@@ -33,8 +33,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.newclasspage.NewClasspagePopupView;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
-import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
-import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
@@ -42,6 +40,7 @@ import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
+import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -67,15 +66,11 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private static ClassCodeViewUiBinder uiBinder = GWT
 			.create(ClassCodeViewUiBinder.class);
 
-	@UiField Button btnCreateClass,btnEnter, disabledBtn;
+	@UiField Button btnCreateClass,btnEnter, disabledBtn,seeMorebtnJoined,seeMorebtnOwner;
 	
-	@UiField Label lblCreateAClass,lblEasyToOrganize,lblAccessAClass;
+	@UiField Label lblCreateAClass;
 	
-	//@UiField Label lblManageAssignments,lblClearDue,lblMonitorStudentProgress,lblMonitorDesc, lblFavoriteClasses, lblClassOne, lblClassTwo, lblClassThree, lblClassFour;
-	
-//	@UiField Anchor ancSampleReport;
-	
-	//@UiField HTMLEventPanel panelClassOne, panelClassTwo, panelClassThree, panelClassFour;
+	@UiField HTMLPanel joinedClassesContainer,ownerClassesContainer,joinedContainerTitle,teachContainerTitle;
 	
 	@UiField TextBoxWithPlaceholder txtCode;
 	
@@ -85,11 +80,18 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	
 	private boolean isValid=true;
 	
+	private Integer pageInitialLimitJoined = 10;
+	private Integer offsetLimitJoined = 0;
+	
+	private Integer defaultLimit = 10;
+	
+	private Integer pageInitialLimitOwner = 10;
+	private Integer offsetLimitOwner = 0;
+	
 	interface ClassCodeViewUiBinder extends UiBinder<Widget, ClassHomeView> {
 
 	}
 
-	
 	
 	
 	@Inject
@@ -97,23 +99,81 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		setText();
-		
-		SetButtonHandler setButtonVisibility = new SetButtonHandler() {
 
-			@Override
-			public void setButtonVisibility() {
-				setCreateClassVisibility();
-			}
-		};
-		AppClientFactory.getEventBus().addHandler(
-				SetButtonEvent.TYPE, setButtonVisibility);
+
+	}
+	public void callServiceRequestsToBindData() {
+		ownerClassesContainer.clear();
+		joinedClassesContainer.clear();
+		txtCode.setText("");
+		pageInitialLimitOwner = 10;
+		pageInitialLimitJoined = 10;
+		offsetLimitOwner = 0;
+		offsetLimitOwner = 0;
+		
+		AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+				new SimpleAsyncCallback<ClasspageListDo >() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+						if(result.getTotalHitCount()>pageInitialLimitOwner)
+						{
+							seeMorebtnOwner.setVisible(true);
+						}
+						else
+						{
+							seeMorebtnOwner.setVisible(false);
+						}
+
+						if(result.getSearchResults().size()>0)
+						{
+							ownerClassesContainer.getElement().setInnerHTML("");
+						for(int i = 0; i<result.getSearchResults().size();i++) 
+						{
+							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+							classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Teach");
+							ownerClassesContainer.add(classpageWidget);
+						}
+						}
+						else
+						{
+							ownerClassesContainer.getElement().setInnerHTML(GL1929);
+						}
+						
+					}
+				});
+		
+		AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+				new SimpleAsyncCallback<ClasspageListDo >() {
+					@Override
+					public void onSuccess(ClasspageListDo result) {
+						if(result.getTotalHitCount()>pageInitialLimitJoined)
+						{
+							seeMorebtnJoined.setVisible(true);
+						}
+						else
+						{
+							seeMorebtnJoined.setVisible(false);
+						}
+						if(result.getSearchResults().size()>0)
+						{
+						joinedClassesContainer.getElement().setInnerHTML("");
+						for(int i = 0; i<result.getSearchResults().size();i++) 
+						{
+							ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+							classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Study");
+							joinedClassesContainer.add(classpageWidget);
+						}
+						}
+						else
+						{
+							joinedClassesContainer.getElement().setInnerHTML(GL1930);
+						}
+						
+					}
+				});
 	}
 	private void setCreateClassVisibility() {
-		if (AppClientFactory.isAnonymous()){
-			btnCreateClass.setVisible(false);
-		}else{
-			btnCreateClass.setVisible(true);
-		}
+		
 	}
 	/**
 	 * @function setText 
@@ -136,34 +196,15 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private void setText() {
 		
 		setCreateClassVisibility();
-		
-		btnCreateClass.setText(GL1771);
-		btnEnter.setText(GL1065);
-		disabledBtn.setText(GL1065);
-		lblCreateAClass.setText(GL1771);
-		lblEasyToOrganize.setText(GL1772);
-		lblAccessAClass.setText(GL1773);
-/*		lblEasyAccessForStudents.setText(GL1774);
-		lblUniqueClassCode.setText(GL1775);
-		lblOne.setText(GL_GRR_NUMERIC_ONE);
-		lblTwo.setText(GL_GRR_NUMERIC_TWO);
-		lblThree.setText(GL_GRR_NUMERIC_THREE);
-		lblManageAssignments.setText(GL1776);
-		lblClearDue.setText(GL1777);
-		lblMonitorStudentProgress.setText(GL1778);
-		lblMonitorDesc.setText(GL1779);
-		ancSampleReport.setText(GL1780);
-		ancSampleReport.setVisible(false);
-		lblFavoriteClasses.setText(GL1781);
-		lblClassOne.setText(GL1782);
-		lblClassTwo.setText(GL1783);
-		lblClassThree.setText(GL1784);	
-		lblClassFour.setText( GL1784_1);*/
-		
-		txtCode.setPlaceholder(GL1785);
-		
-		disabledBtn.setVisible(false);
-		
+		disabledBtn.setText(GL1065);		
+		joinedContainerTitle.getElement().setInnerHTML(GL1925);
+		teachContainerTitle.getElement().setInnerHTML(GL1927);		
+		txtCode.setPlaceholder(GL1785);		
+		btnEnter.setText(GL1926);		
+		btnCreateClass.getElement().setInnerHTML(GL1928);		
+		disabledBtn.setVisible(false);	
+		seeMorebtnJoined.setText(GL0508);
+		seeMorebtnOwner.setText(GL0508);
 		txtCode.addFocusHandler(new FocusHandler() {
 			
 			@Override
@@ -184,13 +225,15 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		});
 		btnEnter.addClickHandler(new OnEnterClassCodeClick());
 		btnCreateClass.addClickHandler(new OnClickCreateClass());
+		seeMorebtnJoined.addClickHandler(new OnClickSeeMoreJoined());
+		seeMorebtnOwner.addClickHandler(new OnClickSeeMoreOwner());
 	}
 
 	
 	
 	private void OpenClasspageEdit(String gooruOId, String token) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", gooruOId);
+		params.put("classpageid", gooruOId);
 		params.put("pageNum", "0");
 		params.put("pageSize", "10");
 		params.put("pos", "1");
@@ -435,6 +478,76 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 			});
 		}
 	}
+	
+	
+	public class OnClickSeeMoreJoined implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {		
+			offsetLimitJoined = pageInitialLimitJoined;
+			AppClientFactory.getInjector().getClasspageService().v2GetUserStudyClasses(defaultLimit.toString(), offsetLimitJoined.toString(),String.valueOf(Math.random()),
+					new SimpleAsyncCallback<ClasspageListDo >() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							pageInitialLimitJoined = pageInitialLimitJoined + 10;
+							if(result.getTotalHitCount()>pageInitialLimitJoined)
+							{
+								seeMorebtnJoined.setVisible(true);
+							}
+							else
+							{
+								seeMorebtnJoined.setVisible(false);
+							}
+
+
+							for(int i = 0; i<result.getSearchResults().size();i++) 
+							{
+								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+								classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Study");
+								joinedClassesContainer.add(classpageWidget);
+							}
+
+							
+						}
+					});
+		}
+		
+	}
+	
+	public class OnClickSeeMoreOwner implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {	
+			offsetLimitOwner = pageInitialLimitOwner;
+			AppClientFactory.getInjector().getClasspageService().v2GetUserClasses(defaultLimit.toString(), offsetLimitOwner.toString(),String.valueOf(Math.random()),
+					new SimpleAsyncCallback<ClasspageListDo >() {
+						@Override
+						public void onSuccess(ClasspageListDo result) {
+							pageInitialLimitOwner = pageInitialLimitOwner + 10;
+							if(result.getTotalHitCount()>pageInitialLimitOwner)
+							{
+								seeMorebtnOwner.setVisible(true);
+							}
+							else
+							{
+								seeMorebtnOwner.setVisible(false);
+							}
+
+
+							for(int i = 0; i<result.getSearchResults().size();i++) 
+							{
+								ClasspageWidgetView classpageWidget =  new ClasspageWidgetView();
+								classpageWidget.setClassPageImage(result.getSearchResults().get(i),"Teach");
+								ownerClassesContainer.add(classpageWidget);
+							}
+
+							
+						}
+					});
+		}
+		
+	}
+	
 	public void setEnterLblVisbility(boolean isVisible) {
 		btnEnter.setVisible(!isVisible);
 		disabledBtn.setVisible(isVisible);

@@ -1,9 +1,9 @@
-.circle{
-	width: 15px;
-	height: 15px;
+.circle, .bluecircle, .greencircle, .circleInside{
+	width: 30px;
+	height: 30px;
 	cursor: pointer;
 	/* margin: -8px 2px 0px 2px; */
-	background: #b9b9c8;
+	background: #B9BBCA;
 	border-radius: 20px;
 	/* display: inline-block; */
 	vertical-align: top;
@@ -13,11 +13,23 @@
 	float: left;
 	vertical-align: top;
 }
+.bluecircle{
+	background: #B9BBCA;
+}
+.greencircle{
+	background: #A3CBA0;
+}
 
+.greencircle:hover .assignmentStudyPopup {
+	display: block;
+}
+.bluecircle:hover .assignmentStudyPopup {
+	display: block;
+}
 .line{
 	height: 3px;
 	background: #B9B9C8 2px;
-	margin-top: 7px;
+	margin-top: 13px;
 	margin-bottom: 7px;
 	width: 10px;
 	float: left;
@@ -45,8 +57,10 @@
 
 .assignmentNumbers{
 	text-align: center;
-	font-size: 14px;
-	margin-top: 20px;
+	font-size: 18px;
+	color: white;
+	margin: 5px auto;
+	font-weight: bold;
 }
 
 .viewedCircle{
@@ -72,8 +86,21 @@
 	margin: auto;
 	border-top: none;
 	z-index: 100000;
-	left: -60px;
+	left: 15px;
 	right: 0;
+}
+
+.assignmentStudyPopupArrow{
+	width: 0;
+	height: 0;
+	border: 10px solid;
+	border-color: transparent transparent white transparent;
+	position: relative;
+	top: 1px;
+	margin: auto;
+	border-top: none;
+	z-index: 100000;
+	margin-left: 10px;
 }
 
 .standardsinner {
@@ -96,14 +123,27 @@
 	float: left;
 }
 
+.studyPopup {
+	width: 300px;
+	padding: 10px;
+	float: left;
+}
 .profileVisiblityPopup {
+	display: none;
+	text-align: left;
+	z-index: 9;
+	padding: 10px;
+	position: relative;
+	top: -11px;
+	left: -19px
+}
+.assignmentStudyPopup{
 	position: absolute;
-	left: -42px;
-	top: 5px;
+	left: -5px;
+	top: 28px;
 	display: none;
 	text-align: left;
 	z-index: 999;
-	padding: 10px;
 }
 
 .title{
@@ -202,4 +242,60 @@
 	line-height: 120%;
 	color: rgb(153, 153, 153);
 	text-align: left;
+}
+.assignmentCollectionTitle{
+	color: #1076bb;
+	display: inline-block;
+	font-size: 16px;
+	width: 138px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	float: left;
+	margin: 5px 6px;
+}
+.headerLeft {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+}
+.dueDataIcon {
+	display: inline-block;
+	vertical-align: top;
+	background: url(images/Classpage/calendar.png) no-repeat;
+	padding-left: 21px;
+	height: 18px;
+	margin-bottom: 5px;
+}
+.headerDueDate {
+	display: inline-block;
+	vertical-align: top;
+	width: 150px;
+}
+.directionHeading {
+	font-size: 12px;
+	line-height: 120%;
+	font-weight: bold;
+	color: #515151;
+}
+.directionDesc {
+	color: #515151;
+}
+
+.studyPlay{
+	width: 90px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 4px;
+	padding: 7px 29px 8px 7px;
+	background: #1076bb;
+	background: url(images/preview-arrow-small.png) 70px center no-repeat, #1076bb;
+	background: url(images/preview-arrow-small.png) 70px center no-repeat, -webkit-gradient(linear, 0 0, 0 100%, from(#4c98cc), to(#1076bb));
+	background: url(images/preview-arrow-small.png) 70px center no-repeat, -webkit-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/preview-arrow-small.png) 70px center no-repeat, -moz-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/preview-arrow-small.png) 70px center no-repeat, -ms-linear-gradient(top, #4c98cc, #1076bb);
+	background: url(images/preview-arrow-small.png) 70px center no-repeat, -o-linear-gradient(top, #4c98cc, #1076bb);
+	float: right;
+	cursor: pointer;
 }

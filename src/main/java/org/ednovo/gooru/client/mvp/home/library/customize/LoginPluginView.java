@@ -170,7 +170,6 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		ancprivacy.setText(GL1893);
 		toUsText.setText(GL1894);
 		
-		
 		hangOnText.getElement().setInnerText(GL0740);
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
 		donotHaveAcount.setText(GL0634);
@@ -196,6 +195,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		lblPleaseWait.setVisible(false);
 
 	}
+	
 
 	/**
 	 * Added click handler to perform Login operation by taking entered user
@@ -230,27 +230,34 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										lblPleaseWait.setText(GL0505);
-										AppClientFactory
-												.setLoggedInUser(result);
-										AppClientFactory
-												.fireEvent(new SetHeaderEvent(
-														result));
-										AppClientFactory
-												.fireEvent(new SetUserDetailsInCollectionPlayEvent(
-														result.getToken(),
-														result.getGooruUId()));
-										/*AppClientFactory
-												.getInjector()
-												.getResourceService()
-												.copyCollection(
-														collectionObject,
-														"true",
-														null,
-														getSaveCollectionAsyncCallback());*/
+										if(result.getActive()==1){
+											lblPleaseWait.setText(GL0505);
+											AppClientFactory
+													.setLoggedInUser(result);
+											AppClientFactory
+													.fireEvent(new SetHeaderEvent(
+															result));
+											AppClientFactory
+													.fireEvent(new SetUserDetailsInCollectionPlayEvent(
+															result.getToken(),
+															result.getGooruUId()));
+											/*previously commented AppClientFactory
+													.getInjector()
+													.getResourceService()
+													.copyCollection(
+															collectionObject,
+															"true",
+															null,
+															getSaveCollectionAsyncCallback());*/
+											
+											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
+											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
+										}else if(result.getActive()==0){
+											loginButton.setVisible(true);
+											lblPleaseWait.setVisible(false);
+											new AlertContentUc(OOPS, GL1938);
+										}
 										
-										showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
-										MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
 									}
 
 									@Override

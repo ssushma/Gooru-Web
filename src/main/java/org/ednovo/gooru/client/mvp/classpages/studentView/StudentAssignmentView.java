@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
@@ -112,7 +113,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField FlowPanel paginationFocPanel;
+	@UiField FlowPanel paginationFocPanel,panelAssignmentProgress;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -157,6 +158,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public static boolean islogin = false;
 	public static boolean isloginPrivate = false;
 	public static boolean isloginButtonClick = false;
+	
+	private Map<String,AssignmentProgressVc> assignmentsDotsMap=new HashMap<String,AssignmentProgressVc>();
 	
 	
 	@Inject
@@ -480,11 +483,14 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			noAssignmentMsg.setVisible(false);
 			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true){
+				CollectionsView collectionsView = new CollectionsView(classpageItemDo,true,(itemIndex+1)){
 					public void resetPagination(){
 						setPagination();
 						contentpanel.add(setLoadingPanel());
 						getUiHandlers().getNextClasspageItems(((pageNumber*limit)-1),1);
+					}
+					public void updateAssignmentCircleColor(String collectionItemId,String readStatus){
+						updateCircleColors(collectionItemId,readStatus);
 					}
 				};
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
@@ -558,6 +564,31 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 		}
 	}
+	
+	@Override
+	public void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList) {
+		//TODO 
+		panelAssignmentProgress.clear();
+		assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
+		if(classpageItemsList!=null&&classpageItemsList.size()>0){
+			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
+				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
+				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc((itemIndex == classpageItemsList.size() - 1) ? true : false,classpageItemDo,(itemIndex+1));
+				assignmentsDotsMap.put(classpageItemDo.getCollectionItemId(), assignmentProgressVc);
+				panelAssignmentProgress.add(assignmentProgressVc);
+				this.totalHitCount=classpageItemDo.getTotalHitCount();
+			}
+		}
+	}
+	
+	public void updateCircleColors(String collectionItemId,String readStatus){
+		AssignmentProgressVc assignmentProgressVc=assignmentsDotsMap.get(collectionItemId);
+		if(assignmentProgressVc!=null){
+			assignmentProgressVc.updateDotsCircle(readStatus);
+		}
+	}
+	
+	
 	@UiHandler("backToEditPanel")
 	public void onClickHandler(ClickEvent event){
 		//getPreviousPage();
@@ -900,7 +931,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			// TODO Auto-generated method stub
 			toolTipPopupPanel.hide();
 			
 		}
@@ -986,6 +1016,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		return mainContainerStatus;		
 	}
+
 	
 }
 	
