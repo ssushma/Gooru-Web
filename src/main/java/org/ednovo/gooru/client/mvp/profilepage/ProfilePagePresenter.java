@@ -58,6 +58,7 @@ import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -152,6 +153,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		callBack = "reveal";
 		isFollow(userId);
 		createProfileUserData();
+		getUserAddedContentTagSummary(userId);
 	}
 
 	@Override
@@ -637,8 +639,22 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		});
 		
 	}
-	
+	public void getUserAddedContentTagSummary(String gooruUid){
+	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,new AsyncCallback<List<UserTagsDo>>() {
 
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
 
+		@Override
+		public void onSuccess(List<UserTagsDo> result) {
+			getView().getTagsObj(result);
+			
+		}
+	});
+
+	}
 	
 }

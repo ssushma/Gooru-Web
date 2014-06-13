@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.profilepage.tab.content.tags;
 
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -22,22 +23,21 @@ public class ProfileUserTagWidget extends Composite{
 	@UiField Label tagTitle,tagcount;
 	@UiField HTMLEventPanel mainContainer;
 	ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
-	public ProfileUserTagWidget() {
-		
+	UserTagsDo userTagDo =new UserTagsDo();
+	public ProfileUserTagWidget(UserTagsDo userTagDo) {
+		this.userTagDo = userTagDo;
 		initWidget(uiBinder.createAndBindUi(this));
-		setData();
+		setData(userTagDo);
 	}
-	public void setData(){
-		tagTitle.setText("Lexile Level 6");
-		tagcount.setText("26");
-		profileUserTagsResourceView.tagMessage().addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				
-				
-			}
-		});
+	public void setData(UserTagsDo userTagDo){
+		String titleLabel=userTagDo.getLabel();
+		if(titleLabel.length()>=16){
+			titleLabel = titleLabel.substring(0, 16) + "...";
+		}
+		tagTitle.setText(titleLabel);
+		tagcount.setText(userTagDo.getCount());
+		mainContainer.getElement().setId(userTagDo.getTagGooruOid());
+		
 	}
 	public HTMLEventPanel getClickOnTags()
 	{

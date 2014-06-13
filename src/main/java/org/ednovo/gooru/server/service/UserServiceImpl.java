@@ -608,15 +608,39 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken());
-		System.out.println("getUserAddedContentTagSummary.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		//jsonRep = jsonResponseRep.getJsonRepresentation();
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
+		
 	}
 	
 	public List<UserTagsDo> deserializeTagsContent(JsonRepresentation jsonRep) {
-		List<UserTagsDo> userTagsDo = null;
-		userTagsDo = new ArrayList<UserTagsDo>();
-		return userTagsDo;
+		
+		List<UserTagsDo> userTagsDoList = null;
+		userTagsDoList = new ArrayList<UserTagsDo>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			UserTagsDo userTagsDo=null;
+			try {
+				
+				JSONObject tagUserObject=jsonRep.getJsonObject();
+				int totatHintCount=tagUserObject.getInt("totalHitCount");
+				JSONArray tagList=tagUserObject.getJSONArray("searchResults");
+				
+				for(int i=0;i<totatHintCount;i++){
+					userTagsDo=new UserTagsDo();
+					JSONObject resultObj = tagList.getJSONObject(i);
+					userTagsDo.setLabel(resultObj.getString("label"));
+					
+					userTagsDo.setCount(resultObj.getString("count"));
+					userTagsDo.setTagGooruOid(resultObj.getString("tagGooruOid"));
+					
+					userTagsDoList.add(userTagsDo);
+				}
+				return userTagsDoList;	
+				} catch (JSONException e) {
+				
+			}
+		}
+		return userTagsDoList;
 	}
 }

@@ -33,6 +33,7 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -112,6 +113,8 @@ public interface IsProfilePageView extends IsViewWithHandlers<ProfilePageUiHandl
 	public void getFollowersObj(List<UserFollowDo> userFollowDo);
 	
 	public void getFolloweingsObj(List<UserFollowDo> userFollowDo);
+	
+	public void getTagsObj(List<UserTagsDo> userTagsDo);
 	
 	void isFollow(String isFollow);
 }
