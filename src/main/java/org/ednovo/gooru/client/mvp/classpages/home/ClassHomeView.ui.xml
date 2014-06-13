@@ -27,8 +27,8 @@
 				<g:HTMLPanel styleName="{StudyStyle.content-inner}">
 					<g:HTMLPanel styleName="{StudyStyle.title}" ui:field="teachContainerTitle"></g:HTMLPanel>
 					<g:HTMLPanel styleName="{StudyStyle.class-code} {StudyStyle.ext}">
-						<g:Label styleName="{StudyStyle.plus}" ui:field="lblCreateAClass"> +</g:Label>
-						<g:Button styleName="{StudyStyle.btnStyle}" ui:field="btnCreateClass"></g:Button>
+						<g:Label styleName="{StudyStyle.plus}" ui:field="lblCreateAClass"></g:Label>
+						<g:Button styleName="primary" ui:field="btnCreateClass"></g:Button>
 					</g:HTMLPanel>
 					<g:HTMLPanel styleName="{StudyStyle.clear}"></g:HTMLPanel>
 

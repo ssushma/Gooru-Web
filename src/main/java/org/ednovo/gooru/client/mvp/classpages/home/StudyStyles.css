@@ -14,6 +14,7 @@
 	display: inline-block;
 	font-size: 20px;
 	font-weight: bold;
+	margin-top: 8px;
 }
 .btnStyle {
 	display: inline-block;
@@ -30,12 +31,14 @@ cursor: pointer;
 	font-weight: bold;
 	font-size: 16px;
 	height: 45px;
+	margin-right:2px;
 }
 .ext {
 	height: 35px;
+	margin-bottom:10px;
 }
 .content-inner {
-	margin-bottom: 20px;
+	margin-bottom: 11px;
 }
 .content-box {
 	display: inline-block;
@@ -43,7 +46,7 @@ cursor: pointer;
 	width: 422px;
 	background: #fff;
 	min-height: 100px;
-	margin-right: 20px;
+	margin-right: 27px;
 	margin-bottom: 10px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -58,7 +61,7 @@ cursor: pointer;
 	color: rgb(81,81,81);
 	display: inline-block;
 	float: right;
-	margin: 10px 20px;
+	margin: 10px 10px;
 }
 .ownerClasses{
 	min-height:100px;
@@ -129,7 +132,7 @@ font-size: 20px;
 	box-shadow: 0 0 0 2px #87badd;
 	width: 30px;
 	height: 30px;
-	margin-left: 10px;
+	margin-left: 65px;
 	margin-top: 3px;
 	float: left;
 }

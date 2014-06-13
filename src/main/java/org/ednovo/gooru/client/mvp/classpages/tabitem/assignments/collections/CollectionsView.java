@@ -272,7 +272,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		getPresenter().updateClasspageItem(classpageItemDo.getCollectionItemId(), null, null, readStatus);
 	}
 	public void changeButtonText(){
-		String buttonText=classpageItemDo.getStatus().equalsIgnoreCase(OPEN)?"Mark as green":"Mark as blue";
+		String buttonText=classpageItemDo.getStatus().equalsIgnoreCase(OPEN)?"Mark as Complete":"Mark as Incomplete";
 		changeStatusButton.setText(buttonText);
 	}
 	@UiHandler("collectionImage")

@@ -99,6 +99,8 @@ public class EditClasspageView extends
 	
 	ArrayList<ClasspageItemDo> globalClasspageProcess;
 	
+	ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
+	
 	/** 
 	 * This method is to get the globalClasspageProcess
 	 */
@@ -305,7 +307,7 @@ public class EditClasspageView extends
 		shareTabContainerPanel.clear();
 		shareTabContainerPanel.setVisible(false);
 
-
+		panelAssignmentPath.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentsTabContainerPanel.setVisible(true);
 		btnCollectionEditImage.setVisible(false);
@@ -478,7 +480,7 @@ public class EditClasspageView extends
 		assignmentsTab.setText(GL1623);
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
-	//	assignmentsDirectionsLabel.setText(GL1887);
+		assignmentsDirectionsLabel.setText(GL1945);
 		
 		lblPrevious.setVisible(false);
 
@@ -741,6 +743,7 @@ public class EditClasspageView extends
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
+		panelAssignmentPath.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
 		
@@ -777,7 +780,7 @@ public class EditClasspageView extends
 	}
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1,String tab, String analyticsId, String monitorId,ClassListPresenter classlistPresenter){
 		this.classlistPresenter = classlistPresenter;
-		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();
+
 		classpageItemsList.clear();
 		classpageItemsList.addAll(classpageItemsList1);
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
@@ -856,7 +859,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 			monitorProgress.setText("");
 			monitorProgress.setVisible(false);
-			assignmentsDirectionsLabel.setVisible(true);
+			assignmentsDirectionsLabel.setVisible(false);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsContainerPanel.clear();
 				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
@@ -868,6 +871,8 @@ public class EditClasspageView extends
 //				displayAssignmentPath(classpageItemsList1);
 				setPagination();
 			}else{
+				panelAssignmentPath.setVisible(false);
+				assignmentsDirectionsLabel.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(true);
 			}
 			getClassListContainer().setVisible(false);
@@ -884,6 +889,8 @@ public class EditClasspageView extends
 					totalHitCount--;
 					setPagination();
 					if(totalHitCount==0){
+						panelAssignmentPath.setVisible(false);
+						assignmentsDirectionsLabel.setVisible(true);
 						noAssignmentsMessagePanel.setVisible(true);
 					}
 				}
@@ -896,6 +903,8 @@ public class EditClasspageView extends
 		assignmentTabView = showClasspageItem(classpageItemDo,1);                             //TODO refresh the sequence....
 		totalHitCount++;
 		assignmentsContainerPanel.insert(assignmentTabView,0);
+		panelAssignmentPath.setVisible(true);
+		assignmentsDirectionsLabel.setVisible(false);
 		noAssignmentsMessagePanel.setVisible(false);
 		if(assignmentsContainerPanel.getWidgetCount()>limit){
 			assignmentsContainerPanel.remove(assignmentsContainerPanel.getWidgetCount()-1);
@@ -978,6 +987,8 @@ public class EditClasspageView extends
 			if (collectionDo != null) {
 				
 				AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(collectionDo.getGooruOid()));
+				panelAssignmentPath.setVisible(true);
+				assignmentsDirectionsLabel.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(false);
 				collectionTitleUc.setText(collectionDo.getTitle() !=null ? collectionDo.getTitle() : "" );
 				imgClasspageImage.setAltText(collectionDo.getTitle());
@@ -1034,6 +1045,8 @@ public class EditClasspageView extends
 	 */
 	public void insertAssignment(AssignmentsSearchDo assignmentsSearchDo,
 			boolean isNew, boolean isExpandable) {
+		panelAssignmentPath.setVisible(true);
+		assignmentsDirectionsLabel.setVisible(false);
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentTabView = new CollectionsView();
 		assignmentsContainerPanel.add(assignmentTabView);
@@ -1121,6 +1134,8 @@ public class EditClasspageView extends
 	public void onDeleteAssignment(boolean isPostDeleteAssignment) {
 		Window.enableScrolling(true);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
+		
+		System.out.println("iam here executing");
 
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("classpageid",classpageDo.getClasspageId());
@@ -1184,10 +1199,14 @@ public class EditClasspageView extends
 			}
 		} else if(result.getTotalHitCount()==0) {
 			panelAssignmentProgress.clear();
+			panelAssignmentPath.setVisible(false);
+			assignmentsDirectionsLabel.setVisible(true);
 			noAssignmentsMessagePanel.setVisible(true);
 		}
 		else{
 			panelAssignmentProgress.clear();
+			panelAssignmentPath.setVisible(true);
+			assignmentsDirectionsLabel.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(false);
 		}
 
@@ -1343,7 +1362,17 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			assignmentsTab.addStyleName(res.css().selected());
-			assignmentsDirectionsLabel.setVisible(true);
+			
+			if(classpageItemsList!=null&&classpageItemsList.size()>0){
+				assignmentsDirectionsLabel.setVisible(false);
+				panelAssignmentPath.setVisible(true);
+			}
+			else{
+				assignmentsDirectionsLabel.setVisible(true);
+				panelAssignmentPath.setVisible(false);
+			}
+			
+			
 
 			classListTab.getElement().setClassName("");
 			
@@ -1352,7 +1381,7 @@ public class EditClasspageView extends
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
-			panelAssignmentPath.setVisible(true);
+		
 			paginationFocPanel.setVisible(true);
 			
 			newAssignmentAndMsgPanel.setVisible(true);
