@@ -211,6 +211,9 @@ public interface EditClasspageCBundle extends ClientBundle{
         String collectionView();
         String img();
         String btn();
+        String dropdowncontainerStudent();
+        String dropdownPlaceHolderStudent();
+        String dropdownListContainerScrollPanelStudent();
 
 	}
 	@NotStrict

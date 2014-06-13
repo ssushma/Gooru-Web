@@ -50,7 +50,7 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 	
 	
 	void setClasspageData( ClasspageDo classpageDo);
-	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList);
+	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String sortOrder);
 	void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList);
 
 			

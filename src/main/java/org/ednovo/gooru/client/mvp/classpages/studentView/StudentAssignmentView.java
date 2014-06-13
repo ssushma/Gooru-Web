@@ -231,32 +231,33 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO sorting
-			Window.alert("In progress...");
+			//Window.alert("In progress...");
 			
-			/*if(!dropdownPlaceHolder.getText().equals(sortType)){
+			if(!dropdownPlaceHolder.getText().equals(sortType)){
 				dropdownPlaceHolder.setText(sortType);
 				String sortingStringValue="";
-				if(sortType.equals(GL1948)){
-					sortingStringValue="asce";
-				}else if(sortType.equals(GL1949)){
-					sortingStringValue="desc";
-				}else if(sortType.equals(GL1950)){
-					sortingStringValue="recent";
+				if(sortType.equals(GL1946)){
+					sortingStringValue="all";
+				}else if(sortType.equals(GL1952)){
+					sortingStringValue="completed";
+				}else if(sortType.equals(GL1953)){
+					sortingStringValue="todo";
 				}
+				System.out.println("ordersent::"+sortingStringValue);
 				contentpanel.clear();
 				contentpanel.add(setLoadingPanel());
 				dropDownListContainer.setVisible(false);
 				Map<String,String> params = new HashMap<String,String>();
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				params.put("classpageid", classpageid);
+				params.put("id", classpageid);
 				params.put("pageNum", pageNum);
 				params.put("order", sortingStringValue);
-				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}else{
 				dropDownListContainer.setVisible(false);
-			}*/
+			}
 
 		}
 	}
@@ -570,7 +571,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 	
 	@Override
-	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1){
+	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList1, String sortOrder){
 		removeLoadingPanel();
 		contentpanel.clear();
 		ArrayList<ClasspageItemDo> classpageItemsList = new ArrayList<ClasspageItemDo>();

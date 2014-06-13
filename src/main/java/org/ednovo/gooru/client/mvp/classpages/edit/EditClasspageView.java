@@ -134,6 +134,8 @@ public class EditClasspageView extends
 //	noAssignmentsMessageLblTwo
 	@UiField Image imgClasspageImage;
 	
+	@UiField FlowPanel dropDownListDiv;
+	
 	@UiField FlowPanel mainFlowPanel,dropDownListContainer;
 
 	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath, panelProgressContainer/*,htmlInstructionalListContainer*/;
@@ -230,7 +232,7 @@ public class EditClasspageView extends
 	
 	private int totalHitCount=0;
 	private int limit=5;
-	private int pageNumber=1;
+	private int pageNumber=0;
 	
 	String dropSortOptionsStr = GL1947;
 	
@@ -311,6 +313,7 @@ public class EditClasspageView extends
 		
 		mainContainer.setVisible(true);
 		/*droplistContianer.setVisible(true);*/
+		dropDownListDiv.setVisible(true);
 
 		frameDiv.setVisible(false);
 		/*txtClasspageLinkShare.setEnabled(true);
@@ -993,7 +996,9 @@ public class EditClasspageView extends
 				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(true);
+				dropDownListDiv.setVisible(false);
 				/*droplistContianer.setVisible(false);*/
+				
 			}
 			getClassListContainer().setVisible(false);
 		}
@@ -1022,6 +1027,7 @@ public class EditClasspageView extends
 				assignmentsDirectionsLabel.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(true);
 				/*droplistContianer.setVisible(false);*/
+				dropDownListDiv.setVisible(false);
 			}
 		}
 	}
@@ -1035,6 +1041,7 @@ public class EditClasspageView extends
 		assignmentsDirectionsLabel.setVisible(false);
 		noAssignmentsMessagePanel.setVisible(false);
 	/*	droplistContianer.setVisible(true);*/
+		dropDownListDiv.setVisible(true);
 		if(assignmentsContainerPanel.getWidgetCount()>limit){
 			assignmentsContainerPanel.remove(assignmentsContainerPanel.getWidgetCount()-1);
 		}
@@ -1121,6 +1128,7 @@ public class EditClasspageView extends
 				assignmentsDirectionsLabel.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(false);
 				/*droplistContianer.setVisible(true);*/
+				dropDownListDiv.setVisible(true);
 				collectionTitleUc.setText(collectionDo.getTitle() !=null ? collectionDo.getTitle() : "" );
 				imgClasspageImage.setAltText(collectionDo.getTitle());
 				imgClasspageImage.setTitle(collectionDo.getTitle());
@@ -1180,6 +1188,7 @@ public class EditClasspageView extends
 		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
 		/*droplistContianer.setVisible(true);*/
+		dropDownListDiv.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentTabView = new CollectionsView();
 		assignmentsContainerPanel.add(assignmentTabView);
@@ -1337,6 +1346,7 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(true);
 			noAssignmentsMessagePanel.setVisible(true);
 			/*droplistContianer.setVisible(false);*/
+			dropDownListDiv.setVisible(false);
 		}
 		else{
 			panelAssignmentProgress.clear();
@@ -1345,6 +1355,7 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(false);
 			/*droplistContianer.setVisible(true);*/
+			dropDownListDiv.setVisible(true);
 		}
 
 	}
@@ -1505,12 +1516,14 @@ public class EditClasspageView extends
 				panelAssignmentPath.setVisible(true);
 				panelProgressContainer.setVisible(true);
 				/*droplistContianer.setVisible(true);*/
+				dropDownListDiv.setVisible(true);
 			}
 			else{
 				assignmentsDirectionsLabel.setVisible(true);
 				panelAssignmentPath.setVisible(false);
 				panelProgressContainer.setVisible(false);
 				/*droplistContianer.setVisible(false);*/
+				dropDownListDiv.setVisible(false);
 			}
 			
 			
@@ -1558,6 +1571,7 @@ public class EditClasspageView extends
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;
 			/*droplistContianer.setVisible(false);*/
+			dropDownListDiv.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			panelAssignmentPath.setVisible(false);
@@ -1594,6 +1608,7 @@ public class EditClasspageView extends
 			assignmentsTab.getElement().setClassName("");
 			refresh=false;
 			/*droplistContianer.setVisible(false);*/
+			dropDownListDiv.setVisible(false);
 			newAssignmentAndMsgPanel.setVisible(false);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
