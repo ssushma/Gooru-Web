@@ -113,7 +113,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 	Anchor forgotPwd,ancSignUp;
 
 	@UiField
-	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr,userBlockedLbl;
+	Label lblPleaseWait, swithUrlLbl, swithToEmbedLbl,assignDes,lblAssignPopDes,lblAssignTitle,lblpopupTitle,lblLoginPopupTitle,donothaveAccountText,lblOr;
 
 	@UiField InlineLabel lblPii,toUsText;
 	@UiField Anchor ancprivacy;
@@ -474,16 +474,6 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 		return iframeText;
 	}
 	
-	@UiHandler("loginTxtBox")
-	public void onLogInTextField(KeyUpEvent keyUpEvent){
-		userBlockedLbl.setVisible(false);
-	}
-	
-	@UiHandler("passwordTxtBox")
-	public void onPasswordField(KeyUpEvent keyUpEvent){
-		userBlockedLbl.setVisible(false);
-	}
-
 	/**
 	 * Switching between Url and Bitly link
 	 * 
@@ -595,56 +585,52 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 						new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						/*if(result.getConfirmStatus()==1){
-							
-						}else if(result.getConfirmStatus()==0){
+						if(result.getActive()==1){
+							MixpanelUtil.Regular_User_Logged_In();
+							AppClientFactory
+							.setLoggedInUser(result);
+							AppClientFactory
+							.fireEvent(new SetUserDetailsInPlayEvent(
+									result.getToken()));
+							AppClientFactory
+							.fireEvent(new SetUserDetailsInCollectionPlayEvent(
+									result.getToken(),
+									result.getGooruUId()));
+
+							AppClientFactory
+							.fireEvent(new SetHeaderEvent(
+									result));
+
+							if (result.getUsername()
+									.equalsIgnoreCase(
+											"TexasTeacher")) {
+								AppClientFactory
+								.fireEvent(new SetTexasAccountEvent(
+										"failure"));
+								AppClientFactory
+								.fireEvent(new SetTexasPlaceHolderEvent(
+										true));
+							} else {
+								AppClientFactory
+								.fireEvent(new SetTexasAccountEvent(
+										"success"));
+								AppClientFactory
+								.fireEvent(new SetTexasPlaceHolderEvent(
+										false));
+							}
+
+							AppClientFactory.setUserflag(true);
+							AppClientFactory.resetPlace();
+
+							loadListContainers();
+							MixpanelUtil
+							.mixpanelEvent("Login_FromAssign_Pop-up");
+							// heeere add widget
+						}else if(result.getActive()==0){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
-							userBlockedLbl.setText(GL1938);
-							userBlockedLbl.setVisible(true);
-						}*/
-						
-						MixpanelUtil.Regular_User_Logged_In();
-						AppClientFactory
-						.setLoggedInUser(result);
-						AppClientFactory
-						.fireEvent(new SetUserDetailsInPlayEvent(
-								result.getToken()));
-						AppClientFactory
-						.fireEvent(new SetUserDetailsInCollectionPlayEvent(
-								result.getToken(),
-								result.getGooruUId()));
-
-						AppClientFactory
-						.fireEvent(new SetHeaderEvent(
-								result));
-
-						if (result.getUsername()
-								.equalsIgnoreCase(
-										"TexasTeacher")) {
-							AppClientFactory
-							.fireEvent(new SetTexasAccountEvent(
-									"failure"));
-							AppClientFactory
-							.fireEvent(new SetTexasPlaceHolderEvent(
-									true));
-						} else {
-							AppClientFactory
-							.fireEvent(new SetTexasAccountEvent(
-									"success"));
-							AppClientFactory
-							.fireEvent(new SetTexasPlaceHolderEvent(
-									false));
+							new AlertContentUc(OOPS, GL1938);
 						}
-
-						AppClientFactory.setUserflag(true);
-						AppClientFactory.resetPlace();
-
-						loadListContainers();
-						MixpanelUtil
-						.mixpanelEvent("Login_FromAssign_Pop-up");
-						// heeere add widget
-
 					}
 
 					@Override
