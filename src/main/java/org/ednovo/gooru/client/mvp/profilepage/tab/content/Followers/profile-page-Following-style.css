@@ -2,16 +2,6 @@
 	margin: 0;
 	padding: 0;
 }
-
-a {
-	text-decoration:none;
-	color:#1076BB;
-}
-
-a:hover {
-	color:#87BADD;
-}
-
 .infoSectionAuthor:nth-of-type(2n+2)
 {
 	margin-right:0px;
@@ -107,10 +97,6 @@ a:hover {
 	border-bottom: 1px solid #ddd;
 	height: 268px;
 }
-.hr {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 15px;
-}
 .profileFollowingUserNameDetails {
 	display: inline-block;
 	vertical-align: top;
@@ -118,7 +104,7 @@ a:hover {
 .userDetails {
 	font-size: 12px;
 }
-.bold {
+.titleBold {
 	font-size: 14px;
 	font-weight: bold;
 	padding: 5px 0px;
