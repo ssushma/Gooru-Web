@@ -130,8 +130,8 @@ public class EditClasspageView extends
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
-	
+	@UiField Label assignmentsDirectionsLabel, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
+//	noAssignmentsMessageLblTwo
 	@UiField Image imgClasspageImage;
 	
 	@UiField FlowPanel mainFlowPanel,dropDownListContainer;
