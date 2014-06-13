@@ -68,6 +68,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 
@@ -136,6 +137,32 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
 			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
 
+	/** 
+	 * This method is to get the followButton
+	 */
+	@Override
+	public Button getFollowButton() {
+		return followButton;
+	}
+	/** 
+	 * This method is to set the followButton
+	 */
+	public void setFollowButton(Button followButton) {
+		this.followButton = followButton;
+	}
+	/** 
+	 * This method is to get the unFollowButton
+	 */
+	@Override
+	public Button getUnFollowButton() {
+		return UnFollowButton;
+	}
+	/** 
+	 * This method is to set the unFollowButton
+	 */
+	public void setUnFollowButton(Button unFollowButton) {
+		UnFollowButton = unFollowButton;
+	}
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
 			profilePageEditBioPanel,mainContainer,followingContainer,tagResourceContainer;
@@ -221,7 +248,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
-
+	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 	
 	private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -1278,7 +1305,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
-			if(("false".equalsIgnoreCase(isFollowUser))||(isFollowUser=="false")){
+			if(isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false"){
 				followButton.setVisible(true);
 				UnFollowButton.setVisible(false);
 			}
@@ -1413,7 +1440,19 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		
 	}
-	
+	@Override
+	public void getTagsObj(List<UserTagsDo> userTagsDo) {
+		userTagDo.clear();
+		userTagDo.addAll(userTagsDo);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			if("tags".equalsIgnoreCase(tabValue))
+			{
+				setTab(tagTabVc);
+			}
+		}
+		
+	}
 	public void onClick(ClickEvent event) {
 		Object source = event.getSource();
 		getUiHandlers().clearTabSlot();
@@ -1423,7 +1462,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
 	{
-		UnFollowButton.setVisible(true);
+		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		getUiHandlers().getFollowerData();
@@ -1435,11 +1474,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("UnFollowButton")
 	public void onClickUnFollowButton(ClickEvent event)
 	{
+		UnFollowButton.setVisible(false);
+		followButton.setVisible(false);
+		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		
 	}
+	
+
 	public class clickOnCollection implements ClickHandler{
 
 		@Override
@@ -1541,7 +1586,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				tagTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-				ProfileUserTagView profileUserTagView = new ProfileUserTagView();
+				ProfileUserTagView profileUserTagView = new ProfileUserTagView(userTagDo);
 				followingContainer.add(profileUserTagView);
 			
 				//ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
@@ -1551,6 +1596,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			
 	}
 }
+	
 
 	
 }

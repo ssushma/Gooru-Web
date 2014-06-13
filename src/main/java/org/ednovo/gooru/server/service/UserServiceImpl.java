@@ -590,13 +590,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		JsonRepresentation jsonRep = null;
 		IsFollowDo isFollowDo = new IsFollowDo();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_IS_FOLLOW, gooruUid,getLoggedInSessionToken());
-		System.out.println("isFollowedUser.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		
 		try{
-			System.out.println("isFollowedUser jsonRep.."+jsonRep.getText());
-			isFollowDo.setIsFollow(jsonRep.getText());
+			if (jsonRep.getText().toString().trim().contains("true")){
+				isFollowDo.setIsFollow("true");
+			}else{
+				isFollowDo.setIsFollow("false");
+			}
 		}
 		catch(Exception ex){}
 	
@@ -608,15 +610,39 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken());
-		System.out.println("getUserAddedContentTagSummary.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
-		//jsonRep = jsonResponseRep.getJsonRepresentation();
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
+		
 	}
 	
 	public List<UserTagsDo> deserializeTagsContent(JsonRepresentation jsonRep) {
-		List<UserTagsDo> userTagsDo = null;
-		userTagsDo = new ArrayList<UserTagsDo>();
-		return userTagsDo;
+		
+		List<UserTagsDo> userTagsDoList = null;
+		userTagsDoList = new ArrayList<UserTagsDo>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			UserTagsDo userTagsDo=null;
+			try {
+				
+				JSONObject tagUserObject=jsonRep.getJsonObject();
+				int totatHintCount=tagUserObject.getInt("totalHitCount");
+				JSONArray tagList=tagUserObject.getJSONArray("searchResults");
+				
+				for(int i=0;i<totatHintCount;i++){
+					userTagsDo=new UserTagsDo();
+					JSONObject resultObj = tagList.getJSONObject(i);
+					userTagsDo.setLabel(resultObj.getString("label"));
+					
+					userTagsDo.setCount(resultObj.getString("count"));
+					userTagsDo.setTagGooruOid(resultObj.getString("tagGooruOid"));
+					
+					userTagsDoList.add(userTagsDo);
+				}
+				return userTagsDoList;	
+				} catch (JSONException e) {
+				
+			}
+		}
+		return userTagsDoList;
 	}
 }

@@ -72,7 +72,7 @@
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.containerProgress}">
+			<g:HTMLPanel styleName="{res.css.containerProgress}" ui:field="panelProgressContainer">
 			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
 			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 			    </uc:HTMLEventPanel>
@@ -111,7 +111,7 @@
 				</g:FlowPanel>
 			<g:HTMLPanel styleName="{res.css.labelCenterAlign}" ui:field="newAssignmentAndMsgPanel"> -->
 <!-- >>>>>>> ef568a2fc6dc6fb1554e7be84e67bb730a335ef7 -->
-				<g:HTMLPanel>
+				<g:HTMLPanel styleName="{res.css.btnContainer}">
 					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
 				</g:HTMLPanel>
 				<g:FlowPanel styleName="{res.css.dropdowncontainer}">
@@ -127,9 +127,39 @@
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->
 					<g:HTMLPanel styleName="{res.css.classpageHover}">
-						<g:Label styleName="{res.css.classpageHoverTitle}"
-							ui:field="noAssignmentsMessageLblTwo">
-							</g:Label>
+						<!-- <g:Label styleName="{res.css.classpageHoverTitle}"
+							ui:field="noAssignmentsMessageLblTwo"> 
+							</g:Label>-->
+							<!-- New layout for empty classpage.  -->
+							  <g:HTMLPanel styleName="{res.css.contentBox}">
+							    <g:HTMLPanel styleName="{res.css.collectionView}">
+							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}">1</g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel>
+							      <g:Label styleName="{res.css.desc}">Incorporate both a due date and directions for each assignment so that  students know exactly what to do</g:Label>
+							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-widget.png" width="626" height="212"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{res.css.collectionView}">
+							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}">2</g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel>
+							      <g:Label styleName="{res.css.desc}">Define the exact sequence of Assignments that your students will see when they access this class.</g:Label>
+							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{res.css.collectionView}">
+							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}">3</g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel>
+							      <g:Label styleName="{res.css.desc}">Add a collection to your class and click on the button to Get Started!</g:Label>
+							      <g:Image url="images/add-button.png" width="204" height="52" styleName="{res.css.btn}"></g:Image>
+							    </g:HTMLPanel>
+							  </g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>

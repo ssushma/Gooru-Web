@@ -14,7 +14,7 @@
 							<g:HTMLPanel styleName="{res.css.moveContainer}">
 								<g:Label styleName="{res.css.move}" ui:field="lblMoveTo"></g:Label>
 								<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDiv}">			
-									<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}">
+									<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryInputDiv}" ui:field="panelComboList">
 											<g:HTMLPanel styleName="{res.css.myFolderCollectionCategoryDivText}">
 												<g:HTMLPanel>
 													<g:Label styleName="{res.css.resourceCategoryLabel}"  ui:field="resourceCategoryLabel" />

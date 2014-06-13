@@ -148,5 +148,5 @@ public interface IsShelfView extends IsViewWithHandlers<ShelfUiHandlers> {
 	
 	HTMLPanel getLoadingImageLabel();
 
-	void setPusblishStatus(String publishStatus);  
+	void setPusblishStatus(String publishStatus, String shareType);  
 }

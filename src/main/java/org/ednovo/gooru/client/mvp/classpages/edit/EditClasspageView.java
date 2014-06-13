@@ -130,13 +130,13 @@ public class EditClasspageView extends
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label noAssignmentsMessageLblTwo,assignmentsDirectionsLabel, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
-	
+	@UiField Label assignmentsDirectionsLabel, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
+//	noAssignmentsMessageLblTwo
 	@UiField Image imgClasspageImage;
 	
 	@UiField FlowPanel mainFlowPanel,dropDownListContainer;
 
-	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath/*,htmlInstructionalListContainer*/;
+	@UiField HTMLPanel panelUpdateActionContols, panelAssignmentProgress, panelAssignmentPath, panelProgressContainer/*,htmlInstructionalListContainer*/;
 	
 	/*@UiField ScrollPanel spanelInstructionalPanel;*/
 
@@ -327,6 +327,7 @@ public class EditClasspageView extends
 		shareTabContainerPanel.setVisible(false);
 
 		panelAssignmentPath.setVisible(true);
+		panelProgressContainer.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		assignmentsTabContainerPanel.setVisible(true);
 		btnCollectionEditImage.setVisible(false);
@@ -855,6 +856,7 @@ public class EditClasspageView extends
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
 		panelAssignmentPath.setVisible(true);
+		panelProgressContainer.setVisible(true);
 		noAssignmentsMessagePanel.setVisible(false);
 		collectionTitleUc.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "" );
 		
@@ -896,6 +898,7 @@ public class EditClasspageView extends
 		classpageItemsList.addAll(classpageItemsList1);
 		if(tab!=null && tab.equalsIgnoreCase("classList")){
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
@@ -921,6 +924,7 @@ public class EditClasspageView extends
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 			
 			frameDiv.setVisible(true);
@@ -941,6 +945,7 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(true);
 			monitorProgress.setText(GL1586);
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 		}
 		else if(monitorId!=null)
@@ -955,12 +960,14 @@ public class EditClasspageView extends
 			monitorProgress.setVisible(true);
 			monitorProgress.setText(GL1587);
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 		}
 		else{
 			
 			removeLoadingPanel();
 			panelAssignmentPath.setVisible(true);
+			panelProgressContainer.setVisible(true);
 			paginationFocPanel.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
@@ -983,6 +990,7 @@ public class EditClasspageView extends
 				setPagination();
 			}else{
 				panelAssignmentPath.setVisible(false);
+				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(true);
 				/*droplistContianer.setVisible(false);*/
@@ -1010,6 +1018,7 @@ public class EditClasspageView extends
 			setPagination();
 			if(totalHitCount==0){
 				panelAssignmentPath.setVisible(false);
+				panelProgressContainer.setVisible(false);
 				assignmentsDirectionsLabel.setVisible(true);
 				noAssignmentsMessagePanel.setVisible(true);
 				/*droplistContianer.setVisible(false);*/
@@ -1022,6 +1031,7 @@ public class EditClasspageView extends
 		totalHitCount++;
 		assignmentsContainerPanel.insert(assignmentTabView,0);
 		panelAssignmentPath.setVisible(true);
+		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
 		noAssignmentsMessagePanel.setVisible(false);
 	/*	droplistContianer.setVisible(true);*/
@@ -1107,6 +1117,7 @@ public class EditClasspageView extends
 				
 				AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(collectionDo.getGooruOid()));
 				panelAssignmentPath.setVisible(true);
+				panelProgressContainer.setVisible(true);
 				assignmentsDirectionsLabel.setVisible(false);
 				noAssignmentsMessagePanel.setVisible(false);
 				/*droplistContianer.setVisible(true);*/
@@ -1166,6 +1177,7 @@ public class EditClasspageView extends
 	public void insertAssignment(AssignmentsSearchDo assignmentsSearchDo,
 			boolean isNew, boolean isExpandable) {
 		panelAssignmentPath.setVisible(true);
+		panelProgressContainer.setVisible(true);
 		assignmentsDirectionsLabel.setVisible(false);
 		/*droplistContianer.setVisible(true);*/
 		noAssignmentsMessagePanel.setVisible(false);
@@ -1321,6 +1333,7 @@ public class EditClasspageView extends
 		} else if(result.getTotalHitCount()==0) {
 			panelAssignmentProgress.clear();
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			assignmentsDirectionsLabel.setVisible(true);
 			noAssignmentsMessagePanel.setVisible(true);
 			/*droplistContianer.setVisible(false);*/
@@ -1328,6 +1341,7 @@ public class EditClasspageView extends
 		else{
 			panelAssignmentProgress.clear();
 			panelAssignmentPath.setVisible(true);
+			panelProgressContainer.setVisible(true);
 			assignmentsDirectionsLabel.setVisible(false);
 			noAssignmentsMessagePanel.setVisible(false);
 			/*droplistContianer.setVisible(true);*/
@@ -1489,11 +1503,13 @@ public class EditClasspageView extends
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsDirectionsLabel.setVisible(false);
 				panelAssignmentPath.setVisible(true);
+				panelProgressContainer.setVisible(true);
 				/*droplistContianer.setVisible(true);*/
 			}
 			else{
 				assignmentsDirectionsLabel.setVisible(true);
 				panelAssignmentPath.setVisible(false);
+				panelProgressContainer.setVisible(false);
 				/*droplistContianer.setVisible(false);*/
 			}
 			
@@ -1545,6 +1561,7 @@ public class EditClasspageView extends
 			newAssignmentAndMsgPanel.setVisible(false);
 			assignmentsTabContainerPanel.setVisible(false);
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
@@ -1583,6 +1600,7 @@ public class EditClasspageView extends
 			assignmentsTabContainerPanel.setVisible(false);
 			getClassListContainer().setVisible(false);
 			panelAssignmentPath.setVisible(false);
+			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);

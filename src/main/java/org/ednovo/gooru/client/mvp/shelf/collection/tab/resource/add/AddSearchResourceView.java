@@ -86,7 +86,7 @@ public abstract class AddSearchResourceView extends Composite implements Message
 	
 	@UiField HTMLPanel searchResultspanel,noResultsPanel;
 	
-	@UiField Label noResultsLabel;
+	@UiField HTML noResultsLabel;
 	 
 	Map<String, String> filterMap = new HashMap<String, String>();
 	
@@ -401,7 +401,7 @@ public abstract class AddSearchResourceView extends Composite implements Message
 		}*/
 		if(suggestedSearchResults.size()==0) {
 			suggestedResourcesPanel.setVisible(false);
-			noResultsLabel.setText("We don't have any good suggestions for your collection. Use the search below to find more resources!   Or   Add your own resource from the Web or from your Computer.");
+			noResultsLabel.setHTML(GL1957);
 			noResultsPanel.setVisible(true);
 			noResultsLabel.setVisible(true);
 		} else {
@@ -409,8 +409,8 @@ public abstract class AddSearchResourceView extends Composite implements Message
 				for(int i = 0; i < suggestedSearchResults.size(); i++) {
 					if(suggestedSearchResults.size()<=2){
 						noResultsLabel.setVisible(true);
-						noResultsLabel.setText("");
-						noResultsLabel.setText("We have only 1 suggestion for this collection. Use the search below to find more resources!   Or   Add your own resource from the Web or from your Computer.");
+						noResultsLabel.setHTML("");
+						noResultsLabel.setHTML(GL1958);
 						}
 					if(i>3){
 						noResultsLabel.setVisible(false);
