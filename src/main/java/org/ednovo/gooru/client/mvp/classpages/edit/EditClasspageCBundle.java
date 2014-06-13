@@ -199,6 +199,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String placeHolderText();
         String arrowInstructional();
         String scrollPanelContainerInstructional();
+        String btnContainer();
 	}
 	@NotStrict
 	@Source("editclasspage.css")

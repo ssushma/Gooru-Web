@@ -136,6 +136,32 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
 			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
 
+	/** 
+	 * This method is to get the followButton
+	 */
+	@Override
+	public Button getFollowButton() {
+		return followButton;
+	}
+	/** 
+	 * This method is to set the followButton
+	 */
+	public void setFollowButton(Button followButton) {
+		this.followButton = followButton;
+	}
+	/** 
+	 * This method is to get the unFollowButton
+	 */
+	@Override
+	public Button getUnFollowButton() {
+		return UnFollowButton;
+	}
+	/** 
+	 * This method is to set the unFollowButton
+	 */
+	public void setUnFollowButton(Button unFollowButton) {
+		UnFollowButton = unFollowButton;
+	}
 	@UiField
 	HTMLPanel gooruSocialButtonsContainer, gooruProfileOnOffContainer,
 			profilePageEditBioPanel,mainContainer,followingContainer,tagResourceContainer;
@@ -1278,7 +1304,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
-			if(("false".equalsIgnoreCase(isFollowUser))||(isFollowUser=="false")){
+			if(isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false"){
 				followButton.setVisible(true);
 				UnFollowButton.setVisible(false);
 			}
@@ -1423,7 +1449,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
 	{
-		UnFollowButton.setVisible(true);
+		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		getUiHandlers().getFollowerData();
@@ -1435,11 +1461,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("UnFollowButton")
 	public void onClickUnFollowButton(ClickEvent event)
 	{
+		UnFollowButton.setVisible(false);
+		followButton.setVisible(false);
+		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		
 	}
+	
+
 	public class clickOnCollection implements ClickHandler{
 
 		@Override
