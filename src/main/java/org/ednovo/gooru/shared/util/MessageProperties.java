@@ -2487,10 +2487,14 @@ public interface MessageProperties {
       	String GL1952 = "View All Completed";
       	String GL1953 = "View All InCompleted";
       	
-      	String GL1954 = "Are you sure you want to change the collection from public? Users will no longer be able to search for your collection or see it in your profile.";
+        String GL1954 = "Are you sure you want to change the collection from public? Users will no longer be able to search for your collection or see it in your profile.";
     	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
     	
     	String GL1956 = "Stay Public";
+
+    	//suggestions for search.
+    	String GL1957 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
+      	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion for this collection.</div><br/> <div>Use the search below to find more resources!</div><br/>   <div>Or</div><br/>   <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
 
 
 }
