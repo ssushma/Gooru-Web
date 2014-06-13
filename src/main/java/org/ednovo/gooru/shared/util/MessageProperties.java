@@ -2462,7 +2462,7 @@ public interface MessageProperties {
     	String GL1937 = "Click a tag to view all the resources that you tagged with that field.";
     	
     	
-    	String GL1938 = "Admin has blocked your Gooru ID.";
+    	String GL1938 = "You have been blocked due to violation of community standards. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
