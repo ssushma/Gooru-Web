@@ -554,48 +554,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
 		
-		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
-		{
-			collectionsTabVc.setEnabled(false);
-			collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-		}
-		else
-		{
-			collectionsTabVc.setEnabled(true);
-			collectionsTabVc.addClickHandler(new clickOnCollection());
-		}
-		if(profileDo.getUser().getMeta().getSummary().getFollowing()==0)
-		{
-			followingTabVc.setEnabled(false);
-			followingTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-		}
-		else
-		{
-			followingTabVc.setEnabled(true);
-			followingTabVc.addClickHandler(new clickOnFollowing());
-		}
-		if(profileDo.getUser().getMeta().getSummary().getFollowers()==0)
-		{
-			followersTabVc.setEnabled(false);
-			followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-		}
-		else
-		{
-			followersTabVc.setEnabled(true);
-			followersTabVc.addClickHandler(new clickOnFollowers());
-		}
-		tagTabVc.addClickHandler(new clickOnTags());
-		/*if(profileDo.getUser().getMeta().getSummary().getTags()==0)
-		{
-			tagTabVc.setEnabled(false);
-			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-		}
-		else
-		{
-			tagTabVc.setEnabled(true);
-			tagTabVc.addClickHandler(new clickOnTags());
-		}*/
-		
+		buttonDisable();
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("collection".equalsIgnoreCase(tabValue))
@@ -1466,9 +1425,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		getUiHandlers().getFollowerData();
-		getUiHandlers().getFollwingData();
-		
-		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+1+"");
+		//getUiHandlers().getFollwingData();
+		followersTabVc.setLabelCount("");
+		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
+		profileDo.getUser().getMeta().getSummary().setFollowers(totalcount);
+		followersTabVc.setLabelCount(totalcount+"");
+		buttonDisable();
 		
 	}
 	@UiHandler("UnFollowButton")
@@ -1479,8 +1441,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		getUiHandlers().getFollowerData();
-		getUiHandlers().getFollwingData();
-		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		//getUiHandlers().getFollwingData();
+		followersTabVc.setLabelCount("");
+		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()-1+"");
+		profileDo.getUser().getMeta().getSummary().setFollowers(profileDo.getUser().getMeta().getSummary().getFollowers()-1);
+		buttonDisable();
 		
 	}
 	
@@ -1597,6 +1562,55 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}
 }
 	
-
+public void buttonDisable()
+{
+	if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
+	{
+		collectionsTabVc.setEnabled(false);
+		collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+	}
+	else
+	{
+		collectionsTabVc.setEnabled(true);
+		collectionsTabVc.addClickHandler(new clickOnCollection());
+		collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#1076bb");
+	}
+	
+	if(profileDo.getUser().getMeta().getSummary().getFollowing()==0)
+	{
+		followingTabVc.setEnabled(false);
+		followingTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+	}
+	else
+	{
+		followingTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
+		followingTabVc.setEnabled(true);
+		followingTabVc.addClickHandler(new clickOnFollowing());
+	}
+	if(profileDo.getUser().getMeta().getSummary().getFollowers()==0)
+	{
+		followersTabVc.setEnabled(false);
+		followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		
+	}
+	else
+	{
+		followersTabVc.setEnabled(true);
+		followersTabVc.addClickHandler(new clickOnFollowers());
+		followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
+	}
+	if(profileDo.getUser().getMeta().getSummary().getTags()==0)
+	{
+		tagTabVc.setEnabled(false);
+		tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+	}
+	else
+	{
+		tagTabVc.setEnabled(true);
+		tagTabVc.addClickHandler(new clickOnTags());
+		tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
+	}
+	
+}
 	
 }
