@@ -671,6 +671,8 @@ public class EditClasspageView extends
 	 */
 	@Override
 	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
+		System.out.println("iam called---"+offsetProgress);
+		System.out.println("iam calledlimitProgress---"+limitProgress);
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
 	}
 	
@@ -1682,6 +1684,7 @@ public class EditClasspageView extends
 	@Override
 	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){
 		panelAssignmentProgress.clear();
+		globalClasspageProcess.clear();
 		//Store all classpage details in one global object.
 		for (int i=0; i<classpageProcess.size(); i++){
 			globalClasspageProcess.add(classpageProcess.get(i));
