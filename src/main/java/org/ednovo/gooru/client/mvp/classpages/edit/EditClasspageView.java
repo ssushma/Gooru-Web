@@ -130,7 +130,7 @@ public class EditClasspageView extends
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label assignmentsDirectionsLabel, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
+	@UiField Label assignmentsDirectionsLabel, lblGetStarted, lblThree, lblOne, lblTwo, lblDefine, lblIncoporate, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
 //	noAssignmentsMessageLblTwo
 	@UiField Image imgClasspageImage;
 	
@@ -477,6 +477,12 @@ public class EditClasspageView extends
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
 		assignmentsDirectionsLabel.setText(GL1945);
+		lblGetStarted.setText(GL1961);
+		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblDefine.setText(GL1960);
+		lblIncoporate.setText(GL1959);
 		
 		/*spanelInstructionalPanel.setVisible(false);*/
 		

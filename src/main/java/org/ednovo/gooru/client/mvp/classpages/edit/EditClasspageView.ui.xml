@@ -115,28 +115,28 @@
 							    <g:HTMLPanel styleName="{res.css.collectionView}">
 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
-							          <g:Label styleName="{res.css.circleTitle}">1</g:Label>
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
 							        </g:HTMLPanel>
 							      </g:HTMLPanel>
-							      <g:Label styleName="{res.css.desc}">Incorporate both a due date and directions for each assignment so that  students know exactly what to do</g:Label>
+							      <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
 							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-widget.png" width="626" height="212"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
 							    <g:HTMLPanel styleName="{res.css.collectionView}">
 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
-							          <g:Label styleName="{res.css.circleTitle}">2</g:Label>
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblTwo"></g:Label>
 							        </g:HTMLPanel>
 							      </g:HTMLPanel>
-							      <g:Label styleName="{res.css.desc}">Define the exact sequence of Assignments that your students will see when they access this class.</g:Label>
+							      <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
 							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
 							    <g:HTMLPanel styleName="{res.css.collectionView}">
 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
-							          <g:Label styleName="{res.css.circleTitle}">3</g:Label>
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblThree"></g:Label>
 							        </g:HTMLPanel>
 							      </g:HTMLPanel>
-							      <g:Label styleName="{res.css.desc}">Add a collection to your class and click on the button to Get Started!</g:Label>
+							      <g:Label styleName="{res.css.desc}" ui:field="lblGetStarted"></g:Label>
 							      <g:Image url="images/add-button.png" width="204" height="52" styleName="{res.css.btn}"></g:Image>
 							    </g:HTMLPanel>
 							  </g:HTMLPanel>
