@@ -1709,6 +1709,15 @@ public class EditClasspageView extends
 			panelAssignmentProgress.add(new AssignmentProgressVc(i == globalClasspageProcess.size()-1 ? true : false, 
 					globalClasspageProcess.get(i), i+1, globalClasspageProcess.size()));
 		}
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
+		params.put("order", "asce");
+		params.put("classpageid", classpageid);
+		params.put("pageNum", 0+"");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
