@@ -671,6 +671,8 @@ public class EditClasspageView extends
 	 */
 	@Override
 	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
+		System.out.println("iam called---"+offsetProgress);
+		System.out.println("iam calledlimitProgress---"+limitProgress);
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
 	}
 	
@@ -1682,6 +1684,7 @@ public class EditClasspageView extends
 	@Override
 	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){
 		panelAssignmentProgress.clear();
+		globalClasspageProcess.clear();
 		//Store all classpage details in one global object.
 		for (int i=0; i<classpageProcess.size(); i++){
 			globalClasspageProcess.add(classpageProcess.get(i));
@@ -1706,6 +1709,15 @@ public class EditClasspageView extends
 			panelAssignmentProgress.add(new AssignmentProgressVc(i == globalClasspageProcess.size()-1 ? true : false, 
 					globalClasspageProcess.get(i), i+1, globalClasspageProcess.size()));
 		}
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
+		params.put("order", "asce");
+		params.put("classpageid", classpageid);
+		params.put("pageNum", 0+"");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
