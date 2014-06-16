@@ -59,6 +59,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -153,7 +154,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		callBack = "reveal";
 		isFollow(userId);
 		createProfileUserData();
-		getUserAddedContentTagSummary(userId);
+		//getUserAddedContentTagSummary(userId);
 	}
 
 	@Override
@@ -586,7 +587,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView("Success","you are now following "+AppClientFactory.getPlaceManager().getRequestParameter("user")) {
+				String username=AppClientFactory.getPlaceManager().getRequestParameter("user");
+				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(MessageProperties.GL0440,MessageProperties.GL1962,username) {
 					@Override
 					public void onClickPositiveButton(ClickEvent event) {
 						Window.enableScrolling(true);
@@ -650,6 +652,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		});
 		
 	}
+	@Override
 	public void getUserAddedContentTagSummary(String gooruUid){
 	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,new AsyncCallback<List<UserTagsDo>>() {
 

@@ -168,8 +168,8 @@ public interface MessageProperties {
 	
 	String GL0106 = "Don't your collections deserve a home?";
 	String GL0107 = "Click on the&nbsp;";
-	String GL0108 = "Click on the Teach tab above to create one and to start assigning Collections to your students.";
-	String GL0109 = "Click on the Teach tab at the top of the page to create your first class! and to start assigning Collections to your students.";
+	String GL0108 = "Click on the My Classes tab above to create one and to start assigning Collections to your students.";
+	String GL0109 = "Click on the My Classes tab at the top of the page to create your first class and to start assigning collections to your students.";
 	String GL0110 = "Loading";
 	String GL0111 = "You have no assignments in this Class.";
 	
@@ -1140,8 +1140,8 @@ public interface MessageProperties {
 		String GL0945 = "Separate email addresses with a comma or space";	//Not used.. Duplicate of GL1111 
 		
 		//Copy resource confirmation popup.
-		String GL0946 ="Copy Resources to";
-		String GL0947 ="Choose a collection to copy this resources to";//HTMLPanel
+		String GL0946 ="Copy Resource To";
+		String GL0947 ="Choose a collection to copy this resource to";//HTMLPanel
 		
 		//Edit user own resource popup.
 		String GL0948 ="Upload a file ";//HTMLPanel
@@ -2497,5 +2497,13 @@ public interface MessageProperties {
     	String GL1957 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
       	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion for this collection.</div><br/> <div>Use the search below to find more resources!</div><br/>   <div>Or</div><br/>   <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
 
-
+      	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
+      	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
+      	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
+      	String GL1962 = "You are now following";
+      	
+      	String GL1963 = "Looks like you don't have any collections to assign! Click on the button below to create your first Collection!";
+      	
+      	String GL1964 = "Create a Collection";
+      	
 }

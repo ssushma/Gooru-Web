@@ -130,7 +130,7 @@ public class EditClasspageView extends
 	
 	/*@UiField HTML htmlWebLinkTitleDesc;*/
 	
-	@UiField Label assignmentsDirectionsLabel, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
+	@UiField Label assignmentsDirectionsLabel, lblGetStarted, lblThree, lblOne, lblTwo, lblDefine, lblIncoporate, lblAssignmentProgress/*,lblInstructionalPlaceHolder,lblInstructionalArrow*/;
 //	noAssignmentsMessageLblTwo
 	@UiField Image imgClasspageImage;
 	
@@ -477,6 +477,12 @@ public class EditClasspageView extends
 		classListTab.setText(GL1624);
 		reportsTab.setText(GL1737);
 		assignmentsDirectionsLabel.setText(GL1945);
+		lblGetStarted.setText(GL1961);
+		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblDefine.setText(GL1960);
+		lblIncoporate.setText(GL1959);
 		
 		/*spanelInstructionalPanel.setVisible(false);*/
 		
@@ -1008,11 +1014,40 @@ public class EditClasspageView extends
 	public CollectionsView showClasspageItem(ClasspageItemDo classpageItemDo,int sequenceNum){
 		CollectionsView assignmentCollectionView = new CollectionsView(classpageItemDo,sequenceNum){
 			public void resetPagination(){
-
-				restingPagination();
+				//restingPagination();
+			}
+			@Override
+			public void updateCollectionsView(){
+				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+				int pageNumber=1;
+				if(pageNum!=null){
+					try{
+						pageNumber=Integer.parseInt(pageNum);
+						if(assignmentsContainerPanel.getWidgetCount()<1){
+							if(pageNumber>1){
+								pageNumber=pageNumber-1;
+							}
+						}
+						
+					}catch(Exception e){
+						
+					}
+				}
+				showCollectionsAfterDeletingCollection(pageNumber);
 			}
 		};
 		return assignmentCollectionView;
+	}
+	
+	public void showCollectionsAfterDeletingCollection(int pageNumber){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
+		params.put("order", order);
+		params.put("classpageid", classpageid);
+		params.put("pageNum", pageNumber+"");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	
 	public void restingPagination(){
@@ -1709,15 +1744,15 @@ public class EditClasspageView extends
 			panelAssignmentProgress.add(new AssignmentProgressVc(i == globalClasspageProcess.size()-1 ? true : false, 
 					globalClasspageProcess.get(i), i+1, globalClasspageProcess.size()));
 		}
-		Map<String,String> params = new HashMap<String,String>();
-		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
-		params.put("order", "asce");
-		params.put("classpageid", classpageid);
-		params.put("pageNum", 0+"");
-		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+//		Map<String,String> params = new HashMap<String,String>();
+//		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+//		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
+//		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
+//		params.put("order", "asce");
+//		params.put("classpageid", classpageid);
+//		params.put("pageNum", 0+"");
+//		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+//		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
@@ -1748,6 +1783,16 @@ public class EditClasspageView extends
 		sortingOptionsList.add(GL1949);
 		sortingOptionsList.add(GL1950);
 		//sortingOptionsList.add(GL1951);
+	}
+	@Override
+	public void setSortingOrderInDropdown(String sortingOrder) {
+		if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("asce")){
+			dropdownPlaceHolder.setText(GL1948);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("desc")){
+			dropdownPlaceHolder.setText(GL1949);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("recent")){
+			dropdownPlaceHolder.setText(GL1950);
+		}
 	}
 }
 

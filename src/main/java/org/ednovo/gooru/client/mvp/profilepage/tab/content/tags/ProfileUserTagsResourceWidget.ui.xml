@@ -10,7 +10,7 @@
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 		<g:HTMLPanel styleName="{ProfilePageTagStyle.resultsection}">
-			<g:Label styleName="{ProfilePageTagStyle.titleBold}" ui:field="resourceTitle"></g:Label>
+			<g:HTML styleName="{ProfilePageTagStyle.titleBold}" ui:field="resourceTitle"></g:HTML>
 			<g:Label ui:field="resourceType"></g:Label>
 			<g:Label styleName="{ProfilePageTagStyle.resourceSource}" ui:field="resourceSource"></g:Label>
 			<g:HTMLPanel styleName="{ProfilePageTagStyle.ratingContainer}"

@@ -13,6 +13,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 /**
@@ -30,7 +31,7 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 	@UiField Button cancelButton,okButton;
 	@UiField Label headerTitle;
 	@UiField HTMLPanel buttonContainer,contentPnl;
-	
+	@UiField InlineLabel headerTitleDes,headerTitleDesUsername;
 	public AppPopUp appPopUp;
 	
 	public DeleteFolderSuccessView() {
@@ -51,6 +52,8 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 //		titleLabel.setText(MessageProperties.GL1176);
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
+		headerTitleDes.setVisible(false);
+		headerTitleDesUsername.setVisible(false);
 	}
 	
 	public DeleteFolderSuccessView(String movedFolderName) {
@@ -69,6 +72,8 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		headerTitle.setText(GL1366+"\""+movedFolderName+"\"");
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
+		headerTitleDes.setVisible(false);
+		headerTitleDesUsername.setVisible(false);
 	}
 	
 	public DeleteFolderSuccessView(String title, String desc) {
@@ -89,9 +94,35 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		headerTitle.getElement().getStyle().setFontSize(12, Unit.PX);
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
+		headerTitleDes.setVisible(false);
+		headerTitleDesUsername.setVisible(false);
 	}
 	
-	
+	public DeleteFolderSuccessView(String title, String desc,String userName) {
+		initWidget(uiBinder.createAndBindUi(this));
+		appPopUp = new AppPopUp();
+		appPopUp.setStyleName("removeResourcePopup");
+		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
+		appPopUp.getElement().getStyle().setHeight(245, Unit.PX);
+		appPopUp.getHeaderPanel().getElement().getStyle().setMarginBottom(-2, Unit.PX);
+		appPopUp.setContent(title, uiBinder.createAndBindUi(this));
+		appPopUp.show();
+		appPopUp.center();
+		cancelButton.setText(GL0142);
+		Window.enableScrolling(false);
+		okButton.setText(GL0190);
+		contentPnl.getElement().getStyle().setHeight(117, Unit.PX);
+		headerTitleDes.getElement().setInnerHTML(desc);	
+		
+		headerTitleDesUsername.getElement().setInnerHTML(userName);	
+		headerTitleDesUsername.getElement().setAttribute("style", "font-weight:bold");
+		
+		headerTitle.getElement().getStyle().setFontSize(12, Unit.PX);
+		cancelButton.setVisible(false);
+		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
+		headerTitleDes.setVisible(true);
+		headerTitleDesUsername.setVisible(true);
+	}
 
 	@UiHandler("cancelButton")
 	public void onClickOfCancelButton(ClickEvent event){

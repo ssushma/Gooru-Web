@@ -41,6 +41,8 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
+
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
@@ -52,6 +54,7 @@ import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,8 +62,11 @@ import org.json.JSONString;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 
 import org.json.JSONArray;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * @author Search Team
@@ -504,7 +510,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,getLoggedInSessionToken());
-		System.out.println("followingUser..."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -516,7 +521,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,getLoggedInSessionToken());
-		System.out.println("getFollowedByUsers.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -563,12 +567,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void followUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOW, gooruUid,getLoggedInSessionToken());
-		System.out.println("followUser.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try{
-		System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
-		}catch(Exception ex){}
+		
 		
 	}
 
@@ -576,12 +577,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void unFollowUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_UNFOLLOW, gooruUid,getLoggedInSessionToken());
-		System.out.println("unFollowUser.."+url);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try{
-			System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
-			}catch(Exception ex){}
+		
 			
 	}
 
@@ -644,5 +643,83 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			}
 		}
 		return userTagsDoList;
+	}
+
+	@Override
+	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid)
+			throws GwtException {
+		JsonRepresentation jsonRep = null;
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken());
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();	
+		return deserializeResourcesByTag(jsonRep);
+	}
+	public List<UserTagsResourceDO> deserializeResourcesByTag(JsonRepresentation jsonRep) {
+		List<UserTagsResourceDO> userTagResourceList =new ArrayList<UserTagsResourceDO>();
+		if (jsonRep != null && jsonRep.getSize() != -1) {
+			UserTagsResourceDO userTagsResourceDO=null;
+			try {
+				
+				JSONObject tagUserResourceObject=jsonRep.getJsonObject();
+				int totatHintCount=tagUserResourceObject.getInt("totalHitCount");
+				
+				JSONArray tagUserList=tagUserResourceObject.getJSONArray("searchResult");
+				
+				for(int i=0;i<totatHintCount;i++){
+				
+					userTagsResourceDO = new UserTagsResourceDO();
+					JSONObject resultObj = tagUserList.getJSONObject(i);
+					
+					userTagsResourceDO.setTitle(getJsonString(resultObj, "title"));
+					userTagsResourceDO.setGooruOid(getJsonString(resultObj, "gooruOid"));
+					userTagsResourceDO.setType(getJsonString(resultObj, "type"));
+					
+					JSONObject resourceFormat = resultObj.getJSONObject("resourceFormat");
+					ResourceFormatDo resourceFormatDO =JsonDeserializer.deserialize(resourceFormat.toString(), ResourceFormatDo.class);
+					userTagsResourceDO.setResourceFormat(resourceFormatDO);
+					
+					JSONObject resourceRating = resultObj.getJSONObject("ratings");
+					SearchRatingsDo searchRatingsDo =JsonDeserializer.deserialize(resourceRating.toString(), SearchRatingsDo.class);
+					userTagsResourceDO.setRatings(searchRatingsDo);
+					
+					userTagsResourceDO.setThumbnails(getJsonString(resultObj.getJSONObject("thumbnails"), "url"));
+					
+					try {
+						userTagsResourceDO.setPublisher(JsonDeserializer.deserialize(resultObj.getJSONArray("publisher").toString(), new TypeReference<List<String>>() {
+						}));
+					} catch (JSONException e2) {
+						e2.printStackTrace();
+					}
+
+					try {
+						userTagsResourceDO.setAggregator(JsonDeserializer.deserialize(resultObj.getJSONArray("aggregator").toString(), new TypeReference<List<String>>() {
+						}));
+					} catch (JSONException e2) {
+						e2.printStackTrace();
+					}
+					
+					
+					userTagResourceList.add(userTagsResourceDO);
+					
+				}
+			return userTagResourceList;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		}
+		return userTagResourceList;
+	}
+	protected static String getJsonString(JSONObject jsonObject, String key) {
+		if (jsonObject != null && !jsonObject.isNull(key) && jsonObject.has(key)) {
+			String value = null;
+			try {
+				value = jsonObject.getString(key);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return value != null ? value : null;
+		} else {
+			return null;
+		}
 	}
 }

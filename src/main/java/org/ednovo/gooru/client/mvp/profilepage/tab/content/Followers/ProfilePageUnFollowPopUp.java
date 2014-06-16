@@ -35,6 +35,7 @@ public class ProfilePageUnFollowPopUp extends PopupPanel {
 		String userName=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
 		inputTitleLbl.setText(MessageProperties.GL1940);
 		inputTitleLblName.setText(userName);
+		inputTitleLblName.getElement().setAttribute("style", "font-weight:bold");
 		
 	}
 	@UiHandler("okBtn")

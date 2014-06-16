@@ -35,6 +35,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -105,4 +106,6 @@ public interface UserServiceAsync extends BaseServiceAsync {
    void isFollowedUser(String gooruUid,AsyncCallback<IsFollowDo> callback);
    
    void getUserAddedContentTagSummary(String tagGooruOid,AsyncCallback<List<UserTagsDo>> callback);
+   
+   void getResourcesByTag(String tagGooruOid,AsyncCallback<List<UserTagsResourceDO>> callback);
 }
