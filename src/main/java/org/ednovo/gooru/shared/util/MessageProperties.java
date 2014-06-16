@@ -1140,8 +1140,8 @@ public interface MessageProperties {
 		String GL0945 = "Separate email addresses with a comma or space";	//Not used.. Duplicate of GL1111 
 		
 		//Copy resource confirmation popup.
-		String GL0946 ="Copy Resources to";
-		String GL0947 ="Choose a collection to copy this resources to";//HTMLPanel
+		String GL0946 ="Copy Resource To";
+		String GL0947 ="Choose a collection to copy this resource to";//HTMLPanel
 		
 		//Edit user own resource popup.
 		String GL0948 ="Upload a file ";//HTMLPanel
