@@ -88,6 +88,8 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	
 	public void setClasspageData(ClasspageDo classpageDo);
 	
+	public void setSortingOrderInDropdown(String sortingOrder);
+	
 	
 	public void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String tab, String analyticsId, String monitorId,ClassListPresenter classListPresenter);
 	

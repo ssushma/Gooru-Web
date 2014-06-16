@@ -27,7 +27,10 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
@@ -39,6 +42,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ResetPresentersEvent;
 
 /**
@@ -110,13 +114,25 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
 					getView().hideAddCollectionPopup("");
 					AppClientFactory.fireEvent(new ResetPresentersEvent());
-					for(int i=0;i<classpageItemDoList.size();i++){
+/*					for(int i=0;i<classpageItemDoList.size();i++){
 						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
 						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
-					}
+					}*/
+					showCollectionsAfterAddingNewCollections();
+					
 				}
 			}
 		});
+	}
+	
+	public void showCollectionsAfterAddingNewCollections(){
+		Map<String,String> params = new HashMap<String,String>();
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+		params.put("order", "recent");
+		params.put("classpageid", classpageid);
+		params.put("pageNum", 1+"");
+		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
+		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	public void setClasspageId(String classpageId,EditClasspagePresenter editClasspagePresenter){
 		this.classpageId=classpageId;

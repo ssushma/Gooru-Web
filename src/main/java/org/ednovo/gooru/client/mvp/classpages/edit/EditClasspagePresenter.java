@@ -403,6 +403,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 						offset=0;
 						limit=5;
 						generateShareLink(classpageDo.getClasspageId());
+						getView().setSortingOrderInDropdown(sortingOrder);
 						getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
 						getAssignmentsProgress(classpageId, "0", "20");	// to display assignment progress.
                         getView().setClasspageData(classpageDo);
@@ -417,7 +418,9 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 				}
 			});
 		}else{
+			getView().setSortingOrderInDropdown(sortingOrder);
 			getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
+			
 		}
 	}
 	
