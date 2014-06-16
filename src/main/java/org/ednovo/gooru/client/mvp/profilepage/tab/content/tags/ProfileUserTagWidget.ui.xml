@@ -2,7 +2,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:panel="urn:import:org.ednovo.gooru.client.ui">
 	<ui:style field="ProfilePageTagStyle" src="profile-page-Tag-style.css"></ui:style>
-	
 	<panel:HTMLEventPanel styleName="{ProfilePageTagStyle.tagBg}" ui:field="mainContainer">
 	  <g:HTMLPanel styleName="{ProfilePageTagStyle.tagTitle}">
 	      <g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagTitle"></g:Label>
@@ -11,4 +10,5 @@
 	      <g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagcount"></g:Label>
 	  </g:HTMLPanel>
 	</panel:HTMLEventPanel>
+	
 </ui:UiBinder> 

@@ -562,6 +562,8 @@ public enum UrlToken {
 	
 	USER_TAG("/v2/content/tag/my?sessionToken={1}"),
 	
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}"),
+	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"); 
 
 
