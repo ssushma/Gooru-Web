@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
@@ -81,12 +82,15 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 
 //	@UiField SimplePanel datePanelContainer;
-	@UiField HTMLPanel floderTreeContainer;
+	@UiField HTMLPanel floderTreeContainer,buttonsContainer;
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Label /*dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,*/ 
-				addCollectionPopupHeader, addingText /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
+				addCollectionPopupHeader, addingText,emptyMsgLbl /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
 //	@UiField TextArea assignmentDirectionsTxtArea;
+	
+	@UiField FlowPanel popupContent;
+	
 	private int offset=0;
 	private int limit=20;
 	private int totalHitCount=0;
@@ -120,7 +124,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		setStaticTexts();
 		//assignmentDirectionsTxtArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 		//assignmentDirectionsTxtArea.getElement().setAttribute("maxlength", "400");
-		//dropdownListContainerScrollPanel.setVisible(false);
+//		dropdownListContainerScrollPanel.setVisible(false);
 		addingText.setVisible(false);
 		appPopUp.setGlassEnabled(true);
 		appPopUp.setAutoHideOnHistoryEventsEnabled(true);
@@ -217,8 +221,14 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@UiHandler("addResourceBtnLbl")
 	public void addButtonEvent(ClickEvent event){
-		addResourceBtnLbl.setEnabled(false);
-		addCollectionToAssign();
+		if(addResourceBtnLbl.getText().trim().equals("Create a Collection")){
+			hide();
+			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+		}else{
+			addResourceBtnLbl.setEnabled(false);
+			addCollectionToAssign();
+		}
+		
 	}
 	@UiHandler("cancelResourcePopupBtnLbl")
 	public void cancelButtonEvent(ClickEvent event){
@@ -409,6 +419,11 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	@Override
 	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel) {
+		resetEmptyCollMsg();
+		if(!dropdownListContainerScrollPanel.isVisible()){
+			dropdownListContainerScrollPanel.setVisible(true);
+		}
+		
 		if(clearShelfPanel){
 			folderTreePanel.clear();
 		}
@@ -541,6 +556,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 
 	public void hide(){
+		resetEmptyCollMsg();
 		dropdownListContainerScrollPanel.setVisible(true);
 		//addingText.setVisible(false);
 		addResourceBtnLbl.setVisible(true);
@@ -577,6 +593,29 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		Label loadingText=new Label(GL1452);
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
+	}
+
+	@Override
+	public void displayNoCollectionsMsg() {
+		dropdownListContainerScrollPanel.setVisible(false);
+		addResourceBtnLbl.setText("Create a Collection");
+		emptyMsgLbl.setText("Looks like you don't have any collections to assign! Click on the button below to create your first Collection!"); 
+		emptyMsgLbl.setVisible(true);
+		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
+		buttonsContainer.getElement().getStyle().setMarginLeft(110, Unit.PX); 
+		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
+		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
+		popupContent.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
+	}
+	
+	public void resetEmptyCollMsg(){
+		dropdownListContainerScrollPanel.setVisible(true);
+		addResourceBtnLbl.setText(GL0104);
+		emptyMsgLbl.setVisible(false);
+		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 
+		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
+		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
+		popupContent.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgContainer());
 	}
 
 }
