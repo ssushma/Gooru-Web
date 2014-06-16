@@ -12,12 +12,12 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfileUserTagsResourceView extends PopupPanel implements MessageProperties {
+public class ProfileUserTagsResourceView extends Composite implements MessageProperties {
 
 	private static ProfileUserTagsResourceViewUiBinder uiBinder = GWT
 			.create(ProfileUserTagsResourceViewUiBinder.class);
@@ -32,14 +32,15 @@ public class ProfileUserTagsResourceView extends PopupPanel implements MessagePr
 	String tagId;
 	String labelName;
 	String count;
-	public ProfileUserTagsResourceView(String tagId,String labelName,String count) {
-		setWidget(uiBinder.createAndBindUi(this));
-		this.setGlassEnabled(true);
+	HTMLPanel followingContainer; 
+	HTMLPanel tagResourceContainer;
+	public ProfileUserTagsResourceView(String tagId,String labelName,String count,HTMLPanel followingContainer, HTMLPanel tagResourceContainer) {
+		initWidget(uiBinder.createAndBindUi(this));
 		this.tagId = tagId;
 		this.labelName = labelName;
 		this.count = count;
-		this.setHeight("500px");
-		this.setWidth("950px");
+		this.followingContainer=followingContainer;
+		this.tagResourceContainer=tagResourceContainer;
 		getData(tagId);
 		
 	}
@@ -77,7 +78,8 @@ public class ProfileUserTagsResourceView extends PopupPanel implements MessagePr
 	}
 	@UiHandler("tagMessage")
 	public void onclickOnBackButton(ClickEvent event){
-		this.hide();
+		tagResourceContainer.setVisible(false);
+		followingContainer.setVisible(true);
 	}
 	
 }
