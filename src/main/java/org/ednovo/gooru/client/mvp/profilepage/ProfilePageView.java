@@ -1519,6 +1519,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.setVisible(false);
 				collectionsTabVc.setSelected(true);
 				mainContainer.setVisible(true);
+				tagResourceContainer.setVisible(false);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW);
 				
 			}
@@ -1529,6 +1530,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView(userFollowingDo,"following");
 				followingContainer.add(profilePagefollowingView);
 				followingContainer.setVisible(true);
+				tagResourceContainer.setVisible(false);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
@@ -1539,6 +1541,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
 				followingContainer.setVisible(true);
+				tagResourceContainer.setVisible(false);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
