@@ -5,11 +5,9 @@ import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -29,16 +27,17 @@ public class ProfileUserTagWidget extends Composite {
 	Label tagcount;
 	@UiField
 	HTMLEventPanel mainContainer;
-			
+	HTMLPanel followingContainer; HTMLPanel tagResourceContainer;		
 	UserTagsDo userTagDo =new UserTagsDo();
 	public ProfileUserTagWidget(){
 		initWidget(uiBinder.createAndBindUi(this));
 		
 	}
-	public ProfileUserTagWidget(UserTagsDo userTagDo) {
+	public ProfileUserTagWidget(UserTagsDo userTagDo,HTMLPanel followingContainer, HTMLPanel tagResourceContainer) {
 		this.userTagDo = userTagDo;
 		initWidget(uiBinder.createAndBindUi(this));
-		
+		this.followingContainer = followingContainer;
+		this.tagResourceContainer = tagResourceContainer;
 		setData(userTagDo);
 	}
 	public void setData(UserTagsDo userTagDo){
@@ -56,10 +55,12 @@ public class ProfileUserTagWidget extends Composite {
 	@UiHandler("mainContainer")
 	public void onclick(ClickEvent event)
 	{
+		tagResourceContainer.clear();
+		ProfileUserTagsResourceView ProfileUserTagsResourceView=new ProfileUserTagsResourceView(mainContainer.getElement().getId(),tagTitle.getText(),tagcount.getText(),followingContainer,tagResourceContainer);
+		tagResourceContainer.add(ProfileUserTagsResourceView);
+		followingContainer.setVisible(false);
+		tagResourceContainer.setVisible(true);
 		
-		ProfileUserTagsResourceView ProfileUserTagsResourceView=new ProfileUserTagsResourceView(mainContainer.getElement().getId(),tagTitle.getText(),tagcount.getText());
-		ProfileUserTagsResourceView.show();
-		ProfileUserTagsResourceView.center();
 		
 				
 	}
