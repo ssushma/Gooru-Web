@@ -551,9 +551,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
-		System.out.println("getFollowers()..........."+profileDo.getUser().getMeta().getSummary().getFollowers());
+		
 		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()+"");
-		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
+		//tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
 		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
@@ -1370,12 +1370,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
+		int totalcount=userFollowDo.size();
+		buttonDisableCickOnFollow(totalcount);
+		followersTabVc.setLabelCount("");
+		followersTabVc.setLabelCount(totalcount+"");
+	
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("followers".equalsIgnoreCase(tabValue))
 			{
-				setTab(followersTabVc);
-				//buttonDisable();
+
+					setTab(followersTabVc);
+				
 			}
 		}
 	}
@@ -1388,7 +1394,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if("following".equalsIgnoreCase(tabValue))
 			{
 				setTab(followingTabVc);
-				//buttonDisable();
+				
 			}
 		}
 		
@@ -1397,12 +1403,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getTagsObj(List<UserTagsDo> userTagsDo) {
 		userTagDo.clear();
 		userTagDo.addAll(userTagsDo);
+		buttonDisableOnTags(userTagsDo.size());
+		tagTabVc.setLabelCount(userTagsDo.size()+"");
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("tags".equalsIgnoreCase(tabValue))
 			{
 				setTab(tagTabVc);
-				//buttonDisable();
+				
 			}
 		}
 		
@@ -1420,10 +1428,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		
-		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
-		buttonDisableCickOnFollow(totalcount);
-		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(totalcount+"");
 		
 	}
 	@UiHandler("UnFollowButton")
@@ -1433,10 +1437,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		int totalUnFollowcount=profileDo.getUser().getMeta().getSummary().getFollowers()-1;
-		buttonDisableCickOnFollow(totalUnFollowcount);
-		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(totalUnFollowcount+"");
+		
 	
 		
 	}
@@ -1518,6 +1519,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.setVisible(false);
 				collectionsTabVc.setSelected(true);
 				mainContainer.setVisible(true);
+				tagResourceContainer.setVisible(false);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW);
 				
 			}
@@ -1528,16 +1530,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView(userFollowingDo,"following");
 				followingContainer.add(profilePagefollowingView);
 				followingContainer.setVisible(true);
+				tagResourceContainer.setVisible(false);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
-				System.out.println("in");
+				
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
 				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
 				followingContainer.setVisible(true);
+				tagResourceContainer.setVisible(false);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
@@ -1597,19 +1601,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			followersTabVc.addClickHandler(new clickOnFollowers());
 			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 		}
-		if(profileDo.getUser().getMeta().getSummary().getTags()==0)
-		{
-			
-			tagTabVc.setEnabled(false);
-			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-		}
-		else
-		{
-			
-			tagTabVc.setEnabled(true);
-			tagTabVc.addClickHandler(new clickOnTags());
-			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
-		}
+		
 		
 	}
 	public void buttonDisableCickOnFollow(int totalCount)
@@ -1627,6 +1619,23 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			followersTabVc.addClickHandler(new clickOnFollowers());
 			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 			
+		}
+}
+	public void buttonDisableOnTags(int totalCount)
+	{
+		
+		if(totalCount==0)
+		{
+			
+			tagTabVc.setEnabled(false);
+			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		}
+		else
+		{
+			
+			tagTabVc.setEnabled(true);
+			tagTabVc.addClickHandler(new clickOnTags());
+			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 		}
 }
 	
