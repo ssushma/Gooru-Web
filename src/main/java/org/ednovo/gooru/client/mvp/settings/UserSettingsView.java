@@ -1628,7 +1628,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			getUiHandlers().updatePartyCustomField(USER_TAXONOMY_ROOT_CODE,getcheckedValue());
 		}
 		if(userStandardPrefcode!=null){
-		if(!commonCoreChk.isChecked() && !californiaStandChk.isChecked() && !texasChk.isChecked()||!ngssChk.isChecked()){
+		if(!commonCoreChk.isChecked() && !californiaStandChk.isChecked() && !texasChk.isChecked() && !ngssChk.isChecked()){
 				standardsSaveButton.setEnabled(true);
 				standardsSaveButton.getElement().removeClassName("disabled");
 				UserSettingStandardDeleteView userSettingStandardDeleteView = new UserSettingStandardDeleteView(gooruUid,standardsEditButton,standardsSaveCancelButtonContainer,standardSavingTextLabel);

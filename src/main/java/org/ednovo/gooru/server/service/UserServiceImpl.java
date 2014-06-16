@@ -510,7 +510,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,getLoggedInSessionToken());
-		System.out.println("followingUser..."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -522,7 +521,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,getLoggedInSessionToken());
-		System.out.println("getFollowedByUsers.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -569,12 +567,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void followUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOW, gooruUid,getLoggedInSessionToken());
-		System.out.println("followUser.."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try{
-		System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
-		}catch(Exception ex){}
+		
 		
 	}
 
@@ -582,12 +577,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void unFollowUser(String gooruUid) throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_UNFOLLOW, gooruUid,getLoggedInSessionToken());
-		System.out.println("unFollowUser.."+url);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
-		try{
-			System.out.println("jsonRep.."+jsonRep.getJsonObject().toString());
-			}catch(Exception ex){}
+		
 			
 	}
 
@@ -657,7 +650,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken());
-		System.out.println("getResourcesByTag..."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeResourcesByTag(jsonRep);
