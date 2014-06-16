@@ -168,8 +168,8 @@ public interface MessageProperties {
 	
 	String GL0106 = "Don't your collections deserve a home?";
 	String GL0107 = "Click on the&nbsp;";
-	String GL0108 = "Click on the Teach tab above to create one and to start assigning Collections to your students.";
-	String GL0109 = "Click on the Teach tab at the top of the page to create your first class! and to start assigning Collections to your students.";
+	String GL0108 = "Click on the My Classes tab above to create one and to start assigning Collections to your students.";
+	String GL0109 = "Click on the My Classes tab at the top of the page to create your first class and to start assigning collections to your students.";
 	String GL0110 = "Loading";
 	String GL0111 = "You have no assignments in this Class.";
 	
