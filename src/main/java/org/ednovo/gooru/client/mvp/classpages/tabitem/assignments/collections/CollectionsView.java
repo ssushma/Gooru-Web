@@ -528,6 +528,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		removeConfirmBox.hideButtons(true);
 		this.removeFromParent();
 		resetPagination();
+		updateCollectionsView();
 	}
 	public void hidePopup(NativePreviewEvent event){
     	if(event.getTypeInt()==Event.ONCLICK){
@@ -549,6 +550,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	}
 
 	public void resetPagination(){
+		
+	}
+	public void updateCollectionsView(){
 		
 	}
 	
