@@ -598,8 +598,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
-		addResourceBtnLbl.setText("Create a Collection");
-		emptyMsgLbl.setText("Looks like you don't have any collections to assign! Click on the button below to create your first Collection!"); 
+		addResourceBtnLbl.setText(GL1964);
+		emptyMsgLbl.setText(GL1963); 
 		emptyMsgLbl.setVisible(true);
 		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
 		buttonsContainer.getElement().getStyle().setMarginLeft(110, Unit.PX); 
