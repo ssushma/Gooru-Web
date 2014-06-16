@@ -153,7 +153,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		callBack = "reveal";
 		isFollow(userId);
 		createProfileUserData();
-		getUserAddedContentTagSummary(userId);
+		//getUserAddedContentTagSummary(userId);
 	}
 
 	@Override
@@ -650,6 +650,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		});
 		
 	}
+	@Override
 	public void getUserAddedContentTagSummary(String gooruUid){
 	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,new AsyncCallback<List<UserTagsDo>>() {
 
