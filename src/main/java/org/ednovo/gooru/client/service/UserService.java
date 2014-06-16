@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
+import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -226,4 +227,6 @@ public interface UserService extends BaseService {
 	IsFollowDo isFollowedUser(String gooruUid)throws GwtException;
 	
 	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)throws GwtException;
+	
+	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid)throws GwtException;
 }

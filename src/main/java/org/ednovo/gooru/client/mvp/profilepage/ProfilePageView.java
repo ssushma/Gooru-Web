@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
+import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
 
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
@@ -90,6 +91,7 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -249,8 +251,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	List<UserFollowDo> userFollowingDo = new ArrayList<UserFollowDo>();
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
-	
-	private static ProfilePageViewUiBinder uiBinder = GWT
+		
+	ProfileUserTagsResourceView profileUserTagsResourceView = null;
+		private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
 
 	interface ProfilePageViewUiBinder extends UiBinder<Widget, ProfilePageView> {
@@ -352,7 +355,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		followButton.setText(GL1935);
 		UnFollowButton.setText(GL1936);
-			
+		
+		
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -553,17 +557,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
-		
+		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
 		buttonDisable();
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("collection".equalsIgnoreCase(tabValue))
 			{
 				setTab(collectionsTabVc);
-			}
-			if("tags".equalsIgnoreCase(tabValue))
-			{
-				setTab(tagTabVc);
 			}
 		}
 		else{
@@ -1429,9 +1429,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		//getUiHandlers().getFollwingData();
 		followersTabVc.setLabelCount("");
 		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
-		profileDo.getUser().getMeta().getSummary().setFollowers(totalcount);
+		//profileDo.getUser().getMeta().getSummary().setFollowers(totalcount);
 		followersTabVc.setLabelCount(totalcount+"");
-		buttonDisable();
+		buttonDisableCickOnFollow(totalcount);
 		
 	}
 	@UiHandler("UnFollowButton")
@@ -1444,9 +1444,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		//getUiHandlers().getFollowerData();
 		//getUiHandlers().getFollwingData();
 		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()-1+"");
-		profileDo.getUser().getMeta().getSummary().setFollowers(profileDo.getUser().getMeta().getSummary().getFollowers()-1);
-		buttonDisable();
+		int totalUnFollowcount=profileDo.getUser().getMeta().getSummary().getFollowers()-1;
+		followersTabVc.setLabelCount(totalUnFollowcount+"");
+		//profileDo.getUser().getMeta().getSummary().setFollowers(profileDo.getUser().getMeta().getSummary().getFollowers()-1);
+		buttonDisableCickOnFollow(totalUnFollowcount);
 		
 	}
 	
@@ -1507,7 +1508,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 		@Override
 		public void onClick(ClickEvent event) {
-			setTab(tagTabVc);	
+		
 			Map<String,String> params = new HashMap<String,String>();
 			String id=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
 			String user=AppClientFactory.getPlaceManager().getRequestParameter("user", null);
@@ -1516,6 +1517,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			params.put("tab", "tags");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.PROFILE_PAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			setTab(tagTabVc);	
 
 			
 		}
@@ -1551,16 +1553,34 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				tagTabVc.setSelected(true);
 				mainContainer.setVisible(false);
+			//	ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget();
+				/*{
+
+					@Override
+					public void getclickevent() {
+						System.out.println("click");
+						profileUserTagsResourceView = new ProfileUserTagsResourceView("06842a13-6a48-4f2b-bfe1-1f9a0cc60363");
+						tagResourceContainer.clear();
+						tagResourceContainer.add(profileUserTagsResourceView);
+						followingContainer.setVisible(false);
+						tagResourceContainer.setVisible(true);
+						
+					}
+					
+				};*/
 				ProfileUserTagView profileUserTagView = new ProfileUserTagView(userTagDo);
 				followingContainer.add(profileUserTagView);
-			
-				//ProfileUserTagsResourceView profileUserTagsResourceView = new ProfileUserTagsResourceView();
-				//followingContainer.add(profileUserTagsResourceView);
+				tagResourceContainer.setVisible(false);
+				
+				
 				
 			}
-			
-	}
-}
+		}
+		
+		
+ }
+	
+	
 	
 public void buttonDisable()
 {
@@ -1611,6 +1631,21 @@ public void buttonDisable()
 		tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 	}
 	
+}
+public void buttonDisableCickOnFollow(int totalCount)
+{
+	if(totalCount==0)
+	{
+		followersTabVc.setEnabled(false);
+		followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
+		
+	}
+	else
+	{
+		followersTabVc.setEnabled(true);
+		followersTabVc.addClickHandler(new clickOnFollowers());
+		followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
+	}
 }
 	
 }
