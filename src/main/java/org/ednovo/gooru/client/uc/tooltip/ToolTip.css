@@ -563,8 +563,8 @@
 	background-color: #cfe3f1;
 }
 .partnerLibraryDivInfo{
-	/* position: fixed !important;width:22% !important; */
+	position: fixed !important;width:22% !important;
 }
 .districtLibrayCOntainerInfo{
-	/* position: fixed !important; */
+	position: fixed !important;
 }
