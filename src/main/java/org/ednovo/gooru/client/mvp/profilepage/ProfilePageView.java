@@ -551,6 +551,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
+		followersTabVc.setLabelCount("");
 		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()+"");
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
@@ -1428,6 +1429,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followersTabVc.setLabelCount("");
 		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
 		//profileDo.getUser().getMeta().getSummary().setFollowers(totalcount);
+		
 		followersTabVc.setLabelCount(totalcount+"");
 		buttonDisableCickOnFollow(totalcount);
 		
