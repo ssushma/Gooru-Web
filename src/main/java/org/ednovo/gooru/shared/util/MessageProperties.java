@@ -2500,5 +2500,5 @@ public interface MessageProperties {
       	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
       	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
       	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
-
+      	String GL1962 = "You are now following";
 }
