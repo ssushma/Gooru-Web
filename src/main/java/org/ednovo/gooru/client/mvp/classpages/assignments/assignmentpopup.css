@@ -655,5 +655,26 @@
   .primaryButton{
  	 margin-left: 5px;
   }
+  
+  
+.noCollectionMsgContainer{
+	border:1px solid #DDD;
+	height:220px;
+	width: 450px;
+  }
  
+.noCollectionMsgOuterContainer{
+	padding: 3px;
+	height: 222px;
+	background: white;
+	z-index: 999;
+}
+
+.emptyCollMsg{
+	text-align: center;
+	margin-top: 38px;
+	float: left;
+	margin-left: -19px;
+	font-size: 12px;
+}
  

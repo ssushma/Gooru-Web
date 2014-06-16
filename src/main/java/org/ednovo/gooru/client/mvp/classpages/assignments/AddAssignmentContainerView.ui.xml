@@ -4,16 +4,17 @@
 	<ui:with
 		type="org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle"
 		field="res"></ui:with>
-		<g:FlowPanel styleName="{res.css.popupContent}">
+		<g:FlowPanel ui:field="popupContent" styleName="{res.css.popupContent}">
 			<g:HTMLPanel styleName="{res.css.popupHeader}">
 				<g:Label styleName="{res.css.popupHeaderText}" ui:field="addCollectionPopupHeader"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentMainContainer}">
+			    <g:Label styleName="{res.css.emptyCollMsg}" ui:field="emptyMsgLbl"></g:Label>
 				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel}">
 	            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
 			   		</g:HTMLPanel>
 				</g:ScrollPanel>
-				<g:HTMLPanel styleName="{res.css.assignmentButtonsContainer}">
+				<g:HTMLPanel ui:field="buttonsContainer" styleName="{res.css.assignmentButtonsContainer}">
 					<g:Button styleName="secondary"  ui:field="cancelResourcePopupBtnLbl" />
 					<g:Button styleName="primary {res.css.assignButton}"  ui:field="addResourceBtnLbl" />
 					<g:Label ui:field="addingText" styleName=""></g:Label>
