@@ -551,7 +551,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
-		System.out.println("getFollowers()..........."+profileDo.getUser().getMeta().getSummary().getFollowers());
+		
 		followersTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowers()+"");
 		tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
@@ -1370,12 +1370,18 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
+		int totalcount=userFollowDo.size();
+		buttonDisableCickOnFollow(totalcount);
+		followersTabVc.setLabelCount("");
+		followersTabVc.setLabelCount(totalcount+"");
+	
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("followers".equalsIgnoreCase(tabValue))
 			{
-				setTab(followersTabVc);
-				//buttonDisable();
+
+					setTab(followersTabVc);
+				
 			}
 		}
 	}
@@ -1420,10 +1426,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		
-		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
-		buttonDisableCickOnFollow(totalcount);
-		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(totalcount+"");
 		
 	}
 	@UiHandler("UnFollowButton")
@@ -1433,10 +1435,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		int totalUnFollowcount=profileDo.getUser().getMeta().getSummary().getFollowers()-1;
-		buttonDisableCickOnFollow(totalUnFollowcount);
-		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(totalUnFollowcount+"");
+		
 	
 		
 	}
@@ -1531,7 +1530,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
-				System.out.println("in");
+				
 				followingContainer.clear();
 				followersTabVc.setSelected(true);
 				mainContainer.setVisible(false);
