@@ -181,6 +181,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		getView().closeAllOpenedPopUp();
 		imageUploadPresenter.getView().closeImageUploadWidget();
 		assignmentContainer.getView().onUnload();
+		this.classpageDo=null;
 		
 	}
 	
@@ -422,7 +423,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	public Integer getOffsetValue(){
 		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
-		int pageNumber=1;
+		int pageNumber=0;
 		try{
 			pageNumber=Integer.parseInt(pageNum);
 			if(pageNumber==0){
@@ -430,7 +431,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		}catch(Exception e){}
 		
-		return (((pageNumber-1)*DEFAULT_OFFSETVALUE))+1;
+		return (((pageNumber-1)*DEFAULT_OFFSETVALUE));
 		
 	}
 	

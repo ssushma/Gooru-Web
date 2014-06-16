@@ -2497,5 +2497,8 @@ public interface MessageProperties {
     	String GL1957 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
       	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion for this collection.</div><br/> <div>Use the search below to find more resources!</div><br/>   <div>Or</div><br/>   <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
 
+      	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
+      	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
+      	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
 
 }
