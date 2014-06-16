@@ -44,14 +44,12 @@ import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePagefollowingView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagView;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagWidget;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.tags.ProfileUserTagsResourceView;
 
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.settings.UserSettingStyle;
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.DeleteFolderSuccessView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.CloseLabel;
@@ -1525,7 +1523,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void setTab(Object tab) {
 		if(tab!=null){
 			if (tab.equals(collectionsTabVc)) {
-				followingContainer.clear();
+				followingContainer.setVisible(false);
 				collectionsTabVc.setSelected(true);
 				mainContainer.setVisible(true);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_PUBLIC_SHELF_VIEW);
@@ -1537,6 +1535,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				mainContainer.setVisible(false);
 				ProfilePagefollowingView profilePagefollowingView = new ProfilePagefollowingView(userFollowingDo,"following");
 				followingContainer.add(profilePagefollowingView);
+				followingContainer.setVisible(true);
 				//getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLOWING_VIEW);
 			}
 			if (tab.equals(followersTabVc)) {
@@ -1545,7 +1544,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				mainContainer.setVisible(false);
 				ProfilePageFollowersView profilePageFollowersView = new ProfilePageFollowersView(userFollowerDo,"followers");
 				followingContainer.add(profilePageFollowersView);
-				
+				followingContainer.setVisible(true);
 			//	getUiHandlers().revealTab(ProfilePageUiHandlers.TYPE_FOLLWER_VIEW);
 				
 			}
@@ -1553,23 +1552,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				followingContainer.clear();
 				tagTabVc.setSelected(true);
 				mainContainer.setVisible(false);
-			//	ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget();
-				/*{
-
-					@Override
-					public void getclickevent() {
-						System.out.println("click");
-						profileUserTagsResourceView = new ProfileUserTagsResourceView("06842a13-6a48-4f2b-bfe1-1f9a0cc60363");
-						tagResourceContainer.clear();
-						tagResourceContainer.add(profileUserTagsResourceView);
-						followingContainer.setVisible(false);
-						tagResourceContainer.setVisible(true);
-						
-					}
-					
-				};*/
-				ProfileUserTagView profileUserTagView = new ProfileUserTagView(userTagDo);
+				ProfileUserTagView profileUserTagView = new ProfileUserTagView(userTagDo,followingContainer,tagResourceContainer);
 				followingContainer.add(profileUserTagView);
+				followingContainer.setVisible(true);
 				tagResourceContainer.setVisible(false);
 				
 				
