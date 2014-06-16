@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.FooterUc;
+import org.ednovo.gooru.client.mvp.home.LoginPopupUc;
 import org.ednovo.gooru.client.mvp.profilepage.content.PPPCollectionResult;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryView;
 import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageFollowersView;
@@ -89,7 +90,6 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -1424,20 +1424,30 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
 	{
+		if(!AppClientFactory.isAnonymous()){
 		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		
-		
+		}else{
+		LoginPopupUc popup =new LoginPopupUc();
+		popup.show();
+		popup.setGlassEnabled(true);
+		}
 	}
 	@UiHandler("UnFollowButton")
 	public void onClickUnFollowButton(ClickEvent event)
 	{
+		if(!AppClientFactory.isAnonymous()){
 		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		
+		}
+		else{
+			LoginPopupUc popup =new LoginPopupUc();
+			popup.show();
+			popup.setGlassEnabled(true);
+		}
 	
 		
 	}
