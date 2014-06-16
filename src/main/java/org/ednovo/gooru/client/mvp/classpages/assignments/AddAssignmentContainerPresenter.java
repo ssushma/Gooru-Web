@@ -83,7 +83,11 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		AppClientFactory.getInjector().getResourceService().getFolderWorkspace(offset, limit,"public,anyonewithlink", null, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo folderListDo) {
-				getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+				if(folderListDo.getCount()==0){
+					getView().displayNoCollectionsMsg();
+				}else{
+					getView().displayWorkspaceData(folderListDo,clearShelfPanel);
+				}
 			}
 		});
 	}

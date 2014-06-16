@@ -2501,4 +2501,9 @@ public interface MessageProperties {
       	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
       	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
       	String GL1962 = "You are now following";
+      	
+      	String GL1963 = "Looks like you don't have any collections to assign! Click on the button below to create your first Collection!";
+      	
+      	String GL1964 = "Create a Collection";
+      	
 }
