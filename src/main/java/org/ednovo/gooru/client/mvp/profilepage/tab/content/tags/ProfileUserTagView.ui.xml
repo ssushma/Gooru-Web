@@ -3,9 +3,9 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="ProfilePageTagStyle" src="profile-page-Tag-style.css"></ui:style>
 	<g:HTMLPanel>
-	<g:HTMLPanel styleName="{ProfilePageTagStyle.profilepageFollwoingContentText}" >
-	    <g:Label ui:field="TagTextMessage"></g:Label>
-	    </g:HTMLPanel>
+	<!-- <g:HTMLPanel styleName="{ProfilePageTagStyle.profilepageFollwoingContentText}" > -->
+	    <g:Label ui:field="TagTextMessage" styleName="{ProfilePageTagStyle.profilepageFollwoingContentText}"></g:Label>
+	   <!--  </g:HTMLPanel> -->
 	    <g:HTMLPanel styleName="{ProfilePageTagStyle.content-box}">
 	   <g:HTMLPanel styleName="{ProfilePageTagStyle.normalTxt}" ui:field="tagTextMessage"/>
 	<g:HTMLPanel styleName="{ProfilePageTagStyle.content-inner}" ui:field="userTagsConatiner">
