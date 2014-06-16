@@ -548,7 +548,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
-		
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
@@ -558,17 +557,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().getFollwingData();
 		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
 		buttonDisable();
-		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
-		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
-			if("collection".equalsIgnoreCase(tabValue))
-			{
-				setTab(collectionsTabVc);
-			}
-		}
-		else{
-			setTab(collectionsTabVc);
+		setTab(collectionsTabVc);
 			
-		}
+		
 		
 	}
 
@@ -1383,6 +1374,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if("followers".equalsIgnoreCase(tabValue))
 			{
 				setTab(followersTabVc);
+				buttonDisable();
 			}
 		}
 	}
@@ -1395,6 +1387,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if("following".equalsIgnoreCase(tabValue))
 			{
 				setTab(followingTabVc);
+				buttonDisable();
 			}
 		}
 		
@@ -1408,6 +1401,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			if("tags".equalsIgnoreCase(tabValue))
 			{
 				setTab(tagTabVc);
+				buttonDisable();
 			}
 		}
 		
@@ -1424,13 +1418,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		UnFollowButton.setVisible(false);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-	//	getUiHandlers().getFollowerData();
-		//getUiHandlers().getFollwingData();
-		followersTabVc.setLabelCount("");
 		int totalcount=profileDo.getUser().getMeta().getSummary().getFollowers()+1;
-		//profileDo.getUser().getMeta().getSummary().setFollowers(totalcount);
-		
-		followersTabVc.setLabelCount(totalcount+"");
 		buttonDisableCickOnFollow(totalcount);
 		
 	}
@@ -1441,12 +1429,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followButton.setVisible(false);
 		
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
-		//getUiHandlers().getFollowerData();
-		//getUiHandlers().getFollwingData();
-		followersTabVc.setLabelCount("");
 		int totalUnFollowcount=profileDo.getUser().getMeta().getSummary().getFollowers()-1;
-		followersTabVc.setLabelCount(totalUnFollowcount+"");
-		//profileDo.getUser().getMeta().getSummary().setFollowers(profileDo.getUser().getMeta().getSummary().getFollowers()-1);
 		buttonDisableCickOnFollow(totalUnFollowcount);
 		
 	}
@@ -1608,11 +1591,13 @@ public void buttonDisable()
 	}
 	if(profileDo.getUser().getMeta().getSummary().getTags()==0)
 	{
+		
 		tagTabVc.setEnabled(false);
 		tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
 	}
 	else
 	{
+		
 		tagTabVc.setEnabled(true);
 		tagTabVc.addClickHandler(new clickOnTags());
 		tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
@@ -1621,17 +1606,19 @@ public void buttonDisable()
 }
 public void buttonDisableCickOnFollow(int totalCount)
 {
+	followersTabVc.setLabelCount("");
 	if(totalCount==0)
 	{
 		followersTabVc.setEnabled(false);
 		followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-		
+		followersTabVc.setLabelCount(totalCount+"");
 	}
 	else
 	{
 		followersTabVc.setEnabled(true);
 		followersTabVc.addClickHandler(new clickOnFollowers());
 		followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
+		followersTabVc.setLabelCount(totalCount+"");
 	}
 }
 	
