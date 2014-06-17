@@ -2280,7 +2280,7 @@ public interface MessageProperties {
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
     	String GL1784_1 = "Physics";
-    	String GL1785 = "Enter your class code";
+    	String GL1785 = "Enter Class Code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
     	String GL1788 = "You can share collections here by setting the collection visibility to \"Public.\"";
@@ -2486,7 +2486,7 @@ public interface MessageProperties {
       	String GL1950 = "Recently Added";
       	String GL1951 = "Upcoming(by due date)";
       	String GL1952 = "View All Completed";
-      	String GL1953 = "View All InCompleted";
+      	String GL1953 = "View All InComplete";
       	
         String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
     	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
@@ -2510,6 +2510,11 @@ public interface MessageProperties {
       	String GL1965 = "Ready to Publish?";
       	String GL1966 = "Something goes here";
       	String GL1967 = "[Collection Title]";
+      	String GL1968 = "See More";
+    	String GL1969 = "Mark as Complete";
+    	String GL1970 = "Mark as Incomplete";
+    	String GL1971 = "Student messaging here";
+    	
       	
       	
       	 
