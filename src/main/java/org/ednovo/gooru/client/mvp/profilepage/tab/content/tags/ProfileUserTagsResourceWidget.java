@@ -38,6 +38,9 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	public ProfileUserTagsResourceWidget(UserTagsResourceDO userTagsResourceDO) {
 		initWidget(uiBinder.createAndBindUi(this));
 		setData(userTagsResourceDO);
+		resourceImage.setWidth("80px");
+		resourceImage.setHeight("60px");
+		
 	}
 
 	
