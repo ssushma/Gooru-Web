@@ -39,4 +39,28 @@ public interface StudentAssignmentUiHandlers extends BaseUiHandlers {
 
 	void removeUserFromClass(ClasspageDo classpageDo, String emailId);
 
+	/**
+	 * @function getAssignmentsProgress 
+	 * 
+	 * @created_date : Jun 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param string
+	 * @param string2
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void getAssignmentsProgress(String classpageId, String offSet,
+			String limit);
+
 }

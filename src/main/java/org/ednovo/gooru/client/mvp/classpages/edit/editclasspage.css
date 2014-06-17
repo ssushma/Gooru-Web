@@ -887,7 +887,7 @@ margin-left:-1px;
 
 .assignmentProgress{
 	text-align: center;
-	font-size: 14px; 
+	font-size: 12px; 
 /*	font-weight: bold;	*/
 	margin:15px;
 	margin-bottom: 19px;
@@ -1183,4 +1183,9 @@ margin-left:-1px;
 }
 .btn {
 	margin-left: 10px;
+}
+
+
+.containerProgressWidth{
+	width:1000px;
 }

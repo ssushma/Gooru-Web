@@ -2280,7 +2280,7 @@ public interface MessageProperties {
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
     	String GL1784_1 = "Physics";
-    	String GL1785 = "Enter your class code";
+    	String GL1785 = "Enter Class Code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
     	String GL1788 = "You can share collections here by setting the collection visibility to \"Public.\"";
@@ -2401,7 +2401,7 @@ public interface MessageProperties {
     	String GL1890 ="New Navigation Tabs";
     	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.   ";
     	
-    	String GL1891_1 = "Reorder your assignments the way that you want your students to view them. This dots order will reflect on the student's page as well.";
+    	String GL1891_1 = "Sort your assignments for easy access to any of the collections you've assigned. Sorting your collections below will not affect the sequence your students will see.";
     	String GL1892 ="We will never share or sell your email address, your";
     	String GL1893 ="privacy is important";
     	String GL1894 ="to us.";
@@ -2486,7 +2486,7 @@ public interface MessageProperties {
       	String GL1950 = "Recently Added";
       	String GL1951 = "Upcoming(by due date)";
       	String GL1952 = "View All Completed";
-      	String GL1953 = "View All InCompleted";
+      	String GL1953 = "View All InComplete";
       	
         String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
     	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
@@ -2510,7 +2510,14 @@ public interface MessageProperties {
       	String GL1965 = "Ready to Publish?";
       	String GL1966 = "Something goes here";
       	String GL1967 = "[Collection Title]";
-      	
+      	String GL1968 = "See More";
+    	String GL1969 = "Mark as Complete";
+    	String GL1970 = "Mark as Incomplete";
+    	String GL1971 = "Student messaging here";
+    	String GL1972 = "Each of the dots below represents an assignment. Sequence your assignments in the order you want students to view them. This order will reflect in student view.";
+    	String GL1973 = "Assign Collections";
+    	String GL1974 = "Assign any of your public or sharable collections to your class.";
+    	String GL1975 = "collections will be added to this class";
       	
       	 
 }

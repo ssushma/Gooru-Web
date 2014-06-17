@@ -113,22 +113,25 @@ cursor: pointer;
 }
 .overlayBg 
 {
-color: white;
-font-weight: bold;
-width: 100%;
-bottom: 4px;
-height: 26px;
-padding-top: 30px;
-padding-left: 10px;
-position: absolute;
-box-sizing: border-box;
--moz-box-sizing: border-box;
-text-align: center;
-font-size: 16px;
-opacity: 0.5;
-background: black;
-width: 422px;
-height: 77px;
+	color: white;
+	font-weight: bold;
+	width: 100%;
+	bottom: 4px;
+	height: 26px;
+	padding-top: 30px;
+	padding-left: 10px;
+	position: absolute;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	text-align: center;
+	font-size: 16px;
+	opacity: 0.5;
+	background: black;
+	width: 422px;
+	height: 77px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .profileImage
 {

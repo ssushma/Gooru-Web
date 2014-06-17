@@ -35,8 +35,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.classpages.edit.AssignmentProgressVc;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView.SortAssignmentEvents;
-import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView.SortDropDownEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.DeleteClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupHandler;
@@ -55,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -73,9 +72,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -108,7 +107,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	}
 	
-	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName;
+	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
 	
 	@UiField HTMLPanel contentpanel;
 	
@@ -132,7 +131,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static Image userImage;
 	
 	@UiField
-	static Label lblWebHelp,dropdownPlaceHolder;
+	static Label lblWebHelp,dropdownPlaceHolder, lblNext, lblPrevious;
 
 	@UiField
 	static
@@ -174,6 +173,9 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	List<String> sortingOptionsList=new ArrayList<String>();
 	
+	private Integer defaultOffsetForPath=0;
+	private Integer defaultLimitForPath=20;
+	
 	@Inject
 	public StudentAssignmentView() {
 		setWidget(uiBinder.createAndBindUi(this));
@@ -195,7 +197,39 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		addSortEventToText();
 		dropdownPlaceHolder.setText(GL1946);
 		dropDownListContainer.setVisible(false);
+		
+		lblAssignmentProgress.setText(GL1971);
+		
 		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
+		
+		lblNext.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {				
+				defaultOffsetForPath = defaultOffsetForPath +defaultLimitForPath;
+				
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
+			}
+		});
+	
+		lblPrevious.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if (defaultOffsetForPath <=0){
+					defaultOffsetForPath =0;
+				}else{
+					defaultOffsetForPath = defaultOffsetForPath - defaultLimitForPath;
+				}
+				
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("id"), defaultOffsetForPath.toString(), defaultLimitForPath.toString());
+				
+			}
+		});
+		
+		lblNext.setVisible(false);
+		lblPrevious.setVisible(false);
+		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 	        public void onPreviewNativeEvent(NativePreviewEvent event) {
 	        	hideDropDown(event);
@@ -231,7 +265,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO sorting
-			//Window.alert("In progress...");
 			
 			if(!dropdownPlaceHolder.getText().equals(sortType)){
 				dropdownPlaceHolder.setText(sortType);
@@ -243,16 +276,15 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				}else if(sortType.equals(GL1953)){
 					sortingStringValue="todo";
 				}
-				System.out.println("ordersent::"+sortingStringValue);
 				contentpanel.clear();
+				noAssignmentMsg.setVisible(false);
 				contentpanel.add(setLoadingPanel());
 				dropDownListContainer.setVisible(false);
+				
 				Map<String,String> params = new HashMap<String,String>();
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				params.put("id", classpageid);
-				params.put("pageNum", pageNum);
+				params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("order", sortingStringValue);
+				
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}else{
@@ -671,9 +703,24 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		panelAssignmentProgress.clear();
 		assignmentsDotsMap.clear(); // TODO dont forget to clear when panelAssignmentProgress clear
 		if(classpageItemsList!=null&&classpageItemsList.size()>0){
-			for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
+			//hide/show the next and previous buttons
+			if (classpageItemsList.get(0).getTotalHitCount() > defaultLimitForPath && classpageItemsList.size() == defaultLimitForPath){
+				lblNext.setVisible(true);
+			}else{
+				lblNext.setVisible(false);
+			}
+			
+			if (defaultOffsetForPath <= 0){
+				lblPrevious.setVisible(false);
+			}else{
+				lblPrevious.setVisible(true);
+			}
+			if (classpageItemsList.size() > 0)
+				panelAssignmentProgress.clear();
+			
+			for(int itemIndex=0; itemIndex<classpageItemsList.size(); itemIndex++){
 				ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
-				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc((itemIndex == classpageItemsList.size() - 1) ? true : false,classpageItemDo,(itemIndex+1));
+				AssignmentProgressVc assignmentProgressVc =new AssignmentProgressVc((itemIndex == classpageItemsList.size() - 1) ? true : false, classpageItemDo, classpageItemDo.getSequenceNumber());
 				assignmentsDotsMap.put(classpageItemDo.getCollectionItemId(), assignmentProgressVc);
 				panelAssignmentProgress.add(assignmentProgressVc);
 				this.totalHitCount=classpageItemDo.getTotalHitCount();
@@ -829,13 +876,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			{
 				final ArrayList<String> arrayEmailId = new ArrayList<String>();
 				arrayEmailId.add('"'+AppClientFactory.getLoggedInUser().getEmailId()+'"');
-				
 				getUiHandlers().removeUserFromClass(classpageDo, arrayEmailId.toString());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				hide();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 			}
 
 			@Override
@@ -1124,7 +1170,43 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		sortingOptionsList.add(GL1953);
 	}
 
+	/**
+	 * 
+	 * @function callAssignmentAPI 
+	 * 
+	 * @created_date : Jun 11, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param pageSize
+	 * @param pageNum
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 *
+	 */
+	@Override
+	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
+		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call showClasspageItemsForAssignmentPath
+	}
+	
+	@Override
+	public void setSortingOrderInDropdown(String sortingOrder) {
+		if(sortingOrder !=null && sortingOrder.equalsIgnoreCase("completed")){
+			dropdownPlaceHolder.setText(GL1952);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("todo")){
+			dropdownPlaceHolder.setText(GL1953);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("all")){
+			dropdownPlaceHolder.setText(GL1946);
+		}else{
+			dropdownPlaceHolder.setText(GL1946);
+		}
+	}
 	
 }
-	
-

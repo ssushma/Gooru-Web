@@ -1264,7 +1264,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
-			if(isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false"){
+			if(isFollowUser !=null && (isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false")){
 				followButton.setVisible(true);
 				UnFollowButton.setVisible(false);
 			}

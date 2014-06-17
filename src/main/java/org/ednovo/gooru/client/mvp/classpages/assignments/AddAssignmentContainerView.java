@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
@@ -586,6 +587,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void hideAddCollectionPopup(String collectionTitle) {
 		hide();
 		clearShelfData();
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		new SuccessMessagePopupView(collectionTitle);
 	}
 	
