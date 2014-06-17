@@ -53,5 +53,32 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String sortOrder);
 	void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList);
 
+
+
+
+	/**
+	 * @function callAssignmentAPI 
+	 * 
+	 * @created_date : Jun 17, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param classpageId
+	 * @param offsetProgress
+	 * @param limitProgress
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void callAssignmentAPI(String classpageId, String offsetProgress,
+			String limitProgress);
+
 			
 }
