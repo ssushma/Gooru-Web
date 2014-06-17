@@ -105,7 +105,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void isFollowedUser(String gooruUid,AsyncCallback<IsFollowDo> callback);
    
-   void getUserAddedContentTagSummary(String tagGooruOid,AsyncCallback<List<UserTagsDo>> callback);
+   void getUserAddedContentTagSummary(String tagGooruOid,String offset, String limit,AsyncCallback<List<UserTagsDo>> callback);
    
    void getResourcesByTag(String tagGooruOid,AsyncCallback<List<UserTagsResourceDO>> callback);
 }

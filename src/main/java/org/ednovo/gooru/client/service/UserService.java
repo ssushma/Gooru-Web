@@ -226,7 +226,7 @@ public interface UserService extends BaseService {
 	
 	IsFollowDo isFollowedUser(String gooruUid)throws GwtException;
 	
-	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)throws GwtException;
+	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset,String limit)throws GwtException;
 	
 	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid)throws GwtException;
 }

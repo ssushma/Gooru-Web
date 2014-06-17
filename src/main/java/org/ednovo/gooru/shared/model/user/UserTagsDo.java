@@ -11,6 +11,7 @@ public class UserTagsDo implements Serializable{
 	private String tagGooruOid;
 	private String count;
 	private String label;
+	private int totalHitCount;
 	
 	public String getTagGooruOid() {
 		return tagGooruOid;
@@ -34,6 +35,14 @@ public class UserTagsDo implements Serializable{
 
 	public void setCount(String count) {
 		this.count = count;
+	}
+
+	public int getTotalHitCount() {
+		return totalHitCount;
+	}
+
+	public void setTotalHitCount(int totalHitCount) {
+		this.totalHitCount = totalHitCount;
 	}
 
 	public UserTagsDo(){}
