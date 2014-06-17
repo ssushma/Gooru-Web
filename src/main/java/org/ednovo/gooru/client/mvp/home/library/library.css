@@ -128,7 +128,20 @@
 }
 
 
-
+#courseTabs .gradeOption {
+	border-bottom: 1px solid #999;
+	padding: 10px 0px 4px 0px;
+	margin: 0px 6px;
+	width: 93%;
+	font-weight: bold;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	float: left;
+	white-space: normal;
+	line-height: 1.2em;
+	cursor: default;
+}
 
 #container {
 	width:1000px;
