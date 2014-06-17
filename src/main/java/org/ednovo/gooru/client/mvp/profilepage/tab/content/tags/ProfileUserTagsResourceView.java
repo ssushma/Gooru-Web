@@ -25,7 +25,7 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	interface ProfileUserTagsResourceViewUiBinder extends
 			UiBinder<Widget, ProfileUserTagsResourceView> {
 	}
-	@UiField HTMLPanel userTagsResourceContainerConatiner;
+	@UiField HTMLPanel userTagsResourceContainerConatiner,tagContainer;
 	@UiField Label TagTextMessage,tagType,tagCount;
 	@UiField
 	Label tagMessage;
@@ -66,6 +66,12 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 		
 		TagTextMessage.setText(GL1915);
 		tagMessage.setText(GL1944);
+		tagContainer.getElement().setAttribute("alt", labelName);
+		tagContainer.setTitle(labelName);
+		
+		if(labelName.length()>=12){
+			labelName = labelName.substring(0, 12) + "...";
+		}
 		tagType.setText(labelName);
 		tagCount.setText(count);
 		userTagsResourceContainerConatiner.clear();

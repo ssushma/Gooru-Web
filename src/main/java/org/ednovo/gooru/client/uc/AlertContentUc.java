@@ -33,6 +33,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -48,7 +49,7 @@ public class AlertContentUc extends Composite implements MessageProperties {
 	Button okButton;
 
 	@UiField
-	Label alertMessageField;
+	HTML alertMessageField;
 
 	AlertBoxUc alertBoxUc;
 
@@ -66,7 +67,7 @@ public class AlertContentUc extends Composite implements MessageProperties {
 	public AlertContentUc(String messageHeader, String messageContent) {
 		alertBoxUc = new AlertBoxUc();
 		alertBoxUc.setContent(uiBinder.createAndBindUi(this));
-		alertMessageField.setText(messageContent);
+		alertMessageField.setHTML(messageContent);
 		alertMessageHeaderField.setText(messageHeader);
 		alertBoxUc.show();
 		alertBoxUc.center();
