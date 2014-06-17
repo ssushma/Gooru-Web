@@ -200,7 +200,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		joinedContainerTitle.getElement().setInnerHTML(GL1925);
 		teachContainerTitle.getElement().setInnerHTML(GL1927);		
 		txtCode.setPlaceholder(GL1785);		
-		btnEnter.setText(GL1926);		
+		btnEnter.setText(GL0213);		
 		btnCreateClass.getElement().setInnerHTML(GL1928);		
 		disabledBtn.setVisible(false);	
 		seeMorebtnJoined.setText(GL0508);
