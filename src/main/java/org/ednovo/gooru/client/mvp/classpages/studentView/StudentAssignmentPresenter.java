@@ -151,6 +151,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 						offset=0;
 						limit=5;
 						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);	//To display Assignments
+						getView().setSortingOrderInDropdown(sortingOrder);
 						getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 						getView().setClasspageData(classpageDo);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());

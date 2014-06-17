@@ -53,6 +53,7 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
 import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -264,7 +265,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO sorting
-			//Window.alert("In progress...");
 			
 			if(!dropdownPlaceHolder.getText().equals(sortType)){
 				dropdownPlaceHolder.setText(sortType);
@@ -276,16 +276,15 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				}else if(sortType.equals(GL1953)){
 					sortingStringValue="todo";
 				}
-				System.out.println("ordersent::"+sortingStringValue);
 				contentpanel.clear();
+				noAssignmentMsg.setVisible(false);
 				contentpanel.add(setLoadingPanel());
 				dropDownListContainer.setVisible(false);
+				
 				Map<String,String> params = new HashMap<String,String>();
-				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-				params.put("id", classpageid);
-				params.put("pageNum", pageNum);
+				params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("order", sortingStringValue);
+				
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 			}else{
@@ -877,13 +876,12 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			{
 				final ArrayList<String> arrayEmailId = new ArrayList<String>();
 				arrayEmailId.add('"'+AppClientFactory.getLoggedInUser().getEmailId()+'"');
-				
 				getUiHandlers().removeUserFromClass(classpageDo, arrayEmailId.toString());
-				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 				Window.enableScrolling(true);
 				AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
 				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				hide();
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 			}
 
 			@Override
@@ -1198,6 +1196,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call showClasspageItemsForAssignmentPath
 	}
 	
-}
+	@Override
+	public void setSortingOrderInDropdown(String sortingOrder) {
+		if(sortingOrder !=null && sortingOrder.equalsIgnoreCase("completed")){
+			dropdownPlaceHolder.setText(GL1952);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("todo")){
+			dropdownPlaceHolder.setText(GL1953);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("all")){
+			dropdownPlaceHolder.setText(GL1946);
+		}else{
+			dropdownPlaceHolder.setText(GL1946);
+		}
+	}
 	
-
+}
