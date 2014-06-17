@@ -345,6 +345,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				btnWithDraw.setVisible(true);
 				LblMember.setVisible(true);
 				userImage.setVisible(true);
+				LblMember.setText(GL1549);
 				mainContainer.setVisible(true);
 			}
 			else 

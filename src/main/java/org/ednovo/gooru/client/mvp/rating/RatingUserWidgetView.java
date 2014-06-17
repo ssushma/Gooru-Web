@@ -415,7 +415,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		if(review.length()>0){
 			errorLbl.setText("");
 		}
-		if(review.length()==5){
+		if(review.length()==500){
 			errorLbl.setText(GL0143);
 			errorLbl.setVisible(true);
 		//	fieldValidationStaus=false;

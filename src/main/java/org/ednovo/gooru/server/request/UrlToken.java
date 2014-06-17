@@ -560,7 +560,7 @@ public enum UrlToken {
 	
 	USER_IS_FOLLOW("/v2/user/{0}/isfollow?sessionToken={1}"),
 	
-	USER_TAG("/v2/content/tag/my?sessionToken={1}"),
+	USER_TAG("/v2/content/tag/{0}?sessionToken={1}"),
 	
 	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}"),
 	
