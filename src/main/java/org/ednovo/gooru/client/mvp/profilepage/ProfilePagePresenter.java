@@ -154,11 +154,12 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		callBack = "reveal";
 		isFollow(userId);
 		createProfileUserData();
-		//getUserAddedContentTagSummary(userId);
+	
 	}
 
 	@Override
 	protected void onReset() {
+	
 		if(AppClientFactory.getPlaceManager().refreshPlace()) {
 			String userResetId = AppClientFactory.getPlaceManager().getRequestParameter("id");
 			String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
@@ -180,6 +181,10 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				signUpViewPresenter.displayPopup(displayScreen);
 				addToPopupSlot(signUpViewPresenter);
 			}
+		}
+		
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
+			getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
 		}
 	}
 	

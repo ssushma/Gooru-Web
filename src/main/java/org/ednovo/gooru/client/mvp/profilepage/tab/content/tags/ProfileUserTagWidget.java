@@ -29,6 +29,7 @@ public class ProfileUserTagWidget extends Composite {
 	HTMLEventPanel mainContainer;
 	HTMLPanel followingContainer; HTMLPanel tagResourceContainer;		
 	UserTagsDo userTagDo =new UserTagsDo();
+	String titleLabelName;
 	public ProfileUserTagWidget(){
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -42,6 +43,9 @@ public class ProfileUserTagWidget extends Composite {
 	}
 	public void setData(UserTagsDo userTagDo){
 		String titleLabel=userTagDo.getLabel();
+		titleLabelName=userTagDo.getLabel();
+		mainContainer.setTitle(titleLabel);
+		mainContainer.getElement().setAttribute("alt", titleLabel);
 		if(titleLabel.length()>=12){
 			titleLabel = titleLabel.substring(0, 12) + "...";
 		}
@@ -56,7 +60,7 @@ public class ProfileUserTagWidget extends Composite {
 	public void onclick(ClickEvent event)
 	{
 		tagResourceContainer.clear();
-		ProfileUserTagsResourceView ProfileUserTagsResourceView=new ProfileUserTagsResourceView(mainContainer.getElement().getId(),tagTitle.getText(),tagcount.getText(),followingContainer,tagResourceContainer);
+		ProfileUserTagsResourceView ProfileUserTagsResourceView=new ProfileUserTagsResourceView(mainContainer.getElement().getId(),titleLabelName,tagcount.getText(),followingContainer,tagResourceContainer);
 		tagResourceContainer.add(ProfileUserTagsResourceView);
 		followingContainer.setVisible(false);
 		tagResourceContainer.setVisible(true);
