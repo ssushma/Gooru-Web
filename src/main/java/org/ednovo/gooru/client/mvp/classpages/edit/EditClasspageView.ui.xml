@@ -143,7 +143,7 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel ui:field="assignmentsTabContainerPanel">
+			<g:HTMLPanel styleName="{res.css.assignmentsContainerHead}" ui:field="assignmentsTabContainerPanel">
 				<g:FlowPanel ui:field="assignmentsContainerPanel"
 					styleName="{res.css.assignmentsContainer}">
 					<!-- This container for Assignments -->
