@@ -2407,8 +2407,8 @@ public interface MessageProperties {
     	String GL1894 ="to us.";
     	
 
-    	String GL1895 = "following";
-    	String GL1896 = "followers";
+    	String GL1895 = "Following";
+    	String GL1896 = "Followers";
     	String GL1897 = "Tags";
     	
     
@@ -2428,9 +2428,9 @@ public interface MessageProperties {
     	String GL1911 = "to an active community of teachers and students";
     	String GL1912 = "Move to position";
     	
-    	String GL1913 = "User Who Are Following Me";
+    	String GL1913 = "People I'm following:";
     	String GL1914 = "My Followers:";
-    	String GL1914_1 = "Followers have bookmarked your profile page.";
+    	String GL1914_1 = "Click on a user to view their profile.";
     	String GL1915 = "My Tags";
     	String GL1916 ="Your Suggestions";
     	
@@ -2459,8 +2459,8 @@ public interface MessageProperties {
 
 
     	String GL1935 = "Follow";
-    	String GL1936 = "Unfollow";
-    	String GL1937 = "Click a tag to view all the resources that you tagged with that field.";
+    	String GL1936 = "Stop Following";
+    	String GL1937 = "Click a tag to view all of the resources you've tagged with this label.";
     	
     	
     	String GL1938 = "You have been blocked due to violation of community standards. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
@@ -2472,7 +2472,7 @@ public interface MessageProperties {
     	String GL1942 = "Published";
 
     	
-    	String GL1944 = "Back to all Tags";
+    	String GL1944 = "Back to all tags";
 
     	String GL1943 = "Publish in Progress";
     	

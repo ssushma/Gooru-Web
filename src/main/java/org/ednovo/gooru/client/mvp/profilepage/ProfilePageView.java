@@ -337,10 +337,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		enableAddBioBtn("userBio");
 		addBioBtn.getElement().setId("btnBioEdit");
 		//added in 6.4
-		collectionsTabVc.setLabel(GL1754.toUpperCase());
-		followingTabVc.setLabel(GL1895.toUpperCase());
-		followersTabVc.setLabel(GL1896.toUpperCase());
-		tagTabVc.setLabel(GL1897.toUpperCase());
+		collectionsTabVc.setLabel(GL1754);
+		followingTabVc.setLabel(GL1895);
+		followersTabVc.setLabel(GL1896);
+		tagTabVc.setLabel(GL1897);
 	
 		collectionsTabVc.getElement().setId("collections");
 		followingTabVc.getElement().setId("following");
