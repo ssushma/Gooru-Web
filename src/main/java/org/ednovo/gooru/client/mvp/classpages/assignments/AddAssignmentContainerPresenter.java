@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -117,7 +118,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
 				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
 					getView().hideAddCollectionPopup("");
-					AppClientFactory.fireEvent(new ResetPresentersEvent());
+					AppClientFactory.fireEvent(new ResetProgressEvent());
 /*					for(int i=0;i<classpageItemDoList.size();i++){
 						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
 						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);

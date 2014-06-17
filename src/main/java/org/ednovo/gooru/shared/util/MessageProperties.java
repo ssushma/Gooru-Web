@@ -1081,10 +1081,10 @@ public interface MessageProperties {
 		String GL0892	="Oops! You can't add a shortened URL as a resource.";
 		String GL0893	="Add a Question";
 		//Add search reource view in shelf
-		String GL0894	="Search from over 18M Resources";//Label
+		String GL0894	="Search millions of resources in our catalog";//Label
 		String GL0895	="Search for a keyword, then drag the resource you want from search results page into your collection";//Label
-		String GL0896	="Go to Search ";//Button
-		String GL0897	="Suggested Resources for this Collection";//Label
+		String GL0896	="Search";//Button
+		String GL0897	="Suggested resources for this collection";//Label
 		String GL0898	="One More Step";
 		String GL0899	=".png";
 		String GL0900	="Small";
@@ -2371,7 +2371,7 @@ public interface MessageProperties {
 //    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
     	String GL1867 = "Educational Role:";
     	String GL1868 = "School Level";
-    	String GL1869 = "Share this class code with your students";
+    	String GL1869 = "Share this class code with your students.";
     	String GL1870 = "Narrow report information by collection and student:";
     	
     	String GL1871 = "All Collections";
@@ -2432,7 +2432,7 @@ public interface MessageProperties {
     	String GL1914 = "My Followers:";
     	String GL1914_1 = "Click on a user to view their profile.";
     	String GL1915 = "My Tags";
-    	String GL1916 ="Your Suggestions";
+    	String GL1916 ="Suggestions";
     	
     	//Make collection as Publish
     	
@@ -2463,7 +2463,7 @@ public interface MessageProperties {
     	String GL1937 = "Click a tag to view all of the resources you've tagged with this label.";
     	
     	
-    	String GL1938 = "You have been blocked due to violation of <a href=\"http://support.goorulearning.org/hc/en-us/articles/200688506\" target=\"_blank\">community standards</a>. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
+    	String GL1938 = "Your account has been disabled due to violation of our <a href=\"http://support.goorulearning.org/hc/en-us/articles/200688506\" target=\"_blank\">community standards</a>. If you feel this is in error, please email us at support@goorulearning.org";
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
@@ -2494,8 +2494,8 @@ public interface MessageProperties {
     	String GL1956 = "Keep it public";
 
     	//suggestions for search.
-    	String GL1957 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
-      	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion for this collection.</div><br/> <div>Use the search below to find more resources!</div><br/>   <div>Or</div><br/>   <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
+    	String GL1957 = "<b style='text-align: center;'><div>Sorry. It looks like there aren't any suggestions for this collection. </div><br/> <div>Try using the search bar below.</div><br/>   <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
+      	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion(s) for this collection.</div><br/> <div>Use the search bar below to find more!</div><br/>    <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
 
       	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
       	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
@@ -2508,4 +2508,9 @@ public interface MessageProperties {
       	
       	
       	String GL1965 = "Ready to Publish?";
+      	String GL1966 = "Something goes here";
+      	String GL1967 = "[Collection Title]";
+      	
+      	
+      	 
 }
