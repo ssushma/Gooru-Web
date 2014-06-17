@@ -629,7 +629,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 						}else if(result.getActive()==0){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
-							new AlertContentUc(OOPS, GL1938);
+							new AlertContentUc(GL1966, GL1938);
 						}
 					}
 

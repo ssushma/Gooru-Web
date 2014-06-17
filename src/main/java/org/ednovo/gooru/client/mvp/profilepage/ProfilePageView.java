@@ -86,6 +86,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -250,6 +251,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 		
+	private HandlerRegistration tagHandler;
+	private HandlerRegistration collectionHandler;
+	private HandlerRegistration followingHandler;
+	private HandlerRegistration follwerHandler;
+	
 	ProfileUserTagsResourceView profileUserTagsResourceView = null;
 		private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -1576,6 +1582,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	public void buttonDisable()
 	{
+		if(collectionHandler!=null) {
+			collectionHandler.removeHandler();
+		}
+		if(followingHandler!=null) {
+			followingHandler.removeHandler();
+		}
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
 			collectionsTabVc.setEnabled(false);
@@ -1584,7 +1596,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		else
 		{
 			collectionsTabVc.setEnabled(true);
-			collectionsTabVc.addClickHandler(new clickOnCollection());
+			collectionHandler = collectionsTabVc.addClickHandler(new clickOnCollection());
 			collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#1076bb");
 		}
 		
@@ -1597,26 +1609,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		{
 			followingTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 			followingTabVc.setEnabled(true);
-			followingTabVc.addClickHandler(new clickOnFollowing());
+			followingHandler = followingTabVc.addClickHandler(new clickOnFollowing());
 		}
-		if(profileDo.getUser().getMeta().getSummary().getFollowers()==0)
-		{
-			followersTabVc.setEnabled(false);
-			followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-			
-		}
-		else
-		{
-			followersTabVc.setEnabled(true);
-			followersTabVc.addClickHandler(new clickOnFollowers());
-			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
-		}
+		
 		
 		
 	}
 	public void buttonDisableCickOnFollow(int totalCount)
 	{
-		
+		if(follwerHandler!=null) {
+			follwerHandler.removeHandler();
+		}
 		if(totalCount==0)
 		{
 			followersTabVc.setEnabled(false);
@@ -1626,25 +1629,26 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		else
 		{
 			followersTabVc.setEnabled(true);
-			followersTabVc.addClickHandler(new clickOnFollowers());
+			follwerHandler=followersTabVc.addClickHandler(new clickOnFollowers());
 			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 			
 		}
 }
 	public void buttonDisableOnTags(int totalCount)
 	{
+		if(tagHandler!=null) {
+			tagHandler.removeHandler();
+		}
 		
 		if(totalCount==0)
 		{
-			
 			tagTabVc.setEnabled(false);
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
 		}
 		else
 		{
-			
 			tagTabVc.setEnabled(true);
-			tagTabVc.addClickHandler(new clickOnTags());
+			tagHandler = tagTabVc.addClickHandler(new clickOnTags());
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 		}
 }
