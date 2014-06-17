@@ -1887,12 +1887,17 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				rbPublic.setVisible(false);
 				lblPublishPending.setVisible(true);	
 				publishedPanel.setVisible(false);
-			}else{
+			}
+			if(publishStatus.equalsIgnoreCase("Reviewed")){
 				rbPublic.setVisible(false);
 				lblPublishPending.setVisible(false);	
 				publishedPanel.setVisible(true);
 			}
 			
+		}else{
+			rbPublic.setVisible(true);
+			lblPublishPending.setVisible(false);	
+			publishedPanel.setVisible(false);
 		}
 	}
 	
