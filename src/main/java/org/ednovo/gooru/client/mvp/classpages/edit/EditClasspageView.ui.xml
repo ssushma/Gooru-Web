@@ -150,6 +150,10 @@
 
 				</g:FlowPanel>
 				
+					<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel1">
+				</g:FlowPanel>
+				
 				<g:HTMLPanel styleName="{res.css.classpageTopLine}">
 					<g:Button ui:field="btnDeleteClasspage"
 						styleName="secondary {res.css.classpageDeleteButton}"></g:Button>
