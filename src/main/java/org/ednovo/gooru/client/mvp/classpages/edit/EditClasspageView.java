@@ -546,18 +546,20 @@ public class EditClasspageView extends
 		}
 		*/
 		
-//		lblPrevious.addClickHandler(new ClickHandler() {
-//			
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				if (offsetProgress <=0){
-//					offsetProgress =0;
-//				}else{
-//					offsetProgress = offsetProgress - limitProgress;
-//				}
-//				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
-//			}
-//		});
+		lblPrevious.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if (offsetProgress <=0){
+					offsetProgress =0;
+				}else{
+					offsetProgress = offsetProgress - limitProgress;
+				}
+				
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+				
+			}
+		});
 		
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
@@ -677,8 +679,6 @@ public class EditClasspageView extends
 	 */
 	@Override
 	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
-		System.out.println("iam called---"+offsetProgress);
-		System.out.println("iam calledlimitProgress---"+limitProgress);
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
 	}
 	
@@ -794,12 +794,11 @@ public class EditClasspageView extends
 
 					@Override
 					public void onSuccess(Void result) {
-						Window.enableScrolling(true);
-				        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				        AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
 				        Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						hide(); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 					}
 				});
 				
@@ -1717,42 +1716,30 @@ public class EditClasspageView extends
 		return collectionTitleUc;
 	}
 	@Override
-	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){
-		panelAssignmentProgress.clear();
-		globalClasspageProcess.clear();
-		//Store all classpage details in one global object.
-		for (int i=0; i<classpageProcess.size(); i++){
-			globalClasspageProcess.add(classpageProcess.get(i));
-		}
-		
+	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){			
+		boolean isLast;
 		//hide/show the next and previous buttons
-		if (classpageProcess.size() >= limitProgress){
+		if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
 			lblNext.setVisible(true);
+			isLast = false;
 		}else{
 			lblNext.setVisible(false);
+			isLast = true;
 		}
 		
 		if (offsetProgress <= 0){
-//			globalClasspageProcess.clear();
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
 		}
+		if (classpageProcess.size() > 0)
+			panelAssignmentProgress.clear();
 		
 		//display the assignments progress (DOTS)
-		for (int i=0; i<globalClasspageProcess.size(); i++){
-			panelAssignmentProgress.add(new AssignmentProgressVc(i == globalClasspageProcess.size()-1 ? true : false, 
-					globalClasspageProcess.get(i), i+1, globalClasspageProcess.size()));
+		for (int i=0; i<classpageProcess.size(); i++){
+			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
+					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.size()));
 		}
-//		Map<String,String> params = new HashMap<String,String>();
-//		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-//		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-//		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
-//		params.put("order", "asce");
-//		params.put("classpageid", classpageid);
-//		params.put("pageNum", 0+"");
-//		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-//		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
@@ -1793,6 +1780,11 @@ public class EditClasspageView extends
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("recent")){
 			dropdownPlaceHolder.setText(GL1950);
 		}
+	}
+	
+	@Override
+	public void hideNoAssignmentsMessagePanel(){
+		noAssignmentsMessagePanel.setVisible(false);
 	}
 }
 

@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspagePresenter;
 import org.ednovo.gooru.client.mvp.classpages.event.RefreshAssignmentsListEvent;
+import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
 import org.ednovo.gooru.client.service.ClasspageService;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -100,7 +101,7 @@ public class CollectionsPresenter extends ChildPresenter<CollectionsPresenter, I
 			@Override
 			public void onSuccess(String result) {
 				getView().removeClasspageItemWidget();
-				AppClientFactory.fireEvent(new ResetPresentersEvent());
+				AppClientFactory.fireEvent(new ResetProgressEvent());
 //				AppClientFactory.fireEvent(new RefreshAssignmentsListEvent());
 			}
 		});
