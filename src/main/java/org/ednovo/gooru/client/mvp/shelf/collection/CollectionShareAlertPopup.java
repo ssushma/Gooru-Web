@@ -117,11 +117,11 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		isPrivateResource = true;
 		setVisibilityData(true, true);
 //		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
-		shareMsgTitle.setText(GL1921);
+		shareMsgTitle.setText(GL1965);
 		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
 		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
 		shareMsgTxt.setText(GL1919);
-		shareMsgLbl.setText(GL1920 + GL1918);
+		shareMsgLbl.setText(GL1920);
 		gooruPublicShare.setVisible(true);
 		alertSuccessTxt.setVisible(true);
 		alertSuccessTitleTxt.setVisible(true);

@@ -473,7 +473,7 @@ public interface MessageProperties {
 	String GL0331 = "Shareable";
 	String GL0332 = "(Allows you to share with only those who have a link)";
 	String GL0333 = "Private";
-	String GL0334 = "(No one but you can see this collection)";
+	String GL0334 = "(Only you can see this collection)";
 	
 	//Add A Resource
 	String GL0335 = "There are {0} recommendations for you!";	
@@ -1021,7 +1021,7 @@ public interface MessageProperties {
 		String GL0841	= 	"Go Back";//BlueButtonUc
 		//collection share tab.
 		String GL0842	= 	"COLLECTION VISIBILITY";
-		String GL0843	= 	"Select visibility option for this collection";
+		String GL0843	= 	"Select a visibility option for this collection:";
 		String GL0844	= 	"Error";
 		String GL0845	= 	"Cannot make collections public yet.";//Label
 		//collection info tab
@@ -2436,14 +2436,14 @@ public interface MessageProperties {
     	
     	//Make collection as Publish
     	
-    	String GL1917 ="Thanks for publishing your Collection and contributing to Gooru.";
-    	String GL1918 ="You will sent an email once your collection has been made public.";
-    	String GL1919 ="It will be reviewed and your status will be pending until then.";
-    	String GL1920 ="You can still edit the collection once you publish.";
+    	String GL1917 ="Thanks for contributing to Gooru by submitting your collection.";
+    	String GL1918 ="You'll be sent an email once your collection is public on your profile and in search results.";
+    	String GL1919 ="Is your collection ready to share with the community? Don't forget to add narration and teacher tips!";
+    	String GL1920 ="All collections are reviewed briefly against our community standards before they appear in publicly in search results and on your profile.";
     	String GL1921 ="Publish";
-    	String GL1922 ="I'm ready to publish";
+    	String GL1922 ="I'm ready to publish!";
     	String GL1923 ="Go back and review";
-    	String GL1924 ="Publishing in Progress";
+    	String GL1924 ="Publishing in progress...";
     	
     	//Classpage Home page
     	String GL1925 ="Classes I've Joined";
@@ -2463,7 +2463,7 @@ public interface MessageProperties {
     	String GL1937 = "Click a tag to view all of the resources you've tagged with this label.";
     	
     	
-    	String GL1938 = "You have been blocked due to violation of community standards. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
+    	String GL1938 = "You have been blocked due to violation of <a href=\"http://support.goorulearning.org/hc/en-us/articles/200688506\" target=\"_blank\">community standards</a>. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
@@ -2488,10 +2488,10 @@ public interface MessageProperties {
       	String GL1952 = "View All Completed";
       	String GL1953 = "View All InCompleted";
       	
-        String GL1954 = "Are you sure you want to change the collection from public? Users will no longer be able to search for your collection or see it in your profile.";
+        String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
     	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
     	
-    	String GL1956 = "Stay Public";
+    	String GL1956 = "Keep it public";
 
     	//suggestions for search.
     	String GL1957 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
@@ -2506,4 +2506,6 @@ public interface MessageProperties {
       	
       	String GL1964 = "Create a Collection";
       	
+      	
+      	String GL1965 = "Ready to Publish?";
 }
