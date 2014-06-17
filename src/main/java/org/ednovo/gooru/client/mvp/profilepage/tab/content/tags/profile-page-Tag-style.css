@@ -147,9 +147,8 @@
 	width:82px;
 }
 .seeMoreStyle{
-	float: right;
 	color: blue;
 	font-size: 13px;
-	text-decoration: underline;
 	cursor: pointer;
+	text-align: center;
 }
