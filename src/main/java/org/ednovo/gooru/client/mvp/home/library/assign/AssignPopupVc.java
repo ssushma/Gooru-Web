@@ -608,7 +608,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 										}else if(result.getActive()==0){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
-											new AlertContentUc(OOPS, GL1938);
+											new AlertContentUc(GL1966, GL1938);
 										}
 									}
 
