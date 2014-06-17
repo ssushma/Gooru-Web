@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -24,7 +25,7 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 	}
 	
 	@UiField HTMLPanel userConatiner;
-	@UiField Label follwingTextMessage;
+	@UiField InlineLabel follwingTextMessage,follwingTextMessageDes;
 	List<UserFollowDo> userFollowDo;
 	String tab;
 	
@@ -36,6 +37,8 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 	}
 	public void setData(){
 		follwingTextMessage.setText(GL1913);
+		follwingTextMessageDes.setText(GL1914_1);
+		follwingTextMessageDes.getElement().setAttribute("style", "font-weight: normal;");
 		userConatiner.clear();
 		for(int i=0; i< userFollowDo.size(); i++){
 			ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);

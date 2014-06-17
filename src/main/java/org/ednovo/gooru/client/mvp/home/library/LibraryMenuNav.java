@@ -487,6 +487,27 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 	 * 
 	*/
 	protected void setTaxonomyData(String subjectname, final String subjectCode, String courseIdRefresh, ArrayList<CourseDo> courseDoList) {
+		final HTMLPanel elementaryCoursePanel = new HTMLPanel("");
+		Label elementaryLabel = new Label("Elementary Courses");
+		elementaryLabel.setStyleName(libraryStyleUc.gradeOption());
+		elementaryCoursePanel.add(elementaryLabel);
+		
+		final HTMLPanel middleSchoolCoursePanel = new HTMLPanel("");
+		Label middleSchoolLabel = new Label("Middle School Courses");
+		middleSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
+		middleSchoolCoursePanel.add(middleSchoolLabel);
+		
+		final HTMLPanel highSchoolCoursePanel = new HTMLPanel("");
+		Label highSchoolLabel = new Label("Higher School Courses");
+		highSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
+		highSchoolCoursePanel.add(highSchoolLabel);
+		
+		if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+			elementaryCoursePanel.clear();
+			middleSchoolCoursePanel.clear();
+			highSchoolCoursePanel.clear();
+		}
+		
 		if (courseDoList != null) {
 			for (final CourseDo courseDo : courseDoList) {
 				if(courseDo.getUnit()!=null&&courseDo.getUnit().size()>0) {
@@ -507,7 +528,13 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 								AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 							}
 						});
-						scienceCourses.add(courseTitle);
+						if(courseDo.getGrade()==null || courseDo.getGrade()<5) {
+							elementaryCoursePanel.add(courseTitle);
+						} else if(courseDo.getGrade()>4 && courseDo.getGrade()<9 ) {
+							middleSchoolCoursePanel.add(courseTitle);
+						} else {
+							highSchoolCoursePanel.add(courseTitle);
+						}
 					} else if(subjectname.equalsIgnoreCase(MATH)) {
 						Label courseTitle = new Label(courseDo.getLabel());
 						courseTitle.setStyleName(libraryStyleUc.courseOption());
@@ -525,7 +552,13 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 								AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 							}
 						});
-						mathCourses.add(courseTitle);
+						if(courseDo.getGrade()==null || courseDo.getGrade()<5) {
+							elementaryCoursePanel.add(courseTitle);
+						} else if(courseDo.getGrade()>4 && courseDo.getGrade()<9 ) {
+							middleSchoolCoursePanel.add(courseTitle);
+						} else {
+							highSchoolCoursePanel.add(courseTitle);
+						}
 					} 
 								
 					else if(subjectname.equalsIgnoreCase(SOCIAL)) {
@@ -545,7 +578,13 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 								AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 							}
 						});
-						socialCourses.add(courseTitle);
+						if(courseDo.getGrade()==null || courseDo.getGrade()<5) {
+							elementaryCoursePanel.add(courseTitle);
+						} else if(courseDo.getGrade()>4 && courseDo.getGrade()<9 ) {
+							middleSchoolCoursePanel.add(courseTitle);
+						} else {
+							highSchoolCoursePanel.add(courseTitle);
+						}
 					} else if(subjectname.equalsIgnoreCase(LANGUAGE)) {
 						Label courseTitle = new Label(courseDo.getLabel());
 						courseTitle.setStyleName(libraryStyleUc.courseOption());
@@ -563,7 +602,13 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 								AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 							}
 						});
-						elaCourses.add(courseTitle);
+						if(courseDo.getGrade()==null || courseDo.getGrade()<5) {
+							elementaryCoursePanel.add(courseTitle);
+						} else if(courseDo.getGrade()>4 && courseDo.getGrade()<9 ) {
+							middleSchoolCoursePanel.add(courseTitle);
+						} else {
+							highSchoolCoursePanel.add(courseTitle);
+						}
 					} 
 					
 				}
@@ -584,6 +629,38 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 			
 			setTabSelection(subjectname);
 			AppClientFactory.fireEvent(new OpenSubjectCourseEvent(subjectname, courseDoMap.get(courseIdRefresh)));
+		}
+		setLibraryGrades(subjectname, elementaryCoursePanel, middleSchoolCoursePanel, highSchoolCoursePanel);
+	}
+	
+	public void setLibraryGrades(String subjectname, HTMLPanel elementaryCoursePanel, HTMLPanel middleSchoolCoursePanel, HTMLPanel highSchoolCoursePanel) {
+		if(subjectname.equals(SCIENCE) && scienceCourses.getWidgetCount()<=0) {
+			scienceCourses.add(elementaryCoursePanel);
+			scienceCourses.add(middleSchoolCoursePanel);
+			scienceCourses.add(highSchoolCoursePanel);
+		} else if(subjectname.equals(MATH) && mathCourses.getWidgetCount()<=0) {
+			mathCourses.add(elementaryCoursePanel);
+			mathCourses.add(middleSchoolCoursePanel);
+			mathCourses.add(highSchoolCoursePanel);
+		} else if(subjectname.equals(SOCIAL) && socialCourses.getWidgetCount()<=0) {
+			socialCourses.add(elementaryCoursePanel);
+			socialCourses.add(middleSchoolCoursePanel);
+			socialCourses.add(highSchoolCoursePanel);
+		} else if(subjectname.equals(LANGUAGE) && elaCourses.getWidgetCount()<=0) {
+			elaCourses.add(elementaryCoursePanel);
+			elaCourses.add(middleSchoolCoursePanel);
+			elaCourses.add(highSchoolCoursePanel);
+		} else if(subjectname.equals(STANDARDS)) {
+			
+		}
+		if(elementaryCoursePanel.getWidgetCount()<=1) {
+			elementaryCoursePanel.setVisible(false);
+		}
+		if(middleSchoolCoursePanel.getWidgetCount()<=1) {
+			middleSchoolCoursePanel.setVisible(false);
+		}
+		if(highSchoolCoursePanel.getWidgetCount()<=1) {
+			highSchoolCoursePanel.setVisible(false);
 		}
 	}
 	

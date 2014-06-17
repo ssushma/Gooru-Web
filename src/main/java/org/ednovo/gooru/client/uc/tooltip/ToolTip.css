@@ -387,6 +387,7 @@
 	position: fixed;
 	top: 50px;
 	width: 139px;
+	z-index: 10;
 }
 
 .myCollectoinTooltipContent{
@@ -564,7 +565,9 @@
 }
 .partnerLibraryDivInfo{
 	position: fixed !important;width:22% !important;
+	z-index: 0;
 }
 .districtLibrayCOntainerInfo{
 	position: fixed !important;
+	z-index: 0;
 }
