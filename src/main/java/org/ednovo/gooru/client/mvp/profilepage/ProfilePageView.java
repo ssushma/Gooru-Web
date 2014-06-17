@@ -255,7 +255,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private HandlerRegistration collectionHandler;
 	private HandlerRegistration followingHandler;
 	private HandlerRegistration follwerHandler;
-	
+		
 	ProfileUserTagsResourceView profileUserTagsResourceView = null;
 		private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -562,9 +562,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		//tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
-		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
+		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),"0","10");
 		buttonDisable();
-		setTab(collectionsTabVc);
+		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+			setTab(collectionsTabVc);
+		}
 			
 		
 		
@@ -1410,7 +1413,14 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		userTagDo.clear();
 		userTagDo.addAll(userTagsDo);
 		buttonDisableOnTags(userTagsDo.size());
-		tagTabVc.setLabelCount(userTagsDo.size()+"");
+		tagTabVc.setLabelCount("");
+		if(userTagsDo.size()!=0){
+			tagTabVc.setLabelCount(userTagsDo.get(0).getTotalHitCount()+"");
+		}
+		else
+		{
+			tagTabVc.setLabelCount(userTagsDo.size()+"");
+		}
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("tags".equalsIgnoreCase(tabValue))
@@ -1431,7 +1441,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void onClickFollowButton(ClickEvent event)
 	{
 		if(!AppClientFactory.isAnonymous()){
-		UnFollowButton.setVisible(false);
+		UnFollowButton.setVisible(true);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}else{
@@ -1445,8 +1455,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	{
 		if(!AppClientFactory.isAnonymous()){
 		UnFollowButton.setVisible(false);
-		followButton.setVisible(false);
-		
+		followButton.setVisible(true);
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}
 		else{

@@ -605,10 +605,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)
+	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset, String limit)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken(),offset,limit);
+		System.out.println("getUserAddedContentTagSummary..."+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
@@ -634,9 +635,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					
 					userTagsDo.setCount(resultObj.getString("count"));
 					userTagsDo.setTagGooruOid(resultObj.getString("tagGooruOid"));
-					
+					userTagsDo.setTotalHitCount(totatHintCount);
 					userTagsDoList.add(userTagsDo);
 				}
+				
 				return userTagsDoList;	
 				} catch (JSONException e) {
 				
