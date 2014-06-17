@@ -41,7 +41,9 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 		this.count = count;
 		this.followingContainer=followingContainer;
 		this.tagResourceContainer=tagResourceContainer;
+		tagContainer.setVisible(false);
 		getData(tagId);
+		
 		
 	}
 	
@@ -53,6 +55,7 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 			public void onSuccess(List<UserTagsResourceDO> result) {
 				
 				setData(result);
+				
 			}
 			
 			@Override
@@ -63,7 +66,7 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 		});
 	}
 	public void setData(List<UserTagsResourceDO> result){
-		
+		tagContainer.setVisible(true);
 		TagTextMessage.setText(GL1915);
 		tagMessage.setText(GL1944);
 		tagContainer.getElement().setAttribute("alt", labelName);
