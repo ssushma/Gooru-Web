@@ -611,6 +611,9 @@
 	overflow: hidden;
 margin-left:-1px;
 }
+.assignmentsContainerHead{
+	margin-top:20px;
+}
 
 .classpageCodeInnerPopup {
 	clear: both;
