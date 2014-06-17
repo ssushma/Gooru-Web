@@ -73,7 +73,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	private Integer offset=0;
 	private Integer limit=5;
 	private Integer defaultOffsetForPath=0;
-	private Integer defaultLimitForPath=30;
+	private Integer defaultLimitForPath=20;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT)
@@ -150,8 +150,8 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				if(classpageDo!=null && classpageDo.getClasspageId() != null){
 						offset=0;
 						limit=5;
-						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);
-						getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");
+						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);	//To display Assignments
+						getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
 						getView().setClasspageData(classpageDo);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 						
@@ -286,6 +286,23 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			}
 		});
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentUiHandlers#getAssignmentsProgress(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void getAssignmentsProgress(String classpageId, String offSet,
+			String limit) {
+		AppClientFactory.getInjector().getClasspageService().getClassPageItems(classpageId, offSet.toString(), limit.toString(),null,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
+				if(classpageItemsList!=null){
+					getView().showClasspageItemsForAssignmentPath(classpageItemsList);
+				}
+			}
+		});
 	}
 
 }
