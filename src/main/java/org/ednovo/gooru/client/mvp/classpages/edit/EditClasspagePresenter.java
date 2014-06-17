@@ -419,8 +419,8 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			});
 		}else{
 			getView().setSortingOrderInDropdown(sortingOrder);
+			getView().hideNoAssignmentsMessagePanel();
 			getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),tab,analyticsId,monitorId,sortingOrder);
-			
 		}
 	}
 	
