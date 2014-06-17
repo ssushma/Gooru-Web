@@ -115,18 +115,6 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		panelMainContainer.getElement().setAttribute("id", classpageList.getCollectionItemId());
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
-//		if (isLast){
-//			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
-//		}else{
-//			lblAssignmentNo.getElement().getStyle().clearTextAlign();
-//		}
-		
-//		if (assignmentNumber >9){
-//			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
-//		}else{
-//			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
-//		}
-//		lblCircle.getElement().addClassName(res.css().viewedCircle());
 		lblAssignmentNo.setText(String.valueOf(assignmentNumber));
 		
 		htmlCollectiontitle.setHTML(classpageList.getCollectionTitle());
@@ -171,18 +159,8 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		setDueDateAndDirection();
 		assignmentCollectiontitle.setHTML(classpageItemDo.getCollectionTitle());
 		panelMainContainer.getElement().setAttribute("id", classpageItemDo.getCollectionItemId());
-//		if (isLastCollection){
-//			lblAssignmentNo.getElement().getStyle().setTextAlign(TextAlign.RIGHT);			
-//		}else{
-//			lblAssignmentNo.getElement().getStyle().clearTextAlign();
-//		}
 		lblLineStart.setVisible(sequenceNumber == 1 ? false : true);
 		lblLineEnd.setVisible(isLastCollection ? false : true);
-//		if (sequenceNumber >9){
-//			lblAssignmentNo.getElement().getStyle().clearMarginRight();				
-//		}else{
-//			lblAssignmentNo.getElement().getStyle().setMarginRight(4, Unit.PX);
-//		}
 		lblAssignmentNo.setText(""+sequenceNumber);
 		lblCircle1.setText(""+sequenceNumber);
 		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
@@ -214,7 +192,6 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	
 	public void updateDotsCircle(String readStatus){
 		classpageItemDo.setStatus(readStatus);
-		System.out.println("classpageItemDo.getStatus() : "+classpageItemDo.getStatus());
 		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
 			panelCircle.setStyleName(this.res.css().bluecircle());
 			panelCicle1.setStyleName(this.res.css().bluecircle());

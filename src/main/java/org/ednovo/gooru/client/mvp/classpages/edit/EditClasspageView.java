@@ -151,7 +151,7 @@ public class EditClasspageView extends
 	@UiField
 	static Frame frameUrl;
 	
-	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious,dropdownPlaceHolder;
+	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious, dropdownPlaceHolder;
 
 	@UiField Button btnStudentView;
 

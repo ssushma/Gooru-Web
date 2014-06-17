@@ -2401,7 +2401,7 @@ public interface MessageProperties {
     	String GL1890 ="New Navigation Tabs";
     	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.   ";
     	
-    	String GL1891_1 = "Reorder your assignments the way that you want your students to view them. This dots order will reflect on the student's page as well.";
+    	String GL1891_1 = "Sort your assignments for easy access to any of the collections you've assigned. Sorting your collections below will not affect the sequence your students will see.";
     	String GL1892 ="We will never share or sell your email address, your";
     	String GL1893 ="privacy is important";
     	String GL1894 ="to us.";
@@ -2514,8 +2514,10 @@ public interface MessageProperties {
     	String GL1969 = "Mark as Complete";
     	String GL1970 = "Mark as Incomplete";
     	String GL1971 = "Student messaging here";
-    	
-      	
+    	String GL1972 = "Each of the dots below represents an assignment. Sequence your assignments in the order you want students to view them. This order will reflect in student view.";
+    	String GL1973 = "Assign Collections";
+    	String GL1974 = "Assign any of your public or sharable collections to your class.";
+    	String GL1975 = "collections will be added to this class";
       	
       	 
 }
