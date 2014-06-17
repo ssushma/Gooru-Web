@@ -564,10 +564,10 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		getUiHandlers().getFollwingData();
 		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),"0","10");
 		buttonDisable();
-		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		/*String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
-			setTab(collectionsTabVc);
-		}
+	*/		setTab(collectionsTabVc);
+		//}
 			
 		
 		
@@ -1412,7 +1412,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getTagsObj(List<UserTagsDo> userTagsDo) {
 		userTagDo.clear();
 		userTagDo.addAll(userTagsDo);
-		buttonDisableOnTags(userTagsDo.size());
+		
 		tagTabVc.setLabelCount("");
 		if(userTagsDo.size()!=0){
 			tagTabVc.setLabelCount(userTagsDo.get(0).getTotalHitCount()+"");
@@ -1429,6 +1429,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				
 			}
 		}
+		buttonDisableOnTags(userTagsDo.size());
 		
 	}
 	public void onClick(ClickEvent event) {
@@ -1656,6 +1657,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		}
 		else
 		{
+			
 			tagTabVc.setEnabled(true);
 			tagHandler = tagTabVc.addClickHandler(new clickOnTags());
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
