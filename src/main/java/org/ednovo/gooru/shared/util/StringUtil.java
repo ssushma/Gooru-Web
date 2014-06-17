@@ -268,8 +268,8 @@ public class StringUtil {
 	public static String replaceSpecial(String originalString){
 		String str = "";
 		str = originalString.replaceAll("%", "%25");	
-		str = originalString.replaceAll("\"", "%22").replaceAll("'", "%27");
-		str = originalString.replaceAll("<", "%3C").replaceAll(">", "%3E");		
+		str = str.replaceAll("\"", "%22").replaceAll("'", "%27");
+		str = str.replaceAll("<", "%3C").replaceAll(">", "%3E");		
 		return str;
 	}
 	

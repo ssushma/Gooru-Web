@@ -300,7 +300,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	private HashMap<String,String> getPublicLibraryPartners() {
 		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
 		publicPartners.put(GL0515_1,PlaceTokens.RUSD_LIBRARY);
-		publicPartners.put(GL1898,PlaceTokens.SAUSD_LIBRARY);
+//		publicPartners.put(GL1898,PlaceTokens.SAUSD_LIBRARY);
 		return publicPartners;
 	}
 	

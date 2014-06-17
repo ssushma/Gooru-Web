@@ -135,21 +135,23 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			initParam();
 		}
+		getClasspage();
 	}
 	private void initParam() {
 		getView().clearAll();
-		getClasspage();
+		//getClasspage();
 	}
 	public void getClasspage(){
 		String classpageId=getPlaceManager().getRequestParameter("id");
+		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
 		this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 			@Override
 			public void onSuccess(ClasspageDo classpageDo) {
 				if(classpageDo!=null && classpageDo.getClasspageId() != null){
 						offset=0;
 						limit=5;
-						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false);
-						getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true);
+						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);
+						getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");
 						getView().setClasspageData(classpageDo);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 						
@@ -161,15 +163,15 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 			}
 		});
 	}
-	public void getClasspageItems(String classpageId,String offset,String limit,final boolean isForAssignmentPath){
-		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
+	public void getClasspageItems(String classpageId,String offset,final String limit,final boolean isForAssignmentPath, final String sortOrder){
+		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit,sortOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
 			@Override
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
 					if(isForAssignmentPath){
 						getView().showClasspageItemsForAssignmentPath(classpageItemsList);
 					}else{
-						getView().showClasspageItems(classpageItemsList);
+						getView().showClasspageItems(classpageItemsList,sortOrder);
 					}
 				}
 			}
@@ -178,7 +180,9 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	@Override
 	public void getNextClasspageItems(Integer offset,Integer limit) {
 		String classpageId=getPlaceManager().getRequestParameter("id");
-		getClasspageItems( classpageId,offset.toString(),limit.toString(),false);
+		 String sortingOrder=getPlaceManager().getRequestParameter("order",null);
+		getClasspageItems(classpageId,offset.toString(),limit.toString(),false,sortingOrder);
+		
 	}
 
 

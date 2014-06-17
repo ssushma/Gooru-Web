@@ -33,10 +33,11 @@ import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.model.user.UserTagsDo;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 
 /**
  * @fileName : IsProfilePageView.java
@@ -110,5 +111,52 @@ public interface IsProfilePageView extends IsViewWithHandlers<ProfilePageUiHandl
 	ProfilePageLibraryView getContentView();
 	
 	public void getFollowersObj(List<UserFollowDo> userFollowDo);
+	
 	public void getFolloweingsObj(List<UserFollowDo> userFollowDo);
+	
+	public void getTagsObj(List<UserTagsDo> userTagsDo);
+	
+	void isFollow(String isFollow);
+
+	/**
+	 * @function getFollowButton 
+	 * 
+	 * @created_date : Jun 13, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : Button
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	Button getFollowButton();
+
+	/**
+	 * @function getUnFollowButton 
+	 * 
+	 * @created_date : Jun 13, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : Button
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	Button getUnFollowButton();
 }

@@ -6,7 +6,8 @@
 			<g:HTMLPanel styleName="{PPPStyle.popupInner}">
 				<g:Label ui:field="popupHeaderTitleLbl" styleName="{PPPStyle.popupHeader}"></g:Label>
                 <g:HTMLPanel styleName="{PPPStyle.popupContent}">
-                    <g:Label ui:field="inputTitleLbl" styleName="{PPPStyle.inputLabel}"></g:Label>
+                     <g:InlineLabel ui:field="inputTitleLbl" styleName="{PPPStyle.inputLabel}"></g:InlineLabel>
+                     <g:InlineLabel ui:field="inputTitleLblName" styleName="{PPPStyle.inputLabel}"></g:InlineLabel>
                   </g:HTMLPanel>
                   <g:HTMLPanel styleName="{PPPStyle.okCancel}" ui:field="buttonsContainer">
                       <g:Button styleName="primary {PPPStyle.buttonMargins}" ui:field="okBtn"></g:Button>

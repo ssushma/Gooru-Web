@@ -126,6 +126,7 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		alertSuccessTxt.setVisible(true);
 		alertSuccessTitleTxt.setVisible(true);
 		okButton.setText(GL1922);
+		goBackBtn.setText(GL1923);
 		goBackBtn.setVisible(true);
 	}
 	
@@ -145,6 +146,23 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		shareMsgLbl.setText(GL0367);
 		okButton.setText(GL0190);
 		goBackBtn.setVisible(false);
+	}
+	
+	public void confirmPopup() {
+		isPrivateResource = true;
+		setVisibilityData(true, true);
+//		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
+		shareMsgTitle.setText(GL0748);
+		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
+		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
+		shareMsgTxt.setText(GL1954);
+		shareMsgLbl.setText(GL1955);
+		gooruPublicShare.setVisible(true);
+		alertSuccessTxt.setVisible(true);
+		alertSuccessTitleTxt.setVisible(true);
+		okButton.setText(GL0190);
+		goBackBtn.setText(GL1956);
+		goBackBtn.setVisible(true);
 	}
 	
 	public void setVisibilityData(boolean isVisible, boolean isPublicResource) {

@@ -22,32 +22,55 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.assignments;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 
 /**
-* @fileName : IsAddResourceView.java 
-*
-* @description :This file is responsible for UI Handlers.
-*
-* @version :5.1
-*
-* @date: Apr 6 2013
-   	
-* @Author  Gooru Team
-* 
-* @Reviewer 
-*
-*/
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.folder.FolderListDo;
+ * @author Search Team
+ * 
+ */
+public interface SearchSuggestedResultWrapperCBundle extends ClientBundle {
+	
+	static final SearchSuggestedResultWrapperCBundle INSTANCE = GWT.create(SearchSuggestedResultWrapperCBundle.class);
 
-import com.google.gwt.user.client.ui.TreeItem;
-import com.gwtplatform.mvp.client.PopupView;
+	/**
+	 * SearchResultWrapperCss.
+	 */
+	public interface SearchSuggestedResultWrapperCss extends CssResource {
+		
+		String resourceHeaderPanel();
+		
+		String resourceHeaderTextPanel();
+		
+		String resourcePanel();
+		
+		String resourceTitle();
+		
+		String metaDataPanel();
+		
+		String standards();
+		
+		String resourceDescription();
 
-public interface IsAddAssignmentContainerView extends PopupView, IsViewWithHandlers<AddAssignmentContainerUiHandlers>{
-	public void displayWorkspaceData(FolderListDo folderListDo,boolean clearShelfPanel);
-	public void clearShelfData();
-	public void setFolderItems(TreeItem item,FolderListDo folderListDo);
-	public void hideAddCollectionPopup(String collectionTitle);
-	public void displayNoCollectionsMsg(); 
+		String imgHeight();
+		
+		String contentPanel();
+		
+		String searchPanel();
+		
+		String ratingWidgetPanel();
+		
+		String suggestedResourceButtonContainer();
+		
+		String addSuggestedResourceOk();
+	}
+
+	@Source("SearchSuggestedResultWrapper.css")
+	SearchSuggestedResultWrapperCss css();
 }

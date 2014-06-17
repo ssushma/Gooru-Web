@@ -2,16 +2,6 @@
 	margin: 0;
 	padding: 0;
 }
-
-a {
-	text-decoration:none;
-	color:#1076BB;
-}
-
-a:hover {
-	color:#87BADD;
-}
-
 .infoSectionAuthor:nth-of-type(2n+2)
 {
 	margin-right:0px;
@@ -99,17 +89,13 @@ a:hover {
 	padding: 10px 0px;
 	font-size: 16px;
 	border-bottom: 1px solid #ddd;
-	height: 268px;
+	height: 255px;
 }
 .profilepageFollowerContentText {
 	padding: 10px 0px;
 	font-size: 16px;
 	border-bottom: 1px solid #ddd;
-	height: 268px;
-}
-.hr {
-	border-bottom: 1px solid #ddd;
-	margin-bottom: 15px;
+	height: 255px;
 }
 .profileFollowingUserNameDetails {
 	display: inline-block;
@@ -118,7 +104,7 @@ a:hover {
 .userDetails {
 	font-size: 12px;
 }
-.bold {
+.titleBold {
 	font-size: 14px;
 	font-weight: bold;
 	padding: 5px 0px;
@@ -132,10 +118,12 @@ a:hover {
 	background-color:white;
 	width: 450px;
 	margin:0px auto;
+	height:170px;
 }
 
 .popupInner {
 	border: 1px solid #DDD;
+	height: 167px;
 }
 
 .popupHeader {
@@ -168,6 +156,7 @@ a:hover {
 }
 .userInput .popupContent {
     text-align:center;
+    margin-top: 32px;
 }
 .okCancel {
 	width: 100%;

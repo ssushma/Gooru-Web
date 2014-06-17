@@ -491,11 +491,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public ClasspageListDo v2GetUserClasses(String limit, String offSet, String randomId) throws GwtException {
 
-		System.out.println("randomIdteach::"+randomId);
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_LISTTEACHCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
-		System.out.println("v2GetUserClasses::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -505,11 +503,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	@Override
 	public ClasspageListDo v2GetUserStudyClasses(String limit, String offSet, String randomId) throws GwtException {
 
-		System.out.println("randomId::"+randomId);
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_LISTSTUDYCLASSES, getLoggedInSessionToken(), limit, offSet, randomId);
-		System.out.println("v2GetUserClasses::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -556,7 +552,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),
 				UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,
 				getLoggedInSessionToken());
-		System.out.println("V2_GET_CLASSPAGE_BY_ID::::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),
 				getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
@@ -899,7 +894,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageDo classPageDo=null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
-		System.out.println("getClasspage:::"+url);
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			try {
@@ -951,10 +945,40 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	
 	
-	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit){
+	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus){
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.GET_CLASSPAGE_ITEMS_V2, classpageId,getLoggedInSessionToken(),offset,limit);
-		System.out.println("getClasspageItems API====>"+url);
+
+		
+		if(sortingOrder!=null){
+			if(sortingOrder.equalsIgnoreCase("asce")){
+				sortingOrder="sequence";
+			}else if(sortingOrder.equalsIgnoreCase("desc")){
+				sortingOrder="sequence-desc";
+			}else if(sortingOrder.equalsIgnoreCase("recent")){
+				sortingOrder="recent-desc";
+			}
+			else if(sortingOrder.equalsIgnoreCase("all"))
+			{
+				sortingOrder="sequence";
+			}
+			else if(sortingOrder.equalsIgnoreCase("completed"))
+			{
+				sortingOrder="sequence";
+				studyStatus = "completed";
+			}
+			else if(sortingOrder.equalsIgnoreCase("todo"))
+			{
+				sortingOrder="sequence";
+				studyStatus = "open";
+			}
+			url=url+"&orderBy="+sortingOrder;
+		}else{
+			url=url+"&orderBy=sequence";
+		}
+		if(studyStatus!=null){
+			url=url+"&status="+studyStatus;
+		}
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep=jsonResponseRep.getJsonRepresentation();
@@ -967,8 +991,6 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus){
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.UPDATE_CLASSPAGE_ITEMS_V2, classpageItemId,getLoggedInSessionToken());
 		JSONObject classPageItemJsonObject=createClasspageJsonObject(null, direction, dueDate,readStatus);
-		System.out.println("API urlllll"+url);
-		System.out.println("input object.."+classPageItemJsonObject.toString());
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.put(url, getRestUsername(), getRestPassword(),classPageItemJsonObject.toString());
 		return jsonResponseRep.getStatusCode().toString();
 	}

@@ -42,11 +42,13 @@ import org.ednovo.gooru.shared.model.content.ResourceSourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceTypeDo;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
+import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
 
 /**
@@ -205,6 +207,11 @@ public class ResourceSearchResultDeSerializer extends SearchDeSerializer<Resourc
 		}
 
 		return resourceSearchResultDo;
+	}
+
+	public void deserializeSuggestedResorcesRecord(JSONObject recordJsonObject) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

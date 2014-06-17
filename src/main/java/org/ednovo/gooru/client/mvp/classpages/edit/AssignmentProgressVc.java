@@ -36,10 +36,16 @@ import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -79,7 +85,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	@UiField 
 	Label lblLineStart, lblLineEnd, lblAssignmentNo, lblCircle1;
 	
-	@UiField HTMLPanel panelCircle,panelCicle1, resourceTypePanel,moveAssignmentPopup,dueDateContainer;
+	@UiField HTMLPanel panelCircle,panelCicle1, resourceTypePanel,moveAssignmentPopup,dueDateContainer, panelComboList;
 	
 	@UiField HTML htmlCollectiontitle,assignmentCollectiontitle;
 	
@@ -149,6 +155,11 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		for (int i=0; i<assignmentTotalCount; i++){
 			resourceTypePanel.add(createLabel(""+(i+1)));
 		}
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 	}
 	
 	
@@ -195,6 +206,11 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION_PLAY, parms, false);
 			}
 		});
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+	        public void onPreviewNativeEvent(NativePreviewEvent event) {
+	        	hideDropDown(event);
+	          }
+	    });
 	}
 	
 	public void updateDotsCircle(String readStatus){
@@ -259,5 +275,23 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 			}
 		});
 		return lblLabel;
+	}
+	
+	public void hideDropDown(NativePreviewEvent event){
+    	if(event.getTypeInt()==Event.ONMOUSEOVER){
+    		Event nativeEvent = Event.as(event.getNativeEvent());
+        	boolean target=eventTargetsPopup(nativeEvent);
+        	if(!target){
+        		resourceTypePanel.setVisible(false);
+        	}
+    	}
+     }
+	private boolean eventTargetsPopup(NativeEvent event) {
+		EventTarget target = event.getEventTarget();
+		if (Element.is(target)) {
+			return resourceTypePanel.getElement().isOrHasChild(Element.as(target)) || resourceCategoryLabel.getElement().isOrHasChild(Element.as(target))
+					|| panelComboList.getElement().isOrHasChild(Element.as(target));
+		}
+		return false;
 	}
 }

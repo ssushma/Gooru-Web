@@ -101,6 +101,7 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 	public static final String PUBLISHER = "publisher";
 	
 	public static final String CREATOR = "creator";
+	public static final String SUGGEST_RESULTS ="suggestResults";
 	
 	
 	
@@ -127,7 +128,23 @@ public abstract class SearchDeSerializer<T extends ResourceSearchResultDo>  exte
 			e.printStackTrace();
 		}
 	}
-	
+	public void deserializeSuggestedResources(JsonRepresentation jsonRep, SearchDo<T> searchDo) {
+		searchDo.setSuggestResults(new ArrayList<T>());
+		try {
+			if (jsonRep != null) {
+				JSONArray suggestedResultJsonArray = jsonRep.getJsonArray().getJSONObject(0).getJSONArray(SUGGEST_RESULTS);
+				List<T> suggestedSearchResults = searchDo.getSuggestResults();
+				for (int pointer = 0; pointer < suggestedResultJsonArray.length(); pointer++) {
+					T record = deserializeRecord(suggestedResultJsonArray.getJSONObject(pointer));
+					if (record != null) {
+						suggestedSearchResults.add(record);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public void deserializeCollectionItems(JsonRepresentation jsonRep, SearchDo<T> searchDo){
 		searchDo.setSearchResults(new ArrayList<T>());
 		try{

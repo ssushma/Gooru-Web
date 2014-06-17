@@ -209,6 +209,12 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			if (resourceUid == null) {
 				if(folderId==null) {
 					getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
+					String mycollection=AppClientFactory.getPlaceManager().getRequestParameter("myCollection");
+					if(mycollection.equals("true")){
+						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
+							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
+						}
+					}
 				} else {
 					AppClientFactory.getInjector().getfolderService().createCollectionInParent(getView().getData(), getView().getCourseCodeId(), folderId,new SimpleAsyncCallback<CollectionDo>() {
 						@Override

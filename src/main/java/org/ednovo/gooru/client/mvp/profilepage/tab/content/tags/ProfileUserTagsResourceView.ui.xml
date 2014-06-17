@@ -3,18 +3,18 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style field="ProfilePageTagStyle" src="profile-page-Tag-style.css"></ui:style>
 	<g:HTMLPanel>
-	<g:HTMLPanel styleName="{ProfilePageTagStyle.profilepageFollwoingContentText}">
+	<g:HTMLPanel styleName="{ProfilePageTagStyle.profilepageTagContentText}">
 		<g:Label ui:field="TagTextMessage"></g:Label>
 	</g:HTMLPanel>
-	<g:HTMLPanel styleName="{ProfilePageTagStyle.content-box}">
-		<g:Label styleName="{ProfilePageTagStyle.link}" ui:field="tagMessage" />
+	<g:HTMLPanel styleName="{ProfilePageTagStyle.contentContainer}">
+		<g:Label styleName="{ProfilePageTagStyle.backlink}" ui:field="tagMessage" />
 		<g:HTMLPanel styleName="{ProfilePageTagStyle.content-inner}">
 			<g:HTMLPanel styleName="{ProfilePageTagStyle.tagBg}">
 				<g:HTMLPanel styleName="{ProfilePageTagStyle.tagTitle}">
-					<g:Label styleName="{ProfilePageTagStyle.label}" ui:field="tagType"></g:Label>
+					<g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagType"></g:Label>
 				</g:HTMLPanel>
 				<g:HTMLPanel styleName="{ProfilePageTagStyle.tagRight}">
-					<g:Label styleName="{ProfilePageTagStyle.label}" ui:field="tagCount"></g:Label>
+					<g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagCount"></g:Label>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
 

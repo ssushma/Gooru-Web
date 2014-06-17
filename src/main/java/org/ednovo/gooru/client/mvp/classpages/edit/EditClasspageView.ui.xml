@@ -71,9 +71,8 @@
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>
 				<g:Button ui:field="classListTab" styleName=""></g:Button>
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
-				
 			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{res.css.containerProgress}">
+			<g:HTMLPanel styleName="{res.css.containerProgress}" ui:field="panelProgressContainer">
 			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
 			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 			    </uc:HTMLEventPanel>
@@ -90,34 +89,57 @@
 				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
-			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlignText}"></g:Label>
-			
-			<g:HTMLPanel ui:field="droplistContianer" styleName="{res.css.dropdownContainerInstructional}">
-					<g:Label ui:field="lblInstructionalPlaceHolder"
-						styleName="{res.css.placeHolderText}"></g:Label>
-					<g:Label ui:field="lblInstructionalArrow" styleName="{res.css.arrowInstructional}"></g:Label>
-					<g:ScrollPanel ui:field="spanelInstructionalPanel"
-						styleName="{res.css.scrollPanelContainerInstructional}">
-						<g:HTMLPanel ui:field="htmlInstructionalListContainer"
-							styleName=""></g:HTMLPanel>
-					</g:ScrollPanel>
-			</g:HTMLPanel>
-				
-			<g:FlowPanel styleName="{res.css.paginationContainer}"
+
+			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
+			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
+				<g:HTMLPanel styleName="{res.css.btnContainer}">
+					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
+				</g:HTMLPanel>
+				<g:FlowPanel ui:field="dropDownListDiv" styleName="{res.css.dropdowncontainer}">
+					<g:Label styleName="{res.css.dropdownPlaceHolder}" ui:field="dropdownPlaceHolder"></g:Label>
+					<g:FlowPanel styleName="{res.css.dropdownListContainerScrollPanel}" ui:field="dropDownListContainer">
+					</g:FlowPanel>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="{res.css.paginationContainer}"
 					ui:field="paginationFocPanel">
 				</g:FlowPanel>
-			<g:HTMLPanel styleName="{res.css.labelCenterAlign}" ui:field="newAssignmentAndMsgPanel">
-				<g:HTMLPanel>
-					<g:Button ui:field="btnNewAssignment" text=""
-						styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
-				</g:HTMLPanel>
 				<g:HTMLPanel ui:field="noAssignmentsMessagePanel">
 					<!-- <g:Label ui:field="noAssignmentsMessageLblTwo" styleName="{res.css.noAssignmentMsg}" 
 						/> -->
 					<g:HTMLPanel styleName="{res.css.classpageHover}">
-						<g:Label styleName="{res.css.classpageHoverTitle}"
-							ui:field="noAssignmentsMessageLblTwo">
-							</g:Label>
+						<!-- <g:Label styleName="{res.css.classpageHoverTitle}"
+							ui:field="noAssignmentsMessageLblTwo"> 
+							</g:Label>-->
+							<!-- New layout for empty classpage.  -->
+							  <g:HTMLPanel styleName="{res.css.contentBox}">
+							    <g:HTMLPanel styleName="{res.css.collectionView}">
+							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel>
+							      <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
+							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-widget.png" width="626" height="212"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{res.css.collectionView}">
+							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblTwo"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel>
+							      <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
+							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{res.css.collectionView}">
+							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							        <g:HTMLPanel styleName="{res.css.circleBg}">
+							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblThree"></g:Label>
+							        </g:HTMLPanel>
+							      </g:HTMLPanel>
+							      <g:Label styleName="{res.css.desc}" ui:field="lblGetStarted"></g:Label>
+							      <g:Image url="images/add-button.png" width="204" height="52" styleName="{res.css.btn}"></g:Image>
+							    </g:HTMLPanel>
+							  </g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
