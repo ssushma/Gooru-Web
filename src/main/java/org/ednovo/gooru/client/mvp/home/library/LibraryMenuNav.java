@@ -502,6 +502,12 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		highSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
 		highSchoolCoursePanel.add(highSchoolLabel);
 		
+		if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
+			elementaryCoursePanel.clear();
+			middleSchoolCoursePanel.clear();
+			highSchoolCoursePanel.clear();
+		}
+		
 		if (courseDoList != null) {
 			for (final CourseDo courseDo : courseDoList) {
 				if(courseDo.getUnit()!=null&&courseDo.getUnit().size()>0) {
