@@ -1717,24 +1717,24 @@ public class EditClasspageView extends
 	}
 	@Override
 	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){			
-		boolean isLast;
-		//hide/show the next and previous buttons
-		if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
-			lblNext.setVisible(true);
-			isLast = false;
-		}else{
-			lblNext.setVisible(false);
-			isLast = true;
-		}
+		boolean isLast = false;
 		
 		if (offsetProgress <= 0){
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
 		}
-		if (classpageProcess.size() > 0)
+		if (classpageProcess.size() > 0){
 			panelAssignmentProgress.clear();
-		
+			//hide/show the next and previous buttons
+			if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
+				lblNext.setVisible(true);
+				isLast = false;
+			}else{
+				lblNext.setVisible(false);
+				isLast = true;
+			}
+		}
 		//display the assignments progress (DOTS)
 		for (int i=0; i<classpageProcess.size(); i++){
 			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
