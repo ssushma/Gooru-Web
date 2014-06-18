@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.home.customize.Rename
 import org.ednovo.gooru.client.mvp.play.collection.preview.home.share.SharePlayerVc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -281,7 +282,7 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
 
 				if(!isSharePopup){
 					isSharePopup=true;
@@ -293,6 +294,9 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 						Window.enableScrolling(true);
 						this.hide();	
 						isSharePopup = false;
+					}
+					public void triggerShareEvent(String shareType,boolean confirmStatus){
+						getUiHandlers().triggerCollectionShareDataEvent(collectionId,PlayerDataLogEvents.COLLECTION,shareType,confirmStatus);
 					}
 				};
 				Window.scrollTo(0, 0);

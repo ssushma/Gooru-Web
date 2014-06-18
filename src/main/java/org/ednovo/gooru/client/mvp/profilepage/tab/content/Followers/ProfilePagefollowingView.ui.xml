@@ -7,8 +7,10 @@
 	    <g:InlineLabel  ui:field="follwingTextMessage"/>
 	     <g:InlineLabel  ui:field="follwingTextMessageDes"/>
 	</g:HTMLPanel>
-	<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="userConatiner">
-	 
-	</g:HTMLPanel>
+	<g:ScrollPanel ui:field="followingScrollPanel" styleName="{ProfilePageStyle.scrollStyle}">
+		<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="userConatiner">
+		 </g:HTMLPanel>
+	</g:ScrollPanel>
+	
 	</g:HTMLPanel>
 </ui:UiBinder> 

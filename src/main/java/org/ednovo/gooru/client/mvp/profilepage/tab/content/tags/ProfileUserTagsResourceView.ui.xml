@@ -17,10 +17,13 @@
 					<g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagCount"></g:Label>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-
+		<g:ScrollPanel ui:field="tagScrollPanel" styleName="{ProfilePageTagStyle.scrollStyle}">
 			<g:HTMLPanel styleName="{ProfilePageTagStyle.tagresults}"
 				ui:field="userTagsResourceContainerConatiner"></g:HTMLPanel>
+			</g:ScrollPanel>
 		</g:HTMLPanel>
+		
 	</g:HTMLPanel>
+	
 </g:HTMLPanel>
 </ui:UiBinder> 

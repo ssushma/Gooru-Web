@@ -24,9 +24,11 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.collection.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.json.client.JSONArray;
@@ -71,6 +73,9 @@ public class PlayerDataLogEvents {
 	public static final String REACTION_DELETE="reaction.delete";
 	public static final String COLLECTION_RESOURCE_SAVE="collection.resource.save";
 	public static final String RESOURCE_SAVE="resource.save";
+	public static final String ITEM_LOAD="item.load";
+	public static final String ITEM_SHARE="item.share";
+	public static final String ITEM_FLAG="item.flag";
 	
 	//event keys
 	public static final String EVENTID="eventId";
@@ -120,6 +125,22 @@ public class PlayerDataLogEvents {
 	public static final String ANSWERID="answerId";
 	public static final String TIMESTAMP="timeStamp";
 	public static final String SKIP="skip";
+	public static final String CONTENTITEMID="contentItemId";
+	public static final String PARENTITEMID="parentItemId";
+	public static final String ITEMTYPE="itemType";
+	public static final String URL="url";
+	public static final String SHARETYPE="shareType";
+	public static final String CONFIRMSTATUS="confirmStatus";
+	public static final String OPTIONTEXT="optionText";
+	public static final String COLLECTION="collection";
+	public static final String RESOURCE="resource";
+	public static final String COLLECTION_LOAD_URL="/collection/load";
+	public static final String COLLECTION_SHARE_URL="/collection/share";
+	public static final String COLLECTION_FLAG_URL="/collection/flag";
+	public static final String FACEBOOK="facebook";
+	public static final String TWITTER="twitter";
+	public static final String MAIL="mail";
+	
 	
 	
 	
@@ -180,11 +201,38 @@ public class PlayerDataLogEvents {
 			}
 			contextMap.put(PATH, new JSONString(path));
 			if(pageLocation!=null){
-				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); //TODO
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
 			}else{
-				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation())); //TODO
+				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation())); 
 			}
 			contextMap.put(MODE, new JSONString(mode));
+		}catch(Exception e){
+			
+		}
+		return new JSONString(contextMap.toString());
+	}
+	
+	
+	public static JSONString getDataLogContextObjectForItemLoad(String collectionId,String contentItemId,String parentEventId,String parentGooruOid,String parentItemId,
+			String mode,String path,String pageLocation,String url){
+		JSONObject contextMap=new JSONObject();
+		try{
+			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
+			contextMap.put(CONTENTITEMID, new JSONString(contentItemId));
+			contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
+			if(parentEventId!=null){
+				contextMap.put(PARENTEVENTID, new JSONString(parentEventId));
+			}
+			contextMap.put(PARENTITEMID, new JSONString(parentItemId));
+			contextMap.put(CLIENTSOURCE, new JSONString(WEB));
+			contextMap.put(PATH, new JSONString(path));
+			if(pageLocation!=null){
+				contextMap.put(PAGELOCATION, new JSONString(pageLocation)); 
+			}else{
+				contextMap.put(PAGELOCATION, new JSONString(AppClientFactory.getPlaceManager().getPageLocation()));
+			}
+			contextMap.put(MODE, new JSONString(mode));
+			contextMap.put(URL, new JSONString(url));
 		}catch(Exception e){
 			
 		}
@@ -199,6 +247,15 @@ public class PlayerDataLogEvents {
 			
 		}
 		return new JSONString(versionMap.toString());
+	}
+	public static  JSONString getDataLogMetricsObject(Long totalTimesInSec){
+		JSONObject metricsMap=new JSONObject();
+		try{
+			metricsMap.put(TOTALTIMESPENTINMS, new JSONNumber(totalTimesInSec));
+		}catch(Exception e){
+			
+		}
+		return new JSONString(metricsMap.toString());
 	}
 	public static  JSONString getDataLogMetricsObject(Long totalTimesInSec,Integer score){
 		JSONObject metricsMap=new JSONObject();
@@ -230,7 +287,6 @@ public class PlayerDataLogEvents {
 		}
 		String payLoad = payLoadMap.toString();
 		payLoad = payLoad.replaceAll("\\\\\"\\[", "[").replaceAll("\\]\\\\\"", "]");
-		System.out.println("payLoad : "+payLoad);
 		return new JSONString(payLoad);
 	}
 	
@@ -238,6 +294,42 @@ public class PlayerDataLogEvents {
 		JSONObject payLoadMap=new JSONObject();
 		try{
 			//payLoadMap.put(REACTIONTYPE, new JSONString(reactionType));
+		}catch(Exception e){
+		
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	
+	public static  JSONString getItemLoadDataLogPayLoadObject(String itemType){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(ITEMTYPE, new JSONString(itemType));
+		}catch(Exception e){
+		
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	public static  JSONString getItemShareDataLogPayLoadObject(String itemType,String shareType,boolean confirmStatus){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(ITEMTYPE, new JSONString(itemType));
+			payLoadMap.put(SHARETYPE, new JSONString(shareType));
+			payLoadMap.put(CONFIRMSTATUS, JSONBoolean.getInstance(confirmStatus));
+		}catch(Exception e){
+		
+		}
+		return new JSONString(payLoadMap.toString());
+	}
+	public static  JSONString getItemFlagDataLogPayLoadObject(String itemType,String flagText,ArrayList<String> contentReportList){
+		JSONObject payLoadMap=new JSONObject();
+		try{
+			payLoadMap.put(ITEMTYPE, new JSONString(itemType));
+			payLoadMap.put(TEXT, new JSONString(flagText));
+			JSONObject flagList=new JSONObject();
+			for(int i=0;i<contentReportList.size();i++){
+				flagList.put("value"+(i+1), new JSONString(contentReportList.get(i)));
+			}
+			payLoadMap.put(OPTIONTEXT, flagList);
 		}catch(Exception e){
 		
 		}
@@ -421,5 +513,22 @@ public class PlayerDataLogEvents {
 		}
 		return new JSONString(payLoadMap.toString());
 	}
+
+	public static void triggerItemShareDataLogEvent(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
+			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=System.currentTimeMillis();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_SHARE));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemShareDataLogPayLoadObject(itemType,shareType,confirmStatus));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, null, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.COLLECTION_SHARE_URL));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}	
+	
 
 }

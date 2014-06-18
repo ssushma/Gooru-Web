@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.play.collection.share.email.CollectionEmailSh
 import org.ednovo.gooru.client.mvp.play.collection.share.email.SentEmailSuccessVc;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -195,6 +196,11 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 					public void sendEmail(String fromEmail, String toEmail,
 							String copyEmail, String subject, String message) {
 						getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
+					}
+
+					@Override
+					public void closeEmailPopup() {
+						
 					}
 				};
 				emailShareView.show();
@@ -389,10 +395,12 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		SocialShareWidget swidget= new SocialShareWidget(collectionItemDo.getResource().getDescription(),collectionItemDo.getResource().getThumbnails().getUrl(),collectionItemDo.getCategory(),collectionItemDo) {
 			@Override
 			public void onTwitter() {
+				getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + SocialShareView.getEncodedUrl(resourceShareUrl), "_blank", "width=600,height=300");
 			}
 			@Override
 			public void onFacebook() {
+				getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(removeHtmlTags(collectionItemDo.getResource().getTitle()),SocialShareView.getEncodedUrl(resourceShareUrl),getResourceDescription(),getThumbnailUrl());
 			}
 
@@ -402,9 +410,13 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 				String emailDescription= collectionItemDo.getResource().getTitle()+"<div><br/></div><div>"+resourceShareUrl+"</div><div><br/></div><div>"+GL1440+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+GL1441+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
-					public void sendEmail(String fromEmail, String toEmail,
-							String copyEmail, String subject, String message) {
+					public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
+						getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,true);
 						getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
+					}
+					@Override
+					public void closeEmailPopup(){
+						getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,false);
 					}
 				};
 				emailShareView.show();
