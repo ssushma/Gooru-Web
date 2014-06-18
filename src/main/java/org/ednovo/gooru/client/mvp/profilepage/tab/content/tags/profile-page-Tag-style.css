@@ -152,3 +152,15 @@
 	cursor: pointer;
 	text-align: center;
 }
+.scrollStyle{
+	height: 365px;
+	width: 942px;
+}
+.scrollStyleTag{
+	height: 190px;
+	width: 942px;
+}
+.content-innerTag{
+	width: 923px;
+	height: 253px;
+}
