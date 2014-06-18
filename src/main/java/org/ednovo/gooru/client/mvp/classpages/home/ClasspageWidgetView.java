@@ -90,6 +90,8 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 
 		classTitle.getElement().setInnerHTML(collectionDoObj.getTitle());
 		
+		assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
+		
 		if(pageMode.equalsIgnoreCase("Teach"))
 		{
 		if(collectionDoObj.getMemberCount() == 1)
