@@ -275,6 +275,9 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 		if(previewEndPresenter!=null){
 			previewEndPresenter.setPreviewPlayerPresenter(previewPlayerPresenter);
 		}
+		if(previewHomePresenter!=null){
+			previewHomePresenter.setPreviewPlayerPresenter(previewPlayerPresenter);
+		}
 	}
 
 }

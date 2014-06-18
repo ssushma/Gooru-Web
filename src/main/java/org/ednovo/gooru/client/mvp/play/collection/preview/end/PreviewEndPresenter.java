@@ -57,5 +57,13 @@ public class PreviewEndPresenter extends PresenterWidget<IsPreviewEndView> imple
 	public void setPreviewPlayerPresenter(PreviewPlayerPresenter previewPlayerPresenter) {
 		this.previewPlayerPresenter = previewPlayerPresenter;
 	}
+	@Override
+	public void triggerCollectionShareDataEvent(String collectionId,
+			String itemType, String shareType, boolean confirmStatus) {
+		if(previewPlayerPresenter!=null){
+			previewPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
+		}
+		
+	}
 
 }

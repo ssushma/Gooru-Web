@@ -29,6 +29,8 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 
@@ -39,7 +41,33 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 
 	private String collectionId=null, resourceId=null;
 	private boolean isResourceView;
+	private boolean isCollectionPlayer=false;
+	private boolean isPreviewPlayer=false;
 	
+
+	private CollectionPlayerPresenter collectionPlayerPresenter=null;
+	private PreviewPlayerPresenter previewPlayerPresenter=null;
+	
+	public CollectionPlayerPresenter getCollectionPlayerPresenter() {
+		return collectionPlayerPresenter;
+	}
+
+	public void setCollectionPlayerPresenter(CollectionPlayerPresenter collectionPlayerPresenter) {
+		this.collectionPlayerPresenter = collectionPlayerPresenter;
+		this.isCollectionPlayer=true;
+	}
+
+	public PreviewPlayerPresenter getPreviewPlayerPresenter() {
+		return previewPlayerPresenter;
+		
+	}
+
+	public void setPreviewPlayerPresenter(PreviewPlayerPresenter previewPlayerPresenter) {
+		this.previewPlayerPresenter = previewPlayerPresenter;
+		this.isPreviewPlayer=true;
+	}
+	
+
 	@Inject
 	public CollectionSharePresenter(EventBus eventBus, IsCollectionShareView view) {
 		super(eventBus, view);
@@ -126,5 +154,16 @@ public class CollectionSharePresenter extends PresenterWidget<IsCollectionShareV
 		});
 		
 	}
+
+	@Override
+	public void triggerShareDatalogEvent(String resourceGooruOid,String collectionItemId, String itemType,String shareType, boolean confirmStatus) {
+		if(isCollectionPlayer){
+			collectionPlayerPresenter.triggerShareDatalogEvent(resourceGooruOid, collectionItemId,  itemType, shareType,  confirmStatus);
+		}else if(isPreviewPlayer){
+			previewPlayerPresenter.triggerShareDatalogEvent(resourceGooruOid, collectionItemId,  itemType, shareType,  confirmStatus);
+		}
+		
+	}
+
 	
 }
