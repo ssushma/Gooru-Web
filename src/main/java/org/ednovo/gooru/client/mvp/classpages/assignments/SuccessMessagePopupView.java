@@ -40,6 +40,8 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
  * @Reviewer:
  */
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -90,6 +92,7 @@ public class SuccessMessagePopupView extends Composite implements MessagePropert
 	}
 	public void hide(){
 		Window.enableScrolling(true);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 		appPopUp.hide();
 	}
 

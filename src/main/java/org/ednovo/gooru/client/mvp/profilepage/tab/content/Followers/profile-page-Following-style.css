@@ -14,7 +14,7 @@ a:hover {
 	margin: 0 auto;
 }
 .profilepageFollwoingContent {
-	width: 1045px;
+	width: 993px;
 	min-height: 130px;
 	padding-top: 15px;
 	
@@ -39,7 +39,7 @@ a:hover {
 .infoSectionAuthor {
 	display: inline-block;
 	vertical-align: top;
-	width: 470px;
+	width: 444px;
 	height: 127px;
 	margin-right: 50px;
 	margin-bottom: 30px;
@@ -170,4 +170,14 @@ a:hover {
 }
 .buttonMargins {
 	margin: 10px 0px 0px 10px;	
+}
+.seeMoreStyle{
+	color: blue;
+	font-size: 13px;
+	cursor: pointer;
+	text-align: center;
+	padding-bottom:20px;
+}
+.scrollStyle{
+	height: 365px;
 }

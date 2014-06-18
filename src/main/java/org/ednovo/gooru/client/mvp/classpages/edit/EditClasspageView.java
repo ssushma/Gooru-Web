@@ -151,7 +151,7 @@ public class EditClasspageView extends
 	@UiField
 	static Frame frameUrl;
 	
-	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious,dropdownPlaceHolder;
+	@UiField Label titleAlertMessageLbl, lblNext, lblPrevious, dropdownPlaceHolder;
 
 	@UiField Button btnStudentView;
 
@@ -179,7 +179,7 @@ public class EditClasspageView extends
 	
 	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel;
 
-	@UiField FlowPanel paginationFocPanel,assignmentsContainerPanel,classListContainer;
+	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,assignmentsContainerPanel,classListContainer;
 
 /*	@UiField HTMLPanel panelWebLink;*/
 
@@ -546,18 +546,20 @@ public class EditClasspageView extends
 		}
 		*/
 		
-//		lblPrevious.addClickHandler(new ClickHandler() {
-//			
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				if (offsetProgress <=0){
-//					offsetProgress =0;
-//				}else{
-//					offsetProgress = offsetProgress - limitProgress;
-//				}
-//				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
-//			}
-//		});
+		lblPrevious.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if (offsetProgress <=0){
+					offsetProgress =0;
+				}else{
+					offsetProgress = offsetProgress - limitProgress;
+				}
+				
+				callAssignmentAPI(AppClientFactory.getPlaceManager().getRequestParameter("classpageid"), offsetProgress.toString(), limitProgress.toString());
+				
+			}
+		});
 		
 		
 		ResetProgressHandler reset = new ResetProgressHandler() {
@@ -618,6 +620,8 @@ public class EditClasspageView extends
 					sortingStringValue="desc";
 				}else if(sortType.equals(GL1950)){
 					sortingStringValue="recent";
+				}else if(sortType.equals(GL1581)){
+					sortingStringValue="duedate";
 				}
 				assignmentsContainerPanel.clear();
 				assignmentsContainerPanel.add(setLoadingPanel());
@@ -677,8 +681,6 @@ public class EditClasspageView extends
 	 */
 	@Override
 	public void callAssignmentAPI(String classpageId, String offsetProgress, String limitProgress){
-		System.out.println("iam called---"+offsetProgress);
-		System.out.println("iam calledlimitProgress---"+limitProgress);
 		getUiHandlers().getAssignmentsProgress(classpageId, offsetProgress.toString(), limitProgress.toString()); // this will call displayAssignmentPath
 	}
 	
@@ -794,12 +796,11 @@ public class EditClasspageView extends
 
 					@Override
 					public void onSuccess(Void result) {
-						Window.enableScrolling(true);
-				        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 				        AppClientFactory.fireEvent(new DeleteClasspageListEvent(classpageDo.getClasspageId()));
 				        Window.enableScrolling(true);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 						hide(); 
+						AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 					}
 				});
 				
@@ -911,6 +912,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
 			assignmentsDirectionsLabel.setVisible(false);
@@ -937,6 +939,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
@@ -958,6 +961,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 		}
 		else if(monitorId!=null)
 		{
@@ -973,6 +977,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 		}
 		else{
 			
@@ -980,6 +985,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(true);
 			panelProgressContainer.setVisible(true);
 			paginationFocPanel.setVisible(true);
+			paginationFocPanel1.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			mainContainer.setVisible(true);
@@ -991,6 +997,7 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(false);
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsContainerPanel.clear();
+				dropDownListDiv.setVisible(true);
 				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
 					assignmentTabView = showClasspageItem(classpageItemDo,(itemIndex+1));
@@ -1095,6 +1102,7 @@ public class EditClasspageView extends
 	}
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		Label seeMoreLabel=new Label(GL0508);
 		//seeMoreLabel.addClickHandler(new PaginationEvent());
 		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
@@ -1104,6 +1112,7 @@ public class EditClasspageView extends
 		if (totalPages > 1) {
 			if (pageNumber > 1) {
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
+				paginationFocPanel1.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 			}
 		
 			int page = pageNumber < 5 ? 1 : pageNumber - 3;
@@ -1111,15 +1120,18 @@ public class EditClasspageView extends
 			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
 			{
 				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
+				paginationFocPanel1.add(new PaginationButtonUc(page, page == pageNumber, this));
 			}
 			if (pageNumber < totalPages) {
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
+				paginationFocPanel1.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
 			}
 		}
 		//paginationFocPanel.add(seeMoreLabel);
 	}
 	public void clearPaginationButton(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 	}
 	private class PaginationEvent implements ClickHandler{
 		@Override
@@ -1132,6 +1144,7 @@ public class EditClasspageView extends
 	}
 	public void resetEditClasspageView(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		assignmentsContainerPanel.clear();
 		assignmentsContainerPanel.add(setLoadingPanel());
 		limit=5;
@@ -1172,6 +1185,7 @@ public class EditClasspageView extends
 				//collectionTitleUc.setText(collectionDo.getTitle());
 				btnCollectionEditImage.setVisible(false);
 				paginationFocPanel.clear();
+				paginationFocPanel1.clear();
 				getUiHandlers().getAssignmentsByClasspageById(classpageId,
 						pageSize + "", pageNum + "");
 				getUiHandlers().generateShareLink(classpageId);
@@ -1358,6 +1372,7 @@ public class EditClasspageView extends
 			}
 			
 			paginationFocPanel.clear();
+			paginationFocPanel1.clear();
 			assignmentCount = (result.getTotalHitCount() / pageSize)
 					+ ((result.getTotalHitCount() % pageSize) > 0 ? 1 : 0);
 
@@ -1365,14 +1380,21 @@ public class EditClasspageView extends
 				if (pos > 1) {
 					paginationFocPanel.add(new PaginationButtonUc(pos - 1,
 							PREVIOUS, this));
+					paginationFocPanel1.add(new PaginationButtonUc(pos - 1,
+							PREVIOUS, this));
+					
 				}
 				int page = pos < 5 ? 1 : pos - 5;
 				for (int count = 0; count < 5 && page <= assignmentCount; page++, ++count) {
 					paginationFocPanel.add(new PaginationButtonUc(page,
 							page == pos, this));
+					paginationFocPanel1.add(new PaginationButtonUc(page,
+							page == pos, this));
 				}
 				if (pos < assignmentCount) {
 					paginationFocPanel.add(new PaginationButtonUc(pos + 1,
+							NEXT, this));
+					paginationFocPanel1.add(new PaginationButtonUc(pos + 1,
 							NEXT, this));
 				}
 			}
@@ -1574,6 +1596,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 		
 			paginationFocPanel.setVisible(true);
+			paginationFocPanel1.setVisible(true);
 			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
@@ -1614,6 +1637,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
@@ -1654,6 +1678,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
@@ -1717,42 +1742,30 @@ public class EditClasspageView extends
 		return collectionTitleUc;
 	}
 	@Override
-	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){
-		panelAssignmentProgress.clear();
-		globalClasspageProcess.clear();
-		//Store all classpage details in one global object.
-		for (int i=0; i<classpageProcess.size(); i++){
-			globalClasspageProcess.add(classpageProcess.get(i));
-		}
-		
-		//hide/show the next and previous buttons
-		if (classpageProcess.size() >= limitProgress){
-			lblNext.setVisible(true);
-		}else{
-			lblNext.setVisible(false);
-		}
+	public void displayAssignmentPath(ArrayList<ClasspageItemDo> classpageProcess){			
+		boolean isLast = false;
 		
 		if (offsetProgress <= 0){
-//			globalClasspageProcess.clear();
 			lblPrevious.setVisible(false);
 		}else{
 			lblPrevious.setVisible(true);
 		}
-		
-		//display the assignments progress (DOTS)
-		for (int i=0; i<globalClasspageProcess.size(); i++){
-			panelAssignmentProgress.add(new AssignmentProgressVc(i == globalClasspageProcess.size()-1 ? true : false, 
-					globalClasspageProcess.get(i), i+1, globalClasspageProcess.size()));
+		if (classpageProcess.size() > 0){
+			panelAssignmentProgress.clear();
+			//hide/show the next and previous buttons
+			if (classpageProcess.get(0).getTotalHitCount() > limitProgress && classpageProcess.size() == limitProgress){
+				lblNext.setVisible(true);
+				isLast = false;
+			}else{
+				lblNext.setVisible(false);
+				isLast = true;
+			}
 		}
-//		Map<String,String> params = new HashMap<String,String>();
-//		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-//		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
-//		String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
-//		params.put("order", "asce");
-//		params.put("classpageid", classpageid);
-//		params.put("pageNum", 0+"");
-//		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-//		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		//display the assignments progress (DOTS)
+		for (int i=0; i<classpageProcess.size(); i++){
+			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
+					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.size()));
+		}
 	}
 	
 	public class MouseOverShowClassCodeToolTip implements MouseOverHandler{
@@ -1782,7 +1795,7 @@ public class EditClasspageView extends
 		sortingOptionsList.add(GL1948);
 		sortingOptionsList.add(GL1949);
 		sortingOptionsList.add(GL1950);
-		//sortingOptionsList.add(GL1951);
+		sortingOptionsList.add(GL1581);
 	}
 	@Override
 	public void setSortingOrderInDropdown(String sortingOrder) {
@@ -1792,7 +1805,14 @@ public class EditClasspageView extends
 			dropdownPlaceHolder.setText(GL1949);
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("recent")){
 			dropdownPlaceHolder.setText(GL1950);
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("duedate")){
+			dropdownPlaceHolder.setText(GL1581);
 		}
+	}
+	
+	@Override
+	public void hideNoAssignmentsMessagePanel(){
+		noAssignmentsMessagePanel.setVisible(false);
 	}
 }
 

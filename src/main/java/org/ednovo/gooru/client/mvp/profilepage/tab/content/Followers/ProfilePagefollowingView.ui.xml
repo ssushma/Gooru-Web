@@ -4,10 +4,13 @@
 	<ui:style field="ProfilePageStyle" src="profile-page-Following-style.css"></ui:style>
 	<g:HTMLPanel>
 	<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContentText}">
-	    <g:Label  ui:field="follwingTextMessage"/>
+	    <g:InlineLabel  ui:field="follwingTextMessage"/>
+	     <g:InlineLabel  ui:field="follwingTextMessageDes"/>
 	</g:HTMLPanel>
-	<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="userConatiner">
-	 
-	</g:HTMLPanel>
+	<g:ScrollPanel ui:field="followingScrollPanel" styleName="{ProfilePageStyle.scrollStyle}">
+		<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="userConatiner">
+		 </g:HTMLPanel>
+	</g:ScrollPanel>
+	
 	</g:HTMLPanel>
 </ui:UiBinder> 

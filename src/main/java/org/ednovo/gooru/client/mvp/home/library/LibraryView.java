@@ -329,6 +329,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			featuredCousesLbl.setText(GL0588);
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
+			landingBanner.setHeight("250px");
 			featuredCousesLbl.setText(GL1901);
 		} else {
 			landingBanner.getElement().setId("landingBanner");

@@ -143,6 +143,7 @@ public abstract class AddSearchResourceView extends Composite implements Message
 		addResourceButton.setText(GL0896);
 		suggestedText.setText(GL0897);
 		//GL0896
+		searchBox.getElement().setAttribute("placeholder", GL1967);
 		searchBox.setText(collectionTitle);
 		searchBox.addKeyUpHandler(new SearchKeyUpHandler());
 		suggestedResourcesPanel.addMouseOverHandler(new showSearchButton());

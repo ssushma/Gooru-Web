@@ -586,6 +586,7 @@
 	margin: 0px auto;
 	float:left;
 	text-align: center;
+	margin-top:30px;
 }
 
 .addAssignment{
@@ -610,6 +611,9 @@
 .assignmentsContainer{
 	overflow: hidden;
 margin-left:-1px;
+}
+.assignmentsContainerHead{
+	margin-top:20px;
 }
 
 .classpageCodeInnerPopup {
@@ -887,7 +891,7 @@ margin-left:-1px;
 
 .assignmentProgress{
 	text-align: center;
-	font-size: 14px; 
+	font-size: 12px; 
 /*	font-weight: bold;	*/
 	margin:15px;
 	margin-bottom: 19px;
@@ -955,6 +959,7 @@ margin-left:-1px;
 	margin: 55px auto;
 	width: 2%;
 	float: left;
+	height: 5px;
 }
 
 .rightArrow {
@@ -1182,4 +1187,9 @@ margin-left:-1px;
 }
 .btn {
 	margin-left: 10px;
+}
+
+
+.containerProgressWidth{
+	width:1000px;
 }

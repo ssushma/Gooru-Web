@@ -143,11 +143,15 @@
 					</g:HTMLPanel>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-			<g:HTMLPanel ui:field="assignmentsTabContainerPanel">
+			<g:HTMLPanel styleName="{res.css.assignmentsContainerHead}" ui:field="assignmentsTabContainerPanel">
 				<g:FlowPanel ui:field="assignmentsContainerPanel"
 					styleName="{res.css.assignmentsContainer}">
 					<!-- This container for Assignments -->
 
+				</g:FlowPanel>
+				
+					<g:FlowPanel styleName="{res.css.paginationContainer}"
+					ui:field="paginationFocPanel1">
 				</g:FlowPanel>
 				
 				<g:HTMLPanel styleName="{res.css.classpageTopLine}">

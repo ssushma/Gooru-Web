@@ -503,7 +503,7 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		CheckBox categoryChk = new CheckBox();
 		categoryChk.setText(value);
 		categoryChk.setName(key);
-		if(value.equalsIgnoreCase("videos")){
+		if(value.equalsIgnoreCase("video")){
 			MixpanelUtil.mixpanelEvent("search_video_filter_selected");
 			categoryChk.getElement().setId("chkVideos");	
 		}else if(value.equalsIgnoreCase("webpage")){
@@ -515,23 +515,23 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			MixpanelUtil.mixpanelEvent("search_websites_filter_selected");
 			categoryChk.getElement().setId("chkwebsites");	
 		}*/
-		else if(value.equalsIgnoreCase("interactives")){
+		else if(value.equalsIgnoreCase("interactive")){
 			MixpanelUtil.mixpanelEvent("search_interactives_filter_selected");
 			categoryChk.getElement().setId("chkInteractives");
 		}
-		else if(value.equalsIgnoreCase("questions")){
+		else if(value.equalsIgnoreCase("question")){
 			MixpanelUtil.mixpanelEvent("search_questions_filter_selected");
 			categoryChk.getElement().setId("chkQuestions");
 		}
-		else if(value.equalsIgnoreCase("images")){
+		else if(value.equalsIgnoreCase("image")){
 			MixpanelUtil.mixpanelEvent("search_images_filter_selected");
 			categoryChk.getElement().setId("chkImages");
 		}
-		else if(value.equalsIgnoreCase("texts")){
+		else if(value.equalsIgnoreCase("text")){
 			MixpanelUtil.mixpanelEvent("search_texts_filter_selected");
 			categoryChk.getElement().setId("chkTexts");
 		}
-		else if(value.equalsIgnoreCase("audios")){
+		else if(value.equalsIgnoreCase("audio")){
 			MixpanelUtil.mixpanelEvent("search_audios_filter_selected");
 			categoryChk.getElement().setId("chkAudios");
 		}
@@ -554,7 +554,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		else if(value.equalsIgnoreCase("Arts and Humanities")){
 			categoryChk.getElement().setId("chkArts&Humanities");
 		}
-		else if(value.equalsIgnoreCase("Technology and Engineering")){
+		else if(value.equalsIgnoreCase("Technology & Engineering")){
+			categoryChk.setText("Tech & Engineering");
 			categoryChk.getElement().setId("chkTechnology&Engineering");
 		}
 		else if(value.equalsIgnoreCase("Elementary School")){

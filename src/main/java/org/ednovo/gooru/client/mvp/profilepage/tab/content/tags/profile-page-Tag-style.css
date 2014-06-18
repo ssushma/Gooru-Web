@@ -146,3 +146,29 @@
 	height: 18px;
 	width:82px;
 }
+.seeMoreStyle{
+	color: blue;
+	font-size: 13px;
+	cursor: pointer;
+	text-align: center;
+}
+.scrollStyle{
+	height: 365px;
+	width: 961px;
+}
+.scrollStyleTag{
+	height: 190px;
+	width: 966px;
+}
+.content-innerTag{
+	width: 933px;
+	background-color: #fff;
+	height: 253px;
+	margin-top: 15px;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	min-height: 100px;
+	padding: 35px;
+	border: 1px solid #ddd;
+	margin-top: 15px;
+}

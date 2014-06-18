@@ -33,7 +33,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.classpages.event.OpenClasspageListEvent;
 import org.ednovo.gooru.client.mvp.classpages.event.OpenJoinClassPopupEvent;
 import org.ednovo.gooru.client.mvp.classpages.studentView.StudentAssignmentView;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
@@ -50,6 +49,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.metadata.comment.even
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
@@ -410,6 +410,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 						    }
 						    if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.STUDENT)){
 						    	AppClientFactory.fireEvent(new OpenJoinClassPopupEvent());
+						    	AppClientFactory.fireEvent(new SetMarkButtonEvent());
 						    }
 						    if(result.getOrganizationName()!=null) {
 							    if (result.getOrganizationName().contains("rusd")&&(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.HOME) || AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY))){
@@ -441,7 +442,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 						}else if(result.getConfirmStatus()==0){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
-							new AlertContentUc(OOPS, GL1938);
+							new AlertContentUc(GL1966, GL1938);
 						}
 					}
 

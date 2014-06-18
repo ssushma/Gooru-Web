@@ -594,6 +594,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		attemptAnswersMap.clear();
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		resetAnswerLists();
+		setCollectionScore(0);
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
 	}
 	
