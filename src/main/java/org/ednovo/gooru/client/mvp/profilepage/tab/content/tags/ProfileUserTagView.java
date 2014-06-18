@@ -69,7 +69,7 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 				if(result.size()>0){
 					totalTagCount = totalTagCount+result.size();
 					for(int i=0;i<result.size();i++){
-						ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(userTagDo.get(i),followingContainer,tagResourceContainer);
+						ProfileUserTagWidget profileUserTagWidget =new ProfileUserTagWidget(result.get(i),followingContainer,tagResourceContainer);
 						userTagsConatiner.add(profileUserTagWidget);
 					}
 					

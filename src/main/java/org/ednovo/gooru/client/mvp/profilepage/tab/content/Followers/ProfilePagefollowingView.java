@@ -84,7 +84,7 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 			if(result.size()>0){
 				totalUserCount  = totalUserCount +result.size();
 				for(int i=0; i< result.size(); i++){
-					ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);
+					ProfilePageUserInfoWidget profilePageUserInfo=new ProfilePageUserInfoWidget(result.get(i),tab);
 					userConatiner.add(profilePageUserInfo);
 				}
 				}

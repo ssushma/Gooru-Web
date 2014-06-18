@@ -66,10 +66,7 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	public void dragFollowingScrollPanel(ScrollEvent event) {
 		if (followerScrollPanel.getVerticalScrollPosition() == followerScrollPanel.getMaximumVerticalScrollPosition() && totalUserCount <totalHintCount) {
 		
-			AppClientFactory.getInjector().getUserService().getFollowedOnUsers(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalUserCount),limit, new AsyncCallback<List<UserFollowDo>>() {
-			
-			
-			
+			AppClientFactory.getInjector().getUserService().getFollowedByUsers(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalUserCount),limit, new AsyncCallback<List<UserFollowDo>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
@@ -78,10 +75,11 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 
 			@Override
 			public void onSuccess(List<UserFollowDo> result) {
+			
 				if(result.size()>0){
 					totalUserCount  = totalUserCount +result.size();
 					for(int i=0; i< result.size(); i++){
-						ProfilePageUserInfoWidget profilePageUserInfoWidget=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);
+						ProfilePageUserInfoWidget profilePageUserInfoWidget=new ProfilePageUserInfoWidget(result.get(i),tab);
 						followersUserConatiner.add(profilePageUserInfoWidget);
 					}
 				
