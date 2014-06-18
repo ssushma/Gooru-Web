@@ -2484,7 +2484,7 @@ public interface MessageProperties {
       	String GL1948 = "Ascending";
       	String GL1949 = "Descending";
       	String GL1950 = "Recently Added";
-      	String GL1951 = "By due date";
+      	String GL1951 = "Upcoming(by due date)";
       	String GL1952 = "View All Completed";
       	String GL1953 = "View All InComplete";
       	
