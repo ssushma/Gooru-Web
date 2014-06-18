@@ -2489,7 +2489,7 @@ public interface MessageProperties {
       	String GL1953 = "View All InComplete";
       	
         String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
-    	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
+    	String GL1955 = "Note: If you want to switch your collection back to public, there might be a slight delay while we review it.";
     	
     	String GL1956 = "Keep it public";
 
