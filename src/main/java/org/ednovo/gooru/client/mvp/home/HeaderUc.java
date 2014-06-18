@@ -320,6 +320,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 	private String GOORU_SEARCH = " -<n> Gooru Search</n>";
 
 	private String discoverLinkUrl = null;
+
 	
 	private static String DEFAULT_PROFILE_IMAGE="images/settings/setting-user-image.png";
 
@@ -424,6 +425,9 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		discoverLink.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
+		
+		discoverLink.getParent().getElement().setAttribute("style", "border-right: 1px solid white;");
+		loggedInfoLbl.getParent().getElement().setAttribute("style", "border-right: 1px solid white;");
 
 		noneMenu = new Label();
 
