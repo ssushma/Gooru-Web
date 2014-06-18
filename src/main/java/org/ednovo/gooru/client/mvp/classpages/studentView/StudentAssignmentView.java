@@ -1175,6 +1175,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		sortingOptionsList.add(GL1946);
 		sortingOptionsList.add(GL1952);
 		sortingOptionsList.add(GL1953);
+
 	}
 
 	/**

@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -42,6 +43,7 @@ import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -204,7 +206,15 @@ public class SearchShareVc extends Composite implements MessageProperties {
 		shareDo.setDecodeRawUrl(socialShareLinksView.getshareLinkTxtBox().getText());
 		shareDo.setOnlyIcon(false);
 		shareDo.setShareType("public");
-		SocialShareView socialView = new SocialShareView(shareDo);
+		SocialShareView socialView = new SocialShareView(shareDo){
+			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+				if (AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", "", "", "", PlayerDataLogEvents.RESOURCE, shareType, confirmStaus, "", "", "resource-search");
+				}else if(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+					PlayerDataLogEvents.triggerItemShareDataLogEvent(searchResultDo.getGooruOid(), "", "", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", "", "collection-search");
+				}
+			}
+		};
 		socialContentPanel.add(socialView);
 
 	}

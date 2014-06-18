@@ -59,8 +59,7 @@ cursor: pointer;
 	font-size: 12px;
 	font-weight: bold;
 	color: rgb(81,81,81);
-	display: inline-block;
-	float: right;
+	float: left;
 	margin: 10px 10px;
 }
 .ownerClasses{
@@ -139,8 +138,8 @@ cursor: pointer;
 	box-shadow: 0 0 0 2px #87badd;
 	width: 30px;
 	height: 30px;
-	margin-left: 65px;
-	margin-top: 3px;
+	margin-left: 19%;
+	margin-top: 1px;
 	float: left;
 }
 .profileImageText
@@ -150,9 +149,11 @@ cursor: pointer;
 	font-size: 12px;
 font-weight: bold;
 color: #515151;
-display: inline-block;
 margin-top:10px;
 }
 .centerAlignBtn{
 	text-align:center;
+}
+.marginRightDisplay{
+	margin-left:31%;
 }

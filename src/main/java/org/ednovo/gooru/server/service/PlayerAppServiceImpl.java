@@ -342,7 +342,7 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		return activityEventId;
 	}
 	
-	public String createSessionTracker(String collectionGooruOid){
+	public String createSessionTracker(String collectionGooruOid,String clientsSessionId){
 		String seesionId="";
 		JSONObject createSessionObject=new JSONObject();
 		JSONObject sessionObject=new JSONObject();
@@ -352,9 +352,14 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			collectionObject.put("gooruOid", collectionGooruOid);
 			sessionObject.put("resource", collectionObject);
 			sessionObject.put("mode", "test");
+			if(clientsSessionId!=null){
+				sessionObject.put("sessionId", clientsSessionId);
+			}
 			createSessionObject.put("session", sessionObject);
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.CREATE_SESSION, getLoggedInSessionToken());
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(),createSessionObject.toString());
+			System.out.println("session tracker API:"+url);
+			System.out.println("session tracker INPUT DATA:"+createSessionObject.toString());
 			jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 			JSONObject createSessionResponse=jsonRepresentation.getJsonObject();
 			seesionId=createSessionResponse.getString("sessionId");
