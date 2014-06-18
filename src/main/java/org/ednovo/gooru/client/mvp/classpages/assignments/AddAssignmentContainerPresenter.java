@@ -118,7 +118,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemDoList) {
 				if(classpageItemDoList!=null&&classpageItemDoList.size()>0){
 					getView().hideAddCollectionPopup("");
-					AppClientFactory.fireEvent(new ResetProgressEvent());
+				//	AppClientFactory.fireEvent(new ResetProgressEvent());
 /*					for(int i=0;i<classpageItemDoList.size();i++){
 						ClasspageItemDo classpageItemDo=classpageItemDoList.get(i);
 						getEditClasspagePresenter().setClasspageItemDo(classpageItemDo);
@@ -137,7 +137,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		params.put("classpageid", classpageid);
 		params.put("pageNum", 1+"");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-		AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 	}
 	public void setClasspageId(String classpageId,EditClasspagePresenter editClasspagePresenter){
 		this.classpageId=classpageId;

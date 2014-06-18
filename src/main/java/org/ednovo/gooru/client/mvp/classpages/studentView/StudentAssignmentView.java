@@ -123,7 +123,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	static
 	Button btnWithDraw;
 	
-	@UiField FlowPanel paginationFocPanel,panelAssignmentProgress,dropDownListContainer;
+	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,panelAssignmentProgress,dropDownListContainer;
 	
 	@UiField Image studentViewImage,imgProfileImage;
 
@@ -642,6 +642,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		Label seeMoreLabel=new Label(GL0508);
 		//seeMoreLabel.addClickHandler(new PaginationEvent());
 		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
@@ -651,6 +652,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		if (totalPages > 1) {
 			if (pageNumber > 1) {
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
+				paginationFocPanel1.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 			}
 		
 			int page = pageNumber < 5 ? 1 : pageNumber - 3;
@@ -658,14 +660,17 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
 			{
 				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
+				paginationFocPanel1.add(new PaginationButtonUc(page, page == pageNumber, this));
 			}
 			if (pageNumber < totalPages) {
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
+				paginationFocPanel1.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
 			}
 		}
 	}
 	public void clearPaginationButton(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 	}
 	private class PaginationEvent implements ClickHandler{
 		@Override
@@ -678,6 +683,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	}
 	public void resetEditClasspageView(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
 		limit=5;
@@ -910,6 +916,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	@Override
 	public void clearAll() {
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		contentpanel.clear();
 		contentpanel.add(setLoadingPanel());
 		limit=5;

@@ -215,6 +215,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String dropdownPlaceHolderStudent();
         String dropdownListContainerScrollPanelStudent();
         String containerProgressWidth();
+        String assignmentsContainerHead();
 
 	}
 	@NotStrict

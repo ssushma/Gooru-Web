@@ -586,6 +586,7 @@
 	margin: 0px auto;
 	float:left;
 	text-align: center;
+	margin-top:30px;
 }
 
 .addAssignment{
@@ -610,6 +611,9 @@
 .assignmentsContainer{
 	overflow: hidden;
 margin-left:-1px;
+}
+.assignmentsContainerHead{
+	margin-top:20px;
 }
 
 .classpageCodeInnerPopup {

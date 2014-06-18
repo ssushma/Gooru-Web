@@ -179,7 +179,7 @@ public class EditClasspageView extends
 	
 	@UiField HTMLPanel shareTabContainerPanel, assignmentsTabContainerPanel, noAssignmentsMessagePanel, newAssignmentAndMsgPanel;
 
-	@UiField FlowPanel paginationFocPanel,assignmentsContainerPanel,classListContainer;
+	@UiField FlowPanel paginationFocPanel,paginationFocPanel1,assignmentsContainerPanel,classListContainer;
 
 /*	@UiField HTMLPanel panelWebLink;*/
 
@@ -910,6 +910,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			classListTab.addStyleName(res.css().selected());
 			assignmentsTab.getElement().setClassName("");
 			assignmentsDirectionsLabel.setVisible(false);
@@ -936,6 +937,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
@@ -957,6 +959,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 		}
 		else if(monitorId!=null)
 		{
@@ -972,6 +975,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 		}
 		else{
 			
@@ -979,6 +983,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(true);
 			panelProgressContainer.setVisible(true);
 			paginationFocPanel.setVisible(true);
+			paginationFocPanel1.setVisible(true);
 			backArrowButton.setVisible(false);
 			monitorProgress.setVisible(false);
 			mainContainer.setVisible(true);
@@ -1094,6 +1099,7 @@ public class EditClasspageView extends
 	}
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		Label seeMoreLabel=new Label(GL0508);
 		//seeMoreLabel.addClickHandler(new PaginationEvent());
 		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
@@ -1103,6 +1109,7 @@ public class EditClasspageView extends
 		if (totalPages > 1) {
 			if (pageNumber > 1) {
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
+				paginationFocPanel1.add(new PaginationButtonUc(pageNumber - 1, PREVIOUS, this));
 			}
 		
 			int page = pageNumber < 5 ? 1 : pageNumber - 3;
@@ -1110,15 +1117,18 @@ public class EditClasspageView extends
 			for (int count = 1; count < 5 && page <= totalPages; page++, ++count) 
 			{
 				paginationFocPanel.add(new PaginationButtonUc(page, page == pageNumber, this));
+				paginationFocPanel1.add(new PaginationButtonUc(page, page == pageNumber, this));
 			}
 			if (pageNumber < totalPages) {
 				paginationFocPanel.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
+				paginationFocPanel1.add(new PaginationButtonUc(pageNumber + 1, NEXT, this));
 			}
 		}
 		//paginationFocPanel.add(seeMoreLabel);
 	}
 	public void clearPaginationButton(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 	}
 	private class PaginationEvent implements ClickHandler{
 		@Override
@@ -1131,6 +1141,7 @@ public class EditClasspageView extends
 	}
 	public void resetEditClasspageView(){
 		paginationFocPanel.clear();
+		paginationFocPanel1.clear();
 		assignmentsContainerPanel.clear();
 		assignmentsContainerPanel.add(setLoadingPanel());
 		limit=5;
@@ -1171,6 +1182,7 @@ public class EditClasspageView extends
 				//collectionTitleUc.setText(collectionDo.getTitle());
 				btnCollectionEditImage.setVisible(false);
 				paginationFocPanel.clear();
+				paginationFocPanel1.clear();
 				getUiHandlers().getAssignmentsByClasspageById(classpageId,
 						pageSize + "", pageNum + "");
 				getUiHandlers().generateShareLink(classpageId);
@@ -1357,6 +1369,7 @@ public class EditClasspageView extends
 			}
 			
 			paginationFocPanel.clear();
+			paginationFocPanel1.clear();
 			assignmentCount = (result.getTotalHitCount() / pageSize)
 					+ ((result.getTotalHitCount() % pageSize) > 0 ? 1 : 0);
 
@@ -1364,14 +1377,21 @@ public class EditClasspageView extends
 				if (pos > 1) {
 					paginationFocPanel.add(new PaginationButtonUc(pos - 1,
 							PREVIOUS, this));
+					paginationFocPanel1.add(new PaginationButtonUc(pos - 1,
+							PREVIOUS, this));
+					
 				}
 				int page = pos < 5 ? 1 : pos - 5;
 				for (int count = 0; count < 5 && page <= assignmentCount; page++, ++count) {
 					paginationFocPanel.add(new PaginationButtonUc(page,
 							page == pos, this));
+					paginationFocPanel1.add(new PaginationButtonUc(page,
+							page == pos, this));
 				}
 				if (pos < assignmentCount) {
 					paginationFocPanel.add(new PaginationButtonUc(pos + 1,
+							NEXT, this));
+					paginationFocPanel1.add(new PaginationButtonUc(pos + 1,
 							NEXT, this));
 				}
 			}
@@ -1573,6 +1593,7 @@ public class EditClasspageView extends
 			frameDiv.setVisible(false);
 		
 			paginationFocPanel.setVisible(true);
+			paginationFocPanel1.setVisible(true);
 			
 			newAssignmentAndMsgPanel.setVisible(true);
 			assignmentsTabContainerPanel.setVisible(true);
@@ -1613,6 +1634,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			backArrowButton.setVisible(true);
 			monitorProgress.setVisible(true);
 			frameDiv.setVisible(false);
@@ -1653,6 +1675,7 @@ public class EditClasspageView extends
 			panelAssignmentPath.setVisible(false);
 			panelProgressContainer.setVisible(false);
 			paginationFocPanel.setVisible(false);
+			paginationFocPanel1.setVisible(false);
 			frameDiv.setVisible(true);
 			frameUrl.getElement().getStyle().setWidth(1000, Unit.PX);
 			frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
