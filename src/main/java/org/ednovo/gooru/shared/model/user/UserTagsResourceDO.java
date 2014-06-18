@@ -22,6 +22,7 @@ public class UserTagsResourceDO implements Serializable{
 	private List<String> aggregator;
 	
 	private List<String> publisher;
+	private int totalHintCount;
 	
 	public String getGooruOid() {
 		return gooruOid;
@@ -70,6 +71,12 @@ public class UserTagsResourceDO implements Serializable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public int getTotalHintCount() {
+		return totalHintCount;
+	}
+	public void setTotalHintCount(int totalHintCount) {
+		this.totalHintCount = totalHintCount;
 	}
 	
 	
