@@ -668,7 +668,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		if (AppClientFactory.isAnonymous()){
 			changeStatusButton.setVisible(false);
 		}else{
-			changeStatusButton.setVisible(true);
+			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+				changeStatusButton.setVisible(true);
+			}
 		}
 	}
 }
