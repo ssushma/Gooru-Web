@@ -8,9 +8,12 @@
         <g:HTMLPanel styleName="{StudyStyle.hover-section}">
           <g:HTMLPanel styleName="{StudyStyle.overlayBg}" ui:field="classTitle"></g:HTMLPanel>
         </g:HTMLPanel>
-        <g:HTMLPanel styleName="{StudyStyle.h4}" ui:field="assignmentsCount"></g:HTMLPanel>
+        <g:HTMLPanel>
         <g:Image styleName="{StudyStyle.profileImage}" ui:field="imgUserProfile"></g:Image>
         <g:HTMLPanel styleName="{StudyStyle.profileImageText}" ui:field="ownerName"></g:HTMLPanel>
-        <g:HTMLPanel styleName="{StudyStyle.h4}" ui:field="assignmentsCounter"></g:HTMLPanel>        
+        <g:HTMLPanel styleName="{StudyStyle.h4}" ui:field="assignmentsCounter"></g:HTMLPanel>  
+		<div style="float: left; height: 24px; margin-left: 8px; font-size: 16px; font-weight: normal; margin-top: 5px; border-right: 1px solid #999999;margin-bottom: 5px;"></div>  
+        <g:HTMLPanel styleName="{StudyStyle.h4}" ui:field="assignmentsCount"></g:HTMLPanel>   
+        </g:HTMLPanel> 
       </gg:HTMLEventPanel>
 </ui:UiBinder>
