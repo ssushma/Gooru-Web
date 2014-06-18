@@ -1432,6 +1432,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
 			if("tags".equalsIgnoreCase(tabValue))
 			{
+				
 				setTab(tagTabVc);
 				
 			}
@@ -1599,12 +1600,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	public void buttonDisable()
 	{
-		if(collectionHandler!=null) {
-			collectionHandler.removeHandler();
-		}
-		if(followingHandler!=null) {
-			followingHandler.removeHandler();
-		}
+		try {
+			if(collectionHandler!=null) {
+				collectionHandler.removeHandler();
+			}
+		 } catch (AssertionError ae) { }
+		try {
+			if(followingHandler!=null) {
+				followingHandler.removeHandler();
+			}
+		} catch (AssertionError ae) { }
+		
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
 			collectionsTabVc.setEnabled(false);
@@ -1634,9 +1640,13 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}
 	public void buttonDisableCickOnFollow(int totalCount)
 	{
-		if(follwerHandler!=null) {
-			follwerHandler.removeHandler();
-		}
+		try {
+			if(follwerHandler!=null) {
+				follwerHandler.removeHandler();
+			}
+		}catch (AssertionError ae) {}
+			 
+			 
 		if(totalCount==0)
 		{
 			followersTabVc.setEnabled(false);
@@ -1653,9 +1663,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 }
 	public void buttonDisableOnTags(int totalCount)
 	{
-		if(tagHandler!=null) {
-			tagHandler.removeHandler();
-		}
+		try{
+			if(tagHandler!=null) {
+				tagHandler.removeHandler();
+			}
+		}catch (AssertionError ae) { }
 		
 		if(totalCount==0)
 		{
