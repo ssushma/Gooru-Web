@@ -612,6 +612,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		attemptAnswersMap.clear();
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		resetAnswerLists();
+		setCollectionScore(0);
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
 		
 	}
