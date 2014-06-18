@@ -39,7 +39,7 @@
 					ui:field="editReviewText"></g:TextArea>
 					 <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
   					 <g:Label styleName="{style.errorLblBottomText}" ui:field="errorLbl"></g:Label>
-				<div style="margin-left: 64%;">
+				<div style="margin-left: 66%;margin-top:4px;">
 					<g:Button styleName="primary" ui:field="editReviewBtn"></g:Button>
 					<g:Button styleName="secondary {style.posValue}" ui:field="cancelReviewBtn">Cancel</g:Button>
 				</div>

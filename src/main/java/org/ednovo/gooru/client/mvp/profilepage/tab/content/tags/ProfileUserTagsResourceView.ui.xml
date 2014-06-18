@@ -9,7 +9,7 @@
 	<g:HTMLPanel styleName="{ProfilePageTagStyle.contentContainer}">
 		<g:Label styleName="{ProfilePageTagStyle.backlink}" ui:field="tagMessage" />
 		<g:HTMLPanel styleName="{ProfilePageTagStyle.content-inner}">
-			<g:HTMLPanel styleName="{ProfilePageTagStyle.tagBg}">
+			<g:HTMLPanel styleName="{ProfilePageTagStyle.tagBg}" ui:field="tagContainer">
 				<g:HTMLPanel styleName="{ProfilePageTagStyle.tagTitle}">
 					<g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagType"></g:Label>
 				</g:HTMLPanel>
@@ -17,10 +17,13 @@
 					<g:Label styleName="{ProfilePageTagStyle.taglabel}" ui:field="tagCount"></g:Label>
 				</g:HTMLPanel>
 			</g:HTMLPanel>
-
+		<g:ScrollPanel ui:field="tagScrollPanel" styleName="{ProfilePageTagStyle.scrollStyle}">
 			<g:HTMLPanel styleName="{ProfilePageTagStyle.tagresults}"
 				ui:field="userTagsResourceContainerConatiner"></g:HTMLPanel>
+			</g:ScrollPanel>
 		</g:HTMLPanel>
+		
 	</g:HTMLPanel>
+	
 </g:HTMLPanel>
 </ui:UiBinder> 

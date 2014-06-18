@@ -678,8 +678,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 							@Override
 							public void onSuccess(CollectionDo result) {
 								final boolean isSharable;
-								System.out.println("result::"+result.getSharing());
-								System.out.println("share::"+share);
 								if (result.getSharing().equalsIgnoreCase("private")) {
 									socialShareLinksView.getshareLinkTxtBox().addStyleName(ShelfCBundle.INSTANCE.css().shareLinkBoxDisabled());
 									shareLinkFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
@@ -693,17 +691,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 									shareLinkFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 									isSharable = true;
 								}
-								/*if(result.getSharing().equalsIgnoreCase("private") || result.getSharing().equalsIgnoreCase("anyonewithlink")){
-									if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus().getValue()!=null){
-										if(!share.equalsIgnoreCase("public")){
-											System.out.println("INI");
-											publishedPanel.setVisible(false);
-											rbPublic.setVisible(true);
-											lblPublishPending.setVisible(false);
-										}
-										    
-									}
-								}*/
 								if(result.getSharing().equalsIgnoreCase(share)){
 									publishedPanel.setVisible(false);
 									rbPublic.setVisible(true);
@@ -716,6 +703,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 								
 								if(result!=null && result.getPublishStatus()!=null && result.getPublishStatus().getValue()!=null){
 									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),result.getPublishStatus().getValue(),true));
+								}else{
+									AppClientFactory.fireEvent(new CollectionAssignShareEvent(result.getSharing(),null,true));
 								}
 								AppClientFactory.fireEvent(new EmbedEnableEvent(isSharable));
 

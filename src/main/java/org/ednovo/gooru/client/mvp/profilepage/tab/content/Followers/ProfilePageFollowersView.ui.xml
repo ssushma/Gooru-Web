@@ -7,7 +7,10 @@
 	    <g:InlineLabel ui:field="followersTextMessage"></g:InlineLabel> 
 	     <g:InlineLabel ui:field="followersTextMessageNormal"></g:InlineLabel>
 	</g:HTMLPanel>
-	<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="followersUserConatiner">
+	<g:ScrollPanel ui:field="followerScrollPanel" styleName="{ProfilePageStyle.scrollStyle}">
+		<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="followersUserConatiner">
 		</g:HTMLPanel>
+	</g:ScrollPanel>
+	
 	</g:HTMLPanel>
 </ui:UiBinder> 

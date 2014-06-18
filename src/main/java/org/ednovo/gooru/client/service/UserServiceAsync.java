@@ -95,9 +95,9 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void updatePartyCustomField(String gooruUid,String optionKey,String optionValue,AsyncCallback<Void> callback);
    
-   void getFollowedOnUsers(String gooruUid,AsyncCallback<List<UserFollowDo>> callback);
+   void getFollowedOnUsers(String gooruUid,String offset, String limit,AsyncCallback<List<UserFollowDo>> callback);
    
-   void getFollowedByUsers(String gooruUid,AsyncCallback<List<UserFollowDo>> callback);
+   void getFollowedByUsers(String gooruUid,String offset, String limit,AsyncCallback<List<UserFollowDo>> callback);
    
    void followUser(String gooruUid,AsyncCallback<Void> callback);
    
@@ -105,7 +105,7 @@ public interface UserServiceAsync extends BaseServiceAsync {
    
    void isFollowedUser(String gooruUid,AsyncCallback<IsFollowDo> callback);
    
-   void getUserAddedContentTagSummary(String tagGooruOid,AsyncCallback<List<UserTagsDo>> callback);
+   void getUserAddedContentTagSummary(String tagGooruOid,String offset, String limit,AsyncCallback<List<UserTagsDo>> callback);
    
-   void getResourcesByTag(String tagGooruOid,AsyncCallback<List<UserTagsResourceDO>> callback);
+   void getResourcesByTag(String tagGooruOid,String offset,String limit,AsyncCallback<List<UserTagsResourceDO>> callback);
 }

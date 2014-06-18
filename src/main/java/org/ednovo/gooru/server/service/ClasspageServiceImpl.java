@@ -956,7 +956,11 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}else if(sortingOrder.equalsIgnoreCase("desc")){
 				sortingOrder="sequence-desc";
 			}else if(sortingOrder.equalsIgnoreCase("recent")){
+
 				sortingOrder="recent";
+			}else if(sortingOrder.equalsIgnoreCase("duedate")){
+				sortingOrder="due-date";
+
 			}
 			else if(sortingOrder.equalsIgnoreCase("all"))
 			{

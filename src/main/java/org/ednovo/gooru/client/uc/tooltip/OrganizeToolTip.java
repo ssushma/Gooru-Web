@@ -26,12 +26,12 @@
 package org.ednovo.gooru.client.uc.tooltip;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateFolderItemEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -145,7 +145,9 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 			@Override
 			public void onClick(ClickEvent event) {
 				if (!AppClientFactory.isAnonymous()){
-					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION);
+					Map<String, String> params= new HashMap<String, String>();
+					params.put("myCollection", "true");
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.COLLECTION,params);
 				}
 			}
 		});
@@ -177,6 +179,7 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 				folderDo.setType("folder");
 //				AppClientFactory.fireEvent(new UpdateFolderItemEvent(folderDo, parentId, params));
 				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params));
+				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
 			}
 			@Override
 			public void onFailure(Throwable caught) {

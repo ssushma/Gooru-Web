@@ -40,7 +40,7 @@
 			<g:Label ui:field="alertMessageHeaderField"/>	
 		</g:FlowPanel>
 		<g:FlowPanel ui:field="contentPanel" styleName="{style.content}">
-			<g:Label styleName="{style.contentStyle}" ui:field="alertMessageField"/>
+			<g:HTML styleName="{style.contentStyle}" ui:field="alertMessageField"/>
 		<g:FlowPanel styleName="{style.okButton}">
 			<g:Button ui:field="okButton"/>
 		</g:FlowPanel>
