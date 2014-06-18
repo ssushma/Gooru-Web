@@ -47,7 +47,7 @@ public class ResourceMoreInfoVc extends SearchMoreInfoVc<ResourceSearchResultDo,
 	private static final String RESOURCE_NOT_IN_COLLECTION = GL1469+" ";
 	
 //	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = "This resource is used in";
-	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = GL1470+GL_SPL_SEMICOLON;
+	private static final String COLLECTIONS_THAT_USE_THIS_RESOURCE = GL1470;
 	/**
 	 * Class constructor
 	 * @param searchDragController instance of {@link ResourceDragController}
