@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.deserializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -38,9 +37,7 @@ import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -65,12 +62,12 @@ public class SearchFilterDeSerialier extends DeSerializer {
 		//COLLECTION_CATEGORIES.put("NoQuestion", "None (___)");
 		//COLLECTION_CATEGORIES.put("all", "Mixed (both Quizzes and___)");
 
-		RESOURCE_CATEGORIES.put("Video", "Videos");
+		RESOURCE_CATEGORIES.put("Video", "Video");
 		RESOURCE_CATEGORIES.put("Webpage", "Webpage");
-		RESOURCE_CATEGORIES.put("Interactive", "Interactives");
-		RESOURCE_CATEGORIES.put("Question", "Questions");
-		RESOURCE_CATEGORIES.put("Image", "Images");
-		RESOURCE_CATEGORIES.put("Text", "Texts");
+		RESOURCE_CATEGORIES.put("Interactive", "Interactive");
+		RESOURCE_CATEGORIES.put("Question", "Question");
+		RESOURCE_CATEGORIES.put("Image", "Image");
+		RESOURCE_CATEGORIES.put("Text", "Text");
 		RESOURCE_CATEGORIES.put("Audio", "Audio");
 		/*RESOURCE_CATEGORIES.put("Other", "Other");*/
 	}
