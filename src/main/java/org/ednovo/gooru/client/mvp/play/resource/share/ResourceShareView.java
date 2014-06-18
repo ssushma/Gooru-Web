@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.play.collection.share.email.CollectionEmailSh
 import org.ednovo.gooru.client.mvp.play.collection.share.email.SentEmailSuccessVc;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -136,11 +137,13 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		SocialShareWidget swidget= new SocialShareWidget(collectionItemDo.getResource().getDescription(),collectionItemDo.getResource().getThumbnails().getUrl(),collectionItemDo.getCategory(),collectionItemDo) {
 			@Override
 			public void onTwitter() {
+				getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle()).replaceAll("\\+", "%2B") +": " + shareBitlyUrl, "_blank", "width=600,height=300");
 			}
 			
 			@Override
 			public void onFacebook() {
+				getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(removeHtmlTags(collectionItemDo.getResource().getTitle()),originalUrl,getResourceDescription(),getThumbnailUrl());
 			}
 
@@ -153,6 +156,13 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 					public void sendEmail(String fromEmail, String toEmail,
 							String copyEmail, String subject, String message) {
 						getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
+						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,true);
+					}
+
+					@Override
+					public void closeEmailPopup() {
+						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
+						
 					}
 				};
 				emailShareView.show();

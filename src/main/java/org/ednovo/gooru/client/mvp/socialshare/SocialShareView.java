@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
@@ -447,6 +448,7 @@ IsSocialShareView, MessageProperties {
 		MixpanelUtil.Click_On_FaceBook();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
+				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 //				Window.open(
 //						"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
@@ -456,6 +458,7 @@ IsSocialShareView, MessageProperties {
 //								"_blank", "width=626,height=436");
 			}
 			else{
+				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				String title=GL1085+socialDo.getTitle()+" "+GL1433;
 				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
 //				Window.open(
@@ -467,6 +470,7 @@ IsSocialShareView, MessageProperties {
 			}
 		}
 		else{
+			triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 			SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 //			Window.open(
 //					"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
@@ -484,11 +488,14 @@ IsSocialShareView, MessageProperties {
 		MixpanelUtil.Click_On_Twitter();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
+				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + "Gooru - "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
 			}else{
+				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + "Check out "+socialDo.getTitle().replaceAll("\\+", "%2B")+ "'s Gooru Profile Page - " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 			}
 		}else{
+			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 			Window.open("http://twitter.com/intent/tweet?text=" + "Gooru - "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 		}
 	}
@@ -503,7 +510,11 @@ IsSocialShareView, MessageProperties {
 				@Override
 				public void onSuccess(SettingDo result) {
 					socialDo.setEmailId(result.getExternalId());
-					EmailShareUc emailShare=new EmailShareUc(socialDo);
+					EmailShareUc emailShare=new EmailShareUc(socialDo){
+						public void triggerEmailEvent(boolean confirmStaus){
+							triggerShareDataEvent(PlayerDataLogEvents.MAIL,confirmStaus);
+						}
+					};
 					emailShare.show();
 					emailShare.center();
 				}
@@ -610,5 +621,8 @@ IsSocialShareView, MessageProperties {
 	public void setShareDo(SocialShareDo shareDo){
 		this.socialDo=shareDo;
 		setUrl(socialDo.getThumbnailurl());
+	}
+	public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+		
 	}
 }

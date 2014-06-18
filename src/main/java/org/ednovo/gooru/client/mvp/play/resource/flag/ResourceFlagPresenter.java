@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresente
 import org.ednovo.gooru.client.mvp.play.resource.ResourcePlayerPresenter;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 
@@ -80,7 +81,8 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 	@Override
 	public void createReport(final String associatedGooruOid, String freeText,
 			ArrayList<String> contentReportList,
-			String deleteContentReportGooruOids) {
+			String deleteContentReportGooruOids,String collectionItemId) {
+			ItemFlagDataLogEvent( associatedGooruOid, freeText, contentReportList,collectionItemId);
 			playerAppService.createContentReport(associatedGooruOid, freeText, contentReportList, deleteContentReportGooruOids, new SimpleAsyncCallback<ContentReportDo>() {
 			@Override
 			public void onSuccess(ContentReportDo result) {
@@ -122,8 +124,16 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 			}
 			}
 		});
-
-		
+	}
+	
+	public void ItemFlagDataLogEvent(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String collectionItemId){
+	   if(isPreviewPlayer){
+		   previewPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
+	   }else if(isCollectionPlayer){
+		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
+	   }else if(isResourcePlayer){
+		   resourcePlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId); 
+	   }
 	}
 	public HTMLEventPanel getResourceFlagCloseButton()
 	{

@@ -78,7 +78,7 @@ public interface PlayerAppService extends BaseService {
 	
 	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent);
 	
-	public String createSessionTracker(String collectionGooruOid);
+	public String createSessionTracker(String collectionGooruOid,String sessionId);
 	
 	public String updateSessionInCollection(String sessionTrackerId);
 	

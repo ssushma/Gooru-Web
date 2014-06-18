@@ -311,6 +311,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		this.collectionFormInPlayPresenter=collectionFormInPlayPresenter;
 		this.resourceFlagPresenter=resourceFlagPresenter;
 		resourceFlagPresenter.setResourcePlayerPresenter(this);
+		resourceSharePresenter.setResourcePlayerPresenter(this);
 		addResourceCollectionPresnter.getAddCollectionViewButton().setVisible(false);
 		resoruceMetadataPresenter.setResourcePlayerPresenter(this, false);
 	}
@@ -603,7 +604,7 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		});
 	}
 	public void createSession(String collectionGooruOid){
-		this.playerAppService.createSessionTracker(collectionGooruOid, new SimpleAsyncCallback<String>() {
+		this.playerAppService.createSessionTracker(collectionGooruOid,null, new SimpleAsyncCallback<String>() {
 			@Override
 			public void onSuccess(String sessionId) {
 				ResourcePlayerPresenter.this.sessionId=sessionId;
@@ -999,6 +1000,25 @@ public class ResourcePlayerPresenter extends BasePlacePresenter<IsResourcePlayer
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}
 
+	public void triggerItemFlagDataLogEvent(Long startTime,String itemType,String flagText,ArrayList<String> contentReportList,String itemGooruOid,String collectionItemId){
+		JSONObject collectionDataLog=new JSONObject(); 
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_FLAG));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemFlagDataLogPayLoadObject(itemType,flagText,contentReportList));
+		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
+		String path="";
+		
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemGooruOid, "", classpageId, "", PlayerDataLogEvents.STUDY, path, null, PlayerDataLogEvents.COLLECTION_FLAG_URL));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}
+	public void triggerShareDataLogEvent(String resourceGooruOid, String itemType, String shareType, boolean confirmStatus){
+		PlayerDataLogEvents.triggerItemShareDataLogEvent(resourceGooruOid, "", "", "", sessionId, itemType, shareType, confirmStatus, PlayerDataLogEvents.STUDY, "", null);
+	}
 	/**
 	 * Gets the respective resource ratings rated by the user.
 	 * @param resourceGooruId {@link String} 

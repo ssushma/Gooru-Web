@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEventHandler;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 
 public interface PreviewHomeUiHandlers extends BaseUiHandlers,OpenReviewPopUpEventHandler{
 	void scrollStudyPageEndPage(); 
@@ -51,5 +52,6 @@ public interface PreviewHomeUiHandlers extends BaseUiHandlers,OpenReviewPopUpEve
 	*/
 	
 	void openReviewPopUp(String assocGooruOId, String title);
+	void triggerCollectionShareDataEvent(String collectionId,String itemType,String shareType,boolean confirmStatus);
 	
 }

@@ -185,6 +185,7 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 
 	private void closeEmailpanel() {
 		this.hide();
+		closeEmailPopup();
 	}
 	
 	@UiHandler("btnSend")
@@ -379,4 +380,5 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 	
 	
 	public  abstract void sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message);
+	public abstract void closeEmailPopup();
 }

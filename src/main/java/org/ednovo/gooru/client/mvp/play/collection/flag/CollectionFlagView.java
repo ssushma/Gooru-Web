@@ -170,19 +170,19 @@ public class CollectionFlagView extends
 		private String Resourcetitle = "";
 		private String resourceId = "";
 		private int resourceItemSize;
+		private String collectionItemId="";
 
-		public OnDropdownItemClick(String Resourcetitle, String resourceId,
-				int resourceItemSize) {
+		public OnDropdownItemClick(String Resourcetitle, String resourceId,String collectionItemId, int resourceItemSize) {
 			this.Resourcetitle = Resourcetitle;
 			this.resourceId = resourceId;
 			this.resourceItemSize = resourceItemSize;
-
+			this.collectionItemId=collectionItemId;
 		}
-
 		@Override
 		public void onClick(ClickEvent event) {
 			dropdownListPlaceHolder.setHTML(Resourcetitle);
 			dropdownListPlaceHolder.getElement().setAttribute("id", resourceId);
+			dropdownListPlaceHolder.getElement().setAttribute("cid", collectionItemId);
 			dropdownListPlaceHolder.getElement().setAttribute("itemsSize",
 					"" + resourceItemSize);
 			
@@ -406,8 +406,9 @@ public class CollectionFlagView extends
 				dropDownListItemTitle.setStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().dropdownListItemContainer());
 
 				dropdownListContainer.add(dropDownListItemTitle);
-				dropDownListItemTitle.addClickHandler(new OnDropdownItemClick(Resourcetitle,collectionItem.getResource().getGooruOid(),resourcesList.size()));
+				dropDownListItemTitle.addClickHandler(new OnDropdownItemClick(Resourcetitle,collectionItem.getResource().getGooruOid(),collectionItem.getCollectionItemId(),resourcesList.size()));
 				dropdownListPlaceHolder.getElement().setAttribute("id", collectionItem.getResource().getGooruOid());
+				dropdownListPlaceHolder.getElement().setAttribute("cid", collectionItem.getCollectionItemId());
 			
 			}
 		}
@@ -455,9 +456,10 @@ public class CollectionFlagView extends
 			}
 			
 			if(resourceCheckBox1.isChecked()||resourceCheckBox2.isChecked()||resourceCheckBox3.isChecked()||resourceCheckBox4.isChecked()){
-			getUiHandlers().createCollectionContentReport(dropdownListPlaceHolder.getElement().getId(),resourceDescTextArea.getText(),reourceContentReportList,getDeleteContentResourceGooruOid);
+				String collectionItemId=dropdownListPlaceHolder.getElement().getAttribute("cid");
+				getUiHandlers().createCollectionContentReport(dropdownListPlaceHolder.getElement().getId(),resourceDescTextArea.getText(),reourceContentReportList,getDeleteContentResourceGooruOid,true,collectionItemId);
 			}else{
-				getUiHandlers().createCollectionContentReport(collectionGooruOid, collectionDescTextArea.getText(), contentReportList, getDeleteContentGooruOid);
+				getUiHandlers().createCollectionContentReport(collectionGooruOid, collectionDescTextArea.getText(), contentReportList, getDeleteContentGooruOid,false,null);
 			}
 			
 	
