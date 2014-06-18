@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
@@ -405,14 +406,17 @@ IsSocialShareSmallView, MessageProperties {
 		MixpanelUtil.Click_On_FaceBook();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
+				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
 			else{
 				String title=GL1085+socialDo.getTitle()+" "+GL1433;
+				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
 		}
 		else{
+			triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 			SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 		}
 	}
@@ -424,11 +428,14 @@ IsSocialShareSmallView, MessageProperties {
 		MixpanelUtil.Click_On_Twitter();
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)){
 			if(socialDo.getIsSearchShare()){
+				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + GL0733+" "+GL_GRR_Hyphen+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
 			}else{
+				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 				Window.open("http://twitter.com/intent/tweet?text=" + GL1085+socialDo.getTitle().replaceAll("\\+", "%2B")+ GL1086+" "+GL_GRR_Hyphen+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 			}
 		}else{
+			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
 			Window.open("http://twitter.com/intent/tweet?text=" + GL0733+" "+GL_GRR_Hyphen+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 		}
 	}
@@ -443,7 +450,11 @@ IsSocialShareSmallView, MessageProperties {
 				@Override
 				public void onSuccess(SettingDo result) {
 					socialDo.setEmailId(result.getExternalId());
-					EmailShareUc emailShare=new EmailShareUc(socialDo);
+					EmailShareUc emailShare=new EmailShareUc(socialDo){
+						public void triggerEmailEvent(boolean confirmStaus){
+							triggerShareDataEvent(PlayerDataLogEvents.MAIL,confirmStaus);
+						}
+					};
 					emailShare.show();
 					emailShare.center();
 				}
@@ -501,6 +512,10 @@ IsSocialShareSmallView, MessageProperties {
 
 	public SimpleAsyncCallback<SettingDo> getUserprofileAsyncCallback() {
 		return userProfileAsyncCallback;
+	}
+	
+	public void triggerShareDataEvent(String shareType,boolean confirmStatus){
+		
 	}
 
 	/**

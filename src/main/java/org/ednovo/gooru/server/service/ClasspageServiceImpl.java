@@ -956,7 +956,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}else if(sortingOrder.equalsIgnoreCase("desc")){
 				sortingOrder="sequence-desc";
 			}else if(sortingOrder.equalsIgnoreCase("recent")){
-				sortingOrder="recent-desc";
+				sortingOrder="recent";
 			}
 			else if(sortingOrder.equalsIgnoreCase("all"))
 			{
@@ -976,10 +976,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}else{
 			url=url+"&orderBy=sequence";
 		}
-		if(studyStatus!=null){
-			url=url+"&status="+studyStatus;
-		}
+			if(studyStatus!=null){
+				url=url+"&status="+studyStatus;
+			}
+			System.out.println("getClasspageItems API:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			return deserializeClassPageItems(jsonRep);

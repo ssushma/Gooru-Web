@@ -250,6 +250,7 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 	public void onCancelClickEvent(ClickEvent event) {
 		this.hide();
 		String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
+		triggerEmailEvent(false);
 		if(!placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)|| !placeToken.equals(PlaceTokens.RESOURCE_PLAY)) {
 			Window.enableScrolling(true);
 		}
@@ -350,6 +351,7 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 												@Override
 												public void onSuccess(Void result) {
 													hide();
+													triggerEmailEvent(true);
 													String placeToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 													if(!(placeToken.equals(PlaceTokens.COLLECTION_PLAY) || !placeToken.equals(PlaceTokens.PREVIEW_PLAY)||placeToken.equals(PlaceTokens.RESOURCE_PLAY))) {
 														Window.enableScrolling(true);
@@ -505,6 +507,10 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 		termsOfUse.setSize("902px", "300px");
 		termsOfUse.center();
 		termsOfUse.getElement().getStyle().setZIndex(999999);//To display the view in collection player.
+	}
+	
+	public void triggerEmailEvent(boolean confirmStaus){
+		
 	}
 	
 }

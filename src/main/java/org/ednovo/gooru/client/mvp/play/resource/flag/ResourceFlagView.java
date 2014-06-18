@@ -179,7 +179,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		
 			contentReportList.add("other");
 		}
-		getUiHandlers().createReport(resourceGooruId, descriptionTextArea.getText(), contentReportList, deleteContentReportGooruOids);
+		getUiHandlers().createReport(resourceGooruId, descriptionTextArea.getText(), contentReportList, deleteContentReportGooruOids,"");
 		//getThankYouPopUp();
 		//resetFlagData();
 	}

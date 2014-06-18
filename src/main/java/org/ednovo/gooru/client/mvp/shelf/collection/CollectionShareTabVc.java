@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ShareViewUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -809,7 +810,12 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		shareDo.setOnlyIcon(false);
 		shareDo.setIsSearchShare(false);
 		contentpanel.clear();
-		SocialShareView socialView = new SocialShareView(shareDo);
+		SocialShareView socialView = new SocialShareView(shareDo){
+			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+				String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id");
+				PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", "", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", collectionId, "shelf");
+			}
+		};
 		contentpanel.add(socialView);
 	}
 
@@ -831,7 +837,11 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		shareDo.setDecodeRawUrl(socialShareLinksView.getshareLinkTxtBox().getText());
 		shareDo.setIsSearchShare(false);
 		contentpanel.clear();
-		SocialShareView socialView = new SocialShareView(shareDo);
+		SocialShareView socialView = new SocialShareView(shareDo){
+			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+				
+			}
+		};
 		contentpanel.add(socialView);
 	}
 	
