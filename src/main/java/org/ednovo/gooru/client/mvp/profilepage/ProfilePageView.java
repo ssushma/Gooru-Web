@@ -1379,10 +1379,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
-		int totalcount=userFollowDo.size();
-		buttonDisableCickOnFollow(totalcount);
+		
+		buttonDisableCickOnFollow(userFollowDo.size());
 		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(totalcount+"");
+		if(userFollowDo.size()!=0){
+			followersTabVc.setLabelCount(userFollowDo.get(0).getTotalHintCount()+"");
+		}
+		else
+		{
+			followersTabVc.setLabelCount(userFollowDo.size()+"");
+		}
+			
 	
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
