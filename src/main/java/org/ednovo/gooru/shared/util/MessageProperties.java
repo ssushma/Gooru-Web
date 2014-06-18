@@ -2477,7 +2477,7 @@ public interface MessageProperties {
     	String GL1943 = "Publish in Progress";
     	
     	
-    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	String GL1945 = "Ready to get started?";
     	
     	String GL1946 = "View All";
       	String GL1947 = "All,Order Ascending,Order Descending";
@@ -2497,8 +2497,8 @@ public interface MessageProperties {
     	String GL1957 = "<b style='text-align: center;'><div>Sorry. It looks like there aren't any suggestions for this collection. </div><br/> <div>Try using the search bar below.</div><br/>   <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
       	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion(s) for this collection.</div><br/> <div>Use the search bar below to find more!</div><br/>    <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
 
-      	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
-      	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
+      	String GL1959 = "Add both a due date and directions for each assignment do that students know exactly what to do.";
+      	String GL1960 = "Define the sequence of assignments that your students will see when they access this class.";
       	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
       	String GL1962 = "You are now following";
       	
