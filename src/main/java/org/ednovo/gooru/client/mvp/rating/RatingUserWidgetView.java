@@ -230,6 +230,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 			public void onMouseOver(MouseOverEvent event) {
 				if(starRatingsDo.getCreator().getUsername().equals(AppClientFactory.getLoggedInUser().getUsername())) {
 					editReview.setVisible(true);
+					deleteReview.setVisible(true); 
 				}
 				
 				if(!AppClientFactory.isAnonymous() && AppClientFactory.getLoggedInUser().getUserRoleSetString().contains(CONTENT_ADMIN_ROLE)){
@@ -621,6 +622,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            	reviewContainer.remove(deleteIndex);
 		            	reviewContainer.setVisible(false);
 		            	AppClientFactory.fireEvent(new UpdateRatingOnDeleteEvent(true)); 
+		            	AppClientFactory.fireEvent(new UpdateRatingsGraphEvent(starRatingsDo.getAssocGooruOid())); 
 					
 		            }
 		        };

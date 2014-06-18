@@ -22,50 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
-
-import org.ednovo.gooru.client.child.IsChildView;
-
 /**
  * 
- * @fileName : IsCollectionsView.java
- *
- * @description : 
- *
- *
- * @version : 1.0
- *
- * @date: Apr 17, 2013
- *
- * @Author Gooru Team 
- *
- * @Reviewer:
  */
-public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
-	public void updateDirection(String directionText);
-	public void updateDueDate(String dueDate);
-	public void removeClasspageItemWidget();
-	public void updateCollectionStatus(String readStatus);
-	
-	/**
-	 * @function setButtonVisibility 
-	 * 
-	 * @created_date : Jun 18, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void setButtonVisibility();
-	
-}
+package org.ednovo.gooru.client.mvp.search.event;
 
+
+import com.google.gwt.event.shared.GwtEvent;
+
+/**
+ * @author Search Team
+ * 
+ */
+public class SetMarkButtonEvent extends GwtEvent<SetMarkButtonHandler> {
+
+	public static final Type<SetMarkButtonHandler> TYPE = new Type<SetMarkButtonHandler>();
+
+	/**
+	 * Class constructor
+	 */
+	public SetMarkButtonEvent() {
+	}
+
+	@Override
+	public Type<SetMarkButtonHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetMarkButtonHandler handler) {
+		handler.setVisibility();
+	}
+
+
+}
