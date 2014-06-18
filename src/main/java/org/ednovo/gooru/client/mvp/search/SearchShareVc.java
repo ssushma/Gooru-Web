@@ -96,7 +96,7 @@ public class SearchShareVc extends Composite implements MessageProperties {
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
 		shareViaText.setText(GL0638);
-		socialShareLinksView.getShareLbl().setText(GL0511);
+		socialShareLinksView.getShareLbl().setText(GL0511_2);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setFloat(Float.LEFT);
