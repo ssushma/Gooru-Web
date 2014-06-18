@@ -188,7 +188,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	@Override
 	public void onBind() {
 		super.onBind();
-		
 		setCollectionAsyncCallback(new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
@@ -563,6 +562,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			public void onSuccess(ArrayList<ClasspageItemDo> classpageItemsList) {
 				if(classpageItemsList!=null){
 					getView().displayAssignmentPath(classpageItemsList);
+					getClasspage();
 				}
 			}
 		});
