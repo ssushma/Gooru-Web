@@ -1487,3 +1487,27 @@ li.resources {
 .followButton{
 	
 }
+.followingBtn
+{
+color: #FFF;
+background-color: #1076BB;
+border-radius: 4px;
+padding: 6px 10px 6px 10px;
+font-size: 13px;
+padding-left: 33px;
+border: 1px solid #1076BB;
+font-family: Arial, sans-serif;
+background: #1076BB;
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4C98CC), to(#1076BB));
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -webkit-linear-gradient(top, #4C98CC, #1076BB);
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -moz-linear-gradient(top, #4C98CC, #1076BB);
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -ms-linear-gradient(top, #4C98CC, #1076BB);
+background: url('images/buttons/tick-mark.png') 8px 6px no-repeat, -o-linear-gradient(top, #4C98CC, #1076BB);
+text-align: center;
+
+}
+
+.followingBtn:hover
+{
+	cursor: pointer;
+}

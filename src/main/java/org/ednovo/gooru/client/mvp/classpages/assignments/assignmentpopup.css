@@ -25,7 +25,7 @@
 
 .assignmentButtonsContainer {
 	float: left;
-	margin: 38px 0 15px 150px;
+	margin: 24px 0 15px 150px;
 }
 .navigateButtonsContainer{
 	float: left;
@@ -675,6 +675,15 @@
 	margin-top: 38px;
 	float: left;
 	margin-left: -19px;
+	font-size: 12px;
+}
+
+.subHeadingCollMsg{
+	text-align: center;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	float: left;
+	margin-left: 12px;
 	font-size: 12px;
 }
  

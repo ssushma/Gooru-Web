@@ -159,4 +159,24 @@ public interface IsProfilePageView extends IsViewWithHandlers<ProfilePageUiHandl
 	*/
 	
 	Button getUnFollowButton();
+	/**
+	 * @function getFollowingButton 
+	 * 
+	 * @created_date : Jun 13, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @return
+	 * 
+	 * @return : Button
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	Button getFollowingButton();
 }

@@ -57,6 +57,7 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ProfilePageDescriptionEditUc;
 import org.ednovo.gooru.client.uc.ProfilePageGradeLabel;
+import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -136,7 +137,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
-			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
+			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton,UnFollowButtonBlue;
 
 	/** 
 	 * This method is to get the followButton
@@ -255,7 +256,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private HandlerRegistration collectionHandler;
 	private HandlerRegistration followingHandler;
 	private HandlerRegistration follwerHandler;
-		
+	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	
 	ProfileUserTagsResourceView profileUserTagsResourceView = null;
 		private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -359,8 +361,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		followButton.setText(GL1935);
 		UnFollowButton.setText(GL1936);
-		
-		
+		UnFollowButtonBlue.setText(GL1895);
+		UnFollowButtonBlue.setVisible(false);
+		followButton.addMouseOverHandler(new MouseOverOnFollowToolTip());
+		UnFollowButton.addMouseOverHandler(new MouseOverOnUnFollowToolTip());
+		followButton.addMouseOutHandler(new MouseOutHideToolTip());
+		UnFollowButton.addMouseOutHandler(new MouseOutHideToolTip());
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -1279,6 +1285,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			gooruProfileOnOffContainer.setVisible(true);
 			followButton.setVisible(false);
 			UnFollowButton.setVisible(false);
+			
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1429,12 +1436,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			tagTabVc.setLabelCount(userTagsDo.size()+"");
 		}
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
-		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+		if(tabValue!=null || !"".equalsIgnoreCase("tabValue")){
 			if("tags".equalsIgnoreCase(tabValue))
 			{
-				
+				System.out.println("in ");
 				setTab(tagTabVc);
-				
+				tagTabVc.setSelected(true);
 			}
 		}
 		buttonDisableOnTags(userTagsDo.size());
@@ -1450,7 +1457,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void onClickFollowButton(ClickEvent event)
 	{
 		if(!AppClientFactory.isAnonymous()){
-		UnFollowButton.setVisible(true);
+		UnFollowButtonBlue.setVisible(true);
+		//UnFollowButton.setVisible(true);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}else{
@@ -1682,5 +1690,41 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 		}
 }
-	
+	@Override
+	public Button getFollowingButton() {
+		// TODO Auto-generated method stub
+		return UnFollowButtonBlue;
+	}
+	public class MouseOverOnFollowToolTip implements MouseOverHandler{
+
+	@Override
+		public void onMouseOver(MouseOverEvent event) {
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1936));
+		toolTipPopupPanelNew.setStyleName("");
+		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 0, event.getRelativeElement().getAbsoluteTop()+5);
+		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+		toolTipPopupPanelNew.show();
+	}
+	}
+	public class MouseOverOnUnFollowToolTip implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1935));
+		toolTipPopupPanelNew.setStyleName("");
+		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 0, event.getRelativeElement().getAbsoluteTop()+5);
+		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+		toolTipPopupPanelNew.show();
+	}
+	}
+	public class MouseOutHideToolTip implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelNew.hide();
+		}
+	}
 }
+	

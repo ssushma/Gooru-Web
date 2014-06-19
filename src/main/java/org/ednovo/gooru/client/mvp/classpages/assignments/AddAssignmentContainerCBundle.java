@@ -141,6 +141,7 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		String noCollectionMsgContainer();
 		String noCollectionMsgOuterContainer();
 		String emptyCollMsg();
+		String subHeadingCollMsg();
 		
 	}
 	@Source("assignmentpopup.css")
