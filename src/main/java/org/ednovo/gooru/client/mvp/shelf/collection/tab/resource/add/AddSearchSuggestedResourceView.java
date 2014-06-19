@@ -25,8 +25,10 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -34,6 +36,7 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
+import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
@@ -42,8 +45,10 @@ import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResource
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
+import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -72,6 +77,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract  class AddSearchSuggestedResourceView extends Composite implements MessageProperties{
@@ -207,7 +214,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				if(aggregatorData.endsWith(",")){
 					aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 				}
-				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
+				//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 			}
 			
 			if(resourceSearchResultDo.getPublisher()!=null){
@@ -224,11 +231,11 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				if(publisherData.endsWith(",")){
 					publisherData=publisherData.substring(0, publisherData.length()-1);
 				}
-				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			//	SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
 			}
-			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
+			renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
 			
-	        SearchUiUtil.renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
+	       renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
 			if (category.equalsIgnoreCase(VIDEO)) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 			} else if (category.equalsIgnoreCase(QUESTION)) {
@@ -272,7 +279,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			if(aggregatorData.endsWith(",")){
 				aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 			}
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
+		//	SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
 		if(resourceSearchResultDo.getPublisher()!=null){
@@ -289,11 +296,12 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			if(publisherData.endsWith(",")){
 				publisherData=publisherData.substring(0, publisherData.length()-1);
 			}
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
-		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
-        SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
+		renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
+		
+        renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 		} else if (category.equalsIgnoreCase(QUESTION)) {
@@ -422,5 +430,53 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		});
 		}
 		
+	}
+	
+	public static void renderMetaData(FlowPanel flowPanel, String data) {
+		renderMetaData(flowPanel, data, null, -1);
+	}
+	
+	public static void renderMetaData(FlowPanel flowPanel, List<String> datas, int wrapLength) {
+		if (datas == null) {
+			return;
+		}
+		renderMetaData(flowPanel, datas.size() > 0 ? datas.get(0) : null, null, wrapLength);
+		FlowPanel toolTipwidgets = new FlowPanel();
+		FlowPanel toolTipwidget1 = new FlowPanel();
+		for (int count = 0; count < datas.size(); count++) {
+			Label label = new Label(datas.get(count));
+			label.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+			if(count==0){
+				toolTipwidget1.add(label);
+			}else{
+				toolTipwidgets.add(label);
+			}
+			
+		}
+		if (datas != null && datas.size() > 1) {
+			Integer moreCount = datas.size() - 1;
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreCount), toolTipwidgets);
+			toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLinkPad());
+			flowPanel.add(toolTipUc);
+		}
+	}
+	public static void renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
+		if (suffix != null || StringUtil.hasValidString(data)) {
+			if (wrapLength > 0) {
+				data = StringUtil.truncateText(data, wrapLength);
+			}
+			if (suffix != null) {
+				data += suffix;
+			}
+			Label label = new Label(data);
+			label.getElement().setAttribute("style", "display:inline-block;float: left;");
+			renderMetaData(flowPanel, label);
+		}
+	}
+	public static void renderMetaData(FlowPanel flowPanel, IsWidget widget) {
+		if (flowPanel.iterator().hasNext()) {
+			flowPanel.add(new SeparatorUc(""));
+		}
+		flowPanel.add(widget);
 	}
 }

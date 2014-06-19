@@ -207,6 +207,12 @@
 	font-size:14px;
 	font-weight:bold;
 }
+.collectionTitlePPP {
+	font-size:14px;
+	font-weight:bold;
+	cursor:pointer;
+	color: #0066cc;
+}
 
 .collectionAuthor, .collectionDescription {
 	margin-bottom:7px;
