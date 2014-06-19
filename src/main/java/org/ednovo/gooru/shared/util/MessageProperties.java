@@ -2459,7 +2459,7 @@ public interface MessageProperties {
 
 
     	String GL1935 = "Follow";
-    	String GL1936 = "Stop Following";
+    	String GL1936 = "Unfollow";
     	String GL1937 = "Click a tag to view all of the resources you've tagged with this label.";
     	
     	
