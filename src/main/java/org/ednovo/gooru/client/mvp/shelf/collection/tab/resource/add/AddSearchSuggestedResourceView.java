@@ -25,10 +25,10 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.ednovo.gooru.client.CssTokens;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
@@ -38,7 +38,6 @@ import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
@@ -49,6 +48,8 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
+import org.ednovo.gooru.client.uc.StandardSgItemVc;
+import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -56,7 +57,6 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.gargoylesoftware.htmlunit.javascript.host.MouseEvent;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -81,6 +81,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
+
 public abstract  class AddSearchSuggestedResourceView extends Composite implements MessageProperties{
 	
 
@@ -92,6 +93,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	
 	@UiField SearchSuggestedResultWrapperCBundle res;
 	
+	@UiField UcCBundle res1;
 
 	@UiField HTML lblResourceTitle;
 	
@@ -147,9 +149,14 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	String collectionId = "";
 	private AddResourceView addresourceview;
 	
+	public static final String STANDARD_CODE = "code";
+
+	public static final String STANDARD_DESCRIPTION = "description";
+	
 	AddSearchSuggestedResourceView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
+		res1.css().ensureInjected();
 	}
 
 	public AddSearchSuggestedResourceView(
@@ -361,7 +368,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		resourceTitleContainer.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.renderSearch(category, resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME, resourceTitle, false,"","");
-		SearchUiUtil.renderStandards(standardsFloPanel, resourceSearchResultDo);
+	renderStandards(standardsFloPanel, resourceSearchResultDo);
 	}
 	
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
@@ -478,5 +485,41 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			flowPanel.add(new SeparatorUc(""));
 		}
 		flowPanel.add(widget);
+	}
+	public static void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
+		if (searchResultDo.getStandards() != null) {
+			List<Map<String, String>> standards = searchResultDo.getStandards();
+			Iterator<Map<String, String>> iterator = standards.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				String stdCode = standard.get(STANDARD_CODE);
+				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if (count > 1) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					standardsContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (standards.size()>18){
+				final Label left = new Label(GL_SPL_PLUS+(standards.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (searchResultDo.getStandards().size() > 2) {
+				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreStandardsCount), toolTipwidgets, standards);
+				toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLink());
+				standardsContainer.add(toolTipUc);
+				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+				
+			}
+		}
 	}
 }
