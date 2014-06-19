@@ -749,7 +749,7 @@ public interface MessageProperties {
 	//Add collection view messages.
 	
 	String GL0589 =	"View the collection in the My Collections tab";
-	String GL0590 =	"Add";
+	String GL0590 =	"Save to Customize";
 	String GL0591 ="Adding....";
 	String GL0592 ="Hide";
 	String GL0593 ="Rename (optional)";
