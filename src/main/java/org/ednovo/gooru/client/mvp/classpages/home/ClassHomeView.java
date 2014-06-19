@@ -196,7 +196,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private void setText() {
 		
 		setCreateClassVisibility();
-		disabledBtn.setText(GL1065);		
+		disabledBtn.setText(GL0213);		
 		joinedContainerTitle.getElement().setInnerHTML(GL1925);
 		teachContainerTitle.getElement().setInnerHTML(GL1927);		
 		txtCode.setPlaceholder(GL1785);		
