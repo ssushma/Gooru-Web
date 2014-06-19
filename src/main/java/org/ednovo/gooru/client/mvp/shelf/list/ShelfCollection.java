@@ -353,7 +353,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
 
 		@Override
-		public void updateShareType(String shareType,String publishStatus,boolean isPublish) {
+		public void updateShareType(String shareType,String publishStatus,boolean isPublish,CollectionDo collec) {
 			
            if(!isPublish){
         	   if(collectionDo.getType().equals("scollection") || collectionDo.getType().equals("collection")){
