@@ -183,7 +183,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	
 	public void setStaticTexts(){
-		addCollectionPopupHeader.setText(GL1375);
+		addCollectionPopupHeader.setText(GL1973);
 		//assignmentTitleLabel.setText(GL1376);
 //		dropdownListPlaceHolder.setText(GL1377);
 //		chooseCollectionHelpText.setText(GL1378);
