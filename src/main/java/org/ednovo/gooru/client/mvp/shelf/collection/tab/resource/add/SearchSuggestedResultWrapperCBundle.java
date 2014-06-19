@@ -69,6 +69,12 @@ public interface SearchSuggestedResultWrapperCBundle extends ClientBundle {
 		String suggestedResourceButtonContainer();
 		
 		String addSuggestedResourceOk();
+		
+		String blueLink();
+		
+		String blueLinkPad();
+		
+		String moreMetaLbl();
 	}
 
 	@Source("SearchSuggestedResultWrapper.css")
