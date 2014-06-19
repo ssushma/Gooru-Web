@@ -2517,7 +2517,7 @@ public interface MessageProperties {
     	String GL1972 = "Each of the dots below represents an assignment. Sequence your assignments in the order you want students to view them. This order will reflect in student view.";
     	String GL1973 = "Assign Collections";
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
-    	String GL1975 = "collections will be added to this class";
+    	String GL1975 = "will be added to this class";
     	
       	
       	 
