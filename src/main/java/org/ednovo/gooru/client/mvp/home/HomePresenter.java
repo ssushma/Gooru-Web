@@ -305,10 +305,10 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		
 		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
 			/**
-			 * Added to check for blocked user its a temporary code
+			 * Added to check for blocked user.
 			 */
-			if(userDo.getActive()==1){
-				//new AlertContentUc("To check ", "checking google sign in");
+			if(userDo.getActive()==0){
+				new AlertContentUc(GL1966, GL1938);
 			}
 			//----------------------------------------------------------------- //
 			
