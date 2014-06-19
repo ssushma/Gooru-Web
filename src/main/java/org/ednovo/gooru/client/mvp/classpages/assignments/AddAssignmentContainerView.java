@@ -87,7 +87,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Label /*dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,*/ 
-				addCollectionPopupHeader, addingText,emptyMsgLbl,subHeadingMsgLbl /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
+				addCollectionPopupHeader, addingText,emptyMsgLbl,subHeadingMsgLbl,displayCountLabel; /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/
 //	@UiField TextArea assignmentDirectionsTxtArea;
 	
 	@UiField FlowPanel popupContent;
@@ -165,6 +165,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				    if(parent != null)
 				    	parent.setSelected(false);   // TODO FIX ME
 				    item.setState(!item.getState(), false);
+				    setSelectedCollectionsCount(item.getChildCount());
 			    }else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
@@ -200,8 +201,15 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
-//			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
-//			chooseCollectionErrorLabel.setText("");
+			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
+		}
+	}
+	public void setSelectedCollectionsCount(int count){
+		if(count>0){
+			String label=count==1?count+" collection":count+" collections";
+			displayCountLabel.setText(label+" "+GL1975);
+		}else{
+			displayCountLabel.setText("");
 		}
 	}
 	protected void removePreviousSelectedItem(){
@@ -452,6 +460,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
+			 setSelectedCollectionsCount(foldersArrayList.size());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
@@ -563,6 +572,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		//addingText.setVisible(false);
 		addResourceBtnLbl.setVisible(true);
 		cancelResourcePopupBtnLbl.setVisible(true);
+		displayCountLabel.setText("");
 //		chooseCollectionErrorLabel.setText("");
 //		directionErrorLabel.setText("");
 //		assignmentDirectionsTxtArea.setText(GL1389);
