@@ -653,7 +653,7 @@ public interface MessageProperties {
 	String GL0508 = "See more";
 	String GL0509 = "See less";
 	String GL0510 = "View Collection Analytics";
-	String GL0511 = "Or share this with your friends and colleagues by copying and pasting this link";
+	String GL0511 = "Or, share this by copying and pasting this link.";
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
@@ -749,7 +749,7 @@ public interface MessageProperties {
 	//Add collection view messages.
 	
 	String GL0589 =	"View the collection in the My Collections tab";
-	String GL0590 =	"Add";
+	String GL0590 =	"Save to Customize";
 	String GL0591 ="Adding....";
 	String GL0592 ="Hide";
 	String GL0593 ="Rename (optional)";
@@ -822,7 +822,7 @@ public interface MessageProperties {
 	
 	//For Customize popup in collection preview.
 	String GL0635="Hang on just a second!"; //HTMLPanel
-	String GL0636="Save to customize"; //Button.
+	String GL0636="Save"; //Button.
 	String GL0637="View and customize this collection";//Button
 	
 	//For Share popup in collection preview.
@@ -959,13 +959,13 @@ public interface MessageProperties {
 		String GL0741 =	"Login to customize this collection";
 		String GL0742 =	"we save a copy of this collection....";
 		String GL0743 =	"Customize this collection!";
-		String GL0744 = "This is a pretty great collection, but I bet that you could make it even better! Click \"Save to Customize\" and we'll create a copy of this collection for you to tweak, personalize, or rebuild.";
+		String GL0744 = "This is a pretty great collection, but I bet that you could make it even better! Click \"Add\" and we'll create a copy of this collection for you to tweak, personalize, or rebuild.";
 
 		
 
 		String GL0745 = "Done";
 		String GL0749 = "Type and select standards for this collection.";
-		String GL0750 = "Add a teacher tip to show other teachers how you are using this collection and what you are using the collection for.";
+		String GL0750 = "Add a teacher tip to show other teachers how you are using this collection and what you are using the collection for. ";
 		//Teach
 		String GL0747 =	"Give your Class a name!";
 		String GL0746 =	"Please enter title.";
@@ -1695,7 +1695,7 @@ public interface MessageProperties {
 		String GL1363="Standard Description";
 		
 		String GL1364="Which folder would you like to move this collection to?";
-		String GL1365="We've saved a copy of this collection for you to use! Would you like to give it a new title?";
+		String GL1365="You can add your own copy of this collection to use. Would you like to give it a new title?";
 		String GL1366="This collection has been moved to ";
 		String GL1367="Collection Moved!";
 		
@@ -1785,7 +1785,7 @@ public interface MessageProperties {
 		String GL1418="The user has already registered successfully. Please use sign-in to log in to your account";
 		String GL1419="User Not Found. Please Try to Register";
 		String GL1420="Something Missing";
-		String GL1421="Save a copy of this collection";
+		String GL1421="Add a copy of this collection";
 		
 		//Library View
 		String GL1422="Mr";
