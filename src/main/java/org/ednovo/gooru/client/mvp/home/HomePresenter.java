@@ -308,7 +308,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			 * Added to check for blocked user its a temporary code
 			 */
 			if(userDo.getActive()==1){
-				new AlertContentUc("To check ", "checking google sign in");
+				//new AlertContentUc("To check ", "checking google sign in");
 			}
 			//----------------------------------------------------------------- //
 			
