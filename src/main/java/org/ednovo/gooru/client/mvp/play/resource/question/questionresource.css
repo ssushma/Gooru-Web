@@ -315,7 +315,13 @@
 	margin-right: 5px;
 	margin-top: -3px;
 }
-
+.resultPanelAnswerImageFIB{
+	display: inline-block;
+	float: none;
+	margin-left: 5px;
+	margin-right: 5px;
+	
+}
 .yesnotextContainer{
 	margin-bottom: 10px;
 	width: 100%;

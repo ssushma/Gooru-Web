@@ -64,5 +64,6 @@ public interface QuestionStyleResource extends CssResource {
 	public String resultPanelConatiner();
 	public String resultPanelText();
 	public String resultPanelAnswerImage();
+	public String resultPanelAnswerImageFIB();
 
 }
