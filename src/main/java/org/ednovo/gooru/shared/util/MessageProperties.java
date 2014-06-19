@@ -28,7 +28,7 @@ package org.ednovo.gooru.shared.util;
 
 public interface MessageProperties {
 	//Special Characters
-	String GL_SPL_SEMICOLON = ":";
+	String GL_SPL_SEMICOLON = ": ";
 	String GL_SPL_STAR = "*";
 	String GL_SPL_PLUS = "+";
 	String GL_SPL_QUESTION = "?";

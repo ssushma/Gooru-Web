@@ -426,8 +426,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 		discoverLink.getParent().setStyleName(
 				GooruCBundle.INSTANCE.css().menu());
 		
-		discoverLink.getParent().getElement().setAttribute("style", "border-right: 1px solid white;");
-		loggedInfoLbl.getParent().getElement().setAttribute("style", "border-right: 1px solid white;");
+/*		discoverLink.getParent().getElement().setAttribute("style", "border-right: 1px solid white;");
+		loggedInfoLbl.getParent().getElement().setAttribute("style", "border-right: 1px solid white;");*/
 
 		noneMenu = new Label();
 

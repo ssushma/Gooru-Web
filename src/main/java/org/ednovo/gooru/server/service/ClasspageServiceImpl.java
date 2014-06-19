@@ -891,7 +891,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	public ClasspageDo getClasspage(String classpageId){
 		JsonRepresentation jsonRep = null;
-		ClasspageDo classPageDo=null;
+		ClasspageDo classPageDo=new ClasspageDo();
+		if(classpageId != null)
+		{
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
@@ -916,6 +918,10 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			 classPageDo=new ClasspageDo();
 		}
 		classPageDo.setStatusCode(jsonResponseRep.getStatusCode());
+		}
+		else{
+			 classPageDo=new ClasspageDo();
+		}
 		return classPageDo;
 	}
 	
