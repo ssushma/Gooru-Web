@@ -653,8 +653,7 @@ public interface MessageProperties {
 	String GL0508 = "See more";
 	String GL0509 = "See less";
 	String GL0510 = "View Collection Analytics";
-	String GL0511_1 = "Or, share this resource by copying and pasting this link.";
-	String GL0511_2 = "Or, share this collection by copying and pasting this link.";
+	String GL0511 = "Or, share this by copying and pasting this link.";
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
