@@ -4,8 +4,11 @@ import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.home.register.UserRegistrationPresenter;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -21,6 +24,10 @@ public class RusdPresenter extends BasePlacePresenter<IsRusdView, RusdPresenter.
 	
 	private int rusdLoader = 1;
 	
+	private static final String CALLBACK = "callback";
+	
+	SignUpPresenter signUpViewPresenter = null;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.RUSD_LIBRARY)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -34,9 +41,10 @@ public class RusdPresenter extends BasePlacePresenter<IsRusdView, RusdPresenter.
 	 * @param proxy {@link Proxy}
 	 */
 	@Inject
-	public RusdPresenter(IsRusdView view, IsRusdProxy proxy) {
+	public RusdPresenter(IsRusdView view, IsRusdProxy proxy, SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.signUpViewPresenter = signUpViewPresenter;
 	}
 	
 	@Override
@@ -61,6 +69,18 @@ public class RusdPresenter extends BasePlacePresenter<IsRusdView, RusdPresenter.
 			getIntoLibrarypage();
 		} else {
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.ERROR);
+		}
+		
+		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
 		}
 	}
 	
