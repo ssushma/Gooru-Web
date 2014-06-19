@@ -47,5 +47,25 @@ public interface IsCollectionsView extends IsChildView<CollectionsPresenter> {
 	public void removeClasspageItemWidget();
 	public void updateCollectionStatus(String readStatus);
 	
+	/**
+	 * @function setButtonVisibility 
+	 * 
+	 * @created_date : Jun 18, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void setButtonVisibility();
+	
 }
 

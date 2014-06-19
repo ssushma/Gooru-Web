@@ -28,7 +28,7 @@ package org.ednovo.gooru.shared.util;
 
 public interface MessageProperties {
 	//Special Characters
-	String GL_SPL_SEMICOLON = ":";
+	String GL_SPL_SEMICOLON = ": ";
 	String GL_SPL_STAR = "*";
 	String GL_SPL_PLUS = "+";
 	String GL_SPL_QUESTION = "?";
@@ -259,7 +259,7 @@ public interface MessageProperties {
 	String GL0174 = "Resources";
 	String GL0175 = "Collections";
 	String GL0176 = "Search";				//Used in Header also.
-	String GL0177 = "Discover your favorite topic...";
+	String GL0177 = "Search for a topic...";
 	String GL0178 = "beta";
 	
 	//Header
@@ -2260,7 +2260,7 @@ public interface MessageProperties {
     	String GL1766 = "http://financiallycapable.org/";
     	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
     	
-    	String GL1768 = "An aggregator is a site that collects learning content from around the Web.";
+    	String GL1768 = "An aggregator is a site that collects learning content from around the web.";
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
     	String GL1770 = "Open educational resources (OER) are <b>freely accessible</b>, <b>openly licensed</b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
@@ -2477,7 +2477,7 @@ public interface MessageProperties {
     	String GL1943 = "Publish in Progress";
     	
     	
-    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	String GL1945 = "Ready to get started?";
     	
     	String GL1946 = "View All";
       	String GL1947 = "All,Order Ascending,Order Descending";
@@ -2489,7 +2489,7 @@ public interface MessageProperties {
       	String GL1953 = "View All InComplete";
       	
         String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
-    	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
+    	String GL1955 = "Note: If you want to switch your collection back to public, there might be a slight delay while we review it.";
     	
     	String GL1956 = "Keep it public";
 
@@ -2497,8 +2497,8 @@ public interface MessageProperties {
     	String GL1957 = "<b style='text-align: center;'><div>Sorry. It looks like there aren't any suggestions for this collection. </div><br/> <div>Try using the search bar below.</div><br/>   <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
       	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion(s) for this collection.</div><br/> <div>Use the search bar below to find more!</div><br/>    <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
 
-      	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
-      	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
+      	String GL1959 = "Add both a due date and directions for each assignment do that students know exactly what to do.";
+      	String GL1960 = "Define the sequence of assignments that your students will see when they access this class.";
       	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
       	String GL1962 = "You are now following";
       	
@@ -2518,6 +2518,7 @@ public interface MessageProperties {
     	String GL1973 = "Assign Collections";
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
     	String GL1975 = "collections will be added to this class";
+    	
       	
       	 
 }

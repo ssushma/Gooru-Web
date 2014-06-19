@@ -10,6 +10,11 @@
 			/* margin-right:43px; */
 		}
 		
+				.borderRightMenu{
+			border-right:2px solid #515151;
+
+	}
+		
 		.login a {
 			color: #FFFFFF !important;
 			float: left !important;
@@ -261,6 +266,7 @@
 		div#LinkheaderElement5 {
 			padding: 10px;
 			padding-right: 5px;
+			height:30px;
 		}
 		
 		.menu{
@@ -418,6 +424,7 @@
 			float: left;
 		}
 
+
 	</ui:style>
 	<g:HTMLPanel>
 
@@ -445,12 +452,11 @@
                <g:HTMLPanel styleName="{style.teachUserNameContainerHoverAddAssignment}" ui:field="mainDotsPanel">
               <g:HTMLPanel styleName="{style.teachUserNameTextContainerAddAssignmentRight}"  ui:field="mainInnerDotsPanel">
                    <g:HTMLPanel ui:field="dotsPanel" styleName="{style.teachUserNameTextContainerAddAssignment}">
-                       
-                      <uc:HTMLEventPanel styleName="{style.menu}" ui:field="discoverLinkContainer">
+                      <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="discoverLinkContainer">
                         	<g:Label ui:field="discoverLink" styleName="{res.css.discoverTextStyle}"/>
                         	<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImg"/>
+                        	<div style="border-right: 1px solid white; height: 27px;  /* margin-left: 69px; */ position: absolute; margin-left: 80px; margin-top: -6px;"></div>
                       </uc:HTMLEventPanel>
-                     
                       <uc:HTMLEventPanel styleName="{style.menu}" ui:field="organizeLinkContainer">
                         	<g:Label ui:field="organizeLink" />
                       </uc:HTMLEventPanel>
@@ -463,11 +469,13 @@
                         	<g:Label ui:field="studyLink" />
                       </uc:HTMLEventPanel>
 
-                      <uc:HTMLEventPanel styleName="{style.menu}" ui:field="LoginLinkContainer">
+                      <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="LoginLinkContainer">
                           	<g:Image styleName="{style.profileImage}" ui:field="imgUserProfile"></g:Image>
-                      		<g:Label styleName="{style.username}" ui:field="loggedInfoLbl" />       
+                      		<g:Label styleName="{style.username}" ui:field="loggedInfoLbl" />
+                      		     
                       </uc:HTMLEventPanel>
                       <g:HTMLPanel styleName="{style.teachUserNameArrowContainerNew}">
+                      <div style="border-right: 1px solid white; height: 27px;  /* margin-left: 69px; */ position: absolute; margin-top: -9px;"></div>  
                          <g:HTMLPanel styleName="{style.downArrow}"></g:HTMLPanel>
                         
                       </g:HTMLPanel>                       

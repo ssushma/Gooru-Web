@@ -22,11 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.play.collection.preview.end;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
 
-public interface PreviewEndUiHandlers extends BaseUiHandlers{
-	public void resetCollectionActivityEventId();
-	public void triggerCollectionShareDataEvent(String collectionId,String itemType,String shareType,boolean confirmStatus);
+import com.google.gwt.event.shared.GwtEvent;
+
+/**
+ * @author Search Team
+ * 
+ */
+public class SetMarkButtonEvent extends GwtEvent<SetMarkButtonHandler> {
+
+	public static final Type<SetMarkButtonHandler> TYPE = new Type<SetMarkButtonHandler>();
+
+	/**
+	 * Class constructor
+	 */
+	public SetMarkButtonEvent() {
+	}
+
+	@Override
+	public Type<SetMarkButtonHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetMarkButtonHandler handler) {
+		handler.setVisibility();
+	}
+
+
 }

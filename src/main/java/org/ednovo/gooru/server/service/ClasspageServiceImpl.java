@@ -891,7 +891,9 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 	}
 	public ClasspageDo getClasspage(String classpageId){
 		JsonRepresentation jsonRep = null;
-		ClasspageDo classPageDo=null;
+		ClasspageDo classPageDo=new ClasspageDo();
+		if(classpageId != null)
+		{
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
 		if(jsonResponseRep.getStatusCode()==200){
@@ -916,6 +918,10 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			 classPageDo=new ClasspageDo();
 		}
 		classPageDo.setStatusCode(jsonResponseRep.getStatusCode());
+		}
+		else{
+			 classPageDo=new ClasspageDo();
+		}
 		return classPageDo;
 	}
 	
@@ -956,7 +962,14 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			}else if(sortingOrder.equalsIgnoreCase("desc")){
 				sortingOrder="sequence-desc";
 			}else if(sortingOrder.equalsIgnoreCase("recent")){
-				sortingOrder="recent-desc";
+
+				sortingOrder="recent";
+			}else if(sortingOrder.equalsIgnoreCase("duedate")){
+				sortingOrder="due-date";
+
+			}
+			else if(sortingOrder.equalsIgnoreCase("duedate")){
+				sortingOrder="due-date";
 			}
 			else if(sortingOrder.equalsIgnoreCase("all"))
 			{
@@ -976,10 +989,12 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}else{
 			url=url+"&orderBy=sequence";
 		}
-		if(studyStatus!=null){
-			url=url+"&status="+studyStatus;
-		}
+			if(studyStatus!=null){
+				url=url+"&status="+studyStatus;
+			}
+			System.out.println("getClasspageItems API:"+url);
 		JsonResponseRepresentation jsonResponseRep =ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep=jsonResponseRep.getJsonRepresentation();
 			return deserializeClassPageItems(jsonRep);

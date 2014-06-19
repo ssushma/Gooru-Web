@@ -89,10 +89,9 @@
 				    <g:Label styleName="{res.css.rightArrow}" ui:field="lblNext"></g:Label>
 				</uc:HTMLEventPanel>
 			</g:HTMLPanel>
-
-			<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
-			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">
-				<g:HTMLPanel styleName="{res.css.btnContainer}">
+			<g:HTMLPanel ui:field="newAssignmentAndMsgPanel">						
+				<g:HTMLPanel styleName="{res.css.btnContainer}" ui:field="getstarteddiv">
+				<g:Label ui:field="assignmentsDirectionsLabel" styleName="{res.css.labelCenterAlign}"></g:Label>
 					<g:Button ui:field="btnNewAssignment" text="" styleName="secondary plusButton {res.css.addAssignment}"></g:Button>
 				</g:HTMLPanel>
 				<g:FlowPanel ui:field="dropDownListDiv" styleName="{res.css.dropdowncontainer}">
@@ -112,25 +111,25 @@
 							</g:Label>-->
 							<!-- New layout for empty classpage.  -->
 							  <g:HTMLPanel styleName="{res.css.contentBox}">
-							    <g:HTMLPanel styleName="{res.css.collectionView}">
-							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							    <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section2Div}">
+<!-- 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
 							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblOne"></g:Label>
 							        </g:HTMLPanel>
-							      </g:HTMLPanel>
+							      </g:HTMLPanel> -->
 							      <g:Label styleName="{res.css.desc}" ui:field="lblIncoporate"></g:Label>
 							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-widget.png" width="626" height="212"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
-							    <g:HTMLPanel styleName="{res.css.collectionView}">
-							      <g:HTMLPanel styleName="{res.css.circleBlock}">
+							    <g:HTMLPanel styleName="{res.css.collectionView} {res.css.section3Div}">
+							      <!-- <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
 							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblTwo"></g:Label>
 							        </g:HTMLPanel>
-							      </g:HTMLPanel>
+							      </g:HTMLPanel> -->
 							      <g:Label styleName="{res.css.desc}" ui:field="lblDefine"></g:Label>
 							      <g:HTMLPanel styleName="{res.css.img}"><g:Image url="images/collection-list.png" width="692" height="141"></g:Image></g:HTMLPanel>
 							    </g:HTMLPanel>
-							    <g:HTMLPanel styleName="{res.css.collectionView}">
+<!-- 							    <g:HTMLPanel styleName="{res.css.collectionView}">
 							      <g:HTMLPanel styleName="{res.css.circleBlock}">
 							        <g:HTMLPanel styleName="{res.css.circleBg}">
 							          <g:Label styleName="{res.css.circleTitle}" ui:field="lblThree"></g:Label>
@@ -138,7 +137,7 @@
 							      </g:HTMLPanel>
 							      <g:Label styleName="{res.css.desc}" ui:field="lblGetStarted"></g:Label>
 							      <g:Image url="images/add-button.png" width="204" height="52" styleName="{res.css.btn}"></g:Image>
-							    </g:HTMLPanel>
+							    </g:HTMLPanel> -->
 							  </g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>

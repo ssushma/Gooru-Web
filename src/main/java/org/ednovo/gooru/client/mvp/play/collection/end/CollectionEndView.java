@@ -196,6 +196,12 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 					public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
 						getUiHandlers().sendEmail( fromEmail,  toEmail, copyEmail,  subject,  message);
 					}
+
+					@Override
+					public void closeEmailPopup() {
+						// TODO Auto-generated method stub
+						
+					}
 				};
 				emailShareView.show();
 				

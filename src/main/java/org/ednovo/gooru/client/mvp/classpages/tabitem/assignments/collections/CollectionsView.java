@@ -35,6 +35,8 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.assignments.AddAssignmentContainerCBundle;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageView;
 import org.ednovo.gooru.client.mvp.home.WaitPopupVc;
+import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
+import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonHandler;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
@@ -125,7 +127,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public interface CollectionsViewUiBinder extends UiBinder<Widget, CollectionsView> {}
 	
 	public CollectionsView(){
-		
+		setButtonVisibility();
 	}
 	
 	public CollectionsView(ClasspageItemDo classpageItemDo,int sequenceNum){
@@ -162,6 +164,20 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		 * @param setHeader is Object of Handler.
 		 */
 		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
+		
+		SetMarkButtonHandler setMarkButtonVisibility = new SetMarkButtonHandler() {
+
+			@Override
+			public void setVisibility() {
+				setButtonVisibility();
+			}
+			
+		};
+		AppClientFactory.getEventBus().addHandler(SetMarkButtonEvent.TYPE,
+				setMarkButtonVisibility);
+		
+		setButtonVisibility();
+		
 	}
 	public void setCollectionItemIndex(int sequenceNum){
 		assignmentIndex.setText(""+classpageItemDo.getSequenceNumber());
@@ -192,6 +208,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		setCollectionItemIndex(sequenceNum);
 		setStaticTexts();
 		setReadStatus();
+		setButtonVisibility();
 	}
 	
 	public void setClasspageItemDo(){
@@ -646,5 +663,14 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			classpageItemDo.setGoal(description1);
 		}
 	};
-
+	@Override
+	public void setButtonVisibility(){
+		if (AppClientFactory.isAnonymous()){
+			changeStatusButton.setVisible(false);
+		}else{
+			if (AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.STUDENT)){
+				changeStatusButton.setVisible(true);
+			}
+		}
+	}
 }
