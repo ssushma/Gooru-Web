@@ -27,6 +27,8 @@
  */
 package org.ednovo.gooru.client.mvp.shelf.event;
 
+import org.ednovo.gooru.shared.model.content.CollectionDo;
+
 import com.google.gwt.event.shared.GwtEvent;
 
 /**
@@ -53,14 +55,17 @@ public class CollectionAssignShareEvent extends GwtEvent<CollectionAssignShareHa
 	String publishStatus=null;
 	
 	boolean isPublish;
+	
+	CollectionDo collectiondo;
 
 	/**
 	 * Class constructor
 	 */
-	public CollectionAssignShareEvent(String shareType,String publishStatus,boolean isPublish) {
+	public CollectionAssignShareEvent(String shareType,String publishStatus,boolean isPublish, CollectionDo collectiondo) {
 		this.shareType = shareType;
 		this.publishStatus = publishStatus;
 		this.isPublish = isPublish;
+		this.collectiondo=collectiondo;
 	}
 
 	@Override
@@ -70,7 +75,7 @@ public class CollectionAssignShareEvent extends GwtEvent<CollectionAssignShareHa
 
 	@Override
 	protected void dispatch(CollectionAssignShareHandler handler) {
-		handler.updateShareType(shareType,publishStatus,isPublish);
+		handler.updateShareType(shareType,publishStatus,isPublish, collectiondo);
 	}
 
 }

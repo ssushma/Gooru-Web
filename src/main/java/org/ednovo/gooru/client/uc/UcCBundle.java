@@ -83,7 +83,7 @@ public interface UcCBundle extends ClientBundle {
 		String paginationUc(); 
 		
 		String separator();
-		
+		String	separatorSuggested();
 		
 		/*CollectionImageUc*/
 		

@@ -75,7 +75,6 @@ import org.ednovo.gooru.shared.model.content.ReactionDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
 import org.ednovo.gooru.shared.util.AttemptedAnswersDo;
 import org.ednovo.gooru.shared.util.PlayerConstants;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -84,7 +83,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
@@ -209,6 +207,8 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 	private int userAttemptedQuestionType=0;
 	
 	private boolean isOpenEndedAnswerSubmited=true;
+	
+	private int sessionIdCreationCount=0;
      
 	public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
     
@@ -516,6 +516,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		  }else{
 		      if(collectionId!=null && !collectionId.equalsIgnoreCase("")){
 		    	  resetCollectionPlayer();
+		    	  sessionId=GwtUUIDGenerator.uuid();
 		    	  triggerItemLoadDataLogEvent(System.currentTimeMillis(), PlayerDataLogEvents.COLLECTION,collectionId);
 		    	  this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView,rootNodeId,new SimpleAsyncCallback<CollectionDo>() {
 		    			@Override
@@ -524,7 +525,6 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 								showCollectionErrorMessage();
 							}else{
 								setPageTitle(collectionDo);
-								sessionId=GwtUUIDGenerator.uuid();
 								showCollectionView(collectionDo,collectionId,resourceId,tabView);
 							}
 		    			}
@@ -1073,7 +1073,11 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(), 
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 				startPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
+				if(sessionIdCreationCount==1){
+					sessionId=null;
+				}
 				createSession(collectionDo.getGooruOid());
+				sessionIdCreationCount=1;
 			}	
 		}
 	}
@@ -1696,6 +1700,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 			setAttemptCount(0);
 			setCollectionScore(0);
 			isExplanationUsed=false;
+			sessionIdCreationCount=0;
 			getView().setResourceTitle("");
 			enablePlayerButton(false, false, false, false, false,false);
 			getView().resetThumbsButtons();

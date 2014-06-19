@@ -28,7 +28,7 @@ package org.ednovo.gooru.shared.util;
 
 public interface MessageProperties {
 	//Special Characters
-	String GL_SPL_SEMICOLON = ":";
+	String GL_SPL_SEMICOLON = ": ";
 	String GL_SPL_STAR = "*";
 	String GL_SPL_PLUS = "+";
 	String GL_SPL_QUESTION = "?";
@@ -2386,20 +2386,20 @@ public interface MessageProperties {
     	String GL1879 = "Rate this resource";
     	
     	//What's New Popup
-    	String GL1880 ="Rate and Review Resources";
-    	String GL1881 =	"With our new resource ratings feature, you can let other teachers know which resources dazzle and which disappoint.";
-    	String GL1882 ="New K-4 Courses and Partner Libraries";
-    	String GL1883 ="Great news for K-4 teachers! Now you can find courses tailored to K-4 learning in our Community Library. We've also added 2 new partner libraries to explore!";
-    	String GL1884 =	"New Question Type: Multiple Answer Questions";
-    	String GL1885 =	"Because sometimes a question has more than one correct answer. Learn more about our question types.";
+    	String GL1880 ="Follow Others on Gooru";
+    	String GL1881 =	"If you've found a creator whose content inspires you, follow them! You'll be able to see everyone you follow (and who follows you) on your profile page.";
+    	String GL1882 ="Santa Ana Unified School District Library";
+    	String GL1883 ="We're proud to present this new library built by teachers from Santa Ana USD in CA! This entire library is tied to Common Core State Standards. Happy learning!";
+    	String GL1884 =	"Next Generation Science Standards (NGSS)";
+    	String GL1885 =	"We've incorporated Next Generation Science Standards into Gooru. Search using NGSS, or tag resources or collections with these standards.";
     	
     	String GL1886 = "Please select one or more grades & courses.";
     	String GL1887 = "Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it will appear below collections that do.";
     	String GL1888 = "Public Collections";
     	
     	String GL1889 = "Reminder: Assigments are sorted by due date in your Class. If you don't add a due date, this colleciton will appear at the bottom of the page.";
-    	String GL1890 ="New Navigation Tabs";
-    	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.   ";
+    	String GL1890 ="Order Assignments in your Classes";
+    	String GL1891 ="Keep your virtual classroom organized! Now you can define the order in which assignments appear in your Classes. Students will be able to mark assignments as complete when they're done.";
     	
     	String GL1891_1 = "Sort your assignments for easy access to any of the collections you've assigned. Sorting your collections below will not affect the sequence your students will see.";
     	String GL1892 ="We will never share or sell your email address, your";
@@ -2459,7 +2459,7 @@ public interface MessageProperties {
 
 
     	String GL1935 = "Follow";
-    	String GL1936 = "Stop Following";
+    	String GL1936 = "Unfollow";
     	String GL1937 = "Click a tag to view all of the resources you've tagged with this label.";
     	
     	
@@ -2477,7 +2477,7 @@ public interface MessageProperties {
     	String GL1943 = "Publish in Progress";
     	
     	
-    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	String GL1945 = "Ready to get started?";
     	
     	String GL1946 = "View All";
       	String GL1947 = "All,Order Ascending,Order Descending";
@@ -2497,8 +2497,8 @@ public interface MessageProperties {
     	String GL1957 = "<b style='text-align: center;'><div>Sorry. It looks like there aren't any suggestions for this collection. </div><br/> <div>Try using the search bar below.</div><br/>   <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
       	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion(s) for this collection.</div><br/> <div>Use the search bar below to find more!</div><br/>    <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
 
-      	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
-      	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
+      	String GL1959 = "Add both a due date and directions for each assignment do that students know exactly what to do.";
+      	String GL1960 = "Define the sequence of assignments that your students will see when they access this class.";
       	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
       	String GL1962 = "You are now following";
       	
@@ -2517,7 +2517,7 @@ public interface MessageProperties {
     	String GL1972 = "Each of the dots below represents an assignment. Sequence your assignments in the order you want students to view them. This order will reflect in student view.";
     	String GL1973 = "Assign Collections";
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
-    	String GL1975 = "collections will be added to this class";
+    	String GL1975 = "will be added to this class";
     	
       	
       	 

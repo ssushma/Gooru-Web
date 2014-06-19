@@ -25,6 +25,8 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -34,16 +36,20 @@ import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInSearchEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateResourceRatingCountEventHandler;
+import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.client.mvp.search.SearchUiUtil;
-import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataEvent;
 import org.ednovo.gooru.client.mvp.search.event.UpdateSearchResultMetaDataHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.InsertCollectionItemInAddResourceEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionItemInShelfListEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
+import org.ednovo.gooru.client.uc.SeparatorUc;
+import org.ednovo.gooru.client.uc.StandardSgItemVc;
+import org.ednovo.gooru.client.uc.UcCBundle;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -51,7 +57,6 @@ import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
-import com.gargoylesoftware.htmlunit.javascript.host.MouseEvent;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
@@ -72,7 +77,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
 
 public abstract  class AddSearchSuggestedResourceView extends Composite implements MessageProperties{
 	
@@ -85,6 +93,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	
 	@UiField SearchSuggestedResultWrapperCBundle res;
 	
+	@UiField UcCBundle res1;
 
 	@UiField HTML lblResourceTitle;
 	
@@ -140,9 +149,14 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	String collectionId = "";
 	private AddResourceView addresourceview;
 	
+	public static final String STANDARD_CODE = "code";
+
+	public static final String STANDARD_DESCRIPTION = "description";
+	
 	AddSearchSuggestedResourceView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
+		res1.css().ensureInjected();
 	}
 
 	public AddSearchSuggestedResourceView(
@@ -207,7 +221,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				if(aggregatorData.endsWith(",")){
 					aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 				}
-				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
+				//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 			}
 			
 			if(resourceSearchResultDo.getPublisher()!=null){
@@ -224,11 +238,11 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				if(publisherData.endsWith(",")){
 					publisherData=publisherData.substring(0, publisherData.length()-1);
 				}
-				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			//	SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
 			}
-			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
+			renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
 			
-	        SearchUiUtil.renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
+	       renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
 			if (category.equalsIgnoreCase(VIDEO)) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 			} else if (category.equalsIgnoreCase(QUESTION)) {
@@ -272,7 +286,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			if(aggregatorData.endsWith(",")){
 				aggregatorData=aggregatorData.substring(0, aggregatorData.length()-1);
 			}
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
+		//	SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
 		if(resourceSearchResultDo.getPublisher()!=null){
@@ -289,11 +303,12 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			if(publisherData.endsWith(",")){
 				publisherData=publisherData.substring(0, publisherData.length()-1);
 			}
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
-		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
-        SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
+		renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
+		
+        renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 		} else if (category.equalsIgnoreCase(QUESTION)) {
@@ -353,7 +368,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		resourceTitleContainer.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.renderSearch(category, resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME, resourceTitle, false,"","");
-		SearchUiUtil.renderStandards(standardsFloPanel, resourceSearchResultDo);
+	renderStandards(standardsFloPanel, resourceSearchResultDo);
 	}
 	
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
@@ -422,5 +437,89 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		});
 		}
 		
+	}
+	
+	public static void renderMetaData(FlowPanel flowPanel, String data) {
+		renderMetaData(flowPanel, data, null, -1);
+	}
+	
+	public static void renderMetaData(FlowPanel flowPanel, List<String> datas, int wrapLength) {
+		if (datas == null) {
+			return;
+		}
+		renderMetaData(flowPanel, datas.size() > 0 ? datas.get(0) : null, null, wrapLength);
+		FlowPanel toolTipwidgets = new FlowPanel();
+		FlowPanel toolTipwidget1 = new FlowPanel();
+		for (int count = 0; count < datas.size(); count++) {
+			Label label = new Label(datas.get(count));
+			label.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().moreMetaLbl());
+			if(count==0){
+				toolTipwidget1.add(label);
+			}else{
+				toolTipwidgets.add(label);
+			}
+			
+		}
+		if (datas != null && datas.size() > 1) {
+			Integer moreCount = datas.size() - 1;
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreCount), toolTipwidgets);
+			toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLinkPad());
+			flowPanel.add(toolTipUc);
+		}
+	}
+	public static void renderMetaData(FlowPanel flowPanel, String data, String suffix, int wrapLength) {
+		if (suffix != null || StringUtil.hasValidString(data)) {
+			if (wrapLength > 0) {
+				data = StringUtil.truncateText(data, wrapLength);
+			}
+			if (suffix != null) {
+				data += suffix;
+			}
+			Label label = new Label(data);
+			label.getElement().setAttribute("style", "display:inline-block;float: left;");
+			renderMetaData(flowPanel, label);
+		}
+	}
+	public static void renderMetaData(FlowPanel flowPanel, IsWidget widget) {
+		if (flowPanel.iterator().hasNext()) {
+			flowPanel.add(new SeparatorUc(""));
+		}
+		flowPanel.add(widget);
+	}
+	public static void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
+		if (searchResultDo.getStandards() != null) {
+			List<Map<String, String>> standards = searchResultDo.getStandards();
+			Iterator<Map<String, String>> iterator = standards.iterator();
+			int count = 0;
+			FlowPanel toolTipwidgets = new FlowPanel();
+			while (iterator.hasNext()) {
+				Map<String, String> standard = iterator.next();
+				String stdCode = standard.get(STANDARD_CODE);
+				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				if (count > 1) {
+					if (count < 18){
+						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
+						toolTipwidgets.add(standardItem);
+					}
+				} else {
+					DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(stdCode), new Label(stdDec), standards);
+					toolTipUc.setStyleName(UcCBundle.INSTANCE.css().searchStandard());
+					standardsContainer.add(toolTipUc);
+				}
+				count++;
+			}
+			if (standards.size()>18){
+				final Label left = new Label(GL_SPL_PLUS+(standards.size() - 18));
+				toolTipwidgets.add(left);
+			}
+			if (searchResultDo.getStandards().size() > 2) {
+				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreStandardsCount), toolTipwidgets, standards);
+				toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLink());
+				standardsContainer.add(toolTipUc);
+				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
+				
+			}
+		}
 	}
 }

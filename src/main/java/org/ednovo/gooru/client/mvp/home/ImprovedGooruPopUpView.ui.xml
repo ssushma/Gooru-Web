@@ -175,7 +175,7 @@
 		.improvedGooruPopupLine {
 		float: left;
 		width: 1px;
-		height: 316px;
+		height: 333px;
 		margin: 20px 10px 0px 10px;
 		background-color: #DDDDDD;
 		}

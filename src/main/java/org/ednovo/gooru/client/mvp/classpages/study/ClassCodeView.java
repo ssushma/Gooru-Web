@@ -140,8 +140,8 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		setCreateClassVisibility();
 		
 		btnCreateClass.setText(GL1771);
-		btnEnter.setText(GL1065);
-		disabledBtn.setText(GL1065);
+		btnEnter.setText(GL0213);
+		disabledBtn.setText(GL0213);
 		lblCreateAClass.setText(GL1771);
 		lblEasyToOrganize.setText(GL1772);
 		lblAccessAClass.setText(GL1773);
