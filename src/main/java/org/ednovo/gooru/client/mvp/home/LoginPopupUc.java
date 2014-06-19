@@ -698,7 +698,10 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 
 	}
 	public void openClasspage() {
-		AppClientFactory
+		/**
+		 * As per the new requirement for 6.4 should land on my classes landing page so commented the following code.
+		 */
+		/*AppClientFactory
 				.getInjector()
 				.getClasspageService()
 				.v2GetAllClass("2", "0",
@@ -711,7 +714,9 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 									
 								}
 							}
-						});
+						});*/
+		
+		AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.CLASSHOME);
 	}
 	private void OpenClasspageEdit(String gooruOId) {
 		Map<String, String> params = new HashMap<String, String>();
