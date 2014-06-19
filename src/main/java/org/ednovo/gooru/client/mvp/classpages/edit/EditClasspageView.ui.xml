@@ -45,27 +45,7 @@
 					</g:FlowPanel>
 				</g:HTMLPanel>
 			</g:FocusPanel>
-			<!-- <g:HTMLPanel styleName="{res.css.classpageClasscode}"> <g:HTMLPanel 
-				styleName="{res.css.classpageCodeDesc}"> <g:HTML styleName="{res.css.classpageCodeShare}" 
-				ui:field="htmlShareText"></g:HTML> <g:HTMLPanel styleName="{res.css.classpageCodeShareInput}"> 
-				<g:TextBox styleName="{res.css.classpageShareCodeInput}" ui:field="txtClasspageCodeShare" 
-				/> </g:HTMLPanel> <g:Label ui:field="lblCodeHelp" styleName="{res.css.classpageCodeHelp}"></g:Label> 
-				<g:HTMLPanel styleName="{res.css.codePopupContainer}" ui:field="panelCode"> 
-				<g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel> <g:HTMLPanel 
-				styleName="{res.css.arrowBorder}"></g:HTMLPanel> <g:HTMLPanel styleName="{res.css.arrow}"></g:HTMLPanel> 
-				<g:HTMLPanel styleName="{res.css.classpageCodeInnerPopup}"> <g:Label styleName="{res.css.classpageCodePopupTitle}" 
-				ui:field="lblPopupTitle" /> <g:HTML ui:field="htmlPopupTitleDesc" /> </g:HTMLPanel> 
-				</g:HTMLPanel> <g:Label styleName="{res.css.classpageCodeShareOr}" ui:field="lblOr"></g:Label> 
-				<g:Label styleName="{res.css.classpageCodeShare}" ui:field="lblAWebLink"></g:Label> 
-				<g:HTMLPanel styleName="{res.css.classpageCodeShareInput}"> <g:TextBox styleName="{res.css.classpageShareLinkInput}" 
-				ui:field="txtClasspageLinkShare" /> </g:HTMLPanel> <g:Label ui:field="lblWebHelp" 
-				styleName="{res.css.classpageCodeHelp}"></g:Label> <g:HTMLPanel styleName="{res.css.webLinkPopupContainer}" 
-				ui:field="panelWebLink"> <g:HTMLPanel styleName="{res.css.arrowShadow}"></g:HTMLPanel> 
-				<g:HTMLPanel styleName="{res.css.arrowBorder}"></g:HTMLPanel> <g:HTMLPanel 
-				styleName="{res.css.arrow}"></g:HTMLPanel> <g:HTMLPanel styleName="{res.css.classpageCodeInnerPopup}"> 
-				<g:Label styleName="{res.css.classpageCodePopupTitle}" ui:field="lblWebLink"></g:Label> 
-				<g:HTML ui:field="htmlWebLinkTitleDesc"></g:HTML> </g:HTMLPanel> </g:HTMLPanel> 
-				</g:HTMLPanel> </g:HTMLPanel> -->
+			
 			<g:HTMLPanel ui:field="mainContainer">
 			<g:HTMLPanel styleName="{res.css.teachTab}">
 				<g:Button ui:field="assignmentsTab" styleName="{res.css.selected}"></g:Button>

@@ -195,9 +195,9 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 		CollectionAssignShareHandler handler = new CollectionAssignShareHandler() {
 			
 			@Override
-			public void updateShareType(String shareType,String publishStatus,boolean isPublish) {
+			public void updateShareType(String shareType,String publishStatus,boolean isPublish,CollectionDo collection) {
 				if(isPublish){
-					getView().setPusblishStatus(publishStatus, shareType);
+					getView().setPusblishStatus(publishStatus, collection);
 				}else{
 					collectionDo.setSharing(shareType);
 					getView().setCollectionAnalyticsVisibility(shareType);
