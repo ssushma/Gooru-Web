@@ -965,7 +965,7 @@ public interface MessageProperties {
 
 		String GL0745 = "Done";
 		String GL0749 = "Type and select standards for this collection.";
-		String GL0750 = "Add a teacher tip to show other teachers how you are using this collection and what you are using the collection for.";
+		String GL0750 = "Add a teacher tip to show other teachers how you are using this collection and what you are using the collection for. ";
 		//Teach
 		String GL0747 =	"Give your Class a name!";
 		String GL0746 =	"Please enter title.";
