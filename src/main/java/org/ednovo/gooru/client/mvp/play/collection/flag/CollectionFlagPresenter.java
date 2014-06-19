@@ -148,7 +148,7 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 	   if(isPreviewPlayer){
 		   previewPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }else if(isCollectionPlayer){
-		   previewPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
+		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }
 	}
 	public Image getCloseButtonImage()

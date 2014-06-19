@@ -209,6 +209,8 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	
 	private boolean isOpenEndedAnswerSubmited=false;
 	
+	private int sessionIdCreationCount=0;
+	
 	public static final  Object COLLECTION_PLAYER_TOC_PRESENTER_SLOT = new Object(); 
     
     public static final  Object METADATA_PRESENTER_SLOT = new Object();
@@ -488,6 +490,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			}
 		}else{
 			if(collectionId!=null && !collectionId.equalsIgnoreCase("")){
+				sessionId=GwtUUIDGenerator.uuid();
 				triggerItemLoadDataLogEvent(System.currentTimeMillis(), PlayerDataLogEvents.COLLECTION,collectionId);
 				this.playerAppService.getSimpleCollectionDetils(apiKey,collectionId,resourceId,tabView, rootNodeId, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
@@ -496,7 +499,6 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 							showCollectionErrorMessage();
 						}else{
 							setPageTitle(collectionDo);
-							sessionId=GwtUUIDGenerator.uuid();
 							showCollectionView(collectionDo,collectionId,resourceId,tabView);
 							setCollectionDetails(collectionDo);
 						}
@@ -1091,7 +1093,11 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 				PlayerDataLogEvents.collectionPlayStartEvent(collectionDataLogEventId, PlayerDataLogEvents.COLLECTION_PLAY_EVENT_NAME, "", PlayerDataLogEvents.OPEN_SESSION_STATUS, collectionDo.getGooruOid(), 
 						PlayerDataLogEvents.START_EVENT_TYPE, collectionStartTime, collectionStartTime, 0L, AppClientFactory.getLoginSessionToken(), AppClientFactory.getGooruUid());
 				startPlayerActivityEvent(collectionActivityEventId, "", PlayerConstants.COLLECTION_EVENT_NAME, collectionDo.getGooruOid(), collectionDo.getGooruOid(), PlayerConstants.COLLECTION_CONTEXT+collectionDo.getGooruOid(), getUserAgent());
+				if(sessionIdCreationCount==1){
+					sessionId=null;
+				}
 				createSession(collectionDo.getGooruOid());
+				sessionIdCreationCount=1;
 			}	
 		}
 	}
@@ -1637,6 +1643,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			setResourceScore(0);
 			setAttemptCount(0);
 			setCollectionScore(0);
+			sessionIdCreationCount=0;
 			isExplanationUsed=false;
 			getView().hideFlagButton(false);
 			getView().setResourceTitle("");
