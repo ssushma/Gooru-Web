@@ -15,6 +15,7 @@
 	            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
 			   		</g:HTMLPanel>
 				</g:ScrollPanel>
+				<g:Label ui:field="displayCountLabel" styleName="{res.css.selectionCountLabel}"></g:Label>
 				<g:HTMLPanel ui:field="buttonsContainer" styleName="{res.css.assignmentButtonsContainer}">
 					<g:Button styleName="secondary"  ui:field="cancelResourcePopupBtnLbl" />
 					<g:Button styleName="primary {res.css.assignButton}"  ui:field="addResourceBtnLbl" />
