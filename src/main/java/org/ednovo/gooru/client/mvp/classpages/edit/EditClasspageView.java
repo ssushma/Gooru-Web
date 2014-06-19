@@ -998,6 +998,7 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
+				dropDownListDiv.setVisible(true);
 				assignmentsContainerPanel.clear();
 				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
