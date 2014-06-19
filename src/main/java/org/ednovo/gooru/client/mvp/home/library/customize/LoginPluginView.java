@@ -362,7 +362,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 				 */
 				if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
 					if(userDo.getActive()==1){
-						new AlertContentUc("To check ", "checking google sign in");
+//						new AlertContentUc("To check ", "checking google sign in");
 					}
 				}
 //				----------------------------------------------------------------- //
