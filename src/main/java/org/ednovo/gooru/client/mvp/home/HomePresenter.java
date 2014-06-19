@@ -328,7 +328,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 //			});
 			
 		}
-		else if(flag<=9 && !AppClientFactory.isAnonymous()){
+		else if(flag<=10 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
 		}
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	
