@@ -12,7 +12,7 @@
 	            <g:HTMLPanel styleName="{style.collectionInfo}" ui:field="collectionInfo">
 	               <g:Image styleName="{style.collectionImage}" ui:field="collectionImage"></g:Image>
 	               <g:HTMLPanel styleName="{style.collectionMetaData}">
-		               <g:HTML styleName="{style.collectionTitle}" ui:field="collectionTitleLbl"/>
+		               <g:HTML styleName="{style.collectionTitlePPP}" ui:field="collectionTitleLbl"/>
 		               <g:HTML styleName="{style.collectionDescription}" ui:field="collectionDescriptionLbl"/>
 					   <g:FlowPanel styleName="{style.standards}" ui:field="standardsFloPanel" />
 		               <g:Button styleName="secondary" ui:field="assignCollectionBtn"></g:Button>
