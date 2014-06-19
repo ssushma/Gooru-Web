@@ -558,7 +558,13 @@
 	width: 17px;
 	color: #999999;
 }
-
+.separatorSuggested {
+	float: left;
+	width: 17px;
+	color: #999999;
+	display:inline-block;
+	text-align: center;
+}
 .labelGlassPanelText {
 	margin-top: 10px;
 	color: #FFFFFF;
