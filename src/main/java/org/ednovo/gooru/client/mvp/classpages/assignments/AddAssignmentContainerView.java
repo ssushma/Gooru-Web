@@ -87,7 +87,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Label /*dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,*/ 
-				addCollectionPopupHeader, addingText,emptyMsgLbl /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
+				addCollectionPopupHeader, addingText,emptyMsgLbl,subHeadingMsgLbl /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
 //	@UiField TextArea assignmentDirectionsTxtArea;
 	
 	@UiField FlowPanel popupContent;
@@ -183,6 +183,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	
 	public void setStaticTexts(){
+		subHeadingMsgLbl.setText(GL1974);
 		addCollectionPopupHeader.setText(GL1973);
 		//assignmentTitleLabel.setText(GL1376);
 //		dropdownListPlaceHolder.setText(GL1377);
@@ -603,6 +604,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		dropdownListContainerScrollPanel.setVisible(false);
 		addResourceBtnLbl.setText(GL1964);
 		emptyMsgLbl.setText(GL1963); 
+		subHeadingMsgLbl.setVisible(false);
 		emptyMsgLbl.setVisible(true);
 		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
 		buttonsContainer.getElement().getStyle().setMarginLeft(110, Unit.PX); 
@@ -615,6 +617,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		dropdownListContainerScrollPanel.setVisible(true);
 		addResourceBtnLbl.setText(GL0104);
 		emptyMsgLbl.setVisible(false);
+		subHeadingMsgLbl.setVisible(true);
 		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());
