@@ -193,10 +193,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			lblcollectionName.setHTML(removeHtmlTags(searchResultsDo.getResourceTitle()));
 
 		}
-		if(searchResultsDo.getGrade()!=null)
+		/**
+		 * Commented this, as it will set very early as it is, grades should display after formating.
+		 */
+		/*if(searchResultsDo.getGrade()!=null)
 		{
 			gradesText.setText(searchResultsDo.getGrade());
-		}
+		}*/
 	}
 
 	public void setResourceTypeImage(String resourceType){

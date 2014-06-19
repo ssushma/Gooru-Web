@@ -147,17 +147,15 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		aboutSix.setText(GL1881);
 		aboutNavigation.setText(GL1891);
 		descLinkNavigation.setText(GL1239);
-		descLinkNavigation.setHref("http://support.goorulearning.org/hc/en-us/articles/203395927");
+		descLinkNavigation.setHref("http://support.goorulearning.org/hc/en-us/articles/202952598");
 		descLinkSix.setText(GL1239);
-		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202222123");
+		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202952638");
 		
 		lblTitleSeven.setText(GL1882);
 		aboutSeven.setText(GL1883);
-
+		
 		lblTitleEight.setText(GL1884);
 		aboutEight.setText(GL1885);
-		descLinkEight.setText(GL1239);
-		descLinkEight.setHref("http://support.goorulearning.org/hc/en-us/articles/200941223");
 		
 //		lblTitleFive.setText(GL0630_1);
 //		aboutFive.setText(GL0627_1);
