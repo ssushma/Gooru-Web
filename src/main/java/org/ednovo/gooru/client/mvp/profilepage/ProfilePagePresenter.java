@@ -594,18 +594,10 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-				String username=AppClientFactory.getPlaceManager().getRequestParameter("user");
-				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(MessageProperties.GL0440,MessageProperties.GL1962,username) {
-					@Override
-					public void onClickPositiveButton(ClickEvent event) {
-						Window.enableScrolling(true);
-						appPopUp.hide();
-						//getView().getUnFollowButton().setVisible(true);
-						//getView().getFollowButton().setVisible(false);
-						getFollowerData();
-					}
-				};
-				
+					getView().getUnFollowButton().setVisible(true);
+					getView().getFollowingButton().setVisible(false);
+					getFollowerData();
+						
 			}
 		});
 		
@@ -623,19 +615,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-				ProfilePageUnFollowPopUp profilePageUnFollowPopUp=new ProfilePageUnFollowPopUp(){
-					@Override
-					public void clickOnOk(ClickEvent event){
-						//getView().getUnFollowButton().setVisible(false);
-						//getView().getFollowButton().setVisible(true);
-						Window.enableScrolling(true);
-						hide();
-						getFollowerData();
-					}
-				}; 
-				profilePageUnFollowPopUp.show();
-				profilePageUnFollowPopUp.center();
-				Window.enableScrolling(false);
+				getFollowerData();
+				
 			}
 		});
 		
