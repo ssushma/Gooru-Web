@@ -121,6 +121,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 				fibQuestionTxt = fibQuestionTxt + "<span id=\"fib"+i+"\"></span>";
 			}
 		}
+		
 		fibText.setHTML(fibQuestionTxt);
 		optionsContainer.add(fibText);
 	}
@@ -202,7 +203,7 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 				answerAttemptDo.setStatus("0");
 				isFibStatus=false;
 				textBoxArray.get(i).addStyleName(oeStyle.answerWrongTextBox());
-				showResultPanel(i,StringUtil.replaceSpecial(questionAnswerDo.getAnswerText()));
+				showResultPanel(i,questionAnswerDo.getAnswerText());
 			}
 			textBoxArray.get(i).setReadOnly(true);
 			i++;
@@ -268,8 +269,10 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		blankHtml.setStyleName(oeStyle.resultPanelText());
 		Label answerWrongImagePanel=new Label();
 		answerWrongImagePanel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().answerWronIcon());
-		answerWrongImagePanel.addStyleName(oeStyle.resultPanelAnswerImage());
-		HTMLPanel answerOptiontext=new HTMLPanel(GL1456+GL_SPL_SEMICOLON+" "+correctAnswer);
+		answerWrongImagePanel.addStyleName(oeStyle.resultPanelAnswerImageFIB());
+		
+		HTML answerOptiontext=new HTML();
+		answerOptiontext.setHTML(GL1456+GL_SPL_SEMICOLON+" "+correctAnswer);
 		answerOptiontext.setStyleName(oeStyle.resultPanelText());
 		resultContianer.add(blankHtml);
 		resultContianer.add(answerWrongImagePanel);
