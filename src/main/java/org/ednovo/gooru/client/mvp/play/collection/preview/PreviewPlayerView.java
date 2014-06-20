@@ -477,7 +477,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	 * This method is used to show first time Add tooltip popup.
 	 */
 	public void showAddToolTip(){
-		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
+	/*	String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
 			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
@@ -486,6 +486,6 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
 			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
 			globalTooltipWithButton.show();
-		}
+		}*/
 	}
 }
