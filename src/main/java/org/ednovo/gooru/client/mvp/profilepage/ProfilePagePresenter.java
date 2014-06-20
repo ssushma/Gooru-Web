@@ -594,8 +594,6 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-					getView().getUnFollowButton().setVisible(true);
-					getView().getFollowingButton().setVisible(false);
 					getFollowerData();
 						
 			}
