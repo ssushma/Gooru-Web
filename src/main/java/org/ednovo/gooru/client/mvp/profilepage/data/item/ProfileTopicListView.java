@@ -102,7 +102,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	
 	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
-	private static Integer LESSON_PAGE_INITIAL_LIMIT = 3;
+	private static Integer LESSON_PAGE_INITIAL_LIMIT = 20;
 	
 	private static String PAGE = "page";
 	
