@@ -73,7 +73,7 @@ a:hover {
 }
 
 .userName {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
 	color: rgba(100,100,100, 0.8);
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
@@ -1524,7 +1524,6 @@ text-align: center;
 	background: -moz-linear-gradient(top, #515151, #333);
 	background: -ms-linear-gradient(top, #515151, #333);
 	background: -o-linear-gradient(top, #515151, #333);
-	border: 1px solid #DDD;
 	float: left;
 	margin-right: 10px;
 	
