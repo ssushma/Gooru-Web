@@ -368,7 +368,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		resourceTitleContainer.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.getElement().getStyle().setZIndex(99999);
 		resourceImageUc.renderSearch(category, resourceSearchResultDo.getUrl(), null, resourceSearchResultDo.getGooruOid(), PLAYER_NAME, resourceTitle, false,"","");
-	renderStandards(standardsFloPanel, resourceSearchResultDo);
+		renderStandards(standardsFloPanel, resourceSearchResultDo);
 	}
 	
 	UpdateResourceRatingCountEventHandler setRatingCount =new UpdateResourceRatingCountEventHandler(){
@@ -496,7 +496,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				Map<String, String> standard = iterator.next();
 				String stdCode = standard.get(STANDARD_CODE);
 				String stdDec = standard.get(STANDARD_DESCRIPTION);
-				if (count > 1) {
+				if (count>0){
 					if (count < 18){
 						StandardSgItemVc standardItem = new StandardSgItemVc(stdCode, stdDec);
 						toolTipwidgets.add(standardItem);
@@ -512,8 +512,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 				final Label left = new Label(GL_SPL_PLUS+(standards.size() - 18));
 				toolTipwidgets.add(left);
 			}
-			if (searchResultDo.getStandards().size() > 2) {
-				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
+			if (searchResultDo.getStandards().size() > 1) {
+				Integer moreStandardsCount = searchResultDo.getStandards().size() - 1;
 				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreStandardsCount), toolTipwidgets, standards);
 				toolTipUc.setStyleName(SearchSuggestedResultWrapperCBundle.INSTANCE.css().blueLink());
 				standardsContainer.add(toolTipUc);

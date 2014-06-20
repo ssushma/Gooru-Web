@@ -2487,7 +2487,7 @@ public interface MessageProperties {
       	String GL1950 = "Recently Added";
       	String GL1951 = "Upcoming(by due date)";
       	String GL1952 = "View All Completed";
-      	String GL1953 = "View All InComplete";
+      	String GL1953 = "View All Incomplete";
       	
         String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
     	String GL1955 = "Note: If you want to switch your collection back to public, there might be a slight delay while we review it.";
@@ -2514,7 +2514,7 @@ public interface MessageProperties {
       	String GL1968 = "See More";
     	String GL1969 = "Mark as Complete";
     	String GL1970 = "Mark as Incomplete";
-    	String GL1971 = "Student messaging here";
+    	String GL1971 = "Hover over each dot to view the assignment.";
     	String GL1972 = "Each of the dots below represents an assignment. Sequence your assignments in the order you want students to view them. This order will reflect in student view.";
     	String GL1973 = "Assign Collections";
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
