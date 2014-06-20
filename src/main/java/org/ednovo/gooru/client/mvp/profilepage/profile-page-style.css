@@ -1525,7 +1525,7 @@ text-align: center;
 	background: -ms-linear-gradient(top, #515151, #333);
 	background: -o-linear-gradient(top, #515151, #333);
 	float: left;
-	margin-right: 10px;
+	width: 100px;
 	
 	
 }

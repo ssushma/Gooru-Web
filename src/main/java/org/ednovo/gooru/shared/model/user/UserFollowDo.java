@@ -1,6 +1,8 @@
 package org.ednovo.gooru.shared.model.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -13,6 +15,7 @@ public class UserFollowDo implements Serializable{
 	private String profileImageUrl;
 	private UserSummaryDo summary;
 	private int totalHintCount;
+	private ArrayList<CustomFieldDo> customFields;
 	
 	public UserFollowDo(){}
 
@@ -54,6 +57,20 @@ public class UserFollowDo implements Serializable{
 
 	public void setTotalHintCount(int totalHintCount) {
 		this.totalHintCount = totalHintCount;
+	}
+
+	/** 
+	 * This method is to get the customFields
+	 */
+	public List<CustomFieldDo> getCustomFields() {
+		return customFields;
+	}
+
+	/** 
+	 * This method is to set the customFields
+	 */
+	public void setCustomFields(ArrayList<CustomFieldDo> customFields) {
+		this.customFields = customFields;
 	}
 	
 }
