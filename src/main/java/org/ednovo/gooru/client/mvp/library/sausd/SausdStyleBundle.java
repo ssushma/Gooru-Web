@@ -22,9 +22,9 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.data;
+package org.ednovo.gooru.client.mvp.library.sausd;
 /**
- * @fileName : ProfilePageLibraryStyleBundle.java
+ * @fileName : LibraryStyleBundle.java
  *
  * @description : 
  *
@@ -41,21 +41,38 @@ package org.ednovo.gooru.client.mvp.profilepage.data;
 import com.google.gwt.resources.client.CssResource;
 
 
-public interface ProfilePageLibraryStyleBundle extends CssResource {
-	String open();
-	String active();
-	String resourceImage();
+public interface SausdStyleBundle extends CssResource {
 	String conceptTitle();
-	String collectionSmall();
-	String conceptActive();
 	String lessonTitle();
-	String collection();
-	String collectionViewerSubStyle();
-	String collectionInfoSubStyle();
+	String conceptTitleActive();
+	String courseOption();
+	String aboutGooruAnrPadding();
+	String unitLiActive();
+	String header();
+	String course();
+	String resourceImage();
+	String blueLink();
+
+	String bannerSpanBlock();
 	String resourcesInsideSubStyle();
-	String emptyFolderContainer();
-	String libraryTitle();
-	String libraryConceptTitle();
-	String libraryConceptActive();
-	String marginTop5();
+	String collectionInfoSubStyle();
+	String collectionViewerSubStyle();
+	String tabsLi();
+	String tabsLiInactive();
+	String singleLink();
+	String active();
+	String paginationPanel();
+	String twoColumnContainer();
+	String subDropdown();
+	String unitOption();
+	String popularStarImage();
+	String math();
+	String partnerMenuPadding();
+	String lessonTitleProfile();
+	String collectionSmall();
+	String conceptTitleLeft();
+	
+	String rusdPartnerLogo();
+	String sausdPartnerLogo();
+	String gradeOption();
 }

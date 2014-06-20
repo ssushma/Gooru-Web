@@ -8,21 +8,18 @@
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="ideasStaticLbl"/>
 	      </g:HTMLPanel>
 	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="bigIdeasLbl"/>
-	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelbigIdeasHTML"></g:Label>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.sausdContentLast}" ui:field="essentialQuestionsPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.question}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="questionsStaticLbl"/>
 	      </g:HTMLPanel>
 	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="essentialQuestionsLbl"/>
-	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelessentialQuestionsHTML"></g:Label>
 	   </g:HTMLPanel>
 	   <g:HTMLPanel styleName="{folderMetaStyle.ideasBlock} {folderMetaStyle.ideasBlockLast} {folderMetaStyle.sausdContentBlock}" ui:field="performanceTaskPanel">
 	      <g:HTMLPanel styleName="{folderMetaStyle.blockView} {folderMetaStyle.task}">
 	         <g:Label styleName="{folderMetaStyle.blockViewTitle}" ui:field="tasksStaticLbl"/>
 	      </g:HTMLPanel>
 	      <g:HTML styleName="{folderMetaStyle.padding10}" ui:field="performanceTaskLbl"/>
-	      <g:Label styleName="errorMessage {folderMetaStyle.errorLabel}" ui:field="errorLabelperformanceTaskHTML"></g:Label>
 	   </g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -2417,8 +2417,8 @@ public interface MessageProperties {
     	String GL1899 = "About SAUSD";
     	String GL1900 = "http://www.sausd.us/site/default.aspx?PageID=1";
     	String GL1901 = "SAUSD Featured Courses";
-    	String GL1902 = "Santa Ana Unified School District Library";
-    	String GL1903 = "This library showcases collections created by teachers from the Santa Ana Unified School District in California.";
+    	String GL1902 = "Community of Learners and Innovators";
+    	String GL1903 = "Powered by Santa Ana Unified School District and the Common Core.";
     	String GL1904 = "Find";
     	String GL1905 = "standards-aligned, interactive learning materials tied to Common Core";
     	String GL1906 = "Share";
