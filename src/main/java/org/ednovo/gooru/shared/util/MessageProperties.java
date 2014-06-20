@@ -1371,7 +1371,7 @@ public interface MessageProperties {
 		
 		//Student Assignment View.
 		String GL1130 = "Return to Teacher View";
-		String GL1131 ="Oops! Looks like your teacher hasn't added any Collections to his/her page yet. Check back later to see if there are any changes";
+		String GL1131 ="It looks like there are no assignments under this view. Select \"View All\" from the dropdown menu to see all of the collections your teacher has assigned.";
 		
 		//Class code view.
 		String GL1132="Students, enter in the Class Code provided by your teacher.";
