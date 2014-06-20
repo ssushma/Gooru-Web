@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.UnitDo;
 
 import com.google.gwt.core.client.GWT;
@@ -44,6 +45,9 @@ public class LibraryUnitMenuView extends Composite {
 	
 	private Integer childCount;
 	
+	private Integer widgetCount;
+	
+	private String type;
 	
 	private static LibraryUnitMenuViewUiBinder uiBinder = GWT
 			.create(LibraryUnitMenuViewUiBinder.class);
@@ -72,6 +76,12 @@ public class LibraryUnitMenuView extends Composite {
 		setUnitId(folderDo.getGooruOid());
 	}
 
+	public LibraryUnitMenuView(ProfileLibraryDo folderDo) {
+		initWidget(uiBinder.createAndBindUi(this));
+		unitMenuItem.setText(folderDo.getTitle());
+		setUnitId(folderDo.getGooruOid());
+	}
+	
 	public Label getUnitMenuItemPanel() {
 		return unitMenuItem;
 	}
@@ -90,4 +100,22 @@ public class LibraryUnitMenuView extends Composite {
 	public void setChildCount(Integer childCount) {
 		this.childCount = childCount;
 	}
+
+	public Integer getWidgetCount() {
+		return widgetCount;
+	}
+
+	public void setWidgetCount(Integer widgetCount) {
+		this.widgetCount = widgetCount;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 }

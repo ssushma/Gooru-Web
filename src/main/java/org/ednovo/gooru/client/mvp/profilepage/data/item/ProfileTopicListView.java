@@ -68,7 +68,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 
 	@UiField ScrollPanel lessonScrollPanel;
 	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside;
-	@UiField Label topicTitleLbl, noCollectionLbl;
+	@UiField Label topicTitleLbl, noCollectionLbl, libraryTopicLbl;
 	@UiField Image collectionImage;
 	@UiField HTML collectionTitleLbl, collectionDescriptionLbl;
 	@UiField Button assignCollectionBtn, customizeCollectionBtn;
@@ -150,7 +150,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		assignCollectionBtn.setText(GL0104);
 		customizeCollectionBtn.setText(GL0631);
 		noCollectionLbl.setText(GL1170);
-		topicTitleLbl.setText(profileFolderDo.getTitle());
+		setTopicLabel(profileFolderDo.getTitle());
 		
 		if(profileFolderDo.getCollections()!=null) {
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
@@ -193,7 +193,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(GL0104);
 		customizeCollectionBtn.setText(GL0631);
-		topicTitleLbl.setText(profileFolderDo.getTitle());
+		setTopicLabel(profileFolderDo.getTitle());
 		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
 
@@ -895,6 +895,17 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			successPopupVc.show();
 			successPopupVc.center();
 		}
-	}	
+	}
 	
+	private void setTopicLabel(String title) {
+		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
+			topicTitleLbl.setVisible(true);
+			libraryTopicLbl.setVisible(false);
+			topicTitleLbl.setText(title);
+		} else {
+			topicTitleLbl.setVisible(false);
+			libraryTopicLbl.setVisible(true);
+			libraryTopicLbl.setText(title);
+		}
+	}
 }

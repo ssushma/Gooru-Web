@@ -4,6 +4,7 @@
 	<ui:style field="style" src="../ProfilePageLibraryStyle.css" type="org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle" />
 	      <g:HTMLPanel styleName="{style.topicBlock}" ui:field="topicBlock">
 	         <g:Label styleName="{style.topicTitle} {style.folderLevel} {style.open}" ui:field="topicTitleLbl"/>
+	         <g:Label styleName="{style.libraryTopicTitle}" ui:field="libraryTopicLbl"/>
 	         <g:ScrollPanel styleName="{style.conceptList}" ui:field="lessonScrollPanel">
 	             <g:HTMLPanel ui:field="conceptList"/>
 	         </g:ScrollPanel>
