@@ -2708,3 +2708,14 @@ margin-top: 18px; */
 	position: relative;
 	float: left;
 }
+.loadingpanelImage{
+	background: url(images/core/loading-sm.gif) no-repeat;
+	height: 38px;
+	width: 238px;
+	color: #999;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	margin-left: 300px;
+	margin-top: -265px;
+}
