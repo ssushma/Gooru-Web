@@ -227,7 +227,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	@Override
 	public void loadingPanel(boolean isVisible) {
-		libraryView.getCourseImage().getElement().getStyle().setMarginTop(-50, Unit.PX);
+		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
 		libraryView.getCourseTabs().setVisible(false);
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
 	}
