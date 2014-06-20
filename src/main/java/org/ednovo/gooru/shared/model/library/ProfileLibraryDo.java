@@ -66,6 +66,9 @@ public class ProfileLibraryDo implements Serializable{
 	private ResourceTypeDo resourceType;
 	private String url;
 	private SearchRatingsDo ratings;
+	private String ideas;
+	private String performanceTasks;
+	private String questions;
 	
 	public ProfileLibraryDo(){}
 
@@ -342,5 +345,48 @@ public class ProfileLibraryDo implements Serializable{
 	public void setRatings(SearchRatingsDo ratings) {
 		this.ratings = ratings;
 	}
+
+	/**
+	 * @return the ideas
+	 */
+	public String getIdeas() {
+		return ideas;
+	}
+
+	/**
+	 * @param ideas the ideas to set
+	 */
+	public void setIdeas(String ideas) {
+		this.ideas = ideas;
+	}
+
+	/**
+	 * @return the performanceTasks
+	 */
+	public String getPerformanceTasks() {
+		return performanceTasks;
+	}
+
+	/**
+	 * @param performanceTasks the performanceTasks to set
+	 */
+	public void setPerformanceTasks(String performanceTasks) {
+		this.performanceTasks = performanceTasks;
+	}
+
+	/**
+	 * @return the questions
+	 */
+	public String getQuestions() {
+		return questions;
+	}
+
+	/**
+	 * @param questions the questions to set
+	 */
+	public void setQuestions(String questions) {
+		this.questions = questions;
+	}
+	
 	
 }

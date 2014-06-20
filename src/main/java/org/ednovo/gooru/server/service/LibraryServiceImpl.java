@@ -49,6 +49,8 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
@@ -828,6 +830,40 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		return deserializeCollaborators(jsonRepresentation);
+	}
+
+	@Override
+	public ProfileLibraryListDo getLibraryWorkspace(String gooruUid, int limit, String sharingType, String collectionType, int offset) throws GwtException {
+		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, getLoggedInSessionToken(), limit+"",offset+"","20");
+		System.out.println(url);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
+		return profileLibraryListDo;
+	}
+
+	@Override
+	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException {
+		ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
+		JsonRepresentation jsonRep = null;
+		String url = null;
+		String sessionToken = getLoggedInSessionToken();
+		if(sharingType!=null){
+			sessionToken=sessionToken+"&sharing="+sharingType;
+		}
+		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
+		return profileLibraryListDo;
+	}
+
+	@Override
+	public ProfileLibraryDo getLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException {
+		return null;
 	}
 
 }

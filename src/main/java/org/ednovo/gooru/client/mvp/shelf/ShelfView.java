@@ -727,7 +727,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 			}
 		}
 		
-		getCollectionShareTabVc();
+		//getCollectionShareTabVc();
 	}
 	public void setCollabCount(int count){
 		//	Set the count of Collaborators;
@@ -783,7 +783,6 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 
 	@Override
 	public void setInSlot(Object slot, Widget content) {
-		System.out.println("setInSlot");
 		if (AppClientFactory.isAnonymous()){
 			shelfTabSimPanel.setVisible(false);
 			folderListPanel.setVisible(false);
@@ -966,7 +965,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 				MixpanelUtil.Click_Share_CollectionEdit();
 				setPersistantTabFlag("shareTab");
 				shareTabVc.setSelected(true);
-				collectionMetaDataSimPanel.setWidget(getCollectionShareTabVc());
+				collectionMetaDataSimPanel.setWidget((collectionShareTabVc!=null?collectionShareTabVc:getCollectionShareTabVc()));
 				collectionShareTabVc.onReveal();
 				collectionMetaDataSimPanel.getElement().removeAttribute("style");
 			}
@@ -1077,8 +1076,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	 */
 	public CollectionCollaboratorTabVc getCollectionCollaboratorTabVc() {
 		if (collectionCollaboratorTabVc == null) {
-			collectionCollaboratorTabVc = new CollectionCollaboratorTabVc(
-					collectionDo);
+			collectionCollaboratorTabVc = new CollectionCollaboratorTabVc(collectionDo);
 		}
 		return collectionCollaboratorTabVc;
 	}
@@ -1876,13 +1874,19 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 	
 	@UiHandler("rbPublic")
 	public void clickOnPublish(ClickEvent clickEvent){
-		collectionShareTabVc.clickOnPublic();
+		if(collectionShareTabVc!=null){
+			collectionShareTabVc.clickOnPublic();
+		}else{
+			getCollectionShareTabVc().clickOnPublic();
+		}
+	
 	}
 	
 	@Override
-	public void setPusblishStatus(String publishStatus, String shareType) {
+	public void setPusblishStatus(String publishStatus, CollectionDo colleDo) {
 		
 		if(publishStatus!=null){
+			collectionDo.setPublishStatus(colleDo.getPublishStatus());
 			if(publishStatus.equalsIgnoreCase("pending")){
 				rbPublic.setVisible(false);
 				lblPublishPending.setVisible(true);	

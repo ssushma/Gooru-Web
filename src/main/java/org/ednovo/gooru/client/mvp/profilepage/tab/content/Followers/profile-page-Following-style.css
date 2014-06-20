@@ -77,7 +77,7 @@ a:hover {
 .username {
 	display: block;
 	vertical-align: middle;
-	color: #1076bb;
+	/* color: #1076bb; */
 	font-weight: bold;
 	font-size: 18px;
 }
@@ -87,15 +87,15 @@ a:hover {
 .profilepageFollwoingContentText {
 	font-weight: bold;
 	padding: 10px 0px;
-	font-size: 16px;
+	font-size: 18px;
 	border-bottom: 1px solid #ddd;
-	height: 255px;
+	
 }
 .profilepageFollowerContentText {
 	padding: 10px 0px;
-	font-size: 16px;
+	font-size: 18px;
 	border-bottom: 1px solid #ddd;
-	height: 255px;
+	
 }
 .profileFollowingUserNameDetails {
 	display: inline-block;

@@ -619,7 +619,7 @@ public class EditClasspageView extends
 				}else if(sortType.equals(GL1950)){
 					sortingStringValue="recent";
 				}
-				else if(sortType.equals(GL1951)){
+				else if(sortType.equals(GL1581)){
 					sortingStringValue="duedate";
 				}
 				assignmentsContainerPanel.clear();
@@ -998,6 +998,7 @@ public class EditClasspageView extends
 			assignmentsDirectionsLabel.setVisible(false);
 			getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
+				dropDownListDiv.setVisible(true);
 				assignmentsContainerPanel.clear();
 				for(int itemIndex=0;itemIndex<classpageItemsList.size();itemIndex++){
 					ClasspageItemDo classpageItemDo=classpageItemsList.get(itemIndex);
@@ -1807,7 +1808,7 @@ public class EditClasspageView extends
 		sortingOptionsList.add(GL1948);
 		sortingOptionsList.add(GL1949);
 		sortingOptionsList.add(GL1950);
-		sortingOptionsList.add(GL1951);
+		sortingOptionsList.add(GL1581);
 	}
 	@Override
 	public void setSortingOrderInDropdown(String sortingOrder) {
@@ -1819,7 +1820,7 @@ public class EditClasspageView extends
 			dropdownPlaceHolder.setText(GL1950);
 		}
 		else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("duedate")){
-			dropdownPlaceHolder.setText(GL1951);
+			dropdownPlaceHolder.setText(GL1581);
 		}
 	}
 	

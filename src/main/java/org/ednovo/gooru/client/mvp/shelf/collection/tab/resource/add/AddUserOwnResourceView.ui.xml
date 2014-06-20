@@ -163,6 +163,7 @@
        <g:HTMLPanel styleName="{res.css.fileActionPanel}" ui:field="panelAction">
           <g:Button styleName="secondary" ui:field="cancelResourcePopupBtnLbl"/>
           <gg:BlueButtonUc styleName="primary {res.css.btnAdd}" ui:field="addResourceBtnLbl"/>
+          <g:HTMLPanel ui:field="loadingImagePanel"/>
         </g:HTMLPanel>
         <g:Label styleName="{res.css.adding}" ui:field="lblAdding"></g:Label>
       </g:HTMLPanel>

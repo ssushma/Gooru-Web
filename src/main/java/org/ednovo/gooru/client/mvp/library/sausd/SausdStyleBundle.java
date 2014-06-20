@@ -22,30 +22,57 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
+package org.ednovo.gooru.client.mvp.library.sausd;
 /**
- * 
+ * @fileName : LibraryStyleBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 02-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
  */
-package org.ednovo.gooru.client.uc;
 
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.resources.client.CssResource;
 
-/**
- * @author Search Team
- * 
- */
-public class SeparatorUc extends HTML {
 
-	private static String DEFAULT_SEPARATOR = " &#8226; ";
+public interface SausdStyleBundle extends CssResource {
+	String conceptTitle();
+	String lessonTitle();
+	String conceptTitleActive();
+	String courseOption();
+	String aboutGooruAnrPadding();
+	String unitLiActive();
+	String header();
+	String course();
+	String resourceImage();
+	String blueLink();
 
-	/**
-	 * Class constructor
-	 */
-	public SeparatorUc() {
-		super(DEFAULT_SEPARATOR);
-		this.setStyleName(UcCBundle.INSTANCE.css().separator());
-	}
-	public SeparatorUc(String value) {
-		super(DEFAULT_SEPARATOR);
-		this.setStyleName(UcCBundle.INSTANCE.css().separatorSuggested());
-	}
+	String bannerSpanBlock();
+	String resourcesInsideSubStyle();
+	String collectionInfoSubStyle();
+	String collectionViewerSubStyle();
+	String tabsLi();
+	String tabsLiInactive();
+	String singleLink();
+	String active();
+	String paginationPanel();
+	String twoColumnContainer();
+	String subDropdown();
+	String unitOption();
+	String popularStarImage();
+	String math();
+	String partnerMenuPadding();
+	String lessonTitleProfile();
+	String collectionSmall();
+	String conceptTitleLeft();
+	
+	String rusdPartnerLogo();
+	String sausdPartnerLogo();
+	String gradeOption();
 }

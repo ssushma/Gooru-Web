@@ -513,7 +513,7 @@ public class CollectionFormView extends
 			appPopUp.setViewTitle(GL1421);
 			setPopUpStyle();
 		}else{
-			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF)){
+			if(AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.SHELF) || AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken().equals(PlaceTokens.HOME)){
 				collPopUpMainheading.setText(GL0993);
 				collPopUpSubheading.setText(GL1033);
 				collTitleLbl.setText(GL0993+GL_SPL_SEMICOLON);

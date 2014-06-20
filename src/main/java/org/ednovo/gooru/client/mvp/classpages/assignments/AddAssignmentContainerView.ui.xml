@@ -9,11 +9,13 @@
 				<g:Label styleName="{res.css.popupHeaderText}" ui:field="addCollectionPopupHeader"></g:Label>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.assignmentMainContainer}">
+			    <g:Label styleName="{res.css.subHeadingCollMsg}" ui:field="subHeadingMsgLbl"></g:Label>
 			    <g:Label styleName="{res.css.emptyCollMsg}" ui:field="emptyMsgLbl"></g:Label>
 				<g:ScrollPanel ui:field="dropdownListContainerScrollPanel" styleName="{res.css.dropdownListContainerScrollPanel}">
 	            	<g:HTMLPanel ui:field="floderTreeContainer" styleName="{res.css.folderStucture}">
 			   		</g:HTMLPanel>
 				</g:ScrollPanel>
+				<g:Label ui:field="displayCountLabel" styleName="{res.css.selectionCountLabel}"></g:Label>
 				<g:HTMLPanel ui:field="buttonsContainer" styleName="{res.css.assignmentButtonsContainer}">
 					<g:Button styleName="secondary"  ui:field="cancelResourcePopupBtnLbl" />
 					<g:Button styleName="primary {res.css.assignButton}"  ui:field="addResourceBtnLbl" />

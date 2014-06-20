@@ -206,6 +206,13 @@
 .collectionTitle {
 	font-size:14px;
 	font-weight:bold;
+	color: #1076bb;
+}
+.collectionTitlePPP {
+	font-size:14px;
+	font-weight:bold;
+	cursor:pointer;
+	color: #0066cc;
 }
 
 .collectionAuthor, .collectionDescription {
@@ -315,4 +322,52 @@
 .emptyFolderContainer {
 	height: 234px;
 	background: url("images/folders/panel/empty-folder-large.png") 248px 43px white no-repeat;
+}
+.libraryTopicTitle {
+	font-size:14px;
+	padding:15px;
+	border-top-right-radius:4px;
+	border-bottom:1px solid #ddd;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	/* Old browsers */
+	background: rgb(239,239,239);
+}
+
+/*For SAUSD library + Profile Page View Widget*/
+.libraryTitle {
+	margin: 0px 0px;
+	font-weight: bold;
+	background-color: rgba(255, 255, 255, 0.5);
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border-style: solid;
+	-moz-box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
+	-webkit-box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
+	box-shadow: 0 0 11px rgba(221, 221, 221, 0.15);
+}
+.libraryConceptTitle {
+	padding:0px 25px;
+	cursor:pointer;
+	margin: 3px 0px;
+}
+.libraryConceptTitle:hover {
+	background-color:#E1EEF6;
+}
+.libraryConceptActive {
+	background-color:#CFE3F1 !important;
+}
+
+.libraryConceptActive:hover {
+	background-color:#CFE3F1 !important;
+}
+.marginTop5 {
+	margin-top: 5px;
 }
