@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
 import org.ednovo.gooru.client.mvp.faq.CopyRightPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
@@ -86,6 +87,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 	}
 	public static AddUserOwnResourceViewUiBinder uiBinder = GWT.create(AddUserOwnResourceViewUiBinder.class);
 	
+	@UiField HTMLPanel loadingImagePanel;
 	
 	@UiField
 	public Button cancelResourcePopupBtnLbl,uploadImageLbl,browseResourceBtn;
@@ -422,10 +424,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 										addResourceBtnLbl.setEnabled(true);
 									}else{	
 										MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
-										
-										lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
-										panelAction.getElement().getStyle().setDisplay(Display.NONE);
-										
+										//lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
+										//panelAction.getElement().getStyle().setDisplay(Display.NONE);
 										filePath = resourcePathTextBox.getText().trim();
 										resourceTitle = titleTextBox.getText().trim();
 										resourceDesc = descriptionTxtAera.getText().trim();
@@ -460,10 +460,15 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 											isValidate = false;
 										}
 										if(isValidate){
+											loadingImagePanel.clear();
+											loadingImagePanel.add(setLoadingPanel());
 											fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
 											fileuploadForm.addFormHandler(new FormHandler() {
 												
 												public void onSubmitComplete(FormSubmitCompleteEvent event) {
+													panelAction.getElement().getStyle().setDisplay(Display.NONE);
+													lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
+													loadingImagePanel.setVisible(false);
 													if(isValidImageSize){
 														if(collectionDo.getSharing().equalsIgnoreCase("public")){
 															parseUploadFileDetails(event.getResults(),true);
@@ -476,10 +481,11 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 												
 												@Override
 												public void onSubmit(FormSubmitEvent event) {
+												
 												}
 											});
-											
 											fileuploadForm.submit();
+											
 											
 											/*
 											 String str ="{\"deleteType\":\"DELETE\",\"deleteUrl\":\"media/f310515f-2908-4bb4-83a5-e4626b72d7dd.pdf\",\"imageValidationMsg\":null,\"name\":\"f310515f-2908-4bb4-83a5-e4626b72d7dd.pdf\",\"originalFilename\":\"gwtb_html5_a_web_develops_dream.pdf\",\"size\":462358,\"statusCode\":200,\"uploadImageSource\":\"local\",\"url\":\"http://westrepository.goorulearning.org/prod1/uploaded-media/f310515f-2908-4bb4-83a5-e4626b72d7dd.pdf\"}";
@@ -726,5 +732,9 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 			});
 		}
 	}
-
+	public Label setLoadingPanel(){
+		Label loadingImage=new Label();
+		loadingImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().loadingpanelImage());
+		return loadingImage;
+	}
 }

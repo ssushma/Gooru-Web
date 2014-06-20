@@ -138,6 +138,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	
 	private static final String LOGINEVENT = "loginEvent";
 	
+	private static final String ERROR = "error";
+	
 	private String parentGooruUID;
 	
 	private boolean isLandingPageLoaded = false;
@@ -299,18 +301,15 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		}
 		
+		if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("403") && AppClientFactory.isAnonymous()) {
+			new AlertContentUc(GL1966, GL1938);
+		}
+		
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
 		int flag = userDo.getViewFlag();
 		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
 		
 		if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
-			/**
-			 * Added to check for blocked user.
-			 */
-			if(userDo.getActive()==0){
-				new AlertContentUc(GL1966, GL1938);
-			}
-			//----------------------------------------------------------------- //
 			
 //			AppClientFactory.getInjector().getUserService().getUserProfileDetails(userDo.getGooruUId(), new SimpleAsyncCallback<SettingDo>(){
 //
@@ -328,7 +327,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 //			});
 			
 		}
-		else if(flag<=9 && !AppClientFactory.isAnonymous()){
+		else if(flag<=10 && !AppClientFactory.isAnonymous()){
 			showMarketingPopup(userDo);
 		}
 		AppClientFactory.fireEvent(new SetFooterEvent(AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken()));	

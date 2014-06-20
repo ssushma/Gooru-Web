@@ -73,7 +73,7 @@ a:hover {
 }
 
 .userName {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
 	color: rgba(100,100,100, 0.8);
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
@@ -1510,4 +1510,26 @@ text-align: center;
 .followingBtn:hover
 {
 	cursor: pointer;
+}
+.blackPrimaryButton{
+	color: #fff;
+	border-radius: 4px;
+	padding: 7px 9px;
+	border: none;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	background-color: #515151;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#515151), to(#333));
+	background: -webkit-linear-gradient(top, #515151, #333);
+	background: -moz-linear-gradient(top, #515151, #333);
+	background: -ms-linear-gradient(top, #515151, #333);
+	background: -o-linear-gradient(top, #515151, #333);
+	float: left;
+	width: 100px;
+	
+	
+}
+.blackPrimaryButton:hover{
+	cursor: pointer;
+	background: #393939;
 }
