@@ -359,7 +359,6 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	public void setLibraryTopicListData(final ArrayList<TopicDo> topicDoList) {
 		contentScroll.clear();
 		try {
-			setMetaDataContent();
 			for(int i = 0; i <topicDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(topicDoList.get(i), (i+1), getPlaceToken()));
 			}
@@ -373,7 +372,6 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	public void setLibraryConceptOnlyData(ArrayList<ConceptDo> conceptDoList, final Integer collectionTotalCount) {
 		contentScroll.clear();
 		try {
-			setMetaDataContent();
 			for(int i = 0; i <conceptDoList.size(); i++) {
 				contentScroll.add(new LibraryTopicListView(conceptDoList.get(i), (i+1), getPlaceToken()));
 			}
@@ -1323,16 +1321,6 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			getContentScroll().setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private void setMetaDataContent() {
-		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-			libraryMetaDataContainer.setVisible(true);
-			libraryMetaDataContainer.clear();
-			libraryMetaDataContainer.add(new LibraryMetaDataContentUc());
-		} else {
-			libraryMetaDataContainer.setVisible(false);
 		}
 	}
 
