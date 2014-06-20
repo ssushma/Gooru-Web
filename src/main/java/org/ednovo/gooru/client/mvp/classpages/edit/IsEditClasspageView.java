@@ -166,4 +166,24 @@ public interface IsEditClasspageView extends IsViewWithHandlers<EditClasspageUiH
 	*/
 	
 	ArrayList<ClasspageItemDo> getGlobalClasspageProcess();
+
+	/**
+	 * @function hideNoAssignmentsMessagePanel 
+	 * 
+	 * @created_date : Jun 16, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void hideNoAssignmentsMessagePanel();
 }

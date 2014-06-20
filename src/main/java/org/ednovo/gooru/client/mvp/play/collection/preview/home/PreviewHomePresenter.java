@@ -28,6 +28,7 @@ package org.ednovo.gooru.client.mvp.play.collection.preview.home;
 
 import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
 import org.ednovo.gooru.client.mvp.play.collection.CollectionPlayerPresenter;
+import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
 import org.ednovo.gooru.client.mvp.rating.RatingAndReviewPopupPresenter;
 import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -43,6 +44,7 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 	SignUpPresenter signUpViewPresenter = null;
 	
 	private CollectionPlayerPresenter collectionPlayerPresenter=null;
+	private PreviewPlayerPresenter previewPlayerPresenter=null;
 	private RatingAndReviewPopupPresenter ratingAndReviewPopup;
 	CollectionDo collectionDo= null;
 	@Inject
@@ -57,6 +59,13 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 		this.collectionDo = collectionDo;
 		getView().setCollectionMetadata(collectionDo);
 		setCollectionResources(collectionDo);
+	}
+	
+	public PreviewPlayerPresenter getPreviewPlayerPresenter() {
+		return previewPlayerPresenter;
+	}
+	public void setPreviewPlayerPresenter(PreviewPlayerPresenter previewPlayerPresenter) {
+		this.previewPlayerPresenter = previewPlayerPresenter;
 	}
 	
 	public void setCollectionResources(CollectionDo collectionDo){
@@ -112,6 +121,14 @@ public class PreviewHomePresenter extends PresenterWidget<IsPreviewHomeView> imp
 	@Override
 	public void openReviewPopUp(String assocGooruOId, String title) {
 		throw new RuntimeException("Not implemented");
+	}
+	@Override
+	public void triggerCollectionShareDataEvent(String collectionId,
+			String itemType, String shareType, boolean confirmStatus) {
+		if(previewPlayerPresenter!=null){
+			previewPlayerPresenter.triggerCollectionShareDataEvent( collectionId, itemType,  shareType,  confirmStatus);
+		}
+		
 	}
 
 }

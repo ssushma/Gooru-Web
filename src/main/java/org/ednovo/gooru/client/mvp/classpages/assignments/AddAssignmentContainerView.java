@@ -32,6 +32,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
@@ -86,7 +87,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@UiField Button addResourceBtnLbl,cancelResourcePopupBtnLbl;
 	@UiField ScrollPanel dropdownListContainerScrollPanel;
 	@UiField Label /*dropdownListPlaceHolder,addingText,chooseCollectionErrorLabel,directionErrorLabel,*/ 
-				addCollectionPopupHeader, addingText,emptyMsgLbl /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/;
+				addCollectionPopupHeader, addingText,emptyMsgLbl,subHeadingMsgLbl,displayCountLabel; /*,assignmentTitleLabel,chooseCollectionHelpText,assignmentDirectionLabel,assignmentDueDateLabel,remainderLbl*/
 //	@UiField TextArea assignmentDirectionsTxtArea;
 	
 	@UiField FlowPanel popupContent;
@@ -164,6 +165,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 				    if(parent != null)
 				    	parent.setSelected(false);   // TODO FIX ME
 				    item.setState(!item.getState(), false);
+				    setSelectedCollectionsCount(item.getChildCount());
 			    }else if(folderWidget instanceof CollectionTreeItem){
 			    	removePreviousSelectedItem();
 			    	cureentcollectionTreeItem=(CollectionTreeItem)folderWidget;
@@ -182,7 +184,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	
 	public void setStaticTexts(){
-		addCollectionPopupHeader.setText(GL1375);
+		subHeadingMsgLbl.setText(GL1974);
+		addCollectionPopupHeader.setText(GL1973);
 		//assignmentTitleLabel.setText(GL1376);
 //		dropdownListPlaceHolder.setText(GL1377);
 //		chooseCollectionHelpText.setText(GL1378);
@@ -198,8 +201,15 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
-//			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
-//			chooseCollectionErrorLabel.setText("");
+			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
+		}
+	}
+	public void setSelectedCollectionsCount(int count){
+		if(count>0){
+			String label=count==1?count+" collection":count+" collections";
+			displayCountLabel.setText(label+" "+GL1975);
+		}else{
+			displayCountLabel.setText("");
 		}
 	}
 	protected void removePreviousSelectedItem(){
@@ -450,6 +460,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
+			 setSelectedCollectionsCount(foldersArrayList.size());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
@@ -561,6 +572,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		//addingText.setVisible(false);
 		addResourceBtnLbl.setVisible(true);
 		cancelResourcePopupBtnLbl.setVisible(true);
+		displayCountLabel.setText("");
 //		chooseCollectionErrorLabel.setText("");
 //		directionErrorLabel.setText("");
 //		assignmentDirectionsTxtArea.setText(GL1389);
@@ -586,6 +598,8 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void hideAddCollectionPopup(String collectionTitle) {
 		hide();
 		clearShelfData();
+		Window.enableScrolling(false);
+		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		new SuccessMessagePopupView(collectionTitle);
 	}
 	
@@ -600,6 +614,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		dropdownListContainerScrollPanel.setVisible(false);
 		addResourceBtnLbl.setText(GL1964);
 		emptyMsgLbl.setText(GL1963); 
+		subHeadingMsgLbl.setVisible(false);
 		emptyMsgLbl.setVisible(true);
 		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 
 		buttonsContainer.getElement().getStyle().setMarginLeft(110, Unit.PX); 
@@ -612,6 +627,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		dropdownListContainerScrollPanel.setVisible(true);
 		addResourceBtnLbl.setText(GL0104);
 		emptyMsgLbl.setVisible(false);
+		subHeadingMsgLbl.setVisible(true);
 		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 
 		appPopUp.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().popupContainer());
 		appPopUp.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().noCollectionMsgOuterContainer());

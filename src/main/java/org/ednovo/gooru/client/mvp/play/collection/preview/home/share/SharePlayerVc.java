@@ -456,7 +456,12 @@ public abstract class SharePlayerVc extends PopupPanel implements MessagePropert
 			shareDo.setOnlyIcon(false);
 			shareDo.setShareType(shareType);
 			shareDo.setDecodeRawUrl(link);
-			SocialShareSmallView socialView = new SocialShareSmallView(shareDo);
+			SocialShareSmallView socialView = new SocialShareSmallView(shareDo){
+				@Override
+				public void triggerShareDataEvent(String shareType,boolean confirmStatus){
+					triggerShareEvent(shareType,confirmStatus);
+				}
+			};
 			ftmPanel.add(socialView);
 			socialSharePanel.add(ftmPanel);
 			} catch (Exception ex) {
@@ -473,6 +478,9 @@ public abstract class SharePlayerVc extends PopupPanel implements MessagePropert
 			shareLinkTxtBox.setFocus(true);
 		}
 
+	}
+	public void triggerShareEvent(String shareType,boolean confirmStatus){
+		
 	}
 
 	private static native boolean isCookieEnabled() /*-{

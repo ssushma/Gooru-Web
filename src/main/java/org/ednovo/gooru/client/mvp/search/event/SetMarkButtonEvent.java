@@ -22,81 +22,37 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.classpages.studentView;
-
-import java.util.ArrayList;
-
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.ClasspageDo;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-
-import com.google.gwt.user.client.ui.Button;
-
-public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssignmentUiHandlers>  {
-
-	
-	
-	
-	public Button getBackToEditPanel();
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.search.event;
 
 
-	
+import com.google.gwt.event.shared.GwtEvent;
 
-	void clearAll();
-	
-	
-	void setClasspageData( ClasspageDo classpageDo);
-	void showClasspageItems(ArrayList<ClasspageItemDo> classpageItemsList, String sortOrder);
-	void showClasspageItemsForAssignmentPath(ArrayList<ClasspageItemDo> classpageItemsList);
+/**
+ * @author Search Team
+ * 
+ */
+public class SetMarkButtonEvent extends GwtEvent<SetMarkButtonHandler> {
 
-
-
+	public static final Type<SetMarkButtonHandler> TYPE = new Type<SetMarkButtonHandler>();
 
 	/**
-	 * @function callAssignmentAPI 
-	 * 
-	 * @created_date : Jun 17, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param classpageId
-	 * @param offsetProgress
-	 * @param limitProgress
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void callAssignmentAPI(String classpageId, String offsetProgress,
-			String limitProgress);
+	 * Class constructor
+	 */
+	public SetMarkButtonEvent() {
+	}
+
+	@Override
+	public Type<SetMarkButtonHandler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(SetMarkButtonHandler handler) {
+		handler.setVisibility();
+	}
 
 
-
-
-	/**
-	 * @function setSortingOrderInDropdown 
-	 * 
-	 * @created_date : Jun 17, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param sortingOrder
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void setSortingOrderInDropdown(String sortingOrder);			
 }

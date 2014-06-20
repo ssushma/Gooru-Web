@@ -28,7 +28,7 @@ package org.ednovo.gooru.shared.util;
 
 public interface MessageProperties {
 	//Special Characters
-	String GL_SPL_SEMICOLON = ":";
+	String GL_SPL_SEMICOLON = ": ";
 	String GL_SPL_STAR = "*";
 	String GL_SPL_PLUS = "+";
 	String GL_SPL_QUESTION = "?";
@@ -259,7 +259,7 @@ public interface MessageProperties {
 	String GL0174 = "Resources";
 	String GL0175 = "Collections";
 	String GL0176 = "Search";				//Used in Header also.
-	String GL0177 = "Discover your favorite topic...";
+	String GL0177 = "Search for a topic...";
 	String GL0178 = "beta";
 	
 	//Header
@@ -277,7 +277,7 @@ public interface MessageProperties {
 	//Logout Popup
 	String GL0188 = "Did you hear the bell?";
 	String GL0189 = "Class is dismissed!";
-	String GL0190 = "Ok";
+	String GL0190 = "OK";
 //	String GL0191 = GL0142; Duplicate.
 
 	//Logout Panel
@@ -526,7 +526,7 @@ public interface MessageProperties {
 	
 	//Signup Labels
 	String GL0400 = "Join the Gooru Community!";
-	String GL0401 = "Discover, organize, teach and study with the best free K-12 learning resources.";
+	String GL0401 = "Find, remix, and share the best free K-12 learning resources.";
 	String GL0402 = "Sign up with Google";
 	String GL0403 = "Why sign up with Google";
 	String GL0404 = "It's fast and easy. Use your existing Google account to sign in without a password.";
@@ -535,12 +535,12 @@ public interface MessageProperties {
 	String GL0407 = "Already have an account";
 	String GL0408 = "Click here to log in.";
 	String GL0409 = "Please fill out the following information.";
-	String GL0410 = "Pick wisely! This will appear publicly on Gooru and you will not be able to change it later.";
+	String GL0410 = "Choose wisely! This is how students and others in the Gooru community will identify you.";
 	String GL0411 = "Why enter your birthday";
 	String GL0412 = "Your birthday helps ensure you get the right Gooru experience for your age. This information will never appear anywhere on the website.";
 	String GL0413 = "Your name will not appear publicly anywhere on Gooru.";
 	String GL0414 = "Double check your email. Make sure it's correct!";
-	String GL0415 = "Passwords must be between 5 and 14 characters and must contain at least one number.";
+	String GL0415 = "Passwords must be between 5 and 14 characters and contain at least one number.";
 	String GL0416 = "Teacher";
 	String GL0417 = "Student";
 	String GL0418 = "Parent";
@@ -563,7 +563,7 @@ public interface MessageProperties {
 	String GL0433 = "Learn how to";
 
 	String GL0434 = "Email or Username";
-	String GL0435 = "You will be getting an email containing a link to reset your password.";
+	String GL0435 = "You will receive an email with a link to reset your password.";
 	String GL0436 = "Please enter your email or username below.";
 
 
@@ -618,7 +618,7 @@ public interface MessageProperties {
 	String GL0475 = "Cannot use special characters";
 	String GL0476 = "Please sign in to customize this collection. Once you're signed in you'll have your very own copy to customize, beautify, and awesome-ify. Okay, maybe awesome-ify isn't a word.";
 	String GL0477 = "Are you sure you want to exit?";
-	String GL0478 = "Your registration will not be completed.";
+	String GL0478 = "Your registration is not complete.";
 	String GL0479 = "Continue with Registration";
 	String GL0480 = "Leave Registration";
 	
@@ -653,7 +653,7 @@ public interface MessageProperties {
 	String GL0508 = "See more";
 	String GL0509 = "See less";
 	String GL0510 = "View Collection Analytics";
-	String GL0511 = "Or share this with your friends and colleagues by copying and pasting this link";
+	String GL0511 = "Or, share this by copying and pasting this link.";
 	String GL0512 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0513 = "Assign this Collection to your students by copying and pasting this link";
 	String GL0514 =  "Assign this to a class and collect class-specific insights";
@@ -749,7 +749,7 @@ public interface MessageProperties {
 	//Add collection view messages.
 	
 	String GL0589 =	"View the collection in the My Collections tab";
-	String GL0590 =	"Add";
+	String GL0590 =	"Save to Customize";
 	String GL0591 ="Adding....";
 	String GL0592 ="Hide";
 	String GL0593 ="Rename (optional)";
@@ -780,7 +780,7 @@ public interface MessageProperties {
 	String GL0601 = "Flag this Collection";
 	String GL0602 = "Flag a Resource";
 	String GL0603 = "Resources in the collection are inappropriate";
-	String GL0604 = "Collection title, objective or narration is not appropriate";
+	String GL0604 = "Collection title, objective or narration is inappropriate";
 	String GL0605 = "Collection information appears to be inaccurate";
 	String GL0606 = "Other reason";
 	String GL0607 =  "Please provide us with more details:";
@@ -822,7 +822,7 @@ public interface MessageProperties {
 	
 	//For Customize popup in collection preview.
 	String GL0635="Hang on just a second!"; //HTMLPanel
-	String GL0636="Save to customize"; //Button.
+	String GL0636="Save"; //Button.
 	String GL0637="View and customize this collection";//Button
 	
 	//For Share popup in collection preview.
@@ -919,7 +919,7 @@ public interface MessageProperties {
 	String GL0706 ="Remove some filters";//Label
 	String GL0707 ="Check the spelling";//Label
 	String GL0708 ="Use a different keyword";//Label
-	String GL0709 ="Change the toggle (resources vs. collections)";//Label
+	String GL0709 ="Switch between resource and collection search";//Label
 	String GL0710 =	"Try our suggested collections";//Label
 	//No search results vc
 	String GL0711 =	"We didn't find any results for that...";//Label
@@ -959,13 +959,13 @@ public interface MessageProperties {
 		String GL0741 =	"Login to customize this collection";
 		String GL0742 =	"we save a copy of this collection....";
 		String GL0743 =	"Customize this collection!";
-		String GL0744 = "This is a pretty great collection, but I bet that you could make it even better! Click \"Save to Customize\" and we'll create a copy of this collection for you to tweak, personalize, or rebuild.";
+		String GL0744 = "This is a pretty great collection, but I bet that you could make it even better! Click \"Add\" and we'll create a copy of this collection for you to tweak, personalize, or rebuild.";
 
 		
 
 		String GL0745 = "Done";
 		String GL0749 = "Type and select standards for this collection.";
-		String GL0750 = "Add a teacher tip to show other teachers how you are using this collection and what you are using the collection for.";
+		String GL0750 = "Add a teacher tip to show other teachers how you are using this collection and what you are using the collection for. ";
 		//Teach
 		String GL0747 =	"Give your Class a name!";
 		String GL0746 =	"Please enter title.";
@@ -1081,10 +1081,10 @@ public interface MessageProperties {
 		String GL0892	="Oops! You can't add a shortened URL as a resource.";
 		String GL0893	="Add a Question";
 		//Add search reource view in shelf
-		String GL0894	="Search from over 18M Resources";//Label
+		String GL0894	="Search millions of resources in our catalog";//Label
 		String GL0895	="Search for a keyword, then drag the resource you want from search results page into your collection";//Label
-		String GL0896	="Go to Search ";//Button
-		String GL0897	="Suggested Resources for this Collection";//Label
+		String GL0896	="Search";//Button
+		String GL0897	="Suggested resources for this collection";//Label
 		String GL0898	="One More Step";
 		String GL0899	=".png";
 		String GL0900	="Small";
@@ -1129,12 +1129,13 @@ public interface MessageProperties {
 		
 		//Collaborator
 		String GL0936 = "Collection Creator";
-		String GL0937 = "Remove yourself from the collaborator list";
+		String GL0937 = "Remove yourself as a collaborator";
 		String GL0938 = "You";
 		String GL0939 = "Current Collaborator(s)";
 		String GL0940 = "Work together, go further!";
 		String GL0941 = "Add a Collaborator";
-		String GL0942 = "Teaching is more fun with friends! Use this page to add up to 20 collaborators. Anyone added as a collaborator will have permission to edit this collection.";
+		String GL0942 = "Teaching is more fun with friends! Use this page to add up to 20 collaborators. Anyone added as a collaborator will have permission to edit this collection."
+				+ "  (Note: Only the original creator of this collection can add collaborators or delete this collection.)";
 		String GL0943 = "Invite collaborators";
 		String GL0944 = "Invite";
 		String GL0945 = "Separate email addresses with a comma or space";	//Not used.. Duplicate of GL1111 
@@ -1216,7 +1217,7 @@ public interface MessageProperties {
 		String GL1009="Featured";
 		String GL1010="Sign in with Google";
 		String GL1011="Looks like this email is tied with Google!";
-		String GL1012="Sign in through this link";
+		String GL1012="Sign in using this button";
 		//Balloon popup
 		String GL1013="Coming soon!";
 		
@@ -1363,7 +1364,7 @@ public interface MessageProperties {
 		String GL1125 = "You will no longer be able to edit this collection.";
 		String GL1126 = "You are no longer a collaborator on this collection.";
 		String GL1127 = "Heads up!";
-		String GL1128 = "You are about to remove yourself from the collaborator list.";
+		String GL1128 = "You are about to remove yourself as a collaborator.";
 		
 		//Assignments View.
 		String GL1129 = "This assignment is empty.";
@@ -1411,7 +1412,7 @@ public interface MessageProperties {
 		/// different section...
 		String GL1158 ="This collection is public, which allows others to find and learn from your collection";
 		String GL1159 ="Congratulations";
-		String GL1160 ="Your Gooru account has been created. Tell us more about your favorite course(s) and grade(s). We’ll use this information to personalize your Gooru experience or skip to finish.";
+		String GL1160 ="Your Gooru account has been created. Tell us more about your favorite course(s) and grade(s). We'll use this information to personalize your Gooru experience.";
 		String GL1161 = "Sorry! We don't support that format yet!";
 		
 		//Collaborators
@@ -1695,7 +1696,7 @@ public interface MessageProperties {
 		String GL1363="Standard Description";
 		
 		String GL1364="Which folder would you like to move this collection to?";
-		String GL1365="We've saved a copy of this collection for you to use! Would you like to give it a new title?";
+		String GL1365="You can add your own copy of this collection to use. Would you like to give it a new title?";
 		String GL1366="This collection has been moved to ";
 		String GL1367="Collection Moved!";
 		
@@ -1785,7 +1786,7 @@ public interface MessageProperties {
 		String GL1418="The user has already registered successfully. Please use sign-in to log in to your account";
 		String GL1419="User Not Found. Please Try to Register";
 		String GL1420="Something Missing";
-		String GL1421="Save a copy of this collection";
+		String GL1421="Add a copy of this collection";
 		
 		//Library View
 		String GL1422="Mr";
@@ -2260,7 +2261,7 @@ public interface MessageProperties {
     	String GL1766 = "http://financiallycapable.org/";
     	String GL1767 ="Alternative Text,Annotations,Audio Description,Bookmarks,Braille,Captions,ChemML,Display Transformability,High Contrast Audio,High Contrast Display,Index,Large Print,Latex,Long Description,Math ML,Print Page Numbers,Reading Order,Sign Language,Structural Navigation,Table of Contents,Tagged PDF,Tactile Graphic,TactileObject,Timing Control,Transcript,Tts Markup,Unlocked";
     	
-    	String GL1768 = "An aggregator is a site that collects learning content from around the Web.";
+    	String GL1768 = "An aggregator is a site that collects learning content from around the web.";
     	String GL1769 = "The publisher is the original producer or creator of the digital learning content.";
     	String GL1770 = "Open educational resources (OER) are <b>freely accessible</b>, <b>openly licensed</b> documents and media that are useful for teaching, learning, educational, assessment and research purposes.";
 
@@ -2280,7 +2281,7 @@ public interface MessageProperties {
     	String GL1783 = "Ancient Civilizations";
     	String GL1784 = "English Language Arts";
     	String GL1784_1 = "Physics";
-    	String GL1785 = "Enter your class code";
+    	String GL1785 = "Enter Class Code";
     	String GL1786 = "Edit My Bio";
     	String GL1787 = "Library";
     	String GL1788 = "You can share collections here by setting the collection visibility to \"Public.\"";
@@ -2371,7 +2372,7 @@ public interface MessageProperties {
 //    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
     	String GL1867 = "Educational Role:";
     	String GL1868 = "School Level";
-    	String GL1869 = "Share this class code with your students";
+    	String GL1869 = "Share this class code with your students.";
     	String GL1870 = "Narrow report information by collection and student:";
     	
     	String GL1871 = "All Collections";
@@ -2386,22 +2387,22 @@ public interface MessageProperties {
     	String GL1879 = "Rate this resource";
     	
     	//What's New Popup
-    	String GL1880 ="Rate and Review Resources";
-    	String GL1881 =	"With our new resource ratings feature, you can let other teachers know which resources dazzle and which disappoint.";
-    	String GL1882 ="New K-4 Courses and Partner Libraries";
-    	String GL1883 ="Great news for K-4 teachers! Now you can find courses tailored to K-4 learning in our Community Library. We've also added 2 new partner libraries to explore!";
-    	String GL1884 =	"New Question Type: Multiple Answer Questions";
-    	String GL1885 =	"Because sometimes a question has more than one correct answer. Learn more about our question types.";
+    	String GL1880 ="Follow Others on Gooru";
+    	String GL1881 =	"If you've found a creator whose content inspires you, follow them! You'll be able to see everyone you follow (and who follows you) on your profile page.";
+    	String GL1882 ="Santa Ana Unified School District Library";
+    	String GL1883 ="We're proud to present this new library built by teachers from Santa Ana USD in CA! This entire library is tied to Common Core State Standards. Happy learning!";
+    	String GL1884 =	"Next Generation Science Standards (NGSS)";
+    	String GL1885 =	"We've incorporated Next Generation Science Standards into Gooru. Search using NGSS, or tag resources or collections with these standards.";
     	
     	String GL1886 = "Please select one or more grades & courses.";
     	String GL1887 = "Assignments are sorted by most recent due date. If an assignment doesn't have a due date, it will appear below collections that do.";
     	String GL1888 = "Public Collections";
     	
     	String GL1889 = "Reminder: Assigments are sorted by due date in your Class. If you don't add a due date, this colleciton will appear at the bottom of the page.";
-    	String GL1890 ="New Navigation Tabs";
-    	String GL1891 ="Heads up! We've updated the navigation tabs at the top of the page. Click "+" \" My Collections\" "+" to see all your collections. Click "+" \" My Classes\" "+" to see classes you've joined and teach, and to enter class codes.   ";
+    	String GL1890 ="Order Assignments in your Classes";
+    	String GL1891 ="Keep your virtual classroom organized! Now you can define the order in which assignments appear in your Classes. Students will be able to mark assignments as complete when they're done.";
     	
-    	String GL1891_1 = "Reorder your assignments the way that you want your students to view them. This dots order will reflect on the student's page as well.";
+    	String GL1891_1 = "Sort your assignments for easy access to any of the collections you've assigned. Sorting your collections below will not affect the sequence your students will see.";
     	String GL1892 ="We will never share or sell your email address, your";
     	String GL1893 ="privacy is important";
     	String GL1894 ="to us.";
@@ -2432,7 +2433,7 @@ public interface MessageProperties {
     	String GL1914 = "My Followers:";
     	String GL1914_1 = "Click on a user to view their profile.";
     	String GL1915 = "My Tags";
-    	String GL1916 ="Your Suggestions";
+    	String GL1916 ="Suggestions";
     	
     	//Make collection as Publish
     	
@@ -2459,11 +2460,11 @@ public interface MessageProperties {
 
 
     	String GL1935 = "Follow";
-    	String GL1936 = "Stop Following";
+    	String GL1936 = "Unfollow";
     	String GL1937 = "Click a tag to view all of the resources you've tagged with this label.";
     	
     	
-    	String GL1938 = "You have been blocked due to violation of <a href=\"http://support.goorulearning.org/hc/en-us/articles/200688506\" target=\"_blank\">community standards</a>. If you feel this is incorrect, you can email us at appeals@goorulearning.org";
+    	String GL1938 = "Your account has been disabled due to violation of our <a href=\"http://support.goorulearning.org/hc/en-us/articles/200688506\" target=\"_blank\">community standards</a>. If you feel this is in error, please email us at support@goorulearning.org";
     	
     	String GL1939 = "Unfollowed";
     	String GL1940 = "You are no longer following ";
@@ -2477,7 +2478,7 @@ public interface MessageProperties {
     	String GL1943 = "Publish in Progress";
     	
     	
-    	String GL1945 = "Welcome to Assignments! With Assignments, you can:";
+    	String GL1945 = "Ready to get started?";
     	
     	String GL1946 = "View All";
       	String GL1947 = "All,Order Ascending,Order Descending";
@@ -2486,19 +2487,19 @@ public interface MessageProperties {
       	String GL1950 = "Recently Added";
       	String GL1951 = "Upcoming(by due date)";
       	String GL1952 = "View All Completed";
-      	String GL1953 = "View All InCompleted";
+      	String GL1953 = "View All InComplete";
       	
         String GL1954 = "Are you sure you want to hide your collection? It will no longer be visible in search results or on your profile.";
-    	String GL1955 = "You will have to republish the collection again if you desire to make it public.";
+    	String GL1955 = "Note: If you want to switch your collection back to public, there might be a slight delay while we review it.";
     	
     	String GL1956 = "Keep it public";
 
     	//suggestions for search.
-    	String GL1957 = "<b style='text-align: center;'><div>We don't have any good suggestions for your collection.</div><br/> <div>Use the search below to find more resources!</div><br/>  <div> Or </div><br/>  <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
-      	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion for this collection.</div><br/> <div>Use the search below to find more resources!</div><br/>   <div>Or</div><br/>   <div>Add your own resource from the Web or from your Computer.</div><br/></b>";
+    	String GL1957 = "<b style='text-align: center;'><div>Sorry. It looks like there aren't any suggestions for this collection. </div><br/> <div>Try using the search bar below.</div><br/>   <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
+      	String GL1958= "<b style='text-align: center;'><div>We have only 1 suggestion(s) for this collection.</div><br/> <div>Use the search bar below to find more!</div><br/>    <div>OR, add your own resource from the web or from your computer.</div><br/></b>";
 
-      	String GL1959 = "Incorporate both a due date and directions for each assignment so that  students know exactly what to do";
-      	String GL1960 = "Define the exact sequence of Assignments that your students will see when they access this class.";
+      	String GL1959 = "Add both a due date and directions for each assignment do that students know exactly what to do.";
+      	String GL1960 = "Define the sequence of assignments that your students will see when they access this class.";
       	String GL1961 = "Add a collection to your class and click on the button to Get Started!";
       	String GL1962 = "You are now following";
       	
@@ -2508,4 +2509,17 @@ public interface MessageProperties {
       	
       	
       	String GL1965 = "Ready to Publish?";
+      	String GL1966 = "Something goes here";
+      	String GL1967 = "[Collection Title]";
+      	String GL1968 = "See More";
+    	String GL1969 = "Mark as Complete";
+    	String GL1970 = "Mark as Incomplete";
+    	String GL1971 = "Student messaging here";
+    	String GL1972 = "Each of the dots below represents an assignment. Sequence your assignments in the order you want students to view them. This order will reflect in student view.";
+    	String GL1973 = "Assign Collections";
+    	String GL1974 = "Assign any of your public or sharable collections to your class.";
+    	String GL1975 = "will be added to this class";
+    	
+      	
+      	 
 }

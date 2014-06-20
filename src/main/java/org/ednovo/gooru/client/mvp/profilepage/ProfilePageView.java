@@ -57,6 +57,7 @@ import org.ednovo.gooru.client.uc.CloseLabel;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.ProfilePageDescriptionEditUc;
 import org.ednovo.gooru.client.uc.ProfilePageGradeLabel;
+import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -86,6 +87,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -135,7 +137,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 	@UiField
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
-			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton;
+			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,UnFollowButton,UnFollowButtonBlue;
 
 	/** 
 	 * This method is to get the followButton
@@ -250,6 +252,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	List<UserFollowDo> userFollowerDo = new ArrayList<UserFollowDo>();
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 		
+	private HandlerRegistration tagHandler;
+	private HandlerRegistration collectionHandler;
+	private HandlerRegistration followingHandler;
+	private HandlerRegistration follwerHandler;
+	private PopupPanel toolTipPopupPanelNew = new PopupPanel();
+	
 	ProfileUserTagsResourceView profileUserTagsResourceView = null;
 		private static ProfilePageViewUiBinder uiBinder = GWT
 			.create(ProfilePageViewUiBinder.class);
@@ -353,8 +361,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		followButton.setText(GL1935);
 		UnFollowButton.setText(GL1936);
-		
-		
+		UnFollowButtonBlue.setText(GL1895);
+		UnFollowButtonBlue.setVisible(false);
+		followButton.addMouseOverHandler(new MouseOverOnFollowToolTip());
+		UnFollowButton.addMouseOverHandler(new MouseOverOnUnFollowToolTip());
+		followButton.addMouseOutHandler(new MouseOutHideToolTip());
+		UnFollowButton.addMouseOutHandler(new MouseOutHideToolTip());
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
@@ -556,9 +568,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		//tagTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getTags()+"");
 		getUiHandlers().getFollowerData();
 		getUiHandlers().getFollwingData();
-		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
+		getUiHandlers().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),"0","10");
 		buttonDisable();
-		setTab(collectionsTabVc);
+		/*String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
+		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+	*/		setTab(collectionsTabVc);
+		//}
 			
 		
 		
@@ -1255,7 +1270,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		if(!toEnable){
 			gooruProfileOnOffContainer.setVisible(false);
-			if(isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false"){
+			if(isFollowUser !=null && (isFollowUser.toString().trim().equalsIgnoreCase("false") || isFollowUser.toString().trim()=="false")){
 				followButton.setVisible(true);
 				UnFollowButton.setVisible(false);
 			}
@@ -1270,6 +1285,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			gooruProfileOnOffContainer.setVisible(true);
 			followButton.setVisible(false);
 			UnFollowButton.setVisible(false);
+			
 			editPencil.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addBioBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 			addCourseGradeBtn.getElement().getStyle().setVisibility(Visibility.VISIBLE);
@@ -1370,10 +1386,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		
 		userFollowerDo.clear();
 		userFollowerDo.addAll(userFollowDo);
-		int totalcount=userFollowDo.size();
-		buttonDisableCickOnFollow(totalcount);
+		
+		buttonDisableCickOnFollow(userFollowDo.size());
 		followersTabVc.setLabelCount("");
-		followersTabVc.setLabelCount(totalcount+"");
+		if(userFollowDo.size()!=0){
+			followersTabVc.setLabelCount(userFollowDo.get(0).getTotalHintCount()+"");
+		}
+		else
+		{
+			followersTabVc.setLabelCount(userFollowDo.size()+"");
+		}
+			
 	
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
@@ -1403,16 +1426,25 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void getTagsObj(List<UserTagsDo> userTagsDo) {
 		userTagDo.clear();
 		userTagDo.addAll(userTagsDo);
-		buttonDisableOnTags(userTagsDo.size());
-		tagTabVc.setLabelCount(userTagsDo.size()+"");
+		
+		tagTabVc.setLabelCount("");
+		if(userTagsDo.size()!=0){
+			tagTabVc.setLabelCount(userTagsDo.get(0).getTotalHitCount()+"");
+		}
+		else
+		{
+			tagTabVc.setLabelCount(userTagsDo.size()+"");
+		}
 		String tabValue = AppClientFactory.getPlaceManager().getRequestParameter("tab");
-		if(tabValue!=null || "".equalsIgnoreCase("tabValue")){
+		if(tabValue!=null || !"".equalsIgnoreCase("tabValue")){
 			if("tags".equalsIgnoreCase(tabValue))
 			{
+				System.out.println("in ");
 				setTab(tagTabVc);
-				
+				tagTabVc.setSelected(true);
 			}
 		}
+		buttonDisableOnTags(userTagsDo.size());
 		
 	}
 	public void onClick(ClickEvent event) {
@@ -1425,7 +1457,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	public void onClickFollowButton(ClickEvent event)
 	{
 		if(!AppClientFactory.isAnonymous()){
-		UnFollowButton.setVisible(false);
+		UnFollowButtonBlue.setVisible(true);
+		//UnFollowButton.setVisible(true);
 		followButton.setVisible(false);
 		getUiHandlers().followUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}else{
@@ -1439,8 +1472,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	{
 		if(!AppClientFactory.isAnonymous()){
 		UnFollowButton.setVisible(false);
-		followButton.setVisible(false);
-		
+		followButton.setVisible(true);
 		getUiHandlers().unFollowUser(AppClientFactory.getPlaceManager().getRequestParameter("id", null));	
 		}
 		else{
@@ -1576,6 +1608,17 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	
 	public void buttonDisable()
 	{
+		try {
+			if(collectionHandler!=null) {
+				collectionHandler.removeHandler();
+			}
+		 } catch (AssertionError ae) { }
+		try {
+			if(followingHandler!=null) {
+				followingHandler.removeHandler();
+			}
+		} catch (AssertionError ae) { }
+		
 		if(profileDo.getUser().getMeta().getSummary().getCollection()==0)
 		{
 			collectionsTabVc.setEnabled(false);
@@ -1584,7 +1627,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		else
 		{
 			collectionsTabVc.setEnabled(true);
-			collectionsTabVc.addClickHandler(new clickOnCollection());
+			collectionHandler = collectionsTabVc.addClickHandler(new clickOnCollection());
 			collectionsTabVc.getLabelCount().getElement().setAttribute("style", "color:#1076bb");
 		}
 		
@@ -1597,26 +1640,21 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		{
 			followingTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 			followingTabVc.setEnabled(true);
-			followingTabVc.addClickHandler(new clickOnFollowing());
+			followingHandler = followingTabVc.addClickHandler(new clickOnFollowing());
 		}
-		if(profileDo.getUser().getMeta().getSummary().getFollowers()==0)
-		{
-			followersTabVc.setEnabled(false);
-			followersTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
-			
-		}
-		else
-		{
-			followersTabVc.setEnabled(true);
-			followersTabVc.addClickHandler(new clickOnFollowers());
-			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
-		}
+		
 		
 		
 	}
 	public void buttonDisableCickOnFollow(int totalCount)
 	{
-		
+		try {
+			if(follwerHandler!=null) {
+				follwerHandler.removeHandler();
+			}
+		}catch (AssertionError ae) {}
+			 
+			 
 		if(totalCount==0)
 		{
 			followersTabVc.setEnabled(false);
@@ -1626,17 +1664,21 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		else
 		{
 			followersTabVc.setEnabled(true);
-			followersTabVc.addClickHandler(new clickOnFollowers());
+			follwerHandler=followersTabVc.addClickHandler(new clickOnFollowers());
 			followersTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 			
 		}
 }
 	public void buttonDisableOnTags(int totalCount)
 	{
+		try{
+			if(tagHandler!=null) {
+				tagHandler.removeHandler();
+			}
+		}catch (AssertionError ae) { }
 		
 		if(totalCount==0)
 		{
-			
 			tagTabVc.setEnabled(false);
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color:#999");
 		}
@@ -1644,9 +1686,45 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		{
 			
 			tagTabVc.setEnabled(true);
-			tagTabVc.addClickHandler(new clickOnTags());
+			tagHandler = tagTabVc.addClickHandler(new clickOnTags());
 			tagTabVc.getLabelCount().getElement().setAttribute("style", "color: #1076bb;");
 		}
 }
-	
+	@Override
+	public Button getFollowingButton() {
+		// TODO Auto-generated method stub
+		return UnFollowButtonBlue;
+	}
+	public class MouseOverOnFollowToolTip implements MouseOverHandler{
+
+	@Override
+		public void onMouseOver(MouseOverEvent event) {
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1936));
+		toolTipPopupPanelNew.setStyleName("");
+		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 0, event.getRelativeElement().getAbsoluteTop()+5);
+		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+		toolTipPopupPanelNew.show();
+	}
+	}
+	public class MouseOverOnUnFollowToolTip implements MouseOverHandler{
+
+		@Override
+		public void onMouseOver(MouseOverEvent event) {
+		toolTipPopupPanelNew.clear();
+		toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1935));
+		toolTipPopupPanelNew.setStyleName("");
+		toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 0, event.getRelativeElement().getAbsoluteTop()+5);
+		toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
+		toolTipPopupPanelNew.show();
+	}
+	}
+	public class MouseOutHideToolTip implements MouseOutHandler{
+
+		@Override
+		public void onMouseOut(MouseOutEvent event) {
+			toolTipPopupPanelNew.hide();
+		}
+	}
 }
+	

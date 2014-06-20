@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.PreviewResourceView;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -366,7 +367,7 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	@UiHandler("shareCollectionBtn")
 	public void onshareCollectionBtnClicked(ClickEvent clickEvent) {
 		MixpanelUtil.Preview_Click_Share();
-		String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
+		final String collectionId = clickEvent.getRelativeElement().getAttribute("collectionId");
 
 				if(!isSharePopup){
 					isSharePopup=true;
@@ -378,6 +379,9 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 						Window.enableScrolling(true);
 						this.hide();	
 						isSharePopup = false;
+					}
+					public void triggerShareEvent(String shareType,boolean confirmStatus){
+						getUiHandlers().triggerCollectionShareDataEvent(collectionId,PlayerDataLogEvents.COLLECTION,shareType,confirmStatus);
 					}
 				};
 				Window.scrollTo(0, 0);

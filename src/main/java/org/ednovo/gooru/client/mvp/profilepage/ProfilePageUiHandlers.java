@@ -92,7 +92,7 @@ public interface ProfilePageUiHandlers extends BaseUiHandlers, RequestFolderOpen
 	
 	void unFollowUser(String gooruUid);
 	
-	void getUserAddedContentTagSummary(String tagGooruUid);
+	void getUserAddedContentTagSummary(String tagGooruUid,String offset,String limit);
 	
 	
 	

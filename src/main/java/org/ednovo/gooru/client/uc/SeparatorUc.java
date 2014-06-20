@@ -44,5 +44,8 @@ public class SeparatorUc extends HTML {
 		super(DEFAULT_SEPARATOR);
 		this.setStyleName(UcCBundle.INSTANCE.css().separator());
 	}
-
+	public SeparatorUc(String value) {
+		super(DEFAULT_SEPARATOR);
+		this.setStyleName(UcCBundle.INSTANCE.css().separatorSuggested());
+	}
 }

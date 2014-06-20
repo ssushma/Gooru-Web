@@ -550,9 +550,9 @@ public enum UrlToken {
 	
 	SEARCH_SUGGEST_RESOURCES("/gooru-search/rest/suggest/v2/resource?sessionToken={0}&searchTerm={1}&event={2}&contentGooruOid={3}"),
 
-	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}"),
+	USER_FOLLOWERS("/v2/user/{0}/followers?sessionToken={1}&offset={2}&limit={3}"),
 	
-	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}"),
+	USER_FOLLOWING("/v2/user/{0}/following?sessionToken={1}&offset={2}&limit={3}"),
 	
 	USER_FOLLOW("/v2/user/follow/{0}?sessionToken={1}"),
 	
@@ -560,9 +560,9 @@ public enum UrlToken {
 	
 	USER_IS_FOLLOW("/v2/user/{0}/isfollow?sessionToken={1}"),
 	
-	USER_TAG("/v2/content/tag/{0}?sessionToken={1}"),
+	USER_TAG("/v2/content/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
 	
-	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}"),
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}"),
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	

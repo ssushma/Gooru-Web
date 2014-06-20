@@ -215,10 +215,10 @@ public interface UserService extends BaseService {
 	void updatePartyCustomField(String gooruUid,String optionKey,String optionValue) throws GwtException;
 	
 	//followingUser
-	List<UserFollowDo> getFollowedOnUsers(String gooruUid)throws GwtException;
+	List<UserFollowDo> getFollowedOnUsers(String gooruUid,String offset, String limit)throws GwtException;
 	
 	//followerUser
-	List<UserFollowDo> getFollowedByUsers(String gooruUid)throws GwtException;
+	List<UserFollowDo> getFollowedByUsers(String gooruUid,String offset, String limit)throws GwtException;
 	
 	void followUser(String gooruUid)throws GwtException;
 	
@@ -226,7 +226,7 @@ public interface UserService extends BaseService {
 	
 	IsFollowDo isFollowedUser(String gooruUid)throws GwtException;
 	
-	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)throws GwtException;
+	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset,String limit)throws GwtException;
 	
-	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid)throws GwtException;
+	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit)throws GwtException;
 }

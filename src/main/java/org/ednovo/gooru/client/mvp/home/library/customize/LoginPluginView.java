@@ -255,7 +255,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 										}else if(result.getActive()==0){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
-											new AlertContentUc(OOPS, GL1938);
+											new AlertContentUc(GL1966, GL1938);
 										}
 										
 									}
@@ -345,13 +345,27 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void onGmailButtonClicked(ClickEvent clickEvent){
 		DataLogEvents.signIn(GwtUUIDGenerator.uuid(),"login",System.currentTimeMillis(),System.currentTimeMillis(), "", AppClientFactory.getLoggedInUser().getToken());
 		String callBack = Window.Location.getHref();
-	
+		/**
+		 * Added to check for blocked user its a temporary code
+		 */
+		final String loginType = AppClientFactory.getLoggedInUser().getLoginType() !=null ? AppClientFactory.getLoggedInUser().getLoginType() : "";
+		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
+//		----------------------------------------------------------------- //
 		AppClientFactory.getInjector().getSearchService().getGoogleSignin(callBack, new SimpleAsyncCallback<String>() {
 		
 			@Override
 			public void onSuccess(String result) {
 //				MixpanelUtil.Click_Gmail_SignIn("LoginPopup");
 				Window.Location.replace(result);
+				/**
+				 * Added to check for blocked user its a temporary code
+				 */
+				if(!AppClientFactory.isAnonymous() && loginType.equalsIgnoreCase("apps")) {
+					if(userDo.getActive()==1){
+//						new AlertContentUc("To check ", "checking google sign in");
+					}
+				}
+//				----------------------------------------------------------------- //
 			
 			}
 		});

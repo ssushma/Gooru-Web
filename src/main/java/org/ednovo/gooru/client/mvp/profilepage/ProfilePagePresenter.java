@@ -182,9 +182,11 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 				addToPopupSlot(signUpViewPresenter);
 			}
 		}
+		String tab=AppClientFactory.getPlaceManager().getRequestParameter("tab");
 		
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)){
-			getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"));
+		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)&& tab==null){
+			
+			getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),"0","10");
 		}
 	}
 	
@@ -543,7 +545,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	
 	@Override
 	public UserFollowDo getFollwingData() {
-		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<List<UserFollowDo>>() {
+		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(),"0","10", new AsyncCallback<List<UserFollowDo>>() {
 			
 			
 			
@@ -564,7 +566,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	public UserFollowDo getFollowerData() {
-		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(), new AsyncCallback<List<UserFollowDo>>() {
+		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(),"0","10", new AsyncCallback<List<UserFollowDo>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -592,18 +594,10 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-				String username=AppClientFactory.getPlaceManager().getRequestParameter("user");
-				DeleteFolderSuccessView deleteFolderSuccessView=new DeleteFolderSuccessView(MessageProperties.GL0440,MessageProperties.GL1962,username) {
-					@Override
-					public void onClickPositiveButton(ClickEvent event) {
-						Window.enableScrolling(true);
-						appPopUp.hide();
-						getView().getUnFollowButton().setVisible(true);
-						getView().getFollowButton().setVisible(false);
-						getFollowerData();
-					}
-				};
-				
+					getView().getUnFollowButton().setVisible(true);
+					getView().getFollowingButton().setVisible(false);
+					getFollowerData();
+						
 			}
 		});
 		
@@ -621,19 +615,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 			@Override
 			public void onSuccess(Void result) {
-				ProfilePageUnFollowPopUp profilePageUnFollowPopUp=new ProfilePageUnFollowPopUp(){
-					@Override
-					public void clickOnOk(ClickEvent event){
-						getView().getUnFollowButton().setVisible(false);
-						getView().getFollowButton().setVisible(true);
-						Window.enableScrolling(true);
-						hide();
-						getFollowerData();
-					}
-				}; 
-				profilePageUnFollowPopUp.show();
-				profilePageUnFollowPopUp.center();
-				Window.enableScrolling(false);
+				getFollowerData();
+				
 			}
 		});
 		
@@ -658,8 +641,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 		
 	}
 	@Override
-	public void getUserAddedContentTagSummary(String gooruUid){
-	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,new AsyncCallback<List<UserTagsDo>>() {
+	public void getUserAddedContentTagSummary(String gooruUid,String offset,String limit){
+	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,offset,limit,new AsyncCallback<List<UserTagsDo>>() {
 
 		@Override
 		public void onFailure(Throwable caught) {

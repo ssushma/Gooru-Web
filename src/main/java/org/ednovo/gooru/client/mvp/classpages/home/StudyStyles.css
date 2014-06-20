@@ -59,8 +59,7 @@ cursor: pointer;
 	font-size: 12px;
 	font-weight: bold;
 	color: rgb(81,81,81);
-	display: inline-block;
-	float: right;
+	float: left;
 	margin: 10px 10px;
 }
 .ownerClasses{
@@ -113,22 +112,24 @@ cursor: pointer;
 }
 .overlayBg 
 {
-color: white;
-font-weight: bold;
-width: 100%;
-bottom: 4px;
-height: 26px;
-padding-top: 30px;
-padding-left: 10px;
-position: absolute;
-box-sizing: border-box;
--moz-box-sizing: border-box;
-text-align: center;
-font-size: 16px;
-opacity: 0.5;
-background: black;
-width: 422px;
-height: 77px;
+	color: white;
+	font-weight: bold;
+	width: 100%;
+	bottom: 4px;
+	height: 26px;
+	padding-top: 30px;
+	padding-left: 10px;
+	position: absolute;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	text-align: center;
+	font-size: 16px;
+	background:rgba(0,0,0,0.5);
+	width: 422px;
+	height: 77px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .profileImage
 {
@@ -136,8 +137,8 @@ height: 77px;
 	box-shadow: 0 0 0 2px #87badd;
 	width: 30px;
 	height: 30px;
-	margin-left: 65px;
-	margin-top: 3px;
+	margin-left: 19%;
+	margin-top: 1px;
 	float: left;
 }
 .profileImageText
@@ -147,9 +148,11 @@ height: 77px;
 	font-size: 12px;
 font-weight: bold;
 color: #515151;
-display: inline-block;
 margin-top:10px;
 }
 .centerAlignBtn{
 	text-align:center;
+}
+.marginRightDisplay{
+	margin-left:31%;
 }

@@ -193,10 +193,13 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			lblcollectionName.setHTML(removeHtmlTags(searchResultsDo.getResourceTitle()));
 
 		}
-		if(searchResultsDo.getGrade()!=null)
+		/**
+		 * Commented this, as it will set very early as it is, grades should display after formating.
+		 */
+		/*if(searchResultsDo.getGrade()!=null)
 		{
 			gradesText.setText(searchResultsDo.getGrade());
-		}
+		}*/
 	}
 
 	public void setResourceTypeImage(String resourceType){
@@ -967,8 +970,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				accessMode= customFields.getCfAccessMode()!=null ? customFields.getCfAccessMode() : null ;
 				mediaFeature = customFields.getCfMediaFeature()!=null ? customFields.getCfMediaFeature() : null;
 				controlFlexibility= customFields.getCfControlFlexibility()!=null ? customFields.getCfControlFlexibility() : null;
-				accessHazard = customFields.getCfControlFlexibility()!=null ? customFields.getCfControlFlexibility() : null;
-				
+				accessHazard = customFields.getCfAccessHazard()!=null ? customFields.getCfAccessHazard() : null;
 				if(accessMode!=null && !accessMode.equals("")){
 					accessModeType.getElement().setInnerText(accessMode);
 					accessModePanel.setVisible(true);

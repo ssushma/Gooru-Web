@@ -11,6 +11,7 @@ import org.ednovo.gooru.client.mvp.play.collection.preview.end.PreviewEndPresent
 import com.google.gwt.user.client.ui.Image;
 import org.ednovo.gooru.client.service.PlayerAppServiceAsync;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 
@@ -55,11 +56,13 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 	}
 
 	@Override
-	public void createCollectionContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids) {
+	public void createCollectionContentReport(final String associatedGooruOid, final String freeText, final ArrayList<String> contentReportList,final String deleteContentReportGooruOids,final boolean isResourceFlag,final String collectionItemId) {
 		playerAppService.createContentReport(associatedGooruOid, freeText, contentReportList, deleteContentReportGooruOids, new SimpleAsyncCallback<ContentReportDo>() {
 			
 			@Override
 			public void onSuccess(ContentReportDo result) {
+				ItemFlagDataLogEvent( associatedGooruOid, freeText,contentReportList, isResourceFlag, collectionItemId);
+				
 				getView().showSuccesmessagePopup();
 				String chkViewPage = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getParameter("view", null);			
 				if(chkViewPage == null)
@@ -80,7 +83,6 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 				}
 			}
 		});	
-		
 	}
 
 	@Override
@@ -110,10 +112,6 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 			}
 			}
 		});
-
-			
-	
-		
 	}
 
 	@Override
@@ -143,6 +141,15 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 			}
 		});
 		return resourceFlagId;
+	}
+	
+	public void ItemFlagDataLogEvent(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,boolean isResourceFlag,String collectionItemId){
+		String itemType=isResourceFlag?PlayerDataLogEvents.RESOURCE:PlayerDataLogEvents.COLLECTION;
+	   if(isPreviewPlayer){
+		   previewPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
+	   }else if(isCollectionPlayer){
+		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),itemType,freeText,contentReportList,associatedGooruOid, collectionItemId);
+	   }
 	}
 	public Image getCloseButtonImage()
 	{

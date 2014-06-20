@@ -64,6 +64,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
+import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealRootPopupContentEvent;
@@ -137,12 +138,32 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 
 			@Override
 			public void onSuccess(CollectionDo result) {
-				getView().hide();
+		
 
 				Map<String, String> params = new HashMap<String, String>();
 				String level = AppClientFactory.getPlaceManager().getRequestParameter("level");
 				String folderId = AppClientFactory.getPlaceManager().getRequestParameter("folderid");
 				String previousNameToken = AppClientFactory.getPlaceManager().getPreviousRequest().getNameToken();
+				
+				getView().hide();
+				
+				String mycollection=AppClientFactory.getPlaceManager().getRequestParameter("myCollection");
+
+				if(mycollection != null)
+				{
+				if(mycollection.equals("true")){
+					if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
+						Map<String,String> params1 = new HashMap<String,String>();
+						//String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
+						params1.put("id", result.getGooruOid());
+						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
+						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+					}
+				}
+				}
+				else
+				{
 
 				if(previousNameToken.equalsIgnoreCase(PlaceTokens.EDIT_FOLDERS)||previousNameToken.equalsIgnoreCase(PlaceTokens.FOLDERS)) {
 					if(level!=null||folderId!=null) {
@@ -180,9 +201,18 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 					String nameToken = AppClientFactory.getPlaceManager().getCurrentPlaceRequest().getNameToken();
 					if(nameToken.equals(PlaceTokens.SHELF)) {
 						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
+						Map<String,String> params1 = new HashMap<String,String>();
+						params1.put("id", result.getGooruOid());
+						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 					} else {
-						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT));
+						fireEvent(new RefreshCollectionInShelfListEvent(result, RefreshType.INSERT_AND_VIEW));
+						Map<String,String> params1 = new HashMap<String,String>();
+						params1.put("id", result.getGooruOid());
+						PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.SHELF, params1);
+						AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 					}
+				}
 				}
 			}
 		});
@@ -209,12 +239,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 			if (resourceUid == null) {
 				if(folderId==null) {
 					getResourceService().createCollection(getView().getData(), getView().getCourseCodeId(), getSaveCollectionAsyncCallback());
-					String mycollection=AppClientFactory.getPlaceManager().getRequestParameter("myCollection");
-					if(mycollection.equals("true")){
-						if(!AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-							AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF);
-						}
-					}
+
 				} else {
 					AppClientFactory.getInjector().getfolderService().createCollectionInParent(getView().getData(), getView().getCourseCodeId(), folderId,new SimpleAsyncCallback<CollectionDo>() {
 						@Override
@@ -228,6 +253,7 @@ public class CollectionFormPresenter extends BasePlacePresenter<IsCollectionForm
 							
 							FolderDo folderDo = getFolderDo(result);
 							getView().hide();
+							
 							HashMap<String, String> params = new HashMap<String, String>();
 							if(o3!=null) {
 								params.put(O1_LEVEL, o1);

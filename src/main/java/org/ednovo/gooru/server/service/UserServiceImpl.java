@@ -150,7 +150,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		SettingDo settingeDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_DETAILS, userUid, getLoggedInSessionToken());
-		System.out.println("getUserProfileDetails.."+url);
+		
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -311,7 +311,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		ProfilePageDo profilePageDo = null;
 		String userUid = getLoggedInUserUid();
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, userUid, getLoggedInSessionToken());
-		System.out.println("getUserProfilePage.."+url);
+		
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -327,7 +327,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public ProfilePageDo getUserPublicProfilePage(String gooruUid) throws GwtException {
 		ProfilePageDo profilePageDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_USER_PROFILE_PAGE, gooruUid, getLoggedInSessionToken());
-		System.out.println("getUserPublicProfilePage"+url);
+		
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -369,7 +369,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		if(userMetaActiveFlag.equalsIgnoreCase("1")) {
 			url+=USER_META_ACTIVE_FLAG;
 		}
-		System.out.println("getUserProfileV2Details"+url);
+		
 		JsonRepresentation jsonRep = null;
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
@@ -506,10 +506,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 	//followingUser
 	@Override
-	public List<UserFollowDo> getFollowedOnUsers(String gooruUid) throws GwtException {
+	public List<UserFollowDo> getFollowedOnUsers(String gooruUid,String offset, String limit) throws GwtException {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWING, gooruUid,getLoggedInSessionToken(),offset,limit);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -517,10 +518,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 	//followerUser
 	@Override
-	public List<UserFollowDo> getFollowedByUsers(String gooruUid) throws GwtException {
+	public List<UserFollowDo> getFollowedByUsers(String gooruUid,String offset, String limit) throws GwtException {
 		UserFollowDo userFollowDo = null;
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_FOLLOWERS, gooruUid,getLoggedInSessionToken(),offset,limit);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		return deserializeFollowingUser(jsonRep);
@@ -528,13 +530,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 	public List<UserFollowDo> deserializeFollowingUser(JsonRepresentation jsonRep) {
 		List<UserFollowDo> userFollowList = null;
+		int totatHintCount;
 		userFollowList = new ArrayList<UserFollowDo>();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
 			UserFollowDo userFollowDo=null;
 			try {
 				
 				JSONObject followingUserObject=jsonRep.getJsonObject();
-				int totatHintCount=followingUserObject.getInt("totalHitCount");
+				totatHintCount=followingUserObject.getInt("totalHitCount");
 				
 				JSONArray followingList=followingUserObject.getJSONArray("searchResults");
 				
@@ -552,11 +555,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					userSummaryDo.setFollowing(summaryObj.getInt("following"));
 					userSummaryDo.setFollowers(summaryObj.getInt("followers"));
 					userFollowDo.setSummary(userSummaryDo);
+					userFollowDo.setTotalHintCount(totatHintCount);
 					userFollowList.add(userFollowDo);
 				}
 				return userFollowList;	
 				} catch (JSONException e) {
-				e.printStackTrace();
+				
 			}
 		}
 	
@@ -605,10 +609,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid)
+	public List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset, String limit)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken(),offset,limit);
+		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
@@ -634,9 +639,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					
 					userTagsDo.setCount(resultObj.getString("count"));
 					userTagsDo.setTagGooruOid(resultObj.getString("tagGooruOid"));
-					
+					userTagsDo.setTotalHitCount(totatHintCount);
 					userTagsDoList.add(userTagsDo);
 				}
+				
 				return userTagsDoList;	
 				} catch (JSONException e) {
 				
@@ -646,10 +652,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid)
+	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken(),offset,limit);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeResourcesByTag(jsonRep);
@@ -698,13 +704,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 						e2.printStackTrace();
 					}
 					
-					
+					userTagsResourceDO.setTotalHintCount(totatHintCount);	
 					userTagResourceList.add(userTagsResourceDO);
 					
 				}
 			return userTagResourceList;
 		} catch (JSONException e) {
-			e.printStackTrace();
+			
 		}
 		}
 		return userTagResourceList;
