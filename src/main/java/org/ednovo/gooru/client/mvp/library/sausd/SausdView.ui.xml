@@ -1,5 +1,44 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:HTMLPanel ui:field="rusdPanel"/>
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:sg="urn:import:org.ednovo.gooru.client.mvp.home">
+	<ui:style field="sausdStyleUc" src="sausd.css" type="org.ednovo.gooru.client.mvp.library.sausd.SausdStyleBundle" />
+	<g:HTMLPanel>
+	
+		<g:HTMLPanel ui:field="courseTabs" styleName="tabs"/>
+		
+		<g:HTMLPanel ui:field="landingBanner"/>
+		
+		<g:HTMLPanel ui:field="container">
+		   
+		   <g:Label styleName="{sausdStyleUc.pageTitle} {sausdStyleUc.h2}" ui:field="featuredCousesLbl"></g:Label>
+		   
+		   <g:HTMLPanel ui:field="featuredCourseTabs" styleName="tabs">
+		   			<g:HTMLPanel ui:field="featuredCourses"/>
+		   </g:HTMLPanel>
+		   
+		   <g:HTMLPanel ui:field="courseBanner">
+		       <g:HTMLPanel ui:field="partnerLogo"/>
+		       <g:Image ui:field="courseImage"/>
+		       <g:Label styleName="{sausdStyleUc.courseTitle}" ui:field="courseTitle"/>
+		   </g:HTMLPanel>
+		   
+		   <g:HTMLPanel ui:field="featuredEducator">
+		    	<g:Image styleName="{sausdStyleUc.educatorPhoto} {sausdStyleUc.courseContributorAlign}" ui:field="educatorPhoto"></g:Image>
+				<g:Label ui:field="featuredContributor" styleName="{sausdStyleUc.courseContributorAlign}"></g:Label>
+				<g:Anchor ui:field="featuredContributorsLink" styleName="{sausdStyleUc.courseContributorAlign}"></g:Anchor>
+		   </g:HTMLPanel>
+		   
+		   <g:HTMLPanel ui:field="leftNav"/>
+		
+		   <g:HTMLPanel ui:field="scrollPanel" styleName="{sausdStyleUc.scrollPanel}">
+		       <g:HTMLPanel ui:field="libraryMetaDataContainer"/>
+		       <g:HTMLPanel ui:field="loadingIconPanel" styleName="loadingImage {sausdStyleUc.loadingIconTopic}"></g:HTMLPanel>
+		       <g:HTMLPanel ui:field="contentScroll"/>
+		   </g:HTMLPanel>
+		
+		</g:HTMLPanel>
+		
+		<g:HTMLPanel ui:field="contributorsContainer"/>
+		<sg:FooterUc />
+	</g:HTMLPanel>
 </ui:UiBinder>

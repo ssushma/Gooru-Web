@@ -36,6 +36,8 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
@@ -169,4 +171,35 @@ public interface LibraryService extends BaseService {
 	public ConceptDo getConceptForStandards(String gooruOid, String roteNodeId,
 			boolean skipCollectionItems) throws GwtException;
 	
+	/**
+	 * @function getProfileLibraryWorkspace
+	 * @return : ProfileLibraryListDo
+	 * @description: Get the list of the workspace of the partners
+	 * @parm(s) : @param offset
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param sharingType
+	 * @parm(s) : @param collectionType
+	 * @throws : GwtException
+	 */
+	public ProfileLibraryListDo getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset) throws GwtException;
+	
+	/**
+	 * Get paginated workspace API
+	 * @return serialized created {@link ProfileLibraryListDo}
+	 * @parm(s) : @param limit
+	 * @parm(s) : @param parentId
+	 * @parm(s) : @param sharingType
+	 * @throws GwtException
+	 */
+	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException;
+	
+	/**
+	 * @function getConcept 
+	 * @return : ConceptDo
+	 * @description: Get the Collection data for a concept
+	 * @param: gooruOid
+	 * @param: skipCollectionItems
+	 * @throws : GwtException
+	 */
+	public ProfileLibraryDo getLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException;
 }
