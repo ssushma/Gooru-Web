@@ -143,6 +143,7 @@ public interface AddAssignmentContainerCBundle extends ClientBundle {
 		String emptyCollMsg();
 		String subHeadingCollMsg();
 		String selectionCountLabel();
+		String assignmentButtonsContainerCopy();
 	}
 	@Source("assignmentpopup.css")
 	NewAssignmentPopupCss css();

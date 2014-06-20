@@ -22,11 +22,12 @@
           			   <g:Label styleName="{res.css.assignmentErrorMessage}" ui:field="chooseCollectionErrorLabel"></g:Label>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{res.css.assignmentButtonsContainer}">
+	
+		</g:HTMLPanel>
+					<g:HTMLPanel styleName="{res.css.assignmentButtonsContainerCopy}">
 					<g:Button styleName="secondary"  ui:field="cancelResourcePopupBtnLbl" />
 					<g:Button styleName="primary"  ui:field="copyResourceBtnLbl" />
 					<g:Label ui:field="addingText" styleName=""></g:Label>
 				</g:HTMLPanel>
-		</g:HTMLPanel>
 	</g:FlowPanel>
 </ui:UiBinder> 
