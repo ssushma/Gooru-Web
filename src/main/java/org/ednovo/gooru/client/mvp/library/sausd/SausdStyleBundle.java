@@ -22,14 +22,57 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.profilepage.data;
+package org.ednovo.gooru.client.mvp.library.sausd;
+/**
+ * @fileName : LibraryStyleBundle.java
+ *
+ * @description : 
+ *
+ *
+ * @version : 1.0
+ *
+ * @date: 02-Dec-2013
+ *
+ * @Author Gooru Team
+ *
+ * @Reviewer: 
+ */
 
-import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import com.google.gwt.resources.client.CssResource;
 
-public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
-	public void getPartnerChildFolderItems(String folderId, int pageNumber);
-	public void getPartnerWorkspaceFolders(int offset);
-	void getIntoPartnerLibrarypage();
-	public void getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems);
-	public void getPartnerWorkspaceFoldersOnScroll(int offset);
+
+public interface SausdStyleBundle extends CssResource {
+	String conceptTitle();
+	String lessonTitle();
+	String conceptTitleActive();
+	String courseOption();
+	String aboutGooruAnrPadding();
+	String unitLiActive();
+	String header();
+	String course();
+	String resourceImage();
+	String blueLink();
+
+	String bannerSpanBlock();
+	String resourcesInsideSubStyle();
+	String collectionInfoSubStyle();
+	String collectionViewerSubStyle();
+	String tabsLi();
+	String tabsLiInactive();
+	String singleLink();
+	String active();
+	String paginationPanel();
+	String twoColumnContainer();
+	String subDropdown();
+	String unitOption();
+	String popularStarImage();
+	String math();
+	String partnerMenuPadding();
+	String lessonTitleProfile();
+	String collectionSmall();
+	String conceptTitleLeft();
+	
+	String rusdPartnerLogo();
+	String sausdPartnerLogo();
+	String gradeOption();
 }
