@@ -277,7 +277,7 @@ public interface MessageProperties {
 	//Logout Popup
 	String GL0188 = "Did you hear the bell?";
 	String GL0189 = "Class is dismissed!";
-	String GL0190 = "Ok";
+	String GL0190 = "OK";
 //	String GL0191 = GL0142; Duplicate.
 
 	//Logout Panel
@@ -526,7 +526,7 @@ public interface MessageProperties {
 	
 	//Signup Labels
 	String GL0400 = "Join the Gooru Community!";
-	String GL0401 = "Discover, organize, teach and study with the best free K-12 learning resources.";
+	String GL0401 = "Find, remix, and share the best free K-12 learning resources.";
 	String GL0402 = "Sign up with Google";
 	String GL0403 = "Why sign up with Google";
 	String GL0404 = "It's fast and easy. Use your existing Google account to sign in without a password.";
@@ -535,12 +535,12 @@ public interface MessageProperties {
 	String GL0407 = "Already have an account";
 	String GL0408 = "Click here to log in.";
 	String GL0409 = "Please fill out the following information.";
-	String GL0410 = "Pick wisely! This will appear publicly on Gooru and you will not be able to change it later.";
+	String GL0410 = "Choose wisely! This is how students and others in the Gooru community will identify you.";
 	String GL0411 = "Why enter your birthday";
 	String GL0412 = "Your birthday helps ensure you get the right Gooru experience for your age. This information will never appear anywhere on the website.";
 	String GL0413 = "Your name will not appear publicly anywhere on Gooru.";
 	String GL0414 = "Double check your email. Make sure it's correct!";
-	String GL0415 = "Passwords must be between 5 and 14 characters and must contain at least one number.";
+	String GL0415 = "Passwords must be between 5 and 14 characters and contain at least one number.";
 	String GL0416 = "Teacher";
 	String GL0417 = "Student";
 	String GL0418 = "Parent";
@@ -563,7 +563,7 @@ public interface MessageProperties {
 	String GL0433 = "Learn how to";
 
 	String GL0434 = "Email or Username";
-	String GL0435 = "You will be getting an email containing a link to reset your password.";
+	String GL0435 = "You will receive an email with a link to reset your password.";
 	String GL0436 = "Please enter your email or username below.";
 
 
@@ -618,7 +618,7 @@ public interface MessageProperties {
 	String GL0475 = "Cannot use special characters";
 	String GL0476 = "Please sign in to customize this collection. Once you're signed in you'll have your very own copy to customize, beautify, and awesome-ify. Okay, maybe awesome-ify isn't a word.";
 	String GL0477 = "Are you sure you want to exit?";
-	String GL0478 = "Your registration will not be completed.";
+	String GL0478 = "Your registration is not complete.";
 	String GL0479 = "Continue with Registration";
 	String GL0480 = "Leave Registration";
 	
@@ -780,7 +780,7 @@ public interface MessageProperties {
 	String GL0601 = "Flag this Collection";
 	String GL0602 = "Flag a Resource";
 	String GL0603 = "Resources in the collection are inappropriate";
-	String GL0604 = "Collection title, objective or narration is not appropriate";
+	String GL0604 = "Collection title, objective or narration is inappropriate";
 	String GL0605 = "Collection information appears to be inaccurate";
 	String GL0606 = "Other reason";
 	String GL0607 =  "Please provide us with more details:";
@@ -919,7 +919,7 @@ public interface MessageProperties {
 	String GL0706 ="Remove some filters";//Label
 	String GL0707 ="Check the spelling";//Label
 	String GL0708 ="Use a different keyword";//Label
-	String GL0709 ="Change the toggle (resources vs. collections)";//Label
+	String GL0709 ="Switch between resource and collection search";//Label
 	String GL0710 =	"Try our suggested collections";//Label
 	//No search results vc
 	String GL0711 =	"We didn't find any results for that...";//Label
@@ -1129,12 +1129,13 @@ public interface MessageProperties {
 		
 		//Collaborator
 		String GL0936 = "Collection Creator";
-		String GL0937 = "Remove yourself from the collaborator list";
+		String GL0937 = "Remove yourself as a collaborator";
 		String GL0938 = "You";
 		String GL0939 = "Current Collaborator(s)";
 		String GL0940 = "Work together, go further!";
 		String GL0941 = "Add a Collaborator";
-		String GL0942 = "Teaching is more fun with friends! Use this page to add up to 20 collaborators. Anyone added as a collaborator will have permission to edit this collection.";
+		String GL0942 = "Teaching is more fun with friends! Use this page to add up to 20 collaborators. Anyone added as a collaborator will have permission to edit this collection."
+				+ "  (Note: Only the original creator of this collection can add collaborators or delete this collection.)";
 		String GL0943 = "Invite collaborators";
 		String GL0944 = "Invite";
 		String GL0945 = "Separate email addresses with a comma or space";	//Not used.. Duplicate of GL1111 
@@ -1216,7 +1217,7 @@ public interface MessageProperties {
 		String GL1009="Featured";
 		String GL1010="Sign in with Google";
 		String GL1011="Looks like this email is tied with Google!";
-		String GL1012="Sign in through this link";
+		String GL1012="Sign in using this button";
 		//Balloon popup
 		String GL1013="Coming soon!";
 		
@@ -1363,7 +1364,7 @@ public interface MessageProperties {
 		String GL1125 = "You will no longer be able to edit this collection.";
 		String GL1126 = "You are no longer a collaborator on this collection.";
 		String GL1127 = "Heads up!";
-		String GL1128 = "You are about to remove yourself from the collaborator list.";
+		String GL1128 = "You are about to remove yourself as a collaborator.";
 		
 		//Assignments View.
 		String GL1129 = "This assignment is empty.";
@@ -1411,7 +1412,7 @@ public interface MessageProperties {
 		/// different section...
 		String GL1158 ="This collection is public, which allows others to find and learn from your collection";
 		String GL1159 ="Congratulations";
-		String GL1160 ="Your Gooru account has been created. Tell us more about your favorite course(s) and grade(s). We’ll use this information to personalize your Gooru experience or skip to finish.";
+		String GL1160 ="Your Gooru account has been created. Tell us more about your favorite course(s) and grade(s). We'll use this information to personalize your Gooru experience.";
 		String GL1161 = "Sorry! We don't support that format yet!";
 		
 		//Collaborators
