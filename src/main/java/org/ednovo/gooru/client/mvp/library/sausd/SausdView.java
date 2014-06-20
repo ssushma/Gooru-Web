@@ -131,13 +131,13 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 			SausdFeaturedView sausdFeaturedView = ((SausdFeaturedView) widget);
 			try {
 				if(courseId.equals(sausdFeaturedView.getCourseId())) {
-					
 					widget.addStyleName(ACTIVE_STYLE);
 				}
 			} catch (Exception e) {}
 			sausdFeaturedView.getfeaturedCoursePanel().addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
+					leftNav.clear();
 					MixpanelUtil.mixpanelEvent("FeaturedCourse_SelectsCourse");
 					final Iterator<Widget> widgetsPanel = featuredCourses.iterator();
 					while (widgetsPanel.hasNext()) {
@@ -145,10 +145,6 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 					}
 					widget.addStyleName(ACTIVE_STYLE);
 					setUnitList(courseList.get(widgetCountTemp).getCollectionItems());
-					Map<String,String> params = new HashMap<String, String>();
-					params.put(LIBRARY_PAGE, FEATURED_COURSE);
-					params.put(COURSE_ID, ""+((FeaturedCourseListView) widget).getCourseId());
-					AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 				}
 			});
 			widgetCount++;
@@ -168,9 +164,9 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 				libraryUnitMenuView.addStyleName(sausdStyleUc.unitLiActive());
 				unitListId = profileLibraryDoList.get(i).getGooruOid();
 				if(profileLibraryDoList.get(i).getType().equals("scollection")) {
-					setTopicListData(profileLibraryDoList.get(i),  unitListId);
+					setTopicListData(profileLibraryDoList.get(i), unitListId);
 				} else {
-					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(),  unitListId, profileLibraryDoList.get(i));
+					setTopicListData(profileLibraryDoList.get(i).getCollectionItems(), unitListId, profileLibraryDoList.get(i));
 				}
 			}
 		}
@@ -224,12 +220,12 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 			int count = 0;
 			setMetaDataContent(profileLibraryDo);
 			if(folderListDo.size()>0) {
-				for(int i = 0; i <folderListDo.size(); i++) {
+				for(int i = 0; i <1; i++) {
 					count++;
 					if(folderListDo.get(i).getType().equals("scollection")) {
 						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
 					} else {
-						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
+						contentScroll.add(new ProfileTopicListView(profileLibraryDo, count, AppClientFactory.getCurrentPlaceToken()));
 					}
 				}
 			} else {
