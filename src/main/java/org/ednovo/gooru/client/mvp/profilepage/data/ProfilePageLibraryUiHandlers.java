@@ -31,5 +31,5 @@ public interface ProfilePageLibraryUiHandlers extends BaseUiHandlers{
 	public void getPartnerWorkspaceFolders(int offset);
 	void getIntoPartnerLibrarypage();
 	public void getProfileLibraryCollection(String gooruOid, boolean skipCollectionItems);
-	
+	public void getPartnerWorkspaceFoldersOnScroll(int offset);
 }
