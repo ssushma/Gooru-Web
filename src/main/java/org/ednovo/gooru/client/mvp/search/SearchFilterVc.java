@@ -503,7 +503,8 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 		CheckBox categoryChk = new CheckBox();
 		categoryChk.setText(value);
 		categoryChk.setName(key);
-		if(value.equalsIgnoreCase("video")){
+		if(value.equalsIgnoreCase("videos")){
+			categoryChk.setText("Video");
 			MixpanelUtil.mixpanelEvent("search_video_filter_selected");
 			categoryChk.getElement().setId("chkVideos");	
 		}else if(value.equalsIgnoreCase("webpage")){
@@ -515,19 +516,23 @@ public class SearchFilterVc extends Composite implements SelectionHandler<Sugges
 			MixpanelUtil.mixpanelEvent("search_websites_filter_selected");
 			categoryChk.getElement().setId("chkwebsites");	
 		}*/
-		else if(value.equalsIgnoreCase("interactive")){
+		else if(value.equalsIgnoreCase("interactives")){
+			categoryChk.setText("Interactive");
 			MixpanelUtil.mixpanelEvent("search_interactives_filter_selected");
 			categoryChk.getElement().setId("chkInteractives");
 		}
-		else if(value.equalsIgnoreCase("question")){
+		else if(value.equalsIgnoreCase("questions")){
+			categoryChk.setText("Question");
 			MixpanelUtil.mixpanelEvent("search_questions_filter_selected");
 			categoryChk.getElement().setId("chkQuestions");
 		}
-		else if(value.equalsIgnoreCase("image")){
+		else if(value.equalsIgnoreCase("images")){
+			categoryChk.setText("Image");
 			MixpanelUtil.mixpanelEvent("search_images_filter_selected");
 			categoryChk.getElement().setId("chkImages");
 		}
-		else if(value.equalsIgnoreCase("text")){
+		else if(value.equalsIgnoreCase("texts")){
+			categoryChk.setText("Text");
 			MixpanelUtil.mixpanelEvent("search_texts_filter_selected");
 			categoryChk.getElement().setId("chkTexts");
 		}

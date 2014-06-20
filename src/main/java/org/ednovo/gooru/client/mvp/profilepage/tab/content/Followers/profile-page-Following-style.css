@@ -87,15 +87,15 @@ a:hover {
 .profilepageFollwoingContentText {
 	font-weight: bold;
 	padding: 10px 0px;
-	font-size: 16px;
+	font-size: 18px;
 	border-bottom: 1px solid #ddd;
-	height: 255px;
+	
 }
 .profilepageFollowerContentText {
 	padding: 10px 0px;
-	font-size: 16px;
+	font-size: 18px;
 	border-bottom: 1px solid #ddd;
-	height: 255px;
+	
 }
 .profileFollowingUserNameDetails {
 	display: inline-block;

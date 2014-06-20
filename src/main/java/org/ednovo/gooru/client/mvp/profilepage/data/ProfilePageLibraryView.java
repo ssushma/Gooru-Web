@@ -263,7 +263,7 @@ public class ProfilePageLibraryView extends ChildView<ProfilePageLibraryPresente
 		public void onWindowScroll(ScrollEvent event) {
 			if(leftNav.getWidgetCount()<totalLeftPanelCount&&isApiProgress) {
 				isApiProgress = false;
-				getPresenter().getPartnerWorkspaceFolders(leftNav.getWidgetCount());
+				getPresenter().getPartnerWorkspaceFoldersOnScroll(leftNav.getWidgetCount());
 			}
 		}
 	}

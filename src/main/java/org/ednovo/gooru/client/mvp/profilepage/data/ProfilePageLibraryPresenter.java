@@ -58,6 +58,7 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 	
 	@Override
 	public void getPartnerWorkspaceFolders(int offset) {
+		
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
 		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new AsyncCallback<ProfileLibraryListDo>(){
 			@Override
@@ -76,7 +77,23 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 			}
 		});
 	}
-	
+	@Override
+	public void getPartnerWorkspaceFoldersOnScroll(int offset) {
+		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new AsyncCallback<ProfileLibraryListDo>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				getView().setEmptyContainer(true);
+			}
+			
+			@Override
+			public void onSuccess(ProfileLibraryListDo result) {
+					getView().setEmptyContainer(false);
+					getView().setUnitList(result);
+				
+			}
+		});
+	}
 	@Override
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
 		AppClientFactory.getInjector().getProfilePageService().getProfilePaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<ProfileLibraryListDo>() {

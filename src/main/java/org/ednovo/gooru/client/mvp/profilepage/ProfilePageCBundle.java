@@ -34,4 +34,7 @@ public interface ProfilePageCBundle extends CssResource {
 	String addedCourseLbl();
 	String margin5();
 	String tabAlign();
+	String blackPrimaryButton();
+	String followingBtn();
+	
 }

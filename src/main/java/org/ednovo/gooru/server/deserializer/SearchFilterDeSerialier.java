@@ -62,12 +62,12 @@ public class SearchFilterDeSerialier extends DeSerializer {
 		//COLLECTION_CATEGORIES.put("NoQuestion", "None (___)");
 		//COLLECTION_CATEGORIES.put("all", "Mixed (both Quizzes and___)");
 
-		RESOURCE_CATEGORIES.put("Video", "Video");
+		RESOURCE_CATEGORIES.put("Video", "Videos");
 		RESOURCE_CATEGORIES.put("Webpage", "Webpage");
-		RESOURCE_CATEGORIES.put("Interactive", "Interactive");
-		RESOURCE_CATEGORIES.put("Question", "Question");
-		RESOURCE_CATEGORIES.put("Image", "Image");
-		RESOURCE_CATEGORIES.put("Text", "Text");
+		RESOURCE_CATEGORIES.put("Interactive", "Interactives");
+		RESOURCE_CATEGORIES.put("Question", "Questions");
+		RESOURCE_CATEGORIES.put("Image", "Images");
+		RESOURCE_CATEGORIES.put("Text", "Texts");
 		RESOURCE_CATEGORIES.put("Audio", "Audio");
 		/*RESOURCE_CATEGORIES.put("Other", "Other");*/
 	}
