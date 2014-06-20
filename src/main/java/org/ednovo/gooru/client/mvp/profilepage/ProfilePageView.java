@@ -361,6 +361,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		FollowingButtonBlue.addStyleName(ProfilePageStyle.followingBtn());
 		FollowingButtonBlue.addMouseOverHandler(new MouseOverOnUnFollowingButton());
 		FollowingButtonBlue.addMouseOutHandler(new MouseOutOnUnFollowingButton());
+		followButton.getElement().setAttribute("style", "width: 100px;");
 		//end for 6.4
 
 		if(AppClientFactory.getLoggedInUser().getConfirmStatus()==1){
