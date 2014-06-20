@@ -511,7 +511,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList) {
 		boolean isLessonHighlighted = true;
 		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
-			for(int i=0;i<LESSON_PAGE_INITIAL_LIMIT;i++) {
+			for(int i=0;i<20;i++) {
 				if(i==0) {
 					isLessonHighlighted = true;
 				} else {
