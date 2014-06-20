@@ -77,7 +77,7 @@ a:hover {
 .username {
 	display: block;
 	vertical-align: middle;
-	color: #1076bb;
+	/* color: #1076bb; */
 	font-weight: bold;
 	font-size: 18px;
 }

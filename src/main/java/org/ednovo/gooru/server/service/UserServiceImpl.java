@@ -44,6 +44,7 @@ import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
 
 import org.ednovo.gooru.shared.model.user.BiographyDo;
+import org.ednovo.gooru.shared.model.user.CustomFieldDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
 import org.ednovo.gooru.shared.model.user.IsFollowDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -550,11 +551,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					
 					userFollowDo.setUsername(resultObj.getString("username"));
 					userFollowDo.setProfileImageUrl(resultObj.getString("profileImageUrl"));
+					
 					JSONObject summaryObj = followingList.getJSONObject(i).getJSONObject("summary");
 					userSummaryDo.setCollection(summaryObj.getInt("collection"));
 					userSummaryDo.setFollowing(summaryObj.getInt("following"));
 					userSummaryDo.setFollowers(summaryObj.getInt("followers"));
 					userFollowDo.setSummary(userSummaryDo);
+					
+					ArrayList<CustomFieldDo> customFields = JsonDeserializer.deserialize( followingList.getJSONObject(i).getJSONArray("customFields").toString(), new TypeReference<ArrayList<CustomFieldDo>>() {});
+					userFollowDo.setCustomFields(customFields);
+					
+
 					userFollowDo.setTotalHintCount(totatHintCount);
 					userFollowList.add(userFollowDo);
 				}

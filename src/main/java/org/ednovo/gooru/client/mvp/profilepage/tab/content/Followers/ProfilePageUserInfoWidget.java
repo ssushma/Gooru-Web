@@ -4,6 +4,7 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -61,15 +62,21 @@ public class ProfilePageUserInfoWidget extends Composite {
 		String gooruUid = userNameLabel.getElement().getId();
 		Anchor anchor = new Anchor();
 		String userName=userFollowDo.getUsername();
+		
 		String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+gooruUid+"&user="+userName;
-			anchor.setHref(token);
-		
+		anchor.setHref(token);
 		anchor.setText(userName);
-		anchor.getElement().setAttribute("style","font-size: 18px !important");
-		
+		anchor.getElement().setAttribute("style","font-size: 18px !important");		
 		anchor.setTarget("_blank");
 		userNameLabel.setText("");
-		userNameLabel.getElement().appendChild(anchor.getElement());	
+		boolean isEnabled =  userFollowDo.getCustomFields() != null && userFollowDo.getCustomFields().get(0).getOptionalValue() != null && userFollowDo.getCustomFields().get(0).getOptionalValue().equalsIgnoreCase("true") ? true : false;
+		if (isEnabled){
+			userNameLabel.getElement().appendChild(anchor.getElement());
+		}else{
+			userNameLabel.setText(userFollowDo.getUsername());
+			userNameLabel.getElement().getStyle().setCursor(Cursor.DEFAULT);
+		}
+			
 		
 	}
 	public void clearAll()
