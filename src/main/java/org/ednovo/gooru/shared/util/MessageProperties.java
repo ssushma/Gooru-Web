@@ -2520,6 +2520,8 @@ public interface MessageProperties {
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
     	String GL1975 = "will be added to this class";
     	
+    	String GL1976 = "joining...";
+    	
       	
       	 
 }

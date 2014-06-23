@@ -121,6 +121,11 @@
 			font-weight: bold;
 			text-align: center;
 		}
+        .lblJoining{
+			font-style: italic;
+			color: #515151;
+			font-size: 12px;	
+        }
 		
 		.btnJoin {
 			font-weight: bold;
@@ -142,10 +147,11 @@
 						<g:HTML styleName="{style.desc}" ui:field="htmlAgree"/>
 						<g:HTML styleName="{style.descInformation}" ui:field="htmlInformation"/>
 						<g:HTMLPanel styleName="{style.signInContainer}">
-							<g:HTMLPanel>
-							<g:Button styleName="secondary {style.btnJoin}" ui:field="joinLaterBtn"/>
+							<g:HTMLPanel ui:field="joinBtnPanel">
+							    <g:Button styleName="secondary {style.btnJoin}" ui:field="joinLaterBtn"/>
 								<g:Button styleName="primary {style.btnJoin}" ui:field="joinClassBtn"/>
 							</g:HTMLPanel>
+							<g:Label styleName="{style.lblJoining}" ui:field="lblJoining"/>
 						</g:HTMLPanel>
 					</g:HTMLPanel>
 				</g:HTMLPanel>
