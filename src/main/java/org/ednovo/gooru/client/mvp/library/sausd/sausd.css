@@ -610,6 +610,7 @@
 
 #featuredCourseTabs .courseTitle {
 	font-weight:bold;
+	white-space: pre-wrap;
 }
 
 #featuredCourseTabs .courseImage {
