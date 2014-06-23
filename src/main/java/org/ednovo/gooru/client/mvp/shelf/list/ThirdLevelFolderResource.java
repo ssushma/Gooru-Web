@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
@@ -62,7 +63,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -177,7 +177,7 @@ public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler
 			if(collectionItemDo.getResource().getResourceType().getName().equals("folder")&&widgetCount==0)
 			{
 				String gooruOId =  folderL3TitleLbl.getElement().getId();
-				AppClientFactory.getInjector().getfolderService().getFolders(gooruOId, new AsyncCallback<List<CollectionItemDo>>() {
+				AppClientFactory.getInjector().getfolderService().getFolders(gooruOId, new SimpleAsyncCallback<List<CollectionItemDo>>() {
 					@Override
 					public void onSuccess(List<CollectionItemDo> result) {
 						if(result.size()==0)
@@ -195,9 +195,6 @@ public class ThirdLevelFolderResource extends FocusPanel implements ClickHandler
 						}
 					}
 					
-					@Override
-					public void onFailure(Throwable caught) {
-					}
 				});
 			}
 			setOpen();
