@@ -28,11 +28,11 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 			UiBinder<Widget, StudentJoinClassPopup> {
 	}
 	ClasspageDo classpageDo;
-	@UiField Label closeLbl;
+	@UiField Label closeLbl,lblJoining;
 	
 	@UiField Button joinClassBtn,joinLaterBtn;
 	
-	@UiField HTMLPanel headerPanel,welcomePanel,descPanel,classNamePanel;//termsPanel, descPanel, welcomePanel
+	@UiField HTMLPanel headerPanel,welcomePanel,descPanel,classNamePanel,joinBtnPanel;//termsPanel, descPanel, welcomePanel
 	
 	@UiField HTML htmlInformation,htmlAgree;
 
@@ -53,7 +53,9 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 
 	private void setStaticData(ClasspageDo classpageDo) {
 		headerPanel.getElement().setInnerHTML(GL1536);
-		
+		lblJoining.setVisible(false);
+		joinBtnPanel.setVisible(true);
+		lblJoining.setText(GL1976);
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
 		{
 			welcomePanel.setVisible(true);
@@ -95,6 +97,8 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 	@UiHandler("joinClassBtn")
 	public void clickOnJoinClassBtn(ClickEvent clickEvent){
 		joinIntoClass();
+		joinBtnPanel.setVisible(false);
+		lblJoining.setVisible(true);
 		StudentAssignmentView.setPrivatePageActive();
 		/*if(AppClientFactory.isAnonymous()){
 			LoginPopupUc loginPopupUc=new LoginPopupUc();
@@ -110,7 +114,13 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 		}*/
 		
 	}
-	
+	/**
+	 * @return the lblJoining
+	 */
+	public Label getLblJoining() {
+		return lblJoining;
+	}
+
 	public abstract void closePoup();
 
 	abstract void joinIntoClass();
