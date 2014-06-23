@@ -76,15 +76,12 @@ public abstract class ServiceRequest {
 			//throw new RuntimeException(exception.getMessage());
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
-			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
-			String serverStatusCode=String.valueOf(statusCode);
-			Character firstCharcter=serverStatusCode.charAt(0);
-			if(Character.getNumericValue(firstCharcter)==4){
+//			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
+//			String serverStatusCode=String.valueOf(statusCode);
+//			Character firstCharcter=serverStatusCode.charAt(0);
+			if(statusCode==504){
 				String serverStatus=getApiServerStatus();
-				System.out.println("statusssssssssssss"+statusCode+"==="+serverStatus);
-				if(serverStatus!=null&&serverStatus.equals(UP)){
-					throw new ServerDownException(statusCode,"");
-				}else if(serverStatus!=null&&serverStatus.equals(DOWN)){
+				if(serverStatus!=null&&serverStatus.equals(DOWN)){
 					throw new ServerDownException(statusCode,"");
 				}else if(serverStatus!=null&&serverStatus.equals(WARNING)){
 					//throw new ServerDownException(statusCode,"");
@@ -101,7 +98,7 @@ public abstract class ServiceRequest {
 	
 	protected String getApiServerStatus(){
 		String serverStatus=null;
-		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get("http://status.goorulearning.org/api/v1/services/gooru-production-api");
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(UrlToken.SERVER_STATUS_URL.getUrl());
 		if(jsonResponseRep!=null){
 			try {
 				JSONObject serverStatusJsonObject=jsonResponseRep.getJsonRepresentation().getJsonObject();
