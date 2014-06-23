@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -82,7 +83,6 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
-			landingBanner.setHeight("250px");
 			featuredCousesLbl.setText(GL1901);
 		}
 	}
@@ -191,7 +191,11 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 					if(libraryUnitMenuView.getType().equals("scollection")) {
 						setTopicListData(profileLibraryDoList.get(widgetCountTemp),  unitListId);
 					} else {
-						setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(),  unitListId, profileLibraryDoList.get(widgetCountTemp));
+						if(widgetCountTemp==0) {
+							setTopicListData(profileLibraryDoList.get(widgetCountTemp).getCollectionItems(), unitListId, profileLibraryDoList.get(widgetCountTemp));
+						} else {
+							getUnitTopics(unitListId, profileLibraryDoList.get(widgetCountTemp));
+						}
 					}
 				}
 			});
@@ -199,6 +203,20 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		}
 	}
 	
+	private void getUnitTopics(final String unitListId, final ProfileLibraryDo profileLibraryDo) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, "public", 14, new AsyncCallback<ProfileLibraryListDo>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				
+			}
+
+			@Override
+			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
+				setTopicListData(profileLibraryListDo.getSearchResult(), unitListId, profileLibraryDo);
+			}
+		});
+	}
+
 	public void setTopicListData(ProfileLibraryDo profileLibraryDo, String folderId) {
 		contentScroll.clear();
 		try {

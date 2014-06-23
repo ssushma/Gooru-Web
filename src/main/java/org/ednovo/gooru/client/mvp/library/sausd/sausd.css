@@ -610,6 +610,7 @@
 
 #featuredCourseTabs .courseTitle {
 	font-weight:bold;
+	white-space: pre-wrap;
 }
 
 #featuredCourseTabs .courseImage {
@@ -1005,7 +1006,7 @@ margin-bottom: 15px;
 
 #landingSausdBanner {
 	width:100%;
-	height:330px;
+	height:315px;
 	background: url("../images/library/landing-image-sausd.png");
 	position:relative;
 	margin-bottom:30px;
@@ -1069,3 +1070,64 @@ margin-bottom: 15px;
 	top: 103px;
 	right: 188px;
 }
+
+/* SAUSD Banner View */
+.banner-tabs {
+	position: relative;
+	z-index: 1;
+	background: #FFF;
+	margin: 0 auto;
+	padding: 0px 100px;
+	margin-top: 51px;
+}
+.box-inner {
+	display: inline-block;
+	vertical-align: top;
+	padding: 16px 0px;
+}
+.first {
+	font-size: 24px !important;
+	font-weight: bold;
+	line-height: 120%;
+	width: 131px !important;
+}
+.large-Title {
+	height: 35px;
+	line-height: 35px;
+	display: table-cell;
+	vertical-align: middle;
+}
+.box {
+	width: 180px;
+	height: 58px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #D81B13;
+	padding: 0px 20px;
+	border-right: 1px solid #D81c13;
+}
+.last {
+	border-right: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

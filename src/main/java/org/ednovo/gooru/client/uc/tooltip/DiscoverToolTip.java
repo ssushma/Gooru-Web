@@ -33,6 +33,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -236,14 +237,12 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		}
 	}
 	public void getPartners() {
-		AppClientFactory.getInjector().getLibraryService().getPartners(new AsyncCallback<ArrayList<LibraryUserDo>>() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
 				setPartners(partnersList);
 			}
-
-			@Override
-			public void onFailure(Throwable caught) {}
+			
 		});
 	}
 	private void setHeaderBrowserTitle(String courseLabel) {
