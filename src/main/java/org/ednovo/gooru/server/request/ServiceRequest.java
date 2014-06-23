@@ -102,7 +102,6 @@ public abstract class ServiceRequest {
 		if(jsonResponseRep!=null){
 			try {
 				JSONObject serverStatusJsonObject=jsonResponseRep.getJsonRepresentation().getJsonObject();
-				System.out.println("JSON Object===>"+serverStatusJsonObject);
 				if(serverStatusJsonObject!=null){
 					JSONObject currentEventJsonObject=serverStatusJsonObject.isNull(CURRENT_EVENT)?null:serverStatusJsonObject.getJSONObject(CURRENT_EVENT);
 					if(currentEventJsonObject!=null){
