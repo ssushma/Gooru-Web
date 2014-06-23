@@ -28,6 +28,7 @@ package org.ednovo.gooru.client;
 
 import java.io.IOException;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.exception.ServerDownException;
@@ -45,7 +46,17 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 			ServerDownException serverDownException=(ServerDownException)caught;
 			//System.out.println("insideeee=== exception"+serverDownException.getStatusCode());
 			//new AlertContentUc("Error==>"+serverDownException.getStatusCode(), "GotException...");
-			Window.open("https://www.google.com", "_self","");
+			AppClientFactory.getInjector().getHomeService().getRedirectServerUrl(new AsyncCallback<String>() {
+				
+				@Override
+				public void onSuccess(String redirectUrl) {
+					Window.open(redirectUrl, "_self","");
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
 		}
 		else if (caught instanceof IOException) {
 			Window.Location.reload();
