@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
@@ -17,7 +18,6 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -51,17 +51,13 @@ public class CollaboratorsUc extends Composite implements MessageProperties {
 	 */
 	public CollaboratorsUc(CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionDo.getGooruOid(), "active", new AsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
+		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
 			
 			@Override
 			public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
 		     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
 		});
 		
 	}
@@ -70,16 +66,11 @@ public class CollaboratorsUc extends Composite implements MessageProperties {
 	
 	public CollaboratorsUc(CollectionSearchResultDo collectionResultDo) {
 		initWidget(uiBinder.createAndBindUi(this));
-		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionResultDo.getGooruOid(), "active", new AsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
+		AppClientFactory.getInjector().getCollaboratorsService().getAssociatedCollaborators(collectionResultDo.getGooruOid(), "active", new SimpleAsyncCallback<Map<String,ArrayList<CollaboratorsDo>>>() {
 			
 			@Override
 			public void onSuccess(Map<String, ArrayList<CollaboratorsDo>> result) {
 		     	renderTeamNames(teamContainer, getTeamMembersNames(result.get("active")));
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}
