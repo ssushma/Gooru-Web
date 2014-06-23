@@ -566,7 +566,9 @@ public enum UrlToken {
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
-	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&sharing=public&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder");
+	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&sharing=public&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder"),
+	
+	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api");
 
 
 	

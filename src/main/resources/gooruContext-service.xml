@@ -74,6 +74,7 @@
 				<prop key="facebook.app_id">${facebook.app_id}</prop>
 				<prop key="facebook.dialogfeedurl">${facebook.dialogfeedurl}</prop>
 				<prop key="taxonomy.preferences">${taxonomy.preferences}</prop>
+				<prop key="redirect.url">${redirect.url}</prop>
 			</props>
 		</property>
 	</bean>

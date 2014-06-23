@@ -83,5 +83,7 @@ public interface HomeService extends BaseService {
 	 *
 	 */
 	String getClientIpAddress() throws GwtException;
+	
+	String getRedirectServerUrl() throws GwtException;
 
 }

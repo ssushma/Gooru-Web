@@ -146,6 +146,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String SIGNED_USER_DOB = "signed-user-dob";
 	
+	private static final String SERVER_REDIRECT_URL="redirect.url";
+	
 	public BaseServiceImpl() {
 
 	}
@@ -285,6 +287,11 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 			cdnEndPoint = cdnEndPoint.replaceAll(MessageProperties.HTTP, MessageProperties.HTTPS);
 		}
 		return cdnEndPoint;
+	}
+	
+	public String getRedirectUrl(){
+		String serverRedirectUrl = restConstants.getProperty(SERVER_REDIRECT_URL);
+		return serverRedirectUrl;
 	}
 
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	
