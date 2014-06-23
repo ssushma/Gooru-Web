@@ -13,6 +13,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -22,6 +24,8 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 	@UiField public FlowPanel ratingWidgetPanel;
 	private RatingWidgetView ratingWidgetView=null;
 	String assocGooruOId,createrName;
+	@UiField Label reviewRatingText;
+	@UiField HTMLPanel averageRationPanel;
 	
 	private static RatingsConfirmationPopupUiBinder uiBinder = GWT
 			.create(RatingsConfirmationPopupUiBinder.class);
@@ -35,6 +39,9 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 			setWidget(uiBinder.createAndBindUi(this));
 			this.assocGooruOId=assocGooruOId;
 			this.createrName = createrName;
+			reviewRatingText.setText(GL1856);
+			averageRationPanel.getElement().setInnerHTML(GL1848);
+			btnOk.setText(GL0190);
 			setAvgRatingWidget(assocGooruOId,score,count,average,createrName);
 	}
 	/**
