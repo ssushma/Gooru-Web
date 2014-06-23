@@ -8,13 +8,14 @@
         	<g:HTMLPanel styleName="{playerStyle.arrowBorder}"></g:HTMLPanel>
             <g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
             <g:HTMLPanel styleName="{playerStyle.icon} {playerStyle.complete}" ui:field="imgSuccessIcon"></g:HTMLPanel>
-                <h3>Thank you for reviewing this resource!</h3>
-                  <g:HTMLPanel styleName="{playerStyle.rating}">
-                        Average Rating<br/>
+            <g:Label styleName="{playerStyle.ratingText}" ui:field="reviewRatingText"></g:Label>
+               <!--  <h3>Thank you for reviewing this resource!</h3> -->
+                  <g:HTMLPanel styleName="{playerStyle.rating}" ui:field="averageRationPanel">
+                      <br/>
                    <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     </g:HTMLPanel>
                     <g:HTMLPanel styleName="{playerStyle.okContainer}" ui:field="buttonsContainer">
-                        <g:Button ui:field="btnOk" styleName="primary">OK</g:Button>
+                        <g:Button ui:field="btnOk" styleName="primary"></g:Button>
                     </g:HTMLPanel>
                     <g:Label ui:field="saveAndPsotLbl"></g:Label>
                 </g:HTMLPanel>

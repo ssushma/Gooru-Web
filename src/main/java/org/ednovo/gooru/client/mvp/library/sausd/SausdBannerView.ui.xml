@@ -1,37 +1,30 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-
 	<ui:style field="sausdStyleUc" src="sausd.css" type="org.ednovo.gooru.client.mvp.library.sausd.SausdStyleBundle" />
 	<g:HTMLPanel ui:field="landingBannerInner">
 	    <g:HTMLPanel ui:field="partnerLogo"/>
 		<g:Label styleName="{sausdStyleUc.header}" ui:field="headerTag"></g:Label>
 		<g:Label styleName="{sausdStyleUc.subheader}" ui:field="subHeaderTag"></g:Label>
-		<g:HTMLPanel styleName="{sausdStyleUc.fourSteps}" ui:field="fourSteps">
-			<g:HTMLPanel styleName="{sausdStyleUc.step}">
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImage}">
-					<g:HTMLPanel styleName="{sausdStyleUc.find}" />
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImageData}" ui:field="findLbl"/>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{sausdStyleUc.step}">
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImage}">
-					<g:HTMLPanel styleName="{sausdStyleUc.share}"></g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImageData}" ui:field="shareLbl"/>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{sausdStyleUc.step}">
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImage}">
-					<g:HTMLPanel styleName="{sausdStyleUc.measure}"></g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImageData}" ui:field="measureLbl"/>
-			</g:HTMLPanel>
-			<g:HTMLPanel styleName="{sausdStyleUc.last} {sausdStyleUc.step}">
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImage}">
-					<g:HTMLPanel styleName="{sausdStyleUc.contribute}"></g:HTMLPanel>
-				</g:HTMLPanel>
-				<g:HTMLPanel styleName="{sausdStyleUc.libraryBannerImageData}" ui:field="contributeLbl"/>
+	<g:HTMLPanel styleName="{sausdStyleUc.banner-tabs}">
+	    <g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+			<g:HTMLPanel styleName="{sausdStyleUc.box} {sausdStyleUc.first}">
+			    <g:Label styleName="{sausdStyleUc.large-Title}" ui:field="title1"></g:Label>
+			    <g:Label ui:field="title2"></g:Label>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+			<g:Label styleName="{sausdStyleUc.box}" ui:field="info1"> </g:Label>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+			<g:Label styleName="{sausdStyleUc.box}" ui:field="info2"> </g:Label>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+			<g:Label styleName="{sausdStyleUc.box}" ui:field="info3"> </g:Label>
+		</g:HTMLPanel>
+		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+			<g:Label styleName="{sausdStyleUc.box} {sausdStyleUc.last}" ui:field="info4"></g:Label>
+		</g:HTMLPanel>
+	</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

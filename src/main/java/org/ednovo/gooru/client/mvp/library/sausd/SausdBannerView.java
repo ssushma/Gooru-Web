@@ -35,7 +35,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -56,9 +55,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class SausdBannerView extends Composite implements MessageProperties{
 
-	@UiField HTMLPanel partnerLogo, landingBannerInner, findLbl, shareLbl, measureLbl, contributeLbl, fourSteps;
-	@UiField Label headerTag;
-	@UiField Label subHeaderTag;
+	@UiField HTMLPanel partnerLogo, landingBannerInner;
+	@UiField Label headerTag, subHeaderTag, info1, info2, info3, info4, title1, title2;
 	@UiField SausdStyleBundle sausdStyleUc;
 	
 	private static SausdBannerViewUiBinder uiBinder = GWT
@@ -80,43 +78,20 @@ public class SausdBannerView extends Composite implements MessageProperties{
 	
 	private void getLandingBannerText(String placeToken) {
 		if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
-			setLandingBannerText(GL1902,GL1903,GL1904,GL1905,GL1906,GL1907,GL1908,GL1909,GL1910,GL1911);
-			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
-			fourSteps.setVisible(false);
+			setLandingBannerText(GL1902,GL1903,GL1977,GL1978,GL1979,GL1980);
 			partnerLogo.setStyleName(sausdStyleUc.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
 		}
 	}
 	
-	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String findInlineMsg, String findMsg, String shareInlineMsg, String shareMsg, 
-			String measureInlineMsg, String measureMsg, String contributeInlineMsg, String contributeMsg) {
+	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String infoText1, String infoText2, String infoText3, String infoText4) {
 			headerTag.setText(headerMsg);
 			subHeaderTag.setText(subHeaderMsg);
-			
-			InlineLabel findInlineLbl = new InlineLabel(findInlineMsg);
-			InlineLabel shareInlineLbl = new InlineLabel(shareInlineMsg);
-			InlineLabel measureInlineLbl = new InlineLabel(measureInlineMsg);
-			InlineLabel contributeInlineLbl = new InlineLabel(contributeInlineMsg);
-			
-			Label findLblMsg = new Label(findMsg);
-			Label shareLblMsg = new Label(shareMsg);
-			Label measureLblMsg = new Label(measureMsg);
-			Label contributeLblMsg = new Label(contributeMsg);
-			findLblMsg.setStyleName(sausdStyleUc.bannerSpanBlock());
-			shareLblMsg.setStyleName(sausdStyleUc.bannerSpanBlock());
-			measureLblMsg.setStyleName(sausdStyleUc.bannerSpanBlock());
-			contributeLblMsg.setStyleName(sausdStyleUc.bannerSpanBlock());
-			
-			findLbl.add(findInlineLbl);
-			findLbl.add(findLblMsg);
-			
-			shareLbl.add(shareInlineLbl);
-			shareLbl.add(shareLblMsg);
-			
-			measureLbl.add(measureInlineLbl);
-			measureLbl.add(measureLblMsg);
-			
-			contributeLbl.add(contributeInlineLbl);
-			contributeLbl.add(contributeLblMsg);
+			title1.setText(GL1981);
+			title2.setText(GL1982);
+			info1.setText(infoText1);
+			info2.setText(infoText2);
+			info3.setText(infoText3);
+			info4.setText(infoText4);
 	}	
 }

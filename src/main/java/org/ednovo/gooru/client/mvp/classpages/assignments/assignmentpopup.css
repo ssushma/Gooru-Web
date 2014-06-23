@@ -697,7 +697,7 @@
 .assignmentButtonsContainerCopy {
 	float: left;
 	margin: 18px 0 15px 150px;
-	position:fixed;
+	position:absolute;
 	margin-top:88px;
 }
  
