@@ -51,6 +51,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -76,7 +77,7 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 	
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
 	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
-	
+	@UiField Anchor viewAnchor;
 	/**
 	 * Class constructor 
 	 */
@@ -210,11 +211,12 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 	}
 	public void setUiText()
 	{
-		  msgPanel.getElement().setInnerHTML(GL1976);
-		  msglinkPanel.getElement().setInnerHTML(GL1977);
+		  msgPanel.getElement().setInnerHTML(GL1983);
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
 		  gooruPanel.getElement().setInnerHTML(GL0733);
-		  ednovoPanel.getElement().setInnerHTML(GL1978);
-		  appstorePanel.getElement().setInnerHTML(GL1979);
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  viewAnchor.setText(GL1428);
 		  
 	}
 }

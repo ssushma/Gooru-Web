@@ -403,11 +403,11 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	}
 	public void setUiText()
 	{
-		  msgPanel.getElement().setInnerHTML(GL1976);
-		  msglinkPanel.getElement().setInnerHTML(GL1977);
+		msgPanel.getElement().setInnerHTML(GL1983);
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
 		  gooruPanel.getElement().setInnerHTML(GL0733);
-		  ednovoPanel.getElement().setInnerHTML(GL1978);
-		  appstorePanel.getElement().setInnerHTML(GL1979);
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  appstorePanel.getElement().setInnerHTML(GL1986);
 		  viewAnchor.setText(GL1428);
 		  
 	}
