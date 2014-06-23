@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.user.UserDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.PlayerConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
@@ -50,6 +51,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -58,7 +60,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class WrapView extends BaseView implements IsWrapView {
+public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 
 	private static WrapViewUiBinder uiBinder = GWT.create(WrapViewUiBinder.class);
 
@@ -74,7 +76,8 @@ public class WrapView extends BaseView implements IsWrapView {
 	@UiField HTMLPanel panelWrapper,ipadSectiondiv,androidSectiondiv;
 	
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
-	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	@UiField Anchor viewAnchor;
 	/**
 	 * Class constructor 
 	 */
@@ -87,7 +90,7 @@ public class WrapView extends BaseView implements IsWrapView {
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
 		  
 		  UAgentInfo detector = new UAgentInfo(Navigator.getUserAgent());
-		  
+		
 		  if(isIpad && !StringUtil.IPAD_MESSAGE_Close_Click)
 		  {
 			  ipadSectiondiv.setVisible(true);
@@ -114,7 +117,7 @@ public class WrapView extends BaseView implements IsWrapView {
 			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
-
+		  setUiText();
 	}
 
 	@Override
@@ -206,5 +209,14 @@ public class WrapView extends BaseView implements IsWrapView {
 	public void setDiscoverLinkFromLibrary(String discoverLink) {
 		headerUc.setDiscoverLinkFromLibrary(discoverLink);
 	}
-
+	public void setUiText()
+	{
+		  msgPanel.getElement().setInnerHTML(GL1983);
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  viewAnchor.setText(GL1428);
+		  
+	}
 }

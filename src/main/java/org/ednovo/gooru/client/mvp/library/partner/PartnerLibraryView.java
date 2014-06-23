@@ -41,6 +41,7 @@ import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -226,6 +227,8 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 
 	@Override
 	public void loadingPanel(boolean isVisible) {
+		libraryView.getContainer().getElement().getStyle().setMarginTop(-50, Unit.PX);
+		libraryView.getCourseTabs().setVisible(false);
 		libraryView.getLoadingIconPanel().setVisible(isVisible);
 	}
 

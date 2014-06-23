@@ -1371,7 +1371,7 @@ public interface MessageProperties {
 		
 		//Student Assignment View.
 		String GL1130 = "Return to Teacher View";
-		String GL1131 ="Oops! Looks like your teacher hasn't added any Collections to his/her page yet. Check back later to see if there are any changes";
+		String GL1131 ="It looks like there are no assignments under this view. Select \"View All\" from the dropdown menu to see all of the collections your teacher has assigned.";
 		
 		//Class code view.
 		String GL1132="Students, enter in the Class Code provided by your teacher.";
@@ -2520,6 +2520,19 @@ public interface MessageProperties {
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
     	String GL1975 = "will be added to this class";
     	
-      	
+    	String GL1976 = "joining...";
+    	
+    	String GL1977 = "How does the lesson value and build on students’ language and experiences to promote deep understandings?";
+    	String GL1978 = "How does the lesson provide frequent opportunities to collaborate with others to optimize learning?";
+    	String GL1979 = "How does the lesson sustain academic rigor to prepare students for college and careers?";
+    	String GL1980 = "How does the lesson build students’ agency and promote them to become lifelong learners in the global society?";
+    	String GL1981 = "Theoretical";
+    	String GL1982 = "Framework";
+    	
+    	String GL1983 = "Welcome to the Gooru Mobile Site!";
+    	String GL1984 = "For most optimized Gooru experience, please visit www.goorulearning.org via computer.";
+    	String GL1985 = "Ednovo";
+    	String GL1986 = "FREE On the App Store";
+
       	 
 }

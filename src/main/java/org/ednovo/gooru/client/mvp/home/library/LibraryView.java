@@ -1324,4 +1324,11 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		}
 	}
 
+	public HTMLPanel getCourseTabs() {
+		return courseTabs;
+	}
+	
+	public HTMLPanel getContainer() {
+		return container;
+	}
 }
