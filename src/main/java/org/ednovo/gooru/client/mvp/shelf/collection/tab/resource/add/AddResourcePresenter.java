@@ -187,7 +187,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	protected void onBind() {
 		super.onBind();
 		
-		setUserResourceCollectionItemAsyncCallback(new AsyncCallback<CollectionItemDo>() {
+		setUserResourceCollectionItemAsyncCallback(new SimpleAsyncCallback<CollectionItemDo>() {
 
 			@Override
 			public void onSuccess(CollectionItemDo result) {
@@ -379,12 +379,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void isShortenUrl(final String userUrlStr) {
-		AppClientFactory.getInjector().getResourceService().checkShortenUrl(userUrlStr.trim(),new AsyncCallback<String>(){
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
-
+		AppClientFactory.getInjector().getResourceService().checkShortenUrl(userUrlStr.trim(),new SimpleAsyncCallback<String>(){
 			@Override
 			public void onSuccess(String result) {
 				if(result.equalsIgnoreCase("True")){

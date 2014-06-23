@@ -72,12 +72,7 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 		 standardsEditButton.setVisible(false);
 		 standardsSaveCancelButtonContainer.setVisible(false);
 		 standardSavingTextLabel.setText(MessageProperties.GL0808);
-		 AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,USER_TAXONOMY_ROOT_CODE,"",new AsyncCallback<Void>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-									
-				}
+		 AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,USER_TAXONOMY_ROOT_CODE,"",new SimpleAsyncCallback<Void>() {
 
 				@Override
 				public void onSuccess(Void result) {

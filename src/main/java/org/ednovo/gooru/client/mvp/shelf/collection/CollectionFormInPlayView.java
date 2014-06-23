@@ -671,7 +671,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 	public void getAccountTypeId()
 	{
 	AppClientFactory
-				.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
+				.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
 					
 					@Override
 					public void onSuccess(SettingDo result) {
@@ -691,12 +691,7 @@ public class CollectionFormInPlayView extends PopupViewWithUiHandlers<Collection
 							publicShareFloPanel.setVisible(true);	
 						}
 						
-					}
-
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-					
+					}					
 				});
 		
 	}

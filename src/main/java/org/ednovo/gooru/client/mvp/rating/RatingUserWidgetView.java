@@ -599,7 +599,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiHandler("deleteReview")
 	public void onClickDeleteReview(ClickEvent event){
 
-		AppClientFactory.getInjector().getPlayerAppService().deleteRating(starRatingsDo.getDeleteRatingGooruOid(), new AsyncCallback<Void>() {
+		AppClientFactory.getInjector().getPlayerAppService().deleteRating(starRatingsDo.getDeleteRatingGooruOid(), new SimpleAsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
@@ -627,13 +627,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            }
 		        };
 		        timer.schedule(1000);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			
-				
-			}
+			}			
 		});
 }
 	

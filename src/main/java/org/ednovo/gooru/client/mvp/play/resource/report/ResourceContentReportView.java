@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.play.resource.report;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.player.resource.client.ResourcePlayerComponentService;
 import org.ednovo.gooru.player.resource.client.ResourcePlayerComponentServiceAsync;
 import org.ednovo.gooru.player.resource.client.presenter.ResourcePlayerPresenter;
@@ -113,13 +114,9 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		resourcePlayerPresenter=new ResourcePlayerPresenter();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 
-		playerRpcService.getContentReport(restEndPoint, session, assocGooruOid, new AsyncCallback<GetFlagContentDO>() {
+		playerRpcService.getContentReport(restEndPoint, session, assocGooruOid, new SimpleAsyncCallback<GetFlagContentDO>() {
 
 			@Override
-			public void onFailure(Throwable caught) {
-							
-			}
-		@Override
 			public void onSuccess(GetFlagContentDO result) {
 			ArrayList<String> formateType=new ArrayList<String>();
 			if(result!=null&&result.getGetTypeList()!=null) {
@@ -137,7 +134,7 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 				
 			}
 			}
-			});
+		});
 		
 	}
 
@@ -244,26 +241,20 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		}
 		
 		if(formateSize>0){	
-			playerRpcService.deleteContentReport(restEndPoint, session, gooruOid, new AsyncCallback<String>() {
+			playerRpcService.deleteContentReport(restEndPoint, session, gooruOid, new SimpleAsyncCallback<String>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
+				@Override
+				public void onSuccess(String result) {
+					if(result==null){
+					resourcePlayerPresenter.createContentReportData(restEndPoint,session,assocGooruOid,"content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText());
+					
+					}
+				}
+				
+			});
+			if(!descriptionTextArea.getText().equals("")){
+				resourcePlayerPresenter.updateReport(restEndPoint,session,gooruOid,descriptionTextArea.getText());
 			}
-
-			@Override
-			public void onSuccess(String result) {
-				if(result==null){
-				resourcePlayerPresenter.createContentReportData(restEndPoint,session,assocGooruOid,"content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText());
-				
-				}
-				}
-				
-		});
-				
-		
-		if(!descriptionTextArea.getText().equals("")){
-			resourcePlayerPresenter.updateReport(restEndPoint,session,gooruOid,descriptionTextArea.getText());
-		}
 	}
 	getThankYouPopUp();
 	}

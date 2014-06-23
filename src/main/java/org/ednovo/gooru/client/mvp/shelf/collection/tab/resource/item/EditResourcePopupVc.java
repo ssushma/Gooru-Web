@@ -470,16 +470,11 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
         if(deletedStandardsDo.size()>0){
-        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new AsyncCallback<Void>() {
+        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new SimpleAsyncCallback<Void>() {
 				
 				@Override
 				public void onSuccess(Void result) {
 					deletedStandardsDo.clear();
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					
 				}
 			});
         }
@@ -1368,23 +1363,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				for(final CodeDo codeObj:standardsDo){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
 						//standardsDo.remove(codeObj);
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<Void>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-							
-							}
-
-
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void result) {
 								CodeDo deletedObj=new CodeDo();
 								deletedObj.setCodeId(codeObj.getCodeId());
 								deletedStandardsDo.add(deletedObj);
-								standardsDo.remove(codeObj);
-								
+								standardsDo.remove(codeObj);								
 							}
-							
 						});
 						
 					}

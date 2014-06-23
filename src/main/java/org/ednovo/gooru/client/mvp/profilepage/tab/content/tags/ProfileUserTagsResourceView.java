@@ -2,9 +2,8 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.tags;
 
 import java.util.List;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageUserInfoWidget;
-import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -61,7 +60,7 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	
 	public void getData(String tagGooruOid)
 	{
-		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagGooruOid,Integer.toString(totalResourceCount),limit, new AsyncCallback<List<UserTagsResourceDO>>() {
+		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagGooruOid,Integer.toString(totalResourceCount),limit, new SimpleAsyncCallback<List<UserTagsResourceDO>>() {
 			
 			@Override
 			public void onSuccess(List<UserTagsResourceDO> result) {
@@ -70,13 +69,7 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 				totalResourceCount=0;
 				totalResourceCount=totalResourceCount+result.size();
 				totalHintCount=result.get(0).getTotalHintCount();
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+			}			
 		});
 	}
 	public void setData(List<UserTagsResourceDO> result){

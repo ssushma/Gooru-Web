@@ -219,7 +219,7 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 		resourceThumbnailImg.setUrl(thumbnailUrl);
 		
 		setResourceIconStyle(category, resourceIconImg);
-		AppClientFactory.getInjector().getResourceService().getContentReport(idStr, new AsyncCallback<GetFlagContentDO>() {
+		AppClientFactory.getInjector().getResourceService().getContentReport(idStr, new SimpleAsyncCallback<GetFlagContentDO>() {
 			@Override
 			public void onSuccess(GetFlagContentDO result) {
 				if(result==null ){
@@ -229,10 +229,6 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 				{
 					reportResInfoLbl.setText(GL1498);	
 				}
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}
