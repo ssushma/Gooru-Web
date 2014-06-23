@@ -56,6 +56,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -75,6 +76,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
 	
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
+	
+	@UiField Anchor viewAnchor;
+	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	
 	private PopupPanel appPopUp;
 	
@@ -158,6 +163,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  
 		  }
+		  setUiText();
 		
 	}
 	
@@ -537,7 +543,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	 */
 	@Override
 	public void showAddToolTip() {
-		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
+/*		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
 			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
@@ -546,7 +552,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
 			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
 			globalTooltipWithButton.show();
-		}
+		}*/
 	}
 	
 	public void showLogoutMessage(boolean hide) {
@@ -613,6 +619,15 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void scrollStudyPage(){
 		appPopUp.getElement().setScrollTop(300);
 	}
-
+	public void setUiText()
+	{
+		  msgPanel.getElement().setInnerHTML(GL1983);
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  viewAnchor.setText(GL1428);
+		  
+	}
 	
 }

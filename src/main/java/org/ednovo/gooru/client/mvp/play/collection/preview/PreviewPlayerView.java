@@ -55,6 +55,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -74,6 +75,10 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn, closeAndriodBtn;
 	
 	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	
+	@UiField Anchor viewAnchor;
 	
 	private PopupPanel appPopUp;
 	
@@ -156,7 +161,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			  androidSectiondiv.setVisible(false);
 
 		  }
-		
+		  setUiText();
 	}
 
 	  @Override
@@ -477,7 +482,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	 * This method is used to show first time Add tooltip popup.
 	 */
 	public void showAddToolTip(){
-		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
+	/*	String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
 			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
@@ -486,6 +491,16 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
 			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
 			globalTooltipWithButton.show();
-		}
+		}*/
+	}
+	public void setUiText()
+	{
+		msgPanel.getElement().setInnerHTML(GL1983);
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  viewAnchor.setText(GL1428);
+		  
 	}
 }

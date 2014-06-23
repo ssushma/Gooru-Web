@@ -43,7 +43,6 @@ import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
@@ -68,7 +67,7 @@ public class GooruEntry implements EntryPoint {
 			appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.DEVICE_NOT_SUPPORTED));
 //			appInjector.getEventBus().fireEvent(new SetDeviceDetailsEvent(size[0], size[1]));
 		}else{
-			appInjector.getAppService().getLoggedInUser(new AsyncCallback<UserDo>() {
+			appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 				@Override
 				public void onSuccess(UserDo loggedInUser) {
 					AppClientFactory.setLoggedInUser(loggedInUser);
@@ -128,7 +127,7 @@ public class GooruEntry implements EntryPoint {
 	 * */
 	
 	private void userLoggedOutheader(){
-		appInjector.getAppService().getLoggedInUser(new AsyncCallback<UserDo>() {
+		appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo loggedInUser) {
 				AppClientFactory.setLoggedInUser(loggedInUser);
@@ -153,7 +152,7 @@ public class GooruEntry implements EntryPoint {
 	 * */
 	
 	private void redirectToLandingPage(){
-		appInjector.getAppService().getLoggedInUser(new AsyncCallback<UserDo>() {
+		appInjector.getAppService().getLoggedInUser(new SimpleAsyncCallback<UserDo>() {
 			@Override
 			public void onSuccess(UserDo loggedInUser) {
 				AppClientFactory.setLoggedInUser(loggedInUser);

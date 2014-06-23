@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
-
  * 
  *  http://www.goorulearning.org/
  * 
@@ -23,12 +22,25 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.rating.events;
+package org.ednovo.gooru.shared.exception;
 
-import com.google.gwt.event.shared.EventHandler;
+/**
+ * @author Search Team
+ * 
+ */
+public class ServiceUnavailableException extends RuntimeException {
 
-public interface PostUserReviewEventHandler extends EventHandler {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8131503840164251388L;
 
-	void postReview(String assocGooruOId, String userReview, Integer score, boolean isUpdate);   
+
+	public ServiceUnavailableException() {
+	}
+
+	public ServiceUnavailableException(String message) {
+		super(message);
+	}
 
 }

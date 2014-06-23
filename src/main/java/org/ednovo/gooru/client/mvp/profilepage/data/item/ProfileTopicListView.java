@@ -331,8 +331,8 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 						if(titleHandler!=null) {
 							titleHandler.removeHandler();
 						}
-						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId));
-						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId));
+						imageHandler=collectionImage.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid()));
+						titleHandler=collectionTitleLbl.addClickHandler(new CollectionOpenClickHandler(lessonId,conceptDo.getGooruOid()));
 					} catch (Exception e) {
 						collectionImage.setUrl(DEFAULT_COLLECTION_IMAGE);
 					}
@@ -813,9 +813,11 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 
 	public class CollectionOpenClickHandler implements ClickHandler {
 		private String lessonId;
+		private String oId;
 		
-		public CollectionOpenClickHandler(String lessonId) {
+		public CollectionOpenClickHandler(String lessonId, String oId) {
 			this.lessonId = lessonId;
+			this.oId = oId;
 		}
 		@Override
 		public void onClick(ClickEvent event) {
@@ -829,7 +831,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				MixpanelUtil.mixpanelEvent("LandingPage_Plays_Collection");
 			}
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", profileLibraryDo.getGooruOid());
+			params.put("id", oId);
 			params.put("subject", AppClientFactory.getPlaceManager().getRequestParameter("subject","featured"));
 			params.put("lessonId", lessonId);
 			if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)||getPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {

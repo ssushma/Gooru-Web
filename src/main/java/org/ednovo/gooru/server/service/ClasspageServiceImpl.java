@@ -44,6 +44,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
@@ -889,7 +890,7 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		}
 		return deserializeCollection(jsonRep);
 	}
-	public ClasspageDo getClasspage(String classpageId){
+	public ClasspageDo getClasspage(String classpageId) throws ServerDownException{
 		JsonRepresentation jsonRep = null;
 		ClasspageDo classPageDo=new ClasspageDo();
 		if(classpageId != null)

@@ -25,13 +25,15 @@
 
 package org.ednovo.gooru.client;
 
+
 import java.io.IOException;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -40,9 +42,24 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 	@Override
 	public void onFailure(Throwable caught) {
 		String message = "";
-		if (caught instanceof IOException) {
+		if(caught instanceof ServerDownException){
+			ServerDownException serverDownException=(ServerDownException)caught;
+			//System.out.println("insideeee=== exception"+serverDownException.getStatusCode());
+			//new AlertContentUc("Error==>"+serverDownException.getStatusCode(), "GotException...");
+			AppClientFactory.getInjector().getHomeService().getRedirectServerUrl(new AsyncCallback<String>() {
+				
+				@Override
+				public void onSuccess(String redirectUrl) {
+					Window.open(redirectUrl, "_self","");
+				}
+				@Override
+				public void onFailure(Throwable caught) {
+					
+				}
+			});
+		}
+		else if (caught instanceof IOException) {
 			Window.Location.reload();
-			GWT.log(caught.getMessage());
 		} else {
 			if (caught instanceof GwtException && ((GwtException) caught).getErrors().size() > 0) {
 				message = ((GwtException) caught).getMessage();
@@ -63,7 +80,7 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 			if (message.trim().toString().equalsIgnoreCase("0")){
 				
 			}else{
-				new AlertContentUc(GL0844, message);
+				//new AlertContentUc(GL0844, message);
 			}
 		}
 	}
