@@ -80,7 +80,7 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 			if (message.trim().toString().equalsIgnoreCase("0")){
 				
 			}else{
-				new AlertContentUc(GL0844, message);
+				//new AlertContentUc(GL0844, message);
 			}
 		}
 	}
