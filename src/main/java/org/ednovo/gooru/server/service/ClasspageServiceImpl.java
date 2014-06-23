@@ -895,9 +895,8 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 		ClasspageDo classPageDo=new ClasspageDo();
 		if(classpageId != null)
 		{
-		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,getLoggedInSessionToken());
+		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_CLASSPAGE_BY_ID, classpageId,"ddd");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(),getRestPassword());
-		System.out.println("classpage urlllllll===>"+url);
 		if(jsonResponseRep.getStatusCode()==200){
 			jsonRep =jsonResponseRep.getJsonRepresentation();
 			try {

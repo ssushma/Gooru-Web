@@ -125,4 +125,10 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 	public String getClientIpAddress(){
 		return getIpAddress();
 	}
+
+	@Override
+	public String getRedirectServerUrl() throws GwtException {
+		
+		return getRedirectUrl();
+	}
 }
