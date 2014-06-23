@@ -55,6 +55,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -74,6 +75,10 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn, closeAndriodBtn;
 	
 	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
+	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+	
+	@UiField Anchor viewAnchor;
 	
 	private PopupPanel appPopUp;
 	
@@ -156,7 +161,7 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			  androidSectiondiv.setVisible(false);
 
 		  }
-		
+		  setUiText();
 	}
 
 	  @Override
@@ -487,5 +492,15 @@ public class PreviewPlayerView extends BasePopupViewWithHandlers<PreviewPlayerUi
 			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
 			globalTooltipWithButton.show();
 		}
+	}
+	public void setUiText()
+	{
+		msgPanel.getElement().setInnerHTML(GL1983);
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  viewAnchor.setText(GL1428);
+		  
 	}
 }

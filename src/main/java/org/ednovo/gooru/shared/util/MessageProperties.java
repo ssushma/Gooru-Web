@@ -2529,5 +2529,10 @@ public interface MessageProperties {
     	String GL1981 = "Theoretical";
     	String GL1982 = "Framework";
     	
+    	String GL1983 = "Welcome to the Gooru Mobile Site!";
+    	String GL1984 = "For most optimized Gooru experience, please visit www.goorulearning.org via computer.";
+    	String GL1985 = "Ednovo";
+    	String GL1986 = "FREE On the App Store";
+
       	 
 }
