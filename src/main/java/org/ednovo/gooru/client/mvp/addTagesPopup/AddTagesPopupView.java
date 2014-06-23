@@ -118,60 +118,288 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99999, false));
 		this.center();
 		
+		
+		standardsPanel.getElement().setId("pnlStandards");
+		standardsPanel.getElement().setAttribute("alt","");
+		standardsPanel.getElement().setAttribute("title","");
+		
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardMaxMsg.getElement().setAttribute("alt","");
+		standardMaxMsg.getElement().setAttribute("title","");
+		
 		addTagesTitle.setText(GL1795);
+		addTagesTitle.getElement().setId("spnAddTagesTitle");
+		addTagesTitle.getElement().setAttribute("alt",GL1795);
+		addTagesTitle.getElement().setAttribute("title",GL1795);
+		
 		popupContentText.setText(GL1812);
-		moblieFriendly.setText(GL1811);
+		popupContentText.getElement().setId("spnpopupContentText");
+		popupContentText.getElement().setAttribute("alt",GL1812);
+		popupContentText.getElement().setAttribute("title",GL1812);
+		
+		
 		headerEducationalUse.setText(GL1664);
+		headerEducationalUse.getElement().setId("lblHeaderEducationalUse");
+		headerEducationalUse.getElement().setAttribute("alt",GL1664);
+		headerEducationalUse.getElement().setAttribute("title",GL1664);
+		
+	
 		activity.setText(GL1665);
+		activity.getElement().setId("lblActivity");
+		activity.getElement().setAttribute("alt",GL1665);
+		activity.getElement().setAttribute("title",GL1665);
+		
 		handout.setText(GL0907);
+		handout.getElement().setId("lblHandout");
+		handout.getElement().setAttribute("alt",GL0907);
+		handout.getElement().setAttribute("title",GL0907);
+		
 		homework.setText(GL1666);
+		homework.getElement().setId("lblHomework");
+		homework.getElement().setAttribute("alt",GL1666);
+		homework.getElement().setAttribute("title",GL1666);
+		
 		game.setText(GL1667);
+		game.getElement().setId("lblGame");
+		game.getElement().setAttribute("alt",GL1667);
+		game.getElement().setAttribute("title",GL1667);
+		
 		presentation.setText(GL1668);
+		presentation.getElement().setId("lblPresentation");
+		presentation.getElement().setAttribute("alt",GL1668);
+		presentation.getElement().setAttribute("title",GL1668);
+		
 		refMaterial.setText(GL1669);
+		refMaterial.getElement().setId("lblRefMaterial");
+		refMaterial.getElement().setAttribute("alt",GL1669);
+		refMaterial.getElement().setAttribute("title",GL1669);
+		
 		quiz.setText(GL1670);
+		quiz.getElement().setId("lblQuiz");
+		quiz.getElement().setAttribute("alt",GL1670);
+		quiz.getElement().setAttribute("title",GL1670);
+		
 		currPlan.setText(GL1671);
+		currPlan.getElement().setId("lblCurrPlan");
+		currPlan.getElement().setAttribute("alt",GL1671);
+		currPlan.getElement().setAttribute("title",GL1671);
+		
 		lessonPlan.setText(GL1672);
+		lessonPlan.getElement().setId("lblLessonPlan");
+		lessonPlan.getElement().setAttribute("alt",GL1672);
+		lessonPlan.getElement().setAttribute("title",GL1672);
+		
 		unitPlan.setText(GL1673);
+		unitPlan.getElement().setId("lblUnitPlan");
+		unitPlan.getElement().setAttribute("alt",GL1673);
+		unitPlan.getElement().setAttribute("title",GL1673);
+		
 		projectPlan.setText(GL1674);
+		projectPlan.getElement().setId("lblProjectPlan");
+		projectPlan.getElement().setAttribute("alt",GL1674);
+		projectPlan.getElement().setAttribute("title",GL1674);
+		
 		reading.setText(GL1675);
+		reading.getElement().setId("lblReading");
+		reading.getElement().setAttribute("alt",GL1675);
+		reading.getElement().setAttribute("title",GL1675);
+		
 		textbook.setText(GL0909);
+		textbook.getElement().setId("lblTextbook");
+		textbook.getElement().setAttribute("alt",GL0909);
+		textbook.getElement().setAttribute("title",GL0909);
+		
 		article.setText(GL1676);
+		article.getElement().setId("lblArticle");
+		article.getElement().setAttribute("alt",GL1676);
+		article.getElement().setAttribute("title",GL1676);
+		
 		book.setText(GL1677);
+		book.getElement().setId("lblBook");
+		book.getElement().setAttribute("alt",GL1677);
+		book.getElement().setAttribute("title",GL1677);
+		
 		lexileHeader.setText(GL1798);
+		lexileHeader.getElement().setId("lblReadingLevel");
+		lexileHeader.getElement().setAttribute("alt",GL1798);
+		lexileHeader.getElement().setAttribute("title",GL1798);
+		
 		kindergarden.setText(GL1799);
+		kindergarden.getElement().setId("lblKindergarten");
+		kindergarden.getElement().setAttribute("alt",GL1799);
+		kindergarden.getElement().setAttribute("title",GL1799);
+		
+		moblieFriendly.setText(GL1811);
+		moblieFriendly.getElement().setId("spnMobileFriendly");
+		moblieFriendly.getElement().setAttribute("alt",GL1811);
+		moblieFriendly.getElement().setAttribute("title",GL1811);
+		
 		level1.setText(GL_GRR_NUMERIC_ONE);
+		level1.getElement().setId("lblOne");
+		level1.getElement().setAttribute("alt",GL_GRR_NUMERIC_ONE);
+		level1.getElement().setAttribute("title",GL_GRR_NUMERIC_ONE);
+		
 		level2.setText(GL_GRR_NUMERIC_TWO);
+		level2.getElement().setId("lblTwo");
+		level2.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWO);
+		level2.getElement().setAttribute("title",GL_GRR_NUMERIC_TWO);
+		
 		level3.setText(GL_GRR_NUMERIC_THREE);
+		level3.getElement().setId("lblThree");
+		level3.getElement().setAttribute("alt",GL_GRR_NUMERIC_THREE);
+		level3.getElement().setAttribute("title",GL_GRR_NUMERIC_THREE);
+		
 		level4.setText(GL_GRR_NUMERIC_FOUR);
+		level4.getElement().setId("lblFour");
+		level4.getElement().setAttribute("alt",GL_GRR_NUMERIC_FOUR);
+		level4.getElement().setAttribute("title",GL_GRR_NUMERIC_FOUR);
+		
 		level5.setText(GL_GRR_NUMERIC_FIVE);
+		level5.getElement().setId("lblFive");
+		level5.getElement().setAttribute("alt",GL_GRR_NUMERIC_FIVE);
+		level5.getElement().setAttribute("title",GL_GRR_NUMERIC_FIVE);
+		
 		level6.setText(GL_GRR_NUMERIC_SIX);
+		level6.getElement().setId("lblSix");
+		level6.getElement().setAttribute("alt",GL_GRR_NUMERIC_SIX);
+		level6.getElement().setAttribute("title",GL_GRR_NUMERIC_SIX);
+		
 		level7.setText(GL_GRR_NUMERIC_SEVEN);
+		level7.getElement().setId("lblSeven");
+		level7.getElement().setAttribute("alt",GL_GRR_NUMERIC_SEVEN);
+		level7.getElement().setAttribute("title",GL_GRR_NUMERIC_SEVEN);
+		
 		level8.setText(GL_GRR_NUMERIC_EIGHT);
+		level8.getElement().setId("lblEight");
+		level8.getElement().setAttribute("alt",GL_GRR_NUMERIC_EIGHT);
+		level8.getElement().setAttribute("title",GL_GRR_NUMERIC_EIGHT);
+		
 		level9.setText(GL_GRR_NUMERIC_NINE);
+		level9.getElement().setId("lblNine");
+		level9.getElement().setAttribute("alt",GL_GRR_NUMERIC_NINE);
+		level9.getElement().setAttribute("title",GL_GRR_NUMERIC_NINE);
+		
 		level10.setText(GL_GRR_NUMERIC_TEN);
+		level10.getElement().setId("lblNine");
+		level10.getElement().setAttribute("alt",GL_GRR_NUMERIC_TEN);
+		level10.getElement().setAttribute("title",GL_GRR_NUMERIC_TEN);
+		
 		level11.setText(GL_GRR_NUMERIC_ELEVEN);
+		level11.getElement().setId("lblEleven");
+		level11.getElement().setAttribute("alt",GL_GRR_NUMERIC_ELEVEN);
+		level11.getElement().setAttribute("title",GL_GRR_NUMERIC_ELEVEN);
+		
 		level12.setText(GL_GRR_NUMERIC_TWELVE);
+		level12.getElement().setId("lblTwelve");
+		level12.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWELVE);
+		level12.getElement().setAttribute("title",GL_GRR_NUMERIC_TWELVE);
+		
 		AdsHeader.setText(GL1800);
+		AdsHeader.getElement().setId("lblAds");
+		AdsHeader.getElement().setAttribute("alt",GL1800);
+		AdsHeader.getElement().setAttribute("title",GL1800);
+		
 		noAds.setText(GL1801);
+		noAds.getElement().setId("lblNoAdvertisement");
+		noAds.getElement().setAttribute("alt",GL1801);
+		noAds.getElement().setAttribute("title",GL1801);
+		
 		modAds.setText(GL1802);
+		modAds.getElement().setId("lblModerateAdvertisements");
+		modAds.getElement().setAttribute("alt",GL1802);
+		modAds.getElement().setAttribute("title",GL1802);
+		
 		aggreAds.setText(GL1803);
+		aggreAds.getElement().setId("lblAggressiveAdvertisements");
+		aggreAds.getElement().setAttribute("alt",GL1803);
+		aggreAds.getElement().setAttribute("title",GL1803);
+		
 		accessHazard.setText(GL1804);
+		accessHazard.getElement().setId("lblAccessHazard");
+		accessHazard.getElement().setAttribute("alt",GL1804);
+		accessHazard.getElement().setAttribute("title",GL1804);
+		
 		flashing.setText(GL1805);
+		flashing.getElement().setId("lblFlashing");
+		flashing.getElement().setAttribute("alt",GL1805);
+		flashing.getElement().setAttribute("title",GL1805);
+		
 		flashingHazard.setText(GL1806);
+		flashingHazard.getElement().setId("lblFlashingHazard");
+		flashingHazard.getElement().setAttribute("alt",GL1806);
+		flashingHazard.getElement().setAttribute("title",GL1806);
+		
 		motionSimulation.setText(GL1807);
+		motionSimulation.getElement().setId("lblMotionSimulation");
+		motionSimulation.getElement().setAttribute("alt",GL1807);
+		motionSimulation.getElement().setAttribute("title",GL1807);
+		
 		motionSimulationHazard.setText(GL1808);
+		motionSimulationHazard.getElement().setId("lblMotionSimulationHazard");
+		motionSimulationHazard.getElement().setAttribute("alt",GL1808);
+		motionSimulationHazard.getElement().setAttribute("title",GL1808);
+		
 		sound.setText(GL1809);
+		sound.getElement().setId("lblSound");
+		sound.getElement().setAttribute("alt",GL1809);
+		sound.getElement().setAttribute("title",GL1809);
+		
 		soundHazard.setText(GL1810);
+		soundHazard.getElement().setId("lblSoundHazard");
+		soundHazard.getElement().setAttribute("alt",GL1810);
+		soundHazard.getElement().setAttribute("title",GL1810);
+		
 		cancelBtn.setText(GL0142);
+		cancelBtn.getElement().setId("btnCancel");
+		cancelBtn.getElement().setAttribute("alt",GL0142);
+		cancelBtn.getElement().setAttribute("title",GL0142);
+		
 		addTagsBtn.setText(GL1795);
+		addTagsBtn.getElement().setId("btnAddTags");
+		addTagsBtn.getElement().setAttribute("alt",GL1795);
+		addTagsBtn.getElement().setAttribute("title",GL1795);
+		
 		mobileYes.setText(GL_GRR_YES);
+		mobileYes.getElement().setId("btnYes");
+		mobileYes.getElement().setAttribute("alt",GL_GRR_YES);
+		mobileYes.getElement().setAttribute("title",GL_GRR_YES);
+		
 		mobileNo.setText(GL1735);
+		mobileNo.getElement().setId("btnNo");
+		mobileNo.getElement().setAttribute("alt",GL1735);
+		mobileNo.getElement().setAttribute("title",GL1735);
+		
 		
 		standardsDefaultText.setText(GL1682);
+		standardsDefaultText.getElement().setId("lblStandards");
+		standardsDefaultText.getElement().setAttribute("alt",GL1682);
+		standardsDefaultText.getElement().setAttribute("title",GL1682);
+		
 		CollectionAssignCBundle.INSTANCE.css().ensureInjected();
 		spanelMediaFeaturePanel.setVisible(false);
+		
 		mediaLabel.setText("Media Feature");
+		mediaLabel.getElement().setId("lblMediaFeature");
+		mediaLabel.getElement().setAttribute("alt","Media Feature");
+		mediaLabel.getElement().setAttribute("title","Media Feature");
+		
 		lblMediaPlaceHolder.setText("Choose a Media Feature Option:");
+		lblMediaPlaceHolder.getElement().setId("phMediaFeature");
+		lblMediaPlaceHolder.getElement().setAttribute("alt","Choose a Media Feature Option:");
+		lblMediaPlaceHolder.getElement().setAttribute("title","Choose a Media Feature Option:");
+		
+		lblMediaFeatureArrow.getElement().setId("lblMediaFeatureArrow");
+		lblMediaFeatureArrow.getElement().setAttribute("alt","");
+		lblMediaFeatureArrow.getElement().setAttribute("title","");
+		
+		spanelMediaFeaturePanel.getElement().setId("sbMediaFeaturesPanel");
+		spanelMediaFeaturePanel.getElement().setAttribute("alt","");
+		spanelMediaFeaturePanel.getElement().setAttribute("title","");
+		
+		htmlMediaFeatureListContainer.getElement().setId("pnlMediaFeaturesList");
+		htmlMediaFeatureListContainer.getElement().setAttribute("alt","");
+		htmlMediaFeatureListContainer.getElement().setAttribute("title","");
+		
 		lblMediaFeatureArrow.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -288,6 +516,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 				return null;
 			}
 		};
+		standardSgstBox.getElement().setId("tbautoStandardSgstBox");
+		standardSgstBox.getElement().setAttribute("alt","");
+		standardSgstBox.getElement().setAttribute("title","");
+		
 		standardSgstBox.addSelectionHandler(this);
 		BlurHandler blurHandler=new BlurHandler() {
 			
