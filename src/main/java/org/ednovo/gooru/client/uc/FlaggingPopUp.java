@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import java.util.ArrayList;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
@@ -98,7 +99,7 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
-		AppClientFactory.getInjector().getResourceService().getContentReport(idStr, new AsyncCallback<GetFlagContentDO>() {
+		AppClientFactory.getInjector().getResourceService().getContentReport(idStr, new SimpleAsyncCallback<GetFlagContentDO>() {
 			
 			@Override
 			public void onSuccess(GetFlagContentDO result) {
@@ -117,9 +118,6 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 				
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
 		});
 
 	
@@ -225,10 +223,7 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 		}
 	
 		if(formateSize==0){
-				AppClientFactory.getInjector().getResourceService().createContentReport(idStr, "content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText(), new AsyncCallback<Void>() {
-				@Override
-				public void onFailure(Throwable caught) {
-				}
+				AppClientFactory.getInjector().getResourceService().createContentReport(idStr, "content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText(), new SimpleAsyncCallback<Void>() {
 				@Override
 				public void onSuccess(Void result) {
 				}
@@ -237,19 +232,12 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 		}
 		
 		if(formateSize>0){	
-			AppClientFactory.getInjector().getResourceService().deleteContentReport(gooruOid, new AsyncCallback<String>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
+			AppClientFactory.getInjector().getResourceService().deleteContentReport(gooruOid, new SimpleAsyncCallback<String>() {
 
 			@Override
 			public void onSuccess(String result) {
 				if(result==null){
-					AppClientFactory.getInjector().getResourceService().createContentReport(idStr, "content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText(), new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-						}
+					AppClientFactory.getInjector().getResourceService().createContentReport(idStr, "content",formatting1,formatting2,formatting3,formatting4,descriptionTextArea.getText(), new SimpleAsyncCallback<Void>() {
 						@Override
 						public void onSuccess(Void result) {
 							
@@ -263,12 +251,7 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 				
 		
 		if(!descriptionTextArea.getText().equals("")){
-			AppClientFactory.getInjector().getResourceService().updateReport(idStr,descriptionTextArea.getText(),new AsyncCallback<String>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					
-				}
+			AppClientFactory.getInjector().getResourceService().updateReport(idStr,descriptionTextArea.getText(),new SimpleAsyncCallback<String>() {
 
 				@Override
 				public void onSuccess(String result) {
