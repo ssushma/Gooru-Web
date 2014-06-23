@@ -27,6 +27,11 @@
  */
 package org.ednovo.gooru.server.request;
 
+
+import org.ednovo.gooru.shared.exception.ServerDownException;
+import org.ednovo.gooru.shared.exception.ServiceUnavailableException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ClientResource;
@@ -46,6 +51,18 @@ public abstract class ServiceRequest {
 
 	private Representation representation = null;
 	
+	private static final String UP="Up";
+	
+	private static final String DOWN="Down";
+	
+	private static final String WARNING="Warning";
+	
+	private static final String CURRENT_EVENT="current-event";
+	
+	private static final String STATUS="status";
+	
+	private static final String NAME="name";
+	
 	private static final String ERROR = "Error : "; 
 
 	protected ServiceRequest() {
@@ -58,7 +75,18 @@ public abstract class ServiceRequest {
 			logger.error(ERROR, exception);
 			//throw new RuntimeException(exception.getMessage());
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
-			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
+			int statusCode=exception.getStatus().getCode();
+//			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
+//			String serverStatusCode=String.valueOf(statusCode);
+//			Character firstCharcter=serverStatusCode.charAt(0);
+			if(statusCode==504){
+				String serverStatus=getApiServerStatus();
+				if(serverStatus!=null&&serverStatus.equals(DOWN)){
+					throw new ServerDownException(statusCode,"");
+				}else if(serverStatus!=null&&serverStatus.equals(WARNING)){
+					//throw new ServerDownException(statusCode,"");
+				}
+			}
 			return jsonResponseRepresentation;
 		} catch (Exception exception) {
 			logger.error(ERROR, exception);
@@ -66,6 +94,28 @@ public abstract class ServiceRequest {
 		} finally {
 			releaseClientResources();
 		}
+	}
+	
+	protected String getApiServerStatus(){
+		String serverStatus=null;
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(UrlToken.SERVER_STATUS_URL.getUrl());
+		if(jsonResponseRep!=null){
+			try {
+				JSONObject serverStatusJsonObject=jsonResponseRep.getJsonRepresentation().getJsonObject();
+				if(serverStatusJsonObject!=null){
+					JSONObject currentEventJsonObject=serverStatusJsonObject.isNull(CURRENT_EVENT)?null:serverStatusJsonObject.getJSONObject(CURRENT_EVENT);
+					if(currentEventJsonObject!=null){
+						JSONObject statusJsonObject=currentEventJsonObject.isNull(STATUS)?null:currentEventJsonObject.getJSONObject(STATUS);
+						if(statusJsonObject!=null){
+							 serverStatus=statusJsonObject.isNull(NAME)?null:statusJsonObject.getString(NAME);
+						}
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return serverStatus;
 	}
 
 	public abstract JsonResponseRepresentation run() throws Exception;
