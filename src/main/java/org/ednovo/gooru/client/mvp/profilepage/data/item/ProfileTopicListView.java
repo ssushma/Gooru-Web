@@ -1,3 +1,27 @@
+/*******************************************************************************
+ * Copyright 2013 Ednovo d/b/a Gooru. All rights reserved.
+ * 
+ *  http://www.goorulearning.org/
+ * 
+ *  Permission is hereby granted, free of charge, to any person obtaining
+ *  a copy of this software and associated documentation files (the
+ *  "Software"), to deal in the Software without restriction, including
+ *  without limitation the rights to use, copy, modify, merge, publish,
+ *  distribute, sublicense, and/or sell copies of the Software, and to
+ *  permit persons to whom the Software is furnished to do so, subject to
+ *  the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be
+ *  included in all copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ *  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ ******************************************************************************/
 package org.ednovo.gooru.client.mvp.profilepage.data.item;
 
 import java.util.ArrayList;
@@ -7,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
@@ -26,7 +51,6 @@ import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.content.StandardFo;
-
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
@@ -254,7 +278,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 							if(LESSON_PAGE_INITIAL_LIMIT<partnerItemCount) {
 								isScrollable = false;
 								String gooruUid = AppClientFactory.getPlaceManager().getRequestParameter("pid");
-								AppClientFactory.getInjector().getLibraryService().getPartnerChildFolders(gooruUid, (pageNumber-1)*20, 20,parentId,SHARING_TYPE, null,new AsyncCallback<PartnerConceptListDo>() {
+								AppClientFactory.getInjector().getLibraryService().getPartnerChildFolders(gooruUid, (pageNumber-1)*20, 20,parentId,SHARING_TYPE, null,new SimpleAsyncCallback<PartnerConceptListDo>() {
 									@Override
 									public void onSuccess(PartnerConceptListDo result) {
 										LESSON_PAGE_INITIAL_LIMIT = LESSON_PAGE_INITIAL_LIMIT + result.getSearchResult().size();
@@ -264,17 +288,10 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 										}
 										//conceptList.add(new PartnerLessonUc(result.getSearchResult(),topicId,false, 0));
 									}
-									@Override
-									public void onFailure(Throwable caught) {
-									}
 								});
 							}
 						} else {
-							AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
-								@Override
-								public void onFailure(Throwable caught) {
-									throw new RuntimeException("Not implemented");
-								}
+							AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
 
 								@Override
 								public void onSuccess(ArrayList<LessonDo> lessonDoList) {
@@ -525,19 +542,6 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				public void onScroll(ScrollEvent event) {
 					if(isScrollable) {
 						isScrollable = false;
-						/*AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 5, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								throw new RuntimeException("Not implemented");
-							}
-
-							@Override
-							public void onSuccess(ArrayList<LessonDo> result) {
-								for(int i=0;i<result.size();i++) {
-									conceptList.add(new PartnerLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
-								}
-							}
-						});*/
 					}
 				}
 			});
