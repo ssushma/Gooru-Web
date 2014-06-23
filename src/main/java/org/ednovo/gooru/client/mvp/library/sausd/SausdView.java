@@ -82,7 +82,6 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
-			landingBanner.setHeight("250px");
 			featuredCousesLbl.setText(GL1901);
 		}
 	}
