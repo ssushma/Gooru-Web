@@ -25,13 +25,14 @@
 
 package org.ednovo.gooru.client;
 
+
 import java.io.IOException;
 
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -40,9 +41,14 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 	@Override
 	public void onFailure(Throwable caught) {
 		String message = "";
-		if (caught instanceof IOException) {
+		if(caught instanceof ServerDownException){
+			ServerDownException serverDownException=(ServerDownException)caught;
+			//System.out.println("insideeee=== exception"+serverDownException.getStatusCode());
+			//new AlertContentUc("Error==>"+serverDownException.getStatusCode(), "GotException...");
+			Window.open("https://www.google.com", "_self","");
+		}
+		else if (caught instanceof IOException) {
 			Window.Location.reload();
-			GWT.log(caught.getMessage());
 		} else {
 			if (caught instanceof GwtException && ((GwtException) caught).getErrors().size() > 0) {
 				message = ((GwtException) caught).getMessage();
