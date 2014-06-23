@@ -1960,7 +1960,6 @@ public interface MessageProperties {
 		String GL1527 = "No students have joined your class!";
 		String GL1528 = "You can invite up to {0} students to this class! That's a lot of papers to grade...";
 		
-		
 		//Study player header
 		String GL1529 = "Hi, ";
 		String GL1530 = "! Welcome to this collection!";
