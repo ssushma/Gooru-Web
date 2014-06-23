@@ -2519,7 +2519,11 @@ public interface MessageProperties {
     	String GL1973 = "Assign Collections";
     	String GL1974 = "Assign any of your public or sharable collections to your class.";
     	String GL1975 = "will be added to this class";
+    	String GL1976 = "Welcome to the Gooru Mobile Site!";
+    	String GL1977 = "For most optimized Gooru experience, please visit www.goorulearning.org via computer.";
+    	String GL1978 = "Ednovo";
+    	String GL1979 = "FREE On the App Store";
     	
-      	
+    	
       	 
 }

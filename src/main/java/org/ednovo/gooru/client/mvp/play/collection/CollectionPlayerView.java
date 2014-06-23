@@ -56,6 +56,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -75,6 +76,10 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	@UiField HTMLPanel ipadSectiondiv,androidSectiondiv;
 	
 	@UiField com.google.gwt.user.client.ui.Image closeIpadBtn,closeAndriodBtn;
+	
+	@UiField Anchor viewAnchor;
+	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
 	
 	private PopupPanel appPopUp;
 	
@@ -158,6 +163,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  
 		  }
+		  setUiText();
 		
 	}
 	
@@ -613,6 +619,15 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	public void scrollStudyPage(){
 		appPopUp.getElement().setScrollTop(300);
 	}
-
+	public void setUiText()
+	{
+		  msgPanel.getElement().setInnerHTML(GL1976);
+		  msglinkPanel.getElement().setInnerHTML(GL1977);
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  ednovoPanel.getElement().setInnerHTML(GL1978);
+		  appstorePanel.getElement().setInnerHTML(GL1979);
+		  viewAnchor.setText(GL1428);
+		  
+	}
 	
 }

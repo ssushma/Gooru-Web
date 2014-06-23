@@ -49,6 +49,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -71,6 +72,11 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	
 	@UiField ResourcePlayerHeaderView headerView;
 	//ResourceInfoView resourceInfoView=new ResourceInfoView();
+
+	@UiField Anchor viewAnchor;
+	
+	@UiField HTMLPanel msgPanel,msglinkPanel,gooruPanel,ednovoPanel,appstorePanel;
+
 	private PopupPanel appPopUp;
 	private boolean isInfoButtonActive=false;
 	private boolean isShareButtonActive=false;
@@ -137,7 +143,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 			  headerView.getElement().setAttribute("style", "position:fixed;");
 			  
 		  }
-		
+		  setUiText();
 	}
 	 
 	  @Override
@@ -395,5 +401,14 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 	public void makeFlagButtonOrange() {
 		headerView.makeFlagButtonOrange();
 	}
-	
+	public void setUiText()
+	{
+		  msgPanel.getElement().setInnerHTML(GL1976);
+		  msglinkPanel.getElement().setInnerHTML(GL1977);
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  ednovoPanel.getElement().setInnerHTML(GL1978);
+		  appstorePanel.getElement().setInnerHTML(GL1979);
+		  viewAnchor.setText(GL1428);
+		  
+	}
 }
