@@ -174,7 +174,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	 * This method is used to show first time Add tooltip popup.
 	 */
 	public void showAddToolTip(){
-		String resourcePlayerFirstTimeUser =null;
+/*		String resourcePlayerFirstTimeUser =null;
 		resourcePlayerFirstTimeUser =Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
@@ -184,7 +184,7 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
 			globalTooltipWithButton.setPopupPosition(Document.get().getElementById("addButton").getAbsoluteLeft()-16, Document.get().getElementById("addButton").getAbsoluteTop()+22);
 			globalTooltipWithButton.show();
-		}
+		}*/
 	}
 	
 	private class NarrationPopupPanel extends PopupPanel{

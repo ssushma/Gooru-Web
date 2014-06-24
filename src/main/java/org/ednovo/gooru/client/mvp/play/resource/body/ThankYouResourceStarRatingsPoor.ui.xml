@@ -9,8 +9,8 @@
         	<g:HTMLPanel styleName="{playerStyle.arrowBorder}"></g:HTMLPanel>
             <g:HTMLPanel styleName="{playerStyle.arrow}"></g:HTMLPanel>
                 <h1>Thank you for rating!</h1>
-                  <g:HTMLPanel styleName="{playerStyle.rating}">
-                        Average Rating<br/>
+                  <g:HTMLPanel styleName="{playerStyle.rating}" ui:field="ratingText">
+                        <br/>
                    <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>
                     </g:HTMLPanel>
                     <g:Label ui:field ="reviewTextAreaTitle"></g:Label> 
@@ -33,7 +33,7 @@
                     <g:TextArea ui:field="ratingCommentTxtArea"></g:TextArea>
                     <g:Label ui:field="mandatoryDescLblForSwareWords"></g:Label>
                     <g:HTMLPanel styleName="{playerStyle.saveCancelContainer}" ui:field="buttonsContainer">
-                        <g:Button ui:field="btnSkip" styleName="secondary">Skip</g:Button>
+                        <g:Button ui:field="btnSkip" styleName="secondary"></g:Button>
                         <g:Button ui:field="btnPost" styleName="primary"></g:Button>
                     </g:HTMLPanel>
                     <g:Label ui:field="saveAndPsotLbl"></g:Label>

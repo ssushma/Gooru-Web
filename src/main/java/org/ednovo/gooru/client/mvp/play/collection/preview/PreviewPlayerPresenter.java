@@ -648,7 +648,7 @@ public class PreviewPlayerPresenter extends BasePlacePresenter<IsPreviewPlayerVi
 		}else{
 			enablePlayerButton(true,true, isSharable, false, true,true);
 			makeButtonActive(tabView);
-			resourceNarrationPresenter.showAddToolTip();
+			//resourceNarrationPresenter.showAddToolTip();
 		}
 		clearIframeContent();
 		this.collectionItemDo=collectionItemDo;
