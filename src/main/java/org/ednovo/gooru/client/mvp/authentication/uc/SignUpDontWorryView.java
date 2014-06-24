@@ -127,7 +127,7 @@ public class SignUpDontWorryView extends PopupPanel implements MessageProperties
 		
 		
 		supportLink.setText(GL0299);
-		supportLink.getElement().setId("hnkSupportLink");
+		supportLink.getElement().setId("lnkSupportLink");
 		supportLink.getElement().setAttribute("alt",GL0299);
 		supportLink.getElement().setAttribute("title",GL0299);
 		supportLink.setHref(GL1055);

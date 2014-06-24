@@ -894,17 +894,17 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		panelPassword.getElement().setId("pnlPassword");
 		
 		ancCopyRight.setText(GL0421 + ",");
-		ancCopyRight.getElement().setId("hnkCopyRight");
+		ancCopyRight.getElement().setId("lnkCopyRight");
 		ancCopyRight.getElement().setAttribute("alt",GL0421);
 		ancCopyRight.getElement().setAttribute("title",GL0421);
 		
 		ancTermsAndPrivacy.setText(GL0422);
-		ancTermsAndPrivacy.getElement().setId("hnkTermsAndPrivacy");
+		ancTermsAndPrivacy.getElement().setId("lnkTermsAndPrivacy");
 		ancTermsAndPrivacy.getElement().setAttribute("alt",GL0422);
 		ancTermsAndPrivacy.getElement().setAttribute("title",GL0422);
 		
 		ancPrivacy.setText(GL0452);
-		ancPrivacy.getElement().setId("hnkPrivacy");
+		ancPrivacy.getElement().setId("lnkPrivacy");
 		ancPrivacy.getElement().setAttribute("alt",GL0452);
 		ancPrivacy.getElement().setAttribute("title",GL0452);
 		
@@ -939,7 +939,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 		lblMyParentDontHaveAccount.getElement().setAttribute("title",GL0458);
 		
 		ancParentRegister.setText(GL0459);
-		ancParentRegister.getElement().setId("hnkParentRegister");
+		ancParentRegister.getElement().setId("lnkParentRegister");
 		ancParentRegister.getElement().setAttribute("alt",GL0459);
 		ancParentRegister.getElement().setAttribute("title",GL0459);
 		
