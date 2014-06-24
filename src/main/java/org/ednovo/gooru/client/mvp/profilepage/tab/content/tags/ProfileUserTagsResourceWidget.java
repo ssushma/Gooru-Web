@@ -58,10 +58,12 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	@UiField HTML resourceTitle;
 	RatingWidgetView ratingWidgetView;
 	private String resourceTypeImage;
+	private UserTagsResourceDO userTagsResourceDO;
 	List<UserTagsResourceDO> listOfTagsResource =new ArrayList<UserTagsResourceDO>();
 	
 	public ProfileUserTagsResourceWidget(UserTagsResourceDO userTagsResourceDO) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.userTagsResourceDO = userTagsResourceDO;
 		setData(userTagsResourceDO);
 		resourceImage.setWidth("80px");
 		resourceImage.setHeight("60px");
@@ -75,7 +77,6 @@ public class ProfileUserTagsResourceWidget extends Composite {
 		resourceType.setText(userTagsResourceDO.getResourceFormat().getValue());
 		resourceTypeImage=userTagsResourceDO.getResourceFormat().getValue();
 		setPublisger(userTagsResourceDO.getPublisher());
-		resourceImage.setUrl(userTagsResourceDO.getThumbnails());
 		if(userTagsResourceDO.getResourceFormat()!=null){
 			setResourceTypeImage(userTagsResourceDO.getResourceFormat().getValue());
 		}
@@ -92,18 +93,6 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	public void setResourceTypeImage(String resourceType){
 		if(resourceType!=null){
 			resourceType=resourceType.toLowerCase();
-			if(resourceType.equalsIgnoreCase("lesson")||resourceType.equalsIgnoreCase("textbook")||resourceType.equalsIgnoreCase("handout"))
-			{
-				resourceType=resourceType.replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
-			}
-			if(resourceType.equalsIgnoreCase("slide"))
-			{
-				resourceType=resourceType.replaceAll("slide","Image");
-			}
-			if(resourceType.equalsIgnoreCase("exam")||resourceType.equalsIgnoreCase("challenge")||resourceType.equalsIgnoreCase("website"))
-			{
-				resourceType=resourceType.replaceAll("exam","Webpage").replaceAll("challenge", "Webpage").replaceAll("website", "Webpage");
-			}
 			//lblresourceType.setText(resourceType);
 			resourceTypeIcon.setStyleName(getResourceTypeImage(resourceType));
 		}
@@ -115,9 +104,12 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	}
 
 	public String getResourceTypeImage(String resourceType){
+		
 		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceTypeInfo();
+			
 		}else if(resourceType.equalsIgnoreCase("Interactive")){
+			
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceTypeInfo();
 		}
 		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Webpage")){
@@ -174,25 +166,26 @@ public class ProfileUserTagsResourceWidget extends Composite {
 	public void onErrorResourceImage(ErrorEvent errorEvent){
 		resourceImage.setUrl("images/resource_trans.png");
 		resourceTypeImage=resourceTypeImage.toLowerCase();
-		if(resourceTypeImage.equalsIgnoreCase("lesson")||resourceTypeImage.equalsIgnoreCase("textbook")||resourceTypeImage.equalsIgnoreCase("handout"))
-		{
-			resourceTypeImage=resourceTypeImage.replaceAll("lesson", "text").replaceAll("textbook", "text").replaceAll("handout", "text");
-		}
-		if(resourceTypeImage.equalsIgnoreCase("slide"))
-		{
-			resourceTypeImage=resourceTypeImage.replaceAll("slide","image");
-		}
-		if(resourceTypeImage.equalsIgnoreCase("exam")||resourceTypeImage.equalsIgnoreCase("website") || resourceTypeImage.equalsIgnoreCase("challenge"))
-		{
-			resourceTypeImage=resourceTypeImage.replaceAll("exam","webpage").replaceAll("website","webpage").replaceAll("challenge","webpage");
-		}
 		resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
 	}
-	
+	@Override
+	public void onLoad(){
+		
+		resourceImage.setUrl(userTagsResourceDO.getThumbnails());
+		if(userTagsResourceDO.getThumbnails()==null||userTagsResourceDO.getThumbnails().equalsIgnoreCase(""))
+		{
+			
+			resourceImage.setUrl("images/resource_trans.png");
+			resourceTypeImage=resourceTypeImage.toLowerCase();
+			resourceImage.setStyleName(getResourceDefaultImage(resourceTypeImage));
+		}
+	}
 	public String getResourceDefaultImage(String resourceType){
+		
 		if(resourceType.equalsIgnoreCase("Video")||resourceType.equalsIgnoreCase("Videos")){
 			return PlayerBundle.INSTANCE.getPlayerStyle().videoResourceDefault();
 		}else if(resourceType.equalsIgnoreCase("Interactive")){
+		
 			return PlayerBundle.INSTANCE.getPlayerStyle().interactiveResourceDefault();
 		}
 		else if(resourceType.equalsIgnoreCase("Website")||resourceType.equalsIgnoreCase("Exam")||resourceType.equalsIgnoreCase("Webpage")|| resourceType.equalsIgnoreCase("challenge")){
@@ -205,6 +198,7 @@ public class ProfileUserTagsResourceWidget extends Composite {
 			return PlayerBundle.INSTANCE.getPlayerStyle().textResourceDefault();
 		}
 		else if(resourceType.equalsIgnoreCase("Question")){
+			
 			return PlayerBundle.INSTANCE.getPlayerStyle().questionResourceDefault();
 		}
 		else if(resourceType.equalsIgnoreCase("Audio")){
@@ -215,4 +209,5 @@ public class ProfileUserTagsResourceWidget extends Composite {
 			return PlayerBundle.INSTANCE.getPlayerStyle().websiteResourceDefault();
 		}
 	}
+	
 }
