@@ -84,7 +84,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	static FlowPanel wrapperContainerField;
 	@UiField Button forwardButton,backwardButton,selectedEmoticButton,canExplainEmoticButton,understandEmoticButton,mehEmoticButton,doNotUnderstandEmoticButton,needHelpButton;
 	@UiField HTMLEventPanel emoticsContainer;
-	@UiField HTMLPanel allEmoticsContainer,singleEmoticsContainer,collectionContainer,ratingsContainer;
+	@UiField HTMLPanel singleEmoticsContainer,collectionContainer,ratingsContainer;
 	@UiField Label resourcePublisher,reactionToolTipOne,reactionToolTipTwo,reactionToolTipThree,reactionToolTipFour,reactionToolTipFive,mouseOverStarValue,starValue;
 	@UiField
 	static ResourcePlayerMetadataBundle playerStyle;
@@ -169,10 +169,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 //		five_star = new SimpleRadioButton("");
 		
 		setWidget(uiBinder.createAndBindUi(this));
-		allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
-		emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
+		//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		//singleEmoticsContainer.setVisible(false);
+		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
+		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
+		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
 		reactionToolTipOne.setText(GL0581); 
 		reactionToolTipTwo.setText(GL0582); 
 		reactionToolTipThree.setText(GL0583); 
@@ -617,30 +618,14 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
-			allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+			//allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 			singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 			
 			/**
 			 * On mouse over if user selected any emotic, selected emotic will be highlighted.
 			 * Note: selected emotic will be differntiated based on respective emotic flag.
 			 */
-			
-			if(isCanExplainSelected){
-				canExplainEmoticButton.setStyleName(playerStyle.spriteType());
-				canExplainEmoticButton.addStyleName(playerStyle.emoticon_vi());
-			}else if(isCanUnderstandSelected){
-				understandEmoticButton.setStyleName(playerStyle.spriteType());
-				understandEmoticButton.addStyleName(playerStyle.emoticon_vii());
-			}else if(isMehSelected){
-				mehEmoticButton.setStyleName(playerStyle.spriteType());
-				mehEmoticButton.addStyleName(playerStyle.emoticon_v());
-			}else if(isDoNotUnderstandSelected){
-				doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
-				doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_ix());
-			}else if(isNeedHelpSelected){
-				needHelpButton.setStyleName(playerStyle.spriteType());
-				needHelpButton.addStyleName(playerStyle.emoticon_x());
-			}
+		
 		}
 
 	}
@@ -655,8 +640,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		 */
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-			singleEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+			//allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
+			singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
 		}
 	}
 
@@ -671,8 +656,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	public void setReaction(ReactionDo reactionDo,String gooruReactionId) {
 		this.gooruReactionId=gooruReactionId;
 		if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_CAN_EXPLAIN)){
-			selectedEmoticButton.setStyleName(playerStyle.spriteType());
-			selectedEmoticButton.addStyleName(playerStyle.emoticon_vi());
+			canExplainEmoticButton.setStyleName(playerStyle.spriteType());
+			canExplainEmoticButton.addStyleName(playerStyle.emoticon_vi());
 			isCanExplainSelected=true;
 			
 			/**
@@ -700,8 +685,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
 		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_CAN_UNDERSTAND)){
-			selectedEmoticButton.setStyleName(playerStyle.spriteType());
-			selectedEmoticButton.addStyleName(playerStyle.emoticon_vii());
+			understandEmoticButton.setStyleName(playerStyle.spriteType());
+			understandEmoticButton.addStyleName(playerStyle.emoticon_vii());
 			isCanUnderstandSelected = true;
 			
 			/**
@@ -729,8 +714,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
 		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_MEH)){
-			selectedEmoticButton.setStyleName(playerStyle.spriteType());
-			selectedEmoticButton.addStyleName(playerStyle.emoticon_v());
+			mehEmoticButton.setStyleName(playerStyle.spriteType());
+			mehEmoticButton.addStyleName(playerStyle.emoticon_v());
 			isMehSelected = true;
 			
 			/**
@@ -758,8 +743,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isDoNotUnderstandSelected=false;
 			isNeedHelpSelected=false;
 		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_DONOT_UNDERSTAND)){
-			selectedEmoticButton.setStyleName(playerStyle.spriteType());
-			selectedEmoticButton.addStyleName(playerStyle.emoticon_ix());
+			doNotUnderstandEmoticButton.setStyleName(playerStyle.spriteType());
+			doNotUnderstandEmoticButton.addStyleName(playerStyle.emoticon_ix());
 			isDoNotUnderstandSelected = true;
 			
 			/**
@@ -787,8 +772,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			isMehSelected=false;
 			isNeedHelpSelected=false;
 		}else if(reactionDo.getReactionText().equalsIgnoreCase(REACTION_NEED_HELP)){
-			selectedEmoticButton.setStyleName(playerStyle.spriteType());
-			selectedEmoticButton.addStyleName(playerStyle.emoticon_x());
+			needHelpButton.setStyleName(playerStyle.spriteType());
+			needHelpButton.addStyleName(playerStyle.emoticon_x());
 			isNeedHelpSelected = true;
 			
 			/**
