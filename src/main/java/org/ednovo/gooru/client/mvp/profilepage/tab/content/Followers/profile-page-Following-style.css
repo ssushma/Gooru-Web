@@ -86,13 +86,13 @@ a:hover {
 }
 .profilepageFollwoingContentText {
 	font-weight: bold;
-	padding: 10px 0px;
+	padding: 14px 0px;
 	font-size: 18px;
 	border-bottom: 1px solid #ddd;
 	
 }
 .profilepageFollowerContentText {
-	padding: 10px 0px;
+	padding: 14px 0px;
 	font-size: 18px;
 	border-bottom: 1px solid #ddd;
 	
@@ -180,4 +180,8 @@ a:hover {
 }
 .scrollStyle{
 	height: 365px;
+}
+.inlineStyle{
+	display: inline-block;
+    margin-top: 10px;
 }

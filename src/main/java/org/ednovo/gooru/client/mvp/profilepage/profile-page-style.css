@@ -82,6 +82,16 @@ a:hover {
 	padding: 4px;
 }
 
+.userNameForCollection{
+	font-size: 18px;
+	font-weight: bold;
+	color: rgba(100,100,100, 0.8);
+	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
+	background-color: transparent;
+	float: left;
+	margin-top: 10px;
+}
+
 .userBio {
 	padding-top: 0px;
 	line-height: 140% !important;
@@ -1299,6 +1309,7 @@ li.resources {
 .userNameborder {
 	width: 100%;
 	float: left;
+	height: 10px;
 	border-bottom: 1px solid #ddd;
 }
 .qmark {
