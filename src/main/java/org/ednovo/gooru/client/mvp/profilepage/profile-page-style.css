@@ -70,6 +70,8 @@ a:hover {
 	width: 80%;
 	float: right;
 	padding: 10px;
+	margin-top:5px;
+	
 }
 
 .userName {
@@ -1303,7 +1305,7 @@ li.resources {
 	font-size: 16px;
 	padding-left: 14px;
 	float: left;
-	padding-top: 3px;
+	padding-top: 5px;
 }
 
 .userNameborder {
@@ -1505,7 +1507,7 @@ li.resources {
 color: #FFF;
 background-color: #1076BB;
 border-radius: 4px;
-padding: 6px 10px 6px 10px;
+padding: 6px 10px 8px 10px;
 font-size: 13px;
 padding-left: 33px;
 border: 1px solid #1076BB;
@@ -1527,7 +1529,7 @@ text-align: center;
 .blackPrimaryButton{
 	color: #fff;
 	border-radius: 4px;
-	padding: 7px 9px;
+	padding: 7px 9px 8px 10px;
 	border: none;
 	font-family: Arial, sans-serif;
 	display: inline-block;
@@ -1545,4 +1547,8 @@ text-align: center;
 .blackPrimaryButton:hover{
 	cursor: pointer;
 	background: #393939;
+}
+.floatLeft{
+	float:left;
+		margin-top:-5px;
 }

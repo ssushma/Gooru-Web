@@ -43,8 +43,8 @@
 							   </g:HTMLPanel>
 							   <!--  Social container stop-->
 							  	</g:HTMLPanel>
-							  	 <g:Button styleName="primary {ProfilePageStyle.followButton}" ui:field="followButton"></g:Button>
-							   	 <g:Button ui:field="FollowingButtonBlue"></g:Button>
+							  	 <g:Button styleName="primary {ProfilePageStyle.followButton} {ProfilePageStyle.floatLeft}" ui:field="followButton"></g:Button>
+							   	 <g:Button styleName="{ProfilePageStyle.floatLeft}" ui:field="FollowingButtonBlue"></g:Button>
 						
 					   <!--  Profile On/Off container stop -->
 					   </g:HTMLPanel>
