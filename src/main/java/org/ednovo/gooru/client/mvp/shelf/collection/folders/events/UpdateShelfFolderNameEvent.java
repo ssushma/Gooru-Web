@@ -13,9 +13,11 @@ public class UpdateShelfFolderNameEvent extends GwtEvent<UpdateShelfFolderNameHa
 
 	public static final Type<UpdateShelfFolderNameHandler> TYPE = new Type<UpdateShelfFolderNameHandler>();
 	private String folderName;
+	private String folderId;
 	
-	public UpdateShelfFolderNameEvent(String folderName){
+	public UpdateShelfFolderNameEvent(String folderName, String folderId){ 
 		this.folderName=folderName;	
+		this.folderId =folderId; 
 	}
 	
 	
@@ -26,7 +28,7 @@ public class UpdateShelfFolderNameEvent extends GwtEvent<UpdateShelfFolderNameHa
 
 	@Override
 	protected void dispatch(UpdateShelfFolderNameHandler handler) {
-		handler.updateShelfFolderName(folderName);
+		handler.updateShelfFolderName(folderName,folderId);
 	}
 
 }
