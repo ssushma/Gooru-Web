@@ -4,6 +4,9 @@
     <ui:with type="org.ednovo.gooru.client.uc.UcCBundle" field="res1" />
 	
 		<g:HTMLPanel ui:field="suggestedWrapperPanel" styleName="{res.css.searchPanel}">
+		 <g:HTMLPanel styleName="{res.css.addSuggestedResourceOk}" ui:field="addResourceBtnPanel">
+	          <gg:BlueButtonUc styleName="primary" ui:field="addResourceBtnLbl"/>
+          </g:HTMLPanel>
 		<g:FlowPanel styleName="{res.css.ratingWidgetPanel}" ui:field="ratingWidgetPanel"></g:FlowPanel>
 		<g:FlowPanel ui:field="contentPanel" styleName="{res.css.contentPanel}">
 			<g:FlowPanel styleName="{res.css.resourcePanel}">
@@ -20,9 +23,7 @@
 				</g:FlowPanel>
 				 <g:HTML styleName="{res.css.resourceDescription}" ui:field="resourceDescriptionHtml" />  
 		  <g:HTMLPanel styleName="{res.css.suggestedResourceButtonContainer}" ui:field="buttonsPanel">
-          <g:HTMLPanel styleName="{res.css.addSuggestedResourceOk}" ui:field="addResourceBtnPanel">
-	          <gg:BlueButtonUc styleName="primary" ui:field="addResourceBtnLbl"/>
-          </g:HTMLPanel>
+         
         </g:HTMLPanel>
 			</g:FlowPanel>
 			</g:FlowPanel>
