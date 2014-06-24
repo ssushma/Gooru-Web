@@ -43,6 +43,8 @@ import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
@@ -280,6 +282,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		addSuccessMsg.setVisible(false);
 		addSuccessMsg.setText(GL0591.toLowerCase());
 		wrapperFocPanel.addClickHandler(new ClickOnFolderItem());
+		AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
 	}
 
 	@UiHandler("myShelfEditButton")
@@ -1116,5 +1119,19 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			});
 		}
 	}
+	
+	UpdateShelfFolderNameHandler updateShelfFolderName = new UpdateShelfFolderNameHandler(){
+
+		@Override
+		public void updateShelfFolderName(String folderName,String folderId) {
+			if(collectionDo.getGooruOid().equals(folderId)){
+				collectionDo.setTitle(folderName);
+				titleLbl.setHTML(folderName);
+			}
+		}
+		
+	};
+		
+	
 	
 }

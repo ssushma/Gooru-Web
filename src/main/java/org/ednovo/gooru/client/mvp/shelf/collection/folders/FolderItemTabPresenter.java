@@ -115,11 +115,11 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 	}
 
 	@Override
-	public void updateCollectionInfo(String folderId, final String title, String description) {
+	public void updateCollectionInfo(final String folderId, final String title, String description) {
 		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, null, null, null, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				AppClientFactory.fireEvent(new UpdateShelfFolderNameEvent(title));
+				AppClientFactory.fireEvent(new UpdateShelfFolderNameEvent(title,folderId)); 
 			}
 		});
 	}
