@@ -2539,4 +2539,5 @@ public interface MessageProperties {
     	String GL1990 = "This folder is empty! Why don't you create a new folder or collection?";
     	String GL1991 = "Average Rating";
     	String GL1992 = "Do you want to rate this resource?";
+    	String GL1993 = "View Administrator Portal";
 }
