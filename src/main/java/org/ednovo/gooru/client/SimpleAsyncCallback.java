@@ -43,8 +43,9 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 	public void onFailure(Throwable caught) {
 		String message = "";
 		if(caught instanceof ServerDownException){
+//			System.out.println("in Server Down Exception....");
 			ServerDownException serverDownException=(ServerDownException)caught;
-			//System.out.println("insideeee=== exception"+serverDownException.getStatusCode());
+//			System.out.println("insideeee=== exception"+serverDownException.getStatusCode());
 			//new AlertContentUc("Error==>"+serverDownException.getStatusCode(), "GotException...");
 			AppClientFactory.getInjector().getHomeService().getRedirectServerUrl(new AsyncCallback<String>() {
 				
@@ -54,7 +55,7 @@ public abstract class SimpleAsyncCallback<T> implements AsyncCallback<T>,Message
 				}
 				@Override
 				public void onFailure(Throwable caught) {
-					
+					caught.printStackTrace();
 				}
 			});
 		}

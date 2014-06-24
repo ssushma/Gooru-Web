@@ -134,8 +134,10 @@ public class PlayerDataLogEvents {
 	public static final String OPTIONTEXT="optionText";
 	public static final String COLLECTION="collection";
 	public static final String RESOURCE="resource";
+	public static final String PROFILE="profile";
 	public static final String COLLECTION_LOAD_URL="/collection/load";
 	public static final String COLLECTION_SHARE_URL="/collection/share";
+	public static final String PROFILE_SHARE_URL="/profile/share";
 	public static final String COLLECTION_FLAG_URL="/collection/flag";
 	public static final String FACEBOOK="facebook";
 	public static final String TWITTER="twitter";
@@ -528,6 +530,22 @@ public class PlayerDataLogEvents {
 		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemShareDataLogPayLoadObject(itemType,shareType,confirmStatus));
 		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, null, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.COLLECTION_SHARE_URL));
+		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
+	}	
+	public static void triggerItemShareDataLogEventForProfile(String itemGooruOid, String itemContentItemId,String parentGooruOid,String parentContItemId,String sessionId,
+			String itemType,String shareType,boolean confirmStatus,String playerMode,String path,String pageLocation){
+		JSONObject collectionDataLog=new JSONObject(); 
+		Long startTime=System.currentTimeMillis();
+		collectionDataLog.put(PlayerDataLogEvents.EVENTID, new JSONString(GwtUUIDGenerator.uuid()));
+		collectionDataLog.put(PlayerDataLogEvents.EVENTNAME, new JSONString(PlayerDataLogEvents.ITEM_SHARE));
+		collectionDataLog.put(PlayerDataLogEvents.SESSION, PlayerDataLogEvents.getDataLogSessionObject(sessionId));
+		collectionDataLog.put(PlayerDataLogEvents.STARTTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
+		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
+		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
+		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemShareDataLogPayLoadObject(itemType,shareType,confirmStatus));
+		collectionDataLog.put(PlayerDataLogEvents.CONTEXT,PlayerDataLogEvents.getDataLogContextObjectForItemLoad(itemGooruOid, itemContentItemId, null, parentGooruOid, parentContItemId, playerMode, path, pageLocation, PlayerDataLogEvents.PROFILE_SHARE_URL));
 		PlayerDataLogEvents.collectionStartStopEvent(collectionDataLog);
 	}	
 	

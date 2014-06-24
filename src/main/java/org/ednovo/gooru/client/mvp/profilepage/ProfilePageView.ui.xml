@@ -43,8 +43,8 @@
 							   </g:HTMLPanel>
 							   <!--  Social container stop-->
 							  	</g:HTMLPanel>
-							  	 <g:Button styleName="primary {ProfilePageStyle.followButton}" ui:field="followButton"></g:Button>
-							   	 <g:Button ui:field="FollowingButtonBlue"></g:Button>
+							  	 <g:Button styleName="primary {ProfilePageStyle.followButton} {ProfilePageStyle.floatLeft}" ui:field="followButton"></g:Button>
+							   	 <g:Button styleName="{ProfilePageStyle.floatLeft}" ui:field="FollowingButtonBlue"></g:Button>
 						
 					   <!--  Profile On/Off container stop -->
 					   </g:HTMLPanel>
@@ -127,8 +127,8 @@
 				</g:FlowPanel>
 			
         <g:HTMLPanel styleName="{ProfilePageStyle.userContent}" ui:field="mainContainer">
-            <g:Label styleName="{ProfilePageStyle.userName}" ui:field="userLibraryMessage"></g:Label>
-			<g:HTMLPanel styleName="{ProfilePageStyle.qmark}">
+            <g:Label styleName="{ProfilePageStyle.userNameForCollection}" ui:field="userLibraryMessage"></g:Label>
+			<g:HTMLPanel styleName="{ProfilePageStyle.qmark}" ui:field="hpnlQuestion">
 		        <g:HTMLPanel styleName="{ProfilePageStyle.userLibraryPopup} {ProfilePageStyle.popup-left}">
 		          <g:HTMLPanel styleName="{ProfilePageStyle.bubble-arrow-style} {ProfilePageStyle.arrow-left}"></g:HTMLPanel>
 		          <g:Label styleName="{ProfilePageStyle.standards-inner} {ProfilePageStyle.marginTop10}" ui:field="libraryMessage"></g:Label>

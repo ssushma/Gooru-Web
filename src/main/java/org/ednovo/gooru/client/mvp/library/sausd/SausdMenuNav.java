@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -46,7 +47,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -163,11 +163,7 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 14, new AsyncCallback<ProfileLibraryListDo>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {

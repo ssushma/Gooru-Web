@@ -203,13 +203,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 		try
 		{
 
-			AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new AsyncCallback<CollectionDo>(){
-
-				@Override
-				public void onFailure(Throwable caught) {
-
-
-				}
+			AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new SimpleAsyncCallback<CollectionDo>(){
 
 				@Override
 				public void onSuccess(CollectionDo result) {
@@ -506,12 +500,7 @@ public abstract class AssignPopupPlayerVc extends PopupPanel implements MessageP
 		.getInjector()
 		.getSearchService()
 		.getShortenShareUrlforAssign(classpageId, params,
-				new AsyncCallback<Map<String, String>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
+				new SimpleAsyncCallback<Map<String, String>>() {
 
 			@Override
 			public void onSuccess(Map<String, String> result) {

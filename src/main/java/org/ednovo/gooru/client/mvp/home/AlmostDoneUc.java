@@ -326,7 +326,7 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 			String userName = userNameTxtBox.getText();
 			String userRole=roleListBox.getItemText(roleListBox.getSelectedIndex());
 			
-			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new AsyncCallback<Void>(){
+			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
 				@Override
 				public void onSuccess(Void result) {
 					hide();
@@ -344,13 +344,7 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 					});
 					Window.enableScrolling(false);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
-				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-					
-				}
-				
+				}				
 			});
 		}
 		

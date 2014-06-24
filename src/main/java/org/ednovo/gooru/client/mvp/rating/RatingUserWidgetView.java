@@ -136,6 +136,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		editReviewText.getElement().setAttribute("maxlength", "500");
 		editReview.setText(GL1860);
 		editReviewBtn.setText(GL0141);
+		cancelReviewBtn.setText(GL0142);
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		long lastModifiedOn = starRatingsDo.getLastModifiedOn();
 		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + GL_GRR_Hyphen + " " + GL1434 : ""));
@@ -624,7 +625,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 	@UiHandler("deleteReview")
 	public void onClickDeleteReview(ClickEvent event){
 
-		AppClientFactory.getInjector().getPlayerAppService().deleteRating(starRatingsDo.getDeleteRatingGooruOid(), new AsyncCallback<Void>() {
+		AppClientFactory.getInjector().getPlayerAppService().deleteRating(starRatingsDo.getDeleteRatingGooruOid(), new SimpleAsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
@@ -652,13 +653,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		            }
 		        };
 		        timer.schedule(1000);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			
-				
-			}
+			}			
 		});
 }
 	

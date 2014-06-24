@@ -43,6 +43,7 @@ public interface CollectionsCBundle extends ClientBundle {
 		String dueDataIcon();
 		String openStateCollectionHeader();
 		String completeStateCollectionHeader();
+		String completedStatus();
 	}
 
 	@Source("collectionsstyles.css")

@@ -43,6 +43,8 @@ import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderMetaDataEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.SetFolderParentNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.UpdateShelfFolderNameHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CollectionAssignShareHandler;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
@@ -280,6 +282,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		addSuccessMsg.setVisible(false);
 		addSuccessMsg.setText(GL0591.toLowerCase());
 		wrapperFocPanel.addClickHandler(new ClickOnFolderItem());
+		AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
 	}
 
 	@UiHandler("myShelfEditButton")
@@ -564,15 +567,11 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     	        		toolTipPopupPanel.hide();
     	        		
 	        			/** Changed to new API call for fetching resources in a order **/
-    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 							@Override
 							public void onSuccess(FolderListDo result) {
 								setAllResources(result.getSearchResult());
 		    					setCollectionOpenedStatus(true);
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-								
 							}
     	        		});
     	        		
@@ -657,7 +656,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
         	}else{
         		new CustomAnimation(draggable).run(50);
         		/** Changed to new API call for fetching resources in a order **/
-        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 					@Override
 					public void onSuccess(FolderListDo result) {
 						if (result.getCount()<25){
@@ -670,10 +669,6 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	    	                }else{
 	    	                	AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
 	    	                }
-					}
-					@Override
-					public void onFailure(Throwable caught) {
-						
 					}
         		});
         		
@@ -760,7 +755,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 //			if(folderDo.getItemCount()==null || folderDo.getItemCount()==0){
 			
 			/** Changed to new API call for fetching resources in a order **/
-    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if(result.getSearchResult().size()==0){
@@ -768,10 +763,6 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 					}else{
 						setCollectionItems(result.getSearchResult());
 					}
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
 				}
     		});
 			
@@ -1116,5 +1107,19 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			});
 		}
 	}
+	
+	UpdateShelfFolderNameHandler updateShelfFolderName = new UpdateShelfFolderNameHandler(){
+
+		@Override
+		public void updateShelfFolderName(String folderName,String folderId) {
+			if(collectionDo.getGooruOid().equals(folderId)){
+				collectionDo.setTitle(folderName);
+				titleLbl.setHTML(folderName);
+			}
+		}
+		
+	};
+		
+	
 	
 }

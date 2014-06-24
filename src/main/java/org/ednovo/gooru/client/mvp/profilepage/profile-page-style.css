@@ -70,6 +70,8 @@ a:hover {
 	width: 80%;
 	float: right;
 	padding: 10px;
+	margin-top:5px;
+	
 }
 
 .userName {
@@ -79,6 +81,17 @@ a:hover {
 	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
 	background-color: transparent;
 	float: left;
+	padding: 4px;
+}
+
+.userNameForCollection{
+	font-size: 18px;
+	font-weight: bold;
+	color: rgba(100,100,100, 0.8);
+	text-shadow: 1px 2px 2px #EEE, 0 0 0 #000, 1px 2px 2px #EEE;
+	background-color: transparent;
+	float: left;
+	margin-top: 10px;
 }
 
 .userBio {
@@ -1061,6 +1074,7 @@ li.resources {
 	background: -ms-linear-gradient(top, #fdfdfd, #ddd);
 	background: -o-linear-gradient(top, #fdfdfd, #ddd);
 	border: 1px solid #ddd;
+	float:left;
 }
 .edit-Button:hover {
 	cursor: pointer;
@@ -1291,12 +1305,13 @@ li.resources {
 	font-size: 16px;
 	padding-left: 14px;
 	float: left;
-	padding-top: 3px;
+	padding-top: 5px;
 }
 
 .userNameborder {
 	width: 100%;
 	float: left;
+	height: 10px;
 	border-bottom: 1px solid #ddd;
 }
 .qmark {
@@ -1476,7 +1491,7 @@ li.resources {
     vertical-align:middle;
 }
 .tabContent{
-	width: 65%;
+	width: 70%;
 	margin: 0 auto;
 	padding-left: 90px;
 }
@@ -1492,7 +1507,7 @@ li.resources {
 color: #FFF;
 background-color: #1076BB;
 border-radius: 4px;
-padding: 6px 10px 6px 10px;
+padding: 6px 10px 8px 10px;
 font-size: 13px;
 padding-left: 33px;
 border: 1px solid #1076BB;
@@ -1514,7 +1529,7 @@ text-align: center;
 .blackPrimaryButton{
 	color: #fff;
 	border-radius: 4px;
-	padding: 7px 9px;
+	padding: 7px 9px 8px 10px;
 	border: none;
 	font-family: Arial, sans-serif;
 	display: inline-block;
@@ -1532,4 +1547,8 @@ text-align: center;
 .blackPrimaryButton:hover{
 	cursor: pointer;
 	background: #393939;
+}
+.floatLeft{
+	float:left;
+		margin-top:-5px;
 }

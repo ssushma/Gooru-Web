@@ -133,7 +133,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 	public void showCollectionsAfterAddingNewCollections(){
 		Map<String,String> params = new HashMap<String,String>();
 		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
-		params.put("order", "recent");
+		params.put("order", "asce");
 		params.put("classpageid", classpageid);
 		params.put("pageNum", 1+"");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);

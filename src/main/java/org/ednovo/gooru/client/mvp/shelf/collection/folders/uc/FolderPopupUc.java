@@ -32,7 +32,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -331,11 +330,7 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 	}
 
 	private void getFolderData(final String moveType) {
-		AppClientFactory.getInjector().getResourceService().getFolderWorkspace((getPageNumber()-1)*20, 20,null, FOLDER, new AsyncCallback<FolderListDo>() {
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-
+		AppClientFactory.getInjector().getResourceService().getFolderWorkspace((getPageNumber()-1)*20, 20,null, FOLDER, new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				setData(result.getSearchResult(), moveType);
@@ -397,13 +392,10 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		if(collectionOpenedStatus) {
 			setChildFolderItems(null, 0, false);
 		} else {
-			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, collectionOid,null, FOLDER, new AsyncCallback<FolderListDo>() {
+			AppClientFactory.getInjector().getfolderService().getChildFolders(0, 20, collectionOid,null, FOLDER, new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					setChildFolderItems(result.getSearchResult(), folderNavigation, isRefresh);
-				}
-				@Override
-				public void onFailure(Throwable caught) {
 				}
 			});
 		}
