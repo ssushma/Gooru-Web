@@ -55,7 +55,8 @@ public class ProfilePageUserInfoWidget extends Composite {
 		
 		//userNameLabel.setText(userFollowDo.getUsername());
 		userNameLabel.getElement().setId(userFollowDo.getGooruUid());
-		userCollections.setText(userFollowDo.getSummary().getCollection()+" Collection");
+		int collectionCount= userFollowDo.getSummary().getCollection();
+		userCollections.setText(collectionCount+(collectionCount==1?" Collection":" Collections"));
 		
 		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()+" Followers | " +userFollowDo.getSummary().getFollowing()+" Following");
 		
