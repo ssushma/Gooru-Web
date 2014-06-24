@@ -1567,6 +1567,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		 }
 	}
 
+	/**
+	 * The following method is not in use, It is handled in Shelf collection.java file.
+	 */
 	@Override
 	public void updateShelfFolderName(String folderName) {
 		ShelfCollection shelfCollection = (ShelfCollection) treeChildSelectedItem.getWidget();
