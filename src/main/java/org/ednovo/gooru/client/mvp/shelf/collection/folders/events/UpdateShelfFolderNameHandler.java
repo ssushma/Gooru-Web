@@ -3,6 +3,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface UpdateShelfFolderNameHandler extends EventHandler {
 
-	void updateShelfFolderName(String folderName);
+	void updateShelfFolderName(String folderName, String folderId); 
 
 }
