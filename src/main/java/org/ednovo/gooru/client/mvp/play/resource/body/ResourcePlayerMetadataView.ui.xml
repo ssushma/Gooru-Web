@@ -49,7 +49,7 @@
 						</g:HTMLPanel>
 				   	 </g:HTMLPanel>
 				   		 
-				    <g:HTMLPanel  ui:field="allEmoticsContainer">
+				    <g:HTMLPanel>
 							<g:HTMLPanel styleName="{playerStyle.iconOuter}">
 								<g:Button  ui:field="needHelpButton" styleName="{playerStyle.spriteType} {playerStyle.emoticon_iv}"></g:Button>
 								<g:HTMLPanel styleName="{playerStyle.emoticonPopup}">
