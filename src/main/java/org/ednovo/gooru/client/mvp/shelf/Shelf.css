@@ -1578,7 +1578,7 @@ padding-left: 11px;
 	font-size: 13px;
 }
 .profileMetaDataTabTitle {
-	padding: 10px;
+	padding: 3px;
 	text-align: center;
 	cursor: pointer !important;
 	display: inline-block;
@@ -1599,7 +1599,7 @@ padding-left: 11px;
     cursor: default !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ddd', endColorstr='#f5f5f5') !important;
 	float: left;
-	padding: 9px 5.5%;
+	padding: 3px 5.5%;
 	text-align: center;
 }
 .profileMetaDataTabTitleDisabled {
