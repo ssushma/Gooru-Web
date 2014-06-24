@@ -100,13 +100,7 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 	}
 	@Override
 	public void getContentReport(String associatedGooruOid) {
-		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new AsyncCallback<ArrayList<ContentReportDo>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {

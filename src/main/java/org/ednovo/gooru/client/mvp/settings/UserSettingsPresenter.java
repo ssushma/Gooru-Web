@@ -1011,7 +1011,7 @@ public class UserSettingsPresenter
 				.getInjector()
 				.getUserService()
 				.updateNewEmailStatus(emailValue, isEmailConfirmed,
-						new AsyncCallback<Void>() {
+						new SimpleAsyncCallback<Void>() {
 							@Override
 							public void onSuccess(Void Result) {
 								if (isEmailConfirmed) {
@@ -1032,9 +1032,6 @@ public class UserSettingsPresenter
 								AppClientFactory.fireEvent(new ConfirmStatusPopupEvent(false));
 							}
 
-							@Override
-							public void onFailure(Throwable caught) {
-							}
 						});
 	}
 
@@ -1058,12 +1055,7 @@ public class UserSettingsPresenter
 		getView().getStandardSavingTextLabel().setText(MessageProperties.GL0808);
 		getView().getstandardsSaveCancelButtonContainer().setVisible(false);
 		getView().getstandardsEditButton().setVisible(false);
-		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new AsyncCallback<Void>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-								
-			}
+		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {

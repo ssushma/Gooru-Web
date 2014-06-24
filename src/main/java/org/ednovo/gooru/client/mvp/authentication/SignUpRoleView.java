@@ -238,7 +238,7 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties {
 			String userRole = this.userRole;
 			final UserDo userDo = AppClientFactory.getLoggedInUser();
 			
-			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new AsyncCallback<Void>(){
+			AppClientFactory.getInjector().getHomeService().updateUserDetails(userName, userRole,new SimpleAsyncCallback<Void>(){
 				@Override
 				public void onSuccess(Void result) {
 					AppClientFactory.getInjector().getUserService().updateUserViewFlag(userDo.getGooruUId(), 1, new SimpleAsyncCallback<UserDo>() {
@@ -253,11 +253,6 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties {
 					Window.enableScrolling(false);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
 				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
-				}
-				
 			});
 		}
 		

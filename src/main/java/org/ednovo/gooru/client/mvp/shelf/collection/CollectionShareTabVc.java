@@ -451,7 +451,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	}
 	
 	public void getUserType() {
-			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
+			AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
 				@Override
 				public void onSuccess(SettingDo result) {
 					if(result.getUser().getAccountTypeId()!=null) {
@@ -464,11 +464,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 					} else {
 						displayAllVisiblePanels();
 					}
-				}
-			
-				@Override
-				public void onFailure(Throwable caught) {
-				}
+				}			
 		});
 	}
 
@@ -928,18 +924,12 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 					.getInjector()
 					.getResourceService()
 					.updateCollectionInfo(collectionDo, teacherTip,
-							new AsyncCallback<CollectionDo>() {
+							new SimpleAsyncCallback<CollectionDo>() {
 
 								@Override
 								public void onSuccess(CollectionDo result) {
 									setExistingTeacherTip(result);
 									// getView().onPostCourseUpdate(result);
-								}
-
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
-
 								}
 							});
 		} else {
@@ -974,21 +964,13 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	public void getCollectionTeacherTipInfo(String collectionId) {
 
-		AppClientFactory.getInjector().getResourceService().getCollectionInfoV2API(collectionId, new AsyncCallback<CollectionDo>() {
+		AppClientFactory.getInjector().getResourceService().getCollectionInfoV2API(collectionId, new SimpleAsyncCallback<CollectionDo>() {
 
 			@Override
 			public void onSuccess(CollectionDo result) {
 				setExistingTeacherTip(result);
 			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
 		});
-
-
 	}
 	
 	private class DirectionsKeyUpHandler implements KeyUpHandler {

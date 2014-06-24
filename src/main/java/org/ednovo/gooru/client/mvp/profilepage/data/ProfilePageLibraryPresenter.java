@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.profilepage.data;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.child.ChildPresenter;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
@@ -60,12 +61,8 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 	public void getPartnerWorkspaceFolders(int offset) {
 		
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
-		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new AsyncCallback<ProfileLibraryListDo>(){
-			@Override
-			public void onFailure(Throwable caught) {
-				getView().setEmptyContainer(true);
-			}
-			
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new SimpleAsyncCallback<ProfileLibraryListDo>(){
+
 			@Override
 			public void onSuccess(ProfileLibraryListDo result) {
 				if(result!=null && result.getSearchResult()!=null && result.getSearchResult().size()>0) {
@@ -96,15 +93,12 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 	}
 	@Override
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getProfilePageService().getProfilePaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getProfilePageService().getProfilePaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<ProfileLibraryListDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryListDo result) {
  				getView().setTopicListData(result.getSearchResult(), folderId);
 			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
+		
 		});
 	}
 	
@@ -137,16 +131,12 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 
 	@Override
 	public void getProfileLibraryCollection(final String gooruOid, boolean skipCollectionItems) {
-		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryCollection(gooruOid, skipCollectionItems, new AsyncCallback<ProfileLibraryDo>() {
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryCollection(gooruOid, skipCollectionItems, new SimpleAsyncCallback<ProfileLibraryDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryDo result) {
 				getView().setTopicListData(result, gooruOid);
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
 		});
 	}
 

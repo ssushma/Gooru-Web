@@ -205,6 +205,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		}else{
 			creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername());
 		}
+		System.out.println("collectionResultDo.getOwner().isProfileUserVisibility() : "+collectionResultDo.getOwner().isProfileUserVisibility());
 		if ((collectionResultDo.getOwner().isProfileUserVisibility())){
 			if(StringUtil.isPartnerUser(collectionResultDo.getOwner().getUsername())) {
 				creatorNameLblValue.getElement().getStyle().setColor("#1076bb");

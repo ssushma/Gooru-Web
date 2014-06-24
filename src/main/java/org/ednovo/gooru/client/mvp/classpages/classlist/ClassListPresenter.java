@@ -143,7 +143,7 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
 	}
 	
 	public void insertUserAfterDeletionForPending(final String gooruOid,final int offSet, int pageSize,String statusType, final boolean pendingFlag){
-        this.classpageServiceAsync.getAssociatedStudentListByCode(gooruOid, offSet, 1, statusType, new AsyncCallback<StudentsAssociatedListDo>() {
+        this.classpageServiceAsync.getAssociatedStudentListByCode(gooruOid, offSet, 1, statusType, new SimpleAsyncCallback<StudentsAssociatedListDo>() {
                 @Override
                 public void onSuccess(StudentsAssociatedListDo result) {
                 	if(result.getSearchResults().size()>0){  
@@ -156,10 +156,6 @@ public class ClassListPresenter extends PresenterWidget<IsClassListView> impleme
                 		getView().insertActiveUserAfterDeletion(result.getSearchResults().get(0), false, result.getTotalHitCount(),0);
                 		}
                 	}
-                }
-                @Override
-                public void onFailure(Throwable caught) {
-                        
                 }
         });
 }

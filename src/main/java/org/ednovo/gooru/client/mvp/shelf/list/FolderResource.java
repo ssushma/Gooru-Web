@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
@@ -246,7 +247,7 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						.getInjector()
 						.getfolderService()
 						.getFolders(gooruOId,
-								new AsyncCallback<List<CollectionItemDo>>() {
+								new SimpleAsyncCallback<List<CollectionItemDo>>() {
 									@Override
 									public void onSuccess(
 											List<CollectionItemDo> result) {
@@ -272,10 +273,6 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 											addFolderItems(collectionFolderItems);
 										}
 									}
-
-									@Override
-									public void onFailure(Throwable caught) {
-									}
 								});
 			}
 			if (collectionItemDo.getResource().getResourceType().getName()
@@ -286,14 +283,10 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 						.getResourceService()
 						.getCollection(
 								collectionItemDo.getResource().getGooruOid(),
-								false, new AsyncCallback<CollectionDo>() {
+								false, new SimpleAsyncCallback<CollectionDo>() {
 									@Override
 									public void onSuccess(CollectionDo result) {
 										setL2FoldersData(result);
-									}
-
-									@Override
-									public void onFailure(Throwable caught) {
 									}
 								});
 			}
