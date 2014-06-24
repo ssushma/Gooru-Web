@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.library.partner;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 
@@ -61,9 +62,7 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 
 	@Override
 	public void getPartnerWorkspaceFolders() {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, null, AppClientFactory.getCurrentPlaceToken(), new AsyncCallback<PartnerFolderListDo>(){
-			@Override
-			public void onFailure(Throwable caught) {}
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(AppClientFactory.getCurrentPlaceToken(), 20, SHARING_TYPE, null, AppClientFactory.getCurrentPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
 			
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
@@ -74,14 +73,10 @@ public class PartnerLibraryPresenter extends PresenterWidget<IsPartnerLibraryVie
 	
 	@Override
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<PartnerFolderListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				getView().setTopicListData(result.getSearchResult(), folderId);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}

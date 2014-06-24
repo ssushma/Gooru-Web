@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SeoTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenSubjectCourseEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetStandardDoEvent;
@@ -407,12 +408,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 			if (subjectCode!=null){
 				if(subjectCode.equalsIgnoreCase(STANDARDS))
 				{
-					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new AsyncCallback<HashMap<String, StandardsDo>>() {
-
-
-						@Override
-						public void onFailure(Throwable caught) {
-						}
+					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
 
 						@Override
 						public void onSuccess(
@@ -427,7 +423,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 				}
 				else
 				{
-					AppClientFactory.getInjector().getLibraryService().getSubjects(subjectCode, getPlaceToken(), new AsyncCallback<HashMap<String, SubjectDo>>() {
+					AppClientFactory.getInjector().getLibraryService().getSubjects(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
 						@Override
 						public void onSuccess(HashMap<String, SubjectDo> subjectListDo) {
 					
@@ -439,10 +435,6 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 							if(!getSubjectSelected(subjectName)) {
 								setTaxonomyData(subjectName, subjectCode, courseId, subjectListDo.get(subjectName).getData());
 							}
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
 						}
 					});
 				}
@@ -954,15 +946,12 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 	}
 	
 	public void getPartners() {
-		AppClientFactory.getInjector().getLibraryService().getPartners(new AsyncCallback<ArrayList<LibraryUserDo>>() {
+		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
 			public void onSuccess(ArrayList<LibraryUserDo> partnersList) {
 				setPartners(partnersList);
 				setTabSelection(AppClientFactory.getCurrentPlaceToken());
 			}
-
-			@Override
-			public void onFailure(Throwable caught) {}
 		});
 	}
 	

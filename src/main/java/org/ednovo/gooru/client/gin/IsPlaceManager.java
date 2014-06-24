@@ -97,4 +97,8 @@ public interface IsPlaceManager extends PlaceManager {
 	
 	public String getPlayerModeInTeach();
 	
+	public String getSeachEventPageLocation();
+	
+	public String getFolderIdsInString();
+	
 }

@@ -43,11 +43,9 @@ import org.ednovo.gooru.client.mvp.profilepage.ProfilePagePresenter.IsProfilePag
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
-import org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers.ProfilePageUnFollowPopUp;
 import org.ednovo.gooru.client.mvp.search.event.ConfirmStatusPopupEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetFooterEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.DeleteFolderSuccessView;
 import org.ednovo.gooru.client.service.ProfilePageServiceAsync;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -59,9 +57,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -545,16 +541,8 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	
 	@Override
 	public UserFollowDo getFollwingData() {
-		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(),"0","10", new AsyncCallback<List<UserFollowDo>>() {
+		AppClientFactory.getInjector().getUserService().getFollowedOnUsers(profileDo.getUser().getGooruUId(),"0","10", new SimpleAsyncCallback<List<UserFollowDo>>() {
 			
-			
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
 			@Override
 			public void onSuccess(List<UserFollowDo> result) {
 				getView().getFolloweingsObj(result);
@@ -584,13 +572,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	public void followUser(String gooruUid) {
-		AppClientFactory.getInjector().getUserService().followUser(profileDo.getUser().getGooruUId(), new AsyncCallback<Void>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+		AppClientFactory.getInjector().getUserService().followUser(profileDo.getUser().getGooruUId(), new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
@@ -603,13 +585,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	public void unFollowUser(String gooruUid) {
-		AppClientFactory.getInjector().getUserService().unFollowUser(gooruUid, new AsyncCallback<Void>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+		AppClientFactory.getInjector().getUserService().unFollowUser(gooruUid, new SimpleAsyncCallback<Void>() {
 
 			@Override
 			public void onSuccess(Void result) {
@@ -622,13 +598,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	
 	public void isFollow(String gooruUid) {
-		AppClientFactory.getInjector().getUserService().isFollowedUser(gooruUid, new AsyncCallback<IsFollowDo>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+		AppClientFactory.getInjector().getUserService().isFollowedUser(gooruUid, new SimpleAsyncCallback<IsFollowDo>() {
 
 			@Override
 			public void onSuccess(IsFollowDo result) {
@@ -640,13 +610,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 	}
 	@Override
 	public void getUserAddedContentTagSummary(String gooruUid,String offset,String limit){
-	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,offset,limit,new AsyncCallback<List<UserTagsDo>>() {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
-		}
+	AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(gooruUid,offset,limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
 
 		@Override
 		public void onSuccess(List<UserTagsDo> result) {

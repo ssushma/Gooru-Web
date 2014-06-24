@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemsList;
@@ -50,15 +50,15 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface PlayerAppService extends BaseService {
 	
 	
-	public CollectionDo getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabView,String rootNodeId);
+	public CollectionDo getSimpleCollectionDetils(String simpleCollectionId,String resourceId,String tabView,String rootNodeId) throws GwtException, ServerDownException;
 	
-	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId,String resourceId,String tabView,String rootNodeId);
+	public CollectionDo getSimpleCollectionDetils(String apiKey,String simpleCollectionId,String resourceId,String tabView,String rootNodeId) throws GwtException, ServerDownException;
 	
-	public ResoruceCollectionDo getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize);
+	public ResoruceCollectionDo getResourceCollectionsList(String resourceGooruOid,String pageNum,String pageSize) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView);
+	public CollectionItemDo getResourceCollectionItem(String apiKey,String resourceId,String tabView) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo getResourceObj(String resourceId);
+	public CollectionItemDo getResourceObj(String resourceId) throws GwtException, ServerDownException;
 	
 	
 	
@@ -69,30 +69,30 @@ public interface PlayerAppService extends BaseService {
 	 * @return shrotenUrl, rawUrl
 	 * @throws GwtException
 	 */
-	Map<String, String> getShortenShareUrl(String contentGooruOid);
+	Map<String, String> getShortenShareUrl(String contentGooruOid) throws GwtException, ServerDownException;
 	
-	public String updateViewCount(String gooruid,String viewCount,String resourceType);
+	public String updateViewCount(String gooruid,String viewCount,String resourceType) throws GwtException, ServerDownException;
 	
 	
-	public String startActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent);
+	public String startActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent) throws GwtException, ServerDownException;
 	
-	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent);
+	public String stopActivityPlayerLog(String activityEventId,String activityParentEventId,String eventName,String gooruOid,String resourceGooruOid,String context,String userAgent) throws GwtException, ServerDownException;
 	
-	public String createSessionTracker(String collectionGooruOid,String sessionId);
+	public String createSessionTracker(String collectionGooruOid,String sessionId) throws GwtException, ServerDownException;
 	
-	public String updateSessionInCollection(String sessionTrackerId);
+	public String updateSessionInCollection(String sessionTrackerId) throws GwtException, ServerDownException;
 	
-	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid);
+	public String createSessionItemInCollection(String sessionTrackerId,String collectionItemId, String resourceGooruOid) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult);
+	public String createSessionItemAttemptTry(String sessionTrackerId,String sessionItemTrackerId, Integer answerId, String attemptResult) throws GwtException, ServerDownException;
 	
-	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult);
+	public String createSessionItemAttemptTryForOe(String sessionTrackerId,String sessionItemTrackerId, String answerId,String attemptStatus,String attemptAnswerResult) throws GwtException, ServerDownException;
 	
-	public String sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message);
+	public String sendEmail(String fromEmail,String toEmail,String copyEmail,String subject,String message) throws GwtException, ServerDownException;
 	
-	public boolean getUserProfileVisibility(String gooruUid);
+	public boolean getUserProfileVisibility(String gooruUid) throws GwtException, ServerDownException;
 	
-	public String copyCollection(String collectionId,String collectionTile);
+	public String copyCollection(String collectionId,String collectionTile) throws GwtException, ServerDownException;
 	
 	public String copyCollectionItem(String collectionItemId,String collectionId);
 	

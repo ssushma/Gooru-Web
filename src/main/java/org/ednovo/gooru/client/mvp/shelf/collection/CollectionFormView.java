@@ -692,7 +692,7 @@ public class CollectionFormView extends
 	
 	public void getAccountTypeId()
 	{
-		AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new AsyncCallback<SettingDo>() {
+		AppClientFactory.getInjector().getUserService().getUserProfileDetails(GOORU_UID, new SimpleAsyncCallback<SettingDo>() {
 
 			@Override
 			public void onSuccess(SettingDo result) {
@@ -713,10 +713,6 @@ public class CollectionFormView extends
 					publicShareFloPanel.setVisible(true);	
 				}
 			}
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-
 		});
 
 	}

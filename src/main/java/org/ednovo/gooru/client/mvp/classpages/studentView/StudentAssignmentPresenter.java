@@ -74,6 +74,9 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	private Integer limit=5;
 	private Integer defaultOffsetForPath=0;
 	private Integer defaultLimitForPath=20;
+	private static final Integer DEFAULT_LIMITVALUE=5;
+	
+	private ClasspageDo classpageDo=null;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.STUDENT)
@@ -135,34 +138,40 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			initParam();
 		}
-		getClasspage();
+		//getClasspage();
 	}
 	private void initParam() {
 		getView().clearAll();
-		//getClasspage();
+		getClasspage();
 	}
 	public void getClasspage(){
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
-		this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
-			@Override
-			public void onSuccess(ClasspageDo classpageDo) {
-				if(classpageDo!=null && classpageDo.getClasspageId() != null){
-						offset=0;
-						limit=5;
-						getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);	//To display Assignments
-						getView().setSortingOrderInDropdown(sortingOrder);
-						getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
-						getView().setClasspageData(classpageDo);
-						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
-						
-				}else{
-					ErrorPopup error = new ErrorPopup(GL1632);
-					error.center();
-					error.show();
+		if(classpageDo==null||(!classpageDo.getClasspageId().equals("classpageId"))){
+			getView().resetAll();
+			this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
+				@Override
+				public void onSuccess(ClasspageDo classpageDo) {
+					if(classpageDo!=null && classpageDo.getClasspageId() != null){
+						StudentAssignmentPresenter.this.classpageDo=classpageDo;
+							offset=0;
+							limit=5;
+							getClasspageItems(classpageDo.getClasspageId(),offset.toString(),limit.toString(),false,sortingOrder);	//To display Assignments
+							getView().setSortingOrderInDropdown(sortingOrder);
+							getClasspageItems(classpageDo.getClasspageId(),""+defaultOffsetForPath,""+defaultLimitForPath,true, "all");	//To do display Assignment progress.
+							getView().setClasspageData(classpageDo);
+							triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
+							
+					}else{
+						ErrorPopup error = new ErrorPopup(GL1632);
+						error.center();
+						error.show();
+					}
 				}
-			}
-		});
+			});
+		}else{
+			getClasspageItems(classpageDo.getClasspageId(),getOffsetValue().toString(),limit.toString(),false,sortingOrder);
+		}
 	}
 	public void getClasspageItems(String classpageId,String offset,final String limit,final boolean isForAssignmentPath, final String sortOrder){
 		this.classpageServiceAsync.getClassPageItems(classpageId, offset, limit,sortOrder,null, new SimpleAsyncCallback<ArrayList<ClasspageItemDo>>() {
@@ -177,6 +186,19 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 				}
 			}
 		});
+	}
+	
+	public Integer getOffsetValue(){
+		String pageNum=getPlaceManager().getRequestParameter("pageNum","1");
+		int pageNumber=0;
+		try{
+			pageNumber=Integer.parseInt(pageNum);
+			if(pageNumber==0){
+				pageNumber=1;
+			}
+		}catch(Exception e){}
+		
+		return (((pageNumber-1)*DEFAULT_LIMITVALUE));
 	}
 	@Override
 	public void getNextClasspageItems(Integer offset,Integer limit) {

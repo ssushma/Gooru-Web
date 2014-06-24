@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -42,7 +43,6 @@ import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -219,11 +219,7 @@ public class NoSearchResultsVc extends Composite implements MessageProperties{
 	public void getSearchData()
 	{
 		SearchDo<ResourceSearchResultDo> searchInput=new SearchDo<ResourceSearchResultDo>();
-		AppClientFactory.getInjector().getSearchService().getSuggestSearchResultForResourceNoResult(searchInput, new AsyncCallback<SearchDo<ResourceSearchResultDo>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-
+		AppClientFactory.getInjector().getSearchService().getSuggestSearchResultForResourceNoResult(searchInput, new SimpleAsyncCallback<SearchDo<ResourceSearchResultDo>>() {
 			@Override
 			public void onSuccess(SearchDo<ResourceSearchResultDo> result) {
 				setData(result);

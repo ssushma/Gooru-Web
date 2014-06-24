@@ -61,6 +61,7 @@ import org.ednovo.gooru.client.uc.ToolTipPopUp;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
@@ -121,7 +122,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Image userProfilePic,errorImage;
 
 	@UiField
-	HTMLPanel profileOnContainerPanel, profileOffContainerPanel;
+	HTMLPanel profileOnContainerPanel, profileOffContainerPanel,hpnlQuestion;
 
 	@UiField
 	HTMLPanel contentview, shareLinkFloPanel,
@@ -354,6 +355,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		
+		hpnlQuestion.getElement().setAttribute("style", "margin-top: 12px;");
+		
 		followButton.setText(GL1935);
 		
 		FollowingButtonBlue.setText(GL1895);
@@ -421,7 +424,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			MixpanelUtil.Click_On();
 			enableProfileButton(true);
 			shareDo.setShareType("public");
-			socialView = new SocialShareView(shareDo);
+			socialView = new SocialShareView(shareDo){
+				public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+					PlayerDataLogEvents.triggerItemShareDataLogEventForProfile(AppClientFactory.getLoggedInUser().getGooruUId(), "", "", "", "", PlayerDataLogEvents.PROFILE, shareType, confirmStaus, "", AppClientFactory.getLoggedInUser().getGooruUId(), "profile");
+				}
+			};
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			gooruSocialButtonsContainer.getElement().getStyle().setOpacity(1.0);
@@ -486,7 +493,11 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private void setPublicShareDo(String privatePublic) {
 		try {
 			shareDo.setShareType(privatePublic);
-			socialView = new SocialShareView(shareDo);
+			socialView = new SocialShareView(shareDo){
+				public void triggerShareDataEvent(String shareType,boolean confirmStaus){
+					PlayerDataLogEvents.triggerItemShareDataLogEventForProfile(AppClientFactory.getLoggedInUser().getGooruUId(), "", "", "", "", PlayerDataLogEvents.PROFILE, shareType, confirmStaus, "", AppClientFactory.getLoggedInUser().getGooruUId(), "profile");
+				}
+			};
 			socialButtonContainer.clear();
 			socialButtonContainer.add(socialView);
 			if(privatePublic.equalsIgnoreCase("private")) {
@@ -555,6 +566,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
+		if(profileDo.getUser().getMeta().getSummary().getCollection()==1||profileDo.getUser().getMeta().getSummary().getCollection()==0){
+			collectionsTabVc.setLabel(GL0645);
+		}
+		else{
+			collectionsTabVc.setLabel(GL1754);
+		}
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
@@ -590,13 +607,23 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				moreCourseLbls.add(profileCodeDo.getCode().getLabel());
 			}
 		}
-		renderExtraGradeCourse(moreCourseLbls, "course");
+		if (moreCourseLbls.size() > 0){
+			userCourseList.setVisible(true);
+			moreCourseLbl.setVisible(true);
+			renderExtraGradeCourse(moreCourseLbls, "course");
+		}else{
+//			userCourseList.setVisible(false);
+//			moreCourseLbl.setVisible(false);
+		}
 	}
 
 	private void setUserGradeList(String grade) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
+		System.out.println("grade : "+grade);
 		if(grade!=null) {
+			userGradeList.setVisible(true);
+			moreGradeCourseLbl.setVisible(true);
 			String[] grades = grade.split(",");
 			List<String> moreGradeCourseLbls = new ArrayList<String>();
 			int gradeLength = grades.length;
@@ -655,6 +682,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 				renderExtraGradeCourse(moreGradeCourseLbls,"grade");
 			}
+		}else{
+			userGradeList.setVisible(false);
+			moreGradeCourseLbl.setVisible(false);
 		}
 	}
 

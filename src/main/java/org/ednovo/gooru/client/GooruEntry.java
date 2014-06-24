@@ -80,10 +80,10 @@ public class GooruEntry implements EntryPoint {
 					registerWindowEvents();
 				}
 	
-				@Override
-				public void onFailure(Throwable caught) {
-					appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-				}
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
+//				}
 				
 			});
 			AppClientFactory.setAppGinjector(appInjector);
@@ -136,10 +136,10 @@ public class GooruEntry implements EntryPoint {
 				AppClientFactory.getInjector().getWrapPresenter().get().setLoginData(loggedInUser);
 			}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-			}
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
+//			}
 		});
 	}
 	
@@ -170,10 +170,10 @@ public class GooruEntry implements EntryPoint {
 //				loginPopupTimer.schedule(LOGIN_POPUP_DELAY_TIME);
 			}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
-			}
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				appInjector.getPlaceManager().revealPlace(new PlaceRequest(PlaceTokens.ERROR));
+//			}
 		});
 	}
 	

@@ -102,24 +102,20 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 	}
 
 	public void getChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getfolderService().getChildFolders((pageNumber-1)*20, 20,folderId,null, null,new AsyncCallback<FolderListDo>() {
+		AppClientFactory.getInjector().getfolderService().getChildFolders((pageNumber-1)*20, 20,folderId,null, null,new SimpleAsyncCallback<FolderListDo>() {
 			@Override
 			public void onSuccess(FolderListDo result) {
 				getView().setFolderData(result.getSearchResult(), folderParentName, folderId);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
+			}			
 		});
 	}
 
 	@Override
-	public void updateCollectionInfo(String folderId, final String title, String description) {
+	public void updateCollectionInfo(final String folderId, final String title, String description) {
 		AppClientFactory.getInjector().getfolderService().updateFolder(folderId, title, null, null, null, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				AppClientFactory.fireEvent(new UpdateShelfFolderNameEvent(title));
+				AppClientFactory.fireEvent(new UpdateShelfFolderNameEvent(title,folderId)); 
 			}
 		});
 	}
@@ -129,13 +125,10 @@ public class FolderItemTabPresenter extends PresenterWidget<IsFolderItemTabView>
 		if(parentId.isEmpty()) {
 			addToShelf = true;
 		}
-		AppClientFactory.getInjector().getfolderService().createFolder(folderName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createFolder(folderName, parentId, addToShelf, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo result) {
 				getView().addFolderItem(result, parentId, null);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 
