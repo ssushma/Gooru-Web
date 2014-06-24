@@ -47,7 +47,7 @@ public interface AppService extends BaseService {
 	 * @return serialized to {@link UserDo} has loggedIn user details
 	 * @throws GwtException
 	 */
-	UserDo getLoggedInUser() throws GwtException,ServerDownException;
+	UserDo getLoggedInUser() throws GwtException, ServerDownException;
 
 	/**
 	 * User signin
@@ -56,18 +56,18 @@ public interface AppService extends BaseService {
 	 * @return serialized to {@link UserDo} loggedIn user details 
 	 * @throws GwtException
 	 */
-	UserDo signin(String username, String password) throws GwtException,ServerDownException;
+	UserDo signin(String username, String password) throws GwtException, ServerDownException;
 	
 	/**
 	 * signout from the account
 	 * @return serialized anonymous {@link UserDo}
 	 * @throws GwtException
 	 */
-	UserDo signout() throws GwtException,ServerDownException;
+	UserDo signout() throws GwtException, ServerDownException;
 	
-	UserDo v2Signin(String postData) throws GwtException,ServerDownException;
+	UserDo v2Signin(String postData) throws GwtException, ServerDownException;
 
-	UserDo v2Signout() throws GwtException,ServerDownException;
+	UserDo v2Signout() throws GwtException, ServerDownException;
 
 	/**
 	 * @function getAnalyticsURL 
@@ -89,5 +89,5 @@ public interface AppService extends BaseService {
 	 * 
 	*/
 	
-	String getAnalyticsURL(String type, String id)  throws GwtException,ServerDownException;
+	String getAnalyticsURL(String type, String id) throws GwtException, ServerDownException;
 }

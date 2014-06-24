@@ -122,7 +122,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	Image userProfilePic,errorImage;
 
 	@UiField
-	HTMLPanel profileOnContainerPanel, profileOffContainerPanel;
+	HTMLPanel profileOnContainerPanel, profileOffContainerPanel,hpnlQuestion;
 
 	@UiField
 	HTMLPanel contentview, shareLinkFloPanel,
@@ -354,6 +354,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		followingTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		followersTabVc.setStyleName(ProfilePageStyle.tabAlign());
 		tagTabVc.setStyleName(ProfilePageStyle.tabAlign());
+		
+		hpnlQuestion.getElement().setAttribute("style", "margin-top: 12px;");
 		
 		followButton.setText(GL1935);
 		

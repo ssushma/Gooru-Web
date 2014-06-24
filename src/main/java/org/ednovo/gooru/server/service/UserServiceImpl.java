@@ -41,8 +41,8 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.SearchRatingsDo;
-
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.CustomFieldDo;
 import org.ednovo.gooru.shared.model.user.GenderDo;
@@ -57,15 +57,12 @@ import org.ednovo.gooru.shared.model.user.UserSummaryDo;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
-
-import org.json.JSONArray;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 

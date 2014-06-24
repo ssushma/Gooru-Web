@@ -76,14 +76,14 @@ public abstract class ServiceRequest {
 			//throw new RuntimeException(exception.getMessage());
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
-//			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
-//			String serverStatusCode=String.valueOf(statusCode);
-//			Character firstCharcter=serverStatusCode.charAt(0);
+			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
+			String serverStatusCode=String.valueOf(statusCode);
+			Character firstCharcter=serverStatusCode.charAt(0);
 			if(statusCode==504){
 				String serverStatus=getApiServerStatus();
-				if(serverStatus!=null&&serverStatus.equals(DOWN)){
+				if(serverStatus!=null && serverStatus.equalsIgnoreCase(DOWN)){
 					throw new ServerDownException(statusCode,"");
-				}else if(serverStatus!=null&&serverStatus.equals(WARNING)){
+				}else if(serverStatus!=null&&serverStatus.equalsIgnoreCase(WARNING)){
 					//throw new ServerDownException(statusCode,"");
 				}
 			}
@@ -102,12 +102,18 @@ public abstract class ServiceRequest {
 		if(jsonResponseRep!=null){
 			try {
 				JSONObject serverStatusJsonObject=jsonResponseRep.getJsonRepresentation().getJsonObject();
-				if(serverStatusJsonObject!=null){
-					JSONObject currentEventJsonObject=serverStatusJsonObject.isNull(CURRENT_EVENT)?null:serverStatusJsonObject.getJSONObject(CURRENT_EVENT);
-					if(currentEventJsonObject!=null){
-						JSONObject statusJsonObject=currentEventJsonObject.isNull(STATUS)?null:currentEventJsonObject.getJSONObject(STATUS);
-						if(statusJsonObject!=null){
-							 serverStatus=statusJsonObject.isNull(NAME)?null:statusJsonObject.getString(NAME);
+				if (serverStatusJsonObject != null) {
+					JSONObject currentEventJsonObject = serverStatusJsonObject
+							.isNull(CURRENT_EVENT) ? null
+							: serverStatusJsonObject
+									.getJSONObject(CURRENT_EVENT);
+					if (currentEventJsonObject != null) {
+						JSONObject statusJsonObject = currentEventJsonObject
+								.isNull(STATUS) ? null : currentEventJsonObject
+								.getJSONObject(STATUS);
+						if (statusJsonObject != null) {
+							serverStatus = statusJsonObject.isNull(NAME) ? null
+									: statusJsonObject.getString(NAME);
 						}
 					}
 				}
