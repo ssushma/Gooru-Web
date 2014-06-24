@@ -400,15 +400,10 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					}
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
-						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
 								setStandardSuggestions(result);
-								
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
 								
 							}
 						});
@@ -545,12 +540,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				for(final CodeDo codeObj:standardsDo){
 					if(isEditResource){
 					if(codeObj.getCodeId()==Integer.parseInt(id)){
-						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new AsyncCallback<Void>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								
-							}
+						AppClientFactory.getInjector().getResourceService().deleteTaxonomyResource(collectionItemDo.getResource().getGooruOid(), codeObj.getCodeId(), new SimpleAsyncCallback<Void>() {
 
 							@Override
 							public void onSuccess(Void result) {
@@ -737,16 +727,11 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		//resetToAnswers();
 		if(isEditResource){
 			if(deletedStandardsDo.size()>0){
-	        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new AsyncCallback<Void>() {
+	        	AppClientFactory.getInjector().getResourceService().UpdateResourceTaxonomy(collectionItemDo.getResource().getGooruOid(), deletedStandardsDo, new SimpleAsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
 						deletedStandardsDo.clear();
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						
 					}
 				});
 	        }

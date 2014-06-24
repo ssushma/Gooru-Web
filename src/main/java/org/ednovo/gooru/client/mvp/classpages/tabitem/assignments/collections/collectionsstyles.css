@@ -66,3 +66,7 @@
 	-webkit-border-top-right-radius: 4px;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#FDFDFD', EndColorStr='#4e9746');
 }
+
+.completedStatus{
+	background: #A3CBA0;	
+}

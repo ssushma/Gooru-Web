@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -81,7 +82,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -597,17 +597,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				if(refreshType.equals(RefreshType.INSERT)){
 					
 					/** Changed to new API call for fetching resources in a order **/
-		    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+		    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 						@Override
 						public void onSuccess(FolderListDo result) {
 							shelfCollection.setAllResources(result.getSearchResult()); 
 							shelfCollection.setOpen();
 							shelfCollection.glowTitle();
 							shelfCollection.setCollectionOpenedStatus(true);
-							
-						}
-						@Override
-						public void onFailure(Throwable caught) {
 							
 						}
 		    		});

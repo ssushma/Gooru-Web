@@ -567,15 +567,11 @@ public class ShelfCollection extends FocusPanel implements DropBox,
     	        		toolTipPopupPanel.hide();
     	        		
 	        			/** Changed to new API call for fetching resources in a order **/
-    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+    	        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 							@Override
 							public void onSuccess(FolderListDo result) {
 								setAllResources(result.getSearchResult());
 		    					setCollectionOpenedStatus(true);
-							}
-							@Override
-							public void onFailure(Throwable caught) {
-								
 							}
     	        		});
     	        		
@@ -660,7 +656,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
         	}else{
         		new CustomAnimation(draggable).run(50);
         		/** Changed to new API call for fetching resources in a order **/
-        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+        		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 					@Override
 					public void onSuccess(FolderListDo result) {
 						if (result.getCount()<25){
@@ -673,10 +669,6 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	    	                }else{
 	    	                	AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0302);
 	    	                }
-					}
-					@Override
-					public void onFailure(Throwable caught) {
-						
 					}
         		});
         		
@@ -763,7 +755,7 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 //			if(folderDo.getItemCount()==null || folderDo.getItemCount()==0){
 			
 			/** Changed to new API call for fetching resources in a order **/
-    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new AsyncCallback<FolderListDo>(){
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(folderDo.getGooruOid(),null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
 					if(result.getSearchResult().size()==0){
@@ -771,10 +763,6 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 					}else{
 						setCollectionItems(result.getSearchResult());
 					}
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
 				}
     		});
 			

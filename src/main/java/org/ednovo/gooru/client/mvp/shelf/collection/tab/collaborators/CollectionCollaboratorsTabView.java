@@ -96,7 +96,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	CollectionDo collectionDo = null;
 	
-	@UiField HTMLPanel panelViewMode, panelEditMode,panelCreator,panelCollaboratorsList,panelLoading, panelPendingSmallLoadingIcon;//, panelCurrentSmallLoadingIcon;
+	@UiField HTMLPanel panelViewMode, panelEditMode,panelCreator,panelCollaboratorsList,panelLoading, panelPendingSmallLoadingIcon,privacyLabelPanel;//, panelCurrentSmallLoadingIcon;
 	
 	@UiField VerticalPanel panelPendingCollabListContainer, panelActiveCollabListContainer;
 	
@@ -205,6 +205,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		btnInvite.setText(GL0944);
 		
 		lblPii.setText(GL1892);
+		privacyLabelPanel.setVisible(false);
 		ancprivacy.setText(GL1893);
 		toUsText.setText(GL1894);
 		

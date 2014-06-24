@@ -264,8 +264,6 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			//TODO sorting
-			
 			if(!dropdownPlaceHolder.getText().equals(sortType)){
 				dropdownPlaceHolder.setText(sortType);
 				String sortingStringValue="";
@@ -284,6 +282,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				Map<String,String> params = new HashMap<String,String>();
 				params = StringUtil.splitQuery(Window.Location.getHref());
 				params.put("order", sortingStringValue);
+				params.put("pageNum", "1");
 				
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
 				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
@@ -600,7 +599,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 		//here we need to check for http://collab.ednovo.org/jira/browse/CORE-516 this 
 		//api response and display the button text and functionality.
-		DataLogEvents.classpageView(GwtUUIDGenerator.uuid(), "classpage-view", classpageDo.getClasspageId(), AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
+		//DataLogEvents.classpageView(GwtUUIDGenerator.uuid(), "classpage-view", classpageDo.getClasspageId(), AppClientFactory.getLoggedInUser().getGooruUId(), System.currentTimeMillis(), System.currentTimeMillis(),"",0L, AppClientFactory.getLoggedInUser().getToken()	,"start");
 	}
 	
 	@Override
@@ -630,8 +629,24 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 			setPagination();
 		}else{
+			this.totalHitCount=0;
+			setPagination();
 			noAssignmentMsg.setVisible(true);
 		}
+	}
+	public void resetAll(){
+		contentpanel.clear();
+		contentpanel.add(setLoadingPanel());
+		this.totalHitCount=0;
+		setPagination();
+		mainTitleLbl.setText("");
+		studentViewImage.setAltText("");
+		studentViewImage.setTitle("");
+		studentViewImage.setUrl("");
+		imgProfileImage.setUrl("");
+		lblUserName.setText("");
+		panelAssignmentProgress.clear();
+		assignmentsDotsMap.clear();
 	}
 	public void setPagination(){
 		if(this.totalHitCount>5){
@@ -643,9 +658,13 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
-		Label seeMoreLabel=new Label(GL0508);
-		//seeMoreLabel.addClickHandler(new PaginationEvent());
-		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
+		String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", "1");
+		try{
+			pageNumber=Integer.parseInt(pageNum);
+			pageNumber=pageNumber==0?1:pageNumber;
+		}catch(NumberFormatException e){
+			
+		}
 		int totalPages = (this.totalHitCount / 5)
 				+ ((this.totalHitCount % 5) > 0 ? 1 : 0);
 		//int pageNumCount = pageNum + 1;
@@ -756,10 +775,10 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		else if(AppClientFactory.getPlaceManager().getRequestParameter("source").equalsIgnoreCase("E")){
 			
 			Map<String, String> params=new HashMap<String, String>();
-			params.put("pageSize", pageSize);
+			//params.put("pageSize", pageSize);
 			params.put("classpageid", classpageid);
 			params.put("pageNum", pageNum);
-			params.put("pos", pos);
+			//params.put("pos", pos);
 			
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.EDIT_CLASSPAGE,params,true);
 		}
@@ -769,36 +788,27 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	@Override
 	public void onClick(ClickEvent event) {
 	if (event.getSource() instanceof PaginationButtonUc) {
-			
 			int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
-
-			int pageNumVal = (pagenumber - 1) * 5;
-			
 			pageNumber = pagenumber;
 			setPagination();
-			
+			contentpanel.clear();
 			contentpanel.add(setLoadingPanel());
-
-			getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
-			/*int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
-
-			pageNum = (pagenumber - 1) * pageSize;
-
-			AssignmentsListDo assignmentListDo = new AssignmentsListDo();
-			assignmentListDo.setClasspageId(classpageId);
-			assignmentListDo.setPageNum(pageNum);
-			assignmentListDo.setPageSize(pageSize);
-			assignmentListDo.setPos(pagenumber);
-
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("classpageid", classpageDo.getClasspageId());
-			params.put("pageSize", pageSize + "");
-			params.put("pageNum", pageNum + "");
-			params.put("pos", pagenumber + "");
-			AppClientFactory.getPlaceManager().revealPlace(
-					PlaceTokens.EDIT_CLASSPAGE, params, true);*/
-
-		} else {
+			Map<String,String> params = new HashMap<String,String>();
+			String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+			String order=AppClientFactory.getPlaceManager().getRequestParameter("order", null);
+			String source=AppClientFactory.getPlaceManager().getRequestParameter("source", null);
+			String backButtonStatus=AppClientFactory.getPlaceManager().getRequestParameter("b", null);
+			params.put("order", order);
+			params.put("id", classpageid);
+			if(source!=null){
+				params.put("source", source);
+			}
+			if(backButtonStatus!=null){
+				params.put("b", "true");
+			}
+			params.put("pageNum", pagenumber+"");
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
+			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
 		}
 	}
 	
@@ -1161,7 +1171,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		Boolean mainContainerStatus = false;
 		try
 		{
-		mainContainerStatus = mainContainer.isVisible();		
+			mainContainerStatus = mainContainer.isVisible();		
 		}
 		catch(Exception ex)
 		{

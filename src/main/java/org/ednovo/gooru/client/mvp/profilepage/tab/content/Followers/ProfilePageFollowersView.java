@@ -3,21 +3,19 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -66,12 +64,7 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	public void dragFollowingScrollPanel(ScrollEvent event) {
 		if (followerScrollPanel.getVerticalScrollPosition() == followerScrollPanel.getMaximumVerticalScrollPosition() && totalUserCount <totalHintCount) {
 		
-			AppClientFactory.getInjector().getUserService().getFollowedByUsers(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalUserCount),limit, new AsyncCallback<List<UserFollowDo>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+			AppClientFactory.getInjector().getUserService().getFollowedByUsers(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalUserCount),limit, new SimpleAsyncCallback<List<UserFollowDo>>() {
 
 			@Override
 			public void onSuccess(List<UserFollowDo> result) {

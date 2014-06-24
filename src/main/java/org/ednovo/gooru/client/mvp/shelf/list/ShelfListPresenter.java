@@ -385,7 +385,7 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		if(isDataCalled) {
 			getView().getChildFolderItems(null);
 		} else {
-			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,new AsyncCallback<FolderListDo>() {
+			AppClientFactory.getInjector().getfolderService().getChildFolders((getView().getChildPageNumber()-1)*20, 20, folderId,null, null,new SimpleAsyncCallback<FolderListDo>() {
 				@Override
 				public void onSuccess(FolderListDo result) {
 					searchResult.addAll(result.getSearchResult());
@@ -397,10 +397,6 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 						getView().getChildFolderItems(searchResult);
 						searchResult.clear();
 					}
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
 				}
 			});
 		}
@@ -417,14 +413,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 		} else {
 			
 			/** Changed to new API call for fetching resources in a order **/
-    		AppClientFactory.getInjector().getfolderService().getCollectionResources(collectionOid,null, null, new AsyncCallback<FolderListDo>(){
+    		AppClientFactory.getInjector().getfolderService().getCollectionResources(collectionOid,null, null, new SimpleAsyncCallback<FolderListDo>(){
 				@Override
 				public void onSuccess(FolderListDo result) {
 					getView().getCollectionItems(result.getSearchResult());
-					
-				}
-				@Override
-				public void onFailure(Throwable caught) {
 					
 				}
     		});
@@ -458,13 +450,10 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 			if(parentId.isEmpty()) {
 				addToShelf = true;
 			}
-			AppClientFactory.getInjector().getfolderService().createFolder(parentName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
+			AppClientFactory.getInjector().getfolderService().createFolder(parentName, parentId, addToShelf, new SimpleAsyncCallback<FolderDo>() {
 				@Override
 				public void onSuccess(FolderDo result) {
 					AppClientFactory.fireEvent(new UpdateFolderItemEvent(result, parentId, params));
-				}
-				@Override
-				public void onFailure(Throwable caught) {
 				}
 			});
 	}

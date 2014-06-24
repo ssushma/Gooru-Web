@@ -110,7 +110,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	
 	private Integer offset=0;
 	private Integer limit=5;
-	private static Integer DEFAULT_OFFSETVALUE=5;
+	private static final Integer DEFAULT_LIMITVALUE=5;
 	
 	ClassListPresenter classlistPresenter;
 	
@@ -408,7 +408,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
                         getView().setClasspageData(classpageDo);
                         classlistPresenter.setClassPageDo(classpageDo);
                         setInSlot(CLASSLIST_SLOT, classlistPresenter,false);
-                        System.out.println("tab : "+tab);
 						triggerClassPageNewDataLogStartStopEvent(classpageDo.getClasspageId(), classpageDo.getClasspageCode());
 					} else {
 						ErrorPopup error = new ErrorPopup(GL0341);
@@ -434,7 +433,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 			}
 		}catch(Exception e){}
 		
-		return (((pageNumber-1)*DEFAULT_OFFSETVALUE));
+		return (((pageNumber-1)*DEFAULT_LIMITVALUE));
 		
 	}
 	
@@ -538,7 +537,6 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 	}
 
 	public void triggerClassPageNewDataLogStartStopEvent(String classpageId, String classCode){
-		System.out.println("triggerClassPageNewDataLogStartStopEvent");
 		JSONObject classpageDataLog=new JSONObject();
 		String classpageEventId=GwtUUIDGenerator.uuid();
 		AppClientFactory.getPlaceManager().setClasspageEventId(classpageEventId);
