@@ -985,6 +985,10 @@ public class ClasspageServiceImpl extends BaseServiceImpl implements
 			{
 				sortingOrder="sequence";
 				studyStatus = "open";
+			}else if(sortingOrder.equalsIgnoreCase("earliest")){ // getting the assignments in ascending order based on due date.
+				sortingOrder="due-date";
+			}else if(sortingOrder.equalsIgnoreCase("latest")){  // getting the assignments in descending order based on due date.
+				sortingOrder="due-date-earliest";
 			}
 			url=url+"&orderBy="+sortingOrder;
 		}else{
