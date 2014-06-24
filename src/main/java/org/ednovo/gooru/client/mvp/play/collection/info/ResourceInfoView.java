@@ -739,12 +739,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 		if(gradesdetails.size()>0){
 			if(gradesdetails.size()==1){
-				final Label gradesLabel=new Label(gradesdetails.get(0));
+				final Label gradesLabel=new Label(" "+gradesdetails.get(0));
 				gradesLabel.getElement().setAttribute("style", "float: left;");
 				gradesText.add(gradesLabel);
 				isGrades =true;
 			} if(gradesdetails.size()==2){
-				final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+				final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
 				gradesLabel.getElement().setAttribute("style", "float: left;");
 				gradesText.add(gradesLabel);
 				isGrades =true;
@@ -753,7 +753,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(gradesdetails.size()>2){
 			final Label gradesLabelCountLabel=new Label("+"+(gradesdetails.size()-2)); 
 			gradesLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+			final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
 			gradesLabel.getElement().setAttribute("style", "float:left;");
 			gradesText.add(gradesLabel);
 			gradesText.add(gradesLabelCountLabel);
@@ -772,12 +772,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 		if(publisher.size()>0){
 			if(publisher.size()==1){
-				final Label publisherLabel=new Label(publisher.get(0));
+				final Label publisherLabel=new Label(" "+publisher.get(0));
 				publisherLabel.getElement().setAttribute("style", "float: left;");
 				lblPublisher.add(publisherLabel);
 				isPublisher =true;
 			} if(publisher.size()==2){
-				final Label publisherLabel=new Label(publisher.get(0)+","+publisher.get(1));
+				final Label publisherLabel=new Label(" "+publisher.get(0)+","+publisher.get(1));
 				publisherLabel.getElement().setAttribute("style", "float: left;");
 				lblPublisher.add(publisherLabel);
 				isPublisher =true;
@@ -786,7 +786,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(publisher.size()>2){
 			final Label publisherLabelCountLabel=new Label("+"+(publisher.size()-2)); 
 			publisherLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label publisherLabel=new Label(publisher.get(0)+","+publisher.get(1));
+			final Label publisherLabel=new Label(" "+publisher.get(0)+","+publisher.get(1));
 			publisherLabel.getElement().setAttribute("style", "float:left;");
 			lblPublisher.add(publisherLabel);
 			lblPublisher.add(publisherLabelCountLabel);
@@ -806,12 +806,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 		if(aggregatorlist.size()>0){
 			if(aggregatorlist.size()==1){
-				final Label aggregatorLabel=new Label(aggregatorlist.get(0));
+				final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0));
 				aggregatorLabel.getElement().setAttribute("style", "float: left;");
 				aggregatorVal.add(aggregatorLabel);
 				isAggregator =true;
 			} if(aggregatorlist.size()==2){
-				final Label aggregatorLabel=new Label(aggregatorlist.get(0)+","+aggregatorlist.get(1));
+				final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0)+","+aggregatorlist.get(1));
 				aggregatorLabel.getElement().setAttribute("style", "float: left;");
 				aggregatorVal.add(aggregatorLabel);
 				isAggregator =true;
@@ -820,7 +820,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(aggregatorlist.size()>2){
 			final Label aggregatorCountLabel=new Label("+"+(aggregatorlist.size()-2)); 
 			aggregatorCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label aggregatorLabel=new Label(aggregatorlist.get(0)+","+aggregatorlist.get(1));
+			final Label aggregatorLabel=new Label(" "+aggregatorlist.get(0)+","+aggregatorlist.get(1));
 			aggregatorLabel.getElement().setAttribute("style", "float:left;");
 			aggregatorVal.add(aggregatorLabel);
 			aggregatorVal.add(aggregatorCountLabel);
@@ -861,12 +861,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			addsTitle.setText(GL1878+GL_SPL_SEMICOLON);
 		if(addsdetails.size()>0){
 			if(addsdetails.size()==1){
-				final Label addsLabel=new Label(addsdetails.get(0));
+				final Label addsLabel=new Label(" "+addsdetails.get(0));
 				addsLabel.getElement().setAttribute("style", "float: left;");
 				addsInfo.add(addsLabel);
 				addsPanel.setVisible(true);
 			} if(addsdetails.size()==2){
-				final Label addsLabel=new Label(addsdetails.get(0)+","+addsdetails.get(1));
+				final Label addsLabel=new Label(" "+addsdetails.get(0)+","+addsdetails.get(1));
 				addsLabel.getElement().setAttribute("style", "float: left;");
 				addsInfo.add(addsLabel);
 				addsPanel.setVisible(true);
@@ -876,7 +876,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(addsdetails.size()>2){
 			final Label addscountLabel=new Label("+"+(addsdetails.size()-2)); 
 			addscountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label addsLabelNew=new Label(addsdetails.get(0)+","+addsdetails.get(1));
+			final Label addsLabelNew=new Label(" "+addsdetails.get(0)+","+addsdetails.get(1));
 			addsLabelNew.getElement().setAttribute("style", "float:left;");
 			addsInfo.add(addsLabelNew);
 			addsInfo.add(addscountLabel);
@@ -895,7 +895,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(cfSchoolLevel!=null&&!cfSchoolLevel.equalsIgnoreCase("")&&!cfSchoolLevel.equalsIgnoreCase("null")){
 			schoolLevelPanel.setVisible(true);
 			schoolLevelLbl.setText(GL1868+GL_SPL_SEMICOLON);
-			schoolLevelType.setText(cfSchoolLevel);
+			schoolLevelType.setText(" "+cfSchoolLevel);
 		}else{
 			schoolLevelPanel.setVisible(false);
 		}
@@ -928,8 +928,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(oerdetails!=null&&!oerdetails.equalsIgnoreCase("")&&!oerdetails.equalsIgnoreCase("null")){
 			oerPanel.setVisible(true);
-			oerLbl.setText(GL1705+GL_SPL_SEMICOLON);
-			oerAvailability.setText(oerdetails);
+			oerLbl.setText(GL1834+GL_SPL_SEMICOLON);
+			oerAvailability.setText(" "+oerdetails);
 		}else{
 			oerPanel.setVisible(false);
 		}
@@ -942,7 +942,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
 		if(momentoflearningdetails.size()>0){
-			final Label momentsofLabel=new Label(momentoflearningdetails.get(0));
+			final Label momentsofLabel=new Label(" "+momentoflearningdetails.get(0));
 			momentsofLabel.getElement().setAttribute("style", "float: left;");
 			momentsoflearningType.add(momentsofLabel);
 			momentsoflearningPanel.setVisible(true);
@@ -969,12 +969,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			dKnowledgeLbl.setText(GL1693+GL_SPL_SEMICOLON);
 		if(depthOfKnowledgedetails.size()>0){
 			if(depthOfKnowledgedetails.size()==1){
-				final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0));
+				final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0));
 				deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
 				dKnowledgeType.add(deapthknowledgeLabel);
 				dKnowledgePanel.setVisible(true);
 			} if(depthOfKnowledgedetails.size()==2){
-				final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+				final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
 				deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
 				dKnowledgeType.add(deapthknowledgeLabel);
 				dKnowledgePanel.setVisible(true);
@@ -984,7 +984,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(depthOfKnowledgedetails.size()>2){
 			final Label deapthknowledgeLabel=new Label("+"+(depthOfKnowledgedetails.size()-2)); 
 			deapthknowledgeLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label deapthknowledgeLabelNew=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+			final Label deapthknowledgeLabelNew=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
 			deapthknowledgeLabelNew.getElement().setAttribute("style", "float:left;");
 			dKnowledgeType.add(deapthknowledgeLabelNew);
 			dKnowledgeType.add(deapthknowledgeLabel);
@@ -1005,7 +1005,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 			educationallLbl.setText(GL1720);
 		if(eduUsedetails.size()>0){
-			final Label eduUseLabel=new Label(eduUsedetails.get(0));
+			final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
 			eduUseLabel.getElement().setAttribute("style", "float: left;");
 			eduUseType.add(eduUseLabel);
 			eduUsePanel.setVisible(true);
@@ -1030,9 +1030,10 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	private void setAcessHazardDetails(String accesshazard) {
 		// TODO Auto-generated method stub
+		System.out.println("accesshazard::::"+accesshazard);
 		if(accesshazard!=null&&!accesshazard.equalsIgnoreCase("")&&!accesshazard.equalsIgnoreCase("null")){
 			accessHazardPanel.setVisible(true);
-			acessHazardType.setText(accesshazard);
+			acessHazardType.setText(" "+accesshazard);
 			acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
 		}else{
 		accessHazardPanel.setVisible(false);
@@ -1043,7 +1044,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(controlflexibility!=null&&!controlflexibility.equalsIgnoreCase("")&&!controlflexibility.equalsIgnoreCase("null")){
 			controlPanel.setVisible(true);
-			controlType.setText(controlflexibility);
+			controlType.setText(" "+controlflexibility);
 			controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
 		}else{
 			controlPanel.setVisible(false);
@@ -1060,12 +1061,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(mediaFeatures.size()>0){
 			
 			if(mediaFeatures.size()==1){
-				final Label mediafeatureLabel=new Label(mediaFeatures.get(0));
+				final Label mediafeatureLabel=new Label(" "+mediaFeatures.get(0));
 				mediafeatureLabel.getElement().setAttribute("style", "float: left;");
 				mediaFeatureType.add(mediafeatureLabel);
 				mediaFeaturePanel.setVisible(true);
 			} if(mediaFeatures.size()==2){
-				final Label mediafeatureLabel=new Label(mediaFeatures.get(0)+","+mediaFeatures.get(1));
+				final Label mediafeatureLabel=new Label(" "+mediaFeatures.get(0)+","+mediaFeatures.get(1));
 				mediafeatureLabel.getElement().setAttribute("style", "float: left;");
 				mediaFeatureType.add(mediafeatureLabel);
 				mediaFeaturePanel.setVisible(true);
@@ -1075,7 +1076,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 			final Label mediafetureCountLabel=new Label("+"+(mediaFeatures.size()-2)); 
 			mediafetureCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label mediafeatureLabelNew=new Label(mediaFeatures.get(0)+","+mediaFeatures.get(1));
+			final Label mediafeatureLabelNew=new Label(" "+mediaFeatures.get(0)+","+mediaFeatures.get(1));
 			mediafeatureLabelNew.getElement().setAttribute("style", "float:left;");
 			mediaFeatureType.add(mediafeatureLabelNew);
 			mediaFeatureType.add(mediafetureCountLabel);
@@ -1096,12 +1097,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(acessmode.size()>0){
 			
 			if(acessmode.size()==1){
-				final Label accessmodeLabel=new Label(acessmode.get(0));
+				final Label accessmodeLabel=new Label(" "+acessmode.get(0));
 				accessmodeLabel.getElement().setAttribute("style", "float: left;");
 				accessModeType.add(accessmodeLabel);
 				accessModePanel.setVisible(true);
 			} if(acessmode.size()==2){
-				final Label accessmodeLabel=new Label(acessmode.get(0)+","+acessmode.get(1));
+				final Label accessmodeLabel=new Label(" "+acessmode.get(0)+","+acessmode.get(1));
 				accessmodeLabel.getElement().setAttribute("style", "float: left;");
 				accessModeType.add(accessmodeLabel);
 				accessModePanel.setVisible(true);
@@ -1111,7 +1112,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 			final Label acessmodeCountLabel=new Label("+"+(acessmode.size()-2)); 
 			acessmodeCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label accessmodeLabelNew=new Label(acessmode.get(0)+","+acessmode.get(1));
+			final Label accessmodeLabelNew=new Label(" "+acessmode.get(0)+","+acessmode.get(1));
 			accessmodeLabelNew.getElement().setAttribute("style", "float:left;");
 			accessModeType.add(accessmodeLabelNew);
 			accessModeType.add(acessmodeCountLabel);
@@ -1129,12 +1130,12 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			if(mediaType.equals(NOT_FRIENDY_TAG)){
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-				mbFriendlyText.setText(GL1735.toUpperCase());
+				mbFriendlyText.setText(" "+GL1735.toUpperCase());
 				isAccessibilityInfo=true;
 			}else{
 				mobileFriendlyPanel.setVisible(true);
 				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-				mbFriendlyText.setText(GL_GRR_YES.toUpperCase());
+				mbFriendlyText.setText(" "+GL_GRR_YES.toUpperCase());
 				isAccessibilityInfo=true;
 			}
 		}else{
@@ -1151,13 +1152,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(readinglevel.size()>0){
 			if(readinglevel.size()==1){
 				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
-				final Label readingLabel=new Label(readinglevel.get(0));
+				final Label readingLabel=new Label(" "+readinglevel.get(0));
 				readingLabel.getElement().setAttribute("style", "float: left;");
 				readingLevelType.add(readingLabel);
 				readingLevelPanel.setVisible(true);
 			} if(readinglevel.size()==2){
 				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
-				final Label readingLabel=new Label(readinglevel.get(0)+","+readinglevel.get(1));
+				final Label readingLabel=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
 				readingLabel.getElement().setAttribute("style", "float: left;");
 				readingLevelType.add(readingLabel);
 				readingLevelPanel.setVisible(true);
@@ -1168,7 +1169,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
 			final Label readingCountLabel=new Label("+"+(readinglevel.size()-2)); 
 			readingCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label readingLabelNew=new Label(readinglevel.get(0)+","+readinglevel.get(1));
+			final Label readingLabelNew=new Label(" "+readinglevel.get(0)+","+readinglevel.get(1));
 			readingLabelNew.getElement().setAttribute("style", "float:left;");
 			readingLevelType.add(readingLabelNew);
 			readingLevelType.add(readingCountLabel);
@@ -1189,13 +1190,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(keywords.size()>0){
 			if(keywords.size()==1){
 				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
-				final Label keywordLabel=new Label(keywords.get(0));
+				final Label keywordLabel=new Label(" "+keywords.get(0));
 				keywordLabel.getElement().setAttribute("style", "float: left;");
 				keywordsInfo.add(keywordLabel);
 				keyWordsPanel.setVisible(true);
 			} if(keywords.size()==2){
 				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
-				final Label keywordLabel=new Label(keywords.get(0)+","+keywords.get(1));
+				final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
 				keywordLabel.getElement().setAttribute("style", "float: left;");
 				keywordsInfo.add(keywordLabel);
 				keyWordsPanel.setVisible(true);
@@ -1205,7 +1206,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
 			keywordCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label keywordsLabelNew=new Label(keywords.get(0)+","+keywords.get(1));
+			final Label keywordsLabelNew=new Label(" "+keywords.get(0)+","+keywords.get(1));
 			keywordsLabelNew.getElement().setAttribute("style", "float:left;");
 			keywordsInfo.add(keywordsLabelNew);
 			keywordsInfo.add(keywordCountLabel);
@@ -1221,7 +1222,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(copyRightHolder!=null&&!copyRightHolder.equalsIgnoreCase("")&&!copyRightHolder.equalsIgnoreCase("null")){
 			copyRightPanel.setVisible(true);
-			copyRightType.setText(copyRightHolder);
+			copyRightType.setText(" "+copyRightHolder);
 			copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
 		}else{
 			copyRightPanel.setVisible(false);
@@ -1233,7 +1234,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(author!=null&&!author.equalsIgnoreCase("")&&!author.equalsIgnoreCase("null")){
 			authorPanel.setVisible(true);
 			authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
-			authorName.setText(author);
+			authorName.setText(" "+author);
 		}else{
 			authorPanel.setVisible(false);
 		}
@@ -1243,7 +1244,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(dataType!=null&&!dataType.equalsIgnoreCase("")&&!dataType.equalsIgnoreCase("null")){
 			DataTypePanel.setVisible(true);
-			dataTypeFormat.setText(dataType);
+			dataTypeFormat.setText(" "+dataType);
 			dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
 		}else{
 			DataTypePanel.setVisible(false);
@@ -1254,7 +1255,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(language!=null&&!language.equalsIgnoreCase("")&&!language.equalsIgnoreCase("null")){
 			languagePanel.setVisible(true);
-			languageType.setText(language);
+			languageType.setText(" "+language);
 			languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
 		}else{
 			languagePanel.setVisible(false);
@@ -1265,7 +1266,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(countryCode!=null&&!countryCode.equalsIgnoreCase("")&&!countryCode.equalsIgnoreCase("null")){
 			countryCodePanel.setVisible(true);
-			countryCodeType.setText(countryCode);
+			countryCodeType.setText(" "+countryCode);
 			countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
 		}else{
 			countryCodePanel.setVisible(false);
@@ -1276,7 +1277,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(ageRange!=null&&!ageRange.equalsIgnoreCase("")&&!ageRange.equalsIgnoreCase("null")){
 			ageRangePanel.setVisible(true);
-			ageRangeType.setText(ageRange);
+			ageRangeType.setText(" "+ageRange);
 			ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
 		}else{
 			ageRangePanel.setVisible(false);
@@ -1287,7 +1288,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		// TODO Auto-generated method stub
 		if(interactivityType!=null&&!interactivityType.equalsIgnoreCase("")&&!interactivityType.equalsIgnoreCase("null")){
 			interactivityTypePanel.setVisible(true);
-			interactiveType.setText(interactivityType);
+			interactiveType.setText(" "+interactivityType);
 			interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
 		}else{
 			interactivityTypePanel.setVisible(false);
@@ -1297,7 +1298,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void seteducationalRoleDetails(String educationalRole) {
 		if(educationalRole!=null&&!educationalRole.equalsIgnoreCase("")&&!educationalRole.equalsIgnoreCase("null")){
 			eduRolePanel.setVisible(true);
-			eduRoleType.setText(educationalRole);
+			eduRoleType.setText(" "+educationalRole);
 			eduRoleLbl.setText(GL1691+GL_SPL_SEMICOLON);
 		}else{
 			eduRolePanel.setVisible(false);
@@ -1308,7 +1309,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void setedAlignDetails(String educationalAlignment) {
 		if(educationalAlignment!=null&&!educationalAlignment.equalsIgnoreCase("")&&!educationalAlignment.equalsIgnoreCase("null")){
 			eduAllignPanel.setVisible(true);
-			eduAllignType.setText(educationalAlignment);
+			eduAllignType.setText(" "+educationalAlignment);
 			eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
 		}else{
 			eduAllignPanel.setVisible(false);
@@ -1319,7 +1320,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(host!=null&&!host.equalsIgnoreCase("")&&!host.equalsIgnoreCase("null")){
 			hostPanel.setVisible(true);
 			hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
-			hostType.setText(host);
+			hostType.setText(" "+host);
 		}else{
 			hostPanel.setVisible(false);
 		}
@@ -1385,7 +1386,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 		courseInfo.clear();
 		if(coursesList.size()>0){
-			final Label courseInfoLabel=new Label(coursesList.get(0));
+			final Label courseInfoLabel=new Label(" "+coursesList.get(0));
 			courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
 			courseInfo.add(courseInfoLabel);
 			coursePanel.setVisible(true);
