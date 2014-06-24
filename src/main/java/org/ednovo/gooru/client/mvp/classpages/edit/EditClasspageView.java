@@ -1578,6 +1578,7 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			assignmentsTab.addStyleName(res.css().selected());
+			dropdownPlaceHolder.setText(GL1948);
 			
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsDirectionsLabel.setVisible(false);

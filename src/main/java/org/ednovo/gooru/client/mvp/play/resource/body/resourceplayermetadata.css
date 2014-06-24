@@ -824,3 +824,8 @@ fieldset {
 .alignTextleft{
 	text-align:left;
 }
+.ratingText{
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}

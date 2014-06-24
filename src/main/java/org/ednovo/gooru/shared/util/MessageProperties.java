@@ -36,7 +36,8 @@ public interface MessageProperties {
 	String GL_SPL_FULLSTOP = ".";
 	String GL_GRR_ARE = "are";
 	String GL_GRR_AND =	"and";
-	String GL_GRR_YES="Yes";
+	String GL_GRR_YES = "Yes";
+	String GL_GRR_NO = "No";
 	String GL_GRR_IS = "is";
 	String GL_GRR_ALPHABET_A = "A";
 	String GL_GRR_ALPHABET_B = "B";
@@ -694,9 +695,7 @@ public interface MessageProperties {
 	String GL0545 = "Share this collection";
 	String GL0546 = "Share this with your friends and colleagues by copying and pasting this link.";
 	String GL0547 = "This Collection has been added!";
-	
-	
-	
+		
 	String GL0548 = "Open in new tab";
 	String GL0549 = "Click the button below to open this resource!";
 	String GL0550 = "The resource will open in a new tab.";
@@ -1959,7 +1958,7 @@ public interface MessageProperties {
 		String GL1524 = "You can't add yourself to this Class.";
 		String GL1525 = "Pending Invitations";
 		String GL1526 = "Students in my Class";
-		String GL1527 = "No student has joined your class yet!";
+		String GL1527 = "No students have joined your class!";
 		String GL1528 = "You can invite up to {0} students to this class! That's a lot of papers to grade...";
 		
 		//Study player header
@@ -1978,7 +1977,7 @@ public interface MessageProperties {
         String GL1540 = "Welcome to";
         String GL1541 = "To get started, click on the \"Join Class,\" button below.";
         String GL1542 = "Gooru Privacy Terms";
-        String GL1543 = "By clicking \"Join Class,\"  I agree to share my collection progress and information with <i>{0}</i>";
+        String GL1543 = "By clicking \"Join Class\"  I agree to share my collection progress and information with <i>{0}</i>";
         
         String GL1544 = "Your Collection Summary";
         String GL1545 = "Hi there, you are new to this collection. Go study this collection now!";
@@ -2087,7 +2086,7 @@ public interface MessageProperties {
     	String GL1631="Back to the class";
     	String GL1632 = "Looks like this class does not exist!";
     	
-    	String GL1633 = "Please note: It may take up to an hour for collections analytics to appear for newly added students.";
+    	String GL1633 = "Please note: It may take up to an hour for collection analytics to appear for newly-added students.";
     	
     	String GL1634 = "To see all standards, please edit your standards preference in settings.";
     	
@@ -2533,6 +2532,10 @@ public interface MessageProperties {
     	String GL1984 = "For most optimized Gooru experience, please visit www.goorulearning.org via computer.";
     	String GL1985 = "Ednovo";
     	String GL1986 = "FREE On the App Store";
-
-      	 
+    	String GL1987 = "You have no folders or collections!";
+    	String GL1988 = "+ New Folder |  ";
+    	String GL1989 =	"+ New Collection";
+    	String GL1990 = "This folder is empty! Why don't you create a new folder or collection?";
+    	String GL1991 = "Average Rating";
+    	String GL1992 = "Do you want to rate this resource?";
 }

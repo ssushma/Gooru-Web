@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.list;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.dnd.Draggable;
 import org.ednovo.gooru.client.mvp.dnd.DropBox;
@@ -53,7 +54,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -156,15 +156,12 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 			AppClientFactory.fireEvent(new RefreshLevelFolderInShelfListEvent(collectionItemDo.getResource().getGooruOid(), RefreshType.UPDATE,FOLDER_LEVEL,collectionItemDo.getItemSequence(),true));
 			if(widgetCount==0)
 			{
-				AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new AsyncCallback<CollectionDo>() {
+				AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new SimpleAsyncCallback<CollectionDo>() {
 					@Override
 					public void onSuccess(CollectionDo result) {
 						setL3FoldersData(result);
 					}
 					
-					@Override
-					public void onFailure(Throwable caught) {
-					}
 				});
 			}
 			setOpen();
@@ -180,15 +177,12 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 		int widgetCount = contentVerPanel.getWidgetCount();
 		if(widgetCount==0)
 		{
-			AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new AsyncCallback<CollectionDo>() {
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionItemDo.getResource().getGooruOid(), false, new SimpleAsyncCallback<CollectionDo>() {
 				@Override
 				public void onSuccess(CollectionDo result) {
 					setL3FoldersData(result);
 				}
 				
-				@Override
-				public void onFailure(Throwable caught) {
-				}
 			});
 		}
 		setOpen();

@@ -13,7 +13,7 @@
 	          <g:HTMLPanel styleName="{playerStyle.resource-info-metadata-innerwrapper}">	
 	                  <g:Label styleName="{playerStyle.resource-image}" ui:field="resourceTypeImage"/>	 
        					<g:HTML ui:field="lblcollectionName"></g:HTML>  
-       					<g:Button styleName="green {playerStyle.btnGreen}" ui:field="addTagsBtn">Add Tags</g:Button>
+       					<g:Button styleName="green {playerStyle.btnGreen}" ui:field="addTagsBtn"></g:Button>
 	           <g:HTMLPanel styleName="{playerStyle.resource-info-type-image}">	           	
 	           		<g:HTMLPanel styleName="{playerStyle.ipadFriendlyIconNone}" ui:field="mobileFriendly"></g:HTMLPanel>
 	           		   <g:FlowPanel ui:field="ratingWidgetPanel"></g:FlowPanel>

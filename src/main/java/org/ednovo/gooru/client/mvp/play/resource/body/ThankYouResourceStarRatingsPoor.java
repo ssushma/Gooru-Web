@@ -79,7 +79,7 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 	@UiField Button btnSkip,btnPost;
 	@UiField TextArea ratingCommentTxtArea;
 	@UiField public FlowPanel ratingWidgetPanel;
-	@UiField HTMLPanel buttonsContainer;
+	@UiField HTMLPanel buttonsContainer,ratingText;
 	@UiField Label saveAndPsotLbl,mandatoryDescLblForSwareWords,reviewTextAreaTitle;
 	
 	@UiField Label incorporateresourceText, unavailableresourceText,inaccurateTextresource,otherReason;
@@ -125,7 +125,8 @@ public class ThankYouResourceStarRatingsPoor extends PopupPanel implements Messa
 		setGlassEnabled(true);
 		saveAndPsotLbl.setVisible(false);
 		buttonsContainer.setVisible(true);
-		
+		ratingText.getElement().setInnerHTML(GL1991);
+		btnSkip.setText(GL1004);
 	}
 	
 	/**

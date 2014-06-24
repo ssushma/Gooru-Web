@@ -193,7 +193,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		generalLbl.setText(GL1708);
 		resourceInfoLbl.setText(GL1716);
 		educationallLbl.setText(GL1720);
-		
+		addTagsBtn.setText(GL1795);
 		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
 		timeRequiredvalue.setText("");
 		

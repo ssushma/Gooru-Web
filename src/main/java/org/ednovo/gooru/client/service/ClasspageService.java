@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
@@ -291,7 +292,7 @@ public interface ClasspageService extends BaseService {
 	
 	public ArrayList<ClasspageDo> getMyClassPages(String limit, String offset);
 	public CollectionDo createClassPage(String classPageTitle);
-	public ClasspageDo getClasspage(String classpageId);
+	public ClasspageDo getClasspage(String classpageId) throws ServerDownException;
 	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction);
 	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId);
 	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus);

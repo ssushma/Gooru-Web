@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
@@ -49,7 +50,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -173,16 +173,13 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 		if(parentId.isEmpty()) {
 			addToShelf = true;
 		}
-		AppClientFactory.getInjector().getfolderService().createFolder(folderName, parentId, addToShelf, new AsyncCallback<FolderDo>() {
+		AppClientFactory.getInjector().getfolderService().createFolder(folderName, parentId, addToShelf, new SimpleAsyncCallback<FolderDo>() {
 			@Override
 			public void onSuccess(FolderDo folderDo) {
 				folderDo.setType("folder");
 //				AppClientFactory.fireEvent(new UpdateFolderItemEvent(folderDo, parentId, params));
 				AppClientFactory.fireEvent(new RefreshFolderItemEvent(folderDo, RefreshFolderType.INSERT, params));
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.SHELF,params);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}	
