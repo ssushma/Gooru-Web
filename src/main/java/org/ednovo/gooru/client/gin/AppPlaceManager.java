@@ -327,33 +327,38 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public PlaceRequest getPreviousPlayerRequestUrl() {
 			return previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 		}
+		public String getSeachEventPageLocation(){
+			String pageLocation="home-search";
+			if(getSearchMovedPlaceRequest()!=null){
+				if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)
+						||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY)){
+					pageLocation="home-search";
+				}else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
+					pageLocation="shelf-search";
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
+					pageLocation="profile-search";					
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
+					pageLocation="teach-search";			
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
+					pageLocation="study-search";			
+				}
+				else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT)){
+					pageLocation="study-search";			
+				}
+			}else{
+				pageLocation="home-search";
+			}
+			return pageLocation;
+		}
 		
 		public String getPageLocation(){
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
 			if(pageLocation.equals(PlaceTokens.COLLECTION_SEARCH)||pageLocation.equals(PlaceTokens.RESOURCE_SEARCH)){
-				if(getSearchMovedPlaceRequest()!=null){
-					if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.HOME)||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.RUSD_LIBRARY)
-							||getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SAUSD_LIBRARY)){
-						pageLocation="home-search";
-					}else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.SHELF)){
-						pageLocation="shelf-search";
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.PROFILE_PAGE)){
-						pageLocation="profile-search";					
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.EDIT_CLASSPAGE)){
-						pageLocation="teach-search";			
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDY)){
-						pageLocation="study-search";			
-					}
-					else if(getSearchMovedPlaceRequest().getNameToken().equals(PlaceTokens.STUDENT)){
-						pageLocation="study-search";			
-					}
-				}else{
-					pageLocation="home-search";
-				}
+				pageLocation=getSeachEventPageLocation();
 			}else{
 				if(pageLocation.equals(PlaceTokens.HOME)){
 					String page=AppClientFactory.getPlaceManager().getRequestParameter("page",null);
@@ -405,6 +410,20 @@ public class AppPlaceManager extends PlaceManagerImpl implements IsPlaceManager 
 		public String getFolderIds(){
 			String folderIds="";
 			PlaceRequest placeRequest=previousPlayerRequestUrl!=null?previousPlayerRequestUrl:getDefaultPlayerPlaceRequest();
+			String pageLocation=placeRequest.getNameToken();
+			if(pageLocation.equals(PlaceTokens.SHELF)){
+				for(int i=1;i<4;i++){
+					String folderId=placeRequest.getParameter("o"+i, "");
+					if(folderId!=null&&!folderId.equals("")){
+						folderIds=folderIds+folderId+"/";
+					}
+				}
+			}
+			return folderIds;
+		}
+		public String getFolderIdsInString(){
+			String folderIds="";
+			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().getCurrentPlaceRequest();
 			String pageLocation=placeRequest.getNameToken();
 			if(pageLocation.equals(PlaceTokens.SHELF)){
 				for(int i=1;i<4;i++){
