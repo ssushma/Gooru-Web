@@ -555,6 +555,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
+		if(profileDo.getUser().getMeta().getSummary().getCollection()==1||profileDo.getUser().getMeta().getSummary().getCollection()==0){
+			collectionsTabVc.setLabel(GL0645);
+		}
+		else{
+			collectionsTabVc.setLabel(GL1754);
+		}
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
