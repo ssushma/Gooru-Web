@@ -151,13 +151,7 @@ public abstract class SharePlayerVc extends PopupPanel implements MessagePropert
 		try
 		{
 
-		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new AsyncCallback<CollectionDo>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-		
-				
-			}
+		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new SimpleAsyncCallback<CollectionDo>(){
 
 			@Override
 			public void onSuccess(CollectionDo result) {
@@ -414,12 +408,7 @@ public abstract class SharePlayerVc extends PopupPanel implements MessagePropert
 				.getInjector()
 				.getSearchService()
 				.getShortenShareUrl(classpageId, params,
-						new AsyncCallback<Map<String, String>>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-
-							}
+						new SimpleAsyncCallback<Map<String, String>>() {
 
 							@Override
 							public void onSuccess(Map<String, String> result) {

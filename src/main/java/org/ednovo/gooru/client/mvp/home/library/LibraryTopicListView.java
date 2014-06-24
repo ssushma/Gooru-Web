@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.assign.AssignPopupVc;
 import org.ednovo.gooru.client.mvp.home.library.customize.RenameAndCustomizeLibraryPopUp;
@@ -399,11 +400,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				public void onScroll(ScrollEvent event) {
 					if(isScrollable) {
 						isScrollable = false;
-						/*AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 5, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								throw new RuntimeException("Not implemented");
-							}
+						/*AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 5, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
 
 							@Override
 							public void onSuccess(ArrayList<LessonDo> result) {
@@ -478,13 +475,8 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				public void onScroll(ScrollEvent event) {
 					if(isScrollable) {
 						isScrollable = false;
-						AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								throw new RuntimeException("Not implemented");
-							}
-
-							@Override
+						AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
+														@Override
 							public void onSuccess(ArrayList<LessonDo> result) {
 								for(int i=0;i<result.size();i++) {
 									conceptList.add(new LibraryLessonUc(result.get(i),topicId,false,((LESSON_PAGE_INITIAL_LIMIT+1)+i)));
@@ -506,12 +498,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		}
 		if(overallCount<15) {
 			isScrollable = false;
-			AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
-				@Override
-				public void onFailure(Throwable caught) {
-					throw new RuntimeException("Not implemented");
-				}
-
+			AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
 				@Override
 				public void onSuccess(ArrayList<LessonDo> result) {
 					for(int i=0;i<result.size();i++) {
@@ -561,7 +548,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 							if(LESSON_PAGE_INITIAL_LIMIT<partnerItemCount) {
 								isScrollable = false;
 								String gooruUid = AppClientFactory.getPlaceManager().getRequestParameter("pid");
-								AppClientFactory.getInjector().getLibraryService().getPartnerChildFolders(gooruUid, (pageNumber-1)*20, 20,parentId,SHARING_TYPE, null,new AsyncCallback<PartnerConceptListDo>() {
+								AppClientFactory.getInjector().getLibraryService().getPartnerChildFolders(gooruUid, (pageNumber-1)*20, 20,parentId,SHARING_TYPE, null,new SimpleAsyncCallback<PartnerConceptListDo>() {
 									@Override
 									public void onSuccess(PartnerConceptListDo result) {
 										LESSON_PAGE_INITIAL_LIMIT = LESSON_PAGE_INITIAL_LIMIT + result.getSearchResult().size();
@@ -571,17 +558,10 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 										}
 										conceptList.add(new LibraryLessonUc(result.getSearchResult(),topicId,false, 0));
 									}
-									@Override
-									public void onFailure(Throwable caught) {
-									}
 								});
 							}
 						} else {
-							AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new AsyncCallback<ArrayList<LessonDo>>() {
-								@Override
-								public void onFailure(Throwable caught) {
-									throw new RuntimeException("Not implemented");
-								}
+							AppClientFactory.getInjector().getLibraryService().getLessonsOnPagination(subject, ""+topicId, LESSON_PAGE_INITIAL_LIMIT, 20, getPlaceToken(), new SimpleAsyncCallback<ArrayList<LessonDo>>() {
 
 								@Override
 								public void onSuccess(ArrayList<LessonDo> lessonDoList) {

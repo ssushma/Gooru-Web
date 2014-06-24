@@ -5,7 +5,9 @@
 	xmlns:dt="urn:import:com.google.gwt.user.datepicker.client">
 	<ui:style field="style" src="collections.css" />
 	<g:FlowPanel styleName="{style.assignmentContainerHt}">
-		<g:Label ui:field="assignmentIndex" styleName="{style.assignmentIndex}"></g:Label>
+	    <g:HTMLPanel styleName="{style.circle}" ui:field="panelCircle">
+			<g:Label ui:field="assignmentIndex" styleName="{style.assignmentNumbers}"></g:Label>
+		</g:HTMLPanel>
 		<g:FlowPanel styleName="{style.classpageContainer}" ui:field="classpageItemContainer">
 		  <g:FlowPanel styleName="{style.classpageHeader}" ui:field="editButtonsToolBar">
 		    <g:HTMLPanel styleName="{style.headerLeft}">
