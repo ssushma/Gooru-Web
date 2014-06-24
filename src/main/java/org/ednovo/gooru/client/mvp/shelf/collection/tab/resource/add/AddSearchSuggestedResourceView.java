@@ -246,7 +246,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			if (category.equalsIgnoreCase(VIDEO)) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 			} else if (category.equalsIgnoreCase(QUESTION)) {
-				SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
+				//SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
 			}
 			if (resourceSearchResultDo.getNumOfPages() != null && !resourceSearchResultDo.getNumOfPages().equals("0") && !resourceSearchResultDo.getNumOfPages().equalsIgnoreCase(NULL) && resourceSearchResultDo.getNumOfPages().length() > 0) {
 				SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);
@@ -312,7 +312,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		if (category.equalsIgnoreCase(VIDEO)) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.stringToTime(resourceSearchResultDo.getDurationInSec()));
 		} else if (category.equalsIgnoreCase(QUESTION)) {
-			SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
+			//SearchUiUtil.renderMetaData(metaDataFloPanel, StringUtil.getQuestionType(resourceSearchResultDo.getQuestionType() !=null ? resourceSearchResultDo.getQuestionType() : ""));
 		}
 		if (resourceSearchResultDo.getNumOfPages() != null && !resourceSearchResultDo.getNumOfPages().equals("0") && !resourceSearchResultDo.getNumOfPages().equalsIgnoreCase(NULL) && resourceSearchResultDo.getNumOfPages().length() > 0) {
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getNumOfPages() + PAGES);

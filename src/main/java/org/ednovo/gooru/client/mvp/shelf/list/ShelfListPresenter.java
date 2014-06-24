@@ -464,8 +464,11 @@ public class ShelfListPresenter extends PresenterWidget<IsShelfListView> impleme
 	}
 	
 	@Override
-	public void updateShelfFolderName(String folderName) {
-		getView().updateShelfFolderName(folderName);
+	public void updateShelfFolderName(String folderName,String folderId) {
+		/**
+		 * Commented, beacuse of DO-4851 and handled in Shelf collection class it self.
+		 */
+//		getView().updateShelfFolderName(folderName);
 	}
 
 	@Override

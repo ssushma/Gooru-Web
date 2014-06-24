@@ -424,8 +424,7 @@
 			height: 30px;
 			float: left;
 		}
-
-
+	
 	</ui:style>
 	<g:HTMLPanel>
 
@@ -433,7 +432,7 @@
 		
 		<g:HTMLPanel styleName="{style.header}" ui:field="headerMainPanel">
          <g:HTMLPanel styleName="{style.header-inner}">
-            <a ui:field="gooruLearning">
+            <a ui:field="gooruLearning" style="opacity: 1;" >
 				<div class="{res.css.gooruLearningIcon}"></div>
 				<g:Label styleName="{style.gooruLearningCaption}" ui:field="lblBeta"></g:Label>
 			</a>
