@@ -615,12 +615,12 @@ public class EditClasspageView extends
 				if(sortType.equals(GL1948)){
 					sortingStringValue="asce";
 				}else if(sortType.equals(GL1949)){
-					sortingStringValue="desc";
+					sortingStringValue="earliest";// previous it was desc
 				}else if(sortType.equals(GL1950)){
 					sortingStringValue="recent";
 				}
-				else if(sortType.equals(GL1581)){
-					sortingStringValue="duedate";
+				else if(sortType.equals(GL1994)){
+					sortingStringValue="latest";// previous it was due date
 				}
 				assignmentsContainerPanel.clear();
 				assignmentsContainerPanel.add(setLoadingPanel());
@@ -1808,20 +1808,20 @@ public class EditClasspageView extends
 		sortingOptionsList.clear();
 		sortingOptionsList.add(GL1948);
 		sortingOptionsList.add(GL1950);
-		sortingOptionsList.add(GL1949);
+		sortingOptionsList.add(GL1949);//previously it was descending order 
 		sortingOptionsList.add(GL1994);//previous number was 1581
 	}
 	@Override
 	public void setSortingOrderInDropdown(String sortingOrder) {
 		if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("asce")){
 			dropdownPlaceHolder.setText(GL1948);
-		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("desc")){
+		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("earliest")){ // previous it was desc
 			dropdownPlaceHolder.setText(GL1949);
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("recent")){
 			dropdownPlaceHolder.setText(GL1950);
 		}
-		else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("duedate")){
-			dropdownPlaceHolder.setText(GL1581);
+		else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("latest")){ // previous it was due date.
+			dropdownPlaceHolder.setText(GL1994);
 		}
 	}
 	
