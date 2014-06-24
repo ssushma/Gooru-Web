@@ -59,7 +59,7 @@
 					ui:field="gradesPanel">
 					<g:Label styleName="{playerStyle.resource-info-more-title}"
 						ui:field="gradeTitle"></g:Label>
-					<g:Label styleName="{playerStyle.resource-info-title}"
+					<g:HTMLPanel styleName="{playerStyle.resource-info-title}"
 						ui:field="gradesText" />
 				</g:HTMLPanel>
 

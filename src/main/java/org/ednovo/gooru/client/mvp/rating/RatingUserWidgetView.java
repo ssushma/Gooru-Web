@@ -136,6 +136,7 @@ public class RatingUserWidgetView extends Composite implements MessageProperties
 		editReviewText.getElement().setAttribute("maxlength", "500");
 		editReview.setText(GL1860);
 		editReviewBtn.setText(GL0141);
+		cancelReviewBtn.setText(GL0142);
 		String commentTime = getCreatedTime(Long.toString(starRatingsDo.getCreatedDate())); 
 		long lastModifiedOn = starRatingsDo.getLastModifiedOn();
 		timeStamp.setText(commentTime +""+ (lastModifiedOn > 0 ? " " + GL_GRR_Hyphen + " " + GL1434 : ""));

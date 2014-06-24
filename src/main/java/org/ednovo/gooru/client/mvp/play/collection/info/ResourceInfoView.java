@@ -102,7 +102,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	readingLevelPanel,languagePanel,countryCodePanel,copyRightPanel,hostPanel,
 	accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,dateCreatedPanel,
 	authorPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo,aggregatorPanel,aggregatorVal,lblPublisher;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,oerPanel,schoolLevelPanel,addsPanel,addsInfo,aggregatorPanel,aggregatorVal,lblPublisher,gradesText;
 	
 	@UiField static  HTMLPanel standardsContentContainer;
 	
@@ -111,7 +111,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 
 	
 	@UiField Label resourceTypeImage,resourceView,collectionsCount,lblresourceType,publisherText,courseText,legalText,learningobjectiveText,
-					standardsText,hideText,resourceInfoText,gradeTitle,gradesText,originalUrlTitle,timeRequiredLabel,mbFriendlyLbl,
+					standardsText,hideText,resourceInfoText,gradeTitle,originalUrlTitle,timeRequiredLabel,mbFriendlyLbl,
 					mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 					eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
 					languageLbl,languageType,countryCodeLbl,countryCodeType,
@@ -169,6 +169,8 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
     boolean isAggregator =false;
   
     boolean isPublisher =false;
+    
+    boolean isGrades =false;
    
 	private static ResourceInfoViewUiBinder uiBinder = GWT.create(ResourceInfoViewUiBinder.class);
 
@@ -186,7 +188,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		collectionsText.getElement().setInnerHTML(GL0620);
 		hideText.setText(GL0592);
 		resourceInfoText.setText(GL0621);
-		gradeTitle.setText(GL0165+ ""+GL_SPL_SEMICOLON);
+		gradeTitle.setText(GL0165+""+GL_SPL_SEMICOLON+" ");
 		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
 		generalLbl.setText(GL1708);
 		resourceInfoLbl.setText(GL1716);
@@ -195,7 +197,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		timeRequiredLabel.setText(GL1685+GL_SPL_SEMICOLON);
 		timeRequiredvalue.setText("");
 		
-		//resourceInfoSeparatorTimeLbl.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
 		resourceDescription.getElement().setAttribute("style", "margin-top:5px;");
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
 		AppClientFactory.getEventBus().addHandler(DeletePlayerStarReviewEvent.TYPE,deleteStarRating);
@@ -251,6 +252,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		isTimeDuration =false;
 		isAggregator =false;
 		isPublisher=false;
+		isGrades =false;
 		
 		collectionItemDoGlobal = collectionItemDo;
 		if(!AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_PLAY)){
@@ -270,11 +272,47 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		setResourceViewsCount(collectionItemDo.getViews());
 		setResourceLicenceLogo(collectionItemDo.getResource().getAssetURI(), collectionItemDo.getResource().getLicense());
 		renderStandards(standardsInfoConatiner,collectionItemDo.getStandards());
-		setGrades(collectionItemDo.getResource().getGrade());
+		
+		if(collectionItemDo.getResource().getGrade()!=null){
+			List<String> gradesdetails = new ArrayList<String>();
+			List<Integer> gradeListInt = new  ArrayList<Integer>();
+			String[] gradeslist=collectionItemDo.getResource().getGrade().split(",");
+			for (String eachGrade1 : gradeslist) {
+				if (!eachGrade1.equalsIgnoreCase("Kindergarten")
+						&& !eachGrade1.equalsIgnoreCase("Higher Education")) {
+					eachGrade1 = eachGrade1.replaceAll("th", "")
+							.replaceAll("TH", "").replaceAll("st", "")
+							.replaceAll("ST", "").replaceAll("nd", "")
+							.replaceAll("ND", "").replaceAll("rd", "")
+							.replaceAll("RD", "");
+					eachGrade1 = eachGrade1.toLowerCase()
+							.replaceAll("Grade", "").replaceAll("grade", "");
+					eachGrade1 = eachGrade1.toLowerCase().replaceAll("K-", "")
+							.replaceAll("k-", "");
+					eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
+							.replaceAll("k", "");
+					try {
+						String grad[] = generateGradeIfHypen(eachGrade1).trim().split(",");
+						for (int i = 0; i < grad.length; i++) {
+							gradeListInt.add(Integer.parseInt(grad[i]));
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					gradesdetails.add(eachGrade1);
+				}
+			}
+			gradeListInt = sortList(gradeListInt);
+			for(int glevel=0;glevel<gradeListInt.size();glevel++){
+				gradesdetails.add(Integer.toString(gradeListInt.get(glevel)));
+			}
+			setGrades(gradesdetails);
+			}
+		
 		setOriginalUrl(collectionItemDo.getResource().getAssetURI(),collectionItemDo.getResource().getFolder(),
 							collectionItemDo.getResource().getUrl(),collectionItemDo.getResource().getResourceType().getName());
 		loadResourceReleatedCollections(collectionItemDo.getResource().getGooruOid());
-		//setPublisher(collectionItemDo.getResource().getResourceSource()!=null?collectionItemDo.getResource().getResourceSource().getAttribution():"",collectionItemDo.getResource().getUrl());
 		
 		if(collectionItemDo.getResource().getPublisher()!=null){
 			setPublisherDetails(collectionItemDo.getResource().getPublisher());
@@ -290,22 +328,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			setAggregatorvalues(collectionItemDo.getResource().getAggregator());
 		}
 		
-		/*if(collectionItemDo.getResource().getCreatedOn()!=null){
-			setCreatedDate(collectionItemDo.getResource().getCreatedOn());
-		}*/
-
-		/*if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PREVIEW_PLAY)){
-			lblcollectionName.setVisible(true);
-			lblcollectionName.setText(title);
-			lblcollectionName.getElement().setAttribute("style", "margin-left: 40px;position: relative;top: 14px;font-weight: bold;");
-		 }else{
-		    lblcollectionName.setVisible(false);
-		 	}*/
-			
 			lblcollectionName.setHTML(removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			lblcollectionName.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceTitleStyleName());
 			
-		//setHostDetails(collectionItemDo.getResource().getHost());
 			if(collectionItemDo.getResource().getCustomFieldValues()!=null ){
 				clearALlPanels();
 				if(collectionItemDo.getResource().getCustomFieldValues().getCfHost()!=null){
@@ -470,59 +495,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		timeRequiredLabel.setVisible(true);
 		accessibilityPanel.setVisible(true);
 		
-		/*}else{
-			
-			resourcetypeSeparator.setHTML(SEPARATOR);
-			resourcetypeSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
-			resourceTypeImage.getElement().setAttribute("style", "position: relative;");
-			learningobjectiveText.setText(GL0904 + ""+GL_SPL_SEMICOLON);
-			resourceTypeImage.getElement().setAttribute("style","top:15px;position: relative;left:50px;");
 		
-			momentsoflearningPanel.setVisible(false);
-			thumbnailPanel.setVisible(false);
-			licenceCodePanel.setVisible(false);
-			dateCreatedPanel.setVisible(false);
-			//lblcollectionName.setVisible(false);
-			timeRequiredvalue.setVisible(false);
-			authorPanel.setVisible(false);
-			gooruSubjectPanel.setVisible(false);
-			generalLbl.setVisible(false);
-			educationallLbl.setVisible(false);
-			resourceInfoLbl.setVisible(false);
-			accesibilityLbl.setVisible(false);
-			timeRequiredLabel.setVisible(false);
-			resourceInfoSeparatorTimeLbl.setVisible(false);
-			contributorPanel.setVisible(false);
-			mobileFriendlyPanel.setVisible(false);
-			DataTypePanel.setVisible(false);
-			interactivityTypePanel.setVisible(false);
-			eduAllignPanel.setVisible(false);
-			eduUsePanel.setVisible(false);
-			eduRolePanel.setVisible(false);
-			ageRangePanel.setVisible(false);
-			dKnowledgePanel.setVisible(false);
-			readingLevelPanel.setVisible(false);
-			hasAdaptationPanel.setVisible(false);
-			languagePanel.setVisible(false);
-			countryCodePanel.setVisible(false);
-			isAdaptationPanel.setVisible(false);
-			copyRightPanel.setVisible(false);
-			hostPanel.setVisible(false);
-			gooruCoursePanel.setVisible(false);
-			accessibilityAPIPanel.setVisible(false);
-			accessibilityPanel.setVisible(false);
-			controlPanel.setVisible(false);
-			accessHazardPanel.setVisible(false);
-			mediaFeaturePanel.setVisible(false);
-			accessModePanel.setVisible(false);
-			keyWordsPanel.setVisible(false);
-			eduUseType.setVisible(false);
-			gooruCourseInfo.setVisible(false);
-			accessModeType.setVisible(false);
-			mediaFeatureType.setVisible(false);
-			accessibilityAPIType.setVisible(false);
-		}*/
-	
 		if(collectionItemDo.getResource().getCustomFieldValues()!=null){
 		if(collectionItemDo.getResource().getCustomFieldValues().getCfAccessMode()==null
 				&& collectionItemDo.getResource().getCustomFieldValues().getCfMediaFeature()==null
@@ -747,9 +720,51 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				publisherText.setVisible(false);
 				lblPublisher.setVisible(false);
 			}
-			
+			if(isGrades){
+				gradesPanel.setVisible(true);
+				gradeTitle.setVisible(true);
+				gradesText.setVisible(true);
+			}else{
+				gradesPanel.setVisible(false);
+				gradeTitle.setVisible(false);
+				gradesText.setVisible(false);
+			}
 	}
 	
+	private void setGrades(List<String> gradesdetails) {
+		// TODO Auto-generated method stub
+		
+		gradesText.clear();
+		if(gradesdetails == null || gradesdetails.size() == 0 || gradesdetails.contains(null) || gradesdetails.contains("") ){
+		}else{
+		if(gradesdetails.size()>0){
+			if(gradesdetails.size()==1){
+				final Label gradesLabel=new Label(gradesdetails.get(0));
+				gradesLabel.getElement().setAttribute("style", "float: left;");
+				gradesText.add(gradesLabel);
+				isGrades =true;
+			} if(gradesdetails.size()==2){
+				final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+				gradesLabel.getElement().setAttribute("style", "float: left;");
+				gradesText.add(gradesLabel);
+				isGrades =true;
+			}
+		}
+		if(gradesdetails.size()>2){
+			final Label gradesLabelCountLabel=new Label("+"+(gradesdetails.size()-2)); 
+			gradesLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+			gradesLabel.getElement().setAttribute("style", "float:left;");
+			gradesText.add(gradesLabel);
+			gradesText.add(gradesLabelCountLabel);
+			Widget gradeswidget = getCommonwidget(gradesdetails);
+			gradesLabelCountLabel.addMouseOverHandler(new MouseOverShowToolTip(gradeswidget));
+			gradesLabelCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			isGrades =true;
+		}
+		}
+	}
+
 	private void setPublisherDetails(List<String> publisher) {
 		// TODO Auto-generated method stub
 		lblPublisher.clear();
@@ -1310,32 +1325,13 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 	}
 
-	/*private void setCreatedDate(Date createdOn) {
-		
-		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(createdOn);
-		dateCreatedPanel.setVisible(true);
-		createdDateInfo.setText(dateString);
-		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
-	}*/
-
 	private void setThumbnailUrl(String url) {
 		thumbnailurlValue.clear();
 		if(url==null||url.equalsIgnoreCase("")||url.equalsIgnoreCase("null")){
 			thumbnailPanel.setVisible(false);
 		}else{
 			thumbnailPanel.setVisible(false);
-		/*	if(!url.substring(0, 4).equalsIgnoreCase("http")){
-				url= "http://"+url;
-			}
-			Anchor thumbnailAnchor=new Anchor(url);
-			thumbnailAnchor.setHref(url);
-			thumbnailAnchor.setStyleName("");
-			thumbnailAnchor.setTarget("_blank");
-			
-			thumbnailurlValue.add(thumbnailAnchor);
-			thumbnailText.setText(GL1718+GL_SPL_SEMICOLON);*/
 		}
-		
 	}
 
 	public void setResourceDescription(String resourceDescription){
@@ -1405,10 +1401,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 		}
 		if(coursesList.size()==0){
-			 /*Label courseInfoLabel=new Label();
-			 courseInfoLabel.setText(GL0977);
-			 courseInfo.clear();
-			 courseInfo.add(courseInfoLabel);*/
 			 coursePanel.setVisible(false);
 		}
 		
@@ -1441,32 +1433,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public void setCourseInfo(){
 		
 	}
-	/*public void setPublisher(String publisherName,String resourceUrl){
-		if(publisherName==null||publisherName.equalsIgnoreCase("")||publisherName.equalsIgnoreCase("null")){
-			//lblPublisher.setText(GL0977);
-			publisherPanel.setVisible(false);
-		}
-		else{
-			if((!resourceUrl.startsWith("https://docs.google.com"))&&(!resourceUrl.startsWith("http://docs.google.com"))){
-				lblPublisher.setText(publisherName);
-				publisherPanel.setVisible(true);
-				}
-				else{
-				//	lblPublisher.setText(GL0977);	
-					publisherPanel.setVisible(false);
-				}
-		}
-	}*/
-	public void setGrades(String gradesText){
-		
-		if(gradesText!=null&&!gradesText.equalsIgnoreCase("")&&!gradesText.equalsIgnoreCase("null")){
-				this.gradesText.setText(getGrades(gradesText));
-				gradesPanel.setVisible(true);
-			}else{
-				gradesPanel.setVisible(false);
-				//this.gradesText.setText(GL0977);
-			}
-	}
+	
 	public void setOriginalUrl(String assetUri,String folder,String originalUrl,String resourceTypeName){
 		this.originalUrlText.clear();
 		if(originalUrl!=null&&!originalUrl.equalsIgnoreCase("")&&!originalUrl.equalsIgnoreCase("null")){
@@ -1490,100 +1457,11 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			this.originalUrlTitle.setVisible(true);
 			this.originalUrlText.setVisible(true);
 		}else{
-			/*HTML html=new HTML(GL0977);
-			html.setStyleName("");
-			this.originalUrlText.add(html);*/
 			this.originalUrlTitle.setVisible(false);
 			this.originalUrlText.setVisible(false);
 		}
 	}
 	
-	public String getGrades(String grade){
-		if (grade != null) {
-			grade = grade.replace("null,", "").replace("null ,", "").replace("null", "");
-			
-		}
-		if (StringUtil.hasValidString(grade)) {
-			boolean isKindergarten = false;
-			boolean isHigherEducation = false;
-
-			if (grade.indexOf("Kindergarten") != -1) {
-				isKindergarten = true;
-			}
-
-			if (grade.indexOf("Higher Education") != -1) {
-				isHigherEducation = true;
-			}
-			if (grade.indexOf("-") > 0) {
-				if (grade.indexOf(",") == -1) {
-					grade = generateGradeIfHypen(grade);
-					
-				}
-			}
-
-			List<String> gradeList = Arrays.asList(grade.split(","));
-			int gradeListSize = gradeList.size();
-
-			StringBuilder finalGradeStringB = new StringBuilder();
-			
-			
-			List<Integer> gradeListInt = new ArrayList<Integer>();
-			//finalGradeStringB.append(gradeListSize > 1 ? "Grades: " : "Grade: ");
-			
-			for (String eachGrade1 : gradeList) {
-				if (!eachGrade1.equalsIgnoreCase("Kindergarten")
-						&& !eachGrade1.equalsIgnoreCase("Higher Education")) {
-
-					eachGrade1 = eachGrade1.replaceAll("th", "")
-							.replaceAll("TH", "").replaceAll("st", "")
-							.replaceAll("ST", "").replaceAll("nd", "")
-							.replaceAll("ND", "").replaceAll("rd", "")
-							.replaceAll("RD", "");
-					eachGrade1 = eachGrade1.toLowerCase()
-							.replaceAll("Grade", "").replaceAll("grade", "");
-					eachGrade1 = eachGrade1.toLowerCase().replaceAll("K-", "")
-							.replaceAll("k-", "");
-					eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
-							.replaceAll("k", "");
-					try {
-					//	gradeListInt.clear();
-						String grad[] = generateGradeIfHypen(eachGrade1).trim().split(",");
-						for (int i = 0; i < grad.length; i++) {
- 
-							gradeListInt.add(Integer.parseInt(grad[i]));
-							
-						}
-
-					} catch (Exception e) {
-						//gradeListInt.add(0);
-						e.printStackTrace();
-					}
-				}
-			}
-			gradeListInt = sortList(gradeListInt);
-			String finalGrde = formatGrades(gradeListInt);
-			if(finalGrde.equalsIgnoreCase(ALL_GRADES)){
-				finalGradeStringB.append(ALL_GRADES);
-			}else{
-			   if(isKindergarten&&isHigherEducation){
-				    finalGradeStringB.append(finalGrde.equalsIgnoreCase("")?"Kindergarten":"Kindergarten, ");
-					finalGradeStringB.append(finalGrde);
-					finalGradeStringB.append(finalGrde.equalsIgnoreCase("")?", Higher Education":", Higher Education");
-			   }else if(isKindergarten){
-					finalGradeStringB.append(finalGrde.equalsIgnoreCase("")?"Kindergarten":"Kindergarten, ");
-					finalGradeStringB.append(finalGrde);
-				}else if(isHigherEducation){
-					finalGradeStringB.append(finalGrde);
-					finalGradeStringB.append(finalGrde.equalsIgnoreCase("")?"Higher Education":", Higher Education");
-				}else{
-					finalGradeStringB.append(finalGrde);
-				}
-			}
-			grade = finalGradeStringB.toString();
-			
-		}
-		return grade;
-	}
 	private String generateGradeIfHypen(String grade) {
 		String gradeList[];
 	 
@@ -1603,7 +1481,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		} else {
 			gradeStr.append(Math.round(Double.parseDouble(gradeList[0].trim())));
-			/*gradeStr.append(Integer.parseInt("0"));*/
 		}
 		return gradeStr.toString();
 	}	
@@ -1623,47 +1500,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}
 
 		return list;
-	}
-	private String formatGrades(List<Integer> list) {
-		
-    	StringBuffer grade = new StringBuffer();
-		try {
-			if(list.size()>3){
-                int firstGrade=list.get(0);
-                int lastGrade=list.get(list.size()-1);
-                String displayGrade=firstGrade+"-"+lastGrade;
-                if(list.size()>=5){
-                	if(firstGrade<=4&&lastGrade>=9){
-                		grade.append("ALL GRADES");
-                	}
-                	else{
-                		grade.append(firstGrade);
-                		grade.append("-");
-                		grade.append(lastGrade);
-                	}
-                	
-                }else{
-                        if(displayGrade.equalsIgnoreCase("1-12")){
-                                grade.append("ALL GRADES");
-                        }else{
-                                grade.append(firstGrade);
-                                grade.append("-");
-                                grade.append(lastGrade);
-                        }
-                }
-        }else{
-                for(int i=0;i<list.size();i++){
-                	grade.append(list.get(i));
-                	if(i!=(list.size()-1)){
-						grade.append(", ");
-					}
-                }
-        }
-			
-			
-		} catch (Exception e) {
-		}
-		return grade.toString();
 	}
 
 	public HTML setText(String text){
@@ -1697,8 +1533,6 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			//rightsLogoContainer.add(setText(GL0977));
 		}		
 	}	
-	
-	
 	
 	public static void renderStandards(FlowPanel standardsContainer, List<Map<String,String>> standardsList) {
 		standardsContainer.clear();
