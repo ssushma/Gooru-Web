@@ -555,6 +555,12 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		setMetaDataContainerWidth("course");
 		setAddGradeCourseBtnVisibility();
 		getEnableWidget(enableEdit,profileDo.getAboutMe(),profileDo.getCourses());
+		if(profileDo.getUser().getMeta().getSummary().getCollection()==1||profileDo.getUser().getMeta().getSummary().getCollection()==0){
+			collectionsTabVc.setLabel(GL0645);
+		}
+		else{
+			collectionsTabVc.setLabel(GL1754);
+		}
 		collectionsTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getCollection()+"");
 		followingTabVc.setLabelCount(profileDo.getUser().getMeta().getSummary().getFollowing()+"");
 		followersTabVc.setLabelCount("");
@@ -590,13 +596,23 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				moreCourseLbls.add(profileCodeDo.getCode().getLabel());
 			}
 		}
-		renderExtraGradeCourse(moreCourseLbls, "course");
+		if (moreCourseLbls.size() > 0){
+			userCourseList.setVisible(true);
+			moreCourseLbl.setVisible(true);
+			renderExtraGradeCourse(moreCourseLbls, "course");
+		}else{
+//			userCourseList.setVisible(false);
+//			moreCourseLbl.setVisible(false);
+		}
 	}
 
 	private void setUserGradeList(String grade) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
+		System.out.println("grade : "+grade);
 		if(grade!=null) {
+			userGradeList.setVisible(true);
+			moreGradeCourseLbl.setVisible(true);
 			String[] grades = grade.split(",");
 			List<String> moreGradeCourseLbls = new ArrayList<String>();
 			int gradeLength = grades.length;
@@ -655,6 +671,9 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				}
 				renderExtraGradeCourse(moreGradeCourseLbls,"grade");
 			}
+		}else{
+			userGradeList.setVisible(false);
+			moreGradeCourseLbl.setVisible(false);
 		}
 	}
 

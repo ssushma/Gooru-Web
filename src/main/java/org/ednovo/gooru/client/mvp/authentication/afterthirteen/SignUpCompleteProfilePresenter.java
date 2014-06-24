@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.authentication.afterthirteen;
 
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.uc.ThankPopUpForUpdateProfile;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
@@ -75,26 +76,15 @@ public class SignUpCompleteProfilePresenter extends PresenterWidget<IsSignUpComp
 	}
 	@Override
 	public void updateProfile(String fname,String lname,String aboutMe,String password) {
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, new AsyncCallback<V2UserDo>() {
-			
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo("", "", fname, lname, aboutMe,password, "","",true, new SimpleAsyncCallback<V2UserDo>() {
+
 			@Override
 			public void onSuccess(V2UserDo result) {
 				getView().getUpdateButton().setVisible(false);
 				ThankPopUpForUpdateProfile thankPopUpForUpdateProfile=new ThankPopUpForUpdateProfile();
 				thankPopUpForUpdateProfile.show();
-				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
-		
-			
-		
-		
 	}
 	
 	

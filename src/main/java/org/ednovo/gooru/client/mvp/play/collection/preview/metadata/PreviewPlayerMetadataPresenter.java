@@ -203,14 +203,10 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 	}
 	@Override
 	public void editCommentChildView(String commentUid, String commentText, String action) {
-		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new AsyncCallback<CommentsDo>() {
+		this.playerAppService.updateCollectionCommentbyCommentUid(commentUid, commentText, new SimpleAsyncCallback<CommentsDo>() {
 			@Override
 			public void onSuccess(CommentsDo result) {
 				getView().updateCommentChildView("", EDIT);
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				
 			}
 		});
 	}
@@ -250,15 +246,11 @@ public class PreviewPlayerMetadataPresenter extends PresenterWidget<IsPreviewPla
 		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.HOME);
 		
 		if(subject!=null) {
-			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new AsyncCallback<ArrayList<ConceptDo>>() {
+			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {
 				@Override
 				public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
 					getView().isConceptsContainerVisible(true);
 					getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
 				}
 			});
 		} else {

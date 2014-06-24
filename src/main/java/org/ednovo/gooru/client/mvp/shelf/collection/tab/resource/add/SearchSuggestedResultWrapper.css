@@ -94,13 +94,19 @@
 	float: right;
 	padding-top: 10px;	
 	padding-right: 8px;
+	right: -12%;
+	position: relative;
 }
 .suggestedResourceButtonContainer{
 	float: right;
 	margin: -9px 0 9px 0px;
 }
 .addSuggestedResourceOk {
-	float: left;
+	/* float: left; */
+	float: right;
+	position: relative;
+	top: 5px;
+	right: 29%;
 }
 .blueLink,.blueLinkPad {
 	color: #0F76BB;

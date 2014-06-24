@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.folders.event.RefreshFolderType;
 import org.ednovo.gooru.client.mvp.shelf.collection.folders.events.RefreshFolderItemEvent;
@@ -21,10 +22,8 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -173,7 +172,7 @@ public class FolderDeleteView extends AppPopUp implements MessageProperties{
 		deleteText.setVisible(true);
 		okButton.setVisible(false);
 		cancelButton.setVisible(false);
-		AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(parentId, new AsyncCallback<Void>() {
+		AppClientFactory.getInjector().getfolderService().deleteCollectionsFolder(parentId, new SimpleAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
 				okButton.setVisible(true);
@@ -191,11 +190,6 @@ public class FolderDeleteView extends AppPopUp implements MessageProperties{
 				};
 				hide();
 				getPreviousPlace();
-			}
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}

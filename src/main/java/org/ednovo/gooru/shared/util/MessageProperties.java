@@ -748,7 +748,12 @@ public interface MessageProperties {
 	//Add collection view messages.
 	
 	String GL0589 =	"View the collection in the My Collections tab";
-	String GL0590 =	"Save to Customize";
+
+	String GL0590 =	"Add";
+
+/*	String GL0590 =	"Save to Customize";*/
+	String GL0590_1 ="Add";
+
 	String GL0591 ="Adding....";
 	String GL0592 ="Hide";
 	String GL0593 ="Rename (optional)";
@@ -2481,8 +2486,8 @@ public interface MessageProperties {
     	
     	String GL1946 = "View All";
       	String GL1947 = "All,Order Ascending,Order Descending";
-      	String GL1948 = "Ascending";
-      	String GL1949 = "Descending";
+      	String GL1948 = "Assignment Number";
+      	String GL1949 = "Earliest Due Date";//"Descending";
       	String GL1950 = "Recently Added";
       	String GL1951 = "Upcoming(by due date)";
       	String GL1952 = "View All Completed";
@@ -2539,4 +2544,6 @@ public interface MessageProperties {
     	String GL1991 = "Average Rating";
     	String GL1992 = "Do you want to rate this resource?";
     	String GL1993 = "View Administrator Portal";
+    	
+    	String GL1994 = "Latest Due Date";//1581 replaced by this number in Edit class page view.
 }

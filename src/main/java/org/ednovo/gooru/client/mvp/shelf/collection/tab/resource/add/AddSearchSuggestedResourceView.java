@@ -163,9 +163,9 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			ResourceSearchResultDo resourceSearchResultDo,String collectionid) {
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
-		buttonsPanel.setVisible(false);
+		buttonsPanel.setVisible(true);
 		this.collectionId = collectionid;
-		addResourceBtnLbl.setText(GL0590);
+		addResourceBtnLbl.setText(GL0590_1);
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		imgNotFriendly.setTitle(GL0737);
 		imgNotFriendly.setAltText(GL0737);
@@ -175,7 +175,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetPanel.add(ratingWidgetView);
 		setData(resourceSearchResultDo);
-		MouseOutHandler mouseouthandler = new MouseOutHandler() {
+	/*	MouseOutHandler mouseouthandler = new MouseOutHandler() {
 			
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
@@ -192,7 +192,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 			}
 		};
 		suggestedWrapperPanel.addDomHandler(mouseoverhandler, MouseOverEvent.getType());
-		suggestedWrapperPanel.addDomHandler(mouseouthandler, MouseOutEvent.getType());
+		suggestedWrapperPanel.addDomHandler(mouseouthandler, MouseOutEvent.getType());*/
 	}
 	
 	public RatingWidgetView getRatingWidgetView(){

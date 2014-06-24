@@ -94,7 +94,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 	@UiField(provided = true)
 	ClasslistpageCBundle res;
 	
-	@UiField HTMLPanel publicAssignContainer, privateAssignContainer, panelSuggestBox, panelActions,publicClassTxt,publicTxt,invite;
+	@UiField HTMLPanel publicAssignContainer, privateAssignContainer, panelSuggestBox, panelActions,publicClassTxt,publicTxt,invite,privacyPolicyPanel;
 	
 	@UiField VerticalPanel panelActiveMembersList,panelPendingMembersList;
 
@@ -238,7 +238,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		lblPii.setText(GL1892);
 		ancprivacy.setText(GL1893);
 		toUsText.setText(GL1894);
-		
+		privacyPolicyPanel.setVisible(false);
 		
 		lblPleaseWait.setVisible(false);
 		lblErrorMessage.setVisible(false);
