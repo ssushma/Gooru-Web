@@ -13,6 +13,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
+import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowToolTip;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
@@ -61,7 +63,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	@UiField Label publisherText,courseText,legalText,
-	standardsText,gradeTitle,gradesText,originalUrlTitle,adsTitle,mbFriendlyLbl,
+	standardsText,gradeTitle,originalUrlTitle,adsTitle,mbFriendlyLbl,
 	mbFriendlyText,dataTypeLbl,dataTypeFormat,interactiveLbl,interactiveType,eduAllignLbl,eduAllignType,eduUseLbl,
 	eduRoleLbl,eduRoleType,ageRangeLbl,ageRangeType,dKnowledgeLbl,readingLevelLbl,
 	hasAdaptationType,hasAdaptationLbl,languageLbl,languageType,countryCodeLbl,countryCodeType,isAdaptationLbl,isAdaptationType,
@@ -76,7 +78,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	readingLevelPanel,hasAdaptationPanel,languagePanel,countryCodePanel,isAdaptationPanel,copyRightPanel,hostPanel,
 	accessibilityAPIPanel,accessibilityPanel,controlPanel,accessHazardPanel,mediaFeaturePanel,accessModePanel,thumbnailPanel,licenceCodePanel,
 	authorPanel,schLevelPanel,eduUseType,keyWordsPanel,keywordsInfo,readingLevelType,accessModeType,mediaFeatureType,accessibilityAPIType,dKnowledgeType,
-	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel;
+	momentsoflearningPanel,momentsoflearningType,thumbnailurlValue,generalPanel,gradesText;
 	
 	@UiField
 	HTMLPanel aggregationPanel,aggregationType;
@@ -107,6 +109,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	boolean isEducationalInfo=false;
 	boolean isResourceInfo=false;
 	boolean isAccessibilityInfo=false;
+	boolean isGrades =false;
 	
 	/**
 	 * Because this class has a default constructor, it can
@@ -126,6 +129,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		isEducationalInfo=false;
 		isResourceInfo=false;
 		isAccessibilityInfo=false;
+		isGrades =false;
 		setResourceInfoData();
 	}
 
@@ -321,7 +325,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 					       resourceDo.getCustomFieldValues().getCfHost() : null;
 	        String licence= (resourceDo.getLicense()!=null && resourceDo.getLicense().getIcon()!=null) ? resourceDo.getLicense().getIcon() :null;		       
 			
-			if(grade!=null && !grade.equals("")){
+			/*if(grade!=null && !grade.equals("")){
 				gradesPanel.setVisible(true);
 				gradeTitle.setVisible(true);
 				gradesText.setText(InfoUtil.getGrades(grade));
@@ -329,7 +333,46 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			}else{
 				gradesPanel.setVisible(false);
 				gradeTitle.setVisible(false);
-			}
+			}*/
+	        
+	        if(grade!=null && !grade.equals("")){
+				List<String> gradesdetails = new ArrayList<String>();
+				List<Integer> gradeListInt = new  ArrayList<Integer>();
+				String[] gradeslist=resourceDo.getGrade().split(",");
+				for (String eachGrade1 : gradeslist) {
+					if (!eachGrade1.equalsIgnoreCase("Kindergarten")
+							&& !eachGrade1.equalsIgnoreCase("Higher Education")) {
+						eachGrade1 = eachGrade1.replaceAll("th", "")
+								.replaceAll("TH", "").replaceAll("st", "")
+								.replaceAll("ST", "").replaceAll("nd", "")
+								.replaceAll("ND", "").replaceAll("rd", "")
+								.replaceAll("RD", "");
+						eachGrade1 = eachGrade1.toLowerCase()
+								.replaceAll("Grade", "").replaceAll("grade", "");
+						eachGrade1 = eachGrade1.toLowerCase().replaceAll("K-", "")
+								.replaceAll("k-", "");
+						eachGrade1 = eachGrade1.toLowerCase().replaceAll("K", "")
+								.replaceAll("k", "");
+						try {
+							String grad[] = generateGradeIfHypen(eachGrade1).trim().split(",");
+							for (int i = 0; i < grad.length; i++) {
+								gradeListInt.add(Integer.parseInt(grad[i]));
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}else{
+						gradesdetails.add(eachGrade1);
+					}
+				}
+				gradeListInt = sortList(gradeListInt);
+				for(int glevel=0;glevel<gradeListInt.size();glevel++){
+					gradesdetails.add(Integer.toString(gradeListInt.get(glevel)));
+				}
+				setGrades(gradesdetails);
+				}
+	        
+	        
 			setResourceAttribution(CollectiongenealInfo.getResource().getResourceSource()!=null?CollectiongenealInfo.getResource().getResourceSource().getAttribution():
 				null,CollectiongenealInfo.getResource().getTaxonomySet());
 			
@@ -1018,6 +1061,15 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}else{
 			accesibilityLbl.setVisible(false);
 		}
+		if(isGrades){
+			gradesPanel.setVisible(true);
+			gradeTitle.setVisible(true);
+			gradesText.setVisible(true);
+		}else{
+			gradesPanel.setVisible(false);
+			gradeTitle.setVisible(false);
+			gradesText.setVisible(false);
+		}
 	}
 	
 	
@@ -1065,6 +1117,79 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			};
 			popup.show();
 			popup.setPopupPosition(popup.getAbsoluteLeft(),Window.getScrollTop()+10);
+		}
+	}
+	
+	private String generateGradeIfHypen(String grade) {
+		String gradeList[];
+	 
+		StringBuilder gradeStr = new StringBuilder();
+		gradeList = grade.split("-");
+		if (gradeList.length >= 2) {
+			int start = Integer.parseInt(gradeList[0].trim());
+			int end = Integer.parseInt(gradeList[1].trim());
+			if (start < end) {
+				for (int i = start; i <= end; i++) {
+					if (i == end) {
+						gradeStr.append(i);
+					} else {
+						gradeStr.append(i).append(",");
+					}
+				}
+			}
+		} else {
+			gradeStr.append(Math.round(Double.parseDouble(gradeList[0].trim())));
+		}
+		return gradeStr.toString();
+	}	
+	public List<Integer> sortList(List<Integer> list) {
+
+		int listSize = list.size();
+
+		for (int i = 0; i < listSize; i++) {
+
+			for (int j = 1; j < listSize - i; j++) {
+				if (list.get(j - 1) > list.get(j)) {
+					int temp = list.get(j - 1);
+					list.set(j - 1, list.get(j));
+					list.set(j, temp);
+				}
+			}
+		}
+
+		return list;
+	}
+	
+	private void setGrades(List<String> gradesdetails) {
+		// TODO Auto-generated method stub
+		gradesText.clear();
+		if(gradesdetails == null || gradesdetails.size() == 0 || gradesdetails.contains(null) || gradesdetails.contains("") ){
+		}else{
+		if(gradesdetails.size()>0){
+			if(gradesdetails.size()==1){
+				final Label gradesLabel=new Label(gradesdetails.get(0));
+				gradesLabel.getElement().setAttribute("style", "float: left;");
+				gradesText.add(gradesLabel);
+				isGrades =true;
+			} if(gradesdetails.size()==2){
+				final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+				gradesLabel.getElement().setAttribute("style", "float: left;");
+				gradesText.add(gradesLabel);
+				isGrades =true;
+			}
+		}
+		if(gradesdetails.size()>2){
+			final Label gradesLabelCountLabel=new Label("+"+(gradesdetails.size()-2)); 
+			gradesLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
+			final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+			gradesLabel.getElement().setAttribute("style", "float:left;");
+			gradesText.add(gradesLabel);
+			gradesText.add(gradesLabelCountLabel);
+			Widget gradeswidget = getCommonwidget(gradesdetails);
+			gradesLabelCountLabel.addMouseOverHandler(new MouseOverShowToolTip(gradeswidget));
+			gradesLabelCountLabel.addMouseOutHandler(new MouseOutHideToolTip());
+			isGrades =true;
+		}
 		}
 	}
 }

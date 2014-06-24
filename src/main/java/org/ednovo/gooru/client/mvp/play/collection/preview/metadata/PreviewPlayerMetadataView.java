@@ -292,25 +292,29 @@ public class PreviewPlayerMetadataView extends BaseViewWithHandlers<PreviewPlaye
 	
 	public void setUserName(String userName){
 		//userNameLabel.setText(userName);
-		String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
-		if(getUserProfileStatus.equalsIgnoreCase("true")){
-			usernameAnchor = new Anchor();
-			if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
-				usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+		if(collectionDo.getUser().getCustomFields()!=null){
+		if(collectionDo.getUser().getCustomFields().get(0).getOptionalValue()!=null){
+			String getUserProfileStatus	=collectionDo.getUser().getCustomFields().get(0).getOptionalValue();
+			if(getUserProfileStatus.equalsIgnoreCase("true")){
+				usernameAnchor = new Anchor();
+				if(StringUtil.isPartnerUser(collectionDo.getUser().getUsername())){
+					usernameAnchor.setHref("#"+collectionDo.getUser().getUsernameDisplay());
+				}
+				else{
+					String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
+					usernameAnchor.setHref(token);
+				}
+				usernameAnchor.setText(userName);
+				usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
+				usernameAnchor.setTarget("_blank");
+				userNameLabel.setText("");
+				userNameLabel.getElement().appendChild(usernameAnchor.getElement());
 			}
 			else{
-				String token= "#"+PlaceTokens.PROFILE_PAGE+"&id="+collectionDo.getUser().getGooruUId()+"&user="+collectionDo.getUser().getUsername();
-				usernameAnchor.setHref(token);
+				userNameLabel.setText(userName);
 			}
-			usernameAnchor.setText(userName);
-			usernameAnchor.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().setUserText());
-			usernameAnchor.setTarget("_blank");
-			userNameLabel.setText("");
-			userNameLabel.getElement().appendChild(usernameAnchor.getElement());
 		}
-		else{
-			userNameLabel.setText(userName);
-		}
+	}
 	}
 	public void setUserProfileImage(String profileUserId){
 		profileThumbnailImage.setUrl(AppClientFactory.loggedInUser.getSettings().getProfileImageUrl()+profileUserId+".png?v="+Math.random());
