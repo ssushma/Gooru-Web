@@ -41,7 +41,7 @@
 	             
 	             <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="gradesPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="gradeTitle"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title-grades}" ui:field="gradesText"/>
+	              		 <g:HTMLPanel styleName="{playerStyle.resource-info-title-grades}" ui:field="gradesText"/>
 	      		</g:HTMLPanel>
 	             
 	               <g:HTMLPanel ui:field="coursePanel">
