@@ -100,9 +100,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel implements MessagePrope
 		lblTitle.getElement().setAttribute("title",GL0480);
 		
 		lblCancel.getElement().setId("lblCancel");
-		lblCancel.getElement().setAttribute("alt","");
-		lblCancel.getElement().setAttribute("title","");
-		
+
 		panelSignUp.getElement().setId("pnlSignUp");
 		
 		lblHeading.setText(GL0477);
