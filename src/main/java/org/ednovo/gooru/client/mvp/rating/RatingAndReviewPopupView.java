@@ -168,7 +168,7 @@ public class RatingAndReviewPopupView extends PopupViewWithUiHandlers<RatingAndR
 		avgLbl.setText(GL1848);
 		rateResourceBtn.setText(GL1849);
 		ratingDistributionLbl.setText(GL1841);
-//		rateMsg.setText(text);
+		rateMsg.setText(GL1992);
 	}
 
 	public void getUserRatingsAndReviews(String resourceId)
