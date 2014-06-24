@@ -1807,9 +1807,9 @@ public class EditClasspageView extends
 	public void addSortingOptionsToList(){
 		sortingOptionsList.clear();
 		sortingOptionsList.add(GL1948);
-		sortingOptionsList.add(GL1949);
 		sortingOptionsList.add(GL1950);
-		sortingOptionsList.add(GL1581);
+		sortingOptionsList.add(GL1949);
+		sortingOptionsList.add(GL1994);//previous number was 1581
 	}
 	@Override
 	public void setSortingOrderInDropdown(String sortingOrder) {
