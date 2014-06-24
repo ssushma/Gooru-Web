@@ -345,7 +345,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 			headerView.getThumbsUpButton().setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().thumbsUpActive());
 		}*/
 		
-		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
+/*		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
 			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
@@ -354,7 +354,7 @@ public class ResourcePlayerView extends BasePopupViewWithHandlers<ResourcePlayer
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
 			globalTooltipWithButton.setPopupPosition(headerView.getAddButton().getAbsoluteLeft() + 7, headerView.getAddButton().getAbsoluteTop()+25);
 			globalTooltipWithButton.show();
-		}
+		}*/
 		
 	}
 

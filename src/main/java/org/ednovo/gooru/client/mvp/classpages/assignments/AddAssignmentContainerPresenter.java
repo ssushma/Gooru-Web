@@ -138,6 +138,7 @@ public class AddAssignmentContainerPresenter extends PresenterWidget<IsAddAssign
 		params.put("pageNum", 1+"");
 		PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 		AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+		AppClientFactory.fireEvent(new ResetProgressEvent());
 	}
 	public void setClasspageId(String classpageId,EditClasspagePresenter editClasspagePresenter){
 		this.classpageId=classpageId;
