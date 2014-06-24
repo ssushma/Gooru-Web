@@ -139,6 +139,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiField
 	Button /*editMyPage,*/ profileOnButton, profileOffButton, btnSave,
 			addCourseBtn, saveBtn, addBioBtn, addCourseGradeBtn,biographyCancelButton,followButton,FollowingButtonBlue;
+	
+	Boolean justClicked = false;
 
 	/** 
 	 * This method is to get the followButton
@@ -620,7 +622,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	private void setUserGradeList(String grade) {
 		profileDo.setGrade(grade);
 		userGradeList.clear();
-		System.out.println("grade : "+grade);
 		if(grade!=null) {
 			userGradeList.setVisible(true);
 			moreGradeCourseLbl.setVisible(true);
@@ -1465,7 +1466,6 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		if(tabValue!=null || !"".equalsIgnoreCase("tabValue")){
 			if("tags".equalsIgnoreCase(tabValue))
 			{
-				System.out.println("in ");
 				setTab(tagTabVc);
 				tagTabVc.setSelected(true);
 			}
@@ -1482,6 +1482,8 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("followButton")
 	public void onClickFollowButton(ClickEvent event)
 	{
+
+		justClicked = true;
 		if(!AppClientFactory.isAnonymous()){
 		FollowingButtonBlue.setVisible(true);
 		followButton.setVisible(false);
@@ -1495,6 +1497,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	@UiHandler("FollowingButtonBlue")
 	public void onClickUnFollowButton(ClickEvent event)
 	{
+
 		if(!AppClientFactory.isAnonymous()){
 		FollowingButtonBlue.setVisible(false);
 		followButton.setVisible(true);
@@ -1725,20 +1728,32 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 
 		@Override
 			public void onMouseOver(MouseOverEvent event) {
+			if(!justClicked)
+			{
 			FollowingButtonBlue.setText("");
 			FollowingButtonBlue.setText(GL1936);
 			FollowingButtonBlue.removeStyleName(ProfilePageStyle.followingBtn());
 			FollowingButtonBlue.addStyleName(ProfilePageStyle.blackPrimaryButton());
+			}
+
 		}
 	}
 	public class MouseOutOnUnFollowingButton implements MouseOutHandler{
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
+
+			if(!justClicked)
+			{
 			FollowingButtonBlue.setText("");
 			FollowingButtonBlue.setText(GL1895);
 			FollowingButtonBlue.removeStyleName(ProfilePageStyle.blackPrimaryButton());
 			FollowingButtonBlue.addStyleName(ProfilePageStyle.followingBtn());
+			}
+			else
+			{
+				justClicked = false;	
+			}
 			
 		}
 	}
