@@ -3,6 +3,8 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.Followers;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.shared.model.user.UserFollowDo;
+import org.ednovo.gooru.shared.util.MessageProperties;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ErrorEvent;
@@ -15,7 +17,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfilePageUserInfoWidget extends Composite {
+public class ProfilePageUserInfoWidget extends Composite implements MessageProperties{
 
 	private static ProfilePageUserInfoUiBinder uiBinder = GWT
 			.create(ProfilePageUserInfoUiBinder.class);
@@ -55,8 +57,13 @@ public class ProfilePageUserInfoWidget extends Composite {
 		
 		//userNameLabel.setText(userFollowDo.getUsername());
 		userNameLabel.getElement().setId(userFollowDo.getGooruUid());
-		userCollections.setText(userFollowDo.getSummary().getCollection()+" Collection");
-		
+		if(userFollowDo.getSummary().getCollection()==1||userFollowDo.getSummary().getCollection()==0){
+			userCollections.setText(userFollowDo.getSummary().getCollection()+ " Collection");
+		}
+		else
+		{
+			userCollections.setText(userFollowDo.getSummary().getCollection()+" Collections");
+		}
 		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()+" Followers | " +userFollowDo.getSummary().getFollowing()+" Following");
 		
 		String gooruUid = userNameLabel.getElement().getId();
