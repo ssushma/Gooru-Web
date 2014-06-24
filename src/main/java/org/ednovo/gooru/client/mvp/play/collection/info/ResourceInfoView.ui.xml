@@ -97,7 +97,7 @@
 	      		
 	      		 <g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}" ui:field="oerPanel">
 	           			 <g:Label styleName="{playerStyle.resource-info-more-title}" ui:field="oerLbl"></g:Label>
-	              		 <g:Label styleName="{playerStyle.resource-info-title}" ui:field="oerAvailability"/>
+	              		 <g:Label styleName="{playerStyle.resource-info-title-oer}" ui:field="oerAvailability"/>
 	      		</g:HTMLPanel>
 	      		
 	      		<g:HTMLPanel styleName="{playerStyle.resource-info-publishContainer}">
