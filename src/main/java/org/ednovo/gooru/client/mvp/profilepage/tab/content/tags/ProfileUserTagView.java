@@ -28,17 +28,16 @@ package org.ednovo.gooru.client.mvp.profilepage.tab.content.tags;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.user.UserTagsDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -80,13 +79,7 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	@UiHandler("userTagScrollPanel")
 	public void dragFollowingScrollPanel(ScrollEvent event) {
 		if (userTagScrollPanel.getVerticalScrollPosition() == userTagScrollPanel.getMaximumVerticalScrollPosition() && totalTagCount<totalHintCount) {
-		AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalTagCount),limit,new AsyncCallback<List<UserTagsDo>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+		AppClientFactory.getInjector().getUserService().getUserAddedContentTagSummary(AppClientFactory.getPlaceManager().getRequestParameter("id"),Integer.toString(totalTagCount),limit,new SimpleAsyncCallback<List<UserTagsDo>>() {
 
 			@Override
 			public void onSuccess(List<UserTagsDo> result) {
@@ -98,8 +91,7 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 						userTagsConatiner.add(profileUserTagWidget);
 					}
 					
-			}
-				
+				}
 			}
 		});
 		}

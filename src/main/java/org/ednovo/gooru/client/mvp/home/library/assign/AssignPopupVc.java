@@ -203,14 +203,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 		loadingImageLabel.setVisible(true);
 		popupContentAssign.setVisible(false);
 
-		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new AsyncCallback<CollectionDo>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-		
-				
-			}
-
+		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionIdVal, new SimpleAsyncCallback<CollectionDo>(){
 			@Override
 			public void onSuccess(CollectionDo result) {
 	
@@ -508,13 +501,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 				.getInjector()
 				.getSearchService()
 				.getShortenShareUrlforAssign(classpageId, params,
-						new AsyncCallback<Map<String, String>>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-
-							}
-
+						new SimpleAsyncCallback<Map<String, String>>() {
 							@Override
 							public void onSuccess(Map<String, String> result) {
 								decodeRawUrl = result.get("decodeRawUrl");
@@ -526,13 +513,8 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 										collectionDesc,
 										bitlyLink, "",
 										"public");
-								// addShareWidgetInPlay(decodeRawUrl,rawUrl,
-								// "","",bitlyLink,"","");
 							}
-
 						});
-
-
 	}
 
 	public void addShareWidgetInPlay(String link, String rawUrl, String title,

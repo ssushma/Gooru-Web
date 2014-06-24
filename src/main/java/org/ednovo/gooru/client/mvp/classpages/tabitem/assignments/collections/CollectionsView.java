@@ -94,7 +94,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	@UiField FlowPanel dropdownPanel,editButtonsToolBar,classpageItemContainer,dropdownPanelAnalyticsButton;
 	
-	@UiField HTMLPanel directionContentPanel,thumbnailContainer;
+	@UiField HTMLPanel directionContentPanel,thumbnailContainer, panelCircle;
 	
 	@UiField HTML learningObject;
 	
@@ -264,8 +264,10 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	public void setReadStatus(){
 		if(classpageItemDo.getStatus().equalsIgnoreCase(OPEN)){
 			editButtonsToolBar.setStyleName(CollectionsCBundle.INSTANCE.css().openStateCollectionHeader());
+			panelCircle.removeStyleName(CollectionsCBundle.INSTANCE.css().completedStatus());
 		}else{
 			editButtonsToolBar.setStyleName(CollectionsCBundle.INSTANCE.css().completeStateCollectionHeader());
+			panelCircle.addStyleName(CollectionsCBundle.INSTANCE.css().completedStatus());
 		}
 	}
 	

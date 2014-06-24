@@ -1,6 +1,6 @@
 .classpageContainer {
 	float:right;
-	width: 975px;
+	width: 960px;
 	margin-bottom:20px;
 	background-color: rgb(255,255,255);
 	border-color: rgb(234,234,234);
@@ -256,4 +256,33 @@ a.AnalyticsDropdownAnchor{
 }
 .assignmentContainerHt{
 	min-height:260px;
+}
+
+.circle{
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+	/* margin: -8px 2px 0px 2px; */
+	background: #B9BBCA;
+	border-radius: 20px;
+	/* display: inline-block; */
+	float: left;
+	position: relative;
+	display: inline-block;
+	float: left;
+	vertical-align: top;
+	margin-top: 11px;
+}
+
+
+.assignmentNumbers{
+	text-align: center;
+	font-size: 18px;
+	color: white;
+	margin: 5px auto;
+	font-weight: bold;
+	
+}
+.completedStatus{
+	background: #A3CBA0;
 }

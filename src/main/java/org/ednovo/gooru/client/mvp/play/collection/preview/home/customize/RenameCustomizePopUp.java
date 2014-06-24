@@ -155,11 +155,7 @@ public abstract class RenameCustomizePopUp extends PopupPanel implements Message
 				});
 			}
 		});*/
-		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new AsyncCallback<CollectionDo>(){
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
+		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
 
 			@Override
 			public void onSuccess(CollectionDo result) {

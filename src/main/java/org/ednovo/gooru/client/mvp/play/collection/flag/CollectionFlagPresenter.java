@@ -88,13 +88,7 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 	@Override
 	public void getContentReport(String associatedGooruOid) {
 		//playerAppService.getContentReport(associatedGooruOid, new AsyncCallback<ContentReportDo>() {
-		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new AsyncCallback<ArrayList<ContentReportDo>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
 
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
@@ -116,14 +110,8 @@ public class CollectionFlagPresenter extends PresenterWidget<IsCollectionFlagVie
 
 	@Override
 	public String getResourceContentReport(String associatedGooruOid) {
-		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new AsyncCallback<ArrayList<ContentReportDo>>() {
+		playerAppService.getContentReport(associatedGooruOid, AppClientFactory.getGooruUid(), new SimpleAsyncCallback<ArrayList<ContentReportDo>>() {
 		
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
 			@Override
 			public void onSuccess(ArrayList<ContentReportDo> result) {
 				

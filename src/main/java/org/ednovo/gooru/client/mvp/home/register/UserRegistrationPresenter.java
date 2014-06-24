@@ -120,7 +120,7 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 	@Override
 	public void onBind() {
 		super.onBind();
-		setUpdateUserAsyncCallback(new AsyncCallback<ProfileDo>() {
+		setUpdateUserAsyncCallback(new SimpleAsyncCallback<ProfileDo>() {
 
 			@Override
 			public void onSuccess(final ProfileDo userProfile) {

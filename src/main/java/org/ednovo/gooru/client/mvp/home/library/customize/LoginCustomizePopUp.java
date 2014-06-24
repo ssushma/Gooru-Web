@@ -100,12 +100,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 		popupcontentCustomize.setVisible(false);
 		loadingImageLabel.setVisible(true);
 
-		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new AsyncCallback<CollectionDo>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
+		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
 
 			@Override
 			public void onSuccess(CollectionDo result) {

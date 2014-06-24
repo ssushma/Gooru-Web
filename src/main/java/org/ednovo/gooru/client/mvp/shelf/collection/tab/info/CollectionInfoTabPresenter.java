@@ -112,25 +112,13 @@ public class CollectionInfoTabPresenter extends PresenterWidget<IsCollectionInfo
 
 			});
 			String collectionUid = AppClientFactory.getPlaceManager().getRequestParameter("id");
-			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new AsyncCallback<CollectionDo>() {
+			AppClientFactory.getInjector().getResourceService().getCollection(collectionUid,true, new SimpleAsyncCallback<CollectionDo>() {
 
 				@Override
 				public void onSuccess(CollectionDo result) {
 					getView().setData(result);
 				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
-				}
 			});
-
-			
-			
-			//Get Depth of Knowledge and other details///
-			
-			
 	}
 	
 	@Override
