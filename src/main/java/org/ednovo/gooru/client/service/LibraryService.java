@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
@@ -54,7 +55,7 @@ public interface LibraryService extends BaseService {
 	 * @param: subjectName
 	 * @throws : GwtException
 	 */
-	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException;
+	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getLibraryFeaturedUsers 
@@ -62,7 +63,7 @@ public interface LibraryService extends BaseService {
 	 * @description: Get the list of featured users for the library
 	 * @throws : GwtException
 	 */
-	public ArrayList<LibraryUserDo> getLibraryFeaturedUsers(String libraryName) throws GwtException;
+	public ArrayList<LibraryUserDo> getLibraryFeaturedUsers(String libraryName) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getLessonsOnPagination 
@@ -74,7 +75,7 @@ public interface LibraryService extends BaseService {
 	 * @param: limit
 	 * @throws : GwtException
 	 */
-	public ArrayList<LessonDo> getLessonsOnPagination(String subjectName, String topicId, int offset, int limit, String libraryName) throws GwtException;
+	public ArrayList<LessonDo> getLessonsOnPagination(String subjectName, String topicId, int offset, int limit, String libraryName) throws GwtException, ServerDownException;
 	/**
 	 * @function getSubjects 
 	 * @return : HashMap<String,SubjectDo>
@@ -82,9 +83,9 @@ public interface LibraryService extends BaseService {
 	 * @param: subjectId
 	 * @throws : GwtException
 	 */
-	public HashMap<String,SubjectDo> getSubjects(String subjectId, String libraryName) throws GwtException;
+	public HashMap<String,SubjectDo> getSubjects(String subjectId, String libraryName) throws GwtException, ServerDownException;
 	
-	public HashMap<String,StandardsDo> getSubjectsForStandards(String subjectId, String libraryName) throws GwtException;
+	public HashMap<String,StandardsDo> getSubjectsForStandards(String subjectId, String libraryName) throws GwtException, ServerDownException;
 	/**
 	 * @function getConcept 
 	 * @return : ConceptDo
@@ -93,7 +94,7 @@ public interface LibraryService extends BaseService {
 	 * @param: skipCollectionItems
 	 * @throws : GwtException
 	 */
-	public ConceptDo getConcept(String gooruOid, boolean skipCollectionItems) throws GwtException;
+	public ConceptDo getConcept(String gooruOid, boolean skipCollectionItems) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getTopicsOnPagination 
@@ -103,7 +104,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @throws GwtException
 	 * @throws : GwtException
 	 */
-	public ArrayList<TopicDo> getTopicsOnPagination(String subjectId, String unitId, String libraryName, int offset, String standardId) throws GwtException;
+	public ArrayList<TopicDo> getTopicsOnPagination(String subjectId, String unitId, String libraryName, int offset, String standardId) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getLibraryCollections 
@@ -113,7 +114,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @throws GwtException
 	 * @throws : GwtException
 	 */
-	public ArrayList<ConceptDo> getLibraryCollections(String courseType, String lessonId, String libraryName) throws GwtException;
+	public ArrayList<ConceptDo> getLibraryCollections(String courseType, String lessonId, String libraryName) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getPopularCollectionsData 
@@ -125,7 +126,7 @@ public interface LibraryService extends BaseService {
 	 * @throws : GwtException
 	 */
 	
-	public ArrayList<ConceptDo> getPopularCollectionsData(String courseId) throws GwtException;
+	public ArrayList<ConceptDo> getPopularCollectionsData(String courseId) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getLibraryPartnerWorkspace 
@@ -137,7 +138,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param collectionType
 	 * @throws : GwtException
 	 */
-	public PartnerFolderListDo getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken) throws GwtException;
+	public PartnerFolderListDo getLibraryPartnerWorkspace(String gooruUid, int limit,String sharingType, String collectionType, String placeToken) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get Folders of the second level and third level by User
@@ -149,7 +150,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param collectionType
 	 * @throws GwtException
 	 */
-	public PartnerConceptListDo getPartnerChildFolders(String gooruUid, int offset, int limit,String parentId,String sharingType, String collectionType) throws GwtException;
+	public PartnerConceptListDo getPartnerChildFolders(String gooruUid, int offset, int limit,String parentId,String sharingType, String collectionType) throws GwtException, ServerDownException;
 
 	/**
 	 * Get paginated workspace API
@@ -159,17 +160,17 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param sharingType
 	 * @throws GwtException
 	 */
-	public PartnerFolderListDo getPartnerPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException;
+	public PartnerFolderListDo getPartnerPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get all the partners
 	 * @return serialized created {@link ArrayList<LibraryUserDo>}
 	 * @throws GwtException
 	 */
-	public ArrayList<LibraryUserDo> getPartners() throws GwtException;
+	public ArrayList<LibraryUserDo> getPartners() throws GwtException, ServerDownException;
 
 	public ConceptDo getConceptForStandards(String gooruOid, String roteNodeId,
-			boolean skipCollectionItems) throws GwtException;
+			boolean skipCollectionItems) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getProfileLibraryWorkspace
@@ -181,7 +182,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param collectionType
 	 * @throws : GwtException
 	 */
-	public ProfileLibraryListDo getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset) throws GwtException;
+	public ProfileLibraryListDo getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get paginated workspace API
@@ -191,7 +192,7 @@ public interface LibraryService extends BaseService {
 	 * @parm(s) : @param sharingType
 	 * @throws GwtException
 	 */
-	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException;
+	public ProfileLibraryListDo getLibraryPaginationWorkspace(String parentId, String sharingType, int limit) throws GwtException, ServerDownException;
 	
 	/**
 	 * @function getConcept 
@@ -201,5 +202,5 @@ public interface LibraryService extends BaseService {
 	 * @param: skipCollectionItems
 	 * @throws : GwtException
 	 */
-	public ProfileLibraryDo getLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException;
+	public ProfileLibraryDo getLibraryCollection(String gooruOid, boolean skipCollectionItems) throws GwtException, ServerDownException;
 }
