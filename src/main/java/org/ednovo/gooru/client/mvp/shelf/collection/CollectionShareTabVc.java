@@ -811,7 +811,8 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		SocialShareView socialView = new SocialShareView(shareDo){
 			public void triggerShareDataEvent(String shareType,boolean confirmStaus){
 				String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id");
-				PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", "", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", collectionId, "shelf");
+				String path=AppClientFactory.getPlaceManager().getFolderIdsInString();
+				PlayerDataLogEvents.triggerItemShareDataLogEvent(collectionId, "", "", "", "", PlayerDataLogEvents.COLLECTION, shareType, confirmStaus, "", path+collectionId, "shelf");
 			}
 		};
 		contentpanel.add(socialView);

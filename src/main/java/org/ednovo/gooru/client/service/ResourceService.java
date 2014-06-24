@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -55,7 +56,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo createCollection(CollectionDo collectionDo, String codeId)  throws GwtException;
+	public CollectionDo createCollection(CollectionDo collectionDo, String codeId)  throws GwtException, ServerDownException;
 	
 /*	*//**
 	 * Create new collection inside a parent
@@ -64,7 +65,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 *//*
-	public CollectionDo createCollectionInParent(CollectionDo collectionDo, String codeId, String parentId)  throws GwtException;
+	public CollectionDo createCollectionInParent(CollectionDo collectionDo, String codeId, String parentId)  throws GwtException, ServerDownException;
 */
 	/**
 	 * update existing collection
@@ -72,14 +73,14 @@ public interface ResourceService extends BaseService {
 	 * @return serialized to {@link CollectionDo} after update 
 	 * @throws GwtException
 	 */
-//	public CollectionDo updateCollection(CollectionDo collectionDo)  throws GwtException;
+//	public CollectionDo updateCollection(CollectionDo collectionDo)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Delete existing collection by collectionId
 	 * @param collectionId of the collection 
 	 * @throws GwtException
 	 */
-	public void deleteCollection(String collectionId)  throws GwtException;
+	public void deleteCollection(String collectionId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Create new collection item
@@ -88,7 +89,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized to {@link CollectionItemDo} after create 
 	 * @throws GwtException
 	 */
-	public CollectionItemDo createCollectionItem(String collectionId, String resourceId)  throws GwtException;
+	public CollectionItemDo createCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * copy as new collection item
@@ -97,7 +98,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized to {@link CollectionItemDo} after create 
 	 * @throws GwtException
 	 */
-	public CollectionItemDo copyCollectionItem(String collectionId, String resourceId)  throws GwtException;
+	public CollectionItemDo copyCollectionItem(String collectionId, String resourceId)  throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -105,7 +106,7 @@ public interface ResourceService extends BaseService {
 	 * @param collectionItemId of the collection item
 	 * @throws GwtException
 	 */
-	public void deleteCollectionItem(String collectionItemId)  throws GwtException;
+	public void deleteCollectionItem(String collectionItemId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Reorder the collection item
@@ -113,7 +114,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized to {@link CollectionItemDo} after reorder
 	 * @throws GwtException
 	 */
-	public CollectionItemDo reorderCollectionItem(CollectionItemDo collectionItemDo)  throws GwtException; 
+	public CollectionItemDo reorderCollectionItem(CollectionItemDo collectionItemDo)  throws GwtException, ServerDownException; 
 	
 	/**
 	 * Make a copy of the given collection  
@@ -123,7 +124,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized copy {@link CollectionDo} 
 	 * @throws GwtException
 	 */
-	public CollectionDo copyCollection(CollectionDo collectionDo, String addToShelf, String taxonomyCode)  throws GwtException;
+	public CollectionDo copyCollection(CollectionDo collectionDo, String addToShelf, String taxonomyCode)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get all collection item
@@ -131,9 +132,9 @@ public interface ResourceService extends BaseService {
 	 * @return List of serialized {@link CollectionItemDo}
 	 * @throws GwtException
 	 */
-//	public List<CollectionItemDo> getCollectionItems(CollectionDo collectionDo)  throws GwtException;
+//	public List<CollectionItemDo> getCollectionItems(CollectionDo collectionDo)  throws GwtException, ServerDownException;
 
-	public MetaDO getPermissions(String collectionId) throws GwtException;
+	public MetaDO getPermissions(String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get collection by collectionId
@@ -142,7 +143,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo getCollection(String collectionGooruOid,boolean skipCollectionItem)  throws GwtException;
+	public CollectionDo getCollection(String collectionGooruOid,boolean skipCollectionItem)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get list of collection
@@ -152,14 +153,14 @@ public interface ResourceService extends BaseService {
 	 * @return List of serialized {@link CollectionDo}
 	 * @throws GwtException
 	 */
-//	public List<CollectionDo> listCollections(Integer pageSize,Integer pageNum,String scollection)  throws GwtException;
+//	public List<CollectionDo> listCollections(Integer pageSize,Integer pageNum,String scollection)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get user collection
 	 * @return List of serialized {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public List<CollectionDo> getUserCollection()  throws GwtException;
+	public List<CollectionDo> getUserCollection()  throws GwtException, ServerDownException;
 	
 	/**
 	 * Create collection with collection item 
@@ -169,7 +170,7 @@ public interface ResourceService extends BaseService {
 	 * @return created {@link CollectionDo} after serialize
 	 * @throws GwtException
 	 */
-	public CollectionDo createCollectionWithItem(CollectionDo collectionDo, String codeId, String resourceId)  throws GwtException;
+	public CollectionDo createCollectionWithItem(CollectionDo collectionDo, String codeId, String resourceId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Update collection item
@@ -177,7 +178,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized {@link CollectionItemDo} after update
 	 * @throws GwtException
 	 */
-//	public CollectionItemDo updateCollectionItem(CollectionItemDo collectionItem)  throws GwtException;
+//	public CollectionItemDo updateCollectionItem(CollectionItemDo collectionItem)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Update collection meta data info
@@ -193,7 +194,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized {@link CollectionDo} after update
 	 * @throws GwtException
 	 */
-	public CollectionDo updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode,String mediaType, String action)  throws GwtException;
+	public CollectionDo updateCollectionMetadata(String collectionId, String title, String description, String grade, String sharing, String vocabulary, String taxonomyCode, String updateTaxonomyByCode,String mediaType, String action)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Update collection metadata item info
@@ -205,7 +206,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized {@link CollectionItemDo} after update
 	 * @throws GwtException
 	 */
-	public CollectionItemDo updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop)  throws GwtException;
+	public CollectionItemDo updateCollectionItemMetadata(String collectionItemId, String narration, String narrationType, String start, String stop)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Add collaborator for the collection
@@ -214,7 +215,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized {@link UserDo}  of collaborator
 	 * @throws GwtException
 	 */
-	public UserDo addCollaborator(String gooruOid,String collaboratorId)  throws GwtException;
+	public UserDo addCollaborator(String gooruOid,String collaboratorId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get added collaborator list for the collection
@@ -222,7 +223,7 @@ public interface ResourceService extends BaseService {
 	 * @return List of serialized collaborator
 	 * @throws GwtException
 	 */
-	public List<UserDo> getCollaborators(String gooruOid)  throws GwtException;
+	public List<UserDo> getCollaborators(String gooruOid)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Delete added collaborator for the collection
@@ -231,7 +232,7 @@ public interface ResourceService extends BaseService {
 	 * @return serialized {@link UserDo}  of collaborator
 	 * @throws GwtException
 	 */
-	public UserDo deleteCollaborators(String gooruOid,String collaboratorId)  throws GwtException;
+	public UserDo deleteCollaborators(String gooruOid,String collaboratorId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Copy collection item
@@ -239,7 +240,7 @@ public interface ResourceService extends BaseService {
 	 * @return Serialized copied {@link CollectionItemDo}
 	 * @throws GwtException
 	 */
-//	public CollectionItemDo copyCollectionItem(String collectionItemId)  throws GwtException;
+//	public CollectionItemDo copyCollectionItem(String collectionItemId)  throws GwtException, ServerDownException;
 	
 	/**
 	 * Get youtybe video length
@@ -247,11 +248,11 @@ public interface ResourceService extends BaseService {
 	 * @return youtube video length
 	 * @throws GwtException
 	 */
-	public String getYoutubeDuration(String videoId)  throws GwtException;
+	public String getYoutubeDuration(String videoId)  throws GwtException, ServerDownException;
 	
 
 	
-//	public List<CollectionItemsListDo> getMyUserCollections()  throws GwtException;
+//	public List<CollectionItemsListDo> getMyUserCollections()  throws GwtException, ServerDownException;
 	
 	/**
 	 * Add new Resource
@@ -266,7 +267,7 @@ public interface ResourceService extends BaseService {
 	 * @return CollectionDO
 	 * @throws GwtException
 	 */
-	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards) throws GwtException;
+	public CollectionItemDo addNewResource(String gooruOid, String idStr, String urlStr,String titleStr, String descriptionStr, String categoryStr, String thumbnailImgSrcStr, Integer endTime,String edcuationalUse,String momentsOfLearning,List<CodeDo> standards) throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -275,7 +276,7 @@ public interface ResourceService extends BaseService {
 	 * @return ResoruceMetaInfo
 	 * @throws GwtException
 	 */
-	ResourceMetaInfoDo getResourceMetaInfo(String url) throws GwtException;
+	ResourceMetaInfoDo getResourceMetaInfo(String url) throws GwtException, ServerDownException;
 	
 	/**
 	 * To check whether 
@@ -283,13 +284,13 @@ public interface ResourceService extends BaseService {
 	 * @return ResourceDo
 	 * @throws GwtException
 	 */
-	ExistsResourceDo checkResourceExists(String url) throws GwtException;
+	ExistsResourceDo checkResourceExists(String url) throws GwtException, ServerDownException;
 	
 	
 	
-	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException;
+	public CollectionItemDo addQuestionResource(String collectionId, String mediafileName, CollectionQuestionItemDo collectionQuestionItemDo) throws GwtException, ServerDownException;
 	
-	public CollectionItemDo updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException;
+	public CollectionItemDo updateQuestionResource(CollectionItemDo collectionItemDo,CollectionQuestionItemDo collectionQuestionItemDo,String thumbnailUrl) throws GwtException, ServerDownException;
 
 	/**
 	 * To update Resource Info.
@@ -298,26 +299,26 @@ public interface ResourceService extends BaseService {
 	 * @return ResourceDo
 	 * @throws GwtException
 	 */
-	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo) throws GwtException;
+	public CollectionItemDo updateResourceInfo(CollectionItemDo collectionItemDo) throws GwtException, ServerDownException;
 	
-	public void removeQuestionImage(String collectionQuestionId) throws GwtException;
+	public void removeQuestionImage(String collectionQuestionId) throws GwtException, ServerDownException;
 	
-    public void updateQuestionImage(String collectionItemId,String fileName) throws GwtException;
+    public void updateQuestionImage(String collectionItemId,String fileName) throws GwtException, ServerDownException;
 	
-	public List<CollectionDo> getUserCollectionList(Integer pageSize,Integer pageNum, boolean isSharable)  throws GwtException;
+	public List<CollectionDo> getUserCollectionList(Integer pageSize,Integer pageNum, boolean isSharable)  throws GwtException, ServerDownException;
 	
-	//public CollectionItemDo copyCollectionListItem(String collectionId, String resourceId,Integer pageSize,Integer pageNum)  throws GwtException;
+	//public CollectionItemDo copyCollectionListItem(String collectionId, String resourceId,Integer pageSize,Integer pageNum)  throws GwtException, ServerDownException;
 	
-	public String checkShortenUrl(String url) throws GwtException;
+	public String checkShortenUrl(String url) throws GwtException, ServerDownException;
 	
 
 	
-	public CollectionItemDo addNewUserResource(String jsonString,	String gooruOid)  throws GwtException;
+	public CollectionItemDo addNewUserResource(String jsonString,	String gooruOid)  throws GwtException, ServerDownException;
 	
-	public MediaUploadDo saveUserOwnResource(String filePath) throws GwtException;  
+	public MediaUploadDo saveUserOwnResource(String filePath) throws GwtException, ServerDownException;  
 	
-	public CollectionItemDo updateUserOwnResource(String jsonString, String gooruOid)throws GwtException; 
-	public CollectionItemDo updateNarrationMetadata(String collectionItemId, String narration, String narrationType)  throws GwtException;
+	public CollectionItemDo updateUserOwnResource(String jsonString, String gooruOid)throws GwtException, ServerDownException; 
+	public CollectionItemDo updateNarrationMetadata(String collectionItemId, String narration, String narrationType)  throws GwtException, ServerDownException;
 	//For Flag existing resources
 	//To create content report
   	public void createContentReport(String assocGooruOid,String targetValue,String typesvalue1,String typesvalue2,String typesvalue3, String typesvalue4,String otherDescription);
@@ -349,41 +350,41 @@ public interface ResourceService extends BaseService {
   	 *
   	 *
   	 */
-  	public Boolean checkProfanity(Map<String, String> parms)  throws GwtException;
+  	public Boolean checkProfanity(Map<String, String> parms)  throws GwtException, ServerDownException;
   	
-	public List<ProfanityCheckDo> checkProfanityForList(List<ProfanityCheckDo> parms)  throws GwtException;
+	public List<ProfanityCheckDo> checkProfanityForList(List<ProfanityCheckDo> parms)  throws GwtException, ServerDownException;
 	
-	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType) throws GwtException;
+	public FolderListDo getFolderWorkspace(int offset, int limit,String sharingType, String collectionType) throws GwtException, ServerDownException;
 
 	public CollectionDo updateCollectionInfo(CollectionDo collectionDo,
-			String teacherTips) throws GwtException;
+			String teacherTips) throws GwtException, ServerDownException;
 	
 	public CollectionDo updateCollectionLanguageObjective(CollectionDo collectionDo,
-			String languageObjective) throws GwtException;
+			String languageObjective) throws GwtException, ServerDownException;
 	
 	public CollectionDo updateCollectionDepthOfKnowledge(CollectionDo collectionDo,
-			String depthOfKnowledge, Boolean selectedVal) throws GwtException;
+			String depthOfKnowledge, Boolean selectedVal) throws GwtException, ServerDownException;
 	
 	public CollectionDo updateCollectionInstructionalMethod(CollectionDo collectionDo,
-			String instructionMethod, Boolean selectedVal) throws GwtException;
+			String instructionMethod, Boolean selectedVal) throws GwtException, ServerDownException;
 	
 	public CollectionDo updateCollectionLearningSkills(CollectionDo collectionDo,
-			String depthOfKnowledge, Boolean selectedVal) throws GwtException;
+			String depthOfKnowledge, Boolean selectedVal) throws GwtException, ServerDownException;
 	
 	
 	public CollectionDo updateCollectionAudience(CollectionDo collectionDo,
-			String audience, Boolean selectedVal) throws GwtException;
+			String audience, Boolean selectedVal) throws GwtException, ServerDownException;
 
 	public CollectionDo getCollectionInfoV2API(String collectionId)
-			throws GwtException;
+			throws GwtException, ServerDownException;
 	
-	public void deleteTaxonomyResource(String resourceId,Integer codeId)throws GwtException;
+	public void deleteTaxonomyResource(String resourceId,Integer codeId)throws GwtException, ServerDownException;
 	
-	public void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj)throws GwtException;
+	public void UpdateResourceTaxonomy(String resourceId,Set<CodeDo> taxonomyObj)throws GwtException, ServerDownException;
 	
-	public List<ResourceTagsDo> addTagsToResource(String resourceId, String addedTags)throws GwtException;
+	public List<ResourceTagsDo> addTagsToResource(String resourceId, String addedTags)throws GwtException, ServerDownException;
 	
-	public List<ResourceTagsDo> getTagsToResource(String resourceId)throws GwtException;
+	public List<ResourceTagsDo> getTagsToResource(String resourceId)throws GwtException, ServerDownException;
 	
-	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException;
+	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException, ServerDownException;
 }

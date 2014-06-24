@@ -30,6 +30,7 @@ package org.ednovo.gooru.client.service;
 import java.util.Map;
 
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
@@ -53,7 +54,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link SearchFilterDo}
 	 * @throws GwtException
 	 */
-	SearchFilterDo getSearchFilters(String type) throws GwtException;
+	SearchFilterDo getSearchFilters(String type) throws GwtException, ServerDownException;
 
 	/**
 	 * Get resource search result 
@@ -61,7 +62,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link ResourceSearchResultDo}
 	 * @throws GwtException
 	 */
-	SearchDo<ResourceSearchResultDo> getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException;
+	SearchDo<ResourceSearchResultDo> getResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
 
 	/**
 	 * Get collection search result
@@ -69,7 +70,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link CollectionSearchResultDo}
 	 * @throws GwtException
 	 */
-	SearchDo<CollectionSearchResultDo> getCollectionSearchResults(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException;
+	SearchDo<CollectionSearchResultDo> getCollectionSearchResults(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
 
 	/**
 	 * Get resources which are as collection item of specific collection
@@ -77,10 +78,10 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link ResourceSearchResultDo}
 	 * @throws GwtException
 	 */
-//	SearchDo<ResourceSearchResultDo> getCollectionResources(SearchDo<ResourceSearchResultDo> searchDo) throws GwtException;
+//	SearchDo<ResourceSearchResultDo> getCollectionResources(SearchDo<ResourceSearchResultDo> searchDo) throws GwtException, ServerDownException;
 	
 	
-	SearchDo<CollectionItemSearchResultDo> getCollectionItems(String collectionId) throws GwtException;
+	SearchDo<CollectionItemSearchResultDo> getCollectionItems(String collectionId) throws GwtException, ServerDownException;
 
 	/**
 	 * Get collections which holds the specific resource as collection item
@@ -88,7 +89,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link CollectionSearchResultDo}
 	 * @throws GwtException
 	 */
-	SearchDo<CollectionSearchResultDo> getResourceCollections(SearchDo<CollectionSearchResultDo> searchDo) throws GwtException;
+	SearchDo<CollectionSearchResultDo> getResourceCollections(SearchDo<CollectionSearchResultDo> searchDo) throws GwtException, ServerDownException;
 
 	/**
 	 * Get suggest query 
@@ -96,7 +97,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link SearchDo}
 	 * @throws GwtException
 	 */
-//	SearchDo<String> getSuggestSearchQuery(SearchDo<String> searchDo) throws GwtException;
+//	SearchDo<String> getSuggestSearchQuery(SearchDo<String> searchDo) throws GwtException, ServerDownException;
 
 	/**
 	 * Get suggest source 
@@ -104,7 +105,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link SearchDo}
 	 * @throws GwtException
 	 */
-	SearchDo<String> getSuggestSource(SearchDo<String> searchDo) throws GwtException;
+	SearchDo<String> getSuggestSource(SearchDo<String> searchDo) throws GwtException, ServerDownException;
 
 	/**
 	 * Get suggest standards 
@@ -112,7 +113,7 @@ public interface SearchService extends BaseService {
 	 * @return serialized {@link CodeDo}
 	 * @throws GwtException
 	 */
-	SearchDo<CodeDo> getSuggestStandard(SearchDo<CodeDo> searchDo) throws GwtException;
+	SearchDo<CodeDo> getSuggestStandard(SearchDo<CodeDo> searchDo) throws GwtException, ServerDownException;
 
 	/**
 	 * Get shorten collection url
@@ -121,7 +122,7 @@ public interface SearchService extends BaseService {
 	 * @return shrotenUrl, rawUrl
 	 * @throws GwtException
 	 */
-	Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) throws GwtException;
+	Map<String, String> getShortenShareUrl(String contentGooruOid, Map<String, String> params) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get shorten collection url
@@ -130,7 +131,7 @@ public interface SearchService extends BaseService {
 	 * @return shrotenUrl, rawUrl
 	 * @throws GwtException
 	 */
-	Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params) throws GwtException;
+	Map<String, String> getShortenShareUrlforAssign(String contentGooruOid, Map<String, String> params) throws GwtException, ServerDownException;
 	
 	
 	/*
@@ -148,16 +149,16 @@ public interface SearchService extends BaseService {
 	 */
 	String getHomeEndPointUrl();
 	
-	SearchDo<ResourceSearchResultDo> getSuggestSearchResultForResourceNoResult(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException;
+	SearchDo<ResourceSearchResultDo> getSuggestSearchResultForResourceNoResult(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
 	
-//	SearchDo<CollectionSearchResultDo> getSuggestedSearchResultForCollectionNoResult(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException;
+//	SearchDo<CollectionSearchResultDo> getSuggestedSearchResultForCollectionNoResult(SearchDo<CollectionSearchResultDo> searchInput) throws GwtException, ServerDownException;
 	/**
 	 * Get suggest standards 
 	 * @param searchDo instance of {@link SearchDo} type of {@link CodeDo}
 	 * @return serialized {@link CodeDo}
 	 * @throws GwtException
 	 */
-	SearchDo<AutoSuggestKeywordSearchDo> getSuggestedAutokeyword(SearchDo<AutoSuggestKeywordSearchDo> searchDo) throws GwtException;
+	SearchDo<AutoSuggestKeywordSearchDo> getSuggestedAutokeyword(SearchDo<AutoSuggestKeywordSearchDo> searchDo) throws GwtException, ServerDownException;
 
 	/**
 	 * 
@@ -180,12 +181,12 @@ public interface SearchService extends BaseService {
 	 *
 	 *
 	 */
-	String getGoogleSignin(String placeToken, Map<String, String> parms) throws GwtException;
+	String getGoogleSignin(String placeToken, Map<String, String> parms) throws GwtException, ServerDownException;
 	
 	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo);
 	
-	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException;
+	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException, ServerDownException;
 	
-	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid) throws GwtException;
+	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid) throws GwtException, ServerDownException;
 
 }
