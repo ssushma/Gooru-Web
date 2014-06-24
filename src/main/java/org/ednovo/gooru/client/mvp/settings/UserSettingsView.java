@@ -426,15 +426,13 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		texasChk.setStyleName(Settings.standardsCheckBox());
 
 		ngssChk.setStyleName(Settings.standardsCheckBox());
-
-		//ngssChk.setStyleName(Settings.standardsCheckBox());
-		//added in 6.4
-		
+	//added in 6.4
+		btnViewAdmin.setText(GL1993);
 		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
 			btnViewAdmin.setVisible(true);
 		}else{
 			btnViewAdmin.setVisible(false);
-			System.out.println("Admin::"+AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin"));
+			
 		}
 
 		

@@ -607,7 +607,8 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		loadingImageLabel.getElement().setId("loadingImageLabel");
 		
 		panelFoooter.setVisible(true);
-		
+		rbPublic.setText(GL1921);
+		lblPublish.setText(GL1942);
 //		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 //			shelfViewMainContainer.getElement().getStyle().clearMarginTop();
 //		}else{
