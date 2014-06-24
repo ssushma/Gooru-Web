@@ -49,6 +49,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -59,6 +60,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	@UiField QuestionStyleResource oeStyle;
 	@UiField Label messageBodyText;
 	@UiField HTMLPanel answerText;
+	@UiField InlineLabel btnYes,btnNo;
 	private boolean isCheckButtonEnabled=true;
 	
 	private boolean isChekcAnswerButtonClicked=false;
@@ -77,6 +79,7 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	public MultipleAnswersQuestionView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		setQuestionTypeCaption();
+		
 	}
 	
 	@UiConstructor
@@ -93,6 +96,8 @@ public abstract  class MultipleAnswersQuestionView extends Composite implements 
 	
 	private void setQuestionTypeCaption(){
 		messageBodyText.setText(TRUE_FALSE_BODY_TEXT);
+		btnYes.setText(GL_GRR_YES);
+		btnNo.setText(GL_GRR_NO);
 	}
 	
 	private void renderQuestionAnswerOptions(){

@@ -36,7 +36,8 @@ public interface MessageProperties {
 	String GL_SPL_FULLSTOP = ".";
 	String GL_GRR_ARE = "are";
 	String GL_GRR_AND =	"and";
-	String GL_GRR_YES="Yes";
+	String GL_GRR_YES = "Yes";
+	String GL_GRR_NO = "No";
 	String GL_GRR_IS = "is";
 	String GL_GRR_ALPHABET_A = "A";
 	String GL_GRR_ALPHABET_B = "B";
@@ -2538,4 +2539,5 @@ public interface MessageProperties {
     	String GL1989 =	"+ New Collection";
     	String GL1990 = "This folder is empty! Why don't you create a new folder or collection?";
     	String GL1991 = "Average Rating";
+    	String GL1992 = "Do you want to rate this resource?";
 }
