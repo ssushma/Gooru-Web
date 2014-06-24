@@ -300,7 +300,7 @@ IsAfterThirteen,MessageProperties {
 		btnEnterLater.setVisible(false);
 		lblUpdating.setText(GL1138);
 		lblUpdating.setVisible(true);
-		AppClientFactory.getInjector().getUserService().updateV2ProfileDo(txtEmailId.getText(), "nonParent", "", "", "","","","",true, new AsyncCallback<V2UserDo>() {
+		AppClientFactory.getInjector().getUserService().updateV2ProfileDo(txtEmailId.getText(), "nonParent", "", "", "","","","",true, new SimpleAsyncCallback<V2UserDo>() {
 			
 			@Override
 			public void onSuccess(V2UserDo result) {
@@ -318,15 +318,7 @@ IsAfterThirteen,MessageProperties {
 				Map<String, String> params = new HashMap<String, String>();
 				params.put(GOORU_UID, AppClientFactory.getGooruUid());
 				params.put(ACCOUNT_TYPE, "nonParent");
-				sendConfirmationMail(params);
-				
-								
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
+				sendConfirmationMail(params);								
 			}
 		});
 		

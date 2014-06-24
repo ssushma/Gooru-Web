@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.profilepage.event.RefreshProfileListEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
@@ -41,7 +42,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -169,11 +169,7 @@ public class ProfilePageCollectionFolder extends FocusPanel implements ClickHand
 	}
 
 	public void setInnerFolderContent() {
-		AppClientFactory.getInjector().getProfilePageService().getFolders(this.collectionItemDo.getResource().getGooruOid(), new AsyncCallback<List<CollectionItemDo>>() {
-			@Override
-			public void onFailure(Throwable caught) {
-
-			}
+		AppClientFactory.getInjector().getProfilePageService().getFolders(this.collectionItemDo.getResource().getGooruOid(), new SimpleAsyncCallback<List<CollectionItemDo>>() {
 			@Override
 			public void onSuccess(List<CollectionItemDo> collectionItems) {
 				contentVerPanel.clear();

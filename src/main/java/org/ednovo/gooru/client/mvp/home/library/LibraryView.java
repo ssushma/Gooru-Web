@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.event.SetDiscoverLinkEvent;
 import org.ednovo.gooru.client.mvp.home.library.contributors.LibraryContributorsView;
@@ -54,7 +55,6 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetStandardDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetStandardDoHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
-import org.ednovo.gooru.client.mvp.library.sausd.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
@@ -585,13 +585,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 				if (featuredLabel!=null){
 					if(standardId != null)
 					{
-						AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(featuredLabel, getPlaceToken(), new AsyncCallback<HashMap<String, StandardsDo>>() {
-							
-							@Override
-							public void onFailure(Throwable caught) {
-								
-							}
-		
+						AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+									
 							@Override
 							public void onSuccess(
 									HashMap<String, StandardsDo> result) {
@@ -604,12 +599,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 					}
 					else
 					{
-					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new AsyncCallback<HashMap<String, SubjectDo>>() {
-	
-						@Override
-						public void onFailure(Throwable caught) {
-							
-						}
+					AppClientFactory.getInjector().getLibraryService().getSubjects(featuredLabel, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, SubjectDo>>() {
 	
 						@Override
 						public void onSuccess(HashMap<String, SubjectDo> subjectDoList) {
@@ -886,7 +876,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	 *
 	 */
 	private void getTopicsOnPagination(String subjectId, String unitId, int offset, final int totalCount, String standardsId) {
-		AppClientFactory.getInjector().getLibraryService().getTopicsOnPagination(subjectId, unitId, getPlaceToken(), offset,standardsId, new AsyncCallback<ArrayList<TopicDo>>() {
+		AppClientFactory.getInjector().getLibraryService().getTopicsOnPagination(subjectId, unitId, getPlaceToken(), offset,standardsId, new SimpleAsyncCallback<ArrayList<TopicDo>>() {
 			@Override
 			public void onSuccess(ArrayList<TopicDo> topicDoList) {
 				if(topicDoList!=null&&topicDoList.size()>0) {
@@ -896,9 +886,6 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						setLibraryTopicListData(topicDoList);
 					}
 				}
-			}
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}
@@ -1235,10 +1222,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	}
 
 	public void getPartnerWorkspaceFolders(String partnerName) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, null, getPlaceToken(), new AsyncCallback<PartnerFolderListDo>(){
-			@Override
-			public void onFailure(Throwable caught) {}
-			
+		AppClientFactory.getInjector().getLibraryService().getLibraryPartnerWorkspace(partnerName, 20, SHARING_TYPE, null, getPlaceToken(), new SimpleAsyncCallback<PartnerFolderListDo>(){
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				partnerFolderList = result.getSearchResult();
@@ -1248,15 +1232,12 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	}
 	
 	public void getPartnerChildFolderItems(final String folderId, final int pageNumber) {
-		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new AsyncCallback<PartnerFolderListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getPartnerPaginationWorkspace(folderId,SHARING_TYPE, 14,new SimpleAsyncCallback<PartnerFolderListDo>() {
 			@Override
 			public void onSuccess(PartnerFolderListDo result) {
 				//getView().setTopicListData(result.getSearchResult(), folderId);
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-			}
 		});
 	}
 

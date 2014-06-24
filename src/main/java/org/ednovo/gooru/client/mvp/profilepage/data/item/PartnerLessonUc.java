@@ -29,13 +29,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.ProfilePageLibraryStyleBundle;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleEvent;
 import org.ednovo.gooru.client.mvp.profilepage.data.events.SetProfileCollectionStyleHandler;
 import org.ednovo.gooru.client.mvp.profilepage.event.OpenProfileCollectionEvent;
-import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -45,7 +45,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -223,16 +222,11 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	 *
 	 */
 	private void getConceptDetails(String gooruOid) {
-		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryCollection(gooruOid, false, new AsyncCallback<ProfileLibraryDo>() {
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryCollection(gooruOid, false, new SimpleAsyncCallback<ProfileLibraryDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryDo profileLibraryDo) {
 				AppClientFactory.fireEvent(new OpenProfileCollectionEvent(profileLibraryDo,topicId,lessonId+"",lessonLabel,lessonCode));
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				throw new RuntimeException("Not implemented");
-			}
+			}			
 		});
 	}
 	

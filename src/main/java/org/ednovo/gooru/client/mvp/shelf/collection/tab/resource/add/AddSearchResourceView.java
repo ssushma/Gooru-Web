@@ -236,19 +236,13 @@ public abstract class AddSearchResourceView extends Composite implements Message
 	}*/
 	
 	private void getSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchDo,final String contentGorruOid) {
-		AppClientFactory.getInjector().getSearchService().getCollectionSuggestedResourceSearchResults(searchDo,contentGorruOid, new AsyncCallback<SearchDo<ResourceSearchResultDo>>() {
+		AppClientFactory.getInjector().getSearchService().getCollectionSuggestedResourceSearchResults(searchDo,contentGorruOid, new SimpleAsyncCallback<SearchDo<ResourceSearchResultDo>>() {
 			
 			@Override
 			public void onSuccess(SearchDo<ResourceSearchResultDo> result) {
 				// TODO Auto-generated method stub
 				setData(result,contentGorruOid);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
+			}			
 		});
 	}
 	

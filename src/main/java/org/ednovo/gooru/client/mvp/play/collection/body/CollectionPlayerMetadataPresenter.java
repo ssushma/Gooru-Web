@@ -167,15 +167,11 @@ public class CollectionPlayerMetadataPresenter extends PresenterWidget<IsCollect
 		final String libraryType = AppClientFactory.getPlaceManager().getRequestParameter("library", PlaceTokens.HOME);
 		
 		if(subject!=null) {
-			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new AsyncCallback<ArrayList<ConceptDo>>() {
+			this.libraryService.getLibraryCollections(subject, lessonId, libraryType, new SimpleAsyncCallback<ArrayList<ConceptDo>>() {
 				@Override
 				public void onSuccess(ArrayList<ConceptDo> conceptDoList) {
 					getView().isConceptsContainerVisible(true);
 					getView().setRelatedConceptsContent(conceptDoList, PAGE, subject, lessonId, libraryType);
-				}
-				@Override
-				public void onFailure(Throwable caught) {
-					
 				}
 			});
 		} else {

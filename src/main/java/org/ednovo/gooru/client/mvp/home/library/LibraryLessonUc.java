@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
@@ -189,29 +189,19 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 	private void getConceptDetails(String gooruOid) {
 		if(AppClientFactory.getPlaceManager().getRequestParameter("standardId")!=null){
 			String standardsId = AppClientFactory.getPlaceManager().getRequestParameter("standardId");
-		AppClientFactory.getInjector().getLibraryService().getConceptForStandards(gooruOid,standardsId, false, new AsyncCallback<ConceptDo>() {
+		AppClientFactory.getInjector().getLibraryService().getConceptForStandards(gooruOid,standardsId, false, new SimpleAsyncCallback<ConceptDo>() {
 			@Override
 			public void onSuccess(ConceptDo conceptDo) {
 				AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				throw new RuntimeException("Not implemented");
-			}
+			}			
 		});
 		}
 		else
 		{
-			AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new AsyncCallback<ConceptDo>() {
+			AppClientFactory.getInjector().getLibraryService().getConcept(gooruOid, false, new SimpleAsyncCallback<ConceptDo>() {
 				@Override
 				public void onSuccess(ConceptDo conceptDo) {
 					AppClientFactory.fireEvent(new OpenLessonConceptEvent(conceptDo,topicId,lessonId+"",lessonLabel,lessonCode));
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					throw new RuntimeException("Not implemented");
 				}
 			});
 		}

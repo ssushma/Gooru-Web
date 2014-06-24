@@ -165,7 +165,7 @@ public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
             String username = loginTxtBox.getText().trim();
             String password = passwordTxtBox.getText().trim();
             if (username.length() > 1 && password.length() > 1) {
-                AppClientFactory.getInjector().getAppService().signin(username, password, new AsyncCallback<UserDo>() {
+                AppClientFactory.getInjector().getAppService().signin(username, password, new SimpleAsyncCallback<UserDo>() {
 
                     @Override
                     public void onSuccess(UserDo result) {
