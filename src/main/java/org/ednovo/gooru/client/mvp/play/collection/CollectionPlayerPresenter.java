@@ -462,7 +462,9 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 			@Override
 			public void onSuccess(ClasspageItemDo classpageItemDo) { 
 				classpageId=classpageItemDo.getClasspageId();
-				setClasspageInsightsUrl();
+				String view=getPlaceManager().getRequestParameter("view", null);
+				boolean isHomeView=view!=null?false:true;
+				setClasspageInsightsUrl(isHomeView);
 			}
 		});
 	}
@@ -578,7 +580,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		setCollectionDetails(collectionDo);
 		metadataPresenter.setCollectionMetadata(collectionDo);
 		//clearDashBoardIframe();
-		setClassCollectionDataInsightsUrl();
+		setClassCollectionDataInsightsUrl(true);
 		showSignupPopup();
 		setOpenEndedAnswerSubmited(true);
 		if(this.collectionMetadataId!=null){
@@ -685,8 +687,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		stopResourceDataLog();
 		resetAnswerLists();
 		stopCollectionDataLog();
-		//insightsScheduler.schedule(3000);
-		setClassCollectionDataInsightsUrl();
+		setClassCollectionDataInsightsUrl(false);
 		updateSession(sessionId);
 		setUserAttemptedQuestionTypeAndStatus(false,0);
 		setInSlot(METADATA_PRESENTER_SLOT, metadataPresenter,false);
@@ -694,32 +695,23 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 	public void clearDashBoardIframe(){
 		metadataPresenter.clearDashBoardIframe();
 	}
-	Timer insightsScheduler=new Timer(){
-		@Override
-		public void run() {
-			setDataInsighsUrl();
-		}
-	};
 	
-	public void setClassCollectionDataInsightsUrl(){
+	public void setClassCollectionDataInsightsUrl(boolean isHomeView){
 		if(!AppClientFactory.getPlaceManager().getRequestParameter("cid","").equals("")){
 			if(classpageId!=null){
-				setClasspageInsightsUrl();
+				setClasspageInsightsUrl(isHomeView);
 			}else{
 				getClassPageId(AppClientFactory.getPlaceManager().getRequestParameter("cid")); 
 			}
 		}else{
-			metadataPresenter.setDataInsightsSummaryUrl(sessionId);
+			String sessionHomeId=isHomeView?null:sessionId;
+			metadataPresenter.setDataInsightsSummaryUrl(sessionHomeId);
 		}
 	}
 	
-	public void setClasspageInsightsUrl(){
-		metadataPresenter.setClasspageInsightsUrl(classpageId,sessionId);
-	}
-	
-	public void setDataInsighsUrl(){
-		metadataPresenter.setDataInsightsSummaryUrl(sessionId);
-
+	public void setClasspageInsightsUrl(boolean isHomeView){
+		String sessionHomeId=isHomeView?null:sessionId;
+		metadataPresenter.setClasspageInsightsUrl(classpageId,sessionHomeId);
 	}
 	private void showClasspageButton(){
 		String classpageItemId=getPlaceManager().getRequestParameter("cid", null);
@@ -1864,6 +1856,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemLoadDataLogPayLoadObject(itemType));
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String classpageEventId=AppClientFactory.getPlaceManager().getClasspageEventId();
@@ -1888,6 +1881,7 @@ public class CollectionPlayerPresenter extends BasePlacePresenter<IsCollectionPl
 		collectionDataLog.put(PlayerDataLogEvents.ENDTIME, new JSONNumber(startTime));
 		collectionDataLog.put(PlayerDataLogEvents.METRICS,PlayerDataLogEvents.getDataLogMetricsObject(startTime-startTime));
 		collectionDataLog.put(PlayerDataLogEvents.VERSION,PlayerDataLogEvents.getDataLogVersionObject());
+		collectionDataLog.put(PlayerDataLogEvents.USER, PlayerDataLogEvents.getDataLogUserObject());
 		collectionDataLog.put(PlayerDataLogEvents.PAYLOADOBJECT,PlayerDataLogEvents.getItemFlagDataLogPayLoadObject(itemType,flagText,contentReportList));
 		String classpageId=AppClientFactory.getPlaceManager().getDataLogClasspageId();
 		String path="";
