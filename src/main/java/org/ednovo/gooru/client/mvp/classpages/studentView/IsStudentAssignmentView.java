@@ -99,4 +99,6 @@ public interface IsStudentAssignmentView extends IsViewWithHandlers<StudentAssig
 	*/
 	
 	void setSortingOrderInDropdown(String sortingOrder);			
+	
+	void resetAll();
 }
