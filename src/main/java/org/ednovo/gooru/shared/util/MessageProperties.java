@@ -2078,7 +2078,7 @@ public interface MessageProperties {
     	
     	//study player text
     	String GL1626="Your Collection Summary";
-    	String GL1627="You are currently logged out! Please log in to view your data on this collection.";
+    	String GL1627="You are currently logged out! Please log in to start saving your progress on this collection.";
     	String GL1628 = "Aggregator";
     	String GL1629 = "e.g. YouTube";
     	String GL1630 = "View in My Collections";

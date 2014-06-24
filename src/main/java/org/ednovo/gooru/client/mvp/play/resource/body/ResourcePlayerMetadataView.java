@@ -169,10 +169,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 //		five_star = new SimpleRadioButton("");
 		
 		setWidget(uiBinder.createAndBindUi(this));
-		allEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
-		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
-		emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
-		emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
+		allEmoticsContainer.getElement().getStyle().setDisplay(Display.BLOCK);
+		//singleEmoticsContainer.setVisible(false);
+		singleEmoticsContainer.getElement().getStyle().setDisplay(Display.NONE);
+		//emoticsContainer.addMouseOverHandler(new OnEmoticsMouseOver());
+		//emoticsContainer.addMouseOutHandler(new OnEmoticsMouseOut());
 		reactionToolTipOne.setText(GL0581); 
 		reactionToolTipTwo.setText(GL0582); 
 		reactionToolTipThree.setText(GL0583); 
