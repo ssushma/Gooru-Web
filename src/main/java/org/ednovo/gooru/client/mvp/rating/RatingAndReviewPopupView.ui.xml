@@ -45,7 +45,7 @@
                          <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button>
                     </g:HTMLPanel>
 					<g:HTMLPanel styleName="{style.userRating}" ui:field="userRatingContainer">
-					   <g:Label styleName="{style.rateMsg}" ui:field="rateMsg">Do you want to rate this resource?</g:Label>
+					   <g:Label styleName="{style.rateMsg}" ui:field="rateMsg"></g:Label>
 					   <!-- <g:Button styleName="secondary {style.floatRight}" ui:field="rateResourceBtn"></g:Button> -->
 					</g:HTMLPanel>
                     <g:VerticalPanel ui:field="reviewsContainer">
