@@ -843,8 +843,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
+			if(tooltipTimer != null)
+			{
 			tooltipTimer.cancel();
-			toolTipPopupPanel.hide();
+			}
+			toolTipPopupPanel.hide();			
 			EventTarget target = event.getRelatedTarget();
 			  if (Element.is(target)) {
 				  if (!discoverToolTip.getElement().isOrHasChild(Element.as(target))){
@@ -879,7 +882,10 @@ public class HeaderUc extends Composite implements MessageProperties,
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
+				if(tooltipTimer != null)
+				{
 				tooltipTimer.cancel();
+				}
 				toolTipPopupPanel.hide();
 				EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
@@ -921,7 +927,10 @@ public class HeaderUc extends Composite implements MessageProperties,
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
+				if(tooltipTimer != null)
+				{
 				tooltipTimer.cancel();
+				}
 				toolTipPopupPanel.hide();
 				EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
