@@ -373,6 +373,7 @@ public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageVi
 		if (AppClientFactory.getPlaceManager().refreshPlace()) {
 			getView().resetEditClasspageView();
 		}
+		classpageDo = null;
 		getClasspage();
 	}
 	public void getClasspage(){
