@@ -108,6 +108,10 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 	public AssignmentPopupView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		assignmentTitleLabel.setText(GL1407+GL_SPL_STAR);
+		assignmentTitleLabel.getElement().setId("htmlSupport");
+		assignmentTitleLabel.getElement().setAttribute("alt",GL0437);
+		assignmentTitleLabel.getElement().setAttribute("title",GL0437);
+		
 		mandatoryTitleLabel.setText(GL0173);
 		assignmentDueDateLabel.setText(GL0238);
 		mandatoryDueDateLabel.setText(GL0235);
