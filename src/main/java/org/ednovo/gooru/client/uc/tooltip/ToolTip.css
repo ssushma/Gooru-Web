@@ -500,7 +500,7 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 	-moz-border-radius: 4px;
 	position: relative;
-	width: 100%;
+	width: 260px;
 	height: 249px;
 	cursor: pointer;
 }
@@ -564,10 +564,10 @@
 	background-color: #cfe3f1;
 }
 .partnerLibraryDivInfo{
-	position: fixed !important;width:22% !important;
+	/* position: fixed !important;width:22% !important; */
 	z-index: 0;
 }
 .districtLibrayCOntainerInfo{
-	position: fixed !important;
+	/* position: fixed !important; */
 	z-index: 0;
 }

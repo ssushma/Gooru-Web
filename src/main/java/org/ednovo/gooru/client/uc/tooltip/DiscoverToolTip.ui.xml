@@ -15,11 +15,11 @@
  			<panel:HTMLEventPanel styleName="{toolTip.discoverTooltipLabel}" ui:field="lblPartnerLibrary"/>
 			<g:HTMLPanel ui:field="dropdownImg" styleName="{toolTip.partnerDropDownArrow}"></g:HTMLPanel>
 		</g:HTMLPanel>
-		<div class="{toolTip.partnerLibraryDivInfo}">
- 		<panel:HTMLEventPanel styleName="{toolTip.partnerLibraryContainer}" ui:field="partnerLibContainer"/>
- 		</div>
- 		<div class="{toolTip.districtLibrayCOntainerInfo}">
- 		<panel:HTMLEventPanel styleName="{toolTip.districtLibraryContainer}" ui:field="districtLibContainer"/>
- 		</div>
+		<g:HTMLPanel styleName="{toolTip.partnerLibraryDivInfo}">
+ 			<panel:HTMLEventPanel styleName="{toolTip.partnerLibraryContainer}" ui:field="partnerLibContainer"/>
+ 		</g:HTMLPanel>
+ 		<g:HTMLPanel styleName="{toolTip.districtLibrayCOntainerInfo}">
+ 			<panel:HTMLEventPanel styleName="{toolTip.districtLibraryContainer}" ui:field="districtLibContainer"/>
+ 		</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder>
