@@ -72,7 +72,7 @@ public abstract class ServiceRequest {
 		try {
 			return run();
 		} catch (ResourceException exception) {
-			logger.error(ERROR, exception);
+//			logger.error(ERROR, exception);
 			//throw new RuntimeException(exception.getMessage());
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
