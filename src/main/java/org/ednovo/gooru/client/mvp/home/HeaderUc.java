@@ -829,12 +829,13 @@ public class HeaderUc extends Composite implements MessageProperties,
 			discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 			discoverToolTip.getElement().getStyle().setZIndex(99);
 			discoverToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
-			tooltipTimer = new Timer() {
-				public void run() {
-					discoverToolTip.show();
-				}
-			};
-			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//			tooltipTimer = new Timer() {
+//				public void run() {
+//					discoverToolTip.show();
+//				}
+//			};
+//			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+			discoverToolTip.show();
 		}
 	}
 
