@@ -43,6 +43,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -65,6 +66,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel implements MessagePrope
 	Button btnLeave, btnContinue;
 	@UiField InlineLabel pleaseContactText;
 	@UiField Anchor supportLink;
+	@UiField HTMLPanel panelSignUp;
 	String accountType = "";
 	String childDob = "";
 	String parentEmailId = "";
@@ -93,17 +95,50 @@ public class LeaveRegistrationPopUpUc extends PopupPanel implements MessagePrope
 	public void setUiAndIds() {
 		lblTitle.setText(GL0480
 				+ GL_SPL_QUESTION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0480);
+		lblTitle.getElement().setAttribute("title",GL0480);
+		
+		lblCancel.getElement().setId("lblCancel");
+
+		panelSignUp.getElement().setId("pnlSignUp");
+		
 		lblHeading.setText(GL0477);
+		lblHeading.getElement().setId("lblHeading");
+		lblHeading.getElement().setAttribute("alt",GL0477);
+		lblHeading.getElement().setAttribute("title",GL0477);
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
+		
 		lblSubHeading.setText(GL0478);
-		btnLeave.getElement().setId("btnLeave");
-		btnContinue.getElement().setId("btnContinue");
+		lblSubHeading.getElement().setId("lblSubHeading");
+		lblSubHeading.getElement().setAttribute("alt",GL0478);
+		lblSubHeading.getElement().setAttribute("title",GL0478);
+		
 		btnLeave.setText(GL0480);
+		btnLeave.getElement().setId("btnLeave");
+		btnLeave.getElement().setAttribute("alt",GL0480);
+		btnLeave.getElement().setAttribute("title",GL0480);
+		
+		btnContinue.getElement().setId("btnContinue");
+		btnLeave.getElement().setAttribute("alt",GL0479);
+		btnLeave.getElement().setAttribute("title",GL0479);
 		btnContinue.setText(GL0479);
 		btnContinue.getElement().setAttribute("style", "margin-left: 20px");
+		
 		quriesText.setText(GL1139+GL_GRR_COMMA);
+		quriesText.getElement().setId("lblQuriesText");
+		quriesText.getElement().setAttribute("alt",GL1139);
+		quriesText.getElement().setAttribute("title",GL1139);
+		
 		pleaseContactText.setText(GL1145);
+		pleaseContactText.getElement().setId("spnPleaseContactText");
+		pleaseContactText.getElement().setAttribute("alt",GL1145);
+		pleaseContactText.getElement().setAttribute("title",GL1145);
+		
 		supportLink.setText(GL0299);
+		supportLink.getElement().setId("lnkSupportLink");
+		supportLink.getElement().setAttribute("alt",GL0299);
+		supportLink.getElement().setAttribute("title",GL0299);
 		supportLink.setHref(GL1055);
 	}
 

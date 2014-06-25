@@ -79,7 +79,7 @@ public abstract class ServiceRequest {
 			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
 			String serverStatusCode=String.valueOf(statusCode);
 			Character firstCharcter=serverStatusCode.charAt(0);
-			if(statusCode==504){
+			if(statusCode==504 || statusCode==502){
 				String serverStatus=getApiServerStatus();
 				if(serverStatus!=null && serverStatus.equalsIgnoreCase(DOWN)){
 					throw new ServerDownException(statusCode,"");

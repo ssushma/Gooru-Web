@@ -60,7 +60,7 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 	
 	@UiField HTML htmlSupport;
 	
-	@UiField HTMLPanel panelPopupInner;
+	@UiField HTMLPanel panelPopupInner,panelFooter;
 	
 	@UiField(provided = true)
 	SignUpCBundle res;
@@ -173,14 +173,32 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 	 */
 	public void setTextAndIds(){
 		lblLoginHeading.setText(GL0186);
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",GL0186);
+		lblLoginHeading.getElement().setAttribute("title",GL0186);
+		
 		lblCongratsHeader.setText(GL0429);
+		lblCongratsHeader.getElement().setId("lblCongratsHeader");
+		lblCongratsHeader.getElement().setAttribute("alt",GL0429);
+		lblCongratsHeader.getElement().setAttribute("title",GL0429);
+		
 		lblCheckYourEmail.setText(GL0430);
+		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
+		lblCheckYourEmail.getElement().setAttribute("alt",GL0430);
+		lblCheckYourEmail.getElement().setAttribute("title",GL0430);
+		
 		lblWhatsNext.setText(GL0432);
+		lblWhatsNext.getElement().setId("lblWhatsNext");
+		lblWhatsNext.getElement().setAttribute("alt",GL0432);
+		lblWhatsNext.getElement().setAttribute("title",GL0432);
 	
 		//This is not required when registered as parent.		
 		btnStartUsingGooru.setText(GL0431);
 		//This is not required when registered as parent.
 		lblLearnHowTo.setText(GL0433);
+		lblLearnHowTo.getElement().setId("lblLearnHowTo");
+		lblLearnHowTo.getElement().setAttribute("alt",GL0433);
+		lblLearnHowTo.getElement().setAttribute("title",GL0433);
 		lblLearnHowTo.setVisible(false);
 		lblWhatsNext.setVisible(false);
 		//This is not required when registered as parent.
@@ -206,9 +224,21 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 		btnStartCreatingStudent.setVisible(account.equalsIgnoreCase("parent") ? true : false);
 		
 		htmlSupport.setHTML(GL0437);
+		htmlSupport.getElement().setId("htmlSupport");
+		htmlSupport.getElement().setAttribute("alt",GL0437);
+		htmlSupport.getElement().setAttribute("title",GL0437);
 		
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
+		btnStartUsingGooru.getElement().setAttribute("alt",GL0431);
+		btnStartUsingGooru.getElement().setAttribute("title",GL0431);
+		
 		btnStartCreatingStudent.getElement().setId("btnStartCreatingStudent");
+		btnStartCreatingStudent.getElement().setAttribute("alt",GL0472);
+		btnStartCreatingStudent.getElement().setAttribute("title",GL0472);
+		
+		panelPopupInner.getElement().setId("pnlPopupInner");
+		panelFooter.getElement().setId("pnlFooter");
+		lblClose.getElement().setId("lblClose");
 	}
 	
 	@UiHandler("btnStartUsingGooru")
