@@ -835,6 +835,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 //				}
 //			};
 //			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+			  classpageListVc.hide();
+					organizeToolTip.hide();
 			discoverToolTip.show();
 		}
 	}
@@ -843,11 +845,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			if(tooltipTimer != null)
+/*			if(tooltipTimer != null)
 			{
 			tooltipTimer.cancel();
-			}
-			toolTipPopupPanel.hide();			
+			}*/
+			//toolTipPopupPanel.hide();			
 			EventTarget target = event.getRelatedTarget();
 			  if (Element.is(target)) {
 				  if (!discoverToolTip.getElement().isOrHasChild(Element.as(target))){
@@ -869,6 +871,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 				organizeToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
 //				tooltipTimer = new Timer() {
 //					public void run() {
+				  discoverToolTip.hide();
+				  classpageListVc.hide();
 						organizeToolTip.show();
 //					}
 //				};
@@ -882,11 +886,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-				if(tooltipTimer != null)
+/*				if(tooltipTimer != null)
 				{
 				tooltipTimer.cancel();
 				}
-				toolTipPopupPanel.hide();
+				toolTipPopupPanel.hide();*/
 				EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
 					if (!organizeToolTip.getElement().isOrHasChild(Element.as(target))){
@@ -907,6 +911,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //					tooltipTimer = new Timer() {
 //						public void run() {
+					 discoverToolTip.hide();
+					 organizeToolTip.hide();
 							OpenClasspageList();
 //						}
 //					};
@@ -927,11 +933,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-				if(tooltipTimer != null)
+	/*			if(tooltipTimer != null)
 				{
 				tooltipTimer.cancel();
 				}
-				toolTipPopupPanel.hide();
+				toolTipPopupPanel.hide();*/
 				EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
 					if (classpageListVc!=null && !classpageListVc.getElement().isOrHasChild(Element.as(target))){
