@@ -212,12 +212,12 @@ public class InfoUtil implements MessageProperties {
 //			lblDepthKnowledge.setText(GL1693+GL_SPL_SEMICOLON);
 			if(depthOfKnowledgedetails.size()>0){
 				if(depthOfKnowledgedetails.size()==1){
-					final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0));
+					final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0));
 					deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
 					dKnowledgeType.add(deapthknowledgeLabel);
 					dKnowledgePanel.setVisible(true);
 				} if(depthOfKnowledgedetails.size()==2){
-					final Label deapthknowledgeLabel=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+					final Label deapthknowledgeLabel=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
 					deapthknowledgeLabel.getElement().setAttribute("style", "float: left;");
 					dKnowledgeType.add(deapthknowledgeLabel);
 					dKnowledgePanel.setVisible(true);
@@ -227,7 +227,7 @@ public class InfoUtil implements MessageProperties {
 			if(depthOfKnowledgedetails.size()>2){
 				final Label deapthknowledgeLabel=new Label("+"+(depthOfKnowledgedetails.size()-2)); 
 				deapthknowledgeLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-				final Label deapthknowledgeLabelNew=new Label(depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
+				final Label deapthknowledgeLabelNew=new Label(" "+depthOfKnowledgedetails.get(0)+","+depthOfKnowledgedetails.get(1));
 				deapthknowledgeLabelNew.getElement().setAttribute("style", "float:left;");
 				dKnowledgeType.add(deapthknowledgeLabelNew);
 				dKnowledgeType.add(deapthknowledgeLabel);

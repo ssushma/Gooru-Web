@@ -76,6 +76,8 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	private List<CustomFieldDo> customFields;
 	private Integer active;
 	
+	private Integer statusCode;
+	
 	private String createdOn;
 	
 	private boolean isBeforeProductionSwitch=false;
@@ -404,6 +406,22 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	 */
 	public void setActive(Integer active) {
 		this.active = active;
+	}
+
+
+	/**
+	 * @return the statusCode
+	 */
+	public Integer getStatusCode() {
+		return statusCode;
+	}
+
+
+	/**
+	 * @param statusCode the statusCode to set
+	 */
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
 	}
 	
 	
