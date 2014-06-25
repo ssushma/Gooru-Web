@@ -63,15 +63,46 @@ public class WelcomeClassView extends PopupPanel implements MessageProperties {
 	private void setDefaultText() {
 		// TODO Auto-generated method stub
 		btnOk.setText(GL1386);
+		btnOk.getElement().setId("btnOk");
+		btnOk.getElement().setAttribute("alt",GL1386);
+		btnOk.getElement().setAttribute("title",GL1386);
+		
 		popupHeader.getElement().setInnerHTML(GL1605);
+		popupHeader.getElement().setId("pnlPopupHeader");
+		popupHeader.getElement().setAttribute("alt",GL1605);
+		popupHeader.getElement().setAttribute("title",GL1605);
+		
 //		headingTittle.getElement().setInnerHTML(GL1607);
 		headingTxt.getElement().setInnerHTML(GL1609);
+		headingTxt.getElement().setId("pnlHeadingText");
+		headingTxt.getElement().setAttribute("alt",GL1609);
+		headingTxt.getElement().setAttribute("title",GL1609);
+		
 		manageList.getElement().setInnerHTML(GL1611);
+		manageList.getElement().setId("pnlManageList");
+		manageList.getElement().setAttribute("alt",GL1611);
+		manageList.getElement().setAttribute("title",GL1611);
+		
 		popupContentDesc.setText(GL1606);
+		popupContentDesc.getElement().setId("lblPopupContentDesc");
+		popupContentDesc.getElement().setAttribute("alt",GL1606);
+		popupContentDesc.getElement().setAttribute("title",GL1606);
+		
 		popupContentDesc1.setText(GL1606_1);
+		popupContentDesc1.getElement().setId("lblPopupContentDesc1");
+		popupContentDesc1.getElement().setAttribute("alt",GL1606_1);
+		popupContentDesc1.getElement().setAttribute("title",GL1606_1);
+		
 //		popupContentTxt.setText(GL1608);
 		headingTxtDesc.setText(GL1610);
+		headingTxtDesc.getElement().setId("spnHeadingTxtDesc");
+		headingTxtDesc.getElement().setAttribute("alt",GL1610);
+		headingTxtDesc.getElement().setAttribute("title",GL1610);
+		
 		manageListDesc.setText(GL1612);
+		manageListDesc.getElement().setId("spnManageListDesc");
+		manageListDesc.getElement().setAttribute("alt",GL1612);
+		manageListDesc.getElement().setAttribute("title",GL1612);
 		
 	}
 
