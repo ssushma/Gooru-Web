@@ -783,11 +783,18 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 							   	
 								@Override
 								public void onMouseOver(MouseOverEvent event) {
+									try
+									{
 									toolTipPopupPanel.clear();
 									toolTipPopupPanel.setWidget(new LibraryTopicCollectionToolTip(libraryResourceDo.getTitle(),categoryImage,attribution,libraryResourceDo.getRatings().getCount(),libraryResourceDo.getRatings().getAverage()));
 									toolTipPopupPanel.setStyleName("");
 									toolTipPopupPanel.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 2, event.getRelativeElement().getAbsoluteTop() + 55);
 									toolTipPopupPanel.show();
+									}
+									catch(Exception ex)
+									{
+										
+									}
 								}
 							});
 							
