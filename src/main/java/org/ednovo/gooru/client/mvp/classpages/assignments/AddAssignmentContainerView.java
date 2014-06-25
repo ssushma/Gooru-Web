@@ -493,7 +493,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-			 setSelectedCollectionsCount(foldersArrayList.size());
+			 setSelectedCollectionsCount(folderListDo.getCount());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();

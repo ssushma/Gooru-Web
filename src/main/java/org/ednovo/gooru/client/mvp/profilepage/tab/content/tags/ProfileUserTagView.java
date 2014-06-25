@@ -40,6 +40,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -56,7 +57,7 @@ public class ProfileUserTagView extends Composite implements MessageProperties {
 	List<UserTagsDo> userTagDo = new ArrayList<UserTagsDo>();
 	
 	@UiField HTMLPanel userTagsConatiner,tagTextMessage;
-	@UiField Label TagTextMessage;
+	@UiField InlineLabel TagTextMessage;
 	HTMLPanel followingContainer;
 	HTMLPanel tagResourceContainer;
 	@UiField ScrollPanel userTagScrollPanel;
