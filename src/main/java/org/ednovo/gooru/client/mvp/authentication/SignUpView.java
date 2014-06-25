@@ -141,26 +141,89 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 
 	private void setUiAndIds(){
 		lblTitle.setText(GL0186 +GL_SPL_EXCLAMATION);
+		
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0186);
+		lblTitle.getElement().setAttribute("title",GL0186);
+		
+		lblCancel.getElement().setId("lblCancel");
+		lblCancel.getElement().setAttribute("alt","");
+		lblCancel.getElement().setAttribute("title","");
+		
+		panelSignUp.getElement().setId("pnlSignUp");
+		panelSignUp.getElement().setAttribute("alt","");
+		panelSignUp.getElement().setAttribute("title","");
+		
 		lblJoinGooruCommunity.setText(GL0400);
+		lblJoinGooruCommunity.getElement().setId("lblJoinTheGooruCommunity");
+		lblJoinGooruCommunity.getElement().setAttribute("alt",GL0400);
+		lblJoinGooruCommunity.getElement().setAttribute("title",GL0400);
+		
 		lblDescription.setText(GL0401);
+		lblDescription.getElement().setId("lblDescription");
+		lblDescription.getElement().setAttribute("alt",GL0401);
+		lblDescription.getElement().setAttribute("title",GL0401);
+		
 		lblParentInfo.setVisible(false);
 		lblParentInfo.setText(GL0470);
+		lblParentInfo.getElement().setId("lblParentInfo");
+		lblParentInfo.getElement().setAttribute("alt",GL0470);
+		lblParentInfo.getElement().setAttribute("title",GL0470);
 		
 		btnSignUpWithGoogle.setText(GL0402);
+		btnSignUpWithGoogle.getElement().setId("btnSignUpWithGoogle");
+		btnSignUpWithGoogle.getElement().setAttribute("alt",GL0402);
+		btnSignUpWithGoogle.getElement().setAttribute("title",GL0402);
 		
 		lblWhyWithGoogle.setText(GL0403);
+		lblWhyWithGoogle.getElement().setId("lblWhyWithGoogle");
+		lblWhyWithGoogle.getElement().setAttribute("alt",GL0403);
+		lblWhyWithGoogle.getElement().setAttribute("title",GL0403);
+		
 		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setId("lblQuestionMark");
+		lblQuestionMark.getElement().setAttribute("alt",GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setAttribute("title",GL_SPL_QUESTION);
+		
 		lblPopupWhyWithGoogle.setText(GL0403 + GL_SPL_QUESTION);
-	
+		lblPopupWhyWithGoogle.getElement().setId("lblPopupWhyWithGoogle");
+		lblPopupWhyWithGoogle.getElement().setAttribute("alt",GL0403);
+		lblPopupWhyWithGoogle.getElement().setAttribute("title",GL0403);
+		
 		lblPopupWhyWithGoogleDesc.setText(GL0404);
+		lblPopupWhyWithGoogleDesc.getElement().setId("lblPopupWhyWithGoogleDesc");
+		lblPopupWhyWithGoogleDesc.getElement().setAttribute("alt",GL0404);
+		lblPopupWhyWithGoogleDesc.getElement().setAttribute("title",GL0404);
+		
 		lblOr.setText(GL0209);
+		lblOr.getElement().setId("lblOr");
+		lblOr.getElement().setAttribute("alt",GL0209);
+		lblOr.getElement().setAttribute("title",GL0209);
+		
 		lblDontHaveGoogleAccount.setText(GL0405 +GL_SPL_QUESTION);
+		lblDontHaveGoogleAccount.getElement().setId("lblDontHaveGoogleAccount");
+		lblDontHaveGoogleAccount.getElement().setAttribute("alt",GL0405);
+		lblDontHaveGoogleAccount.getElement().setAttribute("title",GL0405);
+		
 		lblAlreadyHaveAccount.setText(GL0407 + GL_SPL_QUESTION);
+		lblAlreadyHaveAccount.getElement().setId("lblAlreadyHaveAccount");
+		lblAlreadyHaveAccount.getElement().setAttribute("alt",GL0407);
+		lblAlreadyHaveAccount.getElement().setAttribute("title",GL0407);
 		
 		achSignUpWithEmail.setText(GL0406);
-		achClickToLogin.setText(GL0408);
+		achSignUpWithEmail.getElement().setId("lnkSignUpWithEmail");
+		achSignUpWithEmail.getElement().setAttribute("alt",GL0406);
+		achSignUpWithEmail.getElement().setAttribute("title",GL0406);
 		
-		btnSignUpWithGoogle.getElement().setId("btnSignUpWithGoogle");
+		achClickToLogin.setText(GL0408);
+		achClickToLogin.getElement().setId("lnkClickToLogin");
+		achClickToLogin.getElement().setAttribute("alt",GL0408);
+		achClickToLogin.getElement().setAttribute("title",GL0408);
+		
+		panelUserInfo.getElement().setId("pnlUserInfo");
+		panelUserInfo.getElement().setAttribute("alt","");
+		panelUserInfo.getElement().setAttribute("title","");
+		
 	}
 	
 	

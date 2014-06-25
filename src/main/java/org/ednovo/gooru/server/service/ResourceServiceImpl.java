@@ -1013,8 +1013,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		JsonRepresentation jsonRep = null;
 		ProfanityDo profanityDo = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.PROFANITY_CHECK, getLoggedInSessionToken());
-		
 		String formData = ResourceFormFactory.generateStringDataForm(parms, null);
+		formData = formData.replaceAll("&", "%26").replaceAll("#", "%23");
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), formData);
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		if (jsonRep != null && jsonRep.getSize() != -1) {
