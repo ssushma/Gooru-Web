@@ -558,6 +558,7 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 					isValid = false;
 				}
 			} catch (Exception e) {
+				isValid = false;
 			}
 			
 			if (userName.equalsIgnoreCase("") || userName == null) {
@@ -582,7 +583,6 @@ public abstract class CreateAccountUc extends PopupPanel implements MessagePrope
 			} else {
 				dateBoxUc.getDateBox().removeStyleName(
 						res.css().errorMsgDisplay());
-				isValid = true;
 			}
 			if (firstName.equalsIgnoreCase("") || firstName == null) {
 				txtFirstName.addStyleName(res.css().errorMsgDisplay());
