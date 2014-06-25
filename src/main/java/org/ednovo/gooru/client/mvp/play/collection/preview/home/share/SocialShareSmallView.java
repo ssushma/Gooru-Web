@@ -410,7 +410,7 @@ IsSocialShareSmallView, MessageProperties {
 				SocialShareView.postOnFacebook(socialDo.getTitle(),socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
 			else{
-				String title=GL1085+socialDo.getTitle()+" "+GL1433;
+				String title = GL1085_2;
 				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
 				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
 			}
@@ -432,7 +432,7 @@ IsSocialShareSmallView, MessageProperties {
 				Window.open("http://twitter.com/intent/tweet?text=" + GL0733+" "+GL_GRR_Hyphen+" "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + GL1085+socialDo.getTitle().replaceAll("\\+", "%2B")+ GL1086+" "+GL_GRR_Hyphen+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + GL1085_1 +" "+GL_GRR_Hyphen+" " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
 			}
 		}else{
 			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);

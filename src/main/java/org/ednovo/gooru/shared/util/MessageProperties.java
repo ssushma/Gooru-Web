@@ -1330,6 +1330,11 @@ public interface MessageProperties {
 		String GL1083="does not have any collections!";
 		String GL1084="";
 		String GL1085="Check out  ";
+		
+		String GL1085_1 = "Check out the collections on my Gooru profile page. Happy learning! #YesIGooru";
+		String GL1085_2 = "I'm on Gooru!";
+		String GL1085_3 = "Check out the collections on my Gooru profile page. Happy learning!";
+		
 		String GL1086="'s Gooru Profile Page";
 		String GL1087="Add Image";
 		String GL1088="What course(s) do you teach? ";
@@ -1828,7 +1833,7 @@ public interface MessageProperties {
 		String GL1438="minute";
 		
 		//Collection share view
-		String GL1439="Gooru - ";
+		String GL1439="Check out this Gooru collection!";
 		String GL1440="Sent using Gooru. Visit";
 		String GL1441="for more great resources and collections. It's free!";
 		
