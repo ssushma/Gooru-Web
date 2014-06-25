@@ -716,7 +716,7 @@ public interface MessageProperties {
 	String GL0563 = "hours ago";
 	String GL0564 = "minutes ago";
 	String GL0565 = "Share your feedback and ideas with fellow teachers about this Collection.";
-	String GL0566 = "Publisher: ";
+	String GL0566 = "Publisher : ";
 	String GL0567 = "#$*@! Please find a G-rated way to express yourself!";	//Duplicate of GL0554
 	
 	String GL0568 = "This collection is missing your voice. Please ";
@@ -796,10 +796,10 @@ public interface MessageProperties {
 	String GL0613 ="Resource is unavailable (i.e. it doesn't load)";
 	String GL0614 ="Resource information appears to be inaccurate (e.g. the resource title, format, description)";
 	String GL0615 ="Thank you for submitting!";
-	String GL0616 ="Course: ";
+	String GL0616 ="Course : ";
 	String GL0617 ="Legal:";
 	String GL0618="Learning Objective:";
-	String GL0619="Standards:";
+	String GL0619="Standards :";
 	String GL0620="Collections that have this resource ";
 	String GL0621="Resource Information";
 	String GL0622="Created by ";
@@ -2084,7 +2084,7 @@ public interface MessageProperties {
     	
     	//study player text
     	String GL1626="Your Collection Summary";
-    	String GL1627="You are currently logged out! Please log in to view your data on this collection.";
+    	String GL1627="You are currently logged out! Please log in to start saving your progress on this collection.";
     	String GL1628 = "Aggregator";
     	String GL1629 = "e.g. YouTube";
     	String GL1630 = "View in My Collections";
@@ -2374,7 +2374,7 @@ public interface MessageProperties {
     	String GL1864 = "Add narration before a resource to give students direction and focus their attention.";
 //    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
 //    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
-    	String GL1867 = "Educational Role:";
+    	String GL1867 = "Educational Role :";
     	String GL1868 = "School Level";
     	String GL1869 = "Share this class code with your students.";
     	String GL1870 = "Narrow report information by collection and student:";

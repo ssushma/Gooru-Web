@@ -66,7 +66,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProperties{
  
-	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose; //lblDiscover,lblOrganize,lblTeach
+	@UiField Label lblLoginHeading, lblCongratsHeader, lblClose,lblCheckYourEmail; //lblDiscover,lblOrganize,lblTeach
 	
 	@UiField Button btnStartUsingGooru;//btnDiscover, btnOrganize, btnTeach,
 	
@@ -161,12 +161,27 @@ public class ThanksEmailConfirmPopupUc extends PopupPanel implements MessageProp
 	 */
 	public void setTextAndIds(){
 		lblLoginHeading.setText(GL0501);
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",GL0501);
+		lblLoginHeading.getElement().setAttribute("title",GL0501);
+		
 		lblCongratsHeader.setText(GL0502);
+		lblCongratsHeader.getElement().setId("lblCongratsHeader");
+		lblCongratsHeader.getElement().setAttribute("alt",GL0502);
+		lblCongratsHeader.getElement().setAttribute("title",GL0502);
 		lblCongratsHeader.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 
 		btnStartUsingGooru.setText(GL0431);						
 		btnStartUsingGooru.setVisible(true);
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
+		btnStartUsingGooru.getElement().setAttribute("alt",GL0431);
+		btnStartUsingGooru.getElement().setAttribute("title",GL0431);
+		
+		lblClose.getElement().setId("lblClose");
+		panelPopupInner.getElement().setId("pnlPopupInner");
+		
+		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
+		
 	}
 	
 	@UiHandler("lblClose")

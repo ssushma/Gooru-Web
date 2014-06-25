@@ -134,47 +134,46 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	private void setResourceInfoData() {
-		publisherText.setText(GL0566);
-		lblAggregation.setText(GL1628+ ""+GL_SPL_SEMICOLON);
-		courseText.setText(GL0616);
-		legalText.setText(GL0730+ ""+GL_SPL_SEMICOLON);
-		standardsText.setText(GL0619);
+		publisherText.setText(GL0566+" ");
+		lblAggregation.setText(GL1628+" "+GL_SPL_SEMICOLON);
+		courseText.setText(GL0616+" ");
+		legalText.setText(GL0730+" "+GL_SPL_SEMICOLON);
+		standardsText.setText(GL0619+" ");
 		//		resourceInfoText.setText(GL0621);
-		gradeTitle.setText(GL0325+ ""+GL_SPL_SEMICOLON);
-		originalUrlTitle.setText(GL0976+ ""+GL_SPL_SEMICOLON);
+		gradeTitle.setText(GL0325+" "+GL_SPL_SEMICOLON);
+		originalUrlTitle.setText(GL0976+" "+GL_SPL_SEMICOLON);
 		generalLbl.setText(GL1708);
-		hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
-		legalText.setText(GL0730);
+		hostLbl.setText(GL1700+" "+GL_SPL_SEMICOLON);
 		
 		//Educational static data
 		educationallLbl.setText(GL1720);
-		eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
-		eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
-		eduRoleLbl.setText(GL1867);
-		interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
-		ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
-		momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
-		readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
-		schLevelLbl.setText(GL1868+GL_SPL_SEMICOLON);
+		eduAllignLbl.setText(GL1690+" "+GL_SPL_SEMICOLON);
+		eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
+		eduRoleLbl.setText(GL1867+" ");
+		interactiveLbl.setText(GL1689+" "+GL_SPL_SEMICOLON);
+		ageRangeLbl.setText(GL1692+" "+GL_SPL_SEMICOLON);
+		dKnowledgeLbl.setText(GL1693+" "+GL_SPL_SEMICOLON);
+		momentsoflearningLbl.setText(GL1678+" "+GL_SPL_SEMICOLON);
+		readingLevelLbl.setText(GL1694+" "+GL_SPL_SEMICOLON);
+		schLevelLbl.setText(GL1868+" "+GL_SPL_SEMICOLON);
 		
 		//Resource Info Static data
 		resourceInfoLbl.setText(GL1716);
 //		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
-		countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
-		languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
-		dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
-		authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
-		copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
-		keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
-		adsTitle.setText(GL1800+GL_SPL_SEMICOLON);
+		countryCodeLbl.setText(GL1697+" "+GL_SPL_SEMICOLON);
+		languageLbl.setText(GL1696+" "+GL_SPL_SEMICOLON);
+		dataTypeLbl.setText(GL1688+" "+GL_SPL_SEMICOLON);
+		authorLbl.setText(GL0573+" "+GL_SPL_SEMICOLON);
+		copyRightLbl.setText(GL1699+" "+GL_SPL_SEMICOLON);
+		keywordsTitle.setText(GL1876+" "+GL_SPL_SEMICOLON);
+		adsTitle.setText(GL1800+" "+GL_SPL_SEMICOLON);
 		//Accessibility Static data
 		accesibilityLbl.setText(GL1703);
-		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
-		accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
-		mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
-		controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
-		acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
-		mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
+		mbFriendlyLbl.setText(GL1687+" "+GL_SPL_SEMICOLON);
+		accessModelLbl.setText(GL1707+" "+GL_SPL_SEMICOLON);
+		mediaFeatureLbl.setText(GL1706+" "+GL_SPL_SEMICOLON);
+		controlLbl.setText(GL1704+" "+GL_SPL_SEMICOLON);
+		acessHazardlLbl.setText(GL1705+" "+GL_SPL_SEMICOLON);
 		
 	}
 
@@ -411,7 +410,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			
 			if(host!=null && !host.equals("")){
 				hostPanel.setVisible(true);
-				hostType.setText(CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
+				hostType.setText(" "+CollectiongenealInfo.getResource().getCustomFieldValues().getCfHost());
 				isGeneralInfo=true;
 			}else{
 				hostPanel.setVisible(false);
@@ -638,7 +637,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		courseInfo.clear();
 		if(coursesList.size()>0){
 			isGeneralInfo=true;
-			final Label courseInfoLabel=new Label(coursesList.get(0));
+			final Label courseInfoLabel=new Label(" "+coursesList.get(0));
 			courseInfoLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseLabel());
 			courseInfo.add(courseInfoLabel);
 			coursePanel.setVisible(true);
@@ -696,12 +695,12 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			educationallLbl.setText(GL1720);
 			if(eduUsedetails.size()>0){
 				isEducationalInfo=true;
-				final Label eduUseLabel=new Label(eduUsedetails.get(0));
+				final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
 				eduUseLabel.getElement().setAttribute("style", "float: left;");
 				eduUseType.add(eduUseLabel);
 				eduUsePanel.setVisible(true);
 				educationallLbl.setText(GL1720);
-				eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+				eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
 				educationallLbl.setVisible(true);
 			}
 			if(eduUsedetails.size()>2){
@@ -714,7 +713,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 				eduUsePanel.setVisible(true);
 				educationallLbl.setText(GL1720);
-				eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
+				eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
 				educationallLbl.setVisible(true);
 			}
 		}
@@ -818,28 +817,28 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 				if(alignType!=null && !alignType.equals("")){
 					isEducationalInfo=true;
-					eduAllignType.setText(alignType);
+					eduAllignType.setText(" "+alignType);
 					eduAllignPanel.setVisible(true);
 				}else{
 					eduAllignPanel.setVisible(false);
 				}
 				if(educationRole!=null && !educationRole.equals("")){
 					isEducationalInfo=true;
-					eduRoleType.setText(educationRole);
+					eduRoleType.setText(" "+educationRole);
 					eduRolePanel.setVisible(true);
 				}else{
 					eduRolePanel.setVisible(false);
 				}
 				if(learningMode!=null && !learningMode.equals("")){
 					isEducationalInfo=true;
-					interactiveType.setText(learningMode);
+					interactiveType.setText(" "+learningMode);
 					interactivityTypePanel.setVisible(true);
 				}else{
 					interactivityTypePanel.setVisible(false);
 				}
 				if(age!=null && !age.equals("")){
 					isEducationalInfo=true;
-					ageRangeType.setText(age);
+					ageRangeType.setText(" "+age);
 					ageRangePanel.setVisible(true);
 				}else{
 					ageRangePanel.setVisible(false);
@@ -847,7 +846,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 				if(readingLevel!=null && !readingLevel.equals("")){
 					isEducationalInfo=true;
-					readingLevelType.getElement().setInnerText(readingLevel);
+					readingLevelType.getElement().setInnerText(" "+readingLevel);
 					readingLevelPanel.setVisible(true);
 				}else{
 					readingLevelPanel.setVisible(false);
@@ -855,7 +854,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 
 				if(schLevel!=null && !schLevel.equals("")){
 					isEducationalInfo=true;
-					schLevelInfo.setText(schLevel);
+					schLevelInfo.setText(" "+schLevel);
 					schLevelPanel.setVisible(true);
 				}else{
 					schLevelPanel.setVisible(false);
@@ -911,49 +910,49 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			
 			if(countryCode!=null && !countryCode.equals("")){
 				isResourceInfo=true;
-				countryCodeType.setText(countryCode);
+				countryCodeType.setText(" "+countryCode);
 				countryCodePanel.setVisible(true);
 			}else{
 				countryCodePanel.setVisible(false);
 			}
 			if(language!=null && !language.equals("")){
 				isResourceInfo=true;
-				languageType.setText(language);
+				languageType.setText(" "+language);
 				languagePanel.setVisible(true);
 			}else{
 				languagePanel.setVisible(false);
 			}
 			if(dataType!=null && !dataType.equals("")){
 				isResourceInfo=true;
-				dataTypeFormat.setText(dataType);
+				dataTypeFormat.setText(" "+dataType);
 				dataTypePanel.setVisible(true);
 			}else{
 				dataTypePanel.setVisible(false);
 			}
 			if(copyrightHolder!=null && !copyrightHolder.equals("")){
 				isResourceInfo=true;
-				copyRightType.setText(copyrightHolder);
+				copyRightType.setText(" "+copyrightHolder);
 				copyRightPanel.setVisible(true);
 			}else{
 				copyRightPanel.setVisible(false);
 			}
 			if(author!=null && !author.equals("")){
 				isResourceInfo=true;
-				authorName.setText(author);
+				authorName.setText(" "+author);
 				authorPanel.setVisible(true);
 			}else{
 				authorPanel.setVisible(false);
 			}
 			if(keywords!=null && !keywords.equals("")){
 				isResourceInfo=true;
-				keywordsInfo.getElement().setInnerText(keywords);
+				keywordsInfo.getElement().setInnerText(" "+keywords);
 				keyWordsPanel.setVisible(true);
 			}else{
 				keyWordsPanel.setVisible(false);
 			}
 			if(ads!=null && !ads.equals("")){
 				isResourceInfo=true;
-				adsName.setText(ads);
+				adsName.setText(" "+ads);
 				adsPanel.setVisible(true);
 			}else{
 				adsPanel.setVisible(false);
@@ -996,11 +995,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			if(mobileFriendly!=null && !mobileFriendly.equals("")){
 				if(mobileFriendly.equalsIgnoreCase(IPAD_FRIENDLY)){
 					mobileFriendlyPanel.setVisible(true);
-					mbFriendlyText.setText(GL_GRR_YES);
+					mbFriendlyText.setText(" "+GL_GRR_YES);
 					isAccessibilityInfo=true;
 				}else{
 					mobileFriendlyPanel.setVisible(true);
-					mbFriendlyText.setText(GL1735);
+					mbFriendlyText.setText(" "+GL1735);
 					isAccessibilityInfo=true;
 				}
 			}else{
@@ -1015,28 +1014,28 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				controlFlexibility= customFields.getCfControlFlexibility()!=null ? customFields.getCfControlFlexibility() : null;
 				accessHazard = customFields.getCfAccessHazard()!=null ? customFields.getCfAccessHazard() : null;
 				if(accessMode!=null && !accessMode.equals("")){
-					accessModeType.getElement().setInnerText(accessMode);
+					accessModeType.getElement().setInnerText(" "+accessMode);
 					accessModePanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
 					accessModePanel.setVisible(false);
 				}
 				if(mediaFeature!=null && !mediaFeature.equals("")){
-					mediaFeatureType.getElement().setInnerText(mediaFeature);
+					mediaFeatureType.getElement().setInnerText(" "+mediaFeature);
 					mediaFeaturePanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
 					mediaFeaturePanel.setVisible(false);
 				}
 				if(controlFlexibility!=null && !controlFlexibility.equals("")){
-					controlType.setText(controlFlexibility);
+					controlType.setText(" "+controlFlexibility);
 					controlPanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
 					controlPanel.setVisible(false);
 				}
 				if(accessHazard!=null && !accessHazard.equals("")){
-					acessHazardType.setText(accessHazard);
+					acessHazardType.setText(" "+accessHazard);
 					accessHazardPanel.setVisible(true);
 					isAccessibilityInfo=true;
 				}else{
@@ -1167,12 +1166,12 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}else{
 		if(gradesdetails.size()>0){
 			if(gradesdetails.size()==1){
-				final Label gradesLabel=new Label(gradesdetails.get(0));
+				final Label gradesLabel=new Label(" "+gradesdetails.get(0));
 				gradesLabel.getElement().setAttribute("style", "float: left;");
 				gradesText.add(gradesLabel);
 				isGrades =true;
 			} if(gradesdetails.size()==2){
-				final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+				final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
 				gradesLabel.getElement().setAttribute("style", "float: left;");
 				gradesText.add(gradesLabel);
 				isGrades =true;
@@ -1181,7 +1180,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		if(gradesdetails.size()>2){
 			final Label gradesLabelCountLabel=new Label("+"+(gradesdetails.size()-2)); 
 			gradesLabelCountLabel.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().resourceCourseNum());
-			final Label gradesLabel=new Label(gradesdetails.get(0)+","+gradesdetails.get(1));
+			final Label gradesLabel=new Label(" "+gradesdetails.get(0)+","+gradesdetails.get(1));
 			gradesLabel.getElement().setAttribute("style", "float:left;");
 			gradesText.add(gradesLabel);
 			gradesText.add(gradesLabelCountLabel);

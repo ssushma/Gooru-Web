@@ -561,6 +561,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		});
 		getUiHandlers().setShareView();
+		getUiHandlers().getTaxonomyData();
 		gooruSocialButtonsContainer.setVisible(true);
 		setUserGradeList(profileDo.getGrade());
 		setUserCourseList(profileDo.getCourses());
@@ -1371,7 +1372,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}
 	
 	private void clickGradeCourseEditBtn() {
-		getUiHandlers().getTaxonomyData();
+		//getUiHandlers().getTaxonomyData();
 		setGradeList(profileDo.getGrade());
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();

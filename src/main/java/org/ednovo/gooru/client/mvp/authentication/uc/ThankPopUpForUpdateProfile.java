@@ -79,15 +79,42 @@ public class ThankPopUpForUpdateProfile extends PopupPanel implements MessagePro
 	public void setUiAndIds() {
 		lblTitle.setText(GL0481
 				+GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0481);
+		lblTitle.getElement().setAttribute("title",GL0481);
+		
+		lblCancel.getElement().setId("lblCancel");
+		
 		lblHeading.setText(GL0498+GL_SPL_EXCLAMATION);
+		lblHeading.getElement().setId("lblHeading");
+		lblHeading.getElement().setAttribute("alt",GL0498);
+		lblHeading.getElement().setAttribute("title",GL0498);
 		lblHeading.getElement().setAttribute("style", "margin-bottom:0px");
+		
 		lblSubHeading.setText(GL0499);
+		lblSubHeading.getElement().setId("lblSubHeading");
+		lblSubHeading.getElement().setAttribute("alt",GL0499);
+		lblSubHeading.getElement().setAttribute("title",GL0499);
 		
 		btnOk.getElement().setId("btnOk");
 		btnOk.setText(GL0190);
+		btnOk.getElement().setAttribute("alt",GL0190);
+		btnOk.getElement().setAttribute("title",GL0190);
+		
 		queriesText.setText(GL1139+GL_GRR_COMMA+" ");
+		queriesText.getElement().setId("lblQuriesText");
+		queriesText.getElement().setAttribute("alt",GL1139);
+		queriesText.getElement().setAttribute("title",GL1139);
+		
 		contactText.setText(GL1145);
+		contactText.getElement().setId("spnContactText");
+		contactText.getElement().setAttribute("alt",GL1145);
+		contactText.getElement().setAttribute("title",GL1145);
+		
 		supportLink.setText(GL0299);
+		supportLink.getElement().setId("lnkSupportLink");
+		supportLink.getElement().setAttribute("alt",GL0299);
+		supportLink.getElement().setAttribute("title",GL0299);
 		supportLink.setHref(GL1055);		
 	}
 

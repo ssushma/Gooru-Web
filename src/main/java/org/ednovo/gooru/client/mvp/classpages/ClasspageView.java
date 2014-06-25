@@ -140,40 +140,107 @@ public class ClasspageView extends BaseViewWithHandlers<ClasspageUiHandlers> imp
 		
 		setWidget(uiBinder.createAndBindUi(this));
 		classPageLbl.getElement().setInnerText(GL1397);
+		classPageLbl.getElement().setId("pnlClassPage");
+		classPageLbl.getElement().setAttribute("alt",GL1397);
+		classPageLbl.getElement().setAttribute("title",GL1397);
+		
 		teachLbl.getElement().setInnerText(GL1382+GL_SPL_EXCLAMATION);
+		teachLbl.getElement().setId("pnlTeach");
+		teachLbl.getElement().setAttribute("alt",GL1382);
+		teachLbl.getElement().setAttribute("title",GL1382);
+		
 		assignLbl.getElement().setInnerText(GL1383);
+		assignLbl.getElement().setId("pnlAssign");
+		assignLbl.getElement().setAttribute("alt",GL1383);
+		assignLbl.getElement().setAttribute("title",GL1383);
+		
 		roundOneLbl.setTitle(GL1398);
+		roundOneLbl.getElement().setId("imgRoundOne");
+		roundOneLbl.getElement().setAttribute("title",GL1398);
 		roundOneLbl.setAltText(GL1398);
 		roundOneLbl.setUrl("images/rounded-one.png");
+		
 		createLbl.getElement().setInnerText(GL1335);
+		createLbl.getElement().setId("pnlCreate");
+		createLbl.getElement().setAttribute("alt",GL1335);
+		createLbl.getElement().setAttribute("title",GL1335);
+		
 		createClasspageLbl.getElement().setInnerText(GL1399);
+		createClasspageLbl.getElement().setId("pnlCreateClassPage");
+		createClasspageLbl.getElement().setAttribute("alt",GL1399);
+		createClasspageLbl.getElement().setAttribute("title",GL1399);
+		
 		addClassPageLbl.setTitle(GL1381);
 		addClassPageLbl.setAltText(GL1381);
 		addClassPageLbl.setUrl("images/Classpage/classpage-image.png");
+		addClassPageLbl.getElement().setId("imgAddClassPage");
+		
 		roundTwoLbl.setTitle(GL1400);
+		roundOneLbl.getElement().setId("imgRoundTwo");
+		roundOneLbl.getElement().setAttribute("title",GL1400);
 		roundTwoLbl.setAltText(GL1400);
 		roundTwoLbl.setUrl("images/rounded-two.png");
+		
 		assignLblClassPage.getElement().setInnerText(GL1401);
+		assignLblClassPage.getElement().setId("pnlAssignClassPage");
+		assignLblClassPage.getElement().setAttribute("alt",GL1401);
+		assignLblClassPage.getElement().setAttribute("title",GL1401);
+		
 		addToAssignLbl.getElement().setInnerText(GL1402);
+		addToAssignLbl.getElement().setId("pnlAddToAssign");
+		addToAssignLbl.getElement().setAttribute("alt",GL1402);
+		addToAssignLbl.getElement().setAttribute("title",GL1402);
+		
 		addAssignImgLbl.setTitle(GL1401);
 		addAssignImgLbl.setAltText(GL1401);
+		addAssignImgLbl.getElement().setId("imgAssAssignImg");
 		addAssignImgLbl.setUrl("images/Classpage/add-assignment-image.png");
+		
 		roundThreeLbl.setTitle(GL1403);
 		roundThreeLbl.setAltText(GL1403);
+		roundThreeLbl.getElement().setId("imgRoundThree");
 		roundThreeLbl.setUrl("images/rounded-three.png");
+		
 		shareLbl.getElement().setInnerText(GL0536);
+		shareLbl.getElement().setId("pnlShare");
+		shareLbl.getElement().setAttribute("alt",GL0536);
+		shareLbl.getElement().setAttribute("title",GL0536);
+		
 		shareClassPageText.getElement().setInnerText(GL1404);
+		shareClassPageText.getElement().setId("pnlShareClassPageText");
+		shareClassPageText.getElement().setAttribute("alt",GL1404);
+		shareClassPageText.getElement().setAttribute("title",GL1404);
+		
 		shareImageLbl.setTitle(GL0526);
 		shareImageLbl.setAltText(GL0526);
+		shareImageLbl.getElement().setId("imgShareImage");
 		shareImageLbl.setUrl("images/Classpage/share-image.png");
+		
 		needHelpText.setText(GL1405);
+		needHelpText.getElement().setId("lblNeedHelp");
+		needHelpText.getElement().setAttribute("alt",GL1405);
+		needHelpText.getElement().setAttribute("title",GL1405);
+		
 		supportCenterLbl.setText(GL1406);
+		supportCenterLbl.getElement().setId("lnkSupportCenter");
+		supportCenterLbl.getElement().setAttribute("alt",GL1406);
+		supportCenterLbl.getElement().setAttribute("title",GL1406);
 		supportCenterLbl.setHref("http://support.goorulearning.org/forums");
+		
 		loadingPanel.setVisible(false);		
+		loadingPanel.getElement().setId("pnlLoading");
+		
 		classPageScrollPanel.setVisible(false);
+		classPageScrollPanel.getElement().setId("sbClassPageScrollBar");
+		classpageListPanel.getElement().setId("pnlClassPageList");
+		
 		placeHolderForEmptyTeach.setVisible(true);
+		placeHolderForEmptyTeach.getElement().setId("pnlPlaceHolderForEmptyTeach");
+		
 		btnNewClasspage.setText(GL1381);
 		btnNewClasspage.getElement().setId("btnNewClasspage");
+		btnNewClasspage.getElement().setAttribute("alt",GL1381);
+		btnNewClasspage.getElement().setAttribute("title",GL1381);
 	}
 	
 	

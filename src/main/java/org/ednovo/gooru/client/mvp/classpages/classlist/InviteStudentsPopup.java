@@ -51,12 +51,27 @@ public class InviteStudentsPopup extends PopupPanel implements MessageProperties
 
 	private void setStaticText() {
 		headerPanel.getElement().setInnerHTML(GL1522);
-		titlePanel.getElement().setInnerHTML(GL1521);
-		inviteBtn.setText(GL0944);
-		cancelBtn.setText(GL0142);
-		cancelBtn.setText(GL0142);
-		inviteBtn.setText(GL0944);
+		headerPanel.getElement().setId("pnlHeader");
+		headerPanel.getElement().setAttribute("alt",GL1522);
+		headerPanel.getElement().setAttribute("title",GL1522);
 		
+		titlePanel.getElement().setInnerHTML(GL1521);
+		titlePanel.getElement().setId("pnlTitle");
+		titlePanel.getElement().setAttribute("alt",GL1521);
+		titlePanel.getElement().setAttribute("title",GL1521);
+		
+		emailTextArea.getElement().setId("tatEmail");
+		emailValidationLbl.getElement().setId("errlblEmailValidation");
+		
+		cancelBtn.setText(GL0142);
+		cancelBtn.getElement().setId("btnCancel");
+		cancelBtn.getElement().setAttribute("alt",GL0142);
+		cancelBtn.getElement().setAttribute("title",GL0142);
+		
+		inviteBtn.setText(GL0944);
+		inviteBtn.getElement().setId("btnInvite");
+		inviteBtn.getElement().setAttribute("alt",GL0944);
+		inviteBtn.getElement().setAttribute("title",GL0944);
 	}
 
 	@UiHandler("cancelBtn")
@@ -84,6 +99,8 @@ public class InviteStudentsPopup extends PopupPanel implements MessageProperties
 					isvalid = true;
 				}else{
 					emailValidationLbl.setText(StringUtil.generateMessage(GL1019, emailIds[i]));
+					emailValidationLbl.getElement().setAttribute("alt",StringUtil.generateMessage(GL1019, emailIds[i]));
+					emailValidationLbl.getElement().setAttribute("title",StringUtil.generateMessage(GL1019, emailIds[i]));
 					emailValidationLbl.setVisible(true);
 					isvalid = false;
 					break;
@@ -93,12 +110,16 @@ public class InviteStudentsPopup extends PopupPanel implements MessageProperties
 		if ((emailTextArea.getText() != null && !emailTextArea.getText().isEmpty())
 				&& !emailTextArea.getText().contains(AT_SYMBOL)) {
 			emailValidationLbl.setText(GL1027);
+			emailValidationLbl.getElement().setAttribute("alt",GL1027);
+			emailValidationLbl.getElement().setAttribute("title",GL1027);
 			emailValidationLbl.setVisible(true);
 			isvalid = false;
 
 		}
 		if (emailTextArea.getText().equals("") || emailTextArea.getText().trim().equals("")) {
 			emailValidationLbl.setText(GL0216_1);
+			emailValidationLbl.getElement().setAttribute("alt",GL0216_1);
+			emailValidationLbl.getElement().setAttribute("title",GL0216_1);
 			emailValidationLbl.setVisible(true);
 			isvalid = false;
 		}

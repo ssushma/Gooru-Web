@@ -72,14 +72,14 @@ public abstract class ServiceRequest {
 		try {
 			return run();
 		} catch (ResourceException exception) {
-			logger.error(ERROR, exception);
+//			logger.error(ERROR, exception);
 			//throw new RuntimeException(exception.getMessage());
 			JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
 			int statusCode=exception.getStatus().getCode();
 			jsonResponseRepresentation.setStatusCode(exception.getStatus().getCode());
 			String serverStatusCode=String.valueOf(statusCode);
 			Character firstCharcter=serverStatusCode.charAt(0);
-			if(statusCode==504){
+			if(statusCode==504 || statusCode==502){
 				String serverStatus=getApiServerStatus();
 				if(serverStatus!=null && serverStatus.equalsIgnoreCase(DOWN)){
 					throw new ServerDownException(statusCode,"");

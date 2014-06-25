@@ -130,35 +130,40 @@ public class AppServiceImpl extends BaseServiceImpl implements AppService {
 		V2UserDo v2UserDo = null;
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_SIGNIN, getApiKey());
-		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.post(url, getRestUsername(), getRestPassword(), postData);
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 		String content = null;
 		try {
-			content = jsonRep.getText();
-			if (content.contains("{")) {
-				v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
-				user = v2UserDo.getUser();
-				user.setToken(v2UserDo.getToken());
-				
-				user.setDateOfBirth(v2UserDo.getDateOfBirth());
-				user.setAccountCreatedType(user.getAccountCreatedType());
-				
-//				user.setCreatedOn(v2UserDo.getCreatedOn());
-				Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
-				Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
-				// if user created after production switch
-				if (userCreatedDate.getTime() >= prodDate.getTime()){
-					user.setBeforeProductionSwitch(false);
-				}else{
-					user.setBeforeProductionSwitch(true);
-				}
-				
-				setUserFilterProperties(user);
-				deleteLoggedInInfo();
-				setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
-				AppClientFactory.setLoggedInUser(user);
+			if(jsonResponseRep.getStatusCode()==401){
+				user = new UserDo();
+				user.setStatusCode(jsonResponseRep.getStatusCode());
 				return user;
+			}else{
+				content = jsonRep.getText();
+				if (content.contains("{")) {
+					v2UserDo = JsonDeserializer.deserialize(jsonRep.getJsonObject().toString(), V2UserDo.class);
+					user = v2UserDo.getUser();
+					user.setToken(v2UserDo.getToken());
+					user.setStatusCode(jsonResponseRep.getStatusCode());
+					user.setDateOfBirth(v2UserDo.getDateOfBirth());
+					user.setAccountCreatedType(user.getAccountCreatedType());
+
+					//				user.setCreatedOn(v2UserDo.getCreatedOn());
+					Date prodDate = new SimpleDateFormat("dd/MM/yyyy").parse(getProductionSwitchDate());				
+					Date userCreatedDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(user.getCreatedOn());
+					// if user created after production switch
+					if (userCreatedDate.getTime() >= prodDate.getTime()){
+						user.setBeforeProductionSwitch(false);
+					}else{
+						user.setBeforeProductionSwitch(true);
+					}
+
+					setUserFilterProperties(user);
+					deleteLoggedInInfo();
+					setLoggedInInfo(user.getToken(), user.getGooruUId(), user.getEmailId(),user.getDateOfBirth());
+					AppClientFactory.setLoggedInUser(user);
+					return user;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -56,7 +56,6 @@ import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -830,12 +829,13 @@ public class HeaderUc extends Composite implements MessageProperties,
 			discoverToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 			discoverToolTip.getElement().getStyle().setZIndex(99);
 			discoverToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
-			tooltipTimer = new Timer() {
-				public void run() {
-					discoverToolTip.show();
-				}
-			};
-			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//			tooltipTimer = new Timer() {
+//				public void run() {
+//					discoverToolTip.show();
+//				}
+//			};
+//			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+			discoverToolTip.show();
 		}
 	}
 
@@ -864,12 +864,12 @@ public class HeaderUc extends Composite implements MessageProperties,
 				organizeToolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				organizeToolTip.getElement().getStyle().setZIndex(99);
 				organizeToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
-				tooltipTimer = new Timer() {
-					public void run() {
+//				tooltipTimer = new Timer() {
+//					public void run() {
 						organizeToolTip.show();
-					}
-				};
-				tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//					}
+//				};
+//				tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 			}
 		}
 	}
@@ -899,12 +899,12 @@ public class HeaderUc extends Composite implements MessageProperties,
 				if (!AppClientFactory.isAnonymous()) {
 					Window.enableScrolling(true);
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
-					tooltipTimer = new Timer() {
-						public void run() {
+//					tooltipTimer = new Timer() {
+//						public void run() {
 							OpenClasspageList();
-						}
-					};
-					tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//						}
+//					};
+//					tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 				} else {
 					name = "teach";
 //					onLinkPopupClicked(null);
@@ -951,12 +951,12 @@ public class HeaderUc extends Composite implements MessageProperties,
 						.getAbsoluteTop() + 41);
 			}
 
-			tooltipTimer = new Timer() {
-				public void run() {
+//			tooltipTimer = new Timer() {
+//				public void run() {
 					toolTipPopupPanel.show();
-				}
-			};
-			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+//				}
+//			};
+//			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
 		}
 	}
 

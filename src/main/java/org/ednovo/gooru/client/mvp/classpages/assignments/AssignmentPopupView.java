@@ -63,6 +63,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -103,23 +104,55 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 	@UiField
 	TextArea assignmentDirectionsTxtArea;
 	
+	@UiField
+	HTMLPanel addResourceBtnPanel;
+	
     boolean isClicked = false;
 
 	public AssignmentPopupView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		assignmentTitleLabel.setText(GL1407+GL_SPL_STAR);
+		assignmentTitleLabel.getElement().setId("lblAssignmentTitle");
+		assignmentTitleLabel.getElement().setAttribute("alt",GL1407);
+		assignmentTitleLabel.getElement().setAttribute("title",GL1407);
+		
 		mandatoryTitleLabel.setText(GL0173);
+		mandatoryTitleLabel.getElement().setId("lblMandatoryTitle");
+		mandatoryTitleLabel.getElement().setAttribute("alt",GL0173);
+		mandatoryTitleLabel.getElement().setAttribute("title",GL0173);
+		
 		assignmentDueDateLabel.setText(GL0238);
+		assignmentDueDateLabel.getElement().setId("lblAssignmentDueDate");
+		assignmentDueDateLabel.getElement().setAttribute("alt",GL0238);
+		assignmentDueDateLabel.getElement().setAttribute("title",GL0238);
+		
 		mandatoryDueDateLabel.setText(GL0235);
-		assignmentDirectionLabel.setText(GL1408);
-		mandatoryDirectionLabel.setText(GL0236);
-		addResourceBtnLbl.setText(GL0590);
-		cancelResourcePopupBtnLbl.setText(GL0142);
 		mandatoryDueDateLabel.getElement().setAttribute("id", "datePickerErrorMessageLabel");
+		mandatoryDueDateLabel.getElement().setAttribute("alt",GL0235);
+		mandatoryDueDateLabel.getElement().setAttribute("title",GL0235);
+		
+		assignmentDirectionLabel.setText(GL1408);
+		assignmentDirectionLabel.getElement().setAttribute("id", "lblAssignmentDirection");
+		assignmentDirectionLabel.getElement().setAttribute("alt",GL1408);
+		assignmentDirectionLabel.getElement().setAttribute("title",GL1408);
+		
+		mandatoryDirectionLabel.setText(GL0236);
+		mandatoryDirectionLabel.getElement().setId("errlblDirectional");
+		
+		addResourceBtnLbl.setText(GL0590);
+		addResourceBtnLbl.getElement().setId("lblAdd");
+		addResourceBtnLbl.getElement().setAttribute("alt",GL0590);
+		addResourceBtnLbl.getElement().setAttribute("title",GL0590);
+		
+		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title",GL0142);
+		
 		assignmentTitleTxt.getElement().setAttribute("id", "txtAssignmentTitle");
 		assignmentDirectionsTxtArea.getElement().setAttribute("id", "txtAreaDirections");
-		addResourceBtnLbl.getElement().setId("lblAdd");
-		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
+		
+		
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 
@@ -133,6 +166,7 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 
 		dateBoxUc = new DateBoxUc(false, false,false);
 		dateSimPanel.add(dateBoxUc);
+		dateSimPanel.getElement().setId("spnlDate");
 		dateValidationUc.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().registerErrorLabel());
 
 		dateBoxUc.getDateBox().addFocusHandler(new OnDateFocus());
@@ -141,7 +175,9 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 
 		dateValidationUc.setVisible(false);
-
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		
+		addResourceBtnPanel.getElement().setId("pnlAddResource");
 		//Dont enable this.
 //		Window.enableScrolling(false);
 //        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, false));
@@ -168,6 +204,8 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 		//dateBoxUc.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateBoxError());
 			//dateBoxUc.getDateBox().addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDateError());
 			dateValidationUc.setText("");
+			assignmentDueDateLabel.getElement().setAttribute("alt","");
+			assignmentDueDateLabel.getElement().setAttribute("title","");
 			dateValidationUc.setVisible(true);
 			
 			isValid = false;
@@ -238,10 +276,14 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 
 			if (title == null || title.equalsIgnoreCase("")) {
 				mandatoryTitleLabel.setText(MANDATORY_TITLE);
+				mandatoryTitleLabel.getElement().setAttribute("alt",MANDATORY_TITLE);
+				mandatoryTitleLabel.getElement().setAttribute("title",MANDATORY_TITLE);
 				mandatoryTitleLabel.setVisible(true);
 				isFormFilled = false;
 			} else if (title.length() > 50) {
 				mandatoryTitleLabel.setText(CHARACTERS_LIMIT);
+				mandatoryTitleLabel.getElement().setAttribute("alt",CHARACTERS_LIMIT);
+				mandatoryTitleLabel.getElement().setAttribute("title",CHARACTERS_LIMIT);
 				mandatoryTitleLabel.setVisible(true);
 				isFormFilled = false;
 			}
@@ -331,6 +373,8 @@ dateBoxUc.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().gooruDate
 			mandatoryTitleLabel.setVisible(false);
 			if (title.length() >= 50) {
 				mandatoryTitleLabel.setText(CHARACTERS_LIMIT);
+				mandatoryTitleLabel.getElement().setAttribute("alt",CHARACTERS_LIMIT);
+				mandatoryTitleLabel.getElement().setAttribute("title",CHARACTERS_LIMIT);
 				mandatoryTitleLabel.setVisible(true);
 			}
 		}

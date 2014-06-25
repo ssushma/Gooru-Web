@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
@@ -53,7 +54,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -172,6 +176,14 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 			districtLibContainer.getElement().removeAttribute("style");
 			partnerLibContainer.getElement().removeAttribute("style");
 		}
+		
+		Window.addWindowScrollHandler(new ScrollHandler() {
+			@Override
+			public void onWindowScroll(ScrollEvent event) {
+				partnerLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+50, Unit.PX);
+				districtLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+23, Unit.PX);
+			}
+		});
         
 	}
 	
@@ -188,6 +200,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	private class OpenPartnerMenu implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
+			
 			lblPartnerLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
 			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
 			
@@ -227,15 +240,6 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		}
 	}
 	
-	public void setPartnersData(List partnersData) {
-		for(int i = 0; i< partnersData.size();) {
-			Label partnerName = new Label(partnersData.get(i).toString());
-			partnerName.setStyleName("discoverTooltipLabel");
-			partnerName.addClickHandler(new RedirectToPartnerPage(partnersData.get(i+1).toString()));
-			i=i+2;
-			partnerLibContainer.add(partnerName);
-		}
-	}
 	public void getPartners() {
 		AppClientFactory.getInjector().getLibraryService().getPartners(new SimpleAsyncCallback<ArrayList<LibraryUserDo>>() {
 			@Override
@@ -251,6 +255,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	public void setPartners(ArrayList<LibraryUserDo> partnersList) {
 		for(int i=0;i<partnersList.size();i++) {
 			final LibraryUserDo libraryUserDo = partnersList.get(i);
+			
 			final Label partnerTitle = new Label(StringUtil.getPartnerName(libraryUserDo.getUsername()));
 			partnerTitle.addStyleName("courseOption");
 			partnerTitle.addClickHandler(new ClickHandler() {
@@ -264,22 +269,22 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 		}
 	}
 	
-	private void getPartnersData() {
-		List<String> partnersData = new ArrayList<String>();
-		partnersData.add("Autodesk® ");
-		partnersData.add("8a6b75b8-0537-492e-8970-c41ade8723a6");
-		partnersData.add("Foundation for Teaching Economics (FTE)");
-		partnersData.add("de182361-8379-4d82-9168-e5bd8b658cff");
-		partnersData.add("SVEF's Lessonopoly");
-		partnersData.add("cd46b323-83d6-44ef-acf1-cef0705623db");
-		partnersData.add("New Global Citizens (NGC)");
-		partnersData.add("bac737f6-4945-4990-b3d6-8c07ec09f9c8");
-		partnersData.add("Office of Naval Research (ONR)");
-		partnersData.add("2e8dd71c-cef6-435d-bfd8-0afad9939b07");
-		partnersData.add("What So Proudly We Hail");
-		partnersData.add("593eeff6-2fa2-487b-941d-67d197e10201");
-		setPartnersData(partnersData);
-	}
+//	private void getPartnersData() {
+//		List<String> partnersData = new ArrayList<String>();
+//		partnersData.add("Autodesk® ");
+//		partnersData.add("8a6b75b8-0537-492e-8970-c41ade8723a6");
+//		partnersData.add("Foundation for Teaching Economics (FTE)");
+//		partnersData.add("de182361-8379-4d82-9168-e5bd8b658cff");
+//		partnersData.add("SVEF's Lessonopoly");
+//		partnersData.add("cd46b323-83d6-44ef-acf1-cef0705623db");
+//		partnersData.add("New Global Citizens (NGC)");
+//		partnersData.add("bac737f6-4945-4990-b3d6-8c07ec09f9c8");
+//		partnersData.add("Office of Naval Research (ONR)");
+//		partnersData.add("2e8dd71c-cef6-435d-bfd8-0afad9939b07");
+//		partnersData.add("What So Proudly We Hail");
+//		partnersData.add("593eeff6-2fa2-487b-941d-67d197e10201");
+//		setPartnersData(partnersData);
+//	}
 
 	public class RedirectToPartnerPage implements ClickHandler {
 		private String folderId;
@@ -289,7 +294,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 
 		@Override
 		public void onClick(ClickEvent event) {
-																																													hide();
+			hide();
 			Map<String,String> params = new HashMap<String, String>();
 			params.put("pid", folderId);
 			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.AUTODESK, params);
