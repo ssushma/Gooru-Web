@@ -86,7 +86,7 @@ public class SignUpCompleteProfileView extends
 	@UiField
 	Button btnUpdateProfileLater, btnSubmit, btnEditImage;
 	@UiField
-	HTMLPanel passwordContainer;
+	HTMLPanel passwordContainer,panelSignUp;
 	@UiField
 	ErrorLabelUc lastNameValidUc, firstNameValidUc, passwordValidUc;
 	private AppPopUp appPopUp;
@@ -124,34 +124,134 @@ public class SignUpCompleteProfileView extends
 	public void setUiAndIds() {
 		lblTitle.setText(GL0481
 				+ GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0481);
+		lblTitle.getElement().setAttribute("title",GL0481);
+		
+		lblCancel.getElement().setId("lblCancel");
+		lblCancel.getElement().setAttribute("alt","");
+		lblCancel.getElement().setAttribute("title","");
+		
+		panelSignUp.getElement().setId("pnlSignUp");
+		panelSignUp.getElement().setAttribute("alt","");
+		panelSignUp.getElement().setAttribute("title","");
+		
 		lblHeading.setText(GL0492
 				+ GL_SPL_EXCLAMATION);
+		lblHeading.getElement().setId("lblCompleteYourProfile");
+		lblHeading.getElement().setAttribute("alt",GL0492);
+		lblHeading.getElement().setAttribute("title",GL0492);
+		
 		lblSubHeading.setText(GL0493);
+		lblSubHeading.getElement().setId("lblSubHeading");
+		lblSubHeading.getElement().setAttribute("alt",GL0493);
+		lblSubHeading.getElement().setAttribute("title",GL0493);
+		
 		profileImage.setUrl("images/signup/user.png");
+		profileImage.getElement().setId("imgProfileImage");
+		profileImage.getElement().setAttribute("alt","Profile Image");
+		profileImage.getElement().setAttribute("title","Profile Image");
+		
 		lblchangePassword.setText(GL0494);
+		lblchangePassword.getElement().setId("lblchangePassword");
+		lblchangePassword.getElement().setAttribute("alt",GL0494);
+		lblchangePassword.getElement().setAttribute("title",GL0494);
+		
 		txtFirstName.setPlaceholder(GL1140);
 		txtlastName.setPlaceholder(GL1141);
+	
 		txtAreaAbout.getElement().setAttribute("placeholder",
 				GL1142);
+		txtAreaAbout.getElement().setId("tatAbout");
+		txtAreaAbout.getElement().setAttribute("alt","");
+		txtAreaAbout.getElement().setAttribute("title","");
+		
 		txtPassword.setPlaceholder(GL1143);
+		txtPassword.getElement().setId("txtPassword");
+		txtPassword.getElement().setAttribute("alt","");
+		txtPassword.getElement().setAttribute("title","");
+		
 		txtConfirmPassword.setPlaceholder(GL1144);
+		txtConfirmPassword.getElement().setId("txtConfirmPassword");
+		txtConfirmPassword.getElement().setAttribute("alt","");
+		txtConfirmPassword.getElement().setAttribute("title","");
+		
 		btnUpdateProfileLater.setText(GL0495);
+		btnUpdateProfileLater.getElement().setId("btnUpdateProfileLater");
+		btnUpdateProfileLater.getElement().setAttribute("alt",GL0495);
+		btnUpdateProfileLater.getElement().setAttribute("title",GL0495);
+		
 		btnSubmit.setText(GL0486);
 		btnSubmit.getElement().setId("btnSubmit");
-		btnUpdateProfileLater.getElement().setId("btnUpdateProfileLater");
+		btnSubmit.getElement().setAttribute("alt",GL0486);
+		btnSubmit.getElement().setAttribute("title",GL0486);
+	
 		passwordContainer.setVisible(false);
+		passwordContainer.getElement().setId("pnlPassWordContainer");
+		passwordContainer.getElement().setAttribute("alt","");
+		passwordContainer.getElement().setAttribute("title","");
+		
 		btnEditImage.setText(GL0138);
 		btnEditImage.getElement().setId("btnEditImage");
+		btnEditImage.getElement().setAttribute("alt",GL0138);
+		btnEditImage.getElement().setAttribute("title",GL0138);
+		
 		btnSubmit.getElement().setAttribute("style", "margin-left: 10px");
+		
 		userName.setText(AppClientFactory.getLoggedInUser().getUsername());
+		userName.getElement().setId("lblUserName");
+		userName.getElement().setAttribute("alt",AppClientFactory.getLoggedInUser().getUsername());
+		userName.getElement().setAttribute("title",AppClientFactory.getLoggedInUser().getUsername());
+		
+		txtFirstName.getElement().setId("txtFirstName");
+		txtFirstName.getElement().setAttribute("alt","");
+		txtFirstName.getElement().setAttribute("title","");
+		
+		txtlastName.getElement().setId("txtLastName");
+		txtlastName.getElement().setAttribute("alt","");
+		txtlastName.getElement().setAttribute("title","");
+		
+		firstNameValidUc.getElement().setId("errlblFirstName");
+		firstNameValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(
+				GL0072, "First name", "<=20"));
+		firstNameValidUc.getElement().setAttribute("title",StringUtil.generateMessage(
+				GL0072, "First name", "<=20"));
+		
+		lastNameValidUc.getElement().setId("errlblLastName");
+		lastNameValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(
+				GL0072, "Last name", "<= 20"));
+		lastNameValidUc.getElement().setAttribute("title",StringUtil.generateMessage(
+				GL0072, "Last name", "<= 20"));
+		
+		
 		quriesText.setText(GL1139+GL_GRR_COMMA);
+		quriesText.getElement().setId("lblQuriesText");
+		quriesText.getElement().setAttribute("alt",GL1139);
+		quriesText.getElement().setAttribute("title",GL1139);
+		
 		pleaseContactText.setText(GL1145);
+		pleaseContactText.getElement().setId("lblPleaseContactText");
+		pleaseContactText.getElement().setAttribute("alt",GL1145);
+		pleaseContactText.getElement().setAttribute("title",GL1145);
 		pleaseContactText.getElement().setAttribute("style", "width: 80%;position: absolute;");
+		
 		supportLink.setText(GL0299);
+		supportLink.getElement().setId("lnkSupportLink");
+		supportLink.getElement().setAttribute("alt",GL0299);
+		supportLink.getElement().setAttribute("title",GL0299);
 		supportLink.setHref(GL1055);
 		supportLink.getElement().setAttribute("style","margin-left:100px;");
+		
 		passwordValidUc.setVisible(false);
+		passwordValidUc.getElement().setId("errlblPasswordValid");
+		passwordValidUc.getElement().setAttribute("alt",GL0446);
+		passwordValidUc.getElement().setAttribute("title",GL0446);
+		
 		lblUpdating.setVisible(false);
+		lblUpdating.getElement().setId("lblUpdatingText");
+		lblUpdating.getElement().setAttribute("alt",GL1138);
+		lblUpdating.getElement().setAttribute("title",GL1138);
+		
 		profileImage.setWidth("96px");
 		profileImage.setHeight("98px");
 		txtPassword.addKeyUpHandler(new OnKeyUpHandler());

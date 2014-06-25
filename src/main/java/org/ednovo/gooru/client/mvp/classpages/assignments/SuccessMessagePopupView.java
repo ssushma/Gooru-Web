@@ -83,8 +83,19 @@ public class SuccessMessagePopupView extends Composite implements MessagePropert
 	}
 	public void setStaticTexts(String collectonTitle){
 		successPopupHeader.setText(GL1384);
+		successPopupHeader.getElement().setId("lblSuccessPopupHeader");
+		successPopupHeader.getElement().setAttribute("alt",GL1384);
+		successPopupHeader.getElement().setAttribute("title",GL1384);
+		
 		successPopupBodyText.setHTML(StringUtil.generateMessage(GL1385, collectonTitle));
+		successPopupBodyText.getElement().setId("htmlSuccessPoupBodyText");
+		successPopupBodyText.getElement().setAttribute("alt",StringUtil.generateMessage(GL1385, collectonTitle));
+		successPopupBodyText.getElement().setAttribute("title",StringUtil.generateMessage(GL1385, collectonTitle));
+		
 		okayButton.setText(GL1386);
+		okayButton.getElement().setId("btnOk");
+		okayButton.getElement().setAttribute("alt",GL1386);
+		okayButton.getElement().setAttribute("title",GL1386);
 	}
 	@UiHandler("okayButton")
 	public void closePopupEvent(ClickEvent event){

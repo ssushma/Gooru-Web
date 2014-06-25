@@ -84,22 +84,80 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties {
 		studentRb.addClickHandler(new StudentRbClick());
 		parentRb.addClickHandler(new ParentRbClick());
 		otherRb.addClickHandler(new OtherRbClick());
-		oneMoreStepText.getElement().setInnerText(GL0898+GL_SPL_EXCLAMATION);
-		teacherLbl.setText(GL0416);
-		studentLbl.setText(GL0417);
-		parentLbl.setText(GL0418);
-		otherLbl.setText(GL0419);
-		submitRegistration.setText(GL0486);
-		teacherRg.add(teacherRb);
-		studentRg.add(studentRb);
-		parentRg.add(parentRb);
-		otherRg.add(otherRb);
 		
-		submitRegistration.getElement().setId("submitRegistration");
+		oneMoreStepText.getElement().setInnerText(GL0898+GL_SPL_EXCLAMATION);
+		oneMoreStepText.getElement().setId("pnlOneMoreStepText");
+		oneMoreStepText.getElement().setAttribute("alt",GL0898);
+		oneMoreStepText.getElement().setAttribute("title",GL0898);
+		
+		teacherLbl.setText(GL0416);
+		teacherLbl.getElement().setId("lblTeacher");
+		teacherLbl.getElement().setAttribute("alt",GL0416);
+		teacherLbl.getElement().setAttribute("title",GL0416);
+		
+		studentLbl.setText(GL0417);
+		studentLbl.getElement().setId("lblStudent");
+		studentLbl.getElement().setAttribute("alt",GL0417);
+		studentLbl.getElement().setAttribute("title",GL0417);
+		
+		parentLbl.setText(GL0418);
+		parentLbl.getElement().setId("lblParent");
+		parentLbl.getElement().setAttribute("alt",GL0418);
+		parentLbl.getElement().setAttribute("title",GL0418);
+		
+		otherLbl.setText(GL0419);
+		otherLbl.getElement().setId("lblOther");
+		otherLbl.getElement().setAttribute("alt",GL0419);
+		otherLbl.getElement().setAttribute("title",GL0419);
+		
+		submitRegistration.setText(GL0486);
+		submitRegistration.getElement().setId("pnlsubmitRegistration");
+		submitRegistration.getElement().setAttribute("alt",GL0486);
+		submitRegistration.getElement().setAttribute("title",GL0486);
+		
+		teacherRg.add(teacherRb);
+		teacherRg.getElement().setId("pnlTeacherRg");
+		teacherRg.getElement().setAttribute("alt","");
+		teacherRg.getElement().setAttribute("title","");
+		
+		studentRg.add(studentRb);
+		studentRg.getElement().setId("pnlStudentRg");
+		studentRg.getElement().setAttribute("alt","");
+		studentRg.getElement().setAttribute("title","");
+		
+		parentRg.add(parentRb);
+		parentRg.getElement().setId("pnlParentRg");
+		parentRg.getElement().setAttribute("alt","");
+		parentRg.getElement().setAttribute("title","");
+		
+		otherRg.add(otherRb);
+		otherRg.getElement().setId("pnlOtherRg");
+		otherRg.getElement().setAttribute("alt","");
+		otherRg.getElement().setAttribute("title","");
+		
+		
+		
 		loginTxtBox.addStyleName(res.css().loginTextBoxMargin());
         loginTxtBox.getElement().setAttribute("placeholder", GL0423);
+        loginTxtBox.getElement().setId("txtLogin");
+        loginTxtBox.getElement().setAttribute("alt","");
+        loginTxtBox.getElement().setAttribute("title","");
+        
+      
         pleaseFillLbl.getElement().setInnerText(GL0953);
-		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+        pleaseFillLbl.getElement().setId("pnlOneMoreStepText");
+		pleaseFillLbl.getElement().setAttribute("alt",GL0953);
+		pleaseFillLbl.getElement().setAttribute("title",GL0953);
+		
+        lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0186);
+		lblTitle.getElement().setAttribute("title",GL0186);
+		
+		lblCancel.getElement().setId("lblCancel");
+		lblCancel.getElement().setAttribute("alt","");
+		lblCancel.getElement().setAttribute("title","");
+		
 
 		this.setGlassEnabled(true);
 		this.show();

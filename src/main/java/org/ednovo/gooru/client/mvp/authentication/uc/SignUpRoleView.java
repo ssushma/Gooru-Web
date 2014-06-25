@@ -77,11 +77,35 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		oneMoreStepText.getElement().setInnerText(GL0898+GL_SPL_EXCLAMATION);
+		oneMoreStepText.getElement().setId("pnlOneMoreStepText");
+		oneMoreStepText.getElement().setAttribute("alt",GL0898);
+		oneMoreStepText.getElement().setAttribute("title",GL0898);
+		
 		fillText.getElement().setInnerText(GL0953);
+		fillText.getElement().setId("pnlFillText");
+		fillText.getElement().setAttribute("alt",GL0953);
+		fillText.getElement().setAttribute("title",GL0953);
+		
 		teachLbl.setText(GL0416);
+		teachLbl.getElement().setId("lblTeach");
+		teachLbl.getElement().setAttribute("alt",GL0416);
+		teachLbl.getElement().setAttribute("title",GL0416);
+		
 		studentLbl.setText(GL0417);
+		studentLbl.getElement().setId("lblStudent");
+		studentLbl.getElement().setAttribute("alt",GL0417);
+		studentLbl.getElement().setAttribute("title",GL0417);
+		
 		parentLbl.setText(GL0418);
+		parentLbl.getElement().setId("lblParent");
+		parentLbl.getElement().setAttribute("alt",GL0418);
+		parentLbl.getElement().setAttribute("title",GL0418);
+		
 		otherLbl.setText(GL0419);
+		otherLbl.getElement().setId("lblOther");
+		otherLbl.getElement().setAttribute("alt",GL0419);
+		otherLbl.getElement().setAttribute("title",GL0419);
+		
 		submitRegistration.setText(GL0486);
 		teacherRb = new RadioButton("roleRadioGroup", "");
 		studentRb = new RadioButton("roleRadioGroup", "");
@@ -93,15 +117,30 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 		otherRb.addClickHandler(new OtherRbClick());
 		
 		teacherRg.add(teacherRb);
+		teacherRg.getElement().setId("rdTeacher");
+		
 		studentRg.add(studentRb);
+		studentRg.getElement().setId("rdStudent");
+		
 		parentRg.add(parentRb);
+		parentRg.getElement().setId("rdParent");
+		
 		otherRg.add(otherRb);
+		otherRg.getElement().setId("rdOther");
 		
 		submitRegistration.getElement().setId("submitRegistration");
+		
 		loginTxtBox.addStyleName(res.css().loginTextBoxMargin());
         loginTxtBox.getElement().setAttribute("placeholder", "Username");
-		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
-
+        loginTxtBox.getElement().setId("txtLogin");
+		
+        lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0186);
+		lblTitle.getElement().setAttribute("title",GL0186);
+		
+		lblCancel.getElement().setId("lblCancel");
+		
 		this.setGlassEnabled(true);
 		this.show();
 		this.center();

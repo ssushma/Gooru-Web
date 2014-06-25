@@ -110,8 +110,20 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		signupBgPanel.setWidth("700px");
+		signupBgPanel.getElement().setId("pnlSignUpBgPanel");
+		
 		metaDataSelectionPanel.getElement().getStyle().setPadding(15, Unit.PX);
+		metaDataSelectionPanel.getElement().setId("pnlMetaDataSelectionPanel");
+		
 		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0186);
+		lblTitle.getElement().setAttribute("title",GL0186);
+		
+		lblCancel.getElement().setId("lblCancel");
+		lblCancel.getElement().setAttribute("alt","");
+		lblCancel.getElement().setAttribute("title","");
+		
 		scienceCourseContainer = new HTMLPanel("");
 		mathCourseContainer = new HTMLPanel("");
 		socialCourseContainer = new HTMLPanel("");
@@ -129,6 +141,9 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
 		
 		lblErrorMessage.setVisible(false);
 		lblErrorMessage.setText(GL0500);
+		lblErrorMessage.getElement().setId("errlblCourse");
+		lblErrorMessage.getElement().setAttribute("alt",GL0500);
+		lblErrorMessage.getElement().setAttribute("title",GL0500);
 		lblErrorMessage.getElement().getStyle().clearMarginLeft();
 		lblErrorMessage.getElement().getStyle().clearWidth();
 		lblErrorMessage.getElement().getStyle().setFloat(Float.RIGHT);
@@ -144,11 +159,36 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
         this.show();
         this.center();
         congratsLbl.getElement().setInnerHTML(GL1159+GL_SPL_EXCLAMATION);
+        congratsLbl.getElement().setId("pnlCongrats");
+        congratsLbl.getElement().setAttribute("alt",GL1159);
+        congratsLbl.getElement().setAttribute("title",GL1159);
+        
         accountCreatedText.getElement().setInnerHTML(GL1160);
+        accountCreatedText.getElement().setId("pnlAccountCreatedText");
+        accountCreatedText.getElement().setAttribute("alt",GL1160);
+        accountCreatedText.getElement().setAttribute("title",GL1160);
+        
         imgLoading.setAltText(GL0110);
         imgLoading.setTitle(GL0110);
+        imgLoading.getElement().setId("imgLoadingImage");
+        imgLoading.getElement().setAttribute("alt",GL0110);
+     
+        registerGradeList.getElement().setId("fpnlGradesList");
+        scienceCourseLbl.getElement().setId("epnlSienceCourse");
+        mathCourseLbl.getElement().setId("epnlMathCourse");
+        socialCourseLbl.getElement().setId("epnlSocialCourse");
+        elaCourseLbl.getElement().setId("epnlElaCourse");
+        courseContainer.getElement().setId("pnlCourseContainer");
+        
         skipBtn.setText(GL1004);
+        skipBtn.getElement().setId("btnSkip");
+        skipBtn.getElement().setAttribute("alt",GL1004);
+        skipBtn.getElement().setAttribute("title",GL1004);
+        
         submitBtn.setText(GL0486);
+        submitBtn.getElement().setId("btnSubmit");
+        submitBtn.getElement().setAttribute("alt",GL1004);
+        submitBtn.getElement().setAttribute("title",GL1004);
 	}
 	/**
 	 * 
