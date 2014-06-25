@@ -93,7 +93,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class ClasspageListVc extends PopupPanel implements MessageProperties {
 
 	@UiField
-	Label lblLoading, lblNoClasspageYet;
+	Label lblLoading, lblNoClasspageYet,lblTitle;
 	@UiField
 	HTMLPanel htmlPanelContentContainer, htmlPanelNoClasspageContainer;
 	@UiField
@@ -341,14 +341,32 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	private void setLabels() {
 		lblLoading.setText(GL0110 + GL_SPL_FULLSTOP + GL_SPL_FULLSTOP
 				+ GL_SPL_FULLSTOP);
+		lblLoading.getElement().setId("lblLoading");
+		lblLoading.getElement().setAttribute("alt",GL0110 + GL_SPL_FULLSTOP + GL_SPL_FULLSTOP
+				+ GL_SPL_FULLSTOP);
+		lblLoading.getElement().setAttribute("title",GL0110 + GL_SPL_FULLSTOP + GL_SPL_FULLSTOP
+				+ GL_SPL_FULLSTOP);
+		
 		ancNewClasspage.setText(GL0115);
-
+		ancNewClasspage.getElement().setId("lnkNewClassPage");
+		ancNewClasspage.getElement().setAttribute("alt",GL0115);
+		ancNewClasspage.getElement().setAttribute("title",GL0115);
+		
 		lblNoClasspageYet.setText(GL0117);
+		lblNoClasspageYet.getElement().setId("lblNoClasspageYet");
+		lblNoClasspageYet.getElement().setAttribute("alt",GL0117);
+		lblNoClasspageYet.getElement().setAttribute("title",GL0117);
+		
 		inLineLblCheckOut.setText(GL0118);
+		inLineLblCheckOut.getElement().setId("spnCheckOut");
+		inLineLblCheckOut.getElement().setAttribute("alt",GL0118);
+		inLineLblCheckOut.getElement().setAttribute("title",GL0118);
 
 		enterLbl.addClickHandler(new OnEnterClassCodeClick());
 		enterLbl.setText(GL1065);
-		
+		enterLbl.getElement().setId("btnEnter");
+		enterLbl.getElement().setAttribute("alt",GL1065);
+		enterLbl.getElement().setAttribute("title",GL1065);
 		classCodeTxtBox.addKeyPressHandler(new KeyPressHandler() {
 			
 			@Override
@@ -365,11 +383,15 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 		setButtonStatus("active");
 		
 		spanelCollectionList.setVisible(false);
+		spanelCollectionList.getElement().setId("sbCollectionList");
+		htmlPanelClasspageList.getElement().setId("vpnlClassPageList");
+		
 		htmlPanelContentContainer.setVisible(false);
-
+		htmlPanelContentContainer.getElement().setId("pnlHtmlContentContainer");
+		htmlPanelNoClasspageContainer.getElement().setId("pnlNoClassPageContentContainer");
 		// inLineLblGooruGuide.setText(MessageProperties.GL0119);
 		// inLineLblCreateOne.setText(MessageProperties.GL0120);
-
+		lblTitle.getElement().setId("lblTitle");
 	}
 
 	public class OnEnterClassCodeClick implements ClickHandler {

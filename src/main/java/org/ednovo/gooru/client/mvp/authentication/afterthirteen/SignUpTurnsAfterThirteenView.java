@@ -91,7 +91,7 @@ IsAfterThirteen,MessageProperties {
 	Label lblfeaturesTitle, lblfeaturesTitleDes1, lblfeaturesTitleDes2,
 			lblfeaturesTitleDes3,lblUpdating;
 	@UiField
-	HTMLPanel tooltipContent;
+	HTMLPanel tooltipContent,panelSignUp;
 
 	String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
@@ -132,25 +132,92 @@ IsAfterThirteen,MessageProperties {
 
 	private void setUiAndIds() {
 		lblTitle.setText(GL0481+GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0481);
+		lblTitle.getElement().setAttribute("title",GL0481);
+		
+		lblCancel.getElement().setId("lblCancel");
+		lblCancel.getElement().setAttribute("alt","");
+		lblCancel.getElement().setAttribute("title","");
+		
+		panelSignUp.getElement().setId("pnlSignUp");
+		panelSignUp.getElement().setAttribute("alt","");
+		panelSignUp.getElement().setAttribute("title","");
+		
 		lblStuDes.setText(GL0483+ GL_SPL_EXCLAMATION);
+		lblStuDes.getElement().setId("lblStuDes");
+		lblStuDes.getElement().setAttribute("alt",GL0483);
+		lblStuDes.getElement().setAttribute("title",GL0483);
+		
 		lblStuDesDetails.setText(GL0484);
+		lblStuDesDetails.getElement().setId("lblStuDesDetails");
+		lblStuDesDetails.getElement().setAttribute("alt",GL0484);
+		lblStuDesDetails.getElement().setAttribute("title",GL0484);
+		
 		lblStuDesDetails2.setText(GL0485);
+		lblStuDesDetails2.getElement().setId("lblStuDesDetails2");
+		lblStuDesDetails2.getElement().setAttribute("alt",GL0485);
+		lblStuDesDetails2.getElement().setAttribute("title",GL0485);
+		
 		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setId("lblQuestionMark");
+		lblQuestionMark.getElement().setAttribute("alt",GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setAttribute("title",GL_SPL_QUESTION);
+		
 		emailValidUc.setVisible(false);
+		emailValidUc.getElement().setId("errlblEmailId");
+		emailValidUc.getElement().setAttribute("alt",GL0447);
+		emailValidUc.getElement().setAttribute("title",GL0447);
+		
 		txtEmailId.setPlaceholder(GL0426);
-		btnEnterLater.getElement().setId("btnEnterLater");
-		btnSubmit.getElement().setId("btnSubmit");
+		txtEmailId.getElement().setId("txtEmailId");
+		txtEmailId.getElement().setAttribute("alt","");
+		txtEmailId.getElement().setAttribute("title","");
+		
 		btnEnterLater.setText(GL0487);
+		btnEnterLater.getElement().setId("btnEnterLater");
+		btnEnterLater.getElement().setAttribute("alt",GL0487);
+		btnEnterLater.getElement().setAttribute("title",GL0487);
+		
 		btnSubmit.setText(GL0486);
+		btnSubmit.getElement().setId("btnSubmit");
+		btnSubmit.getElement().setAttribute("alt",GL0486);
+		btnSubmit.getElement().setAttribute("title",GL0486);
+		
 		lblfeaturesTitle.setText(GL0488+GL_SPL_QUESTION);
+		lblfeaturesTitle.getElement().setId("lblfeaturesTitle");
+		lblfeaturesTitle.getElement().setAttribute("alt",GL0488);
+		lblfeaturesTitle.getElement().setAttribute("title",GL0488);
+		
 		lblfeaturesTitleDes1.setText(GL0489);
+		lblfeaturesTitleDes1.getElement().setId("lblfeaturesTitleDes1");
+		lblfeaturesTitleDes1.getElement().setAttribute("alt",GL0489);
+		lblfeaturesTitleDes1.getElement().setAttribute("title",GL0489);
+		
 		lblfeaturesTitleDes2.setText(GL0490);
+		lblfeaturesTitleDes2.getElement().setId("lblfeaturesTitleDes2");
+		lblfeaturesTitleDes2.getElement().setAttribute("alt",GL0490);
+		lblfeaturesTitleDes2.getElement().setAttribute("title",GL0490);
+		
 		lblfeaturesTitleDes3.setText(GL0491);
+		lblfeaturesTitleDes3.getElement().setId("lblfeaturesTitleDes3");
+		lblfeaturesTitleDes3.getElement().setAttribute("alt",GL0491);
+		lblfeaturesTitleDes3.getElement().setAttribute("title",GL0491);
+		
 		tooltipContent.getElement().setAttribute("style", "width:193px");
+		tooltipContent.getElement().setId("pnlTooltipContentPanel");
+		tooltipContent.getElement().setAttribute("alt","");
+		tooltipContent.getElement().setAttribute("title","");
+		
 		btnSubmit.getElement().setAttribute("style", "margin-left: 10px");
 		//txtEmailId.addBlurHandler(new OnBlurHandler());
 		txtEmailId.addKeyUpHandler(new OnKeyUpHandler());
+		
 		lblUpdating.setVisible(false);
+		lblUpdating.getElement().setId("lblUpdating");
+		lblUpdating.getElement().setAttribute("alt",GL1138);
+		lblUpdating.getElement().setAttribute("title",GL1138);
+		
 		btnSubmit.getElement().addClassName("disabled");
 		btnSubmit.setEnabled(false);
 		
