@@ -185,31 +185,64 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void setStaticTexts(){
 		subHeadingMsgLbl.setText(GL1974);
+		subHeadingMsgLbl.getElement().setId("lblSubHeadingMsg");
+		subHeadingMsgLbl.getElement().setAttribute("alt",GL1974);
+		subHeadingMsgLbl.getElement().setAttribute("title",GL1974);
+		
 		addCollectionPopupHeader.setText(GL1973);
+		addCollectionPopupHeader.getElement().setId("lblAddCollectionPopupHeader");
+		addCollectionPopupHeader.getElement().setAttribute("alt",GL1973);
+		addCollectionPopupHeader.getElement().setAttribute("title",GL1973);
+		
 		//assignmentTitleLabel.setText(GL1376);
 //		dropdownListPlaceHolder.setText(GL1377);
 //		chooseCollectionHelpText.setText(GL1378);
 //		assignmentDirectionLabel.setText(GL1379);
 //		assignmentDueDateLabel.setText(GL1380);
 		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.getElement().setId("btnCancelResourcePoup");
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title",GL0142);
+		
 		addResourceBtnLbl.setText(GL0104);
+		addResourceBtnLbl.getElement().setId("btnAddResource");
+		addResourceBtnLbl.getElement().setAttribute("alt",GL0104);
+		addResourceBtnLbl.getElement().setAttribute("title",GL0104);
+		
 		addingText.setText(GL1172);
+		addingText.getElement().setId("lblAddText");
+		addingText.getElement().setAttribute("alt",GL1172);
+		addingText.getElement().setAttribute("title",GL1172);
+		
 //		assignmentDirectionsTxtArea.setText(GL1389);
 //		assignmentDueDateLabel.setText(GL1380);
 //		remainderLbl.setText(GL1889);
+		popupContent.getElement().setId("pnlPopupContent");
+		emptyMsgLbl.getElement().setId("lblEmptyMsg");
+		dropdownListContainerScrollPanel.getElement().setId("sbDropDownListContainer");
+		floderTreeContainer.getElement().setId("pnlFolderTreeContainer");
+		displayCountLabel.getElement().setId("lblDisplayCount");
+		buttonsContainer.getElement().setId("pnlButtonsContainer");
 	}
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
 			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
+			displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
+			displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
 		}
 	}
 	public void setSelectedCollectionsCount(int count){
 		if(count>0){
 			String label=count==1?count+" collection":count+" collections";
 			displayCountLabel.setText(label+" "+GL1975);
+			displayCountLabel.getElement().setAttribute("alt",label+" "+GL1975);
+			displayCountLabel.getElement().setAttribute("title",label+" "+GL1975);
+		
 		}else{
 			displayCountLabel.setText("");
+			displayCountLabel.getElement().setAttribute("alt","");
+			displayCountLabel.getElement().setAttribute("title","");
 		}
 	}
 	protected void removePreviousSelectedItem(){
@@ -460,7 +493,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	public void displayWorkspaceData(TreeItem item, FolderListDo folderListDo) {
 		if(folderListDo!=null){
 			 List<FolderDo> foldersArrayList=folderListDo.getSearchResult();
-			 setSelectedCollectionsCount(foldersArrayList.size());
+			 setSelectedCollectionsCount(folderListDo.getCount());
 			 if(foldersArrayList!=null&&foldersArrayList.size()>0){
 				 FolderTreeItem folderTreeItemWidget=(FolderTreeItem)item.getWidget();
 				 int folderLevel=folderTreeItemWidget.getFolerLevel();
@@ -614,6 +647,9 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 		dropdownListContainerScrollPanel.setVisible(false);
 		addResourceBtnLbl.setText(GL1964);
 		emptyMsgLbl.setText(GL1963); 
+		emptyMsgLbl.getElement().setAttribute("alt",GL1963);
+		emptyMsgLbl.getElement().setAttribute("title",GL1963);
+		
 		subHeadingMsgLbl.setVisible(false);
 		emptyMsgLbl.setVisible(true);
 		buttonsContainer.getElement().getStyle().setMarginTop(66, Unit.PX); 

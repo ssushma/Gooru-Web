@@ -53,6 +53,7 @@
 				<g:Button ui:field="reportsTab" styleName=""></g:Button>
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{res.css.containerProgress}" ui:field="panelProgressContainer">
+			<g:HTMLPanel ui:field="headerAssignments" styleName="{res.css.assignementOrderHeader}">Assignments Order</g:HTMLPanel>
 			    <uc:HTMLEventPanel styleName="{res.css.next}" ui:field="panelPrevious">
 			        <g:Label styleName="{res.css.leftArrow}" ui:field="lblPrevious"></g:Label>
 			    </uc:HTMLEventPanel>

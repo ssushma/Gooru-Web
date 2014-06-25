@@ -219,6 +219,7 @@ public interface EditClasspageCBundle extends ClientBundle{
         String btnContainerClasswithBG();
         String section2Div();
         String section3Div();
+        String assignementOrderHeader();
 
 	}
 	@NotStrict

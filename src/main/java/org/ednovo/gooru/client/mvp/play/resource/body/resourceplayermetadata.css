@@ -111,10 +111,7 @@
 	padding-left: 10px;
 	position: relative;
 }
-.iconOuter:hover div.emoticonPopup {
-	cursor: pointer;
-	display: block;
-}
+
 .icons {
 	background-position: -3px -1px;
 	width: 35px;

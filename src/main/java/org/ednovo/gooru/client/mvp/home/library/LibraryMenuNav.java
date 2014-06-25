@@ -383,7 +383,15 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 	private void setStandardDataWidgetVisibility(boolean isCCSSVisible, boolean isTEXASVisible) {
     /** 0th widget in "standardData" refers to CCSS widget and 1st widget refers to TEXAS widget **/
 		standardData.getWidget(0).setVisible(isCCSSVisible);
+		try
+		{
 		standardData.getWidget(1).setVisible(isTEXASVisible);
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		
 	}
 
 	/**

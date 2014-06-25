@@ -96,8 +96,8 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 	@UiField SimplePanel sPanelDateOfBirth;
 
 	@UiField
-	ErrorLabelUc dateValidationUc,lblSelectRole,passwordValidUc;
-	@UiField HTMLPanel panelUserNamePopUp;
+	ErrorLabelUc userNameValidUc,dateValidationUc,lblSelectRole,passwordValidUc;
+	@UiField HTMLPanel panelUserNamePopUp,panelSignUp;
 	@UiField TextBoxWithPlaceholder txtChooseUsername,txtChoosePassword,txtConfirmPassword;
 	@UiField Label lblTeacher,lblStudent, lblParent, lblOther,lblPasswordTooltipContent,lblPleaseWait;
 	@UiField HTMLPanel rdTeacher, rdStudent, rdParent, rdOther,panelPassword;
@@ -164,6 +164,10 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		//this.getElement().getStyle().setBackgroundColor("transparent");
 		lblTitle.getElement().setAttribute("style", "height: 17px");
 		lblParentEmailId.setText(emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.getElement().setId("lblParentEmailId");
+		lblParentEmailId.getElement().setAttribute("alt",emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		lblParentEmailId.getElement().setAttribute("title",emailId != null && !emailId.equalsIgnoreCase("") ? emailId : AppClientFactory.getPlaceManager().getRequestParameter("emailId"));
+		
 		txtChooseUsername.setText(username);
 		txtChooseUsername.setReadOnly(true);
 		lblPleaseWait.setVisible(false);
@@ -207,43 +211,139 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 	 */
 	private void setUiAndIds(String dob){
 		lblStuDes.setText(GL0467);
+		lblStuDes.getElement().setId("lblStuDes");
+		lblStuDes.getElement().setAttribute("alt",GL0467);
+		lblStuDes.getElement().setAttribute("title",GL0467);
+		
 		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+		lblTitle.getElement().setId("lblTitle");
+		lblTitle.getElement().setAttribute("alt",GL0186);
+		lblTitle.getElement().setAttribute("title",GL0186);
+		
+		lblCancel.getElement().setId("lblCancel");
+		panelSignUp.getElement().setId("pnlSignUp");
 		
 		lblTxtParent.setText(GL0468);
+		lblTxtParent.getElement().setId("lblTxtParent");
+		lblTxtParent.getElement().setAttribute("alt",GL0468);
+		lblTxtParent.getElement().setAttribute("title",GL0468);
 		
 		dateBoxUc = new DateBoxUc(true, true,true);
 		sPanelDateOfBirth.add(dateBoxUc);
+		sPanelDateOfBirth.getElement().setId("spnlDateOfBirth");
+		
 		dateBoxUc.getDateBox().setText(dob);
 		panelUserNamePopUp.setVisible(false);
+		panelUserNamePopUp.getElement().setId("pnlUserNamePopup");
+		
 		panelPassword.setVisible(false);
+		panelPassword.getElement().setId("pnlPassword");
+		
 		lblPickWisely.setText(GL0410);
+		lblPickWisely.getElement().setId("lblPickWisely");
+		lblPickWisely.getElement().setAttribute("alt",GL0410);
+		lblPickWisely.getElement().setAttribute("title",GL0410);
+		
+		txtChooseUsername.getElement().setId("txtChooseUserName");
+		userNameValidUc.getElement().setId("errlblUserNameValidUc");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		passwordValidUc.getElement().setId("errlblPasswordValidUc");
+		
 		txtChoosePassword.setPlaceholder(GL0204);
+		txtChoosePassword.getElement().setId("pswChoosePassword");
+		
 		txtConfirmPassword.setPlaceholder(GL0427);
+		txtConfirmPassword.getElement().setId("pswConfirmPassword");
+		
 		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setId("lblQuestionMark");
+		lblQuestionMark.getElement().setAttribute("alt",GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setAttribute("title",GL_SPL_QUESTION);
+		
 		lblWhyEnterBirthday.setText(GL0411 + GL_SPL_QUESTION);
+		lblWhyEnterBirthday.getElement().setId("lblWhyEnterBirthday");
+		lblWhyEnterBirthday.getElement().setAttribute("alt",GL0411);
+		lblWhyEnterBirthday.getElement().setAttribute("title",GL0411);
+		
 		lblWhyEnterBirthdayDesc.setText(GL0412);
+		lblWhyEnterBirthdayDesc.getElement().setId("lblWhyEnterBirthdayDesc");
+		lblWhyEnterBirthdayDesc.getElement().setAttribute("alt",GL0412);
+		lblWhyEnterBirthdayDesc.getElement().setAttribute("title",GL0412);
+		
 		lblTeacher.setText(GL0416);
+		lblTeacher.getElement().setId("lblTeacher");
+		lblTeacher.getElement().setAttribute("alt",GL0416);
+		lblTeacher.getElement().setAttribute("title",GL0416);
+		
 		lblStudent.setText(GL0417);
+		lblStudent.getElement().setId("lblStudent");
+		lblStudent.getElement().setAttribute("alt",GL0417);
+		lblStudent.getElement().setAttribute("title",GL0417);
+		
 		lblParent.setText(GL0418);
+		lblParent.getElement().setId("lblParent");
+		lblParent.getElement().setAttribute("alt",GL0418);
+		lblParent.getElement().setAttribute("title",GL0418);
+		
 		lblOther.setText(GL0419);
+		lblOther.getElement().setId("lblOther");
+		lblOther.getElement().setAttribute("alt",GL0419);
+		lblOther.getElement().setAttribute("title",GL0419);
+		
+		panelDataOfBirth.getElement().setId("pnlDateOfBirth");
+		
 		rbTeacher = new RadioButton("roleOption","");
 		rbStudent = new RadioButton("roleOption","");
 		rbParent = new RadioButton("roleOption","");
 		rbOther = new RadioButton("roleOption","");
 		btnSignUp.setText(GL0186);
 		btnSignUp.getElement().setId("btnSignUp");
+		btnSignUp.getElement().setAttribute("alt",GL0186);
+		btnSignUp.getElement().setAttribute("title",GL0186);
+		
 		lblAgree.setText(GL0420);
+		lblAgree.getElement().setId("lblAgree");
+		lblAgree.getElement().setAttribute("alt",GL0420);
+		lblAgree.getElement().setAttribute("title",GL0420);
+		
 		ancCopyRight.setText(GL0421+",");
+		ancCopyRight.getElement().setId("lnkCopyRight");
+		ancCopyRight.getElement().setAttribute("alt",GL0421);
+		ancCopyRight.getElement().setAttribute("title",GL0421);
+		
 		ancTermsAndPrivacy.setText(GL0422);
+		ancTermsAndPrivacy.getElement().setId("lnkTermsAndPrivacy");
+		ancTermsAndPrivacy.getElement().setAttribute("alt",GL0422);
+		ancTermsAndPrivacy.getElement().setAttribute("title",GL0422);
+		
 		ancPrivacy.setText(GL0452);
+		ancPrivacy.getElement().setId("lnkPrivacy");
+		ancPrivacy.getElement().setAttribute("alt",GL0422);
+		ancPrivacy.getElement().setAttribute("title",GL0422);
+		
 		lblPasswordTooltipContent.setText(GL0415);
+		lblPasswordTooltipContent.getElement().setId("lblPasswordToolTipContent");
+		lblPasswordTooltipContent.getElement().setAttribute("alt",GL0415);
+		lblPasswordTooltipContent.getElement().setAttribute("title",GL0415);
+		
 		rbStudent.setChecked(true);
 		MixpanelUtil.select_student();
 		lblSelectRole.setText(GL1146);
+		lblSelectRole.getElement().setId("lblSelectRole");
+		lblSelectRole.getElement().setAttribute("alt",GL1146);
+		lblSelectRole.getElement().setAttribute("title",GL1146);
+		
 		andText.setText(GL_GRR_AND);
+		andText.getElement().setId("spnAndText");
+		andText.getElement().setAttribute("alt",GL_GRR_AND);
+		andText.getElement().setAttribute("title",GL_GRR_AND);
+		
 		lblSelectRole.setVisible(false);
 		
 		lblPleaseWait.setText(GL0469);
+		lblPleaseWait.getElement().setId("lblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",GL0469);
+		lblPleaseWait.getElement().setAttribute("title",GL0469);
 		
 		txtChooseUsername.addMouseOverHandler(new OnMouseOver());
 		txtChoosePassword.addMouseOverHandler(new OnMouseOver());
@@ -262,9 +362,16 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		rbTeacher.setEnabled(false);
 		rbOther.setEnabled(false);
 		rdTeacher.add(rbTeacher);
+		rdTeacher.getElement().setId("rdTeacher");
+		
 		rdStudent.add(rbStudent);
+		rdStudent.getElement().setId("rdStudent");
+		
 		rdParent.add(rbParent);
+		rdParent.getElement().setId("rdParent");
+		
 		rdOther.add(rbOther);
+		rdOther.getElement().setId("rdOther");
 	
 	}
 	private TermsAndPolicyVc termsAndPolicyVc;
@@ -400,6 +507,8 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 			txtConfirmPassword.addStyleName(res.css().errorMsgDisplay());
 			txtChoosePassword.addStyleName(res.css().errorMsgDisplay());
 			passwordValidUc.setText(GL0446);
+			passwordValidUc.getElement().setAttribute("alt",GL0446);
+			passwordValidUc.getElement().setAttribute("title",GL0446);
 			passwordValidUc.setVisible(true);
 			isValid= false;
 		}
@@ -408,6 +517,8 @@ public class StudentSignUpUc extends PopupPanel implements MessageProperties{
 		boolean validatePwd=reg.test(password);
 		if (!validatePwd && password.length() >= 5 && password.length() <= 14){
 			passwordValidUc.setText(StringUtil.generateMessage(GL0073, "Password"));
+			passwordValidUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0073, "Password"));
+			passwordValidUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0073, "Password"));
 			passwordValidUc.setVisible(true);
 			isValid = false;
 		}

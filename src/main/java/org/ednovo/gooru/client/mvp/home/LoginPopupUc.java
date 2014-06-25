@@ -84,6 +84,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
+import com.itextpdf.text.log.SysoCounter;
 
 
 /**
@@ -137,6 +138,8 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	
 
 	private static final String LOGINEVENT = "loginEvent";
+	private static final int UNAUTHORISED_STATUS_CODE = 401;
+	
 	@UiTemplate("LoginPopupUc.ui.xml")
 	interface Binder extends UiBinder<Widget, LoginPopupUc> {
 
@@ -310,7 +313,6 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 			JSONObject login = new JSONObject();
 			login.put("username", new JSONString(username));
 			login.put("password", new JSONString(password));
-			
 			if (username.length() > 1 && password.length() > 1) {
 				
 				loginButton.setVisible(false);
@@ -319,8 +321,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 					@Override
 					public void onSuccess(UserDo result) {
-						if(result.getActive()==1){
-
+						if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
 							MixpanelUtil.Regular_User_Logged_In();
 							if(result.getDateOfBirth()!=null && result.getAccountTypeId()==2){
 							MixpanelUtil.Registration_turns13(); 
@@ -439,7 +440,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 									AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 								}
 						    }*/
-						}else if(result.getConfirmStatus()==0){
+						}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
 							new AlertContentUc(GL1966, GL1938);
@@ -450,6 +451,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 
 					@Override
 					public void onFailure(Throwable caught) {
+						caught.printStackTrace(); 
 						loginButton.setVisible(true);
 						lblPleaseWait.setVisible(false);
 						new AlertContentUc(OOPS, LOGIN_ERROR);
