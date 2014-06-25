@@ -147,7 +147,7 @@ public class StudentAssignmentPresenter extends BasePlacePresenter<IsStudentAssi
 	public void getClasspage(){
 		String classpageId=getPlaceManager().getRequestParameter("id");
 		final String sortingOrder=getPlaceManager().getRequestParameter("order",null);
-		if(classpageDo==null||(!classpageDo.getClasspageId().equals("classpageId"))){
+		if(classpageDo==null||(!classpageDo.getClasspageId().equals(classpageId))){
 			getView().resetAll();
 			this.classpageServiceAsync.getClasspage(classpageId, new SimpleAsyncCallback<ClasspageDo>() {
 				@Override

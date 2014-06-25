@@ -136,7 +136,8 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 		panelCollaboratorsListContainer.getElement().setId(emailId);
 		btnRemove.setText(GL0237);
 		btnRemove.getElement().setId("" + position);
-		
+		btnRemove.getElement().setAttribute("alt",GL0237);
+		btnRemove.getElement().setAttribute("title",GL0237);
 
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 			
@@ -148,6 +149,8 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 
 		if (status.equalsIgnoreCase("pending")){
 			lblEmailId.setText(emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("alt",emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setVisible(false);
 			lblUserName.setVisible(false);
 			
@@ -172,9 +175,20 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 			lblUserName.setVisible(true);
 			
 			lblUserName.setText(userName);
+			lblUserName.getElement().setAttribute("alt",userName);
+			lblUserName.getElement().setAttribute("title",userName);
+			
 			lblEmailId.setText(emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("alt",emailId != null ? emailId : email);
+			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setUrl(collaboratorsDo.getProfileImageUrl());
 		}
+		lblUserName.getElement().setId("lblUserName");
+		lblEmailId.getElement().setId("lblEmailId");
+		panelCollaboratorsListContainer.getElement().setId("pnlCollaboratorsListContainer");
+		panelMembers.getElement().setId("epnlMembers");
+		imgProfileImage.getElement().setId("imgProfileImage");
+	
 	}
 	
 	private void removeThisFromParent(){		
