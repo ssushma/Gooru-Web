@@ -43,6 +43,7 @@ import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
@@ -53,7 +54,10 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
+import com.google.gwt.user.client.Window.ScrollEvent;
+import com.google.gwt.user.client.Window.ScrollHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -172,6 +176,14 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 			districtLibContainer.getElement().removeAttribute("style");
 			partnerLibContainer.getElement().removeAttribute("style");
 		}
+		
+		Window.addWindowScrollHandler(new ScrollHandler() {
+			@Override
+			public void onWindowScroll(ScrollEvent event) {
+				partnerLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+50, Unit.PX);
+				districtLibContainer.getElement().getStyle().setMarginTop(event.getScrollTop()+23, Unit.PX);
+			}
+		});
         
 	}
 	
@@ -188,6 +200,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	private class OpenPartnerMenu implements MouseOverHandler {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
+			
 			lblPartnerLibrary.getElement().getStyle().setBackgroundColor("#cfe3f1");
 			lblDistrictLibrary.getElement().getStyle().clearBackgroundColor();
 			
