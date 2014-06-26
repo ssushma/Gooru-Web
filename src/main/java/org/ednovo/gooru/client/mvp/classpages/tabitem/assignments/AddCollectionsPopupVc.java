@@ -136,12 +136,37 @@ public abstract class AddCollectionsPopupVc extends AppPopUp implements MessageP
 		this.getElement().getStyle().setWidth(400, Unit.PX);
 		this.getElement().getStyle().setHeight(231, Unit.PX);
 		setContent(GL1410, uiBinder.createAndBindUi(this));
+		
 		chooseCollectionsLbl.getElement().setInnerText(GL1411+GL_SPL_STAR);
+		chooseCollectionsLbl.getElement().setId("lblChooseCollections");
+		chooseCollectionsLbl.getElement().setAttribute("alt",GL1411);
+		chooseCollectionsLbl.getElement().setAttribute("title",GL1411);
+		
 		nocollectionMsgLabel.setText(GL0995);
+		nocollectionMsgLabel.getElement().setId("lblNoCollectionMsg");
+		nocollectionMsgLabel.getElement().setAttribute("alt",GL0995);
+		nocollectionMsgLabel.getElement().setAttribute("title",GL0995);
+		
 		btnAdd.setText(GL0590);
+		btnAdd.getElement().setId("btnAdd");
+		btnAdd.getElement().setAttribute("alt",GL0590);
+		btnAdd.getElement().setAttribute("title",GL0590);
+		
 		btnCancel.setText(GL0142);
+		btnCancel.getElement().setId("lblCancel");
+		btnCancel.getElement().setAttribute("alt",GL0142);
+		btnCancel.getElement().setAttribute("title",GL0142);
+		
 		loadingLbl.setText(GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		loadingLbl.getElement().setId("lblLoading");
+		loadingLbl.getElement().setAttribute("alt",GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		loadingLbl.getElement().setAttribute("title",GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		
 		cannotFindLbl.getElement().setInnerText(GL1412);
+		cannotFindLbl.getElement().setId("lblCannotFind");
+		cannotFindLbl.getElement().setAttribute("alt",GL1412);
+		cannotFindLbl.getElement().setAttribute("title",GL1412);
+		
 		//
 		nocollectionMsgLabel.setVisible(false);
 		setModal(true);
@@ -151,16 +176,28 @@ public abstract class AddCollectionsPopupVc extends AppPopUp implements MessageP
 		center();
 		populateUserCollections();
 		addLabel.setVisible(false);
+		addLabel.getElement().setId("lblAdd");
+		
 		btnCancel.setVisible(false);
 		loadingPanel.setVisible(true);
-		btnAdd.getElement().setId("btnAdd");
-		btnCancel.getElement().setId("lblCancel");
+		
+		
 		copyPopUpResourceListImage.getElement().removeAttribute("tabindex");
 		copyPopUpScrollHtmlPanel.getElement().getStyle()
 				.setVisibility(Visibility.HIDDEN);
 		collectionFirstElement.getElement().setAttribute("style",
 				"padding-left:5px");
 		collectionFirstElement.setText(GL1377+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		collectionFirstElement.getElement().setId("lblCollectionFirstElement");
+		collectionFirstElement.getElement().setAttribute("alt",GL1377+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		collectionFirstElement.getElement().setAttribute("title",GL1377+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		
+		copyPopUpResourceListImage.getElement().setId("pnlCopyPopUpResourceListImage");
+		copyPopUpScrollHtmlPanel.getElement().setId("spnlCopyPopUpScrollHtmlPanel");
+		htmlScrollPanel.getElement().setId("pnlHtmlScroll");
+		mandatorySelectCollectionLbl.getElement().setId("lblMandatorySelectCollection");
+		collectionListContainer.getElement().setId("pnlCollectionListContainer");
+		
 		collectionFirstElement.getElement().setAttribute("style", "color:#999");
 		/**
 		 * on click for display list of collection in listbox

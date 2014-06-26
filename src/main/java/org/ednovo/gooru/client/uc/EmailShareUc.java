@@ -220,10 +220,16 @@ public class EmailShareUc extends PopupPanel implements MessageProperties {
 			   subTxt.setText(StringUtil.generateMessage(GL0218_1, socialShareDo.getCategoryType(), "\"" + socialShareDo.getTitle() + "\""));
 			   msgTxa.setHTML(StringUtil.generateMessage(GL0219_1, socialShareDo.getCategoryType(), socialShareDo.getTitle(), socialShareDo.getBitlylink(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 		}else{
-			//			subTxt.setText("Gooru -"+socialShareDo.getTitle());
-			subTxt.setText(StringUtil.generateMessage(GL0218, socialShareDo.getTitle()));
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RESOURCE_SEARCH)){
+				subTxt.setText(StringUtil.generateMessage(GL1997,GL2000));
+				msgTxa.setHTML(StringUtil.generateMessage(GL1999,AppClientFactory.getLoggedInUser().getUsername(),GL2000,socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+			}else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PREVIEW_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_PLAY) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF) ){
+				subTxt.setText(StringUtil.generateMessage(GL1997,GL2001));
+				msgTxa.setHTML(StringUtil.generateMessage(GL1999,AppClientFactory.getLoggedInUser().getUsername(),GL2001,socialShareDo.getTitle(),socialShareDo.getDecodeRawUrl(),AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+			}
+//			subTxt.setText(StringUtil.generateMessage(GL0218, socialShareDo.getTitle()));
 			//			msgTxa.setHTML(socialShareDo.getTitle() +"<div><br/></div>"+"<div>" +socialShareDo.getBitlylink() + "</div><div><br/></div>"+ "<div>"+"Sent using Gooru. Visit www.goorulearning.org for more great resources and collections. It's free!"+"</div>");
-			msgTxa.setHTML(StringUtil.generateMessage(GL0219, socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
+//			msgTxa.setHTML(StringUtil.generateMessage(GL0219, socialShareDo.getTitle(), socialShareDo.getDecodeRawUrl(), AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()));
 		}
 
 		isCheckedValue = false;

@@ -327,7 +327,7 @@ public interface MessageProperties {
 	
 	String GL0220 = "Learn with my collections on Gooru!";
 
-	String GL0221 = "Check out the collections on my Gooru profile page! <div><br/></div> {1} <div><br/></div><div>Gooru is a free personalized learning solution that helps me quickly find topic-relevant, standards-aligned learning materials from the best educational websites. I can organize these learning materials into teachable and sharable playlists, called, \"collections\", all in one place. With millions of resources across all core subjects, Gooru makes it easy for me to find high-quality, teacher-vetted resources and assign them to my students.</div><div><br/></div><div>Go to www.goorulearning.org to start browsing and creating collections. Happy learning!</div>";
+	String GL0221 = "Check out the collections on my Gooru profile page! <div><br/></div> {1} <div><br/></div><div>Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress.</div><div><br/></div><div>Go to www.goorulearning.org to start browsing and creating collections. Happy learning!</div>";
 	
 	String GL0222 = "Email to Friend";
 	String GL0222_1 = "Share this class";
@@ -1331,7 +1331,7 @@ public interface MessageProperties {
 		String GL1084="";
 		String GL1085="Check out  ";
 		
-		String GL1085_1 = "Check out the collections on my Gooru profile page. Happy learning! #YesIGooru";
+		String GL1085_1 = "Check out the collections on my Gooru profile page. Happy learning! #YesIGooru ";
 		String GL1085_2 = "I'm on Gooru!";
 		String GL1085_3 = "Check out the collections on my Gooru profile page. Happy learning!";
 		
@@ -2554,10 +2554,11 @@ public interface MessageProperties {
     	
     	String GL1995 = "I'm";
     	String GL1996 = "Check out the collections on my Gooru profile page. Happy learning!";
-    	String GL1997= "Check out this Gooru resource!";
+    	String GL1997= "Check out this Gooru {0}!";
     	String GL1998 = "Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress. ";
-    	String GL1999 = "{0}  has shared a Gooru resource with you called, {1}. Click the link below to view it: <div><br/></div><div> {2} </div><div><br/></div><div> What is Gooru?<div><br/></div><div> "+GL1998+"</div><div><br/></div><div> Visit {3} to find more great resources. Happy learning! </div>";
-    	
+    	String GL1999 = "{0}  has shared a Gooru {1} with you called, {2}. Click the link below to view it: <div><br/></div><div> {3} </div><div><br/></div><div> What is Gooru?<div><br/></div><div> "+GL1998+"</div><div><br/></div><div> Visit {4} to find more great resources. Happy learning! </div>";
+    	String GL2000 = "resource";
+    	String GL2001 = "collection";
     	
     	
 
