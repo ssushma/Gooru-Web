@@ -198,13 +198,41 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		setCreateClassVisibility();
 		disabledBtn.setText(GL0213);		
 		joinedContainerTitle.getElement().setInnerHTML(GL1925);
-		teachContainerTitle.getElement().setInnerHTML(GL1927);		
+		joinedContainerTitle.getElement().setId("pnlJoinedContainerTitle");
+		joinedContainerTitle.getElement().setAttribute("alt",GL1925);
+		joinedContainerTitle.getElement().setAttribute("title",GL1925);
+		
+		teachContainerTitle.getElement().setInnerHTML(GL1927);	
+		teachContainerTitle.getElement().setId("pnlTeachContainerTitle");
+		teachContainerTitle.getElement().setAttribute("alt",GL1927);
+		teachContainerTitle.getElement().setAttribute("title",GL1927);
+		
 		txtCode.setPlaceholder(GL1785);		
-		btnEnter.setText(GL0213);		
-		btnCreateClass.getElement().setInnerHTML(GL1928);		
+		txtCode.getElement().setId("txtCode");
+		txtCode.getElement().setAttribute("alt",GL1785);
+		txtCode.getElement().setAttribute("title",GL1785);
+		
+		btnEnter.setText(GL0213);	
+		btnEnter.getElement().setId("btnEnter");
+		btnEnter.getElement().setAttribute("alt",GL0213);
+		btnEnter.getElement().setAttribute("title",GL0213);
+		
+		btnCreateClass.getElement().setInnerHTML(GL1928);	
+		btnCreateClass.getElement().setId("btnCreateClass");
+		btnCreateClass.getElement().setAttribute("alt",GL1928);
+		btnCreateClass.getElement().setAttribute("title",GL1928);
+		
 		disabledBtn.setVisible(false);	
 		seeMorebtnJoined.setText(GL0508);
+		seeMorebtnJoined.getElement().setId("btnSeeMoreJoined");
+		seeMorebtnJoined.getElement().setAttribute("alt",GL0508);
+		seeMorebtnJoined.getElement().setAttribute("title",GL0508);
+		
 		seeMorebtnOwner.setText(GL0508);
+		seeMorebtnOwner.getElement().setId("btnSeeMoreOwner");
+		seeMorebtnOwner.getElement().setAttribute("alt",GL0508);
+		seeMorebtnOwner.getElement().setAttribute("title",GL0508);
+		
 		txtCode.addFocusHandler(new FocusHandler() {
 			
 			@Override
@@ -227,6 +255,9 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		btnCreateClass.addClickHandler(new OnClickCreateClass());
 		seeMorebtnJoined.addClickHandler(new OnClickSeeMoreJoined());
 		seeMorebtnOwner.addClickHandler(new OnClickSeeMoreOwner());
+		joinedClassesContainer.getElement().setId("pnljJoinedClassesContainer");
+		lblCreateAClass.getElement().setId("lblCreateAClass");
+		ownerClassesContainer.getElement().setId("pnlOwnerClassesContainer");
 	}
 
 	
