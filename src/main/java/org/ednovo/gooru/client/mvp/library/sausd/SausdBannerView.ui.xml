@@ -6,25 +6,27 @@
 	    <g:HTMLPanel ui:field="partnerLogo"/>
 		<g:Label styleName="{sausdStyleUc.header}" ui:field="headerTag"></g:Label>
 		<g:Label styleName="{sausdStyleUc.subheader}" ui:field="subHeaderTag"></g:Label>
-	<g:HTMLPanel styleName="{sausdStyleUc.banner-tabs}">
-	    <g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
-			<g:HTMLPanel styleName="{sausdStyleUc.box} {sausdStyleUc.first}">
-			    <g:Label styleName="{sausdStyleUc.large-Title}" ui:field="title1"></g:Label>
-			    <g:Label ui:field="title2"></g:Label>
+		<g:HTMLPanel styleName="{sausdStyleUc.banner-container}">
+			<g:HTMLPanel styleName="{sausdStyleUc.banner-tabs}">
+			    <g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+					<g:HTMLPanel styleName="{sausdStyleUc.box} {sausdStyleUc.first}">
+					    <g:Label styleName="{sausdStyleUc.large-Title}" ui:field="title1"></g:Label>
+					    <g:Label ui:field="title2"></g:Label>
+					</g:HTMLPanel>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+					<g:Label styleName="{sausdStyleUc.box}" ui:field="info1"> </g:Label>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+					<g:Label styleName="{sausdStyleUc.box}" ui:field="info2"> </g:Label>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+					<g:Label styleName="{sausdStyleUc.box}" ui:field="info3"> </g:Label>
+				</g:HTMLPanel>
+				<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
+					<g:Label styleName="{sausdStyleUc.box} {sausdStyleUc.last}" ui:field="info4"></g:Label>
+				</g:HTMLPanel>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
-			<g:Label styleName="{sausdStyleUc.box}" ui:field="info1"> </g:Label>
-		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
-			<g:Label styleName="{sausdStyleUc.box}" ui:field="info2"> </g:Label>
-		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
-			<g:Label styleName="{sausdStyleUc.box}" ui:field="info3"> </g:Label>
-		</g:HTMLPanel>
-		<g:HTMLPanel styleName="{sausdStyleUc.box-inner}">
-			<g:Label styleName="{sausdStyleUc.box} {sausdStyleUc.last}" ui:field="info4"></g:Label>
-		</g:HTMLPanel>
-	</g:HTMLPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

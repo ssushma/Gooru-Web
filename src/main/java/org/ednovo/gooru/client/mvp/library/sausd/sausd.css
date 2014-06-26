@@ -1077,8 +1077,8 @@ margin-bottom: 15px;
 	z-index: 1;
 	background: #FFF;
 	margin: 0 auto;
-	padding: 0px 186px;
 	margin-top: 51px;
+	width: 1050px;
 }
 .box-inner {
 	display: inline-block;
@@ -1109,8 +1109,9 @@ margin-bottom: 15px;
 .last {
 	border-right: none;
 }
-
-
+.banner-container {
+	background: white;
+}
 
 
 
