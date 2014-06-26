@@ -835,8 +835,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 //				}
 //			};
 //			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
-			  classpageListVc.hide();
-					organizeToolTip.hide();
+
 			discoverToolTip.show();
 		}
 	}
@@ -871,8 +870,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 				organizeToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
 //				tooltipTimer = new Timer() {
 //					public void run() {
-				  discoverToolTip.hide();
-				  classpageListVc.hide();
+
 						organizeToolTip.show();
 //					}
 //				};
@@ -911,8 +909,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //					tooltipTimer = new Timer() {
 //						public void run() {
-					 discoverToolTip.hide();
-					 organizeToolTip.hide();
+
 							OpenClasspageList();
 //						}
 //					};
