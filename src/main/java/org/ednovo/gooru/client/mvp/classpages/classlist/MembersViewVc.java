@@ -183,8 +183,8 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setUrl(collaboratorsDo.getProfileImageUrl());
 		}
-		lblUserName.getElement().setId("lblUserName");
-		lblEmailId.getElement().setId("lblEmailId");
+		lblUserName.getElement().setId(emailId);
+		lblEmailId.getElement().setId(emailId);
 		panelCollaboratorsListContainer.getElement().setId("pnlCollaboratorsListContainer");
 		panelMembers.getElement().setId("epnlMembers");
 		imgProfileImage.getElement().setId("imgProfileImage");
