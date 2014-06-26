@@ -123,6 +123,8 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =GL0348;
 	
 	private TermsOfUse termsOfUse;
+	
+	private static final int UNAUTHORISED_STATUS_CODE = 401;
 
 	private static LoginPluginUiBinder uiBinder = GWT
 			.create(LoginPluginUiBinder.class);
@@ -230,7 +232,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 								new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										if(result.getActive()==1){
+										if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
 											lblPleaseWait.setText(GL0505);
 											AppClientFactory
 													.setLoggedInUser(result);
@@ -252,7 +254,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 											
 											showSuccessMsgfromChild(collectionObject.getGooruOid(),collectionTitle);
 											MixpanelUtil.mixpanelEvent("Login_FromCustomize_Pop-up");
-										}else if(result.getActive()==0){
+										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
 											new AlertContentUc(GL1966, GL1938);
