@@ -633,7 +633,7 @@ public class EditClasspageView extends
 				params.put("pageNum", pageNum);
 				params.put("order", sortingStringValue);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
-				AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
 			}else{
 				dropDownListContainer.setVisible(false);
 			}
