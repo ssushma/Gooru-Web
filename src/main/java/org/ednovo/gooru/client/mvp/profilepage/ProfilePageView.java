@@ -777,8 +777,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		shareDo.setBitlylink(shortenUrl.get(0));
 		shareDo.setRawUrl(shortenUrl.get(1));
 		shareDo.setTitle(profileDo.getUser().getUsername());
-		shareDo.setDescription(GL1085
-				+ profileDo.getUser().getUsername() + GL1086);
+		shareDo.setDescription(GL1085_3);
 		shareDo.setThumbnailurl(profileImageUrl);
 		shareDo.setCategoryType("profile");
 		shareDo.setPppBitlylink(profileUrl);
