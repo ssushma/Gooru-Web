@@ -76,9 +76,13 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 		
 		classImage.setWidth("422"+Unit.PX);
 		classImage.setHeight("77"+Unit.PX);
-		
-		
-
+		classImage.getElement().setId("imgClassImage");
+		classpageContainer.getElement().setId("pnlClasspageContainer");
+		classTitle.getElement().setId("pnlClassTitle");
+		imgUserProfile.getElement().setId("imgUserProfile");
+		ownerName.getElement().setId("pnlOwnerName");
+		assignmentsCounter.getElement().setId("pnlAssignmentsCounter");
+		assignmentsCount.getElement().setId("pnlAssignmentsCount");
 	}
 
 /*	public InlineLabel getRatingCountLabel(){
@@ -89,6 +93,8 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 		
 
 		classTitle.getElement().setInnerHTML(collectionDoObj.getTitle());
+		classTitle.getElement().setAttribute("alt",collectionDoObj.getTitle());
+		classTitle.getElement().setAttribute("title",collectionDoObj.getTitle());
 		
 		assignmentsCounter.getElement().setAttribute("style", "margin-left:31%;");
 		
