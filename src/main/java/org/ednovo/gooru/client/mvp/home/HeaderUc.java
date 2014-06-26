@@ -835,6 +835,15 @@ public class HeaderUc extends Composite implements MessageProperties,
 //				}
 //			};
 //			tooltipTimer.schedule(TOOLTIP_DELAY_TIME);
+			
+			if(organizeToolTip != null)
+			{
+				organizeToolTip.hide();
+			}
+			if(classpageListVc != null)
+			{
+				classpageListVc.hide();
+			}
 
 			discoverToolTip.show();
 		}
@@ -870,6 +879,15 @@ public class HeaderUc extends Composite implements MessageProperties,
 				organizeToolTip.setPopupPosition(event.getRelativeElement().getAbsoluteLeft(), event.getRelativeElement().getAbsoluteTop() + 50);
 //				tooltipTimer = new Timer() {
 //					public void run() {
+				
+				if(discoverToolTip != null)
+				{
+					discoverToolTip.hide();
+				}
+				if(classpageListVc != null)
+				{
+					classpageListVc.hide();
+				}
 
 						organizeToolTip.show();
 //					}
@@ -909,6 +927,15 @@ public class HeaderUc extends Composite implements MessageProperties,
 					AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, true));
 //					tooltipTimer = new Timer() {
 //						public void run() {
+					
+					if(discoverToolTip != null)
+					{
+						discoverToolTip.hide();
+					}
+					if(organizeToolTip != null)
+					{
+						organizeToolTip.hide();
+					}
 
 							OpenClasspageList();
 //						}
@@ -930,12 +957,20 @@ public class HeaderUc extends Composite implements MessageProperties,
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
+				
 				EventTarget target = event.getRelatedTarget();
+				if (Element.is(target)) {
+					if (!classpageListVc.getElement().isOrHasChild(Element.as(target))){
+						classpageListVc.hide();
+					}
+				}
+				
+		/*		EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
 					if (classpageListVc!=null && !classpageListVc.getElement().isOrHasChild(Element.as(target))){
 						classpageListVc.hide();
 					}
-				}
+				}*/
 			}
 		}
 
