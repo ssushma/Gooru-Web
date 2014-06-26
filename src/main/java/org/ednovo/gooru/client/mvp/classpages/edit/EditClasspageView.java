@@ -734,7 +734,7 @@ public class EditClasspageView extends
 				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				params.put("classpageid", classpageid);
-				params.put("pageNum", pageNum);
+				params.put("pageNum", "1");
 				params.put("order", sortingStringValue);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
