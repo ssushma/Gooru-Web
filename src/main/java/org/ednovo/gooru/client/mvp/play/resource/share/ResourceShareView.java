@@ -147,6 +147,9 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 				SocialShareView.postOnFacebook(removeHtmlTags(collectionItemDo.getResource().getTitle()),originalUrl,getResourceDescription(),getThumbnailUrl());
 			}
 
+			/**
+			 * This method is used in resource player share.
+			 */
 			@Override
 			public void onEmail() {
 				String emailSubject=GL1439+collectionItemDo.getResource().getTitle();

@@ -46,12 +46,11 @@ import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeletePopupViewVc;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
+import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
-import org.ednovo.gooru.shared.util.DataLogEvents;
-import org.ednovo.gooru.shared.util.GwtUUIDGenerator;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -109,7 +108,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
 	
-	@UiField HTMLPanel contentpanel;
+	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath;
+	@UiField HTMLEventPanel panelPrevious,panelNext;
 	
 	@UiField
 	static HTMLPanel mainContainer;
@@ -196,9 +196,16 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		addSortingOptionsToList();
 		addSortEventToText();
 		dropdownPlaceHolder.setText(GL1946);
+		dropdownPlaceHolder.getElement().setId("lblDropdownPlaceHolder");
+		dropdownPlaceHolder.getElement().setAttribute("alt",GL1946);
+		dropdownPlaceHolder.getElement().setAttribute("title",GL1946);
+		
 		dropDownListContainer.setVisible(false);
 		
 		lblAssignmentProgress.setText(GL1971);
+		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
+		lblAssignmentProgress.getElement().setAttribute("alt",GL1971);
+		lblAssignmentProgress.getElement().setAttribute("title",GL1971);
 		
 		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
 		
@@ -266,6 +273,8 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		public void onClick(ClickEvent event) {
 			if(!dropdownPlaceHolder.getText().equals(sortType)){
 				dropdownPlaceHolder.setText(sortType);
+				dropdownPlaceHolder.getElement().setAttribute("alt",sortType);
+				dropdownPlaceHolder.getElement().setAttribute("title",sortType);
 				String sortingStringValue="";
 				if(sortType.equals(GL1946)){
 					sortingStringValue="all";
@@ -313,31 +322,71 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 
 	private void setStaticData() {
 		backToEditPanel.setText(GL1130);
-		noAssignmentMsg.setText(GL1131);
-		btnJoinClass.setText(GL1536);
-		btnWithDraw.setText(GL1537);
-		LblMember.setText(GL1549);
-		btnJoinClass.getElement().setId("btnJoinClass");
+		backToEditPanel.getElement().setAttribute("alt",GL1130);
+		backToEditPanel.getElement().setAttribute("title",GL1130);
 		backToEditPanel.getElement().setId("btnBackToEdit");
+		
+		noAssignmentMsg.setText(GL1131);
+		noAssignmentMsg.getElement().setId("lblNoAssignmentMsg");
+		noAssignmentMsg.getElement().setAttribute("alt",GL1131);
+		noAssignmentMsg.getElement().setAttribute("title",GL1131);
+		
+		btnJoinClass.setText(GL1536);
+		btnJoinClass.getElement().setAttribute("alt",GL1536);
+		btnJoinClass.getElement().setAttribute("title",GL1536);
+		
+		btnWithDraw.setText(GL1537);
+		btnWithDraw.getElement().setId("lblNoAssignmentMsg");
+		btnJoinClass.getElement().setAttribute("alt",GL1537);
+		btnJoinClass.getElement().setAttribute("title",GL1537);
+		
+		LblMember.setText(GL1549);
+		LblMember.getElement().setId("lblMember");
+		LblMember.getElement().setAttribute("alt",GL1549);
+		LblMember.getElement().setAttribute("title",GL1549);
+		
+	
 		noAssignmentMsg.setVisible(false);
 		btnJoinClass.setVisible(false);
 		lblWebHelp.setVisible(false);
+		lblWebHelp.getElement().setId("lblWebHelp");
 		btnWithDraw.setVisible(false);
 		LblMember.setVisible(false);
 		userImage.setVisible(false);
+		userImage.getElement().setId("imgUserImage");
+		mainContainer.getElement().setId("pnlMainContainer");
+		studentViewImage.getElement().setId("imgStudentView");
+		mainTitleLbl.getElement().setId("lblMainTitle");
+		imgProfileImage.getElement().setId("imgProfileImage");
+		lblUserName.getElement().setId("lblUserName");
+		btnJoinClass.getElement().setId("btnJoinClass");
+		panelProgressContainer.getElement().setId("pnlProgressContainer");
+		panelPrevious.getElement().setId("pnlPrevious");
+		lblPrevious.getElement().setId("lblPrevious");
+		panelAssignmentPath.getElement().setId("pnlAssignmentPath");
+		panelAssignmentProgress.getElement().setId("pnlAssignmentProgress");
+		panelNext.getElement().setId("pnlNext");
+		lblNext.getElement().setId("lblNext");
+		dropDownListContainer.getElement().setId("fpnlDropDownListContainer");
+		paginationFocPanel.getElement().setId("fpnlPaginationFoc");
+		paginationFocPanel1.getElement().setId("fpnlPaginationFoc1");
+		contentpanel.getElement().setId("pnlContent");
 	}
 
 	@Override
 	public void setClasspageData(ClasspageDo classpageDo) {
 		this.classpageDo=classpageDo;
 		mainTitleLbl.setText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
+		mainTitleLbl.getElement().setAttribute("alt",classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
+		mainTitleLbl.getElement().setAttribute("title",classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setAltText(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setTitle(classpageDo.getTitle() !=null ? classpageDo.getTitle() : "");
 		studentViewImage.setUrl(classpageDo.getThumbnailUrl() == "" ? DEFAULT_CLASSPAGE_IMAGE : classpageDo.getThumbnailUrl());
 		AppClientFactory.fireEvent(new SetSelectedClasspageListEvent(classpageDo.getClasspageId()));
 		imgProfileImage.setUrl(classpageDo.getCreatorProfileImage());
 		lblUserName.setText(classpageDo.getCreatorUsername() + "'s " + GL0102.toLowerCase());
-		
+		lblUserName.getElement().setAttribute("alt",classpageDo.getCreatorUsername() + "'s " + GL0102.toLowerCase());
+		lblUserName.getElement().setAttribute("title",classpageDo.getCreatorUsername() + "'s " + GL0102.toLowerCase());
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 			
 			@Override
@@ -1218,12 +1267,20 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	public void setSortingOrderInDropdown(String sortingOrder) {
 		if(sortingOrder !=null && sortingOrder.equalsIgnoreCase("completed")){
 			dropdownPlaceHolder.setText(GL1952);
+			dropdownPlaceHolder.getElement().setAttribute("alt",GL1952);
+			dropdownPlaceHolder.getElement().setAttribute("title",GL1952);
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("todo")){
 			dropdownPlaceHolder.setText(GL1953);
+			dropdownPlaceHolder.getElement().setAttribute("alt",GL1953);
+			dropdownPlaceHolder.getElement().setAttribute("title",GL1953);
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("all")){
 			dropdownPlaceHolder.setText(GL1946);
+			dropdownPlaceHolder.getElement().setAttribute("alt",GL1946);
+			dropdownPlaceHolder.getElement().setAttribute("title",GL1946);
 		}else{
 			dropdownPlaceHolder.setText(GL1946);
+			dropdownPlaceHolder.getElement().setAttribute("alt",GL1946);
+			dropdownPlaceHolder.getElement().setAttribute("title",GL1946);
 		}
 	}
 	

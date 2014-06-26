@@ -240,7 +240,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 					if(folderListDo.get(i).getType().equals("scollection")) {
 						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken(), "scollection"));
 					} else {
-						contentScroll.add(new ProfileTopicListView(profileLibraryDo, count, AppClientFactory.getCurrentPlaceToken()));
+						contentScroll.add(new ProfileTopicListView(folderListDo.get(i), count, AppClientFactory.getCurrentPlaceToken()));
 					}
 				}
 			} else {

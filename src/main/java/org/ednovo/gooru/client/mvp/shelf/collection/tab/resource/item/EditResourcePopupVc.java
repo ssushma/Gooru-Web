@@ -175,6 +175,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	Set<CodeDo> standardsDo=new HashSet<CodeDo>();
 	Set<CodeDo> deletedStandardsDo=new HashSet<CodeDo>();
 	
+	StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+	
 	private static EditResourcePopupVcUiBinder uiBinder = GWT
 			.create(EditResourcePopupVcUiBinder.class);
 
@@ -190,7 +192,7 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
-			final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
+			
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
@@ -251,7 +253,16 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 				return null;
 			}
 		};
-		
+		BlurHandler blurHandler=new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				if(standardsPreferenceOrganizeToolTip.isShowing()){
+				standardsPreferenceOrganizeToolTip.hide();
+				}
+			}
+		};
+		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
 		standardSgstBox.addSelectionHandler(this);
 		// this.getElement().getStyle().setWidth(450, Unit.PX);
 		// this.getElement().getStyle().setHeight(788, Unit.PX);
