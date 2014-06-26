@@ -2546,4 +2546,12 @@ public interface MessageProperties {
     	String GL1993 = "View Administrator Portal";
     	
     	String GL1994 = "Latest Due Date";//1581 replaced by this number in Edit class page view.
+    	
+    	String GL1995 = "I'm";
+    	String GL1996 = "Check out the collections on my Gooru profile page. Happy learning!";
+    	String GL1997= "Check out this Gooru resource!";
+
+    	
+    	
+
 }
