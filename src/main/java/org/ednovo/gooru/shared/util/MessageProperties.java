@@ -716,7 +716,7 @@ public interface MessageProperties {
 	String GL0563 = "hours ago";
 	String GL0564 = "minutes ago";
 	String GL0565 = "Share your feedback and ideas with fellow teachers about this Collection.";
-	String GL0566 = "Publisher: ";
+	String GL0566 = "Publisher : ";
 	String GL0567 = "#$*@! Please find a G-rated way to express yourself!";	//Duplicate of GL0554
 	
 	String GL0568 = "This collection is missing your voice. Please ";
@@ -796,10 +796,10 @@ public interface MessageProperties {
 	String GL0613 ="Resource is unavailable (i.e. it doesn't load)";
 	String GL0614 ="Resource information appears to be inaccurate (e.g. the resource title, format, description)";
 	String GL0615 ="Thank you for submitting!";
-	String GL0616 ="Course: ";
+	String GL0616 ="Course : ";
 	String GL0617 ="Legal:";
 	String GL0618="Learning Objective:";
-	String GL0619="Standards:";
+	String GL0619="Standards :";
 	String GL0620="Collections that have this resource ";
 	String GL0621="Resource Information";
 	String GL0622="Created by ";
@@ -1330,6 +1330,11 @@ public interface MessageProperties {
 		String GL1083="does not have any collections!";
 		String GL1084="";
 		String GL1085="Check out  ";
+		
+		String GL1085_1 = "Check out the collections on my Gooru profile page. Happy learning! #YesIGooru";
+		String GL1085_2 = "I'm on Gooru!";
+		String GL1085_3 = "Check out the collections on my Gooru profile page. Happy learning!";
+		
 		String GL1086="'s Gooru Profile Page";
 		String GL1087="Add Image";
 		String GL1088="What course(s) do you teach? ";
@@ -1828,7 +1833,7 @@ public interface MessageProperties {
 		String GL1438="minute";
 		
 		//Collection share view
-		String GL1439="Gooru - ";
+		String GL1439="Check out this Gooru collection!";
 		String GL1440="Sent using Gooru. Visit";
 		String GL1441="for more great resources and collections. It's free!";
 		
@@ -2374,7 +2379,7 @@ public interface MessageProperties {
     	String GL1864 = "Add narration before a resource to give students direction and focus their attention.";
 //    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
 //    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
-    	String GL1867 = "Educational Role:";
+    	String GL1867 = "Educational Role :";
     	String GL1868 = "School Level";
     	String GL1869 = "Share this class code with your students.";
     	String GL1870 = "Narrow report information by collection and student:";

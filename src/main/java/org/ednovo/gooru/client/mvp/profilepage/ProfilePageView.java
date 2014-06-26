@@ -561,6 +561,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 			}
 		});
 		getUiHandlers().setShareView();
+		getUiHandlers().getTaxonomyData();
 		gooruSocialButtonsContainer.setVisible(true);
 		setUserGradeList(profileDo.getGrade());
 		setUserCourseList(profileDo.getCourses());
@@ -776,8 +777,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 		shareDo.setBitlylink(shortenUrl.get(0));
 		shareDo.setRawUrl(shortenUrl.get(1));
 		shareDo.setTitle(profileDo.getUser().getUsername());
-		shareDo.setDescription(GL1085
-				+ profileDo.getUser().getUsername() + GL1086);
+		shareDo.setDescription(GL1085_3);
 		shareDo.setThumbnailurl(profileImageUrl);
 		shareDo.setCategoryType("profile");
 		shareDo.setPppBitlylink(profileUrl);
@@ -1371,7 +1371,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 	}
 	
 	private void clickGradeCourseEditBtn() {
-		getUiHandlers().getTaxonomyData();
+		//getUiHandlers().getTaxonomyData();
 		setGradeList(profileDo.getGrade());
 		Set<ProfileCodeDo> codeDo = profileDo.getCourses();
 		coursesPanel.clear();

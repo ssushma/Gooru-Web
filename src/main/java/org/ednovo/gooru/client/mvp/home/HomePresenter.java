@@ -301,7 +301,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 			AppClientFactory.fireEvent(new InvokeLoginEvent());
 		}
 		
-		if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("403") && AppClientFactory.isAnonymous()) {
+		if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("401") && AppClientFactory.isAnonymous()) {
 			new AlertContentUc(GL1966, GL1938);
 		}
 		

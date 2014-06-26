@@ -455,7 +455,7 @@
                       <uc:HTMLEventPanel styleName="{style.menu} {style.borderRightMenu}" ui:field="discoverLinkContainer">
                         	<g:Label ui:field="discoverLink" styleName="{res.css.discoverTextStyle}"/>
                         	<g:HTMLPanel styleName="{res.css.discoverDropDown}" ui:field="dropDownImg"/>
-                        	<div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-left: 79px; margin-top: -9px;"></div>
+                        	<div style="border-right: 1px solid #616161; height: 34px;  /* margin-left: 69px; */ position: absolute; margin-left: 80px; margin-top: -9px;"></div>
                       </uc:HTMLEventPanel>
                       <uc:HTMLEventPanel styleName="{style.menu}" ui:field="organizeLinkContainer">
                         	<g:Label ui:field="organizeLink" />

@@ -1218,3 +1218,9 @@ margin-top:20px !important;
 .containerProgressWidth{
 	width:1000px;
 }
+.assignementOrderHeader{
+	margin: 0 auto; 
+	text-align: center; 
+	font-size: 14px; 
+	font-weight: bold;
+}

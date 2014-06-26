@@ -142,13 +142,15 @@ public class ServiceProcessor {
                    getClientResource().setChallengeResponse(ChallengeScheme.HTTP_BASIC, username, password);
                }
 //                getClientResource().getRequest().setEntity();
-               Representation resp = null;
-               try{
+               
+              Representation resp = null;
+               resp = getClientResource().post(new JsonRepresentation(formData));
+               /*try{
 //                    setRepresentation(getClientResource().post(new JsonRepresentation(formData)));
                    resp = getClientResource().post(new JsonRepresentation(formData));
                }catch(Exception e){
                    resp = getClientResource().getResponse().getEntity();
-               }
+               }*/
               // return new JsonRepresentation(resp.getText());
                JsonResponseRepresentation jsonResponseRepresentation=new JsonResponseRepresentation();
                jsonResponseRepresentation.setJsonRepresentation(new JsonRepresentation(resp.getText()));

@@ -199,8 +199,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel implements MessagePrope
 	@UiHandler("btnContinue")
 	public void onClickBtnContinue(ClickEvent event) {
 		MixpanelUtil.continue_registration();
-		if(accountType=="parent")
-		{
+		if(accountType.equalsIgnoreCase("parent")){
 			
 			Map<String, String> params = StringUtil.splitQuery(Window.Location.getHref());
 			if(params.containsKey("query"))
@@ -217,9 +216,7 @@ public class LeaveRegistrationPopUpUc extends PopupPanel implements MessagePrope
 			params.put("callback", "signup");
 			AppClientFactory.getPlaceManager().revealPlace(AppClientFactory.getCurrentPlaceToken(), params );
 
-		}
-		if(accountType=="registerChild")
-		{
+		}else if(accountType.equalsIgnoreCase("registerChild")){
 			Map<String, String> params = new HashMap<String, String>();
 			if(params.containsKey("query"))
 			{
