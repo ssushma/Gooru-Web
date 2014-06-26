@@ -700,11 +700,23 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 									isSharable = true;
 								}
 								if(result.getSharing().equalsIgnoreCase(share)){
-									publishedPanel.setVisible(false);
-									rbPublic.setVisible(true);
-									lblPublishPending.setVisible(false);
+									if(result.getPublishStatus()!=null){
+										if(result.getPublishStatus().getValue().equals("reviewed")){
+											publishedPanel.setVisible(true);
+											rbPublic.setVisible(false);
+											lblPublishPending.setVisible(false);
+											publicShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+											privateShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+											linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
+											selectPrivateResource("public");
+										}
+									}else{
+										publishedPanel.setVisible(false);
+										rbPublic.setVisible(true);
+										lblPublishPending.setVisible(false);
+									}
+									
 								}else{
-									System.out.println("else-pendingstatus:"+lblPublishPending.isVisible());
 									publishedPanel.setVisible(false);
 									rbPublic.setVisible(false);
 									lblPublishPending.setVisible(true);
