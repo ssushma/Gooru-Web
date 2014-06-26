@@ -930,11 +930,6 @@ public class HeaderUc extends Composite implements MessageProperties,
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			if (!AppClientFactory.isAnonymous()){
-	/*			if(tooltipTimer != null)
-				{
-				tooltipTimer.cancel();
-				}
-				toolTipPopupPanel.hide();*/
 				EventTarget target = event.getRelatedTarget();
 				if (Element.is(target)) {
 					if (classpageListVc!=null && !classpageListVc.getElement().isOrHasChild(Element.as(target))){
@@ -976,7 +971,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			tooltipTimer.cancel();
+//			tooltipTimer.cancel();
 			toolTipPopupPanel.hide();
 		}
 	}
