@@ -327,7 +327,7 @@ public interface MessageProperties {
 	
 	String GL0220 = "Learn with my collections on Gooru!";
 
-	String GL0221 = "Check out the collections on my Gooru profile page! <div><br/></div> {1} <div><br/></div><div>Gooru is a free personalized learning solution that helps me quickly find topic-relevant, standards-aligned learning materials from the best educational websites. I can organize these learning materials into teachable and sharable playlists, called, \"collections\", all in one place. With millions of resources across all core subjects, Gooru makes it easy for me to find high-quality, teacher-vetted resources and assign them to my students.</div><div><br/></div><div>Go to www.goorulearning.org to start browsing and creating collections. Happy learning!</div>";
+	String GL0221 = "Check out the collections on my Gooru profile page! <div><br/></div> {1} <div><br/></div><div>Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress.</div><div><br/></div><div>Go to www.goorulearning.org to start browsing and creating collections. Happy learning!</div>";
 	
 	String GL0222 = "Email to Friend";
 	String GL0222_1 = "Share this class";
@@ -1331,7 +1331,7 @@ public interface MessageProperties {
 		String GL1084="";
 		String GL1085="Check out  ";
 		
-		String GL1085_1 = "Check out the collections on my Gooru profile page. Happy learning! #YesIGooru";
+		String GL1085_1 = "Check out the collections on my Gooru profile page. Happy learning! #YesIGooru ";
 		String GL1085_2 = "I'm on Gooru!";
 		String GL1085_3 = "Check out the collections on my Gooru profile page. Happy learning!";
 		
