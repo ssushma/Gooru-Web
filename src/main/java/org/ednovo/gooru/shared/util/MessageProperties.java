@@ -2554,10 +2554,11 @@ public interface MessageProperties {
     	
     	String GL1995 = "I'm";
     	String GL1996 = "Check out the collections on my Gooru profile page. Happy learning!";
-    	String GL1997= "Check out this Gooru resource!";
+    	String GL1997= "Check out this Gooru {0}!";
     	String GL1998 = "Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress. ";
-    	String GL1999 = "{0}  has shared a Gooru resource with you called, {1}. Click the link below to view it: <div><br/></div><div> {2} </div><div><br/></div><div> What is Gooru?<div><br/></div><div> "+GL1998+"</div><div><br/></div><div> Visit {3} to find more great resources. Happy learning! </div>";
-    	
+    	String GL1999 = "{0}  has shared a Gooru {1} with you called, {2}. Click the link below to view it: <div><br/></div><div> {3} </div><div><br/></div><div> What is Gooru?<div><br/></div><div> "+GL1998+"</div><div><br/></div><div> Visit {4} to find more great resources. Happy learning! </div>";
+    	String GL2000 = "resource";
+    	String GL2001 = "collection";
     	
     	
 
