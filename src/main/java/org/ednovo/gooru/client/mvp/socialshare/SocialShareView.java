@@ -52,6 +52,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -123,6 +124,8 @@ IsSocialShareView, MessageProperties {
 	public static final String DEFAULT_PROFILEIMAGE="images/profilepage/user-profile-pic.png";
 
 	private boolean isProfilePageView = false;
+	
+	public HTML htmlName;
 
 	/**
 	 * Class constructor
@@ -459,8 +462,9 @@ IsSocialShareView, MessageProperties {
 			}
 			else{
 				triggerShareDataEvent(PlayerDataLogEvents.FACEBOOK,false);
-				String title=GL1085+socialDo.getTitle()+" "+GL1433;
-				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),description,categoryImage.getUrl());
+				String title=GL1995+" "+GL1433;
+				String token= Window.Location.getHref();
+				SocialShareView.postOnFacebook(title,socialDo.getRawUrl(),getAsHtml(description)+" "+token,categoryImage.getUrl());
 //				Window.open(
 //						"http://www.facebook.com/sharer/sharer.php?s=100&p[url]="
 //								+socialDo.getRawUrl() + "&p[images][0]="
@@ -492,7 +496,8 @@ IsSocialShareView, MessageProperties {
 				Window.open("http://twitter.com/intent/tweet?text=" + "Gooru - "+socialDo.getTitle().replaceAll("\\+", "%2B")+ ": " + socialDo.getBitlylink(), "_blank", "width=600,height=300");  
 			}else{
 				triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
-				Window.open("http://twitter.com/intent/tweet?text=" + "Check out "+socialDo.getTitle().replaceAll("\\+", "%2B")+ "'s Gooru Profile Page - " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+//				Window.open("http://twitter.com/intent/tweet?text=" + "Check out "+socialDo.getTitle().replaceAll("\\+", "%2B")+ "'s Gooru Profile Page - " + socialDo.getBitlylink(), "_blank", "width=600,height=300");
+				Window.open("http://twitter.com/intent/tweet?text=" + getEncodedUrl(GL1085_1) + socialDo.getBitlylink() , "_blank", "width=600,height=300");
 			}
 		}else{
 			triggerShareDataEvent(PlayerDataLogEvents.TWITTER,false);
@@ -625,4 +630,12 @@ IsSocialShareView, MessageProperties {
 	public void triggerShareDataEvent(String shareType,boolean confirmStaus){
 		
 	}
+	
+	public String getAsHtml(String name){
+		htmlName=new HTML();
+		htmlName.getElement().setInnerHTML(name);
+		return htmlName.getHTML();
+		
+	}
+	
 }
