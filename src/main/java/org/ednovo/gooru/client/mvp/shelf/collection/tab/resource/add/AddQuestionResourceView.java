@@ -430,8 +430,9 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(standardsPreferenceOrganizeToolTip.isShowing())
-				standardsPreferenceOrganizeToolTip.show();
+				if(standardsPreferenceOrganizeToolTip.isShowing()){
+				standardsPreferenceOrganizeToolTip.hide();
+				}
 			}
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());

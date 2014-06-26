@@ -115,11 +115,16 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		panelMainContainer.getElement().setAttribute("id", classpageList.getCollectionItemId());
 		lblLineEnd.setVisible(this.isLast ? false : true);
 		lblLineStart.setVisible(assignmentNumber == 1 ? false : true);
+		
 		lblAssignmentNo.setText(String.valueOf(assignmentNumber));
-		
+		lblAssignmentNo.getElement().setAttribute("alt",String.valueOf(assignmentNumber));
+		lblAssignmentNo.getElement().setAttribute("title",String.valueOf(assignmentNumber));
 		htmlCollectiontitle.setHTML(classpageList.getCollectionTitle());
+		htmlCollectiontitle.getElement().setAttribute("alt",classpageList.getCollectionTitle());
+		htmlCollectiontitle.getElement().setAttribute("title",classpageList.getCollectionTitle());
 		lblMoveTo.setText(GL1912);
-		
+		lblMoveTo.getElement().setAttribute("alt",GL1912);
+		lblMoveTo.getElement().setAttribute("title",GL1912);
 		resourceTypePanel.setVisible(false);
 		resourceCategoryLabel.setText(String.valueOf(assignmentNumber));
 		
@@ -147,8 +152,27 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	        	hideDropDown(event);
 	          }
 	    });
+		setId();
 	}
-	
+	public void setId(){
+		lblLineStart.getElement().setId("lblLineStart");
+		lblLineEnd.getElement().setId("lblLineEnd");
+		panelCircle.getElement().setId("pnlCircle");
+		panelCicle1.getElement().setId("pnlCircle1");
+		lblAssignmentNo.getElement().setId("lblAssignmentNo");
+		moveAssignmentPopup.getElement().setId("pnlMoveAssignmentPopup");
+		htmlCollectiontitle.getElement().setId("htmlCollectionTitle");
+		lblMoveTo.getElement().setId("lblMoveTo");
+		panelComboList.getElement().setId("pnlComboList");
+		resourceCategoryLabel.getElement().setId("lblResourceCategory");
+		resoureDropDownLbl.getElement().setId("lblResourceDropDown");
+		resourceTypePanel.getElement().setId("pnlResourceType");
+		assignmentInfoPopup.getElement().setId("pnlAssignmentInfoPopup");
+		lblCircle1.getElement().setId("lblCircle1");
+		assignmentCollectiontitle.getElement().setId("htmlAssignmentCollectionTitle");
+		studyButtonText.getElement().setId("btnStudy");
+		dueDateContainer.getElement().setId("pnlDueDateContainer");
+	}
 	
 	public AssignmentProgressVc(boolean isLastCollection, final ClasspageItemDo classpageItemDo, int sequenceNumber) {
 		this.res = AssignmentProgressCBundle.INSTANCE;
@@ -158,11 +182,17 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		moveAssignmentPopup.removeFromParent();
 		setDueDateAndDirection();
 		assignmentCollectiontitle.setHTML(classpageItemDo.getCollectionTitle());
+		assignmentCollectiontitle.getElement().setAttribute("alt",classpageItemDo.getCollectionTitle());
+		assignmentCollectiontitle.getElement().setAttribute("title",classpageItemDo.getCollectionTitle());
 		panelMainContainer.getElement().setAttribute("id", classpageItemDo.getCollectionItemId());
 		lblLineStart.setVisible(sequenceNumber == 1 ? false : true);
 		lblLineEnd.setVisible(isLastCollection ? false : true);
 		lblAssignmentNo.setText(""+sequenceNumber);
+		lblAssignmentNo.getElement().setAttribute("alt",""+sequenceNumber);
+		lblAssignmentNo.getElement().setAttribute("title",""+sequenceNumber);
 		lblCircle1.setText(""+sequenceNumber);
+		lblCircle1.getElement().setAttribute("alt",""+sequenceNumber);
+		lblCircle1.getElement().setAttribute("title",""+sequenceNumber);
 		if(classpageItemDo.getStatus().equalsIgnoreCase("open")){
 			panelCircle.setStyleName(this.res.css().bluecircle());
 			panelCicle1.setStyleName(this.res.css().bluecircle());
@@ -171,6 +201,8 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 			panelCicle1.setStyleName(this.res.css().greencircle());
 		}
 		studyButtonText.setText(GL0182);
+		studyButtonText.getElement().setAttribute("alt",GL0182);
+		studyButtonText.getElement().setAttribute("title",GL0182);
 		studyButtonText.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -188,6 +220,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 	        	hideDropDown(event);
 	          }
 	    });
+		setId();
 	}
 	
 	public void updateDotsCircle(String readStatus){
@@ -238,7 +271,8 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 			public void onClick(ClickEvent event) {
 				Label lbl = (Label)event.getSource();
 				resourceCategoryLabel.setText(lbl.getText());
-				
+				resourceCategoryLabel.getElement().setAttribute("alt",lbl.getText());
+				resourceCategoryLabel.getElement().setAttribute("title",lbl.getText());
 				
 				AppClientFactory.getInjector().getClasspageService().v2ChangeAssignmentSequence("", classpageItemDo.getCollectionItemId(), Integer.parseInt(lbl.getText()), new SimpleAsyncCallback<Void>() {
 

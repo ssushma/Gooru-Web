@@ -247,8 +247,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(standardsPreferenceOrganizeToolTip.isShowing())
-				standardsPreferenceOrganizeToolTip.show();
+				if(standardsPreferenceOrganizeToolTip.isShowing()){
+				standardsPreferenceOrganizeToolTip.hide();
+				}
 			}
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
