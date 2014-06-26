@@ -285,7 +285,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 				params.put("pageNum", "1");
 				
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
-				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
+				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 			}else{
 				dropDownListContainer.setVisible(false);
 			}
@@ -808,7 +808,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 			}
 			params.put("pageNum", pagenumber+"");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.STUDENT, params);
-			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+			AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, false);
 		}
 	}
 	

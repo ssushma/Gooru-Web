@@ -161,7 +161,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 
 					@Override
 					public void closeEmailPopup() {
-						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
+						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,false);
 						
 					}
 				};
