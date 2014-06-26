@@ -134,13 +134,30 @@ public class AssignmentsView extends
 		this.assignmentsSearchDo = assignmentsSearchDo;
 		assignmentId = assignmentsSearchDo.getTask().getGooruOid();
 		titleLb.setText(taskTitle);
+		titleLb.getElement().setId("lblTitle");
+		titleLb.getElement().setAttribute("alt",taskTitle);
+		titleLb.getElement().setAttribute("title",taskTitle);
+		
 		descLbl.setText(description);
+		descLbl.getElement().setId("lblDesc");
+		descLbl.getElement().setAttribute("alt",description);
+		descLbl.getElement().setAttribute("title",description);
+		
+		
 		expandLbl.setText(GL0241);
+		expandLbl.getElement().setAttribute("alt",GL0241);
+		expandLbl.getElement().setAttribute("title",GL0241);
 		expandLbl.getElement().setId("lblexpand");
+		
+		dueLbl.getElement().setId("lblDue");
 		if (dueDate!=null && !dueDate.equalsIgnoreCase("")){
 			dueLbl.setText(GL0238+GL_SPL_SEMICOLON+" "+dueDate);
+			dueLbl.getElement().setAttribute("alt",GL0238+GL_SPL_SEMICOLON+" "+dueDate);
+			dueLbl.getElement().setAttribute("title",GL0238+GL_SPL_SEMICOLON+" "+dueDate);
 		}else{
 			dueLbl.setText(" ");
+			dueLbl.getElement().setAttribute("alt","");
+			dueLbl.getElement().setAttribute("title","");
 		}
 		emptyAssignmentLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		getPresenter().getAssignmentCollections(assignmentId);
@@ -157,8 +174,9 @@ public class AssignmentsView extends
 				descPanel.getElement().getStyle().setDisplay(Display.NONE);
 				this.description= false;
 		}
-		
-		
+		assignmentPanel.getElement().setId("pnlAssignment");
+		colletionPanel.getElement().setId("pnlColletion");
+		emptyAssignmentLbl.getElement().setId("lblEmptyAssignment");
 	}
 		
 	private class OnMouseOver implements MouseOverHandler{
@@ -210,6 +228,8 @@ public class AssignmentsView extends
 		
 		if((descLbl.getText()==null || descLbl.getText().equalsIgnoreCase(""))){
 			emptyAssignmentLbl.setText(GL1129);
+			emptyAssignmentLbl.getElement().setAttribute("alt",GL1129);
+			emptyAssignmentLbl.getElement().setAttribute("title",GL1129);
 		}
 	}
 
