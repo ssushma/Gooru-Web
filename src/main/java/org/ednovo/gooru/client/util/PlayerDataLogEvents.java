@@ -220,6 +220,7 @@ public class PlayerDataLogEvents {
 		JSONObject contextMap=new JSONObject();
 		try{
 			contextMap.put(CONTENTGOORUID, new JSONString(collectionId));
+			contentItemId=contentItemId!=null?contentItemId:"";
 			contextMap.put(CONTENTITEMID, new JSONString(contentItemId));
 			contextMap.put(PARENTGOORUID, new JSONString(parentGooruOid));
 			if(parentEventId!=null){

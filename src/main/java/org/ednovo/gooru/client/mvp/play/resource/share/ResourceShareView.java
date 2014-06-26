@@ -147,6 +147,9 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 				SocialShareView.postOnFacebook(removeHtmlTags(collectionItemDo.getResource().getTitle()),originalUrl,getResourceDescription(),getThumbnailUrl());
 			}
 
+			/**
+			 * This method is used in resource player share.
+			 */
 			@Override
 			public void onEmail() {
 				String emailSubject=GL1439+collectionItemDo.getResource().getTitle();
@@ -161,7 +164,7 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 
 					@Override
 					public void closeEmailPopup() {
-						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.FACEBOOK,false);
+						getUiHandlers().triggerShareDataLogEvent(collectionItemDo.getResource().getGooruOid(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,false);
 						
 					}
 				};

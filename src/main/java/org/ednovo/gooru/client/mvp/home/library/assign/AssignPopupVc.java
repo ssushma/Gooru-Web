@@ -157,6 +157,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 	String assignmentId = null;
 	boolean isMoreThanLimit = false; // Limit = 10
 	private TermsOfUse termsOfUse;
+	private static final int UNAUTHORISED_STATUS_CODE = 401;
 	
 	private static AssignPopupVcUiBinder uiBinder = GWT
 			.create(AssignPopupVcUiBinder.class);
@@ -566,7 +567,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 				AppClientFactory.getInjector().getAppService().v2Signin(login.toString(), new SimpleAsyncCallback<UserDo>() {
 									@Override
 									public void onSuccess(UserDo result) {
-										if(result.getActive()==1){
+										if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
 											MixpanelUtil.Regular_User_Logged_In();
 											AppClientFactory.setLoggedInUser(result);
 											AppClientFactory.fireEvent(new SetUserDetailsInPlayEvent(result.getToken()));
@@ -587,7 +588,7 @@ public abstract class AssignPopupVc extends PopupPanel implements MessagePropert
 
 											loadListContainers();
 											MixpanelUtil.mixpanelEvent("Login_FromAssign_Pop-up");
-										}else if(result.getActive()==0){
+										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
 											new AlertContentUc(GL1966, GL1938);

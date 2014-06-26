@@ -126,7 +126,7 @@ public class ResourceFlagPresenter extends PresenterWidget<IsResourceFlag> imple
 	   }else if(isCollectionPlayer){
 		   collectionPlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId);
 	   }else if(isResourcePlayer){
-		   resourcePlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, collectionItemId); 
+		   resourcePlayerPresenter.triggerItemFlagDataLogEvent(System.currentTimeMillis(),PlayerDataLogEvents.RESOURCE,freeText,contentReportList,associatedGooruOid, ""); 
 	   }
 	}
 	public HTMLEventPanel getResourceFlagCloseButton()

@@ -73,6 +73,7 @@ public class ClasspageResourceItemChildView extends
 	
 	@UiField
 	Label confirmDeleteLbl;
+	@UiField HTMLPanel classpageItemPanel;
 	
 	DeleteConfirmPopupVc deleteConfirmVc =null;
 
@@ -99,9 +100,24 @@ public class ClasspageResourceItemChildView extends
 		ClasspageResourceItemCBundle.INSTANCE.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		classpageTitleLbl.setText(GL1409);
+		classpageTitleLbl.getElement().setId("lblClasspageTitle");
+		classpageTitleLbl.getElement().setAttribute("alt",GL1409);
+		classpageTitleLbl.getElement().setAttribute("title",GL1409);
+		
 		openClasspageLbl.setText(GL1115);
+		openClasspageLbl.getElement().setId("lblOpenClasspage");
+		openClasspageLbl.getElement().setAttribute("alt",GL1115);
+		openClasspageLbl.getElement().setAttribute("title",GL1115);
+		
 		studentViewLbl.setText(GL0139);
+		studentViewLbl.getElement().setId("lblStudentView");
+		studentViewLbl.getElement().setAttribute("alt",GL0139);
+		studentViewLbl.getElement().setAttribute("title",GL0139);
+		
 		confirmDeleteLbl.setText(GL0558);
+		confirmDeleteLbl.getElement().setId("lblConfirmDeleteLbl");
+		confirmDeleteLbl.getElement().setAttribute("alt",GL0558);
+		confirmDeleteLbl.getElement().setAttribute("title",GL0558);
 		this.collectionDo = collection;
 		
 		setData(collection);
@@ -111,6 +127,7 @@ public class ClasspageResourceItemChildView extends
 		setPresenter(new ClasspageResourceItemChildPresenter(this));
 		
 		actionVerPanel.setVisible(false);
+		actionVerPanel.getElement().setId("pnlActionVer");
 		/**
 		 * create delete confirmation pop and delete the collection if user wants
 		 * 
@@ -151,6 +168,7 @@ public class ClasspageResourceItemChildView extends
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.STUDENT, params);
 			}
 		});
+		classpageItemPanel.getElement().setId("pnlClasspageItem");
 	}
 
 	@Override
@@ -194,7 +212,8 @@ public class ClasspageResourceItemChildView extends
 	private void setData(CollectionDo collection) {
 		
 		classpageTitleLbl.setText(collection.getTitle());
-		
+		classpageTitleLbl.getElement().setAttribute("alt",collection.getTitle());
+		classpageTitleLbl.getElement().setAttribute("title",collection.getTitle());
 	}
 
 	@UiHandler("openClasspageLbl")

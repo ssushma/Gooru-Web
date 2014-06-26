@@ -140,29 +140,117 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		setCreateClassVisibility();
 		
 		btnCreateClass.setText(GL1771);
+		btnCreateClass.getElement().setId("btnCreateClass");
+		btnCreateClass.getElement().setAttribute("alt",GL1771);
+		btnCreateClass.getElement().setAttribute("title",GL1771);
+		
 		btnEnter.setText(GL0213);
+		btnEnter.getElement().setId("btnEnter");
+		btnEnter.getElement().setAttribute("alt",GL0213);
+		btnEnter.getElement().setAttribute("title",GL0213);
+		
 		disabledBtn.setText(GL0213);
+		disabledBtn.getElement().setId("btnDisable");
+		disabledBtn.getElement().setAttribute("alt",GL0213);
+		disabledBtn.getElement().setAttribute("title",GL0213);
+		
 		lblCreateAClass.setText(GL1771);
+		lblCreateAClass.getElement().setId("lblCreateAClass");
+		lblCreateAClass.getElement().setAttribute("alt",GL1771);
+		lblCreateAClass.getElement().setAttribute("title",GL1771);
+		
 		lblEasyToOrganize.setText(GL1772);
+		lblEasyToOrganize.getElement().setId("lblEasyToOrganize");
+		lblEasyToOrganize.getElement().setAttribute("alt",GL1772);
+		lblEasyToOrganize.getElement().setAttribute("title",GL1772);
+		
 		lblAccessAClass.setText(GL1773);
+		lblAccessAClass.getElement().setId("lblAccessAClass");
+		lblAccessAClass.getElement().setAttribute("alt",GL1773);
+		lblAccessAClass.getElement().setAttribute("title",GL1773);
+		
 		lblEasyAccessForStudents.setText(GL1774);
+		lblEasyAccessForStudents.getElement().setId("lblEasyAccessForStudents");
+		lblEasyAccessForStudents.getElement().setAttribute("alt",GL1774);
+		lblEasyAccessForStudents.getElement().setAttribute("title",GL1774);
+		
 		lblUniqueClassCode.setText(GL1775);
+		lblUniqueClassCode.getElement().setId("lblUniqueClassCode");
+		lblUniqueClassCode.getElement().setAttribute("alt",GL1775);
+		lblUniqueClassCode.getElement().setAttribute("title",GL1775);
+		
 		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblOne.getElement().setId("lblOne");
+		lblOne.getElement().setAttribute("alt",GL_GRR_NUMERIC_ONE);
+		lblOne.getElement().setAttribute("title",GL_GRR_NUMERIC_ONE);
+		
 		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblTwo.getElement().setId("lblTwo");
+		lblTwo.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWO);
+		lblTwo.getElement().setAttribute("title",GL_GRR_NUMERIC_TWO);
+		
 		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblThree.getElement().setId("lblThree");
+		lblThree.getElement().setAttribute("alt",GL_GRR_NUMERIC_THREE);
+		lblThree.getElement().setAttribute("title",GL_GRR_NUMERIC_THREE);
+		
 		lblManageAssignments.setText(GL1776);
+		lblManageAssignments.getElement().setId("lblManageAssignments");
+		lblManageAssignments.getElement().setAttribute("alt",GL1776);
+		lblManageAssignments.getElement().setAttribute("title",GL1776);
+		
 		lblClearDue.setText(GL1777);
+		lblClearDue.getElement().setId("lblClearDue");
+		lblClearDue.getElement().setAttribute("alt",GL1777);
+		lblClearDue.getElement().setAttribute("title",GL1777);
+		
 		lblMonitorStudentProgress.setText(GL1778);
+		lblMonitorStudentProgress.getElement().setId("lblMonitorStudentProgress");
+		lblMonitorStudentProgress.getElement().setAttribute("alt",GL1778);
+		lblMonitorStudentProgress.getElement().setAttribute("title",GL1778);
+		
 		lblMonitorDesc.setText(GL1779);
+		lblMonitorDesc.getElement().setId("lblMonitorDesc");
+		lblMonitorDesc.getElement().setAttribute("alt",GL1779);
+		lblMonitorDesc.getElement().setAttribute("title",GL1779);
+		
 		ancSampleReport.setText(GL1780);
+		ancSampleReport.getElement().setId("lnkSampleReport");
+		ancSampleReport.getElement().setAttribute("alt",GL1780);
+		ancSampleReport.getElement().setAttribute("title",GL1780);
 		ancSampleReport.setVisible(false);
+		
 		lblFavoriteClasses.setText(GL1781);
+		lblFavoriteClasses.getElement().setId("lblFavoriteClasses");
+		lblFavoriteClasses.getElement().setAttribute("alt",GL1781);
+		lblFavoriteClasses.getElement().setAttribute("title",GL1781);
+		
 		lblClassOne.setText(GL1782);
+		lblClassOne.getElement().setId("lblClassOne");
+		lblClassOne.getElement().setAttribute("alt",GL1782);
+		lblClassOne.getElement().setAttribute("title",GL1782);
+		
 		lblClassTwo.setText(GL1783);
+		lblClassTwo.getElement().setId("lblClassTwo");
+		lblClassTwo.getElement().setAttribute("alt",GL1783);
+		lblClassTwo.getElement().setAttribute("title",GL1783);
+		
 		lblClassThree.setText(GL1784);	
+		lblClassThree.getElement().setId("lblClassThree");
+		lblClassThree.getElement().setAttribute("alt",GL1784);
+		lblClassThree.getElement().setAttribute("title",GL1784);
+		
 		lblClassFour.setText( GL1784_1);
+		lblClassFour.getElement().setId("lblClassFour");
+		lblClassFour.getElement().setAttribute("alt",GL1784_1);
+		lblClassFour.getElement().setAttribute("title",GL1784_1);
 		
 		txtCode.setPlaceholder(GL1785);
+		txtCode.getElement().setId("txtCode");
+		panelClassOne.getElement().setId("pnlClassOne");
+		panelClassTwo.getElement().setId("pnlClassTwo");
+		panelClassThree.getElement().setId("pnlClassThree");
+		panelClassFour.getElement().setId("pnlClassFour");
 		
 		disabledBtn.setVisible(false);
 		

@@ -77,7 +77,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	
 	public PopupPanel appPopUp;
 	private String resourceTitle;
-    private String resourceGooruId;
+    private String resourceGooruId,collectionItemId;
 	private String deleteContentReportGooruOids="";
 	
 	@Inject
@@ -179,7 +179,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		
 			contentReportList.add("other");
 		}
-		getUiHandlers().createReport(resourceGooruId, descriptionTextArea.getText(), contentReportList, deleteContentReportGooruOids,"");
+		getUiHandlers().createReport(resourceGooruId, descriptionTextArea.getText(), contentReportList, deleteContentReportGooruOids,collectionItemId);
 		//getThankYouPopUp();
 		//resetFlagData();
 	}
@@ -215,6 +215,7 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 	public void setFlagView(CollectionItemDo collectionItemDo) {
 		resourceTitle=collectionItemDo.getResourceTitle();
 		resourceGooruId=collectionItemDo.getResource().getGooruOid();
+		collectionItemId=collectionItemDo.getCollectionItemId();
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
 	}
@@ -244,6 +245,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		descriptionTextArea.setText("");
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
+		contentReportList.clear();
+		deleteContentReportGooruOids="";
 	}
 	@Override
 	public void getreportData(ContentReportDo contentReportDo,String gooruFlagId) {

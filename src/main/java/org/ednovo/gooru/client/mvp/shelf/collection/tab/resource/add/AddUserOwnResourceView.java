@@ -179,7 +179,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 	private static final String RESOURCE_FILE_SUPPORT_MSG = GL0955;
 	
 	private static final String IMAGE_UPLOAD_URL = "/v2/media?sessionToken={0}";
-	
+	boolean isEnabled = true;
+	boolean isValidText=false,isValidTextArea=false,isValidFilePath=false;
 	CollectionDo collectionDo;
 	
 	/**
@@ -322,8 +323,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		
 		lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 		panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
-		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords));
-		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords));
+		titleTextBox.addBlurHandler(new CheckProfanityInOnBlur(titleTextBox, null, mandatoryTitleLblForSwareWords,resourcePathTextBox));
+		descriptionTxtAera.addBlurHandler(new CheckProfanityInOnBlur(null, descriptionTxtAera, mandatoryDescLblForSwareWords,resourcePathTextBox));
 	}
 	
 	/**
@@ -403,6 +404,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		@Override
 		public void onClick(ClickEvent event) {
 			addResourceBtnLbl.setEnabled(false);
+			addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -422,7 +424,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 									if(result){
 										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
 										addResourceBtnLbl.setEnabled(true);
-									}else{	
+									}else{
+										
 										MixpanelUtil.mixpanelEvent("Collaborator_edits_collection");
 										//lblAdding.getElement().getStyle().setDisplay(Display.BLOCK);
 										//panelAction.getElement().getStyle().setDisplay(Display.NONE);
@@ -433,19 +436,21 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 										boolean isValidate = true;
 										if(filePath==null || filePath.equals("")){
 											 isValidate = false;
+											 isEnabled = false;
 											 resourcePathTextBox.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControlForErrors());
 											 resourceContentChkLbl.setText(GL0914);
 											 resourceContentChkLbl.setVisible(true);
 										}
 										if(resourceTitle==null || resourceTitle.equals("")){
 											isValidate = false;
+											isEnabled = false;
 											resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
 											mandatoryTitleLbl.setText(GL0903);
 											mandatoryTitleLbl.setVisible(true);
-											
 										}
 										if(resourceDesc==null || resourceDesc.equals("")){
 											isValidate = false;
+											isEnabled = false;
 											resourceDescriptionContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
 											resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
 										
@@ -454,12 +459,16 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 										}
 										if(resourceCategory==null || resourceCategory.equals("-1") || resourceCategory.equalsIgnoreCase("Choose a resource format") ){ 
 											isValidate = false;
+											isEnabled = false;
 										}
 										if(!rightsChkBox.getValue()){
 											rightsLbl.getElement().getStyle().setColor("orange");
 											isValidate = false;
+											isEnabled = false;
 										}
 										if(isValidate){
+											addResourceBtnLbl.setEnabled(true);
+											addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 											loadingImagePanel.clear();
 											loadingImagePanel.add(setLoadingPanel());
 											fileuploadForm.setAction(AppClientFactory.getLoggedInUser().getSettings().getRestEndPoint() + StringUtil.generateMessage(IMAGE_UPLOAD_URL, AppClientFactory.getLoggedInUser().getToken(), chooseResourceBtn.getFilename()));
@@ -494,7 +503,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 										}else{
 											lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 											panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
-											addResourceBtnLbl.setEnabled(true);
+										/*	addResourceBtnLbl.setEnabled(true);*/
 										}
 									}
 								}
@@ -570,6 +579,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		public void onKeyUp(KeyUpEvent event) {
 			filePathContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControl());
 			resourceContentChkLbl.setVisible(false);
+			addResourceBtnLbl.setEnabled(true);
+			addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
 		}
 	}
 	
@@ -599,8 +610,6 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 
 		}
 	}
-	
-	
 
 	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
@@ -701,10 +710,13 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		private TextBox textBox;
 		private Label label;
 		private TextArea textArea;
-		public CheckProfanityInOnBlur(TextBox textBox,TextArea textArea,Label label){
+		private TextBox filePathVal;
+		
+		public CheckProfanityInOnBlur(TextBox textBox,TextArea textArea,Label label,TextBox path){
 			this.textBox=textBox;
 			this.label=label;
 			this.textArea=textArea;
+			this.filePathVal=path;
 		}
 		@Override
 		public void onBlur(BlurEvent event) {
@@ -723,11 +735,35 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
+						isEnabled = false;
+						if(value || textBox.getValue().trim().equalsIgnoreCase("")){
+							isValidText=false;
+						}else{
+							isValidText=true;
+						}
+					
 					}else{
 						isHavingBadWordsInRichText=value;
 						SetStyleForProfanity.SetStyleForProfanityForTextArea(textArea, label, value);
+						isEnabled = false;
+						if(value || textArea.getText().trim().equalsIgnoreCase("")){
+							isValidTextArea=false;
+						}else{
+							isValidTextArea=true;
+						}
 					}
-					
+					if(filePathVal.getText().trim().equalsIgnoreCase("")){
+						isValidFilePath =false;
+					}else{
+						isValidFilePath =true;
+					}
+					if(isValidText && isValidTextArea && isValidFilePath){
+						addResourceBtnLbl.setEnabled(true);
+						addResourceBtnLbl.getElement().setAttribute("style", "background: #1076BB;border: 1px solid #1076BB;");
+					}else{
+						addResourceBtnLbl.setEnabled(false);
+						addResourceBtnLbl.getElement().setAttribute("style", "background: #999;border: none;");
+					}
 				}
 			});
 		}
@@ -737,4 +773,5 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		loadingImage.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().loadingpanelImage());
 		return loadingImage;
 	}
+	
 }

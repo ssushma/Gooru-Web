@@ -188,7 +188,6 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 
 			@Override
 			public void onEmail() {
-				
 				String emailSubject="Gooru - "+collectionDo.getTitle();
 				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+originalUrl+"</div><div><br/></div><div>"+GL1429+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
