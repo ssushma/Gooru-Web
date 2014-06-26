@@ -189,6 +189,7 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 
 			@Override
 			public void onEmail() {
+				System.out.println("--- in coll share view 1 --");
 				String emailSubject=GL1439+collectionDo.getTitle();
 				String emailDescription= collectionDo.getTitle()+"<div><br/></div><div>"+shareUrl+"</div><div><br/></div><div>"+GL1440+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+GL1441+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
@@ -404,11 +405,17 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 				SocialShareView.postOnFacebook(removeHtmlTags(collectionItemDo.getResource().getTitle()),SocialShareView.getEncodedUrl(resourceShareUrl),getResourceDescription(),getThumbnailUrl());
 			}
 
+			/**
+			 * used in preview player resource share.
+			 */
 			@Override
 			public void onEmail() {
-				String emailSubject=GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle());
-				String emailDescription= collectionItemDo.getResource().getTitle()+"<div><br/></div><div>"+resourceShareUrl+"</div><div><br/></div><div>"+GL1440+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+GL1441+"</div>";
-				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
+				System.out.println("-- coll share view --");
+//				String emailSubject=GL1439+removeHtmlTags(collectionItemDo.getResource().getTitle());
+				String emailSubject=removeHtmlTags(collectionItemDo.getResource().getTitle());
+//				String emailDescription= collectionItemDo.getResource().getTitle()+"<div><br/></div><div>"+resourceShareUrl+"</div><div><br/></div><div>"+GL1440+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+GL1441+"</div>";
+				String emailDescription= AppClientFactory.getLoggedInUser().getUsername()+" has shared a Gooru resource with you called, "+collectionItemDo.getResource().getTitle()+". Click the link below to view it: "+"<div><br/></div><div>"+resourceShareUrl+"</div><div><br/></div><div>"+"What is Gooru?"+"<div><br/></div><div>"+"Gooru is a free personalized learning solution that helps users find and remix the best K-12 learning resources on the web. With Gooru, you can organize these materials into teachable and shareable playlists, called collections. In the classroom, Gooru makes it easy to assign collections to students and monitor their progress."+"</div><div><br/></div><div>"+"Visit "+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+"to find more great resources. Happy learning!"+"</div>";
+				emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
 					@Override
 					public void sendEmail(String fromEmail, String toEmail,String copyEmail, String subject, String message) {
 						getUiHandlers().triggerShareDatalogEvent(collectionItemDo.getResource().getGooruOid(),collectionItemDo.getCollectionItemId(),PlayerDataLogEvents.RESOURCE,PlayerDataLogEvents.MAIL,true);
