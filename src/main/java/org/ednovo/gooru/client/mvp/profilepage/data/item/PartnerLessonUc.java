@@ -128,7 +128,13 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 		}
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
-			final ProfileLibraryDo profileLibrary = profileLibraryDoList.get(i);
+			ProfileLibraryDo profileLibraryTemp = null;
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+				profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);
+			} else {
+				profileLibraryTemp = profileLibraryDoList.get(i);
+			}
+			final ProfileLibraryDo profileLibrary = profileLibraryTemp;
 			conceptTitle = profileLibrary.getTitle();
 			
 			Label conceptTitleLbl = new Label(conceptTitle);
