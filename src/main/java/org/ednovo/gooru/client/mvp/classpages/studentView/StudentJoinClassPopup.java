@@ -53,9 +53,16 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 
 	private void setStaticData(ClasspageDo classpageDo) {
 		headerPanel.getElement().setInnerHTML(GL1536);
+		headerPanel.getElement().setId("pnlHeader");
+		headerPanel.getElement().setAttribute("alt",GL1536);
+		headerPanel.getElement().setAttribute("title",GL1536);
+		closeLbl.getElement().setId("lblClose");
 		lblJoining.setVisible(false);
 		joinBtnPanel.setVisible(true);
 		lblJoining.setText(GL1976);
+		lblJoining.getElement().setId("lblJoining");
+		lblJoining.getElement().setAttribute("alt",GL1976);
+		lblJoining.getElement().setAttribute("title",GL1976);
 		if(classpageDo.getSharing().equalsIgnoreCase("public"))
 		{
 			welcomePanel.setVisible(true);
@@ -64,9 +71,25 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 			joinLaterBtn.setVisible(true);
 		
 		welcomePanel.getElement().setInnerHTML(GL1540);
+		welcomePanel.getElement().setId("pnlWelcome");
+		welcomePanel.getElement().setAttribute("alt",GL1540);
+		welcomePanel.getElement().setAttribute("title",GL1540);
+		
 		classNamePanel.getElement().setInnerHTML(classpageDo.getTitle() +"!");
+		classNamePanel.getElement().setId("pnlClassName");
+		classNamePanel.getElement().setAttribute("alt",classpageDo.getTitle() +"!");
+		classNamePanel.getElement().setAttribute("title",classpageDo.getTitle() +"!");
+		
 		descPanel.getElement().setInnerHTML(GL1541);
+		descPanel.getElement().setId("pnlDesc");
+		descPanel.getElement().setAttribute("alt",GL1541);
+		descPanel.getElement().setAttribute("title",GL1541);
+		
 		joinLaterBtn.setText(GL1738);
+		joinLaterBtn.getElement().setId("pnlJoinLater");
+		joinLaterBtn.getElement().setAttribute("alt",GL1738);
+		joinLaterBtn.getElement().setAttribute("title",GL1738);
+		
 		}
 		else
 		{
@@ -78,9 +101,19 @@ public abstract class StudentJoinClassPopup extends PopupPanel implements Messag
 //		termsPanel.getElement().setInnerHTML(GL1542);
 		String userName = classpageDo.getCreatorUsername();
 		htmlAgree.getElement().setInnerHTML(StringUtil.generateMessage(GL1543, userName != null ? userName : ""));
-		htmlInformation.setHTML(StringUtil.generateMessage(GL1558, userName != null ? userName : ""));
+		htmlAgree.getElement().setId("htmlAgree");
+		htmlAgree.getElement().setAttribute("alt",StringUtil.generateMessage(GL1543, userName != null ? userName : ""));
+		htmlAgree.getElement().setAttribute("title",StringUtil.generateMessage(GL1543, userName != null ? userName : ""));
 		
+		htmlInformation.setHTML(StringUtil.generateMessage(GL1558, userName != null ? userName : ""));
+		htmlInformation.getElement().setId("htmlInformation");
+		htmlInformation.getElement().setAttribute("alt",StringUtil.generateMessage(GL1558, userName != null ? userName : ""));
+		htmlInformation.getElement().setAttribute("title",StringUtil.generateMessage(GL1558, userName != null ? userName : ""));
+		joinBtnPanel.getElement().setId("pnlJoin");
 		joinClassBtn.setText(GL1536);
+		joinClassBtn.getElement().setId("pnlJoinClass");
+		joinClassBtn.getElement().setAttribute("alt",GL1536);
+		joinClassBtn.getElement().setAttribute("title",GL1536);
 		
 	}
 

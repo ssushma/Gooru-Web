@@ -121,7 +121,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	@UiField Button btnEditAssignment;
 	
 	@UiField
-	HTMLPanel actionPanel, inLinePanel;
+	HTMLPanel actionPanel, inLinePanel,displayMetaInfoPanel;
 	@UiField
 	HTMLPanel collectionsPanel, assignmentContainerPanel;
 	@UiField
@@ -260,17 +260,67 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		btnAddCollectionToAssign.getElement().setId("btnAddCollectionToAssign");
 		btnEditAssignment.getElement().setId("btnEditAssignment");
 		assignmentTitleTxt.getElement().setId("txtAssignmentTitle");
+		
+		
 		assignmentDescriptionTxtArea.getElement().setId("tatDescription");
 		cancelLabel.getElement().setId("lblCancel");
 		btnEditAssignment.setText(GL0140);
+		btnEditAssignment.getElement().setAttribute("alt",GL0140);
+		btnEditAssignment.getElement().setAttribute("title",GL0140);
+		
 		deleteLabel.setText(GL0237);
+		deleteLabel.getElement().setAttribute("alt",GL0237);
+		deleteLabel.getElement().setAttribute("title",GL0237);
+		
 		cancelLabel.setText(GL0142);
+		cancelLabel.getElement().setAttribute("alt",GL0142);
+		cancelLabel.getElement().setAttribute("title",GL0142);
+		
 		mandatoryTitleLabel.setText(MANDATORY_TITLE);
+		mandatoryTitleLabel.getElement().setAttribute("alt",MANDATORY_TITLE);
+		mandatoryTitleLabel.getElement().setAttribute("title",MANDATORY_TITLE);
+		
 		lblDueDateDisplay.setText(GL0238 +GL_SPL_SEMICOLON);
+		lblDueDateDisplay.getElement().setId("lblDueDateDisplay");
+		lblDueDateDisplay.getElement().setAttribute("alt",GL0238);
+		lblDueDateDisplay.getElement().setAttribute("title",GL0238);
+		
 		mandatoryDueDateLabel.setText(MANDATORY_DUEDATE);
+		mandatoryDueDateLabel.getElement().setId("lblMandatoryDueDate");
+		mandatoryDueDateLabel.getElement().setAttribute("alt",MANDATORY_DUEDATE);
+		mandatoryDueDateLabel.getElement().setAttribute("title",MANDATORY_DUEDATE);
+		
 		mandatoryDirectionLabel.setText(MANDATORY_DIRECTIONS);
+		mandatoryDirectionLabel.getElement().setId("lblMandatoryDirection");
+		mandatoryDirectionLabel.getElement().setAttribute("alt",MANDATORY_DIRECTIONS);
+		mandatoryDirectionLabel.getElement().setAttribute("title",MANDATORY_DIRECTIONS);
+		
 		btnAddCollectionToAssign.setText(GL0239);
+		btnAddCollectionToAssign.getElement().setAttribute("alt",GL0239);
+		btnAddCollectionToAssign.getElement().setAttribute("title",GL0239);
+		
 		clickToExpandLabel.setText(GL0241);
+		clickToExpandLabel.getElement().setId("lblClickToExpand");
+		clickToExpandLabel.getElement().setAttribute("alt",GL0241);
+		clickToExpandLabel.getElement().setAttribute("title",GL0241);
+		
+		asignmentTiltleContainer.getElement().setId("epnlAsignmentTiltleContainer");
+		assignmentTitleTxtPanel.getElement().setId("pnlAssignmentTitleTxt");
+		clickEventPanel.getElement().setId("epnlClickEventPanel");
+		assignmentTitleLblPanel.getElement().setId("pnlAssignmentTitleLbl");
+		assignmentTitelLbl.getElement().setId("htmlAssignmentTitel");
+		actionPanel.getElement().setId("pnlAction");
+		inLinePanel.getElement().setId("pnlInline");
+		mandatoryTitleLabel.getElement().setId("lblMandatoryTitle");
+		displayMetaInfoPanel.getElement().setId("pnlDisplayMetaInfo");
+		dueDateLbl.getElement().setId("lblDueDate");
+		dateSimPanel.getElement().setId("spnlDateSim");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		assignmentDescriptionLbl.getElement().setId("htmlAssignmentDescription");
+		assignmentContainerPanel.getElement().setId("pnlAssignmentContainer");
+		collectionsPanel.getElement().setId("pnlCollections");
+		loadingPanel.getElement().setId("pnlLoading");
+		
 	}
 
 	/**
@@ -363,14 +413,24 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		String description = assignmentsSearchDo.getTask().getDescription() !=null ? assignmentsSearchDo.getTask().getDescription().replaceAll("%20"," ") : "";
 		if(assignmentTitelLbl.getText()==null || assignmentTitelLbl.getText().equalsIgnoreCase("")){
 		     assignmentTitelLbl.setHTML(taskTitle.trim());
+		     assignmentTitelLbl.getElement().setAttribute("alt",taskTitle.trim());
+		     assignmentTitelLbl.getElement().setAttribute("title",taskTitle.trim());
 		     assignmentTitleTxt.setText(taskTitle.trim());
+		     assignmentTitleTxt.getElement().setAttribute("alt",taskTitle.trim());
+				assignmentTitleTxt.getElement().setAttribute("title",taskTitle.trim());
         }else{
         	assignmentTitelLbl.setHTML(assignmentTitelLbl.getText().trim());
+        	  assignmentTitelLbl.getElement().setAttribute("alt",assignmentTitelLbl.getText().trim());
+ 		     assignmentTitelLbl.getElement().setAttribute("title",assignmentTitelLbl.getText().trim());
         	assignmentTitleTxt.setText(assignmentTitelLbl.getText().trim());
+        	assignmentTitleTxt.getElement().setAttribute("alt",assignmentTitelLbl.getText().trim());
+			assignmentTitleTxt.getElement().setAttribute("title",assignmentTitelLbl.getText().trim());
         }
 		//assignmentTitleTxt.setText(taskTitle.trim());
 		
 		dueDateLbl.setText(dueDate);
+		dueDateLbl.getElement().setAttribute("alt",dueDate);
+		dueDateLbl.getElement().setAttribute("title",dueDate);
 		dateBoxUc.getDateBox().setText(dueDate);
 		assignmentDescriptionLbl.setHTML(description);
 		assignmentDescriptionTxtArea.setText(description);
@@ -589,6 +649,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		if (btnEditAssignment.getText().equalsIgnoreCase("edit")) {
 			isInEditMode = true;
 			btnEditAssignment.setText(GL0240);
+			btnEditAssignment.getElement().setAttribute("alt",GL0240);
+			btnEditAssignment.getElement().setAttribute("title",GL0240);
 //			btnEditAssignment.setStyleName("myCollectionUpdateText");
 
 			cancelLabel.setVisible(true);
@@ -636,6 +698,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 				isInEditMode = false;
 				btnEditAssignment.setText(GL0140);
+				btnEditAssignment.getElement().setAttribute("alt",GL0140);
+				btnEditAssignment.getElement().setAttribute("title",GL0140);
 //				btnEditAssignment.setStyleName("myCollectionEditText");
 
 				AssignmentDo assignmentDo = new AssignmentDo();
@@ -654,7 +718,12 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			    assignmentDo.setTask(taskDo);
 				assignmentTitelLbl.setHTML(assignmentDo.getTask().getTitle());
 				assignmentTitleTxt.setText(assignmentDo.getTask().getTitle());
+				assignmentTitleTxt.getElement().setAttribute("alt",assignmentDo.getTask().getTitle());
+				assignmentTitleTxt.getElement().setAttribute("title",assignmentDo.getTask().getTitle());
+				 
 				dueDateLbl.setText(dateBoxUc.getDateBox().getText());
+				dueDateLbl.getElement().setAttribute("alt",dateBoxUc.getDateBox().getText());
+				dueDateLbl.getElement().setAttribute("title",dateBoxUc.getDateBox().getText());
 				dateBoxUc.getDateBox().setText(dueDateLbl.getText());
 		
 				assignmentDescriptionLbl.setHTML(assignmentDo.getTask()
@@ -682,6 +751,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	public void onClickCancelUpdate(ClickEvent event) {
 		isInEditMode = false;
 		btnEditAssignment.setText(GL0140);
+		btnEditAssignment.getElement().setAttribute("alt",GL0140);
+		btnEditAssignment.getElement().setAttribute("title",GL0140);
 //		btnEditAssignment.setStyleName("myCollectionEditText");
 		cancelLabel.setVisible(false);
 		deleteLabel.setVisible(true);

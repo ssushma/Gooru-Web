@@ -152,7 +152,6 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			 */
 			@Override
 			public void onEmail() {
-				System.out.println("--- in resource share email --");
 				String emailSubject=GL1439+collectionItemDo.getResource().getTitle();
 				String emailDescription= removeHtmlTags(collectionItemDo.getResource().getTitle())+"<div><br/></div><div>"+shareBitlyUrl+"</div><div><br/></div><div>"+GL1440+" "+AppClientFactory.getLoggedInUser().getSettings().getHomeEndPoint()+" "+GL1441+"</div>";
 				 emailShareView=new CollectionEmailShareView(emailSubject, emailDescription){
