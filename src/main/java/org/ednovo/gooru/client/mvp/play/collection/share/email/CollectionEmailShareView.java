@@ -134,7 +134,7 @@ public abstract class CollectionEmailShareView extends PopupPanel implements Mes
 		toValidation.setVisible(false);
 		toTxt.getElement().setId("tbTo");
 		subTxt.getElement().setId("tbSubject");
-		subTxt.setText(mailSubject);
+		subTxt.setText(StringUtil.generateMessage(GL1997,GL2000)); 
 		fromTxt.getElement().setId("tbFrom");
 		msgTxa.getElement().setId("taMessage");
 		btnSend.getElement().setId("btnSend");

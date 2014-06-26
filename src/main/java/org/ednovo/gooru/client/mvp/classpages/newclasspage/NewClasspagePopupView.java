@@ -95,13 +95,31 @@ public abstract class NewClasspagePopupView extends AppPopUp implements MessageP
 		classpageTitleTxt.getElement().setAttribute("placeholder", GL1124);
 		classpageTitleTxt.getElement().setAttribute("maxlength", "50");
 		classpageTitleTxt.getElement().setId("txtClassPageTitle");
+		
 		btnAdd.getElement().setId("btnAdd");
 		btnAdd.setText(GL0745);
+		btnAdd.getElement().setAttribute("alt",GL0745);
+		btnAdd.getElement().setAttribute("title",GL0745);
+		
 		btnCancel.setText(GL0142);
 		btnCancel.getElement().setId("btnCancel");
+		btnCancel.getElement().setAttribute("alt",GL0142);
+		btnCancel.getElement().setAttribute("title",GL0142);
+		
 		titlePanel.getElement().setInnerText(GL0318 + GL_SPL_STAR);
+		titlePanel.getElement().setId("pnlTitle");
+		titlePanel.getElement().setAttribute("alt",GL0318);
+		titlePanel.getElement().setAttribute("title",GL0318);
+		
 		headerPanel.getElement().setInnerText(GL0747);
+		headerPanel.getElement().setId("pnlHeader");
+		headerPanel.getElement().setAttribute("alt",GL0747);
+		headerPanel.getElement().setAttribute("title",GL0747);
 		mandatoryClasspageTitleLbl.setText(GL0746);
+		mandatoryClasspageTitleLbl.getElement().setId("lblMandatoryClasspageTitle");
+		mandatoryClasspageTitleLbl.getElement().setAttribute("alt",GL0746);
+		mandatoryClasspageTitleLbl.getElement().setAttribute("title",GL0746);
+		
 		classpageTitleTxt.addBlurHandler(new BlurHandler() {
 			
 			@Override
@@ -140,6 +158,8 @@ public abstract class NewClasspagePopupView extends AppPopUp implements MessageP
 		show();
 		center();
 		classpageTitleTxt.setFocus(true);
+		panelLoading.getElement().setId("pnlLoading");
+		panelControls.getElement().setId("pnlControls");
 	}
 	
 	private class TitleKeyUpHandler implements KeyUpHandler {
