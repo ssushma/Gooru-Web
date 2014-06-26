@@ -186,7 +186,9 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		} else {
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems());
 			try {
-				setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
+				}
 			} catch(Exception e) {
 				setDefaultCollectionLbl();
 			}
