@@ -179,9 +179,12 @@ a:hover {
 	padding-bottom:20px;
 }
 .scrollStyle{
-	height: 365px;
+
 }
 .inlineStyle{
 	display: inline-block;
     margin-top: 10px;
+}
+.centerAlignBtn{
+	text-align:center;
 }
