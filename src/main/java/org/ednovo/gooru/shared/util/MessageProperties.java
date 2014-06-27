@@ -2518,7 +2518,7 @@ public interface MessageProperties {
       	
       	
       	String GL1965 = "Ready to Publish?";
-      	String GL1966 = "Something goes here";
+      	String GL1966 = "";
       	String GL1967 = "[Collection Title]";
       	String GL1968 = "See More";
     	String GL1969 = "Mark as Complete";
@@ -2560,6 +2560,8 @@ public interface MessageProperties {
     	String GL2000 = "resource";
     	String GL2001 = "collection";
     	
-    	
+    	String GL2002 = "Elementary Courses";
+    	String GL2003 = "Middle School Courses";
+    	String GL2004 = "High School Courses";
 
 }

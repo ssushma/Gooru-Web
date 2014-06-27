@@ -558,18 +558,18 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 							 
 							@Override
 							public void onClick(ClickEvent event) {
-								AppClientFactory.getInjector().getClasspageService().deleteCollectionAssocInAssignment(collectionId, new SimpleAsyncCallback<Void>() {
+								//AppClientFactory.getInjector().getClasspageService().deleteCollectionAssocInAssignment(collectionId, new SimpleAsyncCallback<Void>() {
 
-									@Override
-									public void onSuccess(Void result) {
+								//	@Override
+								//	public void onSuccess(Void result) {
 										collectionConfirmationPopup.hide();
 										privateShareFloPanel.removeStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 										publicShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 										linkShareFloPanel.addStyleName(ShelfCBundle.INSTANCE.css().inActiveClass());
 										updateShare("private");
 										selectPrivateResource("private");
-									}
-								});
+									//}
+								//});
 							}
 						});
 						 

@@ -88,7 +88,7 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 		initWidget(uiBinder.createAndBindUi(this));
 		setPlaceToken(placeToken);
 		setAssets();
-		
+		learnPanel.setVisible(false);
 		sciencePanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
