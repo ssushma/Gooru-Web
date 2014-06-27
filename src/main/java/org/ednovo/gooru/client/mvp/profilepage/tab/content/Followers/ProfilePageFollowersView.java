@@ -37,7 +37,7 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 	
 	String limit = "20";
 	int totalUserCount  = 0;
-	int totalHintCount;
+	int totalHitCount;
 	
 	private Integer pageInitialLimit = 20;
 	private Integer offsetLimit = 0;
@@ -48,7 +48,10 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 		initWidget(uiBinder.createAndBindUi(this));
 		totalUserCount =0;
 		totalUserCount  =userFollowDo.size();
-		totalHintCount = userFollowDo.get(0).getTotalHintCount();
+		if(userFollowDo != null && userFollowDo.size()>0)
+		{
+		totalHitCount = userFollowDo.get(0).getTotalHintCount();
+		}
 		setData();
 
 	}
@@ -59,6 +62,15 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 		followersTextMessage.getElement().setAttribute("style", "font-weight:bold");
 		followersTextMessageNormal.setText(GL1914_1);
 		followersUserConatiner.clear();
+		
+		if(totalHitCount>pageInitialLimit)
+		{
+			seeMorebtn.setVisible(true);
+		}
+		else
+		{
+			seeMorebtn.setVisible(false);
+		}
 		
 		for(int i=0; i< userFollowDo.size(); i++){
 			ProfilePageUserInfoWidget profilePageUserInfoWidget=new ProfilePageUserInfoWidget(userFollowDo.get(i),tab);
@@ -78,7 +90,7 @@ public class ProfilePageFollowersView extends Composite implements MessageProper
 				if(result.size()>0){
 				
 					pageInitialLimit = pageInitialLimit + 20;
-					if(totalUserCount>pageInitialLimit)
+					if(totalHitCount>pageInitialLimit)
 					{
 						seeMorebtn.setVisible(true);
 					}
