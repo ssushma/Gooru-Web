@@ -122,26 +122,7 @@ public class ShelfCollectionResourceChildView extends
 	VerticalPanel actionVerPanel;
 */
 	@UiField
-	static
-	Button EditBtn;
-
-	@UiField
-	Button updateNarrationBtn;
-
-	@UiField
-	Button cancelNarrationBtn;
-
-	@UiField
-	Button updateVideoTimeBtn;
-
-	@UiField
-	Button cancelVideoTimeBtn;
-
-	@UiField
-	Button updatePdfBtn;
-
-	@UiField
-	Button cancelpdfBtn;
+	Button EditBtn,updateNarrationBtn,cancelNarrationBtn,updateVideoTimeBtn,cancelVideoTimeBtn,updatePdfBtn,cancelpdfBtn;
 
 	@UiField
 	FlowPanel editFloPanel, editFieldsFloPanel,actionVerPanel,actionVerPanelForUpdateTime;
@@ -308,15 +289,11 @@ public class ShelfCollectionResourceChildView extends
 						@Override
 						@UiHandler("cancelButton")
 						public void onCancelClick(ClickEvent clickEvent) {
-							
-//							System.out.println("--------Cancel Button 2--------");
-							EditBtn.setVisible(true);
 							disableAllEditMode();
 							hide();
 							isEdited = false;
 							isConfirmationPopup = false;
 							clickEvent.stopPropagation();
-							
 						}
 					};
 				}
@@ -364,7 +341,6 @@ public class ShelfCollectionResourceChildView extends
 		editSartPageText.setText(GL0960);
 		StartPageLbl.setText(GL0961);
 		EditBtn.setText(GL0140);
-//		EditBtn.setVisible(true);
 		updateResourceBtn.setText(GL0962);
 		addTages.setText("Add Tags");
 		editInfoLbl.setText(GL0963);
@@ -380,11 +356,10 @@ public class ShelfCollectionResourceChildView extends
 		updatePdfBtn.setText(GL0240);
 		cancelpdfBtn.setText(GL0142);
 		setData(collectionItem);
-//		EditBtn.setVisible(true);
 		
 		onResourceNarrationOut();
-//		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
-//		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
+		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
+		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		setPresenter(new ShelfCollectionResourceChildPresenter(this));
 		//For 5.9 
 		narrationAlertMessageLbl.setText(GL0143);
@@ -392,7 +367,7 @@ public class ShelfCollectionResourceChildView extends
 		actionVerPanelForUpdateTime.setVisible(false);
 		UpdateTextMessage.setVisible(false);
 		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-//		EditBtn.setVisible(false);
+		EditBtn.setVisible(false);
 		editPdfFlowPanel.setVisible(false);
 		actionVerPanelForUpdatePDF.setVisible(false);
 		fromTxt.setFocus(true);
@@ -675,7 +650,7 @@ public class ShelfCollectionResourceChildView extends
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			if ((actionVerPanel.isVisible()==false) && (actionVerPanelForUpdateTime.isVisible()==false) && (actionVerPanelForUpdatePDF.isVisible()==false)) {
-//				EditBtn.setVisible(true);
+				EditBtn.setVisible(true);
 				//ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.VISIBLE);
 				//actionVerPanel.setVisible(true);
 				// onResourceNarrationHover();
@@ -693,7 +668,7 @@ public class ShelfCollectionResourceChildView extends
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
 			//if (updateResourceBtn.getText().equalsIgnoreCase("Edit Narration")) {
-//				EditBtn.setVisible(true);
+				EditBtn.setVisible(false);
 				ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 				//actionVerPanel.setVisible(false);
 				//actionVerPanelForUpdateTime.setVisible(false);
@@ -1129,7 +1104,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("copyResource")
 	public void copyResource(ClickEvent clickEvent) {
 		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-		EditBtn.setVisible(true);
+		EditBtn.setVisible(false);
 		if (isEdited) {
 				if (previousCollectionResourceChildView != null	&& previousCollectionResourceChildView.isAttached()) {
 				if (!isConfirmationPopup) {
@@ -1147,8 +1122,6 @@ public class ShelfCollectionResourceChildView extends
 						@Override
 						@UiHandler("cancelButton")
 						public void onCancelClick(ClickEvent clickEvent) {
-							System.out.println("Cancel Button");
-							EditBtn.setVisible(true);
 							disableAllEditMode();
 							hide();
 							isEdited = false;
@@ -1198,7 +1171,7 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("confirmDeleteLbl")
 	public void deleteCollectionItem(ClickEvent clickEvent) {
 		ResourceEditButtonContainer.getElement().getStyle().setVisibility(Visibility.HIDDEN);
-//		EditBtn.setVisible(false);
+		EditBtn.setVisible(false);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(88, false));
 
@@ -1357,7 +1330,6 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("updateNarrationBtn")
 	public void onclickOfnarrationUpdate(ClickEvent event)
 	{
-		
 		Map<String, String> parms = new HashMap<String, String>();
 		parms.put("text", narrationTxtArea.getText());
 		AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -1415,8 +1387,6 @@ public class ShelfCollectionResourceChildView extends
 	 */
 	@UiHandler("cancelNarrationBtn")
 	public void onclickcancelNarrationBtn(ClickEvent event){
-		
-		EditBtn.setVisible(true);
 		narrationTxtArea.setText(collectionItemDo.getNarration());
 		fromLblDisplayText.setVisible(true);
 		videoDisplay.setVisible(true);
@@ -1451,7 +1421,6 @@ public class ShelfCollectionResourceChildView extends
 	public void updateVideoTimeBtnClickEvent(ClickEvent event)
 	{
 		editAndUpdateVideoTime();
-		EditBtn.setVisible(true);
 	}
 	/*
 	 * This clickEvent is used to cancel video time edit
@@ -1459,7 +1428,6 @@ public class ShelfCollectionResourceChildView extends
 	@UiHandler("cancelVideoTimeBtn")
 	public void cancelVideoTimeBtnClickEvent(ClickEvent event)
 	{
-		EditBtn.setVisible(true);
 		videoDisplay.setVisible(true);
 		narrationConatainer.setVisible(true);
 		editFieldsFloPanel.setVisible(false);
@@ -1572,7 +1540,6 @@ public class ShelfCollectionResourceChildView extends
 			previousCollectionResourceChildView = editMode ? this : null;
 			editFloPanel.setVisible(editMode);
 			
-			EditBtn.setVisible(!editMode);
 			if (editMode) {
 				addStyleName(CollectionEditResourceCBundle.INSTANCE.css()
 						.collectionResourceEdit());
