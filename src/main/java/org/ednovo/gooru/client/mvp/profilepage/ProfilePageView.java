@@ -409,7 +409,7 @@ public class ProfilePageView extends BaseViewWithHandlers<ProfilePageUiHandlers>
 				if(userCoursePopup.isVisible() && isShowing && enableEdit){
 						userCoursePopup.setVisible(true);
 				}else{
-					userCoursePopup.setVisible(false);	
+				//	userCoursePopup.setVisible(false);	
 				}
 				isShowing=false;
 			}
