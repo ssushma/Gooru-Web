@@ -41,7 +41,9 @@
 	font-size:14px;
 	border-left:1px solid #ddd;
 	cursor:default;
-	width: 9.1%;
+/* 	width: 9.1%;*/
+/*  A temporary Fix - Bottom Line of code*/
+	width: 11.8%;
 }
 
 #courseTabs .tabsLi.math {
