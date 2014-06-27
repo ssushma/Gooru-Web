@@ -56,18 +56,61 @@ public class FaqVc extends Composite implements MessageProperties{
 	public FaqVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		organizeText.setText(GL1350+GL_SPL_QUESTION);
+		organizeText.getElement().setId("lblOrganizeText");
+		organizeText.getElement().setAttribute("alt",GL1350);
+		organizeText.getElement().setAttribute("title",GL1350);
+		
 		createCollectionText.setText(GL1351+GL_SPL_FULLSTOP);
+		createCollectionText.getElement().setId("lblCreateCollectionText");
+		createCollectionText.getElement().setAttribute("alt",GL1351);
+		createCollectionText.getElement().setAttribute("title",GL1351);
+		
 		reOrganizeText.setText(GL1352+GL_SPL_QUESTION);
+		reOrganizeText.getElement().setId("lblReOrganizeText");
+		reOrganizeText.getElement().setAttribute("alt",GL1352);
+		reOrganizeText.getElement().setAttribute("title",GL1352);
+		
 		editCollectionText.setText(GL1353);
+		editCollectionText.getElement().setId("lblEditCollectionText");
+		editCollectionText.getElement().setAttribute("alt",GL1353);
+		editCollectionText.getElement().setAttribute("title",GL1353);
+		
 		shareResourceLbl.setText(GL1354+GL_SPL_QUESTION);
+		shareResourceLbl.getElement().setId("lblShareResourceLbl");
+		shareResourceLbl.getElement().setAttribute("alt",GL1354);
+		shareResourceLbl.getElement().setAttribute("title",GL1354);
+		
 		shareResourceText.setText(GL1355);
+		shareResourceText.getElement().setId("lblShareResourceText");
+		shareResourceText.getElement().setAttribute("alt",GL1355);
+		shareResourceText.getElement().setAttribute("title",GL1355);
+		
 		needHelpLbl.setText(GL1356+GL_SPL_QUESTION);
+		needHelpLbl.getElement().setId("lblNeedHelp");
+		needHelpLbl.getElement().setAttribute("alt",GL1356);
+		needHelpLbl.getElement().setAttribute("title",GL1356);
+		
 		supportLbl.setText(GL1357);
+		supportLbl.getElement().setId("lnkSupport");
+		supportLbl.getElement().setAttribute("alt",GL1357);
+		supportLbl.getElement().setAttribute("title",GL1357);
 		supportLbl.setHref("http://support.goorulearning.org/forums");
+		
 		moreAnsweretext.setText(GL1358);
+		moreAnsweretext.getElement().setId("lblMoreAnsweretext");
+		moreAnsweretext.getElement().setAttribute("alt",GL1358);
+		moreAnsweretext.getElement().setAttribute("title",GL1358);
+		
 		contactUsText.setText(" "+GL1245);
+		contactUsText.getElement().setId("lnkContactUsText");
+		contactUsText.getElement().setAttribute("alt"," "+GL1245);
+		contactUsText.getElement().setAttribute("title"," "+GL1245);
 		contactUsText.setHref("http://support.goorulearning.org/anonymous_requests/new");
+	
 		helpText.setText(" "+GL1359+GL_SPL_EXCLAMATION);
+		helpText.getElement().setId("lblHelpText");
+		helpText.getElement().setAttribute("alt"," "+GL1359+GL_SPL_EXCLAMATION);
+		helpText.getElement().setAttribute("title"," "+GL1359+GL_SPL_EXCLAMATION);
 	}
 
 }

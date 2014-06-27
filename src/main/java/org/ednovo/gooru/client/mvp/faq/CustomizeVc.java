@@ -56,9 +56,16 @@ public class CustomizeVc extends Composite implements MessageProperties{
 	public CustomizeVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		watchVideoText.setText(GL1340);
+		watchVideoText.getElement().setId("lnkWatchVideoText");
+		watchVideoText.getElement().setAttribute("alt",GL1340);
+		watchVideoText.getElement().setAttribute("title",GL1340);
 		watchVideoText.setHref("http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources");
 		watchVideoImage.setHref("http://support.goorulearning.org/entries/23349673-Customize-playlists-of-learning-resources");
+		watchVideoImage.getElement().setId("lnkWatchVideoImage");
 		guideStudentsText.setText(GL1341+GL_SPL_FULLSTOP);
+		guideStudentsText.getElement().setId("lblGuideStudentsText");
+		guideStudentsText.getElement().setAttribute("alt",GL1341);
+		guideStudentsText.getElement().setAttribute("title",GL1341);
 	}
 
 }
