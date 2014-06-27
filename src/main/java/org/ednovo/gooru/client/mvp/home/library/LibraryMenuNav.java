@@ -488,17 +488,17 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 	*/
 	protected void setTaxonomyData(String subjectname, final String subjectCode, String courseIdRefresh, ArrayList<CourseDo> courseDoList) {
 		final HTMLPanel elementaryCoursePanel = new HTMLPanel("");
-		Label elementaryLabel = new Label("Elementary Courses");
+		Label elementaryLabel = new Label(GL2002);
 		elementaryLabel.setStyleName(libraryStyleUc.gradeOption());
 		elementaryCoursePanel.add(elementaryLabel);
 		
 		final HTMLPanel middleSchoolCoursePanel = new HTMLPanel("");
-		Label middleSchoolLabel = new Label("Middle School Courses");
+		Label middleSchoolLabel = new Label(GL2003);
 		middleSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
 		middleSchoolCoursePanel.add(middleSchoolLabel);
 		
 		final HTMLPanel highSchoolCoursePanel = new HTMLPanel("");
-		Label highSchoolLabel = new Label("Higher School Courses");
+		Label highSchoolLabel = new Label(GL2004);
 		highSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
 		highSchoolCoursePanel.add(highSchoolLabel);
 		
@@ -528,9 +528,9 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 								AppClientFactory.getPlaceManager().revealPlace(getPlaceToken(),params);
 							}
 						});
-						if(courseDo.getGrade()==null || courseDo.getGrade()<5) {
+						if(courseDo.getGrade()==null || courseDo.getGrade()<=5) {
 							elementaryCoursePanel.add(courseTitle);
-						} else if(courseDo.getGrade()>4 && courseDo.getGrade()<9 ) {
+						} else if(courseDo.getGrade()>5 && courseDo.getGrade()<9 ) {
 							middleSchoolCoursePanel.add(courseTitle);
 						} else {
 							highSchoolCoursePanel.add(courseTitle);

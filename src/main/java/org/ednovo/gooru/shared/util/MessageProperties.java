@@ -2560,6 +2560,8 @@ public interface MessageProperties {
     	String GL2000 = "resource";
     	String GL2001 = "collection";
     	
-    	
+    	String GL2002 = "Elementary Courses";
+    	String GL2003 = "Middle School Courses";
+    	String GL2004 = "High School Courses";
 
 }
