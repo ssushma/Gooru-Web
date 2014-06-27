@@ -734,7 +734,7 @@ public class EditClasspageView extends
 				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
 				params.put("classpageid", classpageid);
-				params.put("pageNum", pageNum);
+				params.put("pageNum", "1");
 				params.put("order", sortingStringValue);
 				PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 				AppClientFactory.getPlaceManager().revealPlace(true, placeRequest, true);
@@ -1430,6 +1430,9 @@ public class EditClasspageView extends
 			
 			assignmentsContainerPanel.clear();
 			assignmentsContainerPanel.add(setLoadingPanel());
+			
+			offsetProgress = 0;
+			limitProgress = 20;
 
 			//getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
 			/*int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
@@ -1451,6 +1454,7 @@ public class EditClasspageView extends
 			params.put("pageNum", pagenumber+"");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
 
 		} else {
 		}

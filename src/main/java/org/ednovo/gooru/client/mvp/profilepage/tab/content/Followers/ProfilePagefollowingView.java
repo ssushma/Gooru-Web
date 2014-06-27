@@ -48,6 +48,8 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 		totalUserCount  =userFollowDo.size();
 		totalHintCount = userFollowDo.get(0).getTotalHintCount();
 		setData();
+		followingScrollPanel.setAlwaysShowScrollBars(false);
+		followingScrollPanel.setTouchScrollingDisabled(true);
 	}
 	public void setData(){
 		
