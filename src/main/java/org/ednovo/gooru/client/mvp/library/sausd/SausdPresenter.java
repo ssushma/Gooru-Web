@@ -5,9 +5,12 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.authentication.SignUpPresenter;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.LibraryServiceAsync;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -24,6 +27,10 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 	
 	private static final String LIBRARY_PAGE = "page";
 	
+	private static final String CALLBACK = "callback";
+	
+	SignUpPresenter signUpViewPresenter = null;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.SAUSD_LIBRARY)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -31,8 +38,9 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 	}
 	
 	@Inject
-	public SausdPresenter(IsSausdView view, IsSausdProxy proxy) {
+	public SausdPresenter(IsSausdView view, IsSausdProxy proxy,SignUpPresenter signUpViewPresenter) {
 		super(view, proxy);
+		this.signUpViewPresenter = signUpViewPresenter; 
 		getView().setUiHandlers(this);
 	}
 	
@@ -60,6 +68,17 @@ public class SausdPresenter extends BasePlacePresenter<IsSausdView, SausdPresent
 	@Override
 	public void prepareFromRequest(PlaceRequest request) {
 		super.prepareFromRequest(request);
+		if (getPlaceManager().getRequestParameter(CALLBACK) != null && getPlaceManager().getRequestParameter(CALLBACK).equalsIgnoreCase("signup")) {
+			//To show SignUp (Registration popup)
+			if (AppClientFactory.isAnonymous()){
+				Window.enableScrolling(false);
+				AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
+				String type = getPlaceManager().getRequestParameter("type") ;
+				int displayScreen =getPlaceManager().getRequestParameter("type") !=null  ? Integer.parseInt(type) : 1;
+				signUpViewPresenter.displayPopup(displayScreen);
+				addToPopupSlot(signUpViewPresenter);
+			}
+		}
 		if(AppClientFactory.getLoggedInUser()!=null) {
 			getIntoLibrarypage();
 		} else {
