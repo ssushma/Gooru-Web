@@ -74,7 +74,7 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 	Label folderTitleLbl,confirmDeleteLbl, openFolderpageLbl, folderdescriptionLbl;
 
 	@UiField
-	HTMLPanel folderIcon, collectionIcon, myFolderPageGoals;
+	HTMLPanel folderIcon, collectionIcon, myFolderPageGoals,folderItemPanel;
 	
 	@UiField
 	VerticalPanel actionVerPanel;
@@ -112,6 +112,15 @@ public class FolderItemChildView extends ChildView<FolderItemChildPresenter> imp
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		setPresenter(new FolderItemChildPresenter(this));
 		actionVerPanel.setVisible(false);
+		folderItemPanel.getElement().setId("pnlFolderItem");
+		folderIcon.getElement().setId("pnlFolderIcon");
+		collectionIcon.getElement().setId("pnlCollectionIcon");
+		folderTitleLbl.getElement().setId("lblFolderTitle");
+		myFolderPageGoals.getElement().setId("pnlMyFolderPageGoals");
+		folderdescriptionLbl.getElement().setId("lblFolderdescription");
+		actionVerPanel.getElement().setId("vpnlActionVer");
+		openFolderpageLbl.getElement().setId("lblOpenFolderpage");
+		confirmDeleteLbl.getElement().setId("lblConfirmDelete");
 	}
 
 	/**

@@ -135,6 +135,22 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 		FolderCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		addStandardBtn.setVisible(false);
+		courseLabel.getElement().setId("lblCourse");
+		courseData.getElement().setId("fpnlCourseData");
+		collectionCourseLst.getElement().setId("glbCollectionCourseLst");
+		addCourseBtn.getElement().setId("btnAddCource");
+		courseMaxMsg.getElement().setId("lblCourseMaxMsg");
+		coursesPanel.getElement().setId("pnlCoursesPanel");
+		KinderGarten.getElement().setId("fpnlKinderGarten");
+		gradeTopList.getElement().setId("fpnlGradeTopList");
+		gradeMiddleList.getElement().setId("fpnlGradeMiddleList");
+		gradeBottomList.getElement().setId("fpnlGradeBottomList");
+		higherEducation.getElement().setId("fpnlHigherEducation");
+		standardLabel.getElement().setId("lblStandard");
+		standardSgstBox.getElement().setId("tbautoStandardsSgst");
+		addStandardBtn.getElement().setId("btnAddStandard");
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardsPanel.getElement().setId("pnlStandards");
 	}
 
 	@Override
@@ -418,9 +434,13 @@ public class FolderInfoTabView extends BaseViewWithHandlers<FolderInfoTabUiHandl
 			/*courseLabel.setText("COURSE" + " (" + coursesPanel.getWidgetCount() + ")");*/
 			
 			courseLabel.setText("COURSE(S)");
+			courseLabel.getElement().setAttribute("alt","COURSE(S)");
+			courseLabel.getElement().setAttribute("title","COURSE(S)");
 			
 		} else {
 			courseLabel.setText("COURSE(S)");
+			courseLabel.getElement().setAttribute("alt","COURSE(S)");
+			courseLabel.getElement().setAttribute("title","COURSE(S)");
 		}
 	}
 

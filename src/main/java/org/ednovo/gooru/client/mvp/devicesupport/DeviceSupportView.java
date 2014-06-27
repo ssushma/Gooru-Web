@@ -78,6 +78,8 @@ public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView,M
 		deviceSupportLbl.setTitle(GL1361);
 		deviceSupportLbl.setAltText(GL1361);
 		deviceSupportLbl.setUrl("images/DeviceSupport/tech-saavy.png");
+		deviceSupportLbl.getElement().setId("imgDeviceSupport");
+		
 	}
 
 	@Override
