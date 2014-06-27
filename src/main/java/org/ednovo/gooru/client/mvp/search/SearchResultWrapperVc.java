@@ -155,11 +155,11 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		String browserType = browserAgent.returnFormFactorView();
 		if(!(browserType.equalsIgnoreCase("desktop"))) {
 			setResourcePlayerClickPanelMobile();
-			disclosureHeaderFloPanel.setVisible(true);
+//			disclosureHeaderFloPanel.setVisible(true);
 		} else {
 			addMouseOutHandler(this);
 			addMouseOverHandler(this);
-			disclosureHeaderFloPanel.setVisible(false);
+//			disclosureHeaderFloPanel.setVisible(true);
 		}
 		searchShareVc = new SearchShareVc();
 		collectionInfo = new CollectionInfo();
@@ -191,7 +191,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	@Override
 	public void onMouseOut(MouseOutEvent event) {
 		if (!disclosureDisPanel.isOpen()) {
-			disclosureHeaderFloPanel.setVisible(false);
+			disclosureHeaderFloPanel.setVisible(true);
 			setAddedStatus(null);
 		}
 	}
