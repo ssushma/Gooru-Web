@@ -224,6 +224,36 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 		contentTabVc.addClickHandler(this);
 		backToSearchHtml.addClickHandler(new BackToSearchHtmlClick());
 		collectionEditImageLbl.setVisible(false);
+		
+		backToSearchFloPanel.getElement().setId("fpnlBackToSearchFloPanel");
+		backToSearchPreHtml.getElement().setId("htmlBackToSearchPreHtml");
+		backToSearchHtml.getElement().setId("htmlBackToSearchHtml");
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSimPanel");
+		clearPanel.getElement().setId("pnlClearPanel");
+		foldersBreadCrumps.getElement().setId("lblFoldersBreadCrumps");
+		myFolderRightContainer.getElement().setId("epnlMyFolderRightContainer");
+		simplePencilFocPanel.getElement().setId("fpnlSimplePencilFocPanel");
+		editFolderTitle.getElement().setId("epnlEditFolderTitle");
+		folderTitle.getElement().setId("felblFolderTitle");
+		collectionEditImageLbl.getElement().setId("lblCollectionEditImage");
+		editFolderSaveButtonCancel.getElement().setId("epnlEditFolderSaveButtonCancel");
+		editFolderSaveButton.getElement().setId("epnlEditFolderSaveButton");
+		titleAlertMessageLbl.getElement().setId("lblTitleAlertMessage");
+		collectionDescriptionTitleContainer.getElement().setId("epnlCollectionDescriptionTitleContainer");
+		collectionDescriptionTitle.getElement().setId("lblCollectionDescriptionTitle");
+		simplePencilPanel.getElement().setId("epnlSimplePencilPanel");
+		editFolderDesc.getElement().setId("epnlEditFolderDesc");
+		folderDescription.getElement().setId("felblFolderDescription");
+		editFolderDescSaveButtonCancel.getElement().setId("epnlEditFolderDescSaveButtonCancel");
+		editFolderDescSaveButton.getElement().setId("epnlEditFolderDescSaveButton");
+		descriptionAlertMessageLbl.getElement().setId("lblDescriptionAlertMessage");
+		folderDeleteLabel.getElement().setId("epnlFolderDeleteLabel");
+		infoTabVc.getElement().setId("cttvInfoTabVc");
+		contentTabVc.getElement().setId("cttvContentTabVc");
+		collectionMetaDataSimPanel.getElement().setId("spnlCollectionMetaDataSimPanel");
+		workspaceFoldersList.getElement().setId("pnlWorkspaceFoldersList");
+		info.getElement().setId("pnlInfo");
+		
 	}
 	
 	/**
@@ -481,8 +511,12 @@ public class EditFolderView extends BaseViewWithHandlers<EditFolderUiHandlers> i
 				if (query.length() > 50) {
 					query = query.substring(0, 50) + "...";
 					backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("alt",PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("title",PRE_SEARCH_LINK + query + "\"");
 				} else {
 					backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("alt",PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("title",PRE_SEARCH_LINK + query + "\"");
 				}
 			}
 		}

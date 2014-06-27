@@ -87,6 +87,11 @@ public class FolderContentTabView extends BaseViewWithHandlers<FolderContentTabU
 		noWorkspaceLbl.getElement().getStyle().setDisplay(Display.NONE);
 		workspaceFoldersList.getElement().getStyle().setFloat(Float.LEFT);
 		secondThirdLevelFoldersPanelVc.getElement().getStyle().setFloat(Float.LEFT);
+		newFolderUIHandler.getElement().setId("lblNewFolderUIHandler");
+		newCollectionUIHandler.getElement().setId("lblNewCollectionUIHandler");
+		noWorkspaceLbl.getElement().setId("lblNoWorkspace");
+		workspaceFoldersList.getElement().setId("vpnlWorkspaceFoldersList");
+		secondThirdLevelFoldersPanelVc.getElement().setId("stlfpnlSecondThirdLevelFoldersPanelVc");
 	}
 
 	@Override

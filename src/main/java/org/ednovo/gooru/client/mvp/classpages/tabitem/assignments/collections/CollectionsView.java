@@ -183,19 +183,72 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		assignmentIndex.setText(""+classpageItemDo.getSequenceNumber());
 	}
 	public void setStaticTexts(){
+		
+		panelCircle.getElement().setId("pnlCircle");
+		assignmentIndex.getElement().setId("lblAssignmentIndex");
+		classpageItemContainer.getElement().setId("pnlClasspageItemContainer");
+		editButtonsToolBar.getElement().setId("pnlEditButtonsToolBar");
+		dueDateText.getElement().setId("lblDueDateText");
+		dueDate.getElement().setId("lblDueDate");
+		headerRightPanel.getElement().setId("pnlHeaderRight");
+		dropdownPanelAnalyticsButton.getElement().setId("btnDropdownPanelAnalytics");
+		dropdownPanel.getElement().setId("pnlDropdown");
+		directionContentPanel.getElement().setId("pnlDirectionContent");
+		thumbnailContainer.getElement().setId("pnlThumbnailContainer");
+		collectionImage.getElement().setId("imgCollectionImage");
+		
 		viewClassItemAnalyticsButton.setText(GL0510);
+		viewClassItemAnalyticsButton.getElement().setId("btnViewClassItemAnalytics");
+		viewClassItemAnalyticsButton.getElement().setAttribute("alt",GL0510);
+		viewClassItemAnalyticsButton.getElement().setAttribute("title",GL0510);
+		
 		editClassItemButton.setText(GL0140);
+		editClassItemButton.getElement().setId("btnEditClassItem");
+		editClassItemButton.getElement().setAttribute("alt",GL0140);
+		editClassItemButton.getElement().setAttribute("title",GL0140);
+		
 		editDueDateButton.setText(GL1368);
+		editDueDateButton.getElement().setId("btnEditDueDate");
+		editDueDateButton.getElement().setAttribute("alt",GL1368);
+		editDueDateButton.getElement().setAttribute("title",GL1368);
+		
 		editDirectionButton.setText(GL1369);
+		editDirectionButton.getElement().setId("btnEditDirection");
+		editDirectionButton.getElement().setAttribute("alt",GL1369);
+		editDirectionButton.getElement().setAttribute("title",GL1369);
+		
 		editCollection.setText(GL1370);
+		editCollection.getElement().setId("btnEditCollection");
+		editCollection.getElement().setAttribute("alt",GL1370);
+		editCollection.getElement().setAttribute("title",GL1370);
+		
 		deleteItemButton.setText(GL1371);
+		deleteItemButton.getElement().setId("btnDeleteItem");
+		deleteItemButton.getElement().setAttribute("alt",GL1371);
+		deleteItemButton.getElement().setAttribute("title",GL1371);
+		
 		directionsLabel.setText(GL1372);	
+		directionsLabel.getElement().setId("lblDirections");
+		directionsLabel.getElement().setAttribute("alt",GL1372);
+		directionsLabel.getElement().setAttribute("title",GL1372);
+		
 		learningObjective.setText(GL1373);
+		learningObjective.getElement().setId("lblLearningObjective");
+		learningObjective.getElement().setAttribute("alt",GL1373);
+		learningObjective.getElement().setAttribute("title",GL1373);
+		
 		moniterProgress.setText(GL1586);
+		moniterProgress.getElement().setId("lblMointerProgress");
+		moniterProgress.getElement().setAttribute("alt",GL1586);
+		moniterProgress.getElement().setAttribute("title",GL1586);
+		
 		collectionSummary.setText(GL1587);
-		
-		
-		
+		collectionSummary.getElement().setId("lblCollectionSummary");
+		collectionSummary.getElement().setAttribute("alt",GL1587);
+		collectionSummary.getElement().setAttribute("title",GL1587);
+	
+		classpageItemTitle.getElement().setId("lnkClasspageItemTitle");
+		learningObject.getElement().setId("htmlLearningObject");
 	}
 	public CollectionsView(ClasspageItemDo classpageItemDo,boolean isStudentView,int sequenceNum){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -239,17 +292,25 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		String dueDate=classpageItemDo.getPlannedEndDate();
 		if(dueDate!=null&&!dueDate.equals("")){
 			dueDateText.setText(GL1390);
+			dueDateText.getElement().setAttribute("alt",GL1390);
+			dueDateText.getElement().setAttribute("title",GL1390);
 			dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
 			this.dueDate.setText(dueDate.toString());
+			this.dueDate.getElement().setAttribute("alt",dueDate.toString());
+			this.dueDate.getElement().setAttribute("title",dueDate.toString());
 		}
 	}
 	public void setLearningObject(){
 		String learningObject=classpageItemDo.getGoal();
 		if(learningObject!=null&&!learningObject.equals("")&&!learningObject.equals("null")){
 			this.learningObject.setHTML(learningObject);
+			this.learningObject.getElement().setAttribute("alt",learningObject);
+			this.learningObject.getElement().setAttribute("title",learningObject);
 		}else{
 			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
 			this.learningObject.setHTML(GL1374);
+			this.learningObject.getElement().setAttribute("alt",GL1374);
+			this.learningObject.getElement().setAttribute("title",GL1374);
 		}
 	}
 

@@ -71,20 +71,77 @@ public class DiscoverVc extends Composite implements MessageProperties{
 		thirdId.getElement().setId("three");
 		fourthId.getElement().setId("four");
 		fifthId.getElement().setId("five");
+		gooruGuideImage.getElement().setId("pnlGooruGuideImage");
+		
 		discoverText.getElement().setInnerText(GL1342);
+		discoverText.getElement().setId("pnlDiscoverText");
+		discoverText.getElement().setAttribute("alt",GL1342);
+		discoverText.getElement().setAttribute("title",GL1342);
+		
 		discoverDescLbl.getElement().setInnerText(GL1343+GL_SPL_FULLSTOP);
+		discoverDescLbl.getElement().setId("pnlDiscoverDesc");
+		discoverDescLbl.getElement().setAttribute("alt",GL1343);
+		discoverDescLbl.getElement().setAttribute("title",GL1343);
+		
 		gooruGuideStyle_One.getElement().setInnerText(GL_GRR_NUMERIC_ONE);
+		gooruGuideStyle_One.getElement().setId("pnlGooruGuideStyleOne");
+		gooruGuideStyle_One.getElement().setAttribute("alt",GL_GRR_NUMERIC_ONE);
+		gooruGuideStyle_One.getElement().setAttribute("title",GL_GRR_NUMERIC_ONE);
+		
 		Style_One_Desc.getElement().setInnerText(GL1344+GL_SPL_FULLSTOP);
+		Style_One_Desc.getElement().setId("pnlStyleOneDesc");
+		Style_One_Desc.getElement().setAttribute("alt",GL1344);
+		Style_One_Desc.getElement().setAttribute("title",GL1344);
+		
 		gooruGuideStyle_Two.getElement().setInnerText(GL_GRR_NUMERIC_TWO);
+		gooruGuideStyle_Two.getElement().setId("pnlGooruGuideStyleTwo");
+		gooruGuideStyle_Two.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWO);
+		gooruGuideStyle_Two.getElement().setAttribute("title",GL_GRR_NUMERIC_TWO);
+		
 		Style_Two_Desc.getElement().setInnerText(GL1345+GL_SPL_FULLSTOP);
+		Style_Two_Desc.getElement().setId("pnlStyleTwoDesc");
+		Style_Two_Desc.getElement().setAttribute("alt",GL1345);
+		Style_Two_Desc.getElement().setAttribute("title",GL1345);
+		
 		gooruGuideStyle_Three.getElement().setInnerText(GL_GRR_NUMERIC_THREE);
+		gooruGuideStyle_Three.getElement().setId("pnlGooruGuideStyle_Three");
+		gooruGuideStyle_Three.getElement().setAttribute("alt",GL_GRR_NUMERIC_THREE);
+		gooruGuideStyle_Three.getElement().setAttribute("title",GL_GRR_NUMERIC_THREE);
+		
 		Style_Three_Desc.getElement().setInnerText(GL1346+GL_SPL_FULLSTOP);
+		Style_Three_Desc.getElement().setId("pnlStyleThreeDesc");
+		Style_Three_Desc.getElement().setAttribute("alt",GL1346);
+		Style_Three_Desc.getElement().setAttribute("title",GL1346);
+		
 		gooruGuideStyle_Four.getElement().setInnerText(GL_GRR_NUMERIC_FOUR);
+		gooruGuideStyle_Four.getElement().setId("pnlGooruGuideStyleFour");
+		gooruGuideStyle_Four.getElement().setAttribute("alt",GL_GRR_NUMERIC_FOUR);
+		gooruGuideStyle_Four.getElement().setAttribute("title",GL_GRR_NUMERIC_FOUR);
+		
 		Style_Four_Desc.getElement().setInnerText(GL1347+GL_SPL_FULLSTOP);
+		Style_Four_Desc.getElement().setId("pnlStyleFourDesc");
+		Style_Four_Desc.getElement().setAttribute("alt",GL1347);
+		Style_Four_Desc.getElement().setAttribute("title",GL1347);
+		
 		gooruGuideStyle_Five.getElement().setInnerText(GL_GRR_NUMERIC_FIVE);
+		gooruGuideStyle_Five.getElement().setId("pnlGooruGuideStyleFive");
+		gooruGuideStyle_Five.getElement().setAttribute("alt",GL_GRR_NUMERIC_FIVE);
+		gooruGuideStyle_Five.getElement().setAttribute("title",GL_GRR_NUMERIC_FIVE);
+		
 		Style_Five_Desc.getElement().setInnerText(GL1348+GL_SPL_FULLSTOP);
+		Style_Five_Desc.getElement().setId("pnlStyleFiveDesc");
+		Style_Five_Desc.getElement().setAttribute("alt",GL1348);
+		Style_Five_Desc.getElement().setAttribute("title",GL1348);
+		
 		needHelpLbl.setText(GL1349);
+		needHelpLbl.getElement().setId("lblNeedHelp");
+		needHelpLbl.getElement().setAttribute("alt",GL1349);
+		needHelpLbl.getElement().setAttribute("title",GL1349);
+		
 		supportCenterLbl.setText(GL1307+GL_SPL_FULLSTOP);
+		supportCenterLbl.getElement().setId("lnkSupportCenter");
+		supportCenterLbl.getElement().setAttribute("alt",GL1307);
+		supportCenterLbl.getElement().setAttribute("title",GL1307);
 		supportCenterLbl.setHref("http://support.goorulearning.org/anonymous_requests/new");
 		firstId.addMouseOverHandler(new HideOtherNumbers("1"));
 		firstId.addMouseOutHandler(new ResetNumbers());

@@ -93,7 +93,7 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 		imgComponent.setHeight("74");
 		
 		imgSampleCollection.getElement().appendChild(imgComponent.getElement());
-		
+		imgSampleCollection.getElement().setId("lnkSampleCollection");
 		
 		
 		
@@ -130,27 +130,101 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 	
 	private void setText() {
 		lblStartCreateingCollection.setText(GL1813);
+		lblStartCreateingCollection.getElement().setId("lblStartCreateingCollection");
+		lblStartCreateingCollection.getElement().setAttribute("alt",GL1813);
+		lblStartCreateingCollection.getElement().setAttribute("title",GL1813);
+		
 		lblCollectionDesc.setText(GL1814);
+		lblCollectionDesc.getElement().setId("lblCollectionDesc");
+		lblCollectionDesc.getElement().setAttribute("alt",GL1814);
+		lblCollectionDesc.getElement().setAttribute("title",GL1814);
+		
 		btnCreateCollection.setText(GL1815);
+		btnCreateCollection.getElement().setId("btnCreateCollection");
+		btnCreateCollection.getElement().setAttribute("alt",GL1815);
+		btnCreateCollection.getElement().setAttribute("title",GL1815);
 		//lblViewWalkthrough.setText(GL1816);
+		lblViewWalkthrough.getElement().setId("lblViewWalkthrough");
+		
 		lblUpload.setText(GL1817);
+		lblUpload.getElement().setId("lblUpload");
+		lblUpload.getElement().setAttribute("alt",GL1817);
+		lblUpload.getElement().setAttribute("title",GL1817);
+		
 		lblCustomizeCollections.setText(GL1818);
+		lblCustomizeCollections.getElement().setId("lblCustomizeCollections");
+		lblCustomizeCollections.getElement().setAttribute("alt",GL1818);
+		lblCustomizeCollections.getElement().setAttribute("title",GL1818);
+		
 		lblCollaborate.setText(GL1819);
+		lblCollaborate.getElement().setId("lblCollaborate");
+		lblCollaborate.getElement().setAttribute("alt",GL1819);
+		lblCollaborate.getElement().setAttribute("title",GL1819);
+		
 		lblFurther.setText(GL1820);
+		lblFurther.getElement().setId("lblFurther");
+		lblFurther.getElement().setAttribute("alt",GL1820);
+		lblFurther.getElement().setAttribute("title",GL1820);
+		
 		lblAssess.setText(GL1821);
+		lblAssess.getElement().setId("lblAssess");
+		lblAssess.getElement().setAttribute("alt",GL1821);
+		lblAssess.getElement().setAttribute("title",GL1821);
+		
 		lblAddQuestion.setText(GL1822);
+		lblAddQuestion.getElement().setId("lblAddQuestion");
+		lblAddQuestion.getElement().setAttribute("alt",GL1822);
+		lblAddQuestion.getElement().setAttribute("title",GL1822);
+		
 		lblGuideWith.setText(GL1823);
+		lblGuideWith.getElement().setId("lblGuideWith");
+		lblGuideWith.getElement().setAttribute("alt",GL1823);
+		lblGuideWith.getElement().setAttribute("title",GL1823);
+		
 		lblGuideNarration.setText(GL1824);
+		lblGuideNarration.getElement().setId("lblGuideNarration");
+		lblGuideNarration.getElement().setAttribute("alt",GL1824);
+		lblGuideNarration.getElement().setAttribute("title",GL1824);
+		
 		lblCustomizeResource.setText(GL1825);
+		lblCustomizeResource.getElement().setId("lblCustomizeResource");
+		lblCustomizeResource.getElement().setAttribute("alt",GL1825);
+		lblCustomizeResource.getElement().setAttribute("title",GL1825);
+		
 		lblEditStart.setText(GL1826);
+		lblEditStart.getElement().setId("lblEditStart");
+		lblEditStart.getElement().setAttribute("alt",GL1826);
+		lblEditStart.getElement().setAttribute("title",GL1826);
 		
 		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblOne.getElement().setId("lblOne");
+		lblOne.getElement().setAttribute("alt",GL_GRR_NUMERIC_ONE);
+		lblOne.getElement().setAttribute("title",GL_GRR_NUMERIC_ONE);
+		
 		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblTwo.getElement().setId("lblTwo");
+		lblTwo.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWO);
+		lblTwo.getElement().setAttribute("title",GL_GRR_NUMERIC_TWO);
+		
 		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblThree.getElement().setId("lblThree");
+		lblThree.getElement().setAttribute("alt",GL_GRR_NUMERIC_THREE);
+		lblThree.getElement().setAttribute("title",GL_GRR_NUMERIC_THREE);
+		
 		lblFour.setText(GL_GRR_NUMERIC_FOUR);
+		lblFour.getElement().setId("lblFour");
+		lblFour.getElement().setAttribute("alt",GL_GRR_NUMERIC_FOUR);
+		lblFour.getElement().setAttribute("title",GL_GRR_NUMERIC_FOUR);
+		
 		lblFive.setText(GL_GRR_NUMERIC_FIVE);
+		lblFive.getElement().setId("lblFive");
+		lblFive.getElement().setAttribute("alt",GL_GRR_NUMERIC_FIVE);
+		lblFive.getElement().setAttribute("title",GL_GRR_NUMERIC_FIVE);
 		
 		htmlWalkSampleCollection.setHTML(GL1830);
+		htmlWalkSampleCollection.getElement().setId("htmlWalkSampleCollection");
+		htmlWalkSampleCollection.getElement().setAttribute("alt",GL1830);
+		htmlWalkSampleCollection.getElement().setAttribute("title",GL1830);
 		
 		setVisibility();
 	}
