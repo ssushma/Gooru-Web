@@ -43,7 +43,7 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 	String limit = "20";
 	int totalUserCount  = 0;
 	
-	int totalHintCount;
+	int totalHitCount = 0;
 	
 	public ProfilePagefollowingView(List<UserFollowDo> userFollowDo,String tab) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -51,7 +51,10 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 		this.tab = tab;
 		totalUserCount =0;
 		totalUserCount  =userFollowDo.size();
-		totalHintCount = userFollowDo.get(0).getTotalHintCount();
+		if(userFollowDo != null && userFollowDo.size()>0)
+		{
+		totalHitCount = userFollowDo.get(0).getTotalHintCount();
+		}
 		setData();
 
 	}
@@ -62,7 +65,7 @@ public class ProfilePagefollowingView extends Composite implements MessageProper
 		follwingTextMessageDes.getElement().setAttribute("style", "font-weight: normal;");
 		userConatiner.clear();
 		
-		if(totalUserCount>pageInitialLimit)
+		if(totalHitCount>pageInitialLimit)
 		{
 			seeMorebtn.setVisible(true);
 		}
