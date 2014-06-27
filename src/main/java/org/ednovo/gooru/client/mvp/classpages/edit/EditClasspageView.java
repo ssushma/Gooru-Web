@@ -1430,6 +1430,9 @@ public class EditClasspageView extends
 			
 			assignmentsContainerPanel.clear();
 			assignmentsContainerPanel.add(setLoadingPanel());
+			
+			offsetProgress = 0;
+			limitProgress = 20;
 
 			//getUiHandlers().getNextClasspageItems(((pagenumber-1)*limit),limit);
 			/*int pagenumber = ((PaginationButtonUc) event.getSource()).getPage();
@@ -1451,6 +1454,7 @@ public class EditClasspageView extends
 			params.put("pageNum", pagenumber+"");
 			PlaceRequest placeRequest=AppClientFactory.getPlaceManager().preparePlaceRequest(PlaceTokens.EDIT_CLASSPAGE, params);
 			AppClientFactory.getPlaceManager().revealPlace(false, placeRequest, true);
+
 
 		} else {
 		}
