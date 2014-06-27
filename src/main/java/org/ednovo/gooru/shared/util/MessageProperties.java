@@ -2518,7 +2518,7 @@ public interface MessageProperties {
       	
       	
       	String GL1965 = "Ready to Publish?";
-      	String GL1966 = "Something goes here";
+      	String GL1966 = "";
       	String GL1967 = "[Collection Title]";
       	String GL1968 = "See More";
     	String GL1969 = "Mark as Complete";

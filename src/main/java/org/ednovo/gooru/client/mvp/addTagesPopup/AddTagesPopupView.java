@@ -525,8 +525,9 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 			
 			@Override
 			public void onBlur(BlurEvent event) {
-				if(standardsPreferenceOrganizeToolTip.isShowing())
-				standardsPreferenceOrganizeToolTip.show();
+				if(standardsPreferenceOrganizeToolTip.isShowing()){
+				standardsPreferenceOrganizeToolTip.hide();
+				}
 			}
 		};
 		standardSgstBox.addDomHandler(blurHandler, BlurEvent.getType());
