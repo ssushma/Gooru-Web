@@ -79,7 +79,7 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 	
 	private void setData(ProfileLibraryDo profileLibraryDo) {
 		courseTitle.setText(profileLibraryDo.getTitle());
-		featuredCourseImage.setUrl(profileLibraryDo.getThumbnails().getUrl());
+		featuredCourseImage.setUrl(StringUtil.formThumbnailName(profileLibraryDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
 		featuredCourseImage.setWidth("100px");
 		featuredCourseImage.setHeight("75px");
 
