@@ -92,6 +92,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_PROFILE_WORKSPACE, userId, getLoggedInSessionToken(), pageNum, pageSize);
 		url+="&sharing=public";
+		System.out.println("getUserWorkSpace::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		List<CollectionItemDo> collectionItemDo = deserializeWorkspace(jsonRep);
@@ -125,6 +126,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_COLLECTION_ITEMS, collectionId, getLoggedInSessionToken(), pageNum, pageSize);
 		url+="&sharing=public";
+		System.out.println("getFolders::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		List<CollectionItemDo> collectionItemDo = deserializeCollectionItems(jsonRep);
@@ -241,6 +243,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			sessionToken=sessionToken+"&collectionType="+collectionType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PROFILE_WORKSPACE, gooruUid, sessionToken, limit+"",offset+"","20");
+		System.out.println("getProfileLibraryWorkspace::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -258,6 +261,7 @@ public class ProfilePageServiceImpl extends BaseServiceImpl implements ProfilePa
 			sessionToken=sessionToken+"&sharing="+sharingType;
 		}
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_PARTNER_CHILD_FOLDER_LIST, parentId, sessionToken, limit+"");
+		System.out.println("getProfilePaginationWorkspace::"+url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);

@@ -59,6 +59,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -374,6 +376,14 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 				setButtonStatus("active");
 			}
 		});
+		classCodeTxtBox.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				setButtonStatus("active");
+			}
+		});
+		
 
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
@@ -632,6 +642,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 											StudentAssignmentView
 													.setPublicPageActive();
 										} else {
+											System.out.println("iam in classpagelistvc::setPublicPagePending");
 											StudentAssignmentView
 													.setPublicPagePending();
 										}
