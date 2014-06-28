@@ -86,7 +86,7 @@ public class ProfilePageUserInfoWidget extends Composite implements MessagePrope
 		userCollections.setText(collectionCount+(collectionCount==1?" Collection":" Collections"));
 		
 
-		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers | " +userFollowDo.getSummary().getFollowing()+" Following");
+		userFollowDetails.setText(userFollowDo.getSummary().getFollowers()+(userFollowDo.getSummary().getFollowers()==1?" Follower":" Followers")+" | " +userFollowDo.getSummary().getFollowing()+" Following");
 		
 		String gooruUid = userNameLabel.getElement().getId();
 		Anchor anchor = new Anchor();
