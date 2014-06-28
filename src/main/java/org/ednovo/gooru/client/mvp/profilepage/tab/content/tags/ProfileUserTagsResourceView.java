@@ -105,9 +105,9 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 		tagContainer.getElement().setAttribute("alt", labelName);
 		tagContainer.setTitle(labelName);
 		
-		if(labelName.length()>=12){
+		/*if(labelName.length()>=12){
 			labelName = labelName.substring(0, 12) + "...";
-		}
+		}*/
 		tagType.setText(labelName);
 		tagCount.setText(count);
 		userTagsResourceContainerConatiner.clear();

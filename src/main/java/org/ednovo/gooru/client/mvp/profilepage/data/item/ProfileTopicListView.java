@@ -177,13 +177,17 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		setTopicLabel(profileFolderDo.getTitle());
 		
 		if(profileFolderDo.getCollections()!=null) {
+			System.out.println("in profile setonlyconcept data::");
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
 			try {
+				System.out.println("in profileconcept data::");
 				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null);
 			} catch(Exception e) {
+				System.out.println("in profileconcept datacatchcatch::");
 				setDefaultCollectionLbl();
 			}
 		} else {
+			System.out.println("in profile setonlyconcept data::");
 			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems());
 			try {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {

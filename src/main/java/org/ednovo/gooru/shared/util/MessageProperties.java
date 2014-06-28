@@ -2563,5 +2563,6 @@ public interface MessageProperties {
     	String GL2002 = "Elementary Courses";
     	String GL2003 = "Middle School Courses";
     	String GL2004 = "High School Courses";
+    	String GL2005 = "Follower";
 
 }

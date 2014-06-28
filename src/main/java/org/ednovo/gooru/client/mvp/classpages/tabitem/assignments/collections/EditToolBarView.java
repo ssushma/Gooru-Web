@@ -36,7 +36,20 @@ public class EditToolBarView extends Composite implements MessageProperties{
 	}
 	public void setStaticTexts(){
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setId("btnCancel");
+		cancelButton.getElement().setAttribute("alt",GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
+		
 		saveButton.setText(GL0141);
+		saveButton.getElement().setId("btnSave");
+		saveButton.getElement().setAttribute("alt",GL0141);
+		saveButton.getElement().setAttribute("title",GL0141);
+		
 		savingText.setText(GL0808);
+		savingText.getElement().setId("lblSaving");
+		savingText.getElement().setAttribute("alt",GL0808);
+		savingText.getElement().setAttribute("title",GL0808);
+		dueDatePanel.getElement().setId("pnlDueDatePanel");
+		dueDateText.getElement().setId("pnlDueDate");
 	}
 }

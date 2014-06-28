@@ -710,6 +710,7 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO sorting
+					
 			
 			if(!dropdownPlaceHolder.getText().equals(sortType)){
 				dropdownPlaceHolder.setText(sortType);
@@ -730,6 +731,11 @@ public class EditClasspageView extends
 				assignmentsContainerPanel.clear();
 				assignmentsContainerPanel.add(setLoadingPanel());
 				dropDownListContainer.setVisible(false);
+				
+				
+				offsetProgress = 0;
+				limitProgress = 20;
+				
 				Map<String,String> params = new HashMap<String,String>();
 				String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("classpageid", null);
 				String pageNum=AppClientFactory.getPlaceManager().getRequestParameter("pageNum", null);
