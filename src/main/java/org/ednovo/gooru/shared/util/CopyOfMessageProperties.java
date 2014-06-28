@@ -2442,7 +2442,7 @@ public interface CopyOfMessageProperties extends Constants {
 
 	//suggestions for search.
 	String GL1957 ();
-	String GL1958=();
+	String GL1958 ();
 	String GL1959 ();
 	String GL1960 ();
 	String GL1961 ();
