@@ -40,7 +40,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -63,7 +63,7 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 
 	@UiField
 	Label entityLbl;
-	@UiField HTMLPanel buttonContainer;
+	@UiField FlowPanel buttonContainer;
 	
 //	@UiField BlueButtonUc deleteCollectionDisabledButton;
 
