@@ -65,7 +65,7 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 	Label entityLbl;
 	@UiField HTMLPanel buttonContainer;
 	
-	@UiField BlueButtonUc deleteCollectionDisabledButton;
+	
 
 	private String confirmText = "DELETE";
 	private static FolderDeleteConfirmationPopUpUiBinder uiBinder = GWT
@@ -91,7 +91,7 @@ public abstract class FolderDeleteConfirmationPopUp extends AppPopUp  {
 		entityLbl.getElement().setAttribute("title",entityInfo);
 		inlineTxtBox.getElement().setId("txtInlineTxtBox");
 		buttonContainer.getElement().setId("pnlButtonContainer");
-		deleteCollectionDisabledButton.getElement().setId("btnDeleteCollectionDisabled");
+	//	deleteCollectionDisabledButton.getElement().setId("btnDeleteCollectionDisabled");
 		cancelAnr.getElement().setId("lnkCancelAnr");
 		
         setModal(true);
