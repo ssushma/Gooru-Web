@@ -553,6 +553,12 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 								for(int j = 0; j<profileLibraryList.getSearchResult().size();j++) {
 									conceptList.add(new PartnerLessonUc(profileLibraryList.getSearchResult().get(j),topicId,false, (j+count+1), true));
 								}
+								LESSON_PAGE_INITIAL_LIMIT = LESSON_PAGE_INITIAL_LIMIT + profileLibraryList.getSearchResult().size();
+								if(!(profileLibraryList.getCount()>LESSON_PAGE_INITIAL_LIMIT)) {
+									isScrollable = false;
+								} else {
+									isScrollable = true;
+								}
 							}
 						});
 					}
