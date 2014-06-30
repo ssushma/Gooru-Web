@@ -35,7 +35,6 @@ import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
@@ -62,6 +61,6 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 
 	void getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset, AsyncCallback<ProfileLibraryListDo> callback);
 	void getLibraryPaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<ProfileLibraryListDo> callback);
-	void getLibraryCollection(String gooruOid, boolean skipCollectionItems, AsyncCallback<ProfileLibraryDo> callback);
+	void getLibraryCoursesList(String parentId,String sharingType, AsyncCallback<ProfileLibraryListDo> callback);
 
 }
