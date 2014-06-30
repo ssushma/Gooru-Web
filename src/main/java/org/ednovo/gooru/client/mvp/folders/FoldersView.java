@@ -97,6 +97,18 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 		welcomeWorkspaceMsg.getElement().getStyle().setDisplay(Display.NONE);
 		backToSearchFloPanel.getElement().getStyle().setDisplay(Display.NONE);
 		backToSearchHtml.addClickHandler(this);
+		
+		backToSearchFloPanel.getElement().setId("fpnlBackToSearchFloPanel");
+		backToSearchPreHtml.getElement().setId("htmlBackToSearchPreHtml");
+		backToSearchHtml.getElement().setId("htmlBackToSearchHtml");
+		noFoldersLeftPanelmsg.getElement().setId("pnlNoFoldersLeftPanelmsg");
+		shelfTabSimPanel.getElement().setId("spnlShelfTabSim");
+		newFolderUIHandler.getElement().setId("lblNewFolderUIHandler");
+		newCollectionUIHandler.getElement().setId("lblNewCollectionUIHandler");
+		noWorkspaceLbl.getElement().setId("pnlNoWorkspace");
+		welcomeWorkspaceMsg.getElement().setId("fpnlWelcomeWorkspaceMsg");
+		workspaceFoldersList.getElement().setId("vpnlWorkspaceFoldersList");
+		foldersPanelVc.getElement().setId("folderpnlFoldersPanelVc");
 	}
 
 	@UiHandler("newFolderUIHandler")
@@ -193,8 +205,12 @@ public class FoldersView extends BaseViewWithHandlers<FoldersUiHandlers> impleme
 				if (query.length() > 50) {
 					query = query.substring(0, 50) + "...";
 					backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("alt",PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("title",PRE_SEARCH_LINK + query + "\"");
 				} else {
 					backToSearchHtml.setHTML(PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("alt",PRE_SEARCH_LINK + query + "\"");
+					backToSearchHtml.getElement().setAttribute("title",PRE_SEARCH_LINK + query + "\"");
 				}
 
 			}
