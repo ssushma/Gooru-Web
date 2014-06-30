@@ -555,9 +555,15 @@ public class EditClasspageView extends
 
 		lblAssignmentProgress.setText(i18n.GL1891_1());
 		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
+
+		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1891_1());
+		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1891_1());
+		headerAssignments.getElement().setInnerHTML(i18n.GL2006());
+
 		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1891_1());
 		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1891_1());
 				
+
 		backArrowButton.getElement().setId("backArrowButton");
 		
 		btnEditImage.getElement().setId("btnEditImage");
