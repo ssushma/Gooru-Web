@@ -150,6 +150,8 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 			if(i==0&&isLessonHighlighted) {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 					conceptTitleLbl.addStyleName(style.conceptActive());
+					conceptId = profileLibrary.getGooruOid();
+					openCollection();
 				} else {
 					conceptTitleLbl.addStyleName(style.libraryConceptActive());
 				}
@@ -159,9 +161,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				@Override
 				public void onClick(ClickEvent event) {
 					conceptId = profileLibrary.getGooruOid();
-					AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
-					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
-					getConceptDetails(conceptId);
+					openCollection();
 				}
 			});
 		}
@@ -195,9 +195,9 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				lessonTitle.addStyleName(style.libraryConceptActive());
 				lessonTitle.addStyleName(style.marginTop5());
 			}
+			openCollection();
 			isLessonHighlighted = false;
 		}
-		openCollection();
 		lessonTitle.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
