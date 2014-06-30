@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -66,7 +67,7 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
 public class SignUpTurnsAfterThirteenView extends
 PopupViewWithUiHandlers<SignUpAfterThirteenUiHandler> implements
-IsAfterThirteen,MessageProperties {
+IsAfterThirteen {
 
 	private static SignUpTurnsAfterThirteenUiBinder uiBinder = GWT
 			.create(SignUpTurnsAfterThirteenUiBinder.class);
@@ -74,6 +75,7 @@ IsAfterThirteen,MessageProperties {
 	interface SignUpTurnsAfterThirteenUiBinder extends
 			UiBinder<Widget, SignUpTurnsAfterThirteenView> {
 	}
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField(provided = true)
 	SignUpCBundle res;
@@ -111,7 +113,7 @@ IsAfterThirteen,MessageProperties {
 	}
 	@Override
 	public void displayView() {
-		appPopUp = new AppPopUp(GL0697);
+		appPopUp = new AppPopUp(i18n.GL0697());
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
 		/*appPopUp.setStyleName(RegisterCBundle.INSTANCE.css()
 				.registerPopupStyle());
@@ -131,10 +133,10 @@ IsAfterThirteen,MessageProperties {
 	}
 
 	private void setUiAndIds() {
-		lblTitle.setText(GL0481+GL_SPL_EXCLAMATION);
+		lblTitle.setText(i18n.GL0481()+i18n.GL_SPL_EXCLAMATION());
 		lblTitle.getElement().setId("lblTitle");
-		lblTitle.getElement().setAttribute("alt",GL0481);
-		lblTitle.getElement().setAttribute("title",GL0481);
+		lblTitle.getElement().setAttribute("alt",i18n.GL0481());
+		lblTitle.getElement().setAttribute("title",i18n.GL0481());
 		
 		lblCancel.getElement().setId("lblCancel");
 		lblCancel.getElement().setAttribute("alt","");
@@ -144,65 +146,65 @@ IsAfterThirteen,MessageProperties {
 		panelSignUp.getElement().setAttribute("alt","");
 		panelSignUp.getElement().setAttribute("title","");
 		
-		lblStuDes.setText(GL0483+ GL_SPL_EXCLAMATION);
+		lblStuDes.setText(i18n.GL0483()+ i18n.GL_SPL_EXCLAMATION());
 		lblStuDes.getElement().setId("lblStuDes");
-		lblStuDes.getElement().setAttribute("alt",GL0483);
-		lblStuDes.getElement().setAttribute("title",GL0483);
+		lblStuDes.getElement().setAttribute("alt",i18n.GL0483());
+		lblStuDes.getElement().setAttribute("title",i18n.GL0483());
 		
-		lblStuDesDetails.setText(GL0484);
+		lblStuDesDetails.setText(i18n.GL0484());
 		lblStuDesDetails.getElement().setId("lblStuDesDetails");
-		lblStuDesDetails.getElement().setAttribute("alt",GL0484);
-		lblStuDesDetails.getElement().setAttribute("title",GL0484);
+		lblStuDesDetails.getElement().setAttribute("alt",i18n.GL0484());
+		lblStuDesDetails.getElement().setAttribute("title",i18n.GL0484());
 		
-		lblStuDesDetails2.setText(GL0485);
+		lblStuDesDetails2.setText(i18n.GL0485());
 		lblStuDesDetails2.getElement().setId("lblStuDesDetails2");
-		lblStuDesDetails2.getElement().setAttribute("alt",GL0485);
-		lblStuDesDetails2.getElement().setAttribute("title",GL0485);
+		lblStuDesDetails2.getElement().setAttribute("alt",i18n.GL0485());
+		lblStuDesDetails2.getElement().setAttribute("title",i18n.GL0485());
 		
-		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
 		lblQuestionMark.getElement().setId("lblQuestionMark");
-		lblQuestionMark.getElement().setAttribute("alt",GL_SPL_QUESTION);
-		lblQuestionMark.getElement().setAttribute("title",GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
+		lblQuestionMark.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
 		
 		emailValidUc.setVisible(false);
 		emailValidUc.getElement().setId("errlblEmailId");
-		emailValidUc.getElement().setAttribute("alt",GL0447);
-		emailValidUc.getElement().setAttribute("title",GL0447);
+		emailValidUc.getElement().setAttribute("alt",i18n.GL0447());
+		emailValidUc.getElement().setAttribute("title",i18n.GL0447());
 		
-		txtEmailId.setPlaceholder(GL0426);
+		txtEmailId.setPlaceholder(i18n.GL0426());
 		txtEmailId.getElement().setId("txtEmailId");
 		txtEmailId.getElement().setAttribute("alt","");
 		txtEmailId.getElement().setAttribute("title","");
 		
-		btnEnterLater.setText(GL0487);
+		btnEnterLater.setText(i18n.GL0487());
 		btnEnterLater.getElement().setId("btnEnterLater");
-		btnEnterLater.getElement().setAttribute("alt",GL0487);
-		btnEnterLater.getElement().setAttribute("title",GL0487);
+		btnEnterLater.getElement().setAttribute("alt",i18n.GL0487());
+		btnEnterLater.getElement().setAttribute("title",i18n.GL0487());
 		
-		btnSubmit.setText(GL0486);
+		btnSubmit.setText(i18n.GL0486());
 		btnSubmit.getElement().setId("btnSubmit");
-		btnSubmit.getElement().setAttribute("alt",GL0486);
-		btnSubmit.getElement().setAttribute("title",GL0486);
+		btnSubmit.getElement().setAttribute("alt",i18n.GL0486());
+		btnSubmit.getElement().setAttribute("title",i18n.GL0486());
 		
-		lblfeaturesTitle.setText(GL0488+GL_SPL_QUESTION);
+		lblfeaturesTitle.setText(i18n.GL0488()+i18n.GL_SPL_QUESTION());
 		lblfeaturesTitle.getElement().setId("lblfeaturesTitle");
-		lblfeaturesTitle.getElement().setAttribute("alt",GL0488);
-		lblfeaturesTitle.getElement().setAttribute("title",GL0488);
+		lblfeaturesTitle.getElement().setAttribute("alt",i18n.GL0488());
+		lblfeaturesTitle.getElement().setAttribute("title",i18n.GL0488());
 		
-		lblfeaturesTitleDes1.setText(GL0489);
+		lblfeaturesTitleDes1.setText(i18n.GL0489());
 		lblfeaturesTitleDes1.getElement().setId("lblfeaturesTitleDes1");
-		lblfeaturesTitleDes1.getElement().setAttribute("alt",GL0489);
-		lblfeaturesTitleDes1.getElement().setAttribute("title",GL0489);
+		lblfeaturesTitleDes1.getElement().setAttribute("alt",i18n.GL0489());
+		lblfeaturesTitleDes1.getElement().setAttribute("title",i18n.GL0489());
 		
-		lblfeaturesTitleDes2.setText(GL0490);
+		lblfeaturesTitleDes2.setText(i18n.GL0490());
 		lblfeaturesTitleDes2.getElement().setId("lblfeaturesTitleDes2");
-		lblfeaturesTitleDes2.getElement().setAttribute("alt",GL0490);
-		lblfeaturesTitleDes2.getElement().setAttribute("title",GL0490);
+		lblfeaturesTitleDes2.getElement().setAttribute("alt",i18n.GL0490());
+		lblfeaturesTitleDes2.getElement().setAttribute("title",i18n.GL0490());
 		
-		lblfeaturesTitleDes3.setText(GL0491);
+		lblfeaturesTitleDes3.setText(i18n.GL0491());
 		lblfeaturesTitleDes3.getElement().setId("lblfeaturesTitleDes3");
-		lblfeaturesTitleDes3.getElement().setAttribute("alt",GL0491);
-		lblfeaturesTitleDes3.getElement().setAttribute("title",GL0491);
+		lblfeaturesTitleDes3.getElement().setAttribute("alt",i18n.GL0491());
+		lblfeaturesTitleDes3.getElement().setAttribute("title",i18n.GL0491());
 		
 		tooltipContent.getElement().setAttribute("style", "width:193px");
 		tooltipContent.getElement().setId("pnlTooltipContentPanel");
@@ -215,8 +217,8 @@ IsAfterThirteen,MessageProperties {
 		
 		lblUpdating.setVisible(false);
 		lblUpdating.getElement().setId("lblUpdating");
-		lblUpdating.getElement().setAttribute("alt",GL1138);
-		lblUpdating.getElement().setAttribute("title",GL1138);
+		lblUpdating.getElement().setAttribute("alt",i18n.GL1138());
+		lblUpdating.getElement().setAttribute("title",i18n.GL1138());
 		
 		btnSubmit.getElement().addClassName("disabled");
 		btnSubmit.setEnabled(false);
@@ -273,7 +275,7 @@ IsAfterThirteen,MessageProperties {
 					btnSubmit.setEnabled(false);
 					txtEmailId.addStyleName(res.css().errorMsgDisplay());
 					emailValidUc.addStyleName(res.css().errorLbl());
-					emailValidUc.setText(MessageProperties.GL0464);
+					emailValidUc.setText(MessageProperties.i18n.GL0464);
 					emailValidUc.setVisible(true);
 				}
 			}
@@ -300,7 +302,7 @@ IsAfterThirteen,MessageProperties {
 							txtEmailId.addStyleName(res.css()
 									.errorMsgDisplay());
 							emailValidUc.addStyleName(res.css().errorLbl());
-							emailValidUc.setText(GL0447);
+							emailValidUc.setText(i18n.GL0447());
 							emailValidUc.setVisible(true);
 							isValid = false;
 						}else 
@@ -340,7 +342,7 @@ IsAfterThirteen,MessageProperties {
 					btnSubmit.setEnabled(false);
 					txtEmailId.addStyleName(res.css().errorMsgDisplay());
 					emailValidUc.addStyleName(res.css().errorLbl());
-					emailValidUc.setText(GL0464);
+					emailValidUc.setText(i18n.GL0464());
 					emailValidUc.setVisible(true);
 				}
 			}
@@ -365,7 +367,7 @@ IsAfterThirteen,MessageProperties {
 		MixpanelUtil.Registration_turns13_submit_email();
 		btnSubmit.setVisible(false);
 		btnEnterLater.setVisible(false);
-		lblUpdating.setText(GL1138);
+		lblUpdating.setText(i18n.GL1138());
 		lblUpdating.setVisible(true);
 		AppClientFactory.getInjector().getUserService().updateV2ProfileDo(txtEmailId.getText(), "nonParent", "", "", "","","","",true, new SimpleAsyncCallback<V2UserDo>() {
 			
