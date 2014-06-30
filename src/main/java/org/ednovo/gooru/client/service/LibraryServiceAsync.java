@@ -61,6 +61,6 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 
 	void getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset, AsyncCallback<ProfileLibraryListDo> callback);
 	void getLibraryPaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<ProfileLibraryListDo> callback);
-	void getLibraryCoursesList(String parentId,String sharingType, AsyncCallback<ProfileLibraryListDo> callback);
+	void getLibraryCoursesList(String parentId,String sharingType, String offset, AsyncCallback<ProfileLibraryListDo> callback);
 
 }
