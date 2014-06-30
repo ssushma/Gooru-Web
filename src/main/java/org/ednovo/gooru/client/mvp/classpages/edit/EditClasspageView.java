@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
@@ -98,7 +99,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  */
 public class EditClasspageView extends
 		BaseViewWithHandlers<EditClasspageUiHandlers> implements
-		IsEditClasspageView, ClickHandler, MessageProperties {
+		IsEditClasspageView, ClickHandler{
 	
 	@UiField(provided = true)
 	EditClasspageCBundle res;
@@ -237,8 +238,6 @@ public class EditClasspageView extends
 	private int limit=5;
 	private int pageNumber=0;
 	
-	String dropSortOptionsStr = GL1947;
-	
 	/*@UiField HTMLPanel droplistContianer;*/
 
 	private final String START_PAGE = "1";
@@ -252,6 +251,10 @@ public class EditClasspageView extends
 
 	private static EditClassPageViewUiBinder uiBinder = GWT
 			.create(EditClassPageViewUiBinder.class);
+	
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
+	String dropSortOptionsStr = i18n.GL1947();
 
 	interface EditClassPageViewUiBinder extends
 			UiBinder<Widget, EditClasspageView> {
@@ -456,12 +459,12 @@ public class EditClasspageView extends
 				monitorProgress.setVisible(true);
 			mainContainer.setVisible(false);
 			frameDiv.setVisible(true);
-			if(monitorProgress.getText().equalsIgnoreCase(GL1586)){
+			if(monitorProgress.getText().equalsIgnoreCase(i18n.GL1586())){
 				frameUrl.setUrl(frameAnalyticsUrlForMonitor());
-				monitorProgress.setText(GL1587);
+				monitorProgress.setText(i18n.GL1587());
 		    }else{
 		    	frameUrl.setUrl(frameAnalyticsUrl());
-		    	monitorProgress.setText(GL1586);
+		    	monitorProgress.setText(i18n.GL1586());
 		    }
 			
 				
@@ -470,91 +473,97 @@ public class EditClasspageView extends
 		
 		panelUpdateActionContols.getElement().setId("panelUpdateActionContols");
 		
-		btnEditImage.setText(GL0138);
-		btnEditImage.getElement().setAttribute("alt",GL0138);
-		btnEditImage.getElement().setAttribute("title",GL0138);
+		btnEditImage.setText(i18n.GL0138());
+		btnEditImage.getElement().setAttribute("alt",i18n.GL0138());
+		btnEditImage.getElement().setAttribute("title",i18n.GL0138());
 		
-		btnStudentView.setText(GL0139);
-		btnStudentView.getElement().setAttribute("alt",GL0139);
-		btnStudentView.getElement().setAttribute("title",GL0139);
+		btnStudentView.setText(i18n.GL0139());
+		btnStudentView.getElement().setAttribute("alt",i18n.GL0139());
+		btnStudentView.getElement().setAttribute("title",i18n.GL0139());
 		
-		btnCollectionEditImage.setText(GL0140);
-		btnCollectionEditImage.getElement().setAttribute("alt",GL0140);
-		btnCollectionEditImage.getElement().setAttribute("title",GL0140);
+		btnCollectionEditImage.setText(i18n.GL0140());
+		btnCollectionEditImage.getElement().setAttribute("alt",i18n.GL0140());
+		btnCollectionEditImage.getElement().setAttribute("title",i18n.GL0140());
 		
-		btnClasspageSave.setText(GL0141);
-		btnClasspageSave.getElement().setAttribute("alt",GL0141);
-		btnClasspageSave.getElement().setAttribute("title",GL0141);
+		btnClasspageSave.setText(i18n.GL0141());
+		btnClasspageSave.getElement().setAttribute("alt",i18n.GL0141());
+		btnClasspageSave.getElement().setAttribute("title",i18n.GL0141());
 		
-		btnClasspageCancel.setText(GL0142);
-		btnClasspageCancel.getElement().setAttribute("alt",GL0142);
-		btnClasspageCancel.getElement().setAttribute("title",GL0142);
+		btnClasspageCancel.setText(i18n.GL0142());
+		btnClasspageCancel.getElement().setAttribute("alt",i18n.GL0142());
+		btnClasspageCancel.getElement().setAttribute("title",i18n.GL0142());
 		
-		titleAlertMessageLbl.setText(GL0143);
+		titleAlertMessageLbl.setText(i18n.GL0143());
 		titleAlertMessageLbl.getElement().setId("lblTitleAlertMessage");
-		titleAlertMessageLbl.getElement().setAttribute("alt",GL0143);
-		titleAlertMessageLbl.getElement().setAttribute("title",GL0143);
+		titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
+		titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
 		
-		btnNewAssignment.setText(GL0144);
-		btnNewAssignment.getElement().setAttribute("alt",GL0144);
-		btnNewAssignment.getElement().setAttribute("title",GL0144);
+		btnNewAssignment.setText(i18n.GL0144());
+		btnNewAssignment.getElement().setAttribute("alt",i18n.GL0144());
+		btnNewAssignment.getElement().setAttribute("title",i18n.GL0144());
 		
-		btnDeleteClasspage.setText(GL0145);
-		btnDeleteClasspage.getElement().setAttribute("alt",GL0145);
-		btnDeleteClasspage.getElement().setAttribute("title",GL0145);
+		btnDeleteClasspage.setText(i18n.GL0145());
+		btnDeleteClasspage.getElement().setAttribute("alt",i18n.GL0145());
+		btnDeleteClasspage.getElement().setAttribute("title",i18n.GL0145());
 		
 		//noAssignmentsMessageLblTwo.setText(GL0147);
-		backArrowButton.setText(GL1617);
-		backArrowButton.getElement().setAttribute("alt",GL1617);
-		backArrowButton.getElement().setAttribute("title",GL1617);
+		backArrowButton.setText(i18n.GL1617());
+		backArrowButton.getElement().setAttribute("alt",i18n.GL1617());
+		backArrowButton.getElement().setAttribute("title",i18n.GL1617());
 		
 		
-		monitorProgress.setText(GL1586);
+		monitorProgress.setText(i18n.GL1586());
 		monitorProgress.getElement().setId("btnMonitorProgress");
-		monitorProgress.getElement().setAttribute("alt",GL1586);
-		monitorProgress.getElement().setAttribute("title",GL1586);
+		monitorProgress.getElement().setAttribute("alt",i18n.GL1586());
+		monitorProgress.getElement().setAttribute("title",i18n.GL1586());
 		
-		assignmentsTab.setText(GL1623);
+		assignmentsTab.setText(i18n.GL1623());
 		assignmentsTab.getElement().setId("btnAssignmentsTab");
-		assignmentsTab.getElement().setAttribute("alt",GL1623);
-		assignmentsTab.getElement().setAttribute("title",GL1623);
+		assignmentsTab.getElement().setAttribute("alt",i18n.GL1623());
+		assignmentsTab.getElement().setAttribute("title",i18n.GL1623());
 		
-		classListTab.setText(GL1624);
+		classListTab.setText(i18n.GL1624());
 		classListTab.getElement().setId("btnClassListTab");
-		classListTab.getElement().setAttribute("alt",GL1624);
-		classListTab.getElement().setAttribute("title",GL1624);
+		classListTab.getElement().setAttribute("alt",i18n.GL1624());
+		classListTab.getElement().setAttribute("title",i18n.GL1624());
 		
-		reportsTab.setText(GL1737);
+		reportsTab.setText(i18n.GL1737());
 		reportsTab.getElement().setId("btnReportsTab");
-		reportsTab.getElement().setAttribute("alt",GL1737);
-		reportsTab.getElement().setAttribute("title",GL1737);
+		reportsTab.getElement().setAttribute("alt",i18n.GL1737());
+		reportsTab.getElement().setAttribute("title",i18n.GL1737());
 		
-		assignmentsDirectionsLabel.setText(GL1945);
+		assignmentsDirectionsLabel.setText(i18n.GL1945());
 		assignmentsDirectionsLabel.getElement().setId("lblAssignmentsDirections");
-		assignmentsDirectionsLabel.getElement().setAttribute("alt",GL1945);
-		assignmentsDirectionsLabel.getElement().setAttribute("title",GL1945);
+		assignmentsDirectionsLabel.getElement().setAttribute("alt",i18n.GL1945());
+		assignmentsDirectionsLabel.getElement().setAttribute("title",i18n.GL1945());
 		
 		getstarteddiv.removeStyleName(EditClasspageCBundle.INSTANCE.css().btnContainerClasswithBG());
 
-		lblDefine.setText(GL1960);
+		lblDefine.setText(i18n.GL1960());
 		lblDefine.getElement().setId("lblDefine");
-		lblDefine.getElement().setAttribute("alt",GL1960);
-		lblDefine.getElement().setAttribute("title",GL1960);
+		lblDefine.getElement().setAttribute("alt",i18n.GL1960());
+		lblDefine.getElement().setAttribute("title",i18n.GL1960());
 		
-		lblIncoporate.setText(GL1959);
+		lblIncoporate.setText(i18n.GL1959());
 		lblIncoporate.getElement().setId("lblIncoporate");
-		lblIncoporate.getElement().setAttribute("alt",GL1959);
-		lblIncoporate.getElement().setAttribute("title",GL1959);
+		lblIncoporate.getElement().setAttribute("alt",i18n.GL1959());
+		lblIncoporate.getElement().setAttribute("title",i18n.GL1959());
 		
 		/*spanelInstructionalPanel.setVisible(false);*/
 		
 		lblPrevious.setVisible(false);
 
-		lblAssignmentProgress.setText(GL1891_1);
+		lblAssignmentProgress.setText(i18n.GL1891_1());
 		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
-		lblAssignmentProgress.getElement().setAttribute("alt",GL1891_1);
-		lblAssignmentProgress.getElement().setAttribute("title",GL1891_1);
-		headerAssignments.getElement().setInnerHTML(GL2006);
+
+		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1891_1());
+		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1891_1());
+		headerAssignments.getElement().setInnerHTML(i18n.GL2006());
+
+		lblAssignmentProgress.getElement().setAttribute("alt",i18n.GL1891_1());
+		lblAssignmentProgress.getElement().setAttribute("title",i18n.GL1891_1());
+				
+
 		backArrowButton.getElement().setId("backArrowButton");
 		
 		btnEditImage.getElement().setId("btnEditImage");
@@ -637,9 +646,9 @@ public class EditClasspageView extends
 		AppClientFactory.getEventBus().addHandler(ResetProgressEvent.TYPE,reset);
 		addSortingOptionsToList();
 		addSortEventToText();
-		dropdownPlaceHolder.setText(GL1948);
-		dropdownPlaceHolder.getElement().setAttribute("alt",GL1948);
-		dropdownPlaceHolder.getElement().setAttribute("title",GL1948);
+		dropdownPlaceHolder.setText(i18n.GL1948());
+		dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1948());
+		dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
 		dropDownListContainer.setVisible(false);
 		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
@@ -718,14 +727,14 @@ public class EditClasspageView extends
 				dropdownPlaceHolder.getElement().setAttribute("title",sortType);
 				
 				String sortingStringValue="";
-				if(sortType.equals(GL1948)){
+				if(sortType.equals(i18n.GL1948())){
 					sortingStringValue="asce";
-				}else if(sortType.equals(GL1949)){
+				}else if(sortType.equals(i18n.GL1949())){
 					sortingStringValue="earliest";// previous it was desc
-				}else if(sortType.equals(GL1950)){
+				}else if(sortType.equals(i18n.GL1950())){
 					sortingStringValue="recent";
 				}
-				else if(sortType.equals(GL1994)){
+				else if(sortType.equals(i18n.GL1994())){
 					sortingStringValue="latest";// previous it was due date
 				}
 				assignmentsContainerPanel.clear();
@@ -926,11 +935,11 @@ public class EditClasspageView extends
 			}
 			
 		};
-		delete.setPopupTitle((GL0748));
-		delete.setNotes(GL0748);
-		delete.setDescText(StringUtil.generateMessage(GL0824+"\""+ classpageDo.getTitle() + "\"" + " "+GL0102+GL_SPL_FULLSTOP +" "+GL0825));
-		delete.setPositiveButtonText(GL0190);						
-		delete.setNegitiveButtonText(GL0142);
+		delete.setPopupTitle((i18n.GL0748()));
+		delete.setNotes(i18n.GL0748());
+		delete.setDescText(StringUtil.generateMessage(i18n.GL0824()+"\""+ classpageDo.getTitle() + "\"" + " "+i18n.GL0102()+i18n.GL_SPL_FULLSTOP() +" "+i18n.GL0825()));
+		delete.setPositiveButtonText(i18n.GL0190());						
+		delete.setNegitiveButtonText(i18n.GL0142());
 		delete.setDeleteValidate("delete");
 		delete.setPixelSize(450, 345);	
 		delete.show();
@@ -1076,7 +1085,7 @@ public class EditClasspageView extends
 			frameUrl.getElement().getStyle().setHeight(484, Unit.PX);
 			frameUrl.setUrl(frameAnalyticsUrl());
 			monitorProgress.setVisible(true);
-			monitorProgress.setText(GL1586);
+			monitorProgress.setText(i18n.GL1586());
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);
 			panelProgressContainer.setVisible(false);
@@ -1093,7 +1102,7 @@ public class EditClasspageView extends
 			frameUrl.getElement().getStyle().setHeight(484, Unit.PX);
 			frameUrl.setUrl(frameAnalyticsUrlForMonitor());
 			monitorProgress.setVisible(true);
-			monitorProgress.setText(GL1587);
+			monitorProgress.setText(i18n.GL1587());
 			panelAssignmentPath.setVisible(false);
 			headerAssignments.setVisible(false);
 			panelProgressContainer.setVisible(false);
@@ -1232,7 +1241,7 @@ public class EditClasspageView extends
 	public void showPaginationButton(){
 		paginationFocPanel.clear();
 		paginationFocPanel1.clear();
-		Label seeMoreLabel=new Label(GL0508);
+		Label seeMoreLabel=new Label(i18n.GL0508());
 		//seeMoreLabel.addClickHandler(new PaginationEvent());
 		seeMoreLabel.setStyleName(EditClasspageCBundle.INSTANCE.css().paginationPanel());
 		int totalPages = (this.totalHitCount / 5)
@@ -1586,9 +1595,9 @@ public class EditClasspageView extends
 	public void onPostClassPageUpdate() {
 		collectionTitleUc.cancel();
 		panelUpdateActionContols.getElement().getStyle().setDisplay(Display.NONE);
-		titleAlertMessageLbl.setText(GL0143);
-		titleAlertMessageLbl.getElement().setAttribute("alt",GL0143);
-		titleAlertMessageLbl.getElement().setAttribute("title",GL0143);
+		titleAlertMessageLbl.setText(i18n.GL0143());
+		titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
+		titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
 		titleAlertMessageLbl.setVisible(false);
 		titleAlertMessageLbl.removeStyleName("titleAlertMessageActive");
 		final CollectionDo classpage = null;
@@ -1688,9 +1697,9 @@ public class EditClasspageView extends
 		
 		isEditing = false;
 		titleAlertMessageLbl.setVisible(false);
-		titleAlertMessageLbl.setText(GL0143);
-		titleAlertMessageLbl.getElement().setAttribute("alt",GL0143);
-		titleAlertMessageLbl.getElement().setAttribute("title",GL0143);
+		titleAlertMessageLbl.setText(i18n.GL0143());
+		titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
+		titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
 		titleAlertMessageLbl.addStyleName("titleAlertMessageDeActive");
 		titleAlertMessageLbl.removeStyleName("titleAlertMessageActive");
 //		panelUpdateActionContols.setVisible(false);
@@ -1716,9 +1725,9 @@ public class EditClasspageView extends
 		@Override
 		public void onClick(ClickEvent event) {
 			assignmentsTab.addStyleName(res.css().selected());
-			dropdownPlaceHolder.setText(GL1948);
-			dropdownPlaceHolder.getElement().setAttribute("alt",GL1948);
-			dropdownPlaceHolder.getElement().setAttribute("title",GL1948);
+			dropdownPlaceHolder.setText(i18n.GL1948());
+			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1948());
+			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
 			
 			if(classpageItemsList!=null&&classpageItemsList.size()>0){
 				assignmentsDirectionsLabel.setVisible(false);
@@ -1876,7 +1885,7 @@ public class EditClasspageView extends
 		frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
 		frameUrl.setUrl(frameAnalyticsUrl());
 		monitorProgress.setVisible(true);
-		monitorProgress.setText(GL1586);
+		monitorProgress.setText(i18n.GL1586());
 	}
 	public static void setAnalyticsMonitoringData()
 	{
@@ -1889,7 +1898,7 @@ public class EditClasspageView extends
 		frameUrl.getElement().getStyle().setHeight(300, Unit.PX);
 		frameUrl.setUrl(frameAnalyticsUrlForMonitor());
 		monitorProgress.setVisible(true);
-		monitorProgress.setText(GL1587);
+		monitorProgress.setText(i18n.GL1587());
 	}
 
 	/* (non-Javadoc)
@@ -1931,7 +1940,7 @@ public class EditClasspageView extends
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL1869));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL1869()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(event.getRelativeElement().getAbsoluteLeft() - 14, event.getRelativeElement().getAbsoluteTop());
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
@@ -1950,30 +1959,30 @@ public class EditClasspageView extends
 	
 	public void addSortingOptionsToList(){
 		sortingOptionsList.clear();
-		sortingOptionsList.add(GL1948);
-		sortingOptionsList.add(GL1950);
-		sortingOptionsList.add(GL1949);//previously it was descending order 
-		sortingOptionsList.add(GL1994);//previous number was 1581
+		sortingOptionsList.add(i18n.GL1948());
+		sortingOptionsList.add(i18n.GL1950());
+		sortingOptionsList.add(i18n.GL1949());//previously it was descending order 
+		sortingOptionsList.add(i18n.GL1994());//previous number was 1581
 	}
 	@Override
 	public void setSortingOrderInDropdown(String sortingOrder) {
 		if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("asce")){
-			dropdownPlaceHolder.setText(GL1948);
-			dropdownPlaceHolder.getElement().setAttribute("alt",GL1948);
-			dropdownPlaceHolder.getElement().setAttribute("title",GL1948);
+			dropdownPlaceHolder.setText(i18n.GL1948());
+			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1948());
+			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1948());
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("earliest")){ // previous it was desc
-			dropdownPlaceHolder.setText(GL1949);
-			dropdownPlaceHolder.getElement().setAttribute("alt",GL1949);
-			dropdownPlaceHolder.getElement().setAttribute("title",GL1949);
+			dropdownPlaceHolder.setText(i18n.GL1949());
+			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1949());
+			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1949());
 		}else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("recent")){
-			dropdownPlaceHolder.setText(GL1950);
-			dropdownPlaceHolder.getElement().setAttribute("alt",GL1950);
-			dropdownPlaceHolder.getElement().setAttribute("title",GL1950);
+			dropdownPlaceHolder.setText(i18n.GL1950());
+			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1950());
+			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1950());
 		}
 		else if(sortingOrder!=null&&sortingOrder.equalsIgnoreCase("latest")){ // previous it was due date.
-			dropdownPlaceHolder.setText(GL1994);
-			dropdownPlaceHolder.getElement().setAttribute("alt",GL1994);
-			dropdownPlaceHolder.getElement().setAttribute("title",GL1994);
+			dropdownPlaceHolder.setText(i18n.GL1994());
+			dropdownPlaceHolder.getElement().setAttribute("alt",i18n.GL1994());
+			dropdownPlaceHolder.getElement().setAttribute("title",i18n.GL1994());
 		}
 	}
 	

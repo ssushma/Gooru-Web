@@ -82,8 +82,24 @@ public class SearchHomeFilterVc extends Composite implements MessageProperties{
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		filterOptionsLbl.setText(GL1309.toUpperCase());
+		filterOptionsLbl.getElement().setId("lblFilterOptions");
+		filterOptionsLbl.getElement().setAttribute("alt",GL1309.toUpperCase());
+		filterOptionsLbl.getElement().setAttribute("title",GL1309.toUpperCase());
+		
 		standardText.setText(GL0724.toUpperCase());
+		standardText.getElement().setId("lblStandardText");
+		standardText.getElement().setAttribute("alt",GL0724.toUpperCase());
+		standardText.getElement().setAttribute("title",GL0724.toUpperCase());
+		
 		sourceLbl.setText(GL0566.toUpperCase());
+		sourceLbl.getElement().setId("lblSourceLbl");
+		sourceLbl.getElement().setAttribute("alt",GL0566.toUpperCase());
+		sourceLbl.getElement().setAttribute("title",GL0566.toUpperCase());
+		
+		filterGradeFloPanel.getElement().setId("fpnlFilterGradeFloPanel");
+		filterColOneResourceTypeFloPanel.getElement().setId("fpnlFilterColOneResourceTypeFloPanel");
+		filterColTwoResourceTypeFloPanel.getElement().setId("fpnlFilterColTwoResourceTypeFloPanel");
+		filterSubjectFloPanel.getElement().setId("fpnlFilterSubjectFloPanel");
 	}
 
 	/**

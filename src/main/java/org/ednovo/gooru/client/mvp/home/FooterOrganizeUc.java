@@ -165,17 +165,46 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 
 		initWidget(uiBinder.createAndBindUi(this));
 		aboutGooruAnr.setText(GL1242);
+		aboutGooruAnr.getElement().setAttribute("alt",GL1242);
+		aboutGooruAnr.getElement().setAttribute("title",GL1242);
+		
 		communityAnr.setText(GL1243);
+		communityAnr.getElement().setAttribute("alt",GL1243);
+		communityAnr.getElement().setAttribute("title",GL1243);
+		
 		supportAnr.setText(GL0194);
+		supportAnr.getElement().setAttribute("alt",GL0194);
+		supportAnr.getElement().setAttribute("title",GL0194);
+		
 		termsAndPolicyAnr.setText(GL0872);
+		termsAndPolicyAnr.getElement().setAttribute("alt",GL0872);
+		termsAndPolicyAnr.getElement().setAttribute("title",GL0872);
+		
 		privacyAndPolicyAnr.setText(GL0873);
+		privacyAndPolicyAnr.getElement().setAttribute("alt",GL0873);
+		privacyAndPolicyAnr.getElement().setAttribute("title",GL0873);
+		
 		copyRightAnr.setText(GL0875);
+		copyRightAnr.getElement().setAttribute("alt",GL0875);
+		copyRightAnr.getElement().setAttribute("title",GL0875);
+		
 		careersAnr.setText(GL1244);
+		careersAnr.getElement().setAttribute("alt",GL1244);
+		careersAnr.getElement().setAttribute("title",GL1244);
+		
 		contactUsAnr.setText(GL1245);
+		contactUsAnr.getElement().setAttribute("alt",GL1245);
+		contactUsAnr.getElement().setAttribute("title",GL1245);
+		
 		copyRightYearText.setText(GL1246);
+		copyRightYearText.getElement().setId("lblCopyRightYearText");
+		copyRightYearText.getElement().setAttribute("alt",GL1246);
+		copyRightYearText.getElement().setAttribute("title",GL1246);
+		
+		
 		mixpanelLink.setTarget("_blank");
 		mixpanelLink.setHref("https://mixpanel.com/f/partner");
-	
+		mixpanelLink.getElement().setId("lnkMixPanel");
 		aboutGooruAnr.setHref("http://about.goorulearning.org/");
 		aboutGooruAnr.setTarget("_blank");
 		//featuresAnr.setHref("http://about.goorulearning.org/product/overview/");
@@ -196,6 +225,9 @@ public class FooterOrganizeUc extends Composite implements MessageProperties {
 		careersAnr.getElement().setId("lnkCareers");
 		contactUsAnr.getElement().setId("lnkcontactUs");
 		AppClientFactory.getEventBus().addHandler(SetFooterEvent.TYPE,setFooter);
+		goorulandingFooterContainer.getElement().setId("fpnlGoorulandingFooterContainer");
+		innerFooterDiv.getElement().setId("fpnlInnerFooterDiv");
+		privacyAndPolicyAnr.getElement().setId("lnkPrivacyAndPolicy");
 	}
 	
 	public void setMargins(String placeName){

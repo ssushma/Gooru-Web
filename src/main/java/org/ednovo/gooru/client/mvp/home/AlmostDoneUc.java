@@ -113,25 +113,61 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 		this.setGlassEnabled(true);
 		this.center();
 		almostDoneText.getElement().setInnerText(GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		almostDoneText.getElement().setId("pnlAlmostDoneText");
+		almostDoneText.getElement().setAttribute("alt",GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		almostDoneText.getElement().setAttribute("title",GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		
 		fillOutText.getElement().setInnerText(GL1280+GL_SPL_SEMICOLON);
+		fillOutText.getElement().setId("pnlFillOutText");
+		fillOutText.getElement().setAttribute("alt",GL1280+GL_SPL_SEMICOLON);
+		fillOutText.getElement().setAttribute("title",GL1280+GL_SPL_SEMICOLON);
+		
 		emailTxtBox.getElement().setId("txtEmail");
+		cancelButton.getElement().setId("epnlCancelButton");
+		
 		emailText.getElement().setInnerText(GL0212);
+		emailText.getElement().setId("pnlEmailText");
+		emailText.getElement().setAttribute("alt",GL0212);
+		emailText.getElement().setAttribute("title",GL0212);
+		
 		uNameLbl.getElement().setInnerText(GL0423);
+		uNameLbl.getElement().setId("lblUName");
+		uNameLbl.getElement().setAttribute("alt",GL0423);
+		uNameLbl.getElement().setAttribute("title",GL0423);
+		
 		roleText.getElement().setInnerText(GL1281);
+		roleText.getElement().setId("pnlRoleText");
+		roleText.getElement().setAttribute("alt",GL1281);
+		roleText.getElement().setAttribute("title",GL1281);
+		
+		roleListBox.getElement().setId("lbRoleListBox");
 		roleListBox.setItemText(0, GL1282+GL_SPL_QUESTION);
 		roleListBox.setItemText(1, GL0417);
 		roleListBox.setItemText(2, GL0416);
 		roleListBox.setItemText(3, GL0418);
 		roleListBox.setItemText(4, GL0419);
 		agreeText.setText(GL1283);
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt",GL1283);
+		agreeText.getElement().setAttribute("title",GL1283);
+		
 		termsAndPolicyAnr.setText(GL0297+" "+GL_GRR_AND+" "+GL0452);
+		termsAndPolicyAnr.getElement().setAttribute("alt",GL0297+" "+GL_GRR_AND+" "+GL0452);
+		termsAndPolicyAnr.getElement().setAttribute("title",GL0297+" "+GL_GRR_AND+" "+GL0452);
+		
 		andText.setText(GL_GRR_AND+" "+GL_GRR_THE);
 		copyRightAnr.setText(GL0421);
+		copyRightAnr.getElement().setAttribute("alt",GL0421);
+		copyRightAnr.getElement().setAttribute("title",GL0421);
+		
 		gooruText.setText(GL_GRR_OF+" "+GL0733+GL_SPL_FULLSTOP);
 		okButton.getElement().setInnerText(GL0190);
 		userNameTxtBox.getElement().setId("txtUserName");
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
+		buttonContainer.getElement().setId("pnlButtonContainer");
 		copyRightAnr.getElement().setId("lnkCopyRight");
+		errorMessageForUserNameLbl.getElement().setId("errlblForUserName");
+		errorMessageForRoleLbl.getElement().setId("errlblForRole");
 		emailTxtBox.setText(userEmail);
 		emailTxtBox.setReadOnly(true);	
 		errorMessageForUserNameLbl.setVisible(false);
@@ -219,6 +255,8 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 		}
 		if(userName.length()==20){
 			errorMessageForUserNameLbl.setText(GL1097+" "+GL0143);
+			errorMessageForUserNameLbl.getElement().setAttribute("alt",GL1097+" "+GL0143);
+			errorMessageForUserNameLbl.getElement().setAttribute("title",GL1097+" "+GL0143);
 			errorMessageForUserNameLbl.setVisible(true);
 		//	fieldValidationStaus=false;
 		}else{
@@ -262,12 +300,17 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 			if(userNameTxtBox.getText()==null||userNameTxtBox.getText().trim().equals(""))
 			{
 				errorMessageForUserNameLbl.setText(errorMessageForUserName);
+				errorMessageForUserNameLbl.getElement().setAttribute("alt",errorMessageForUserName);
+				errorMessageForUserNameLbl.getElement().setAttribute("title",errorMessageForUserName);
 				errorMessageForUserNameLbl.setVisible(true);
 				fieldValidationStaus=false;
 			}
 			if(userNameTxtBox.getText().length()>0 && userNameTxtBox.getText().length()<5) 
 			{
 				errorMessageForUserNameLbl.setText(errorMessageForUserNameTxt);
+				errorMessageForUserNameLbl.getElement().setAttribute("alt",errorMessageForUserNameTxt);
+				errorMessageForUserNameLbl.getElement().setAttribute("title",errorMessageForUserNameTxt);
+				
 				errorMessageForUserNameLbl.setVisible(true);
 				fieldValidationStaus=false;
 			}
@@ -275,6 +318,8 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 			if(userRole.trim().equalsIgnoreCase("what is your role?"))
 			{
 				errorMessageForRoleLbl.setText(errorMessageForUserRole);
+				errorMessageForRoleLbl.getElement().setAttribute("alt",errorMessageForUserRole);
+				errorMessageForRoleLbl.getElement().setAttribute("title",errorMessageForUserRole);
 				fieldValidationStaus=false;
 			}
 			if(userNameTxtBox.getText().length()==21){
@@ -318,6 +363,8 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 	public void checkUserNameAvailability(UserDo result) {
 		if (result != null && result.isAvailability() && userNameTxtBox.getText() != null) {
 			errorMessageForUserNameLbl.setText(GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
+			errorMessageForUserNameLbl.getElement().setAttribute("alt",GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
+			errorMessageForUserNameLbl.getElement().setAttribute("title",GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
 			errorMessageForUserNameLbl.setVisible(true);
 			
 		}

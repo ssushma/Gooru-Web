@@ -92,6 +92,10 @@ public class FeaturedSlideVc extends Composite implements MessageProperties{
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		didYouKnowText.setText(GL1241);
+		didYouKnowText.getElement().setId("lblDidYouKnowText");
+		didYouKnowText.getElement().setAttribute("alt",GL1241);
+		didYouKnowText.getElement().setAttribute("title",GL1241);
+		contentDisplayTitle.setId("pContentDisplayTitle");
 		this.setData(featuredContentDo);
 		collectionStudyButtonFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			
@@ -115,7 +119,10 @@ public class FeaturedSlideVc extends Composite implements MessageProperties{
 				studyFeaturedCollection.featuredStartStudyFloPanel.setVisible(false);
 			}
 		});
-		
+		collectionStudyButtonFocPanel.getElement().setId("focuspnlCollectionStudyButtonFocPanel");
+		studyFeaturedCollection.getElement().setId("sfcStudyFeaturedCollection");
+	
+	
 	}
 
 	/** 

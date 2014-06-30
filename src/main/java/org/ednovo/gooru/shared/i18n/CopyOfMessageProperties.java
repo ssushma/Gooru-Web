@@ -22,7 +22,7 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.util;
+package org.ednovo.gooru.shared.i18n;
 
 import com.google.gwt.i18n.client.Constants;
 
@@ -30,40 +30,40 @@ import com.google.gwt.i18n.client.Constants;
 
 public interface CopyOfMessageProperties extends Constants {
 	//Special Characters
-	String GL_SPL_SEMICOLON ();
-	String GL_SPL_STAR ();
-	String GL_SPL_PLUS ();
-	String GL_SPL_QUESTION ();
-	String GL_SPL_EXCLAMATION ();
-	String GL_SPL_FULLSTOP ();
-	String GL_GRR_ARE ();
-	String GL_GRR_AND ();
-	String GL_GRR_YES ();
+	String GL_SPL_SEMICOLON();
+	String GL_SPL_STAR();
+	String GL_SPL_PLUS();
+	String GL_SPL_QUESTION();
+	String GL_SPL_EXCLAMATION();
+	String GL_SPL_FULLSTOP();
+	String GL_GRR_ARE();
+	String GL_GRR_AND();
+	String GL_GRR_YES();
 	String GL_GRR_NO();
-	String GL_GRR_IS ();
-	String GL_GRR_ALPHABET_A ();
-	String GL_GRR_ALPHABET_B ();
+	String GL_GRR_IS();
+	String GL_GRR_ALPHABET_A();
+	String GL_GRR_ALPHABET_B();
 	String GL_GRR_Hyphen();
 	String GL_GRR_COMMA();
 	String GL_GRR_BYMR();
 	String GL_GRR_BYMS();
 	String GL_GRR_OF();
 	String GL_GRR_THE();
-	String GL_GRR_ALPHABET_APOSTROPHE ();
+	String GL_GRR_ALPHABET_APOSTROPHE();
 	String GL_GRR_NUMERIC_ONE();
-	String GL_GRR_NUMERIC_TWO ();
-	String GL_GRR_NUMERIC_THREE ();
-	String GL_GRR_NUMERIC_FOUR ();
-	String GL_GRR_NUMERIC_FIVE ();
-	String GL_GRR_NUMERIC_SIX ();
+	String GL_GRR_NUMERIC_TWO();
+	String GL_GRR_NUMERIC_THREE();
+	String GL_GRR_NUMERIC_FOUR();
+	String GL_GRR_NUMERIC_FIVE();
+	String GL_GRR_NUMERIC_SIX();
 	String GL_GRR_NUMERIC_SEVEN();
 	String GL_GRR_NUMERIC_EIGHT();
-	String GL_GRR_NUMERIC_NINE ();
-	String GL_GRR_NUMERIC_TEN ();
-	String GL_GRR_NUMERIC_ELEVEN ();
+	String GL_GRR_NUMERIC_NINE();
+	String GL_GRR_NUMERIC_TEN();
+	String GL_GRR_NUMERIC_ELEVEN();
 	String GL_GRR_NUMERIC_TWELVE();
 
-	String GL_GRR_Close ();
+	String GL_GRR_Close();
 
 	String GL0001();
 	String GL0002();
@@ -185,255 +185,255 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0121();
 	String GL0122();
 	//Gooru Guide
-	String GL0123 ();
-	String GL0124 ();
-	String GL0125 ();
-	String GL0126 ();
-	String GL0127 ();
-	String GL0128 ();
-	String GL0129 ();
-	String GL0130 ();
-	String GL0131 ();
-	String GL0132 ();
-	String GL0133 ();
-	String GL0134 ();
-	String GL0135 ();
-	String GL0136 ();
-	String GL0137 ();
+	String GL0123();
+	String GL0124();
+	String GL0125();
+	String GL0126();
+	String GL0127();
+	String GL0128();
+	String GL0129();
+	String GL0130();
+	String GL0131();
+	String GL0132();
+	String GL0133();
+	String GL0134();
+	String GL0135();
+	String GL0136();
+	String GL0137();
 
 	//Class
-	String GL0138 ();
-	String GL0139 ();
-	String GL0140 ();	//used in Assignment Tab view
-	String GL0141 ();
-	String GL0142 ();	//used in Email Share also 
-	String GL0143 ();	// Assignment Tab also
-	String GL0144 ();
-	String GL0145 ();
-	String GL0146 ();
-	String GL0147 (); 
+	String GL0138();
+	String GL0139();
+	String GL0140();	//used in Assignment Tab view
+	String GL0141();
+	String GL0142();	//used in Email Share also 
+	String GL0143();	// Assignment Tab also
+	String GL0144();
+	String GL0145();
+	String GL0146();
+	String GL0147(); 
 
 	//Landing page Gooru in collection
-	String GL0148 ();
-	String GL0149 ();
-	String GL0150 ();
-	String GL0151 ();
-	String GL0152 ();
-	String GL0153 ();
-	String GL0154 ();
-	String GL0155 ();
-	String GL0156 ();
+	String GL0148();
+	String GL0149();
+	String GL0150();
+	String GL0151();
+	String GL0152();
+	String GL0153();
+	String GL0154();
+	String GL0155();
+	String GL0156();
 
-	String GL0157 ();
-	String GL0158 ();
-	String GL0159 ();
+	String GL0157();
+	String GL0158();
+	String GL0159();
 
-	String GL0160 ();
-	String GL0161 ();
-	String GL0162 ();
+	String GL0160();
+	String GL0161();
+	String GL0162();
 	//Gooru Guide
-	String GL0163 ();
-	String GL0164 ();
+	String GL0163();
+	String GL0164();
 
 	//Landing Page ...
-	String GL0165 ();
-	String GL0166 ();
-	String GL0167 ();
-	String GL0168 ();
-	String GL0169 ();
-	String GL0170 ();
-	String GL0171 ();
-	String GL0172 ();
-	String GL0172_1 ();
+	String GL0165();
+	String GL0166();
+	String GL0167();
+	String GL0168();
+	String GL0169();
+	String GL0170();
+	String GL0171();
+	String GL0172();
+	String GL0172_1();
 
 	//EditClasspage
-	String GL0173 ();
+	String GL0173();
 
 	//Search Root View
-	String GL0174 ();
-	String GL0175 ();
-	String GL0176 ();//Used in Header also.
-	String GL0177 ();
-	String GL0178 ();
+	String GL0174();
+	String GL0175();
+	String GL0176();//Used in Header also.
+	String GL0177();
+	String GL0178();
 	//Header
-	String GL0179 ();
-	String GL0180 ();
-	String GL0181 ();
-	String GL0182 ();
-	String GL0183 ();
-	String GL0184 ();
-	String GL0185 ();	//Not used
-	String GL0186 ();		// Regiseter Page also.
+	String GL0179();
+	String GL0180();
+	String GL0181();
+	String GL0182();
+	String GL0183();
+	String GL0184();
+	String GL0185();	//Not used
+	String GL0186();		// Regiseter Page also.
 	//	String GL0186_1 = GL_SPL_EXCLAMATION;
-	String GL0187 ();		// Used in Login Popup also.
+	String GL0187();		// Used in Login Popup also.
 
 	//Logout Popup
-	String GL0188 ();
-	String GL0189 ();
-	String GL0190 ();
+	String GL0188();
+	String GL0189();
+	String GL0190();
 	//	String GL0191 = GL0142; Duplicate.
 
 	//Logout Panel
-	String GL0192 ();
-	String GL0193 ();
-	String GL0194 ();
-	String GL0195 ();
-	String GL0196 ();
-	String GL0197 ();
+	String GL0192();
+	String GL0193();
+	String GL0194();
+	String GL0195();
+	String GL0196();
+	String GL0197();
 
 	/// Landing Page
-	String GL0198 ();// Used in TeachersPickUc also.
-	String GL0199 ();
-	String GL0200 ();
-	String GL0201 ();
+	String GL0198();// Used in TeachersPickUc also.
+	String GL0199();
+	String GL0200();
+	String GL0201();
 
 
 	//Login Page
-	String GL0202 ();
-	String GL0203 ();
-	String GL0204 ();
-	String GL0205 ();
-	String GL0206 ();
-	String GL0207 ();
-	String GL0208 ();
-	String GL0209 ();	//	Register, Edit Classpage also
+	String GL0202();
+	String GL0203();
+	String GL0204();
+	String GL0205();
+	String GL0206();
+	String GL0207();
+	String GL0208();
+	String GL0209();	//	Register, Edit Classpage also
 
 	//Register Page
-	String GL0210 ();
-	String GL0211 ();
-	String GL0212 ();
-	String GL0213 ();
-	String GL0214 ();
+	String GL0210();
+	String GL0211();
+	String GL0212();
+	String GL0213();
+	String GL0214();
 
 
 	//Email Share
-	String GL0215 ();
-	String GL0216 ();
-	String GL0216_1 ();
-	String GL0217 ();
-	String GL0218 ();
-	String GL0218_1 ();
-	String GL0219 ();
-	String GL0219_1 ();
+	String GL0215();
+	String GL0216();
+	String GL0216_1();
+	String GL0217();
+	String GL0218();
+	String GL0218_1();
+	String GL0219();
+	String GL0219_1();
 
 
-	String GL0220 ();
+	String GL0220();
 
-	String GL0221 ();
+	String GL0221();
 
-	String GL0222 ();
-	String GL0222_1 ();
-	String GL0223 ();
-	String GL0224 ();
-	String GL0225 ();
-	String GL0226 ();
-	String GL0227 ();
-	String GL0228 ();
+	String GL0222();
+	String GL0222_1();
+	String GL0223();
+	String GL0224();
+	String GL0225();
+	String GL0226();
+	String GL0227();
+	String GL0228();
 
 	//Edit Classpage - Dont use these...
-	String GL0229 ();
-	String GL0230 ();
-	String GL0231 ();
-	String GL0232 ();
-	String GL0233 ();
-	String GL0234 ();
-	String GL0235 ();
-	String GL0236 ();;
-	String GL0237 ();	//This is used in collaborators for Button.
-	String GL0238 ();
-	String GL0239 ();
-	String GL0240 ();
-	String GL0241 ();
+	String GL0229();
+	String GL0230();
+	String GL0231();
+	String GL0232();
+	String GL0233();
+	String GL0234();
+	String GL0235();
+	String GL0236();;
+	String GL0237();	//This is used in collaborators for Button.
+	String GL0238();
+	String GL0239();
+	String GL0240();
+	String GL0241();
 
 	//Login Page
 	String GL0242();
 
 	//Header
-	String GL0243 ();
-	String GL0244 ();
+	String GL0243();
+	String GL0244();
 
 	//Landing Page..
-	String GL0245 ();
+	String GL0245();
 
 	// Search Page filters help messages
-	String GL0246 ();
-	String GL0247 ();
+	String GL0246();
+	String GL0247();
 
 
 	//Collection Share Tab... Please dont use this...
-	String 	GL0248	();
-	String	GL0249	();
-	String	GL0250	();
-	String	GL0251	();
-	String	GL0252	();
-	String	GL0253	();
-	String	GL0254	();
-	String	GL0255	();
-	String	GL0256	();
-	String	GL0257	();
-	String	GL0258	();
-	String	GL0259	();
-	String	GL0260	();
-	String	GL0261	();
-	String	GL0262	();
-	String	GL0263	();
-	String	GL0264	();
-	String	GL0265	();
-	String	GL0266	();
-	String	GL0267	();
-	String	GL0268	();
-	String	GL0269	();
-	String	GL0270	();
-	String	GL0271	();
-	String	GL0272	();
-	String	GL0273	();
-	String	GL0274	();
-	String	GL0275	();
-	String	GL0276	();
-	String	GL0277	();
-	String	GL0278	();
-	String	GL0279	();
-	String	GL0280	();
-	String	GL0281	();
-	String	GL0282	();
-	String	GL0283	();
-	String	GL0284	();
+	String 	GL0248();
+	String	GL0249();
+	String	GL0250();
+	String	GL0251();
+	String	GL0252();
+	String	GL0253();
+	String	GL0254();
+	String	GL0255();
+	String	GL0256();
+	String	GL0257();
+	String	GL0258();
+	String	GL0259();
+	String	GL0260();
+	String	GL0261();
+	String	GL0262();
+	String	GL0263();
+	String	GL0264();
+	String	GL0265();
+	String	GL0266();
+	String	GL0267();
+	String	GL0268();
+	String	GL0269();
+	String	GL0270();
+	String	GL0271();
+	String	GL0272();
+	String	GL0273();
+	String	GL0274();
+	String	GL0275();
+	String	GL0276();
+	String	GL0277();
+	String	GL0278();
+	String	GL0279();
+	String	GL0280();
+	String	GL0281();
+	String	GL0282();
+	String	GL0283();
+	String	GL0284();
 	//Collection Share Tab... Please dont use this...
 
 	//ImproveGoorupopup
-	String	GL0285	();
-	String	GL0286	();
-	String	GL0287	();
-	String	GL0288	();
-	String	GL0289	();
-	String	GL0290	();
-	String	GL0291	();
-	String	GL0292	();
-	String	GL0293	();
+	String	GL0285();
+	String	GL0286();
+	String	GL0287();
+	String	GL0288();
+	String	GL0289();
+	String	GL0290();
+	String	GL0291();
+	String	GL0292();
+	String	GL0293();
 	String	GL0293_1(); 
-	String	GL0294	();
-	String	GL0295	();
-	String	GL0296	();
-	String	GL0297	();
-	String	GL0298	();
-	String	GL0299	();
-	String	GL0342  ();
-	String	GL0343  ();
-	String	GL0344 ();
+	String	GL0294();
+	String	GL0295();
+	String	GL0296();
+	String	GL0297();
+	String	GL0298();
+	String	GL0299();
+	String	GL0342();
+	String	GL0343();
+	String	GL0344();
 	// New Collection hints popups messages
-	String GL0300 ();
-	String GL0301 ();
+	String GL0300();
+	String GL0301();
 
 	//Edit Questions.
-	String GL0302 ();
+	String GL0302();
 
 	//Collection Create
-	String GL0303 ();
+	String GL0303();
 
 	//Edit Question.
-	String GL0304 ();
-	String GL0305 ();
-	String GL0306 ();
+	String GL0304();
+	String GL0305();
+	String GL0306();
 	String GL0306_1();
 	String GL0307();
 	String GL0308();
@@ -448,28 +448,28 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0317();
 
 	//Collection Create
-	String GL0318 ();
-	String GL0319 ();
-	String GL0320 ();
-	String GL0321 ();
+	String GL0318();
+	String GL0319();
+	String GL0320();
+	String GL0321();
 	//	String GL0322 = "Title this collection to start saving resources";
-	String GL0322 ();
-	String GL0323 ();
-	String GL0324 ();
-	String GL0325 ();
-	String GL0326 ();
-	String GL0327 ();
-	String GL0328 ();
-	String GL0329 ();
-	String GL0330 ();
-	String GL0331 ();
-	String GL0332 ();
-	String GL0333 ();
-	String GL0334 ();
+	String GL0322();
+	String GL0323();
+	String GL0324();
+	String GL0325();
+	String GL0326();
+	String GL0327();
+	String GL0328();
+	String GL0329();
+	String GL0330();
+	String GL0331();
+	String GL0332();
+	String GL0333();
+	String GL0334();
 
 	//Add A Resource
-	String GL0335 ();
-	String GL0336 ();
+	String GL0335();
+	String GL0336();
 
 
 
@@ -481,14 +481,14 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0339 ();
 
 	//Error popup
-	String GL0340 ();
-	String GL0341 ();
+	String GL0340();
+	String GL0341();
 
 	//Login
-	String GL0345 ();
-	String GL0346 ();
-	String GL0347 ();
-	String GL0348 ();
+	String GL0345();
+	String GL0346();
+	String GL0347();
+	String GL0348();
 
 	//Add Question popup
 	String GL0349();
@@ -546,264 +546,264 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0428();
 
 
-	String GL0429 ();
-	String GL0430 ();
-	String GL0431 ();
-	String GL0432 ();
-	String GL0433 ();
+	String GL0429();
+	String GL0430();
+	String GL0431();
+	String GL0432();
+	String GL0433();
 
-	String GL0434 ();
-	String GL0435 ();
-	String GL0436 ();
+	String GL0434();
+	String GL0435();
+	String GL0436();
 
 
-	String GL0437 ();
-	String GL0438 ();
-	String GL0439 ();
-	String GL0440 ();
-	String GL0441 ();
-	String GL0442 ();
-	String GL0443 ();
+	String GL0437();
+	String GL0438();
+	String GL0439();
+	String GL0440();
+	String GL0441();
+	String GL0442();
+	String GL0443();
 	//Signup Label();
 
 	//HTTP and HTTPS protocols msgs
-	String HTTP ();
+	String HTTP();
 	String HTTPS();
 
-	String GL0444 ();
-	String GL0445 ();
-	String GL0446 ();
-	String GL0447 ();
-	String GL0448 ();
-	String GL0449 ();
-	String GL0450 ();
-	String GL0451 ();
-	String GL0452 ();
-	String GL0453 ();
-	String GL0454 ();
+	String GL0444();
+	String GL0445();
+	String GL0446();
+	String GL0447();
+	String GL0448();
+	String GL0449();
+	String GL0450();
+	String GL0451();
+	String GL0452();
+	String GL0453();
+	String GL0454();
 	String GL04431();
 
-	String GL0455 ();
-	String GL0456 ();
+	String GL0455();
+	String GL0456();
 
-	String GL0457 ();
-	String GL0458 ();
-	String GL0459 ();
-	String GL0460 ();
-	String GL0461 ();
-	String GL0462 ();
-	String GL0463 ();
-	String GL0464 ();
-	String GL0465 ();
-	String GL0466 ();
-	String GL0467 ();
-	String GL0468 ();
-	String GL0469 ();
-	String GL0470 ();
-	String GL0471 ();
-	String GL0472 ();
+	String GL0457();
+	String GL0458();
+	String GL0459();
+	String GL0460();
+	String GL0461();
+	String GL0462();
+	String GL0463();
+	String GL0464();
+	String GL0465();
+	String GL0466();
+	String GL0467();
+	String GL0468();
+	String GL0469();
+	String GL0470();
+	String GL0471();
+	String GL0472();
 
-	String GL0473 (); 
-	String GL0474 (); 
-	String GL0475 (); 
-	String GL0476 (); 
-	String GL0477 (); 
-	String GL0478 (); 
-	String GL0479 (); 
-	String GL0480 (); 
+	String GL0473(); 
+	String GL0474(); 
+	String GL0475(); 
+	String GL0476(); 
+	String GL0477(); 
+	String GL0478(); 
+	String GL0479(); 
+	String GL0480(); 
 
-	String GL0481 (); 
-	String GL0482 (); 
-	String GL0483 (); 
-	String GL0484 (); 
-	String GL0485 (); 
-	String GL0486 (); 
-	String GL0487 (); 
-	String GL0488 (); 
-	String GL0489 (); 
-	String GL0490 (); 
-	String GL0491 (); 
-	String GL0492 (); 
-	String GL0493 (); 
-	String GL0494 (); 
-	String GL0495 (); 
-	String GL0496 (); 
-	String GL0497 (); 
-	String GL0498 (); 
-	String GL0499 (); 
-	String GL0500 (); 
-	String GL0501 (); 
-	String GL0502 (); 
-	String GL0503 (); 
-	String GL0504 (); //duplicate for GL0108 GL0109
-	String GL0505 (); 
+	String GL0481(); 
+	String GL0482(); 
+	String GL0483(); 
+	String GL0484(); 
+	String GL0485(); 
+	String GL0486(); 
+	String GL0487(); 
+	String GL0488(); 
+	String GL0489(); 
+	String GL0490(); 
+	String GL0491(); 
+	String GL0492(); 
+	String GL0493(); 
+	String GL0494(); 
+	String GL0495(); 
+	String GL0496(); 
+	String GL0497(); 
+	String GL0498(); 
+	String GL0499(); 
+	String GL0500(); 
+	String GL0501(); 
+	String GL0502(); 
+	String GL0503(); 
+	String GL0504(); //duplicate for GL0108 GL0109
+	String GL0505(); 
 	//5.12 Messages
-	String GL0506 (); //No search Results.
-	String GL0507 (); 
-	String GL0508 (); 
-	String GL0509 (); 
-	String GL0510 (); 
-	String GL0511 (); 
-	String GL0512 (); 
-	String GL0513 (); 
-	String GL0514 (); 
-	String GL0515 (); 
-	String GL0515_1 (); 
+	String GL0506(); //No search Results.
+	String GL0507(); 
+	String GL0508(); 
+	String GL0509(); 
+	String GL0510(); 
+	String GL0511(); 
+	String GL0512(); 
+	String GL0513(); 
+	String GL0514(); 
+	String GL0515(); 
+	String GL0515_1(); 
 
-	String GL0516 (); 
-	String GL0517 (); 
-	String GL0518 (); 
-	String GL0519 (); 
-	String GL0520 (); 
-	String GL0521 (); 
+	String GL0516(); 
+	String GL0517(); 
+	String GL0518(); 
+	String GL0519(); 
+	String GL0520(); 
+	String GL0521(); 
 
-	String GL0522 (); 
-	String GL0523 (); 
-	String GL0524 (); 
-	String GL0525 (); 
-	String GL0526 (); 
-	String GL0527 (); 
-	String GL0528 (); 
-	String GL0529 (); 
-	String GL0530 (); 
-	String GL0531 (); 
+	String GL0522(); 
+	String GL0523(); 
+	String GL0524(); 
+	String GL0525(); 
+	String GL0526(); 
+	String GL0527(); 
+	String GL0528(); 
+	String GL0529(); 
+	String GL0530(); 
+	String GL0531(); 
 
-	String GL0532 (); 
-	String GL0533 (); 
-	String GL0534 (); 
-	String GL0535 (); 
-	String GL0536 (); 
-	String GL0537 (); 
-	String GL0538 (); 
-	String GL0539 (); 
-	String GL0540 (); 
-	String GL0541 (); 
-	String GL0542 (); 
-	String GL0543 (); 
-	String GL0544 (); 
-	String GL0545 (); 
-	String GL0546 (); 
-	String GL0547 (); 
+	String GL0532(); 
+	String GL0533(); 
+	String GL0534(); 
+	String GL0535(); 
+	String GL0536(); 
+	String GL0537(); 
+	String GL0538(); 
+	String GL0539(); 
+	String GL0540(); 
+	String GL0541(); 
+	String GL0542(); 
+	String GL0543(); 
+	String GL0544(); 
+	String GL0545(); 
+	String GL0546(); 
+	String GL0547(); 
 
-	String GL0548 (); 
-	String GL0549 (); 
-	String GL0550 (); 
-	String GL0551 (); 
-	String GL0552 (); 
+	String GL0548(); 
+	String GL0549(); 
+	String GL0550(); 
+	String GL0551(); 
+	String GL0552(); 
 
-	String GL0553 (); 
-	String GL0554 (); 
-	String GL0555 (); 
-	String GL0556 (); 
-	String GL0557 (); 
+	String GL0553(); 
+	String GL0554(); 
+	String GL0555(); 
+	String GL0556(); 
+	String GL0557(); 
 
-	String GL0558 (); 
-	String GL0559 (); 
-	String GL0560 (); 
-	String GL0561 (); 
-	String GL0562 (); 
-	String GL0563 (); 
-	String GL0564 (); 
-	String GL0565 (); 
-	String GL0566 (); 
-	String GL0567 (); 	//Duplicate of GL0554
+	String GL0558(); 
+	String GL0559(); 
+	String GL0560(); 
+	String GL0561(); 
+	String GL0562(); 
+	String GL0563(); 
+	String GL0564(); 
+	String GL0565(); 
+	String GL0566(); 
+	String GL0567(); 	//Duplicate of GL0554
 
-	String GL0568 (); 
-	String GL0569 (); 
-	String GL0570 (); 
-	String GL0571 (); 
-	String GL0572 (); 
-	String GL0573 (); 
+	String GL0568(); 
+	String GL0569(); 
+	String GL0570(); 
+	String GL0571(); 
+	String GL0572(); 
+	String GL0573(); 
 
-	String GL0574 (); 
-	String GL0575 (); 
+	String GL0574(); 
+	String GL0575(); 
 
-	String GL0576 (); 
-	String GL0577 (); 
-	String GL0578 (); 
-	String GL0579 (); 
-	String GL0580 (); 
+	String GL0576(); 
+	String GL0577(); 
+	String GL0578(); 
+	String GL0579(); 
+	String GL0580(); 
 
-	String GL0581 (); 
-	String GL0582 (); 
-	String GL0583 (); 
-	String GL0584 (); 
-	String GL0585 (); 
+	String GL0581(); 
+	String GL0582(); 
+	String GL0583(); 
+	String GL0584(); 
+	String GL0585(); 
 
-	String GL0586 (); 
-	String GL0587 (); 
-	String GL0588 (); 
+	String GL0586(); 
+	String GL0587(); 
+	String GL0588(); 
 
 	//Add collection view messages.
 
-	String GL0589 (); 
+	String GL0589(); 
 
-	String GL0590 (); 
+	String GL0590(); 
 
 	/*	String GL0590 =	"Save to Customize";*/
-	String GL0590_1 (); 
+	String GL0590_1(); 
 
-	String GL0591 (); 
-	String GL0592 (); 
-	String GL0593 (); 
-	String GL0685 (); 
-	String GL0690 (); 
-	String GL0691 (); 
-	String GL0692 (); 
-	String GL0696 (); 
-	String GL0699_1 (); 
-	String GL0699_2 (); 
+	String GL0591(); 
+	String GL0592(); 
+	String GL0593(); 
+	String GL0685(); 
+	String GL0690(); 
+	String GL0691(); 
+	String GL0692(); 
+	String GL0696(); 
+	String GL0699_1(); 
+	String GL0699_2(); 
 
 
 	//Collection meta data.
 
-	String GL0594 (); 
-	String GL0595 (); 
-	String GL0694 (); 
+	String GL0594(); 
+	String GL0595(); 
+	String GL0694(); 
 
 	//collection end page
-	String GL0596 (); 
-	String GL0597 (); 
-	String GL0598 (); 
+	String GL0596(); 
+	String GL0597(); 
+	String GL0598(); 
 	String GL0599(); 
 	String GL0695(); 
 
 	//Collection Flag
-	String GL0600 (); 
-	String GL0601 (); 
-	String GL0602 (); 
-	String GL0603 (); 
-	String GL0604 (); 
-	String GL0605 (); 
-	String GL0606 (); 
-	String GL0607 (); 
-	String GL0608 (); 
-	String GL0609 (); 
-	String GL0610 (); 
-	String GL0611 (); 
-	String GL0612 (); 
-	String GL0613 (); 
-	String GL0614 (); 
-	String GL0615 (); 
-	String GL0616 (); 
-	String GL0617 (); 
+	String GL0600(); 
+	String GL0601(); 
+	String GL0602(); 
+	String GL0603(); 
+	String GL0604(); 
+	String GL0605(); 
+	String GL0606(); 
+	String GL0607(); 
+	String GL0608(); 
+	String GL0609(); 
+	String GL0610(); 
+	String GL0611(); 
+	String GL0612(); 
+	String GL0613(); 
+	String GL0614(); 
+	String GL0615(); 
+	String GL0616(); 
+	String GL0617(); 
 	String GL0618(); 
 	String GL0619(); 
 	String GL0620(); 
 	String GL0621(); 
 	String GL0622(); 
 
-	String GL0623 (); 
-	String GL0624 (); 
-	String GL0625 (); 
-	String GL0626 (); 
-	String GL0627 (); 
-	String GL0627_1 (); 
-	String GL0628 (); 
+	String GL0623(); 
+	String GL0624(); 
+	String GL0625(); 
+	String GL0626(); 
+	String GL0627(); 
+	String GL0627_1(); 
+	String GL0628(); 
 
-	String GL0629 (); 
-	String GL0630 (); 
-	String GL0630_1 (); 
+	String GL0629(); 
+	String GL0630(); 
+	String GL0630_1(); 
 
 	//priview player
 	String GL0631(); 
@@ -847,8 +847,8 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0655();  //HTMLPanel
 	String GL0656(); //HTMLPanel
 	String GL0657(); //HTMLPanel
-	String GL0697 (); 
-	String GL1831 (); 
+	String GL0697(); 
+	String GL1831(); 
 
 	//Add to an existing collection
 	String GL0658(); //Label
@@ -858,8 +858,8 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0662(); //Label
 	String GL0663(); //Label
 	String GL0664(); //Label
-	String GL0698 (); ;
-	String GL0699 (); 
+	String GL0698(); ;
+	String GL0699(); 
 
 	//Fill in the blanks
 	String GL0665(); //HTMLPanel.
@@ -894,158 +894,158 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0684(); 
 
 	//New 
-	String GL0686 (); 
-	String GL0687 (); 
-	String GL0688 (); 
-	String GL0689 (); 
-	String GL0693 (); 
-	String GL0700 (); 
-	String GL0701 (); 
-	String GL0702 (); 
+	String GL0686(); 
+	String GL0687(); 
+	String GL0688(); 
+	String GL0689(); 
+	String GL0693(); 
+	String GL0700(); 
+	String GL0701(); 
+	String GL0702(); 
 
 	//Resource Narration
-	String GL0703 (); 
+	String GL0703(); 
 
 	//No search results collections.
-	String GL0704 (); 
-	String GL0705 (); //Label
-	String GL0706 (); //Label
-	String GL0707 (); //Label
-	String GL0708 (); //Label
-	String GL0709 (); //Label
-	String GL0710 (); //Label
+	String GL0704(); 
+	String GL0705(); //Label
+	String GL0706(); //Label
+	String GL0707(); //Label
+	String GL0708(); //Label
+	String GL0709(); //Label
+	String GL0710(); //Label
 	//No search results vc
-	String GL0711 (); //Label
-	String GL0712 (); //Label
-	String GL0713 (); //Label
+	String GL0711(); //Label
+	String GL0712(); //Label
+	String GL0713(); //Label
 	String GL0714(); //Label
-	String GL0715 (); //Label
-	String GL0716 (); //Label
-	String GL0717 (); //Label
+	String GL0715(); //Label
+	String GL0716(); //Label
+	String GL0717(); //Label
 	//search embed vc
 	String GL0718(); 
 	//search filters
-	String GL0719 (); //Label
-	String GL0720 (); //Label
-	String GL0721 (); //DisclosurePanelUc
-	String GL0722 (); //DisclosurePanelUc
-	String GL0723 (); //Label
-	String GL0724 (); //DisclosurePanelUc
-	String GL0725 (); //Label
+	String GL0719(); //Label
+	String GL0720(); //Label
+	String GL0721(); //DisclosurePanelUc
+	String GL0722(); //DisclosurePanelUc
+	String GL0723(); //Label
+	String GL0724(); //DisclosurePanelUc
+	String GL0725(); //Label
 
 	//search more info
-	String GL0726 (); 
-	String GL0727 (); 
-	String GL0728 (); 
-	String GL0729 (); 
-	String GL0730 (); 
-	String GL0731 (); 
-	String GL0732 (); 
-	String GL0733 (); 
-	String GL0734 (); 
-	String GL0735 (); 
-	String GL0736 (); 
-	String GL0737 (); 
-	String GL0738 (); 
-	String GL0739 (); 
-	String GL0740 (); 
-	String GL0741 (); 
-	String GL0742 (); 
-	String GL0743 (); 
-	String GL0744 (); 
+	String GL0726(); 
+	String GL0727(); 
+	String GL0728(); 
+	String GL0729(); 
+	String GL0730(); 
+	String GL0731(); 
+	String GL0732(); 
+	String GL0733(); 
+	String GL0734(); 
+	String GL0735(); 
+	String GL0736(); 
+	String GL0737(); 
+	String GL0738(); 
+	String GL0739(); 
+	String GL0740(); 
+	String GL0741(); 
+	String GL0742(); 
+	String GL0743(); 
+	String GL0744(); 
 
 
 
-	String GL0745 (); 
-	String GL0749 (); 
-	String GL0750 (); 
+	String GL0745(); 
+	String GL0749(); 
+	String GL0750(); 
 	//Teach
-	String GL0747 (); 
-	String GL0746 (); 
-	String GL0748 (); 
-	String GL0751 (); 
-	String GL0752 (); 
-	String GL0753 (); 
+	String GL0747(); 
+	String GL0746(); 
+	String GL0748(); 
+	String GL0751(); 
+	String GL0752(); 
+	String GL0753(); 
 
 	//User Settings.
-	String GL0800	(); 
-	String GL0801	(); 
-	String GL0802	(); 
-	String GL0803	(); 
-	String GL0804	(); 
-	String GL0805	(); 
-	String GL0806	(); 
-	String GL0807	(); 
-	String GL0808	(); 
-	String GL0809	(); 
-	String GL0810	(); 
-	String GL0811	(); 
-	String GL0812	(); 
-	String GL0813	(); 
-	String GL0814	(); 
-	String GL0815	(); 
-	String GL0816	(); 
-	String GL0817	(); 
-	String GL0818	(); 
-	String GL0819	(); 
-	String GL0820	(); 
-	String GL0821	(); 
-	String GL0822	(); 
-	String GL0823	(); 
+	String GL0800(); 
+	String GL0801(); 
+	String GL0802(); 
+	String GL0803(); 
+	String GL0804(); 
+	String GL0805(); 
+	String GL0806(); 
+	String GL0807(); 
+	String GL0808(); 
+	String GL0809(); 
+	String GL0810(); 
+	String GL0811(); 
+	String GL0812(); 
+	String GL0813(); 
+	String GL0814(); 
+	String GL0815(); 
+	String GL0816(); 
+	String GL0817(); 
+	String GL0818(); 
+	String GL0819(); 
+	String GL0820(); 
+	String GL0821(); 
+	String GL0822(); 
+	String GL0823(); 
 
 	//shelf
-	String GL0824	(); 
-	String GL0825	(); 
-	String GL0826	(); 
-	String GL0827	(); 
-	String GL0828	(); 
-	String GL0829	(); 
-	String GL0830	(); 
-	String GL0831	(); 
-	String GL0832	(); 
-	String GL0833	(); 
-	String GL0834	(); 
-	String GL0835	(); 
-	String GL0836	(); 
-	String GL0837	(); 
-	String GL0838	(); 
-	String GL0839	(); 
-	String GL0840	(); 
-	String GL0841	(); 
+	String GL0824(); 
+	String GL0825(); 
+	String GL0826(); 
+	String GL0827(); 
+	String GL0828(); 
+	String GL0829(); 
+	String GL0830(); 
+	String GL0831(); 
+	String GL0832(); 
+	String GL0833(); 
+	String GL0834(); 
+	String GL0835(); 
+	String GL0836(); 
+	String GL0837(); 
+	String GL0838(); 
+	String GL0839(); 
+	String GL0840(); 
+	String GL0841(); 
 	//collection share tab.
-	String GL0842	(); 
-	String GL0843	(); 
-	String GL0844	(); 
-	String GL0845	(); 
+	String GL0842(); 
+	String GL0843(); 
+	String GL0844(); 
+	String GL0845(); 
 	//collection info tab
-	String GL0846	(); 
-	String GL0847	(); 
-	String GL0848	(); 
-	String GL0849	(); 
-	String GL0850	(); 
+	String GL0846(); 
+	String GL0847(); 
+	String GL0848(); 
+	String GL0849(); 
+	String GL0850(); 
 
 	//Content tab in shelf
-	String GL0851	(); 
-	String GL0852	(); 
-	String GL0853	(); 
-	String GL0854	(); 
-	String GL0855	(); 
-	String GL0856	(); 
-	String GL0857	(); 
-	String GL0858	(); 
+	String GL0851(); 
+	String GL0852(); 
+	String GL0853(); 
+	String GL0854(); 
+	String GL0855(); 
+	String GL0856(); 
+	String GL0857(); 
+	String GL0858(); 
 
 	//Hints
-	String GL0859	(); 
+	String GL0859(); 
 	//Add Question image in shelf
-	String GL0860	(); 
-	String GL0861	(); 
-	String GL0862	(); 
+	String GL0860(); 
+	String GL0861(); 
+	String GL0862(); 
 	//Add Question Resource View in shelf.
-	String GL0863	(); 
-	String GL0864	(); 
-	String GL0865 ();
-	String GL0866 (); 
-	String GL0867 (); 
+	String GL0863(); 
+	String GL0864(); 
+	String GL0865();
+	String GL0866(); 
+	String GL0867(); 
 	String GL0868(); 
 	String GL0869(); 
 	String GL0870(); 
@@ -1065,60 +1065,60 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0884(); 
 	String GL0885(); 
 	//Add Resource View in shelf
-	String GL0886	(); 
-	String GL0887	(); 
-	String GL0888	(); 
-	String GL0889	(); 
-	String GL0890	(); 
-	String GL0891	(); 
-	String GL0892	(); 
-	String GL0893	(); 
+	String GL0886(); 
+	String GL0887(); 
+	String GL0888(); 
+	String GL0889(); 
+	String GL0890(); 
+	String GL0891(); 
+	String GL0892(); 
+	String GL0893(); 
 	//Add search reource view in shelf
-	String GL0894	(); 
-	String GL0895	(); 
-	String GL0896	(); 
-	String GL0897	(); 
-	String GL0898	(); 
-	String GL0899	(); 
-	String GL0900	(); 
+	String GL0894(); 
+	String GL0895(); 
+	String GL0896(); 
+	String GL0897(); 
+	String GL0898(); 
+	String GL0899(); 
+	String GL0900(); 
 	//Add user own resource view in shelf.
-	String GL0901	(); 
-	String GL0902	(); 
-	String GL0903	(); 
-	String GL0904	(); 
-	String GL0905	(); 
-	String GL0906	(); 
-	String GL0907	(); 
-	String GL0908	(); 
-	String GL0909	(); 
-	String GL0910	(); 
-	String GL0911	(); 
-	String GL0912	(); 
-	String GL0913	(); 
-	String GL0914	(); 
+	String GL0901(); 
+	String GL0902(); 
+	String GL0903(); 
+	String GL0904(); 
+	String GL0905(); 
+	String GL0906(); 
+	String GL0907(); 
+	String GL0908(); 
+	String GL0909(); 
+	String GL0910(); 
+	String GL0911(); 
+	String GL0912(); 
+	String GL0913(); 
+	String GL0914(); 
 	//Add web resource view,User own resource preview and web resource preview in shelf
-	String GL0915	(); 
-	String GL0916	(); 
-	String GL0917	(); 
-	String GL0918	(); 
-	String GL0919	(); 
-	String GL0920	(); 
-	String GL0921	(); 
-	String GL0922	(); 
-	String GL0923	(); 
-	String GL0924	(); 
-	String GL0925	(); 
-	String GL0926	(); 
-	String GL0927	(); 
-	String GL0928	(); 
-	String GL0929	(); 
-	String GL0930	(); 
-	String GL0931	(); 
+	String GL0915(); 
+	String GL0916(); 
+	String GL0917(); 
+	String GL0918(); 
+	String GL0919(); 
+	String GL0920(); 
+	String GL0921(); 
+	String GL0922(); 
+	String GL0923(); 
+	String GL0924(); 
+	String GL0925(); 
+	String GL0926(); 
+	String GL0927(); 
+	String GL0928(); 
+	String GL0929(); 
+	String GL0930(); 
+	String GL0931(); 
 	//Exists Resource View in shelf
-	String GL0932	(); 
-	String GL0933	(); 
-	String GL0934	(); 
-	String GL0935	(); 
+	String GL0932(); 
+	String GL0933(); 
+	String GL0934(); 
+	String GL0935(); 
 
 	//Collaborator
 	String GL0936(); 
@@ -1134,37 +1134,37 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL0945(); 
 
 	//Copy resource confirmation popup.
-	String GL0946 (); 
-	String GL0947 (); 
+	String GL0946(); 
+	String GL0947(); 
 
 	//Edit user own resource popup.
-	String GL0948 (); 
-	String GL0949 (); 
-	String GL0950 (); 
-	String GL0951 (); 
-	String GL0952 (); 
-	String GL0953 (); 
-	String GL0954 (); 
-	String GL0955 (); 
+	String GL0948(); 
+	String GL0949(); 
+	String GL0950(); 
+	String GL0951(); 
+	String GL0952(); 
+	String GL0953(); 
+	String GL0954(); 
+	String GL0955(); 
 
 	//shelf collection resource child view
-	String GL0956 (); 
-	String GL0957 (); 
-	String GL0958 (); 
-	String GL0959 (); 
-	String GL0960 (); 
-	String GL0961 (); 
-	String GL0962 (); 
-	String GL0963 (); 
-	String GL0964 (); 
-	String GL0965 (); 
-	String GL0966 (); 
-	String GL0967 (); 
-	String GL0968 (); 
-	String GL0969 (); 
-	String GL0970 (); 
-	String GL0971 (); 
-	String GL0972 (); 
+	String GL0956(); 
+	String GL0957(); 
+	String GL0958(); 
+	String GL0959(); 
+	String GL0960(); 
+	String GL0961(); 
+	String GL0962(); 
+	String GL0963(); 
+	String GL0964(); 
+	String GL0965(); 
+	String GL0966(); 
+	String GL0967(); 
+	String GL0968(); 
+	String GL0969(); 
+	String GL0970(); 
+	String GL0971(); 
+	String GL0972(); 
 	String GL0973(); 
 	String GL0974(); 
 	String GL0975(); 
@@ -1214,23 +1214,23 @@ public interface CopyOfMessageProperties extends Constants {
 	//Balloon popup
 	String GL1013(); 
 
-	String GL1014 (); 
-	String GL1015 (); 
-	String GL1016 (); 
-	String GL1017 (); 
-	String GL1018 (); 
-	String GL1019 (); 
+	String GL1014(); 
+	String GL1015(); 
+	String GL1016(); 
+	String GL1017(); 
+	String GL1018(); 
+	String GL1019(); 
 	//Organize
-	String GL1020 (); 
+	String GL1020(); 
 	//Confirmation Popup
-	String GL1021 (); 
+	String GL1021(); 
 	//course list
-	String GL1022 (); 
+	String GL1022(); 
 	//Disclosure panel.
-	String GL1023 (); 
-	String GL1024 (); 
-	String GL1025 (); 
-	String GL1026 (); 
+	String GL1023(); 
+	String GL1024(); 
+	String GL1025(); 
+	String GL1026(); 
 	//Email share uc
 	String GL1027(); 
 	String GL1027_1(); 
@@ -1255,10 +1255,10 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1043(); 
 
 	//new cateroies
-	String GL1044 (); 
-	String GL1045 (); 
-	String GL1046 (); 
-	String GL1047 (); 
+	String GL1044(); 
+	String GL1045(); 
+	String GL1046(); 
+	String GL1047(); 
 	String GL1048(); 
 	String GL1049(); 
 	String GL1050(); 
@@ -1301,10 +1301,10 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1073(); 
 
 	//Collaborators
-	String GL1111 (); 
-	String GL1112 (); 
-	String GL1113 (); 
-	String GL1114 (); 
+	String GL1111(); 
+	String GL1112(); 
+	String GL1113(); 
+	String GL1114(); 
 
 	//profile page view.
 	String GL1074(); 
@@ -1320,9 +1320,9 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1084(); 
 	String GL1085(); 
 
-	String GL1085_1 (); 
-	String GL1085_2 (); 
-	String GL1085_3 (); 
+	String GL1085_1(); 
+	String GL1085_2(); 
+	String GL1085_3(); 
 
 	String GL1086(); 
 	String GL1087(); 
@@ -1348,28 +1348,28 @@ public interface CopyOfMessageProperties extends Constants {
 
 	String GL1117(); 
 
-	String GL1118 (); 
-	String GL1119 (); 
-	String GL1120 (); 
-	String GL1121 (); 
-	String GL1122 (); 
-	String GL1123 (); 
+	String GL1118(); 
+	String GL1119(); 
+	String GL1120(); 
+	String GL1121(); 
+	String GL1122(); 
+	String GL1123(); 
 
 	//New class page popup.
-	String GL1124 (); 
+	String GL1124(); 
 
 	//Collaborators
-	String GL1125 (); 
-	String GL1126 (); 
-	String GL1127 (); 
-	String GL1128 (); 
+	String GL1125(); 
+	String GL1126(); 
+	String GL1127(); 
+	String GL1128(); 
 
 	//Assignments View.
-	String GL1129 (); 
+	String GL1129(); 
 
 	//Student Assignment View.
-	String GL1130 ();
-	String GL1131 (); 
+	String GL1130();
+	String GL1131(); 
 
 	//Class code view.
 	String GL1132(); 
@@ -1404,38 +1404,38 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1153(); 
 	String GL1154(); 
 	String GL1155(); 
-	String GL1156 (); 
-	String GL1157 (); 
+	String GL1156(); 
+	String GL1157(); 
 
 	/// different section...
-	String GL1158 (); 
-	String GL1159 (); 
-	String GL1160 (); 
-	String GL1161 (); 
+	String GL1158(); 
+	String GL1159(); 
+	String GL1160(); 
+	String GL1161(); 
 
 	//Collaborators
-	String GL1162 (); 
-	String GL1163 (); 
-	String GL1164 (); 
-	String GL1165 (); 
-	String GL1165_1 (); 
+	String GL1162(); 
+	String GL1163(); 
+	String GL1164(); 
+	String GL1165(); 
+	String GL1165_1(); 
 	//Assign      (); 
-	String GL1166 (); 
-	String GL1167 (); 
-	String GL1168 (); 
-	String GL1172 (); 
+	String GL1166(); 
+	String GL1167(); 
+	String GL1168(); 
+	String GL1172(); 
 	String GL1179(); 
 	String GL1183(); 
 
 	//Library Topic List View
-	String GL1169 (); 
-	String GL1170 (); 
-	String GL1171 (); 
+	String GL1169(); 
+	String GL1170(); 
+	String GL1171(); 
 
-	String GL1173 (); 
-	String GL1174 (); 
-	String GL1175 (); 
-	String GL1176 (); 
+	String GL1173(); 
+	String GL1174(); 
+	String GL1175(); 
+	String GL1176(); 
 	String GL1177(); 
 	String GL1178(); 
 	String GL1180(); 
@@ -1443,41 +1443,41 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1182(); 
 
 	//Collaborator
-	String GL1184 (); 
-	String GL1185 (); 
-	String GL1184_1 (); 
+	String GL1184(); 
+	String GL1185(); 
+	String GL1184_1(); 
 	String GL1186(); 
 	String GL1187(); 
 
 	//Registration welcome popup.
-	String GL1188 (); 
-	String GL1189 (); 
-	String GL1190 (); 
-	String GL1191 (); 
-	String GL1192 (); 
-	String GL1193 (); 
-	String GL1194 (); 
+	String GL1188(); 
+	String GL1189(); 
+	String GL1190(); 
+	String GL1191(); 
+	String GL1192(); 
+	String GL1193(); 
+	String GL1194(); 
 
 	//parent register vc
-	String GL1195 (); 
-	String GL1196 (); 
-	String GL1197 (); 
+	String GL1195(); 
+	String GL1196(); 
+	String GL1197(); 
 
 	//user registration view.
-	String GL1198 (); 
-	String GL1199 (); 
-	String GL1200 (); 
-	String GL1201 (); 
-	String GL1202 (); 
-	String GL1203 (); 
-	String GL1204 (); 
-	String GL1205 (); 
-	String GL1206 (); 
-	String GL1207 (); 
-	String GL1208 (); 
-	String GL1209 (); 
-	String GL1210 (); 
-	String GL1211 (); 
+	String GL1198(); 
+	String GL1199(); 
+	String GL1200(); 
+	String GL1201(); 
+	String GL1202(); 
+	String GL1203(); 
+	String GL1204(); 
+	String GL1205(); 
+	String GL1206(); 
+	String GL1207(); 
+	String GL1208(); 
+	String GL1209(); 
+	String GL1210(); 
+	String GL1211(); 
 
 	//child account popup.
 	String GL1212(); 
@@ -1514,7 +1514,7 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1237(); 
 	String GL1238(); 
 
-	String GL1239 (); 
+	String GL1239(); 
 
 	//Featured Content vc.
 	String GL1240(); 
@@ -1642,8 +1642,8 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1326(); 
 	String GL1327(); 
 
-	String GL1328 (); 
-	String GL1329 (); 	
+	String GL1328(); 
+	String GL1329(); 	
 	String GL1328_1(); 
 	String GL1329_1(); 
 	String GL1330(); 
@@ -1662,8 +1662,8 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1339 (); 
 
 	//Customize Vc.
-	String GL1340 (); 
-	String GL1341 (); 
+	String GL1340(); 
+	String GL1341(); 
 
 	//Discover Vc
 	String GL1342(); 
@@ -1950,75 +1950,75 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1515(); 
 
 	//Invite Student Popup
-	String GL1521 (); 
-	String GL1522 (); 
+	String GL1521(); 
+	String GL1522(); 
 
-	String GL1523 (); 
-	String GL1524 (); 
-	String GL1525 (); 
-	String GL1526 (); 
-	String GL1527 (); 
-	String GL1528 (); 
+	String GL1523(); 
+	String GL1524(); 
+	String GL1525(); 
+	String GL1526(); 
+	String GL1527(); 
+	String GL1528(); 
 
 	//Study player header
-	String GL1529 (); 
-	String GL1530 (); 
-	String GL1531 (); 
+	String GL1529(); 
+	String GL1530(); 
+	String GL1531(); 
 
 	//AleartMessage popup
-	String GL1535 (); 
+	String GL1535(); 
 	String GL1535_1(); 
 	String GL1536(); 
 	String GL1537(); 
 
-	String GL1538 (); 
-	String GL1539 (); 
-	String GL1540 (); 
-	String GL1541 (); 
-	String GL1542 (); 
-	String GL1543 (); 
-	String GL1544 (); 
-	String GL1545 (); 
-	String GL1546 (); 
-	String GL1547 (); 
-	String GL1548 (); 
-	String GL1549 (); 
-	String GL1550 (); 
-	String GL1551 (); 
-	String GL1552 (); 
-	String GL1553 (); 
-	String GL1554 (); 
-	String GL1555 (); 
-	String GL1556 (); 
-	String GL1557 (); 
-	String GL1558 (); 
-	String GL1559 (); 
-	String GL1560 (); 
-	String GL1561 (); 
-	String GL1562 (); 
-	String GL1563 (); 
-	String GL1564 (); 
-	String GL1565 (); 
-	String GL1566 (); 
-	String GL1567 (); 
-	String GL1568 (); 
-	String GL1569 (); 
-	String GL1570 (); 
-	String GL1571 (); 
-	String GL1572 (); 
-	String GL1573 (); 
-	String GL1574 (); 
-	String GL1575 (); 
-	String GL1576 (); 
-	String GL1577 (); 
+	String GL1538(); 
+	String GL1539(); 
+	String GL1540(); 
+	String GL1541(); 
+	String GL1542(); 
+	String GL1543(); 
+	String GL1544(); 
+	String GL1545(); 
+	String GL1546(); 
+	String GL1547(); 
+	String GL1548(); 
+	String GL1549(); 
+	String GL1550(); 
+	String GL1551(); 
+	String GL1552(); 
+	String GL1553(); 
+	String GL1554(); 
+	String GL1555(); 
+	String GL1556(); 
+	String GL1557(); 
+	String GL1558(); 
+	String GL1559(); 
+	String GL1560(); 
+	String GL1561(); 
+	String GL1562(); 
+	String GL1563(); 
+	String GL1564(); 
+	String GL1565(); 
+	String GL1566(); 
+	String GL1567(); 
+	String GL1568(); 
+	String GL1569(); 
+	String GL1570(); 
+	String GL1571(); 
+	String GL1572(); 
+	String GL1573(); 
+	String GL1574(); 
+	String GL1575(); 
+	String GL1576(); 
+	String GL1577(); 
                  
                  
-	String GL1578 (); 
-	String GL1579 (); 
-	String GL1580 (); 
-	String GL1581 (); 
-	String GL1582 (); 
-	String GL1583 (); 
+	String GL1578(); 
+	String GL1579(); 
+	String GL1580(); 
+	String GL1581(); 
+	String GL1582(); 
+	String GL1583(); 
 
 	String GL1584(); 
 	String GL1585(); 
@@ -2203,50 +2203,50 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1745();
 	String GL1746();
 	String GL1747();
-	String GL1748 ();
-	String GL1749 ();
+	String GL1748();
+	String GL1749();
 
-	String GL1748_1 ();
-	String GL1749_1 ();// need to change 
-	String GL1750 (); // need to change  
-	String GL1751 ();
-	String GL1752 ();
-	String GL1753 ();
-	String GL1754 ();
-	String GL1755 ();
-	String GL1756 ();
-	String GL1757 ();
-	String GL1758 ();
-	String GL1759 ();
-	String GL1760 ();
-	String GL1761 ();
-	String GL1762 ();
+	String GL1748_1();
+	String GL1749_1();// need to change 
+	String GL1750(); // need to change  
+	String GL1751();
+	String GL1752();
+	String GL1753();
+	String GL1754();
+	String GL1755();
+	String GL1756();
+	String GL1757();
+	String GL1758();
+	String GL1759();
+	String GL1760();
+	String GL1761();
+	String GL1762();
 
 	String GL1762_1();
 
-	String GL1763 ();
-	String GL1764 ();
-	String GL1765 ();
-	String GL1766 ();
-	String GL1767 ();
-	String GL1768 ();
-	String GL1769 ();
-	String GL1770 ();
-	String GL1771 ();
-	String GL1772 ();
-	String GL1773 ();
-	String GL1774 ();
-	String GL1775 ();
-	String GL1776 ();
-	String GL1777 ();
-	String GL1778 ();
-	String GL1779 ();
-	String GL1780 ();
-	String GL1781 ();
-	String GL1782 ();
-	String GL1783 ();
-	String GL1784 ();
-	String GL1784_1 ();
+	String GL1763();
+	String GL1764();
+	String GL1765();
+	String GL1766();
+	String GL1767();
+	String GL1768();
+	String GL1769();
+	String GL1770();
+	String GL1771();
+	String GL1772();
+	String GL1773();
+	String GL1774();
+	String GL1775();
+	String GL1776();
+	String GL1777();
+	String GL1778();
+	String GL1779();
+	String GL1780();
+	String GL1781();
+	String GL1782();
+	String GL1783();
+	String GL1784();
+	String GL1784_1();
 	String GL1785();
 	String GL1786();
 	String GL1787();
@@ -2328,13 +2328,13 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1861();
 	String GL1862();
 	//    	String GL1863 = "Go further together--add another user as a collaborator on your collection.";
-	String GL1864 ();
+	String GL1864();
 	//    	String GL1865 = "Edit start & stop times for videos drag and drop to reorder resources, and more.";
 	//    	String GL1866 = "When students log in, you can see reactions and responses to intervene in real time.";
-	String GL1867 ();
-	String GL1868 ();
-	String GL1869 ();
-	String GL1870 ();
+	String GL1867();
+	String GL1868();
+	String GL1869();
+	String GL1870();
 
 	String GL1871();
 	String GL1872();
@@ -2383,9 +2383,9 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1912();
 	String GL1913();
 	String GL1914();
-	String GL1914_1 ();
-	String GL1915 ();
-	String GL1916 ();
+	String GL1914_1();
+	String GL1915();
+	String GL1916();
 
 	//Make collection as Publish
 
@@ -2421,71 +2421,71 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL1940();
 
 
-	String GL1942 ();
+	String GL1942();
 
 
-	String GL1944 ();
-	String GL1943 ();
-	String GL1945 ();
-	String GL1946 ();
-	String GL1947 ();
-	String GL1948 ();
-	String GL1949 ();
-	String GL1950 ();
-	String GL1951 ();
-	String GL1952 ();
-	String GL1953 ();
+	String GL1944();
+	String GL1943();
+	String GL1945();
+	String GL1946();
+	String GL1947();
+	String GL1948();
+	String GL1949();
+	String GL1950();
+	String GL1951();
+	String GL1952();
+	String GL1953();
 
-	String GL1954 ();
-	String GL1955 ();
-	String GL1956 ();
+	String GL1954();
+	String GL1955();
+	String GL1956();
 
 	//suggestions for search.
-	String GL1957 ();
-	String GL1958 ();
-	String GL1959 ();
-	String GL1960 ();
-	String GL1961 ();
-	String GL1962 ();
-	String GL1963 ();
-	String GL1964 ();
-	String GL1965 ();
-	String GL1966 ();
-	String GL1967 ();
-	String GL1968 ();
-	String GL1969 ();
-	String GL1970 ();
-	String GL1971 ();
-	String GL1972 ();
-	String GL1973 ();
-	String GL1974 ();
-	String GL1975 ();
-	String GL1976 ();
-	String GL1977 ();
-	String GL1978 ();
-	String GL1979 ();
-	String GL1980 ();
-	String GL1981 ();
-	String GL1982 ();
-	String GL1983 ();
-	String GL1984 ();
-	String GL1985 ();
-	String GL1986 ();
-	String GL1987 ();
-	String GL1988 ();
-	String GL1989 ();
-	String GL1990 ();
-	String GL1991 ();
-	String GL1992 ();
-	String GL1993 ();
-	String GL1994 ();
-	String GL1995 ();
-	String GL1996 ();
+	String GL1957();
+	String GL1958();
+	String GL1959();
+	String GL1960();
+	String GL1961();
+	String GL1962();
+	String GL1963();
+	String GL1964();
+	String GL1965();
+	String GL1966();
+	String GL1967();
+	String GL1968();
+	String GL1969();
+	String GL1970();
+	String GL1971();
+	String GL1972();
+	String GL1973();
+	String GL1974();
+	String GL1975();
+	String GL1976();
+	String GL1977();
+	String GL1978();
+	String GL1979();
+	String GL1980();
+	String GL1981();
+	String GL1982();
+	String GL1983();
+	String GL1984();
+	String GL1985();
+	String GL1986();
+	String GL1987();
+	String GL1988();
+	String GL1989();
+	String GL1990();
+	String GL1991();
+	String GL1992();
+	String GL1993();
+	String GL1994();
+	String GL1995();
+	String GL1996();
 	String GL1997();
-	String GL1998 ();
+	String GL1998();
 	String GL1999();
-	String GL2000 ();
-	String GL2001 ();
+	String GL2000();
+	String GL2001();
 
 
 
