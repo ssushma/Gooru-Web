@@ -861,7 +861,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	}
 
 	@Override
-	public ProfileLibraryListDo getLibraryCoursesList(String parentId,String sharingType) throws GwtException {
+	public ProfileLibraryListDo getLibraryCoursesList(String parentId,String sharingType,String offset) throws GwtException {
 			ProfileLibraryListDo profileLibraryListDo = new ProfileLibraryListDo();
 			JsonRepresentation jsonRep = null;
 			String url = null;
@@ -870,7 +870,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			if(sharingType!=null){
 				sessionToken=sessionToken+"&sharing="+sharingType;
 			}
-			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, "0", "20");
+			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset, "20");
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);

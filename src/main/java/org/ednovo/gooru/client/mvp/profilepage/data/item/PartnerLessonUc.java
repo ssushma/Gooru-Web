@@ -70,21 +70,21 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	interface LibraryLessonUcUiBinder extends UiBinder<Widget, PartnerLessonUc> {
 	}
 
-	public PartnerLessonUc(ArrayList<ProfileLibraryDo> profileLibraryDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ArrayList<ProfileLibraryDo> profileLibraryDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, null, profileLibraryDoList, isLessonHighlighted,lessonNumber);
+		setLessonData(null, null, profileLibraryDoList, isLessonHighlighted,lessonNumber,isPaginated);
 	}
 
-	public PartnerLessonUc(ProfileLibraryDo profileLibraryDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ProfileLibraryDo profileLibraryDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
 		if(profileLibraryDo.getType().equals("scollection")) {
 			setCollectionData(profileLibraryDo, isLessonHighlighted, lessonNumber);
 		} else {
-			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber);
+			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber, isPaginated);
 		}
 	}
 	/**
@@ -106,7 +106,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	 * @throws : <Mentioned if any exceptions>	 
 	 * 
 	 */
-	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber) {
+	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
 		if(profileLibraryDo!=null) {
 			lessonTitle.setHTML(profileLibraryDo.getTitle());
 			lessonList.add(lessonTitle);
@@ -129,7 +129,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
 			ProfileLibraryDo profileLibraryTemp = null;
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)&&(isPaginated==false)) {
 				profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);
 			} else {
 				profileLibraryTemp = profileLibraryDoList.get(i);
