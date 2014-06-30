@@ -54,6 +54,7 @@ import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
+import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -75,7 +76,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -126,7 +126,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	
 	private static final String DEFAULT_COLLECTION_IMAGE = "../images/default-collection-image-160x120.png";
 	
-	private static Integer LESSON_PAGE_INITIAL_LIMIT = 20;
+	private static Integer LESSON_PAGE_INITIAL_LIMIT = 10;
 	
 	private static String PAGE = "page";
 	
@@ -177,18 +177,14 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		setTopicLabel(profileFolderDo.getTitle());
 		
 		if(profileFolderDo.getCollections()!=null) {
-			System.out.println("in profile setonlyconcept data::");
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
 			try {
-				System.out.println("in profileconcept data::");
 				setConceptData(profileFolderDo.getCollectionItems().get(0),topicId, null, null,null);
 			} catch(Exception e) {
-				System.out.println("in profileconcept datacatchcatch::");
 				setDefaultCollectionLbl();
 			}
 		} else {
-			System.out.println("in profile setonlyconcept data::");
-			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems());
+			setPartnerLibraryLessonData(profileFolderDo.getCollectionItems(), profileFolderDo.getGooruOid());
 			try {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 					setConceptData(profileFolderDo.getCollectionItems().get(0).getCollectionItems().get(0).getCollectionItems().get(0),topicId, null, null,null);
@@ -274,7 +270,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			pageCount = profileFolderDoList.size();
 		}
 		if(pageCount>=LESSON_PAGE_INITIAL_LIMIT) {
-			conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted, 0));
+			conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted, 0, false));
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
 				@Override
@@ -322,7 +318,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted,(i+1)));
+				conceptList.add(new PartnerLessonUc(profileFolderDoList,topicId,isLessonHighlighted,(i+1), false));
 			}
 		}
 	}
@@ -531,16 +527,18 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		noCollectionLbl.setVisible(true);
 	}
 
-	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList) {
+	private void setPartnerLibraryLessonData(final ArrayList<ProfileLibraryDo> profileLibraryDoList, final String gooruOid) {
 		boolean isLessonHighlighted = true;
+		final int count = profileLibraryDoList.size();
 		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
+			System.out.println("b");
 			for(int i=0;i<LESSON_PAGE_INITIAL_LIMIT;i++) {
 				if(i==0) {
 					isLessonHighlighted = true;
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted, (i+1)));
+				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted, (i+1), false));
 			}
 			final String subject = AppClientFactory.getPlaceManager().getRequestParameter("subject","featured");
 			lessonScrollPanel.addScrollHandler(new ScrollHandler() {
@@ -548,17 +546,33 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				public void onScroll(ScrollEvent event) {
 					if(isScrollable) {
 						isScrollable = false;
+						AppClientFactory.getInjector().getLibraryService().getLibraryCoursesList(gooruOid, "public", conceptList.getWidgetCount()+"", new SimpleAsyncCallback<ProfileLibraryListDo>() {
+							@Override
+							public void onSuccess(ProfileLibraryListDo profileLibraryList) {
+								int count = LESSON_PAGE_INITIAL_LIMIT;
+								for(int j = 0; j<profileLibraryList.getSearchResult().size();j++) {
+									conceptList.add(new PartnerLessonUc(profileLibraryList.getSearchResult().get(j),topicId,false, (j+count+1), true));
+								}
+								LESSON_PAGE_INITIAL_LIMIT = LESSON_PAGE_INITIAL_LIMIT + profileLibraryList.getSearchResult().size();
+								if(!(profileLibraryList.getCount()>LESSON_PAGE_INITIAL_LIMIT)) {
+									isScrollable = false;
+								} else {
+									isScrollable = true;
+								}
+							}
+						});
 					}
 				}
 			});
 		} else {
+			System.out.println("c");
 			for(int i=0;i<profileLibraryDoList.size();i++) {
 				if(i==0) {
 					isLessonHighlighted = true;
 				} else {
 					isLessonHighlighted = false;
 				}
-				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted,(i+1)));
+				conceptList.add(new PartnerLessonUc(profileLibraryDoList.get(i),topicId,isLessonHighlighted,(i+1), false));
 			}
 		}
 	}

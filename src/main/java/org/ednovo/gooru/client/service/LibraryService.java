@@ -202,5 +202,5 @@ public interface LibraryService extends BaseService {
 	 * @param: skipCollectionItems
 	 * @throws : GwtException
 	 */
-	public ProfileLibraryListDo getLibraryCoursesList(String parentId,String sharingType) throws GwtException, ServerDownException;
+	public ProfileLibraryListDo getLibraryCoursesList(String parentId,String sharingType, String offset) throws GwtException, ServerDownException;
 }
