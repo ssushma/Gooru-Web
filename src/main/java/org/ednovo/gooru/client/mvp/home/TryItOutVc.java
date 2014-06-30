@@ -76,13 +76,44 @@ public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProper
 		this.show();
 		this.center();
 		improveGooruText.setText(GL0285);
+		improveGooruText.getElement().setId("lblImproveGooruText");
+		improveGooruText.getElement().setAttribute("alt",GL0285);
+		improveGooruText.getElement().setAttribute("title",GL0285);
+		
 		celebrationLbl.setText(GL1314);
+		celebrationLbl.getElement().setId("lblCelebrationLbl");
+		celebrationLbl.getElement().setAttribute("alt",GL1314);
+		celebrationLbl.getElement().setAttribute("title",GL1314);
+		
 		learnMoreLbl.setHref("http://support.goorulearning.org/entries/23251492-Why-are-we-retiring-Classic-Gooru-and-transitioning-everyone-over-to-the-new-version-");
 		learnMoreLbl.setText(GL1315);
+		learnMoreLbl.getElement().setId("lblLearnMoreLbl");
+		learnMoreLbl.getElement().setAttribute("alt",GL1315);
+		learnMoreLbl.getElement().setAttribute("title",GL1315);
+		
 		backToClassicAnr.setText(GL1316);
+		backToClassicAnr.getElement().setId("lnkBackToClassicAnr");
+		backToClassicAnr.getElement().setAttribute("alt",GL1316);
+		backToClassicAnr.getElement().setAttribute("title",GL1316);
+		
 		classicGooruLbl.setText(GL1317);
+		classicGooruLbl.getElement().setId("lnkClassicGooruLbl");
+		classicGooruLbl.getElement().setAttribute("alt",GL1317);
+		classicGooruLbl.getElement().setAttribute("title",GL1317);
+		
 		tryItOutLbl.setText(GL1318);
+		tryItOutLbl.getElement().setId("lnkTryItOutLbl");
+		tryItOutLbl.getElement().setAttribute("alt",GL1318);
+		tryItOutLbl.getElement().setAttribute("title",GL1318);
+		
 		goBackText.setText(GL1319);
+		goBackText.getElement().setId("lblGoBackText");
+		goBackText.getElement().setAttribute("alt",GL1319);
+		goBackText.getElement().setAttribute("title",GL1319);
+	
+		closePopUpLbl.getElement().setId("lblClosePopUpLbl");
+		tryItOutNewGooruFloPanel.getElement().setId("fpnlTryItOutNewGooruFloPanel");
+		
 		backToClassicAnr.setHref(AppClientFactory.getLoggedInUser().getSettings().getClassicEndPoint());
 		tryItOutNewGooruFloPanel.addDomHandler(this, ClickEvent.getType());
 	}

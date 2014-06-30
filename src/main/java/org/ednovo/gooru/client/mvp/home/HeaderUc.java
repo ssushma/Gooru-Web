@@ -207,7 +207,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 	public AppSuggestBox editSearchTxtBox;
 
 	@UiField
-	FlowPanel editSearchInputFloPanel;
+	FlowPanel editSearchInputFloPanel,signUpInfo;
 
 	@UiField
 	FlowPanel logInfoFloPanel;
@@ -283,7 +283,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 	Label lblBeta; // gooruClassicViewLbl
 
 	@UiField
-	HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel;
+	HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
@@ -455,27 +455,85 @@ public class HeaderUc extends Composite implements MessageProperties,
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
 		editSearchBtn.getElement().setId("btnEditSearch");
 		editSearchBtn.setText(GL0176);
+		editSearchBtn.getElement().setAttribute("alt",GL0176);
+		editSearchBtn.getElement().setAttribute("title",GL0176);
+		
 		confirmEmailText.getElement().setAttribute("style", "float: left;");
 		confirmEmailText.setText(GL1248);
+		confirmEmailText.getElement().setId("lblConfirmEmailText");
+		confirmEmailText.getElement().setAttribute("alt",GL1248);
+		confirmEmailText.getElement().setAttribute("title",GL1248);
+		
 		resendEmailAncr.getElement().setAttribute("style", "float: left;padding-left:5px;");
 		resendEmailAncr.setText(GL1249+GL_GRR_COMMA);
+		resendEmailAncr.getElement().setId("lnkResendEmail");
+		resendEmailAncr.getElement().setAttribute("alt",GL1249);
+		resendEmailAncr.getElement().setAttribute("title",GL1249);
+		
 		thanksLbl.getElement().setAttribute("style", "padding-left:5px;");
 		thanksLbl.setText(GL0498+GL_SPL_EXCLAMATION);
+		thanksLbl.getElement().setId("lblThanksLbl");
+		thanksLbl.getElement().setAttribute("alt",GL0498);
+		thanksLbl.getElement().setAttribute("title",GL0498);
+		
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
 				GL0177);
 		lblBeta.setText(GL0178);
+		lblBeta.getElement().setId("lblBeta");
+		lblBeta.getElement().setAttribute("alt",GL0178);
+		lblBeta.getElement().setAttribute("title",GL0178);
+		
 		discoverLink.setText(GL1748_1);
+		discoverLink.getElement().setId("lblDiscoverLink");
+		discoverLink.getElement().setAttribute("alt",GL1748_1);
+		discoverLink.getElement().setAttribute("title",GL1748_1);
+		
 		organizeLink.setText(GL1752);
+		organizeLink.getElement().setId("lblOrganizeLink");
+		organizeLink.getElement().setAttribute("alt",GL1752);
+		organizeLink.getElement().setAttribute("title",GL1752);
+		
 		teachLink.setText(GL1753);
+		teachLink.getElement().setId("lblTeachLink");
+		teachLink.getElement().setAttribute("alt",GL1753);
+		teachLink.getElement().setAttribute("title",GL1753);
+		
 		studyLink.setText(GL0182);//not used.
+		studyLink.getElement().setId("lblStudyLink");
+		studyLink.getElement().setAttribute("alt",GL0182);
+		studyLink.getElement().setAttribute("title",GL0182);
+		
 		loggedInfoLbl.setText(GL0183);
+		loggedInfoLbl.getElement().setId("lblLoggedInfo");
+		loggedInfoLbl.getElement().setAttribute("alt",GL0183);
+		loggedInfoLbl.getElement().setAttribute("title",GL0183);
+		
 		// classCodeTxtBox.setPlaceholder(MessageProperties.GL0184);
 //		StudyLbl.setText(GL0185);
 //		StudyLbl.getElement().setId("btnStudy");
 		registerLinkLbl.setText(GL0186);
+		registerLinkLbl.getElement().setId("btnRegister");
+		registerLinkLbl.getElement().setAttribute("alt",GL0186);
+		registerLinkLbl.getElement().setAttribute("title",GL0186);
+		
 		loginLink.setText(GL0187);
 		loginLink.getElement().setId("lblLogin");
-		registerLinkLbl.getElement().setId("btnRegister");
+		loginLink.getElement().setAttribute("alt",GL0187);
+		loginLink.getElement().setAttribute("title",GL0187);
+		
+		headerSearchBarVerPanel.getElement().setId("vsbHeaderSearchBarVerPanel");
+		headerSearchBarFloPanel.getElement().setId("fpnlHeaderSearchBarFloPanel");
+		editSearchTxtBox.getElement().setId("tbautoEditSearchTxtBox");
+		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
+		mainInnerDotsPanel.getElement().setId("pnlMainInnerDotsPanel");
+		dotsPanel.getElement().setId("pnlDotsPanel");
+		dropDownImg.getElement().setId("pnlDropDownImg");
+		signUpInfo.getElement().setId("fpnlSignUpInfo");
+		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
+		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
+		acctActivationPl.getElement().setId("epnlAcctActivationPl");
+		
+		
 		discoverLinkContainer.addMouseOverHandler(new DiscoverMouseOver());
 		discoverLinkContainer.addMouseOutHandler(new DiscoverMouseOut());
 		
@@ -555,6 +613,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		 * (PlaceTokens.PROFILE_PAGE))){ editSearchTxtBox.setText(""); }
 		 */
 		discoverLinkUrl = null;
+		gooruLearning.setId("lnkeleGooruLearning");
 	}
 
 	public void clearClasspageList() {
@@ -1192,7 +1251,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 			
 			imgUserProfile.getElement().setAttribute("onerror","imgError(this);");
 			imgUserProfile.setAltText(userDo.getUsername());
+			imgUserProfile.getElement().setId("imgUserProfile");
+			imgUserProfile.getElement().setAttribute("alt",userDo.getUsername());
+			imgUserProfile.getElement().setAttribute("title",userDo.getUsername());
 			imgUserProfile.setVisible(true);
+
 			LoginLinkContainer.setVisible(true);
 			loggedInfoLbl.setVisible(true);
 /*			if (userDo.getUsername().length() >= 15){

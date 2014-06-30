@@ -246,21 +246,49 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	 */
 	public void setTextAndIds(){
 		lblLoginHeading.setText(GL0187);
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",GL0187);
+		lblLoginHeading.getElement().setAttribute("title",GL0187);
+		
 		gmailButton.setText(GL0203);
 		gmailButton.getElement().setId("btnGmail");
-		forgotPwd.getElement().setId("lnkForgotPwd");
+		gmailButton.getElement().setAttribute("alt",GL0203);
+		gmailButton.getElement().setAttribute("title",GL0203);
+		
+		
         loginTxtBox.setPlaceholder(GL0202);
         loginTxtBox.getElement().setAttribute("placeholder", GL0202);
 		loginTxtBox.setFocus(true);
         passwordTxtBox.setPlaceholder(GL0204);
+       
         forgotPwd.setText(GL0205);
+        forgotPwd.getElement().setId("lnkForgotPwd");
+        forgotPwd.getElement().setAttribute("alt",GL0205);
+        forgotPwd.getElement().setAttribute("title",GL0205);
 //        lblKeepMeLogedIn.setText(GL0206);
         loginButton.setText(GL0187);
+        loginButton.getElement().setAttribute("alt",GL0187);
+        loginButton.getElement().setAttribute("title",GL0187);
+		
         ancRegisterHere.setText(GL0207+GL_SPL_EXCLAMATION);
+        ancRegisterHere.getElement().setAttribute("alt",GL0207);
+        ancRegisterHere.getElement().setAttribute("title",GL0207);
         ancRegisterHere.getElement().setId("lnkRegisterHere");
+       
         lblDoYouHaveAccount.setText(GL0208);
+        lblDoYouHaveAccount.getElement().setId("lblDoYouHaveAccount");
+        lblDoYouHaveAccount.getElement().setAttribute("alt",GL0208);
+        lblDoYouHaveAccount.getElement().setAttribute("title",GL0208);
+        
         lblOr.setText(GL0209);
+        lblOr.getElement().setId("lblOr");
+        lblOr.getElement().setAttribute("alt",GL0209);
+        lblOr.getElement().setAttribute("title",GL0209);
+        
         lblPleaseWait.setText(GL0242);
+        lblPleaseWait.getElement().setId("lblPleaseWait");
+        lblPleaseWait.getElement().setAttribute("alt",GL0242);
+        lblPleaseWait.getElement().setAttribute("title",GL0242);
         
         loginTxtBox.getElement().setId("tbLoginUsername");
         passwordTxtBox.getElement().setId("tbLoginPassword");
@@ -269,7 +297,16 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
         lblPleaseWait.setVisible(false);
         
         lblWelcomeBack.setText(GL0345);
-        lblLoginWithGooru.setText(GL0346);;
+        lblWelcomeBack.getElement().setId("lblWelcomeBack");
+        lblWelcomeBack.getElement().setAttribute("alt",GL0345);
+        lblWelcomeBack.getElement().setAttribute("title",GL0345);
+        
+        lblLoginWithGooru.setText(GL0346);
+        lblLoginWithGooru.getElement().setId("lblLoginWithGooru");
+        lblLoginWithGooru.getElement().setAttribute("alt",GL0346);
+        lblLoginWithGooru.getElement().setAttribute("title",GL0346);
+        
+        cancelButton.getElement().setId("btnCancelButton");
 	}
 
 	

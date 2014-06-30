@@ -34,6 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -49,6 +50,8 @@ public class AleartPopupVc extends Composite implements MessageProperties {
 	BlueButtonUc okBtnUc;
 	
 	@UiField Label storeResourcesText;
+	
+	@UiField HTMLPanel buttonContainer;
 	
 	private static final String IS_COLLECTIONS = GL1089+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
 
@@ -68,7 +71,15 @@ public class AleartPopupVc extends Composite implements MessageProperties {
 		appPopUp.show();
 		appPopUp.center();
 		okBtnUc.setText(GL0190);
+		okBtnUc.getElement().setId("btnOkBtnUc");
+		okBtnUc.getElement().setAttribute("alt",GL0190);
+		okBtnUc.getElement().setAttribute("title",GL0190);
+		
 		storeResourcesText.setText(GL1237);
+		storeResourcesText.getElement().setId("lblStoreResourcesText");
+		storeResourcesText.getElement().setAttribute("alt",GL1237);
+		storeResourcesText.getElement().setAttribute("title",GL1237);
+		buttonContainer.getElement().setId("pnlButtonContainer");
 	}
 
 	/**

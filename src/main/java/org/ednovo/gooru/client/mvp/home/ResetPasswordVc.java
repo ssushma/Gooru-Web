@@ -108,10 +108,30 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 		appPopUp.show();
 		appPopUp.center();
 		newPasswordText.setText(GL1254);
+		newPasswordText.getElement().setId("lblNewPasswordText");
+		newPasswordText.getElement().setAttribute("alt",GL1254);
+		newPasswordText.getElement().setAttribute("title",GL1254);
+		
 		newPwdLbl.setText(GL1255);
+		newPwdLbl.getElement().setId("lblNewPwdLbl");
+		newPwdLbl.getElement().setAttribute("alt",GL1255);
+		newPwdLbl.getElement().setAttribute("title",GL1255);
+		
 		confirmPwdLbl.setText(GL0427);
+		confirmPwdLbl.getElement().setId("lblConfirmPwdLbl");
+		confirmPwdLbl.getElement().setAttribute("alt",GL0427);
+		confirmPwdLbl.getElement().setAttribute("title",GL0427);
+		
 		sendMailBtnUc.setText(GL0141);
+		sendMailBtnUc.getElement().setAttribute("alt",GL0141);
+		sendMailBtnUc.getElement().setAttribute("title",GL0141);
+		
 		resetPwdCancelAnr.setText(GL0142);
+		resetPwdCancelAnr.getElement().setAttribute("alt",GL0142);
+		resetPwdCancelAnr.getElement().setAttribute("title",GL0142);
+		
+		newPwdValidationUc.getElement().setId("errlblNewPwdValidationUc");
+		
 		resetConfirmPwdTxtBox.getElement().setPropertyString("type", "password");
 		resetNewPwdTxtBox.getElement().setPropertyString("type", "password");
 		resetConfirmPwdTxtBox.getElement().setId("txtConfirmPwd");
@@ -119,6 +139,7 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 		newPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
 				.passwordErrorLabel());
 		newPwdValidationUc.setVisible(false);
+		confirmPwdValidationUc.getElement().setId("errlblConfirmPwdValidationUc");
 		confirmPwdValidationUc.setStyleName(HomeCBundle.INSTANCE.css()
 				.passwordErrorLabel());
 		confirmPwdValidationUc.setVisible(false);
@@ -147,6 +168,8 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 					if(result != null && result.containsKey("statusCode")&& Integer.parseInt(result.get("statusCode").toString())==400){ 
 						resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css().resetPwdTextError());
 						newPwdValidationUc.setText(StringUtil.generateMessage(GL0078,"Password"));
+						newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0078,"Password"));
+						newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0078,"Password"));
 						newPwdValidationUc.setVisible(true);
 					}else if (result != null && result.containsKey("tokenExpired") && result.get("tokenExpired") != null && result.get("tokenExpired").toString().length() > 0) {
 						appPopUp.hide();
@@ -223,6 +246,11 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 						.resetPwdTextError());
 				newPwdValidationUc.setText(StringUtil.generateMessage(GL0070,
 						"Password"));
+				newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0070,
+						"Password"));
+				newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0070,
+						"Password"));
+				
 				isValid = false;
 			}
 
@@ -233,6 +261,10 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 						.resetPwdTextError());
 				confirmPwdValidationUc.setText(StringUtil.generateMessage(GL0070,
 						"Confirm Password"));
+				confirmPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0070,
+						"Confirm Password"));
+				confirmPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0070,
+						"Confirm Password"));
 				isValid = false;
 			}
 			
@@ -242,6 +274,10 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 						.resetPwdTextError());
 				newPwdValidationUc.setText(StringUtil.generateMessage(GL0071,
 						"Password", "5"));
+				newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0071,
+						"Password", "5"));
+				newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0071,
+						"Password", "5"));
 				isValid = false;
 			}
 			
@@ -249,6 +285,8 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 				resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
 						.resetPwdTextError());
 				newPwdValidationUc.setText(StringUtil.generateMessage(GL0072, "Password", "<= 14"));
+				newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0072, "Password", "<= 14"));
+				newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0072, "Password", "<= 14"));
 				newPwdValidationUc.setVisible(true);
 				isValid = false;
 			}
@@ -260,11 +298,15 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 					resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
 							.resetPwdTextError());
 					newPwdValidationUc.setText(StringUtil.generateMessage(GL0073,"Password"));
+					newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0073,"Password"));
+					newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0073,"Password"));
 					newPwdValidationUc.setVisible(true);
 				}else{
 					resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
 							.resetPwdTextError());
 					newPwdValidationUc.setText(StringUtil.generateMessage(GL0073,"Password"));
+					newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0073,"Password"));
+					newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0073,"Password"));
 					newPwdValidationUc.setVisible(true);
 				}
 				
@@ -279,6 +321,10 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 						.resetPwdTextError());
 				confirmPwdValidationUc.setText(StringUtil.generateMessage(GL0069,
 						"Passwords"));
+				confirmPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0069,
+						"Passwords"));
+				confirmPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0069,
+						"Passwords"));
 				isValid = false;
 			}
 
@@ -290,6 +336,8 @@ public class ResetPasswordVc extends Composite implements MessageProperties {
 				resetNewPwdTxtBox.addStyleName(HomeCBundle.INSTANCE.css()
 						.resetPwdTextError());
 				newPwdValidationUc.setText(StringUtil.generateMessage(GL0073,"Password"));
+				newPwdValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0073,"Password"));
+				newPwdValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0073,"Password"));
 				isValid = false;
 			}
 

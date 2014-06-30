@@ -38,6 +38,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -54,6 +55,7 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 	
 	@UiField
 	Label resetPasswordLbl;
+	@UiField FlowPanel buttonContainer;
 	
 	private static final String LOGIN_WITH_NEW_PWD = GL_SPL_EXCLAMATION+" "+GL1256;
 
@@ -75,9 +77,18 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 		appPopUp.setStyleName("removeResourcePopup");
 		appPopUp.setContent(GL0062, uiBinder.createAndBindUi(this));
 		resetPasswordLbl.setText(userName+LOGIN_WITH_NEW_PWD);
+		resetPasswordLbl.getElement().setId("lblResetPasswordLbl");
+		resetPasswordLbl.getElement().setAttribute("alt",userName+LOGIN_WITH_NEW_PWD);
+		resetPasswordLbl.getElement().setAttribute("title",userName+LOGIN_WITH_NEW_PWD);
+		
+		buttonContainer.getElement().setId("fpnlButtonContainer");
+		
 		appPopUp.show();
 		appPopUp.center();
 		okBtnUc.setText(GL0190);
+		okBtnUc.getElement().setId("btnOkBtnUc");
+		okBtnUc.getElement().setAttribute("alt",GL0190);
+		okBtnUc.getElement().setAttribute("title",GL0190);
 		Window.enableScrolling(false);
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 	}

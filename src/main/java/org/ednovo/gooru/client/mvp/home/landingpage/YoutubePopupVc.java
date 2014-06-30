@@ -66,6 +66,11 @@ public class YoutubePopupVc extends PopupPanel implements MessageProperties{
 		this.show();
 		this.center();
 		titleText.setText(GL1331);
+		titleText.getElement().setId("lblTitleText");
+		titleText.getElement().setAttribute("alt",GL1331);
+		titleText.getElement().setAttribute("title",GL1331);
+		closeButton.getElement().setId("fpnlCloseButton");
+		youtubeVideoContainer.getElement().setId("pnlYoutubeVideoContainer");
 	}
 
 	@Override

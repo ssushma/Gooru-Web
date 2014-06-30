@@ -36,6 +36,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -48,6 +49,8 @@ public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
 	@UiField Button cancelAnr,okButtonUc;
 
 	@UiField Label messageTextLabel,removingText;
+	
+	@UiField FlowPanel buttonContainer;
 
 	private static WaitPopupVcUiBinder uiBinder = GWT.create(WaitPopupVcUiBinder.class);
 
@@ -68,12 +71,28 @@ public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
 		setStyleName("deleteResourcePopup");
 		//okButtonUc.setStyleName("overRideBlueButtonDelete");
 		messageTextLabel.setText(entityInfo);
+		messageTextLabel.getElement().setId("lblMessageTextLabel");
+		messageTextLabel.getElement().setAttribute("alt",entityInfo);
+		messageTextLabel.getElement().setAttribute("title",entityInfo);
+		
 		cancelAnr.setText(GL0142);
+		cancelAnr.getElement().setId("lnkCancel");
+		cancelAnr.getElement().setAttribute("alt",GL0142);
+		cancelAnr.getElement().setAttribute("title",GL0142);
+		
 		okButtonUc.setText(GL0190);
 		okButtonUc.getElement().setId("btnOk");
-		cancelAnr.getElement().setId("lnkCancel");
+		okButtonUc.getElement().setAttribute("alt",GL0190);
+		okButtonUc.getElement().setAttribute("title",GL0190);
+		
 		removingText.setText(GL1021);
+		removingText.getElement().setId("lblRemovingText");
+		removingText.getElement().setAttribute("alt",GL1021);
+		removingText.getElement().setAttribute("title",GL1021);
 		removingText.setVisible(false);
+	
+		buttonContainer.getElement().setId("fpnlButtonContainer");
+		
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));

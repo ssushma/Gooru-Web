@@ -64,9 +64,25 @@ public class ResetTimeoutVc extends PopupPanel  implements MessageProperties {
 		appPopUp.show();
 		appPopUp.center();
 		newPwdLbl.setText(GL1254);
+		newPwdLbl.getElement().setId("lblNewPwdLbl");
+		newPwdLbl.getElement().setAttribute("alt",GL1254);
+		newPwdLbl.getElement().setAttribute("title",GL1254);
+		
 		timeOutText.setText(GL1257);
+		timeOutText.getElement().setId("lblTimeOutText");
+		timeOutText.getElement().setAttribute("alt",GL1257);
+		timeOutText.getElement().setAttribute("title",GL1257);
+		
 		requestNewText.setText(GL1258);
+		requestNewText.getElement().setId("lblRequestNewText");
+		requestNewText.getElement().setAttribute("alt",GL1258);
+		requestNewText.getElement().setAttribute("title",GL1258);
+		
 		forgotPwdLbl.setText(GL1259);
+		forgotPwdLbl.getElement().setId("lblForgotPwdLbl");
+		forgotPwdLbl.getElement().setAttribute("alt",GL1259);
+		forgotPwdLbl.getElement().setAttribute("title",GL1259);
+		
 		forgotPwdLbl.addClickHandler(new OnResetPasswordVc());
 	}
 	

@@ -87,11 +87,32 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 		socialContent = new HTMLPanel("");
 		languageContent = new HTMLPanel("");
 		loadingImage = new HTMLPanel("");
+		
 		mathTab.getElement().setInnerText(GL1001);
+		mathTab.getElement().setId("epnlMathTab");
+		mathTab.getElement().setAttribute("alt",GL1001);
+		mathTab.getElement().setAttribute("title",GL1001);
+		
 		scienceTab.getElement().setInnerText(GL1000);
+		scienceTab.getElement().setId("epnlScienceTab");
+		scienceTab.getElement().setAttribute("alt",GL1000);
+		scienceTab.getElement().setAttribute("title",GL1000);
+		
 		socialTab.getElement().setInnerText(GL1002);
+		socialTab.getElement().setId("epnlSocialTab");
+		socialTab.getElement().setAttribute("alt",GL1002);
+		socialTab.getElement().setAttribute("title",GL1002);
+		
 		languageTab.getElement().setInnerText(GL1003);
+		languageTab.getElement().setId("epnLanguageTab");
+		languageTab.getElement().setAttribute("alt",GL1003);
+		languageTab.getElement().setAttribute("title",GL1003);
+		
 		featuredTab.getElement().setInnerText(GL1009);
+		featuredTab.getElement().setId("epnlFeaturedTab");
+		featuredTab.getElement().setAttribute("alt",GL1009);
+		featuredTab.getElement().setAttribute("title",GL1009);
+		
 		loadingImage.setStyleName(landingPageStyle.loadingImage());
 		featuredContainer.add(loadingImage);
 		teachersPickPanelLabel = new Label(GL0198);
@@ -99,6 +120,8 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 		getTeacherPickCollections(MATH_TAB);
 		AppClientFactory.getEventBus().addHandler(SetTexasAccountEvent.TYPE,setTexasAccountHandler);
 		panelTeachersPick.getElement().setId("panelTeachersPick");
+		teachersPickPanel.getElement().setId("pnlTeachersPickPanel");
+		featuredContainer.getElement().setId("pnlFeaturedContainer");
 	}
 	
 	SetTexasAccountHandler setTexasAccountHandler=new SetTexasAccountHandler(){
