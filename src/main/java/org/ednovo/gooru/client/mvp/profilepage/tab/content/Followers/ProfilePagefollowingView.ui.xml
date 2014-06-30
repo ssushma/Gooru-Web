@@ -7,10 +7,14 @@
 	    <g:InlineLabel styleName="{ProfilePageStyle.inlineStyle}" ui:field="follwingTextMessage"/>
 	    <g:InlineLabel styleName="{ProfilePageStyle.inlineStyle}" ui:field="follwingTextMessageDes"/>
 	</g:HTMLPanel>
-	<g:ScrollPanel ui:field="followingScrollPanel" styleName="{ProfilePageStyle.scrollStyle}">
+
 		<g:HTMLPanel styleName="{ProfilePageStyle.profilepageFollwoingContent}" ui:field="userConatiner">
 		 </g:HTMLPanel>
-	</g:ScrollPanel>
+
+	
+			<g:HTMLPanel styleName="{ProfilePageStyle.centerAlignBtn}">
+						<g:Button styleName="secondary" ui:field="seeMorebtn">See More</g:Button>
+					</g:HTMLPanel>
 	
 	</g:HTMLPanel>
 </ui:UiBinder> 

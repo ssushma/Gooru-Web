@@ -90,9 +90,9 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 			}
 		});
 
-		contributorImage.setHeight("46px");
+		/*		contributorImage.setHeight("46px");
 		contributorImage.setWidth("46px");
-/*		
+		
 		if(courseDo.getCreator()!=null) {
 			courseAuthor.setVisible(true);
 			String authorName = "";
@@ -151,8 +151,9 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 		} else {
 			setParentId(courseDo.getParentId());
 		}
-*/		courseAuthor.setVisible(false);
 		contributorImage.setUrl(DEFAULT_USER_IMG);
+*/		courseAuthor.setVisible(false);
+		contributorImage.setVisible(false);
 		setCourseId(profileLibraryDo.getGooruOid());
 	}
 	

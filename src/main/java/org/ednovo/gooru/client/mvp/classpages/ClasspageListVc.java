@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -59,6 +60,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.ScrollEvent;
 import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -90,7 +93,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class ClasspageListVc extends PopupPanel implements MessageProperties {
+public class ClasspageListVc extends PopupPanel {
 
 	@UiField
 	Label lblLoading, lblNoClasspageYet,lblTitle;
@@ -130,15 +133,15 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	private boolean whileDeleting = false;
 	private int resultSize = 0;
 
-	private static ClasspageListVcUiBinder uiBinder = GWT
-			.create(ClasspageListVcUiBinder.class);
-
+	private static ClasspageListVcUiBinder uiBinder = GWT.create(ClasspageListVcUiBinder.class);
 	interface ClasspageListVcUiBinder extends UiBinder<Widget, ClasspageListVc> {
 	}
 
 	@UiField(provided = true)
 	ClasspageListPopupViewCBundle res;
-
+	
+	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	private NewClasspagePopupView newPopup = null;
 
 	/**
@@ -339,34 +342,34 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 	 * 
 	 */
 	private void setLabels() {
-		lblLoading.setText(GL0110 + GL_SPL_FULLSTOP + GL_SPL_FULLSTOP
-				+ GL_SPL_FULLSTOP);
+		lblLoading.setText(i18n.GL0110()+ i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
+				+ i18n.GL_SPL_FULLSTOP());
 		lblLoading.getElement().setId("lblLoading");
-		lblLoading.getElement().setAttribute("alt",GL0110 + GL_SPL_FULLSTOP + GL_SPL_FULLSTOP
-				+ GL_SPL_FULLSTOP);
-		lblLoading.getElement().setAttribute("title",GL0110 + GL_SPL_FULLSTOP + GL_SPL_FULLSTOP
-				+ GL_SPL_FULLSTOP);
+		lblLoading.getElement().setAttribute("alt",i18n.GL0110() + i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
+				+ i18n.GL_SPL_FULLSTOP());
+		lblLoading.getElement().setAttribute("title",i18n.GL0110() + i18n.GL_SPL_FULLSTOP() + i18n.GL_SPL_FULLSTOP()
+				+ i18n.GL_SPL_FULLSTOP());
 		
-		ancNewClasspage.setText(GL0115);
+		ancNewClasspage.setText(i18n.GL0115());
 		ancNewClasspage.getElement().setId("lnkNewClassPage");
-		ancNewClasspage.getElement().setAttribute("alt",GL0115);
-		ancNewClasspage.getElement().setAttribute("title",GL0115);
+		ancNewClasspage.getElement().setAttribute("alt",i18n.GL0115());
+		ancNewClasspage.getElement().setAttribute("title",i18n.GL0115());
 		
-		lblNoClasspageYet.setText(GL0117);
+		lblNoClasspageYet.setText(i18n.GL0117());
 		lblNoClasspageYet.getElement().setId("lblNoClasspageYet");
-		lblNoClasspageYet.getElement().setAttribute("alt",GL0117);
-		lblNoClasspageYet.getElement().setAttribute("title",GL0117);
+		lblNoClasspageYet.getElement().setAttribute("alt",i18n.GL0117());
+		lblNoClasspageYet.getElement().setAttribute("title",i18n.GL0117());
 		
-		inLineLblCheckOut.setText(GL0118);
+		inLineLblCheckOut.setText(i18n.GL0118());
 		inLineLblCheckOut.getElement().setId("spnCheckOut");
-		inLineLblCheckOut.getElement().setAttribute("alt",GL0118);
-		inLineLblCheckOut.getElement().setAttribute("title",GL0118);
+		inLineLblCheckOut.getElement().setAttribute("alt",i18n.GL0118());
+		inLineLblCheckOut.getElement().setAttribute("title",i18n.GL0118());
 
 		enterLbl.addClickHandler(new OnEnterClassCodeClick());
-		enterLbl.setText(GL1065);
+		enterLbl.setText(i18n.GL1065());
 		enterLbl.getElement().setId("btnEnter");
-		enterLbl.getElement().setAttribute("alt",GL1065);
-		enterLbl.getElement().setAttribute("title",GL1065);
+		enterLbl.getElement().setAttribute("alt",i18n.GL1065());
+		enterLbl.getElement().setAttribute("title",i18n.GL1065());
 		classCodeTxtBox.addKeyPressHandler(new KeyPressHandler() {
 			
 			@Override
@@ -374,11 +377,19 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 				setButtonStatus("active");
 			}
 		});
+		classCodeTxtBox.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				setButtonStatus("active");
+			}
+		});
+		
 
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
-		classCodeTxtBox.setPlaceholder(GL1762_1);
+		classCodeTxtBox.setPlaceholder(i18n.GL1762_1());
 
 		setButtonStatus("active");
 		
@@ -401,7 +412,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 			setButtonStatus("active");
 			if (classCodeTxtBox.getText().trim().equalsIgnoreCase("")
 					|| classCodeTxtBox.getText().trim() == null) {
-				alertMessageUc = new AlertMessageUc(GL0061, new Label(GL0243));
+				alertMessageUc = new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
 				ClickHandler alertHandler = new ClickHandler() {
 
 					@Override
@@ -632,6 +643,7 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 											StudentAssignmentView
 													.setPublicPageActive();
 										} else {
+											System.out.println("iam in classpagelistvc::setPublicPagePending");
 											StudentAssignmentView
 													.setPublicPagePending();
 										}

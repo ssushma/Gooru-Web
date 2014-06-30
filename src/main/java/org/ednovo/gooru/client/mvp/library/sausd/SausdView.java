@@ -292,7 +292,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 			@Override
 			public void clickOnCourse(ArrayList<ProfileLibraryDo> unitList, String courseId, ProfileLibraryDo profileLibraryDo) {
 				showCourseBanner(profileLibraryDo, true);
-				setSubjectUnits(profileLibraryDo);
+				setSubjectUnits(unitList);
 			}
 		};
 		courseTabs.add(sausdMenuNav);
@@ -303,9 +303,9 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		courseImage.setHeight("300px");
 	}
 	
-	private void setSubjectUnits(ProfileLibraryDo profileLibraryDo) {
+	private void setSubjectUnits(ArrayList<ProfileLibraryDo> unitList) {
 		leftNav.clear();
-		setUnitList(profileLibraryDo.getCollectionItems());
+		setUnitList(unitList);
 	}
 	
 	private void showCourseBanner(ProfileLibraryDo profileLibraryDo, boolean isCoursePageVisible) {

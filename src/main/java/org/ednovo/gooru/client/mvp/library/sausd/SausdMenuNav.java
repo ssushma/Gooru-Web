@@ -88,7 +88,7 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 		initWidget(uiBinder.createAndBindUi(this));
 		setPlaceToken(placeToken);
 		setAssets();
-		
+		learnPanel.setVisible(false);
 		sciencePanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -163,11 +163,21 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryCoursesList(subjectCode, "public", "0", new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				setTaxonomyData(subjectName, subjectCode, profileLibraryListDo);
+			}
+		});
+	}
+
+	public void getCourse(final String subjectCode, final String subjectName, final ProfileLibraryDo profileLibraryDo) {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+			@Override
+			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
+				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);
+				//setTaxonomyData(subjectName, subjectCode, profileLibraryListDo);
 			}
 		});
 	}
@@ -198,7 +208,8 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 						@Override
 						public void onClick(ClickEvent event) {
 							setTabSelection(subjectname);
-							clickOnCourse(profileLibraryDo.getCollectionItems(), courseId, profileLibraryDo);
+							getCourse(courseId, subjectname, profileLibraryDo);
+							//clickOnCourse(profileLibraryDo.getCollectionItems(), courseId, profileLibraryDo);
 						}
 					});
 					if(subjectname.equalsIgnoreCase(SCIENCE)) {

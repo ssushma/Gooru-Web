@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.DeleteP
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.uc.suggestbox.widget.AutoSuggestForm;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
@@ -87,10 +88,11 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: Gooru Team
  */
-public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> implements IsClassListView, MessageProperties, SelectionHandler<SuggestOracle.Suggestion> {
+public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> implements IsClassListView, SelectionHandler<SuggestOracle.Suggestion> {
 
 	private static ClassListViewUiBinder uiBinder = GWT
 			.create(ClassListViewUiBinder.class);
+    CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	@UiField(provided = true)
 	ClasslistpageCBundle res;
 	
@@ -207,148 +209,148 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		txtClasspageLinkShare.setReadOnly(true);
 		txtClasspageLinkShare.getElement().setId("txtClassPageLinkShare");
 		
-		btnInvite.setText(GL0944);
+		btnInvite.setText(i18n.GL0944());
 		btnInvite.getElement().setId("btnInvite");
-		btnInvite.getElement().setAttribute("alt",GL0944);
-		btnInvite.getElement().setAttribute("title",GL0944);
+		btnInvite.getElement().setAttribute("alt",i18n.GL0944());
+		btnInvite.getElement().setAttribute("title",i18n.GL0944());
 		btnInvite.setEnabled(true);
 		btnInvite.setVisible(true);
 		
-		inviteOnlyTxt.getElement().setInnerHTML(GL1589);
+		inviteOnlyTxt.getElement().setInnerHTML(i18n.GL1589());
 		inviteOnlyTxt.getElement().setId("lblInviteOnly");
-		inviteOnlyTxt.getElement().setAttribute("alt",GL1589);
-		inviteOnlyTxt.getElement().setAttribute("title",GL1589);
+		inviteOnlyTxt.getElement().setAttribute("alt",i18n.GL1589());
+		inviteOnlyTxt.getElement().setAttribute("title",i18n.GL1589());
 		
-		publicTitleTxt.getElement().setInnerHTML(GL1621);
+		publicTitleTxt.getElement().setInnerHTML(i18n.GL1621());
 		publicTitleTxt.getElement().setId("lblPublicTitle");
-		publicTitleTxt.getElement().setAttribute("alt",GL1621);
-		publicTitleTxt.getElement().setAttribute("title",GL1621);
+		publicTitleTxt.getElement().setAttribute("alt",i18n.GL1621());
+		publicTitleTxt.getElement().setAttribute("title",i18n.GL1621());
 		
 		privateMsgPanel.getElement().setId("pnlPrivateMsg");
 		
-		privateMsgDesc.setText(GL1599);
+		privateMsgDesc.setText(i18n.GL1599());
 		privateMsgDesc.getElement().setId("spnPrivateMsgDesc");
-		privateMsgDesc.getElement().setAttribute("alt",GL1599);
-		privateMsgDesc.getElement().setAttribute("title",GL1599);
+		privateMsgDesc.getElement().setAttribute("alt",i18n.GL1599());
+		privateMsgDesc.getElement().setAttribute("title",i18n.GL1599());
 		
 		//publicClassTxt.getElement().setInnerHTML(GL1601);
 		publicClassTxt.getElement().setId("pnlPublicClass");
 		publicDescTxt.getElement().setId("spnPublicDesc");
 		publicMsgPanel.getElement().setId("pnlPublicMsg");
 		//publicDescTxt.setText(GL1602);
-		publicTxt.getElement().setInnerHTML(GL1621+GL_SPL_EXCLAMATION);
+		publicTxt.getElement().setInnerHTML(i18n.GL1621()+i18n.GL_SPL_EXCLAMATION());
 		publicTxt.getElement().setId("pnlPublic");
-		publicTxt.getElement().setAttribute("alt",GL1621);
-		publicTxt.getElement().setAttribute("title",GL1621);
+		publicTxt.getElement().setAttribute("alt",i18n.GL1621());
+		publicTxt.getElement().setAttribute("title",i18n.GL1621());
 		
-		publicTxtDesc.setText(GL1599);
+		publicTxtDesc.setText(i18n.GL1599());
 		publicTxtDesc.getElement().setId("spnPublicTxtDesc");
-		publicTxtDesc.getElement().setAttribute("alt",GL1599);
-		publicTxtDesc.getElement().setAttribute("title",GL1599);
+		publicTxtDesc.getElement().setAttribute("alt",i18n.GL1599());
+		publicTxtDesc.getElement().setAttribute("title",i18n.GL1599());
 		
-		invite.getElement().setInnerHTML(GL1589);
+		invite.getElement().setInnerHTML(i18n.GL1589());
 		invite.getElement().setId("pblInvite");
-		invite.getElement().setAttribute("alt",GL1589);
-		invite.getElement().setAttribute("title",GL1589);
+		invite.getElement().setAttribute("alt",i18n.GL1589());
+		invite.getElement().setAttribute("title",i18n.GL1589());
 		
-		inviteDesc.setText(GL1604);
+		inviteDesc.setText(i18n.GL1604());
 		inviteDesc.getElement().setId("spnInviteDesc");
-		inviteDesc.getElement().setAttribute("alt",GL1604);
-		inviteDesc.getElement().setAttribute("title",GL1604);
+		inviteDesc.getElement().setAttribute("alt",i18n.GL1604());
+		inviteDesc.getElement().setAttribute("title",i18n.GL1604());
 		
-		titleTxt.getElement().setInnerHTML(GL1590);
+		titleTxt.getElement().setInnerHTML(i18n.GL1590());
 		titleTxt.getElement().setId("pnlTitle");
-		titleTxt.getElement().setAttribute("alt",GL1590);
-		titleTxt.getElement().setAttribute("title",GL1590);
+		titleTxt.getElement().setAttribute("alt",i18n.GL1590());
+		titleTxt.getElement().setAttribute("title",i18n.GL1590());
 		
-		emailTxt.getElement().setInnerHTML(GL1591);
+		emailTxt.getElement().setInnerHTML(i18n.GL1591());
 		emailTxt.getElement().setId("pnlEmail");
-		emailTxt.getElement().setAttribute("alt",GL1591);
-		emailTxt.getElement().setAttribute("title",GL1591);
+		emailTxt.getElement().setAttribute("alt",i18n.GL1591());
+		emailTxt.getElement().setAttribute("title",i18n.GL1591());
 		
-		shareTxt.getElement().setInnerHTML(GL1592);
+		shareTxt.getElement().setInnerHTML(i18n.GL1592());
 		shareTxt.getElement().setId("pnlShare");
-		shareTxt.getElement().setAttribute("alt",GL1592);
-		shareTxt.getElement().setAttribute("title",GL1592);
+		shareTxt.getElement().setAttribute("alt",i18n.GL1592());
+		shareTxt.getElement().setAttribute("title",i18n.GL1592());
 		
-		shareTitle.getElement().setInnerHTML(GL1594);
+		shareTitle.getElement().setInnerHTML(i18n.GL1594());
 		shareTitle.getElement().setId("pnlShareTitle");
-		shareTitle.getElement().setAttribute("alt",GL1594);
-		shareTitle.getElement().setAttribute("title",GL1594);
+		shareTitle.getElement().setAttribute("alt",i18n.GL1594());
+		shareTitle.getElement().setAttribute("title",i18n.GL1594());
 		
-		shareDesc.setText(GL1595);
+		shareDesc.setText(i18n.GL1595());
 		shareDesc.getElement().setId("spnShareDesc");
-		shareDesc.getElement().setAttribute("alt",GL1595);
-		shareDesc.getElement().setAttribute("title",GL1595);
+		shareDesc.getElement().setAttribute("alt",i18n.GL1595());
+		shareDesc.getElement().setAttribute("title",i18n.GL1595());
 		
-		joinTxt.getElement().setInnerHTML(GL1596);
+		joinTxt.getElement().setInnerHTML(i18n.GL1596());
 		joinTxt.getElement().setId("pnlJoinText");
-		joinTxt.getElement().setAttribute("alt",GL1596);
-		joinTxt.getElement().setAttribute("title",GL1596);
+		joinTxt.getElement().setAttribute("alt",i18n.GL1596());
+		joinTxt.getElement().setAttribute("title",i18n.GL1596());
 		
-		manageTxt.getElement().setInnerHTML(GL1597);
+		manageTxt.getElement().setInnerHTML(i18n.GL1597());
 		manageTxt.getElement().setId("pnlManageText");
-		manageTxt.getElement().setAttribute("alt",GL1597);
-		manageTxt.getElement().setAttribute("title",GL1597);
+		manageTxt.getElement().setAttribute("alt",i18n.GL1597());
+		manageTxt.getElement().setAttribute("title",i18n.GL1597());
 		
-		trackTxt.getElement().setInnerHTML(GL1598);
+		trackTxt.getElement().setInnerHTML(i18n.GL1598());
 		trackTxt.getElement().setId("pnlTrackText");
-		trackTxt.getElement().setAttribute("alt",GL1598);
-		trackTxt.getElement().setAttribute("title",GL1598);
+		trackTxt.getElement().setAttribute("alt",i18n.GL1598());
+		trackTxt.getElement().setAttribute("title",i18n.GL1598());
 		
-		inviteTextDesc.setText(GL1600);
+		inviteTextDesc.setText(i18n.GL1600());
 		inviteTextDesc.getElement().setId("spnInviteTextDesc");
-		inviteTextDesc.getElement().setAttribute("alt",GL1600);
-		inviteTextDesc.getElement().setAttribute("title",GL1600);
+		inviteTextDesc.getElement().setAttribute("alt",i18n.GL1600());
+		inviteTextDesc.getElement().setAttribute("title",i18n.GL1600());
 		
 		inviteTxt.getElement().setId("pnlInvite");
 		//inviteTxt.getElement().setInnerHTML(GL1589);
-		shareTxtDesc.setText(GL1593);
+		shareTxtDesc.setText(i18n.GL1593());
 		shareTxtDesc.getElement().setId("spnShareTxtDesc");
-		shareTxtDesc.getElement().setAttribute("alt",GL1593);
-		shareTxtDesc.getElement().setAttribute("title",GL1593);
+		shareTxtDesc.getElement().setAttribute("alt",i18n.GL1593());
+		shareTxtDesc.getElement().setAttribute("title",i18n.GL1593());
 		
-		emailShareBtn.setText(GL0212);
+		emailShareBtn.setText(i18n.GL0212());
 		emailShareBtn.getElement().setId("btnEmaillShare");
-		emailShareBtn.getElement().setAttribute("alt",GL0212);
-		emailShareBtn.getElement().setAttribute("title",GL0212);
+		emailShareBtn.getElement().setAttribute("alt",i18n.GL0212());
+		emailShareBtn.getElement().setAttribute("title",i18n.GL0212());
 		
-		assignHeader.getElement().setInnerText(GL1584);
+		assignHeader.getElement().setInnerText(i18n.GL1584());
 		assignHeader.getElement().setId("pnlAssignHeader");
-		assignHeader.getElement().setAttribute("alt",GL1584);
-		assignHeader.getElement().setAttribute("title",GL1584);
+		assignHeader.getElement().setAttribute("alt",i18n.GL1584());
+		assignHeader.getElement().setAttribute("title",i18n.GL1584());
 		
-		assignSubHeader.getElement().setInnerText(GL1585);
+		assignSubHeader.getElement().setInnerText(i18n.GL1585());
 		assignSubHeader.getElement().setId("pnlAssignSubHeader");
-		assignSubHeader.getElement().setAttribute("alt",GL1585);
-		assignSubHeader.getElement().setAttribute("title",GL1585);
+		assignSubHeader.getElement().setAttribute("alt",i18n.GL1585());
+		assignSubHeader.getElement().setAttribute("title",i18n.GL1585());
 
 		checkbox.getElement().setId("schkInvitePublic");
 		
-		lblPleaseWait.setText(GL1137);
+		lblPleaseWait.setText(i18n.GL1137());
 		lblPleaseWait.getElement().setId("lblPleaseWait");
-		lblPleaseWait.getElement().setAttribute("alt",GL1137);
-		lblPleaseWait.getElement().setAttribute("title",GL1137);
+		lblPleaseWait.getElement().setAttribute("alt",i18n.GL1137());
+		lblPleaseWait.getElement().setAttribute("title",i18n.GL1137());
 		
-		lblText.setText(StringUtil.generateMessage(GL1528, studentsLimitCount+""));
+		lblText.setText(StringUtil.generateMessage(i18n.GL1528(), studentsLimitCount+""));
 		lblText.getElement().setId("lblText");
-		lblText.getElement().setAttribute("alt",StringUtil.generateMessage(GL1528, studentsLimitCount+""));
-		lblText.getElement().setAttribute("title",StringUtil.generateMessage(GL1528, studentsLimitCount+""));
+		lblText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1528(), studentsLimitCount+""));
+		lblText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1528(), studentsLimitCount+""));
 		
-		lblPii.setText(GL1892);
+		lblPii.setText(i18n.GL1892());
 		lblPii.getElement().setId("spnPii");
-		lblPii.getElement().setAttribute("alt",GL1892);
-		lblPii.getElement().setAttribute("title",GL1892);
+		lblPii.getElement().setAttribute("alt",i18n.GL1892());
+		lblPii.getElement().setAttribute("title",i18n.GL1892());
 		
-		ancprivacy.setText(GL1893);
+		ancprivacy.setText(i18n.GL1893());
 		ancprivacy.getElement().setId("lnkPrivacy");
-		ancprivacy.getElement().setAttribute("alt",GL1893);
-		ancprivacy.getElement().setAttribute("title",GL1893);
+		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
+		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
 		
-		toUsText.setText(GL1894);
+		toUsText.setText(i18n.GL1894());
 		toUsText.getElement().setId("spnUsText");
-		toUsText.getElement().setAttribute("alt",GL1894);
-		toUsText.getElement().setAttribute("title",GL1894);
+		toUsText.getElement().setAttribute("alt",i18n.GL1894());
+		toUsText.getElement().setAttribute("title",i18n.GL1894());
 		
 		privacyPolicyPanel.setVisible(false);
 		privacyPolicyPanel.getElement().setId("pnlPrivacyPolicy");
@@ -363,15 +365,15 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		panelMembersList.setVisible(false);
 		panelMembersList.getElement().setId("pnlMembersList");
 		
-		lblPendingMembers.setText(GL1525);
+		lblPendingMembers.setText(i18n.GL1525());
 		lblPendingMembers.getElement().setId("lblPendingMembers");
-		lblPendingMembers.getElement().setAttribute("alt",GL1525);
-		lblPendingMembers.getElement().setAttribute("title",GL1525);
+		lblPendingMembers.getElement().setAttribute("alt",i18n.GL1525());
+		lblPendingMembers.getElement().setAttribute("title",i18n.GL1525());
 		
-		lblActiveMembers.setText(GL1526);
+		lblActiveMembers.setText(i18n.GL1526());
 		lblActiveMembers.getElement().setId("lblActiveMembers");
-		lblActiveMembers.getElement().setAttribute("alt",GL1526);
-		lblActiveMembers.getElement().setAttribute("title",GL1526);
+		lblActiveMembers.getElement().setAttribute("alt",i18n.GL1526());
+		lblActiveMembers.getElement().setAttribute("title",i18n.GL1526());
 		
 		lblPendingPleaseWait.setVisible(false);
 		lblActivePleaseWait.setVisible(false);
@@ -380,31 +382,31 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		lblPendingMembers.setVisible(false);
 		lblActiveMembers.setVisible(false);
 		
-		lblPendingPleaseWait.setText(GL0339.toLowerCase());
+		lblPendingPleaseWait.setText(i18n.GL0339().toLowerCase());
 		lblPendingPleaseWait.getElement().setId("lblPendingPleaseWait");
-		lblPendingPleaseWait.getElement().setAttribute("alt",GL0339.toLowerCase());
-		lblPendingPleaseWait.getElement().setAttribute("title",GL0339.toLowerCase());
+		lblPendingPleaseWait.getElement().setAttribute("alt",i18n.GL0339().toLowerCase());
+		lblPendingPleaseWait.getElement().setAttribute("title",i18n.GL0339().toLowerCase());
 		
-		lblActivePleaseWait.setText(GL0339.toLowerCase());
+		lblActivePleaseWait.setText(i18n.GL0339().toLowerCase());
 		lblActivePleaseWait.getElement().setId("lblActivePleaseWait");
-		lblActivePleaseWait.getElement().setAttribute("alt",GL0339.toLowerCase());
-		lblActivePleaseWait.getElement().setAttribute("title",GL0339.toLowerCase());
+		lblActivePleaseWait.getElement().setAttribute("alt",i18n.GL0339().toLowerCase());
+		lblActivePleaseWait.getElement().setAttribute("title",i18n.GL0339().toLowerCase());
 		
-		ancPendingListSeeMore.setText(GL0508.toLowerCase());
+		ancPendingListSeeMore.setText(i18n.GL0508().toLowerCase());
 		ancPendingListSeeMore.getElement().setId("lnkPendingListSeeMore");
-		ancPendingListSeeMore.getElement().setAttribute("alt",GL0508.toLowerCase());
-		ancPendingListSeeMore.getElement().setAttribute("title",GL0508.toLowerCase());
+		ancPendingListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
+		ancPendingListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
 		
 		
-		ancActiveListSeeMore.setText(GL0508.toLowerCase());
+		ancActiveListSeeMore.setText(i18n.GL0508().toLowerCase());
 		ancActiveListSeeMore.getElement().setId("lnkActiveListSeeMore");
-		ancActiveListSeeMore.getElement().setAttribute("alt",GL0508.toLowerCase());
-		ancActiveListSeeMore.getElement().setAttribute("title",GL0508.toLowerCase());
+		ancActiveListSeeMore.getElement().setAttribute("alt",i18n.GL0508().toLowerCase());
+		ancActiveListSeeMore.getElement().setAttribute("title",i18n.GL0508().toLowerCase());
 		
-		lblActiveMembersDesc.setText(GL1633);
+		lblActiveMembersDesc.setText(i18n.GL1633());
 		lblActiveMembersDesc.getElement().setId("lblActiveMembersDesc");
-		lblActiveMembersDesc.getElement().setAttribute("alt",GL1633);
-		lblActiveMembersDesc.getElement().setAttribute("title",GL1633);
+		lblActiveMembersDesc.getElement().setAttribute("alt",i18n.GL1633());
+		lblActiveMembersDesc.getElement().setAttribute("title",i18n.GL1633());
 		lblActiveMembersDesc.setVisible(false);
 		
 		panelActiveMembersList.getElement().setId("ActiveMembersList");
@@ -716,7 +718,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		if (currentStudentsCount > studentsLimitCount){
 			lblPleaseWait.setVisible(false);
 			btnInvite.setVisible(true);
-			showErrorMessage(StringUtil.generateMessage(GL1523, ""+studentsLimitCount));
+			showErrorMessage(StringUtil.generateMessage(i18n.GL1523(), ""+studentsLimitCount));
 			return;
 		}
 				
@@ -728,7 +730,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			if (!from){
 				lblPleaseWait.setVisible(false);
 				btnInvite.setVisible(true);
-				showErrorMessage(StringUtil.generateMessage(GL1019, emailID));
+				showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailID));
 				return;
 			}
 		}
@@ -739,7 +741,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 				if (emailId.equalsIgnoreCase(AppClientFactory.getLoggedInUser().getEmailId())){
 					lblPleaseWait.setVisible(false);
 					btnInvite.setVisible(true);
-					showErrorMessage(GL1524);
+					showErrorMessage(i18n.GL1524());
 					isValid = false;
 					break;
 				}
@@ -903,11 +905,11 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 							
 						}
 					};
-					delete.setPopupTitle(GL1548);
-					delete.setNotes(GL0748);
-					delete.setDescText(StringUtil.generateMessage(GL1547, lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-					delete.setPositiveButtonText(GL0190);						
-					delete.setNegitiveButtonText(GL0142);
+					delete.setPopupTitle(i18n.GL1548());
+					delete.setNotes(i18n.GL0748());
+					delete.setDescText(StringUtil.generateMessage(i18n.GL1547(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
+					delete.setPositiveButtonText(i18n.GL0190());						
+					delete.setNegitiveButtonText(i18n.GL0142());
 					delete.setDeleteValidate("delete");
 					delete.setPixelSize(450, 344);		
 					delete.show();
@@ -970,7 +972,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		lblActiveMembers.setVisible(true);
 		lblActiveMembersDesc.setVisible(true);
 		ancActiveListSeeMore.setVisible(false);
-		Label noActiveStudents = new Label(GL1527);
+		Label noActiveStudents = new Label(i18n.GL1527());
 		panelActiveMembersContainter.setVisible(true);
 		noActiveStudents.getElement().addClassName(res.css().noActiveStudents());
 		panelActiveMembersList.add(noActiveStudents);
@@ -1071,11 +1073,11 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 						
 					}
 				};
-				delete.setPopupTitle(GL1548);
-				delete.setNotes(GL0748);
-				delete.setDescText(StringUtil.generateMessage(GL1547, lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
-				delete.setPositiveButtonText(GL0190);						
-				delete.setNegitiveButtonText(GL0142);
+				delete.setPopupTitle(i18n.GL1548());
+				delete.setNotes(i18n.GL0748());
+				delete.setDescText(StringUtil.generateMessage(i18n.GL1547(), lblUserName.getText() != null && !lblUserName.getText().equalsIgnoreCase("") ? "<i>"+lblUserName.getText()+"</i>" : "<i>"+lblEmailId.getText()+"</i>"));
+				delete.setPositiveButtonText(i18n.GL0190());						
+				delete.setNegitiveButtonText(i18n.GL0142());
 				delete.setDeleteValidate("delete");
 				delete.setPixelSize(450, 344);		
 				delete.show();
@@ -1161,13 +1163,13 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 		};
 		success.setHeight("253px");
 		success.setWidth("450px");
-		success.setPopupTitle(GL1556);
+		success.setPopupTitle(i18n.GL1556());
 		if (listSize>1){
-			success.setDescText(GL1557);
+			success.setDescText(i18n.GL1557());
 		}else{
-			success.setDescText(GL1360);
+			success.setDescText(i18n.GL1360());
 		}
-		success.setPositiveButtonText(GL0190);
+		success.setPositiveButtonText(i18n.GL0190());
 		success.center();
 		success.show();
 		

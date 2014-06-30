@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.effects.BackgroundColorEffect;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
@@ -52,14 +53,14 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class MembersViewVc extends Composite implements MessageProperties {
+public abstract class MembersViewVc extends Composite {
 
 	private static MembersViewVcUiBinder uiBinder = GWT.create(MembersViewVcUiBinder.class);
 
 	interface MembersViewVcUiBinder extends UiBinder<Widget, MembersViewVc> {
 	}
 	
-	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	List<ClassPageCollectionDo> classpageTitles = new ArrayList<ClassPageCollectionDo>();
 
 	CollaboratorsDo collaboratorsDo = null;
@@ -134,10 +135,10 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 		String status = collaboratorsDo.getStatus();
 		
 		panelCollaboratorsListContainer.getElement().setId(emailId);
-		btnRemove.setText(GL0237);
+		btnRemove.setText(i18n.GL0237());
 		btnRemove.getElement().setId("" + position);
-		btnRemove.getElement().setAttribute("alt",GL0237);
-		btnRemove.getElement().setAttribute("title",GL0237);
+		btnRemove.getElement().setAttribute("alt",i18n.GL0237());
+		btnRemove.getElement().setAttribute("title",i18n.GL0237());
 
 		imgProfileImage.addErrorHandler(new ErrorHandler() {
 			
@@ -183,8 +184,8 @@ public abstract class MembersViewVc extends Composite implements MessageProperti
 			lblEmailId.getElement().setAttribute("title",emailId != null ? emailId : email);
 			imgProfileImage.setUrl(collaboratorsDo.getProfileImageUrl());
 		}
-		lblUserName.getElement().setId("lblUserName");
-		lblEmailId.getElement().setId("lblEmailId");
+		lblUserName.getElement().setId(emailId);
+		lblEmailId.getElement().setId(emailId);
 		panelCollaboratorsListContainer.getElement().setId("pnlCollaboratorsListContainer");
 		panelMembers.getElement().setId("epnlMembers");
 		imgProfileImage.getElement().setId("imgProfileImage");
