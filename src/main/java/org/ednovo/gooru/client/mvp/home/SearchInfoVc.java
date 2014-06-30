@@ -52,8 +52,19 @@ public class SearchInfoVc extends Composite implements MessageProperties{
 	public SearchInfoVc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		searchText.setText(GL0176.toUpperCase());
+		searchText.getElement().setId("lblSearchText");
+		searchText.getElement().setAttribute("alt",GL0176.toUpperCase());
+		searchText.getElement().setAttribute("title",GL0176.toUpperCase());
+		
 		moreTimeText.setText(GL1312);
+		moreTimeText.getElement().setId("lblMoreTimeText");
+		moreTimeText.getElement().setAttribute("alt",GL1312);
+		moreTimeText.getElement().setAttribute("title",GL1312);
+		
 		startSearchText.setText(GL1313);
+		startSearchText.getElement().setId("lblStartSearchText");
+		startSearchText.getElement().setAttribute("alt",GL1313);
+		startSearchText.getElement().setAttribute("title",GL1313);
 	}
 
 }

@@ -50,6 +50,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -68,6 +69,7 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 	BlueButtonUc okBtnUc;
 	
 	@UiField Label lblClassDismissed;
+	@UiField FlowPanel buttonContainer;
 	
 	private static final String HEAR_THE_BELL_TEXT = GL0188;
 
@@ -86,13 +88,26 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 		appPopUp.setContent(HEAR_THE_BELL_TEXT, uiBinder.createAndBindUi(this));
 		
 		lblClassDismissed.setText(GL0189);
+		lblClassDismissed.getElement().setId("lblClassDismissed");
+		lblClassDismissed.getElement().setAttribute("alt",GL0189);
+		lblClassDismissed.getElement().setAttribute("title",GL0189);
+		
 		okBtnUc.setText(GL0190);
+		okBtnUc.getElement().setId("btnOk");
+		okBtnUc.getElement().setAttribute("alt",GL0190);
+		okBtnUc.getElement().setAttribute("title",GL0190);
+		
 		cancelAnr.setText(GL0142);
+		cancelAnr.getElement().setId("lnkCancel");
+		cancelAnr.getElement().setAttribute("alt",GL0142);
+		cancelAnr.getElement().setAttribute("title",GL0142);
+		
+		buttonContainer.getElement().setId("fpnlButtonContainer");
 		
 		appPopUp.show();
 		appPopUp.center();
-		okBtnUc.getElement().setId("btnOk");
-		cancelAnr.getElement().setId("lnkCancel");
+		
+		
 	}
 
 	/**

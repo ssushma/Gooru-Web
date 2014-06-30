@@ -77,6 +77,11 @@ public class FeaturedContentVc extends Composite implements MouseOverHandler, Mo
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		featuredLbl.setText(GL1240);
+		featuredLbl.getElement().setId("lblFeatured");
+		featuredLbl.getElement().setAttribute("alt",GL1240);
+		featuredLbl.getElement().setAttribute("title",GL1240);
+		featuredContentTitleFloPanel.getElement().setId("fpnlFeaturedContentTitleFloPanel");
+		featuredSlideFloPanel.getElement().setId("fpnlFeaturedSlideFloPanel");
 		 elapsedTimer = new Timer () {
 		      public void run() {
 		    	  if(countOfChild>3){

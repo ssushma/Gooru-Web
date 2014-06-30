@@ -82,18 +82,35 @@ public class LogoutPanelVc extends PopupPanel implements MessageProperties{
 		setWidget(uiBinder.createAndBindUi(this));
 		
 		anrSettings.setText(GL0192);
-		anrSettings.setHref("#settings");
-		classicGooruAnr.setText(GL0193);
-		supportAnr.setText(GL0194);
-		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
-		feedbackAnr.setText(GL0195);
-		logoutAnr.setText(GL0197);
 		anrSettings.getElement().setId("lnkSettings");
+		anrSettings.getElement().setAttribute("alt",GL0192);
+		anrSettings.getElement().setAttribute("title",GL0192);
+		anrSettings.setHref("#settings");
+		
+		classicGooruAnr.setText(GL0193);
 		classicGooruAnr.getElement().setId("lnkClassicGooru");
+		classicGooruAnr.getElement().setAttribute("alt",GL0193);
+		classicGooruAnr.getElement().setAttribute("title",GL0193);
+		
+		supportAnr.setText(GL0194);
 		supportAnr.getElement().setId("lnkSupport");
+		supportAnr.getElement().setAttribute("alt",GL0194);
+		supportAnr.getElement().setAttribute("title",GL0194);
+		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
+		
+		feedbackAnr.setText(GL0195);
 		feedbackAnr.getElement().setId("lnkFeedback");
+		feedbackAnr.getElement().setAttribute("alt",GL0193);
+		feedbackAnr.getElement().setAttribute("title",GL0193);
+		
+		logoutAnr.setText(GL0197);
 		logoutAnr.getElement().setId("lnkLogout");
+		logoutAnr.getElement().setAttribute("alt",GL0197);
+		logoutAnr.getElement().setAttribute("title",GL0197);
+		
 		classicGooruAnr.setVisible(false);
+		
+		logPanel.getElement().setId("fpnlLogPanel");
 		triggerUserVoice();
 	}
 

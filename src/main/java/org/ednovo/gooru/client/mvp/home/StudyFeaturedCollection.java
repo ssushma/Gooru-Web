@@ -68,6 +68,13 @@ public class StudyFeaturedCollection extends Composite implements MessagePropert
 		initWidget(uiBinder.createAndBindUi(this));
 		featuredStartStudyFloPanel.setVisible(false);
 		studyFeaturedCollectionButton.setText(GL0182);
+		studyFeaturedCollectionButton.getElement().setId("lblStudyFeaturedCollectionButton");
+		studyFeaturedCollectionButton.getElement().setAttribute("alt",GL0182);
+		studyFeaturedCollectionButton.getElement().setAttribute("title",GL0182);
+		
+		contentImageFloPanel.getElement().setId("fpnlContentImageFloPanel");
+		contentUrlImg.getElement().setId("imgContentUrl");
+		featuredStartStudyFloPanel.getElement().setId("fpnlFeaturedStartStudyFloPanel");
 	}
 
 	/**

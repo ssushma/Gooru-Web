@@ -65,7 +65,13 @@ public class GooruGuideInfoVc extends PopupPanel implements MessageProperties {
 		super(false);
 		setWidget(uiBinder.createAndBindUi(this));
 		gooruGuideLbl.setText(GL1247);
+		gooruGuideLbl.getElement().setId("lblGooruGuide");
+		gooruGuideLbl.getElement().setAttribute("alt",GL1247);
+		gooruGuideLbl.getElement().setAttribute("title",GL1247);
+		
 		guideSlideHomeBtnUc.setText(GL0543);
+		guideSlideHomeBtnUc.getElement().setAttribute("alt",GL0543);
+		guideSlideHomeBtnUc.getElement().setAttribute("title",GL0543);
 		guideSlideHomeBtnUc.getElement().setId("btnGuideSlideHome");
 	}
 	
