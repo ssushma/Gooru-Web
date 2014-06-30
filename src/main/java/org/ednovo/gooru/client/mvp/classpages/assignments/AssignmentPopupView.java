@@ -45,6 +45,7 @@ import java.util.Date;
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -70,11 +71,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class AssignmentPopupView extends Composite implements MessageProperties{
-
-	private static final String MANDATORY_TITLE = GL0173;
-	private static final String CHARACTERS_LIMIT = GL0143;
-	String classpageId = "";
+public abstract class AssignmentPopupView extends Composite{
 
 	public interface AssignmentPopupViewUiBinder extends
 			UiBinder<Widget, AssignmentPopupView> {
@@ -91,6 +88,12 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 
 	public static AssignmentPopupViewUiBinder uiBinder = GWT
 			.create(AssignmentPopupViewUiBinder.class);
+	
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
+	private static final String MANDATORY_TITLE = i18n.GL0173();
+	private static final String CHARACTERS_LIMIT = i18n.GL0143();
+	String classpageId = "";
 
 	@UiField
 	public Label cancelResourcePopupBtnLbl, addResourceBtnLbl,assignmentTitleLabel,assignmentDirectionLabel;
@@ -111,43 +114,43 @@ public abstract class AssignmentPopupView extends Composite implements MessagePr
 
 	public AssignmentPopupView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		assignmentTitleLabel.setText(GL1407+GL_SPL_STAR);
+		assignmentTitleLabel.setText(i18n.GL1407()+i18n.GL_SPL_STAR());
 		assignmentTitleLabel.getElement().setId("lblAssignmentTitle");
-		assignmentTitleLabel.getElement().setAttribute("alt",GL1407);
-		assignmentTitleLabel.getElement().setAttribute("title",GL1407);
+		assignmentTitleLabel.getElement().setAttribute("alt",i18n.GL1407());
+		assignmentTitleLabel.getElement().setAttribute("title",i18n.GL1407());
 		
-		mandatoryTitleLabel.setText(GL0173);
+		mandatoryTitleLabel.setText(i18n.GL0173());
 		mandatoryTitleLabel.getElement().setId("lblMandatoryTitle");
-		mandatoryTitleLabel.getElement().setAttribute("alt",GL0173);
-		mandatoryTitleLabel.getElement().setAttribute("title",GL0173);
+		mandatoryTitleLabel.getElement().setAttribute("alt",i18n.GL0173());
+		mandatoryTitleLabel.getElement().setAttribute("title",i18n.GL0173());
 		
-		assignmentDueDateLabel.setText(GL0238);
+		assignmentDueDateLabel.setText(i18n.GL0238());
 		assignmentDueDateLabel.getElement().setId("lblAssignmentDueDate");
-		assignmentDueDateLabel.getElement().setAttribute("alt",GL0238);
-		assignmentDueDateLabel.getElement().setAttribute("title",GL0238);
+		assignmentDueDateLabel.getElement().setAttribute("alt",i18n.GL0238());
+		assignmentDueDateLabel.getElement().setAttribute("title",i18n.GL0238());
 		
-		mandatoryDueDateLabel.setText(GL0235);
+		mandatoryDueDateLabel.setText(i18n.GL0235());
 		mandatoryDueDateLabel.getElement().setAttribute("id", "datePickerErrorMessageLabel");
-		mandatoryDueDateLabel.getElement().setAttribute("alt",GL0235);
-		mandatoryDueDateLabel.getElement().setAttribute("title",GL0235);
+		mandatoryDueDateLabel.getElement().setAttribute("alt",i18n.GL0235());
+		mandatoryDueDateLabel.getElement().setAttribute("title",i18n.GL0235());
 		
-		assignmentDirectionLabel.setText(GL1408);
+		assignmentDirectionLabel.setText(i18n.GL1408());
 		assignmentDirectionLabel.getElement().setAttribute("id", "lblAssignmentDirection");
-		assignmentDirectionLabel.getElement().setAttribute("alt",GL1408);
-		assignmentDirectionLabel.getElement().setAttribute("title",GL1408);
+		assignmentDirectionLabel.getElement().setAttribute("alt",i18n.GL1408());
+		assignmentDirectionLabel.getElement().setAttribute("title",i18n.GL1408());
 		
-		mandatoryDirectionLabel.setText(GL0236);
+		mandatoryDirectionLabel.setText(i18n.GL0236());
 		mandatoryDirectionLabel.getElement().setId("errlblDirectional");
 		
-		addResourceBtnLbl.setText(GL0590);
+		addResourceBtnLbl.setText(i18n.GL0590());
 		addResourceBtnLbl.getElement().setId("lblAdd");
-		addResourceBtnLbl.getElement().setAttribute("alt",GL0590);
-		addResourceBtnLbl.getElement().setAttribute("title",GL0590);
+		addResourceBtnLbl.getElement().setAttribute("alt",i18n.GL0590());
+		addResourceBtnLbl.getElement().setAttribute("title",i18n.GL0590());
 		
-		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
-		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",GL0142);
-		cancelResourcePopupBtnLbl.getElement().setAttribute("title",GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title",i18n.GL0142());
 		
 		assignmentTitleTxt.getElement().setAttribute("id", "txtAssignmentTitle");
 		assignmentDirectionsTxtArea.getElement().setAttribute("id", "txtAreaDirections");
