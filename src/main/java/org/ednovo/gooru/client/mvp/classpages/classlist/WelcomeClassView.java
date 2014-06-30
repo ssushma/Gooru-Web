@@ -5,6 +5,7 @@ package org.ednovo.gooru.client.mvp.classpages.classlist;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -24,11 +25,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Gooru Team
  *
  */
-public class WelcomeClassView extends PopupPanel implements MessageProperties {
+public class WelcomeClassView extends PopupPanel {
 
 	private static NewFeaturesClassVcUiBinder uiBinder = GWT
 			.create(NewFeaturesClassVcUiBinder.class);
-
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	interface NewFeaturesClassVcUiBinder extends
 			UiBinder<Widget, WelcomeClassView> {
 	}
@@ -62,47 +63,47 @@ public class WelcomeClassView extends PopupPanel implements MessageProperties {
 	
 	private void setDefaultText() {
 		// TODO Auto-generated method stub
-		btnOk.setText(GL1386);
+		btnOk.setText(i18n.GL1386());
 		btnOk.getElement().setId("btnOk");
-		btnOk.getElement().setAttribute("alt",GL1386);
-		btnOk.getElement().setAttribute("title",GL1386);
+		btnOk.getElement().setAttribute("alt",i18n.GL1386());
+		btnOk.getElement().setAttribute("title",i18n.GL1386());
 		
-		popupHeader.getElement().setInnerHTML(GL1605);
+		popupHeader.getElement().setInnerHTML(i18n.GL1605());
 		popupHeader.getElement().setId("pnlPopupHeader");
-		popupHeader.getElement().setAttribute("alt",GL1605);
-		popupHeader.getElement().setAttribute("title",GL1605);
+		popupHeader.getElement().setAttribute("alt",i18n.GL1605());
+		popupHeader.getElement().setAttribute("title",i18n.GL1605());
 		
 //		headingTittle.getElement().setInnerHTML(GL1607);
-		headingTxt.getElement().setInnerHTML(GL1609);
+		headingTxt.getElement().setInnerHTML(i18n.GL1609());
 		headingTxt.getElement().setId("pnlHeadingText");
-		headingTxt.getElement().setAttribute("alt",GL1609);
-		headingTxt.getElement().setAttribute("title",GL1609);
+		headingTxt.getElement().setAttribute("alt",i18n.GL1609());
+		headingTxt.getElement().setAttribute("title",i18n.GL1609());
 		
-		manageList.getElement().setInnerHTML(GL1611);
+		manageList.getElement().setInnerHTML(i18n.GL1611());
 		manageList.getElement().setId("pnlManageList");
-		manageList.getElement().setAttribute("alt",GL1611);
-		manageList.getElement().setAttribute("title",GL1611);
+		manageList.getElement().setAttribute("alt",i18n.GL1611());
+		manageList.getElement().setAttribute("title",i18n.GL1611());
 		
-		popupContentDesc.setText(GL1606);
+		popupContentDesc.setText(i18n.GL1606());
 		popupContentDesc.getElement().setId("lblPopupContentDesc");
-		popupContentDesc.getElement().setAttribute("alt",GL1606);
-		popupContentDesc.getElement().setAttribute("title",GL1606);
+		popupContentDesc.getElement().setAttribute("alt",i18n.GL1606());
+		popupContentDesc.getElement().setAttribute("title",i18n.GL1606());
 		
-		popupContentDesc1.setText(GL1606_1);
+		popupContentDesc1.setText(i18n.GL1606_1());
 		popupContentDesc1.getElement().setId("lblPopupContentDesc1");
-		popupContentDesc1.getElement().setAttribute("alt",GL1606_1);
-		popupContentDesc1.getElement().setAttribute("title",GL1606_1);
+		popupContentDesc1.getElement().setAttribute("alt",i18n.GL1606_1());
+		popupContentDesc1.getElement().setAttribute("title",i18n.GL1606_1());
 		
 //		popupContentTxt.setText(GL1608);
-		headingTxtDesc.setText(GL1610);
+		headingTxtDesc.setText(i18n.GL1610());
 		headingTxtDesc.getElement().setId("spnHeadingTxtDesc");
-		headingTxtDesc.getElement().setAttribute("alt",GL1610);
-		headingTxtDesc.getElement().setAttribute("title",GL1610);
+		headingTxtDesc.getElement().setAttribute("alt",i18n.GL1610());
+		headingTxtDesc.getElement().setAttribute("title",i18n.GL1610());
 		
-		manageListDesc.setText(GL1612);
+		manageListDesc.setText(i18n.GL1612());
 		manageListDesc.getElement().setId("spnManageListDesc");
-		manageListDesc.getElement().setAttribute("alt",GL1612);
-		manageListDesc.getElement().setAttribute("title",GL1612);
+		manageListDesc.getElement().setAttribute("alt",i18n.GL1612());
+		manageListDesc.getElement().setAttribute("title",i18n.GL1612());
 		
 	}
 

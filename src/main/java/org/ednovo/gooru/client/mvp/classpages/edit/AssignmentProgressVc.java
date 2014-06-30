@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.ResetProgressEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -69,11 +70,13 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class AssignmentProgressVc extends Composite implements MessageProperties {
+public class AssignmentProgressVc extends Composite{
 
 
 	private static AssignmentProgressVcUiBinder uiBinder = GWT
 			.create(AssignmentProgressVcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface AssignmentProgressVcUiBinder extends UiBinder<Widget, AssignmentProgressVc> {
 	}
@@ -122,9 +125,9 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		htmlCollectiontitle.setHTML(classpageList.getCollectionTitle());
 		htmlCollectiontitle.getElement().setAttribute("alt",classpageList.getCollectionTitle());
 		htmlCollectiontitle.getElement().setAttribute("title",classpageList.getCollectionTitle());
-		lblMoveTo.setText(GL1912);
-		lblMoveTo.getElement().setAttribute("alt",GL1912);
-		lblMoveTo.getElement().setAttribute("title",GL1912);
+		lblMoveTo.setText(i18n.GL1912());
+		lblMoveTo.getElement().setAttribute("alt",i18n.GL1912());
+		lblMoveTo.getElement().setAttribute("title",i18n.GL1912());
 		resourceTypePanel.setVisible(false);
 		resourceCategoryLabel.setText(String.valueOf(assignmentNumber));
 		
@@ -200,9 +203,9 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 			panelCircle.setStyleName(this.res.css().greencircle());
 			panelCicle1.setStyleName(this.res.css().greencircle());
 		}
-		studyButtonText.setText(GL0182);
-		studyButtonText.getElement().setAttribute("alt",GL0182);
-		studyButtonText.getElement().setAttribute("title",GL0182);
+		studyButtonText.setText(i18n.GL0182());
+		studyButtonText.getElement().setAttribute("alt",i18n.GL0182());
+		studyButtonText.getElement().setAttribute("title",i18n.GL0182());
 		studyButtonText.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -238,7 +241,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		dueDateContainer.clear();
 		String dueDate=classpageItemDo.getPlannedEndDate();
 		if(dueDate!=null&&!dueDate.equals("")){
-			Label dueDateText=new Label(GL1390);
+			Label dueDateText=new Label(i18n.GL1390());
 			dueDateText.setStyleName(this.res.css().dueDataIcon());
 			Label dueDateLabel=new Label(dueDate.toString());
 			dueDateLabel.setStyleName(this.res.css().headerDueDate());
@@ -247,7 +250,7 @@ public class AssignmentProgressVc extends Composite implements MessageProperties
 		}
 		String directionDescription=classpageItemDo.getDirection();
 		if(directionDescription!=null&&!directionDescription.equals("")){
-			InlineLabel directionHeadLabel=new InlineLabel(GL1372);
+			InlineLabel directionHeadLabel=new InlineLabel(i18n.GL1372());
 			directionHeadLabel.setStyleName(this.res.css().directionHeading());
 			InlineLabel directionTextLabel=new InlineLabel(directionDescription);
 			directionTextLabel.setStyleName(this.res.css().directionDesc());

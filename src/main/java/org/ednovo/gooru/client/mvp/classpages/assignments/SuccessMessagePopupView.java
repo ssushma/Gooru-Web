@@ -42,6 +42,7 @@ package org.ednovo.gooru.client.mvp.classpages.assignments;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -58,7 +59,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SuccessMessagePopupView extends Composite implements MessageProperties{
+public class SuccessMessagePopupView extends Composite{
 	private PopupPanel appPopUp;
 	@UiField Button okayButton;
 	@UiField Label successPopupHeader;
@@ -69,6 +70,8 @@ public class SuccessMessagePopupView extends Composite implements MessagePropert
 
 	}
 	public static SuccessMessagePopupViewUiBinder uiBinder = GWT.create(SuccessMessagePopupViewUiBinder.class);
+	
+	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public SuccessMessagePopupView(String collectonTitle) {
 		appPopUp=new PopupPanel();
@@ -82,20 +85,20 @@ public class SuccessMessagePopupView extends Composite implements MessagePropert
 		appPopUp.center();
 	}
 	public void setStaticTexts(String collectonTitle){
-		successPopupHeader.setText(GL1384);
+		successPopupHeader.setText(i18n.GL1384());
 		successPopupHeader.getElement().setId("lblSuccessPopupHeader");
-		successPopupHeader.getElement().setAttribute("alt",GL1384);
-		successPopupHeader.getElement().setAttribute("title",GL1384);
+		successPopupHeader.getElement().setAttribute("alt",i18n.GL1384());
+		successPopupHeader.getElement().setAttribute("title",i18n.GL1384());
 		
-		successPopupBodyText.setHTML(StringUtil.generateMessage(GL1385, collectonTitle));
+		successPopupBodyText.setHTML(StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
 		successPopupBodyText.getElement().setId("htmlSuccessPoupBodyText");
-		successPopupBodyText.getElement().setAttribute("alt",StringUtil.generateMessage(GL1385, collectonTitle));
-		successPopupBodyText.getElement().setAttribute("title",StringUtil.generateMessage(GL1385, collectonTitle));
+		successPopupBodyText.getElement().setAttribute("alt",StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
+		successPopupBodyText.getElement().setAttribute("title",StringUtil.generateMessage(i18n.GL1385(), collectonTitle));
 		
-		okayButton.setText(GL1386);
+		okayButton.setText(i18n.GL1386());
 		okayButton.getElement().setId("btnOk");
-		okayButton.getElement().setAttribute("alt",GL1386);
-		okayButton.getElement().setAttribute("title",GL1386);
+		okayButton.getElement().setAttribute("alt",i18n.GL1386());
+		okayButton.getElement().setAttribute("title",i18n.GL1386());
 	}
 	@UiHandler("okayButton")
 	public void closePopupEvent(ClickEvent event){
