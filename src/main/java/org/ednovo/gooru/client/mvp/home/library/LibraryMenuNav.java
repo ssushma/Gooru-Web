@@ -629,12 +629,16 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 							}
 						});
 					}
-					if(courseDo.getGrade()==null || courseDo.getGrade()<=5) {
+					if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 						elementaryCoursePanel.add(courseTitle);
-					} else if(courseDo.getGrade()>5 && courseDo.getGrade()<9 ) {
-						middleSchoolCoursePanel.add(courseTitle);
 					} else {
-						highSchoolCoursePanel.add(courseTitle);
+						if(courseDo.getGrade()==null || courseDo.getGrade()<=5) {
+							elementaryCoursePanel.add(courseTitle);
+						} else if(courseDo.getGrade()>5 && courseDo.getGrade()<9 ) {
+							middleSchoolCoursePanel.add(courseTitle);
+						} else {
+							highSchoolCoursePanel.add(courseTitle);
+						}
 					}
 				}
 			}
