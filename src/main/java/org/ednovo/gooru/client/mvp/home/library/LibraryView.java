@@ -57,6 +57,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetSubjectDoHandler;
 import org.ednovo.gooru.client.uc.PaginationButtonUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
@@ -94,7 +95,7 @@ import com.seanchenxi.gwt.storage.client.StorageExt;
 import com.seanchenxi.gwt.storage.client.StorageKey;
 import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
 
-public class LibraryView extends Composite implements MessageProperties, ClickHandler {
+public class LibraryView extends Composite implements  ClickHandler {
 
 	@UiField
 	static HTMLPanel courseTabs;
@@ -187,9 +188,9 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 	
 	private static final String PNG = ".png";
 	
-	private final static String MR = GL1422+GL_SPL_FULLSTOP+" ";
+//	private final static String MR = i18n.GL1422+i18n.GL_SPL_FULLSTOP+" ";
 	
-	private final static String MS = GL1423+GL_SPL_FULLSTOP+" ";
+//	private final static String MS = i18n.GL1423+i18n.GL_SPL_FULLSTOP+" ";
 
 	private final static String FEMALE = "female";
 
@@ -227,6 +228,8 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 
 	interface LibraryViewUiBinder extends UiBinder<Widget, LibraryView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public LibraryView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -299,10 +302,10 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 			libraryMenuNavigation = new LibraryMenuNav(getPlaceToken());
 			courseTabs.add(libraryMenuNavigation);
 			landingBanner.add(new LibraryBannerView(getPlaceToken()));
-			featuredContributorsLink.setText(GL1005);
-			featuredContributorsLink.getElement().setAttribute("alt",GL1005);
-			featuredContributorsLink.getElement().setAttribute("title",GL1005);
-			featuredContributorsLink.setTitle(GL0680);
+			featuredContributorsLink.setText(i18n.GL1005());
+			featuredContributorsLink.getElement().setAttribute("alt",i18n.GL1005());
+			featuredContributorsLink.getElement().setAttribute("title",i18n.GL1005());
+			featuredContributorsLink.setTitle(i18n.GL0680());
 			featuredContributorsLink.setHref("#"+getPlaceToken()+"&page="+FEATURED_CONTRIBUTORS);
 		}
 	}
@@ -340,20 +343,20 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.RUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingRusdBanner");
 			landingBanner.setHeight("250px");
-			featuredCousesLbl.setText(GL0588);
-			featuredCousesLbl.getElement().setAttribute("alt",GL0588);
-			featuredCousesLbl.getElement().setAttribute("title",GL0588);
+			featuredCousesLbl.setText(i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0588());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0588());
 		} else if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
 			landingBanner.setHeight("250px");
-			featuredCousesLbl.setText(GL1901);
-			featuredCousesLbl.getElement().setAttribute("alt",GL1901);
-			featuredCousesLbl.getElement().setAttribute("title",GL1901);
+			featuredCousesLbl.setText(i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL1901());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL1901());
 		} else {
 			landingBanner.getElement().setId("landingBanner");
-			featuredCousesLbl.setText(GL0587);
-			featuredCousesLbl.getElement().setAttribute("alt",GL0587);
-			featuredCousesLbl.getElement().setAttribute("title",GL0587);
+			featuredCousesLbl.setText(i18n.GL0587());
+			featuredCousesLbl.getElement().setAttribute("alt",i18n.GL0587());
+			featuredCousesLbl.getElement().setAttribute("title",i18n.GL0587());
 		}
 	}
 	
@@ -998,38 +1001,38 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 							}
 						
 							if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(MALE)) {
-								authorName = MR+courseDo.getUser().get(j).getLastName();
+								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
 							} else if(courseDo.getUser().get(j).getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = MS+courseDo.getUser().get(j).getLastName();
+								authorName = (i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getUser().get(j).getLastName();
 							} else {
 								authorName = courseDo.getUser().get(j).getLastName();
 							}
 							
 							
 							if (courseDo.getUser().size()>1){
-								featuredContributor.setText(authorName+" "+GL_GRR_AND+" "+GL1117+" "+GL1006+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("alt",authorName+" "+GL_GRR_AND+" "+GL1117+" "+GL1006+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("title",authorName+" "+GL_GRR_AND+" "+GL1117+" "+GL1006+" "+courseDo.getLabel()+". ");
+								featuredContributor.setText(authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("alt",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("title",authorName+" "+i18n.GL_GRR_AND()+" "+i18n.GL1117()+" "+i18n.GL1006()+" "+courseDo.getLabel()+". ");
 							}else{
-								featuredContributor.setText(authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
-								featuredContributor.getElement().setAttribute("title",authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
+								featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+								featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							}
 							
 							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
 							
 						}else{
 							if(courseDo.getCreator().getGender().equalsIgnoreCase(MALE)) {
-								authorName = MR+courseDo.getCreator().getLastName();
+								authorName = (i18n.GL1422()+i18n.GL_SPL_FULLSTOP()+" ")+courseDo.getCreator().getLastName();
 							} else if(courseDo.getCreator().getGender().equalsIgnoreCase(FEMALE)) {
-								authorName = MS+courseDo.getCreator().getLastName();
+								authorName = i18n.GL1423()+i18n.GL_SPL_FULLSTOP()+" "+courseDo.getCreator().getLastName();
 							} else {
 								authorName = courseDo.getCreator().getLastName();
 							}
 							
-							featuredContributor.setText(authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
-							featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
-							featuredContributor.getElement().setAttribute("title",authorName+" "+" "+GL1007+" "+courseDo.getLabel()+". ");
+							featuredContributor.setText(authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+							featuredContributor.getElement().setAttribute("alt",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
+							featuredContributor.getElement().setAttribute("title",authorName+" "+" "+i18n.GL1007()+" "+courseDo.getLabel()+". ");
 							authorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 							
 						}
@@ -1218,7 +1221,7 @@ public class LibraryView extends Composite implements MessageProperties, ClickHa
 						if(result.size()>0) {
 							UnitDo unitDo = new UnitDo();
 							unitDo.setCodeId(courseId);
-							unitDo.setLabel(GL1008);
+							unitDo.setLabel(i18n.GL1008);
 							unitDo.setCollection(result);
 							unitDo.setCount(result.size());
 							unitDoListTemp.add(0, unitDo);	
