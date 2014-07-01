@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.home;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -44,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
+public abstract class WaitPopupVc extends AppPopUp{
 
 	@UiField Button cancelAnr,okButtonUc;
 
@@ -57,6 +58,9 @@ public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
 	interface WaitPopupVcUiBinder extends UiBinder<Widget, WaitPopupVc> {
 	}
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+
+	
 	/**
 	 * Class constructor to set title and content text for pop up
 	 * 
@@ -75,20 +79,20 @@ public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
 		messageTextLabel.getElement().setAttribute("alt",entityInfo);
 		messageTextLabel.getElement().setAttribute("title",entityInfo);
 		
-		cancelAnr.setText(GL0142);
+		cancelAnr.setText(i18n.GL0142());
 		cancelAnr.getElement().setId("lnkCancel");
-		cancelAnr.getElement().setAttribute("alt",GL0142);
-		cancelAnr.getElement().setAttribute("title",GL0142);
+		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
 		
-		okButtonUc.setText(GL0190);
+		okButtonUc.setText(i18n.GL0190());
 		okButtonUc.getElement().setId("btnOk");
-		okButtonUc.getElement().setAttribute("alt",GL0190);
-		okButtonUc.getElement().setAttribute("title",GL0190);
+		okButtonUc.getElement().setAttribute("alt",i18n.GL0190());
+		okButtonUc.getElement().setAttribute("title",i18n.GL0190());
 		
-		removingText.setText(GL1021);
+		removingText.setText(i18n.GL1021());
 		removingText.getElement().setId("lblRemovingText");
-		removingText.getElement().setAttribute("alt",GL1021);
-		removingText.getElement().setAttribute("title",GL1021);
+		removingText.getElement().setAttribute("alt",i18n.GL1021());
+		removingText.getElement().setAttribute("title",i18n.GL1021());
 		removingText.setVisible(false);
 	
 		buttonContainer.getElement().setId("fpnlButtonContainer");

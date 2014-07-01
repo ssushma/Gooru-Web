@@ -35,6 +35,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -60,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
+public class LoginPopupInPlay extends PopupPanel {
 
     @UiField
     TextBoxWithPlaceholder loginTxtBox;
@@ -86,17 +87,19 @@ public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
 
     private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
 
-    private static final String LOGIN_ERROR =GL0347;
+//    private static final String LOGIN_ERROR =i18n.GL0347;
 
-    private static final String LOGIN_COOKIE_DISABLE_MESSAGE =GL0348;
+//    private static final String LOGIN_COOKIE_DISABLE_MESSAGE =i18n.GL0348;
 
-    private static final String OOPS = GL0061;
+//    private static final String OOPS = i18n.GL0061;
 
     interface Binder extends UiBinder<Widget, LoginPopupInPlay> {
 
     }
 
     private static final Binder binder = GWT.create(Binder.class);
+    
+    private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
     public LoginPopupInPlay() {
         super(true);
@@ -105,55 +108,55 @@ public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
         this.getElement().getStyle().setZIndex(999999);
         this.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
         add(binder.createAndBindUi(this));
-        loginLbl.setText(GL0187+GL_SPL_EXCLAMATION);
+        loginLbl.setText(i18n.GL0187()+i18n.GL_SPL_EXCLAMATION());
         loginLbl.getElement().setId("lblLoginLbl");
-        loginLbl.getElement().setAttribute("alt",GL0187);
-        loginLbl.getElement().setAttribute("title",GL0187);
+        loginLbl.getElement().setAttribute("alt",i18n.GL0187());
+        loginLbl.getElement().setAttribute("title",i18n.GL0187());
 		
-        betaText.setText(GL0178);
+        betaText.setText(i18n.GL0178());
         betaText.getElement().setId("lblBetaText");
-        betaText.getElement().setAttribute("alt",GL0178);
-        betaText.getElement().setAttribute("title",GL0178);
+        betaText.getElement().setAttribute("alt",i18n.GL0178());
+        betaText.getElement().setAttribute("title",i18n.GL0178());
         
-        loginToCreateteLbl.setText(GL1251+GL_SPL_EXCLAMATION);
+        loginToCreateteLbl.setText(i18n.GL1251()+i18n.GL_SPL_EXCLAMATION());
         loginToCreateteLbl.getElement().setId("lblLoginToCreateteLbl");
-        loginToCreateteLbl.getElement().setAttribute("alt",GL1251);
-        loginToCreateteLbl.getElement().setAttribute("title",GL1251);
+        loginToCreateteLbl.getElement().setAttribute("alt",i18n.GL1251());
+        loginToCreateteLbl.getElement().setAttribute("title",i18n.GL1251());
         
-        loginTxtBox.setPlaceholder(GL0434);
+        loginTxtBox.setPlaceholder(i18n.GL0434());
         loginTxtBox.getElement().setId("txtLoginTxtBox");
         passwordTxtBox.getElement().setId("pswPasswordTxtBox");
-        passwordTxtBox.setPlaceholder(GL0204);
+        passwordTxtBox.setPlaceholder(i18n.GL0204());
       
-        forgotPwd.setText(GL0063+GL_SPL_QUESTION);
+        forgotPwd.setText(i18n.GL0063()+i18n.GL_SPL_QUESTION());
         forgotPwd.getElement().setId("lblForgotPwd");
-        forgotPwd.getElement().setAttribute("alt",GL0063);
-        forgotPwd.getElement().setAttribute("title",GL0063);
+        forgotPwd.getElement().setAttribute("alt",i18n.GL0063());
+        forgotPwd.getElement().setAttribute("title",i18n.GL0063());
         
-        keepMeLoginLbl.setText(GL1252);
+        keepMeLoginLbl.setText(i18n.GL1252());
         keepMeLoginLbl.getElement().setId("chkKeepMeLoginLbl");
-        keepMeLoginLbl.getElement().setAttribute("alt",GL1252);
-        keepMeLoginLbl.getElement().setAttribute("title",GL1252);
+        keepMeLoginLbl.getElement().setAttribute("alt",i18n.GL1252());
+        keepMeLoginLbl.getElement().setAttribute("title",i18n.GL1252());
         
-        loginButton.setText(GL0187);
+        loginButton.setText(i18n.GL0187());
         loginButton.getElement().setId("btnLoginButton");
-        loginButton.getElement().setAttribute("alt",GL0187);
-        loginButton.getElement().setAttribute("title",GL0187);
+        loginButton.getElement().setAttribute("alt",i18n.GL0187());
+        loginButton.getElement().setAttribute("title",i18n.GL0187());
         
-        cancelButton.setText(GL0142);
+        cancelButton.setText(i18n.GL0142());
         cancelButton.getElement().setId("lnkCancelButton");
-        cancelButton.getElement().setAttribute("alt",GL0142);
-        cancelButton.getElement().setAttribute("title",GL0142);
+        cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+        cancelButton.getElement().setAttribute("title",i18n.GL0142());
         
-        doNotHaveAcLbl.setText(GL0208);
+        doNotHaveAcLbl.setText(i18n.GL0208());
         doNotHaveAcLbl.getElement().setId("lblDoNotHaveAcLbl");
-        doNotHaveAcLbl.getElement().setAttribute("alt",GL0208);
-        doNotHaveAcLbl.getElement().setAttribute("title",GL0208);
+        doNotHaveAcLbl.getElement().setAttribute("alt",i18n.GL0208());
+        doNotHaveAcLbl.getElement().setAttribute("title",i18n.GL0208());
         
-        registerHereLbl.setText(GL1253);
+        registerHereLbl.setText(i18n.GL1253());
         registerHereLbl.getElement().setId("lblRegisterHereLbl");
-        registerHereLbl.getElement().setAttribute("alt",GL1253);
-        registerHereLbl.getElement().setAttribute("title",GL1253);
+        registerHereLbl.getElement().setAttribute("alt",i18n.GL1253());
+        registerHereLbl.getElement().setAttribute("title",i18n.GL1253());
         
         loginTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         passwordTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
@@ -173,17 +176,17 @@ public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
         res.css().ensureInjected();
         this.headerUc = headerUc;
         add(binder.createAndBindUi(this));
-        loginLbl.setText(GL0187+GL_SPL_EXCLAMATION);
-        betaText.setText(GL0178);
-        loginToCreateteLbl.setText(GL1251+GL_SPL_EXCLAMATION);
-        loginTxtBox.setPlaceholder(GL0434);
-        passwordTxtBox.setPlaceholder(GL0204);
-        forgotPwd.setText(GL0063+GL_SPL_QUESTION);
-        keepMeLoginLbl.setText(GL1252);
-        loginButton.setText(GL0187);
-        cancelButton.setText(GL0142);
-        doNotHaveAcLbl.setText(GL0208);
-        registerHereLbl.setText(GL1253);
+        loginLbl.setText(i18n.GL0187()+i18n.GL_SPL_EXCLAMATION());
+        betaText.setText(i18n.GL0178());
+        loginToCreateteLbl.setText(i18n.GL1251()+i18n.GL_SPL_EXCLAMATION());
+        loginTxtBox.setPlaceholder(i18n.GL0434());
+        passwordTxtBox.setPlaceholder(i18n.GL0204());
+        forgotPwd.setText(i18n.GL0063()+i18n.GL_SPL_QUESTION());
+        keepMeLoginLbl.setText(i18n.GL1252());
+        loginButton.setText(i18n.GL0187());
+        cancelButton.setText(i18n.GL0142());
+        doNotHaveAcLbl.setText(i18n.GL0208());
+        registerHereLbl.setText(i18n.GL1253());
         loginTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         passwordTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());
@@ -219,14 +222,14 @@ public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
 
                     @Override
                     public void onFailure(Throwable caught) {
-                        new AlertContentUc(OOPS, caught.getMessage());
+                        new AlertContentUc(i18n.GL0061(), caught.getMessage());
                     }
                 });
             } else {
-                new AlertContentUc(OOPS, LOGIN_ERROR);
+                new AlertContentUc(i18n.GL0061(), i18n.GL0347());
             }
         } else  { 
-            new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+            new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
         }
     }
 

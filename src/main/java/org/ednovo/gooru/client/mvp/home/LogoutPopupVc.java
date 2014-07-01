@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -58,7 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class LogoutPopupVc extends Composite implements MessageProperties{
+public class LogoutPopupVc extends Composite{
 
 	public AppPopUp appPopUp;
 
@@ -71,13 +72,15 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 	@UiField Label lblClassDismissed;
 	@UiField FlowPanel buttonContainer;
 	
-	private static final String HEAR_THE_BELL_TEXT = GL0188;
+//	private static final String HEAR_THE_BELL_TEXT = i18n.GL0188;
 
 	private static LogoutPopupVcUiBinder uiBinder = GWT.create(LogoutPopupVcUiBinder.class);
 
 	interface LogoutPopupVcUiBinder extends UiBinder<Widget, LogoutPopupVc> {
 	}
 
+	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	 
 	/**
 	 * Class constructor , get confirm logout popup
 	 */
@@ -85,22 +88,22 @@ public class LogoutPopupVc extends Composite implements MessageProperties{
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName("removeResourcePopup");
-		appPopUp.setContent(HEAR_THE_BELL_TEXT, uiBinder.createAndBindUi(this));
+		appPopUp.setContent(i18n.GL0188(), uiBinder.createAndBindUi(this));
 		
-		lblClassDismissed.setText(GL0189);
+		lblClassDismissed.setText(i18n.GL0189());
 		lblClassDismissed.getElement().setId("lblClassDismissed");
-		lblClassDismissed.getElement().setAttribute("alt",GL0189);
-		lblClassDismissed.getElement().setAttribute("title",GL0189);
+		lblClassDismissed.getElement().setAttribute("alt",i18n.GL0189());
+		lblClassDismissed.getElement().setAttribute("title",i18n.GL0189());
 		
-		okBtnUc.setText(GL0190);
+		okBtnUc.setText(i18n.GL0190());
 		okBtnUc.getElement().setId("btnOk");
-		okBtnUc.getElement().setAttribute("alt",GL0190);
-		okBtnUc.getElement().setAttribute("title",GL0190);
+		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
+		okBtnUc.getElement().setAttribute("title",i18n.GL0190());
 		
-		cancelAnr.setText(GL0142);
+		cancelAnr.setText(i18n.GL0142());
 		cancelAnr.getElement().setId("lnkCancel");
-		cancelAnr.getElement().setAttribute("alt",GL0142);
-		cancelAnr.getElement().setAttribute("title",GL0142);
+		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
 		
 		buttonContainer.getElement().setId("fpnlButtonContainer");
 		
