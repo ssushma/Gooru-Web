@@ -52,7 +52,14 @@ public class NoCollectionInShelfListView extends Composite implements MessagePro
 	public NoCollectionInShelfListView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		emptyCollMsg_1.setText(GL1031+GL_SPL_QUESTION);
+		emptyCollMsg_1.getElement().setId("lblEmptyCollMsg_1");
+		emptyCollMsg_1.getElement().setAttribute("alt", GL1031+GL_SPL_QUESTION);
+		emptyCollMsg_1.getElement().setAttribute("title", GL1031+GL_SPL_QUESTION);
+		
 		emptyCollMsg_2.setText(GL1058);
+		emptyCollMsg_2.getElement().setId("lblEmptyCollMsg_2");
+		emptyCollMsg_2.getElement().setAttribute("alt", GL1058);
+		emptyCollMsg_2.getElement().setAttribute("title", GL1058);
 	}
 
 }

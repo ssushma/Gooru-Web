@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.service.SearchServiceAsync;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
@@ -65,6 +66,7 @@ import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -84,7 +86,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  * @author Search Team
  * 
  */
-public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers,MessageProperties {
+public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.IsHomeProxy> implements HomeUiHandlers {
 
 	@Inject
 	private SearchServiceAsync searchService;
@@ -148,6 +150,8 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 	@UseGatekeeper(AppPlaceKeeper.class)
 	public interface IsHomeProxy extends ProxyPlace<HomePresenter> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -301,7 +305,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		}
 		
 		if (getPlaceManager().getRequestParameter(ERROR) != null && getPlaceManager().getRequestParameter(ERROR).equals("401") && AppClientFactory.isAnonymous()) {
-			new AlertContentUc(GL1966, GL1938);
+			new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 		}
 		
 		final UserDo userDo = AppClientFactory.getLoggedInUser(); 
@@ -427,7 +431,7 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 		String userType = getPlaceManager().getRequestParameter(USER_TYPE);
 		if (userType == null || (userType != null && !userType.equalsIgnoreCase("Parent") && !userType.equalsIgnoreCase("NonParent"))) {
 
-			alert(GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP, GL1416);
+			alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1416());
 
 		} else if (user != null) {
 			if (user.isAvailability()) {
@@ -440,11 +444,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 						addToPopupSlot(userRegistrationPresenter, true); 
 					}
 					else {
-						alert(GL0065+GL_SPL_FULLSTOP, GL1417);
+						alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1417());
 						
 					}
 				} else if (user.getConfirmStatus() == 1 && !userType.equalsIgnoreCase("Parent")) {
-					alert(GL0065+GL_SPL_FULLSTOP, GL1418); 
+					alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1418()); 
 				} 
 				else {
 					userRegistrationPresenter.setAccountType(userType);
@@ -452,11 +456,11 @@ public class HomePresenter extends BasePlacePresenter<IsHomeView, HomePresenter.
 					addToPopupSlot(userRegistrationPresenter, true);
 				}
 			} else {
-				alert(GL0065+GL_SPL_FULLSTOP, GL1419);
+				alert(i18n.GL0065()+i18n.GL_SPL_FULLSTOP(), i18n.GL1419());
 			}
 
 		} else {
-			alert(GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP, GL1420+GL_SPL_FULLSTOP);
+			alert(i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP(), i18n.GL1420()+i18n.GL_SPL_FULLSTOP());
 		}
 	}
 

@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -60,7 +61,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 
 
-public class AlmostDoneUc extends PopupPanel implements MessageProperties{
+public class AlmostDoneUc extends PopupPanel{
 	
 
 	private UserDo user=null;
@@ -83,11 +84,11 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 	@UiField(provided = true)
 	AlmostDoneUcCBundle res;
 	
-	private static final String errorMessageForUserName=GL1284+GL_SPL_FULLSTOP;
-	private static final String errorMessageForUserNameTxt=GL1285+GL_SPL_FULLSTOP;
-	private static final String errorMessageForUserRole=GL1146;
+//	private static final String errorMessageForUserName=i18n.GL1284+i18n.GL_SPL_FULLSTOP;
+//	private static final String errorMessageForUserNameTxt=i18n.GL1285+i18n.GL_SPL_FULLSTOP;
+//	private static final String errorMessageForUserRole=i18n.GL1146;
 
-	private static final String IS_ALREADY_AVAILABLE = ""+GL1286+GL_SPL_FULLSTOP;
+//	private static final String IS_ALREADY_AVAILABLE = ""+i18n.GL1286+i18n.GL_SPL_FULLSTOP;
 	
 
 	@UiTemplate("AlmostDoneUc.ui.xml")
@@ -96,7 +97,7 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 		
 	}
 	private static final Binder binder = GWT.create(Binder.class);
-	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	/**
 	 * Class constructor , to create Almost done popup
 	 * @param userEmail 
@@ -112,56 +113,56 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
 		this.center();
-		almostDoneText.getElement().setInnerText(GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		almostDoneText.getElement().setInnerText(i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
 		almostDoneText.getElement().setId("pnlAlmostDoneText");
-		almostDoneText.getElement().setAttribute("alt",GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
-		almostDoneText.getElement().setAttribute("title",GL1279+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
+		almostDoneText.getElement().setAttribute("alt",i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
+		almostDoneText.getElement().setAttribute("title",i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
 		
-		fillOutText.getElement().setInnerText(GL1280+GL_SPL_SEMICOLON);
+		fillOutText.getElement().setInnerText(i18n.GL1280()+i18n.GL_SPL_SEMICOLON());
 		fillOutText.getElement().setId("pnlFillOutText");
-		fillOutText.getElement().setAttribute("alt",GL1280+GL_SPL_SEMICOLON);
-		fillOutText.getElement().setAttribute("title",GL1280+GL_SPL_SEMICOLON);
+		fillOutText.getElement().setAttribute("alt",i18n.GL1280()+i18n.GL_SPL_SEMICOLON());
+		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON());
 		
 		emailTxtBox.getElement().setId("txtEmail");
 		cancelButton.getElement().setId("epnlCancelButton");
 		
-		emailText.getElement().setInnerText(GL0212);
+		emailText.getElement().setInnerText(i18n.GL0212());
 		emailText.getElement().setId("pnlEmailText");
-		emailText.getElement().setAttribute("alt",GL0212);
-		emailText.getElement().setAttribute("title",GL0212);
+		emailText.getElement().setAttribute("alt",i18n.GL0212());
+		emailText.getElement().setAttribute("title",i18n.GL0212());
 		
-		uNameLbl.getElement().setInnerText(GL0423);
+		uNameLbl.getElement().setInnerText(i18n.GL0423());
 		uNameLbl.getElement().setId("lblUName");
-		uNameLbl.getElement().setAttribute("alt",GL0423);
-		uNameLbl.getElement().setAttribute("title",GL0423);
+		uNameLbl.getElement().setAttribute("alt",i18n.GL0423());
+		uNameLbl.getElement().setAttribute("title",i18n.GL0423());
 		
-		roleText.getElement().setInnerText(GL1281);
+		roleText.getElement().setInnerText(i18n.GL1281());
 		roleText.getElement().setId("pnlRoleText");
-		roleText.getElement().setAttribute("alt",GL1281);
-		roleText.getElement().setAttribute("title",GL1281);
+		roleText.getElement().setAttribute("alt",i18n.GL1281());
+		roleText.getElement().setAttribute("title",i18n.GL1281());
 		
 		roleListBox.getElement().setId("lbRoleListBox");
-		roleListBox.setItemText(0, GL1282+GL_SPL_QUESTION);
-		roleListBox.setItemText(1, GL0417);
-		roleListBox.setItemText(2, GL0416);
-		roleListBox.setItemText(3, GL0418);
-		roleListBox.setItemText(4, GL0419);
-		agreeText.setText(GL1283);
+		roleListBox.setItemText(0, i18n.GL1282()+i18n.GL_SPL_QUESTION());
+		roleListBox.setItemText(1, i18n.GL0417());
+		roleListBox.setItemText(2, i18n.GL0416());
+		roleListBox.setItemText(3, i18n.GL0418());
+		roleListBox.setItemText(4, i18n.GL0419());
+		agreeText.setText(i18n.GL1283());
 		agreeText.getElement().setId("lblAgreeText");
-		agreeText.getElement().setAttribute("alt",GL1283);
-		agreeText.getElement().setAttribute("title",GL1283);
+		agreeText.getElement().setAttribute("alt",i18n.GL1283());
+		agreeText.getElement().setAttribute("title",i18n.GL1283());
 		
-		termsAndPolicyAnr.setText(GL0297+" "+GL_GRR_AND+" "+GL0452);
-		termsAndPolicyAnr.getElement().setAttribute("alt",GL0297+" "+GL_GRR_AND+" "+GL0452);
-		termsAndPolicyAnr.getElement().setAttribute("title",GL0297+" "+GL_GRR_AND+" "+GL0452);
+		termsAndPolicyAnr.setText(i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
+		termsAndPolicyAnr.getElement().setAttribute("alt",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
+		termsAndPolicyAnr.getElement().setAttribute("title",i18n.GL0297()+" "+i18n.GL_GRR_AND()+" "+i18n.GL0452());
 		
-		andText.setText(GL_GRR_AND+" "+GL_GRR_THE);
-		copyRightAnr.setText(GL0421);
-		copyRightAnr.getElement().setAttribute("alt",GL0421);
-		copyRightAnr.getElement().setAttribute("title",GL0421);
+		andText.setText(i18n.GL_GRR_AND()+" "+i18n.GL_GRR_THE());
+		copyRightAnr.setText(i18n.GL0421());
+		copyRightAnr.getElement().setAttribute("alt",i18n.GL0421());
+		copyRightAnr.getElement().setAttribute("title",i18n.GL0421());
 		
-		gooruText.setText(GL_GRR_OF+" "+GL0733+GL_SPL_FULLSTOP);
-		okButton.getElement().setInnerText(GL0190);
+		gooruText.setText(i18n.GL_GRR_OF()+" "+i18n.GL0733()+i18n.GL_SPL_FULLSTOP());
+		okButton.getElement().setInnerText(i18n.GL0190());
 		userNameTxtBox.getElement().setId("txtUserName");
 		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicy");
 		buttonContainer.getElement().setId("pnlButtonContainer");
@@ -254,9 +255,9 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 			errorMessageForUserNameLbl.setText("");
 		}
 		if(userName.length()==20){
-			errorMessageForUserNameLbl.setText(GL1097+" "+GL0143);
-			errorMessageForUserNameLbl.getElement().setAttribute("alt",GL1097+" "+GL0143);
-			errorMessageForUserNameLbl.getElement().setAttribute("title",GL1097+" "+GL0143);
+			errorMessageForUserNameLbl.setText(i18n.GL1097()+" "+i18n.GL0143());
+			errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL1097()+" "+i18n.GL0143());
+			errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL1097()+" "+i18n.GL0143());
 			errorMessageForUserNameLbl.setVisible(true);
 		//	fieldValidationStaus=false;
 		}else{
@@ -299,17 +300,17 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 			
 			if(userNameTxtBox.getText()==null||userNameTxtBox.getText().trim().equals(""))
 			{
-				errorMessageForUserNameLbl.setText(errorMessageForUserName);
-				errorMessageForUserNameLbl.getElement().setAttribute("alt",errorMessageForUserName);
-				errorMessageForUserNameLbl.getElement().setAttribute("title",errorMessageForUserName);
+				errorMessageForUserNameLbl.setText(i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+				errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
+				errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL1284()+i18n.GL_SPL_FULLSTOP());
 				errorMessageForUserNameLbl.setVisible(true);
 				fieldValidationStaus=false;
 			}
 			if(userNameTxtBox.getText().length()>0 && userNameTxtBox.getText().length()<5) 
 			{
-				errorMessageForUserNameLbl.setText(errorMessageForUserNameTxt);
-				errorMessageForUserNameLbl.getElement().setAttribute("alt",errorMessageForUserNameTxt);
-				errorMessageForUserNameLbl.getElement().setAttribute("title",errorMessageForUserNameTxt);
+				errorMessageForUserNameLbl.setText(i18n.GL1285()+i18n.GL_SPL_FULLSTOP());
+				errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL1285()+i18n.GL_SPL_FULLSTOP());
+				errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL1285()+i18n.GL_SPL_FULLSTOP());
 				
 				errorMessageForUserNameLbl.setVisible(true);
 				fieldValidationStaus=false;
@@ -317,9 +318,9 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 
 			if(userRole.trim().equalsIgnoreCase("what is your role?"))
 			{
-				errorMessageForRoleLbl.setText(errorMessageForUserRole);
-				errorMessageForRoleLbl.getElement().setAttribute("alt",errorMessageForUserRole);
-				errorMessageForRoleLbl.getElement().setAttribute("title",errorMessageForUserRole);
+				errorMessageForRoleLbl.setText(i18n.GL1146());
+				errorMessageForRoleLbl.getElement().setAttribute("alt",i18n.GL1146());
+				errorMessageForRoleLbl.getElement().setAttribute("title",i18n.GL1146());
 				fieldValidationStaus=false;
 			}
 			if(userNameTxtBox.getText().length()==21){
@@ -362,9 +363,9 @@ public class AlmostDoneUc extends PopupPanel implements MessageProperties{
 
 	public void checkUserNameAvailability(UserDo result) {
 		if (result != null && result.isAvailability() && userNameTxtBox.getText() != null) {
-			errorMessageForUserNameLbl.setText(GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
-			errorMessageForUserNameLbl.getElement().setAttribute("alt",GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
-			errorMessageForUserNameLbl.getElement().setAttribute("title",GL0061 + userNameTxtBox.getText() + IS_ALREADY_AVAILABLE);
+			errorMessageForUserNameLbl.setText(i18n.GL0061() + userNameTxtBox.getText() + ""+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
+			errorMessageForUserNameLbl.getElement().setAttribute("alt",i18n.GL0061() + userNameTxtBox.getText() + ""+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
+			errorMessageForUserNameLbl.getElement().setAttribute("title",i18n.GL0061() + userNameTxtBox.getText() + ""+i18n.GL1286()+i18n.GL_SPL_FULLSTOP());
 			errorMessageForUserNameLbl.setVisible(true);
 			
 		}

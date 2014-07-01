@@ -55,6 +55,7 @@ import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -91,7 +92,7 @@ import com.itextpdf.text.log.SysoCounter;
  * @author BLR Team
  * 
  */
-public class LoginPopupUc extends PopupPanel implements MessageProperties {
+public class LoginPopupUc extends PopupPanel{
  
 	@UiField
 	TextBoxWithPlaceholder loginTxtBox;
@@ -119,11 +120,11 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 
 	private SimpleAsyncCallback<UserDo> signedInDataAsyncCallback;
 
-	private static final String LOGIN_ERROR = GL0347;
+//	private static final String LOGIN_ERROR = i18n.GL0347;
 
-	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = GL0348;
+//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE = i18n.GL0348;
 
-	private static final String OOPS = GL0061;
+//	private static final String OOPS = i18n.GL0061;
 	
 	private String nameToken = "";
 	
@@ -146,6 +147,8 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	/**
 	 * Class constructor , to create Login Popup. 
@@ -245,50 +248,50 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(GL0187);
+		lblLoginHeading.setText(i18n.GL0187());
 		lblLoginHeading.getElement().setId("lblLoginHeading");
-		lblLoginHeading.getElement().setAttribute("alt",GL0187);
-		lblLoginHeading.getElement().setAttribute("title",GL0187);
+		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0187());
+		lblLoginHeading.getElement().setAttribute("title",i18n.GL0187());
 		
-		gmailButton.setText(GL0203);
+		gmailButton.setText(i18n.GL0203());
 		gmailButton.getElement().setId("btnGmail");
-		gmailButton.getElement().setAttribute("alt",GL0203);
-		gmailButton.getElement().setAttribute("title",GL0203);
+		gmailButton.getElement().setAttribute("alt",i18n.GL0203()) ;
+		gmailButton.getElement().setAttribute("title",i18n.GL0203());
 		
 		
-        loginTxtBox.setPlaceholder(GL0202);
-        loginTxtBox.getElement().setAttribute("placeholder", GL0202);
+        loginTxtBox.setPlaceholder(i18n.GL0202());
+        loginTxtBox.getElement().setAttribute("placeholder", i18n.GL0202());
 		loginTxtBox.setFocus(true);
-        passwordTxtBox.setPlaceholder(GL0204);
+        passwordTxtBox.setPlaceholder(i18n.GL0204());
        
-        forgotPwd.setText(GL0205);
+        forgotPwd.setText(i18n.GL0205());
         forgotPwd.getElement().setId("lnkForgotPwd");
-        forgotPwd.getElement().setAttribute("alt",GL0205);
-        forgotPwd.getElement().setAttribute("title",GL0205);
-//        lblKeepMeLogedIn.setText(GL0206);
-        loginButton.setText(GL0187);
-        loginButton.getElement().setAttribute("alt",GL0187);
-        loginButton.getElement().setAttribute("title",GL0187);
+        forgotPwd.getElement().setAttribute("alt",i18n.GL0205());
+        forgotPwd.getElement().setAttribute("title",i18n.GL0205());
+//        lblKeepMeLogedIn.setText(i18n.GL0206);
+        loginButton.setText(i18n.GL0187());
+        loginButton.getElement().setAttribute("alt",i18n.GL0187());
+        loginButton.getElement().setAttribute("title",i18n.GL0187());
 		
-        ancRegisterHere.setText(GL0207+GL_SPL_EXCLAMATION);
-        ancRegisterHere.getElement().setAttribute("alt",GL0207);
-        ancRegisterHere.getElement().setAttribute("title",GL0207);
+        ancRegisterHere.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
+        ancRegisterHere.getElement().setAttribute("alt",i18n.GL0207());
+        ancRegisterHere.getElement().setAttribute("title",i18n.GL0207());
         ancRegisterHere.getElement().setId("lnkRegisterHere");
        
-        lblDoYouHaveAccount.setText(GL0208);
+        lblDoYouHaveAccount.setText(i18n.GL0208());
         lblDoYouHaveAccount.getElement().setId("lblDoYouHaveAccount");
-        lblDoYouHaveAccount.getElement().setAttribute("alt",GL0208);
-        lblDoYouHaveAccount.getElement().setAttribute("title",GL0208);
+        lblDoYouHaveAccount.getElement().setAttribute("alt",i18n.GL0208());
+        lblDoYouHaveAccount.getElement().setAttribute("title",i18n.GL0208());
         
-        lblOr.setText(GL0209);
+        lblOr.setText(i18n.GL0209());
         lblOr.getElement().setId("lblOr");
-        lblOr.getElement().setAttribute("alt",GL0209);
-        lblOr.getElement().setAttribute("title",GL0209);
+        lblOr.getElement().setAttribute("alt",i18n.GL0209());
+        lblOr.getElement().setAttribute("title",i18n.GL0209());
         
-        lblPleaseWait.setText(GL0242);
+        lblPleaseWait.setText(i18n.GL0242());
         lblPleaseWait.getElement().setId("lblPleaseWait");
-        lblPleaseWait.getElement().setAttribute("alt",GL0242);
-        lblPleaseWait.getElement().setAttribute("title",GL0242);
+        lblPleaseWait.getElement().setAttribute("alt",i18n.GL0242());
+        lblPleaseWait.getElement().setAttribute("title",i18n.GL0242());
         
         loginTxtBox.getElement().setId("tbLoginUsername");
         passwordTxtBox.getElement().setId("tbLoginPassword");
@@ -296,15 +299,15 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
         
         lblPleaseWait.setVisible(false);
         
-        lblWelcomeBack.setText(GL0345);
+        lblWelcomeBack.setText(i18n.GL0345());
         lblWelcomeBack.getElement().setId("lblWelcomeBack");
-        lblWelcomeBack.getElement().setAttribute("alt",GL0345);
-        lblWelcomeBack.getElement().setAttribute("title",GL0345);
+        lblWelcomeBack.getElement().setAttribute("alt",i18n.GL0345());
+        lblWelcomeBack.getElement().setAttribute("title",i18n.GL0345());
         
-        lblLoginWithGooru.setText(GL0346);
+        lblLoginWithGooru.setText(i18n.GL0346());
         lblLoginWithGooru.getElement().setId("lblLoginWithGooru");
-        lblLoginWithGooru.getElement().setAttribute("alt",GL0346);
-        lblLoginWithGooru.getElement().setAttribute("title",GL0346);
+        lblLoginWithGooru.getElement().setAttribute("alt",i18n.GL0346());
+        lblLoginWithGooru.getElement().setAttribute("title",i18n.GL0346());
         
         cancelButton.getElement().setId("btnCancelButton");
 	}
@@ -480,7 +483,7 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 						}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 							loginButton.setVisible(true);
 							lblPleaseWait.setVisible(false);
-							new AlertContentUc(GL1966, GL1938);
+							new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 						}
 					}
 
@@ -491,18 +494,18 @@ public class LoginPopupUc extends PopupPanel implements MessageProperties {
 						caught.printStackTrace(); 
 						loginButton.setVisible(true);
 						lblPleaseWait.setVisible(false);
-						new AlertContentUc(OOPS, LOGIN_ERROR);
+						new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 					}
 				});
 			} else {
 				loginButton.setVisible(true);
 				lblPleaseWait.setVisible(false);
-				new AlertContentUc(OOPS, LOGIN_ERROR);
+				new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 			}
 		} else  { 
 			loginButton.setVisible(true);
 			lblPleaseWait.setVisible(false);
-			new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+			new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
 		}
 	}
 

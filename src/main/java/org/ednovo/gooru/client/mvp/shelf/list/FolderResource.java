@@ -72,6 +72,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -104,6 +105,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 
 	@UiField
 	VerticalPanel contentVerPanel;
+	
+	@UiField Label blueLbl,greyLbl;
 
 	@UiField(provided = true)
 	ShelfListCBundle res;
@@ -131,13 +134,26 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		glassContainer.setGlassText(GL0991);
+		glassContainer.getElement().setId("GlassContainer");
+		glassContainer.getElement().setAttribute("alt", GL0991);
+		glassContainer.getElement().setAttribute("title", GL0991);
+
 		glassContainer.setGlassVisible(false);
 		this.collectionItemDo = collectionItem;
 
 		dropController = new ResourceDropController(this);
 		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
+		L1titleFocPanel.getElement().setId("focuspnlL1titleFocPanel");
 		L1titleFocPanel.addClickHandler(this);
+		secondLevelFolders.getElement().setId("fpnlsecondLevelFolders");
 		secondLevelFolders.getElement().getStyle().setFloat(Float.LEFT);
+		collectionIcon.getElement().setId("fpnlCollectionIcon");
+		folderL2Icon.getElement().setId("fpnlFolderL2Icon");
+		blueLbl.getElement().setId("lblBlueLbl");
+		greyLbl.getElement().setId("lblGreyLbl");
+		folderL2DisPanel.getElement().setId("discpnlFolderL2DisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 		wrapperFocPanel.addMouseOverHandler(this);
 		wrapperFocPanel.addMouseOutHandler(new MouseOutHandler() {
 
@@ -208,10 +224,14 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 			// 30));
 			folderL2TitleLbl.setHTML(StringUtil.truncateText(collectionItem
 					.getResource().getTitle(), 30));
+			folderL2TitleLbl.getElement().setAttribute("alt", collectionItem.getResource().getTitle());
+			folderL2TitleLbl.getElement().setAttribute("title", collectionItem.getResource().getTitle());
 			folderL2TitleLbl.getElement().setId(
 					collectionItem.getResource().getGooruOid());
+			
 		} else {
 			folderL2TitleLbl.setText("--");
+			folderL2TitleLbl.getElement().setId(collectionItem.getResource().getGooruOid());
 		}
 	}
 
@@ -380,6 +400,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 	public void setOpen() {
 		if (folderResource == null || !folderResource.equals(this)) {
 			glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 			if (folderResource != null) {
 				folderResource.setOpen(false);
 				folderResource.L1titleFocPanel.setStyleName(res.css()
@@ -419,6 +441,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 				if (collectionItemDo.getResource().getResourceType().getName()
 						.equalsIgnoreCase("scollection")) {
 					glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 					glassContainer.setGlassVisible(true);
 				}
 
@@ -467,6 +491,8 @@ public class FolderResource extends FocusPanel implements ClickHandler,
 		if (collectionItemDo.getResource().getResourceType().getName()
 				.equalsIgnoreCase("scollection")) {
 			glassContainer.setGlassText(ADD_TO_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("alt", ADD_TO_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("title", ADD_TO_THIS_COLLECTION);
 			glassContainer.setGlassVisible(true);
 			if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
 				draggable.getDraggableMirageUc().onDroppable(true);

@@ -62,10 +62,28 @@ public class MoreCollectionPrompt extends Composite implements MessageProperties
 		appPopUp.show();
 		appPopUp.center();
 		manyResourcesText.setText(GL0978);
+		manyResourcesText.getElement().setId("lblManyResourcesText");
+		manyResourcesText.getElement().setAttribute("alt", GL0978);
+		manyResourcesText.getElement().setAttribute("title", GL0978);
 		tipLabelText.setText(GL0979);
+		tipLabelText.getElement().setId("lblTipLabelText");
+		tipLabelText.getElement().setAttribute("alt", GL0979);
+		tipLabelText.getElement().setAttribute("title", GL0979);
+		
 		splitCollectionText.setText(GL0980);
+		splitCollectionText.getElement().setId("lblSplitCollectionText");
+		splitCollectionText.getElement().setAttribute("alt", GL0980);
+		splitCollectionText.getElement().setAttribute("title", GL0980);
+		
 		okButton.setText(GL0190.toLowerCase());
+		okButton.getElement().setId("bluebtnOkButton");
+		okButton.getElement().setAttribute("alt", GL0190.toLowerCase());
+		okButton.getElement().setAttribute("title", GL0190.toLowerCase());
+		
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setId("lnkCancelButton");
+		cancelButton.getElement().setAttribute("alt", GL0142);
+		cancelButton.getElement().setAttribute("title",GL0142);
 	}
 
 }
