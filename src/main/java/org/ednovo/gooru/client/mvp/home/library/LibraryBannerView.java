@@ -77,6 +77,14 @@ public class LibraryBannerView extends Composite implements MessageProperties{
 	@Override
 	public void onLoad() {
 		landingBannerInner.getElement().setId("landingBannerInner");
+		partnerLogo.getElement().setId("pnlPartnerLogo");
+		headerTag.getElement().setId("lblHeaderTag");
+		subHeaderTag.getElement().setId("lblSubHeaderTag");
+		fourSteps.getElement().setId("pnlFourSteps");
+		findLbl.getElement().setId("pnlFindLbl");
+		shareLbl.getElement().setId("pnlShareLbl");
+		measureLbl.getElement().setId("pnlMeasureLbl");
+		contributeLbl.getElement().setId("pnlContributeLbl");
 	}
 	
 	private void getLandingBannerText(String placeToken) {
@@ -101,7 +109,13 @@ public class LibraryBannerView extends Composite implements MessageProperties{
 	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String findInlineMsg, String findMsg, String shareInlineMsg, String shareMsg, 
 			String measureInlineMsg, String measureMsg, String contributeInlineMsg, String contributeMsg) {
 			headerTag.setText(headerMsg);
+			headerTag.getElement().setAttribute("alt",headerMsg);
+			headerTag.getElement().setAttribute("title",headerMsg);
+			
 			subHeaderTag.setText(subHeaderMsg);
+			subHeaderTag.getElement().setAttribute("alt",subHeaderMsg);
+			subHeaderTag.getElement().setAttribute("title",subHeaderMsg);
+			
 			
 			InlineLabel findInlineLbl = new InlineLabel(findInlineMsg);
 			InlineLabel shareInlineLbl = new InlineLabel(shareInlineMsg);

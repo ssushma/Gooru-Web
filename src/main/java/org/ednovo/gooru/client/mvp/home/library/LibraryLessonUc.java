@@ -113,6 +113,7 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 	 *
 	 */
 	private void setLessonData(final LessonDo lessonDo, final PartnerFolderDo partnerFolderDo, ArrayList<ConceptDo> conceptDoList, boolean isLessonHighlighted, Integer lessonNumber) {
+		lessonList.getElement().setId("pnlLessonList");
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(lessonDo!=null) {
 			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+lessonDo.getLabel());

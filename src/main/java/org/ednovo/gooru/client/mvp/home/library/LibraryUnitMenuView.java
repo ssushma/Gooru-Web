@@ -62,26 +62,37 @@ public class LibraryUnitMenuView extends Composite {
 			unitMenuItem.setStyleName(libraryStyleUc.popularStarImage());
 		}
 		unitMenuItem.setText(unitDo.getLabel());
+		unitMenuItem.getElement().setAttribute("alt",unitDo.getLabel());
+		unitMenuItem.getElement().setAttribute("title",unitDo.getLabel());
 		setUnitId(""+unitDo.getCodeId());
 		if(unitDo.getCount()==null) {
 			setChildCount(0);	
 		} else {
 			setChildCount(unitDo.getCount());
 		}
+		setIds();
 	}
 
 	public LibraryUnitMenuView(PartnerFolderDo folderDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		unitMenuItem.setText(folderDo.getTitle());
+		unitMenuItem.getElement().setAttribute("alt",folderDo.getTitle());
+		unitMenuItem.getElement().setAttribute("title",folderDo.getTitle());
 		setUnitId(folderDo.getGooruOid());
+		setIds();
 	}
 
 	public LibraryUnitMenuView(ProfileLibraryDo folderDo) {
 		initWidget(uiBinder.createAndBindUi(this));
 		unitMenuItem.setText(folderDo.getTitle());
+		unitMenuItem.getElement().setAttribute("alt",folderDo.getTitle());
+		unitMenuItem.getElement().setAttribute("title",folderDo.getTitle());
 		setUnitId(folderDo.getGooruOid());
+		setIds();
 	}
-	
+	public void setIds(){
+		unitMenuItem.getElement().setId("lblUnitMenuItem");
+	}
 	public Label getUnitMenuItemPanel() {
 		return unitMenuItem;
 	}
