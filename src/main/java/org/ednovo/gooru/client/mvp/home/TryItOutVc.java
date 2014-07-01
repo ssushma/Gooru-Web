@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.GooruCBundle;
 import org.ednovo.gooru.client.event.InvokeGooruGuideBubbleEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -48,7 +49,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProperties {
+public class TryItOutVc extends PopupPanel implements ClickHandler{
 
 	@UiField
 	Label closePopUpLbl,improveGooruText,celebrationLbl,classicGooruLbl,goBackText;
@@ -63,6 +64,9 @@ public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProper
 
 	interface TryItOutUiBinder extends UiBinder<Widget, TryItOutVc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+
 
 	/**
 	 * Class constructor
@@ -75,41 +79,41 @@ public class TryItOutVc extends PopupPanel implements ClickHandler,MessageProper
 		this.addStyleName(GooruCBundle.INSTANCE.css().tryitoutpopup());
 		this.show();
 		this.center();
-		improveGooruText.setText(GL0285);
+		improveGooruText.setText(i18n.GL0285());
 		improveGooruText.getElement().setId("lblImproveGooruText");
-		improveGooruText.getElement().setAttribute("alt",GL0285);
-		improveGooruText.getElement().setAttribute("title",GL0285);
+		improveGooruText.getElement().setAttribute("alt",i18n.GL0285());
+		improveGooruText.getElement().setAttribute("title",i18n.GL0285());
 		
-		celebrationLbl.setText(GL1314);
+		celebrationLbl.setText(i18n.GL1314());
 		celebrationLbl.getElement().setId("lblCelebrationLbl");
-		celebrationLbl.getElement().setAttribute("alt",GL1314);
-		celebrationLbl.getElement().setAttribute("title",GL1314);
+		celebrationLbl.getElement().setAttribute("alt",i18n.GL1314());
+		celebrationLbl.getElement().setAttribute("title",i18n.GL1314());
 		
 		learnMoreLbl.setHref("http://support.goorulearning.org/entries/23251492-Why-are-we-retiring-Classic-Gooru-and-transitioning-everyone-over-to-the-new-version-");
-		learnMoreLbl.setText(GL1315);
+		learnMoreLbl.setText(i18n.GL1315());
 		learnMoreLbl.getElement().setId("lblLearnMoreLbl");
-		learnMoreLbl.getElement().setAttribute("alt",GL1315);
-		learnMoreLbl.getElement().setAttribute("title",GL1315);
+		learnMoreLbl.getElement().setAttribute("alt",i18n.GL1315());
+		learnMoreLbl.getElement().setAttribute("title",i18n.GL1315());
 		
-		backToClassicAnr.setText(GL1316);
+		backToClassicAnr.setText(i18n.GL1316());
 		backToClassicAnr.getElement().setId("lnkBackToClassicAnr");
-		backToClassicAnr.getElement().setAttribute("alt",GL1316);
-		backToClassicAnr.getElement().setAttribute("title",GL1316);
+		backToClassicAnr.getElement().setAttribute("alt",i18n.GL1316());
+		backToClassicAnr.getElement().setAttribute("title",i18n.GL1316());
 		
-		classicGooruLbl.setText(GL1317);
+		classicGooruLbl.setText(i18n.GL1317());
 		classicGooruLbl.getElement().setId("lnkClassicGooruLbl");
-		classicGooruLbl.getElement().setAttribute("alt",GL1317);
-		classicGooruLbl.getElement().setAttribute("title",GL1317);
+		classicGooruLbl.getElement().setAttribute("alt",i18n.GL1317());
+		classicGooruLbl.getElement().setAttribute("title",i18n.GL1317());
 		
-		tryItOutLbl.setText(GL1318);
+		tryItOutLbl.setText(i18n.GL1318());
 		tryItOutLbl.getElement().setId("lnkTryItOutLbl");
-		tryItOutLbl.getElement().setAttribute("alt",GL1318);
-		tryItOutLbl.getElement().setAttribute("title",GL1318);
+		tryItOutLbl.getElement().setAttribute("alt",i18n.GL1318());
+		tryItOutLbl.getElement().setAttribute("title",i18n.GL1318());
 		
-		goBackText.setText(GL1319);
+		goBackText.setText(i18n.GL1319());
 		goBackText.getElement().setId("lblGoBackText");
-		goBackText.getElement().setAttribute("alt",GL1319);
-		goBackText.getElement().setAttribute("title",GL1319);
+		goBackText.getElement().setAttribute("alt",i18n.GL1319());
+		goBackText.getElement().setAttribute("title",i18n.GL1319());
 	
 		closePopUpLbl.getElement().setId("lblClosePopUpLbl");
 		tryItOutNewGooruFloPanel.getElement().setId("fpnlTryItOutNewGooruFloPanel");

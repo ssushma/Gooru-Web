@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.home;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -42,7 +43,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class AleartPopupVc extends Composite implements MessageProperties {
+public class AleartPopupVc extends Composite{
 
 	private AppPopUp appPopUp;
 
@@ -53,12 +54,14 @@ public class AleartPopupVc extends Composite implements MessageProperties {
 	
 	@UiField HTMLPanel buttonContainer;
 	
-	private static final String IS_COLLECTIONS = GL1089+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
+//	private static final String IS_COLLECTIONS = i18n.GL1089+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP;
 
 	private static AleartPopupVcUiBinder uiBinder = GWT.create(AleartPopupVcUiBinder.class);
 
 	interface AleartPopupVcUiBinder extends UiBinder<Widget, AleartPopupVc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor , get confirm logout popup
@@ -67,18 +70,18 @@ public class AleartPopupVc extends Composite implements MessageProperties {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName("removeResourcePopup");
-		appPopUp.setContent(IS_COLLECTIONS, uiBinder.createAndBindUi(this));
+		appPopUp.setContent((i18n.GL1089()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()), uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		okBtnUc.setText(GL0190);
+		okBtnUc.setText(i18n.GL0190());
 		okBtnUc.getElement().setId("btnOkBtnUc");
-		okBtnUc.getElement().setAttribute("alt",GL0190);
-		okBtnUc.getElement().setAttribute("title",GL0190);
+		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
+		okBtnUc.getElement().setAttribute("title",i18n.GL0190());
 		
-		storeResourcesText.setText(GL1237);
+		storeResourcesText.setText(i18n.GL1237());
 		storeResourcesText.getElement().setId("lblStoreResourcesText");
-		storeResourcesText.getElement().setAttribute("alt",GL1237);
-		storeResourcesText.getElement().setAttribute("title",GL1237);
+		storeResourcesText.getElement().setAttribute("alt",i18n.GL1237());
+		storeResourcesText.getElement().setAttribute("title",i18n.GL1237());
 		buttonContainer.getElement().setId("pnlButtonContainer");
 	}
 

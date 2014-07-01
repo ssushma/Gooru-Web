@@ -193,12 +193,22 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		this.topicId = topicDo.getCodeId();
 		setPlaceToken(placeToken);
 		moreOnTopicText.getElement().setInnerHTML(GL1169);
+		moreOnTopicText.getElement().setAttribute("alt",GL1169);
+		moreOnTopicText.getElement().setAttribute("title",GL1169);
 		assignCollectionBtn.setText(GL0104);
+		assignCollectionBtn.getElement().setAttribute("alt",GL0104);
+		assignCollectionBtn.getElement().setAttribute("title",GL0104);
 		customizeCollectionBtn.setText(GL0631);
+		customizeCollectionBtn.getElement().setAttribute("alt",GL0631);
+		customizeCollectionBtn.getElement().setAttribute("title",GL0631);
 		noCollectionLbl.setText(GL1170);
+		noCollectionLbl.getElement().setAttribute("alt",GL1170);
+		noCollectionLbl.getElement().setAttribute("title",GL1170);
 		topicTitleLbl.setText(GL1171+" "+topicNumber+": "+topicDo.getLabel());
+		topicTitleLbl.getElement().setAttribute("alt",GL1171+" "+topicNumber+": "+topicDo.getLabel());
+		topicTitleLbl.getElement().setAttribute("title",GL1171+" "+topicNumber+": "+topicDo.getLabel());
 		searchTitle=topicDo.getLabel();
-		
+		setIds();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -287,17 +297,44 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 			
 		}
 	}
-	
+	public void setIds(){
+		topicBlock.getElement().setId("pnlTopicBlock");
+		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
+		searchLink.getElement().setId("epnlSearchLink");
+		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
+		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
+		conceptList.getElement().setId("pnlConceptList");
+		loadingImage.getElement().setId("pnlLoadingImage");
+		collectionViewer.getElement().setId("pnlCollectionViewer");
+		collectionInfo.getElement().setId("pnlCollectionInfo");
+		standardsDescription.getElement().setId("pnlStandardsDescription");
+		collectionImage.getElement().setId("imgCollectionImage");
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		collectionDescriptionLbl.getElement().setId("htmlCollectionDescriptionLbl");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		assignCollectionBtn.getElement().setId("btnAssignCollection");
+		customizeCollectionBtn.getElement().setId("btnCustomizeCollection");
+		resourcesInside.getElement().setId("pnlResourcesInside");
+		noCollectionLbl.getElement().setId("lnlNoCollectionLbl");
+	}
 
 	public LibraryTopicListView(ConceptDo conceptDo, Integer conceptNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
 		assignCollectionBtn.setText(GL0104);
+		assignCollectionBtn.getElement().setAttribute("alt",GL0104);
+		assignCollectionBtn.getElement().setAttribute("title",GL0104);
 		customizeCollectionBtn.setText(GL0631);
+		customizeCollectionBtn.getElement().setAttribute("alt",GL0631);
+		customizeCollectionBtn.getElement().setAttribute("title",GL0631);
 		topicTitleLbl.setText(conceptDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
 		searchTitle=conceptDo.getTitle();
 		moreOnTopicText.getElement().setInnerHTML(GL1169);
+		moreOnTopicText.getElement().setAttribute("alt",GL1169);
+		moreOnTopicText.getElement().setAttribute("title",GL1169);
 		try {
 			setConceptData(conceptDo,conceptNumber,null, null,null);
 		} catch(Exception e) {
@@ -313,7 +350,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		
-		
+		setIds();
 		lessonScrollPanel.setVisible(false);
 		collectionViewer.addStyleName(libraryStyle.collectionViewerSubStyle());
 		collectionInfo.addStyleName(libraryStyle.collectionInfoSubStyle());
@@ -341,12 +378,22 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
 		moreOnTopicText.getElement().setInnerHTML(GL1169);
+		moreOnTopicText.getElement().setAttribute("alt",GL1169);
+		moreOnTopicText.getElement().setAttribute("title",GL1169);
 		assignCollectionBtn.setText(GL0104);
+		assignCollectionBtn.getElement().setAttribute("alt",GL0104);
+		assignCollectionBtn.getElement().setAttribute("title",GL0104);
 		customizeCollectionBtn.setText(GL0631);
+		customizeCollectionBtn.getElement().setAttribute("alt",GL0631);
+		customizeCollectionBtn.getElement().setAttribute("title",GL0631);
 		noCollectionLbl.setText(GL1170);
+		noCollectionLbl.getElement().setAttribute("alt",GL1170);
+		noCollectionLbl.getElement().setAttribute("title",GL1170);
 		topicTitleLbl.setText(partnerFolderDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("alt",partnerFolderDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("title",partnerFolderDo.getTitle());
 		searchTitle=partnerFolderDo.getTitle();
-		
+		setIds();
 		if(partnerFolderDo.getCollections()!=null) {
 			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount());
 			try {
@@ -721,6 +768,8 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				try
 				{
 				collectionTitleLbl.setHTML(conceptDo.getTitle());
+				collectionTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
+				collectionTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
 				String description = conceptDo.getGoals();
 				if(description!=null&&description.length()>=97) {
 					String browesr = BrowserAgent.getWebBrowserClient();
@@ -731,6 +780,8 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 					}
 				}
 				collectionDescriptionLbl.setHTML(description);
+				collectionDescriptionLbl.getElement().setAttribute("alt",description);
+				collectionDescriptionLbl.getElement().setAttribute("title",description);
 				}
 				catch(Exception ex)
 				{

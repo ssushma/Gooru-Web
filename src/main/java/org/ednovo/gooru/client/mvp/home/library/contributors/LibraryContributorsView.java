@@ -68,6 +68,10 @@ public class LibraryContributorsView extends Composite implements MessagePropert
 	public LibraryContributorsView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		contributorsText.getElement().setInnerText(GL1182);
+		contributorsText.getElement().setId("pnlContributorsText");
+		contributorsText.getElement().setAttribute("alt",GL1182);
+		contributorsText.getElement().setAttribute("title",GL1182);
+		featuredEducatorsPanel.getElement().setId("pnlFeaturedEducatorsPanel");
 		getFeaturedUsers(placeToken);
 	}
 	

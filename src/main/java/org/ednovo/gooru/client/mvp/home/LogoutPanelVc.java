@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.home;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -46,7 +47,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class LogoutPanelVc extends PopupPanel implements MessageProperties{
+public class LogoutPanelVc extends PopupPanel{
 
 	@UiField
 	Anchor logoutAnr, anrSettings;
@@ -74,6 +75,8 @@ public class LogoutPanelVc extends PopupPanel implements MessageProperties{
 	interface logoutPanelVcUiBinder extends UiBinder<Widget, LogoutPanelVc> {
 	}
 
+	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	/**
 	 * Class constructor
 	 */
@@ -81,32 +84,32 @@ public class LogoutPanelVc extends PopupPanel implements MessageProperties{
 		super(true);
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		anrSettings.setText(GL0192);
+		anrSettings.setText(i18n.GL0192());
 		anrSettings.getElement().setId("lnkSettings");
-		anrSettings.getElement().setAttribute("alt",GL0192);
-		anrSettings.getElement().setAttribute("title",GL0192);
+		anrSettings.getElement().setAttribute("alt",i18n.GL0192());
+		anrSettings.getElement().setAttribute("title",i18n.GL0192());
 		anrSettings.setHref("#settings");
 		
-		classicGooruAnr.setText(GL0193);
+		classicGooruAnr.setText(i18n.GL0193());
 		classicGooruAnr.getElement().setId("lnkClassicGooru");
-		classicGooruAnr.getElement().setAttribute("alt",GL0193);
-		classicGooruAnr.getElement().setAttribute("title",GL0193);
+		classicGooruAnr.getElement().setAttribute("alt",i18n.GL0193());
+		classicGooruAnr.getElement().setAttribute("title",i18n.GL0193());
 		
-		supportAnr.setText(GL0194);
+		supportAnr.setText(i18n.GL0194());
 		supportAnr.getElement().setId("lnkSupport");
-		supportAnr.getElement().setAttribute("alt",GL0194);
-		supportAnr.getElement().setAttribute("title",GL0194);
+		supportAnr.getElement().setAttribute("alt",i18n.GL0194());
+		supportAnr.getElement().setAttribute("title",i18n.GL0194());
 		supportAnr.setHref("http://support.goorulearning.org/hc/en-us");
 		
-		feedbackAnr.setText(GL0195);
+		feedbackAnr.setText(i18n.GL0195());
 		feedbackAnr.getElement().setId("lnkFeedback");
-		feedbackAnr.getElement().setAttribute("alt",GL0193);
-		feedbackAnr.getElement().setAttribute("title",GL0193);
+		feedbackAnr.getElement().setAttribute("alt",i18n.GL0193());
+		feedbackAnr.getElement().setAttribute("title",i18n.GL0193());
 		
-		logoutAnr.setText(GL0197);
+		logoutAnr.setText(i18n.GL0197());
 		logoutAnr.getElement().setId("lnkLogout");
-		logoutAnr.getElement().setAttribute("alt",GL0197);
-		logoutAnr.getElement().setAttribute("title",GL0197);
+		logoutAnr.getElement().setAttribute("alt",i18n.GL0197());
+		logoutAnr.getElement().setAttribute("title",i18n.GL0197());
 		
 		classicGooruAnr.setVisible(false);
 		
