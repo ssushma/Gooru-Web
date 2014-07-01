@@ -44,6 +44,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -63,9 +64,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class NewClasspagePopupView extends AppPopUp implements MessageProperties{
+public abstract class NewClasspagePopupView extends AppPopUp{
 
 	private static NewClasspagePopupViewUiBinder uiBinder = GWT.create(NewClasspagePopupViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@UiField(provided = true)
 	NewClasspagePopupCBundle res;
@@ -92,33 +95,33 @@ public abstract class NewClasspagePopupView extends AppPopUp implements MessageP
 		this.getElement().getStyle().setWidth(450,Unit.PX);
 		btnCancel.addClickHandler(new CloseExistsClickHandler());
 		btnAdd.addClickHandler(new AddExistsClickHandler());
-		classpageTitleTxt.getElement().setAttribute("placeholder", GL1124);
+		classpageTitleTxt.getElement().setAttribute("placeholder", i18n.GL1124());
 		classpageTitleTxt.getElement().setAttribute("maxlength", "50");
 		classpageTitleTxt.getElement().setId("txtClassPageTitle");
 		
 		btnAdd.getElement().setId("btnAdd");
-		btnAdd.setText(GL0745);
-		btnAdd.getElement().setAttribute("alt",GL0745);
-		btnAdd.getElement().setAttribute("title",GL0745);
+		btnAdd.setText(i18n.GL0745());
+		btnAdd.getElement().setAttribute("alt",i18n.GL0745());
+		btnAdd.getElement().setAttribute("title",i18n.GL0745());
 		
-		btnCancel.setText(GL0142);
+		btnCancel.setText(i18n.GL0142());
 		btnCancel.getElement().setId("btnCancel");
-		btnCancel.getElement().setAttribute("alt",GL0142);
-		btnCancel.getElement().setAttribute("title",GL0142);
+		btnCancel.getElement().setAttribute("alt",i18n.GL0142());
+		btnCancel.getElement().setAttribute("title",i18n.GL0142());
 		
-		titlePanel.getElement().setInnerText(GL0318 + GL_SPL_STAR);
+		titlePanel.getElement().setInnerText(i18n.GL0318() + i18n.GL_SPL_STAR());
 		titlePanel.getElement().setId("pnlTitle");
-		titlePanel.getElement().setAttribute("alt",GL0318);
-		titlePanel.getElement().setAttribute("title",GL0318);
+		titlePanel.getElement().setAttribute("alt",i18n.GL0318());
+		titlePanel.getElement().setAttribute("title",i18n.GL0318());
 		
-		headerPanel.getElement().setInnerText(GL0747);
+		headerPanel.getElement().setInnerText(i18n.GL0747());
 		headerPanel.getElement().setId("pnlHeader");
-		headerPanel.getElement().setAttribute("alt",GL0747);
-		headerPanel.getElement().setAttribute("title",GL0747);
-		mandatoryClasspageTitleLbl.setText(GL0746);
+		headerPanel.getElement().setAttribute("alt",i18n.GL0747());
+		headerPanel.getElement().setAttribute("title",i18n.GL0747());
+		mandatoryClasspageTitleLbl.setText(i18n.GL0746());
 		mandatoryClasspageTitleLbl.getElement().setId("lblMandatoryClasspageTitle");
-		mandatoryClasspageTitleLbl.getElement().setAttribute("alt",GL0746);
-		mandatoryClasspageTitleLbl.getElement().setAttribute("title",GL0746);
+		mandatoryClasspageTitleLbl.getElement().setAttribute("alt",i18n.GL0746());
+		mandatoryClasspageTitleLbl.getElement().setAttribute("title",i18n.GL0746());
 		
 		classpageTitleTxt.addBlurHandler(new BlurHandler() {
 			
@@ -133,7 +136,7 @@ public abstract class NewClasspagePopupView extends AppPopUp implements MessageP
 						boolean isHavingBadWords = value;
 						if (value){
 							classpageTitleTxt.getElement().getStyle().setBorderColor("orange");
-							mandatoryClasspageTitleLbl.setText(GL0554);
+							mandatoryClasspageTitleLbl.setText(i18n.GL0554());
 							mandatoryClasspageTitleLbl.setVisible(true);
 						}else{							
 							classpageTitleTxt.getElement().getStyle().clearBackgroundColor();
@@ -153,7 +156,7 @@ public abstract class NewClasspagePopupView extends AppPopUp implements MessageP
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
 		mandatoryClasspageTitleLbl.setVisible(false);
 		panelLoading.setVisible(false);
-		panelLoading.setText(GL0122);
+		panelLoading.setText(i18n.GL0122());
 		panelControls.setVisible(true);
 		show();
 		center();
@@ -169,7 +172,7 @@ public abstract class NewClasspagePopupView extends AppPopUp implements MessageP
 			classpageTitleTxt.getElement().getStyle().setBorderColor("#ccc");
 			mandatoryClasspageTitleLbl.setVisible(false);
 			if (classpageTitleTxt.getText().length() >= 50) {
-				mandatoryClasspageTitleLbl.setText(GL0143);
+				mandatoryClasspageTitleLbl.setText(i18n.GL0143());
 				mandatoryClasspageTitleLbl.setVisible(true);
 			}
 		}
