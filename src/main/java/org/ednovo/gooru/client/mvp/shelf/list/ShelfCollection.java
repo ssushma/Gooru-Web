@@ -212,7 +212,10 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		myShelfEditButton.setText(GL0140);
+		myShelfEditButton.getElement().setAttribute("alt", GL0140);
+		myShelfEditButton.getElement().setAttribute("title", GL0140);
 		myShelfEditButton.getElement().setId("btnMyShelfEdit");
+		glassContainer.getElement().setId("GlassContainer");
 		glassContainer.setGlassVisible(false);
 		
 		setData(collectionDo,nextLevel);
@@ -221,6 +224,15 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		dropController = new ResourceDropController(this);
 		myShelfEditButton.getElement().getStyle().setDisplay(Display.NONE);
 		myShelfEditButton.getElement().getStyle().setMarginRight(20, Unit.PX);
+		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
+		arrowIcon.getElement().setId("pnlArrowIcon");
+		titleLbl.getElement().setId("htmlTitleLbl");
+		panelToolTip.getElement().setId("pnlPanelToolTip");
+		htmlToolTipContent.getElement().setId("htmlHtmlToolTipContent");
+		disPanel.getElement().setId("discpnlDisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		addSuccessMsg.getElement().setId("lblAddSuccessMsg");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 		titleFocPanel.addClickHandler(new ClickOnFolderItem());
 		titleFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -277,10 +289,15 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 		});
 		
 		htmlToolTipContent.setHTML(GL1395);
+		htmlToolTipContent.getElement().setAttribute("alt", GL1395);
+		htmlToolTipContent.getElement().setAttribute("title", GL1395);
 		
 		AppClientFactory.getEventBus().addHandler(CollectionAssignShareEvent.TYPE, handler);
 		addSuccessMsg.setVisible(false);
 		addSuccessMsg.setText(GL0591.toLowerCase());
+		addSuccessMsg.getElement().setAttribute("alt", GL0591.toLowerCase());
+		addSuccessMsg.getElement().setAttribute("title", GL0591.toLowerCase());
+
 		wrapperFocPanel.addClickHandler(new ClickOnFolderItem());
 		AppClientFactory.getEventBus().addHandler(UpdateShelfFolderNameEvent.TYPE,updateShelfFolderName);
 	}
@@ -402,6 +419,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 	public void updateData(FolderDo collectionDo) {
 		this.collectionDo = collectionDo;
 		titleLbl.setHTML(collectionDo.getTitle());
+		titleLbl.getElement().setAttribute("alt", collectionDo.getTitle());
+		titleLbl.getElement().setAttribute("title", collectionDo.getTitle());
 	}
 
 	/**
@@ -1115,6 +1134,8 @@ public class ShelfCollection extends FocusPanel implements DropBox,
 			if(collectionDo.getGooruOid().equals(folderId)){
 				collectionDo.setTitle(folderName);
 				titleLbl.setHTML(folderName);
+				titleLbl.getElement().setAttribute("alt", folderName);
+				titleLbl.getElement().setAttribute("title", folderName);
 			}
 		}
 		
