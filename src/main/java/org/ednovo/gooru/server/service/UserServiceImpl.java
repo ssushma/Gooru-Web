@@ -617,7 +617,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG, tagGooruOid,getLoggedInSessionToken(),offset,limit);
-		
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeTagsContent(jsonRep);
@@ -656,10 +655,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit)
+	public List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit, String userIdVal)
 			throws GwtException {
 		JsonRepresentation jsonRep = null;
-		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken(),offset,limit);
+		String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.USER_TAG_RESOURCE, tagGooruOid,getLoggedInSessionToken(),offset,limit,userIdVal);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();	
 		return deserializeResourcesByTag(jsonRep);
