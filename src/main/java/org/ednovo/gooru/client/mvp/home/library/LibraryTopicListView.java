@@ -66,6 +66,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
@@ -111,7 +112,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class LibraryTopicListView extends Composite implements MessageProperties{
+public class LibraryTopicListView extends Composite{
 
 	@UiField ScrollPanel lessonScrollPanel;
 	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside,moreOnTopicText,standardsDescription;
@@ -187,18 +188,30 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 	interface LibraryTopicViewUiBinder extends
 			UiBinder<Widget, LibraryTopicListView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public LibraryTopicListView(TopicDo topicDo, Integer topicNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicDo.getCodeId();
 		setPlaceToken(placeToken);
-		moreOnTopicText.getElement().setInnerHTML(GL1169);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
-		noCollectionLbl.setText(GL1170);
-		topicTitleLbl.setText(GL1171+" "+topicNumber+": "+topicDo.getLabel());
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		noCollectionLbl.setText(i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
+		topicTitleLbl.setText(i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
+		topicTitleLbl.getElement().setAttribute("alt",i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
+		topicTitleLbl.getElement().setAttribute("title",i18n.GL1171()+" "+topicNumber+": "+topicDo.getLabel());
 		searchTitle=topicDo.getLabel();
-		
+		setIds();
 		if(topicDo.getLesson()!=null) {
 			setLessonData(topicDo.getLesson());
 		} else {
@@ -287,17 +300,44 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 			
 		}
 	}
-	
+	public void setIds(){
+		topicBlock.getElement().setId("pnlTopicBlock");
+		topicTitleLbl.getElement().setId("lblTopicTitleLbl");
+		searchLink.getElement().setId("epnlSearchLink");
+		moreOnTopicText.getElement().setId("pnlMoreOnTopicText");
+		lessonScrollPanel.getElement().setId("sbLessonScrollPanel");
+		conceptList.getElement().setId("pnlConceptList");
+		loadingImage.getElement().setId("pnlLoadingImage");
+		collectionViewer.getElement().setId("pnlCollectionViewer");
+		collectionInfo.getElement().setId("pnlCollectionInfo");
+		standardsDescription.getElement().setId("pnlStandardsDescription");
+		collectionImage.getElement().setId("imgCollectionImage");
+		collectionTitleLbl.getElement().setId("htmlCollectionTitleLbl");
+		collectionDescriptionLbl.getElement().setId("htmlCollectionDescriptionLbl");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		assignCollectionBtn.getElement().setId("btnAssignCollection");
+		customizeCollectionBtn.getElement().setId("btnCustomizeCollection");
+		resourcesInside.getElement().setId("pnlResourcesInside");
+		noCollectionLbl.getElement().setId("lnlNoCollectionLbl");
+	}
 
 	public LibraryTopicListView(ConceptDo conceptDo, Integer conceptNumber, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
+		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
 		topicTitleLbl.setText(conceptDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
 		searchTitle=conceptDo.getTitle();
-		moreOnTopicText.getElement().setInnerHTML(GL1169);
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
 		try {
 			setConceptData(conceptDo,conceptNumber,null, null,null);
 		} catch(Exception e) {
@@ -313,7 +353,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
 		customizeCollectionBtn.addMouseOutHandler(new OncustomizeCollectionBtnMouseOut());
 		
-		
+		setIds();
 		lessonScrollPanel.setVisible(false);
 		collectionViewer.addStyleName(libraryStyle.collectionViewerSubStyle());
 		collectionInfo.addStyleName(libraryStyle.collectionInfoSubStyle());
@@ -340,13 +380,23 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
-		moreOnTopicText.getElement().setInnerHTML(GL1169);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
-		noCollectionLbl.setText(GL1170);
+		moreOnTopicText.getElement().setInnerHTML(i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("alt",i18n.GL1169());
+		moreOnTopicText.getElement().setAttribute("title",i18n.GL1169());
+		assignCollectionBtn.setText(i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("alt",i18n.GL0104());
+		assignCollectionBtn.getElement().setAttribute("title",i18n.GL0104());
+		customizeCollectionBtn.setText(i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("alt",i18n.GL0631());
+		customizeCollectionBtn.getElement().setAttribute("title",i18n.GL0631());
+		noCollectionLbl.setText(i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("alt",i18n.GL1170());
+		noCollectionLbl.getElement().setAttribute("title",i18n.GL1170());
 		topicTitleLbl.setText(partnerFolderDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("alt",partnerFolderDo.getTitle());
+		topicTitleLbl.getElement().setAttribute("title",partnerFolderDo.getTitle());
 		searchTitle=partnerFolderDo.getTitle();
-		
+		setIds();
 		if(partnerFolderDo.getCollections()!=null) {
 			setOnlyConceptData(partnerFolderDo.getCollections(), false, partnerFolderDo.getGooruOid(), partnerFolderDo.getItemCount());
 			try {
@@ -671,7 +721,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		if(this.topicId==topicId) {
 		if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
 			standardsDescription.clear();
-			InlineLabel headerLbl = new InlineLabel(GL1363+GL_SPL_SEMICOLON+" ");
+			InlineLabel headerLbl = new InlineLabel(i18n.GL1363()+i18n.GL_SPL_SEMICOLON()+" ");
 			headerLbl.getElement().getStyle().setFontWeight(FontWeight.BOLD);
 			if(lessonLabel.length() > 400)
 			{
@@ -721,6 +771,8 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				try
 				{
 				collectionTitleLbl.setHTML(conceptDo.getTitle());
+				collectionTitleLbl.getElement().setAttribute("alt",conceptDo.getTitle());
+				collectionTitleLbl.getElement().setAttribute("title",conceptDo.getTitle());
 				String description = conceptDo.getGoals();
 				if(description!=null&&description.length()>=97) {
 					String browesr = BrowserAgent.getWebBrowserClient();
@@ -731,6 +783,8 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 					}
 				}
 				collectionDescriptionLbl.setHTML(description);
+				collectionDescriptionLbl.getElement().setAttribute("alt",description);
+				collectionDescriptionLbl.getElement().setAttribute("title",description);
 				}
 				catch(Exception ex)
 				{
@@ -742,7 +796,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 				if(libraryResources!=null) {
 					int resourceCount = libraryResources.size();
 					int resources=resourceCount<=4?resourceCount:4;
-					final Label resourceCountLbl = new Label(resources+" "+GL_GRR_OF+" "+GL_GRR_THE+" "+resourceCount+" "+GL1094.toLowerCase());
+					final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 					resourcesInside.add(resourceCountLbl);
 					for(int i=0;i<resources;i++) {
 						try {
@@ -1192,7 +1246,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL0676));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0676()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
@@ -1217,7 +1271,7 @@ public class LibraryTopicListView extends Composite implements MessageProperties
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL0677));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0677()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);

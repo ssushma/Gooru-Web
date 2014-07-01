@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetTexasAccountHandler;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -47,7 +48,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TeachersPickUc extends Composite implements MessageProperties{
+public class TeachersPickUc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
@@ -77,6 +78,8 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 
 	interface TeachersPickUcUiBinder extends UiBinder<Widget, TeachersPickUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public TeachersPickUc() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -87,18 +90,41 @@ public class TeachersPickUc extends Composite implements MessageProperties{
 		socialContent = new HTMLPanel("");
 		languageContent = new HTMLPanel("");
 		loadingImage = new HTMLPanel("");
-		mathTab.getElement().setInnerText(GL1001);
-		scienceTab.getElement().setInnerText(GL1000);
-		socialTab.getElement().setInnerText(GL1002);
-		languageTab.getElement().setInnerText(GL1003);
-		featuredTab.getElement().setInnerText(GL1009);
+		
+		mathTab.getElement().setInnerText(i18n.GL1001());
+		mathTab.getElement().setId("epnlMathTab");
+		mathTab.getElement().setAttribute("alt",i18n.GL1001());
+		mathTab.getElement().setAttribute("title",i18n.GL1001());
+		
+		scienceTab.getElement().setInnerText(i18n.GL1000());
+		scienceTab.getElement().setId("epnlScienceTab");
+		scienceTab.getElement().setAttribute("alt",i18n.GL1000());
+		scienceTab.getElement().setAttribute("title",i18n.GL1000());
+		
+		socialTab.getElement().setInnerText(i18n.GL1002());
+		socialTab.getElement().setId("epnlSocialTab");
+		socialTab.getElement().setAttribute("alt",i18n.GL1002());
+		socialTab.getElement().setAttribute("title",i18n.GL1002());
+		
+		languageTab.getElement().setInnerText(i18n.GL1003());
+		languageTab.getElement().setId("epnLanguageTab");
+		languageTab.getElement().setAttribute("alt",i18n.GL1003());
+		languageTab.getElement().setAttribute("title",i18n.GL1003());
+		
+		featuredTab.getElement().setInnerText(i18n.GL1009());
+		featuredTab.getElement().setId("epnlFeaturedTab");
+		featuredTab.getElement().setAttribute("alt",i18n.GL1009());
+		featuredTab.getElement().setAttribute("title",i18n.GL1009());
+		
 		loadingImage.setStyleName(landingPageStyle.loadingImage());
 		featuredContainer.add(loadingImage);
-		teachersPickPanelLabel = new Label(GL0198);
+		teachersPickPanelLabel = new Label(i18n.GL0198());
 		teachersPickPanel.add(teachersPickPanelLabel);//new DownToolTipWidgetUc(teachersPickPanelLabel, TEACHERS_PICK_DESCRIPTION));
 		getTeacherPickCollections(MATH_TAB);
 		AppClientFactory.getEventBus().addHandler(SetTexasAccountEvent.TYPE,setTexasAccountHandler);
 		panelTeachersPick.getElement().setId("panelTeachersPick");
+		teachersPickPanel.getElement().setId("pnlTeachersPickPanel");
+		featuredContainer.getElement().setId("pnlFeaturedContainer");
 	}
 	
 	SetTexasAccountHandler setTexasAccountHandler=new SetTexasAccountHandler(){

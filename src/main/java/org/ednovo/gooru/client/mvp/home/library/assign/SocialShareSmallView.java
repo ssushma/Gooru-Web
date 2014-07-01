@@ -248,6 +248,24 @@ IsSocialShareSmallView, MessageProperties {
 		 * @param setHeader is Object of Handler.
 		 */
 		AppClientFactory.getEventBus().addHandler(UpdateSocialShareMetaDataEvent.TYPE,setHeader);
+		
+		shareTextPanel.getElement().setId("pnlShareTextPanel");
+		fbPanel.getElement().setId("epnlFbPanel");
+		faceBookLbl.getElement().setId("pnlFaceBookLbl");
+		twitterPanel.getElement().setId("epnlTwitterPanel");
+		panelTwitter.getElement().setId("pnlPanelTwitter");
+		twitterLbl.getElement().setId("pnlTwitterLbl");
+		emailPanel.getElement().setId("epnlEmailPanel");
+		panelEmail.getElement().setId("pnlPanelEmail");
+		emailLbl.getElement().setId("pnlEmailLbl");
+		shareIconPanel.getElement().setId("pnlShareIconPanel");
+		fbIconPanel.getElement().setId("epnlFbIconPanel");
+		panelfbIcon.getElement().setId("pnlPanelfbIcon");
+		twIconPanel.getElement().setId("epnlTwIconPanel");
+		panelTwIcon.getElement().setId("pnlPanelTwIcon");
+		emailIconPanel.getElement().setId("epnlEmailIconPanel");
+		panelEmailIcon.getElement().setId("pnlPanelEmailIcon");
+		categoryImage.getElement().setId("imgCategoryImage");
 	}
 	public void setSocialShareContainerId(String socialShareId) {
 		socialShareContainer.getElement().setId(socialShareId);

@@ -63,16 +63,38 @@ public class SearchBoxToolTip extends Composite implements MessageProperties{
 	public SearchBoxToolTip(){
 		MixpanelUtil.Loading_ToolTip();
 		initWidget(searchBoxToolTipUiBinder.createAndBindUi(this));
+		mainPanel.getElement().setId("pnlMainPanel");
+		
 		enterSubjectText.setText(GL1068);
+		enterSubjectText.getElement().setId("lblEnterSubjectText");
+		enterSubjectText.getElement().setAttribute("alt", GL1068);
+		enterSubjectText.getElement().setAttribute("title", GL1068);
+		
 		examplesText.setText(GL1069);
+		examplesText.getElement().setId("lblExamplesText");
+		examplesText.getElement().setAttribute("alt", GL1069);
+		examplesText.getElement().setAttribute("title", GL1069);
+		
 		solarLbl.setText(GL1070);
-		exponentsLbl.setText(GL1071);
-		oceansLbl.setText(GL1072);
-		cellsLbl.setText(GL1073);
 		solarLbl.getElement().setId("lnkSolar");
+		solarLbl.getElement().setAttribute("alt", GL1070);
+		solarLbl.getElement().setAttribute("title", GL1070);
+		
+		exponentsLbl.setText(GL1071);
 		exponentsLbl.getElement().setId("lnkExponents");
+		exponentsLbl.getElement().setAttribute("alt", GL1071);
+		exponentsLbl.getElement().setAttribute("title", GL1071);
+		
+		oceansLbl.setText(GL1072);
 		oceansLbl.getElement().setId("lnkOceans");
+		oceansLbl.getElement().setAttribute("alt", GL1072);
+		oceansLbl.getElement().setAttribute("title", GL1072);
+		
+		cellsLbl.setText(GL1073);
 		cellsLbl.getElement().setId("lnkCells");
+		cellsLbl.getElement().setAttribute("alt", GL1073);
+		cellsLbl.getElement().setAttribute("title", GL1073);
+		
 		solarLbl.addClickHandler(new SearchSolorClickHandler());
 		exponentsLbl.addClickHandler(new SearchExponentClickHandler());
 		oceansLbl.addClickHandler(new SearchOceansClickHandler());

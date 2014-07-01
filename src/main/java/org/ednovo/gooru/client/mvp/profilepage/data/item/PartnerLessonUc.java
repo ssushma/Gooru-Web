@@ -41,6 +41,8 @@ import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -70,21 +72,21 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	interface LibraryLessonUcUiBinder extends UiBinder<Widget, PartnerLessonUc> {
 	}
 
-	public PartnerLessonUc(ArrayList<ProfileLibraryDo> profileLibraryDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ArrayList<ProfileLibraryDo> profileLibraryDoList, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
-		setLessonData(null, null, profileLibraryDoList, isLessonHighlighted,lessonNumber);
+		setLessonData(null, null, profileLibraryDoList, isLessonHighlighted,lessonNumber,isPaginated);
 	}
 
-	public PartnerLessonUc(ProfileLibraryDo profileLibraryDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
+	public PartnerLessonUc(ProfileLibraryDo profileLibraryDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
 		initWidget(uiBinder.createAndBindUi(this));
 		AppClientFactory.getEventBus().addHandler(SetProfileCollectionStyleEvent.TYPE, setProfileCollectionStyleHandler);
 		this.topicId = topicId;
 		if(profileLibraryDo.getType().equals("scollection")) {
 			setCollectionData(profileLibraryDo, isLessonHighlighted, lessonNumber);
 		} else {
-			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber);
+			setLessonData(null, profileLibraryDo, profileLibraryDo.getCollectionItems(),isLessonHighlighted,lessonNumber, isPaginated);
 		}
 	}
 	/**
@@ -106,7 +108,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 	 * @throws : <Mentioned if any exceptions>	 
 	 * 
 	 */
-	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber) {
+	private void setLessonData(final LessonDo lessonDo, final ProfileLibraryDo profileLibraryDo, ArrayList<ProfileLibraryDo> profileLibraryDoList, boolean isLessonHighlighted, Integer lessonNumber, boolean isPaginated) {
 		if(profileLibraryDo!=null) {
 			lessonTitle.setHTML(profileLibraryDo.getTitle());
 			lessonList.add(lessonTitle);
@@ -129,7 +131,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 		for(int i = 0; i<profileLibraryDoList.size(); i++) {
 			String conceptTitle = "";
 			ProfileLibraryDo profileLibraryTemp = null;
-			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
+			if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)&&(isPaginated==false)) {
 				profileLibraryTemp = profileLibraryDoList.get(i).getCollectionItems().get(0);
 			} else {
 				profileLibraryTemp = profileLibraryDoList.get(i);
@@ -150,6 +152,8 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 			if(i==0&&isLessonHighlighted) {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 					conceptTitleLbl.addStyleName(style.conceptActive());
+					conceptId = profileLibrary.getGooruOid();
+					openCollection();
 				} else {
 					conceptTitleLbl.addStyleName(style.libraryConceptActive());
 				}
@@ -159,9 +163,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				@Override
 				public void onClick(ClickEvent event) {
 					conceptId = profileLibrary.getGooruOid();
-					AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
-					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
-					getConceptDetails(conceptId);
+					openCollection();
 				}
 			});
 		}
@@ -195,13 +197,21 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				lessonTitle.addStyleName(style.libraryConceptActive());
 				lessonTitle.addStyleName(style.marginTop5());
 			}
+			openCollection();
 			isLessonHighlighted = false;
 		}
-		openCollection();
 		lessonTitle.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				openCollection();
+				NodeList links = lessonList.getElement().getParentElement().getChildNodes();
+				    for (int i = 0; i < links.getLength(); i++) {
+				      com.google.gwt.user.client.Element link =
+				        (com.google.gwt.user.client.Element) links.getItem(i);
+				      link.getFirstChildElement().removeClassName(style.conceptActive());
+
+				    }
+				lessonTitle.addStyleName(style.conceptActive());
 			}
 		});
 	}

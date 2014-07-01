@@ -44,7 +44,12 @@ public class SearchDragToolTip extends Composite implements MessageProperties{
 	public SearchDragToolTip(String description) {
 		initWidget(uiBinder.createAndBindUi(this));
 		searchDragToolTipImage.setUrl("images/SearchDragImages/minus.png");
+		searchDragToolTipImage.getElement().setId("imgSearchDragToolTipImage");
+		
 		desLbl.setText(description);
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", description);
+		desLbl.getElement().setAttribute("title", description);
 		
 	}
 

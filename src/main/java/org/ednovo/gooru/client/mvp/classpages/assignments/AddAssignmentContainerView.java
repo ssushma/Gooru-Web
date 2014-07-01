@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.settings.CustomAnimation;
 import org.ednovo.gooru.client.mvp.shelf.list.TreeMenuImages;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -75,9 +76,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 
-public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssignmentContainerUiHandlers> implements IsAddAssignmentContainerView,MessageProperties {
+public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssignmentContainerUiHandlers> implements IsAddAssignmentContainerView {
 	
 	private static AddAssignmentContainerViewUiBinder uiBinder = GWT.create(AddAssignmentContainerViewUiBinder.class);
+	
+	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface AddAssignmentContainerViewUiBinder extends UiBinder<Widget, AddAssignmentContainerView> {
 	}
@@ -184,35 +187,35 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	
 	public void setStaticTexts(){
-		subHeadingMsgLbl.setText(GL1974);
+		subHeadingMsgLbl.setText(i18n.GL1974());
 		subHeadingMsgLbl.getElement().setId("lblSubHeadingMsg");
-		subHeadingMsgLbl.getElement().setAttribute("alt",GL1974);
-		subHeadingMsgLbl.getElement().setAttribute("title",GL1974);
+		subHeadingMsgLbl.getElement().setAttribute("alt",i18n.GL1974());
+		subHeadingMsgLbl.getElement().setAttribute("title",i18n.GL1974());
 		
-		addCollectionPopupHeader.setText(GL1973);
+		addCollectionPopupHeader.setText(i18n.GL1973());
 		addCollectionPopupHeader.getElement().setId("lblAddCollectionPopupHeader");
-		addCollectionPopupHeader.getElement().setAttribute("alt",GL1973);
-		addCollectionPopupHeader.getElement().setAttribute("title",GL1973);
+		addCollectionPopupHeader.getElement().setAttribute("alt",i18n.GL1973());
+		addCollectionPopupHeader.getElement().setAttribute("title",i18n.GL1973());
 		
 		//assignmentTitleLabel.setText(GL1376);
 //		dropdownListPlaceHolder.setText(GL1377);
 //		chooseCollectionHelpText.setText(GL1378);
 //		assignmentDirectionLabel.setText(GL1379);
 //		assignmentDueDateLabel.setText(GL1380);
-		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.setText(i18n.GL0142());
 		cancelResourcePopupBtnLbl.getElement().setId("btnCancelResourcePoup");
-		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",GL0142);
-		cancelResourcePopupBtnLbl.getElement().setAttribute("title",GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt",i18n.GL0142());
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title",i18n.GL0142());
 		
-		addResourceBtnLbl.setText(GL0104);
+		addResourceBtnLbl.setText(i18n.GL0104());
 		addResourceBtnLbl.getElement().setId("btnAddResource");
-		addResourceBtnLbl.getElement().setAttribute("alt",GL0104);
-		addResourceBtnLbl.getElement().setAttribute("title",GL0104);
+		addResourceBtnLbl.getElement().setAttribute("alt",i18n.GL0104());
+		addResourceBtnLbl.getElement().setAttribute("title",i18n.GL0104());
 		
-		addingText.setText(GL1172);
+		addingText.setText(i18n.GL1172());
 		addingText.getElement().setId("lblAddText");
-		addingText.getElement().setAttribute("alt",GL1172);
-		addingText.getElement().setAttribute("title",GL1172);
+		addingText.getElement().setAttribute("alt",i18n.GL1172());
+		addingText.getElement().setAttribute("title",i18n.GL1172());
 		
 //		assignmentDirectionsTxtArea.setText(GL1389);
 //		assignmentDueDateLabel.setText(GL1380);
@@ -227,17 +230,17 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
-			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
-			displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
-			displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+GL1975);
+			displayCountLabel.setText("\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("alt","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("title","\""+cureentcollectionTreeItem.getCollectionName()+"\" "+i18n.GL1975());
 		}
 	}
 	public void setSelectedCollectionsCount(int count){
 		if(count>0){
 			String label=count==1?count+" collection":count+" collections";
-			displayCountLabel.setText(label+" "+GL1975);
-			displayCountLabel.getElement().setAttribute("alt",label+" "+GL1975);
-			displayCountLabel.getElement().setAttribute("title",label+" "+GL1975);
+			displayCountLabel.setText(label+" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("alt",label+" "+i18n.GL1975());
+			displayCountLabel.getElement().setAttribute("title",label+" "+i18n.GL1975());
 		
 		}else{
 			displayCountLabel.setText("");
@@ -637,7 +640,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	}
 	
 	public TreeItem loadingTreeItem(){
-		Label loadingText=new Label(GL1452);
+		Label loadingText=new Label(i18n.GL1452());
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
 	}
@@ -645,10 +648,10 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	@Override
 	public void displayNoCollectionsMsg() {
 		dropdownListContainerScrollPanel.setVisible(false);
-		addResourceBtnLbl.setText(GL1964);
-		emptyMsgLbl.setText(GL1963); 
-		emptyMsgLbl.getElement().setAttribute("alt",GL1963);
-		emptyMsgLbl.getElement().setAttribute("title",GL1963);
+		addResourceBtnLbl.setText(i18n.GL1964());
+		emptyMsgLbl.setText(i18n.GL1963()); 
+		emptyMsgLbl.getElement().setAttribute("alt",i18n.GL1963());
+		emptyMsgLbl.getElement().setAttribute("title",i18n.GL1963());
 		
 		subHeadingMsgLbl.setVisible(false);
 		emptyMsgLbl.setVisible(true);
@@ -661,7 +664,7 @@ public class AddAssignmentContainerView extends PopupViewWithUiHandlers<AddAssig
 	
 	public void resetEmptyCollMsg(){
 		dropdownListContainerScrollPanel.setVisible(true);
-		addResourceBtnLbl.setText(GL0104);
+		addResourceBtnLbl.setText(i18n.GL0104());
 		emptyMsgLbl.setVisible(false);
 		subHeadingMsgLbl.setVisible(true);
 		buttonsContainer.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentButtonsContainer()); 

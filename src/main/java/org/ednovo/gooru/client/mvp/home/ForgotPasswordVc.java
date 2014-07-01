@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AlertForgetContentUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -52,10 +53,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
+public class ForgotPasswordVc extends PopupPanel {
 
 	private static ForgotPasswordVcUiBinder uiBinder = GWT
 			.create(ForgotPasswordVcUiBinder.class);
+	
+	
 	
 	@UiField
 	Anchor supportLink;
@@ -80,6 +83,7 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 	interface ForgotPasswordVcUiBinder extends
 			UiBinder<Widget, ForgotPasswordVc> {
 	}
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor , to create forgot password popup
@@ -95,24 +99,51 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
   		forgotEmailIdTxtBox.getElement().setId("tbUsername");
 		sendMailBtnUc.getElement().setId("btnSubmit");
 		supportLink.getElement().setId("lnkSupport");
-		sendMailBtnUc.setText(GL0486);
-		queriesText.setText(GL1139+GL_GRR_COMMA);
-		supportLink.setText(GL0299);
+		
+		sendMailBtnUc.setText(i18n.GL0486());
+		sendMailBtnUc.getElement().setAttribute("alt",i18n.GL0486());
+		sendMailBtnUc.getElement().setAttribute("title",i18n.GL0486());
+		
+		queriesText.setText(i18n.GL1139()+i18n.GL_GRR_COMMA());
+		queriesText.getElement().setId("lblQueriesText");
+		queriesText.getElement().setAttribute("alt",i18n.GL1139());
+		queriesText.getElement().setAttribute("title",i18n.GL1139());
+		
+		supportLink.setText(i18n.GL0299());
+		supportLink.getElement().setAttribute("alt",i18n.GL0299());
+		supportLink.getElement().setAttribute("title",i18n.GL0299());
 		supportLink.setHref("mailto:support@goorulearning.org");
-		pleaseContactLbl.setText(GL1145);
+		pleaseContactLbl.setText(i18n.GL1145());
+		pleaseContactLbl.getElement().setId("spnPleaseContact");
+		pleaseContactLbl.getElement().setAttribute("alt",i18n.GL1145());
+		pleaseContactLbl.getElement().setAttribute("title",i18n.GL1145());
+		
 		this.center();
 		this.setSize("502px", "390px");
 		lblLoginHeading.setHeight("16px");
-		lblLoginHeading.setText(GL0063);
-		lblDisplayTextMessage.setText(GL0436);
+		lblLoginHeading.setText(i18n.GL0063());
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0063());
+		lblLoginHeading.getElement().setAttribute("title",i18n.GL0063());
+		
+		lblDisplayTextMessage.setText(i18n.GL0436());
+		lblDisplayTextMessage.getElement().setId("lblDisplayTextMessage");
+		lblDisplayTextMessage.getElement().setAttribute("alt",i18n.GL0436());
+		lblDisplayTextMessage.getElement().setAttribute("title",i18n.GL0436());
+		
 		lblTextMessageInfomation.getElement().setAttribute("style", "font-size: 13px !important");
-		lblTextMessageInfomation.setText(GL0435);
+		lblTextMessageInfomation.setText(i18n.GL0435());
+		lblTextMessageInfomation.getElement().setId("lblTextMessageInfomation");
+		lblTextMessageInfomation.getElement().setAttribute("alt",i18n.GL0435());
+		lblTextMessageInfomation.getElement().setAttribute("title",i18n.GL0435());
+		
 		forgotEmailIdTxtBox.setWidth("341px");
-		forgotEmailIdTxtBox.getElement().setAttribute("placeholder",GL0434);
+		forgotEmailIdTxtBox.getElement().setAttribute("placeholder",i18n.GL0434());
 		forgotEmailIdTxtBox.setFocus(true);
 		errorMessage.setVisible(false);
-	    
 		
+		errorMessage.getElement().setId("lblerrErrorMessage");
+		cancelButton.getElement().setId("epnlCancelButton");
 	}
 	@UiHandler("cancelButton")
 	public void onCloseClick(ClickEvent clickEvent)
@@ -171,7 +202,9 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 							 alertForgetContentUc.center();
 							 alertForgetContentUc.getElement().getStyle().setZIndex(999999);
 						}else{
-							errorMessage.setText(GL0438);
+							errorMessage.setText(i18n.GL0438());
+							errorMessage.getElement().setAttribute("alt",i18n.GL0438());
+							errorMessage.getElement().setAttribute("title",i18n.GL0438());
 							errorMessage.setVisible(true);
 							//new AlertContentUc("Oops!", (String) result.get("error"));
 						}
@@ -193,8 +226,10 @@ public class ForgotPasswordVc extends PopupPanel implements MessageProperties{
 		{
 			
 			errorMessage.setVisible(true);
-			errorMessage.setText(GL0439);
-		//new AlertContentUc(GL0064, PROVIDE_EMAIL_OR_USERNAME);
+			errorMessage.setText(i18n.GL0439());
+			errorMessage.getElement().setAttribute("alt",i18n.GL0439());
+			errorMessage.getElement().setAttribute("title",i18n.GL0439());
+		//new AlertContentUc(i18n.GL0064, PROVIDE_EMAIL_OR_USERNAME);
 		}
 		}
 	

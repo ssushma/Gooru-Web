@@ -138,9 +138,33 @@ IsSocialShareView, MessageProperties {
 		this.socialDo=shareDo;
 
 		initWidget(uiBinder.createAndBindUi(this));
+		shareTextPanel.getElement().setId("pnlShareTextPanel");
+		fbPanel.getElement().setId("epnlFbPanel");
+		twitterPanel.getElement().setId("epnlTwitterPanel");
+		emailPanel.getElement().setId("epnlEmailPanel");
+		panelTwitter.getElement().setId("pnlPanelTwitter");
+		panelEmail.getElement().setId("pnlPanelEmail");
 		emailText.getElement().setInnerHTML(GL0212);
+		emailText.getElement().setId("pnlEmailText");
+		emailText.getElement().setAttribute("alt", GL0212);
+		emailText.getElement().setAttribute("title", GL0212);
 		twitterText.getElement().setInnerHTML(GL0647);
+		twitterText.getElement().setId("pnlTwitterText");
+		twitterText.getElement().setAttribute("alt", GL0647);
+		twitterText.getElement().setAttribute("title", GL0647);
 		facbookText.getElement().setInnerHTML(GL0646);
+		facbookText.getElement().setId("pnlFacbookText");
+		facbookText.getElement().setAttribute("alt", GL0646);
+		facbookText.getElement().setAttribute("title", GL0646);
+		shareIconPanel.getElement().setId("pnlShareIconPanel");
+		fbIconPanel.getElement().setId("epnlFbIconPanel");
+		panelfbIcon.getElement().setId("pnlPanelfbIcon");
+		twIconPanel.getElement().setId("epnlTwIconPanel");
+		panelTwIcon.getElement().setId("pnlPanelTwIcon");
+		emailIconPanel.getElement().setId("epnlEmailIconPanel");
+		panelEmailIcon.getElement().setId("pnlPanelEmailIcon");
+		categoryImage.getElement().setId("imgCategoryImage");
+		
 		category=socialDo.getCategoryType()!=null?socialDo.getCategoryType():"collection";
 		description=socialDo.getDescription();
 		String title=socialDo.getTitle();
@@ -267,7 +291,7 @@ IsSocialShareView, MessageProperties {
 	 *            of the image
 	 */
 	public void setUrl(String url) {
-		categoryImage.setUrl(StringUtil.formThumbnailName(url, "."));	
+		categoryImage.setUrl(StringUtil.formThumbnailName(url, "."));
 		categoryImage.setAltText(socialDo.getTitle());
 		categoryImage.setTitle(socialDo.getTitle());
 	}
