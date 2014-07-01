@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GooruClassRoomCollectionUc extends Composite implements MessageProperties{
+public class GooruClassRoomCollectionUc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
@@ -85,6 +86,8 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 	interface GooruClassRoomCollectionUcUiBinder extends
 			UiBinder<Widget, GooruClassRoomCollectionUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public GooruClassRoomCollectionUc(FeaturedCollectionContentDo featuredCollectionContentDo, String tabfilter, String title, String useCase, String description, String collectionId) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -152,9 +155,9 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 		} else {
 			howToUseDescription.add(new HTML(description));
 		}
-		howToUseTitle.setText(GL1321);
-		howToUseTitle.getElement().setAttribute("alt",GL1321);
-		howToUseTitle.getElement().setAttribute("title",GL1321);
+		howToUseTitle.setText(i18n.GL1321());
+		howToUseTitle.getElement().setAttribute("alt",i18n.GL1321());
+		howToUseTitle.getElement().setAttribute("title",i18n.GL1321());
 		howToUseTitle.getElement().getStyle().setMarginBottom(3, Unit.PX);
 	}
 	
