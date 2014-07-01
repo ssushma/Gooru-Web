@@ -441,10 +441,10 @@ public class ClasspageListVc extends PopupPanel implements MessageProperties {
 					.v2getClasspageByCode(classCodeTxtBox.getText().trim(),
 							new SimpleAsyncCallback<CollectionDo>() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									setButtonStatus("");
-								}
+//								@Override
+//								public void onFailure(Throwable caught) {
+//									setButtonStatus("");
+//								}
 
 								@Override
 								public void onSuccess(CollectionDo result) {

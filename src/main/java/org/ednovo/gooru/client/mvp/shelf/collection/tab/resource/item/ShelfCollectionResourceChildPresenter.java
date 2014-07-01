@@ -182,6 +182,7 @@ public class ShelfCollectionResourceChildPresenter extends ChildPresenter<ShelfC
 				}
 				@Override
 				public void onFailure(Throwable arg0) {
+					super.onFailure(arg0);
 					getView().getVisible().setVisible(false);
 				}
 			};

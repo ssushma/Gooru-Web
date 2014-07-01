@@ -198,6 +198,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				Window.enableScrolling(true);
 			}
 		});

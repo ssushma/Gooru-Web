@@ -489,13 +489,10 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 					}
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
-						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
 								setStandardSuggestions(result);
-							}
-							@Override
-							public void onFailure(Throwable caught) {
 							}
 						});
 						
@@ -1211,15 +1208,11 @@ public abstract class AddTagesPopupView extends PopupPanel implements SelectionH
 	}
 	public void deleteTagsServiceRequest(String frameTagsStr, final String addingNewTags)
 	{
-		AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new AsyncCallback<Void>() {
+		AppClientFactory.getInjector().getResourceService().deleteTagsServiceRequest(resourceId, frameTagsStr, new SimpleAsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
 				addTagsServiceRequest(addingNewTags.toString(), resourceId);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
 			}
 		});
 	}

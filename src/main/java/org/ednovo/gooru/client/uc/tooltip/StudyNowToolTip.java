@@ -244,6 +244,7 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 
 				@Override
 				public void onFailure(Throwable caught) {
+					super.onFailure(caught);
 					setEnterLblVisbility(false);
 				}
 				

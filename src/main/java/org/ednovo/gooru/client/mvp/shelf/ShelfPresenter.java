@@ -268,6 +268,7 @@ public class ShelfPresenter extends BasePlacePresenter<IsShelfView, ShelfPresent
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				AppClientFactory.fireEvent(new RefreshCollectionInShelfListEvent(null, RefreshType.OPEN));
 			}
 		});

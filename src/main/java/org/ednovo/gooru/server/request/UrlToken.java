@@ -568,6 +568,8 @@ public enum UrlToken {
 	
 	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&sharing=public&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder"),
 	
+	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?sessionToken={1}"),
+	
 	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api");
 
 

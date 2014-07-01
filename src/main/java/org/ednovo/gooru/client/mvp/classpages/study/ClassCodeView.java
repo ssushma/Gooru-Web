@@ -404,10 +404,10 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 			MixpanelUtil.ClickOnStudyNow();
 			AppClientFactory.getInjector().getClasspageService().v2getClasspageByCode(txtCode.getText().trim(), new SimpleAsyncCallback<CollectionDo>(){
 
-				@Override
-				public void onFailure(Throwable caught) {
-					setEnterLblVisbility(false);
-				}
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					setEnterLblVisbility(false);
+//				}
 				
 				@Override
 				public void onSuccess(CollectionDo result) {

@@ -126,7 +126,7 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	@UiHandler("tagScrollPanel")
 	public void dragFollowingScrollPanel(ScrollEvent event) {
 		if (tagScrollPanel.getVerticalScrollPosition() == tagScrollPanel.getMaximumVerticalScrollPosition() && totalResourceCount <totalHintCount) {
-		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagId,Integer.toString(totalResourceCount),limit, new AsyncCallback<List<UserTagsResourceDO>>() {
+		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagId,Integer.toString(totalResourceCount),limit, new SimpleAsyncCallback<List<UserTagsResourceDO>>() {
 			
 			@Override
 			public void onSuccess(List<UserTagsResourceDO> result) {
@@ -142,11 +142,6 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 				}
 			}
 			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
 		});
 	}
 	}
