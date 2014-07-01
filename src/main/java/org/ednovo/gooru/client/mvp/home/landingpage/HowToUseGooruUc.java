@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.home.landingpage;
 
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -39,7 +40,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HowToUseGooruUc extends Composite implements MessageProperties{
+public class HowToUseGooruUc extends Composite{
 
 	@UiField Anchor youTubePlayerContainer;
 	@UiField Anchor learnmore,backto;
@@ -57,72 +58,74 @@ public class HowToUseGooruUc extends Composite implements MessageProperties{
 	interface HowToUseGooruUcUiBinder extends UiBinder<Widget, HowToUseGooruUc> {
 	}
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public HowToUseGooruUc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		gooruText.setText(GL0199);
+		gooruText.setText(i18n.GL0199());
 		gooruText.getElement().setId("lblGooruText");
-		gooruText.getElement().setAttribute("alt",GL0199);
-		gooruText.getElement().setAttribute("title",GL0199);
+		gooruText.getElement().setAttribute("alt",i18n.GL0199());
+		gooruText.getElement().setAttribute("title",i18n.GL0199());
 		
-		backto.setText(GL1260);
-		backto.getElement().setAttribute("alt",GL1260);
-		backto.getElement().setAttribute("title",GL1260);
+		backto.setText(i18n.GL1260());
+		backto.getElement().setAttribute("alt",i18n.GL1260());
+		backto.getElement().setAttribute("title",i18n.GL1260());
 		
-		discoverLbl.setText(GL0179);
+		discoverLbl.setText(i18n.GL0179());
 		discoverLbl.getElement().setId("lblDiscoverLbl");
-		discoverLbl.getElement().setAttribute("alt",GL0179);
-		discoverLbl.getElement().setAttribute("title",GL0179);
+		discoverLbl.getElement().setAttribute("alt",i18n.GL0179());
+		discoverLbl.getElement().setAttribute("title",i18n.GL0179());
 		
-		k12Text.setText(GL1328_1);
+		k12Text.setText(i18n.GL1328_1());
 		k12Text.getElement().setId("lblK12Text");
-		k12Text.getElement().setAttribute("alt",GL1328_1);
-		k12Text.getElement().setAttribute("title",GL1328_1);
+		k12Text.getElement().setAttribute("alt",i18n.GL1328_1());
+		k12Text.getElement().setAttribute("title",i18n.GL1328_1());
 		
-		organizeLbl.setText(GL0180);
+		organizeLbl.setText(i18n.GL0180());
 		organizeLbl.getElement().setId("lblOrganizeLbl");
-		organizeLbl.getElement().setAttribute("alt",GL0180);
-		organizeLbl.getElement().setAttribute("title",GL0180);
+		organizeLbl.getElement().setAttribute("alt",i18n.GL0180());
+		organizeLbl.getElement().setAttribute("title",i18n.GL0180());
 		
-		customizableText.setText(GL1329_1);
+		customizableText.setText(i18n.GL1329_1());
 		customizableText.getElement().setId("lblCustomizableText");
-		customizableText.getElement().setAttribute("alt",GL1329_1);
-		customizableText.getElement().setAttribute("title",GL1329_1);
+		customizableText.getElement().setAttribute("alt",i18n.GL1329_1());
+		customizableText.getElement().setAttribute("title",i18n.GL1329_1());
 		
-		teachText.setText(GL0181);
+		teachText.setText(i18n.GL0181());
 		teachText.getElement().setId("lblTeachText");
-		teachText.getElement().setAttribute("alt",GL0181);
-		teachText.getElement().setAttribute("title",GL0181);
+		teachText.getElement().setAttribute("alt",i18n.GL0181());
+		teachText.getElement().setAttribute("title",i18n.GL0181());
 		
-		assignToStudents.setText(GL1067);
+		assignToStudents.setText(i18n.GL1067());
 		assignToStudents.getElement().setId("lblAssignToStudents");
-		assignToStudents.getElement().setAttribute("alt",GL1067);
-		assignToStudents.getElement().setAttribute("title",GL1067);
+		assignToStudents.getElement().setAttribute("alt",i18n.GL1067());
+		assignToStudents.getElement().setAttribute("title",i18n.GL1067());
 		
-		studyText.setText(GL0182);
+		studyText.setText(i18n.GL0182());
 		studyText.getElement().setId("lblStudyText");
-		studyText.getElement().setAttribute("alt",GL0182);
-		studyText.getElement().setAttribute("title",GL0182);
+		studyText.getElement().setAttribute("alt",i18n.GL0182());
+		studyText.getElement().setAttribute("title",i18n.GL0182());
 		
-		completeAssignmentsText.setText(GL1330);
+		completeAssignmentsText.setText(i18n.GL1330());
 		completeAssignmentsText.getElement().setId("lblCompleteAssignmentsText");
-		completeAssignmentsText.getElement().setAttribute("alt",GL1330);
-		completeAssignmentsText.getElement().setAttribute("title",GL1330);
+		completeAssignmentsText.getElement().setAttribute("alt",i18n.GL1330());
+		completeAssignmentsText.getElement().setAttribute("title",i18n.GL1330());
 		
-		watchVideoText.setText(GL1331);
+		watchVideoText.setText(i18n.GL1331());
 		watchVideoText.getElement().setId("lblWatchVideoText");
-		watchVideoText.getElement().setAttribute("alt",GL1331);
-		watchVideoText.getElement().setAttribute("title",GL1331);
+		watchVideoText.getElement().setAttribute("alt",i18n.GL1331());
+		watchVideoText.getElement().setAttribute("title",i18n.GL1331());
 		
-		orText.setText(" "+GL0209.toUpperCase()+" ");
+		orText.setText(" "+i18n.GL0209().toUpperCase()+" ");
 		orText.getElement().setId("lblOrText");
-		orText.getElement().setAttribute("alt",GL0209.toUpperCase());
-		orText.getElement().setAttribute("title",GL0209.toUpperCase());
+		orText.getElement().setAttribute("alt",i18n.GL0209().toUpperCase());
+		orText.getElement().setAttribute("title",i18n.GL0209().toUpperCase());
 		
-		learnmore.setText(GL0751);
-		learnmore.getElement().setAttribute("alt",GL0751);
-		learnmore.getElement().setAttribute("title",GL0751);
+		learnmore.setText(i18n.GL0751());
+		learnmore.getElement().setAttribute("alt",i18n.GL0751());
+		learnmore.getElement().setAttribute("title",i18n.GL0751());
 		
-		videoIcon.setAltText(GL1332);
+		videoIcon.setAltText(i18n.GL1332());
 		videoIcon.getElement().setId("imgVideoIcon");
 		videoIcon.setUrl("images/landing-page/video-icon.png");
 		

@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedCollectionContentDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -48,7 +49,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GooruInClassRoomVc extends Composite implements MessageProperties{
+public class GooruInClassRoomVc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 
@@ -76,35 +77,35 @@ public class GooruInClassRoomVc extends Composite implements MessageProperties{
 
 	private final String CLASSROOM_TAB5 = "gooruCrTab5";
 	
-	private final String BLENDED_TITLE=GL0148;
+//	private final String BLENDED_TITLE=i18n.GL0148;
 
-	private final String BLENDED_USE_CASE=GL0149;
+//	private final String BLENDED_USE_CASE=i18n.GL0149;
 
-	private final String BLENDED_DESCRIPTION=GL0150;
+//	private final String BLENDED_DESCRIPTION=i18n.GL0150;
 
-	private final String FLIPPED_TITLE=GL0151;
+//	private final String FLIPPED_TITLE=i18n.GL0151;
 
-	private final String FLIPPED_USE_CASE=GL0152;
+//	private final String FLIPPED_USE_CASE=i18n.GL0152;
 
-	private final String FLIPPED_DESCRIPTION=GL0153;
+//	private final String FLIPPED_DESCRIPTION=i18n.GL0153;
 
-	private final String ASSESSMENT_TITLE=GL0154;
+//	private final String ASSESSMENT_TITLE=i18n.GL0154;
 
-	private final String ASSESSMENT_USE_CASE=GL0155;
+//	private final String ASSESSMENT_USE_CASE=i18n.GL0155;
 
-	private final String ASSESSMENT_DESCRIPTION=GL0156;
+//	private final String ASSESSMENT_DESCRIPTION=i18n.GL0156;
 
-	private final String PROJECT_TITLE=GL0157;
+//	private final String PROJECT_TITLE=i18n.GL0157;
 
-	private final String PROJECT_USE_CASE=GL0158;
+//	private final String PROJECT_USE_CASE=i18n.GL0158;
 
-	private final String PROJECT_DESCRIPTION=GL0159;
+//	private final String PROJECT_DESCRIPTION=i18n.GL0159;
 
-	private final String ENRICHED_TITLE=GL0160;
+//	private final String ENRICHED_TITLE=i18n.GL0160;
 
-	private final String ENRICHED_USE_CASE=GL0161;
+//	private final String ENRICHED_USE_CASE=i18n.GL0161;
 
-	private final String ENRICHED_DESCRIPTION=GL0162;
+//	private final String ENRICHED_DESCRIPTION=i18n.GL0162;
 
 	private final String CLASSROOM = "classroom";
 	
@@ -116,47 +117,49 @@ public class GooruInClassRoomVc extends Composite implements MessageProperties{
 	interface GooruInClassRoomVcUiBinder extends
 			UiBinder<Widget, GooruInClassRoomVc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public GooruInClassRoomVc() {
 		initWidget(uiBinder.createAndBindUi(this));
-		classroomText.setText(GL0200);
+		classroomText.setText(i18n.GL0200());
 		classroomText.getElement().setId("lblClassroomText");
-		classroomText.getElement().setAttribute("alt",GL0200);
-		classroomText.getElement().setAttribute("title",GL0200);
+		classroomText.getElement().setAttribute("alt",i18n.GL0200());
+		classroomText.getElement().setAttribute("title",i18n.GL0200());
 		
-		backto.setText(GL1260);
-		backto.getElement().setAttribute("alt",GL1260);
-		backto.getElement().setAttribute("title",GL1260);
+		backto.setText(i18n.GL1260());
+		backto.getElement().setAttribute("alt",i18n.GL1260());
+		backto.getElement().setAttribute("title",i18n.GL1260());
 		
-		teachingMethodsLbl.setText(GL1322);
+		teachingMethodsLbl.setText(i18n.GL1322());
 		teachingMethodsLbl.getElement().setId("lblTeachingMethods");
-		teachingMethodsLbl.getElement().setAttribute("alt",GL1322);
-		teachingMethodsLbl.getElement().setAttribute("title",GL1322);
+		teachingMethodsLbl.getElement().setAttribute("alt",i18n.GL1322());
+		teachingMethodsLbl.getElement().setAttribute("title",i18n.GL1322());
 		
-		gooruCrTab1.getElement().setInnerText(GL1323);
+		gooruCrTab1.getElement().setInnerText(i18n.GL1323());
 		gooruCrTab1.getElement().setId("epnlGooruCrTab1");
-		gooruCrTab1.getElement().setAttribute("alt",GL1323);
-		gooruCrTab1.getElement().setAttribute("title",GL1323);
+		gooruCrTab1.getElement().setAttribute("alt",i18n.GL1323());
+		gooruCrTab1.getElement().setAttribute("title",i18n.GL1323());
 		
-		gooruCrTab2.getElement().setInnerText(GL1324);
+		gooruCrTab2.getElement().setInnerText(i18n.GL1324());
 		gooruCrTab2.getElement().setId("epnlGooruCrTab2");
-		gooruCrTab2.getElement().setAttribute("alt",GL1324);
-		gooruCrTab2.getElement().setAttribute("title",GL1324);
+		gooruCrTab2.getElement().setAttribute("alt",i18n.GL1324());
+		gooruCrTab2.getElement().setAttribute("title",i18n.GL1324());
 		
-		gooruCrTab3.getElement().setInnerText(GL1325);
+		gooruCrTab3.getElement().setInnerText(i18n.GL1325());
 		gooruCrTab3.getElement().setId("epnlGooruCrTab3");
-		gooruCrTab3.getElement().setAttribute("alt",GL1325);
-		gooruCrTab3.getElement().setAttribute("title",GL1325);
+		gooruCrTab3.getElement().setAttribute("alt",i18n.GL1325());
+		gooruCrTab3.getElement().setAttribute("title",i18n.GL1325());
 		
-		gooruCrTab4.getElement().setInnerText(GL1326);
+		gooruCrTab4.getElement().setInnerText(i18n.GL1326());
 		gooruCrTab4.getElement().setId("epnlGooruCrTab4");
-		gooruCrTab4.getElement().setAttribute("alt",GL1326);
-		gooruCrTab4.getElement().setAttribute("title",GL1326);
+		gooruCrTab4.getElement().setAttribute("alt",i18n.GL1326());
+		gooruCrTab4.getElement().setAttribute("title",i18n.GL1326());
 		
-		gooruCrTab5.getElement().setInnerText(GL1327);
+		gooruCrTab5.getElement().setInnerText(i18n.GL1327());
 		gooruCrTab5.getElement().setId("epnlGooruCrTab5");
-		gooruCrTab5.getElement().setAttribute("alt",GL1327);
-		gooruCrTab5.getElement().setAttribute("title",GL1327);
+		gooruCrTab5.getElement().setAttribute("alt",i18n.GL1327());
+		gooruCrTab5.getElement().setAttribute("title",i18n.GL1327());
 		
 		tabContent1 = new HTMLPanel("");
 		tabContent2 = new HTMLPanel("");
@@ -185,15 +188,15 @@ public class GooruInClassRoomVc extends Composite implements MessageProperties{
 	}
 
 	private void setData(List<FeaturedCollectionContentDo> classroomContent) {
-		tabContent1.add(new GooruClassRoomCollectionUc(classroomContent.get(0), CLASSROOM_TAB1, BLENDED_TITLE, BLENDED_USE_CASE, BLENDED_DESCRIPTION, gooruClassRoomHowToUse.get(0)));
+		tabContent1.add(new GooruClassRoomCollectionUc(classroomContent.get(0), CLASSROOM_TAB1, i18n.GL0148(), i18n.GL0149(), i18n.GL0150(), gooruClassRoomHowToUse.get(0)));
 		methodsContentContainer.add(tabContent1);
-		tabContent2.add(new GooruClassRoomCollectionUc(classroomContent.get(1), CLASSROOM_TAB2, FLIPPED_TITLE, FLIPPED_USE_CASE, FLIPPED_DESCRIPTION, gooruClassRoomHowToUse.get(1)));
+		tabContent2.add(new GooruClassRoomCollectionUc(classroomContent.get(1), CLASSROOM_TAB2, i18n.GL0151(), i18n.GL0152(), i18n.GL0153(), gooruClassRoomHowToUse.get(1)));
 		methodsContentContainer.add(tabContent2);
-		tabContent3.add(new GooruClassRoomCollectionUc(classroomContent.get(2), CLASSROOM_TAB3, ASSESSMENT_TITLE, ASSESSMENT_USE_CASE, ASSESSMENT_DESCRIPTION, gooruClassRoomHowToUse.get(2)));
+		tabContent3.add(new GooruClassRoomCollectionUc(classroomContent.get(2), CLASSROOM_TAB3, i18n.GL0154(), i18n.GL0155(), i18n.GL0156(), gooruClassRoomHowToUse.get(2)));
 		methodsContentContainer.add(tabContent3);
-		tabContent4.add(new GooruClassRoomCollectionUc(classroomContent.get(3), CLASSROOM_TAB4, PROJECT_TITLE, PROJECT_USE_CASE, PROJECT_DESCRIPTION, gooruClassRoomHowToUse.get(3)));
+		tabContent4.add(new GooruClassRoomCollectionUc(classroomContent.get(3), CLASSROOM_TAB4, i18n.GL0157(), i18n.GL0158(), i18n.GL0159(), gooruClassRoomHowToUse.get(3)));
 		methodsContentContainer.add(tabContent4);
-		tabContent5.add(new GooruClassRoomCollectionUc(classroomContent.get(4), CLASSROOM_TAB5, ENRICHED_TITLE, ENRICHED_USE_CASE, ENRICHED_DESCRIPTION, gooruClassRoomHowToUse.get(4)));
+		tabContent5.add(new GooruClassRoomCollectionUc(classroomContent.get(4), CLASSROOM_TAB5, i18n.GL0160(), i18n.GL0161(), i18n.GL0162(), gooruClassRoomHowToUse.get(4)));
 		methodsContentContainer.add(tabContent5);
 		displayContent(CLASSROOM_TAB1);
 		loadingImage.setVisible(false);

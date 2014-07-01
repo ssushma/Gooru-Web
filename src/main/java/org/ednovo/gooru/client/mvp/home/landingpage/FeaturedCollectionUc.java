@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.mvp.home.LandingPageStyleCss;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -57,7 +58,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FeaturedCollectionUc extends Composite implements MessageProperties{
+public class FeaturedCollectionUc extends Composite{
 
 	@UiField LandingPageStyleCss landingPageStyle;
 	
@@ -87,6 +88,8 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 	interface FeaturedCollectionUcUiBinder extends
 			UiBinder<Widget, FeaturedCollectionUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public FeaturedCollectionUc(CollectionDo collectionDo) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -145,17 +148,17 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 	}
 
 	private void setCollectionData(final CollectionDo collectionDo) {
-			createdByText.setText(GL0622);
-			createdByText.getElement().setAttribute("alt",GL0622);
-			createdByText.getElement().setAttribute("title",GL0622);
+			createdByText.setText(i18n.GL0622());
+			createdByText.getElement().setAttribute("alt",i18n.GL0622());
+			createdByText.getElement().setAttribute("title",i18n.GL0622());
 			
-			gradesText.setText(GL1320_1);
-			gradesText.getElement().setAttribute("alt",GL1320_1);
-			gradesText.getElement().setAttribute("title",GL1320_1);
+			gradesText.setText(i18n.GL1320_1());
+			gradesText.getElement().setAttribute("alt",i18n.GL1320_1());
+			gradesText.getElement().setAttribute("title",i18n.GL1320_1());
 			
-			standardsText.setText(GL0575);
-			standardsText.getElement().setAttribute("alt",GL0575);
-			standardsText.getElement().setAttribute("title",GL0575);
+			standardsText.setText(i18n.GL0575());
+			standardsText.getElement().setAttribute("alt",i18n.GL0575());
+			standardsText.getElement().setAttribute("title",i18n.GL0575());
 			
 			collectionTitle.setText(collectionDo.getTitle());
 			collectionTitle.getElement().setAttribute("alt",collectionDo.getTitle());
