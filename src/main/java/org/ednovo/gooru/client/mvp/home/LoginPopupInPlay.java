@@ -106,16 +106,55 @@ public class LoginPopupInPlay extends PopupPanel implements MessageProperties{
         this.setGlassStyleName(HomeCBundle.INSTANCE.css().loginPopupGlassStyle());
         add(binder.createAndBindUi(this));
         loginLbl.setText(GL0187+GL_SPL_EXCLAMATION);
+        loginLbl.getElement().setId("lblLoginLbl");
+        loginLbl.getElement().setAttribute("alt",GL0187);
+        loginLbl.getElement().setAttribute("title",GL0187);
+		
         betaText.setText(GL0178);
+        betaText.getElement().setId("lblBetaText");
+        betaText.getElement().setAttribute("alt",GL0178);
+        betaText.getElement().setAttribute("title",GL0178);
+        
         loginToCreateteLbl.setText(GL1251+GL_SPL_EXCLAMATION);
+        loginToCreateteLbl.getElement().setId("lblLoginToCreateteLbl");
+        loginToCreateteLbl.getElement().setAttribute("alt",GL1251);
+        loginToCreateteLbl.getElement().setAttribute("title",GL1251);
+        
         loginTxtBox.setPlaceholder(GL0434);
+        loginTxtBox.getElement().setId("txtLoginTxtBox");
+        passwordTxtBox.getElement().setId("pswPasswordTxtBox");
         passwordTxtBox.setPlaceholder(GL0204);
+      
         forgotPwd.setText(GL0063+GL_SPL_QUESTION);
+        forgotPwd.getElement().setId("lblForgotPwd");
+        forgotPwd.getElement().setAttribute("alt",GL0063);
+        forgotPwd.getElement().setAttribute("title",GL0063);
+        
         keepMeLoginLbl.setText(GL1252);
+        keepMeLoginLbl.getElement().setId("chkKeepMeLoginLbl");
+        keepMeLoginLbl.getElement().setAttribute("alt",GL1252);
+        keepMeLoginLbl.getElement().setAttribute("title",GL1252);
+        
         loginButton.setText(GL0187);
+        loginButton.getElement().setId("btnLoginButton");
+        loginButton.getElement().setAttribute("alt",GL0187);
+        loginButton.getElement().setAttribute("title",GL0187);
+        
         cancelButton.setText(GL0142);
+        cancelButton.getElement().setId("lnkCancelButton");
+        cancelButton.getElement().setAttribute("alt",GL0142);
+        cancelButton.getElement().setAttribute("title",GL0142);
+        
         doNotHaveAcLbl.setText(GL0208);
+        doNotHaveAcLbl.getElement().setId("lblDoNotHaveAcLbl");
+        doNotHaveAcLbl.getElement().setAttribute("alt",GL0208);
+        doNotHaveAcLbl.getElement().setAttribute("title",GL0208);
+        
         registerHereLbl.setText(GL1253);
+        registerHereLbl.getElement().setId("lblRegisterHereLbl");
+        registerHereLbl.getElement().setAttribute("alt",GL1253);
+        registerHereLbl.getElement().setAttribute("title",GL1253);
+        
         loginTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         passwordTxtBox.addStyleName(HomeCBundle.INSTANCE.css().textBoxPlaceHolderWidth());
         loginTxtBox.addKeyUpHandler(new LoginKeyupHandler());

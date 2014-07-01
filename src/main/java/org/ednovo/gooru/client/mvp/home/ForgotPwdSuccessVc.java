@@ -82,17 +82,45 @@ public class ForgotPwdSuccessVc extends PopupPanel implements MessageProperties{
 		this.getElement().getStyle().setZIndex(99999);
        	okBtnUc.getElement().setId("btnSubmit");
        	supportlnk.getElement().setId("lnksupport");
+       
        	okBtnUc.setText(GL0190);
+       	okBtnUc.getElement().setAttribute("alt",GL0190);
+       	okBtnUc.getElement().setAttribute("title",GL0190);
+		
        	queriesText.setText(GL1139+GL_GRR_COMMA);
+       	queriesText.getElement().setId("lblQueriesText");
+       	queriesText.getElement().setAttribute("alt",GL1139);
+       	queriesText.getElement().setAttribute("title",GL1139);
+       	
        	pleaseContactLbl.setText(GL1145);
+       	pleaseContactLbl.getElement().setId("spnPleaseContact");
+       	pleaseContactLbl.getElement().setAttribute("alt",GL1145);
+       	pleaseContactLbl.getElement().setAttribute("title",GL1145);
+       	
        	supportlnk.setText(GL0299);
+       	supportlnk.getElement().setAttribute("alt",GL0299);
+       	supportlnk.getElement().setAttribute("title",GL0299);
        	supportlnk.setHref("mailto:support@goorulearning.org");
 		this.setSize("502px", "382px");
+	
 		lblLoginHeading.setHeight("16px");
 		lblLoginHeading.setText(GL0063);
+		lblLoginHeading.getElement().setId("lblLoginHeading");
+		lblLoginHeading.getElement().setAttribute("alt",GL0063);
+		lblLoginHeading.getElement().setAttribute("title",GL0063);
+       	
 		lblDisplayTextMessage.setText(GL0440);
+		lblDisplayTextMessage.getElement().setId("lblDisplayTextMessage");
+		lblDisplayTextMessage.getElement().setAttribute("alt",GL0440);
+		lblDisplayTextMessage.getElement().setAttribute("title",GL0440);
+		
 		lblTextMessageInfomation.getElement().setAttribute("style", "font-size: 16px !important");
 		lblTextMessageInfomation.setText(GL0441);
+		lblTextMessageInfomation.getElement().setId("lblTextMessageInfomation");
+		lblTextMessageInfomation.getElement().setAttribute("alt",GL0441);
+		lblTextMessageInfomation.getElement().setAttribute("title",GL0441);
+		
+		closeButton.getElement().setId("epnlCloseButton");
 		this.center();
 		
 	}

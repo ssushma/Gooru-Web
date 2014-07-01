@@ -112,9 +112,19 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 
 		lblSupportLink.getElement().getStyle().setColor("#4d9645");
 		headertext.setText(GL0285);
-
+		headertext.getElement().setId("lblHeadertext");
+		headertext.getElement().setAttribute("alt",GL0285);
+		headertext.getElement().setAttribute("title",GL0285);
+		
 		goorutext.setText(GL0287);
+		goorutext.getElement().setId("lblGoorutext");
+		goorutext.getElement().setAttribute("alt",GL0287);
+		goorutext.getElement().setAttribute("title",GL0287);
+		
 		headersubtext.setText(GL0288);
+		headersubtext.getElement().setId("lblHeadersSubText");
+		headersubtext.getElement().setAttribute("alt",GL0288);
+		headersubtext.getElement().setAttribute("title",GL0288);
 
 		/*contenttext.setText(GL0292);
 		contenttextlbl.setText(GL0293);
@@ -143,30 +153,79 @@ public class ImprovedGooruPopUpView extends PopupPanel implements
 		aboutFour.setText(GL0627);*/
 		
 		lblTitleSix.setText(GL1880);
+		lblTitleSix.getElement().setId("lblTitleSix");
+		lblTitleSix.getElement().setAttribute("alt",GL1880);
+		lblTitleSix.getElement().setAttribute("title",GL1880);
+		
 		lblnavigation.setText(GL1890);
+		lblnavigation.getElement().setId("lblnavigation");
+		lblnavigation.getElement().setAttribute("alt",GL1890);
+		lblnavigation.getElement().setAttribute("title",GL1890);
+		
 		aboutSix.setText(GL1881);
+		aboutSix.getElement().setId("spnAboutSix");
+		aboutSix.getElement().setAttribute("alt",GL1881);
+		aboutSix.getElement().setAttribute("title",GL1881);
+		
 		aboutNavigation.setText(GL1891);
+		aboutNavigation.getElement().setId("spnAboutNavigation");
+		aboutNavigation.getElement().setAttribute("alt",GL1891);
+		aboutNavigation.getElement().setAttribute("title",GL1891);
+		
 		descLinkNavigation.setText(GL1239);
+		descLinkNavigation.getElement().setId("lnkDescLinkNavigation");
+		descLinkNavigation.getElement().setAttribute("alt",GL1239);
+		descLinkNavigation.getElement().setAttribute("title",GL1239);
 		descLinkNavigation.setHref("http://support.goorulearning.org/hc/en-us/articles/202952598");
+	
 		descLinkSix.setText(GL1239);
+		descLinkSix.getElement().setId("lnkDescLinkSix");
+		descLinkSix.getElement().setAttribute("alt",GL1239);
+		descLinkSix.getElement().setAttribute("title",GL1239);
 		descLinkSix.setHref("http://support.goorulearning.org/hc/en-us/articles/202952638");
 		
 		lblTitleSeven.setText(GL1882);
+		lblTitleSeven.getElement().setId("lblTitleSeven");
+		lblTitleSeven.getElement().setAttribute("alt",GL1882);
+		lblTitleSeven.getElement().setAttribute("title",GL1882);
+		
 		aboutSeven.setText(GL1883);
+		aboutSeven.getElement().setId("spnAboutSeven");
+		aboutSeven.getElement().setAttribute("alt",GL1883);
+		aboutSeven.getElement().setAttribute("title",GL1883);
 		
 		lblTitleEight.setText(GL1884);
+		lblTitleEight.getElement().setId("lblTitleEight");
+		lblTitleEight.getElement().setAttribute("alt",GL1884);
+		lblTitleEight.getElement().setAttribute("title",GL1884);
+		
 		aboutEight.setText(GL1885);
+		aboutEight.getElement().setId("spnAboutEight");
+		aboutEight.getElement().setAttribute("alt",GL1885);
+		aboutEight.getElement().setAttribute("title",GL1885);
 		
 //		lblTitleFive.setText(GL0630_1);
+//		lblTitleFive.getElement().setId("lblTitleFive");
+//		lblTitleFive.getElement().setAttribute("alt",GL0630_1);
+//		lblTitleFive.getElement().setAttribute("title",GL0630_1);
 //		aboutFive.setText(GL0627_1);
 //		descLinkFive.setText(GL1239);
 //		descLinkFive.setHref("http://support.goorulearning.org/hc/en-us/articles/200688096");
 		
 		questiontxt.setHTML(GL0298);
+		questiontxt.getElement().setId("htmlQuestionTxt");
+		questiontxt.getElement().setAttribute("alt",GL0298);
+		questiontxt.getElement().setAttribute("title",GL0298);
+		
 		lblSupportLink.setText(GL0299);
+		lblSupportLink.getElement().setAttribute("alt",GL0299);
+		lblSupportLink.getElement().setAttribute("title",GL0299);
 		lblSupportLink.getElement().setId("lnkSupports");
 		lblSupportLink.setHref("mailto:support@goorulearning.org");
 		
+		closeButton.getElement().setId("btnCloseButton");
+		subtext.getElement().setId("lblSubText");
+		GooruLinkOutercontainer.getElement().setId("pnlGooruLinkOutercontainer");
 	}
 
 	@UiHandler("closeButton")

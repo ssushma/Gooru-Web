@@ -93,6 +93,11 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 		worksOnGooruLbl2 = new InlineLabel();
 		setData(featuredCollectionContentDo, title, useCase, description,collectionId);
 		
+		methodsCollection.getElement().setId("imgMethodsCollection");
+		contentTitle.getElement().setId("lblContentTitle");
+		contentDescription.getElement().setId("htmlContentDescription");
+		howToUseTitle.getElement().setId("lblHowToUseTitle");
+		howToUseDescription.getElement().setId("pnlHowToUseDescription");
 	}
 	
 	private void setData(final FeaturedCollectionContentDo featuredCollectionContentDo, String title, String useCase, String description, final String collectionId) {
@@ -120,8 +125,12 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 		});
 		
 		contentTitle.setText(title);
+		contentTitle.getElement().setAttribute("alt",title);
+		contentTitle.getElement().setAttribute("title",title);
 		contentTitle.getElement().getStyle().setMarginBottom(3, Unit.PX);
 		contentDescription.setHTML(useCase);
+		contentDescription.getElement().setAttribute("alt",useCase);
+		contentDescription.getElement().setAttribute("title",useCase);
 		contentDescription.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		
 		if(!collectionId.equalsIgnoreCase("na")) {
@@ -144,6 +153,8 @@ public class GooruClassRoomCollectionUc extends Composite implements MessageProp
 			howToUseDescription.add(new HTML(description));
 		}
 		howToUseTitle.setText(GL1321);
+		howToUseTitle.getElement().setAttribute("alt",GL1321);
+		howToUseTitle.getElement().setAttribute("title",GL1321);
 		howToUseTitle.getElement().getStyle().setMarginBottom(3, Unit.PX);
 	}
 	
