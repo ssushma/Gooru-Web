@@ -22,61 +22,19 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
+package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
-/**
-* @fileName : IsAddResourceView.java 
-*
-* @description :This file is responsible for UI Handlers.
-*
-* @version :5.1
-*
-* @date: Apr 6 2013
-   	
-* @Author  Gooru Team
-* 
-* @Reviewer 
-*
-*/
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
-import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.drive.DriveDo;
-import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
-import com.gwtplatform.mvp.client.PopupView;
+public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 
-public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddResourceUiHandlers>{
-	void setImageUrl(String fileName,String fileNameWithoutRepository,boolean isQuestionImage, boolean isUserOwnResourceImage);
-
-	void setNewResourcePopupData(ResourceMetaInfoDo resMetaInfo);
-
-	void setExistingResourceData(ExistsResourceDo existsResourceDo,CollectionDo collectionDo);
-
-
-	void setPopup(String clickType);
-	
-	public void getResourceMetaInfo(String webUrl);
-
-	void setShortenUrlAlertMsg();
-
-	void closePopUp();
-	
-	void setCollectionItemDo(CollectionItemDo collectionItemDo);
-	
-	void removeQuestionEditImage();
-
-	void uploadResource(MediaUploadDo result); 
-	
 	void getDriveDetails(DriveDo driveDo);
-	
-	void getFolderDetails(String title, String id, List<DriveDo> result); 
 
+	void getFolderDetails(String title, String id, List<DriveDo> result);
 
+	void driveContentList(List<DriveDo> result);
 
-	
 }

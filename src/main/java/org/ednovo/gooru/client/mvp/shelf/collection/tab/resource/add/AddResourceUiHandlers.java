@@ -47,6 +47,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageHandler, EventHandler{
 	
@@ -81,5 +82,7 @@ public interface AddResourceUiHandlers extends BaseUiHandlers, AddResourceImageH
 	void addUserOwnResource(String jsonString);
 
 	void saveUserResource(String filePath);
+	public void showDriveResoureView(HTMLPanel tabContainer);
+
 
 }
