@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.DeleteConfirmPopupVc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -58,7 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ClasspageResourceItemChildView extends
 		ChildView<ClasspageResourceItemChildPresenter> implements
-		IsClasspageResourceItemView, MessageProperties {
+		IsClasspageResourceItemView{
 
 	@UiField(provided = true)
 	ClasspageResourceItemCBundle res;
@@ -82,6 +83,8 @@ public class ClasspageResourceItemChildView extends
 	
 	private static ClasspageResourceItemChildViewUiBinder uiBinder = GWT
 			.create(ClasspageResourceItemChildViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface ClasspageResourceItemChildViewUiBinder extends
 			UiBinder<Widget, ClasspageResourceItemChildView> {
@@ -99,25 +102,25 @@ public class ClasspageResourceItemChildView extends
 		res = ClasspageResourceItemCBundle.INSTANCE;
 		ClasspageResourceItemCBundle.INSTANCE.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		classpageTitleLbl.setText(GL1409);
+		classpageTitleLbl.setText(i18n.GL1409());
 		classpageTitleLbl.getElement().setId("lblClasspageTitle");
-		classpageTitleLbl.getElement().setAttribute("alt",GL1409);
-		classpageTitleLbl.getElement().setAttribute("title",GL1409);
+		classpageTitleLbl.getElement().setAttribute("alt",i18n.GL1409());
+		classpageTitleLbl.getElement().setAttribute("title",i18n.GL1409());
 		
-		openClasspageLbl.setText(GL1115);
+		openClasspageLbl.setText(i18n.GL1115());
 		openClasspageLbl.getElement().setId("lblOpenClasspage");
-		openClasspageLbl.getElement().setAttribute("alt",GL1115);
-		openClasspageLbl.getElement().setAttribute("title",GL1115);
+		openClasspageLbl.getElement().setAttribute("alt",i18n.GL1115());
+		openClasspageLbl.getElement().setAttribute("title",i18n.GL1115());
 		
-		studentViewLbl.setText(GL0139);
+		studentViewLbl.setText(i18n.GL0139());
 		studentViewLbl.getElement().setId("lblStudentView");
-		studentViewLbl.getElement().setAttribute("alt",GL0139);
-		studentViewLbl.getElement().setAttribute("title",GL0139);
+		studentViewLbl.getElement().setAttribute("alt",i18n.GL0139());
+		studentViewLbl.getElement().setAttribute("title",i18n.GL0139());
 		
-		confirmDeleteLbl.setText(GL0558);
+		confirmDeleteLbl.setText(i18n.GL0558());
 		confirmDeleteLbl.getElement().setId("lblConfirmDeleteLbl");
-		confirmDeleteLbl.getElement().setAttribute("alt",GL0558);
-		confirmDeleteLbl.getElement().setAttribute("title",GL0558);
+		confirmDeleteLbl.getElement().setAttribute("alt",i18n.GL0558());
+		confirmDeleteLbl.getElement().setAttribute("title",i18n.GL0558());
 		this.collectionDo = collection;
 		
 		setData(collection);
@@ -139,7 +142,7 @@ public class ClasspageResourceItemChildView extends
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				deleteConfirmVc = new DeleteConfirmPopupVc(GL0748,"\""+ collectionDo.getTitle() + "\"" + " "+GL0102+GL_SPL_FULLSTOP)  {
+				deleteConfirmVc = new DeleteConfirmPopupVc(i18n.GL0748(),"\""+ collectionDo.getTitle() + "\"" + " "+i18n.GL0102()+i18n.GL_SPL_FULLSTOP())  {
 					
 					@Override
 					public void onTextConfirmed() {
