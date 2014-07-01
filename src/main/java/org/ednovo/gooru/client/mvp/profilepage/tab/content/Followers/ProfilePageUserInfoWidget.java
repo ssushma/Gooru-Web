@@ -98,7 +98,15 @@ public class ProfilePageUserInfoWidget extends Composite implements MessagePrope
 		anchor.getElement().setAttribute("style","font-size: 18px !important");		
 		anchor.setTarget("_blank");
 		userNameLabel.setText("");
-		boolean isEnabled =  userFollowDo.getCustomFields() != null && userFollowDo.getCustomFields().get(0).getOptionalValue() != null && userFollowDo.getCustomFields().get(0).getOptionalValue().equalsIgnoreCase("true") ? true : false;
+//		boolean isEnabled =  userFollowDo.getCustomFields() != null && userFollowDo.getCustomFields().get(0).getOptionalValue() != null && userFollowDo.getCustomFields().get(0).getOptionalValue().equalsIgnoreCase("true") ? true : false;
+		boolean isEnabled = false;
+		if(userFollowDo.getCustomFields() != null){
+			System.out.println("size::"+userFollowDo.getCustomFields().size());
+			for(int i=0;i<userFollowDo.getCustomFields().size(); i++)
+			if(userFollowDo.getCustomFields().get(i).getOptionalKey().equalsIgnoreCase("show_profile_page")){
+				 isEnabled = userFollowDo.getCustomFields().get(i).getOptionalValue().equalsIgnoreCase("true") ? true : false;
+			}
+		}
 		if (isEnabled){
 			userNameLabel.getElement().appendChild(anchor.getElement());
 		}else{
