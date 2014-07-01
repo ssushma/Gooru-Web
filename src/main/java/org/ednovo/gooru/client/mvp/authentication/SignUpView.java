@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -74,7 +75,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  *
  * @Reviewer:
  */
-public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implements IsSignUpView, MessageProperties {
+public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implements IsSignUpView{
 
 	private static SignUpViewUiBinder uiBinder = GWT.create(SignUpViewUiBinder.class);
 
@@ -82,6 +83,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		
 	interface SignUpViewUiBinder extends UiBinder<Widget, SignUpView> {
 	}
+	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField Label lblTitle,lblJoinGooruCommunity,lblDescription,lblWhyWithGoogle,lblQuestionMark,lblPopupWhyWithGoogle,lblParentInfo;
 	
@@ -108,7 +110,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		super(eventBus);
 		SignUpCBundle.INSTANCE.css().ensureInjected();
 
-		appPopUp = new AppPopUp(GL0697);
+		appPopUp = new AppPopUp(i18n.GL0697());
 		appPopUp.setContent(uiBinder.createAndBindUi(this));
 		
 		
@@ -140,11 +142,11 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 	}
 
 	private void setUiAndIds(){
-		lblTitle.setText(GL0186 +GL_SPL_EXCLAMATION);
+		lblTitle.setText(i18n.GL0186() +i18n.GL_SPL_EXCLAMATION());
 		
 		lblTitle.getElement().setId("lblTitle");
-		lblTitle.getElement().setAttribute("alt",GL0186);
-		lblTitle.getElement().setAttribute("title",GL0186);
+		lblTitle.getElement().setAttribute("alt",i18n.GL0186());
+		lblTitle.getElement().setAttribute("title",i18n.GL0186());
 		
 		lblCancel.getElement().setId("lblCancel");
 		lblCancel.getElement().setAttribute("alt","");
@@ -154,71 +156,71 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		panelSignUp.getElement().setAttribute("alt","");
 		panelSignUp.getElement().setAttribute("title","");
 		
-		lblJoinGooruCommunity.setText(GL0400);
+		lblJoinGooruCommunity.setText(i18n.GL0400());
 		lblJoinGooruCommunity.getElement().setId("lblJoinTheGooruCommunity");
-		lblJoinGooruCommunity.getElement().setAttribute("alt",GL0400);
-		lblJoinGooruCommunity.getElement().setAttribute("title",GL0400);
+		lblJoinGooruCommunity.getElement().setAttribute("alt",i18n.GL0400());
+		lblJoinGooruCommunity.getElement().setAttribute("title",i18n.GL0400());
 		
-		lblDescription.setText(GL0401);
+		lblDescription.setText(i18n.GL0401());
 		lblDescription.getElement().setId("lblDescription");
-		lblDescription.getElement().setAttribute("alt",GL0401);
-		lblDescription.getElement().setAttribute("title",GL0401);
+		lblDescription.getElement().setAttribute("alt",i18n.GL0401());
+		lblDescription.getElement().setAttribute("title",i18n.GL0401());
 		
 		lblParentInfo.setVisible(false);
-		lblParentInfo.setText(GL0470);
+		lblParentInfo.setText(i18n.GL0470());
 		lblParentInfo.getElement().setId("lblParentInfo");
-		lblParentInfo.getElement().setAttribute("alt",GL0470);
-		lblParentInfo.getElement().setAttribute("title",GL0470);
+		lblParentInfo.getElement().setAttribute("alt",i18n.GL0470());
+		lblParentInfo.getElement().setAttribute("title",i18n.GL0470());
 		
-		btnSignUpWithGoogle.setText(GL0402);
+		btnSignUpWithGoogle.setText(i18n.GL0402());
 		btnSignUpWithGoogle.getElement().setId("btnSignUpWithGoogle");
-		btnSignUpWithGoogle.getElement().setAttribute("alt",GL0402);
-		btnSignUpWithGoogle.getElement().setAttribute("title",GL0402);
+		btnSignUpWithGoogle.getElement().setAttribute("alt",i18n.GL0402());
+		btnSignUpWithGoogle.getElement().setAttribute("title",i18n.GL0402());
 		
-		lblWhyWithGoogle.setText(GL0403);
+		lblWhyWithGoogle.setText(i18n.GL0403());
 		lblWhyWithGoogle.getElement().setId("lblWhyWithGoogle");
-		lblWhyWithGoogle.getElement().setAttribute("alt",GL0403);
-		lblWhyWithGoogle.getElement().setAttribute("title",GL0403);
+		lblWhyWithGoogle.getElement().setAttribute("alt",i18n.GL0403());
+		lblWhyWithGoogle.getElement().setAttribute("title",i18n.GL0403());
 		
-		lblQuestionMark.setText(GL_SPL_QUESTION);
+		lblQuestionMark.setText(i18n.GL_SPL_QUESTION());
 		lblQuestionMark.getElement().setId("lblQuestionMark");
-		lblQuestionMark.getElement().setAttribute("alt",GL_SPL_QUESTION);
-		lblQuestionMark.getElement().setAttribute("title",GL_SPL_QUESTION);
+		lblQuestionMark.getElement().setAttribute("alt",i18n.GL_SPL_QUESTION());
+		lblQuestionMark.getElement().setAttribute("title",i18n.GL_SPL_QUESTION());
 		
-		lblPopupWhyWithGoogle.setText(GL0403 + GL_SPL_QUESTION);
+		lblPopupWhyWithGoogle.setText(i18n.GL0403() + i18n.GL_SPL_QUESTION());
 		lblPopupWhyWithGoogle.getElement().setId("lblPopupWhyWithGoogle");
-		lblPopupWhyWithGoogle.getElement().setAttribute("alt",GL0403);
-		lblPopupWhyWithGoogle.getElement().setAttribute("title",GL0403);
+		lblPopupWhyWithGoogle.getElement().setAttribute("alt",i18n.GL0403());
+		lblPopupWhyWithGoogle.getElement().setAttribute("title",i18n.GL0403());
 		
-		lblPopupWhyWithGoogleDesc.setText(GL0404);
+		lblPopupWhyWithGoogleDesc.setText(i18n.GL0404());
 		lblPopupWhyWithGoogleDesc.getElement().setId("lblPopupWhyWithGoogleDesc");
-		lblPopupWhyWithGoogleDesc.getElement().setAttribute("alt",GL0404);
-		lblPopupWhyWithGoogleDesc.getElement().setAttribute("title",GL0404);
+		lblPopupWhyWithGoogleDesc.getElement().setAttribute("alt",i18n.GL0404());
+		lblPopupWhyWithGoogleDesc.getElement().setAttribute("title",i18n.GL0404());
 		
-		lblOr.setText(GL0209);
+		lblOr.setText(i18n.GL0209());
 		lblOr.getElement().setId("lblOr");
-		lblOr.getElement().setAttribute("alt",GL0209);
-		lblOr.getElement().setAttribute("title",GL0209);
+		lblOr.getElement().setAttribute("alt",i18n.GL0209());
+		lblOr.getElement().setAttribute("title",i18n.GL0209());
 		
-		lblDontHaveGoogleAccount.setText(GL0405 +GL_SPL_QUESTION);
+		lblDontHaveGoogleAccount.setText(i18n.GL0405() +i18n.GL_SPL_QUESTION());
 		lblDontHaveGoogleAccount.getElement().setId("lblDontHaveGoogleAccount");
-		lblDontHaveGoogleAccount.getElement().setAttribute("alt",GL0405);
-		lblDontHaveGoogleAccount.getElement().setAttribute("title",GL0405);
+		lblDontHaveGoogleAccount.getElement().setAttribute("alt",i18n.GL0405());
+		lblDontHaveGoogleAccount.getElement().setAttribute("title",i18n.GL0405());
 		
-		lblAlreadyHaveAccount.setText(GL0407 + GL_SPL_QUESTION);
+		lblAlreadyHaveAccount.setText(i18n.GL0407() + i18n.GL_SPL_QUESTION());
 		lblAlreadyHaveAccount.getElement().setId("lblAlreadyHaveAccount");
-		lblAlreadyHaveAccount.getElement().setAttribute("alt",GL0407);
-		lblAlreadyHaveAccount.getElement().setAttribute("title",GL0407);
+		lblAlreadyHaveAccount.getElement().setAttribute("alt",i18n.GL0407());
+		lblAlreadyHaveAccount.getElement().setAttribute("title",i18n.GL0407());
 		
-		achSignUpWithEmail.setText(GL0406);
+		achSignUpWithEmail.setText(i18n.GL0406());
 		achSignUpWithEmail.getElement().setId("lnkSignUpWithEmail");
-		achSignUpWithEmail.getElement().setAttribute("alt",GL0406);
-		achSignUpWithEmail.getElement().setAttribute("title",GL0406);
+		achSignUpWithEmail.getElement().setAttribute("alt",i18n.GL0406());
+		achSignUpWithEmail.getElement().setAttribute("title",i18n.GL0406());
 		
-		achClickToLogin.setText(GL0408);
+		achClickToLogin.setText(i18n.GL0408());
 		achClickToLogin.getElement().setId("lnkClickToLogin");
-		achClickToLogin.getElement().setAttribute("alt",GL0408);
-		achClickToLogin.getElement().setAttribute("title",GL0408);
+		achClickToLogin.getElement().setAttribute("alt",i18n.GL0408());
+		achClickToLogin.getElement().setAttribute("title",i18n.GL0408());
 		
 		panelUserInfo.getElement().setId("pnlUserInfo");
 		panelUserInfo.getElement().setAttribute("alt","");
@@ -257,7 +259,7 @@ public class SignUpView extends PopupViewWithUiHandlers<SignUpUiHandlers> implem
 		MixpanelUtil.close_signUp();
 		
 		if (AppClientFactory.getPlaceManager().getRequestParameter("type") !=null && !AppClientFactory.getPlaceManager().getRequestParameter("type").equalsIgnoreCase("1")){
-			LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(GL0074.toLowerCase(),"","","");
+			LeaveRegistrationPopUpUc leaveRegistrationPopUpUc=new LeaveRegistrationPopUpUc(i18n.GL0074().toLowerCase(),"","","");
 			leaveRegistrationPopUpUc.show();
 		}else{
 			Map<String, String> map = StringUtil.splitQuery(Window.Location.getHref());

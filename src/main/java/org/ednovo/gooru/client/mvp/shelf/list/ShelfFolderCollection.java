@@ -59,6 +59,7 @@ import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -85,6 +86,8 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 
 	@UiField
 	DisclosurePanel disPanel;
+	
+	@UiField Label darkGreyLbl;
 
 	private CollectionDo collectionDo;
 
@@ -110,6 +113,10 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 		setWidget(uiBinder.createAndBindUi(this));
 		setData(collectionDo);
 		dropController = new ResourceDropController(this);
+		titleFocPanel.getElement().setId("focuspnlTitleFocPanel");
+		darkGreyLbl.getElement().setId("lblDarkGreyLbl");
+		titleLbl.getElement().setId("htmlTitleLbl");
+		disPanel.getElement().setId("discpnlDisPanel");
 		titleFocPanel.addClickHandler(this);
 	}
 
@@ -144,6 +151,9 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 		this.collectionDo = collectionDo;
 	//	titleLbl.setText(StringUtil.truncateText(collectionDo.getTitle(), 30));
 		titleLbl.setHTML(StringUtil.truncateText(collectionDo.getTitle(), 30));
+		titleLbl.getElement().setAttribute("alt", collectionDo.getTitle());
+		titleLbl.getElement().setAttribute("title", collectionDo.getTitle());
+
 	}
 
 	/**

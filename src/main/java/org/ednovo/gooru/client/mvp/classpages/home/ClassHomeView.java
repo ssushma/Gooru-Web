@@ -38,6 +38,7 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -61,10 +62,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> implements IsClassHomeView,MessageProperties {
+public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> implements IsClassHomeView {
 	
 	private static ClassCodeViewUiBinder uiBinder = GWT
 			.create(ClassCodeViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField Button btnCreateClass,btnEnter, disabledBtn,seeMorebtnJoined,seeMorebtnOwner;
 	
@@ -196,42 +199,42 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 	private void setText() {
 		
 		setCreateClassVisibility();
-		disabledBtn.setText(GL0213);		
-		joinedContainerTitle.getElement().setInnerHTML(GL1925);
+		disabledBtn.setText(i18n.GL0213());		
+		joinedContainerTitle.getElement().setInnerHTML(i18n.GL1925());
 		joinedContainerTitle.getElement().setId("pnlJoinedContainerTitle");
-		joinedContainerTitle.getElement().setAttribute("alt",GL1925);
-		joinedContainerTitle.getElement().setAttribute("title",GL1925);
+		joinedContainerTitle.getElement().setAttribute("alt",i18n.GL1925());
+		joinedContainerTitle.getElement().setAttribute("title",i18n.GL1925());
 		
-		teachContainerTitle.getElement().setInnerHTML(GL1927);	
+		teachContainerTitle.getElement().setInnerHTML(i18n.GL1927());	
 		teachContainerTitle.getElement().setId("pnlTeachContainerTitle");
-		teachContainerTitle.getElement().setAttribute("alt",GL1927);
-		teachContainerTitle.getElement().setAttribute("title",GL1927);
+		teachContainerTitle.getElement().setAttribute("alt",i18n.GL1927());
+		teachContainerTitle.getElement().setAttribute("title",i18n.GL1927());
 		
-		txtCode.setPlaceholder(GL1785);		
+		txtCode.setPlaceholder(i18n.GL1785());		
 		txtCode.getElement().setId("txtCode");
-		txtCode.getElement().setAttribute("alt",GL1785);
-		txtCode.getElement().setAttribute("title",GL1785);
+		txtCode.getElement().setAttribute("alt",i18n.GL1785());
+		txtCode.getElement().setAttribute("title",i18n.GL1785());
 		
-		btnEnter.setText(GL0213);	
+		btnEnter.setText(i18n.GL0213());	
 		btnEnter.getElement().setId("btnEnter");
-		btnEnter.getElement().setAttribute("alt",GL0213);
-		btnEnter.getElement().setAttribute("title",GL0213);
+		btnEnter.getElement().setAttribute("alt",i18n.GL0213());
+		btnEnter.getElement().setAttribute("title",i18n.GL0213());
 		
-		btnCreateClass.getElement().setInnerHTML(GL1928);	
+		btnCreateClass.getElement().setInnerHTML(i18n.GL1928());	
 		btnCreateClass.getElement().setId("btnCreateClass");
-		btnCreateClass.getElement().setAttribute("alt",GL1928);
-		btnCreateClass.getElement().setAttribute("title",GL1928);
+		btnCreateClass.getElement().setAttribute("alt",i18n.GL1928());
+		btnCreateClass.getElement().setAttribute("title",i18n.GL1928());
 		
 		disabledBtn.setVisible(false);	
-		seeMorebtnJoined.setText(GL0508);
+		seeMorebtnJoined.setText(i18n.GL0508());
 		seeMorebtnJoined.getElement().setId("btnSeeMoreJoined");
-		seeMorebtnJoined.getElement().setAttribute("alt",GL0508);
-		seeMorebtnJoined.getElement().setAttribute("title",GL0508);
+		seeMorebtnJoined.getElement().setAttribute("alt",i18n.GL0508());
+		seeMorebtnJoined.getElement().setAttribute("title",i18n.GL0508());
 		
-		seeMorebtnOwner.setText(GL0508);
+		seeMorebtnOwner.setText(i18n.GL0508());
 		seeMorebtnOwner.getElement().setId("btnSeeMoreOwner");
-		seeMorebtnOwner.getElement().setAttribute("alt",GL0508);
-		seeMorebtnOwner.getElement().setAttribute("title",GL0508);
+		seeMorebtnOwner.getElement().setAttribute("alt",i18n.GL0508());
+		seeMorebtnOwner.getElement().setAttribute("title",i18n.GL0508());
 		
 		txtCode.addFocusHandler(new FocusHandler() {
 			
@@ -305,7 +308,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 													.setClasspageId(classpageId);
 
 											TaskDo taskDo = new TaskDo();
-											taskDo.setTitle(GL0121);
+											taskDo.setTitle(i18n.GL0121());
 											taskDo.setTypeName("assignment");
 											assignmentDo.setTask(taskDo);
 
@@ -345,7 +348,7 @@ public class ClassHomeView extends BaseViewWithHandlers<ClassHomeUiHandlers> imp
 		public void onClick(ClickEvent event) {
 			setEnterLblVisbility(true);
 			if (txtCode.getText().trim().equalsIgnoreCase("") || txtCode.getText().trim() == null){
-				alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0243));
+				alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
 				ClickHandler alertHandler=new ClickHandler() {
 
 					@Override

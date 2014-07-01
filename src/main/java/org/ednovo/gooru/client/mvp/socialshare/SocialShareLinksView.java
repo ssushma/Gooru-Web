@@ -78,13 +78,22 @@ public class SocialShareLinksView extends Composite implements MessageProperties
 	public SocialShareLinksView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		shareLinkFlwPl.getElement().getStyle().clearPaddingTop();
+		shareLinkFlwPl.getElement().setId("fpnlShareLinkFlwPl");
+		shareLinkContainer.getElement().setId("fpnlShareLinkContainer");
 		shareLinkTxtBox.addClickHandler(new OnTextBoxClick());
 		shareLinkTxtBox.getElement().setId("tatShareLink");
 		swithUrlLbl.setText(GL0639);
+		swithUrlLbl.getElement().setAttribute("alt", GL0639);
+		swithUrlLbl.getElement().setAttribute("title", GL0639);
 		swithToEmbedLbl.setText(GL0640);
+		swithToEmbedLbl.getElement().setAttribute("alt", GL0640);
+		swithToEmbedLbl.getElement().setAttribute("title", GL0640);
 		swithUrlLbl.getElement().setId("lblSwithUrl");
 		swithToEmbedLbl.getElement().setId("lblSwithToEmbedLbl");
 		shareLbl.setText(GL0512);
+		shareLbl.getElement().setId("lblShareLbl");
+		shareLbl.getElement().setAttribute("alt", GL0512);
+		shareLbl.getElement().setAttribute("title", GL0512);
 	}
 
 	public void setData(Map<String, String> shortenUrl) {
@@ -92,6 +101,9 @@ public class SocialShareLinksView extends Composite implements MessageProperties
 			//shareLinkTxtBox.setText(shortenUrl.get("shortenUrl"));
 			//bitlyLink=shareLinkTxtBox.getText();
 			shareLinkTxtBox.setText(shortenUrl.get("decodeRawUrl").toString());
+			shareLinkTxtBox.getElement().setAttribute("alt", shortenUrl.get("decodeRawUrl").toString());
+			shareLinkTxtBox.getElement().setAttribute("title", shortenUrl.get("decodeRawUrl").toString());
+
 			bitlyLink=shortenUrl.get("shortenUrl");
 			
 		}
@@ -153,66 +165,139 @@ public class SocialShareLinksView extends Composite implements MessageProperties
 		if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
+
 				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 			} else {
 				shareLinkTxtBox.setText(getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
 				swithUrlLbl.setText(SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 				swithToEmbedLbl.setText(SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
 			}
 		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_BITLY)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
 				swithUrlLbl.setText(SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 			} else {
 				shareLinkTxtBox.setText(bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
 				swithUrlLbl.setText(SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 			}
 		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.setText(SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
 			} else {
 				shareLinkTxtBox.setText(getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
 				swithUrlLbl.setText(SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 			}
 		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_EMBED_CODE)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("alt", getIframeText());
+				shareLinkTxtBox.getElement().setAttribute("title", getIframeText());
 				swithUrlLbl.setText(SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 				swithToEmbedLbl.setText(SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
 			} else {
 				shareLinkTxtBox.setText(decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 			}
 		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_BITLY)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
 				swithUrlLbl.setText(SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 			} else {
 				shareLinkTxtBox.setText(decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.setText(SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_BITLY);
 			}
 		}else if(swithToEmbedLbl.getText().equalsIgnoreCase(SWITCH_FULL_URL)&&swithUrlLbl.getText().equalsIgnoreCase(SWITCH_BITLY)){
 			if(buttonType.equalsIgnoreCase(SWITCH_TO_EMBED_LABEL)) {
 				shareLinkTxtBox.setText(decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("alt", decodeRawUrl);
+				shareLinkTxtBox.getElement().setAttribute("title", decodeRawUrl);
 				fullUrlMixPanelEvent();
 				swithUrlLbl.setText(SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_BITLY);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_BITLY);
 				swithToEmbedLbl.setText(SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 			} else {
 				shareLinkTxtBox.setText(bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("alt", bitlyLink);
+				shareLinkTxtBox.getElement().setAttribute("title", bitlyLink);
 				swithUrlLbl.setText(SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("alt", SWITCH_EMBED_CODE);
+				swithUrlLbl.getElement().setAttribute("title", SWITCH_EMBED_CODE);
 				swithToEmbedLbl.setText(SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("alt", SWITCH_FULL_URL);
+				swithToEmbedLbl.getElement().setAttribute("title", SWITCH_FULL_URL);
 			}
 		}
 	}

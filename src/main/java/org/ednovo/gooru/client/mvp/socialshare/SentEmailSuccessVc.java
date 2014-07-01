@@ -87,10 +87,27 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
+		
 		emailToFriendText.getElement().setInnerHTML(GL0222);
+		emailToFriendText.getElement().setId("pnlEmailToFriendText");
+		emailToFriendText.getElement().setAttribute("alt", GL0222);
+		emailToFriendText.getElement().setAttribute("title", GL0222);
+		
 		emailSentText.getElement().setInnerHTML(GL0648);
+		emailSentText.getElement().setId("pnlEmailSentText");
+		emailSentText.getElement().setAttribute("alt", GL0648);
+		emailSentText.getElement().setAttribute("title", GL0648);
+		
 		toEmailLbl.setText(toEmail);
+		toEmailLbl.getElement().setId("lblToEmailLbl");
+		toEmailLbl.getElement().setAttribute("alt", toEmail);
+		toEmailLbl.getElement().setAttribute("title", toEmail);
+		
 		okLbl.setText(GL0190);
+		okLbl.getElement().setId("lblOkLbl");
+		okLbl.getElement().setAttribute("alt", GL0190);
+		okLbl.getElement().setAttribute("title", GL0190);
+		
 		Window.enableScrolling(false);
 	}
 	
@@ -105,13 +122,28 @@ public class SentEmailSuccessVc extends Composite implements MessageProperties{
 		appPopUp.setGlassEnabled(true);
 		appPopUp.show();
 		appPopUp.center();
+		
 		emailToFriendText.getElement().setInnerHTML(messageHeader);
+		emailToFriendText.getElement().setId("pnlEmailToFriendText");
+		emailToFriendText.getElement().setAttribute("alt", messageHeader);
+		emailToFriendText.getElement().setAttribute("title", messageHeader);
+		
 		emailSentText.getElement().setInnerHTML("");
+		emailSentText.getElement().setId("pnlEmailSentText");
+		
 		/*toEmailLbl.getElement().getStyle().setWidth(70, Unit.PCT);
 		toEmailLbl.getElement().getStyle().setPaddingLeft(86, Unit.PX);*/
 		toEmailLbl.setStyleName(ShelfCBundle.INSTANCE.css().aleartDescText());
 		toEmailLbl.setText(desc);
+		toEmailLbl.getElement().setId("lblToEmailLbl");
+		toEmailLbl.getElement().setAttribute("alt", desc);
+		toEmailLbl.getElement().setAttribute("title", desc);
+		
 		okLbl.setText(GL0190);
+		okLbl.getElement().setId("lblOkLbl");
+		okLbl.getElement().setAttribute("alt", GL0190);
+		okLbl.getElement().setAttribute("title", GL0190);
+		
 		Window.enableScrolling(false);
 	}
 

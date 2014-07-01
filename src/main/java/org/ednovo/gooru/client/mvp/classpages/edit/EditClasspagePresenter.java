@@ -86,7 +86,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
  *
  * @Reviewer: 
  */
-public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageView, IsEditClasspageProxy> implements EditClasspageUiHandlers,MessageProperties {
+public class EditClasspagePresenter extends BasePlacePresenter<IsEditClasspageView, IsEditClasspageProxy> implements EditClasspageUiHandlers {
 
 	
 	@Inject

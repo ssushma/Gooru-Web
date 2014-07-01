@@ -176,11 +176,26 @@ IsCollectionAssign, MessageProperties {
 		collectionDoGlobal = collectionDoObject;
 		
 		lblDirections.setText(GL1166);
+		lblDirections.getElement().setAttribute("alt",GL1166);
+		lblDirections.getElement().setAttribute("title",GL1166);
+		
 		lblDirectionsOptional.setText(GL1167);
+		lblDirectionsOptional.getElement().setAttribute("alt",GL1167);
+		lblDirectionsOptional.getElement().setAttribute("title",GL1167);
+		
 		lblDuedateOptional.setText(GL1167);
+		lblDuedateOptional.getElement().setAttribute("alt",GL1167);
+		lblDuedateOptional.getElement().setAttribute("title",GL1167);
+		
 		lblDuedate.setText(GL1168);
+		lblDuedate.getElement().setAttribute("alt",GL1168);
+		lblDuedate.getElement().setAttribute("title",GL1168);
+		
 		textAreaVal.setText(GL1461);
+		textAreaVal.getElement().setAttribute("alt",GL1461);
+		textAreaVal.getElement().setAttribute("title",GL1461);
 		textAreaVal.getElement().getStyle().setColor("#999");
+		
 		dateBoxUc = new DateBoxUcCustomizedForAssign(false, false,false);
 		duedateContainer.add(dateBoxUc);
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
@@ -232,10 +247,16 @@ IsCollectionAssign, MessageProperties {
 
 		getClassPageData();
 	}
-	
+
 	public void getClassPageData() {
 		lblNoClassPage.setText(GL0106);
+		lblNoClassPage.getElement().setAttribute("alt",GL0106);
+		lblNoClassPage.getElement().setAttribute("title",GL0106);
+		
 		lblNoClassPageMsg.setText(GL0109);
+		lblNoClassPageMsg.getElement().setAttribute("alt",GL0109);
+		lblNoClassPageMsg.getElement().setAttribute("title",GL0109);
+		
 		lblNoClassPageImage.setUrl("images/library/banner-assign.png");
 		lblNoClassPageImage.setTitle(GL1025);
 		lblNoClassPageImage.setAltText(GL1025);
@@ -284,6 +305,8 @@ IsCollectionAssign, MessageProperties {
 						.substring(0, 400));
 				directionsErrorLbl.setText("");
 				directionsErrorLbl.setText(MessageProperties.GL0143);
+				directionsErrorLbl.getElement().setAttribute("alt",MessageProperties.GL0143);
+				directionsErrorLbl.getElement().setAttribute("title",MessageProperties.GL0143);
 				directionsErrorLbl.setVisible(true);
 			}
 
@@ -559,7 +582,12 @@ IsCollectionAssign, MessageProperties {
 									
 									assignMoreCpContainer.setVisible(true);
 									assignMoreCpLbl.setText(GL0521);
+									assignMoreCpLbl.getElement().setAttribute("alt",GL0521);
+									assignMoreCpLbl.getElement().setAttribute("title",GL0521);
+									
 									ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
+									ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
+									ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
 								}
 							});
 						}
@@ -598,7 +626,11 @@ IsCollectionAssign, MessageProperties {
 							
 							assignMoreCpContainer.setVisible(true);
 							assignMoreCpLbl.setText(GL0521);
+							assignMoreCpLbl.getElement().setAttribute("alt",GL0521);
+							assignMoreCpLbl.getElement().setAttribute("title",GL0521);
 							ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
+							ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
+							ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
 						}
 					});	
 				}
@@ -731,19 +763,38 @@ IsCollectionAssign, MessageProperties {
 	
 	public void setLabelsAndIds()
 	{
-		
+		panelTitleContainer.getElement().setId("pnlTitleContainer");
+
 		lblAssignCollectionPrivate.setText(GL0112);
+		lblAssignCollectionPrivate.getElement().setId("lblAssignCollectionPrivate");
+		lblAssignCollectionPrivate.getElement().setAttribute("alt",GL0112);
+		lblAssignCollectionPrivate.getElement().setAttribute("title",GL0112);
 		lblAssignCollectionPrivate.setVisible(false);
 		
 		lblAssignCollectionTitle.setText(GL0101);
+		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");
+		lblAssignCollectionTitle.getElement().setAttribute("alt",GL0101);
+		lblAssignCollectionTitle.getElement().setAttribute("title",GL0101);
+		
+		
 		lblClasspages.setText(GL0102);
-
+		lblClasspages.getElement().setId("lblClasspages");
+		lblClasspages.getElement().setAttribute("alt",GL0102);
+		lblClasspages.getElement().setAttribute("title",GL0102);
 		
 		btnAssign.setText(GL0104);
+		btnAssign.getElement().setAttribute("alt",GL0104);
+		btnAssign.getElement().setAttribute("title",GL0104);
 		
 		lblClasspagePlaceHolder.setText(GL0105);
-
+		lblClasspagePlaceHolder.getElement().setId("lblClasspagePlaceHolder");
+		lblClasspagePlaceHolder.getElement().setAttribute("alt",GL0105);
+		lblClasspagePlaceHolder.getElement().setAttribute("title",GL0105);
+		
 		classPageBtn.setText(GL0517);
+		classPageBtn.getElement().setId("btnClassPage");
+		classPageBtn.getElement().setAttribute("alt",GL0517);
+		classPageBtn.getElement().setAttribute("title",GL0517);
 	
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
@@ -754,8 +805,26 @@ IsCollectionAssign, MessageProperties {
 
 		lblClasspagePlaceHolder.setStyleName(AssignPopUpCBundle.INSTANCE.css().placeHolderText());
 
-
-		
+		panelNoClasspages.getElement().setId("pnlNoClasspages");
+		lblNoClassPageImage.getElement().setId("imgLblNoClassPageImage");
+		lblNoClassPage.getElement().setId("lblNoClassPage");
+		lblNoClassPageMsg.getElement().setId("lblNoClassPageMsg");
+		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
+		htmlPanelContainer.getElement().setId("pnlHtmlPanelContainer");
+		controlsContainer.getElement().setId("pnlControlsContainer");
+		lblClasspagesArrow.getElement().setId("lblClasspagesArrow");
+		spanelClasspagesPanel.getElement().setId("sbSpanelClasspagesPanel");
+		htmlClasspagesListContainer.getElement().setId("pnlHtmlClasspagesListContainer");
+		lblDuedate.getElement().setId("lblDuedate");
+		lblDuedateOptional.getElement().setId("lblDuedateOptional");
+		duedateContainer.getElement().setId("pnlDuedateContainer");
+		lblDirections.getElement().setId("lblDirections");
+		lblDirectionsOptional.getElement().setId("lblDirectionsOptional");
+		textAreaVal.getElement().setId("tatTextAreaVal");
+		directionsErrorLbl.getElement().setId("errlblDirectionsErrorLbl");
+		assignMoreCpContainer.getElement().setId("pnlAssignMoreCpContainer");
+		assignMoreCpLbl.getElement().setId("spnAssignMoreCpLbl");
+		ancClasspageTitle.getElement().setId("spnAncClasspageTitle");
 	}
 	
 	public abstract void closePoupfromChild();

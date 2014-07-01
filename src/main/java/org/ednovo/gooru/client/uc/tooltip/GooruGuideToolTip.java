@@ -39,9 +39,21 @@ public class GooruGuideToolTip extends Composite implements MessageProperties{
 	public GooruGuideToolTip(){
 		initWidget(gooruGuideToolTipUiBinder.createAndBindUi(this));
 		newToGooruText.getElement().setInnerHTML(GL1061);
+		newToGooruText.getElement().setId("pnlNewToGooruText");
+		newToGooruText.getElement().setAttribute("alt", GL1061);
+		newToGooruText.getElement().setAttribute("title", GL1061);
 		useGoorutext.getElement().setInnerHTML(GL1062);
+		useGoorutext.getElement().setId("pnlUseGoorutext");
+		useGoorutext.getElement().setAttribute("alt", GL1062);
+		useGoorutext.getElement().setAttribute("title", GL1062);
 		questionsText.getElement().setInnerHTML(GL1029);
+		questionsText.getElement().setId("pnlQuestionsText");
+		questionsText.getElement().setAttribute("alt", GL1029);
+		questionsText.getElement().setAttribute("title", GL1029);
 		emailSupportText.getElement().setInnerHTML(GL0212+" "+GL0299);
+		emailSupportText.getElement().setId("pnlEmailSupportText");
+		emailSupportText.getElement().setAttribute("alt", GL0212+" "+GL0299);
+		emailSupportText.getElement().setAttribute("title", GL0212+" "+GL0299);
 	}
 	
 	public interface GooruGuideToolTipUiBinder extends UiBinder<Widget, GooruGuideToolTip>{

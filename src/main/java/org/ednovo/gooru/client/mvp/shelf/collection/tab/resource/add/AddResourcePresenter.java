@@ -46,6 +46,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.IsCollectionResourceTabView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.event.AddResouceImageEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
@@ -61,6 +62,7 @@ import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
@@ -100,6 +102,17 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	IsCollectionResourceTabView isCollResourceTabView=null;
 	
+private DrivePresenter drivePresenter=null;
+	
+	public DrivePresenter getDrivePresenter() {
+		return drivePresenter;
+	}
+
+	public void setDrivePresenter(DrivePresenter drivePresenter) {
+		this.drivePresenter = drivePresenter;
+	}
+
+
 	@Inject
 	private ResourceServiceAsync resourceService;
 	
@@ -108,13 +121,15 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	String clickType;
 	
 	@Inject
-	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter) {
+	public AddResourcePresenter(IsCollectionResourceTabView isCollResourceTabView, EventBus eventBus, IsAddResourceView view,ImageUploadPresenter imageUploadPresenter,DrivePresenter drivePresenter) {
 		super(eventBus, view);
 		this.setImageUploadPresenter(imageUploadPresenter);
 		getView().setUiHandlers(this);
 		addRegisteredHandler(AddResouceImageEvent.TYPE, this);
 		
 		this.isCollResourceTabView = isCollResourceTabView;
+		this.drivePresenter=drivePresenter;
+
 //		,ExistsResourcePresenter alreadyExistsResourcePresenter
 //		this.alreadyExistsResourcePresenter = alreadyExistsResourcePresenter;
 
@@ -453,6 +468,12 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		this.updateQuestionResourceAsyncCallback = updateQuestionResourceAsyncCallback;
 	}
 
+	@Override
+	public void showDriveResoureView(HTMLPanel tabContainer) {
+		drivePresenter.callDriveContent();
+		tabContainer.add(drivePresenter.getWidget());
+	}
+	
 	
 
 }

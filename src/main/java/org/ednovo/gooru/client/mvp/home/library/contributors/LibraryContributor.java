@@ -65,6 +65,10 @@ public class LibraryContributor extends Composite implements MessageProperties {
 		setEducatorData(libraryUserDo,placeToken);
 		educatorPhoto.setHeight("185px");
 		educatorPhoto.setWidth("185px");
+		educatorPhoto.getElement().setId("imgEducatorPhoto");
+		educatorName.getElement().setId("lblEducatorName");
+		userName.getElement().setId("lblUserName");
+		courses.getElement().setId("pnlCourses");
 	}
 	
 	/**
@@ -94,7 +98,13 @@ public class LibraryContributor extends Composite implements MessageProperties {
 		});
 		educatorPhoto.setAltText(libraryUserDo.getFirstName()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1181);
 		educatorName.setText(libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
+		educatorName.getElement().setAttribute("alt",libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
+		educatorName.getElement().setAttribute("title",libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
+		
 		userName.setText(libraryUserDo.getUsername());
+		userName.getElement().setAttribute("alt",libraryUserDo.getUsername());
+		userName.getElement().setAttribute("title",libraryUserDo.getUsername());
+		
 		Label authorCoursesLbl = new Label(libraryUserDo.getUsername()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1180);
 		//
 		authorCoursesLbl.setStyleName(libraryStyleUc.header());

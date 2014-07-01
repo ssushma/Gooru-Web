@@ -60,4 +60,6 @@ public interface PlaceTokens {
 	String PSDPAL = "PSD";
 	String FINCAPINC = "CFCI";
 	String SAUSD_LIBRARY = "sausd";	
+	String DRIVE="drive";
+
 }
