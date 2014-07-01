@@ -45,7 +45,7 @@
 		    </uc:HTMLEventPanel>
 			<g:HTMLPanel styleName="{style.css.assignmentPathContainer}" ui:field="panelAssignmentPath">
 			    <!-- <g:HTMLPanel styleName="{res.css.progressStart}"></g:HTMLPanel> -->
-			    <g:HTMLPanel styleName="{style.css.assignementOrderHeader}">Assignments Order</g:HTMLPanel>
+			    <g:HTMLPanel styleName="{style.css.assignementOrderHeader}" ui:field="assignmentOrderPanel"></g:HTMLPanel>
 			    <g:Label styleName="{style.css.assignmentProgress}" ui:field="lblAssignmentProgress" />
 			    <g:HTMLPanel styleName="{style.css.path}">
 					<g:FlowPanel styleName="{style.css.assignmentPath}" ui:field="panelAssignmentProgress" />

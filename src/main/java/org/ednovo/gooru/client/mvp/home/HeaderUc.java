@@ -56,6 +56,7 @@ import org.ednovo.gooru.client.uc.tooltip.OrganizeToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyNowToolTip;
 import org.ednovo.gooru.client.uc.tooltip.StudyToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.AutoSuggestKeywordSearchDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -113,7 +114,7 @@ import com.google.inject.Inject;
  * @author Search Team
  * 
  */
-public class HeaderUc extends Composite implements MessageProperties,
+public class HeaderUc extends Composite implements
 		SelectionHandler<SuggestOracle.Suggestion> {
 	
 	private static HeaderUcUiBinder uiBinder = GWT
@@ -122,7 +123,8 @@ public class HeaderUc extends Composite implements MessageProperties,
 	interface HeaderUcUiBinder extends UiBinder<Widget, HeaderUc> {
 	}
 
-
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	OpenClasspageListHandler openClasspageListHandler = new OpenClasspageListHandler() {
 
 		@Override
@@ -207,7 +209,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 	public AppSuggestBox editSearchTxtBox;
 
 	@UiField
-	FlowPanel editSearchInputFloPanel;
+	FlowPanel editSearchInputFloPanel,signUpInfo;
 
 	@UiField
 	FlowPanel logInfoFloPanel;
@@ -283,7 +285,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 	Label lblBeta; // gooruClassicViewLbl
 
 	@UiField
-	HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel;
+	HTMLPanel dotsPanel, mainDotsPanel, mainInnerDotsPanel,dropDownImg;
 
 	@UiField
 	Label discoverLink, organizeLink, teachLink, studyLink, loggedInfoLbl,thanksLbl;
@@ -451,31 +453,89 @@ public class HeaderUc extends Composite implements MessageProperties,
 
 		studyLinkContainer.addClickHandler(new studyClickHandler());
 
-		// gooruClassicViewLbl.setText(MessageProperties.GL0094);
+		// gooruClassicViewLbl.setText(MessageProperties.i18n.GL0094);
 		getEditSearchTxtBox().getElement().setId("txtEditSearch");
 		editSearchBtn.getElement().setId("btnEditSearch");
-		editSearchBtn.setText(GL0176);
+		editSearchBtn.setText(i18n.GL0176());
+		editSearchBtn.getElement().setAttribute("alt",i18n.GL0176());
+		editSearchBtn.getElement().setAttribute("title",i18n.GL0176());
+		
 		confirmEmailText.getElement().setAttribute("style", "float: left;");
-		confirmEmailText.setText(GL1248);
+		confirmEmailText.setText(i18n.GL1248());
+		confirmEmailText.getElement().setId("lblConfirmEmailText");
+		confirmEmailText.getElement().setAttribute("alt",i18n.GL1248());
+		confirmEmailText.getElement().setAttribute("title",i18n.GL1248());
+		
 		resendEmailAncr.getElement().setAttribute("style", "float: left;padding-left:5px;");
-		resendEmailAncr.setText(GL1249+GL_GRR_COMMA);
+		resendEmailAncr.setText(i18n.GL1249()+i18n.GL_GRR_COMMA());
+		resendEmailAncr.getElement().setId("lnkResendEmail");
+		resendEmailAncr.getElement().setAttribute("alt",i18n.GL1249());
+		resendEmailAncr.getElement().setAttribute("title",i18n.GL1249());
+		
 		thanksLbl.getElement().setAttribute("style", "padding-left:5px;");
-		thanksLbl.setText(GL0498+GL_SPL_EXCLAMATION);
+		thanksLbl.setText(i18n.GL0498()+i18n.GL_SPL_EXCLAMATION());
+		thanksLbl.getElement().setId("lblThanksLbl");
+		thanksLbl.getElement().setAttribute("alt",i18n.GL0498());
+		thanksLbl.getElement().setAttribute("title",i18n.GL0498());
+		
 		getEditSearchTxtBox().getElement().setAttribute("placeholder",
-				GL0177);
-		lblBeta.setText(GL0178);
-		discoverLink.setText(GL1748_1);
-		organizeLink.setText(GL1752);
-		teachLink.setText(GL1753);
-		studyLink.setText(GL0182);//not used.
-		loggedInfoLbl.setText(GL0183);
-		// classCodeTxtBox.setPlaceholder(MessageProperties.GL0184);
-//		StudyLbl.setText(GL0185);
+				i18n.GL0177());
+		lblBeta.setText(i18n.GL0178());
+		lblBeta.getElement().setId("lblBeta");
+		lblBeta.getElement().setAttribute("alt",i18n.GL0178());
+		lblBeta.getElement().setAttribute("title",i18n.GL0178());
+		
+		discoverLink.setText(i18n.GL1748_1());
+		discoverLink.getElement().setId("lblDiscoverLink");
+		discoverLink.getElement().setAttribute("alt",i18n.GL1748_1());
+		discoverLink.getElement().setAttribute("title",i18n.GL1748_1());
+		
+		organizeLink.setText(i18n.GL1752());
+		organizeLink.getElement().setId("lblOrganizeLink");
+		organizeLink.getElement().setAttribute("alt",i18n.GL1752());
+		organizeLink.getElement().setAttribute("title",i18n.GL1752());
+		
+		teachLink.setText(i18n.GL1753());
+		teachLink.getElement().setId("lblTeachLink");
+		teachLink.getElement().setAttribute("alt",i18n.GL1753());
+		teachLink.getElement().setAttribute("title",i18n.GL1753());
+		
+		studyLink.setText(i18n.GL0182());//not used.
+		studyLink.getElement().setId("lblStudyLink");
+		studyLink.getElement().setAttribute("alt",i18n.GL0182());
+		studyLink.getElement().setAttribute("title",i18n.GL0182());
+		
+		loggedInfoLbl.setText(i18n.GL0183());
+		loggedInfoLbl.getElement().setId("lblLoggedInfo");
+		loggedInfoLbl.getElement().setAttribute("alt",i18n.GL0183());
+		loggedInfoLbl.getElement().setAttribute("title",i18n.GL0183());
+		
+		// classCodeTxtBox.setPlaceholder(MessageProperties.i18n.GL0184);
+//		StudyLbl.setText(i18n.GL0185);
 //		StudyLbl.getElement().setId("btnStudy");
-		registerLinkLbl.setText(GL0186);
-		loginLink.setText(GL0187);
-		loginLink.getElement().setId("lblLogin");
+		registerLinkLbl.setText(i18n.GL0186());
 		registerLinkLbl.getElement().setId("btnRegister");
+		registerLinkLbl.getElement().setAttribute("alt",i18n.GL0186());
+		registerLinkLbl.getElement().setAttribute("title",i18n.GL0186());
+		
+		loginLink.setText(i18n.GL0187());
+		loginLink.getElement().setId("lblLogin");
+		loginLink.getElement().setAttribute("alt",i18n.GL0187());
+		loginLink.getElement().setAttribute("title",i18n.GL0187());
+		
+		headerSearchBarVerPanel.getElement().setId("vsbHeaderSearchBarVerPanel");
+		headerSearchBarFloPanel.getElement().setId("fpnlHeaderSearchBarFloPanel");
+		editSearchTxtBox.getElement().setId("tbautoEditSearchTxtBox");
+		mainDotsPanel.getElement().setId("pnlMainDotsPanel");
+		mainInnerDotsPanel.getElement().setId("pnlMainInnerDotsPanel");
+		dotsPanel.getElement().setId("pnlDotsPanel");
+		dropDownImg.getElement().setId("pnlDropDownImg");
+		signUpInfo.getElement().setId("fpnlSignUpInfo");
+		logoutDownArrowLbl.getElement().setId("lblLogoutDownArrow");
+		logInfoFloPanel.getElement().setId("fpnlLogInfoFloPanel");
+		acctActivationPl.getElement().setId("epnlAcctActivationPl");
+		
+		
 		discoverLinkContainer.addMouseOverHandler(new DiscoverMouseOver());
 		discoverLinkContainer.addMouseOutHandler(new DiscoverMouseOut());
 		
@@ -555,6 +615,7 @@ public class HeaderUc extends Composite implements MessageProperties,
 		 * (PlaceTokens.PROFILE_PAGE))){ editSearchTxtBox.setText(""); }
 		 */
 		discoverLinkUrl = null;
+		gooruLearning.setId("lnkeleGooruLearning");
 	}
 
 	public void clearClasspageList() {
@@ -1222,7 +1283,11 @@ public class HeaderUc extends Composite implements MessageProperties,
 			
 			imgUserProfile.getElement().setAttribute("onerror","imgError(this);");
 			imgUserProfile.setAltText(userDo.getUsername());
+			imgUserProfile.getElement().setId("imgUserProfile");
+			imgUserProfile.getElement().setAttribute("alt",userDo.getUsername());
+			imgUserProfile.getElement().setAttribute("title",userDo.getUsername());
 			imgUserProfile.setVisible(true);
+
 			LoginLinkContainer.setVisible(true);
 			loggedInfoLbl.setVisible(true);
 /*			if (userDo.getUsername().length() >= 15){

@@ -871,6 +871,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 				sessionToken=sessionToken+"&sharing="+sharingType;
 			}
 			url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.V2_GET_CHILD_FOLDER_LIST, parentId, sessionToken, offset, "20");
+			System.out.println("--- url -- "+url);
 			JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 			jsonRep = jsonResponseRep.getJsonRepresentation();
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);

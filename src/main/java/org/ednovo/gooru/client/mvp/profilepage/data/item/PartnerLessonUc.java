@@ -41,6 +41,8 @@ import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -150,6 +152,8 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 			if(i==0&&isLessonHighlighted) {
 				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE)) {
 					conceptTitleLbl.addStyleName(style.conceptActive());
+					conceptId = profileLibrary.getGooruOid();
+					openCollection();
 				} else {
 					conceptTitleLbl.addStyleName(style.libraryConceptActive());
 				}
@@ -159,9 +163,7 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				@Override
 				public void onClick(ClickEvent event) {
 					conceptId = profileLibrary.getGooruOid();
-					AppClientFactory.fireEvent(new SetProfileCollectionStyleEvent(conceptId,topicId,lessonId));
-					AppClientFactory.fireEvent(new SetLoadingIconEvent(true,topicId));
-					getConceptDetails(conceptId);
+					openCollection();
 				}
 			});
 		}
@@ -195,13 +197,21 @@ public class PartnerLessonUc extends Composite implements MessageProperties {
 				lessonTitle.addStyleName(style.libraryConceptActive());
 				lessonTitle.addStyleName(style.marginTop5());
 			}
+			openCollection();
 			isLessonHighlighted = false;
 		}
-		openCollection();
 		lessonTitle.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				openCollection();
+				NodeList links = lessonList.getElement().getParentElement().getChildNodes();
+				    for (int i = 0; i < links.getLength(); i++) {
+				      com.google.gwt.user.client.Element link =
+				        (com.google.gwt.user.client.Element) links.getItem(i);
+				      link.getFirstChildElement().removeClassName(style.conceptActive());
+
+				    }
+				lessonTitle.addStyleName(style.conceptActive());
 			}
 		});
 	}

@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.featured.FeaturedContentDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -56,12 +57,14 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class FeaturedSlideVc extends Composite implements MessageProperties{
+public class FeaturedSlideVc extends Composite{
 
 	private static FeaturedSlideVcUiBinder uiBinder = GWT.create(FeaturedSlideVcUiBinder.class);
 
 	interface FeaturedSlideVcUiBinder extends UiBinder<Widget, FeaturedSlideVc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField
 	ParagraphElement contentDisplayTitle;
@@ -91,7 +94,11 @@ public class FeaturedSlideVc extends Composite implements MessageProperties{
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		didYouKnowText.setText(GL1241);
+		didYouKnowText.setText(i18n.GL1241());
+		didYouKnowText.getElement().setId("lblDidYouKnowText");
+		didYouKnowText.getElement().setAttribute("alt",i18n.GL1241());
+		didYouKnowText.getElement().setAttribute("title",i18n.GL1241());
+		contentDisplayTitle.setId("pContentDisplayTitle");
 		this.setData(featuredContentDo);
 		collectionStudyButtonFocPanel.addMouseOverHandler(new MouseOverHandler() {
 			
@@ -115,7 +122,10 @@ public class FeaturedSlideVc extends Composite implements MessageProperties{
 				studyFeaturedCollection.featuredStartStudyFloPanel.setVisible(false);
 			}
 		});
-		
+		collectionStudyButtonFocPanel.getElement().setId("focuspnlCollectionStudyButtonFocPanel");
+		studyFeaturedCollection.getElement().setId("sfcStudyFeaturedCollection");
+	
+	
 	}
 
 	/** 

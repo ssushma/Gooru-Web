@@ -531,7 +531,6 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		boolean isLessonHighlighted = true;
 		final int count = profileLibraryDoList.size();
 		if(profileLibraryDoList.size()>=LESSON_PAGE_INITIAL_LIMIT) {
-			System.out.println("b");
 			for(int i=0;i<LESSON_PAGE_INITIAL_LIMIT;i++) {
 				if(i==0) {
 					isLessonHighlighted = true;
@@ -556,6 +555,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 								LESSON_PAGE_INITIAL_LIMIT = LESSON_PAGE_INITIAL_LIMIT + profileLibraryList.getSearchResult().size();
 								if(!(profileLibraryList.getCount()>LESSON_PAGE_INITIAL_LIMIT)) {
 									isScrollable = false;
+									LESSON_PAGE_INITIAL_LIMIT=10;
 								} else {
 									isScrollable = true;
 								}
@@ -565,7 +565,6 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 				}
 			});
 		} else {
-			System.out.println("c");
 			for(int i=0;i<profileLibraryDoList.size();i++) {
 				if(i==0) {
 					isLessonHighlighted = true;

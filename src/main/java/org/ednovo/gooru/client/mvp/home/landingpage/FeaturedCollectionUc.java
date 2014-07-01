@@ -94,6 +94,22 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 		featuredCollectionHoverEvent.addMouseOverHandler(new ShowHoverCollectionContainer());
 		featuredCollectionHoverEvent.addMouseOutHandler(new HideHoverCollectionContainer());
 		setCollectionData(collectionDo);
+		
+		courseTitle.getElement().setId("lblCourseTitle");
+		featuredCollectionHoverEvent.getElement().setId("epnlFeaturedCollectionHoverEvent");
+		featuredCollectionImg.getElement().setId("imgFeaturedCollection");
+		featuredCollectionDescription.getElement().setId("htmlFeaturedCollectionDescription");
+		collectionTitle.getElement().setId("lblCollectionTitle");
+		creatorText.getElement().setId("pnlCreatorText");
+		createdByText.getElement().setId("lblCreatedByText");
+		collectionAuthor.getElement().setId("lnkCollectionAuthor");
+		collectionGrades.getElement().setId("pnlCollectionGrades");
+		gradesText.getElement().setId("lblGradesText");
+		gradeTag1.getElement().setId("lblGradeTag1");
+		gradeTag2.getElement().setId("lblGradeTag2");
+		collectionStandards.getElement().setId("pnlCollectionStandards");
+		standardsText.getElement().setId("lblStandardsText");
+		standardsTab.getElement().setId("pnlStandardsTab");
 	}
 	
 	private class ShowHoverCollectionContainer implements MouseOverHandler {
@@ -130,9 +146,21 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 
 	private void setCollectionData(final CollectionDo collectionDo) {
 			createdByText.setText(GL0622);
+			createdByText.getElement().setAttribute("alt",GL0622);
+			createdByText.getElement().setAttribute("title",GL0622);
+			
 			gradesText.setText(GL1320_1);
+			gradesText.getElement().setAttribute("alt",GL1320_1);
+			gradesText.getElement().setAttribute("title",GL1320_1);
+			
 			standardsText.setText(GL0575);
+			standardsText.getElement().setAttribute("alt",GL0575);
+			standardsText.getElement().setAttribute("title",GL0575);
+			
 			collectionTitle.setText(collectionDo.getTitle());
+			collectionTitle.getElement().setAttribute("alt",collectionDo.getTitle());
+			collectionTitle.getElement().setAttribute("title",collectionDo.getTitle());
+		
 			collectionAuthor.setText(collectionDo.getUser().getUsernameDisplay());
 			collectionAuthor.setStyleName(landingPageStyle.userNamePPPdisabled());
 			
@@ -183,11 +211,15 @@ public class FeaturedCollectionUc extends Composite implements MessageProperties
 					if(collectionDo.getMetaInfo().getCourse().get(0).contains("English Language Arts"))
 					{
 						String courseTitleTxt=collectionDo.getMetaInfo().getCourse().get(0).replaceAll("English Language Arts", "ELA");
-						courseTitle.setText(courseTitleTxt);	
+						courseTitle.setText(courseTitleTxt);
+						courseTitle.getElement().setAttribute("alt",courseTitleTxt);
+						courseTitle.getElement().setAttribute("title",courseTitleTxt);
 					}
 					else
 					{
 						courseTitle.setText(collectionDo.getMetaInfo().getCourse().get(0));	
+						courseTitle.getElement().setAttribute("alt",collectionDo.getMetaInfo().getCourse().get(0));
+						courseTitle.getElement().setAttribute("title",collectionDo.getMetaInfo().getCourse().get(0));
 					}
 					} else {
 					courseTitle.setVisible(false);

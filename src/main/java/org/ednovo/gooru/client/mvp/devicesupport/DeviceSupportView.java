@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.devicesupport;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -54,7 +55,7 @@ import com.gwtplatform.mvp.client.ViewImpl;
  * 
  * @Reviewer:
  */
-public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView,MessageProperties {
+public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView{
 	Widget widget = null;
 
 	private String device;
@@ -68,6 +69,8 @@ public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView,M
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -75,8 +78,8 @@ public class DeviceSupportView extends ViewImpl implements IsDeviceSupportView,M
 	@Inject
 	public DeviceSupportView() {
 		binder.createAndBindUi(this);
-		deviceSupportLbl.setTitle(GL1361);
-		deviceSupportLbl.setAltText(GL1361);
+		deviceSupportLbl.setTitle(i18n.GL1361());
+		deviceSupportLbl.setAltText(i18n.GL1361());
 		deviceSupportLbl.setUrl("images/DeviceSupport/tech-saavy.png");
 		deviceSupportLbl.getElement().setId("imgDeviceSupport");
 		
