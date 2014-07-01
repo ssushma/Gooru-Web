@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -45,11 +46,13 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FoldersWelcomePage extends Composite implements MessageProperties {
+public class FoldersWelcomePage extends Composite {
 
 	private static FoldersWelcomePageUiBinder uiBinder = GWT
 			.create(FoldersWelcomePageUiBinder.class);
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	Label lblStartCreateingCollection, lblCollectionDesc, lblViewWalkthrough,
 			lblUpload, lblCustomizeCollections, lblCollaborate, lblFurther,
@@ -129,102 +132,102 @@ public class FoldersWelcomePage extends Composite implements MessageProperties {
 	*/
 	
 	private void setText() {
-		lblStartCreateingCollection.setText(GL1813);
+		lblStartCreateingCollection.setText(i18n.GL1813());
 		lblStartCreateingCollection.getElement().setId("lblStartCreateingCollection");
-		lblStartCreateingCollection.getElement().setAttribute("alt",GL1813);
-		lblStartCreateingCollection.getElement().setAttribute("title",GL1813);
+		lblStartCreateingCollection.getElement().setAttribute("alt",i18n.GL1813());
+		lblStartCreateingCollection.getElement().setAttribute("title",i18n.GL1813());
 		
-		lblCollectionDesc.setText(GL1814);
+		lblCollectionDesc.setText(i18n.GL1814());
 		lblCollectionDesc.getElement().setId("lblCollectionDesc");
-		lblCollectionDesc.getElement().setAttribute("alt",GL1814);
-		lblCollectionDesc.getElement().setAttribute("title",GL1814);
+		lblCollectionDesc.getElement().setAttribute("alt",i18n.GL1814());
+		lblCollectionDesc.getElement().setAttribute("title",i18n.GL1814());
 		
-		btnCreateCollection.setText(GL1815);
+		btnCreateCollection.setText(i18n.GL1815());
 		btnCreateCollection.getElement().setId("btnCreateCollection");
-		btnCreateCollection.getElement().setAttribute("alt",GL1815);
-		btnCreateCollection.getElement().setAttribute("title",GL1815);
-		//lblViewWalkthrough.setText(GL1816);
+		btnCreateCollection.getElement().setAttribute("alt",i18n.GL1815());
+		btnCreateCollection.getElement().setAttribute("title",i18n.GL1815());
+		//lblViewWalkthrough.setText(i18n.GL1816);
 		lblViewWalkthrough.getElement().setId("lblViewWalkthrough");
 		
-		lblUpload.setText(GL1817);
+		lblUpload.setText(i18n.GL1817());
 		lblUpload.getElement().setId("lblUpload");
-		lblUpload.getElement().setAttribute("alt",GL1817);
-		lblUpload.getElement().setAttribute("title",GL1817);
+		lblUpload.getElement().setAttribute("alt",i18n.GL1817());
+		lblUpload.getElement().setAttribute("title",i18n.GL1817());
 		
-		lblCustomizeCollections.setText(GL1818);
+		lblCustomizeCollections.setText(i18n.GL1818());
 		lblCustomizeCollections.getElement().setId("lblCustomizeCollections");
-		lblCustomizeCollections.getElement().setAttribute("alt",GL1818);
-		lblCustomizeCollections.getElement().setAttribute("title",GL1818);
+		lblCustomizeCollections.getElement().setAttribute("alt",i18n.GL1818());
+		lblCustomizeCollections.getElement().setAttribute("title",i18n.GL1818());
 		
-		lblCollaborate.setText(GL1819);
+		lblCollaborate.setText(i18n.GL1819());
 		lblCollaborate.getElement().setId("lblCollaborate");
-		lblCollaborate.getElement().setAttribute("alt",GL1819);
-		lblCollaborate.getElement().setAttribute("title",GL1819);
+		lblCollaborate.getElement().setAttribute("alt",i18n.GL1819());
+		lblCollaborate.getElement().setAttribute("title",i18n.GL1819());
 		
-		lblFurther.setText(GL1820);
+		lblFurther.setText(i18n.GL1820());
 		lblFurther.getElement().setId("lblFurther");
-		lblFurther.getElement().setAttribute("alt",GL1820);
-		lblFurther.getElement().setAttribute("title",GL1820);
+		lblFurther.getElement().setAttribute("alt",i18n.GL1820());
+		lblFurther.getElement().setAttribute("title",i18n.GL1820());
 		
-		lblAssess.setText(GL1821);
+		lblAssess.setText(i18n.GL1821());
 		lblAssess.getElement().setId("lblAssess");
-		lblAssess.getElement().setAttribute("alt",GL1821);
-		lblAssess.getElement().setAttribute("title",GL1821);
+		lblAssess.getElement().setAttribute("alt",i18n.GL1821());
+		lblAssess.getElement().setAttribute("title",i18n.GL1821());
 		
-		lblAddQuestion.setText(GL1822);
+		lblAddQuestion.setText(i18n.GL1822());
 		lblAddQuestion.getElement().setId("lblAddQuestion");
-		lblAddQuestion.getElement().setAttribute("alt",GL1822);
-		lblAddQuestion.getElement().setAttribute("title",GL1822);
+		lblAddQuestion.getElement().setAttribute("alt",i18n.GL1822());
+		lblAddQuestion.getElement().setAttribute("title",i18n.GL1822());
 		
-		lblGuideWith.setText(GL1823);
+		lblGuideWith.setText(i18n.GL1823());
 		lblGuideWith.getElement().setId("lblGuideWith");
-		lblGuideWith.getElement().setAttribute("alt",GL1823);
-		lblGuideWith.getElement().setAttribute("title",GL1823);
+		lblGuideWith.getElement().setAttribute("alt",i18n.GL1823());
+		lblGuideWith.getElement().setAttribute("title",i18n.GL1823());
 		
-		lblGuideNarration.setText(GL1824);
+		lblGuideNarration.setText(i18n.GL1824());
 		lblGuideNarration.getElement().setId("lblGuideNarration");
-		lblGuideNarration.getElement().setAttribute("alt",GL1824);
-		lblGuideNarration.getElement().setAttribute("title",GL1824);
+		lblGuideNarration.getElement().setAttribute("alt",i18n.GL1824());
+		lblGuideNarration.getElement().setAttribute("title",i18n.GL1824());
 		
-		lblCustomizeResource.setText(GL1825);
+		lblCustomizeResource.setText(i18n.GL1825());
 		lblCustomizeResource.getElement().setId("lblCustomizeResource");
-		lblCustomizeResource.getElement().setAttribute("alt",GL1825);
-		lblCustomizeResource.getElement().setAttribute("title",GL1825);
+		lblCustomizeResource.getElement().setAttribute("alt",i18n.GL1825());
+		lblCustomizeResource.getElement().setAttribute("title",i18n.GL1825());
 		
-		lblEditStart.setText(GL1826);
+		lblEditStart.setText(i18n.GL1826());
 		lblEditStart.getElement().setId("lblEditStart");
-		lblEditStart.getElement().setAttribute("alt",GL1826);
-		lblEditStart.getElement().setAttribute("title",GL1826);
+		lblEditStart.getElement().setAttribute("alt",i18n.GL1826());
+		lblEditStart.getElement().setAttribute("title",i18n.GL1826());
 		
-		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblOne.setText(i18n.GL_GRR_NUMERIC_ONE());
 		lblOne.getElement().setId("lblOne");
-		lblOne.getElement().setAttribute("alt",GL_GRR_NUMERIC_ONE);
-		lblOne.getElement().setAttribute("title",GL_GRR_NUMERIC_ONE);
+		lblOne.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_ONE());
+		lblOne.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_ONE());
 		
-		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblTwo.setText(i18n.GL_GRR_NUMERIC_TWO());
 		lblTwo.getElement().setId("lblTwo");
-		lblTwo.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWO);
-		lblTwo.getElement().setAttribute("title",GL_GRR_NUMERIC_TWO);
+		lblTwo.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_TWO());
+		lblTwo.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_TWO());
 		
-		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblThree.setText(i18n.GL_GRR_NUMERIC_THREE());
 		lblThree.getElement().setId("lblThree");
-		lblThree.getElement().setAttribute("alt",GL_GRR_NUMERIC_THREE);
-		lblThree.getElement().setAttribute("title",GL_GRR_NUMERIC_THREE);
+		lblThree.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_THREE());
+		lblThree.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_THREE());
 		
-		lblFour.setText(GL_GRR_NUMERIC_FOUR);
+		lblFour.setText(i18n.GL_GRR_NUMERIC_FOUR());
 		lblFour.getElement().setId("lblFour");
-		lblFour.getElement().setAttribute("alt",GL_GRR_NUMERIC_FOUR);
-		lblFour.getElement().setAttribute("title",GL_GRR_NUMERIC_FOUR);
+		lblFour.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_FOUR());
+		lblFour.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_FOUR());
 		
-		lblFive.setText(GL_GRR_NUMERIC_FIVE);
+		lblFive.setText(i18n.GL_GRR_NUMERIC_FIVE());
 		lblFive.getElement().setId("lblFive");
-		lblFive.getElement().setAttribute("alt",GL_GRR_NUMERIC_FIVE);
-		lblFive.getElement().setAttribute("title",GL_GRR_NUMERIC_FIVE);
+		lblFive.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_FIVE());
+		lblFive.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_FIVE());
 		
-		htmlWalkSampleCollection.setHTML(GL1830);
+		htmlWalkSampleCollection.setHTML(i18n.GL1830());
 		htmlWalkSampleCollection.getElement().setId("htmlWalkSampleCollection");
-		htmlWalkSampleCollection.getElement().setAttribute("alt",GL1830);
-		htmlWalkSampleCollection.getElement().setAttribute("title",GL1830);
+		htmlWalkSampleCollection.getElement().setAttribute("alt",i18n.GL1830());
+		htmlWalkSampleCollection.getElement().setAttribute("title",i18n.GL1830());
 		
 		setVisibility();
 	}

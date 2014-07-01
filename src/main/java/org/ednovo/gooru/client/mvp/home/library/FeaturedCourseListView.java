@@ -113,11 +113,21 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 	 *
 	 */
 	private void setData(CourseDo courseDo) {
+		
+		featuredCourse.getElement().setId("epnlFeaturedCourse");
+		contributorImage.getElement().setId("imgContributorImage");
+		courseAuthor.getElement().setId("lblCourseAuthor");
+		
 		courseTitle.setText(courseDo.getLabel());
+		courseTitle.getElement().setId("lblCourseTitle");
+		courseTitle.getElement().setAttribute("alt",courseDo.getLabel());
+		courseTitle.getElement().setAttribute("title",courseDo.getLabel());
+	
 		featuredCourseImage.setUrl(StringUtil.formThumbnailName(courseDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
 		featuredCourseImage.setWidth("100px");
 		featuredCourseImage.setHeight("75px");
-
+		featuredCourseImage.getElement().setId("imgFeaturedCourseImage");
+		
 		featuredCourseImage.addErrorHandler(new ErrorHandler() {
 			@Override
 			public void onError(ErrorEvent event) {
@@ -151,8 +161,12 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 				
 				if (courseDo.getUser().size()>1){
 					courseAuthor.setText(authorName +" "+GL_GRR_AND+" "+GL1117);
+					courseAuthor.getElement().setAttribute("alt",authorName +" "+GL_GRR_AND+" "+GL1117);
+					courseAuthor.getElement().setAttribute("title",authorName +" "+GL_GRR_AND+" "+GL1117);
 				}else{
 					courseAuthor.setText(authorName);
+					courseAuthor.getElement().setAttribute("alt",authorName );
+					courseAuthor.getElement().setAttribute("title",authorName);
 				}
 				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getUser().get(j).getGooruUId()+PNG;
 			}else{
@@ -167,6 +181,8 @@ public class FeaturedCourseListView extends Composite implements MessageProperti
 					}
 				}
 				courseAuthor.setText(authorName);
+				courseAuthor.getElement().setAttribute("alt",authorName );
+				courseAuthor.getElement().setAttribute("title",authorName);
 				contributorProfileImage =AppClientFactory.getLoggedInUser().getSettings().getProfileImageUrl() + courseDo.getCreator().getGooruUId()+PNG; 
 			}
 			contributorImage.setUrl(contributorProfileImage);			
