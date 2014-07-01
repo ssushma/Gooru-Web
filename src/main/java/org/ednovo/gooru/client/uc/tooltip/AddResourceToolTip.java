@@ -46,6 +46,9 @@ public class AddResourceToolTip extends Composite implements MessageProperties{
 	public AddResourceToolTip() {
 		initWidget(uiBinder.createAndBindUi(this));
 		collectionLimit.getElement().setInnerHTML(GL1059);
+		collectionLimit.getElement().setId("pnlCollectionLimit");
+		collectionLimit.getElement().setAttribute("alt", GL1059);
+		collectionLimit.getElement().setAttribute("title", GL1059);
 	}
 
 }

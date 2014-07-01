@@ -94,7 +94,7 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 
 	@UiField HTMLEventPanel lblPartnerLibrary, partnerLibContainer, lblDistrictLibrary, districtLibContainer;
 	
-	@UiField HTMLPanel dropdownImg;
+	@UiField HTMLPanel dropdownImg,tooltipPanel,dropdownImgLib;
 	
 //	@UiField LibraryStyleBundle libraryStyleUc;
 	/**
@@ -110,18 +110,36 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	 */
 	public DiscoverToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
+		panelCode.getElement().setId("pnlPanelCode");
 		lblDistrictLibrary.getElement().setInnerHTML(GL0515);
+		lblDistrictLibrary.getElement().setId("epnlLblDistrictLibrary");
+		lblDistrictLibrary.getElement().setAttribute("alt", GL0515);
+		lblDistrictLibrary.getElement().setAttribute("title", GL0515);
+		
+		dropdownImg.getElement().setId("pnlDropdownImg");
+		dropdownImgLib.getElement().setId("pnlDropdownImgLib");
+		
 		lblGooruLibrary.setText(GL0516);
+		lblGooruLibrary.getElement().setId("lblLblGooruLibrary");
+		lblGooruLibrary.getElement().setAttribute("alt", GL0516);
+		lblGooruLibrary.getElement().setAttribute("title", GL0516);
 		
 		lblPartnerLibrary.add(new Label(GL1751));
+		lblPartnerLibrary.getElement().setId("epnlLblPartnerLibrary");
+		
 		partnerLibContainer.getElement().addClassName("setVisible");
+		partnerLibContainer.getElement().setId("epnlPartnerLibContainer");
+
 		districtLibContainer.getElement().addClassName("setVisible");
+		districtLibContainer.getElement().setId("epnlDistrictLibContainer");
 		
 		lblPartnerLibrary.addMouseOverHandler(new OpenPartnerMenu());
 		partnerLibContainer.addMouseOutHandler(new ClosePartnerMenu());
 		
 		lblGooruLibrary.addMouseOverHandler(new CloseOtherMenus());
 		lblDistrictLibrary.addMouseOverHandler(new OpenDistrictMenus());
+		
+		tooltipPanel.getElement().setId("pnlTooltipPanel");
 		
 		final HashMap<String,String> publicPartnerList = getPublicLibraryPartners();
 		
