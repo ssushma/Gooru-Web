@@ -60,6 +60,11 @@ public class GlobalToolTip extends Composite implements MessageProperties {
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(GL1060);
+		confirmationPanel.getElement().setId("epnlConfirmationPanel");
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", GL1060);
+		desLbl.getElement().setAttribute("title", GL1060);
+		panelArrow.getElement().setId("pnlPanelArrow");
 		setPanelPosition();
 	}
 	
@@ -67,17 +72,29 @@ public class GlobalToolTip extends Composite implements MessageProperties {
     public GlobalToolTip(String description){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(description);
+		confirmationPanel.getElement().setId("epnlConfirmationPanel");
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", description);
+		desLbl.getElement().setAttribute("title", description);
+		panelArrow.getElement().setId("pnlPanelArrow");
 		setPanelPosition();
 	}
     public GlobalToolTip(String description, boolean isSharePopup){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(description);
-
+		confirmationPanel.getElement().setId("epnlConfirmationPanel");
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", description);
+		desLbl.getElement().setAttribute("title", description);
 		setArrowLeft();
 	}
     public GlobalToolTip(String description, String value){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
 		desLbl.setText(description);
+		confirmationPanel.getElement().setId("epnlConfirmationPanel");
+		desLbl.getElement().setId("lblDesLbl");
+		desLbl.getElement().setAttribute("alt", description);
+		desLbl.getElement().setAttribute("title", description);
 		setArrowDirections();
 	}
     public void setPanelPosition(){

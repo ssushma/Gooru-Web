@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AttachToDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -64,10 +65,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> implements IsClassCodeView,MessageProperties {
+public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> implements IsClassCodeView {
 	
 	private static ClassCodeViewUiBinder uiBinder = GWT
 			.create(ClassCodeViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField Button btnCreateClass,btnEnter, disabledBtn;
 	
@@ -139,113 +142,113 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		
 		setCreateClassVisibility();
 		
-		btnCreateClass.setText(GL1771);
+		btnCreateClass.setText(i18n.GL1771());
 		btnCreateClass.getElement().setId("btnCreateClass");
-		btnCreateClass.getElement().setAttribute("alt",GL1771);
-		btnCreateClass.getElement().setAttribute("title",GL1771);
+		btnCreateClass.getElement().setAttribute("alt",i18n.GL1771());
+		btnCreateClass.getElement().setAttribute("title",i18n.GL1771());
 		
-		btnEnter.setText(GL0213);
+		btnEnter.setText(i18n.GL0213());
 		btnEnter.getElement().setId("btnEnter");
-		btnEnter.getElement().setAttribute("alt",GL0213);
-		btnEnter.getElement().setAttribute("title",GL0213);
+		btnEnter.getElement().setAttribute("alt",i18n.GL0213());
+		btnEnter.getElement().setAttribute("title",i18n.GL0213());
 		
-		disabledBtn.setText(GL0213);
+		disabledBtn.setText(i18n.GL0213());
 		disabledBtn.getElement().setId("btnDisable");
-		disabledBtn.getElement().setAttribute("alt",GL0213);
-		disabledBtn.getElement().setAttribute("title",GL0213);
+		disabledBtn.getElement().setAttribute("alt",i18n.GL0213());
+		disabledBtn.getElement().setAttribute("title",i18n.GL0213());
 		
-		lblCreateAClass.setText(GL1771);
+		lblCreateAClass.setText(i18n.GL1771());
 		lblCreateAClass.getElement().setId("lblCreateAClass");
-		lblCreateAClass.getElement().setAttribute("alt",GL1771);
-		lblCreateAClass.getElement().setAttribute("title",GL1771);
+		lblCreateAClass.getElement().setAttribute("alt",i18n.GL1771());
+		lblCreateAClass.getElement().setAttribute("title",i18n.GL1771());
 		
-		lblEasyToOrganize.setText(GL1772);
+		lblEasyToOrganize.setText(i18n.GL1772());
 		lblEasyToOrganize.getElement().setId("lblEasyToOrganize");
-		lblEasyToOrganize.getElement().setAttribute("alt",GL1772);
-		lblEasyToOrganize.getElement().setAttribute("title",GL1772);
+		lblEasyToOrganize.getElement().setAttribute("alt",i18n.GL1772());
+		lblEasyToOrganize.getElement().setAttribute("title",i18n.GL1772());
 		
-		lblAccessAClass.setText(GL1773);
+		lblAccessAClass.setText(i18n.GL1773());
 		lblAccessAClass.getElement().setId("lblAccessAClass");
-		lblAccessAClass.getElement().setAttribute("alt",GL1773);
-		lblAccessAClass.getElement().setAttribute("title",GL1773);
+		lblAccessAClass.getElement().setAttribute("alt",i18n.GL1773());
+		lblAccessAClass.getElement().setAttribute("title",i18n.GL1773());
 		
-		lblEasyAccessForStudents.setText(GL1774);
+		lblEasyAccessForStudents.setText(i18n.GL1774());
 		lblEasyAccessForStudents.getElement().setId("lblEasyAccessForStudents");
-		lblEasyAccessForStudents.getElement().setAttribute("alt",GL1774);
-		lblEasyAccessForStudents.getElement().setAttribute("title",GL1774);
+		lblEasyAccessForStudents.getElement().setAttribute("alt",i18n.GL1774());
+		lblEasyAccessForStudents.getElement().setAttribute("title",i18n.GL1774());
 		
-		lblUniqueClassCode.setText(GL1775);
+		lblUniqueClassCode.setText(i18n.GL1775());
 		lblUniqueClassCode.getElement().setId("lblUniqueClassCode");
-		lblUniqueClassCode.getElement().setAttribute("alt",GL1775);
-		lblUniqueClassCode.getElement().setAttribute("title",GL1775);
+		lblUniqueClassCode.getElement().setAttribute("alt",i18n.GL1775());
+		lblUniqueClassCode.getElement().setAttribute("title",i18n.GL1775());
 		
-		lblOne.setText(GL_GRR_NUMERIC_ONE);
+		lblOne.setText(i18n.GL_GRR_NUMERIC_ONE());
 		lblOne.getElement().setId("lblOne");
-		lblOne.getElement().setAttribute("alt",GL_GRR_NUMERIC_ONE);
-		lblOne.getElement().setAttribute("title",GL_GRR_NUMERIC_ONE);
+		lblOne.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_ONE());
+		lblOne.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_ONE());
 		
-		lblTwo.setText(GL_GRR_NUMERIC_TWO);
+		lblTwo.setText(i18n.GL_GRR_NUMERIC_TWO());
 		lblTwo.getElement().setId("lblTwo");
-		lblTwo.getElement().setAttribute("alt",GL_GRR_NUMERIC_TWO);
-		lblTwo.getElement().setAttribute("title",GL_GRR_NUMERIC_TWO);
+		lblTwo.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_TWO());
+		lblTwo.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_TWO());
 		
-		lblThree.setText(GL_GRR_NUMERIC_THREE);
+		lblThree.setText(i18n.GL_GRR_NUMERIC_THREE());
 		lblThree.getElement().setId("lblThree");
-		lblThree.getElement().setAttribute("alt",GL_GRR_NUMERIC_THREE);
-		lblThree.getElement().setAttribute("title",GL_GRR_NUMERIC_THREE);
+		lblThree.getElement().setAttribute("alt",i18n.GL_GRR_NUMERIC_THREE());
+		lblThree.getElement().setAttribute("title",i18n.GL_GRR_NUMERIC_THREE());
 		
-		lblManageAssignments.setText(GL1776);
+		lblManageAssignments.setText(i18n.GL1776());
 		lblManageAssignments.getElement().setId("lblManageAssignments");
-		lblManageAssignments.getElement().setAttribute("alt",GL1776);
-		lblManageAssignments.getElement().setAttribute("title",GL1776);
+		lblManageAssignments.getElement().setAttribute("alt",i18n.GL1776());
+		lblManageAssignments.getElement().setAttribute("title",i18n.GL1776());
 		
-		lblClearDue.setText(GL1777);
+		lblClearDue.setText(i18n.GL1777());
 		lblClearDue.getElement().setId("lblClearDue");
-		lblClearDue.getElement().setAttribute("alt",GL1777);
-		lblClearDue.getElement().setAttribute("title",GL1777);
+		lblClearDue.getElement().setAttribute("alt",i18n.GL1777());
+		lblClearDue.getElement().setAttribute("title",i18n.GL1777());
 		
-		lblMonitorStudentProgress.setText(GL1778);
+		lblMonitorStudentProgress.setText(i18n.GL1778());
 		lblMonitorStudentProgress.getElement().setId("lblMonitorStudentProgress");
-		lblMonitorStudentProgress.getElement().setAttribute("alt",GL1778);
-		lblMonitorStudentProgress.getElement().setAttribute("title",GL1778);
+		lblMonitorStudentProgress.getElement().setAttribute("alt",i18n.GL1778());
+		lblMonitorStudentProgress.getElement().setAttribute("title",i18n.GL1778());
 		
-		lblMonitorDesc.setText(GL1779);
+		lblMonitorDesc.setText(i18n.GL1779());
 		lblMonitorDesc.getElement().setId("lblMonitorDesc");
-		lblMonitorDesc.getElement().setAttribute("alt",GL1779);
-		lblMonitorDesc.getElement().setAttribute("title",GL1779);
+		lblMonitorDesc.getElement().setAttribute("alt",i18n.GL1779());
+		lblMonitorDesc.getElement().setAttribute("title",i18n.GL1779());
 		
-		ancSampleReport.setText(GL1780);
+		ancSampleReport.setText(i18n.GL1780());
 		ancSampleReport.getElement().setId("lnkSampleReport");
-		ancSampleReport.getElement().setAttribute("alt",GL1780);
-		ancSampleReport.getElement().setAttribute("title",GL1780);
+		ancSampleReport.getElement().setAttribute("alt",i18n.GL1780());
+		ancSampleReport.getElement().setAttribute("title",i18n.GL1780());
 		ancSampleReport.setVisible(false);
 		
-		lblFavoriteClasses.setText(GL1781);
+		lblFavoriteClasses.setText(i18n.GL1781());
 		lblFavoriteClasses.getElement().setId("lblFavoriteClasses");
-		lblFavoriteClasses.getElement().setAttribute("alt",GL1781);
-		lblFavoriteClasses.getElement().setAttribute("title",GL1781);
+		lblFavoriteClasses.getElement().setAttribute("alt",i18n.GL1781());
+		lblFavoriteClasses.getElement().setAttribute("title",i18n.GL1781());
 		
-		lblClassOne.setText(GL1782);
+		lblClassOne.setText(i18n.GL1782());
 		lblClassOne.getElement().setId("lblClassOne");
-		lblClassOne.getElement().setAttribute("alt",GL1782);
-		lblClassOne.getElement().setAttribute("title",GL1782);
+		lblClassOne.getElement().setAttribute("alt",i18n.GL1782());
+		lblClassOne.getElement().setAttribute("title",i18n.GL1782());
 		
-		lblClassTwo.setText(GL1783);
+		lblClassTwo.setText(i18n.GL1783());
 		lblClassTwo.getElement().setId("lblClassTwo");
-		lblClassTwo.getElement().setAttribute("alt",GL1783);
-		lblClassTwo.getElement().setAttribute("title",GL1783);
+		lblClassTwo.getElement().setAttribute("alt",i18n.GL1783());
+		lblClassTwo.getElement().setAttribute("title",i18n.GL1783());
 		
-		lblClassThree.setText(GL1784);	
+		lblClassThree.setText(i18n.GL1784());	
 		lblClassThree.getElement().setId("lblClassThree");
-		lblClassThree.getElement().setAttribute("alt",GL1784);
-		lblClassThree.getElement().setAttribute("title",GL1784);
+		lblClassThree.getElement().setAttribute("alt",i18n.GL1784());
+		lblClassThree.getElement().setAttribute("title",i18n.GL1784());
 		
-		lblClassFour.setText( GL1784_1);
+		lblClassFour.setText( i18n.GL1784_1());
 		lblClassFour.getElement().setId("lblClassFour");
-		lblClassFour.getElement().setAttribute("alt",GL1784_1);
-		lblClassFour.getElement().setAttribute("title",GL1784_1);
+		lblClassFour.getElement().setAttribute("alt",i18n.GL1784_1());
+		lblClassFour.getElement().setAttribute("title",i18n.GL1784_1());
 		
-		txtCode.setPlaceholder(GL1785);
+		txtCode.setPlaceholder(i18n.GL1785());
 		txtCode.getElement().setId("txtCode");
 		panelClassOne.getElement().setId("pnlClassOne");
 		panelClassTwo.getElement().setId("pnlClassTwo");
@@ -339,7 +342,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 													.setClasspageId(classpageId);
 
 											TaskDo taskDo = new TaskDo();
-											taskDo.setTitle(GL0121);
+											taskDo.setTitle(i18n.GL0121());
 											taskDo.setTypeName("assignment");
 											assignmentDo.setTask(taskDo);
 
@@ -379,7 +382,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 		public void onClick(ClickEvent event) {
 			setEnterLblVisbility(true);
 			if (txtCode.getText().trim().equalsIgnoreCase("") || txtCode.getText().trim() == null){
-				alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0243));
+				alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
 				ClickHandler alertHandler=new ClickHandler() {
 
 					@Override
@@ -415,7 +418,7 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 					 if(result.getGooruOid()==null){
 						 Window.enableScrolling(false);
 						 AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
-						alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0244));
+						alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0244()));
 						ClickHandler alertHandler=new ClickHandler() {
 
 							@Override
@@ -509,9 +512,9 @@ public class ClassCodeView extends BaseViewWithHandlers<ClassCodeUiHandlers> imp
 						else 
 						{
 							       if(AppClientFactory.isAnonymous()){
-							    	   new SentEmailSuccessVc(GL1177, GL1535);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535());
 							       }else{
-							    	   new SentEmailSuccessVc(GL1177, GL1535_1);
+							    	   new SentEmailSuccessVc(i18n.GL1177(), i18n.GL1535_1());
 							       }
 						}
 						
