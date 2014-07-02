@@ -28,7 +28,7 @@
 package org.ednovo.gooru.client.mvp.library.sausd;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class SausdBannerView extends Composite implements MessageProperties{
+public class SausdBannerView extends Composite {
 
 	@UiField HTMLPanel partnerLogo, landingBannerInner;
 	@UiField Label headerTag, subHeaderTag, info1, info2, info3, info4, title1, title2;
@@ -61,6 +61,8 @@ public class SausdBannerView extends Composite implements MessageProperties{
 	
 	private static SausdBannerViewUiBinder uiBinder = GWT
 			.create(SausdBannerViewUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SausdBannerViewUiBinder extends
 			UiBinder<Widget, SausdBannerView> {
@@ -78,7 +80,7 @@ public class SausdBannerView extends Composite implements MessageProperties{
 	
 	private void getLandingBannerText(String placeToken) {
 		if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
-			setLandingBannerText(GL1902,GL1903,GL1977,GL1978,GL1979,GL1980);
+			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1977(),i18n.GL1978(),i18n.GL1979(),i18n.GL1980());
 			partnerLogo.setStyleName(sausdStyleUc.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
 		}
@@ -87,8 +89,8 @@ public class SausdBannerView extends Composite implements MessageProperties{
 	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String infoText1, String infoText2, String infoText3, String infoText4) {
 			headerTag.setText(headerMsg);
 			subHeaderTag.setText(subHeaderMsg);
-			title1.setText(GL1981);
-			title2.setText(GL1982);
+			title1.setText(i18n.GL1981());
+			title2.setText(i18n.GL1982());
 			info1.setText(infoText1);
 			info2.setText(infoText2);
 			info3.setText(infoText3);

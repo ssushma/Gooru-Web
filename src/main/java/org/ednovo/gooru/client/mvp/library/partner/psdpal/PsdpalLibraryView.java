@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.library.partner.psdpal;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -37,7 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class PsdpalLibraryView extends BaseViewWithHandlers<PsdpalLibraryUiHandlers> implements IsPsdpalView, MessageProperties {
+public class PsdpalLibraryView extends BaseViewWithHandlers<PsdpalLibraryUiHandlers> implements IsPsdpalView {
 
 	@UiField SimplePanel partnerPanel;
 	
