@@ -163,7 +163,7 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryCoursesList(subjectCode, "public", new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryCoursesList(subjectCode, "public", "0", new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
@@ -174,7 +174,6 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 
 	public void getCourse(final String subjectCode, final String subjectName, final ProfileLibraryDo profileLibraryDo) {
 		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
-
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);

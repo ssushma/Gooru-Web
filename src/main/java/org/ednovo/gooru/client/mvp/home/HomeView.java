@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.home.register.RegisterVc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -42,7 +43,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView, MessageProperties {
+public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements IsHomeView {
 
 	@UiField HTMLPanel gooruPanel;
 	
@@ -52,6 +53,8 @@ public class HomeView extends BaseViewWithHandlers<HomeUiHandlers> implements Is
 
 	interface HomeViewUiBinder extends UiBinder<Widget, HomeView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor

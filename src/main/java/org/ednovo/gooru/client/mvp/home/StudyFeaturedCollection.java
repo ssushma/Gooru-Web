@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -40,7 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class StudyFeaturedCollection extends Composite implements MessageProperties {
+public class StudyFeaturedCollection extends Composite{
 
 	@UiField
 	FlowPanel contentImageFloPanel;
@@ -60,6 +61,9 @@ public class StudyFeaturedCollection extends Composite implements MessagePropert
 	interface StudyFeaturedCollectionUiBinder extends
 			UiBinder<Widget, StudyFeaturedCollection> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+
 
 	/**
 	 * Class constructor
@@ -67,7 +71,14 @@ public class StudyFeaturedCollection extends Composite implements MessagePropert
 	public StudyFeaturedCollection() {
 		initWidget(uiBinder.createAndBindUi(this));
 		featuredStartStudyFloPanel.setVisible(false);
-		studyFeaturedCollectionButton.setText(GL0182);
+		studyFeaturedCollectionButton.setText(i18n.GL0182());
+		studyFeaturedCollectionButton.getElement().setId("lblStudyFeaturedCollectionButton");
+		studyFeaturedCollectionButton.getElement().setAttribute("alt",i18n.GL0182());
+		studyFeaturedCollectionButton.getElement().setAttribute("title",i18n.GL0182());
+		
+		contentImageFloPanel.getElement().setId("fpnlContentImageFloPanel");
+		contentUrlImg.getElement().setId("imgContentUrl");
+		featuredStartStudyFloPanel.getElement().setId("fpnlFeaturedStartStudyFloPanel");
 	}
 
 	/**

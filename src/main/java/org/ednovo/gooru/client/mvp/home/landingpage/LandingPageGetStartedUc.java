@@ -60,14 +60,48 @@ public class LandingPageGetStartedUc extends Composite implements MessagePropert
 	public LandingPageGetStartedUc() {
 		initWidget(uiBinder.createAndBindUi(this));
 		howToStartText.setText(GL1333);
+		howToStartText.getElement().setId("lblHowToStartText");
+		howToStartText.getElement().setAttribute("alt",GL1333);
+		howToStartText.getElement().setAttribute("title",GL1333);
+		
 		backto.setText(GL1260);
-		searchLbl.setText(GL0176);
-		searchDescLbl.getElement().setInnerText(GL1334);
-		createText.setText(GL1335);
-		startCollectionLbl.getElement().setInnerText(GL1336);
-		signUpLbl.setText(GL0186);
-		shareLbl.getElement().setInnerText(GL1337+GL_SPL_EXCLAMATION);
 		backto.getElement().setId("lnkBackTo");
+		backto.getElement().setAttribute("alt",GL1260);
+		backto.getElement().setAttribute("title",GL1260);
+		
+		searchLbl.setText(GL0176);
+		searchLbl.getElement().setId("lblSearchLbl");
+		searchLbl.getElement().setAttribute("alt",GL0176);
+		searchLbl.getElement().setAttribute("title",GL0176);
+		
+		searchDescLbl.getElement().setInnerText(GL1334);
+		searchDescLbl.getElement().setId("pnlSearchDescLbl");
+		searchDescLbl.getElement().setAttribute("alt",GL1334);
+		searchDescLbl.getElement().setAttribute("title",GL1334);
+		
+		createText.setText(GL1335);
+		createText.getElement().setId("lblCreateText");
+		createText.getElement().setAttribute("alt",GL1335);
+		createText.getElement().setAttribute("title",GL1335);
+		
+		startCollectionLbl.getElement().setInnerText(GL1336);
+		startCollectionLbl.getElement().setId("pnlStartCollectionLbl");
+		startCollectionLbl.getElement().setAttribute("alt",GL1336);
+		startCollectionLbl.getElement().setAttribute("title",GL1336);
+		
+		signUpLbl.setText(GL0186);
+		signUpLbl.getElement().setId("lblSignUpLbl");
+		signUpLbl.getElement().setAttribute("alt",GL0186);
+		signUpLbl.getElement().setAttribute("title",GL0186);
+		
+		shareLbl.getElement().setInnerText(GL1337+GL_SPL_EXCLAMATION);
+		shareLbl.getElement().setId("pnlShareLbl");
+		shareLbl.getElement().setAttribute("alt",GL1337);
+		shareLbl.getElement().setAttribute("title",GL1337);
+		
+		discoverLink.getElement().setId("epnlDiscoverLink");
+		organizeLink.getElement().setId("epnlOrganizeLink");
+		signUpLink.getElement().setId("epnlSignUpLink");
 	}
 
 	@UiHandler("signUpLink")

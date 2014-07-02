@@ -108,7 +108,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 	
 	@UiField Label mainTitleLbl,noAssignmentMsg,lblUserName,lblAssignmentProgress;
 	
-	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath;
+	@UiField HTMLPanel contentpanel,panelProgressContainer,panelAssignmentPath,assignmentOrderPanel;
 	@UiField HTMLEventPanel panelPrevious,panelNext;
 	
 	@UiField
@@ -208,7 +208,7 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		lblAssignmentProgress.getElement().setId("lblAssignmentProgress");
 		lblAssignmentProgress.getElement().setAttribute("alt",GL1971);
 		lblAssignmentProgress.getElement().setAttribute("title",GL1971);
-		
+		assignmentOrderPanel.getElement().setInnerHTML(GL2006);
 		dropdownPlaceHolder.addClickHandler(new SortDropDownEvent());
 		
 		lblNext.addClickHandler(new ClickHandler() {
@@ -1214,68 +1214,243 @@ public class StudentAssignmentView extends BaseViewWithHandlers<StudentAssignmen
 		
 	}
 	
-	public void openJoinClassEvent(){
+	
+	public void openJoinClassEvent()
+	{
+		String classpageid=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		AppClientFactory.getInjector().getClasspageService().getClasspage(classpageid, new SimpleAsyncCallback<ClasspageDo>() {
+			@Override
+			public void onSuccess(ClasspageDo classpageDoService) {
+				classpageDo = classpageDoService;
+				if(classpageDo.getSharing().equalsIgnoreCase("public"))
+				{
+					if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+					{
+						btnJoinClass.setVisible(false);
+						userImage.setVisible(true);
+						lblWebHelp.setVisible(false);
+						btnWithDraw.setVisible(false);
+						LblMember.setVisible(true);
+						userImage.setVisible(true);
+						LblMember.setText(GL1551);
+						mainContainer.setVisible(true);
+					}
+					else if(classpageDo.getStatus().equalsIgnoreCase("active"))
+					{
+						btnJoinClass.setVisible(false);
+						userImage.setVisible(true);
+						lblWebHelp.setVisible(false);
+						btnWithDraw.setVisible(true);
+						LblMember.setVisible(true);
+						userImage.setVisible(true);
+						LblMember.setText(GL1549);
+						mainContainer.setVisible(true);
+					}
+					else 
+					{
 
-		if(classpageDo.getSharing().equalsIgnoreCase("public"))
-		{
-		if((!classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()) && !classpageDo.getStatus().equalsIgnoreCase("active") && classpageDo.getStatus().equalsIgnoreCase("pending")))
-		{
-		
-		joinPopupButtonClick =  new StudentJoinClassPopup(classpageDo) {
-		
-		@Override
-		void joinIntoClass() {
-				String emailId=AppClientFactory.getLoggedInUser().getEmailId();
-				AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+						
+						btnJoinClass.setVisible(true);
+						userImage.setVisible(false);
+						lblWebHelp.setVisible(true);
+						btnWithDraw.setVisible(false);
+						LblMember.setVisible(false);
+						userImage.setVisible(false);
+						mainContainer.setVisible(true);
+						
+			
+						
+						if(!AppClientFactory.isAnonymous())
+						{
 
-					@Override
-					public void onSuccess(ClasspageDo result) {
-						joinPopupButtonClick.hide();
-						SuccessPopupViewVc success=new SuccessPopupViewVc(){
+						if(!isJoinPopupPublic){
+							isJoinPopupPublic=true;
+							joinPopupPublic =  new StudentJoinClassPopup(classpageDo) {
+							
+							@Override
+							void joinIntoClass() {
+									String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+									AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+
+										@Override
+										public void onSuccess(ClasspageDo result) {
+											joinPopupPublic.hide();
+											mainContainer.setVisible(true);
+											SuccessPopupViewVc success=new SuccessPopupViewVc(){
+
+												@Override
+												public void onClickPositiveButton(
+														ClickEvent event) {
+													Window.enableScrolling(true);
+													btnJoinClass.setVisible(false);
+													userImage.setVisible(true);
+													lblWebHelp.setVisible(false);
+													btnWithDraw.setVisible(true);
+													LblMember.setVisible(true);
+													LblMember.setText(GL1549);
+													mainContainer.setVisible(true);
+													this.hide();
+													isJoinPopupPublic=false;
+													
+												}
+												
+											};
+											success.setHeight("248px");
+		                                    success.setWidth("450px");
+		                                    success.setPopupTitle(GL1553);
+		                                    success.setDescText(GL1554+classpageDo.getTitle()+GL_SPL_EXCLAMATION+'\n'+GL1552);
+		                                    success.setPositiveButtonText(GL0190);
+		                                    success.center();
+		                                    success.show();
+								
+										}
+									});
+							}
 
 							@Override
-							public void onClickPositiveButton(
-									ClickEvent event) {
+							public void closePoup() {
+								hide();
 								Window.enableScrolling(true);
-								btnJoinClass.setVisible(false);
-								userImage.setVisible(true);
-								lblWebHelp.setVisible(false);
-								btnWithDraw.setVisible(true);
-								LblMember.setVisible(true);
-								LblMember.setText(GL1549);
-								mainContainer.setVisible(true);
-								this.hide();
-								
+						
 							}
-							
 						};
-						success.setHeight("248px");
-                        success.setWidth("450px");
-                        success.setPopupTitle(GL1553);
-                        success.setDescText(GL1554+classpageDo.getTitle()+GL_SPL_EXCLAMATION+'\n'+GL1552);
-                        success.setPositiveButtonText(GL0190);
-                        success.center();
-                        success.show();
+						}
+						int windowHeight=Window.getClientHeight()/2; //I subtract 10 from the client height so the window isn't maximized.
+						int windowWidth=Window.getClientWidth()/2;
+						joinPopupPublic.setPopupPosition(windowWidth-253, windowHeight-70);
+						joinPopupPublic.setPixelSize(506, 261);		
+						//joinPopup.center();
+						joinPopupPublic.show();
 						
 					}
-				});
-		}
 
-		@Override
-		public void closePoup() {
-			hide();
-			Window.enableScrolling(true);
-			
-		}
-	};
-	
-	joinPopupButtonClick.setPopupPosition(btnJoinClass.getElement().getAbsoluteLeft() - (509), btnJoinClass.getElement().getAbsoluteTop());
-	joinPopupButtonClick.setPixelSize(506, 261);		
-	//joinPopup.center();
-	joinPopupButtonClick.show();
-	
-	}
-	}
+						
+					}	
+				}
+				else
+				{
+					System.out.println("iam here always::"+classpageDo.getStatus());
+					if(AppClientFactory.isAnonymous()){
+
+
+						mainContainer.setVisible(false);
+						LoginPopupUc loginPopupUc=new LoginPopupUc();
+						
+					}else{
+					if(classpageDo.getCreatorId().equalsIgnoreCase(AppClientFactory.getGooruUid()))
+					{
+						btnJoinClass.setVisible(false);
+						userImage.setVisible(true);
+						lblWebHelp.setVisible(false);
+						btnWithDraw.setVisible(false);
+						LblMember.setVisible(true);
+						LblMember.setText(GL1551);
+						userImage.setVisible(true);
+						mainContainer.setVisible(true);
+					}
+					else if(classpageDo.getStatus().equalsIgnoreCase("active")){
+							btnJoinClass.setVisible(false);
+							userImage.setVisible(true);
+							lblWebHelp.setVisible(false);
+							btnWithDraw.setVisible(false);
+							LblMember.setVisible(true);
+							userImage.setVisible(true);
+							mainContainer.setVisible(true);
+						}
+					else if(classpageDo.getStatus().equalsIgnoreCase("pending")) 
+					{
+							btnJoinClass.setVisible(true);
+							userImage.setVisible(false);
+							lblWebHelp.setVisible(true);
+							btnWithDraw.setVisible(false);
+							LblMember.setVisible(false);
+							userImage.setVisible(false);
+							mainContainer.setVisible(false);
+							System.out.println("in pending::"+isJoinPopupPrivateStatic);
+
+								if(!isJoinPopupPrivateStatic){
+									isJoinPopupPrivateStatic=true;
+									joinPopupPrivate =  new StudentJoinClassPopup(classpageDo) {
+									
+									@Override
+									void joinIntoClass() {
+											String emailId=AppClientFactory.getLoggedInUser().getEmailId();
+											AppClientFactory.getInjector().getClasspageService().studentJoinIntoClass(classpageDo.getClasspageCode(),emailId, new SimpleAsyncCallback<ClasspageDo>() {
+
+												@Override
+												public void onSuccess(ClasspageDo result) {
+													joinPopupPrivate.hide();
+													mainContainer.setVisible(true);
+													SuccessPopupViewVc success=new SuccessPopupViewVc(){
+
+														@Override
+														public void onClickPositiveButton(
+																ClickEvent event) {
+															Window.enableScrolling(true);
+															btnJoinClass.setVisible(false);
+															userImage.setVisible(true);
+															lblWebHelp.setVisible(false);
+															btnWithDraw.setVisible(false);
+															LblMember.setVisible(true);
+															LblMember.setText(GL1549);
+															mainContainer.setVisible(true);
+															this.hide();
+															isJoinPopupPrivateStatic=false;
+															
+														}
+														
+													};
+													success.setHeight("248px");
+		                                            success.setWidth("450px");
+		                                            success.setPopupTitle(GL1553);
+		                                            success.setDescText(GL1554+classpageDo.getTitle()+GL_SPL_EXCLAMATION+'\n'+GL1552);
+		                                            success.setPositiveButtonText(GL0190);
+		                                            success.center();
+		                                            success.show();
+										
+												}
+											});
+									}
+
+									@Override
+									public void closePoup() {
+										hide();
+										Window.enableScrolling(true);
+										AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
+									}
+								};
+								}
+								int windowHeight=Window.getClientHeight()/2; //I subtract 10 from the client height so the window isn't maximized.
+								int windowWidth=Window.getClientWidth()/2;
+								joinPopupPrivate.setPopupPosition(windowWidth-253, windowHeight-70);
+								joinPopupPrivate.setPixelSize(506, 261);		
+								//joinPopup.center();
+								joinPopupPrivate.show();
+							
+							
+						}
+						else 
+						{
+							try
+							{
+							mainContainer.setVisible(false);
+							}
+							catch(Exception ex)
+							{
+								
+							}
+						       if(AppClientFactory.isAnonymous()){
+						    	   new SentEmailSuccessVc(GL1177, GL1535);
+						       }else{
+						    	   new SentEmailSuccessVc(GL1177, GL1535_1);
+						       }
+						}
+					
+				}
+				}
+			}
+		});
+
 
 	}
 	

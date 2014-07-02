@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
@@ -63,7 +62,7 @@ public interface LibraryServiceAsync extends BaseServiceAsync {
 
 	void getLibraryWorkspace(String gooruUid, int limit,String sharingType, String collectionType, int offset, AsyncCallback<ProfileLibraryListDo> callback);
 	void getLibraryPaginationWorkspace(String parentId,String sharingType, int limit, AsyncCallback<ProfileLibraryListDo> callback);
-	void getLibraryCoursesList(String parentId,String sharingType, AsyncCallback<ProfileLibraryListDo> callback);
+	void getLibraryCoursesList(String parentId,String sharingType, String offset, AsyncCallback<ProfileLibraryListDo> callback);
 	
 	public void  getStandardLibraryMenuList(String subjectCode,String libraryName,AsyncCallback<ArrayList<StandardCourseDo>> callback);
 

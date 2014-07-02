@@ -27,6 +27,7 @@ package org.ednovo.gooru.client.mvp.home;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -36,6 +37,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -43,17 +45,22 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
+public abstract class WaitPopupVc extends AppPopUp{
 
 	@UiField Button cancelAnr,okButtonUc;
 
 	@UiField Label messageTextLabel,removingText;
+	
+	@UiField FlowPanel buttonContainer;
 
 	private static WaitPopupVcUiBinder uiBinder = GWT.create(WaitPopupVcUiBinder.class);
 
 	interface WaitPopupVcUiBinder extends UiBinder<Widget, WaitPopupVc> {
 	}
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+
+	
 	/**
 	 * Class constructor to set title and content text for pop up
 	 * 
@@ -68,12 +75,28 @@ public abstract class WaitPopupVc extends AppPopUp implements MessageProperties{
 		setStyleName("deleteResourcePopup");
 		//okButtonUc.setStyleName("overRideBlueButtonDelete");
 		messageTextLabel.setText(entityInfo);
-		cancelAnr.setText(GL0142);
-		okButtonUc.setText(GL0190);
-		okButtonUc.getElement().setId("btnOk");
+		messageTextLabel.getElement().setId("lblMessageTextLabel");
+		messageTextLabel.getElement().setAttribute("alt",entityInfo);
+		messageTextLabel.getElement().setAttribute("title",entityInfo);
+		
+		cancelAnr.setText(i18n.GL0142());
 		cancelAnr.getElement().setId("lnkCancel");
-		removingText.setText(GL1021);
+		cancelAnr.getElement().setAttribute("alt",i18n.GL0142());
+		cancelAnr.getElement().setAttribute("title",i18n.GL0142());
+		
+		okButtonUc.setText(i18n.GL0190());
+		okButtonUc.getElement().setId("btnOk");
+		okButtonUc.getElement().setAttribute("alt",i18n.GL0190());
+		okButtonUc.getElement().setAttribute("title",i18n.GL0190());
+		
+		removingText.setText(i18n.GL1021());
+		removingText.getElement().setId("lblRemovingText");
+		removingText.getElement().setAttribute("alt",i18n.GL1021());
+		removingText.getElement().setAttribute("title",i18n.GL1021());
 		removingText.setVisible(false);
+	
+		buttonContainer.getElement().setId("fpnlButtonContainer");
+		
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));

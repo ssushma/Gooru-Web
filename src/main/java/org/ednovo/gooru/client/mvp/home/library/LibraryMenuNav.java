@@ -135,19 +135,64 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		}
 		partnerPanel.setVisible(false);
 		featuredCourses.setText(GL1009);
+		featuredCourses.getElement().setId("lblFeaturedCourses");
+		featuredCourses.getElement().setAttribute("alt",GL1009);
+		featuredCourses.getElement().setAttribute("title",GL1009);
+		
 		scienceText.setText(GL1000);
+		scienceText.getElement().setId("lblScienceText");
+		scienceText.getElement().setAttribute("alt",GL1000);
+		scienceText.getElement().setAttribute("title",GL1000);
+		
 		mathText.setText(GL1001);
+		mathText.getElement().setId("lblMathText");
+		mathText.getElement().setAttribute("alt",GL1001);
+		mathText.getElement().setAttribute("title",GL1001);
+		
 		socialSciencesText.setText(GL1002);
+		socialSciencesText.getElement().setId("lblSocialSciencesText");
+		socialSciencesText.getElement().setAttribute("alt",GL1002);
+		socialSciencesText.getElement().setAttribute("title",GL1002);
+		
 		languageArtsText.setText(GL1003);
+		languageArtsText.getElement().setId("lblLanguageArtsText");
+		languageArtsText.getElement().setAttribute("alt",GL1003);
+		languageArtsText.getElement().setAttribute("title",GL1003);
+		
 		standardsText.setText(GL0575);
+		standardsText.getElement().setId("lblStandardsText");
+		standardsText.getElement().setAttribute("alt",GL0575);
+		standardsText.getElement().setAttribute("title",GL0575);
+		
+		sciencePanel.getElement().setId("epnlSciencePanel");
+		scienceCourses.getElement().setId("pnlScienceCourses");
+		mathPanel.getElement().setId("epnlMathPanel");
+		mathCourses.getElement().setId("pnlMathCourses");
+		socialPanel.getElement().setId("epnlSocialPanel");
+		socialCourses.getElement().setId("pnlSocialCourses");
+		elaPanel.getElement().setId("epnlElaPanel");
+		elaCourses.getElement().setId("pnlElaCourses");
+		standardPanel.getElement().setId("epnlStandardPanel");
+		standardData.getElement().setId("pnlStandardData");
+		partnerPanel.getElement().setId("epnlPartnerPanel");
+		partnerLibraries.getElement().setId("pnlPartnerLibraries");
+		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
+		dynamicContainer.getElement().setId("epnlDynamicContainer");
+		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 			aboutGooruAnr.setText(GL1827);
+			aboutGooruAnr.getElement().setAttribute("alt",GL1827);
+			aboutGooruAnr.getElement().setAttribute("title",GL1827);
 			aboutGooruAnr.setHref(GL1828);
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 			aboutGooruAnr.setText(GL1899);
+			aboutGooruAnr.getElement().setAttribute("alt",GL1899);
+			aboutGooruAnr.getElement().setAttribute("title",GL1899);
 			aboutGooruAnr.setHref(GL1900);
 		} else {
 			aboutGooruAnr.setText(GL1024);
+			aboutGooruAnr.getElement().setAttribute("alt",GL1024);
+			aboutGooruAnr.getElement().setAttribute("title",GL1024);
 			aboutGooruAnr.setHref(GL1829);
 		}
 		aboutGooruAnr.setTarget("_blank");
@@ -156,6 +201,9 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		featuredCourses.setVisible(false);
 		partnerPanel.addStyleName(libraryStyleUc.partnerMenuPadding());
 		partnerText.setText(GL1550);
+		partnerText.getElement().setId("lblPartnerText");
+		partnerText.getElement().setAttribute("alt",GL1550);
+		partnerText.getElement().setAttribute("title",GL1550);
 		
 		scienceText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		mathText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -294,6 +342,8 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		}
 		
 		AppClientFactory.getEventBus().addHandler(StandardPreferenceSettingEvent.TYPE, standardPreferenceSettingHandler);
+		tabsInner.getElement().setId("pnlTabsInner");
+	
 	}
 	
 	StandardPreferenceSettingHandler standardPreferenceSettingHandler= new StandardPreferenceSettingHandler(){
@@ -587,12 +637,16 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 							}
 						});
 					}
-					if(courseDo.getGrade()==null || courseDo.getGrade()<=5) {
+					if(getPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
 						elementaryCoursePanel.add(courseTitle);
-					} else if(courseDo.getGrade()>5 && courseDo.getGrade()<9 ) {
-						middleSchoolCoursePanel.add(courseTitle);
 					} else {
-						highSchoolCoursePanel.add(courseTitle);
+						if(courseDo.getGrade()==null || courseDo.getGrade()<=5) {
+							elementaryCoursePanel.add(courseTitle);
+						} else if(courseDo.getGrade()>5 && courseDo.getGrade()<9 ) {
+							middleSchoolCoursePanel.add(courseTitle);
+						} else {
+							highSchoolCoursePanel.add(courseTitle);
+						}
 					}
 				}
 			}

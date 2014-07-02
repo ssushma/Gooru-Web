@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchFilterDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -47,13 +48,16 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class SearchHomeFilterVc extends Composite implements MessageProperties{
+public class SearchHomeFilterVc extends Composite{
 
 	private static SearchHomeFilterVcUiBinder uiBinder = GWT.create(SearchHomeFilterVcUiBinder.class);
 
 	interface SearchHomeFilterVcUiBinder extends UiBinder<Widget, SearchHomeFilterVc> {
 
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+
 
 	@UiField
 	FlowPanel filterGradeFloPanel;
@@ -81,9 +85,25 @@ public class SearchHomeFilterVc extends Composite implements MessageProperties{
 		this.res = HomeCBundle.INSTANCE;
 		res.css().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
-		filterOptionsLbl.setText(GL1309.toUpperCase());
-		standardText.setText(GL0724.toUpperCase());
-		sourceLbl.setText(GL0566.toUpperCase());
+		filterOptionsLbl.setText(i18n.GL1309().toUpperCase());
+		filterOptionsLbl.getElement().setId("lblFilterOptions");
+		filterOptionsLbl.getElement().setAttribute("alt",i18n.GL1309().toUpperCase());
+		filterOptionsLbl.getElement().setAttribute("title",i18n.GL1309().toUpperCase());
+		
+		standardText.setText(i18n.GL0724().toUpperCase());
+		standardText.getElement().setId("lblStandardText");
+		standardText.getElement().setAttribute("alt",i18n.GL0724().toUpperCase());
+		standardText.getElement().setAttribute("title",i18n.GL0724().toUpperCase());
+		
+		sourceLbl.setText(i18n.GL0566().toUpperCase());
+		sourceLbl.getElement().setId("lblSourceLbl");
+		sourceLbl.getElement().setAttribute("alt",i18n.GL0566().toUpperCase());
+		sourceLbl.getElement().setAttribute("title",i18n.GL0566().toUpperCase());
+		
+		filterGradeFloPanel.getElement().setId("fpnlFilterGradeFloPanel");
+		filterColOneResourceTypeFloPanel.getElement().setId("fpnlFilterColOneResourceTypeFloPanel");
+		filterColTwoResourceTypeFloPanel.getElement().setId("fpnlFilterColTwoResourceTypeFloPanel");
+		filterSubjectFloPanel.getElement().setId("fpnlFilterSubjectFloPanel");
 	}
 
 	/**
@@ -94,7 +114,7 @@ public class SearchHomeFilterVc extends Composite implements MessageProperties{
 		Collection<String> categories = filterList.getCategories().values();
 		List<String> subjects = filterList.getSubjects();
 
-		Label gradeLabel = new Label(GL1076.toUpperCase());
+		Label gradeLabel = new Label(i18n.GL1076().toUpperCase());
 		gradeLabel.setStyleName(HomeCBundle.INSTANCE.css().filterSubHeader());
 		filterGradeFloPanel.clear();
 		filterGradeFloPanel.add(gradeLabel);
@@ -107,7 +127,7 @@ public class SearchHomeFilterVc extends Composite implements MessageProperties{
 			filterGradeFloPanel.add(filterCheBox);
 		}
 
-		Label categoryLabel = new Label(GL1310.toUpperCase());
+		Label categoryLabel = new Label(i18n.GL1310().toUpperCase());
 		categoryLabel.setStyleName(HomeCBundle.INSTANCE.css().filterSubHeader());
 		filterColOneResourceTypeFloPanel.clear();
 		filterColTwoResourceTypeFloPanel.clear();
@@ -126,7 +146,7 @@ public class SearchHomeFilterVc extends Composite implements MessageProperties{
 			i++;
 		}
 
-		Label subjectLabel = new Label(GL1311.toUpperCase());
+		Label subjectLabel = new Label(i18n.GL1311().toUpperCase());
 		subjectLabel.setStyleName(HomeCBundle.INSTANCE.css().filterSubHeader());
 		filterSubjectFloPanel.clear();
 		filterSubjectFloPanel.add(subjectLabel);
