@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections;
 
 import org.ednovo.gooru.client.uc.DateBoxUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -11,7 +12,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-public class EditToolBarView extends Composite implements MessageProperties{
+public class EditToolBarView extends Composite{
 	
 	@UiField Button saveButton,cancelButton;
 	
@@ -22,6 +23,9 @@ public class EditToolBarView extends Composite implements MessageProperties{
 	public DateBoxUc dateBoxUc;
 	
 	private static EditToolBarViewUiBinder uiBinder = GWT.create(EditToolBarViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public interface EditToolBarViewUiBinder extends UiBinder<Widget, EditToolBarView> {}
 	
 	public EditToolBarView(boolean isDuedateEdited){
@@ -35,20 +39,20 @@ public class EditToolBarView extends Composite implements MessageProperties{
 		}
 	}
 	public void setStaticTexts(){
-		cancelButton.setText(GL0142);
+		cancelButton.setText(i18n.GL0142());
 		cancelButton.getElement().setId("btnCancel");
-		cancelButton.getElement().setAttribute("alt",GL0142);
-		cancelButton.getElement().setAttribute("title",GL0142);
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
 		
-		saveButton.setText(GL0141);
+		saveButton.setText(i18n.GL0141());
 		saveButton.getElement().setId("btnSave");
-		saveButton.getElement().setAttribute("alt",GL0141);
-		saveButton.getElement().setAttribute("title",GL0141);
+		saveButton.getElement().setAttribute("alt",i18n.GL0141());
+		saveButton.getElement().setAttribute("title",i18n.GL0141());
 		
-		savingText.setText(GL0808);
+		savingText.setText(i18n.GL0808());
 		savingText.getElement().setId("lblSaving");
-		savingText.getElement().setAttribute("alt",GL0808);
-		savingText.getElement().setAttribute("title",GL0808);
+		savingText.getElement().setAttribute("alt",i18n.GL0808());
+		savingText.getElement().setAttribute("title",i18n.GL0808());
 		dueDatePanel.getElement().setId("pnlDueDatePanel");
 		dueDateText.getElement().setId("pnlDueDate");
 	}
