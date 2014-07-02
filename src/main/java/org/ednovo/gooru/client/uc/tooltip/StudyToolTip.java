@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc.tooltip;
 
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -33,20 +33,23 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class StudyToolTip extends Composite implements MessageProperties{
+public class StudyToolTip extends Composite {
+	
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 	
 	@UiField HTMLPanel studyText,guidanceText;
 	public StudyToolTip(){
 		initWidget(studyToolTipUiBinder.createAndBindUi(this));
-		studyText.getElement().setInnerHTML(GL0182);
+		studyText.getElement().setInnerHTML(i18n.GL0182());
 		studyText.getElement().setId("pnlStudyText");
-		studyText.getElement().setAttribute("alt", GL0182);
-		studyText.getElement().setAttribute("title", GL0182);
+		studyText.getElement().setAttribute("alt", i18n.GL0182());
+		studyText.getElement().setAttribute("title", i18n.GL0182());
 		
-		guidanceText.getElement().setInnerHTML(GL1066);
+		guidanceText.getElement().setInnerHTML(i18n.GL1066());
 		guidanceText.getElement().setId("pnlGuidanceText");
-		guidanceText.getElement().setAttribute("alt", GL1066);
-		guidanceText.getElement().setAttribute("title", GL1066);
+		guidanceText.getElement().setAttribute("alt", i18n.GL1066());
+		guidanceText.getElement().setAttribute("title", i18n.GL1066());
 	}
 	
 	public interface StudyToolTipUiBinder extends UiBinder<Widget, StudyToolTip>{

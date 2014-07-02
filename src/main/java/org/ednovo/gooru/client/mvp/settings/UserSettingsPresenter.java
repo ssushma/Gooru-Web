@@ -75,8 +75,8 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -162,6 +162,16 @@ public class UserSettingsPresenter
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
+		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : "ya29.NgB31EYcRQOnSyAAAADvvUHF5jyYerkqpFWKKRd3cX1JxlPKyPIGA-cN_dwmsQ";
+		
+		if (access_token !=null ){
+			UserDo user = AppClientFactory.getLoggedInUser();
+			user.setAccessToken(access_token);
+			AppClientFactory.setLoggedInUser(user);
+			
+			getView().googleDirveStatus();
+		}
+		
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(
 				"userId");
 		String confirmStatus = AppClientFactory.getPlaceManager()

@@ -13,6 +13,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -44,10 +45,10 @@ import com.google.inject.Inject;
  * @author BLR Team
  * 
  */
-public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implements MessageProperties {
+public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 	@UiField
-	HTMLPanel loginCustom, copyCollectionSuccess, panelAssign,loadingImageLabel,popupcontentCustomize,customizeText;
+	HTMLPanel popupContentAssign,loginCustom, copyCollectionSuccess, panelAssign,loadingImageLabel,popupcontentCustomize,customizeText;
 
 	@UiField(provided = true)
 	AssignPopUpCBundle res;
@@ -75,6 +76,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 
 	private static final Binder binder = GWT.create(Binder.class);
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	private boolean isCustomizePopup = false,isHavingBadWords;
 	
 
@@ -88,6 +91,9 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		add(binder.createAndBindUi(this));
 		
 		copycollectionTextbox.setText(collectionTitle);
+		copycollectionTextbox.getElement().setId("txtCopycollectionTextbox");
+		copycollectionTextbox.getElement().setAttribute("alt",collectionTitle);
+		copycollectionTextbox.getElement().setAttribute("title",collectionTitle);
 		
 		AppClientFactory.getInjector().getClasspageService().getSCollIdClasspageById(collectionId, new SimpleAsyncCallback<CollectionDo>(){
 
@@ -125,12 +131,24 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 				loadingImageLabel.setVisible(false);
 			}
 		});
-		
+		errorLabel.getElement().setId("errlblErrorLabel");
 		errorLabel.setVisible(false);
 		this.setGlassEnabled(true);
-		customizeText.getElement().setInnerHTML(GL0743);
-		backtoLibrary.setText(GL0142);
-		editCollection.setText(GL0636);
+		customizeText.getElement().setInnerHTML(i18n.GL0743());
+		customizeText.getElement().setId("pnlCustomizeText");
+		customizeText.getElement().setAttribute("alt",i18n.GL0743());
+		customizeText.getElement().setAttribute("title",i18n.GL0743());
+		
+		backtoLibrary.setText(i18n.GL0142());
+		backtoLibrary.getElement().setId("btnBacktoLibrary");
+		backtoLibrary.getElement().setAttribute("alt",i18n.GL0142());
+		backtoLibrary.getElement().setAttribute("title",i18n.GL0142());
+		
+		editCollection.setText(i18n.GL0636());
+		editCollection.getElement().setId("btnEditCollection");
+		editCollection.getElement().setAttribute("alt",i18n.GL0636());
+		editCollection.getElement().setAttribute("title",i18n.GL0636());
+		
 		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
 		copycollectionTextbox.setMaxLength(50);
@@ -144,9 +162,20 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		
-		assignDes.setText(GL0744);
-		lblpopupTitle.setText(GL0743);
-		lbltxtBoxTitle.setText(GL0553);
+		assignDes.setText(i18n.GL0744());
+		assignDes.getElement().setId("lblAssignDes");
+		assignDes.getElement().setAttribute("alt",i18n.GL0744());
+		assignDes.getElement().setAttribute("title",i18n.GL0744());
+		
+		lblpopupTitle.setText(i18n.GL0743());
+		lblpopupTitle.getElement().setId("lblpopupTitle");
+		lblpopupTitle.getElement().setAttribute("alt",i18n.GL0743());
+		lblpopupTitle.getElement().setAttribute("title",i18n.GL0743());
+		
+		lbltxtBoxTitle.setText(i18n.GL0553());
+		lbltxtBoxTitle.getElement().setId("lbltxtBoxTitle");
+		lbltxtBoxTitle.getElement().setAttribute("alt",i18n.GL0553());
+		lbltxtBoxTitle.getElement().setAttribute("title",i18n.GL0553());
 		
 		copycollectionTextbox.addBlurHandler(new BlurHandler() {
 			
@@ -167,6 +196,14 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 
 		copycollectionTextbox.addKeyUpHandler(new OnkeyUp());
 		MixpanelUtil.mixpanelEvent("CoursePage_customize_collection");
+		panelAssign.getElement().setId("pnlPanelAssign");
+		cancelButton.getElement().setId("btnCancelButton");
+		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
+		popupcontentCustomize.getElement().setId("pnlPopupcontentCustomize");
+		loginCustom.getElement().setId("pnlLoginCustom");
+		copyCollectionSuccess.getElement().setId("pnlCopyCollectionSuccess");
+		popupContentAssign.getElement().setId("pnlPopupContentAssign");
+		
 		this.center();
 
 	}
@@ -186,7 +223,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
-		customizeText.getElement().setInnerHTML(GL0743);
+		customizeText.getElement().setInnerHTML(i18n.GL0743());
 	}
 
 	/**
@@ -252,7 +289,9 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 							}
 							else
 							{
-								errorLabel.setText(GL0693);
+								errorLabel.setText(i18n.GL0693());
+								errorLabel.getElement().setAttribute("alt",i18n.GL0693());
+								errorLabel.getElement().setAttribute("title",i18n.GL0693());
 								errorLabel.setVisible(true);	
 							}
 						}
@@ -288,10 +327,14 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		public void onKeyPress(KeyPressEvent event) {
 			String collTitle=copycollectionTextbox.getText().trim();
 			if(collTitle.length()>=50){
-				errorLabel.setText(GL0143);
+				errorLabel.setText(i18n.GL0143());
+				errorLabel.getElement().setAttribute("alt",i18n.GL0143());
+				errorLabel.getElement().setAttribute("title",i18n.GL0143());
 				errorLabel.setVisible(true);
 			}else{
 				errorLabel.setText("");
+				errorLabel.getElement().setAttribute("alt","");
+				errorLabel.getElement().setAttribute("title","");
 				errorLabel.setVisible(false);
 			}
 			
@@ -303,10 +346,14 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 			public void onKeyUp(KeyUpEvent event) {
 				String collTitle=copycollectionTextbox.getText().trim();
 				if(collTitle.length()>=50){
-					errorLabel.setText(GL0143);
+					errorLabel.setText(i18n.GL0143());
+					errorLabel.getElement().setAttribute("alt",i18n.GL0143());
+					errorLabel.getElement().setAttribute("title",i18n.GL0143());
 					errorLabel.setVisible(true);
 				}else{
 					errorLabel.setText("");
+					errorLabel.getElement().setAttribute("alt","");
+					errorLabel.getElement().setAttribute("title","");
 					errorLabel.setVisible(false);
 				}
 				

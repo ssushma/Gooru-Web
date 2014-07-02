@@ -189,7 +189,7 @@
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 
-
+						<!-- Email -->
 						<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}" ui:field="emailPanel">
 							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
 								ui:field="plContact">
@@ -225,6 +225,32 @@
 									<!-- <g:Label styleName="{Settings.settingOneSetOfLable}" ui:field="lbEmail" 
 										/> -->
 								</g:HTMLPanel>
+							</g:HTMLPanel>
+						</g:HTMLPanel>
+						
+						<!-- Google Drive -->
+						<g:HTMLPanel styleName="{Settings.settingInfoTitleOneContainer}" ui:field="panelGoogleDrive">
+							<panel:HTMLEventPanel styleName="{Settings.settingInfoTitleContainerTwo}"
+								ui:field="panelDrive">
+								<g:Label styleName="{Settings.settingInfoTitle}"
+									ui:field="panelHeading" />
+							</panel:HTMLEventPanel>
+							<g:HTMLPanel styleName="{Settings.settingHtmlPanel}">
+							    <g:HTMLPanel styleName="{Settings.div1}">
+							        <g:Button ui:field="btnConnect" styleName="primary {Settings.buttonConnect}"></g:Button>
+							        <g:Label ui:field="lblDisconnect"/>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{Settings.div2}">
+							        <g:Image url="images/GoogleDriveIcon.png" styleName="{Settings.driveImage}"></g:Image>
+							        <g:Label ui:field="lblImageSubHeading">
+								    </g:Label>
+							    </g:HTMLPanel>
+							    <g:HTMLPanel styleName="{Settings.div3}">
+								    <g:Label ui:field="lblHeading" styleName="{Settings.lblHeading}">
+								    </g:Label>
+								    <g:Label ui:field="lblSubHeading">
+								    </g:Label>
+							    </g:HTMLPanel>
 							</g:HTMLPanel>
 						</g:HTMLPanel>
 

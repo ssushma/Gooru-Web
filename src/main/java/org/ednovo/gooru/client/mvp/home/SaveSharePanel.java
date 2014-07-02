@@ -89,7 +89,7 @@ public abstract class SaveSharePanel extends PopupPanel{
 		this.setStyleName("");
 		this.getElement().getStyle().setZIndex(9999);
 		saveSharePanelContentContainer.getElement().getStyle().setDisplay(Display.NONE);
-		quickHelpText.setText(i18n.GL1287()+i18n.GL_SPL_SEMICOLON());	
+		quickHelpText.setText(i18n.GL1287()+i18n.GL_SPL_SEMICOLON()+" ");	
 		quickHelpText.getElement().setId("lblQuickHelpText");
 		quickHelpText.getElement().setAttribute("alt",i18n.GL1287());
 		quickHelpText.getElement().setAttribute("title",i18n.GL1287());

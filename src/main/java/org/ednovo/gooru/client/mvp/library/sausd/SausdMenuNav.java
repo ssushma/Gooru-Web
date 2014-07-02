@@ -34,10 +34,10 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.TextAlign;
@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SausdMenuNav extends Composite implements MessageProperties{
+public abstract class SausdMenuNav extends Composite {
 
 	@UiField HTMLPanel tabsInner, scienceCourses, mathCourses, socialCourses, elaCourses,learnCourses;
 	
@@ -81,6 +81,8 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	
     private static SausdMenuNavUiBinder uiBinder = GWT.create(SausdMenuNavUiBinder.class);
 
+    private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    
 	interface SausdMenuNavUiBinder extends UiBinder<Widget, SausdMenuNav> {
 	}
 
@@ -141,14 +143,37 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	}
 	
 	private void setAssets() {
-		scienceText.setText(GL1000);
-		mathText.setText(GL1001);
+		
+		scienceText.setText(i18n.GL1000());
+		scienceText.getElement().setId("lblScienceText");
+		scienceText.getElement().setAttribute("alt",i18n.GL1000());
+		scienceText.getElement().setAttribute("title",i18n.GL1000());
+		
+		mathText.setText(i18n.GL1001());
+		mathText.getElement().setId("lblMathText");
+		mathText.getElement().setAttribute("alt",i18n.GL1001());
+		mathText.getElement().setAttribute("title",i18n.GL1001());
+		
 		socialSciencesText.setText("Social Studies");
-		languageArtsText.setText(GL1003);
+		socialSciencesText.getElement().setId("lblSocialSciencesText");
+		socialSciencesText.getElement().setAttribute("alt","Social Studies");
+		socialSciencesText.getElement().setAttribute("title","Social Studies");
+		
+		languageArtsText.setText(i18n.GL1003());
+		languageArtsText.getElement().setId("lblLanguageArtsText");
+		languageArtsText.getElement().setAttribute("alt",i18n.GL1003());
+		languageArtsText.getElement().setAttribute("title",i18n.GL1003());
+		
 		learnText.setText("Elementary");
+		learnText.getElement().setId("lblLearnText");
+		learnText.getElement().setAttribute("alt","Elementary");
+		learnText.getElement().setAttribute("title","Elementary");
+		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-			aboutGooruAnr.setText(GL1899);
-			aboutGooruAnr.setHref(GL1900);
+			aboutGooruAnr.setText(i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
+			aboutGooruAnr.setHref(i18n.GL1900());
 		}
 		aboutGooruAnr.setTarget("_blank");
 		aboutGooruAnr.addStyleName(sausdStyleUc.aboutGooruAnrPadding());
@@ -160,6 +185,18 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 		languageArtsText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		learnText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		aboutGooruAnr.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		
+		sciencePanel.getElement().setId("epnlSciencePanel");
+		scienceCourses.getElement().setId("pnlScienceCourses");
+		mathPanel.getElement().setId("epnlMathPanel");
+		mathCourses.getElement().setId("pnlMathCourses");
+		socialPanel.getElement().setId("epnlSocialPanel");
+		socialCourses.getElement().setId("pnlSocialCourses");
+		elaPanel.getElement().setId("epnlElaPanel");
+		elaCourses.getElement().setId("pnlElaCourses");
+		learnPanel.getElement().setId("epnlLearnPanel");
+		learnCourses.getElement().setId("pnlLearnCourses");
+		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {

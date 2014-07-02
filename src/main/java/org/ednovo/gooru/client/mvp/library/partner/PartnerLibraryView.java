@@ -79,6 +79,7 @@ public class PartnerLibraryView extends BaseViewWithHandlers<PartnerLibraryUiHan
 		setWidget(uiBinder.createAndBindUi(this));
 		libraryView = new LibraryView(PlaceTokens.HOME);
 		partnerPanel.add(libraryView);
+		partnerPanel.getElement().setId("pnlPartnerPanel");
 	}
 
 	@Override

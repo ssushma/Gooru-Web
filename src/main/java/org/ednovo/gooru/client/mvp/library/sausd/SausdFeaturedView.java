@@ -24,8 +24,8 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.library.sausd;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -38,12 +38,14 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SausdFeaturedView extends Composite implements MessageProperties {
+public class SausdFeaturedView extends Composite {
 	
 	@UiField HTMLEventPanel featuredCourse;
 	@UiField Label courseTitle;
 	@UiField Label courseAuthor;
 	@UiField Image featuredCourseImage, contributorImage;
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	private String courseId;
 	
@@ -55,9 +57,9 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 	
 	private static final String PNG = ".png";
 	
-	private final static String MR =GL_GRR_BYMR+" ";
+	private final static String MR =i18n.GL_GRR_BYMR()+" ";
 	
-	private final static String MS =GL_GRR_BYMS+" ";
+	private final static String MS =i18n.GL_GRR_BYMS()+" ";
 
 	private final static String FEMALE = "female";
 
@@ -79,6 +81,11 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 	
 	private void setData(ProfileLibraryDo profileLibraryDo) {
 		courseTitle.setText(profileLibraryDo.getTitle());
+		courseTitle.getElement().setId("lblCourseTitle");
+		courseTitle.getElement().setAttribute("alt",profileLibraryDo.getTitle());
+		courseTitle.getElement().setAttribute("title",profileLibraryDo.getTitle());
+		courseAuthor.getElement().setId("lblCourseAuthor");
+		
 		featuredCourseImage.setUrl(StringUtil.formThumbnailName(profileLibraryDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
 		featuredCourseImage.setWidth("100px");
 		featuredCourseImage.setHeight("75px");
@@ -155,6 +162,9 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 */		courseAuthor.setVisible(false);
 		contributorImage.setVisible(false);
 		setCourseId(profileLibraryDo.getGooruOid());
+		featuredCourse.getElement().setId("epnlFeaturedCourse");
+		featuredCourseImage.getElement().setId("imgFeaturedCourseImage");
+		contributorImage.getElement().setId("imgContributorImage");
 	}
 	
 	public HTMLEventPanel getfeaturedCoursePanel() {

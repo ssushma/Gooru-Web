@@ -28,7 +28,6 @@ package org.ednovo.gooru.client.uc.tooltip;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -37,8 +36,8 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -58,7 +57,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -79,10 +77,12 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: Gooru Team
  */
-public class DiscoverToolTip extends PopupPanel implements MessageProperties, HasMouseOutHandlers{
+public class DiscoverToolTip extends PopupPanel implements HasMouseOutHandlers{
 	
 	private static DiscoverToolTipUiBinder uiBinder = GWT
 			.create(DiscoverToolTipUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 
 	interface DiscoverToolTipUiBinder extends UiBinder<Widget, DiscoverToolTip> {
 	}
@@ -111,20 +111,20 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	public DiscoverToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
 		panelCode.getElement().setId("pnlPanelCode");
-		lblDistrictLibrary.getElement().setInnerHTML(GL0515);
+		lblDistrictLibrary.getElement().setInnerHTML(i18n.GL0515());
 		lblDistrictLibrary.getElement().setId("epnlLblDistrictLibrary");
-		lblDistrictLibrary.getElement().setAttribute("alt", GL0515);
-		lblDistrictLibrary.getElement().setAttribute("title", GL0515);
+		lblDistrictLibrary.getElement().setAttribute("alt", i18n.GL0515());
+		lblDistrictLibrary.getElement().setAttribute("title", i18n.GL0515());
 		
 		dropdownImg.getElement().setId("pnlDropdownImg");
 		dropdownImgLib.getElement().setId("pnlDropdownImgLib");
 		
-		lblGooruLibrary.setText(GL0516);
+		lblGooruLibrary.setText(i18n.GL0516());
 		lblGooruLibrary.getElement().setId("lblLblGooruLibrary");
-		lblGooruLibrary.getElement().setAttribute("alt", GL0516);
-		lblGooruLibrary.getElement().setAttribute("title", GL0516);
+		lblGooruLibrary.getElement().setAttribute("alt", i18n.GL0516());
+		lblGooruLibrary.getElement().setAttribute("title", i18n.GL0516());
 		
-		lblPartnerLibrary.add(new Label(GL1751));
+		lblPartnerLibrary.add(new Label(i18n.GL1751()));
 		lblPartnerLibrary.getElement().setId("epnlLblPartnerLibrary");
 		
 		partnerLibContainer.getElement().addClassName("setVisible");
@@ -321,8 +321,8 @@ public class DiscoverToolTip extends PopupPanel implements MessageProperties, Ha
 	
 	private HashMap<String,String> getPublicLibraryPartners() {
 		HashMap<String,String> publicPartners = new LinkedHashMap<String,String>();
-		publicPartners.put(GL0515_1,PlaceTokens.RUSD_LIBRARY);
-		publicPartners.put(GL1898,PlaceTokens.SAUSD_LIBRARY);
+		publicPartners.put(i18n.GL0515_1(),PlaceTokens.RUSD_LIBRARY);
+		publicPartners.put(i18n.GL1898(),PlaceTokens.SAUSD_LIBRARY);
 		return publicPartners;
 	}
 	

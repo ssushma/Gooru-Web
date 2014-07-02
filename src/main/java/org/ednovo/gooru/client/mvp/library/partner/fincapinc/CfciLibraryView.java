@@ -25,7 +25,6 @@
 package org.ednovo.gooru.client.mvp.library.partner.fincapinc;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -37,7 +36,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class CfciLibraryView extends BaseViewWithHandlers<CfciLibraryUiHandlers> implements IsCfciView, MessageProperties {
+public class CfciLibraryView extends BaseViewWithHandlers<CfciLibraryUiHandlers> implements IsCfciView {
 
 	@UiField SimplePanel partnerPanel;
 	
@@ -48,6 +47,7 @@ public class CfciLibraryView extends BaseViewWithHandlers<CfciLibraryUiHandlers>
 
 	public CfciLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override
