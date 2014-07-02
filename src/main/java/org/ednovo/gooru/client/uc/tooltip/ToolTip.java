@@ -62,8 +62,16 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 		setWidget(toolTipUiBinder.createAndBindUi(this));
 	//	lblTitle.setText(GL0450);
 		lblTitle.setTitle(GL0450);
+		lblTitle.getElement().setId("pnlLblTitle");
+		lblTitle.getElement().setAttribute("alt", GL0450);
+		lblTitle.getElement().setAttribute("title", GL0450);
 		lblLink.setText(GL0451);
+		lblLink.getElement().setId("lnkLblLink");
+		lblLink.getElement().setAttribute("alt", GL0451);
+		lblLink.getElement().setAttribute("title", GL0451);
+
 		lblLink.setTarget("_blank");
+		panelCode.getElement().setId("pnlPanelCode");
 		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
 		this.addMouseOutHandler(new MouseOutHandler() {
 			
@@ -86,7 +94,14 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 		setWidget(toolTipUiBinder.createAndBindUi(this));
 		lblTitle.getElement().setInnerHTML(description);
 		lblLink.setText(GL0451);
+		lblLink.getElement().setId("lnkLblLink");
+		lblLink.getElement().setAttribute("alt", GL0451);
+		lblLink.getElement().setAttribute("title", GL0451);
 		lblLink.setTarget("_blank");
+		panelCode.getElement().setId("pnlPanelCode");
+		lblTitle.getElement().setId("pnlLblTitle");
+		lblTitle.getElement().setAttribute("alt", description);
+		lblTitle.getElement().setAttribute("title", description);
 		panelCode.getElement().getStyle().setWidth(150, Unit.PX);
 
 		this.addMouseOutHandler(new MouseOutHandler() {

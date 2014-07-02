@@ -47,6 +47,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -63,6 +64,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.shared.model.drive.DriveDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
@@ -1448,4 +1450,131 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.delete(url, getRestUsername(),getRestPassword());
 		jsonRep =jsonResponseRep.getJsonRepresentation();
 	}
+	
+	@Override
+	public List<DriveDo> getDrive() {
+		String driveKind=null;
+		List<DriveDo> driveDo=null;
+		
+		String contentType="application/json";
+		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=999&q=fullText%20contains%20%27%5C%5C%27").webInvokeforget("GET", "", contentType);
+		System.out.println("response in  add r"+response);
+		try{
+		JSONObject responseObj;
+		responseObj=new JSONObject(response);
+		driveDo=deserializegetGoogleDriveContent(responseObj.getJSONArray("items"));
+	
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+	
+	
+		
+		return driveDo;
+		
+	}
+
+	public List<DriveDo> deserializegetGoogleDriveContent(JSONArray GoogleDriveJsonArray){
+		DriveDo driveObj=new DriveDo();
+		List<DriveDo> googleResult=new ArrayList<DriveDo>();
+		for (int pointer = 0; pointer < GoogleDriveJsonArray.length(); pointer++) {
+		try {
+		driveObj = deserializeDriveDetails(GoogleDriveJsonArray.getJSONObject(pointer));
+		if (driveObj != null) {
+		googleResult.add(driveObj);
+		}
+
+		} catch (JSONException e) {
+		throw new RuntimeException("message", e); 
+		}
+
+		}
+
+		return googleResult;
+
+		}
+	public DriveDo deserializeDriveDetails(JSONObject jsonRep) {
+        if (jsonRep != null) {
+                return (DriveDo) JsonDeserializer.deserialize(jsonRep.toString(), new TypeReference<DriveDo>() {
+                });
+        }
+        return new DriveDo();
+}
+
+	@Override
+	public List<DriveDo> getfolderList(String id) {
+		String driveKind=null;
+		List<DriveDo> driveDo=null;
+		
+		String contentType="application/json";
+		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=999&q='0B0Mk6043Vojid0djTjNSVnVoZm8'+in+parents&fields=items(alternateLink%2CcreatedDate%2Cdescription%2Cid%2CmimeType%2Ctitle)").webInvokeforget("GET", "", contentType);
+		System.out.println("response in  add r"+response);
+		try{
+		JSONObject responseObj;
+		responseObj=new JSONObject(response);
+		driveDo=deserializeFolderContent(responseObj.getJSONArray("items"));
+	
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+	
+	
+		
+		return driveDo;
+		
+	}
+	public List<DriveDo> deserializeFolderContent(JSONArray FolderContentJsonArray){
+		DriveDo driveObj=new DriveDo();
+		List<DriveDo> folderResult=new ArrayList<DriveDo>();
+		for (int pointer = 0; pointer < FolderContentJsonArray.length(); pointer++) {
+		try {
+		driveObj = deserializeFolderDetails(FolderContentJsonArray.getJSONObject(pointer));
+		if (driveObj != null) {
+			folderResult.add(driveObj);
+		}
+
+		} catch (JSONException e) {
+		throw new RuntimeException("message", e); 
+		}
+
+		}
+
+		return folderResult;
+
+		}
+	public DriveDo deserializeFolderDetails(JSONObject jsonRep) {
+        if (jsonRep != null) {
+                return (DriveDo) JsonDeserializer.deserialize(jsonRep.toString(), new TypeReference<DriveDo>() {
+                });
+        }
+        return new DriveDo();
+}
+
+	@Override
+	public DriveDo updatePermissions(DriveDo driveObject) throws GwtException,
+			ServerDownException {
+		
+		String contentType="application/json";
+		String response=new WebService("https://www.googleapis.com/drive/v2/files/0B0Mk6043VojiT3A4ZU4zZXJRZUE/permissions?fields=id%2Crole%2Ctype").webInvokeforget("GET", "", contentType);
+		System.out.println("response in  add r in update permission api"+response);
+		JSONObject responseObj=null;
+		try{
+			responseObj=new JSONObject(response);
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		return deserializeUpdateContent(responseObj);
+	}
+	private DriveDo deserializeUpdateContent(JSONObject jsonRep) {
+        if (jsonRep != null ) {
+                try {
+                        return JsonDeserializer.deserialize(jsonRep.toString(), DriveDo.class);
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+        }
+        return new DriveDo();
+}
+	
+	
 }

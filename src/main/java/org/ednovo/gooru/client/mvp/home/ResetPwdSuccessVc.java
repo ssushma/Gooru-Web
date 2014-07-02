@@ -29,6 +29,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -46,7 +47,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class ResetPwdSuccessVc extends Composite implements MessageProperties {
+public class ResetPwdSuccessVc extends Composite{
 	
 	private AppPopUp appPopUp;
 
@@ -57,7 +58,7 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 	Label resetPasswordLbl;
 	@UiField FlowPanel buttonContainer;
 	
-	private static final String LOGIN_WITH_NEW_PWD = GL_SPL_EXCLAMATION+" "+GL1256;
+//	private static final String LOGIN_WITH_NEW_PWD = i18n.GL_SPL_EXCLAMATION+" "+i18n.GL1256;
 
 	private static resetPasswordSuccessVcUiBinder uiBinder = GWT
 			.create(resetPasswordSuccessVcUiBinder.class);
@@ -65,6 +66,8 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 	interface resetPasswordSuccessVcUiBinder extends
 			UiBinder<Widget, ResetPwdSuccessVc> {
 	}
+	
+	 private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor , assign user name in reset password success popup
@@ -75,20 +78,20 @@ public class ResetPwdSuccessVc extends Composite implements MessageProperties {
 		initWidget(uiBinder.createAndBindUi(this));
 		appPopUp = new AppPopUp();
 		appPopUp.setStyleName("removeResourcePopup");
-		appPopUp.setContent(GL0062, uiBinder.createAndBindUi(this));
-		resetPasswordLbl.setText(userName+LOGIN_WITH_NEW_PWD);
+		appPopUp.setContent(i18n.GL0062(), uiBinder.createAndBindUi(this));
+		resetPasswordLbl.setText(userName+( i18n.GL_SPL_EXCLAMATION()+" "+i18n.GL1256()));
 		resetPasswordLbl.getElement().setId("lblResetPasswordLbl");
-		resetPasswordLbl.getElement().setAttribute("alt",userName+LOGIN_WITH_NEW_PWD);
-		resetPasswordLbl.getElement().setAttribute("title",userName+LOGIN_WITH_NEW_PWD);
+		resetPasswordLbl.getElement().setAttribute("alt",userName+( i18n.GL_SPL_EXCLAMATION()+" "+i18n.GL1256()));
+		resetPasswordLbl.getElement().setAttribute("title",userName+( i18n.GL_SPL_EXCLAMATION()+" "+i18n.GL1256()));
 		
 		buttonContainer.getElement().setId("fpnlButtonContainer");
 		
 		appPopUp.show();
 		appPopUp.center();
-		okBtnUc.setText(GL0190);
+		okBtnUc.setText(i18n.GL0190());
 		okBtnUc.getElement().setId("btnOkBtnUc");
-		okBtnUc.getElement().setAttribute("alt",GL0190);
-		okBtnUc.getElement().setAttribute("title",GL0190);
+		okBtnUc.getElement().setAttribute("alt",i18n.GL0190());
+		okBtnUc.getElement().setAttribute("title",i18n.GL0190());
 		Window.enableScrolling(false);
 		AppClientFactory.getEventBus().fireEvent(new SetHeaderZIndexEvent(99, false));
 	}

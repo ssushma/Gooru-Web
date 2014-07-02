@@ -230,17 +230,51 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
 		newCollectionShelf.setLabel(GL0993);
+		newCollectionShelf.getElement().setAttribute("alt", GL0993);
+		newCollectionShelf.getElement().setAttribute("title", GL0993);
 		foldersText.setText(GL0994);
+		foldersText.getElement().setId("lblFoldersText");
+		foldersText.getElement().setAttribute("alt", GL0994);
+		foldersText.getElement().setAttribute("title", GL0994);
+		
+		noCollectionMsgLbl.getElement().setId("lblNoCollectionMsgLbl");
 		noCollectionMsgLbl.setText(LOADING_COLLECTION_MESSAGE);
+		noCollectionMsgLbl.getElement().setAttribute("alt", LOADING_COLLECTION_MESSAGE);
+		noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
 		noCollectionMsgLbl.setVisible(true);
 		newCollectionShelf.getElement().setId("lblNewCollection");
 		backArrowButton.setText(GL1500);
+		backArrowButton.getElement().setId("btnBackArrowButton");
+		backArrowButton.getElement().setAttribute("alt", GL1500);
+		backArrowButton.getElement().setAttribute("title", GL1500);
+
 		backArrowButton.setVisible(false);
 		backArrowButton.addClickHandler(this);
 		createBtn.setText(GL1335);
+		createBtn.getElement().setId("btnCreateBtn");
+		createBtn.getElement().setAttribute("alt", GL1335);
+		createBtn.getElement().setAttribute("title", GL1335);
 		folderLabel.setText(GL1501);
+		folderLabel.getElement().setId("lblFolderLabel");
+		folderLabel.getElement().setAttribute("alt", GL1501);
+		folderLabel.getElement().setAttribute("title", GL1501);
 		collectionLabel.setText(GL0645);
+		collectionLabel.getElement().setId("lblCollectionLabel");
+		collectionLabel.getElement().setAttribute("alt", GL0645);
+		collectionLabel.getElement().setAttribute("title", GL0645);
 		organizelbl.getElement().setInnerText(GL0180);
+		organizelbl.getElement().setId("pnlOrganizelbl");
+		organizelbl.getElement().setAttribute("alt", GL0180);
+		organizelbl.getElement().setAttribute("title", GL0180);
+		shelfFocPanel.getElement().setId("focuspnlShelfFocPanel");
+		collectionListScrollpanel.getElement().setId("sbCollectionListScrollpanel");
+		folderCollectionPanel.getElement().setId("fpnlFolderCollectionPanel");
+		addCollectionItem.getElement().setId("shelfListAddCollectionItem");
+		organizeButtonPanel.getElement().setId("pnlOrganizeButtonPanel");
+		organizeRootPnl.getElement().setId("epnlOrganizeRootPnl");
+		folderListPanelEvent.getElement().setId("pnlFolderListPanelEvent");
+		myShelfVerPanelHolder.getElement().setId("pnlMyShelfVerPanelHolder");
+		dragImageSimPanel.getElement().setId("spnlDragImageSimPanel");
 		tabDropController = new ResourceDropController(this);
 		setShelfPosition(true);
 		
@@ -347,12 +381,16 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					} else {
 						backArrowButton.setHTML(PRE_SEARCH_LINK);
 					}
+					backArrowButton.getElement().setAttribute("alt", PRE_SEARCH_LINK);
+					backArrowButton.getElement().setAttribute("title", PRE_SEARCH_LINK);
 				}
 				
 				backArrowButton.setVisible(visible);
 
 				if(isVisible){
 					backArrowButton.setHTML(PRE_CLASSPAGE_LINK);
+					backArrowButton.getElement().setAttribute("alt", PRE_CLASSPAGE_LINK);
+					backArrowButton.getElement().setAttribute("title", PRE_CLASSPAGE_LINK);
 					backArrowButton.setVisible(isVisible);
 				}
 			}
@@ -456,6 +494,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		}
 		if(collectionItemDoSize==0){
 			noCollectionMsgLbl.setText(NO_COLLECTION_MESSAGE);
+			noCollectionMsgLbl.getElement().setAttribute("alt", NO_COLLECTION_MESSAGE);
+			noCollectionMsgLbl.getElement().setAttribute("title", NO_COLLECTION_MESSAGE);
 		}
 		resetDragImage();
 		fireConsumeShelfCollectionEvent = true;
@@ -652,8 +692,12 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				shelfCollection.removeFromParent();
 				if(myShelfVerPanel.getItemCount()==0){
 					noCollectionMsgLbl.setText(NO_COLLECTION_MESSAGE);
+					noCollectionMsgLbl.getElement().setAttribute("alt", NO_COLLECTION_MESSAGE);
+					noCollectionMsgLbl.getElement().setAttribute("title", NO_COLLECTION_MESSAGE);
 				}else{
 					noCollectionMsgLbl.setText(LOADING_COLLECTION_MESSAGE);
+					noCollectionMsgLbl.getElement().setAttribute("alt", LOADING_COLLECTION_MESSAGE);
+					noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
 				}
 				// resetDragImage();
 
@@ -868,6 +912,8 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			addCollectionItem.getElement().getStyle().setDisplay(Display.NONE);
 		} else {
 			addCollectionItem.setLabel(msg);
+			addCollectionItem.getElement().setAttribute("alt", msg);
+			addCollectionItem.getElement().setAttribute("title", msg);
 			addCollectionItem.removeStyleName(ShelfListCBundle.INSTANCE.css().shelfNewCollection());
 			addCollectionItem.addStyleName(folderStyle.dropbox());
 			addCollectionItem.getLabel().setStyleName(ShelfListCBundle.INSTANCE.css().resourceCollectionPanelText());
@@ -1299,9 +1345,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			}
 			if(myShelfVerPanel.getItemCount()==0){
 				noCollectionMsgLbl.setText(NO_COLLECTION_MESSAGE);
+				noCollectionMsgLbl.getElement().setAttribute("alt", NO_COLLECTION_MESSAGE);
+				noCollectionMsgLbl.getElement().setAttribute("title", NO_COLLECTION_MESSAGE);
 				resetDragImage();
 			}else{
 				noCollectionMsgLbl.setText(LOADING_COLLECTION_MESSAGE);
+				noCollectionMsgLbl.getElement().setAttribute("alt", LOADING_COLLECTION_MESSAGE);
+				noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
 			}
 		}
 	}

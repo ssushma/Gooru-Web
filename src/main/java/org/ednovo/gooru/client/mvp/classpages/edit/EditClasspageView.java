@@ -272,9 +272,9 @@ public class EditClasspageView extends
 					isEditing = false;
 					btnCollectionEditImage.setVisible(false);
 					titleAlertMessageLbl.setVisible(false);
-					titleAlertMessageLbl.setText(GL0143);
-					titleAlertMessageLbl.getElement().setAttribute("alt",GL0143);
-					titleAlertMessageLbl.getElement().setAttribute("title",GL0143);
+					titleAlertMessageLbl.setText(i18n.GL0143());
+					titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
+					titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
 					titleAlertMessageLbl.addStyleName("titleAlertMessageDeActive");
 					titleAlertMessageLbl.removeStyleName("titleAlertMessageActive");
 					//panelUpdateActionContols.getElement().getStyle().setDisplay(Display.NONE);
@@ -288,9 +288,9 @@ public class EditClasspageView extends
 
 			@Override
 			public void checkCharacterLimit(String text) {
-				titleAlertMessageLbl.setText(GL0143);
-				titleAlertMessageLbl.getElement().setAttribute("alt",GL0143);
-				titleAlertMessageLbl.getElement().setAttribute("title",GL0143);
+				titleAlertMessageLbl.setText(i18n.GL0143());
+				titleAlertMessageLbl.getElement().setAttribute("alt",i18n.GL0143());
+				titleAlertMessageLbl.getElement().setAttribute("title",i18n.GL0143());
 				if (text.length() >= 50) {
 					titleAlertMessageLbl
 							.addStyleName("titleAlertMessageActive");
@@ -1931,7 +1931,7 @@ public class EditClasspageView extends
 		//display the assignments progress (DOTS)
 		for (int i=0; i<classpageProcess.size(); i++){
 			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
-					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.size()));
+					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.get(0).getTotalHitCount()));
 		}
 	}
 	

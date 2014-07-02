@@ -84,7 +84,20 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 	public WrapView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		
-		panelWrapper.getElement().setId("wrapper");		
+		panelWrapper.getElement().setId("wrapper");	
+		androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");	
+		msglinkPanel.getElement().setId("pnlMsglinkPanel");
+		msgPanel.getElement().setId("pnlMsgPanel");
+		closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
+		ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
+		closeIpadBtn.getElement().setId("imgCloseIpadBtn");
+		gooruPanel.getElement().setId("pnlGooruPanel");
+		ednovoPanel.getElement().setId("pnlEdnovoPanel");
+		appstorePanel.getElement().setId("pnlAppstorePanel");
+		viewAnchor.getElement().setId("lnkViewAnchor");
+		headerUc.getElement().setId("homeHeaderUc");
+		wrapperPanel.getElement().setId("spnlWrapperPanel");
+		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");
 		  Boolean isWinDskp = !!Navigator.getUserAgent().matches("(.*)NT(.*)");
@@ -212,11 +225,23 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 	public void setUiText()
 	{
 		  msgPanel.getElement().setInnerHTML(GL1983);
+		  msgPanel.getElement().setAttribute("alt", GL1983);
+		  msgPanel.getElement().setAttribute("title", GL1983);
 		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  msglinkPanel.getElement().setAttribute("alt", GL1984);
+		  msglinkPanel.getElement().setAttribute("title", GL1984);
 		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  gooruPanel.getElement().setAttribute("alt", GL0733);
+		  gooruPanel.getElement().setAttribute("title", GL0733);
 		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  ednovoPanel.getElement().setAttribute("alt", GL1985);
+		  ednovoPanel.getElement().setAttribute("title", GL1985);
 		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  appstorePanel.getElement().setAttribute("alt", GL1986);
+		  appstorePanel.getElement().setAttribute("title", GL1986);
 		  viewAnchor.setText(GL1428);
+		  viewAnchor.getElement().setAttribute("alt", GL1428);
+		  viewAnchor.getElement().setAttribute("title", GL1428);
 		  
 	}
 }
