@@ -27,10 +27,12 @@ package org.ednovo.gooru.client.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddQuestionResourceView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.BodyElement;
@@ -57,7 +59,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class TinyMCE extends Composite implements MessageProperties{
+public class TinyMCE extends Composite{
 	private static List<String> richTextsList=new ArrayList<String>();
 	private static String lastButtonId="";
     private TextArea tinyMceTextArea=null;
@@ -68,7 +70,8 @@ public class TinyMCE extends Composite implements MessageProperties{
     private Label errorMessageLabel=null; 
     private HandlerRegistration nativePreviewHandlerRegistration=null;
     private int characterLimit=500;
-    private String ERROR_MESSAGE=GL0143;
+    private CopyOfMessageProperties i18n=GWT.create(CopyOfMessageProperties.class);
+    private String ERROR_MESSAGE=i18n.GL0143();
     public  class OpenRichTextToolBar implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
@@ -80,7 +83,7 @@ public class TinyMCE extends Composite implements MessageProperties{
         super();
         TinyMceBundle.TINYMCEBUNDLE.tinyMceStyle().ensureInjected();
         FlowPanel timymceWrapper=new FlowPanel();
-        toolBarOpenButton=new Button(GL_GRR_ALPHABET_A);
+        toolBarOpenButton=new Button(i18n.GL_GRR_ALPHABET_A());
         errorMessageLabel=new Label();
         markAsBlankPanel=new HTMLPanel("");
         toolBarOpenButton.addClickHandler(new OpenRichTextToolBar());
@@ -185,7 +188,7 @@ public class TinyMCE extends Composite implements MessageProperties{
     public void setMarkAsBlankLabel(){
     	Element markAsBlankElement=getFibButton();
         if(markAsBlankElement.hasChildNodes()){
-        	markAsBlankElement.getFirstChildElement().setInnerText(GL1507);
+        	markAsBlankElement.getFirstChildElement().setInnerText(i18n.GL1507());
         }
         markAsBlankPanel.getElement().appendChild(markAsBlankElement);
     }
