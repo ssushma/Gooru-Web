@@ -218,4 +218,23 @@ public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHan
 	Button getstandardsEditButton();
 	HTMLPanel getuserStandardDefaultView();
 	public void hideEmailContainer();
+	/**
+	 * @function googleDirveStatus 
+	 * 
+	 * @created_date : Jul 2, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void googleDirveStatus();
 }

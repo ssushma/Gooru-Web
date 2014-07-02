@@ -92,6 +92,8 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	
 	private UserMetaDo meta;
 	
+	private String accessToken;
+	
 	public UserDo(){}
 	
 	
@@ -422,6 +424,22 @@ public class UserDo extends ResponseStatusDo implements Serializable {
 	 */
 	public void setStatusCode(Integer statusCode) {
 		this.statusCode = statusCode;
+	}
+
+
+	/** 
+	 * This method is to get the accessToken
+	 */
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+
+	/** 
+	 * This method is to set the accessToken
+	 */
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
 	}
 	
 	

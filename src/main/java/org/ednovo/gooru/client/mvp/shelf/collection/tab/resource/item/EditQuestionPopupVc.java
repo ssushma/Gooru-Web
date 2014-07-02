@@ -83,6 +83,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.SuggestOracle.Suggestion;
 import com.google.gwt.user.client.ui.Widget;
@@ -98,17 +99,22 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	private TinyMCE explainationTextArea = null;
 
 	@UiField
-	HTMLEventPanel questionTabButton,trueOrFlaseButton,openEndedButton;
+	HTMLEventPanel questionTabButton,trueOrFlaseButton,openEndedButton,
+	activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,referenceMaterialPanel,quizPanel,curriculumPlanPanel,
+	lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,textbookPanel,articlePanel,bookPanel;
 	
 	@UiField
 	HTMLPanel addQuestionHintsContainer, questionTextRichTextboxContainer,
-			questionExplantionRichTextboxContainer, listQuestionType, answerchoiceTitleContainer, panelPleaseWait,panelControls,typeLbl;
+			questionExplantionRichTextboxContainer, listQuestionType, answerchoiceTitleContainer, panelPleaseWait,panelControls,typeLbl,educationalTitle,educationalpanel,
+			activityText,handoutText,homeworkText,gameText,presentationText,referenceMaterialText,quizText,
+			curriculumPlanText,lessonPlanText,unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText;
 
 	@UiField
 	Button btnSave, btnCancel;
 	
 	@UiField
-	Label mandatoryEducationalLbl,resourceEducationalLabel,standardMaxMsg,depthOfKnowledgeHeader,lblEditQuestionTitle, lblQuestion, lblPleaseWait;
+	Label mandatoryEducationalLbl,resourceEducationalLabel,standardMaxMsg,depthOfKnowledgeHeader,lblEditQuestionTitle, lblQuestion, lblPleaseWait,depthOfKnowledgeTitle,educationalDropDownLbl,
+	standardsDefaultText;
 	
 	@UiField 
 	CheckBox chkLevelRecall,chkLevelSkillConcept,chkLevelStrategicThinking,chkLevelExtendedThinking;
@@ -118,6 +124,10 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	@UiField
 	Label lblAddHints, lblChoices, lblCorrect, lblAddAnswerChoice,lblExplanation,
 			lblAddQuestion, lblErrorMessageForExplanation;
+	
+	@UiField RadioButton multipleChoiceRadioButton,trueOrFalseRadioButton,openEndedRadioButton;
+	
+	@UiField FlowPanel standardContainer;
 
 	RemoveToolTipUc removeToolTip = null;
 	boolean isSaveButtonClicked = false,educationalDropDownLblOpen=false;
@@ -306,11 +316,106 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		center();
 		 this.getElement().getStyle().setTop(100, Unit.PX);
 		 displayQuestionResource();
+		 
+		 lblEditQuestionTitle.getElement().setId("lblLblEditQuestionTitle");
+		 questionTabButton.getElement().setId("epnlQuestionTabButton");
+		 multipleChoiceRadioButton.getElement().setId("rdMultipleChoiceRadioButton");
+		 trueOrFalseRadioButton.getElement().setId("rdTrueOrFalseRadioButton");
+		 ancMultipleChoice.getElement().setId("lnkAncMultipleChoice");
+		 trueOrFlaseButton.getElement().setId("epnlTrueOrFlaseButton");
+		 ancTrueOfFalse.getElement().setId("lnkAncTrueOfFalse");
+		 openEndedButton.getElement().setId("epnlOpenEndedButton");
+		 openEndedRadioButton.getElement().setId("rdOpenEndedRadioButton");
+		 ancOpenEnded.getElement().setId("lnkAncOpenEnded");
+		 listQuestionType.getElement().setId("pnlListQuestionType");
+		 typeLbl.getElement().setId("pnlTypeLbl");
+		 questionTypeListBox.getElement().setId("lbQuestionTypeListBox");
+		 lblQuestion.getElement().setId("lblLblQuestion");
+		 questionTextRichTextboxContainer.getElement().setId("pnlQuestionTextRichTextboxContainer");
+		 lblAddQuestion.getElement().setId("lblLblAddQuestion");
+		 errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
+		 questionImageContainer.getElement().setId("pnlQuestionImageContainer");
+		 updateQuestionImageView.getElement().setId("UpdateQuestionImageView");
+		 answerchoiceTitleContainer.getElement().setId("pnlAnswerchoiceTitleContainer");
+		 lblChoices.getElement().setId("lblLblChoices");
+		 lblCorrect.getElement().setId("lblLblCorrect");
+		 questionAnswerChoiceContainer.getElement().setId("pnlQuestionAnswerChoiceContainer");
+		 lblAddAnswerChoice.getElement().setId("lblLblAddAnswerChoice");
+		 errorMessageForAnsCheck.getElement().setId("errlblErrorMessageForAnsCheck");
+		 ansChoiceErrMsg.getElement().setId("lblAnsChoiceErrMsg");
+		 lblExplanation.getElement().setId("lblLblExplanation");
+		 questionExplantionRichTextboxContainer.getElement().setId("pnlQuestionExplantionRichTextboxContainer");
+		 lblErrorMessageForExplanation.getElement().setId("lblLblErrorMessageForExplanation");
+		 addQuestionHintsContainer.getElement().setId("pnlAddQuestionHintsContainer");
+		 lblAddHints.getElement().setId("lblLblAddHints");
+		 errorMessageForHintsCheck.getElement().setId("errlblErrorMessageForHintsCheck");
+		 depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
+		 
 		 depthOfKnowledgeHeader.setText(GL1643);
+		 depthOfKnowledgeHeader.getElement().setId("lblDepthOfKnowledgeHeader");
+		 depthOfKnowledgeHeader.getElement().setAttribute("alt", GL1643);
+		 depthOfKnowledgeHeader.getElement().setAttribute("title", GL1643);
 		 chkLevelRecall.setText(GL1645);
+		 chkLevelRecall.getElement().setId("chkChkLevelRecall");
+		 chkLevelRecall.getElement().setAttribute("alt", GL1645);
+		 chkLevelRecall.getElement().setAttribute("title", GL1645);
 		 chkLevelSkillConcept.setText(GL1646);
+		 chkLevelSkillConcept.getElement().setId("chkChkLevelSkillConcept");
+		 chkLevelSkillConcept.getElement().setAttribute("alt", GL1646);
+		 chkLevelSkillConcept.getElement().setAttribute("title", GL1646);
+	 
 		 chkLevelStrategicThinking.setText(GL1647);
+		 chkLevelStrategicThinking.getElement().setId("chkChkLevelStrategicThinking");
+		 chkLevelStrategicThinking.getElement().setAttribute("alt", GL1647);
+		 chkLevelStrategicThinking.getElement().setAttribute("title", GL1647);
 		 chkLevelExtendedThinking.setText(GL1648);
+		 chkLevelExtendedThinking.getElement().setId("chkChkLevelExtendedThinking");
+		 chkLevelExtendedThinking.getElement().setAttribute("alt", GL1648);
+		 chkLevelExtendedThinking.getElement().setAttribute("title", GL1648);
+		 educationalTitle.getElement().setId("pnlEducationalTitle");
+		 educationalpanel.getElement().setId("pnlEducationalpanel");
+		 resourceEducationalLabel.getElement().setId("lblResourceEducationalLabel");
+		 educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
+		 mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
+		 educationalUsePanel.getElement().setId("pnlEducationalUsePanel");
+		 activityPanel.getElement().setId("epnlActivityPanel");
+		 activityText.getElement().setId("pnlActivityText");
+		 handoutPanel.getElement().setId("epnlHandoutPanel");
+		 handoutText.getElement().setId("pnlHandoutText");
+		 homeworkPanel.getElement().setId("epnlHomeworkPanel");
+		 homeworkText.getElement().setId("pnlHomeworkText");
+		 gamePanel.getElement().setId("epnlGamePanel");
+		 gameText.getElement().setId("pnlGameText");
+		 presentationPanel.getElement().setId("epnlPresentationPanel");
+		 presentationText.getElement().setId("pnlPresentationText");
+		 referenceMaterialPanel.getElement().setId("epnlReferenceMaterialPanel");
+		 referenceMaterialText.getElement().setId("pnlReferenceMaterialText");
+		 quizPanel.getElement().setId("epnlQuizPanel");
+		 quizText.getElement().setId("pnlQuizText");
+		 curriculumPlanPanel.getElement().setId("epnlCurriculumPlanPanel");
+		 curriculumPlanText.getElement().setId("pnlCurriculumPlanText");
+		 lessonPlanPanel.getElement().setId("epnlLessonPlanPanel");
+		 lessonPlanText.getElement().setId("pnlLessonPlanText");
+		 unitPlanPanel.getElement().setId("epnlUnitPlanPanel");
+		 unitPlanText.getElement().setId("pnlUnitPlanText");
+		 projectPlanPanel.getElement().setId("epnlProjectPlanPanel");
+		 projectPlanText.getElement().setId("pnlProjectPlanText");
+		 readingPanel.getElement().setId("epnlReadingPanel");
+		 readingText.getElement().setId("pnlReadingText");
+		 textbookPanel.getElement().setId("epnlTextbookPanel");
+		 textbookText.getElement().setId("pnlTextbookText");
+		 articlePanel.getElement().setId("epnlArticlePanel");
+		 articleText.getElement().setId("pnlArticleText");
+		 bookPanel.getElement().setId("epnlBookPanel");
+		 bookText.getElement().setId("pnlBookText");
+		 standardContainer.getElement().setId("fpnlStandardContainer");
+		 standardsDefaultText.getElement().setId("lblStandardsDefaultText");
+		 standardSgstBox.getElement().setId("standardSgstBox");
+		 standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		 standardsPanel.getElement().setId("fpnlStandardsPanel");
+		 panelPleaseWait.getElement().setId("pnlPanelPleaseWait");
+		 lblPleaseWait.getElement().setId("lblLblPleaseWait");
+		 panelControls.getElement().setId("pnlPanelControls");
 	//	 educationalUsePanel.setVisible(false);
 		 
 
@@ -507,22 +612,54 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	
 	public void setLabelAndIds(){
 		typeLbl.getElement().setInnerText(GL1499);
+		typeLbl.getElement().setAttribute("alt", GL1499);
+		typeLbl.getElement().setAttribute("title", GL1499);
 		btnSave.setText(GL0141);
+		btnSave.getElement().setAttribute("alt", GL0141);
+		btnSave.getElement().setAttribute("title", GL0141);
 		btnCancel.setText(GL0142);
-		
+		btnCancel.getElement().setAttribute("alt", GL0142);
+		btnCancel.getElement().setAttribute("title", GL0142);
 		lblEditQuestionTitle.setText(GL0304);
+		lblEditQuestionTitle.getElement().setAttribute("alt", GL0304);
+		lblEditQuestionTitle.getElement().setAttribute("title", GL0304);
 		ancMultipleChoice.setText(GL0305);
+		ancMultipleChoice.getElement().setAttribute("alt", GL0305);
+		ancMultipleChoice.getElement().setAttribute("title", GL0305);
 		ancTrueOfFalse.setText(GL0306);
+		ancTrueOfFalse.getElement().setAttribute("alt", GL0306);
+		ancTrueOfFalse.getElement().setAttribute("title", GL0306);
 		ancOpenEnded.setText(GL0307);
+		ancOpenEnded.getElement().setAttribute("alt", GL0307);
+		ancOpenEnded.getElement().setAttribute("title", GL0307);
 		lblQuestion.setText(GL0308 + GL_SPL_STAR);
+		lblQuestion.getElement().setAttribute("alt", GL0308 + GL_SPL_STAR);
+		lblQuestion.getElement().setAttribute("title", GL0308 + GL_SPL_STAR);
 		lblAddQuestion.setText(GL_SPL_PLUS + " " + GL0309);
+		lblAddQuestion.getElement().setAttribute("alt", GL_SPL_PLUS + " " + GL0309);
+		lblAddQuestion.getElement().setAttribute("title", GL_SPL_PLUS + " " + GL0309);
 		lblChoices.setText(GL0313 + GL_SPL_STAR);
+		lblChoices.getElement().setAttribute("alt", GL0313 + GL_SPL_STAR);
+		lblChoices.getElement().setAttribute("title", GL0313 + GL_SPL_STAR);
 		lblCorrect.setText(GL0314);
+		lblCorrect.getElement().setAttribute("alt", GL0314);
+		lblCorrect.getElement().setAttribute("title", GL0314);
 		lblAddAnswerChoice.setText(GL_SPL_PLUS + " " +GL0315);
+		lblAddAnswerChoice.getElement().setAttribute("alt", GL_SPL_PLUS + " " +GL0315);
+		lblAddAnswerChoice.getElement().setAttribute("title", GL_SPL_PLUS + " " +GL0315);
+		
 		lblExplanation.setText(GL0316);
+		lblExplanation.getElement().setAttribute("alt", GL0316);
+		lblExplanation.getElement().setAttribute("title", GL0316);
+		
 		lblAddHints.setText(GL_SPL_PLUS + " " + GL0317);
+		lblAddHints.getElement().setAttribute("alt", GL_SPL_PLUS + " " + GL0317);
+		lblAddHints.getElement().setAttribute("title", GL_SPL_PLUS + " " + GL0317);
 		
 		lblPleaseWait.setText(GL0339);
+		lblPleaseWait.getElement().setAttribute("alt", GL0339);
+		lblPleaseWait.getElement().setAttribute("title", GL0339);
+		
 		panelPleaseWait.setVisible(false);
 		panelControls.setVisible(true);
 		
@@ -865,9 +1002,13 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 		if (resourceQuestion.getText() == null
 				|| resourceQuestion.getText().trim().equals("")) {
 			errorMessageForQuestion.setText(ERROR_MSG_QUESTION);
+			errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION);
+			errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION);
 			fieldValidationStaus = false;
 		} else if (resourceQuestion.getText().length() > 500) {
 			errorMessageForQuestion.setText(ERROR_MSG_CHAR_LIMIT);
+			errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_CHAR_LIMIT);
+			errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_CHAR_LIMIT);
 			fieldValidationStaus = false;
 		}
 		ansChoiceErrMsg.setText("");
@@ -878,6 +1019,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 			}
 			if (!isAnswerChoiceSelected()) {
 				ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
+				ansChoiceErrMsg.getElement().setAttribute("alt", ERROR_MSG_ANSWER_SELECTED);
+				ansChoiceErrMsg.getElement().setAttribute("title", ERROR_MSG_ANSWER_SELECTED);
 				fieldValidationStaus = false;
 			}
 		}
@@ -885,6 +1028,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 
 		if (explainationTextArea.getText().trim().length() > EXPLAINATION_TEXT_LENGTH) {
 			lblErrorMessageForExplanation.setText(ERROR_MSG_CHAR_LIMIT);
+			lblErrorMessageForExplanation.getElement().setAttribute("alt", ERROR_MSG_CHAR_LIMIT);
+			lblErrorMessageForExplanation.getElement().setAttribute("title", ERROR_MSG_CHAR_LIMIT);
 			fieldValidationStaus = false;
 		}
 		if (fieldValidationStaus) {
@@ -1159,6 +1304,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void activityPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_activity_selected");
 		resourceEducationalLabel.setText(GL1665);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1665);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1665);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1167,6 +1314,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void handoutPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_handout_selected");
 		resourceEducationalLabel.setText(GL0907);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL0907);
+		resourceEducationalLabel.getElement().setAttribute("title", GL0907);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1175,6 +1324,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void homeworkPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_homework_selected");
 		resourceEducationalLabel.setText(GL1666);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1666);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1666);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1183,6 +1334,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void gamePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_game_selected");
 		resourceEducationalLabel.setText(GL1667);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1667);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1667);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1191,6 +1344,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void presentationPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_presentation_selected");
 		resourceEducationalLabel.setText(GL1668);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1668);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1668);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1199,6 +1354,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void referenceMaterialPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_reference_material_selected");
 		resourceEducationalLabel.setText(GL1669);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1669);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1669);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1207,6 +1364,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void quizPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_quiz_selected");
 		resourceEducationalLabel.setText(GL1670);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1670);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1670);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1215,6 +1374,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void curriculumPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_curriculum_plan_selected");
 		resourceEducationalLabel.setText(GL1671);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1671);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1671);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1223,6 +1384,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void lessonPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_lesson_plan_selected");
 		resourceEducationalLabel.setText(GL1672);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1672);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1672);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1231,6 +1394,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void unitPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_unit_plan_selected");
 		resourceEducationalLabel.setText(GL1673);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1673);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1673);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1239,6 +1404,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void projectPlanPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_project_plan_selected");
 		resourceEducationalLabel.setText(GL1674);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1674);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1674);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1247,6 +1414,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void readingPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_reading_selected");
 		resourceEducationalLabel.setText(GL1675);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1675);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1675);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1255,6 +1424,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void textbookPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_textbook_selected");
 		resourceEducationalLabel.setText(GL0909);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL0909);
+		resourceEducationalLabel.getElement().setAttribute("title", GL0909);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1263,6 +1434,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void articlePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_article_selected");
 		resourceEducationalLabel.setText(GL1676);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1676);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1676);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);
@@ -1271,6 +1444,8 @@ public abstract class EditQuestionPopupVc extends AppPopUp implements SelectionH
 	void bookPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_book_selected");
 		resourceEducationalLabel.setText(GL1677);
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1677);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1677);
 		educationalUsePanel.setVisible(false);
 		educationalDropDownLblOpen = false;
 		mandatoryEducationalLbl.setVisible(false);

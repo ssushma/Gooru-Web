@@ -105,16 +105,16 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	public Button addResourceBtn;
 	
 	@UiField
-	public Label generateImageLbl;
+	public Label generateImageLbl,resoureDropDownLbl;
 
 	@UiField
-	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,agreeText,additionalText;
+	Label resourcemomentsOfLearningLabel,standardMaxMsg,mandatoryEducationalLbl,resourceEducationalLabel,mandatoryUrlLbl, mandatoryTitleLbl,agreeText,additionalText,educationalDropDownLbl;
 
 	@UiField
-	Label mandatoryCategoryLbl, urlTextLbl,andText;
+	Label mandatoryCategoryLbl, urlTextLbl,andText,refreshLbl;
 
 	@UiField
-	Label leftArrowLbl, rightArrowLbl, uploadImageLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords;
+	Label leftArrowLbl, rightArrowLbl, uploadImageLbl,mandatoryDescLblForSwareWords,mandatoryTitleLblForSwareWords,momentsOfLearningDropDownLbl;
 
 	@UiField
 	public TextBox titleTextBox;
@@ -122,7 +122,10 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiField
 	public TextArea descriptionTxtAera;
 	
-	@UiField HTMLEventPanel videoResourcePanel,lblContentRights;
+	@UiField HTMLEventPanel videoResourcePanel,lblContentRights,interactiveResourcePanel,websiteResourcePanel,imageResourcePanel,
+	textResourcePanel,audioResourcePanel,activityPanel,handoutPanel,homeworkPanel,gamePanel,presentationPanel,
+	referenceMaterialPanel,quizPanel,curriculumPlanPanel,lessonPlanPanel,unitPlanPanel,projectPlanPanel,readingPanel,
+	textbookPanel,articlePanel,bookPanel,preparingTheLearningPanel,interactingWithTheTextPanel,extendingUnderstandingPanel;
 
 	/*@UiField
 	public ListBox resourceTypeListBox;*/
@@ -133,7 +136,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	// Drop down for Resource Type//
 	@UiField
 	HTMLPanel momentsOfLearningPanel,momentsOfLearningTitle,extendingUnderstandingText,interactingWithTheTextText,preparingTheLearningText,educationalUsePanel,educationalTitle,homeworkText,gameText,presentationText,referenceMaterialText,quizText,curriculumPlanText,lessonPlanText,
-	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel;//otherPanel
+	unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,saveButtonContainer,panelContentRights,rightsContainer,videoPanel,interactivePanel,websitePanel,imagePanel,textsPanel,audioPanel,
+	educationalpanel,rightsContent;//otherPanel
 	
 	@UiField Label mandatorymomentsOfLearninglLbl,standardsDefaultText,resourceCategoryLabel,loadingTextLbl,rightsLbl;
 	
@@ -273,11 +277,14 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		addResourceBtn.addClickHandler(new AddClickHandler());
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
-
+		titleTextBox.getElement().setId("txtTitleTextBox");
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
+		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
+		mandatoryTitleLblForSwareWords.getElement().setId("lblMandatoryTitleLblForSwareWords");
+		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
 		mandatoryUrlLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
@@ -285,11 +292,15 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		leftArrowLbl.setVisible(false);
 		rightArrowLbl.setVisible(false);
 		setThumbnailImage.setVisible(true);
+		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		resourceTypePanel.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
 		generateImageLbl.setVisible(false);
+		saveButtonContainer.getElement().setId("pnlSaveButtonContainer");
 		saveButtonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
+		panelContentRights.getElement().setId("pnlPanelContentRights");
+		rightsContent.getElement().setId("pnlRightsContent");
 		panelContentRights.setVisible(false);
 		mandatoryTitleLblForSwareWords.setVisible(false);
 		mandatoryDescLblForSwareWords.setVisible(false);
@@ -298,63 +309,282 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
+        categorypanel.getElement().setId("pnlCategorypanel");
+        mandatoryTitleLbl.getElement().setId("lblMandatoryTitleLbl");
         mandatoryTitleLbl.setText(GL0173);
+        mandatoryTitleLbl.getElement().setAttribute("alt", GL0173);
+        mandatoryTitleLbl.getElement().setAttribute("title", GL0173);
         descCharcterLimit.getElement().setInnerText(GL0143);
+        descCharcterLimit.getElement().setId("pnlDescCharcterLimit");
+        descCharcterLimit.getElement().setAttribute("alt", GL0143);
+        descCharcterLimit.getElement().setAttribute("title", GL0143);
         mandatoryCategoryLbl.setText(GL1515);
+        mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+        mandatoryCategoryLbl.getElement().setAttribute("alt", GL1515);
+        mandatoryCategoryLbl.getElement().setAttribute("title", GL1515);
         thumbnailLbl.getElement().setInnerText(GL0911);
+        thumbnailLbl.getElement().setId("pnlThumbnailLbl");
+        thumbnailLbl.getElement().setAttribute("alt", GL0911);
+        thumbnailLbl.getElement().setAttribute("title", GL0911);
         titleTextPanel.getElement().setInnerText(GL0318+GL_SPL_STAR);
+        titleTextPanel.getElement().setId("pnlTitleTextPanel");
+        titleTextPanel.getElement().setAttribute("alt", GL0318+GL_SPL_STAR);
+        titleTextPanel.getElement().setAttribute("title", GL0318+GL_SPL_STAR);
+        
         videoPanel.getElement().setInnerHTML(GL0918);
+        videoPanel.getElement().setId("pnlVideoPanel");
+        videoPanel.getElement().setAttribute("alt", GL0918);
+        videoPanel.getElement().setAttribute("title", GL0918);
+        
         interactivePanel.getElement().setInnerHTML(GL0919);
+        interactivePanel.getElement().setId("pnlInteractivePanel");
+        interactivePanel.getElement().setAttribute("alt", GL0919);
+        interactivePanel.getElement().setAttribute("title", GL0919);
+        
 		websitePanel.getElement().setInnerHTML(GL1396);
+		websitePanel.getElement().setId("pnlWebsitePanel");
+		websitePanel.getElement().setAttribute("alt", GL1396);
+		websitePanel.getElement().setAttribute("title", GL1396);
 		textsPanel.getElement().setInnerHTML(GL1044);
+		textsPanel.getElement().setId("pnlTextsPanel");
+		textsPanel.getElement().setAttribute("alt", GL1044);
+		textsPanel.getElement().setAttribute("title", GL1044);
 		audioPanel.getElement().setInnerHTML(GL1045);
+		audioPanel.getElement().setId("pnlAudioPanel");
+		audioPanel.getElement().setAttribute("alt", GL1045);
+		audioPanel.getElement().setAttribute("title", GL1045);
 		imagePanel.getElement().setInnerHTML(GL1046);
+		imagePanel.getElement().setId("pnlImagePanel");
+		imagePanel.getElement().setAttribute("alt", GL1046);
+		imagePanel.getElement().setAttribute("title", GL1046);
 		generateImageLbl.setText(GL0922);
+		generateImageLbl.getElement().setId("lblGenerateImageLbl");
+		generateImageLbl.getElement().setAttribute("alt", GL0922);
+		generateImageLbl.getElement().setAttribute("title", GL0922);
 		orLbl.getElement().setInnerText(GL_GRR_Hyphen+GL0209.toLowerCase()+GL_GRR_Hyphen);
+		orLbl.getElement().setId("pnlOrLbl");
+		orLbl.getElement().setAttribute("alt", GL_GRR_Hyphen+GL0209.toLowerCase()+GL_GRR_Hyphen);
+		orLbl.getElement().setAttribute("title", GL_GRR_Hyphen+GL0209.toLowerCase()+GL_GRR_Hyphen);
 		uploadImageLbl.setText(GL0912);
+		uploadImageLbl.getElement().setId("lblUploadImageLbl");
+		uploadImageLbl.getElement().setAttribute("alt", GL0912);
+		uploadImageLbl.getElement().setAttribute("title", GL0912);
 		refreshLblPanel.getElement().setInnerText(GL0923);
+		refreshLblPanel.getElement().setId("pnlRefreshLblPanel");
+		refreshLblPanel.getElement().setAttribute("alt", GL0923);
+		refreshLblPanel.getElement().setAttribute("title", GL0923);
 		rightsLbl.setText(GL0869);
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt", GL0869);
+		rightsLbl.getElement().setAttribute("title", GL0869);
 		agreeText.setText(GL0870);
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt", GL0870);
+		agreeText.getElement().setAttribute("title", GL0870);
 		commuGuideLinesAnr.setText(GL0871);
+		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
+		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
+		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
 		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
+		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872+GL_GRR_COMMA);
+		termsAndPolicyAnr.getElement().setAttribute("title", GL0872+GL_GRR_COMMA);
 		privacyAnr.setText(" "+GL0873);
+		privacyAnr.getElement().setId("lnkPrivacyAnr");
+		privacyAnr.getElement().setAttribute("alt", GL0873);
+		privacyAnr.getElement().setAttribute("title", GL0873);
 		andText.setText(" "+GL_GRR_AND+" ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt", GL_GRR_AND);
+		andText.getElement().setAttribute("title", GL_GRR_AND);
 		copyRightAnr.setText(" "+GL0875);
+		copyRightAnr.getElement().setId("lnkCopyRightAnr");
+		copyRightAnr.getElement().setAttribute("alt", GL0875);
+		copyRightAnr.getElement().setAttribute("title", GL0875);
 		additionalText.setText(GL0874);
+		additionalText.getElement().setId("lblAdditionalText");
+		additionalText.getElement().setAttribute("alt", GL0874);
+		additionalText.getElement().setAttribute("title", GL0874);
 		addResourceBtn.setText(GL0141);
+		addResourceBtn.getElement().setId("btnAddResourceBtn");
+		addResourceBtn.getElement().setAttribute("alt", GL0141);
+		addResourceBtn.getElement().setAttribute("title", GL0141);
 		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.getElement().setId("lnkCancelResourcePopupBtnLbl");
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
 		loadingTextLbl.setText(GL0808.toLowerCase());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt", GL0808.toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title", GL0808.toLowerCase());
 //		otherPanel.getElement().setInnerHTML(MessageProperties.GL1047);  
 		resourceFormat.getElement().setInnerHTML(GL0906); 
-		resDescription.getElement().setInnerHTML(GL0904); 
-		urlTextPanel.getElement().setInnerHTML(GL0915);
-		mandatoryUrlLbl.setText(GL0916);
-		momentsOfLearningPanel.setVisible(false);
+		resourceFormat.getElement().setId("pnlResourceFormat");
+		resourceFormat.getElement().setAttribute("alt", GL0906);
+		resourceFormat.getElement().setAttribute("title", GL0906);
 		
+		resDescription.getElement().setInnerHTML(GL0904); 
+		resDescription.getElement().setId("pnlResDescription");
+		resDescription.getElement().setAttribute("alt", GL0904);
+		resDescription.getElement().setAttribute("title", GL0904);
+		
+		urlTextPanel.getElement().setInnerHTML(GL0915);
+		urlTextPanel.getElement().setId("pnlUrlTextPanel");
+		urlTextPanel.getElement().setAttribute("alt", GL0915);
+		urlTextPanel.getElement().setAttribute("title", GL0915);
+		
+		
+		mandatoryUrlLbl.setText(GL0916);
+		mandatoryUrlLbl.getElement().setId("lblMandatoryUrlLbl");
+		mandatoryUrlLbl.getElement().setAttribute("alt", GL0916);
+		mandatoryUrlLbl.getElement().setAttribute("title", GL0916);
+		
+		momentsOfLearningPanel.setVisible(false);
+		momentsOfLearningPanel.getElement().setId("pnlMomentsOfLearningPanel");
 		educationalTitle.getElement().setInnerHTML(GL1664);
+		educationalTitle.getElement().setId("lblEducationalTitle");
+		educationalTitle.getElement().setAttribute("alt", GL1664);
+		educationalTitle.getElement().setAttribute("title", GL1664);
 		activityText.getElement().setInnerHTML(GL1665);
+		activityText.getElement().setId("pnlActivityText");
+		activityText.getElement().setAttribute("alt", GL1665);
+		activityText.getElement().setAttribute("title", GL1665);
 		handoutText.getElement().setInnerHTML(GL0907);
+		handoutText.getElement().setId("pnlHandoutText");
+		handoutText.getElement().setAttribute("alt", GL0907);
+		handoutText.getElement().setAttribute("title", GL0907);
 		homeworkText.getElement().setInnerHTML(GL1666);
+		homeworkText.getElement().setId("pnlHomeworkText");
+		homeworkText.getElement().setAttribute("alt", GL1666);
+		homeworkText.getElement().setAttribute("title", GL1666);
 		gameText.getElement().setInnerHTML(GL1667);
+		gameText.getElement().setId("pnlGameText");
+		gameText.getElement().setAttribute("alt", GL1667);
+		gameText.getElement().setAttribute("title", GL1667);
 		presentationText.getElement().setInnerHTML(GL1668);
+		presentationText.getElement().setId("pnlPresentationText");
+		presentationText.getElement().setAttribute("alt", GL1668);
+		presentationText.getElement().setAttribute("title", GL1668);
 		referenceMaterialText.getElement().setInnerHTML(GL1669);
+		referenceMaterialText.getElement().setId("pnlReferenceMaterialText");
+		referenceMaterialText.getElement().setAttribute("alt", GL1669);
+		referenceMaterialText.getElement().setAttribute("title", GL1669);
 		quizText.getElement().setInnerHTML(GL1670);
+		quizText.getElement().setId("pnlQuizText");
+		quizText.getElement().setAttribute("alt", GL1670);
+		quizText.getElement().setAttribute("title", GL1670);
 		curriculumPlanText.getElement().setInnerHTML(GL1671);
+		curriculumPlanText.getElement().setId("pnlCurriculumPlanText");
+		curriculumPlanText.getElement().setAttribute("alt", GL1671);
+		curriculumPlanText.getElement().setAttribute("title", GL1671);
 		lessonPlanText.getElement().setInnerHTML(GL1672);
+		lessonPlanText.getElement().setId("pnlLessonPlanText");
+		lessonPlanText.getElement().setAttribute("alt", GL1672);
+		lessonPlanText.getElement().setAttribute("title", GL1672);
 		unitPlanText.getElement().setInnerHTML(GL1673);
+		unitPlanText.getElement().setId("pnlUnitPlanText");
+		unitPlanText.getElement().setAttribute("alt", GL1673);
+		unitPlanText.getElement().setAttribute("title", GL1673);
 		projectPlanText.getElement().setInnerHTML(GL1674);
+		projectPlanText.getElement().setId("pnlProjectPlanText");
+		projectPlanText.getElement().setAttribute("alt", GL1674);
+		projectPlanText.getElement().setAttribute("title", GL1674);
 		readingText.getElement().setInnerHTML(GL1675);
+		readingText.getElement().setId("pnlReadingText");
+		readingText.getElement().setAttribute("alt", GL1675);
+		readingText.getElement().setAttribute("title", GL1675);
 		textbookText.getElement().setInnerHTML(GL0909);
+		textbookText.getElement().setId("pnlTextbookText");
+		textbookText.getElement().setAttribute("alt", GL0909);
+		textbookText.getElement().setAttribute("title", GL0909);
 		articleText.getElement().setInnerHTML(GL1676);
+		articleText.getElement().setId("pnlArticleText");
+		articleText.getElement().setAttribute("alt", GL1676);
+		articleText.getElement().setAttribute("title", GL1676);
 		bookText.getElement().setInnerHTML(GL1677);
+		bookText.getElement().setId("pnlBookText");
+		bookText.getElement().setAttribute("alt", GL1677);
+		bookText.getElement().setAttribute("title", GL1677);
+		educationalUsePanel.getElement().setId("pnlEducationalUsePanel");
 		educationalUsePanel.setVisible(false);
+		
 		standardsDefaultText.setText(GL1682);
+		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
+		standardsDefaultText.getElement().setAttribute("alt", GL1682);
+		standardsDefaultText.getElement().setAttribute("title", GL1682);
 		momentsOfLearningTitle.getElement().setInnerHTML(GL1678);
+		momentsOfLearningTitle.getElement().setId("pnlMomentsOfLearningTitle");
+		momentsOfLearningTitle.getElement().setAttribute("alt", GL1678);
+		momentsOfLearningTitle.getElement().setAttribute("title", GL1678);
 		preparingTheLearningText.getElement().setInnerHTML(GL1679);
+		preparingTheLearningText.getElement().setId("pnlPreparingTheLearningText");
+		preparingTheLearningText.getElement().setAttribute("alt", GL1679);
+		preparingTheLearningText.getElement().setAttribute("title", GL1679);
 		interactingWithTheTextText.getElement().setInnerHTML(GL1680);
+		interactingWithTheTextText.getElement().setId("pnlInteractingWithTheTextText");
+		interactingWithTheTextText.getElement().setAttribute("alt", GL1680);
+		interactingWithTheTextText.getElement().setAttribute("title", GL1680);
 		extendingUnderstandingText.getElement().setInnerHTML(GL1681);
+		extendingUnderstandingText.getElement().setId("pnlExtendingUnderstandingText");
+		extendingUnderstandingText.getElement().setAttribute("alt", GL1681);
+		extendingUnderstandingText.getElement().setAttribute("title", GL1681);
 		resourceEducationalLabel.setText(GL1684);
+		resourceEducationalLabel.getElement().setId("lblResourceEducationalLabel");
+		resourceEducationalLabel.getElement().setAttribute("alt", GL1684);
+		resourceEducationalLabel.getElement().setAttribute("title", GL1684);
 		resourcemomentsOfLearningLabel.setText(GL1684);
+		resourcemomentsOfLearningLabel.getElement().setId("lblResourcemomentsOfLearningLabel");
+		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", GL1684);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("title", GL1684);
+		urlTextLbl.getElement().setId("lblUrlTextLbl");
+		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
+		resoureDropDownLbl.getElement().setId("lblResoureDropDownLbl");
+		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
+		videoResourcePanel.getElement().setId("epnlVideoResourcePanel");
+		interactiveResourcePanel.getElement().setId("epnlInteractiveResourcePanel");
+		websiteResourcePanel.getElement().setId("epnlWebsiteResourcePanel");
+		imageResourcePanel.getElement().setId("epnlImageResourcePanel");
+		textResourcePanel.getElement().setId("epnlTextResourcePanel");
+		audioResourcePanel.getElement().setId("epnlAudioResourcePanel");
+		video.getElement().setId("pnlVideo");
+		interactive.getElement().setId("pnlInteractive");
+		website.getElement().setId("pnlWebsite");
+		image.getElement().setId("pnlImage");
+		texts.getElement().setId("pnlTexts");
+		audio.getElement().setId("pnlAudio");
+		educationalpanel.getElement().setId("pnlEducationalpanel");
+		educationalDropDownLbl.getElement().setId("lblEducationalDropDownLbl");
+		mandatoryEducationalLbl.getElement().setId("lblMandatoryEducationalLbl");
+		activityPanel.getElement().setId("epnlActivityPanel");
+		handoutPanel.getElement().setId("epnlHandoutPanel");
+		homeworkPanel.getElement().setId("epnlHomeworkPanel");
+		gamePanel.getElement().setId("epnlGamePanel");
+		presentationPanel.getElement().setId("epnlPresentationPanel");
+		referenceMaterialPanel.getElement().setId("epnlReferenceMaterialPanel");
+		quizPanel.getElement().setId("epnlQuizPanel");
+		curriculumPlanPanel.getElement().setId("epnlCurriculumPlanPanel");
+		lessonPlanPanel.getElement().setId("epnlLessonPlanPanel");
+		unitPlanPanel.getElement().setId("epnlUnitPlanPanel");
+		projectPlanPanel.getElement().setId("epnlProjectPlanPanel");
+		readingPanel.getElement().setId("epnlReadingPanel");
+		textbookPanel.getElement().setId("epnlTextbookPanel");
+		articlePanel.getElement().setId("epnlArticlePanel");
+		bookPanel.getElement().setId("epnlBookPanel");
+		momentsOfLearningDropDownLbl.getElement().setId("lblMomentsOfLearningDropDownLbl");
+		mandatorymomentsOfLearninglLbl.getElement().setId("lblMandatorymomentsOfLearninglLbl");
+		preparingTheLearningPanel.getElement().setId("epnlPreparingTheLearningPanel");
+		interactingWithTheTextPanel.getElement().setId("epnlInteractingWithTheTextPanel");
+		extendingUnderstandingPanel.getElement().setId("epnlExtendingUnderstandingPanel");
+		standardContainer.getElement().setId("fpnlStandardContainer");
+		standardSgstBox.getElement().setId("StandardSgstBox");
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardsPanel.getElement().setId("fpnlStandardsPanel");
+		leftArrowLbl.getElement().setId("lblLeftArrowLbl");
+		rightArrowLbl.getElement().setId("lblRightArrowLbl");
+		refreshLbl.getElement().setId("lblRefreshLbl");
+		rightsContainer.getElement().setId("pnlRightsContainer");
+		lblContentRights.getElement().setId("epnlLblContentRights");
+		
 		displayResourceInfo();
 		show();
 		center();
@@ -563,24 +793,37 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	
 	public void setResourceDescription(){
 		descriptionTxtAera.setText(collectionItemDo.getResource().getDescription());
+		descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+		descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 	}
 
 	public void displayResourceInfo() {
 		
 		String url = collectionItemDo.getResource().getUrl();
 		urlTextLbl.setText(url);
+		urlTextLbl.getElement().setAttribute("alt", GL0827);
+		urlTextLbl.getElement().setAttribute("title", GL0827);
+		
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
+			descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+			descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 		} else {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription());
+			descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+			descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 		}
 		if (collectionItemDo.getResource().getTitle().length() >= 50) {
 			titleTextBox.setText(collectionItemDo.getResource().getTitle()
 					.substring(0, 50));
+			titleTextBox.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 		} else {
 			titleTextBox.setText(collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 		}
 
 		setThumbnailImage.setVisible(true);
@@ -588,23 +831,31 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 		
 		if (category.equalsIgnoreCase("Video")||category.equalsIgnoreCase("Videos")) {
 			resourceCategoryLabel.setText(GL0918);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL0918);
+			resourceCategoryLabel.getElement().setAttribute("title", GL0918);
 			categorypanel.setStyleName(video.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 			
 		} else if (category.equalsIgnoreCase("Interactive")) {
 			resourceCategoryLabel.setText(GL0919);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL0919);
+			resourceCategoryLabel.getElement().setAttribute("title",GL0919);
 			categorypanel.setStyleName(interactive.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Website")||category.equalsIgnoreCase("websites")||category.equalsIgnoreCase("webpage")) {
 			resourceCategoryLabel.setText(GL1396);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1396);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1396);
 			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		}
 		else if(category.equalsIgnoreCase("audio")) {
 			resourceCategoryLabel.setText(GL1045);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1045);
+			resourceCategoryLabel.getElement().setAttribute("title",GL1045);
 			categorypanel.setStyleName(audio.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -612,12 +863,16 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	//	else if((category.equalsIgnoreCase("texts")||(category.equalsIgnoreCase("Slide")||(category.equalsIgnoreCase("Handout")||(category.equalsIgnoreCase("Textbook")||(category.equalsIgnoreCase("Lesson")) {
 		else if(category.equalsIgnoreCase("texts")||category.equalsIgnoreCase("text")) {
 				resourceCategoryLabel.setText(GL1044);
+				resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+				resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		}
 		else if (category.equalsIgnoreCase("image")) {
 			resourceCategoryLabel.setText(GL1046);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1046);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1046);
 			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -630,21 +885,29 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 //		} 
 		else if (category.equalsIgnoreCase("Slide")) {
 			resourceCategoryLabel.setText(GL1046);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1046);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1046);
 			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Handout")) {
 			resourceCategoryLabel.setText(GL1044);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Textbook")) {
 			resourceCategoryLabel.setText(GL1044);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Lesson")) {
 			resourceCategoryLabel.setText(GL1044);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -655,6 +918,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 //			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase("Exam")) {
 			resourceCategoryLabel.setText(GL1396);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1396);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1396);
 			categorypanel.setStyleName(website.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -676,6 +941,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			for (checkboxSelectedDo item : collectionItemDo.getResource().getMomentsOfLearning()) {			
 				   if(item.isSelected()){
 					   resourcemomentsOfLearningLabel.setText(item.getValue());
+					   resourcemomentsOfLearningLabel.getElement().setAttribute("alt", item.getValue());
+						resourcemomentsOfLearningLabel.getElement().setAttribute("title", item.getValue());
 					   momentsOfLearningPanel.setVisible(false);
 					   momentsOfLearningOpen = false;
 					   mandatorymomentsOfLearninglLbl.setVisible(false);
@@ -765,6 +1032,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											
 											if (titleStr.toLowerCase().contains("http://") || titleStr.toLowerCase().contains("https://") || titleStr.toLowerCase().contains("ftp://")){
 												mandatoryTitleLbl.setText(GL0323);
+												mandatoryTitleLbl.getElement().setAttribute("alt", GL0323);
+										        mandatoryTitleLbl.getElement().setAttribute("title", GL0323);
 												mandatoryTitleLbl.setVisible(true);
 												isValidate = false;
 											}
@@ -775,6 +1044,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 											}
 											if (titleStr == null || titleStr.equalsIgnoreCase("")) {
 												mandatoryTitleLbl.setText(GL0173);
+												mandatoryTitleLbl.getElement().setAttribute("alt", GL0173);
+										        mandatoryTitleLbl.getElement().setAttribute("title", GL0173);
 												mandatoryTitleLbl.setVisible(true);
 												isValidate = false;
 											}
@@ -783,6 +1054,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 													|| categoryStr
 															.equalsIgnoreCase("Choose a resource format")) {
 												mandatoryCategoryLbl.setText(GL0917);
+												mandatoryCategoryLbl.getElement().setAttribute("alt", GL0917);
+										        mandatoryCategoryLbl.getElement().setAttribute("title", GL0917);
 												mandatoryCategoryLbl.setVisible(true);
 												isValidate = false;
 											}
@@ -791,6 +1064,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 												if(youTubeId==null || youTubeId.equalsIgnoreCase("null") || youTubeId.equalsIgnoreCase("")){
 													if(!categoryStr.equalsIgnoreCase("Webpage")){
 														mandatoryCategoryLbl.setText(GL0927);
+														mandatoryCategoryLbl.getElement().setAttribute("alt", GL0927);
+												        mandatoryCategoryLbl.getElement().setAttribute("title", GL0927);
 														mandatoryCategoryLbl.setVisible(true);
 														isValidate = false;
 													}else{
@@ -895,6 +1170,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
 				mandatoryTitleLbl.setText(GL0143);
+				mandatoryTitleLbl.getElement().setAttribute("alt", GL0143);
+		        mandatoryTitleLbl.getElement().setAttribute("title", GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
@@ -906,6 +1183,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 			descCharcterLimit.setVisible(false);
 			if (descriptionTxtAera.getText().length() >= 300) {
 				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0,300));
+				descriptionTxtAera.getElement().setAttribute("alt", descriptionTxtAera.getText());
+				descriptionTxtAera.getElement().setAttribute("title", descriptionTxtAera.getText());
 				descCharcterLimit.setVisible(true);
 			}
 		}
@@ -925,6 +1204,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("videoResourcePanel")
 	void videoResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText(GL0918);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL0918);
+		resourceCategoryLabel.getElement().setAttribute("title", GL0918);
 		//resourceCategoryLabel.setStyleName(video.getStyleName());
 		categorypanel.setStyleName(video.getStyleName());
 		resourceTypePanel.setVisible(false);
@@ -933,6 +1214,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("interactiveResourcePanel")
 	void interactiveResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText(GL0919);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL0919);
+		resourceCategoryLabel.getElement().setAttribute("title", GL0919);
 		categorypanel.setStyleName(interactive.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
@@ -940,6 +1223,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("websiteResourcePanel")
 	void websiteResourcePanel(ClickEvent event){
 		resourceCategoryLabel.setText(GL1396);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1396);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1396);
 		categorypanel.setStyleName(website.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen=false;
@@ -947,6 +1232,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("imageResourcePanel")
 	void slideResourcePanel(ClickEvent event) {
 		resourceCategoryLabel.setText(GL1046);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1046);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1046);
 		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -956,6 +1243,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("textResourcePanel")
 	void handoutResourcePanel(ClickEvent event) {
 		resourceCategoryLabel.setText(GL1044);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -965,6 +1254,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	@UiHandler("audioResourcePanel")
 	void textbookResourcePanel(ClickEvent event) {
 		resourceCategoryLabel.setText(GL1045);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1045);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1045);
 		categorypanel.setStyleName(audio.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -1295,6 +1586,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	void preparingTheLearningPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_preparing_the_learning_selected");
 		resourcemomentsOfLearningLabel.setText(GL1679);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", GL1679);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("title", GL1679);
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
@@ -1303,6 +1596,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	void interactingWithTheTextPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_interacting_with_the_text_selected");
 		resourcemomentsOfLearningLabel.setText(GL1680);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", GL1680);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("title", GL1680);
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
@@ -1311,6 +1606,8 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 	void extendingUnderstandingPanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_extending_Understanding_selected");
 		resourcemomentsOfLearningLabel.setText(GL1681);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("alt", GL1681);
+		resourcemomentsOfLearningLabel.getElement().setAttribute("title", GL1681);
 		momentsOfLearningPanel.setVisible(false);
 		momentsOfLearningOpen = false;
 		mandatorymomentsOfLearninglLbl.setVisible(false);
