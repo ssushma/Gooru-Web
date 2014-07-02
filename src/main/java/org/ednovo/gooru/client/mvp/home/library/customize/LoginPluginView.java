@@ -169,31 +169,81 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	public void setLabelsAndIds() {
 		
 		lblPii.setText(GL1892);
+		lblPii.getElement().setId("lblPii");
+		lblPii.getElement().setAttribute("alt",GL1892);
+		lblPii.getElement().setAttribute("title",GL1892);
+		
 		ancprivacy.setText(GL1893);
+		ancprivacy.getElement().setId("lnkAncprivacy");
+		ancprivacy.getElement().setAttribute("alt",GL1893);
+		ancprivacy.getElement().setAttribute("title",GL1893);
+		
 		toUsText.setText(GL1894);
+		toUsText.getElement().setId("spnToUsText");
+		toUsText.getElement().setAttribute("alt",GL1894);
+		toUsText.getElement().setAttribute("title",GL1894);
 		
 		hangOnText.getElement().setInnerText(GL0740);
+		hangOnText.getElement().setId("pnlHangOnText");
+		hangOnText.getElement().setAttribute("alt",GL0740);
+		hangOnText.getElement().setAttribute("title",GL0740);
+		
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
+		signUpPanel.getElement().setId("pnlSignUpPanel");
+		
 		donotHaveAcount.setText(GL0634);
+		donotHaveAcount.getElement().setId("lblDonotHaveAcount");
+		donotHaveAcount.getElement().setAttribute("alt",GL0634);
+		donotHaveAcount.getElement().setAttribute("title",GL0634);
 		donotHaveAcount.getElement().setAttribute("style", "float: left;");
+		
 		ancSignUp.getElement().setAttribute("style", "float: left;padding: 0;margin-left: 5px;");
 		ancSignUp.setText(GL0207);
+		ancSignUp.getElement().setId("lnkAncSignUp");
+		ancSignUp.getElement().setAttribute("alt",GL0207);
+		ancSignUp.getElement().setAttribute("title",GL0207);
+		
 		collectionDescription.setText(GL0476);
-		forgotPwd.getElement().setId("lnkForgotPwd");
+		collectionDescription.getElement().setId("lblCollectionDescription");
+		collectionDescription.getElement().setAttribute("alt",GL0476);
+		collectionDescription.getElement().setAttribute("title",GL0476);
+		
+	
 		loginTxtBox.setPlaceholder(GL0202);
 		loginTxtBox.getElement().setAttribute("placeholder",GL0202);
 		loginTxtBox.setFocus(true);
-		passwordTxtBox.setPlaceholder(GL0204);
-		forgotPwd.setText(GL0205);
-		loginButton.setText(GL0187);
-		lblPleaseWait.setText(GL0242);
-		loginButton.setText(GL1185);
 		loginTxtBox.getElement().setId("tbLoginUsername");
+		
+		passwordTxtBox.setPlaceholder(GL0204);
 		passwordTxtBox.getElement().setId("tbLoginPassword");
+		
+		forgotPwd.setText(GL0205);
+		forgotPwd.getElement().setId("lnkForgotPwd");
+		forgotPwd.getElement().setAttribute("alt",GL0205);
+		forgotPwd.getElement().setAttribute("title",GL0205);
+		
+		loginButton.setText(GL0187);
 		loginButton.getElement().setId("btnLogin");
+		loginButton.getElement().setAttribute("alt",GL0187);
+		loginButton.getElement().setAttribute("title",GL0187);
+		
+		lblPleaseWait.setText(GL0242);
+		lblPleaseWait.getElement().setId("lblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",GL0242);
+		lblPleaseWait.getElement().setAttribute("title",GL0242);
+		
+		loginButton.setText(GL1185);
+
 		gmailButton.setText(GL0203);
-		lblOr.setText(GL0209);
 		gmailButton.getElement().setId("customizeGmailBtn");
+		gmailButton.getElement().setAttribute("alt",GL0203);
+		gmailButton.getElement().setAttribute("title",GL0203);
+		
+		lblOr.setText(GL0209);
+		lblOr.getElement().setId("lblOr");
+		lblOr.getElement().setAttribute("alt",GL0209);
+		lblOr.getElement().setAttribute("title",GL0209);
+		
 		lblPleaseWait.setVisible(false);
 
 	}

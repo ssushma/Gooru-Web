@@ -48,6 +48,7 @@ public class NgcLibraryView extends BaseViewWithHandlers<NgcLibraryUiHandlers> i
 
 	public NgcLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

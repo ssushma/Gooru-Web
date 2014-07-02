@@ -79,6 +79,11 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 	
 	private void setData(ProfileLibraryDo profileLibraryDo) {
 		courseTitle.setText(profileLibraryDo.getTitle());
+		courseTitle.getElement().setId("lblCourseTitle");
+		courseTitle.getElement().setAttribute("alt",profileLibraryDo.getTitle());
+		courseTitle.getElement().setAttribute("title",profileLibraryDo.getTitle());
+		courseAuthor.getElement().setId("lblCourseAuthor");
+		
 		featuredCourseImage.setUrl(StringUtil.formThumbnailName(profileLibraryDo.getThumbnails().getUrl(),COURSE_100_75_CROP));
 		featuredCourseImage.setWidth("100px");
 		featuredCourseImage.setHeight("75px");
@@ -155,6 +160,9 @@ public class SausdFeaturedView extends Composite implements MessageProperties {
 */		courseAuthor.setVisible(false);
 		contributorImage.setVisible(false);
 		setCourseId(profileLibraryDo.getGooruOid());
+		featuredCourse.getElement().setId("epnlFeaturedCourse");
+		featuredCourseImage.getElement().setId("imgFeaturedCourseImage");
+		contributorImage.getElement().setId("imgContributorImage");
 	}
 	
 	public HTMLEventPanel getfeaturedCoursePanel() {

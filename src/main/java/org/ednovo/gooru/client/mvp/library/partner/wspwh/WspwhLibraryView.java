@@ -48,6 +48,7 @@ public class WspwhLibraryView extends BaseViewWithHandlers<WspwhLibraryUiHandler
 
 	public WspwhLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override
