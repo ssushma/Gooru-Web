@@ -162,7 +162,7 @@ public class UserSettingsPresenter
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
-		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : "ya29.NgB31EYcRQOnSyAAAADvvUHF5jyYerkqpFWKKRd3cX1JxlPKyPIGA-cN_dwmsQ";
+		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : null;
 		
 		if (access_token !=null ){
 			UserDo user = AppClientFactory.getLoggedInUser();
