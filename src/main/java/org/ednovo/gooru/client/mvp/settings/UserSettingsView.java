@@ -65,6 +65,7 @@ import org.ednovo.gooru.client.uc.SettingEmailEditLabelUc;
 import org.ednovo.gooru.client.uc.SettingLastNameEditLabelUC;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
@@ -73,6 +74,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -149,9 +151,9 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	@UiField HTMLEventPanel profileImageContainer,userCoursePopup;
 	@UiField Image uploadProfileImage;
 	@UiField HTMLPanel editButtonContainerAccount,editButtonContainerEdu,editButtonContainerContact,buttonContainer,emailbuttonContainer,EduInfoButtonContainer,gradeContainer,DefaultGardeContainer,courseContainer, panelToolTipContent,panelTooltipContainer;
-	@UiField Button editButtonAccount,editButtonEdu,editButtonContact,settingCancelButton,emailCancelButton,emailSaveButton,eduInfoCancelButton,eduInfoSaveButton,standardsSaveButton,standardsCancelButton,standardsEditButton;
+	@UiField Button editButtonAccount,editButtonEdu,editButtonContact,settingCancelButton,emailCancelButton,emailSaveButton,eduInfoCancelButton,eduInfoSaveButton,standardsSaveButton,standardsCancelButton,standardsEditButton, btnConnect;
 	
-	@UiField Label lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss;
+	@UiField Label panelHeading, lblPleaseWait,lblCommonCore,lblCaliforniaScience,description,standardSavingTextLabel,lblTexas,lblUserMessage,lblNgss,lblImageSubHeading, lblHeading, lblSubHeading,lblDisconnect;
 	
 	@UiField HTML htmlToolTipDesc;
 	@UiField TextBox txtUserName;
@@ -188,6 +190,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	String USER_TAXONOMY_ROOT_CODE="user_taxonomy_root_code";
 	List<String> userStandardPrefcode=new ArrayList<String>();
+	
+	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	/** 
 	 * This method is to get the settingDo
@@ -270,6 +274,16 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		
 		MixpanelUtil.Loading_SettingsPage();
+		
+		panelHeading.setText(i18n.GL2007());
+		btnConnect.setText(i18n.GL2008());
+		btnConnect.getElement().removeClassName("green");
+		lblImageSubHeading.setText(i18n.GL2009());
+		lblHeading.setText(i18n.GL2009());
+		lblSubHeading.setText(i18n.GL2010());
+		lblDisconnect.setText(i18n.GL2011());
+		lblDisconnect.setVisible(false); 
+		
 		courseData.getElement().getStyle().setWidth(324, Unit.PX);
 		settingsText.getElement().setInnerHTML(GL0192);
 		uploadProfilImageButton.setText(GL0800);
@@ -742,6 +756,20 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}
 		
 	}
+	@UiHandler("btnConnect")
+	public void onClickConnect(ClickEvent event){
+		Map<String, String> parms = new HashMap<String, String>();
+		parms = StringUtil.splitQuery(Window.Location.getHref());
+		AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
+
+			@Override
+			public void onSuccess(String redirectUrl) {
+				MixpanelUtil.mixpanelEvent("Access_Google_Drive");
+				Window.Location.replace(redirectUrl);
+			}
+		});
+	}
+	
 	@UiHandler("settingsSaveButton")
 	public void OnClickSaveButton(ClickEvent event) {
 		
@@ -1774,5 +1802,10 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	public void hideEmailContainer() {
 		emailPanel.setVisible(false);
 	}
-	
+	@Override
+	public void googleDirveStatus(){
+//		lblDisconnect.setVisible(AppClientFactory.getLoggedInUser().getAccessToken() != null ? true : false);
+		btnConnect.getElement().addClassName("green");
+		btnConnect.setText(i18n.GL2012());
+	}
 }

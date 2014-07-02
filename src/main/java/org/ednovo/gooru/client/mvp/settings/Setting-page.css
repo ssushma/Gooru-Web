@@ -1375,3 +1375,29 @@ input.styled {
 	padding: 7px 46px !important;
 	border-radius: 1px !important;
 }
+
+.div1, .div2, .div3{
+	float: left;
+}
+
+.driveImage{
+	width: 50px;
+	height: auto;
+}
+.div1, .div2{
+	width: 20%;
+	text-align: center;
+}
+.div1{
+	margin: 10px auto;
+}
+
+.buttonConnect{
+	width: 135px;
+	margin-bottom: 12px;
+}
+.lblHeading{
+	font-size: 24px;
+	font-weight: bold;
+	padding-bottom: 6px;
+}
