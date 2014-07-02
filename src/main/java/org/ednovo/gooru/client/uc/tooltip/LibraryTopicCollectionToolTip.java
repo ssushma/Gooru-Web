@@ -4,7 +4,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.RatingWidgetView;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LibraryTopicCollectionToolTip extends Composite implements MessageProperties{
+public class LibraryTopicCollectionToolTip extends Composite {
 	
 	
 	public interface DiscoverToolTipUiBinder extends UiBinder<Widget, LibraryTopicCollectionToolTip>{
@@ -26,6 +26,7 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 	
 	public static DiscoverToolTipUiBinder discoverToolTipUiBinder=GWT.create(DiscoverToolTipUiBinder.class);
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 	
 	@UiField HTMLPanel arowPanel;
 	
@@ -44,13 +45,13 @@ public class LibraryTopicCollectionToolTip extends Composite implements MessageP
 		organizePopupTextContainer.getElement().setId("fpnlOrganizePopupTextContainer");
 		textFlowPanel.getElement().setId("fpnlTextFlowPanel");
 		descPanel.getElement().setId("htmlDescPanel");
-		descPanel.getElement().setAttribute("alt", GL0532);
-		descPanel.getElement().setAttribute("title", GL0532);
-		descPanel.setHTML(GL0532);
-		categoryLbl.setHTML(GL1063);
+		descPanel.getElement().setAttribute("alt", i18n.GL0532());
+		descPanel.getElement().setAttribute("title", i18n.GL0532());
+		descPanel.setHTML(i18n.GL0532());
+		categoryLbl.setHTML(i18n.GL1063());
 		categoryLbl.getElement().setId("htmlCategoryLbl");
-		categoryLbl.getElement().setAttribute("alt", GL1063);
-		categoryLbl.getElement().setAttribute("title", GL1063);
+		categoryLbl.getElement().setAttribute("alt", i18n.GL1063());
+		categoryLbl.getElement().setAttribute("title",i18n.GL1063());
 		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
 	}
 	
