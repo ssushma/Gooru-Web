@@ -34,6 +34,7 @@ public class RusdView extends BaseViewWithHandlers<RusdUiHandlers> implements Is
 		setWidget(uiBinder.createAndBindUi(this));
 		libraryView = new LibraryView(PlaceTokens.RUSD_LIBRARY);
 		rusdPanel.add(libraryView);
+		rusdPanel.getElement().setId("pnlPartnerPanel");
 	}
 
 	@Override

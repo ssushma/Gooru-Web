@@ -48,6 +48,7 @@ public class OnrLibraryView extends BaseViewWithHandlers<OnrLibraryUiHandlers> i
 
 	public OnrLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

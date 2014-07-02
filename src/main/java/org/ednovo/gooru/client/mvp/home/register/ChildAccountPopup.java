@@ -63,9 +63,19 @@ public class ChildAccountPopup extends Composite implements MessageProperties {
 		appPopUp.show();
 		appPopUp.center();
 		congrtstext.setText(GL1212);
+		congrtstext.getElement().setId("lblCongrtstext");
+		congrtstext.getElement().setAttribute("alt",GL1212);
+		congrtstext.getElement().setAttribute("title",GL1212);
+		
 		excitedText.setText(GL1213);
+		excitedText.getElement().setId("lblExcitedText");
+		excitedText.getElement().setAttribute("alt",GL1213);
+		excitedText.getElement().setAttribute("title",GL1213);
+		
 		confirmationBtnUc.setText(GL0190);
 		confirmationBtnUc.getElement().setId("btnConfirmation");
+		confirmationBtnUc.getElement().setAttribute("alt",GL0190);
+		confirmationBtnUc.getElement().setAttribute("title",GL0190);
 	}
 
 	/**

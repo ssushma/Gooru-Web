@@ -89,16 +89,33 @@ public class ParentRegisterVc extends Composite implements MessageProperties {
 		appPopUp.show();
 		appPopUp.center();
 		setUpText.setText(GL1195);
+		setUpText.getElement().setId("lblSetUpText");
+		setUpText.getElement().setAttribute("alt",GL1195);
+		setUpText.getElement().setAttribute("title",GL1195);
+		
 		emailtext.setText(GL1196);
+		emailtext.getElement().setId("lblEmailtext");
+		emailtext.getElement().setAttribute("alt",GL1196);
+		emailtext.getElement().setAttribute("title",GL1196);
+		
 		almostDoneRegisterationUc.setText(GL0228);
+		almostDoneRegisterationUc.getElement().setId("btnSend");
+		almostDoneRegisterationUc.getElement().setAttribute("alt",GL0228);
+		almostDoneRegisterationUc.getElement().setAttribute("title",GL0228);
+		
 		guardianCancelAnr.setText(GL0142);
+		guardianCancelAnr.getElement().setId("lnkCancel");
+		guardianCancelAnr.getElement().setAttribute("alt",GL0142);
+		guardianCancelAnr.getElement().setAttribute("title",GL0142);
+		
 		emailValidationUc.setVisible(false);
 		emailValidationUc.setStyleName(RegisterCBundle.INSTANCE.css().parentErrorLabel());
 		parentEmailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		parentEmailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		parentEmailIdTxtBox.getElement().setId("txtParentEmailId");
-		almostDoneRegisterationUc.getElement().setId("btnSend");
-		guardianCancelAnr.getElement().setId("lnkCancel");
+		emailValidationUc.getElement().setId("errlblEmailValidationUc");
+		
+		
 	}
 	
 	/**
@@ -157,12 +174,16 @@ public class ParentRegisterVc extends Composite implements MessageProperties {
 			parentEmailIdTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().guardianErrorEmail());
 			emailValidationUc.setVisible(true);
 			emailValidationUc.setText(StringUtil.generateMessage(GL0082, EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0082, EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0082, EMAIL));
 			isValid = false;
 		}
 		if ((email != null && !email.isEmpty()) && !email.contains("@")) {
 			parentEmailIdTxtBox.addStyleName(RegisterCBundle.INSTANCE.css().guardianErrorEmail());
 			emailValidationUc.setVisible(true);
 			emailValidationUc.setText(StringUtil.generateMessage(GL0067, EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0067, EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0067, EMAIL));
 			isValid = false;
 		}		
 		return isValid;
