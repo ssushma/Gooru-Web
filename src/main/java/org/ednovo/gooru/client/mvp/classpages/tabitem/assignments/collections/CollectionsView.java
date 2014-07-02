@@ -39,6 +39,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetMarkButtonHandler;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataEvent;
 import org.ednovo.gooru.client.mvp.socialshare.event.UpdateSocialShareMetaDataHandler;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -88,7 +89,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  *
  * @Reviewer:
  */
-public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView,MessageProperties{
+public class CollectionsView extends ChildView<CollectionsPresenter> implements IsCollectionsView{
 	
 	@UiField Button viewClassItemAnalyticsButton,editClassItemButton;
 	
@@ -124,6 +125,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	
 	
 	private static CollectionsViewUiBinder uiBinder = GWT.create(CollectionsViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public interface CollectionsViewUiBinder extends UiBinder<Widget, CollectionsView> {}
 	
 	public CollectionsView(){
@@ -197,55 +201,55 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		thumbnailContainer.getElement().setId("pnlThumbnailContainer");
 		collectionImage.getElement().setId("imgCollectionImage");
 		
-		viewClassItemAnalyticsButton.setText(GL0510);
+		viewClassItemAnalyticsButton.setText(i18n.GL0510());
 		viewClassItemAnalyticsButton.getElement().setId("btnViewClassItemAnalytics");
-		viewClassItemAnalyticsButton.getElement().setAttribute("alt",GL0510);
-		viewClassItemAnalyticsButton.getElement().setAttribute("title",GL0510);
+		viewClassItemAnalyticsButton.getElement().setAttribute("alt",i18n.GL0510());
+		viewClassItemAnalyticsButton.getElement().setAttribute("title",i18n.GL0510());
 		
-		editClassItemButton.setText(GL0140);
+		editClassItemButton.setText(i18n.GL0140());
 		editClassItemButton.getElement().setId("btnEditClassItem");
-		editClassItemButton.getElement().setAttribute("alt",GL0140);
-		editClassItemButton.getElement().setAttribute("title",GL0140);
+		editClassItemButton.getElement().setAttribute("alt",i18n.GL0140());
+		editClassItemButton.getElement().setAttribute("title",i18n.GL0140());
 		
-		editDueDateButton.setText(GL1368);
+		editDueDateButton.setText(i18n.GL1368());
 		editDueDateButton.getElement().setId("btnEditDueDate");
-		editDueDateButton.getElement().setAttribute("alt",GL1368);
-		editDueDateButton.getElement().setAttribute("title",GL1368);
+		editDueDateButton.getElement().setAttribute("alt",i18n.GL1368());
+		editDueDateButton.getElement().setAttribute("title",i18n.GL1368());
 		
-		editDirectionButton.setText(GL1369);
+		editDirectionButton.setText(i18n.GL1369());
 		editDirectionButton.getElement().setId("btnEditDirection");
-		editDirectionButton.getElement().setAttribute("alt",GL1369);
-		editDirectionButton.getElement().setAttribute("title",GL1369);
+		editDirectionButton.getElement().setAttribute("alt",i18n.GL1369());
+		editDirectionButton.getElement().setAttribute("title",i18n.GL1369());
 		
-		editCollection.setText(GL1370);
+		editCollection.setText(i18n.GL1370());
 		editCollection.getElement().setId("btnEditCollection");
-		editCollection.getElement().setAttribute("alt",GL1370);
-		editCollection.getElement().setAttribute("title",GL1370);
+		editCollection.getElement().setAttribute("alt",i18n.GL1370());
+		editCollection.getElement().setAttribute("title",i18n.GL1370());
 		
-		deleteItemButton.setText(GL1371);
+		deleteItemButton.setText(i18n.GL1371());
 		deleteItemButton.getElement().setId("btnDeleteItem");
-		deleteItemButton.getElement().setAttribute("alt",GL1371);
-		deleteItemButton.getElement().setAttribute("title",GL1371);
+		deleteItemButton.getElement().setAttribute("alt",i18n.GL1371());
+		deleteItemButton.getElement().setAttribute("title",i18n.GL1371());
 		
-		directionsLabel.setText(GL1372);	
+		directionsLabel.setText(i18n.GL1372());	
 		directionsLabel.getElement().setId("lblDirections");
-		directionsLabel.getElement().setAttribute("alt",GL1372);
-		directionsLabel.getElement().setAttribute("title",GL1372);
+		directionsLabel.getElement().setAttribute("alt",i18n.GL1372());
+		directionsLabel.getElement().setAttribute("title",i18n.GL1372());
 		
-		learningObjective.setText(GL1373);
+		learningObjective.setText(i18n.GL1373());
 		learningObjective.getElement().setId("lblLearningObjective");
-		learningObjective.getElement().setAttribute("alt",GL1373);
-		learningObjective.getElement().setAttribute("title",GL1373);
+		learningObjective.getElement().setAttribute("alt",i18n.GL1373());
+		learningObjective.getElement().setAttribute("title",i18n.GL1373());
 		
-		moniterProgress.setText(GL1586);
+		moniterProgress.setText(i18n.GL1586());
 		moniterProgress.getElement().setId("lblMointerProgress");
-		moniterProgress.getElement().setAttribute("alt",GL1586);
-		moniterProgress.getElement().setAttribute("title",GL1586);
+		moniterProgress.getElement().setAttribute("alt",i18n.GL1586());
+		moniterProgress.getElement().setAttribute("title",i18n.GL1586());
 		
-		collectionSummary.setText(GL1587);
+		collectionSummary.setText(i18n.GL1587());
 		collectionSummary.getElement().setId("lblCollectionSummary");
-		collectionSummary.getElement().setAttribute("alt",GL1587);
-		collectionSummary.getElement().setAttribute("title",GL1587);
+		collectionSummary.getElement().setAttribute("alt",i18n.GL1587());
+		collectionSummary.getElement().setAttribute("title",i18n.GL1587());
 	
 		classpageItemTitle.getElement().setId("lnkClasspageItemTitle");
 		learningObject.getElement().setId("htmlLearningObject");
@@ -291,9 +295,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 	private void setDueDate(){
 		String dueDate=classpageItemDo.getPlannedEndDate();
 		if(dueDate!=null&&!dueDate.equals("")){
-			dueDateText.setText(GL1390);
-			dueDateText.getElement().setAttribute("alt",GL1390);
-			dueDateText.getElement().setAttribute("title",GL1390);
+			dueDateText.setText(i18n.GL1390());
+			dueDateText.getElement().setAttribute("alt",i18n.GL1390());
+			dueDateText.getElement().setAttribute("title",i18n.GL1390());
 			dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
 			this.dueDate.setText(dueDate.toString());
 			this.dueDate.getElement().setAttribute("alt",dueDate.toString());
@@ -308,9 +312,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			this.learningObject.getElement().setAttribute("title",learningObject);
 		}else{
 			this.learningObject.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-			this.learningObject.setHTML(GL1374);
-			this.learningObject.getElement().setAttribute("alt",GL1374);
-			this.learningObject.getElement().setAttribute("title",GL1374);
+			this.learningObject.setHTML(i18n.GL1374());
+			this.learningObject.getElement().setAttribute("alt",i18n.GL1374());
+			this.learningObject.getElement().setAttribute("title",i18n.GL1374());
 		}
 	}
 
@@ -389,7 +393,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			editToolBarView=new EditToolBarView(false);
 			if(classpageItemDo.getPlannedEndDate()!=null&&!classpageItemDo.getPlannedEndDate().toString().equals("")){
 				editToolBarView.dueDatePanel.add(new Label(classpageItemDo.getPlannedEndDate()!=null?classpageItemDo.getPlannedEndDate().toString():"")); // TODO need to set date.
-				editToolBarView.dueDateText.add(new Label(GL1390));
+				editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
 				editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
 				editToolBarView.dueDatePanel.setStyleName(CollectionsCBundle.INSTANCE.css().dateText());
 			}
@@ -405,7 +409,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			dropdownPanel.setVisible(false);
 			editButtonsToolBar.setVisible(false);
 			editToolBarView=new EditToolBarView(true);
-			editToolBarView.dueDateText.add(new Label(GL1390));
+			editToolBarView.dueDateText.add(new Label(i18n.GL1390()));
 			editToolBarView.dueDateText.setStyleName(CollectionsCBundle.INSTANCE.css().dueDataIcon());
 			//editToolBarView.dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 			editToolBarView.cancelButton.addClickHandler(new ResetEditContentEvent());
@@ -418,7 +422,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			dropdownPanel.setVisible(false);
-			removeConfirmBox=new WaitPopupVc(GL1387,GL1388) {
+			removeConfirmBox=new WaitPopupVc(i18n.GL1387(),i18n.GL1388()) {
 				@Override
 				public void onTextConfirmed() {
 					getPresenter().deleteClasspageItem(classpageItemDo.getCollectionItemId());
@@ -512,9 +516,9 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onClick(ClickEvent event) {
 			if(directionTextArea!=null){
-				final String directionTextAreaText=directionTextArea.getText().trim().equals(GL1389)?"":directionTextArea.getText().trim();
+				final String directionTextAreaText=directionTextArea.getText().trim().equals(i18n.GL1389())?"":directionTextArea.getText().trim();
 				if(directionTextAreaText.length()>=400){
-					directionErrorLabel.setText(GL0143);
+					directionErrorLabel.setText(i18n.GL0143());
 				}else{
 					hideButtons(true);
 					directionErrorLabel.setText("");
@@ -524,7 +528,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 						@Override
 						public void onSuccess(Boolean isFound) {
 							if(isFound){
-								directionErrorLabel.setText(GL0554);
+								directionErrorLabel.setText(i18n.GL0554());
 								hideButtons(false);
 							}else{
 								directionErrorLabel.setText("");
@@ -570,7 +574,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 			directionTextArea.setText(directionText);
 		}else{
-			directionTextArea.setText(GL1389);
+			directionTextArea.setText(i18n.GL1389());
 			directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 		}
 		directionTextArea.addFocusHandler(new DirectonFoucsEvent());
@@ -598,7 +602,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		directionContent.setStyleName("");
 		if(directionText==null||directionText.equals("")||directionText.equals("null")){
 			directionContent.setStyleName(CollectionsCBundle.INSTANCE.css().systemMessage());
-			directionText=GL1374;
+			directionText=i18n.GL1374();
 		}
 		directionContent.setHTML(directionText);
 		directionContentPanel.add(directionContent);
@@ -676,7 +680,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onFocus(FocusEvent event) {
 			String directionText=directionTextArea.getText().trim();
-			if(directionText.equalsIgnoreCase(GL1389)){
+			if(directionText.equalsIgnoreCase(i18n.GL1389())){
 				directionTextArea.setText("");
 			}
 			directionTextArea.removeStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
@@ -687,16 +691,16 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		@Override
 		public void onBlur(BlurEvent event) {
 			String directionText=directionTextArea.getText().trim();
-			if(!directionText.equalsIgnoreCase(GL1389)&&directionText.length()>0){
+			if(!directionText.equalsIgnoreCase(i18n.GL1389())&&directionText.length()>0){
 				if(directionText.length()>=400){
-					directionErrorLabel.setText(GL0143);
+					directionErrorLabel.setText(i18n.GL0143());
 					
 				}else{
 					directionErrorLabel.setText("");
 					showButtons();
 				}
 			}else{
-				directionTextArea.setText(GL1389);
+				directionTextArea.setText(i18n.GL1389());
 				directionTextArea.addStyleName(AddAssignmentContainerCBundle.INSTANCE.css().assignmentsystemMessage());
 			}
 		}
@@ -706,7 +710,7 @@ public class CollectionsView extends ChildView<CollectionsPresenter> implements 
 		public void onKeyUp(KeyUpEvent event) {
 			String directionText=directionTextArea.getText().trim();
 			if(directionText.length()>=400){
-				directionErrorLabel.setText(GL0143);
+				directionErrorLabel.setText(i18n.GL0143());
 				//event.preventDefault();
 				}else{
 				directionErrorLabel.setText("");
