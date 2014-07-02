@@ -562,11 +562,13 @@ public enum UrlToken {
 	
 	USER_TAG("/v2/content/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
 	
-	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}"),
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}&gooruUId={4}"),
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	
 	GET_SAUSD_LIBRARY("/v2/folder/{0}/workspace?sessionToken={1}&fetchChilds=true&sharing=public&itemLimit={2}&offset={3}&limit={4}&&topLevelCollectionType=folder"),
+	
+	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?sessionToken={1}"),
 	
 	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api");
 

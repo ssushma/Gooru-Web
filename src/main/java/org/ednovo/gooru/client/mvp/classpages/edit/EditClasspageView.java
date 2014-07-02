@@ -1931,7 +1931,7 @@ public class EditClasspageView extends
 		//display the assignments progress (DOTS)
 		for (int i=0; i<classpageProcess.size(); i++){
 			panelAssignmentProgress.add(new AssignmentProgressVc(isLast, 
-					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.size()));
+					classpageProcess.get(i), classpageProcess.get(i).getSequenceNumber(), classpageProcess.get(0).getTotalHitCount()));
 		}
 	}
 	

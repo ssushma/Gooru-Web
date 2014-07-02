@@ -37,7 +37,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class AutodeskLibraryView extends BaseViewWithHandlers<AutodeskLibraryUiHandlers> implements IsAutodeskLibraryView, MessageProperties {
+public class AutodeskLibraryView extends BaseViewWithHandlers<AutodeskLibraryUiHandlers> implements IsAutodeskLibraryView{
 
 	@UiField SimplePanel partnerPanel;
 	
@@ -48,6 +48,7 @@ public class AutodeskLibraryView extends BaseViewWithHandlers<AutodeskLibraryUiH
 
 	public AutodeskLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

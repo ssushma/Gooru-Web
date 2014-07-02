@@ -43,6 +43,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.Collection
 import org.ednovo.gooru.client.uc.DateBoxUc;
 import org.ednovo.gooru.client.uc.ErrorLabelUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentDo;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -96,16 +97,10 @@ import com.google.gwt.user.client.ui.Widget;
  * @Reviewer:
  */
 public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
-		implements IsAssignmentsTabView, MessageProperties {
+		implements IsAssignmentsTabView{
 
 	@UiField(provided = true)
 	AssignmentsTabViewCBundle res;
-
-	private static final String MANDATORY_TITLE = GL0173;
-	private static final String MANDATORY_DUEDATE = GL0235;
-	private static final String MANDATORY_DIRECTIONS =GL0236;
-
-	private static final String CHARACTERS_LIMIT =GL0143;
 
 	AddCollectionsPopupVc addCollections = null;
 
@@ -174,6 +169,14 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 
 	private static AssignmentsTabViewUiBinder uiBinder = GWT
 			.create(AssignmentsTabViewUiBinder.class);
+	
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
+	private static final String MANDATORY_TITLE = i18n.GL0173();
+	private static final String MANDATORY_DUEDATE = i18n.GL0235();
+	private static final String MANDATORY_DIRECTIONS =i18n.GL0236();
+
+	private static final String CHARACTERS_LIMIT =i18n.GL0143();
 
 	interface AssignmentsTabViewUiBinder extends
 			UiBinder<Widget, AssignmentsTabView> {
@@ -264,26 +267,26 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		
 		assignmentDescriptionTxtArea.getElement().setId("tatDescription");
 		cancelLabel.getElement().setId("lblCancel");
-		btnEditAssignment.setText(GL0140);
-		btnEditAssignment.getElement().setAttribute("alt",GL0140);
-		btnEditAssignment.getElement().setAttribute("title",GL0140);
+		btnEditAssignment.setText(i18n.GL0140());
+		btnEditAssignment.getElement().setAttribute("alt",i18n.GL0140());
+		btnEditAssignment.getElement().setAttribute("title",i18n.GL0140());
 		
-		deleteLabel.setText(GL0237);
-		deleteLabel.getElement().setAttribute("alt",GL0237);
-		deleteLabel.getElement().setAttribute("title",GL0237);
+		deleteLabel.setText(i18n.GL0237());
+		deleteLabel.getElement().setAttribute("alt",i18n.GL0237());
+		deleteLabel.getElement().setAttribute("title",i18n.GL0237());
 		
-		cancelLabel.setText(GL0142);
-		cancelLabel.getElement().setAttribute("alt",GL0142);
-		cancelLabel.getElement().setAttribute("title",GL0142);
+		cancelLabel.setText(i18n.GL0142());
+		cancelLabel.getElement().setAttribute("alt",i18n.GL0142());
+		cancelLabel.getElement().setAttribute("title",i18n.GL0142());
 		
 		mandatoryTitleLabel.setText(MANDATORY_TITLE);
 		mandatoryTitleLabel.getElement().setAttribute("alt",MANDATORY_TITLE);
 		mandatoryTitleLabel.getElement().setAttribute("title",MANDATORY_TITLE);
 		
-		lblDueDateDisplay.setText(GL0238 +GL_SPL_SEMICOLON);
+		lblDueDateDisplay.setText(i18n.GL0238() +i18n.GL_SPL_SEMICOLON()+" ");
 		lblDueDateDisplay.getElement().setId("lblDueDateDisplay");
-		lblDueDateDisplay.getElement().setAttribute("alt",GL0238);
-		lblDueDateDisplay.getElement().setAttribute("title",GL0238);
+		lblDueDateDisplay.getElement().setAttribute("alt",i18n.GL0238());
+		lblDueDateDisplay.getElement().setAttribute("title",i18n.GL0238());
 		
 		mandatoryDueDateLabel.setText(MANDATORY_DUEDATE);
 		mandatoryDueDateLabel.getElement().setId("lblMandatoryDueDate");
@@ -295,14 +298,14 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		mandatoryDirectionLabel.getElement().setAttribute("alt",MANDATORY_DIRECTIONS);
 		mandatoryDirectionLabel.getElement().setAttribute("title",MANDATORY_DIRECTIONS);
 		
-		btnAddCollectionToAssign.setText(GL0239);
-		btnAddCollectionToAssign.getElement().setAttribute("alt",GL0239);
-		btnAddCollectionToAssign.getElement().setAttribute("title",GL0239);
+		btnAddCollectionToAssign.setText(i18n.GL0239());
+		btnAddCollectionToAssign.getElement().setAttribute("alt",i18n.GL0239());
+		btnAddCollectionToAssign.getElement().setAttribute("title",i18n.GL0239());
 		
-		clickToExpandLabel.setText(GL0241);
+		clickToExpandLabel.setText(i18n.GL0241());
 		clickToExpandLabel.getElement().setId("lblClickToExpand");
-		clickToExpandLabel.getElement().setAttribute("alt",GL0241);
-		clickToExpandLabel.getElement().setAttribute("title",GL0241);
+		clickToExpandLabel.getElement().setAttribute("alt",i18n.GL0241());
+		clickToExpandLabel.getElement().setAttribute("title",i18n.GL0241());
 		
 		asignmentTiltleContainer.getElement().setId("epnlAsignmentTiltleContainer");
 		assignmentTitleTxtPanel.getElement().setId("pnlAssignmentTitleTxt");
@@ -465,7 +468,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 											"Please choose one of the following...")) {
 
 						addCollections.getMandatorySelectCollectionLbl()
-								.setText(GL1134);
+								.setText(i18n.GL1134());
 						addCollections.getMandatorySelectCollectionLbl()
 								.setVisible(true);
 						return;
@@ -648,9 +651,9 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	public void onClickEditAssignment(ClickEvent event) {
 		if (btnEditAssignment.getText().equalsIgnoreCase("edit")) {
 			isInEditMode = true;
-			btnEditAssignment.setText(GL0240);
-			btnEditAssignment.getElement().setAttribute("alt",GL0240);
-			btnEditAssignment.getElement().setAttribute("title",GL0240);
+			btnEditAssignment.setText(i18n.GL0240());
+			btnEditAssignment.getElement().setAttribute("alt",i18n.GL0240());
+			btnEditAssignment.getElement().setAttribute("title",i18n.GL0240());
 //			btnEditAssignment.setStyleName("myCollectionUpdateText");
 
 			cancelLabel.setVisible(true);
@@ -697,9 +700,9 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 			if (isFormFilled) {
 
 				isInEditMode = false;
-				btnEditAssignment.setText(GL0140);
-				btnEditAssignment.getElement().setAttribute("alt",GL0140);
-				btnEditAssignment.getElement().setAttribute("title",GL0140);
+				btnEditAssignment.setText(i18n.GL0140());
+				btnEditAssignment.getElement().setAttribute("alt",i18n.GL0140());
+				btnEditAssignment.getElement().setAttribute("title",i18n.GL0140());
 //				btnEditAssignment.setStyleName("myCollectionEditText");
 
 				AssignmentDo assignmentDo = new AssignmentDo();
@@ -750,9 +753,9 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	@UiHandler("cancelLabel")
 	public void onClickCancelUpdate(ClickEvent event) {
 		isInEditMode = false;
-		btnEditAssignment.setText(GL0140);
-		btnEditAssignment.getElement().setAttribute("alt",GL0140);
-		btnEditAssignment.getElement().setAttribute("title",GL0140);
+		btnEditAssignment.setText(i18n.GL0140());
+		btnEditAssignment.getElement().setAttribute("alt",i18n.GL0140());
+		btnEditAssignment.getElement().setAttribute("title",i18n.GL0140());
 //		btnEditAssignment.setStyleName("myCollectionEditText");
 		cancelLabel.setVisible(false);
 		deleteLabel.setVisible(true);
@@ -770,8 +773,8 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 	// Method for deleting Assignment from Classpage
 	@UiHandler("deleteLabel")
 	public void onClickDeleteAssignment(ClickEvent event) {
-		deleteConfirmVc = new DeleteConfirmPopupVc(GL0748, "\""
-				+ assignmentTitelLbl.getHTML() + "\"" + GL0103+GL_SPL_FULLSTOP) {
+		deleteConfirmVc = new DeleteConfirmPopupVc(i18n.GL0748(), "\""
+				+ assignmentTitelLbl.getHTML() + "\"" + i18n.GL0103()+i18n.GL_SPL_FULLSTOP()) {
 
 			@Override
 			public void onTextConfirmed() {

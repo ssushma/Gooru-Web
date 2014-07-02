@@ -127,6 +127,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			}
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				getView().glasspanelLoadingImage(false);
 			}
 		});
@@ -177,6 +178,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			}
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				getView().glasspanelLoadingImage(false);
 			}
 		});
@@ -199,6 +201,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				getView().glasspanelLoadingImage(false);
 			}
 		});
@@ -212,6 +215,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			}
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				getView().glasspanelLoadingImage(false);
 			}
 		});
@@ -247,6 +251,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 			}
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				getView().glasspanelLoadingImage(false);
 			}
 		});

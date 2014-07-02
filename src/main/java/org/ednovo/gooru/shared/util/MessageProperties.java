@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.shared.util;
 
-
+//This file will be deprecated in next release. please use CopyOfMessageProperties.java
 
 public interface MessageProperties {
 	//Special Characters

@@ -213,6 +213,7 @@ private DrivePresenter drivePresenter=null;
 
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				Window.enableScrolling(true);
 			}
 		});
