@@ -36,6 +36,7 @@ import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.EmailShareUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
@@ -69,7 +70,7 @@ import com.google.gwt.user.client.ui.Widget;
 */
 
 public class SocialShareSmallView extends ChildView<SocialShareSmallPresenter> implements
-IsSocialShareSmallView, MessageProperties {
+IsSocialShareSmallView{
 
 	private static SocialShareSmallViewUiBinder uiBinder = GWT
 			.create(SocialShareSmallViewUiBinder.class);
@@ -77,6 +78,7 @@ IsSocialShareSmallView, MessageProperties {
 	interface SocialShareSmallViewUiBinder extends UiBinder<Widget, SocialShareSmallView> {
 	}
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField
 	HTMLEventPanel fbPanel,twitterPanel,emailPanel,fbIconPanel,twIconPanel,emailIconPanel;
@@ -147,9 +149,9 @@ IsSocialShareSmallView, MessageProperties {
 
 		setPresenter(new SocialShareSmallPresenter(this));
 		//		shareTextPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-		faceBookLbl.getElement().setInnerHTML(GL0646);
-		twitterLbl.getElement().setInnerHTML(GL0647);
-		emailLbl.getElement().setInnerHTML(GL0426);
+		faceBookLbl.getElement().setInnerHTML(i18n.GL0646());
+		twitterLbl.getElement().setInnerHTML(i18n.GL0647());
+		emailLbl.getElement().setInnerHTML(i18n.GL0426());
 		try {
 			if(socialDo.getIsSearchShare()){
 				socialShareContainer.getElement().getStyle().setWidth(100, Unit.PX);
