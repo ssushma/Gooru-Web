@@ -118,10 +118,10 @@ public class AlmostDoneUc extends PopupPanel{
 		almostDoneText.getElement().setAttribute("alt",i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
 		almostDoneText.getElement().setAttribute("title",i18n.GL1279()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP());
 		
-		fillOutText.getElement().setInnerText(i18n.GL1280()+i18n.GL_SPL_SEMICOLON());
+		fillOutText.getElement().setInnerText(i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
 		fillOutText.getElement().setId("pnlFillOutText");
-		fillOutText.getElement().setAttribute("alt",i18n.GL1280()+i18n.GL_SPL_SEMICOLON());
-		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON());
+		fillOutText.getElement().setAttribute("alt",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
+		fillOutText.getElement().setAttribute("title",i18n.GL1280()+i18n.GL_SPL_SEMICOLON()+" ");
 		
 		emailTxtBox.getElement().setId("txtEmail");
 		cancelButton.getElement().setId("epnlCancelButton");

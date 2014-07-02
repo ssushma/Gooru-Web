@@ -582,7 +582,7 @@ IsCollectionAssign {
 									btnAssign.setVisible(false);
 									
 									assignMoreCpContainer.setVisible(true);
-									assignMoreCpLbl.setText(i18n.GL0521());
+									assignMoreCpLbl.setText(i18n.GL0521()+ " ");
 									assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521());
 									assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
 									
@@ -626,8 +626,8 @@ IsCollectionAssign {
 							btnAssign.setVisible(false);
 							
 							assignMoreCpContainer.setVisible(true);
-							assignMoreCpLbl.setText(i18n.GL0521());
-							assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521());
+							assignMoreCpLbl.setText(i18n.GL0521()+" ");
+							assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521()+" ");
 							assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
 							ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
 							ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());

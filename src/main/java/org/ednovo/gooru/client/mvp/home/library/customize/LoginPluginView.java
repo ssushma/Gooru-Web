@@ -194,10 +194,10 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
 		signUpPanel.getElement().setId("pnlSignUpPanel");
 		
-		donotHaveAcount.setText(i18n.GL0634());
+		donotHaveAcount.setText(i18n.GL0634()+" ");
 		donotHaveAcount.getElement().setId("lblDonotHaveAcount");
-		donotHaveAcount.getElement().setAttribute("alt",i18n.GL0634());
-		donotHaveAcount.getElement().setAttribute("title",i18n.GL0634());
+		donotHaveAcount.getElement().setAttribute("alt",i18n.GL0634()+" ");
+		donotHaveAcount.getElement().setAttribute("title",i18n.GL0634()+" ");
 		donotHaveAcount.getElement().setAttribute("style", "float: left;");
 		
 		ancSignUp.getElement().setAttribute("style", "float: left;padding: 0;margin-left: 5px;");

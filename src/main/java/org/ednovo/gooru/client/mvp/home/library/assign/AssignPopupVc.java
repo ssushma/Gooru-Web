@@ -394,8 +394,8 @@ public abstract class AssignPopupVc extends PopupPanel {
 		
 		donothaveAC.setText(i18n.GL0634()+" ");
 		donothaveAC.getElement().setId("lblDonothaveAC");
-		donothaveAC.getElement().setAttribute("alt",i18n.GL0634());
-		donothaveAC.getElement().setAttribute("title",i18n.GL0634());
+		donothaveAC.getElement().setAttribute("alt",i18n.GL0634()+" ");
+		donothaveAC.getElement().setAttribute("title",i18n.GL0634()+" ");
 		
 		ancSignUp.setText(i18n.GL0207()+i18n.GL_SPL_EXCLAMATION());
 		ancSignUp.getElement().setId("lnkAncSignUp");
