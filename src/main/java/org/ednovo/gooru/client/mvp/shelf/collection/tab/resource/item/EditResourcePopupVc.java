@@ -225,16 +225,12 @@ public abstract class EditResourcePopupVc extends AppPopUp implements SelectionH
 					
 					if(standardsPrefDisplayPopup){
 						standardsPreferenceOrganizeToolTip.hide();
-						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new AsyncCallback<SearchDo<CodeDo>>() {
+						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
 								setStandardSuggestions(result);
 								
-							}
-							
-							@Override
-							public void onFailure(Throwable caught) {
 							}
 						});
 						

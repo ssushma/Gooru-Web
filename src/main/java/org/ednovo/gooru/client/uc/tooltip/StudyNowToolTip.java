@@ -260,6 +260,7 @@ public class StudyNowToolTip extends PopupPanel {
 
 				@Override
 				public void onFailure(Throwable caught) {
+					super.onFailure(caught);
 					setEnterLblVisbility(false);
 				}
 				

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
@@ -207,11 +208,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 	}
 	
 	private void getUnitTopics(final String unitListId, final ProfileLibraryDo profileLibraryDo) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, "public", 14, new AsyncCallback<ProfileLibraryListDo>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				
-			}
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(unitListId, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {

@@ -61,7 +61,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -97,7 +97,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			UiBinder<Widget, AddResourceView> {
 		
 	}
-	 static List<DriveDo> listobj=new ArrayList<DriveDo>();
+	 static List<GoogleDriveItemDo> listobj=new ArrayList<GoogleDriveItemDo>();
 
 	private static final String MESSAGE_HEADER = GL0748;
 	private static final String MESSAGE_CONTENT = GL0891;
@@ -1086,7 +1086,7 @@ myDriveButton.addClickHandler(new ClickHandler() {
 	public static Map setData(Map<String, Object> resultObj){
 		//driveObject=(List<String>) resultObj.get("items");
 		
-	listobj=(List<DriveDo>) resultObj.get("items");
+	listobj=(List<GoogleDriveItemDo>) resultObj.get("items");
 
 
 	System.out.println("list obj"+listobj.get(0).getAlternateLink());
@@ -1096,7 +1096,7 @@ myDriveButton.addClickHandler(new ClickHandler() {
 		
 	}
 	@Override
-	public void getDriveDetails(DriveDo driveDo){
+	public void getDriveDetails(GoogleDriveItemDo driveDo){
 		tabViewContainer.clear();
 		tabViewContainer.add(new GoogleDocsResourceView(driveDo));
 		
@@ -1104,7 +1104,7 @@ myDriveButton.addClickHandler(new ClickHandler() {
 
 
 	@Override
-	public void getFolderDetails(String title, String id, List<DriveDo> result) {
+	public void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result) {
 		tabViewContainer.clear();
 
 		// TODO Auto-generated method stub

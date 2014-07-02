@@ -554,12 +554,7 @@ public class ProfilePagePresenter extends BasePlacePresenter<IsProfilePageView, 
 
 	@Override
 	public UserFollowDo getFollowerData() {
-		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(),"0","20", new AsyncCallback<List<UserFollowDo>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-			}
-
+		AppClientFactory.getInjector().getUserService().getFollowedByUsers(profileDo.getUser().getGooruUId(),"0","20", new SimpleAsyncCallback<List<UserFollowDo>>() {
 
 			@Override
 			public void onSuccess(List<UserFollowDo> result) {

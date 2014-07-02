@@ -39,7 +39,7 @@ import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -171,9 +171,9 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	
 	void deleteTagsServiceRequest(String resourceId, String addedTags,AsyncCallback<Void> callback);
 
-	void getfolderList(String id, AsyncCallback<List<DriveDo>> asyncCallback);
+	//void getfolderList(String id, AsyncCallback<List<DriveDo>> asyncCallback);
 
-	void getDrive(AsyncCallback<List<DriveDo>> callback);
+	void getGoogleDriveFilesList(AsyncCallback<GoogleDriveDo> callback);
 
-	void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
+	//void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
 }

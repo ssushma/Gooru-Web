@@ -11,7 +11,7 @@ import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -105,7 +105,7 @@ public class GoogleDocsResourceView extends Composite implements MessageProperti
 	
 	
 	
-	public GoogleDocsResourceView( DriveDo driveDo){
+	public GoogleDocsResourceView( GoogleDriveItemDo driveDo){
 		initWidget(uiBinder.createAndBindUi(this));
 		addResourceBtnLbl.setText(GL0590);
 		cancelResourcePopupBtnLbl.setText(GL0142);
@@ -144,19 +144,19 @@ public class GoogleDocsResourceView extends Composite implements MessageProperti
 	
 	@UiHandler("addResourceBtnLbl")
 	public void addResource(ClickEvent event){
-		DriveDo driveObject=new DriveDo();
+		GoogleDriveItemDo driveObject=new GoogleDriveItemDo();
 		driveObject.setId(id);
 		driveObject.setAlternateLink(alternateLink);
-		AppClientFactory.getInjector().getResourceService().updatePermissions( driveObject,new SimpleAsyncCallback<DriveDo>(){
-
-			@Override
-			public void onSuccess(DriveDo result) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			
-		});
+//		AppClientFactory.getInjector().getResourceService().updatePermissions( driveObject,new SimpleAsyncCallback<GoogleDriveItemDo>(){
+//
+//			@Override
+//			public void onSuccess(GoogleDriveItemDo result) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			
+//		});
 	
 	}	
 	

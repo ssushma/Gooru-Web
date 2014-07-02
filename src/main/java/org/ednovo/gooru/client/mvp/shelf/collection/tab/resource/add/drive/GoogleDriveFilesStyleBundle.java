@@ -22,47 +22,33 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event;
-
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-
-import com.google.gwt.event.shared.EventHandler;
+package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 /**
- * 
- * @fileName : ClearClasspageListHandler.java
+ * @fileName : LibraryStyleBundle.java
  *
  * @description : 
  *
  *
  * @version : 1.0
  *
- * @date: Aug 20, 2013
+ * @date: 02-Dec-2013
  *
  * @Author Gooru Team
  *
- * @Reviewer:
+ * @Reviewer: 
  */
-public interface DriveEventHandler extends EventHandler {
-	/**
-	 * 
-	 * @param driveDo 
-	 * @function clearClasspage 
-	 * 
-	 * @created_date : Aug 20, 2013
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @parm(s) : 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 *
-	 */
-	void clearDrivepage(GoogleDriveItemDo driveDo);
 
+import com.google.gwt.resources.client.CssResource;
+
+
+public interface GoogleDriveFilesStyleBundle extends CssResource {
+
+	String googleDriveFolderStyle();
+	
+	String googleDriveWordStyle();
+	
+	String googleDriveExcelStyle();
+
+	String googleDrivePptStyle();
+	
 }
