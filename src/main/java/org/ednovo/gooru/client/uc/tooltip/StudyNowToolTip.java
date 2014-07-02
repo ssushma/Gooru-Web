@@ -49,9 +49,9 @@ import org.ednovo.gooru.client.mvp.socialshare.SentEmailSuccessVc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -77,10 +77,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Gooru Team
  *
  */
-public class StudyNowToolTip extends PopupPanel implements MessageProperties {
+public class StudyNowToolTip extends PopupPanel {
 
 	private static StudyNowToolTipUiBinder uiBinder = GWT
 			.create(StudyNowToolTipUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 
 	interface StudyNowToolTipUiBinder extends UiBinder<Widget, StudyNowToolTip> {
 	}
@@ -140,20 +142,20 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 		tooltipPanel.getElement().getStyle().setTop(14, Unit.PX);
 		panelCode.getElement().setId("pnlPanelCode");
 		tooltipPanel.getElement().setId("pnlTooltipPanel");
-		enterLbl.setText(GL1065);
+		enterLbl.setText(i18n.GL1065());
 		enterLbl.getElement().setId("btnEnterLbl");	
-		enterLbl.getElement().setAttribute("alt", GL1065);
-		enterLbl.getElement().setAttribute("title", GL1065);
-		lblTitle.setText(GL0474);
+		enterLbl.getElement().setAttribute("alt", i18n.GL1065());
+		enterLbl.getElement().setAttribute("title", i18n.GL1065());
+		lblTitle.setText(i18n.GL0474());
 		lblTitle.getElement().setId("lblLblTitle");
-		lblTitle.getElement().setAttribute("alt", GL0474);
-		lblTitle.getElement().setAttribute("title", GL0474);
+		lblTitle.getElement().setAttribute("alt", i18n.GL0474());
+		lblTitle.getElement().setAttribute("title", i18n.GL0474());
 		lblLoading.getElement().setId("lblLblLoading");
 		spanelCollectionList.getElement().setId("sbSpanelCollectionList");
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
-		classCodeTxtBox.setPlaceholder(GL0184);
+		classCodeTxtBox.setPlaceholder(i18n.GL0184());
 		classStudyList.getElement().setId("vpnlClassStudyList");
 //		lblLoading.setText(GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
 		
@@ -216,10 +218,10 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 				}
 			}
 		};
-		disabledBtn.setText(GL1065);
+		disabledBtn.setText(i18n.GL1065());
 		disabledBtn.getElement().setId("btnDisabledBtn");
-		disabledBtn.getElement().setAttribute("alt", GL1065);
-		disabledBtn.getElement().setAttribute("title", GL1065);
+		disabledBtn.getElement().setAttribute("alt", i18n.GL1065());
+		disabledBtn.getElement().setAttribute("title", i18n.GL1065());
 		disabledBtn.setVisible(false);
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 
@@ -231,7 +233,7 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 		public void onClick(ClickEvent event) {
 			setEnterLblVisbility(true);
 			if (classCodeTxtBox.getText().trim().equalsIgnoreCase("") || classCodeTxtBox.getText().trim() == null){
-				alertMessageUc=new AlertMessageUc(GL0061, new Label(GL0243));
+				alertMessageUc=new AlertMessageUc(i18n.GL0061(), new Label(i18n.GL0243()));
 				ClickHandler alertHandler=new ClickHandler() {
 
 					@Override

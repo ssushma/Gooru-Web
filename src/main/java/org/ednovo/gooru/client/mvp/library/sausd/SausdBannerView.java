@@ -28,7 +28,7 @@
 package org.ednovo.gooru.client.mvp.library.sausd;
 
 import org.ednovo.gooru.client.PlaceTokens;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -53,7 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class SausdBannerView extends Composite implements MessageProperties{
+public class SausdBannerView extends Composite {
 
 	@UiField HTMLPanel partnerLogo, landingBannerInner;
 	@UiField Label headerTag, subHeaderTag, info1, info2, info3, info4, title1, title2;
@@ -61,6 +61,8 @@ public class SausdBannerView extends Composite implements MessageProperties{
 	
 	private static SausdBannerViewUiBinder uiBinder = GWT
 			.create(SausdBannerViewUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SausdBannerViewUiBinder extends
 			UiBinder<Widget, SausdBannerView> {
@@ -78,20 +80,55 @@ public class SausdBannerView extends Composite implements MessageProperties{
 	
 	private void getLandingBannerText(String placeToken) {
 		if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
-			setLandingBannerText(GL1902,GL1903,GL1977,GL1978,GL1979,GL1980);
+			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1977(),i18n.GL1978(),i18n.GL1979(),i18n.GL1980());
 			partnerLogo.setStyleName(sausdStyleUc.sausdPartnerLogo());
 			partnerLogo.setVisible(true);
 		}
 	}
 	
 	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String infoText1, String infoText2, String infoText3, String infoText4) {
+		
+		    partnerLogo.getElement().setId("pnlPartnerLogo"); 
+		    
 			headerTag.setText(headerMsg);
+			headerTag.getElement().setId("lblHeaderTag");
+			headerTag.getElement().setAttribute("alt",headerMsg);
+			headerTag.getElement().setAttribute("title",headerMsg);
+			
 			subHeaderTag.setText(subHeaderMsg);
-			title1.setText(GL1981);
-			title2.setText(GL1982);
+
+			subHeaderTag.getElement().setId("lblSubHeaderTag");
+			subHeaderTag.getElement().setAttribute("alt",subHeaderMsg);
+			subHeaderTag.getElement().setAttribute("title",subHeaderMsg);
+			
+			title1.setText(i18n.GL1981());
+			title1.getElement().setId("lblTitle1");
+			title1.getElement().setAttribute("alt",i18n.GL1981());
+			title1.getElement().setAttribute("title",i18n.GL1981());
+			
+			title2.setText(i18n.GL1982());
+			title2.getElement().setId("lblTitle2");
+			title2.getElement().setAttribute("alt",i18n.GL1982());
+			title2.getElement().setAttribute("title",i18n.GL1982());
+			
 			info1.setText(infoText1);
+			info1.getElement().setId("lblInfo1");
+			info1.getElement().setAttribute("alt",infoText1);
+			info1.getElement().setAttribute("title",infoText1);
+			
 			info2.setText(infoText2);
+			info2.getElement().setId("lblInfo2");
+			info2.getElement().setAttribute("alt",infoText2);
+			info2.getElement().setAttribute("title",infoText2);
+			
 			info3.setText(infoText3);
+			info3.getElement().setId("lblInfo3");
+			info3.getElement().setAttribute("alt",infoText3);
+			info3.getElement().setAttribute("title",infoText3);
+			
 			info4.setText(infoText4);
+			info4.getElement().setId("lblInfo4");
+			info4.getElement().setAttribute("alt",infoText4);
+			info4.getElement().setAttribute("title",infoText4);
 	}	
 }

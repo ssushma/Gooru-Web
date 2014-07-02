@@ -41,6 +41,7 @@ import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.AlertMessageUc;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.DataLogEvents;
@@ -84,7 +85,7 @@ import com.google.inject.Inject;
  * @Reviewer:
  */
 public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> implements
-		IsLoginPlugin, MessageProperties {
+		IsLoginPlugin{
 
 	@UiField(provided = true)
 	AssignPopUpCBundle res;
@@ -118,9 +119,9 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	CollectionDo collectionObject = new CollectionDo();
 	String collectionTitle="";
 
-	private static final String OOPS =GL0061;
-	private static final String LOGIN_ERROR =GL0347;
-	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =GL0348;
+//	private static final String OOPS =i18n.GL0061;
+//	private static final String LOGIN_ERROR =i18n.GL0347;
+//	private static final String LOGIN_COOKIE_DISABLE_MESSAGE =i18n.GL0348;
 	
 	private TermsOfUse termsOfUse;
 	
@@ -131,6 +132,8 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 
 	interface LoginPluginUiBinder extends UiBinder<Widget, LoginPluginView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -168,32 +171,82 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 	 */
 	public void setLabelsAndIds() {
 		
-		lblPii.setText(GL1892);
-		ancprivacy.setText(GL1893);
-		toUsText.setText(GL1894);
+		lblPii.setText(i18n.GL1892());
+		lblPii.getElement().setId("lblPii");
+		lblPii.getElement().setAttribute("alt",i18n.GL1892());
+		lblPii.getElement().setAttribute("title",i18n.GL1892());
 		
-		hangOnText.getElement().setInnerText(GL0740);
+		ancprivacy.setText(i18n.GL1893());
+		ancprivacy.getElement().setId("lnkAncprivacy");
+		ancprivacy.getElement().setAttribute("alt",i18n.GL1893());
+		ancprivacy.getElement().setAttribute("title",i18n.GL1893());
+		
+		toUsText.setText(i18n.GL1894());
+		toUsText.getElement().setId("spnToUsText");
+		toUsText.getElement().setAttribute("alt",i18n.GL1894());
+		toUsText.getElement().setAttribute("title",i18n.GL1894());
+		
+		hangOnText.getElement().setInnerText(i18n.GL0740());
+		hangOnText.getElement().setId("pnlHangOnText");
+		hangOnText.getElement().setAttribute("alt",i18n.GL0740());
+		hangOnText.getElement().setAttribute("title",i18n.GL0740());
+		
 		signUpPanel.getElement().setAttribute("style", "display: inline-block;");
-		donotHaveAcount.setText(GL0634);
+		signUpPanel.getElement().setId("pnlSignUpPanel");
+		
+		donotHaveAcount.setText(i18n.GL0634());
+		donotHaveAcount.getElement().setId("lblDonotHaveAcount");
+		donotHaveAcount.getElement().setAttribute("alt",i18n.GL0634());
+		donotHaveAcount.getElement().setAttribute("title",i18n.GL0634());
 		donotHaveAcount.getElement().setAttribute("style", "float: left;");
+		
 		ancSignUp.getElement().setAttribute("style", "float: left;padding: 0;margin-left: 5px;");
-		ancSignUp.setText(GL0207);
-		collectionDescription.setText(GL0476);
-		forgotPwd.getElement().setId("lnkForgotPwd");
-		loginTxtBox.setPlaceholder(GL0202);
-		loginTxtBox.getElement().setAttribute("placeholder",GL0202);
+		ancSignUp.setText(i18n.GL0207());
+		ancSignUp.getElement().setId("lnkAncSignUp");
+		ancSignUp.getElement().setAttribute("alt",i18n.GL0207());
+		ancSignUp.getElement().setAttribute("title",i18n.GL0207());
+		
+		collectionDescription.setText(i18n.GL0476());
+		collectionDescription.getElement().setId("lblCollectionDescription");
+		collectionDescription.getElement().setAttribute("alt",i18n.GL0476());
+		collectionDescription.getElement().setAttribute("title",i18n.GL0476());
+		
+	
+		loginTxtBox.setPlaceholder(i18n.GL0202());
+		loginTxtBox.getElement().setAttribute("placeholder",i18n.GL0202());
 		loginTxtBox.setFocus(true);
-		passwordTxtBox.setPlaceholder(GL0204);
-		forgotPwd.setText(GL0205);
-		loginButton.setText(GL0187);
-		lblPleaseWait.setText(GL0242);
-		loginButton.setText(GL1185);
 		loginTxtBox.getElement().setId("tbLoginUsername");
+		
+		passwordTxtBox.setPlaceholder(i18n.GL0204());
 		passwordTxtBox.getElement().setId("tbLoginPassword");
+		
+		forgotPwd.setText(i18n.GL0205());
+		forgotPwd.getElement().setId("lnkForgotPwd");
+		forgotPwd.getElement().setAttribute("alt",i18n.GL0205());
+		forgotPwd.getElement().setAttribute("title",i18n.GL0205());
+		
+		loginButton.setText(i18n.GL0187());
 		loginButton.getElement().setId("btnLogin");
-		gmailButton.setText(GL0203);
-		lblOr.setText(GL0209);
+		loginButton.getElement().setAttribute("alt",i18n.GL0187());
+		loginButton.getElement().setAttribute("title",i18n.GL0187());
+		
+		lblPleaseWait.setText(i18n.GL0242());
+		lblPleaseWait.getElement().setId("lblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",i18n.GL0242());
+		lblPleaseWait.getElement().setAttribute("title",i18n.GL0242());
+		
+		loginButton.setText(i18n.GL1185());
+
+		gmailButton.setText(i18n.GL0203());
 		gmailButton.getElement().setId("customizeGmailBtn");
+		gmailButton.getElement().setAttribute("alt",i18n.GL0203());
+		gmailButton.getElement().setAttribute("title",i18n.GL0203());
+		
+		lblOr.setText(i18n.GL0209());
+		lblOr.getElement().setId("lblOr");
+		lblOr.getElement().setAttribute("alt",i18n.GL0209());
+		lblOr.getElement().setAttribute("title",i18n.GL0209());
+		
 		lblPleaseWait.setVisible(false);
 
 	}
@@ -233,7 +286,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 									@Override
 									public void onSuccess(UserDo result) {
 										if(result.getStatusCode()!=UNAUTHORISED_STATUS_CODE){
-											lblPleaseWait.setText(GL0505);
+											lblPleaseWait.setText(i18n.GL0505());
 											AppClientFactory
 													.setLoggedInUser(result);
 											AppClientFactory
@@ -257,7 +310,7 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 										}else if(result.getStatusCode()==UNAUTHORISED_STATUS_CODE){
 											loginButton.setVisible(true);
 											lblPleaseWait.setVisible(false);
-											new AlertContentUc(GL1966, GL1938);
+											new AlertContentUc(i18n.GL1966(), i18n.GL1938());
 										}
 										
 									}
@@ -266,18 +319,18 @@ public abstract class LoginPluginView extends ChildView<LoginPluginPresenter> im
 									public void onFailure(Throwable caught) {
 										loginButton.setVisible(true);
 										lblPleaseWait.setVisible(false);
-										new AlertContentUc(OOPS, LOGIN_ERROR);
+										new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 									}
 								});
 			} else {
 				loginButton.setVisible(true);
 				lblPleaseWait.setVisible(false);
-				new AlertContentUc(OOPS, LOGIN_ERROR);
+				new AlertContentUc(i18n.GL0061(), i18n.GL0347());
 			}
 		} else {
 			loginButton.setVisible(true);
 			lblPleaseWait.setVisible(false);
-			new AlertMessageUc(GL0738, new HTML(LOGIN_COOKIE_DISABLE_MESSAGE));
+			new AlertMessageUc(i18n.GL0738(), new HTML(i18n.GL0348()));
 		}
 		
 		

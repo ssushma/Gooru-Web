@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.shared.GWT;
@@ -43,7 +44,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SearchBoxToolTip extends Composite implements MessageProperties{
+public class SearchBoxToolTip extends Composite {
 	
 	@UiField 
 	Anchor solarLbl,exponentsLbl,oceansLbl,cellsLbl;
@@ -57,6 +58,7 @@ public class SearchBoxToolTip extends Composite implements MessageProperties{
 	
 	public static SearchBoxToolTipUiBinder searchBoxToolTipUiBinder=GWT.create(SearchBoxToolTipUiBinder.class);{
 	}
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 	/*
 	 * constructor
 	*/
@@ -65,35 +67,35 @@ public class SearchBoxToolTip extends Composite implements MessageProperties{
 		initWidget(searchBoxToolTipUiBinder.createAndBindUi(this));
 		mainPanel.getElement().setId("pnlMainPanel");
 		
-		enterSubjectText.setText(GL1068);
+		enterSubjectText.setText(i18n.GL1068());
 		enterSubjectText.getElement().setId("lblEnterSubjectText");
-		enterSubjectText.getElement().setAttribute("alt", GL1068);
-		enterSubjectText.getElement().setAttribute("title", GL1068);
+		enterSubjectText.getElement().setAttribute("alt", i18n.GL1068());
+		enterSubjectText.getElement().setAttribute("title", i18n.GL1068());
 		
-		examplesText.setText(GL1069);
+		examplesText.setText(i18n.GL1069());
 		examplesText.getElement().setId("lblExamplesText");
-		examplesText.getElement().setAttribute("alt", GL1069);
-		examplesText.getElement().setAttribute("title", GL1069);
+		examplesText.getElement().setAttribute("alt", i18n.GL1069());
+		examplesText.getElement().setAttribute("title", i18n.GL1069());
 		
-		solarLbl.setText(GL1070);
+		solarLbl.setText(i18n.GL1070());
 		solarLbl.getElement().setId("lnkSolar");
-		solarLbl.getElement().setAttribute("alt", GL1070);
-		solarLbl.getElement().setAttribute("title", GL1070);
+		solarLbl.getElement().setAttribute("alt", i18n.GL1070());
+		solarLbl.getElement().setAttribute("title", i18n.GL1070());
 		
-		exponentsLbl.setText(GL1071);
+		exponentsLbl.setText(i18n.GL1071());
 		exponentsLbl.getElement().setId("lnkExponents");
-		exponentsLbl.getElement().setAttribute("alt", GL1071);
-		exponentsLbl.getElement().setAttribute("title", GL1071);
+		exponentsLbl.getElement().setAttribute("alt", i18n.GL1071());
+		exponentsLbl.getElement().setAttribute("title", i18n.GL1071());
 		
-		oceansLbl.setText(GL1072);
+		oceansLbl.setText(i18n.GL1072());
 		oceansLbl.getElement().setId("lnkOceans");
-		oceansLbl.getElement().setAttribute("alt", GL1072);
-		oceansLbl.getElement().setAttribute("title", GL1072);
+		oceansLbl.getElement().setAttribute("alt", i18n.GL1072());
+		oceansLbl.getElement().setAttribute("title", i18n.GL1072());
 		
-		cellsLbl.setText(GL1073);
+		cellsLbl.setText(i18n.GL1073());
 		cellsLbl.getElement().setId("lnkCells");
-		cellsLbl.getElement().setAttribute("alt", GL1073);
-		cellsLbl.getElement().setAttribute("title", GL1073);
+		cellsLbl.getElement().setAttribute("alt", i18n.GL1073());
+		cellsLbl.getElement().setAttribute("title", i18n.GL1073());
 		
 		solarLbl.addClickHandler(new SearchSolorClickHandler());
 		exponentsLbl.addClickHandler(new SearchExponentClickHandler());
