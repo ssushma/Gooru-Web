@@ -87,13 +87,48 @@ public class SausdBannerView extends Composite {
 	}
 	
 	private void setLandingBannerText(String headerMsg, String subHeaderMsg, String infoText1, String infoText2, String infoText3, String infoText4) {
+		
+		    partnerLogo.getElement().setId("pnlPartnerLogo"); 
+		    
 			headerTag.setText(headerMsg);
+			headerTag.getElement().setId("lblHeaderTag");
+			headerTag.getElement().setAttribute("alt",headerMsg);
+			headerTag.getElement().setAttribute("title",headerMsg);
+			
 			subHeaderTag.setText(subHeaderMsg);
+
+			subHeaderTag.getElement().setId("lblSubHeaderTag");
+			subHeaderTag.getElement().setAttribute("alt",subHeaderMsg);
+			subHeaderTag.getElement().setAttribute("title",subHeaderMsg);
+			
 			title1.setText(i18n.GL1981());
+			title1.getElement().setId("lblTitle1");
+			title1.getElement().setAttribute("alt",i18n.GL1981());
+			title1.getElement().setAttribute("title",i18n.GL1981());
+			
 			title2.setText(i18n.GL1982());
+			title2.getElement().setId("lblTitle2");
+			title2.getElement().setAttribute("alt",i18n.GL1982());
+			title2.getElement().setAttribute("title",i18n.GL1982());
+			
 			info1.setText(infoText1);
+			info1.getElement().setId("lblInfo1");
+			info1.getElement().setAttribute("alt",infoText1);
+			info1.getElement().setAttribute("title",infoText1);
+			
 			info2.setText(infoText2);
+			info2.getElement().setId("lblInfo2");
+			info2.getElement().setAttribute("alt",infoText2);
+			info2.getElement().setAttribute("title",infoText2);
+			
 			info3.setText(infoText3);
+			info3.getElement().setId("lblInfo3");
+			info3.getElement().setAttribute("alt",infoText3);
+			info3.getElement().setAttribute("title",infoText3);
+			
 			info4.setText(infoText4);
+			info4.getElement().setId("lblInfo4");
+			info4.getElement().setAttribute("alt",infoText4);
+			info4.getElement().setAttribute("title",infoText4);
 	}	
 }

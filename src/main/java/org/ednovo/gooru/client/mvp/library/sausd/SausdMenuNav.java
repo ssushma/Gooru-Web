@@ -143,13 +143,36 @@ public abstract class SausdMenuNav extends Composite {
 	}
 	
 	private void setAssets() {
+		
 		scienceText.setText(i18n.GL1000());
+		scienceText.getElement().setId("lblScienceText");
+		scienceText.getElement().setAttribute("alt",i18n.GL1000());
+		scienceText.getElement().setAttribute("title",i18n.GL1000());
+		
 		mathText.setText(i18n.GL1001());
+		mathText.getElement().setId("lblMathText");
+		mathText.getElement().setAttribute("alt",i18n.GL1001());
+		mathText.getElement().setAttribute("title",i18n.GL1001());
+		
 		socialSciencesText.setText("Social Studies");
+		socialSciencesText.getElement().setId("lblSocialSciencesText");
+		socialSciencesText.getElement().setAttribute("alt","Social Studies");
+		socialSciencesText.getElement().setAttribute("title","Social Studies");
+		
 		languageArtsText.setText(i18n.GL1003());
+		languageArtsText.getElement().setId("lblLanguageArtsText");
+		languageArtsText.getElement().setAttribute("alt",i18n.GL1003());
+		languageArtsText.getElement().setAttribute("title",i18n.GL1003());
+		
 		learnText.setText("Elementary");
+		learnText.getElement().setId("lblLearnText");
+		learnText.getElement().setAttribute("alt","Elementary");
+		learnText.getElement().setAttribute("title","Elementary");
+		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
 			aboutGooruAnr.setText(i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
 			aboutGooruAnr.setHref(i18n.GL1900());
 		}
 		aboutGooruAnr.setTarget("_blank");
@@ -162,6 +185,18 @@ public abstract class SausdMenuNav extends Composite {
 		languageArtsText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		learnText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		aboutGooruAnr.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+		
+		sciencePanel.getElement().setId("epnlSciencePanel");
+		scienceCourses.getElement().setId("pnlScienceCourses");
+		mathPanel.getElement().setId("epnlMathPanel");
+		mathCourses.getElement().setId("pnlMathCourses");
+		socialPanel.getElement().setId("epnlSocialPanel");
+		socialCourses.getElement().setId("pnlSocialCourses");
+		elaPanel.getElement().setId("epnlElaPanel");
+		elaCourses.getElement().setId("pnlElaCourses");
+		learnPanel.getElement().setId("epnlLearnPanel");
+		learnCourses.getElement().setId("pnlLearnCourses");
+		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {

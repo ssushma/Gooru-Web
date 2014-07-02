@@ -47,6 +47,7 @@ public class FteLibraryView extends BaseViewWithHandlers<FteLibraryUiHandlers> i
 
 	public FteLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

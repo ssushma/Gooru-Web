@@ -47,6 +47,7 @@ public class LessonopolyLibraryView extends BaseViewWithHandlers<LessonopolyLibr
 
 	public LessonopolyLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

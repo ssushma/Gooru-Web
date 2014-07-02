@@ -47,6 +47,7 @@ public class PsdpalLibraryView extends BaseViewWithHandlers<PsdpalLibraryUiHandl
 
 	public PsdpalLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

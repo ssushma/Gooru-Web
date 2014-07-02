@@ -48,6 +48,7 @@ public class AutodeskLibraryView extends BaseViewWithHandlers<AutodeskLibraryUiH
 
 	public AutodeskLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override

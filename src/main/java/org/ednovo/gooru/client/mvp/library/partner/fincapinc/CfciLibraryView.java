@@ -47,6 +47,7 @@ public class CfciLibraryView extends BaseViewWithHandlers<CfciLibraryUiHandlers>
 
 	public CfciLibraryView() {
 		setWidget(uiBinder.createAndBindUi(this));
+		partnerPanel.getElement().setId("spnlPartnerPanel");
 	}
 	
 	@Override
