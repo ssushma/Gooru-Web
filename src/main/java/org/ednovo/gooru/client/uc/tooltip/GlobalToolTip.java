@@ -27,7 +27,7 @@ package org.ednovo.gooru.client.uc.tooltip;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -39,7 +39,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class GlobalToolTip extends Composite implements MessageProperties {
+public class GlobalToolTip extends Composite {
 	
 	@UiField
 	HTMLEventPanel confirmationPanel;
@@ -57,13 +57,15 @@ public class GlobalToolTip extends Composite implements MessageProperties {
 	public static GlobalToolTipUiBinder toolTipGlobalUiBinder=GWT.create(GlobalToolTipUiBinder.class);{
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	
 	public GlobalToolTip(){
 		initWidget(toolTipGlobalUiBinder.createAndBindUi(this));
-		desLbl.setText(GL1060);
+		desLbl.setText(i18n.GL1060());
 		confirmationPanel.getElement().setId("epnlConfirmationPanel");
 		desLbl.getElement().setId("lblDesLbl");
-		desLbl.getElement().setAttribute("alt", GL1060);
-		desLbl.getElement().setAttribute("title", GL1060);
+		desLbl.getElement().setAttribute("alt", i18n.GL1060());
+		desLbl.getElement().setAttribute("title", i18n.GL1060());
 		panelArrow.getElement().setId("pnlPanelArrow");
 		setPanelPosition();
 	}
