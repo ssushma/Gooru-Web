@@ -137,9 +137,9 @@ public interface SearchService extends BaseService {
 	/*
 	 * get Google Signin API
 	 */
-	String getGoogleSignin(String parms);
+	String getGoogleSignin(String parms) throws GwtException, ServerDownException;
 	
-	String getCollectionPlayDirectLink(String params);
+	String getCollectionPlayDirectLink(String params) throws GwtException, ServerDownException;
 	
 	/**
 	 * Get Home End point url
@@ -147,7 +147,7 @@ public interface SearchService extends BaseService {
 	 * @return home end point url
 	 * @throws GwtException
 	 */
-	String getHomeEndPointUrl();
+	String getHomeEndPointUrl() throws GwtException, ServerDownException;
 	
 	SearchDo<ResourceSearchResultDo> getSuggestSearchResultForResourceNoResult(SearchDo<ResourceSearchResultDo> searchInput) throws GwtException, ServerDownException;
 	
@@ -183,7 +183,7 @@ public interface SearchService extends BaseService {
 	 */
 	String getGoogleSignin(String placeToken, Map<String, String> parms) throws GwtException, ServerDownException;
 	
-	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo);
+	public SearchDo<CodeDo> getSuggestStandardByFilterCourseId(SearchDo<CodeDo> searchDo)  throws GwtException, ServerDownException; 
 	
 	SearchDo<String> getSuggestedAggregator(SearchDo<String> searchDo) throws GwtException, ServerDownException;
 	

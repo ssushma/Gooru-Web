@@ -121,7 +121,7 @@ public interface FolderService extends BaseService {
 	public void moveCollectionIntoFolder(String sourceId, String targetId) throws GwtException, ServerDownException;
 	
 	
-	public CollectionDo createCollectionInParent(CollectionDo data, String courseCodeId,String folderId)throws GwtException, ServerDownException;
+	public CollectionDo createCollectionInParent(CollectionDo data, String courseCodeId,String folderId) throws GwtException, ServerDownException;
 	
 	/**
 	 * updates the folder title for a particular folder.
@@ -131,7 +131,7 @@ public interface FolderService extends BaseService {
 	 */
 	public void updateFolder(String folderId, String title, String ideas, String questions, String performance) throws GwtException, ServerDownException;
 	
-	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf)throws GwtException, ServerDownException;
+	public CollectionDo  copyDraggedCollectionIntoFolder(CollectionDo collectionDo,String courseCodeId,String parentId,boolean addToShelf) throws GwtException, ServerDownException;
 	
 	public FolderListDo getCollectionResources(String parentId,String sharingType, String collectionType) throws GwtException, ServerDownException;
 	

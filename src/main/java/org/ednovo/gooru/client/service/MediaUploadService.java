@@ -78,7 +78,7 @@ public interface MediaUploadService extends BaseService {
 	MediaUploadDo imageFileUpload(String response) throws GwtException, ServerDownException;
 	
 	
-	String saveQuestionImage(String colletionItemId, String fileName);
+	String saveQuestionImage(String colletionItemId, String fileName)  throws GwtException, ServerDownException;
 	
 
 	/**
@@ -90,5 +90,5 @@ public interface MediaUploadService extends BaseService {
 //	String saveResourceImage(String gooruOid, String fileName);
 	
 	
-	String uploadProfileImage(String fileNameWithOutRepository,String fileName);
+	String uploadProfileImage(String fileNameWithOutRepository,String fileName)  throws GwtException, ServerDownException;
 }

@@ -467,20 +467,28 @@ public class LibraryMenuNav extends Composite{
 		
 	
 			if (subjectCode!=null){
-				if(subjectCode.equalsIgnoreCase(STANDARDS))
-				{
-					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
-
+				if(subjectCode.equalsIgnoreCase(STANDARDS)){
+//					AppClientFactory.getInjector().getLibraryService().getSubjectsForStandards(subjectCode, getPlaceToken(), new SimpleAsyncCallback<HashMap<String, StandardsDo>>() {
+//
+//						@Override
+//						public void onSuccess(HashMap<String, StandardsDo> result) {
+//							setSubjectPanelIdsForStandards(result);
+//							AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
+//							if(!getSubjectSelected(STANDARDS)) {
+//								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+//							}
+//						}
+//					});
+					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
 						@Override
-						public void onSuccess(
-							HashMap<String, StandardsDo> result) {
-							setSubjectPanelIdsForStandards(result);
-							AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,result.get(STANDARDS)));
+						public void onSuccess(ArrayList<StandardCourseDo> standardCourseList) {
 							if(!getSubjectSelected(STANDARDS)) {
-								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, result.get(STANDARDS).getData());
+								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, standardCourseList);
 							}
 						}
+						
 					});
+					
 				}
 				else
 				{

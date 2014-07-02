@@ -37,8 +37,8 @@ import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
-import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
+import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
@@ -203,4 +203,7 @@ public interface LibraryService extends BaseService {
 	 * @throws : GwtException
 	 */
 	public ProfileLibraryListDo getLibraryCoursesList(String parentId,String sharingType, String offset) throws GwtException, ServerDownException;
+	
+	public ArrayList<StandardCourseDo> getStandardLibraryMenuList(String subjectCode,String libraryName) throws GwtException, ServerDownException;
+	
 }

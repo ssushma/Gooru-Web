@@ -67,7 +67,7 @@ public class RegistrationWelcomePopup extends Composite{
 		appPopUp.show();
 		appPopUp.center();
 		
-		getStartedText.setText(i18n.GL1188()+i18n.GL_SPL_SEMICOLON());
+		getStartedText.setText(i18n.GL1188()+i18n.GL_SPL_SEMICOLON()+" ");
 		getStartedText.getElement().setId("lblGetStartedText");
 		getStartedText.getElement().setAttribute("alt",i18n.GL1188());
 		getStartedText.getElement().setAttribute("title",i18n.GL1188());
