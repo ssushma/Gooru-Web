@@ -781,8 +781,8 @@ public interface MessageProperties {
 	
 	//Collection Flag
 	String GL0600 = "Flag";
-	String GL0600_1 = "Flag this Content";
-	String GL0600_2 = "Thanks!";
+//	String GL0600_1 = "Flag this Content";
+//	String GL0600_2 = "Thanks!";
 	String GL0601 = "Flag this Collection";
 	String GL0602 = "Flag a Resource";
 	String GL0603 = "Resources in the collection are inappropriate";
@@ -797,7 +797,7 @@ public interface MessageProperties {
 	String GL0612 ="Resource is inappropriate (i.e. for students)";
 	String GL0613 ="Resource is unavailable (i.e. it doesn't load)";
 	String GL0614 ="Resource information appears to be inaccurate (e.g. the resource title, format, description)";
-	String GL0615 ="Thank you for flagging this content! Your report will be reviewed shortly.";
+	String GL0615 ="Thank you for submitting!";
 	String GL0616 ="Course : ";
 	String GL0617 ="Legal:";
 	String GL0618="Learning Objective:";
@@ -1170,7 +1170,7 @@ public interface MessageProperties {
 		String GL0960 ="Edit Start page";//Label
 		String GL0961 =	"Start page :";//Label
 		String GL0962 =	"Edit Narration";//Label
-		String GL0963 =	"Edit Question";//Label
+		String GL0963 =	"Edit Info";//Label
 		String GL0964 =	"Edit Video Time";//Label
 		String GL0965 =	"Copy To";//Label
 		String GL0966 ="Updating...";//Label
@@ -1270,9 +1270,9 @@ public interface MessageProperties {
 		String GL1043="Shouldn't be empty!";
 		
 		//new cateroies
-		String GL1044 = "Text";
+		String GL1044 = "Texts";
 		String GL1045 = "Audio";
-		String GL1046 = "Image";
+		String GL1046 = "Images";
 		String GL1047 = "Other";
 		String GL1048="lastname";
 		String GL1049="code";

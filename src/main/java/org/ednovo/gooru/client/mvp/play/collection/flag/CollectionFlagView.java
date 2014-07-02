@@ -112,7 +112,7 @@ public class CollectionFlagView extends
 		appPopUp = new FlagPopupPanel(false);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		popUpCloseButton.addClickHandler(new CloseFlagPopupEvent());
-		headerflagtext.setText(GL0600_1);
+		headerflagtext.setText(GL0600);
 		flagCollectionText.getElement().setInnerHTML(GL0601);
 		flagResourceText.getElement().setInnerHTML(GL0601);
 		flagResourceText.getElement().setInnerHTML(GL0602);
