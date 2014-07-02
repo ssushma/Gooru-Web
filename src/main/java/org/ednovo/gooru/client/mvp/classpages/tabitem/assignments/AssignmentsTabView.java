@@ -283,7 +283,7 @@ public class AssignmentsTabView extends ChildView<AssignmentsTabPresenter>
 		mandatoryTitleLabel.getElement().setAttribute("alt",MANDATORY_TITLE);
 		mandatoryTitleLabel.getElement().setAttribute("title",MANDATORY_TITLE);
 		
-		lblDueDateDisplay.setText(i18n.GL0238() +i18n.GL_SPL_SEMICOLON());
+		lblDueDateDisplay.setText(i18n.GL0238() +i18n.GL_SPL_SEMICOLON()+" ");
 		lblDueDateDisplay.getElement().setId("lblDueDateDisplay");
 		lblDueDateDisplay.getElement().setAttribute("alt",i18n.GL0238());
 		lblDueDateDisplay.getElement().setAttribute("title",i18n.GL0238());

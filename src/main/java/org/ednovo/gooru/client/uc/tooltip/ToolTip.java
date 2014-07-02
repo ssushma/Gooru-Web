@@ -63,10 +63,10 @@ public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 	public ToolTip(){
 		setWidget(toolTipUiBinder.createAndBindUi(this));
 	//	lblTitle.setText(GL0450);
-		lblTitle.setTitle(i18n.GL0450());
+		lblTitle.setTitle(i18n.GL0450()+" ");
 		lblTitle.getElement().setId("pnlLblTitle");
-		lblTitle.getElement().setAttribute("alt",i18n.GL0450());
-		lblTitle.getElement().setAttribute("title", i18n.GL0450());
+		lblTitle.getElement().setAttribute("alt",i18n.GL0450()+" ");
+		lblTitle.getElement().setAttribute("title", i18n.GL0450()+" ");
 		lblLink.setText(i18n.GL0451());
 		lblLink.getElement().setId("lnkLblLink");
 		lblLink.getElement().setAttribute("alt", i18n.GL0451());

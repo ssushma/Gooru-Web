@@ -148,9 +148,9 @@ public class FeaturedCollectionUc extends Composite{
 	}
 
 	private void setCollectionData(final CollectionDo collectionDo) {
-			createdByText.setText(i18n.GL0622());
-			createdByText.getElement().setAttribute("alt",i18n.GL0622());
-			createdByText.getElement().setAttribute("title",i18n.GL0622());
+			createdByText.setText(i18n.GL0622()+" ");
+			createdByText.getElement().setAttribute("alt",i18n.GL0622()+" ");
+			createdByText.getElement().setAttribute("title",i18n.GL0622()+" ");
 			
 			gradesText.setText(i18n.GL1320_1());
 			gradesText.getElement().setAttribute("alt",i18n.GL1320_1());
