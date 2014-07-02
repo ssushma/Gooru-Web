@@ -2,7 +2,7 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.even
 
 import java.util.List;
 
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -12,7 +12,7 @@ public class FolderEvent extends GwtEvent<FolderEventHandlers> {
 	
 	String title=null;
 	String id=null;
-	List<DriveDo> result=null; 
+	List<GoogleDriveItemDo> result=null; 
 	public static final Type<FolderEventHandlers> TYPE = new Type<FolderEventHandlers>();
 
 	/**
@@ -23,7 +23,7 @@ public class FolderEvent extends GwtEvent<FolderEventHandlers> {
 	
 	
 
-	public FolderEvent(String title, String id, List<DriveDo> result) {
+	public FolderEvent(String title, String id, List<GoogleDriveItemDo> result) {
 		
 		this.title=title;
 		this.id=id;

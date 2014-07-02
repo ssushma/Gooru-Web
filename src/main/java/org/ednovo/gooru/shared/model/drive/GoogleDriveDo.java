@@ -22,48 +22,79 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.shared.model.folder;
+package org.ednovo.gooru.shared.model.drive;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class FolderListDo implements Serializable
-{
-	private static final long serialVersionUID = 1L;
-	private List<FolderDo> searchResult;
-	private Integer count;
+public class GoogleDriveDo implements Serializable{
+
+	private static final long serialVersionUID = -3298220423508874309L;
+
+	private String kind;
+	private String selfLink;
+	private String nextPageToken;
+	private String nextLink;
+	private ArrayList<GoogleDriveItemDo> items;
 	
-	public FolderListDo() {}
-
-	/** 
-	 * This method is to get the searchResult
+	/**
+	 * @return the kind
 	 */
-	public List<FolderDo> getSearchResult() {
-		return searchResult;
+	public String getKind() {
+		return kind;
+	}
+	/**
+	 * @param kind the kind to set
+	 */
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+	/**
+	 * @return the selfLink
+	 */
+	public String getSelfLink() {
+		return selfLink;
+	}
+	/**
+	 * @param selfLink the selfLink to set
+	 */
+	public void setSelfLink(String selfLink) {
+		this.selfLink = selfLink;
+	}
+	/**
+	 * @return the nextPageToken
+	 */
+	public String getNextPageToken() {
+		return nextPageToken;
+	}
+	/**
+	 * @param nextPageToken the nextPageToken to set
+	 */
+	public void setNextPageToken(String nextPageToken) {
+		this.nextPageToken = nextPageToken;
+	}
+	/**
+	 * @return the nextLink
+	 */
+	public String getNextLink() {
+		return nextLink;
+	}
+	/**
+	 * @param nextLink the nextLink to set
+	 */
+	public void setNextLink(String nextLink) {
+		this.nextLink = nextLink;
+	}
+	public ArrayList<GoogleDriveItemDo> getItems() {
+		return items;
+	}
+	public void setItems(ArrayList<GoogleDriveItemDo> items) {
+		this.items = items;
 	}
 
-	/** 
-	 * This method is to set the searchResult
-	 */
-	public void setSearchResult(List<FolderDo> searchResult) {
-		this.searchResult = searchResult;
-	}
-
-	/** 
-	 * This method is to get the count
-	 */
-	public Integer getCount() {
-		return count;
-	}
-
-	/** 
-	 * This method is to set the count
-	 */
-	public void setCount(Integer count) {
-		this.count = count;
-	}
+	
 }

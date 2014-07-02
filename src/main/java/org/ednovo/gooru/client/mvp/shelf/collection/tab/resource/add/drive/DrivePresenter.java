@@ -35,7 +35,8 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEventHandlers;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -101,7 +102,7 @@ public class DrivePresenter extends
 	DriveEventHandler driveEvent = new DriveEventHandler() {
 
 		@Override
-		public void clearDrivepage(DriveDo driveDo) {
+		public void clearDrivepage(GoogleDriveItemDo driveDo) {
 			getView().getDriveDetails(driveDo);
 			// TODO Auto-generated method stub
 
@@ -112,7 +113,7 @@ public class DrivePresenter extends
 
 		@Override
 		public void clearFolderpage(String title, String id,
-				List<DriveDo> result) {
+				List<GoogleDriveItemDo> result) {
 			// TODO Auto-generated method stub
 			getView().getFolderDetails(title, id, result);
 
@@ -122,34 +123,31 @@ public class DrivePresenter extends
 
 	@Override
 	public void getdriveListAgain() {
-		AppClientFactory.getInjector().getResourceService()
-				.getDrive(new AsyncCallback<List<DriveDo>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onSuccess(List<DriveDo> result) {
-						getView().driveContentList(result);
-						// TODO Auto-generated method stub
-
-					}
-
-				});
+//		AppClientFactory.getInjector().getResourceService()
+//				.getDrive(new AsyncCallback<List<GoogleDriveItemDo>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//
+//					}
+//
+//					@Override
+//					public void onSuccess(List<GoogleDriveItemDo> result) {
+//						getView().driveContentList(result);
+//						// TODO Auto-generated method stub
+//
+//					}
+//
+//				});
 
 	}
 
 	public void callDriveContent() {
-		// TODO Auto-generated method stub
-		AppClientFactory.getInjector().getResourceService()
-			.getDrive(new SimpleAsyncCallback<List<DriveDo>>() {
-
+		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(new SimpleAsyncCallback<GoogleDriveDo>() {
 				@Override
-				public void onSuccess(List<DriveDo> result) {
-					getView().driveContentList(result);	
+				public void onSuccess(GoogleDriveDo googleDriveDo) {
+					getView().driveContentList(googleDriveDo);	
 				}
 			});
 	}
