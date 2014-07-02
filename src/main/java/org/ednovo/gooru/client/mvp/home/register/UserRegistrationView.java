@@ -173,29 +173,132 @@ public class UserRegistrationView extends
 		appPopUp.setContent(REGISTER_LOGIN, uiBinder.createAndBindUi(this));
 		appPopUp.setGlassStyleName(RegisterCBundle.INSTANCE.css()
 				.registerPopupGlassPanel());
+		
+		userRegisterFloPanel.getElement().setId("fpnlUserRegisterFloPanel");
+		welcomeMessageHtml.getElement().setId("htmlWelcomeMessageHtml");
+		firstnameFloPanel.getElement().setId("fpnlFirstnameFloPanel");
+		lastnameFloPanel.getElement().setId("fpnlLastnameFloPanel");
+		birthdayFloPanel.getElement().setId("fpnlBirthdayFloPanel");
+		dateSimPanel.getElement().setId("spnlDateSimPanel");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		genderFocusFocPanel.getElement().setId("fouspnlGenderFocusFocPanel");
+		genderFieldsFloPanel.getElement().setId("fouspnlGenderFieldsFloPanel");
+		genderValidUc.getElement().setId("errlblGenderValidUc");
+		userCategoryFloPanel.getElement().setId("fpnlUserCategoryFloPanel");
+		userCategoryLisBox.getElement().setId("lbUserCategoryLisBox");
+		termsAndConditionFloPanel.getElement().setId("fpnlTermsAndConditionFloPanel");
+		
+		
 		accountTypeFieldLbl.setText(GL0807);
+		accountTypeFieldLbl.getElement().setId("lblAccountTypeFieldLbl");
+		accountTypeFieldLbl.getElement().setAttribute("alt",GL0807);
+		accountTypeFieldLbl.getElement().setAttribute("title",GL0807);
+		
 		accountInformationLbl.setText(GL1198);
+		accountInformationLbl.getElement().setId("lblAccountInformationLbl");
+		accountInformationLbl.getElement().setAttribute("alt",GL1198);
+		accountInformationLbl.getElement().setAttribute("title",GL1198);
+		
 		fName.setText(GL0424);
+		fName.getElement().setId("lblFName");
+		fName.getElement().setAttribute("alt",GL0424);
+		fName.getElement().setAttribute("title",GL0424);
+		
 		lName.setText(GL0425);
+		lName.getElement().setId("lblLName");
+		lName.getElement().setAttribute("alt",GL0425);
+		lName.getElement().setAttribute("title",GL0425);
+		
 		uName.setText(GL1035);
+		uName.getElement().setId("lblUName");
+		uName.getElement().setAttribute("alt",GL1035);
+		uName.getElement().setAttribute("title",GL1035);
+		
 		pWord.setText(GL0204);
+		pWord.getElement().setId("lblPWord");
+		pWord.getElement().setAttribute("alt",GL0204);
+		pWord.getElement().setAttribute("title",GL0204);
+		
 		cPword.setText(GL0427);
+		cPword.getElement().setId("lblCPword");
+		cPword.getElement().setAttribute("alt",GL0427);
+		cPword.getElement().setAttribute("title",GL0427);
+		
 		bdLbl.setText(GL0211);
+		bdLbl.getElement().setId("lblBdLbl");
+		bdLbl.getElement().setAttribute("alt",GL0211);
+		bdLbl.getElement().setAttribute("title",GL0211);
+		
 		emailText.setText(GL0212);
+		emailText.getElement().setId("lblEmailText");
+		emailText.getElement().setAttribute("alt",GL0212);
+		emailText.getElement().setAttribute("title",GL0212);
+		
 		genderText.setText(GL0809);
+		genderText.getElement().setId("lblGenderText");
+		genderText.getElement().setAttribute("alt",GL0809);
+		genderText.getElement().setAttribute("title",GL0809);
+		
 		female.setText(GL0811);
+		female.getElement().setId("rdFemale");
+		female.getElement().setAttribute("alt",GL0811);
+		female.getElement().setAttribute("title",GL0811);
+		
 		male.setText(GL0810);
+		male.getElement().setId("rdMale");
+		male.getElement().setAttribute("alt",GL0810);
+		male.getElement().setAttribute("title",GL0810);
+		
 		other.setText(GL1047);
+		other.getElement().setId("rdOther");
+		other.getElement().setAttribute("alt",GL1047);
+		other.getElement().setAttribute("title",GL1047);
+		
 		donot.setText(GL1199);
+		donot.getElement().setId("rdDoNot");
+		donot.getElement().setAttribute("alt",GL1199);
+		donot.getElement().setAttribute("title",GL1199);
+		
 		aboutMe.setText(GL1200);
+		aboutMe.getElement().setId("lblAboutMe");
+		aboutMe.getElement().setAttribute("alt",GL1200);
+		aboutMe.getElement().setAttribute("title",GL1200);
+		
 		conditionsText.setText(GL1201+" ");
+		conditionsText.getElement().setId("lblConditionsText");
+		conditionsText.getElement().setAttribute("alt",GL1201);
+		conditionsText.getElement().setAttribute("title",GL1201);
+		
 		termsAndConditionsAnr.setText(GL0297+" "+GL_GRR_AND+" "+GL0452);
+		termsAndConditionsAnr.getElement().setAttribute("alt",GL0297+" "+GL_GRR_AND+" "+GL0452);
+		termsAndConditionsAnr.getElement().setAttribute("title",GL0297+" "+GL_GRR_AND+" "+GL0452);
+		
 		andText.setText("  "+GL_GRR_AND+"  ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt","  "+GL_GRR_AND+"  ");
+		andText.getElement().setAttribute("title","  "+GL_GRR_AND+"  ");
+		
 		copyRightPolicyAnr.setText(GL0421);
+		copyRightPolicyAnr.getElement().setAttribute("alt",GL0421);
+		copyRightPolicyAnr.getElement().setAttribute("title",GL0421);
+		
 		gooruText.setText(" "+GL_GRR_OF+" "+GL1202);
+		gooruText.getElement().setId("lblGooruText");
+		gooruText.getElement().setAttribute("alt"," "+GL_GRR_OF+" "+GL1202);
+		gooruText.getElement().setAttribute("title"," "+GL_GRR_OF+" "+GL1202);
+		
 		updateUserDetailsUc.setText(GL1203);
+		updateUserDetailsUc.getElement().setAttribute("alt",GL1203);
+		updateUserDetailsUc.getElement().setAttribute("title",GL1203);
+		
 		cancelAnr.setText(GL0142);
+		cancelAnr.getElement().setAttribute("alt",GL0142);
+		cancelAnr.getElement().setAttribute("title",GL0142);
+		
 		welcomeMessageHtml.setHTML(GL1211);
+		welcomeMessageHtml.getElement().setAttribute("alt",GL1211);
+		welcomeMessageHtml.getElement().setAttribute("title",GL1211);
+		
 		passwordFieldTxtBox.addFocusHandler(new OnPasswordFocus());
 		dateBoxUc = new DateBoxUc(true, false, false);
 		dateSimPanel.add(dateBoxUc);
@@ -226,10 +329,6 @@ public class UserRegistrationView extends
 		lastNameFieldUc.getElement().setId("txtLastName");
 		passwordFieldTxtBox.getElement().setId("txtpassword");
 		confirmPasswordFieldTxtBox.getElement().setId("txtConfirmPassword");
-		female.getElement().setId("rdFemale");
-		male.getElement().setId("rdMale");
-		other.getElement().setId("rdOther");
-		donot.getElement().setId("rdDoNot");
 		termsAndConditionsAnr.getElement().setId("lnkTermsAndConditions");
 		copyRightPolicyAnr.getElement().setId("lnkCopyRightPolicy");
 		updateUserDetailsUc.getElement().setId("btnRegister");
@@ -678,6 +777,10 @@ public class UserRegistrationView extends
 	@Override
 	public void setRegisteredUserDetails(UserDo user, String accountType) {
 		userEmailFieldLbl.setText(user.getEmailId());
+		userEmailFieldLbl.getElement().setId("lblUserEmailFieldLbl");
+		userEmailFieldLbl.getElement().setAttribute("alt",user.getEmailId());
+		userEmailFieldLbl.getElement().setAttribute("title",user.getEmailId());
+		
 		userCategoryLisBox.addItem(GL0417);
 		userCategoryLisBox.addItem(GL0416);
 		userCategoryLisBox.addItem(GL0418);

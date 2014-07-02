@@ -70,13 +70,36 @@ public class RegistrationConfirmationVc extends Composite implements MessageProp
 		appPopUp.setContent(REGISTRATION_RECEIVED, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		confirmRegisterUc.getElement().setId("btnConfirmRegister");
+		
 		almostHereText.setText(GL1191);
+		almostHereText.getElement().setId("lblAlmostHereText");
+		almostHereText.getElement().setAttribute("alt",GL1191);
+		almostHereText.getElement().setAttribute("title",GL1191);
+		
 		sentConformationText.setText(GL1192);
+		sentConformationText.getElement().setId("lblSentConformationText");
+		sentConformationText.getElement().setAttribute("alt",GL1192);
+		sentConformationText.getElement().setAttribute("title",GL1192);
+		
 		contactText.setText(GL1193);
+		contactText.getElement().setId("lblContactText");
+		contactText.getElement().setAttribute("alt",GL1193);
+		contactText.getElement().setAttribute("title",GL1193);
+		
 		supportText.setText("  "+GL0299);
+		supportText.getElement().setId("lblSupportText");
+		supportText.getElement().setAttribute("alt","  "+GL0299);
+		supportText.getElement().setAttribute("title","  "+GL0299);
+		
 		confirmRegisterUc.setText(GL0190);
+		confirmRegisterUc.getElement().setId("btnConfirmRegister");
+		confirmRegisterUc.getElement().setAttribute("alt",GL0190);
+		confirmRegisterUc.getElement().setAttribute("title",GL0190);
+		
 		didnotReceiveText.setText(GL1194+GL_SPL_QUESTION);
+		didnotReceiveText.getElement().setId("lblDidnotReceiveText");
+		didnotReceiveText.getElement().setAttribute("alt",GL1194);
+		didnotReceiveText.getElement().setAttribute("title",GL1194);
 	}
 	
 	/**

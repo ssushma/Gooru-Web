@@ -63,10 +63,21 @@ public class RegistrationWelcomePopup extends Composite implements MessageProper
 		appPopUp.setContent(READY_TO_USE_GOORU, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		registerWelcomeUc.getElement().setId("btnRegisterWelcome");
+		
 		getStartedText.setText(GL1188+GL_SPL_SEMICOLON);
+		getStartedText.getElement().setId("lblGetStartedText");
+		getStartedText.getElement().setAttribute("alt",GL1188);
+		getStartedText.getElement().setAttribute("title",GL1188);
+		
 		happyStudyingText.setText(GL1189+GL_SPL_EXCLAMATION);
+		happyStudyingText.getElement().setId("lblHappyStudyingText");
+		happyStudyingText.getElement().setAttribute("alt",GL1189);
+		happyStudyingText.getElement().setAttribute("title",GL1189);
+		
 		registerWelcomeUc.setText(GL0190);
+		registerWelcomeUc.getElement().setId("btnRegisterWelcome");
+		registerWelcomeUc.getElement().setAttribute("alt",GL0190);
+		registerWelcomeUc.getElement().setAttribute("title",GL0190);
 	}
 	
 	@Override
