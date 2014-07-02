@@ -36,7 +36,7 @@ public class FlagThankYouPopUpView extends PopupPanel implements MessageProperti
 		this.getElement().getStyle().setZIndex(999999);
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
-		flagHeaderText.setText(GL0600);
+		flagHeaderText.setText(GL0600_2);
 		thanksSubmitText.setText(GL0615);
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE
 				.closeFlagPopUpImages());
