@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.classpages.tabitem.assignments.collections.CollectionsView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsSearchDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.ResourceDo;
@@ -59,7 +60,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class AssignmentsView extends
 		ChildView<AssignmentsPresenter> implements
-		IsAssignmentsView, MessageProperties {
+		IsAssignmentsView {
 
 	@UiField(provided = true)
 	AssignmentsViewCBundle res;
@@ -108,6 +109,8 @@ public class AssignmentsView extends
 
 	private static AssignmentsViewUiBinder uiBinder = GWT
 			.create(AssignmentsViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface AssignmentsViewUiBinder extends
 			UiBinder<Widget, AssignmentsView> {
@@ -144,16 +147,16 @@ public class AssignmentsView extends
 		descLbl.getElement().setAttribute("title",description);
 		
 		
-		expandLbl.setText(GL0241);
-		expandLbl.getElement().setAttribute("alt",GL0241);
-		expandLbl.getElement().setAttribute("title",GL0241);
+		expandLbl.setText(i18n.GL0241());
+		expandLbl.getElement().setAttribute("alt",i18n.GL0241());
+		expandLbl.getElement().setAttribute("title",i18n.GL0241());
 		expandLbl.getElement().setId("lblexpand");
 		
 		dueLbl.getElement().setId("lblDue");
 		if (dueDate!=null && !dueDate.equalsIgnoreCase("")){
-			dueLbl.setText(GL0238+GL_SPL_SEMICOLON+" "+dueDate);
-			dueLbl.getElement().setAttribute("alt",GL0238+GL_SPL_SEMICOLON+" "+dueDate);
-			dueLbl.getElement().setAttribute("title",GL0238+GL_SPL_SEMICOLON+" "+dueDate);
+			dueLbl.setText(i18n.GL0238()+i18n.GL_SPL_SEMICOLON()+" "+dueDate);
+			dueLbl.getElement().setAttribute("alt",i18n.GL0238()+i18n.GL_SPL_SEMICOLON()+" "+dueDate);
+			dueLbl.getElement().setAttribute("title",i18n.GL0238()+i18n.GL_SPL_SEMICOLON()+" "+dueDate);
 		}else{
 			dueLbl.setText(" ");
 			dueLbl.getElement().setAttribute("alt","");
@@ -227,9 +230,9 @@ public class AssignmentsView extends
 	public void emptyAssignment() {
 		
 		if((descLbl.getText()==null || descLbl.getText().equalsIgnoreCase(""))){
-			emptyAssignmentLbl.setText(GL1129);
-			emptyAssignmentLbl.getElement().setAttribute("alt",GL1129);
-			emptyAssignmentLbl.getElement().setAttribute("title",GL1129);
+			emptyAssignmentLbl.setText(i18n.GL1129());
+			emptyAssignmentLbl.getElement().setAttribute("alt",i18n.GL1129());
+			emptyAssignmentLbl.getElement().setAttribute("title",i18n.GL1129());
 		}
 	}
 

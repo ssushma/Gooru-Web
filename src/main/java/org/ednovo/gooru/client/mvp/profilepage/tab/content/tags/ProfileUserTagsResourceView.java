@@ -85,7 +85,8 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	
 	public void getData(String tagGooruOid)
 	{
-		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagGooruOid,Integer.toString(totalResourceCount),limit, new SimpleAsyncCallback<List<UserTagsResourceDO>>() {
+		String profileUserUserId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagGooruOid,Integer.toString(totalResourceCount),limit,profileUserUserId, new SimpleAsyncCallback<List<UserTagsResourceDO>>() {
 			
 			@Override
 			public void onSuccess(List<UserTagsResourceDO> result) {
@@ -126,7 +127,9 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	@UiHandler("tagScrollPanel")
 	public void dragFollowingScrollPanel(ScrollEvent event) {
 		if (tagScrollPanel.getVerticalScrollPosition() == tagScrollPanel.getMaximumVerticalScrollPosition() && totalResourceCount <totalHintCount) {
-		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagId,Integer.toString(totalResourceCount),limit, new SimpleAsyncCallback<List<UserTagsResourceDO>>() {
+
+		String profileUserUserId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+		AppClientFactory.getInjector().getUserService().getResourcesByTag(tagId,Integer.toString(totalResourceCount),limit,profileUserUserId, new SimpleAsyncCallback<List<UserTagsResourceDO>>() {
 			
 			@Override
 			public void onSuccess(List<UserTagsResourceDO> result) {

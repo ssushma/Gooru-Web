@@ -59,6 +59,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -88,6 +89,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	@UiField
 	VerticalPanel contentVerPanel;
 	
+	@UiField Label blueLbl,greyLbl;
+	
 	@UiField(provided = true)
 	ShelfListCBundle res;
 	 
@@ -110,8 +113,20 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 //		this.setCollectionItemDo(collectionItem);
 		this.collectionItemDo = collectionItem;
 		glassContainer.setGlassText(GL0991);
+		glassContainer.getElement().setId("GlassContainer");
+		glassContainer.getElement().setAttribute("alt", GL0991);
+		glassContainer.getElement().setAttribute("title", GL0991);
 		glassContainer.setGlassVisible(false);
 		this.setStyleName(ShelfListCBundle.INSTANCE.css().shelfResourcePanel());
+		thirdLevelFoldersData.getElement().setId("fpnlThirdLevelFoldersData");
+		L3DataTitleFocPanel.getElement().setId("focuspnlL3DataTitleFocPanel");
+		collectionIcon.getElement().setId("fpnlCollectionIcon");
+		blueLbl.getElement().setId("lblBlueLbl");
+		greyLbl.getElement().setId("lblGreyLbl");
+		folderL3DataIcon.getElement().setId("fpnlFolderL3DataIcon");
+		folderL3DataDisPanel.getElement().setId("discpnlFolderL3DataDisPanel");
+		wrapperFocPanel.getElement().setId("focuspnlWrapperFocPanel");
+		contentVerPanel.getElement().setId("vpnlContentVerPanel");
 		thirdLevelFoldersData.getElement().getStyle().setFloat(Float.LEFT);
 		L3DataTitleFocPanel.addClickHandler(this);
 		wrapperFocPanel.addMouseOverHandler(this);
@@ -141,9 +156,13 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 			L3DataTitleFocPanel.getElement().setAttribute("collectionType", collectionItem.getResource().getResourceType().getName());
 		//	folderL3TitleLbl.setText(StringUtil.truncateText(collectionItem.getResource().getTitle(), 30));
 			folderL3TitleLbl.setHTML(StringUtil.truncateText(collectionItem.getResource().getTitle(), 30));
+			folderL3TitleLbl.getElement().setAttribute("alt", collectionItem.getResource().getTitle());
+			folderL3TitleLbl.getElement().setAttribute("title", collectionItem.getResource().getTitle());
+
 			folderL3TitleLbl.getElement().setId(collectionItem.getResource().getGooruOid());
 		}else {
 			folderL3TitleLbl.setText("--");
+			folderL3TitleLbl.getElement().setId(collectionItem.getResource().getGooruOid());
 		}
 	}
 	
@@ -244,6 +263,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	public void setOpen() {
 		if (thirdLevelFolderResourceData == null || !thirdLevelFolderResourceData.equals(this)) {
 			glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+			glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 			if (thirdLevelFolderResourceData != null) {
 				thirdLevelFolderResourceData.setOpen(false);
 				thirdLevelFolderResourceData.L3DataTitleFocPanel.setStyleName(res.css().shelfCollectionTitle()); 
@@ -282,6 +303,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 				if(collectionItemDo.getResource().getResourceType().getName().equalsIgnoreCase("scollection"))
 				{
 					glassContainer.setGlassText(EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("alt", EDIT_THIS_COLLECTION);
+					glassContainer.getElement().setAttribute("title", EDIT_THIS_COLLECTION);
 					glassContainer.setGlassVisible(true);
 				}
 			}
@@ -307,6 +330,8 @@ public class ThirdLevelFolderResourceData extends FocusPanel implements ClickHan
 	@Override
 	public void onDragOver(Draggable draggable) {
 		glassContainer.setGlassText(ADD_TO_THIS_COLLECTION);
+		glassContainer.getElement().setAttribute("alt", ADD_TO_THIS_COLLECTION);
+		glassContainer.getElement().setAttribute("title", ADD_TO_THIS_COLLECTION);
 		glassContainer.setGlassVisible(true);
 		if (draggable.getType().equals(DRAG_TYPE.RESOURCE)) {
 			draggable.getDraggableMirageUc().onDroppable(true);

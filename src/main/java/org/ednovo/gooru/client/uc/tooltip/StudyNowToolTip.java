@@ -91,7 +91,7 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 
 	@UiField Button enterLbl,disabledBtn;
 	
-	@UiField HTMLPanel tooltipPanel;
+	@UiField HTMLPanel tooltipPanel,panelCode;
 	
 	@UiField
 	ScrollPanel spanelCollectionList;
@@ -138,12 +138,23 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 		this.res = ClasspageListPopupViewCBundle.INSTANCE;
 		res.css().ensureInjected();
 		tooltipPanel.getElement().getStyle().setTop(14, Unit.PX);
+		panelCode.getElement().setId("pnlPanelCode");
+		tooltipPanel.getElement().setId("pnlTooltipPanel");
 		enterLbl.setText(GL1065);
+		enterLbl.getElement().setId("btnEnterLbl");	
+		enterLbl.getElement().setAttribute("alt", GL1065);
+		enterLbl.getElement().setAttribute("title", GL1065);
 		lblTitle.setText(GL0474);
+		lblTitle.getElement().setId("lblLblTitle");
+		lblTitle.getElement().setAttribute("alt", GL0474);
+		lblTitle.getElement().setAttribute("title", GL0474);
+		lblLoading.getElement().setId("lblLblLoading");
+		spanelCollectionList.getElement().setId("sbSpanelCollectionList");
 		classCodeTxtBox.setText("");
 		classCodeTxtBox.getElement().setAttribute("maxlength", "10");
 		classCodeTxtBox.getElement().setId("txtClassCode");
 		classCodeTxtBox.setPlaceholder(GL0184);
+		classStudyList.getElement().setId("vpnlClassStudyList");
 //		lblLoading.setText(GL0110+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP);
 		
 		if(!AppClientFactory.isAnonymous()) {
@@ -206,6 +217,9 @@ public class StudyNowToolTip extends PopupPanel implements MessageProperties {
 			}
 		};
 		disabledBtn.setText(GL1065);
+		disabledBtn.getElement().setId("btnDisabledBtn");
+		disabledBtn.getElement().setAttribute("alt", GL1065);
+		disabledBtn.getElement().setAttribute("title", GL1065);
 		disabledBtn.setVisible(false);
 		RootPanel.get().addDomHandler(rootHandler, ClickEvent.getType());
 

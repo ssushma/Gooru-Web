@@ -39,7 +39,14 @@ public class TeachToolTip extends Composite implements MessageProperties{
 	public TeachToolTip(){
 		initWidget(teachToolTipUiBinder.createAndBindUi(this));
 		teachText.getElement().setInnerHTML(GL0181);
+		teachText.getElement().setId("pnlTeachText");
+		teachText.getElement().setAttribute("alt", GL0181);
+		teachText.getElement().setAttribute("title", GL0181);
+		
 		assignToSTudentsText.getElement().setInnerHTML(GL1067);
+		assignToSTudentsText.getElement().setId("pnlAssignToSTudentsText");
+		assignToSTudentsText.getElement().setAttribute("alt", GL1067);
+		assignToSTudentsText.getElement().setAttribute("title", GL1067);
 	}
 	
 	public interface TeachToolTipUiBinder extends UiBinder<Widget, TeachToolTip>{

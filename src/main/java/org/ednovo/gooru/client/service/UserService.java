@@ -229,5 +229,5 @@ public interface UserService extends BaseService {
 	
 	List<UserTagsDo> getUserAddedContentTagSummary(String tagGooruOid,String offset,String limit)throws GwtException, ServerDownException;
 	
-	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit)throws GwtException, ServerDownException;
+	List<UserTagsResourceDO> getResourcesByTag(String tagGooruOid,String offset,String limit,String userIdVal)throws GwtException, ServerDownException;
 }

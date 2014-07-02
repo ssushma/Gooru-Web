@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.uc.PlayerBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -49,7 +50,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ClasspageWidgetView extends Composite implements MessageProperties{
+public class ClasspageWidgetView extends Composite {
 
 /*	@UiField InlineLabel ratingCountLabel,star_1,star_2,star_3,star_4,star_5;*/
 	
@@ -65,6 +66,8 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 
 
 	private static ClasspageWidgetViewUiBinder uiBinder = GWT.create(ClasspageWidgetViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface ClasspageWidgetViewUiBinder extends UiBinder<Widget, ClasspageWidgetView> {
 
@@ -102,19 +105,19 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 		{
 		if(collectionDoObj.getMemberCount() == 1)
 		{
-			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+GL1932);
+			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1932());
 		}
 		else
 		{
-			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+GL1931);
+			assignmentsCounter.getElement().setInnerHTML(collectionDoObj.getMemberCount()+" "+i18n.GL1931());
 		}
 		if(collectionDoObj.getItemCount() == 1)
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1934);
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
 		}
 		else
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1933);
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());
 		}
 		
 		imgUserProfile.setVisible(false);
@@ -139,11 +142,11 @@ public class ClasspageWidgetView extends Composite implements MessageProperties{
 		{
 		if(collectionDoObj.getItemCount() == 1)
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1934);
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1934());
 		}
 		else
 		{
-			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+GL1933);	
+			assignmentsCount.getElement().setInnerHTML(collectionDoObj.getItemCount()+" "+i18n.GL1933());	
 		}
 		ownerName.getElement().setInnerHTML(collectionDoObj.getUser().getUserName()+"'s"+" "+"class");
 		imgUserProfile.setVisible(true);

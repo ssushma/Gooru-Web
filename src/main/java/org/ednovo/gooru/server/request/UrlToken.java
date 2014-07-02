@@ -562,7 +562,7 @@ public enum UrlToken {
 	
 	USER_TAG("/v2/content/tag/{0}?sessionToken={1}&offset={2}&limit={3}"),
 	
-	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}"),
+	USER_TAG_RESOURCE("/v2/tag/{0}/resource?sessionToken={1}&offset={2}&limit={3}&gooruUId={4}"),
 	
 	UPDATE_ASSIGNMENT_SEQUENCE("/v2/class/item/{0}/reorder/{1}?sessionToken={2}"),
 	

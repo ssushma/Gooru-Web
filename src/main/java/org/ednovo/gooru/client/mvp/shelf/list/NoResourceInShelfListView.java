@@ -78,6 +78,15 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 	public NoResourceInShelfListView(String msg) { 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.msgInfo=msg;
+		resourceUgArrowImg.getElement().setId("spnlResourceUgArrowImg");
+		emptyCollMsg_1.getElement().setId("lblEmptyCollMsg_1");
+		emptyCollMsg_2.getElement().setId("lblEmptyCollMsg_2");	
+		resourceImageOneImg.getElement().setId("spnlResourceImageOneImg");
+		resourceImageTwoImg.getElement().setId("spnlResourceImageTwoImg");
+		resourceImageThreeImg.getElement().setId("spnlResourceImageThreeImg");
+		userInfoMsg_1.getElement().setId("lblUserInfoMsg_1");
+		userInfoMsg_2.getElement().setId("lblUserInfoMsg_2");
+		
 		resourceImageOneImg.getElement().getStyle().setDisplay(Display.NONE);
 		resourceImageTwoImg.getElement().getStyle().setDisplay(Display.NONE);
 		resourceImageThreeImg.getElement().getStyle().setDisplay(Display.NONE);
@@ -92,8 +101,12 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
 			emptyCollMsg_2.getElement().getStyle().setDisplay(Display.NONE);
 			userInfoMsg_1.setText(infoMsg_1);
+			userInfoMsg_1.getElement().setAttribute("alt", infoMsg_1);
+			userInfoMsg_1.getElement().setAttribute("title", infoMsg_1);
+
 			userInfoMsg_2.setText(infoMsg_2);
-		
+			userInfoMsg_2.getElement().setAttribute("alt", infoMsg_2);
+			userInfoMsg_2.getElement().setAttribute("title", infoMsg_2);
 		}
 		else if(msg.equals(CONGRATS_MSG)){ 
 			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
@@ -103,7 +116,11 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 			resourceImageTwoImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageThreeImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			userInfoMsg_1.setText(congratsMsg_1);
+			userInfoMsg_1.getElement().setAttribute("alt", congratsMsg_1);
+			userInfoMsg_1.getElement().setAttribute("title", congratsMsg_1);
 			userInfoMsg_2.setText(congratsMsg_2);
+			userInfoMsg_2.getElement().setAttribute("alt", congratsMsg_2);
+			userInfoMsg_2.getElement().setAttribute("title", congratsMsg_2);
 			new FadeInAndOut(userInfoMsg_1.getElement(), 5000);
 			new FadeInAndOut(userInfoMsg_2.getElement(), 5000);
 			Timer shelfUserInfoMsg=new Timer(){
@@ -127,7 +144,11 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 			resourceImageTwoImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageThreeImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			userInfoMsg_1.setText(infoMsg_1);
+			userInfoMsg_1.getElement().setAttribute("alt", infoMsg_1);
+			userInfoMsg_1.getElement().setAttribute("title", infoMsg_1);
 			userInfoMsg_2.setText(infoMsg_2);
+			userInfoMsg_2.getElement().setAttribute("alt", infoMsg_2);
+			userInfoMsg_2.getElement().setAttribute("title", infoMsg_2);
 			
 		}else if(msg.equals(CONGRATS_NO_IMG)){
 			emptyCollMsg_1.getElement().getStyle().setDisplay(Display.NONE);
@@ -137,13 +158,21 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 			resourceImageTwoImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			resourceImageThreeImg.getElement().getStyle().setVisibility(Visibility.HIDDEN);
 			userInfoMsg_1.setText(congratsMsg_1);
+			userInfoMsg_1.getElement().setAttribute("alt", congratsMsg_1);
+			userInfoMsg_1.getElement().setAttribute("title", congratsMsg_1);
 			userInfoMsg_2.setText(congratsMsg_2);
+			userInfoMsg_2.getElement().setAttribute("alt", congratsMsg_2);
+			userInfoMsg_2.getElement().setAttribute("title", congratsMsg_2);
 			new FadeInAndOut(userInfoMsg_1.getElement(), 5000);
 			new FadeInAndOut(userInfoMsg_2.getElement(), 5000);
 			Timer shelfUserInfoMsg=new Timer(){
 				public void run() {
 					userInfoMsg_1.setText(infoMsg_1);
+					userInfoMsg_1.getElement().setAttribute("alt", infoMsg_1);
+					userInfoMsg_1.getElement().setAttribute("title", infoMsg_1);
 					userInfoMsg_2.setText(infoMsg_2);
+					userInfoMsg_2.getElement().setAttribute("alt", infoMsg_2);
+					userInfoMsg_2.getElement().setAttribute("title", infoMsg_2);
 					userInfoMsg_1.getElement().getStyle().setOpacity(1.0);
 					userInfoMsg_2.getElement().getStyle().setOpacity(1.0);
 				}
@@ -152,7 +181,12 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 			
 		}else{
 			emptyCollMsg_1.setText(GL1056);
+			emptyCollMsg_1.getElement().setAttribute("alt", GL1056);
+			emptyCollMsg_1.getElement().setAttribute("title", GL1056);
+
 			emptyCollMsg_2.setText(" "+GL1057);
+			emptyCollMsg_2.getElement().setAttribute("alt", GL1057);
+			emptyCollMsg_2.getElement().setAttribute("title", GL1057);
 		}
 		
 		

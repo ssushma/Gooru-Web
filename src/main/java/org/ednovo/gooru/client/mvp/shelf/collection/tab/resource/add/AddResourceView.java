@@ -38,10 +38,16 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add;
 *
 */
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDocsResourceView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleWebResource;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.IsDriveView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.exists.ExistsResourceView;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
@@ -55,6 +61,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
+import org.ednovo.gooru.shared.model.drive.DriveDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
@@ -90,12 +97,16 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			UiBinder<Widget, AddResourceView> {
 		
 	}
+	 static List<DriveDo> listobj=new ArrayList<DriveDo>();
+
 	private static final String MESSAGE_HEADER = GL0748;
 	private static final String MESSAGE_CONTENT = GL0891;
 	private AddWebResourceWidget addWebResourceWidget;
 	private AddQuestionResourceWidget addQuestionResourceWidget;
 	private AddSearchResourceWidget addSearchResourceWidget;
 	private AddUserOwnResourceWidget addUserOwnResourceWidget;
+	private AddGoogleResourceWidget addGoogleResourceWidget;
+
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
 
@@ -112,9 +123,9 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@UiField HTMLPanel tabViewContainer,addResourceTabContainer;
 	
-	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText;
+	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive;
 
-	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton;
+	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton;
 
 	
 	@UiField Label titleLbl,addResourceCloseButton;
@@ -149,6 +160,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		tabViewContainer.clear();
 		fromweb.setText(GL0887);
 		fromfile.setText(GL0888);
+		googleDrive.setText(GDRIVE);
+
 		fromwsearch.setText(GL1916);
 		multiplechoice.setText(GL0305);
 		truefalase.setText(GL0306);
@@ -221,6 +234,16 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		});
 
 		Window.enableScrolling(false);
+		
+myDriveButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				tabViewContainer.clear();
+				getUiHandlers().showDriveResoureView(tabViewContainer);
+			}
+			});
+			
 	}
 	@Override
 	public void setCollectionItemDo(CollectionItemDo collectionItemDo){
@@ -246,6 +269,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		myComputerTabButton.setStyleName(res.css().buttonSelected());
 		questionTabButton.setStyleName(res.css().buttonDeSelected());
 		searchTabButton.setStyleName(res.css().buttonDeSelected());
+	}
+	public class AddGoogleResourceWidget extends DrivePresenter{
+
+		public AddGoogleResourceWidget(IsDriveView view, IsDriveyProxy proxy) {
+			super(view, proxy);
+			
+		}
+		
 	}
 	
 	public class AddWebResourceWidget extends AddWebResourceView{
@@ -1051,6 +1082,38 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 					+ "";
 		}
 		return tolTimeInmin+":"+totalTimeSec;
+	}
+	public static Map setData(Map<String, Object> resultObj){
+		//driveObject=(List<String>) resultObj.get("items");
+		
+	listobj=(List<DriveDo>) resultObj.get("items");
+
+
+	System.out.println("list obj"+listobj.get(0).getAlternateLink());
+		System.out.println("resultObj::::"+resultObj);
+		return resultObj;
+		
+		
+	}
+	@Override
+	public void getDriveDetails(DriveDo driveDo){
+		tabViewContainer.clear();
+		tabViewContainer.add(new GoogleDocsResourceView(driveDo));
+		
+	}
+
+
+	@Override
+	public void getFolderDetails(String title, String id, List<DriveDo> result) {
+		tabViewContainer.clear();
+
+		// TODO Auto-generated method stub
+		for(int m=0;m<result.size();m++){
+			
+			
+	         tabViewContainer.add(new GoogleWebResource(result.get(m)));
+		}
+		
 	}
 	
 }

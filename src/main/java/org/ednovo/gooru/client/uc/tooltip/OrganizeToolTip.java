@@ -80,14 +80,29 @@ public class OrganizeToolTip extends PopupPanel implements MessageProperties, Ha
 	
 	@UiField Label lblCreateFolder,lblCreateCollection, lblEditMyCollections;
 	
-	@UiField HTMLPanel tooltipPanel;
+	@UiField HTMLPanel tooltipPanel,panelCode;
 	
 	public OrganizeToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
+		
 		lblCreateCollection.setText(GL1757);
+		lblCreateCollection.getElement().setId("lblLblCreateCollection");
+		lblCreateCollection.getElement().setAttribute("alt", GL1757);
+		lblCreateCollection.getElement().setAttribute("title", GL1757);
+		
 		lblCreateFolder.setText(GL1758);
+		lblCreateFolder.getElement().setId("lblLblCreateFolder");
+		lblCreateFolder.getElement().setAttribute("alt", GL1758);
+		lblCreateFolder.getElement().setAttribute("title", GL1758);
+		
 		lblEditMyCollections.setText(GL1759);
+		lblEditMyCollections.getElement().setId("lblLblEditMyCollections");
+		lblEditMyCollections.getElement().setAttribute("alt", GL1759);
+		lblEditMyCollections.getElement().setAttribute("title", GL1759);
 		lblEditMyCollections.setVisible(false);
+		
+		panelCode.getElement().setId("pnlPanelCode");
+		tooltipPanel.getElement().setId("pnlTooltipPanel");
 		
 		  Boolean isIpad = !!Navigator.getUserAgent().matches("(.*)iPad(.*)");
 		  Boolean isAndriod = !!Navigator.getUserAgent().matches("(.*)Android(.*)");

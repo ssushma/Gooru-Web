@@ -467,6 +467,7 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String shelfFoldereDragdropSpacer();
 		String myFolderCollectionFolderUpdateDropdownPanel();
 		String loadingpanelImage();
+        String dDriveSlides();
 	}
 
 	@Source("CollectionEditResource.css")
