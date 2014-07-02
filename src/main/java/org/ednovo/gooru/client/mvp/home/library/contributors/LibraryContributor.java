@@ -28,6 +28,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.LibraryStyleBundle;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.player.resource.shared.StringUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -45,7 +46,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LibraryContributor extends Composite implements MessageProperties {
+public class LibraryContributor extends Composite {
 
 	@UiField Image educatorPhoto;
 	@UiField Label educatorName, userName;
@@ -59,6 +60,8 @@ public class LibraryContributor extends Composite implements MessageProperties {
 	private static LibraryContributorUiBinder uiBinder = GWT.create(LibraryContributorUiBinder.class);
 
 	interface LibraryContributorUiBinder extends UiBinder<Widget, LibraryContributor> {}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	public LibraryContributor(LibraryUserDo libraryUserDo, String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -96,7 +99,7 @@ public class LibraryContributor extends Composite implements MessageProperties {
 				educatorPhoto.setUrl("../images/settings/setting-user-image.png");
 			}
 		});
-		educatorPhoto.setAltText(libraryUserDo.getFirstName()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1181);
+		educatorPhoto.setAltText(libraryUserDo.getFirstName()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1181());
 		educatorName.setText(libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
 		educatorName.getElement().setAttribute("alt",libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
 		educatorName.getElement().setAttribute("title",libraryUserDo.getFirstName()+" "+libraryUserDo.getLastName());
@@ -105,7 +108,7 @@ public class LibraryContributor extends Composite implements MessageProperties {
 		userName.getElement().setAttribute("alt",libraryUserDo.getUsername());
 		userName.getElement().setAttribute("title",libraryUserDo.getUsername());
 		
-		Label authorCoursesLbl = new Label(libraryUserDo.getUsername()+GL_GRR_ALPHABET_APOSTROPHE+" "+GL1180);
+		Label authorCoursesLbl = new Label(libraryUserDo.getUsername()+i18n.GL_GRR_ALPHABET_APOSTROPHE()+" "+i18n.GL1180());
 		//
 		authorCoursesLbl.setStyleName(libraryStyleUc.header());
 		courses.add(authorCoursesLbl);

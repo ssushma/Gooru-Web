@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshCollectionInShelfListEvent
 import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -80,6 +81,8 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * 
@@ -104,7 +107,7 @@ public abstract class LoginCustomizePopUp extends PopupPanel {
 
 			@Override
 			public void onSuccess(CollectionDo result) {
-				successDesc.setText(MessageProperties.GL0476);
+				successDesc.setText(i18n.GL0476());
 
 				if (loginFlag) {
 					loginCustom.setVisible(true);
