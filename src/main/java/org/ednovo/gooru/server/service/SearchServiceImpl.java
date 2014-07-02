@@ -28,7 +28,6 @@
 package org.ednovo.gooru.server.service;
 
 
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -417,6 +416,19 @@ public class SearchServiceImpl extends BaseServiceImpl implements SearchService 
 		
 		String gSigninUrl = getGoogleSignin() + "&domain=gmail.com&callback=" + callback;
 		return gSigninUrl;
+	}
+	
+	@Override
+	public String getGoogleDrive(String url, Map<String, String> parms) {
+		
+		String callback = StringUtil.generateMessage(url, parms);
+		
+		callback = callback.replaceAll("#", "%23");
+		callback = callback.replaceAll("!", "%21");
+		callback = callback.replaceAll("&", "%26");
+		
+		String gDriveUrl = getDriveGoogle() + "?callBackUrl=" + callback;
+		return gDriveUrl;
 	}
 	
 	@Override

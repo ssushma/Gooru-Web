@@ -189,4 +189,27 @@ public interface SearchService extends BaseService {
 	
 	public SearchDo<ResourceSearchResultDo> getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid) throws GwtException, ServerDownException;
 
+	/**
+	 * @function getGoogleDerive 
+	 * 
+	 * @created_date : Jul 2, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param placeToken
+	 * @param parms
+	 * @return
+	 * 
+	 * @return : String
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public String getGoogleDrive(String url, Map<String, String> parms) throws GwtException, ServerDownException;
+
 }
