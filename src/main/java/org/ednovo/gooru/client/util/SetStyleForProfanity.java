@@ -4,8 +4,10 @@ package org.ednovo.gooru.client.util;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.ui.TinyMCE;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextArea;
@@ -25,13 +27,15 @@ import com.google.gwt.user.client.ui.TextBox;
  *
  * @Reviewer: Gooru Team
  */
-public class SetStyleForProfanity implements MessageProperties{
+public class SetStyleForProfanity {
+	
+    static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
 	
 	public static void SetStyleForProfanityForTextBox(TextBox textbox,Label errorlabel,boolean value) {
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
 			textbox.getElement().setAttribute("style", "border-color:#fab03a !important");	
-			errorlabel.setText(GL0554);
+			errorlabel.setText(i18n.GL0554());
 			errorlabel.setVisible(true);
 			errorlabel.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 		}else{
@@ -45,7 +49,7 @@ public class SetStyleForProfanity implements MessageProperties{
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
 			textArea.getElement().getStyle().setBorderColor("orange");
-			errorlabel.setText(GL0554);
+			errorlabel.setText(i18n.GL0554());
 			errorlabel.setVisible(true);
 			errorlabel.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 		}else{
@@ -58,7 +62,7 @@ public class SetStyleForProfanity implements MessageProperties{
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
 			richTextArea.getElement().getStyle().setBorderColor("orange");
-			errorlabel.setText(GL0554);
+			errorlabel.setText(i18n.GL0554());
 			errorlabel.setVisible(true);
 			errorlabel.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 		}else{
@@ -71,7 +75,7 @@ public class SetStyleForProfanity implements MessageProperties{
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (isHavingBadWords){
 			copycollectionTextbox.getElement().getStyle().setBorderColor("orange");
-			errorLabel.setText(GL0554);
+			errorLabel.setText(i18n.GL0554());
 			errorLabel.setVisible(true);
 			errorLabel.setStyleName(CollectionCBundle.INSTANCE.css().searchRenameCollProfanityErrLbl());
 		}else{
@@ -84,7 +88,7 @@ public class SetStyleForProfanity implements MessageProperties{
 		CollectionCBundle.INSTANCE.css().ensureInjected();
 		if (value){
 			tinyMCE.getElement().getStyle().setBorderColor("orange");
-			errorlabel.setText(GL0554);
+			errorlabel.setText(i18n.GL0554());
 			errorlabel.setVisible(true);
 			errorlabel.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 		}else{

@@ -45,6 +45,7 @@ import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.uc.DateBoxUcCustomizedForAssign;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.AssignmentsListDo;
 import org.ednovo.gooru.shared.model.content.ClasspageItemDo;
 import org.ednovo.gooru.shared.model.content.ClasspageListDo;
@@ -95,7 +96,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @Reviewer:
  */
 public abstract class AssignCollectionView extends ChildView<AssignCollectionPresenter> implements
-IsCollectionAssign, MessageProperties {
+IsCollectionAssign {
 
 	@UiField(provided = true)
 	AssignPopUpCBundle res;
@@ -158,7 +159,7 @@ IsCollectionAssign, MessageProperties {
 	interface AssignCollectionViewUiBinder extends UiBinder<Widget, AssignCollectionView> {
 	}
 
-	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	/**
 	 * Class constructor
@@ -175,25 +176,25 @@ IsCollectionAssign, MessageProperties {
 		toAssignStr = collectionDoObject.getGooruOid();
 		collectionDoGlobal = collectionDoObject;
 		
-		lblDirections.setText(GL1166);
-		lblDirections.getElement().setAttribute("alt",GL1166);
-		lblDirections.getElement().setAttribute("title",GL1166);
+		lblDirections.setText(i18n.GL1166());
+		lblDirections.getElement().setAttribute("alt",i18n.GL1166());
+		lblDirections.getElement().setAttribute("title",i18n.GL1166());
 		
-		lblDirectionsOptional.setText(GL1167);
-		lblDirectionsOptional.getElement().setAttribute("alt",GL1167);
-		lblDirectionsOptional.getElement().setAttribute("title",GL1167);
+		lblDirectionsOptional.setText(i18n.GL1167());
+		lblDirectionsOptional.getElement().setAttribute("alt",i18n.GL1167());
+		lblDirectionsOptional.getElement().setAttribute("title",i18n.GL1167());
 		
-		lblDuedateOptional.setText(GL1167);
-		lblDuedateOptional.getElement().setAttribute("alt",GL1167);
-		lblDuedateOptional.getElement().setAttribute("title",GL1167);
+		lblDuedateOptional.setText(i18n.GL1167());
+		lblDuedateOptional.getElement().setAttribute("alt",i18n.GL1167());
+		lblDuedateOptional.getElement().setAttribute("title",i18n.GL1167());
 		
-		lblDuedate.setText(GL1168);
-		lblDuedate.getElement().setAttribute("alt",GL1168);
-		lblDuedate.getElement().setAttribute("title",GL1168);
+		lblDuedate.setText(i18n.GL1168());
+		lblDuedate.getElement().setAttribute("alt",i18n.GL1168());
+		lblDuedate.getElement().setAttribute("title",i18n.GL1168());
 		
-		textAreaVal.setText(GL1461);
-		textAreaVal.getElement().setAttribute("alt",GL1461);
-		textAreaVal.getElement().setAttribute("title",GL1461);
+		textAreaVal.setText(i18n.GL1461());
+		textAreaVal.getElement().setAttribute("alt",i18n.GL1461());
+		textAreaVal.getElement().setAttribute("title",i18n.GL1461());
 		textAreaVal.getElement().getStyle().setColor("#999");
 		
 		dateBoxUc = new DateBoxUcCustomizedForAssign(false, false,false);
@@ -206,7 +207,7 @@ IsCollectionAssign, MessageProperties {
 			@Override
 			public void onFocus(FocusEvent event) {
 				String directionText=textAreaVal.getText().trim();
-				if(directionText.equalsIgnoreCase(GL1389)){
+				if(directionText.equalsIgnoreCase(i18n.GL1389())){ 
 					textAreaVal.setText("");
 				}
 				textAreaVal.getElement().getStyle().setColor("black");
@@ -227,7 +228,7 @@ IsCollectionAssign, MessageProperties {
 			public void onBlur(BlurEvent event) {
 				if(textAreaVal.getText().length() == 0)
 				{
-					textAreaVal.setText(GL1389);
+					textAreaVal.setText(i18n.GL1389());
 					textAreaVal.getElement().getStyle().setColor("#999");
 				}
 				Map<String, String> parms = new HashMap<String, String>();
@@ -249,17 +250,17 @@ IsCollectionAssign, MessageProperties {
 	}
 
 	public void getClassPageData() {
-		lblNoClassPage.setText(GL0106);
-		lblNoClassPage.getElement().setAttribute("alt",GL0106);
-		lblNoClassPage.getElement().setAttribute("title",GL0106);
+		lblNoClassPage.setText(i18n.GL0106());
+		lblNoClassPage.getElement().setAttribute("alt",i18n.GL0106());
+		lblNoClassPage.getElement().setAttribute("title",i18n.GL0106());
 		
-		lblNoClassPageMsg.setText(GL0109);
-		lblNoClassPageMsg.getElement().setAttribute("alt",GL0109);
-		lblNoClassPageMsg.getElement().setAttribute("title",GL0109);
+		lblNoClassPageMsg.setText(i18n.GL0109());
+		lblNoClassPageMsg.getElement().setAttribute("alt",i18n.GL0109());
+		lblNoClassPageMsg.getElement().setAttribute("title",i18n.GL0109());
 		
 		lblNoClassPageImage.setUrl("images/library/banner-assign.png");
-		lblNoClassPageImage.setTitle(GL1025);
-		lblNoClassPageImage.setAltText(GL1025);
+		lblNoClassPageImage.setTitle(i18n.GL1025());
+		lblNoClassPageImage.setAltText(i18n.GL1025());
 		setLabelsAndIds();
 		htmlPanelContainer.setVisible(false);
 		panelNoClasspages.setVisible(false);
@@ -304,9 +305,9 @@ IsCollectionAssign, MessageProperties {
 				textAreaVal.setText(textAreaVal.getText().trim()
 						.substring(0, 400));
 				directionsErrorLbl.setText("");
-				directionsErrorLbl.setText(MessageProperties.GL0143);
-				directionsErrorLbl.getElement().setAttribute("alt",MessageProperties.GL0143);
-				directionsErrorLbl.getElement().setAttribute("title",MessageProperties.GL0143);
+				directionsErrorLbl.setText(i18n.GL0143());
+				directionsErrorLbl.getElement().setAttribute("alt",i18n.GL0143());
+				directionsErrorLbl.getElement().setAttribute("title",i18n.GL0143());
 				directionsErrorLbl.setVisible(true);
 			}
 
@@ -523,7 +524,7 @@ IsCollectionAssign, MessageProperties {
 					btnAssign.setEnabled(true);
 				}else{
 					btnAssign.getElement().setAttribute("id", "btnAssign");
-					btnAssign.setText(GL1172);
+					btnAssign.setText(i18n.GL1172());
 					//btnAssign.getElement().getStyle().setMarginRight(17, Unit.PCT);
 					btnAssign.setEnabled(false);
 					btnAssign.setStyleName(AssignPopUpCBundle.INSTANCE.css().disableAssignButon());
@@ -554,7 +555,7 @@ IsCollectionAssign, MessageProperties {
 							resourceDo.setGooruOid(collectionDoResult.getGooruOid());
 							taskResourceAssocDo.setResource(resourceDo);
 							String directionsVal = textAreaVal.getText();
-							if(directionsVal.equalsIgnoreCase(GL1389))
+							if(directionsVal.equalsIgnoreCase(i18n.GL1389()))
 							{
 								directionsVal = "";
 							}
@@ -581,9 +582,9 @@ IsCollectionAssign, MessageProperties {
 									btnAssign.setVisible(false);
 									
 									assignMoreCpContainer.setVisible(true);
-									assignMoreCpLbl.setText(GL0521);
-									assignMoreCpLbl.getElement().setAttribute("alt",GL0521);
-									assignMoreCpLbl.getElement().setAttribute("title",GL0521);
+									assignMoreCpLbl.setText(i18n.GL0521());
+									assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521());
+									assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
 									
 									ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
 									ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
@@ -602,7 +603,7 @@ IsCollectionAssign, MessageProperties {
 					resourceDo.setGooruOid(collectionDoGlobal.getGooruOid());
 					taskResourceAssocDo.setResource(resourceDo);
 					String directionsVal = textAreaVal.getText();
-					if(directionsVal.equalsIgnoreCase(GL1389))
+					if(directionsVal.equalsIgnoreCase(i18n.GL1389()))
 					{
 						directionsVal = "";
 					}
@@ -625,9 +626,9 @@ IsCollectionAssign, MessageProperties {
 							btnAssign.setVisible(false);
 							
 							assignMoreCpContainer.setVisible(true);
-							assignMoreCpLbl.setText(GL0521);
-							assignMoreCpLbl.getElement().setAttribute("alt",GL0521);
-							assignMoreCpLbl.getElement().setAttribute("title",GL0521);
+							assignMoreCpLbl.setText(i18n.GL0521());
+							assignMoreCpLbl.getElement().setAttribute("alt",i18n.GL0521());
+							assignMoreCpLbl.getElement().setAttribute("title",i18n.GL0521());
 							ancClasspageTitle.setText(lblClasspagePlaceHolder.getText());
 							ancClasspageTitle.getElement().setAttribute("alt",lblClasspagePlaceHolder.getText());
 							ancClasspageTitle.getElement().setAttribute("title",lblClasspagePlaceHolder.getText());
@@ -648,7 +649,7 @@ IsCollectionAssign, MessageProperties {
 		btnAssign.setVisible(true);
 		
 		btnAssign.getElement().setAttribute("id", "btnAssign");
-		btnAssign.setText(GL0104);
+		btnAssign.setText(i18n.GL0104());
 		
 		textAreaVal.setText("");
 		dateBoxUc.getDateBox().setValue("");
@@ -765,36 +766,36 @@ IsCollectionAssign, MessageProperties {
 	{
 		panelTitleContainer.getElement().setId("pnlTitleContainer");
 
-		lblAssignCollectionPrivate.setText(GL0112);
+		lblAssignCollectionPrivate.setText(i18n.GL0112());
 		lblAssignCollectionPrivate.getElement().setId("lblAssignCollectionPrivate");
-		lblAssignCollectionPrivate.getElement().setAttribute("alt",GL0112);
-		lblAssignCollectionPrivate.getElement().setAttribute("title",GL0112);
+		lblAssignCollectionPrivate.getElement().setAttribute("alt",i18n.GL0112());
+		lblAssignCollectionPrivate.getElement().setAttribute("title",i18n.GL0112());
 		lblAssignCollectionPrivate.setVisible(false);
 		
-		lblAssignCollectionTitle.setText(GL0101);
+		lblAssignCollectionTitle.setText(i18n.GL0101());
 		lblAssignCollectionTitle.getElement().setId("lblAssignCollectionTitle");
-		lblAssignCollectionTitle.getElement().setAttribute("alt",GL0101);
-		lblAssignCollectionTitle.getElement().setAttribute("title",GL0101);
+		lblAssignCollectionTitle.getElement().setAttribute("alt",i18n.GL0101());
+		lblAssignCollectionTitle.getElement().setAttribute("title",i18n.GL0101());
 		
 		
-		lblClasspages.setText(GL0102);
+		lblClasspages.setText(i18n.GL0102());
 		lblClasspages.getElement().setId("lblClasspages");
-		lblClasspages.getElement().setAttribute("alt",GL0102);
-		lblClasspages.getElement().setAttribute("title",GL0102);
+		lblClasspages.getElement().setAttribute("alt",i18n.GL0102());
+		lblClasspages.getElement().setAttribute("title",i18n.GL0102());
 		
-		btnAssign.setText(GL0104);
-		btnAssign.getElement().setAttribute("alt",GL0104);
-		btnAssign.getElement().setAttribute("title",GL0104);
+		btnAssign.setText(i18n.GL0104());
+		btnAssign.getElement().setAttribute("alt",i18n.GL0104());
+		btnAssign.getElement().setAttribute("title",i18n.GL0104());
 		
-		lblClasspagePlaceHolder.setText(GL0105);
+		lblClasspagePlaceHolder.setText(i18n.GL0105());
 		lblClasspagePlaceHolder.getElement().setId("lblClasspagePlaceHolder");
-		lblClasspagePlaceHolder.getElement().setAttribute("alt",GL0105);
-		lblClasspagePlaceHolder.getElement().setAttribute("title",GL0105);
+		lblClasspagePlaceHolder.getElement().setAttribute("alt",i18n.GL0105());
+		lblClasspagePlaceHolder.getElement().setAttribute("title",i18n.GL0105());
 		
-		classPageBtn.setText(GL0517);
+		classPageBtn.setText(i18n.GL0517());
 		classPageBtn.getElement().setId("btnClassPage");
-		classPageBtn.getElement().setAttribute("alt",GL0517);
-		classPageBtn.getElement().setAttribute("title",GL0517);
+		classPageBtn.getElement().setAttribute("alt",i18n.GL0517());
+		classPageBtn.getElement().setAttribute("title",i18n.GL0517());
 	
 		//Ids
 		btnAssign.getElement().setAttribute("id", "btnAssign");
