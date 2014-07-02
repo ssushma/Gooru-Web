@@ -42,6 +42,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSetting
 import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.CourseDo;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.model.library.StandardCourseDo;
@@ -73,7 +74,7 @@ import com.seanchenxi.gwt.storage.client.StorageExt;
 import com.seanchenxi.gwt.storage.client.StorageKey;
 import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
 
-public class LibraryMenuNav extends Composite implements MessageProperties{
+public class LibraryMenuNav extends Composite{
 
 	@UiField HTMLPanel tabsInner, scienceCourses, mathCourses, socialCourses, elaCourses,standardData,partnerLibraries;
 	
@@ -123,6 +124,8 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 
 	interface LibraryMenuNavUiBinder extends UiBinder<Widget, LibraryMenuNav> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public LibraryMenuNav(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -134,35 +137,35 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 			setPlaceToken(PlaceTokens.HOME);
 		}
 		partnerPanel.setVisible(false);
-		featuredCourses.setText(GL1009);
+		featuredCourses.setText(i18n.GL1009());
 		featuredCourses.getElement().setId("lblFeaturedCourses");
-		featuredCourses.getElement().setAttribute("alt",GL1009);
-		featuredCourses.getElement().setAttribute("title",GL1009);
+		featuredCourses.getElement().setAttribute("alt",i18n.GL1009());
+		featuredCourses.getElement().setAttribute("title",i18n.GL1009());
 		
-		scienceText.setText(GL1000);
+		scienceText.setText(i18n.GL1000());
 		scienceText.getElement().setId("lblScienceText");
-		scienceText.getElement().setAttribute("alt",GL1000);
-		scienceText.getElement().setAttribute("title",GL1000);
+		scienceText.getElement().setAttribute("alt",i18n.GL1000());
+		scienceText.getElement().setAttribute("title",i18n.GL1000());
 		
-		mathText.setText(GL1001);
+		mathText.setText(i18n.GL1001());
 		mathText.getElement().setId("lblMathText");
-		mathText.getElement().setAttribute("alt",GL1001);
-		mathText.getElement().setAttribute("title",GL1001);
+		mathText.getElement().setAttribute("alt",i18n.GL1001());
+		mathText.getElement().setAttribute("title",i18n.GL1001());
 		
-		socialSciencesText.setText(GL1002);
+		socialSciencesText.setText(i18n.GL1002());
 		socialSciencesText.getElement().setId("lblSocialSciencesText");
-		socialSciencesText.getElement().setAttribute("alt",GL1002);
-		socialSciencesText.getElement().setAttribute("title",GL1002);
+		socialSciencesText.getElement().setAttribute("alt",i18n.GL1002());
+		socialSciencesText.getElement().setAttribute("title",i18n.GL1002());
 		
-		languageArtsText.setText(GL1003);
+		languageArtsText.setText(i18n.GL1003());
 		languageArtsText.getElement().setId("lblLanguageArtsText");
-		languageArtsText.getElement().setAttribute("alt",GL1003);
-		languageArtsText.getElement().setAttribute("title",GL1003);
+		languageArtsText.getElement().setAttribute("alt",i18n.GL1003());
+		languageArtsText.getElement().setAttribute("title",i18n.GL1003());
 		
-		standardsText.setText(GL0575);
+		standardsText.setText(i18n.GL0575());
 		standardsText.getElement().setId("lblStandardsText");
-		standardsText.getElement().setAttribute("alt",GL0575);
-		standardsText.getElement().setAttribute("title",GL0575);
+		standardsText.getElement().setAttribute("alt",i18n.GL0575());
+		standardsText.getElement().setAttribute("title",i18n.GL0575());
 		
 		sciencePanel.getElement().setId("epnlSciencePanel");
 		scienceCourses.getElement().setId("pnlScienceCourses");
@@ -180,30 +183,30 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 		dynamicContainer.getElement().setId("epnlDynamicContainer");
 		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.RUSD_LIBRARY)) {
-			aboutGooruAnr.setText(GL1827);
-			aboutGooruAnr.getElement().setAttribute("alt",GL1827);
-			aboutGooruAnr.getElement().setAttribute("title",GL1827);
-			aboutGooruAnr.setHref(GL1828);
+			aboutGooruAnr.setText(i18n.GL1827());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1827());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1827());
+			aboutGooruAnr.setHref(i18n.GL1828());
 		} else if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-			aboutGooruAnr.setText(GL1899);
-			aboutGooruAnr.getElement().setAttribute("alt",GL1899);
-			aboutGooruAnr.getElement().setAttribute("title",GL1899);
-			aboutGooruAnr.setHref(GL1900);
+			aboutGooruAnr.setText(i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
+			aboutGooruAnr.setHref(i18n.GL1900());
 		} else {
-			aboutGooruAnr.setText(GL1024);
-			aboutGooruAnr.getElement().setAttribute("alt",GL1024);
-			aboutGooruAnr.getElement().setAttribute("title",GL1024);
-			aboutGooruAnr.setHref(GL1829);
+			aboutGooruAnr.setText(i18n.GL1024());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1024());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1024());
+			aboutGooruAnr.setHref(i18n.GL1829());
 		}
 		aboutGooruAnr.setTarget("_blank");
 		aboutGooruAnr.addStyleName(libraryStyleUc.aboutGooruAnrPadding());
 		aboutGooruAnr.addClickHandler(new MixPanelEventClick());
 		featuredCourses.setVisible(false);
 		partnerPanel.addStyleName(libraryStyleUc.partnerMenuPadding());
-		partnerText.setText(GL1550);
+		partnerText.setText(i18n.GL1550());
 		partnerText.getElement().setId("lblPartnerText");
-		partnerText.getElement().setAttribute("alt",GL1550);
-		partnerText.getElement().setAttribute("title",GL1550);
+		partnerText.getElement().setAttribute("alt",i18n.GL1550());
+		partnerText.getElement().setAttribute("title",i18n.GL1550());
 		
 		scienceText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		mathText.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -299,7 +302,7 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 					if(!isStandardCode){
 						isStandardToolTipShow=false;
 						toolTipPopupPanel.clear();
-						toolTipPopupPanel.setWidget(new GlobalToolTip(GL1634));
+						toolTipPopupPanel.setWidget(new GlobalToolTip(i18n.GL1634()));
 						toolTipPopupPanel.setStyleName("");
 						toolTipPopupPanel.setPopupPosition(standardPanel.getElement().getAbsoluteLeft()+32, standardPanel.getElement().getAbsoluteTop()+30);
 						toolTipPopupPanel.show();
@@ -538,17 +541,17 @@ public class LibraryMenuNav extends Composite implements MessageProperties{
 	*/
 	protected void setTaxonomyData(String subjectname, final String subjectCode, String courseIdRefresh, ArrayList<CourseDo> courseDoList) {
 		final HTMLPanel elementaryCoursePanel = new HTMLPanel("");
-		Label elementaryLabel = new Label(GL2002);
+		Label elementaryLabel = new Label(i18n.GL2002());
 		elementaryLabel.setStyleName(libraryStyleUc.gradeOption());
 		elementaryCoursePanel.add(elementaryLabel);
 		
 		final HTMLPanel middleSchoolCoursePanel = new HTMLPanel("");
-		Label middleSchoolLabel = new Label(GL2003);
+		Label middleSchoolLabel = new Label(i18n.GL2003());
 		middleSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
 		middleSchoolCoursePanel.add(middleSchoolLabel);
 		
 		final HTMLPanel highSchoolCoursePanel = new HTMLPanel("");
-		Label highSchoolLabel = new Label(GL2004);
+		Label highSchoolLabel = new Label(i18n.GL2004());
 		highSchoolLabel.setStyleName(libraryStyleUc.gradeOption());
 		highSchoolCoursePanel.add(highSchoolLabel);
 		

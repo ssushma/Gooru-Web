@@ -1079,6 +1079,8 @@ public interface MessageProperties {
 		String GL0886	="Add a resource";
 		String GL0887	="From Web";
 		String GL0888	="From File";
+		String GDRIVE   ="Google Drive";
+
 		String GL0889	="From Search";
 		String GL0890	="Fill in the Blank";
 		String GL0891	="Are you sure you want to remove the question image?";

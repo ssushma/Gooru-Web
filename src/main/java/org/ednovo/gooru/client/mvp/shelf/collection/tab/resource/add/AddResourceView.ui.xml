@@ -27,6 +27,10 @@
 							ui:field="myComputerTabButton">
 							<g:Anchor ui:field="fromfile" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
 						</uc:HTMLEventPanel>
+						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
+							ui:field="myDriveButton">
+							<g:Anchor ui:field="googleDrive" styleName="{res.css.myFolderCollectionUrlbgTitle}"></g:Anchor>
+						</uc:HTMLEventPanel>
 						
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="searchTabButton">

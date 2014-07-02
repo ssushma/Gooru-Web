@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.home.library.events.OpenLessonConceptEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleEvent;
 import org.ednovo.gooru.client.mvp.home.library.events.SetConceptTitleStyleHandler;
 import org.ednovo.gooru.client.mvp.home.library.events.SetLoadingIconEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LibraryLessonUc extends Composite implements MessageProperties {
+public class LibraryLessonUc extends Composite{
 
 	@UiField HTMLPanel lessonList;
 	@UiField LibraryStyleBundle libraryStyleUc;
@@ -69,6 +70,8 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 
 	interface LibraryLessonUcUiBinder extends UiBinder<Widget, LibraryLessonUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public LibraryLessonUc(LessonDo lessonDo, Integer topicId, boolean isLessonHighlighted, Integer lessonNumber) {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -116,7 +119,7 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 		lessonList.getElement().setId("pnlLessonList");
 		String subjectName = AppClientFactory.getPlaceManager().getRequestParameter(SUBJECT_NAME);
 		if(lessonDo!=null) {
-			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+lessonDo.getLabel());
+			HTML lessonTitle = new HTML(i18n.GL0910()+" "+lessonNumber+": "+lessonDo.getLabel());
 			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
 			
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {
@@ -130,7 +133,7 @@ public class LibraryLessonUc extends Composite implements MessageProperties {
 		}
 
 		if(partnerFolderDo!=null) {
-			HTML lessonTitle = new HTML(GL0910+" "+lessonNumber+": "+partnerFolderDo.getTitle());
+			HTML lessonTitle = new HTML(i18n.GL0910()+" "+lessonNumber+": "+partnerFolderDo.getTitle());
 			lessonTitle.setStyleName(libraryStyleUc.lessonTitle());
 
 			if(subjectName!=null && subjectName.equalsIgnoreCase(STANDARDS)) {

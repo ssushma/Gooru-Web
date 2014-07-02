@@ -73,6 +73,7 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.assign.CollectionAssignT
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.CollectionCollaboratorsTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.info.CollectionInfoTabPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.CollectionResourceTabPresenter;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DrivePresenter;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListPresenter;
 import org.ednovo.gooru.client.mvp.wrap.WrapPresenter;
 
@@ -196,5 +197,7 @@ public interface AppInjector extends ServiceInjector {
 	AsyncProvider<CfciLibraryPresenter> getCfciLibraryPresenter();
 	
 	AsyncProvider<SausdPresenter> getSausdPresenter();
+
+	AsyncProvider<DrivePresenter>getDrivePresenter();
 
 }

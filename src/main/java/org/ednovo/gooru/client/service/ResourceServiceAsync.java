@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
-import org.ednovo.gooru.shared.exception.GwtException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.shared.model.drive.DriveDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -169,4 +170,10 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 	void getTagsToResource(String resourceId, AsyncCallback<List<ResourceTagsDo>> asyncCallback);
 	
 	void deleteTagsServiceRequest(String resourceId, String addedTags,AsyncCallback<Void> callback);
+
+	void getfolderList(String id, AsyncCallback<List<DriveDo>> asyncCallback);
+
+	void getDrive(AsyncCallback<List<DriveDo>> callback);
+
+	void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
 }

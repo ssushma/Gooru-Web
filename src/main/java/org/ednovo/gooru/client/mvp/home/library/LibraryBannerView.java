@@ -28,6 +28,7 @@
 package org.ednovo.gooru.client.mvp.home.library;
 
 import org.ednovo.gooru.client.PlaceTokens;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -54,7 +55,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer: 
  */
-public class LibraryBannerView extends Composite implements MessageProperties{
+public class LibraryBannerView extends Composite{
 
 	@UiField HTMLPanel partnerLogo, landingBannerInner, findLbl, shareLbl, measureLbl, contributeLbl, fourSteps;
 	@UiField Label headerTag;
@@ -73,6 +74,8 @@ public class LibraryBannerView extends Composite implements MessageProperties{
 		initWidget(uiBinder.createAndBindUi(this));
 		getLandingBannerText(placeToken);
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@Override
 	public void onLoad() {
@@ -89,16 +92,16 @@ public class LibraryBannerView extends Composite implements MessageProperties{
 	
 	private void getLandingBannerText(String placeToken) {
 		if(placeToken.contains(PlaceTokens.HOME)) {
-			setLandingBannerText(GL0522,GL0523,GL0524,GL0525,GL0526,GL0527,GL0528,GL0529,GL0530,GL0531);
+			setLandingBannerText(i18n.GL0522(),i18n.GL0523(),i18n.GL0524(),i18n.GL0525(),i18n.GL0526(),i18n.GL0527(),i18n.GL0528(),i18n.GL0529(),i18n.GL0530(),i18n.GL0531());
 			partnerLogo.setVisible(false);
 		} else if(placeToken.contains(PlaceTokens.RUSD_LIBRARY)) {
-			setLandingBannerText(GL0532,GL0533,GL0534,GL0535,GL0536,GL0537,GL0538,GL0539,GL0540,GL0541);
+			setLandingBannerText(i18n.GL0532(),i18n.GL0533(),i18n.GL0534(),i18n.GL0535(),i18n.GL0536(),i18n.GL0537(),i18n.GL0538(),i18n.GL0539(),i18n.GL0540(),i18n.GL0541());
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
 			fourSteps.setVisible(false);
 			partnerLogo.setStyleName(libraryStyle.rusdPartnerLogo());
 			partnerLogo.setVisible(true);
 		} else if(placeToken.contains(PlaceTokens.SAUSD_LIBRARY)) {
-			setLandingBannerText(GL1902,GL1903,GL1904,GL1905,GL1906,GL1907,GL1908,GL1909,GL1910,GL1911);
+			setLandingBannerText(i18n.GL1902(),i18n.GL1903(),i18n.GL1904(),i18n.GL1905(),i18n.GL1906(),i18n.GL1907(),i18n.GL1908(),i18n.GL1909(),i18n.GL1910(),i18n.GL1911());
 			fourSteps.getElement().getStyle().setBackgroundColor("#000000");
 			fourSteps.setVisible(false);
 			partnerLogo.setStyleName(libraryStyle.sausdPartnerLogo());
