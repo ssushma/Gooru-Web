@@ -153,7 +153,10 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 		popupPanel.show();
 		popupPanel.center();
 		popupPanel.setModal(true);
+		dropdownListContainerScrollPanel.getElement().setId("sbDropdownListContainerScrollPanel");
 		dropdownListContainerScrollPanel.setVisible(false);
+		chooseCollectionErrorLabel.getElement().setId("lblChooseCollectionErrorLabel");
+		floderTreeContainer.getElement().setId("pnlFloderTreeContainer");
 		addingText.setVisible(false);
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
@@ -241,18 +244,38 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 	}
 	public void setStaticTexts(){
 		copyCollectionPopupHeader.setText(GL0946);
+		copyCollectionPopupHeader.getElement().setId("lblCopyCollectionPopupHeader");
+		copyCollectionPopupHeader.getElement().setAttribute("alt", GL0946);
+		copyCollectionPopupHeader.getElement().setAttribute("title", GL0946);
 		copyResourceTitleLabel.setText(GL0947);
+		copyResourceTitleLabel.getElement().setId("lblCopyResourceTitleLabel");
+		copyResourceTitleLabel.getElement().setAttribute("alt", GL0947);
+		copyResourceTitleLabel.getElement().setAttribute("title", GL0947);
 		dropdownListPlaceHolder.setText(GL1377);
+		dropdownListPlaceHolder.getElement().setId("lblDropdownListPlaceHolder");
+		dropdownListPlaceHolder.getElement().setAttribute("alt", GL1377);
+		dropdownListPlaceHolder.getElement().setAttribute("title", GL1377);
 		copyResourceBtnLbl.setText(GL0827);
 		cancelResourcePopupBtnLbl.setText(GL0142);
 		copyResourceBtnLbl.getElement().setId("btnCopy");
+		copyResourceBtnLbl.getElement().setAttribute("alt", GL0827);
+		copyResourceBtnLbl.getElement().setAttribute("title", GL0827);
+		
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
 		addingText.setText(GL0505.toLowerCase());
+		addingText.getElement().setId("btnCopy");
+		addingText.getElement().setAttribute("alt", GL0505.toLowerCase());
+		addingText.getElement().setAttribute("title", GL0505.toLowerCase());
+		
 	}
 	
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
 			dropdownListPlaceHolder.setText(cureentcollectionTreeItem.getCollectionName());
+			dropdownListPlaceHolder.getElement().setAttribute("alt", cureentcollectionTreeItem.getCollectionName());
+			dropdownListPlaceHolder.getElement().setAttribute("title", cureentcollectionTreeItem.getCollectionName());
 			chooseCollectionErrorLabel.setText("");
 		}
 	}
@@ -490,12 +513,16 @@ public abstract class CopyConfirmPopupVc  implements MessageProperties{
 		if(cureentcollectionTreeItem!=null){
 			if(cureentcollectionTreeItem.getItemCount()>= 25){
 				chooseCollectionErrorLabel.setText(GL0302);
+				chooseCollectionErrorLabel.getElement().setAttribute("alt", GL0302);
+				chooseCollectionErrorLabel.getElement().setAttribute("title", GL0302);
 			}else{
 				hideButton(false);
 				copyResourceToCollection(cureentcollectionTreeItem.getGooruOid());
 			}
 		}else{
 			chooseCollectionErrorLabel.setText(GL1377);
+			chooseCollectionErrorLabel.getElement().setAttribute("alt", GL1377);
+			chooseCollectionErrorLabel.getElement().setAttribute("title", GL1377);
 		}
 	}
 	public void hideButton(boolean hideButtons){
