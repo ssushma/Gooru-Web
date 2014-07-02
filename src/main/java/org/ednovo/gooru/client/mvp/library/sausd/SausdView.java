@@ -10,6 +10,7 @@ import org.ednovo.gooru.client.mvp.home.library.LibraryUnitMenuView;
 import org.ednovo.gooru.client.mvp.library.sausd.metadata.LibraryMetaDataContentUc;
 import org.ednovo.gooru.client.mvp.profilepage.data.item.ProfileTopicListView;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -34,7 +35,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
 ` * 
  */
-public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements IsSausdView, MessageProperties {
+public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements IsSausdView {
 
 	@UiField
 	static HTMLPanel courseTabs;
@@ -62,6 +63,8 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 	private final static String COURSE_DEFAULT_IMG = "../images/library/course-1000x300.png";
 
 	private static SausdViewUiBinder uiBinder = GWT.create(SausdViewUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SausdViewUiBinder extends UiBinder<Widget, SausdView> {
 	}
@@ -83,7 +86,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
-			featuredCousesLbl.setText(GL1901);
+			featuredCousesLbl.setText(i18n.GL1901());
 		}
 	}
 	
@@ -297,8 +300,8 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		};
 		courseTabs.add(sausdMenuNav);
 		landingBanner.add(new SausdBannerView(getPlaceToken()));
-		featuredContributorsLink.setText(GL1005);
-		featuredContributorsLink.setTitle(GL0680);
+		featuredContributorsLink.setText(i18n.GL1005());
+		featuredContributorsLink.setTitle(i18n.GL0680());
 		courseImage.setWidth("1000px");
 		courseImage.setHeight("300px");
 	}
