@@ -152,14 +152,20 @@ public class DrivePresenter extends
 			getView().getPanelFileList().add(setLoadingPanel());
 		}
 		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
-				@Override
-				public void onSuccess(GoogleDriveDo googleDriveDo) {
-					if(isPanelClear){
-						getView().getPanelFileList().clear();
-					}
-					getView().driveContentList(googleDriveDo);	
+			@Override
+			public void onSuccess(GoogleDriveDo googleDriveDo) {
+				if(isPanelClear){
+					getView().getPanelFileList().clear();
 				}
-			});
+				if (googleDriveDo.getError().getCode()==200){
+					getView().driveContentList(googleDriveDo);
+				}else if (googleDriveDo.getError().getCode() == 401){
+					getView().showNoDriveAccess(401);
+				}else if(googleDriveDo.getError().getCode() == 403){
+					getView().showNoDriveAccess(403);
+				}
+			}
+		});
 	}
 	
 	public Label setLoadingPanel(){
