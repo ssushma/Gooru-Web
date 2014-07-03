@@ -24,13 +24,89 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 
 public interface DriveUiHandlers extends BaseUiHandlers{
 	public Map<String,Object>redirect();
 
 	public void getdriveListAgain();
 	public void getGoogleDriveFiles(String folderId,String nextPageToken,boolean isPanelClear);
+
+	/**
+	 * @function resourceImageUpload 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public void resourceImageUpload();
+
+	/**
+	 * @function addResource 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param idStr
+	 * @param urlStr
+	 * @param titleStr
+	 * @param descriptionStr
+	 * @param webResourceCategory
+	 * @param thumbnailUrlStr
+	 * @param endTime
+	 * @param educationalUse
+	 * @param momentsOfLearning
+	 * @param standards
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public void addResource(String idStr, String urlStr, String titleStr,
+			String descriptionStr, String webResourceCategory,
+			String thumbnailUrlStr, Integer endTime, String educationalUse,
+			String momentsOfLearning, List<CodeDo> standards);
+
+	/**
+	 * @function isShortenUrl 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param userUrlStr
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	public void isShortenUrl(String userUrlStr);
 }

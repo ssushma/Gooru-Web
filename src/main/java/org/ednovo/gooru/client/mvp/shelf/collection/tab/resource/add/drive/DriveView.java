@@ -27,19 +27,30 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddWebResourceView;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.WebResourcePreview;
+import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
+import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -79,7 +90,15 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
 	}
-
+	
+	String webResourceId;
+	String webResourceUrl;
+	String webResourceTitle;
+	String webResourceDescription;
+	String webResourceCategory;
+	String webResourceThumbnail;
+	Integer webResourceEnd; 
+	
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
 
@@ -153,29 +172,34 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 
 	@Override
 	public void driveContentList(GoogleDriveDo googleDriveDo) {
+		System.out.println("Drive content list....");
 		panelFileList.clear();
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
 		lblLoading.setVisible(false);
-		if(googleDriveDo!=null&&googleDriveDo.getItems()!=null&&googleDriveDo.getItems().size()>0){
-			ArrayList<GoogleDriveItemDo> googleDriveItemsList=googleDriveDo.getItems();
-			for(int i=0;i<googleDriveItemsList.size();i++){
-				DriveFileView driveFileView=new DriveFileView(googleDriveItemsList.get(i).getMimeType(),googleDriveItemsList.get(i).getTitle());
+		System.out.println("googleDriveDo.getItems().size() : "+googleDriveDo.getItems().size());
+		if (googleDriveDo != null && googleDriveDo.getItems() != null
+				&& googleDriveDo.getItems().size() > 0) {
+			ArrayList<GoogleDriveItemDo> googleDriveItemsList = googleDriveDo.getItems();
+			for (int i = 0; i < googleDriveItemsList.size(); i++) {
+				DriveFileView driveFileView = new DriveFileView(googleDriveItemsList.get(i).getMimeType(), googleDriveItemsList.get(i).getTitle());
 				driveFileView.addClickHandler(new GoogleFolderClickEvent(googleDriveItemsList.get(i)));
 				panelFileList.add(driveFileView);
-				System.out.println("mime typeee===>"+googleDriveItemsList.get(i).getMimeType()+" ==indexx====="+i);
 			}
+		}else{
+			showNoDriveAccess(401);
 		}
 	}
 	
 	@Override
 	public void showNoDriveAccess(int errorCode) {
+		System.out.println("Show no drive access : "+errorCode);
 		panelFileList.clear();
 		panelFileList.setVisible(false);
 		lblLoading.setVisible(false);
 		panelError.setVisible(true);
 		panelDriveBreadCrums.setVisible(false);
-		System.out.println("errorCode : "+errorCode);
+		Cookies.removeCookie("google-access-token");
 		if (errorCode==401){
 			lblErrorSubHeading.setText(i18n.GL2014());
 			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2015());
@@ -230,6 +254,10 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		}
 		@Override
 		public void onClick(ClickEvent event) {
+			System.out.println("googleDriveItemDo.getEmbedLink() :"+googleDriveItemDo.getEmbedLink());
+			System.out.println("googleDriveItemDo.getAlternateLink() :"+googleDriveItemDo.getAlternateLink());
+			System.out.println("googleDriveItemDo.getTitle() :"+googleDriveItemDo.getTitle());
+			System.out.println("googleDriveItemDo.getDescription() :"+googleDriveItemDo.getDescription());
 			if(googleDriveItemDo.getMimeType().equals(FOLDER_MIMETYPE)){
 				getGoogleFolderItems(googleDriveItemDo.getId());
 				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
@@ -317,5 +345,70 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelError.setVisible(false);
 		lblLoading.setVisible(true);
 		panelDriveBreadCrums.setVisible(false);
+	}
+	
+	
+//	Adding google file as resource.
+	public class AddWebResourceWidget extends AddWebResourceView{
+
+		public AddWebResourceWidget(CollectionDo parentCollectionDetails) {
+			super(parentCollectionDetails);
+		}
+
+
+		@Override
+		public void getResourceInfo(String userUrlStr) {
+		}
+		
+	
+		@Override
+		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards) {
+//			this.setVisible(false);
+			
+			webResourceId = idStr;
+			webResourceUrl = urlStr;
+			webResourceTitle = titleStr;
+			webResourceDescription = descriptionStr;
+			webResourceCategory = categoryStr;
+			//Bcaz In the DB the resource category's are singular.
+			if (webResourceCategory.contains("Videos")
+					|| webResourceCategory.contains("Interactives")
+					|| webResourceCategory.contains("Images")
+					|| webResourceCategory.contains("Texts")) {
+				webResourceCategory = webResourceCategory.substring(0,
+						webResourceCategory.length() - 1);
+				/*
+				 * if(webResourceCategory.contains("Image")||webResourceCategory.
+				 * contains("Images")){ webResourceCategory="Slide"; }
+				 */
+			}
+			webResourceThumbnail = thumbnailUrlStr;
+			webResourceEnd = endTime; 
+			urlStr=urlStr.replaceAll("feature=player_detailpage&", "");
+			urlStr=urlStr.replaceAll("feature=player_embedded&","");
+			if(conformationFlag){
+				
+			}else{
+				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards);
+			}
+		}
+		
+		public void hidePopup(){
+			closeAddResourcePopup();
+		}
+
+		@Override
+		public void resourceImageUpload() {
+			getUiHandlers().resourceImageUpload();	
+		}
+		@Override
+		public void checkShortenUrl(String userUrlStr) {
+			getUiHandlers().isShortenUrl(userUrlStr);
+		}
+	}
+	
+	public void closeAddResourcePopup(){
+		Window.enableScrolling(true);
+        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 }
