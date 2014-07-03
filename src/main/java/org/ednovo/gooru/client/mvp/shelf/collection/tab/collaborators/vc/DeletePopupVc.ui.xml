@@ -20,8 +20,8 @@
 			</g:HTMLPanel>
 			<g:HTMLPanel styleName="{collaborators.css.okCancel}">
 			    <g:Label styleName="pleaseWaitMessage" ui:field="lblRemoving"/>
-				<g:Button styleName="secondary" ui:field="btnNegitive">Cancel</g:Button>
-				<g:Button styleName="primary" ui:field="btnPositive">OK</g:Button>
+				<g:Button styleName="secondary" ui:field="btnNegitive"></g:Button>
+				<g:Button styleName="primary" ui:field="btnPositive"></g:Button>
 			</g:HTMLPanel>
 		</g:HTMLPanel>
 	</g:HTMLPanel>
