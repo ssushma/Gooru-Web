@@ -41,5 +41,7 @@ public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 	void driveContentList(GoogleDriveDo googleDriveDo);
 	
 	public FlowPanel getPanelFileList();
+	
+	public void setBreadCrumbLabel(String folderId,String folderTitle);
 
 }

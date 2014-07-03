@@ -225,7 +225,7 @@ public class WebService {
 
 		if (contentType != null) {
 			httpGet.setHeader("Content-Type", contentType);
-			httpGet.setHeader("Authorization","Bearer ya29.NgDDdSzwbqcVGxsAAAAvsaHX6nlMsyWmvTn8vAW06HvZkzf7jD0CPbhL6X1tMQ");
+			httpGet.setHeader("Authorization","Bearer ya29.NwB96ql31pVUdi0AAADTFgifxOYIhATVBGVPuQyPr9e8t22MhvWqY6VUHbVYAVPUrshRVilZBZ3PZ7Um8DY");
 
 		} else {
 			httpGet.setHeader("Content-Type",

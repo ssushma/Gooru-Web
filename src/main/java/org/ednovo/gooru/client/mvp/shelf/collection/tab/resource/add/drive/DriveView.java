@@ -42,6 +42,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -65,7 +66,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	private static final String SPREADSHEET_MIMETYPE="application/vnd.google-apps.spreadsheet";
 	private static final String UNKNOWN_MIMETYPE="application/vnd.google-apps.unknown";
 	private static final String VIDEO_MIMETYPE="application/vnd.google-apps.video";
-	
 	@UiField FlowPanel panelDriveBreadCrums, panelFileList;
 
 	@UiField GoogleDriveFilesStyleBundle driveStyle;
@@ -77,8 +77,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
-//		rootDriveLabel.setText("Drive");
-		panelDriveBreadCrums.add(new Label("Drive > "));
 	}
 
 	
@@ -186,6 +184,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		public void onClick(ClickEvent event) {
 			if(googleDriveItemDo.getMimeType().equals(FOLDER_MIMETYPE)){
 				getGoogleFolderItems(googleDriveItemDo.getId());
+				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}else {
 				
 			}
@@ -194,6 +193,74 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	private void getGoogleFolderItems(String folderId){
 		getUiHandlers().getGoogleDriveFiles(folderId, null, true);
+	}
+	
+	
+	public void setBreadCrumbLabel(String folderId,String folderTitle){
+		if(folderId!=null){
+			BreadCrumbLabel  breadCrumbLabel=new BreadCrumbLabel(folderId);
+			breadCrumbLabel.setText(folderTitle);
+			BreadCrumbLabel arrowPanel=new BreadCrumbLabel();
+			arrowPanel.setStyleName(driveStyle.breadCrumbsArrow());
+			addClickEventForBreadCrumbs();
+			panelDriveBreadCrums.add(arrowPanel);
+			panelDriveBreadCrums.add(breadCrumbLabel);
+		}else{
+			BreadCrumbLabel  breadCrumbLabel=new BreadCrumbLabel(folderId);
+			breadCrumbLabel.setText("Drive");
+			panelDriveBreadCrums.clear();
+			panelDriveBreadCrums.add(breadCrumbLabel);
+		}
+	}
+	public void removeBreadCrumbs(int index){
+		int widgetCount=panelDriveBreadCrums.getWidgetCount();
+		for(int i=index+1;i<widgetCount;){
+			BreadCrumbLabel breadCrumbLabel=(BreadCrumbLabel)panelDriveBreadCrums.getWidget(i);
+			breadCrumbLabel.setText("");
+			breadCrumbLabel.removeFromParent();
+			widgetCount=panelDriveBreadCrums.getWidgetCount();
+		}
+		BreadCrumbLabel lastbreadCrumbLabel=(BreadCrumbLabel)panelDriveBreadCrums.getWidget(index);
+		BreadCrumbLabel newbreadCrumbLabel=new BreadCrumbLabel(lastbreadCrumbLabel.getFolderId());
+		newbreadCrumbLabel.setText(lastbreadCrumbLabel.getText());
+		lastbreadCrumbLabel.removeFromParent();
+		panelDriveBreadCrums.add(newbreadCrumbLabel);
+	}
+	public void addClickEventForBreadCrumbs(){
+		int widgetCount=panelDriveBreadCrums.getWidgetCount();
+		Widget widget=panelDriveBreadCrums.getWidget(widgetCount-1);
+		if(widget instanceof BreadCrumbLabel){
+			BreadCrumbLabel breadCrumbLabel=(BreadCrumbLabel)widget;
+			breadCrumbLabel.setStyleName(driveStyle.breadCrumbsText());
+			breadCrumbLabel.addClickHandler(new GoogleDriveClickEvent(breadCrumbLabel.getFolderId(),widgetCount-1));
+		}
+	}
+	private class GoogleDriveClickEvent implements ClickHandler{
+		private String folderId=null;
+		private int index=0;
+		public  GoogleDriveClickEvent(String folderId,int widgetIndex){
+			this.folderId=folderId;
+			this.index=widgetIndex;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			removeBreadCrumbs(index);
+			getGoogleFolderItems(folderId);
+		}
+	}
+	public class BreadCrumbLabel extends InlineLabel{
+		private String folderId=null;
+		public BreadCrumbLabel(String folderId){
+			super();
+			this.folderId=folderId;
+		}
+		public BreadCrumbLabel(){
+			super();
+			this.setText(">");
+		}
+		public String getFolderId(){
+			return folderId;
+		}
 	}
 
 }
