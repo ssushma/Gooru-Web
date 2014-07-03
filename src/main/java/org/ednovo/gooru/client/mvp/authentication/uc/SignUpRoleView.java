@@ -31,6 +31,7 @@ import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.TextBoxWithPlaceholder;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -49,7 +50,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SignUpRoleView extends PopupPanel implements MessageProperties{
+public class SignUpRoleView extends PopupPanel{
 
 	@UiField Label lblTitle, lblCancel,teachLbl,studentLbl,parentLbl,otherLbl;
 	
@@ -72,41 +73,43 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
 	interface SignUpRoleViewUiBinder extends UiBinder<Widget, SignUpRoleView> {
 	}
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public SignUpRoleView(String email, UserDo userDo) {
 		this.res = SignUpCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		oneMoreStepText.getElement().setInnerText(GL0898+GL_SPL_EXCLAMATION);
+		oneMoreStepText.getElement().setInnerText(i18n.GL0898()+i18n.GL_SPL_EXCLAMATION());
 		oneMoreStepText.getElement().setId("pnlOneMoreStepText");
-		oneMoreStepText.getElement().setAttribute("alt",GL0898);
-		oneMoreStepText.getElement().setAttribute("title",GL0898);
+		oneMoreStepText.getElement().setAttribute("alt",i18n.GL0898());
+		oneMoreStepText.getElement().setAttribute("title",i18n.GL0898());
 		
-		fillText.getElement().setInnerText(GL0953);
+		fillText.getElement().setInnerText(i18n.GL0953());
 		fillText.getElement().setId("pnlFillText");
-		fillText.getElement().setAttribute("alt",GL0953);
-		fillText.getElement().setAttribute("title",GL0953);
+		fillText.getElement().setAttribute("alt",i18n.GL0953());
+		fillText.getElement().setAttribute("title",i18n.GL0953());
 		
-		teachLbl.setText(GL0416);
+		teachLbl.setText(i18n.GL0416());
 		teachLbl.getElement().setId("lblTeach");
-		teachLbl.getElement().setAttribute("alt",GL0416);
-		teachLbl.getElement().setAttribute("title",GL0416);
+		teachLbl.getElement().setAttribute("alt",i18n.GL0416());
+		teachLbl.getElement().setAttribute("title",i18n.GL0416());
 		
-		studentLbl.setText(GL0417);
+		studentLbl.setText(i18n.GL0417());
 		studentLbl.getElement().setId("lblStudent");
-		studentLbl.getElement().setAttribute("alt",GL0417);
-		studentLbl.getElement().setAttribute("title",GL0417);
+		studentLbl.getElement().setAttribute("alt",i18n.GL0417());
+		studentLbl.getElement().setAttribute("title",i18n.GL0417());
 		
-		parentLbl.setText(GL0418);
+		parentLbl.setText(i18n.GL0418());
 		parentLbl.getElement().setId("lblParent");
-		parentLbl.getElement().setAttribute("alt",GL0418);
-		parentLbl.getElement().setAttribute("title",GL0418);
+		parentLbl.getElement().setAttribute("alt",i18n.GL0418());
+		parentLbl.getElement().setAttribute("title",i18n.GL0418());
 		
-		otherLbl.setText(GL0419);
+		otherLbl.setText(i18n.GL0419());
 		otherLbl.getElement().setId("lblOther");
-		otherLbl.getElement().setAttribute("alt",GL0419);
-		otherLbl.getElement().setAttribute("title",GL0419);
+		otherLbl.getElement().setAttribute("alt",i18n.GL0419());
+		otherLbl.getElement().setAttribute("title",i18n.GL0419());
 		
-		submitRegistration.setText(GL0486);
+		submitRegistration.setText(i18n.GL0486());
 		teacherRb = new RadioButton("roleRadioGroup", "");
 		studentRb = new RadioButton("roleRadioGroup", "");
 		parentRb = new RadioButton("roleRadioGroup", "");
@@ -134,10 +137,10 @@ public class SignUpRoleView extends PopupPanel implements MessageProperties{
         loginTxtBox.getElement().setAttribute("placeholder", "Username");
         loginTxtBox.getElement().setId("txtLogin");
 		
-        lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+        lblTitle.setText(i18n.GL0186() + i18n.GL_SPL_EXCLAMATION());
 		lblTitle.getElement().setId("lblTitle");
-		lblTitle.getElement().setAttribute("alt",GL0186);
-		lblTitle.getElement().setAttribute("title",GL0186);
+		lblTitle.getElement().setAttribute("alt",i18n.GL0186());
+		lblTitle.getElement().setAttribute("title",i18n.GL0186());
 		
 		lblCancel.getElement().setId("lblCancel");
 		

@@ -32,6 +32,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.authentication.SignUpCBundle;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -52,7 +53,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 
-public class ThanksPopupUc extends PopupPanel implements MessageProperties{
+public class ThanksPopupUc extends PopupPanel{
  
 	@UiField Label lblLoginHeading, lblCongratsHeader,lblCheckYourEmail,lblWhatsNext,lblLearnHowTo,lblClose; //lblDiscover,lblOrganize,lblTeach
 	
@@ -76,6 +77,8 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	/**
 	 * Class constructor , to create Login Popup. 
@@ -172,44 +175,44 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 	 *
 	 */
 	public void setTextAndIds(){
-		lblLoginHeading.setText(GL0186);
+		lblLoginHeading.setText(i18n.GL0186());
 		lblLoginHeading.getElement().setId("lblLoginHeading");
-		lblLoginHeading.getElement().setAttribute("alt",GL0186);
-		lblLoginHeading.getElement().setAttribute("title",GL0186);
+		lblLoginHeading.getElement().setAttribute("alt",i18n.GL0186());
+		lblLoginHeading.getElement().setAttribute("title",i18n.GL0186());
 		
-		lblCongratsHeader.setText(GL0429);
+		lblCongratsHeader.setText(i18n.GL0429());
 		lblCongratsHeader.getElement().setId("lblCongratsHeader");
-		lblCongratsHeader.getElement().setAttribute("alt",GL0429);
-		lblCongratsHeader.getElement().setAttribute("title",GL0429);
+		lblCongratsHeader.getElement().setAttribute("alt",i18n.GL0429());
+		lblCongratsHeader.getElement().setAttribute("title",i18n.GL0429());
 		
-		lblCheckYourEmail.setText(GL0430);
+		lblCheckYourEmail.setText(i18n.GL0430());
 		lblCheckYourEmail.getElement().setId("lblCheckYourEmail");
-		lblCheckYourEmail.getElement().setAttribute("alt",GL0430);
-		lblCheckYourEmail.getElement().setAttribute("title",GL0430);
+		lblCheckYourEmail.getElement().setAttribute("alt",i18n.GL0430());
+		lblCheckYourEmail.getElement().setAttribute("title",i18n.GL0430());
 		
-		lblWhatsNext.setText(GL0432);
+		lblWhatsNext.setText(i18n.GL0432());
 		lblWhatsNext.getElement().setId("lblWhatsNext");
-		lblWhatsNext.getElement().setAttribute("alt",GL0432);
-		lblWhatsNext.getElement().setAttribute("title",GL0432);
+		lblWhatsNext.getElement().setAttribute("alt",i18n.GL0432());
+		lblWhatsNext.getElement().setAttribute("title",i18n.GL0432());
 	
 		//This is not required when registered as parent.		
-		btnStartUsingGooru.setText(GL0431);
+		btnStartUsingGooru.setText(i18n.GL0431());
 		//This is not required when registered as parent.
-		lblLearnHowTo.setText(GL0433);
+		lblLearnHowTo.setText(i18n.GL0433());
 		lblLearnHowTo.getElement().setId("lblLearnHowTo");
-		lblLearnHowTo.getElement().setAttribute("alt",GL0433);
-		lblLearnHowTo.getElement().setAttribute("title",GL0433);
+		lblLearnHowTo.getElement().setAttribute("alt",i18n.GL0433());
+		lblLearnHowTo.getElement().setAttribute("title",i18n.GL0433());
 		lblLearnHowTo.setVisible(false);
 		lblWhatsNext.setVisible(false);
 		//This is not required when registered as parent.
-//		lblDiscover.setText(MessageProperties.GL0179);
+//		lblDiscover.setText(MessageProperties.i18n.GL0179);
 		//This is not required when registered as parent.
-//		lblOrganize.setText(MessageProperties.GL0180);
+//		lblOrganize.setText(MessageProperties.i18n.GL0180);
 		//This is not required when registered as parent.
-//		lblTeach.setText(MessageProperties.GL0181);
+//		lblTeach.setText(MessageProperties.i18n.GL0181);
 		
 		//This is not required for Regular user.
-		btnStartCreatingStudent.setText(GL0472);
+		btnStartCreatingStudent.setText(i18n.GL0472());
 				
 		btnStartUsingGooru.setVisible(account.equalsIgnoreCase("regular") ? true : false);			
 //		lblWhatsNext.setVisible(account.equalsIgnoreCase("regular") ? true : false);
@@ -223,18 +226,18 @@ public class ThanksPopupUc extends PopupPanel implements MessageProperties{
 		
 		btnStartCreatingStudent.setVisible(account.equalsIgnoreCase("parent") ? true : false);
 		
-		htmlSupport.setHTML(GL0437);
+		htmlSupport.setHTML(i18n.GL0437());
 		htmlSupport.getElement().setId("htmlSupport");
-		htmlSupport.getElement().setAttribute("alt",GL0437);
-		htmlSupport.getElement().setAttribute("title",GL0437);
+		htmlSupport.getElement().setAttribute("alt",i18n.GL0437());
+		htmlSupport.getElement().setAttribute("title",i18n.GL0437());
 		
 		btnStartUsingGooru.getElement().setId("btnStartUsingGooru");
-		btnStartUsingGooru.getElement().setAttribute("alt",GL0431);
-		btnStartUsingGooru.getElement().setAttribute("title",GL0431);
+		btnStartUsingGooru.getElement().setAttribute("alt",i18n.GL0431());
+		btnStartUsingGooru.getElement().setAttribute("title",i18n.GL0431());
 		
 		btnStartCreatingStudent.getElement().setId("btnStartCreatingStudent");
-		btnStartCreatingStudent.getElement().setAttribute("alt",GL0472);
-		btnStartCreatingStudent.getElement().setAttribute("title",GL0472);
+		btnStartCreatingStudent.getElement().setAttribute("alt",i18n.GL0472());
+		btnStartCreatingStudent.getElement().setAttribute("title",i18n.GL0472());
 		
 		panelPopupInner.getElement().setId("pnlPopupInner");
 		panelFooter.getElement().setId("pnlFooter");
