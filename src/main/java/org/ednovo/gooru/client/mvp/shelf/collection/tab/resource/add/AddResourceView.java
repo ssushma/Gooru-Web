@@ -55,6 +55,7 @@ import org.ednovo.gooru.client.uc.AppPopUp;
 import org.ednovo.gooru.client.uc.ConfirmationPopupVc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
@@ -65,6 +66,7 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.ResourceImageUtil;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -92,7 +94,9 @@ import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandlers> implements IsAddResourceView,MessageProperties{
 
 	private static AddResourcePopupViewUiBinder uiBinder = GWT.create(AddResourcePopupViewUiBinder.class);
-
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	interface AddResourcePopupViewUiBinder extends
 			UiBinder<Widget, AddResourceView> {
 		
@@ -123,7 +127,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	
 	@UiField HTMLPanel tabViewContainer,addResourceTabContainer;
 	
-	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive;
+	@UiField Anchor fromweb,fromfile,fromwsearch,multiplechoice,truefalase,openended,truefalseText,googleDrive,multipleAnswerAnc;
 
 	@UiField HTMLEventPanel questionTabButton,urlTabButton,searchTabButton,trueOrFlaseButton,openEndedButton,multipleAnswerTabButton,myComputerTabButton,fillInTheBlankTabButton,myDriveButton;
 
@@ -167,7 +171,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		truefalase.setText(GL0306);
 		truefalseText.setText(GL0890);
 		openended.setText(GL0307);
-		
+		multipleAnswerAnc.setText(StringUtil.generateMessage(i18n.GL2017()));
 		//GL0748
 		fromweb.getElement().setId("lnkFromWeb");
 		fromfile.getElement().setId("lnkFromFile");
