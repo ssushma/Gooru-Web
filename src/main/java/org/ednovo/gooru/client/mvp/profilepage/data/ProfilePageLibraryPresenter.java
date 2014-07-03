@@ -77,9 +77,10 @@ public class ProfilePageLibraryPresenter extends ChildPresenter<ProfilePageLibra
 	@Override
 	public void getPartnerWorkspaceFoldersOnScroll(int offset) {
 		String id = AppClientFactory.getPlaceManager().getRequestParameter("id");
-		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new AsyncCallback<ProfileLibraryListDo>(){
+		AppClientFactory.getInjector().getProfilePageService().getProfileLibraryWorkspace(id, 14, SHARING_TYPE, null, getViewToken(), offset, new SimpleAsyncCallback<ProfileLibraryListDo>(){
 			@Override
 			public void onFailure(Throwable caught) {
+				super.onFailure(caught);
 				getView().setEmptyContainer(true);
 			}
 			

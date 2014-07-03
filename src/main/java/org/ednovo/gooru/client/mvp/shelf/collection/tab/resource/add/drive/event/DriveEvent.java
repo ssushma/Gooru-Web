@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event;
 
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.event.shared.GwtEvent;
 
@@ -53,8 +53,8 @@ public class DriveEvent extends GwtEvent<DriveEventHandler> {
 	 * @param classpageId
 	 */
 	
-	DriveDo driveDo=new DriveDo();
-	public DriveEvent(DriveDo driveDo) {
+	GoogleDriveItemDo driveDo=new GoogleDriveItemDo();
+	public DriveEvent(GoogleDriveItemDo driveDo) {
 		this.driveDo=driveDo;
 	}
 

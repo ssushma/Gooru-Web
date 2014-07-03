@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.filesConatiner{
+	float: left;
+	padding: 0 21px 0 18px;
+	width: 67%;
+	border-left: 1px solid #ddd;
+	background-color: white;
+	overflow-y: auto !important;
+	overflow-x: hidden !important;
+	max-height: 567px;
+	min-height: 300px;
+}
+
+.googleDriveFolderStyle{
+	background: url(../images/drive/drive-folder-icon.png) no-repeat;
+	padding-left: 40px;
+	line-height: 35px;
+	height:30px;
+}
+.googleDriveWordStyle{
+	background: url(../images/drive/drive-word-icon.png) no-repeat;
+	padding-left: 40px;
+	line-height: 35px;
+	height:30px;
+}
+.googleDriveExcelStyle{
+	background: url(../images/drive/drive-excel-icon.png) no-repeat;
+	padding-left: 40px;
+	line-height: 35px;
+	height:30px;
+}
+.googleDrivePptStyle{
+	background: url(../images/drive/drive-ppt-icon.png) no-repeat;
+	padding-left: 40px;
+	line-height: 35px;
+	height:30px;
+}
+.googleDriveFolderStyle:hover,.googleDriveWordStyle:hover,.googleDriveExcelStyle:hover,.googleDrivePptStyle:hover{
+	background-color: #cfe3f1;
+	cursor: pointer;
+}
+

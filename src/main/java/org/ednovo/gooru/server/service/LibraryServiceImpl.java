@@ -39,6 +39,7 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
+import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.library.ConceptDo;
 import org.ednovo.gooru.shared.model.library.CourseDo;
@@ -50,6 +51,7 @@ import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderDo;
 import org.ednovo.gooru.shared.model.library.PartnerFolderListDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
+import org.ednovo.gooru.shared.model.library.StandardCourseDo;
 import org.ednovo.gooru.shared.model.library.StandardsDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
 import org.ednovo.gooru.shared.model.library.TopicDo;
@@ -60,6 +62,7 @@ import org.restlet.ext.json.JsonRepresentation;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.gargoylesoftware.htmlunit.javascript.host.Node;
 
 @Service("libraryService")
 @ServiceURL("/libraryService")
@@ -101,6 +104,7 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 	private static final String MALE = "none";
 	private final static String RUSDLEARNS = "rusdlearns";
 	private final static String RUSD_LAST_NAME = "RUSD Teachers";
+	private final static String NODE = "node";
 	
 	@Override
 	public ArrayList<CourseDo> getCourses(String subjectName, String libraryName) throws GwtException {
@@ -837,7 +841,6 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 		JsonRepresentation jsonRep = null;
 		String url = null;
 		url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_SAUSD_LIBRARY, gooruUid, getLoggedInSessionToken(), limit+"",offset+"","20");
-		System.out.println(url);
 		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRep = jsonResponseRep.getJsonRepresentation();
 		profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
@@ -877,5 +880,45 @@ public class LibraryServiceImpl extends BaseServiceImpl implements LibraryServic
 			profileLibraryListDo = new ProfileLibraryDeserializer().deserializeFolderList(jsonRep);
 			return profileLibraryListDo;
 	}
+
+	@Override
+	public ArrayList<StandardCourseDo> getStandardLibraryMenuList(String subjectCode, String libraryName) throws GwtException,ServerDownException {
+		ArrayList<StandardCourseDo> standardCourseList=new ArrayList<StandardCourseDo>();
+		JsonRepresentation jsonRep = null;
+		String url=UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.GET_STANDARD_LIBRARY_MENUS, subjectCode,getLoggedInSessionToken());
+		url=url+getLibraryName(libraryName);
+		JsonResponseRepresentation jsonResponseRep = ServiceProcessor.get(url, getRestUsername(), getRestPassword());
+		jsonRep = jsonResponseRep.getJsonRepresentation();
+		try {
+			JSONArray libraryMenuArray=jsonRep.getJsonArray();
+			if(libraryMenuArray!=null){
+				for(int index=0;index<libraryMenuArray.length();index++){
+					StandardCourseDo standardCourseDo=deserializeStandardLibraryList(libraryMenuArray.getJSONObject(index));
+					standardCourseDo.setCourse(deserializeStandardLibraryCourses(libraryMenuArray.getJSONObject(index).getJSONArray(NODE)));
+					standardCourseList.add(standardCourseDo);
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return standardCourseList;
+	}
+	
+	public StandardCourseDo deserializeStandardLibraryList(JSONObject jsonObject) {
+		if (jsonObject != null) {
+				return JsonDeserializer.deserialize(jsonObject.toString(), new TypeReference<StandardCourseDo>() {
+				});
+		}
+		return new StandardCourseDo();
+	}
+	
+	public ArrayList<CourseDo> deserializeStandardLibraryCourses(JSONArray jsonArray) {
+		if (jsonArray != null && jsonArray.length()>0) {
+			return JsonDeserializer.deserialize(jsonArray.toString(), new TypeReference<ArrayList<CourseDo>>() {
+			});
+		}
+		return new ArrayList<CourseDo>();
+	}
+	
 
 }

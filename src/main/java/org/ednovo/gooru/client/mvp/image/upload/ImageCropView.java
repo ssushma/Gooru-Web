@@ -54,7 +54,7 @@ public abstract class ImageCropView extends Composite implements MessageProperti
 	Label backPageLinkLbl;
 
 	@UiField
-	FlowPanel cropImageWidgetFloPanel;
+	FlowPanel cropImageWidgetFloPanel,imagCropContainer;
 
 	@UiField
 	BlueButtonUc cropImageBtn;
@@ -91,15 +91,45 @@ public abstract class ImageCropView extends Composite implements MessageProperti
 		super();
 		initWidget(uiBinder.createAndBindUi(this));
 		backPageLinkLbl.setText(GL1231);
+		backPageLinkLbl.getElement().setId("lblBackPageLinkLbl");
+		backPageLinkLbl.getElement().setAttribute("alt",GL1231);
+		backPageLinkLbl.getElement().setAttribute("title",GL1231);
+		
 		cropText.setHTML(GL1232);
+		cropText.getElement().setId("htmlCropText");
+		cropText.getElement().setAttribute("alt",GL1232);
+		cropText.getElement().setAttribute("title",GL1232);
+		
 		dragText.setHTML(GL1233);
+		dragText.getElement().setId("htmlDragText");
+		dragText.getElement().setAttribute("alt",GL1233);
+		dragText.getElement().setAttribute("title",GL1233);
+		
 		cropImageLoading.setLoadingText(GL1234);
 		cropImageBtn.setText(GL1235);
+		cropImageBtn.getElement().setId("btnCropImageBtn");
+		cropImageBtn.getElement().setAttribute("alt",GL1235);
+		cropImageBtn.getElement().setAttribute("title",GL1235);
+		
 		cancelButtonAnr.setText(GL0142);
+		cancelButtonAnr.getElement().setId("lnkCancelButtonAnr");
+		cancelButtonAnr.getElement().setAttribute("alt",GL0142);
+		cancelButtonAnr.getElement().setAttribute("title",GL0142);
+		
 		loadingTextLbl.setText(GL1236);
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt",GL1236);
+		loadingTextLbl.getElement().setAttribute("title",GL1236);
+		
 		cropImageLoadingVerPanel.setCellVerticalAlignment(cropImageLoading, HasVerticalAlignment.ALIGN_MIDDLE);
 		buttonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
+		
+		imagCropContainer.getElement().setId("fpnlImagCropContainer");
+		cropImageWidgetFloPanel.getElement().setId("fpnlCropImageWidgetFloPanel");
+		cropImageLoadingVerPanel.getElement().setId("vpnlCropImageLoadingVerPanel");
+		cropImageLoading.getElement().setId("loadingUcCropImageLoading");
+		buttonContainer.getElement().setId("fpnlButtonContainer");
 	}
 
 	/**

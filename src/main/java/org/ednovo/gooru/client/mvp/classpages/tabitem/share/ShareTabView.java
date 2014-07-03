@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.classpages.tabitem.share;
 
 import org.ednovo.gooru.client.child.ChildView;
 import org.ednovo.gooru.client.mvp.dnd.IsDraggableMirage;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -46,7 +47,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ShareTabView extends
 		ChildView<ShareTabPresenter> implements
-		IsShareTabView, MessageProperties {
+		IsShareTabView {
 
 	@UiField(provided = true)
 	ShareTabViewCBundle res;
@@ -58,6 +59,8 @@ public class ShareTabView extends
 	
 	private static ShareTabViewUiBinder uiBinder = GWT
 			.create(ShareTabViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n= GWT.create(CopyOfMessageProperties.class);
 
 	interface ShareTabViewUiBinder extends
 			UiBinder<Widget, ShareTabView> {
@@ -79,25 +82,25 @@ public class ShareTabView extends
 		addDomHandler(new ActionPanelHover(), MouseOverEvent.getType());
 		addDomHandler(new ActionPanelOut(), MouseOutEvent.getType());
 		setPresenter(new ShareTabPresenter(this));
-		webLinkLbl.setText(GL0232);
+		webLinkLbl.setText(i18n.GL0232());
 		webLinkLbl.getElement().setId("lblWebLink");
-		webLinkLbl.getElement().setAttribute("alt",GL0232);
-		webLinkLbl.getElement().setAttribute("title",GL0232);
+		webLinkLbl.getElement().setAttribute("alt",i18n.GL0232());
+		webLinkLbl.getElement().setAttribute("title",i18n.GL0232());
 		
-		linkToClasspage.setText(GL1413);
+		linkToClasspage.setText(i18n.GL1413());
 		linkToClasspage.getElement().setId("lblLinkToClasspage");
-		linkToClasspage.getElement().setAttribute("alt",GL1413);
-		linkToClasspage.getElement().setAttribute("title",GL1413);
+		linkToClasspage.getElement().setAttribute("alt",i18n.GL1413());
+		linkToClasspage.getElement().setAttribute("title",i18n.GL1413());
 		
-		classCodeLbl.setText(GL0184);
+		classCodeLbl.setText(i18n.GL0184());
 		classCodeLbl.getElement().setId("lblClassCode");
-		classCodeLbl.getElement().setAttribute("alt",GL0184);
-		classCodeLbl.getElement().setAttribute("title",GL0184);
+		classCodeLbl.getElement().setAttribute("alt",i18n.GL0184());
+		classCodeLbl.getElement().setAttribute("title",i18n.GL0184());
 		
-		enterCodetext.setText(GL1414);
+		enterCodetext.setText(i18n.GL1414());
 		enterCodetext.getElement().setId("lblEnterCodetext");
-		enterCodetext.getElement().setAttribute("alt",GL1414);
-		enterCodetext.getElement().setAttribute("title",GL1414);
+		enterCodetext.getElement().setAttribute("alt",i18n.GL1414());
+		enterCodetext.getElement().setAttribute("title",i18n.GL1414());
 		
 		shortenUrlTxtBox.setText(shareUrl);
 		shortenUrlTxtBox.setEnabled(true);

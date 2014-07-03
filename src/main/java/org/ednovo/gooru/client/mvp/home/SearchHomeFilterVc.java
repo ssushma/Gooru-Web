@@ -95,10 +95,10 @@ public class SearchHomeFilterVc extends Composite{
 		standardText.getElement().setAttribute("alt",i18n.GL0724().toUpperCase());
 		standardText.getElement().setAttribute("title",i18n.GL0724().toUpperCase());
 		
-		sourceLbl.setText(i18n.GL0566().toUpperCase());
+		sourceLbl.setText(i18n.GL0566().toUpperCase()+" ");
 		sourceLbl.getElement().setId("lblSourceLbl");
-		sourceLbl.getElement().setAttribute("alt",i18n.GL0566().toUpperCase());
-		sourceLbl.getElement().setAttribute("title",i18n.GL0566().toUpperCase());
+		sourceLbl.getElement().setAttribute("alt",i18n.GL0566().toUpperCase()+" ");
+		sourceLbl.getElement().setAttribute("title",i18n.GL0566().toUpperCase()+" ");
 		
 		filterGradeFloPanel.getElement().setId("fpnlFilterGradeFloPanel");
 		filterColOneResourceTypeFloPanel.getElement().setId("fpnlFilterColOneResourceTypeFloPanel");

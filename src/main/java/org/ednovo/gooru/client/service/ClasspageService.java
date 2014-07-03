@@ -43,7 +43,6 @@ import org.ednovo.gooru.shared.model.content.TaskDo;
 import org.ednovo.gooru.shared.model.content.TaskResourceAssocDo;
 import org.ednovo.gooru.shared.model.user.ProfilePageDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 //import org.ednovo.gooru.shared.model.content.ResourceItemDo;
 
@@ -155,7 +154,7 @@ public interface ClasspageService extends BaseService {
 	 * @return serialized created {@link CollectionDo}
 	 * @throws GwtException
 	 */
-	public CollectionDo v2CreateClasspage(CollectionDo collectionDo);
+	public CollectionDo v2CreateClasspage(CollectionDo collectionDo) throws GwtException, ServerDownException;
 
 	/**
 	 * To update classpage by Classpage ID using Version 2 APIs
@@ -290,14 +289,14 @@ public interface ClasspageService extends BaseService {
 	
 	
 	
-	public ArrayList<ClasspageDo> getMyClassPages(String limit, String offset);
-	public CollectionDo createClassPage(String classPageTitle);
-	public ClasspageDo getClasspage(String classpageId) throws ServerDownException;
-	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction);
-	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId);
-	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus);
-	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus);
-	public String deleteClassPageItem(String collectionId);
+	public ArrayList<ClasspageDo> getMyClassPages(String limit, String offset) throws GwtException, ServerDownException;
+	public CollectionDo createClassPage(String classPageTitle) throws GwtException, ServerDownException;
+	public ClasspageDo getClasspage(String classpageId)  throws GwtException, ServerDownException;
+	public ClasspageItemDo createClassPageItem(String classpageId,String collectionId,String dueDate,String direction)  throws GwtException, ServerDownException;
+	public ArrayList<ClasspageItemDo> assignItemToClass(String classpageId,String itemId)  throws GwtException, ServerDownException;
+	public ArrayList<ClasspageItemDo> getClassPageItems(String classpageId,String offset,String limit,String sortingOrder,String studyStatus) throws GwtException, ServerDownException;
+	public String updateClasspageItem(String classpageItemId,String direction,String dueDate,String readStatus) throws GwtException, ServerDownException;
+	public String deleteClassPageItem(String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -321,7 +320,7 @@ public interface ClasspageService extends BaseService {
 	 *
 	 */
 	public ArrayList<ClassPageCollectionDo> getClasspagesListByCollectionId(String collectionId,
-			String collabUId);
+			String collabUId) throws GwtException, ServerDownException;
 	
 	
 	/**
@@ -343,9 +342,9 @@ public interface ClasspageService extends BaseService {
 	 *
 	 * 
 	*/
-	Integer getCollectionUsedCount(String collectionId);
+	Integer getCollectionUsedCount(String collectionId) throws GwtException, ServerDownException;
 	
-	public ArrayList<String> getCollectionParentFolders(String collectionId);
+	public ArrayList<String> getCollectionParentFolders(String collectionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * 
@@ -430,7 +429,7 @@ public interface ClasspageService extends BaseService {
 	
 	List<String> getSuggestionByName(String emailId) throws GwtException, ServerDownException;
 	
-	public ClasspageItemDo getClassPageItem(String classItemId);
+	public ClasspageItemDo getClassPageItem(String classItemId) throws GwtException, ServerDownException;
 
 	ProfilePageDo v2GetClassPartyCustomField(String gooruUid)
 			throws GwtException, ServerDownException;

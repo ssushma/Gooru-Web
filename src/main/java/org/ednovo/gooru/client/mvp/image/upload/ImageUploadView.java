@@ -161,37 +161,113 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 		imageCropPopup = new AppPopUp(GL1424);
 		imageCropPopup.setStyleName(GooruCBundle.INSTANCE.css().imageUploadPopup());
 		chooseText.setText(GL1215+GL_SPL_SEMICOLON);
+		chooseText.getElement().setId("lblChooseText");
+		chooseText.getElement().setAttribute("alt",GL1215+GL_SPL_SEMICOLON);
+		chooseText.getElement().setAttribute("title",GL1215+GL_SPL_SEMICOLON);
+		
 		imageUploadOnWebLbl.setText(GL1216);
+		imageUploadOnWebLbl.getElement().setId("lnkOnWeb");
+		imageUploadOnWebLbl.getElement().setAttribute("alt",GL1216);
+		imageUploadOnWebLbl.getElement().setAttribute("title",GL1216);
+		
 		imageUploadOnComputerLbl.setText(GL1217);
+		imageUploadOnComputerLbl.getElement().setId("lnkOnComputer");
+		imageUploadOnComputerLbl.getElement().setAttribute("alt",GL1217);
+		imageUploadOnComputerLbl.getElement().setAttribute("title",GL1217);
+		
 		uploadGooruImages.setText(GL1218);
+		uploadGooruImages.getElement().setId("lnkGooruImages");
+		uploadGooruImages.getElement().setAttribute("alt",GL1218);
+		uploadGooruImages.getElement().setAttribute("title",GL1218);
+		
 		uploadFromComputer.setText(GL1219);
+		uploadFromComputer.getElement().setId("lblUploadFromComputer");
+		uploadFromComputer.getElement().setAttribute("alt",GL1219);
+		uploadFromComputer.getElement().setAttribute("title",GL1219);
+		
 		uploadLimitText.setText(GL1220);
+		uploadLimitText.getElement().setId("lblUploadLimitText");
+		uploadLimitText.getElement().setAttribute("alt",GL1220);
+		uploadLimitText.getElement().setAttribute("title",GL1220);
+		
 		notWorkingLblText.setText(GL1221+" "+GL_SPL_QUESTION);
+		notWorkingLblText.getElement().setId("lblNotWorkingLblText");
+		notWorkingLblText.getElement().setAttribute("alt",GL1221);
+		notWorkingLblText.getElement().setAttribute("title",GL1221);
+		
 		readThisLbl.setText(GL1222+GL_SPL_EXCLAMATION);
+		readThisLbl.getElement().setId("lblReadThisLbl");
+		readThisLbl.getElement().setAttribute("alt",GL1222);
+		readThisLbl.getElement().setAttribute("title",GL1222);
+		
 		onSystemCancelBtn.setText(GL0142);
+		onSystemCancelBtn.getElement().setId("btnCancel");
+		onSystemCancelBtn.getElement().setAttribute("alt",GL0142);
+		onSystemCancelBtn.getElement().setAttribute("title",GL0142);
+		
 		uploadFromWebText.setText(GL1223);
+		uploadFromWebText.getElement().setId("lblUploadFromWebText");
+		uploadFromWebText.getElement().setAttribute("alt",GL1223);
+		uploadFromWebText.getElement().setAttribute("title",GL1223);
+		
 		imageURLLbl.setText(GL1224);
+		imageURLLbl.getElement().setId("lblImageURLLbl");
+		imageURLLbl.getElement().setAttribute("alt",GL1224);
+		imageURLLbl.getElement().setAttribute("title",GL1224);
+		
 		uploadImageButtonOnWeb.setText(GL1225);
+		uploadImageButtonOnWeb.getElement().setId("btnUpload");
+		uploadImageButtonOnWeb.getElement().setAttribute("alt",GL1225);
+		uploadImageButtonOnWeb.getElement().setAttribute("title",GL1225);
+		
 		typeImageurlText.setText(GL1226);
+		typeImageurlText.getElement().setId("lblTypeImageurlText");
+		typeImageurlText.getElement().setAttribute("alt",GL1226);
+		typeImageurlText.getElement().setAttribute("title",GL1226);
+		
 		infoUrlUploadText.setText(GL1227);
+		infoUrlUploadText.getElement().setId("lblInfoUrlUploadText");
+		infoUrlUploadText.getElement().setAttribute("alt",GL1227);
+		infoUrlUploadText.getElement().setAttribute("title",GL1227);
+		
 		onWebCancelBtn.setText(GL0142);
+		onWebCancelBtn.getElement().setId("btnCancel");
+		onWebCancelBtn.getElement().setAttribute("alt",GL0142);
+		onWebCancelBtn.getElement().setAttribute("title",GL0142);
+		
 		chooseFromText.setText(GL1228+GL_SPL_SEMICOLON);
+		chooseFromText.getElement().setId("lblChooseFromText");
+		chooseFromText.getElement().setAttribute("alt",GL1228);
+		chooseFromText.getElement().setAttribute("title",GL1228);
+		
 		okButtonOnUploadGooruImages.setText(GL0190);
+		okButtonOnUploadGooruImages.getElement().setId("btnOkButtonOnUploadGooruImages");
+		okButtonOnUploadGooruImages.getElement().setAttribute("alt",GL0190);
+		okButtonOnUploadGooruImages.getElement().setAttribute("title",GL0190);
+		
 		cancelButtonOnUploadGooruImages.setText(GL0142);
+		cancelButtonOnUploadGooruImages.getElement().setId("btnCancelButtonOnUploadGooruImages");
+		cancelButtonOnUploadGooruImages.getElement().setAttribute("alt",GL0142);
+		cancelButtonOnUploadGooruImages.getElement().setAttribute("title",GL0142);
+		
 		fileUpload.getElement().setAttribute("size", "25");
 		fileUpload.getElement().setId("fileUpload");
-		onWebCancelBtn.getElement().setId("btnCancel");
-		onSystemCancelBtn.getElement().setId("btnCancel");
-		fileUpload.getElement().setId("fileUpload");
-		imageUploadOnWebLbl.getElement().setId("lnkOnWeb");
-		imageUploadOnComputerLbl.getElement().setId("lnkOnComputer");
-		uploadGooruImages.getElement().setId("lnkGooruImages");
+		fileuploadForm.getElement().setId("fileUploadForm");
+		notWorkingPanel.getElement().setId("pnlNotWorkingPanel");
+		imageUploadOnUrlFloPanel.getElement().setId("fpnlImageUploadOnUrlFloPanel");
+		urlValidation.getElement().setId("errlblUrlValidation");
+		uploadGooruImagesContainer.getElement().setId("fpnlUploadGooruImagesContainer");
+		gooruProfileDefaultImagesContainer.getElement().setId("fpnlGooruProfileDefaultImagesContainer");
+		imageCropFloPanel.getElement().setId("fpnlImageCropFloPanel");
+		glassPanelWithLoadingUc.getElement().setId("glassPanelWithLoadingUc");
+		
+		
 		imageUploadOnComputerLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 		imageUploadOnWebLbl.setStyleName(GooruCBundle.INSTANCE.css().uploadActive());
 		uploadGooruImages.setStyleName(GooruCBundle.INSTANCE.css().uploadClose());
 		uploadGooruImages.getElement().getStyle().setDisplay(Display.NONE);
 		imageWebUploadUrlTxtBox.getElement().setId("tbImageWebUploadUrl");
-		uploadImageButtonOnWeb.getElement().setId("btnUpload");
+		
 		urlValidation.setVisible(false);
 		imageWebUploadUrlTxtBox.addFocusHandler(new OnTextFocus());
 		urlValidation.setStyleName(GooruCBundle.INSTANCE.css().imageUrlError());
@@ -243,7 +319,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			}
 		});
 		
-		
+		imagUploadFloPanel.getElement().setId("fpnlImagUploadFloPanel");
+		imageUploadOnWebFloPanel.getElement().setId("fpnlImageUploadOnWebFloPanel");
 	}
 
 	@Override
@@ -451,6 +528,8 @@ public class ImageUploadView extends PopupViewWithUiHandlers<ImageUploadUiHandle
 			
 			if (url == null || (url != null && url.isEmpty())) {
 				urlValidation.setText(GL0080);
+				urlValidation.getElement().setAttribute("alt",GL0080);
+				urlValidation.getElement().setAttribute("title",GL0080);
 				imageWebUploadUrlTxtBox.addStyleName(GooruCBundle.INSTANCE.css().textboxUrlError());
 				urlValidation.setVisible(true);
 				return isValid = false;

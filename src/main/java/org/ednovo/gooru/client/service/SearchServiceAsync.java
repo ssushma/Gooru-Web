@@ -83,4 +83,6 @@ public interface SearchServiceAsync extends BaseServiceAsync {
 	void getSuggestedAggregator(SearchDo<String> searchDo, AsyncCallback<SearchDo<String>> callback);
 	
 	void getCollectionSuggestedResourceSearchResults(SearchDo<ResourceSearchResultDo> searchInput,String contentGorruOid, AsyncCallback<SearchDo<ResourceSearchResultDo>> callback);
+	
+	void getGoogleDrive(String url, Map<String, String> parms, AsyncCallback<String> callback);
 }

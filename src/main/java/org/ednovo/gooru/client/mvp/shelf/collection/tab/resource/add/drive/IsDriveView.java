@@ -27,14 +27,15 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 
-	void getDriveDetails(DriveDo driveDo);
+	void getDriveDetails(GoogleDriveItemDo driveDo);
 
-	void getFolderDetails(String title, String id, List<DriveDo> result);
+	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result);
 
-	void driveContentList(List<DriveDo> result);
+	void driveContentList(GoogleDriveDo googleDriveDo);
 
 }

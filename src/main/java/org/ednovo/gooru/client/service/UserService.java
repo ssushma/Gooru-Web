@@ -209,7 +209,7 @@ public interface UserService extends BaseService {
 	
 	void updateNewEmailStatus(String emailId, boolean isEmailConfirmed) throws GwtException, ServerDownException;
 	
-	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail);
+	V2UserDo updateV2ProfileDo(String EmailId,String accountType,String firstName,String lastName,String biography,String password, String userName, String gender, boolean isSendConfirmEmail)  throws GwtException, ServerDownException;
 	
 	void sendWelcomeMail(String gooruUId, String emailType) throws GwtException, ServerDownException;
 	
