@@ -282,10 +282,8 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	public class AddGoogleResourceWidget extends DrivePresenter{
 
 		public AddGoogleResourceWidget(IsDriveView view, IsDriveyProxy proxy) {
-			super(view, proxy);
-			
+			super(view, proxy, imageUploadPresenter);
 		}
-		
 	}
 	
 	public class AddWebResourceWidget extends AddWebResourceView{
