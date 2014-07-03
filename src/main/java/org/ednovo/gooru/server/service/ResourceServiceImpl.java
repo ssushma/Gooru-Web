@@ -46,7 +46,6 @@ import org.ednovo.gooru.server.request.ServiceProcessor;
 import org.ednovo.gooru.server.request.UrlToken;
 import org.ednovo.gooru.server.serializer.JsonDeserializer;
 import org.ednovo.gooru.shared.exception.GwtException;
-import org.ednovo.gooru.shared.exception.ServerDownException;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionAddQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -70,12 +69,11 @@ import org.ednovo.gooru.shared.model.library.ProfanityDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
 import org.restlet.data.Form;
 import org.restlet.ext.json.JsonRepresentation;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -1455,6 +1453,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) {
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
 		String contentType="application/json";
+		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;
 		String enocodedString="";
 		try {
 			enocodedString = URLEncoder.encode("(mimeType = 'application/vnd.google-apps.document' or mimeType = 'application/vnd.google-apps.spreadsheet' or mimeType = 'application/vnd.google-apps.folder' or mimeType='application/vnd.google-apps.form' or mimeType='application/vnd.google-apps.presentation' or mimeType='application/vnd.google-apps.drawing')","UTF-8");
@@ -1466,8 +1465,10 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=20&q="+enocodedString).webInvokeforget("GET", "", contentType);
-		googleDriveDo=deserializeGoogleDriveFilesList(response);
+		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=100").webInvokeforget("GET", "", contentType, access_token);
+		if (response!=null){
+			googleDriveDo=deserializeGoogleDriveFilesList(response);
+		}
 		return googleDriveDo;
 	}
 
@@ -1553,7 +1554,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
                 });
         }
         return new GoogleDriveItemDo();
-}
+	}
 
 //	@Override
 //	public GoogleDriveItemDo updatePermissions(GoogleDriveItemDo driveObject) throws GwtException,

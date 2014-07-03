@@ -283,6 +283,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblSubHeading.setText(i18n.GL2010());
 		lblDisconnect.setText(i18n.GL2011());
 		lblDisconnect.setVisible(false); 
+		btnConnect.setEnabled(true);
 		
 		courseData.getElement().getStyle().setWidth(324, Unit.PX);
 		settingsText.getElement().setInnerHTML(GL0192);
@@ -1803,9 +1804,16 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		emailPanel.setVisible(false);
 	}
 	@Override
-	public void googleDirveStatus(){
-//		lblDisconnect.setVisible(AppClientFactory.getLoggedInUser().getAccessToken() != null ? true : false);
-		btnConnect.getElement().addClassName("green");
-		btnConnect.setText(i18n.GL2012());
+	public void googleDirveStatus(boolean isConnected){
+//		lblDisconnect.setVisible(isConnected);
+		if (isConnected){
+			btnConnect.getElement().addClassName("green");
+			btnConnect.setText(i18n.GL2012());
+			btnConnect.setEnabled(false);
+		}else{
+			btnConnect.getElement().removeClassName("green");
+			btnConnect.setText(i18n.GL2008());
+			btnConnect.setEnabled(true);
+		}
 	}
 }

@@ -22,65 +22,44 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
+package org.ednovo.gooru.shared.model.drive;
 
-import java.util.List;
+import java.io.Serializable;
 
-import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
-import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import com.google.gwt.user.client.ui.FlowPanel;
-
-public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
-
-	void getDriveDetails(GoogleDriveItemDo driveDo);
-
-	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result);
-
-	void driveContentList(GoogleDriveDo googleDriveDo);
-	
-	public FlowPanel getPanelFileList();
-
+@JsonInclude(Include.NON_NULL)
+public class ErrorDo implements Serializable{
 	/**
-	 * @function showNoDriveAccess 
 	 * 
-	 * @created_date : Jul 3, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * @param errorCode
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void showNoDriveAccess(int errorCode);
-
-	/**
-	 * @function showLoading 
-	 * 
-	 * @created_date : Jul 3, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	void showLoading();
+	 */
+	private static final long serialVersionUID = 1840162086238517090L;
+	private Integer code;
+	private String message;
+	/** 
+	 * This method is to get the code
+	 */
+	public Integer getCode() {
+		return code;
+	}
+	/** 
+	 * This method is to set the code
+	 */
+	public void setCode(Integer code) {
+		this.code = code;
+	}
+	/** 
+	 * This method is to get the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+	/** 
+	 * This method is to set the message
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }

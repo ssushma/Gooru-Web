@@ -194,6 +194,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				questionTabButton.setStyleName(res.css().buttonDeSelected());
 				searchTabButton.setStyleName(res.css().buttonDeSelected());
 				myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+				myDriveButton.setStyleName(res.css().buttonDeSelected());
 				MixpanelUtil.Add_Resource_Click_Computer();
 			}
 		});
@@ -213,6 +214,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				questionTabButton.setStyleName(res.css().buttonDeSelected());
 				searchTabButton.setStyleName(res.css().buttonDeSelected());
 				urlTabButton.setStyleName(res.css().buttonDeSelected());
+				myDriveButton.setStyleName(res.css().buttonDeSelected());
 			}
 		});
 		
@@ -230,19 +232,25 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				questionTabButton.setStyleName(res.css().buttonDeSelected());
 				urlTabButton.setStyleName(res.css().buttonDeSelected());
 				myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+				myDriveButton.setStyleName(res.css().buttonDeSelected());
 			}
 		});
 
 		Window.enableScrolling(false);
 		
-myDriveButton.addClickHandler(new ClickHandler() {
+		myDriveButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				tabViewContainer.clear();
 				getUiHandlers().showDriveResoureView(tabViewContainer);
+				searchTabButton.setStyleName(res.css().buttonDeSelected());
+				questionTabButton.setStyleName(res.css().buttonDeSelected());
+				urlTabButton.setStyleName(res.css().buttonDeSelected());
+				myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+				myDriveButton.setStyleName(res.css().buttonSelected());
 			}
-			});
+		});
 			
 	}
 	@Override
@@ -269,6 +277,7 @@ myDriveButton.addClickHandler(new ClickHandler() {
 		myComputerTabButton.setStyleName(res.css().buttonSelected());
 		questionTabButton.setStyleName(res.css().buttonDeSelected());
 		searchTabButton.setStyleName(res.css().buttonDeSelected());
+		myDriveButton.setStyleName(res.css().buttonDeSelected());
 	}
 	public class AddGoogleResourceWidget extends DrivePresenter{
 

@@ -40,6 +40,7 @@ public class GoogleDriveDo implements Serializable{
 	private String nextPageToken;
 	private String nextLink;
 	private ArrayList<GoogleDriveItemDo> items;
+	private ErrorDo error;
 	
 	/**
 	 * @return the kind
@@ -95,6 +96,16 @@ public class GoogleDriveDo implements Serializable{
 	public void setItems(ArrayList<GoogleDriveItemDo> items) {
 		this.items = items;
 	}
-
-	
+	/** 
+	 * This method is to get the error
+	 */
+	public ErrorDo getError() {
+		return error;
+	}
+	/** 
+	 * This method is to set the error
+	 */
+	public void setError(ErrorDo error) {
+		this.error = error;
+	}
 }
