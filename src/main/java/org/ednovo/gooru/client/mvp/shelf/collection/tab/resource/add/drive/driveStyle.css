@@ -43,3 +43,22 @@
 	cursor: pointer;
 }
 
+
+.loadingText {
+	background: url("images/core/B-Dot.gif");
+	width: 200px;
+	height: 175px;
+	margin: 0 auto;
+	z-index: 5;
+}
+
+.errorHeading{
+	font-size: 18px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+.pannelError{
+	text-align: center;
+	padding: 10px;
+}

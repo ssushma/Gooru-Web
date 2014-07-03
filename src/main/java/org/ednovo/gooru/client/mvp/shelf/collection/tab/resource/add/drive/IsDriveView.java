@@ -38,4 +38,45 @@ public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 
 	void driveContentList(GoogleDriveDo googleDriveDo);
 
+	/**
+	 * @function showNoDriveAccess 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param errorCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void showNoDriveAccess(int errorCode);
+
+	/**
+	 * @function showLoading 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void showLoading();
+
 }

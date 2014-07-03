@@ -236,5 +236,5 @@ public interface IsUserSettingsView extends IsViewWithHandlers<UserSettingsUiHan
 	 * 
 	*/
 	
-	void googleDirveStatus();
+	void googleDirveStatus(boolean isConnected);
 }

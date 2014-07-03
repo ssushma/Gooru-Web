@@ -1,6 +1,5 @@
 package org.ednovo.gooru.server.service;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -43,7 +42,7 @@ import com.google.gwt.json.client.JSONValue;
 public class WebService {
 	DefaultHttpClient httpClient;
 	HttpContext localContext;
-	 String ret;
+	String ret;
 	public static HttpResponse response = null;
 	HttpPost httpPost = null;
 	HttpDelete httpDelete = null;
@@ -116,8 +115,6 @@ public class WebService {
 		return ret;
 	}
 
-	
-	
 	public String webInvokefordelete(String methodName, String data,
 			String contentType) {
 		ret = null;
@@ -208,7 +205,7 @@ public class WebService {
 	}
 
 	public String webInvokeforget(String methodName, String data,
-			String contentType) {
+			String contentType, String accessToken) {
 		ret = null;
 
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
@@ -222,32 +219,37 @@ public class WebService {
 		httpGet.setHeader(
 				"Accept",
 				"text/html,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
-
-		if (contentType != null) {
-			httpGet.setHeader("Content-Type", contentType);
-			httpGet.setHeader("Authorization","Bearer ya29.NgDDdSzwbqcVGxsAAAAvsaHX6nlMsyWmvTn8vAW06HvZkzf7jD0CPbhL6X1tMQ");
-
-		} else {
-			httpGet.setHeader("Content-Type",
-					"application/x-www-form-urlencoded; charset=UTF-8");
-		}
-
-		try {
-			tmp = new StringEntity(data, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-
-		}
-		try {
-			response = httpClient.execute(httpGet, localContext);
-
-			if (response != null) {
-				ret = EntityUtils.toString(response.getEntity());
+		if (accessToken !=null){		
+			if (contentType != null) {
+				httpGet.setHeader("Content-Type", contentType);
+				httpGet.setHeader("Authorization",
+						"Bearer "+accessToken);
+	
+			} else {
+				httpGet.setHeader("Content-Type",
+						"application/x-www-form-urlencoded; charset=UTF-8");
+			}
+			try {
+				tmp = new StringEntity(data, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
 
 			}
-		} catch (Exception e) {
+			try {
+				
+				response = httpClient.execute(httpGet, localContext);
+				
+//				response = httpConn.getResponseCode();
+				if (response != null) {
+					ret = EntityUtils.toString(response.getEntity());
 
+				}
+			} catch (Exception e) {
+
+			}
+		}else{
+			ret = null;
 		}
-
+		
 		return ret;
 	}
 

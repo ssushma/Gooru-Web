@@ -144,12 +144,19 @@ public class DrivePresenter extends
 	}
 
 	public void callDriveContent() {
+		getView().showLoading();
 		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(new SimpleAsyncCallback<GoogleDriveDo>() {
-				@Override
-				public void onSuccess(GoogleDriveDo googleDriveDo) {
-					getView().driveContentList(googleDriveDo);	
+			@Override
+			public void onSuccess(GoogleDriveDo googleDriveDo) {
+				if (googleDriveDo.getError().getCode()==200){
+					getView().driveContentList(googleDriveDo);
+				}else if (googleDriveDo.getError().getCode() == 401){
+					getView().showNoDriveAccess(401);
+				}else if(googleDriveDo.getError().getCode() == 403){
+					getView().showNoDriveAccess(403);
 				}
-			});
+			}
+		});
 	}
 
 }

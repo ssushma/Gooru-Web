@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -64,16 +65,31 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	@UiField FlowPanel panelDriveBreadCrums, panelFileList;
 	@UiField GoogleDriveFilesStyleBundle driveStyle;
+	@UiField HTMLPanel panelError;
+	@UiField Label lblLoading, lblErrorHeading, lblErrorSubHeading;
 
 	private static DriveViewUiBinder uiBinder = GWT.create(DriveViewUiBinder.class);
 
+	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
 	}
 
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
 //		rootDriveLabel.setText("Drive");
-		panelDriveBreadCrums.add(new Label("Drive > "));
+		panelDriveBreadCrums.add(new Label(i18n.GL2016()));
+		
+		showLoading();
+		
+		lblErrorHeading.setText(i18n.GL2013());
+		lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
+		lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
+		
+		lblErrorSubHeading.setText(i18n.GL2014());
+		lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
+		lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+		
 	}
 
 	
@@ -88,6 +104,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void getDriveDetails(GoogleDriveItemDo driveDo) {
 		// TODO Auto-generated method stub
 		panelFileList.clear();
+		panelFileList.setVisible(true);
+		panelDriveBreadCrums.setVisible(true);
+		lblLoading.setVisible(false);
 		panelFileList.add(new GoogleDocsResourceView(driveDo));
 
 	}
@@ -103,6 +122,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		// TODO Auto-generated method stub
 		panelDriveBreadCrums.add(new Label(" "+title+""));
 		panelFileList.clear();
+		panelFileList.setVisible(true);
+		panelDriveBreadCrums.setVisible(true);
+		lblLoading.setVisible(false);
 		for (int n = 0; n < result.size(); n++) {
 			panelFileList.add(new GoogleWebResource(result.get(n)));
 
@@ -112,12 +134,34 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	@Override
 	public void driveContentList(GoogleDriveDo googleDriveDo) {
 		panelFileList.clear();
+		panelFileList.setVisible(true);
+		panelDriveBreadCrums.setVisible(true);
+		lblLoading.setVisible(false);
 		if(googleDriveDo!=null&&googleDriveDo.getItems()!=null&&googleDriveDo.getItems().size()>0){
 			ArrayList<GoogleDriveItemDo> googleDriveItemsList=googleDriveDo.getItems();
 			for(int i=0;i<googleDriveItemsList.size();i++){
 				DriveFileView driveFileView=new DriveFileView(googleDriveItemsList.get(i).getMimeType(),googleDriveItemsList.get(i).getTitle());
 				panelFileList.add(driveFileView);
 			}
+		}
+	}
+	
+	@Override
+	public void showNoDriveAccess(int errorCode) {
+		panelFileList.clear();
+		panelFileList.setVisible(false);
+		lblLoading.setVisible(false);
+		panelError.setVisible(true);
+		panelDriveBreadCrums.setVisible(false);
+		System.out.println("errorCode : "+errorCode);
+		if (errorCode==401){
+			lblErrorSubHeading.setText(i18n.GL2014());
+			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2015());
+			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2015());
+		}else if (errorCode==403){
+			lblErrorSubHeading.setText(i18n.GL2015());
+			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
+			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
 		}
 	}
 	
@@ -130,7 +174,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			fileTypeImage.add(label);
 			conatiner.add(fileTypeImage);
 			setFileTypeImage(mimeType);
-			System.out.println("mime typeee===>"+mimeType);
 			setFileTitle(title);
 		}
 		private void setFileTypeImage(String mimeType){
@@ -152,5 +195,11 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		}
 		
 	}
-
+	@Override
+	public void showLoading(){
+		panelFileList.setVisible(false);
+		panelError.setVisible(false);
+		lblLoading.setVisible(true);
+		panelDriveBreadCrums.setVisible(false);
+	}
 }
