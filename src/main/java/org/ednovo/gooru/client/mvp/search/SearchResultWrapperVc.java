@@ -142,7 +142,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 		this.res = SearchResultWrapperCBundle.INSTANCE;
 		res.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		setAddedStatus(null);
+		setAddedStatus(true);
 
 		moreInfoLbl.setText(GL1756);
 		
@@ -192,7 +192,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public void onMouseOut(MouseOutEvent event) {
 		if (!disclosureDisPanel.isOpen()) {
 			disclosureHeaderFloPanel.setVisible(true);
-			setAddedStatus(null);
+			setAddedStatus(true);
 		}
 	}
 
@@ -316,7 +316,7 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	public void onDisclosureOpen() {
 		if (openedResult != null && !openedResult.equals(this)) {
 			openedResult.getDisclosurePanel().setOpen(false);
-			openedResult.setAddedStatus(null);
+			openedResult.setAddedStatus(true);
 			if (!getDisclosurePanel().isOpen()) {
 				getDisclosurePanel().setOpen(true);
 			}
@@ -353,7 +353,8 @@ public abstract class SearchResultWrapperVc<T extends ResourceSearchResultDo, C 
 	 * @param added whether status is added or not
 	 */
 	public void setAddedStatus(Boolean added) {
-		addedStatusLbl.setVisible(added != null ? added : !addedStatusLbl.getText().equals(DRAG_TO_ADD));
+//		addedStatusLbl.setVisible(added != null ? added : !addedStatusLbl.getText().equals(DRAG_TO_ADD));
+		addedStatusLbl.setVisible(true);
 	}
 
 	/**
