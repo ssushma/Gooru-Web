@@ -471,7 +471,7 @@ private DrivePresenter drivePresenter=null;
 
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
-		drivePresenter.callDriveContent();
+		drivePresenter.getGoogleDriveFiles(null, null, true);
 		tabContainer.add(drivePresenter.getWidget());
 	}
 	

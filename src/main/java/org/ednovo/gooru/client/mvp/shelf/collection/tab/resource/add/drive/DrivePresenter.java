@@ -143,9 +143,13 @@ public class DrivePresenter extends
 
 	}
 
-	public void callDriveContent() {
+
+	public void getGoogleDriveFiles(String folderId,String nextPageToken,boolean isPanelClear) {
+		if(isPanelClear){
+			getView().getPanelFileList().clear();
+		}
 		getView().showLoading();
-		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(new SimpleAsyncCallback<GoogleDriveDo>() {
+		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
 			@Override
 			public void onSuccess(GoogleDriveDo googleDriveDo) {
 				if (googleDriveDo.getError().getCode()==200){

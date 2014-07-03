@@ -31,12 +31,6 @@ import org.ednovo.gooru.client.gin.BaseUiHandlers;
 public interface DriveUiHandlers extends BaseUiHandlers{
 	public Map<String,Object>redirect();
 
-
-
-
-
-
-
-
 	public void getdriveListAgain();
+	public void getGoogleDriveFiles(String folderId,String nextPageToken,boolean isPanelClear);
 }

@@ -25,6 +25,7 @@
 package org.ednovo.gooru.server.service;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -1449,11 +1450,21 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 	}
 	
 	@Override
-	public GoogleDriveDo getGoogleDriveFilesList() {
+	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) {
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
 		String contentType="application/json";
 		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;
-//		&q=fullText%20contains%20%27%5C%5C%27
+		String enocodedString="";
+		try {
+			enocodedString = URLEncoder.encode("(mimeType = 'application/vnd.google-apps.document' or mimeType = 'application/vnd.google-apps.spreadsheet' or mimeType = 'application/vnd.google-apps.folder' or mimeType='application/vnd.google-apps.form' or mimeType='application/vnd.google-apps.presentation' or mimeType='application/vnd.google-apps.drawing')","UTF-8");
+			folderId=folderId!=null?folderId:"root";
+			enocodedString=enocodedString+URLEncoder.encode(" and '"+folderId+"' in parents","UTF-8");
+			if(nextPageToken!=null){
+				enocodedString=enocodedString+"&pageToken="+nextPageToken;
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=100").webInvokeforget("GET", "", contentType, access_token);
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);

@@ -38,7 +38,21 @@
 	line-height: 35px;
 	height:30px;
 }
-.googleDriveFolderStyle:hover,.googleDriveWordStyle:hover,.googleDriveExcelStyle:hover,.googleDrivePptStyle:hover{
+.googleDriveFormStyle{
+	background: url(../images/drive/drive-form-icon.png) no-repeat;
+	padding-left: 40px;
+	line-height: 35px;
+	height:30px;
+}
+	
+.googleDriveDrawingStyle{
+	background: url(../images/drive/drive-drawing-icon.png) no-repeat;
+	padding-left: 40px;
+	line-height: 35px;
+	height:30px;
+}
+.googleDriveFolderStyle:hover,.googleDriveWordStyle:hover,.googleDriveExcelStyle:hover,
+.googleDrivePptStyle:hover,.googleDriveFormStyle:hover,.googleDriveDrawingStyle:hover{
 	background-color: #cfe3f1;
 	cursor: pointer;
 }

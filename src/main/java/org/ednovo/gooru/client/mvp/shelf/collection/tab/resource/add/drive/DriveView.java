@@ -34,6 +34,10 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -64,6 +68,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	private static final String VIDEO_MIMETYPE="application/vnd.google-apps.video";
 	
 	@UiField FlowPanel panelDriveBreadCrums, panelFileList;
+
 	@UiField GoogleDriveFilesStyleBundle driveStyle;
 	@UiField HTMLPanel panelError;
 	@UiField Label lblLoading, lblErrorHeading, lblErrorSubHeading;
@@ -93,7 +98,21 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	}
 
 	
-	
+	/**
+	 * @return the panelFileList
+	 */
+	public FlowPanel getPanelFileList() {
+		return panelFileList;
+	}
+
+
+
+	/**
+	 * @param panelFileList the panelFileList to set
+	 */
+	public void setPanelFileList(FlowPanel panelFileList) {
+		this.panelFileList = panelFileList;
+	}
 	
 	@Override
 	public void setInSlot(Object slot, Widget content) {
@@ -141,7 +160,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			ArrayList<GoogleDriveItemDo> googleDriveItemsList=googleDriveDo.getItems();
 			for(int i=0;i<googleDriveItemsList.size();i++){
 				DriveFileView driveFileView=new DriveFileView(googleDriveItemsList.get(i).getMimeType(),googleDriveItemsList.get(i).getTitle());
+				driveFileView.addClickHandler(new GoogleFolderClickEvent(googleDriveItemsList.get(i)));
 				panelFileList.add(driveFileView);
+				System.out.println("mime typeee===>"+googleDriveItemsList.get(i).getMimeType()+" ==indexx====="+i);
 			}
 		}
 	}
@@ -165,7 +186,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		}
 	}
 	
-	public class DriveFileView extends Composite{
+	public class DriveFileView extends Composite implements HasClickHandlers{
 		private FlowPanel conatiner=null;
 		private HTMLPanel fileTypeImage=new HTMLPanel("");
 		private Label label=new Label();
@@ -185,15 +206,39 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 				fileTypeImage.setStyleName(driveStyle.googleDriveExcelStyle());
 			}else if(mimeType.equals(PRESENTATION_MIMETYPE)){
 				fileTypeImage.setStyleName(driveStyle.googleDrivePptStyle());
-			}else{
-				fileTypeImage.setStyleName(driveStyle.googleDrivePptStyle());
+			}else if(mimeType.equals(FORM_MIMETYPE)){
+				fileTypeImage.setStyleName(driveStyle.googleDriveFormStyle());
+			}else if(mimeType.equals(DRAWING_MIMETYPE)){
+				fileTypeImage.setStyleName(driveStyle.googleDriveDrawingStyle());
 			}
 		}
 		private void setFileTitle(String title){
 			label.setText(title);
 			label.setStyleName("");
 		}
-		
+		@Override
+		public HandlerRegistration addClickHandler(ClickHandler handler) {
+			return addDomHandler(handler, ClickEvent.getType());
+		}
+	}
+	
+	private class GoogleFolderClickEvent implements ClickHandler{
+		private GoogleDriveItemDo googleDriveItemDo=null;
+		public  GoogleFolderClickEvent(GoogleDriveItemDo googleDriveItemDo){
+			this.googleDriveItemDo=googleDriveItemDo;
+		}
+		@Override
+		public void onClick(ClickEvent event) {
+			if(googleDriveItemDo.getMimeType().equals(FOLDER_MIMETYPE)){
+				getGoogleFolderItems(googleDriveItemDo.getId());
+			}else {
+				
+			}
+		}
+	}
+	
+	private void getGoogleFolderItems(String folderId){
+		getUiHandlers().getGoogleDriveFiles(folderId, null, true);
 	}
 	@Override
 	public void showLoading(){
