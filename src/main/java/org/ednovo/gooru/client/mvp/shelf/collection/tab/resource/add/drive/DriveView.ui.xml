@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:uc="urn:import:org.ednovo.gooru.client.uc">
 	<ui:style field="driveStyle" src="driveStyle.css" type="org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.GoogleDriveFilesStyleBundle"/> 
 	<g:FlowPanel styleName="{driveStyle.filesConatiner}">
-		<g:FlowPanel ui:field="panelDriveBreadCrums"></g:FlowPanel>
+		<g:FlowPanel ui:field="panelDriveBreadCrums" styleName="{driveStyle.breadCrumbsContainer}"></g:FlowPanel>
 		<g:Label ui:field="lblLoading" styleName="{driveStyle.loadingText}"></g:Label>
 		<g:HTMLPanel ui:field="panelError" styleName="{driveStyle.pannelError}">
 			<g:Label ui:field="lblErrorHeading" styleName="{driveStyle.errorHeading}"></g:Label>
