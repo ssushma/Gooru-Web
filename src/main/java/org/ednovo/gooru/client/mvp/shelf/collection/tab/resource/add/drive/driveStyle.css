@@ -61,7 +61,23 @@
 	cursor: pointer;
 }
 
-
+.breadCrumbsContainer{
+	width: 100%;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 10px 0px 10px 0px;
+}
+.breadCrumbsText{
+	
+}
+.breadCrumbsText:hover{
+	cursor: pointer;
+	opacity:0.6;
+}
+.breadCrumbsArrow{
+	padding: 0px 3px 0px 3px;
+	font-weight: normal;
+}
 .loadingText {
 	background: url("images/core/B-Dot.gif");
 	width: 200px;
