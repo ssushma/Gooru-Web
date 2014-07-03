@@ -30,6 +30,8 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
+import com.google.gwt.user.client.ui.FlowPanel;
+
 public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 
 	void getDriveDetails(GoogleDriveItemDo driveDo);
@@ -37,5 +39,7 @@ public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result);
 
 	void driveContentList(GoogleDriveDo googleDriveDo);
+	
+	public FlowPanel getPanelFileList();
 
 }

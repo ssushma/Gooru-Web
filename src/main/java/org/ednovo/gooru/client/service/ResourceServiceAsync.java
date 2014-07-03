@@ -173,7 +173,7 @@ public interface ResourceServiceAsync extends BaseServiceAsync {
 
 	//void getfolderList(String id, AsyncCallback<List<DriveDo>> asyncCallback);
 
-	void getGoogleDriveFilesList(AsyncCallback<GoogleDriveDo> callback);
+	void getGoogleDriveFilesList(String folderId,String nextPageToken,AsyncCallback<GoogleDriveDo> callback);
 
 	//void updatePermissions(DriveDo driveObject,AsyncCallback<DriveDo> simpleAsyncCallback);
 }
