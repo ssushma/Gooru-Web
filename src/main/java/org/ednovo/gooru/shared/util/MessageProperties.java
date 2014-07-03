@@ -781,6 +781,8 @@ public interface MessageProperties {
 	
 	//Collection Flag
 	String GL0600 = "Flag";
+//	String GL0600_1 = "Flag this Content";
+//	String GL0600_2 = "Thanks!";
 	String GL0601 = "Flag this Collection";
 	String GL0602 = "Flag a Resource";
 	String GL0603 = "Resources in the collection are inappropriate";

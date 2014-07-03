@@ -43,7 +43,6 @@ import org.ednovo.gooru.shared.model.content.ClasspageDo;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -473,7 +472,7 @@ public class ClassListView  extends BaseViewWithHandlers<ClassListUiHandlers> im
 			@Override
 			public void errorMsgVisibility(boolean visibility, String emailId) {
 				if (visibility){
-					showErrorMessage(StringUtil.generateMessage(GL1019, emailId));
+					showErrorMessage(StringUtil.generateMessage(i18n.GL1019(), emailId));
 				}else{
 					lblErrorMessage.setVisible(false);
 				}
