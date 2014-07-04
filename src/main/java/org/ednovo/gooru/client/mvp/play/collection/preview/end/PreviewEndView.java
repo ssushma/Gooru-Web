@@ -93,11 +93,40 @@ public class PreviewEndView extends BaseViewWithHandlers<PreviewEndUiHandlers> i
 	public PreviewEndView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		endText.getElement().setInnerHTML(GL0596);
+		endText.getElement().setId("pnlEndText");
+		endText.getElement().setAttribute("alt",GL0596);
+		endText.getElement().setAttribute("title",GL0596);
+		
 		assignCollectionBtn.setText(GL0104);
+		assignCollectionBtn.getElement().setId("btnAssignCollectionBtn");
+		assignCollectionBtn.getElement().setAttribute("alt",GL0104);
+		assignCollectionBtn.getElement().setAttribute("title",GL0104);
+		
 		customizeCollectionBtn.setText(GL0631);
+		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
+		customizeCollectionBtn.getElement().setAttribute("alt",GL0631);
+		customizeCollectionBtn.getElement().setAttribute("title",GL0631);
+		
 		shareCollectionBtn.setText(GL0536);
+		shareCollectionBtn.getElement().setId("btnShareCollectionBtn");
+		shareCollectionBtn.getElement().setAttribute("alt",GL0536);
+		shareCollectionBtn.getElement().setAttribute("title",GL0536);
+		
 		replayCollection.setText(GL0632);
+		replayCollection.getElement().setId("lblReplayCollection");
+		replayCollection.getElement().setAttribute("alt",GL0632);
+		replayCollection.getElement().setAttribute("title",GL0632);
+		
 		learningobjectiveText.setText(GL0618);
+		learningobjectiveText.getElement().setId("lblLearningobjectiveText");
+		learningobjectiveText.getElement().setAttribute("alt",GL0618);
+		learningobjectiveText.getElement().setAttribute("title",GL0618);
+		
+		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
+		thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
+		collectionGoal.getElement().setId("htmlCollectionGoal");
+		
+		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());

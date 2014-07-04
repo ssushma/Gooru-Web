@@ -136,7 +136,7 @@ IsSocialShareSmallView, MessageProperties {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		category=socialDo.getCategoryType()!=null?socialDo.getCategoryType():"collection";
-
+		setId();
 		description=socialDo.getDescription();
 		String title=socialDo.getTitle();
 		if(description==null){
@@ -542,4 +542,20 @@ IsSocialShareSmallView, MessageProperties {
 			}
 		}
 	};
+	public void setId(){
+		shareTextPanel.getElement().setId("pnlShareTextPanel");
+		fbPanel.getElement().setId("epnlFbPanel");
+		twitterPanel.getElement().setId("epnlTwitterPanel");
+		panelTwitter.getElement().setId("pnlPanelTwitter");
+		emailPanel.getElement().setId("epnlEmailPanel");
+		panelEmail.getElement().setId("pnlPanelEmail");
+		shareIconPanel.getElement().setId("pnlShareIconPanel");
+		fbIconPanel.getElement().setId("epnlFbIconPanel");
+		panelfbIcon.getElement().setId("pnlPanelfbIcon");
+		twIconPanel.getElement().setId("epnlTwIconPanel");
+		panelTwIcon.getElement().setId("pnlPanelTwIcon");
+		emailIconPanel.getElement().setId("epnlEmailIconPanel");
+		panelEmailIcon.getElement().setId("pnlPanelEmailIcon");
+		categoryImage.getElement().setId("imgCategoryImage");
+	}
 }

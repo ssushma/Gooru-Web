@@ -102,11 +102,35 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 	public PreviewHomeView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		previewButton.setText(GL0633);
+		previewButton.getElement().setId("btnPreviewButton");
+		previewButton.getElement().setAttribute("alt",GL0633);
+		previewButton.getElement().setAttribute("title",GL0633);
+		
 		assignCollectionBtn.setText(GL0104);
+		assignCollectionBtn.getElement().setId("btnAsignCollectionBtn");
+		assignCollectionBtn.getElement().setAttribute("alt",GL0104);
+		assignCollectionBtn.getElement().setAttribute("title",GL0104);
+		
 		customizeCollectionBtn.setText(GL0631);
+		customizeCollectionBtn.getElement().setId("btnCustomizeCollectionBtn");
+		customizeCollectionBtn.getElement().setAttribute("alt",GL0631);
+		customizeCollectionBtn.getElement().setAttribute("title",GL0631);
+		
 		shareCollectionBtn.setText(GL0526);
+		shareCollectionBtn.getElement().setId("btnShareCollectionBtn");
+		shareCollectionBtn.getElement().setAttribute("alt",GL0526);
+		shareCollectionBtn.getElement().setAttribute("title",GL0526);
+		
 		learningobjectiveText.setText(GL0618);
+		learningobjectiveText.getElement().setId("lblLearningobjectiveText");
+		learningobjectiveText.getElement().setAttribute("alt",GL0618);
+		learningobjectiveText.getElement().setAttribute("title",GL0618);
+		
 		backToClasspageButton.setText(GL1631);
+		backToClasspageButton.getElement().setId("btnBackToClasspageButton");
+		backToClasspageButton.getElement().setAttribute("alt",GL1631);
+		backToClasspageButton.getElement().setAttribute("title",GL1631);
+		
 		assignCollectionBtn.addMouseOverHandler(new OnassignCollectionBtnMouseOver());
 		assignCollectionBtn.addMouseOutHandler(new OnassignCollectionBtnMouseOut());
 		customizeCollectionBtn.addMouseOverHandler(new OncustomizeCollectionBtnMouseOver());
@@ -116,7 +140,25 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 		collectionEndImageContainer.setVisible(false);
 		endTextContainer.setVisible(false);
 		viewCollectionSummaryBtn.setVisible(false);
-		}
+		
+		
+		collectionImageContainer.getElement().setId("fpnlCollectionImageContainer");
+		collectionImage.getElement().setId("imgCollectionImage");
+		collectionEndImageContainer.getElement().setId("fpnlCollectionEndImageContainer");
+		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
+		thumbnailContainer.getElement().setId("fpnlThumbnailContainer");
+		endTextContainer.getElement().setId("pnlEndTextContainer");
+		endText.getElement().setId("pnlEndText");
+		viewCollectionSummaryBtn.getElement().setId("btnViewCollectionSummaryBtn");
+		previewButtonConatainer.getElement().setId("fpnlPreviewButtonConatainer");
+		collectionGoal.getElement().setId("htmlCollectionGoal");
+		resourceCountTitle.getElement().setId("lblResourceCountTitle");
+		previousButton.getElement().setId("lblPreviousButton");
+		resourceCurosalContainer.getElement().setId("fpnlResourceCurosalContainer");
+		nextButton.getElement().setId("lblNextButton");
+		
+		
+	}
 	@UiHandler("collectionImage")
 	public void thumbnailErrorImage(ErrorEvent event){
 		collectionImage.setUrl("images/collection-default-thubnail.png");
@@ -235,11 +277,15 @@ public class PreviewHomeView extends BaseViewWithHandlers<PreviewHomeUiHandlers>
 			
 			}
 			resourceCountTitle.setText(finalMessage);
+			resourceCountTitle.getElement().setAttribute("alt",finalMessage);
+			resourceCountTitle.getElement().setAttribute("title",finalMessage);
 			resourceCurosalContainer.add(curosalPanel);
 		}
 		else
 		{
 			resourceCountTitle.setText(GL0684);
+			resourceCountTitle.getElement().setAttribute("alt",GL0684);
+			resourceCountTitle.getElement().setAttribute("title",GL0684);
 			Image resourceThumbnail = new Image();
 			resourceThumbnail.setUrl("images/resource_trans.png");
 			resourceThumbnail.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().noResourceDefault());

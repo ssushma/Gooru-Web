@@ -64,7 +64,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
 public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandlers> implements IsCollectionEndView,MessageProperties{
 	
-	@UiField HTMLPanel summaryQuestionsContainer,ftmSummaryPageContainer;
+	@UiField HTMLPanel summaryQuestionsContainer,ftmSummaryPageContainer,collectionSummaryShareButtonImage;
 	
 	@UiField Label emailButton, printButton,flagButton,endLabelText,replayText,shareCollectionText,saveSummaryText;
 	
@@ -99,14 +99,47 @@ public class CollectionEndView extends BaseViewWithHandlers<CollectionEndUiHandl
 		setWidget(uiBinder.createAndBindUi(this));
 		printElementContainer.setVisible(false);
 		resourceInfoSeparator.setHTML(SEPARATOR);
+		resourceInfoSeparator.getElement().setId("htmlResourceInfoSeparator");
+		resourceInfoSeparator.getElement().setAttribute("alt",SEPARATOR);
+		resourceInfoSeparator.getElement().setAttribute("title",SEPARATOR);
+		  
 		resourceInfoSeparator.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().sourceSepartor());
+		
 		flagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionplayerEndFlagBlackImage());
 		flagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().collectionplayerEndFlagOrange());
 		flagButton.setText(GL0556);
+		flagButton.getElement().setId("btnFlagButton");
+		flagButton.getElement().setAttribute("alt",GL0556);
+		flagButton.getElement().setAttribute("title",GL0556);
+		
 		endLabelText.setText(GL0596);
+		endLabelText.getElement().setId("lblEndLabelText");
+		endLabelText.getElement().setAttribute("alt",GL0596);
+		endLabelText.getElement().setAttribute("title",GL0596);
+		
 		replayText.setText(GL0597);
+		replayText.getElement().setId("lblReplayText");
+		replayText.getElement().setAttribute("alt",GL0597);
+		replayText.getElement().setAttribute("title",GL0597);
+		
 		shareCollectionText.setText(GL0598);
+		shareCollectionText.getElement().setId("lblShareCollectionText");
+		shareCollectionText.getElement().setAttribute("alt",GL0598);
+		shareCollectionText.getElement().setAttribute("title",GL0598);
+		
 		saveSummaryText.setText(GL0599);
+		saveSummaryText.getElement().setId("lblSaveSummaryText");
+		saveSummaryText.getElement().setAttribute("alt",GL0599);
+		saveSummaryText.getElement().setAttribute("title",GL0599);
+		
+		collectionReplayButtonImage.getElement().setId("epnlCollectionReplayButtonImage");
+		collectionSummaryShareButtonImage.getElement().setId("pnlCollectionSummaryShareButtonImage");
+		collectionPlayerSummaryShareTextBox.getElement().setId("txtCollectionPlayerSummaryShareTextBox");
+		ftmSummaryPageContainer.getElement().setId("pnlFtmSummaryPageContainer");
+		printElementContainer.getElement().setId("epnlPrintElementContainer");
+		emailButton.getElement().setId("lblEmailButton");
+		printButton.getElement().setId("lblPrintButton");
+		summaryQuestionsContainer.getElement().setId("pnlSummaryQuestionsContainer");
 	}
 	
 	@UiHandler("collectionReplayButtonImage")

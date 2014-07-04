@@ -80,10 +80,24 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		contentScroll.getElement().setId("contentScroll");
 		courseBanner.getElement().setId("courseBanner");
 		featuredEducator.getElement().setId("featuredEducator");
+		featuredCousesLbl.getElement().setId("lblFeaturedCousesLbl");
+		featuredCourses.getElement().setId("pnlFeaturedCourses");
+		partnerLogo.getElement().setId("pnlPartnerLogo");
+		courseImage.getElement().setId("imgCourseImage");
+		courseTitle.getElement().setId("lblCourseTitle");
+		educatorPhoto.getElement().setId("imgEducatorPhoto");
+		featuredContributor.getElement().setId("lblFeaturedContributor");
+		featuredContributorsLink.getElement().setId("lnkFeaturedContributorsLink");
+		scrollPanel.getElement().setId("sbScrollPanel");
+		libraryMetaDataContainer.getElement().setId("pnlLibraryMetaDataContainer");
+		loadingIconPanel.getElement().setId("pnlLoadingIconPanel");
+		contributorsContainer.getElement().setId("pnlContributorsContainer");
 		
 		if(getPlaceToken().equalsIgnoreCase(PlaceTokens.SAUSD_LIBRARY)) {
 			landingBanner.getElement().setId("landingSausdBanner");
 			featuredCousesLbl.setText(GL1901);
+			featuredCousesLbl.getElement().setAttribute("alt",GL1901);
+			featuredCousesLbl.getElement().setAttribute("title",GL1901);
 		}
 	}
 	
@@ -298,6 +312,7 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 		courseTabs.add(sausdMenuNav);
 		landingBanner.add(new SausdBannerView(getPlaceToken()));
 		featuredContributorsLink.setText(GL1005);
+		featuredContributorsLink.getElement().setAttribute("alt",GL1005);
 		featuredContributorsLink.setTitle(GL0680);
 		courseImage.setWidth("1000px");
 		courseImage.setHeight("300px");
@@ -322,6 +337,8 @@ public class SausdView extends BaseViewWithHandlers<SausdUiHandlers> implements 
 				}
 			});
 			courseTitle.setText(profileLibraryDo.getTitle());
+			courseTitle.getElement().setAttribute("alt",profileLibraryDo.getTitle());
+			courseTitle.getElement().setAttribute("title",profileLibraryDo.getTitle());
 		}
 	}
 }

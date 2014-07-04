@@ -621,13 +621,43 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 	}
 	public void setUiText()
 	{
-		  msgPanel.getElement().setInnerHTML(GL1983);
-		  msglinkPanel.getElement().setInnerHTML(GL1984);
-		  gooruPanel.getElement().setInnerHTML(GL0733);
-		  ednovoPanel.getElement().setInnerHTML(GL1985);
-		  appstorePanel.getElement().setInnerHTML(GL1986);
-		  viewAnchor.setText(GL1428);
+		  androidSectiondiv.getElement().setId("pnlAndroidSectiondiv");
+		  closeAndriodBtn.getElement().setId("imgCloseAndriodBtn");
+		  ipadSectiondiv.getElement().setId("pnlIpadSectiondiv");
+		  closeIpadBtn.getElement().setId("imgCloseIpadBtn");
+		  headerView.getElement().setId("studnetPlayerHeaderHeaderView");
+		  navigationContainer.getElement().setId("fpnlNavigationContainer");
+		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
 		  
+		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  msglinkPanel.getElement().setId("pnlMsglinkPanel");
+		  msglinkPanel.getElement().setAttribute("alt",GL1984);
+		  msglinkPanel.getElement().setAttribute("title",GL1984);
+
+		  msgPanel.getElement().setInnerHTML(GL1983);
+		  msgPanel.getElement().setId("pnlMsgPanel");
+		  msgPanel.getElement().setAttribute("alt",GL1983);
+		  msgPanel.getElement().setAttribute("title",GL1983);
+		  
+		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  gooruPanel.getElement().setId("pnlGooruPanel");
+		  gooruPanel.getElement().setAttribute("alt",GL0733);
+		  gooruPanel.getElement().setAttribute("title",GL0733);
+		  
+		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
+		  ednovoPanel.getElement().setAttribute("alt",GL1985);
+		  ednovoPanel.getElement().setAttribute("title",GL1985);
+		  
+		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  appstorePanel.getElement().setId("pnlAppstorePanel");
+		  appstorePanel.getElement().setAttribute("alt",GL1986);
+		  appstorePanel.getElement().setAttribute("title",GL1986);
+		  
+		  viewAnchor.setText(GL1428);
+		  viewAnchor.getElement().setId("lnkViewAnchor");
+		  viewAnchor.getElement().setAttribute("alt",GL1428);
+		  viewAnchor.getElement().setAttribute("title",GL1428);
 	}
 	
 }

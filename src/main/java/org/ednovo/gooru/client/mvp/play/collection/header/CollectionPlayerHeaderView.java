@@ -77,11 +77,22 @@ public class CollectionPlayerHeaderView extends Composite implements MessageProp
 		navigationButton.getElement().setId("navigationButton");
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		studentViewButton.setText(GL0139);
+		studentViewButton.getElement().setId("lnkStudentViewButton");
+		studentViewButton.getElement().setAttribute("alt",GL0139);
+		studentViewButton.getElement().setAttribute("title",GL0139);
+		  
 		studentViewButton.addMouseOverHandler(new OnStudentViewButtonMouseOver());
 		studentViewButton.addMouseOutHandler(new OnStudentViewButtonMouseOut());
 		shareButton.addMouseOverHandler(new ShareButtonMouseOver());
 		shareButton.addMouseOutHandler(new ShareButtonMouseOut());
 		addButton.getElement().setId("addButton");
+		flagButton.getElement().setId("btnFlagButton");
+		infoButton.getElement().setId("btnInfoButton");
+		shareButton.getElement().setId("btnShareButton");
+		narrationButton.getElement().setId("btnNarrationButton");
+		navigationButton.getElement().setId("btnNavigationButton");
+		closeButtonForCollection.getElement().setId("lblCloseButtonForCollection");
+		resourceTitle.getElement().setId("htmlResourceTitle");
 		
 	}
 	

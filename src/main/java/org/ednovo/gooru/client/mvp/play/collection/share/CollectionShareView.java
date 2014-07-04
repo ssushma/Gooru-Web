@@ -105,13 +105,50 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		resourceShareTextArea.setReadOnly(true);
 		resourceShareTextArea.getElement().setAttribute("readOnly", "");
 		embedLink.setText(SWITCH_EMBED_CODE);
+		embedLink.getElement().setId("spnEmbedLink");
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
+		
 		bitlyLink.setText(SWITCH_BITLY);
+		bitlyLink.getElement().setId("spnBitlyLink");
+		bitlyLink.getElement().setAttribute("alt",SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("title",SWITCH_BITLY);
+		
 		shareMainTitle.getElement().setInnerHTML(GL0644);
+		shareMainTitle.getElement().setId("pnlShareMainTitle");
+		shareMainTitle.getElement().setAttribute("alt",GL0644);
+		shareMainTitle.getElement().setAttribute("title",GL0644);
+		
 		collectionShareText.setText(GL0645);
+		collectionShareText.getElement().setId("lblCollectionShareText");
+		collectionShareText.getElement().setAttribute("alt",GL0645);
+		collectionShareText.getElement().setAttribute("title",GL0645);
+		
 		bitlyLink.getElement().setInnerHTML(GL0639);
+		bitlyLink.getElement().setAttribute("alt",GL0639);
+		bitlyLink.getElement().setAttribute("title",GL0639);
+		
 		embedLink.getElement().setInnerHTML(GL0640);
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
+		
 		hideText.setText(GL0592);
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",GL0592);
+		hideText.getElement().setAttribute("title",GL0592);
+		
 		shareText.setText(GL0638);
+		shareText.getElement().setId("lblShareText");
+		shareText.getElement().setAttribute("alt",GL0638);
+		shareText.getElement().setAttribute("title",GL0638);
+		
+		resourceTitleText.getElement().setId("lblResourceTitleText");
+		resourceShareTextArea.getElement().setId("tatResourceShareTextArea");
+		socialSharePanel.getElement().setId("fpnlSocialSharePanel");
+		sharePanel.getElement().setId("fpnlSharePanel");
+		collectionShareContainer.getElement().setId("fpnlCollectionShareContainer");
+		collectionShareTextArea.getElement().setId("tatCollectionShareTextArea");
+		hideButton.getElement().setId("epnlHideButton");
 	}
 	
 	public void showShareView(boolean isResourceView){
@@ -123,6 +160,8 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 //			resourceTitleText.setText("Resource");
 		}else{
 			resourceTitleText.setText(GL0645);
+			resourceTitleText.getElement().setAttribute("alt",GL0645);
+			resourceTitleText.getElement().setAttribute("title",GL0645);
 			collectionShareContainer.setVisible(false);
 			socialSharePanel.setVisible(true);
 		}	
@@ -139,8 +178,16 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		collectionShareMap.put(SWITCH_FULL_URL, shareUrl);
 		collectionShareMap.put(SWITCH_BITLY, shareBitlyUrl);
 		embedLink.setText(SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
+		
 		bitlyLink.setText(SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("alt",SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("title",SWITCH_BITLY);
+		
 		resourceShareTextArea.setText(shareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",shareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",shareUrl);
 	}
 	
 	public void setResourceShareData(Map<String, String> shareUrlsList){
@@ -153,16 +200,30 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		resourceShareMap.put(SWITCH_FULL_URL, resourceShareUrl);
 		resourceShareMap.put(SWITCH_BITLY, resourceShareBitlyUrl);
 		resourceShareTextArea.setText(resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
 		embedLink.setText(SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
 		bitlyLink.setText(SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("alt",SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("title",SWITCH_BITLY);
 	}
 	public void setCollectionShareData(){
 		embedLink.setText(SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
 		bitlyLink.setText(SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("alt",SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("title",SWITCH_BITLY);
 		if(isResourceView){
 			collectionShareTextArea.setText(shareUrl);
+			collectionShareTextArea.getElement().setAttribute("alt",shareUrl);
+			collectionShareTextArea.getElement().setAttribute("title",shareUrl);
 		}else{
 			resourceShareTextArea.setText(shareUrl);
+			resourceShareTextArea.getElement().setAttribute("alt",shareUrl);
+			resourceShareTextArea.getElement().setAttribute("title",shareUrl);
 		}
 	}
 	
@@ -170,6 +231,8 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 		resourceShareTextArea.setValue("");
 		String resourceShareUrl=resourceShareMap.get(SWITCH_FULL_URL);
 		resourceShareTextArea.setText(resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
 	}
 	
 	
@@ -249,10 +312,16 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			String value= isResourceView?resourceShareMap.get(key):collectionShareMap.get(key);
 			if(shareTxt.equalsIgnoreCase(value)){
 				embedLink.setText(key);
+				embedLink.getElement().setAttribute("alt",key);
+				embedLink.getElement().setAttribute("title",key);
 				if(isResourceView){
 					resourceShareTextArea.setText(resourceShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(embed));
 				}else{
 					resourceShareTextArea.setText(collectionShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(embed));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(embed));
 				}
 			}
 		}
@@ -281,11 +350,17 @@ public class CollectionShareView extends BaseViewWithHandlers<CollectionShareUiH
 			String value= isResourceView?resourceShareMap.get(key):collectionShareMap.get(key);
 			if(shareTxt.equalsIgnoreCase(value)){
 				bitlyLink.setText(key);
+				bitlyLink.getElement().setAttribute("alt",key);
+				bitlyLink.getElement().setAttribute("title",key);
 				if(isResourceView){
 					resourceShareTextArea.setText(resourceShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
 					//collectionShareTextArea.setText(collectionShareMap.get(linkUrl));
 				}else{
 					resourceShareTextArea.setText(collectionShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
+					resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
 				}
 			}
 		}

@@ -80,7 +80,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField
 	static FlowPanel studyMainContianer;
 	@UiField
-	FlowPanel metadataContainer;
+	FlowPanel metadataContainer,dataInsightsPanel;
 	@UiField
 	FlowPanel standardsContainer;
 	@UiField
@@ -94,7 +94,7 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	@UiField Label userNameLabel,viewsCountLabel,lblClassInfo,classTitleValue,lblclassTitle,lblTeacher,lbldueDate,lblDirections,lblDirectionsDesc;
 	@UiField Label lblAuthor, lblCourse, lblStandards,teacherNameLabel,dueDate,insightsHeaderText,insightsContentText,lbllanguageObjectiveText,lbllanguageObjective;//collectionSummaryLbl,emptyMsgDescOne,emptyMsgDescTwo
 	@UiField Image profileThumbnailImage;
-	@UiField HTMLPanel authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer;
+	@UiField HTMLPanel teacherPanel,classInfoPanel,authorPanel,courseSection,standardSection,teacherContainer,viewSection,dueDateSection,directionSection,teacherProfileContainer,languageObjectiveContainer;
 	@UiField Anchor previewFlagButton,seeMoreAnchor;
 	@UiField CollectionPlayerStyleBundle playerStyle;
 	//@UiField Frame insightsFrame;
@@ -188,17 +188,78 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setLabelAndIds() {
 //		collectionSummaryLbl.setVisible(false);
 		lblAuthor.setText(GL0573);
+		lblAuthor.getElement().setId("lblAuthor");
+		lblAuthor.getElement().setAttribute("alt",GL0573);
+		lblAuthor.getElement().setAttribute("title",GL0573);
+		  
 		lblCourse.setText(GL0574);
+		lblCourse.getElement().setId("lblCourse");
+		lblCourse.getElement().setAttribute("alt",GL0574);
+		lblCourse.getElement().setAttribute("title",GL0574);
+		
 		lblStandards.setText(GL0575);
+		lblStandards.getElement().setId("lblStandards");
+		lblStandards.getElement().setAttribute("alt",GL0575);
+		lblStandards.getElement().setAttribute("title",GL0575);
+		
 		previewFlagButton.setText(GL0556);
+		previewFlagButton.getElement().setId("lnkPreviewFlagButton");
+		previewFlagButton.getElement().setAttribute("alt",GL0556);
+		previewFlagButton.getElement().setAttribute("title",GL0556);
+		
 //		collectionSummaryLbl.setText(GL1544);
 //		emptyMsgDescOne.setText(GL1545);
 //		emptyMsgDescTwo.setText(GL1546);
 		insightsHeaderText.setText(GL1626);
+		insightsHeaderText.getElement().setId("lblInsightsHeaderText");
+		insightsHeaderText.getElement().setAttribute("alt",GL1626);
+		insightsHeaderText.getElement().setAttribute("title",GL1626);
+		
 		insightsContentText.setText(GL1627);
+		insightsContentText.getElement().setId("lblInsightsContentText");
+		insightsContentText.getElement().setAttribute("alt",GL1627);
+		insightsContentText.getElement().setAttribute("title",GL1627);
+		
 		previewFlagButton.removeStyleName(PlayerBundle.INSTANCE.getPlayerStyle().previewCoverFlagImageOrange());
 		previewFlagButton.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().playerPreviewCoverFlagImage());
 		lbllanguageObjectiveText.setText(GL1721);
+		lbllanguageObjectiveText.getElement().setId("lblLanguageObjectiveText");
+		lbllanguageObjectiveText.getElement().setAttribute("alt",GL1721);
+		lbllanguageObjectiveText.getElement().setAttribute("title",GL1721);
+		
+		studyMainContianer.getElement().setId("fpnlStudyMainContianer");
+		metadataContainer.getElement().setId("fpnlMetadataContainer");
+		teacherContainer.getElement().setId("pnlTeacherContainer");
+		classInfoPanel.getElement().setId("pnlClassInfoPanel");
+		lblClassInfo.getElement().setId("lblClassInfo");
+		lblclassTitle.getElement().setId("lblClassTitle");
+		classTitleValue.getElement().setId("lblClassTitleValue");
+		teacherPanel.getElement().setId("pnlTeacherPanel");
+		lblTeacher.getElement().setId("lblTeacher");
+		teacherProfileContainer.getElement().setId("pnlTeacherProfileContainer");
+		teacherNameLabel.getElement().setId("lblTeacherNameLabel");
+		dueDateSection.getElement().setId("pnlDueDateSection");
+		lbldueDate.getElement().setId("lbldueDate");
+		dueDate.getElement().setId("lbldueDateLabel");
+		directionSection.getElement().setId("pnlDirectionSection");
+		lblDirections.getElement().setId("lblDirections");
+		lblDirectionsDesc.getElement().setId("lblDirectionsDesc");
+		authorPanel.getElement().setId("pnlAuthorPanel");
+		profileThumbnailImage.getElement().setId("imgProfileThumbnailImage");
+		userNameLabel.getElement().setId("lblUserNameLabel");
+		teamContainer.getElement().setId("fpnlTeamContainer");
+		courseSection.getElement().setId("pnlCourseSection");
+		courseTitle.getElement().setId("fpnlCourseTitle");
+		standardSection.getElement().setId("pnlStandardSection");
+		standardsContainer.getElement().setId("fpnlStandardsContainer");
+		viewSection.getElement().setId("pnlViewSection");
+		viewsCountLabel.getElement().setId("lblViewsCountLabel");
+		languageObjectiveContainer.getElement().setId("pnlLanguageObjectiveContainer");
+		lbllanguageObjective.getElement().setId("lbllanguageObjective");
+		seeMoreAnchor.getElement().setId("lnkSeeMoreAnchor");
+		dataInsightsPanel.getElement().setId("pnlDataInsightsPanel");
+		frameContainer.getElement().setId("fpnlFrameContainer");
+		messageContainer.getElement().setId("fpnlMessageContainer");
 	}
 	
 	/*public void setUserName(String userName){
@@ -241,6 +302,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 				}
 				else{
 					userNameLabel.setText(userName);
+					userNameLabel.getElement().setAttribute("alt",userName);
+					userNameLabel.getElement().setAttribute("title",userName);
 				}
 			}
 			
@@ -257,6 +320,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setViewCount(String viewCount){
 		String viewsText=Integer.parseInt(viewCount)==1?viewCount+" "+GL1428:viewCount+" "+GL0934;
 		viewsCountLabel.setText(viewsText);
+		viewsCountLabel.getElement().setAttribute("alt",viewsText);
+		viewsCountLabel.getElement().setAttribute("title",viewsText);
 	}
 	public void renderCourseInfo(List<String> courseInfo){
 		courseTitle.clear();
@@ -372,13 +437,11 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setRelatedConceptsContent(ArrayList<ConceptDo> conceptDoList,
 			String coursePage, String subject, String lessonId,
 			String libraryName) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void isConceptsContainerVisible(boolean isVisible) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -387,14 +450,35 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 		hideCollectionDetails(true);
 		teacherContainer.setVisible(true);
 		classTitleValue.setText(classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("alt",classpageItemDo.getTitle());
+		classTitleValue.getElement().setAttribute("title",classpageItemDo.getTitle());
+		
 		lblclassTitle.setText(GL1578);
+		lblclassTitle.getElement().setAttribute("alt",GL1578);
+		lblclassTitle.getElement().setAttribute("title",GL1578);
+		
 		lblClassInfo.setText(GL1579);
+		lblClassInfo.getElement().setAttribute("alt",GL1579);
+		lblClassInfo.getElement().setAttribute("title",GL1579);
+		
 		lblTeacher.setText(GL1580);
+		lblTeacher.getElement().setAttribute("alt",GL1580);
+		lblTeacher.getElement().setAttribute("title",GL1580);
+		
 		lbldueDate.setText(GL1581);
+		lbldueDate.getElement().setAttribute("alt",GL1581);
+		lbldueDate.getElement().setAttribute("title",GL1581);
+		
 		lblDirections.setText(GL1582);
+		lblDirections.getElement().setAttribute("alt",GL1582);
+		lblDirections.getElement().setAttribute("title",GL1582);
+		
 		setDueDateText(classpageItemDo.getPlannedEndDate());
 		setDirectionText(classpageItemDo.getDirection());
 		teacherNameLabel.setText(classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("alt",classpageItemDo.getUserNameDispaly());
+		teacherNameLabel.getElement().setAttribute("title",classpageItemDo.getUserNameDispaly());
+		
 		teacherProfileContainer.clear();
 		//teacherProfileThumbnailImage.setUrl(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()); 
 		teacherProfileContainer.add(new TeacherImage(classpageItemDo.getProfileImageUrl()+"?p="+Math.random()));
@@ -403,6 +487,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setDueDateText(String text){
 		if(text!=null&&!text.trim().equals("")){
 			dueDate.setText(text);
+			dueDate.getElement().setAttribute("alt",text);
+			dueDate.getElement().setAttribute("title",text);
 			dueDateSection.setVisible(true);
 		}else{
 			dueDateSection.setVisible(false);
@@ -411,6 +497,8 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 	public void setDirectionText(String text){
 		if(text!=null&&!text.trim().equals("")){
 			lblDirectionsDesc.setText(text);
+			lblDirectionsDesc.getElement().setAttribute("alt",text);
+			lblDirectionsDesc.getElement().setAttribute("title",text);
 			directionSection.setVisible(true);
 		}else{
 			directionSection.setVisible(false);
@@ -548,14 +636,20 @@ public class CollectionPlayerMetadataView extends BaseViewWithHandlers<Collectio
 			seeMoreAnchor.getElement().setAttribute("style", "float:right;");
 			if(languageObjective.length()>=200){
 				seeMoreAnchor.setText(GL1728);	
+				seeMoreAnchor.getElement().setAttribute("alt",GL1728);
+				seeMoreAnchor.getElement().setAttribute("title",GL1728);
 				seeMoreAnchor.setVisible(true);
 				lbllanguageObjective.setText(languageObjective.substring(0,200));
+				lbllanguageObjective.getElement().setAttribute("alt",languageObjective.substring(0,200));
+				lbllanguageObjective.getElement().setAttribute("title",languageObjective.substring(0,200));
 				//lbllanguageObjectiveAll.setText(languageObjective.substring(80,languageObjective.length()));
 			}
 			else
 			{
 				seeMoreAnchor.setVisible(false);
 				lbllanguageObjective.setText(languageObjective);
+				lbllanguageObjective.getElement().setAttribute("alt",languageObjective);
+				lbllanguageObjective.getElement().setAttribute("title",languageObjective);
 			}
 			
 		}
