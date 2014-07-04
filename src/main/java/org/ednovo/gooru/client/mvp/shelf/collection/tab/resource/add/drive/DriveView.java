@@ -69,20 +69,12 @@ import com.itextpdf.text.log.SysoCounter;
 public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		IsDriveView, MessageProperties {
 
-	private static final String AUDIO_MIMETYPE="application/vnd.google-apps.audio";
-	private static final String DOCUMENT_MIMETYPE="application/vnd.google-apps.document";
-	private static final String DRAWING_MIMETYPE="application/vnd.google-apps.drawing";
-	private static final String FILE_MIMETYPE="application/vnd.google-apps.file";
-	private static final String FOLDER_MIMETYPE="application/vnd.google-apps.folder";
-	private static final String FORM_MIMETYPE="application/vnd.google-apps.form";
-	private static final String FUSIONTABLE_MIMETYPE="application/vnd.google-apps.fusiontable";
-	private static final String PHOTO_MIMETYPE="application/vnd.google-apps.photo";
-	private static final String PRESENTATION_MIMETYPE="application/vnd.google-apps.presentation";
-	private static final String SCRIPT_MIMETYPE="application/vnd.google-apps.script";
-	private static final String SITES_MIMETYPE="application/vnd.google-apps.sites";
-	private static final String SPREADSHEET_MIMETYPE="application/vnd.google-apps.spreadsheet";
-	private static final String UNKNOWN_MIMETYPE="application/vnd.google-apps.unknown";
-	private static final String VIDEO_MIMETYPE="application/vnd.google-apps.video";
+	public static final String DOCUMENT_MIMETYPE="application/vnd.google-apps.document";
+	public static final String DRAWING_MIMETYPE="application/vnd.google-apps.drawing";
+	public static final String FOLDER_MIMETYPE="application/vnd.google-apps.folder";
+	public static final String FORM_MIMETYPE="application/vnd.google-apps.form";
+	public static final String PRESENTATION_MIMETYPE="application/vnd.google-apps.presentation";
+	public static final String SPREADSHEET_MIMETYPE="application/vnd.google-apps.spreadsheet";
 	
 	@UiField FlowPanel panelDriveBreadCrums, panelFileList;
 	@UiField ScrollPanel driveScrollContainer;
@@ -270,15 +262,12 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			System.out.println("googleDriveItemDo.getEmbedLink() :"+googleDriveItemDo.getEmbedLink());
-			System.out.println("googleDriveItemDo.getAlternateLink() :"+googleDriveItemDo.getAlternateLink());
-			System.out.println("googleDriveItemDo.getTitle() :"+googleDriveItemDo.getTitle());
-			System.out.println("googleDriveItemDo.getDescription() :"+googleDriveItemDo.getDescription());
 			if(googleDriveItemDo.getMimeType().equals(FOLDER_MIMETYPE)){
 				getGoogleFolderItems(googleDriveItemDo.getId());
 				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}else {
-				
+				getUiHandlers().showAddResourceWidget(googleDriveItemDo);
+				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}
 		}
 	}
@@ -353,79 +342,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		public String getFolderId(){
 			return folderId;
 		}
-	}
-
-	@Override
-	public void showLoading(){
-		panelFileList.setVisible(false);
-		//panelError.setVisible(false);
-		//lblLoading.setVisible(true);
-		panelDriveBreadCrums.setVisible(false);
-	}
-	
-	
-//	Adding google file as resource.
-	public class AddWebResourceWidget extends AddWebResourceView{
-
-		public AddWebResourceWidget(CollectionDo parentCollectionDetails) {
-			super(parentCollectionDetails);
-		}
-
-
-		@Override
-		public void getResourceInfo(String userUrlStr) {
-		}
-		
-	
-		@Override
-		public void addResource(String idStr, String urlStr, String titleStr,String descriptionStr, String categoryStr,String thumbnailUrlStr, Integer endTime,boolean conformationFlag,final String educationalUse,final String momentsOfLearning,final List<CodeDo> standards) {
-//			this.setVisible(false);
-			
-			webResourceId = idStr;
-			webResourceUrl = urlStr;
-			webResourceTitle = titleStr;
-			webResourceDescription = descriptionStr;
-			webResourceCategory = categoryStr;
-			//Bcaz In the DB the resource category's are singular.
-			if (webResourceCategory.contains("Videos")
-					|| webResourceCategory.contains("Interactives")
-					|| webResourceCategory.contains("Images")
-					|| webResourceCategory.contains("Texts")) {
-				webResourceCategory = webResourceCategory.substring(0,
-						webResourceCategory.length() - 1);
-				/*
-				 * if(webResourceCategory.contains("Image")||webResourceCategory.
-				 * contains("Images")){ webResourceCategory="Slide"; }
-				 */
-			}
-			webResourceThumbnail = thumbnailUrlStr;
-			webResourceEnd = endTime; 
-			urlStr=urlStr.replaceAll("feature=player_detailpage&", "");
-			urlStr=urlStr.replaceAll("feature=player_embedded&","");
-			if(conformationFlag){
-				
-			}else{
-				getUiHandlers().addResource(idStr, urlStr, titleStr, descriptionStr, webResourceCategory, thumbnailUrlStr, endTime,educationalUse,momentsOfLearning,standards);
-			}
-		}
-		
-		public void hidePopup(){
-			closeAddResourcePopup();
-		}
-
-		@Override
-		public void resourceImageUpload() {
-			getUiHandlers().resourceImageUpload();	
-		}
-		@Override
-		public void checkShortenUrl(String userUrlStr) {
-			getUiHandlers().isShortenUrl(userUrlStr);
-		}
-	}
-	
-	public void closeAddResourcePopup(){
-		Window.enableScrolling(true);
-        AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
 
 }
