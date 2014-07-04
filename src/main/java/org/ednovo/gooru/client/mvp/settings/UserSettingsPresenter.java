@@ -163,13 +163,14 @@ public class UserSettingsPresenter
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
 		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : null;
-		
 		if (access_token !=null ){
 			UserDo user = AppClientFactory.getLoggedInUser();
 			user.setAccessToken(access_token);
 			AppClientFactory.setLoggedInUser(user);
 			
-			getView().googleDirveStatus();
+			getView().googleDirveStatus(true);
+		}else{
+			getView().googleDirveStatus(false);
 		}
 		
 		String userId = AppClientFactory.getPlaceManager().getRequestParameter(

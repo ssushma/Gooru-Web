@@ -31,14 +31,18 @@ import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
+import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEventHandler;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEventHandlers;
+import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -50,6 +54,9 @@ public class DrivePresenter extends
 		BasePlacePresenter<IsDriveView, DrivePresenter.IsDriveyProxy> implements
 		DriveUiHandlers {
 
+	
+	protected static ImageUploadPresenter imageUploadPresenter;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.DRIVE)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -57,9 +64,10 @@ public class DrivePresenter extends
 	}
 
 	@Inject
-	public DrivePresenter(IsDriveView view, IsDriveyProxy proxy) {
+	public DrivePresenter(IsDriveView view, IsDriveyProxy proxy,ImageUploadPresenter imageUploadPresenter) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
+		this.setImageUploadPresenter(imageUploadPresenter);
 		addRegisteredHandler(DriveEvent.TYPE, driveEvent);
 		addRegisteredHandler(FolderEvent.TYPE, folderEvent);
 
@@ -143,13 +151,71 @@ public class DrivePresenter extends
 
 	}
 
-	public void callDriveContent() {
-		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(new SimpleAsyncCallback<GoogleDriveDo>() {
-				@Override
-				public void onSuccess(GoogleDriveDo googleDriveDo) {
-					getView().driveContentList(googleDriveDo);	
+	public void getGoogleDriveFiles(String folderId,String nextPageToken,final boolean isPanelClear) {
+		if(isPanelClear){
+			getView().getPanelFileList().clear();
+			getView().getPanelFileList().add(setLoadingPanel());
+		}
+		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
+			@Override
+			public void onSuccess(GoogleDriveDo googleDriveDo) {
+				if(isPanelClear){
+					getView().getPanelFileList().clear();
 				}
-			});
+				if (googleDriveDo!=null){
+					getView().showNoDriveAccess(401);
+				}else if (googleDriveDo.getError().getCode() == 401){
+					getView().showNoDriveAccess(401);
+				}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+					getView().showNoDriveAccess(403);
+				}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+					getView().showNoDriveAccess(401);
+				}else{
+					getView().driveContentList(googleDriveDo);
+				}
+			}
+		});
+	}
+	@Override
+	public void resourceImageUpload() {
+		addToPopupSlot(imageUploadPresenter);
+		imageUploadPresenter.setCollectionImage(false);
+		imageUploadPresenter.setQuestionImage(false);
+		imageUploadPresenter.setEditResourceImage(false);
+		imageUploadPresenter.setUserOwnResourceImage(false);
+		imageUploadPresenter.setEditUserOwnResourceImage(false);
+		imageUploadPresenter.getView().isFromEditQuestion(true);
+	}
+	
+	public void setImageUploadPresenter(ImageUploadPresenter imageUploadPresenter) {
+		this.imageUploadPresenter = imageUploadPresenter;
+	}
+	
+	public Label setLoadingPanel(){
+		Label loadingImage=new Label();
+		EditClasspageCBundle.INSTANCE.css().ensureInjected();
+		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
+		loadingImage.getElement().getStyle().setMarginLeft(70, Unit.PX);
+		loadingImage.getElement().getStyle().setMarginTop(25, Unit.PX);
+		return loadingImage;
+	}
+	
+	public void setBreadCrumbLabel(String folderId,String folderTitle){
+		getView().setBreadCrumbLabel(folderId,folderTitle);
 	}
 
+	
+	@Override
+	public void addResource(String idStr, String urlStr, String titleStr,
+			String descriptionStr, String webResourceCategory,
+			String thumbnailUrlStr, Integer endTime, String educationalUse,
+			String momentsOfLearning, List<CodeDo> standards) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	
+	@Override
+	public void isShortenUrl(String userUrlStr) {
+		throw new RuntimeException("Not implemented");
+	}
 }

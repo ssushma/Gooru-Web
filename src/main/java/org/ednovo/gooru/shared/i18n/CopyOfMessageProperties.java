@@ -2498,4 +2498,9 @@ public interface CopyOfMessageProperties extends Constants {
 	String GL2010();
 	String GL2011();
 	String GL2012();
+	String GL2013();
+	String GL2014();
+	String GL2015();
+	String GL2016();
+	String GL2017();
 }
