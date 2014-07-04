@@ -471,8 +471,12 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
-		drivePresenter.getGoogleDriveFiles(null, null, true);
-		drivePresenter.setBreadCrumbLabel(null,null);
+		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
+			drivePresenter.getGoogleDriveFiles(null, null, true);
+			drivePresenter.setBreadCrumbLabel(null,null);
+		//}else{
+			//drivePresenter.showDriveNotConnectedErrorMessage();
+		//}
 		tabContainer.add(drivePresenter.getWidget());
 	}
 	

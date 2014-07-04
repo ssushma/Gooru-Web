@@ -59,4 +59,7 @@ public interface GoogleDriveFilesStyleBundle extends CssResource {
 	
 	String breadCrumbsArrow();
 	
+	String errorHeading();
+	
+	String pannelError();
 }

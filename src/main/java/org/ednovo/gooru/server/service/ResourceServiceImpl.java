@@ -1465,8 +1465,8 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String url = "https://www.googleapis.com/drive/v2/files?maxResults=20&q="+enocodedString;
-		String response=new WebService(url).webInvokeforget("GET", "", contentType, access_token);
+		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=20&q="+enocodedString).webInvokeforget("GET", "", contentType, access_token);
+
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}
