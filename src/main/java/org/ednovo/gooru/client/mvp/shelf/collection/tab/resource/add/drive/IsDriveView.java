@@ -30,6 +30,8 @@ import org.ednovo.gooru.client.gin.IsViewWithHandlers;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
+import com.google.gwt.user.client.ui.FlowPanel;
+
 public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 
 	void getDriveDetails(GoogleDriveItemDo driveDo);
@@ -37,5 +39,50 @@ public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result);
 
 	void driveContentList(GoogleDriveDo googleDriveDo);
+	
+	public FlowPanel getPanelFileList();
+	
+	public void setBreadCrumbLabel(String folderId,String folderTitle);
+
+	/**
+	 * @function showNoDriveAccess 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param errorCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void showNoDriveAccess(int errorCode);
+
+	/**
+	 * @function showLoading 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void showLoading();
 
 }

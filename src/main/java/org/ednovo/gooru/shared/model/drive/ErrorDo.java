@@ -25,87 +25,41 @@
 package org.ednovo.gooru.shared.model.drive;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class GoogleDriveDo implements Serializable{
-
-	private static final long serialVersionUID = -3298220423508874309L;
-
-	private String kind;
-	private String selfLink;
-	private String nextPageToken;
-	private String nextLink;
-	private ArrayList<GoogleDriveItemDo> items;
-	private ErrorDo error;
-	
+public class ErrorDo implements Serializable{
 	/**
-	 * @return the kind
+	 * 
 	 */
-	public String getKind() {
-		return kind;
-	}
-	/**
-	 * @param kind the kind to set
+	private static final long serialVersionUID = 1840162086238517090L;
+	private Integer code;
+	private String message;
+	/** 
+	 * This method is to get the code
 	 */
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
-	/**
-	 * @return the selfLink
-	 */
-	public String getSelfLink() {
-		return selfLink;
-	}
-	/**
-	 * @param selfLink the selfLink to set
-	 */
-	public void setSelfLink(String selfLink) {
-		this.selfLink = selfLink;
-	}
-	/**
-	 * @return the nextPageToken
-	 */
-	public String getNextPageToken() {
-		return nextPageToken;
-	}
-	/**
-	 * @param nextPageToken the nextPageToken to set
-	 */
-	public void setNextPageToken(String nextPageToken) {
-		this.nextPageToken = nextPageToken;
-	}
-	/**
-	 * @return the nextLink
-	 */
-	public String getNextLink() {
-		return nextLink;
-	}
-	/**
-	 * @param nextLink the nextLink to set
-	 */
-	public void setNextLink(String nextLink) {
-		this.nextLink = nextLink;
-	}
-	public ArrayList<GoogleDriveItemDo> getItems() {
-		return items;
-	}
-	public void setItems(ArrayList<GoogleDriveItemDo> items) {
-		this.items = items;
+	public Integer getCode() {
+		return code;
 	}
 	/** 
-	 * This method is to get the error
+	 * This method is to set the code
 	 */
-	public ErrorDo getError() {
-		return error;
+	public void setCode(Integer code) {
+		this.code = code;
 	}
 	/** 
-	 * This method is to set the error
+	 * This method is to get the message
 	 */
-	public void setError(ErrorDo error) {
-		this.error = error;
+	public String getMessage() {
+		return message;
 	}
+	/** 
+	 * This method is to set the message
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 }

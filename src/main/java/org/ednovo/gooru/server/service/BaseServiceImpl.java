@@ -106,6 +106,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	private static final String GOORU_SESSION_TOKEN = "gooru-session-token";
 	
+	private static final String GOORU_ACCESS_TOKEN = "google-access-token";
+	
 	private static final String GOORU_ACTIVE_USER = "gooru-active-user";
 
 	private static final String SIGNED_USER_UID = "signed-user-uid";
@@ -376,6 +378,34 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return token;
 	}
 
+	protected String getLoggedInAccessToken() {
+		String token = getCookie(GOORU_ACCESS_TOKEN);
+		if (token == null) {
+			token = (String) getHttpRequest().getSession().getAttribute(GOORU_ACCESS_TOKEN);
+			//Fix for handling when cookie get disabled.
+			if (token == null || token.equalsIgnoreCase("null")) { 
+				getHttpRequest().getSession().setAttribute(GOORU_ACCESS_TOKEN, token);
+			}
+			setLoggedInAccessToken(token);
+		}
+		return token;
+	}
+	protected void setLoggedInAccessToken(String accessToken) {
+		Cookie cookie = new Cookie(GOORU_ACCESS_TOKEN, accessToken);
+		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
+		cookie.setPath(COOKIE_PATH);
+		if (accessToken != null && accessToken.length() > 0) {
+			cookie.setMaxAge(COOKIE_AGE);
+		} else {
+			cookie.setMaxAge(0);
+		}
+		getHttpResponse().addCookie(cookie);
+		if (accessToken != null) {
+			getHttpRequest().getSession().setAttribute(GOORU_ACCESS_TOKEN, accessToken);
+		} else {
+			getHttpRequest().getSession().removeAttribute(GOORU_ACCESS_TOKEN);
+		}
+	}
 	private String getCookie(String name) {
 		Cookie[] cookies = getHttpRequest().getCookies();
 		if (cookies != null) {

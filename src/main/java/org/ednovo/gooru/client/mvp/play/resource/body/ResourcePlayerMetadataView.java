@@ -878,7 +878,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				isProtocolsMatched=sourceUrl.contains("https");
 			}
 		}
-		if(sourceUrl.toLowerCase().endsWith("jpg")){
+		if(sourceUrl.toLowerCase().endsWith("jpg")||sourceUrl.toLowerCase().endsWith("jpeg")){
 			{
 				isProtocolsMatched=sourceUrl.contains("https");
 			}
