@@ -39,6 +39,7 @@ import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.mortbay.jetty.security.SSORealm;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -46,6 +47,8 @@ import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -56,7 +59,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.itextpdf.text.log.SysoCounter;
 
 /**
  * @author Search Team ` *
@@ -78,12 +83,13 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	private static final String SPREADSHEET_MIMETYPE="application/vnd.google-apps.spreadsheet";
 	private static final String UNKNOWN_MIMETYPE="application/vnd.google-apps.unknown";
 	private static final String VIDEO_MIMETYPE="application/vnd.google-apps.video";
+	
 	@UiField FlowPanel panelDriveBreadCrums, panelFileList;
-
+	@UiField ScrollPanel driveScrollContainer;
 	@UiField GoogleDriveFilesStyleBundle driveStyle;
-	@UiField HTMLPanel panelError;
-	@UiField Label lblLoading, lblErrorHeading, lblErrorSubHeading;
-
+	
+	private String pageToken=null;
+	
 	private static DriveViewUiBinder uiBinder = GWT.create(DriveViewUiBinder.class);
 
 	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
@@ -101,20 +107,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
-
-//		rootDriveLabel.setText("Drive");
-//		panelDriveBreadCrums.add(new Label(i18n.GL2016()));
-//		
-//		showLoading();
-		
-		lblErrorHeading.setText(i18n.GL2013());
-		lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
-		lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
-		
-		lblErrorSubHeading.setText(i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
-		
+		driveScrollContainer.addScrollHandler(new DriveScrollEvent());
 	}
 
 	
@@ -141,45 +134,54 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 
 	@Override
 	public void getDriveDetails(GoogleDriveItemDo driveDo) {
-		// TODO Auto-generated method stub
 		panelFileList.clear();
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		lblLoading.setVisible(false);
+		//lblLoading.setVisible(false);
 		panelFileList.add(new GoogleDocsResourceView(driveDo));
 
 	}
-
-//	@UiHandler("rootDriveLabel")
-//	public void rootDriveLabelclick(ClickEvent event) {
-//		getUiHandlers().getdriveListAgain();
-//
-//	}
+	
+	private class DriveScrollEvent implements ScrollHandler{
+		@Override
+		public void onScroll(ScrollEvent event) {
+			if((driveScrollContainer.getVerticalScrollPosition() == driveScrollContainer.getMaximumVerticalScrollPosition())&&pageToken!=null){
+				String folderId=getFolderIdFromBreadCrumbs();
+				getUiHandlers().getGoogleDriveFiles(folderId, pageToken, false);
+				pageToken=null;
+			}
+		}
+	}
+	
+	public String getFolderIdFromBreadCrumbs(){
+		int widgetCount=panelDriveBreadCrums.getWidgetCount();
+		Widget widget=panelDriveBreadCrums.getWidget(widgetCount-1);
+		String folderId=null;
+		if(widget instanceof BreadCrumbLabel){
+			BreadCrumbLabel breadCrumbLabel=(BreadCrumbLabel)widget;
+			folderId=breadCrumbLabel.getFolderId();
+		}
+		return folderId;
+	}
 
 	@Override
 	public void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result) {
-		// TODO Auto-generated method stub
 		panelDriveBreadCrums.add(new Label(" "+title+""));
 		panelFileList.clear();
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		lblLoading.setVisible(false);
+		//lblLoading.setVisible(false);
 		for (int n = 0; n < result.size(); n++) {
 			panelFileList.add(new GoogleWebResource(result.get(n)));
-
 		}
 	}
 
 	@Override
 	public void driveContentList(GoogleDriveDo googleDriveDo) {
-		System.out.println("Drive content list....");
-		panelFileList.clear();
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		lblLoading.setVisible(false);
-		System.out.println("googleDriveDo.getItems().size() : "+googleDriveDo.getItems().size());
-		if (googleDriveDo != null && googleDriveDo.getItems() != null
-				&& googleDriveDo.getItems().size() > 0) {
+		if (googleDriveDo != null && googleDriveDo.getItems() != null) {
+			pageToken=googleDriveDo.getNextPageToken();
 			ArrayList<GoogleDriveItemDo> googleDriveItemsList = googleDriveDo.getItems();
 			for (int i = 0; i < googleDriveItemsList.size(); i++) {
 				DriveFileView driveFileView = new DriveFileView(googleDriveItemsList.get(i).getMimeType(), googleDriveItemsList.get(i).getTitle());
@@ -191,24 +193,38 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		}
 	}
 	
+	
 	@Override
 	public void showNoDriveAccess(int errorCode) {
-		System.out.println("Show no drive access : "+errorCode);
 		panelFileList.clear();
-		panelFileList.setVisible(false);
-		lblLoading.setVisible(false);
-		panelError.setVisible(true);
 		panelDriveBreadCrums.setVisible(false);
 		Cookies.removeCookie("google-access-token");
 		if (errorCode==401){
-			lblErrorSubHeading.setText(i18n.GL2014());
-			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2015());
-			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2015());
+			showErrorMessage(i18n.GL2013(),i18n.GL2014());
 		}else if (errorCode==403){
-			lblErrorSubHeading.setText(i18n.GL2015());
-			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
-			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+			showErrorMessage(i18n.GL2013(),i18n.GL2015());
 		}
+	}
+	@Override
+	public void showDriveNotConnectedErrorMessage() {
+		showErrorMessage(i18n.GL2013(),i18n.GL2014());
+	}
+	public void showErrorMessage(String errorHeading,String errorSubHeading){
+		FlowPanel errorContainer=new FlowPanel();
+		errorContainer.setStyleName(driveStyle.pannelError());
+		Label lblErrorHeading=new Label();
+		lblErrorHeading.setStyleName(driveStyle.errorHeading());
+		lblErrorHeading.setText(i18n.GL2013());
+		lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
+		lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
+		Label lblErrorSubHeading=new Label();
+		lblErrorSubHeading.setStyleName("");
+		lblErrorSubHeading.setText(i18n.GL2014());
+		lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
+		lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+		errorContainer.add(lblErrorHeading);
+		errorContainer.add(lblErrorSubHeading);
+		panelFileList.add(errorContainer);
 	}
 	
 	public class DriveFileView extends Composite implements HasClickHandlers{
@@ -342,8 +358,8 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	@Override
 	public void showLoading(){
 		panelFileList.setVisible(false);
-		panelError.setVisible(false);
-		lblLoading.setVisible(true);
+		//panelError.setVisible(false);
+		//lblLoading.setVisible(true);
 		panelDriveBreadCrums.setVisible(false);
 	}
 	
@@ -411,4 +427,5 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		Window.enableScrolling(true);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(0, true));
 	}
+
 }
