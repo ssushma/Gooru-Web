@@ -102,7 +102,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	IsCollectionResourceTabView isCollResourceTabView=null;
 	
-private DrivePresenter drivePresenter=null;
+	private DrivePresenter drivePresenter=null;
 	
 	public DrivePresenter getDrivePresenter() {
 		return drivePresenter;

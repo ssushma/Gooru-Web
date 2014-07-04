@@ -122,9 +122,7 @@ public class DrivePresenter extends
 		@Override
 		public void clearFolderpage(String title, String id,
 				List<GoogleDriveItemDo> result) {
-			// TODO Auto-generated method stub
 			getView().getFolderDetails(title, id, result);
-
 		}
 
 	};
@@ -162,13 +160,15 @@ public class DrivePresenter extends
 				if(isPanelClear){
 					getView().getPanelFileList().clear();
 				}
-				if (googleDriveDo!=null){
+				if (googleDriveDo==null){
 					getView().showNoDriveAccess(401);
-				}else if (googleDriveDo.getError().getCode() == 401){
+				}else if (googleDriveDo.getItems() !=null && googleDriveDo.getItems().size() <=0){
+					getView().showNoDriveAccess(404);
+				}else if (googleDriveDo.getError() != null && googleDriveDo.getError().getCode() == 401){
 					getView().showNoDriveAccess(401);
-				}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+				}else if (googleDriveDo.getError() != null && googleDriveDo.getError().getCode() == 403){
 					getView().showNoDriveAccess(403);
-				}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+				}else if (googleDriveDo.getError() != null && googleDriveDo.getError().getCode() == 401){
 					getView().showNoDriveAccess(401);
 				}else{
 					getView().driveContentList(googleDriveDo);

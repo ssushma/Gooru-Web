@@ -31,8 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddWebResourceView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.WebResourcePreview;
-import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -41,8 +39,6 @@ import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -88,6 +84,8 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 
 	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
+	private AddWebResourceWidget addWebResourceWidget;
+	
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
 	}
 	
@@ -105,15 +103,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 //		rootDriveLabel.setText("Drive");
 //		panelDriveBreadCrums.add(new Label(i18n.GL2016()));
 //		
-//		showLoading();
-		
-		lblErrorHeading.setText(i18n.GL2013());
-		lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
-		lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
-		
-		lblErrorSubHeading.setText(i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+		showLoading();
 		
 	}
 
@@ -177,7 +167,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
 		lblLoading.setVisible(false);
-		System.out.println("googleDriveDo.getItems().size() : "+googleDriveDo.getItems().size());
 		if (googleDriveDo != null && googleDriveDo.getItems() != null
 				&& googleDriveDo.getItems().size() > 0) {
 			ArrayList<GoogleDriveItemDo> googleDriveItemsList = googleDriveDo.getItems();
@@ -201,13 +190,29 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		panelDriveBreadCrums.setVisible(false);
 		Cookies.removeCookie("google-access-token");
 		if (errorCode==401){
+			lblErrorHeading.setText(i18n.GL2013());
+			lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
+			lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
+			
 			lblErrorSubHeading.setText(i18n.GL2014());
 			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2015());
 			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2015());
 		}else if (errorCode==403){
+			lblErrorHeading.setText(i18n.GL2013());
+			lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
+			lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
+			
 			lblErrorSubHeading.setText(i18n.GL2015());
 			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
 			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+		}else if (errorCode==404){
+			lblErrorHeading.setText("");
+			lblErrorHeading.getElement().setAttribute("alt", ""); 
+			lblErrorHeading.getElement().setAttribute("title", "");
+			
+			lblErrorSubHeading.setText(i18n.GL2018());
+			lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2018());
+			lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2018());
 		}
 	}
 	
@@ -262,7 +267,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 				getGoogleFolderItems(googleDriveItemDo.getId());
 				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}else {
-				
+//				addWebResourceWidget =new AddWebResourceWidget(null);
+//				panelFileList.clear();
+//				panelFileList.add(addWebResourceWidget);
 			}
 		}
 	}
