@@ -122,9 +122,7 @@ public class DrivePresenter extends
 		@Override
 		public void clearFolderpage(String title, String id,
 				List<GoogleDriveItemDo> result) {
-			// TODO Auto-generated method stub
 			getView().getFolderDetails(title, id, result);
-
 		}
 
 	};
@@ -166,6 +164,7 @@ public class DrivePresenter extends
 				if(isPanelClear){
 					getView().getPanelFileList().clear();
 				}
+
 				if(googleDriveDo!=null){
 					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
 						getView().showNoDriveAccess(401);

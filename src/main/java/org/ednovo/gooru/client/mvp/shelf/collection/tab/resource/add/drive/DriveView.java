@@ -31,8 +31,6 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddWebResourceView;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.WebResourcePreview;
-import org.ednovo.gooru.client.mvp.shelf.event.GetEditPageHeightEvent;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -42,8 +40,6 @@ import org.ednovo.gooru.shared.util.MessageProperties;
 import org.mortbay.jetty.security.SSORealm;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -94,6 +90,8 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 
 	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
+	private AddWebResourceWidget addWebResourceWidget;
+	
 	interface DriveViewUiBinder extends UiBinder<Widget, DriveView> {
 	}
 	
@@ -107,7 +105,13 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	
 	public DriveView() {
 		setWidget(uiBinder.createAndBindUi(this));
+
+//		rootDriveLabel.setText("Drive");
+//		panelDriveBreadCrums.add(new Label(i18n.GL2016()));
+//		
+		showLoading();
 		driveScrollContainer.addScrollHandler(new DriveScrollEvent());
+
 	}
 
 	
@@ -180,8 +184,10 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void driveContentList(GoogleDriveDo googleDriveDo) {
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		if (googleDriveDo != null && googleDriveDo.getItems() != null) {
+		if (googleDriveDo != null && googleDriveDo.getItems() != null
+				&& googleDriveDo.getItems().size() > 0) {
 			pageToken=googleDriveDo.getNextPageToken();
+
 			ArrayList<GoogleDriveItemDo> googleDriveItemsList = googleDriveDo.getItems();
 			for (int i = 0; i < googleDriveItemsList.size(); i++) {
 				DriveFileView driveFileView = new DriveFileView(googleDriveItemsList.get(i).getMimeType(), googleDriveItemsList.get(i).getTitle());
@@ -189,7 +195,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 				panelFileList.add(driveFileView);
 			}
 		}else{
-			showNoDriveAccess(401);
+			showNoDriveAccess(0);
 		}
 	}
 	
@@ -201,6 +207,8 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		Cookies.removeCookie("google-access-token");
 		if (errorCode==401){
 			showErrorMessage(i18n.GL2013(),i18n.GL2014());
+		}else if (errorCode==0){
+			showErrorMessage("",i18n.GL2018());
 		}else if (errorCode==403){
 			showErrorMessage(i18n.GL2013(),i18n.GL2015());
 		}
@@ -209,7 +217,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void showDriveNotConnectedErrorMessage() {
 		showErrorMessage(i18n.GL2013(),i18n.GL2014());
 	}
-	public void showErrorMessage(String errorHeading,String errorSubHeading){
+	public void showErrorMessage(String errorHeading, String errorSubHeading){
 		FlowPanel errorContainer=new FlowPanel();
 		errorContainer.setStyleName(driveStyle.pannelError());
 		Label lblErrorHeading=new Label();
@@ -278,7 +286,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 				getGoogleFolderItems(googleDriveItemDo.getId());
 				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}else {
-				
+//				addWebResourceWidget =new AddWebResourceWidget(null);
+//				panelFileList.clear();
+//				panelFileList.add(addWebResourceWidget);
 			}
 		}
 	}
