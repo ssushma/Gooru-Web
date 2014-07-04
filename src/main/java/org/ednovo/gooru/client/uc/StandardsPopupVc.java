@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -61,11 +62,11 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @Reviewer:
  */
-public class StandardsPopupVc extends PopupPanel implements MessageProperties {
+public class StandardsPopupVc extends PopupPanel  {
 
-	public static final String STANDARD_CODE = GL1049;
+//	public static final String STANDARD_CODE = i18n.GL1049;
 
-	public static final String STANDARD_DESCRIPTION =GL0904.toLowerCase();
+//	public static final String STANDARD_DESCRIPTION =i18n.GL0904.toLowerCase();
 
 	@UiField
 	ScrollPanel spanelStandardsPanel;
@@ -86,6 +87,8 @@ public class StandardsPopupVc extends PopupPanel implements MessageProperties {
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * 
@@ -97,7 +100,7 @@ public class StandardsPopupVc extends PopupPanel implements MessageProperties {
 		res.css().ensureInjected();
 		add(binder.createAndBindUi(this));
 		this.setGlassEnabled(true);
-		standardsText.getElement().setInnerHTML(GL0575);
+		standardsText.getElement().setInnerHTML(i18n.GL0575());
 		this.standards = standards;
 		this.iterator = standards.iterator();
 		this.getElement().setAttribute("style", "z-index:99999");
@@ -132,8 +135,8 @@ public class StandardsPopupVc extends PopupPanel implements MessageProperties {
 		if (iterator != null) {
 			while (this.iterator.hasNext()) {
 				Map<String, String> standard = this.iterator.next();
-				String stdCode = standard.get(STANDARD_CODE);
-				String stdDec = standard.get(STANDARD_DESCRIPTION);
+				String stdCode = standard.get(i18n.GL1049());
+				String stdDec = standard.get(i18n.GL0904().toLowerCase());
 
 				final HTMLPanel standardsPanel = new HTMLPanel("");
 				standardsPanel.setStyleName(UcCBundle.INSTANCE.css().divContainer());

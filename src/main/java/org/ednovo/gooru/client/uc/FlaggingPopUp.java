@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
 import org.ednovo.gooru.player.resource.shared.GetFlagContentDO;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -48,7 +49,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
-public class FlaggingPopUp extends PopupPanel implements MessageProperties {
+public class FlaggingPopUp extends PopupPanel {
 
 	private static FlaggingPopUpUiBinder uiBinder = GWT
 			.create(FlaggingPopUpUiBinder.class);
@@ -56,7 +57,8 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 	interface FlaggingPopUpUiBinder extends
 			UiBinder<Widget, FlaggingPopUp> {
 	}
-
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField HTMLEventPanel closeButton;
 	@UiField Button cancelButton,submitButton,submitButtonGray;
 	@UiField Image popUpCloseButton;
@@ -82,17 +84,17 @@ public class FlaggingPopUp extends PopupPanel implements MessageProperties {
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
-		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
-		flagText.setText(GL0600);
-		inappropriateText.setText(GL0612);
-		unavailableText.setText(GL0613);
-		inaccurateText.setText(GL0614);
-		otherReasonText.setText(GL0606);
-		provideMoretext.setText(GL0607);
-		cancelButton.setText(GL0608);
-		submitButton.setText(GL0486);
-		submitButtonGray.setText(GL0486);
-		popUpCloseButton.setAltText(GL1050);
+		titleText.setHTML(i18n.GL1430() +resourceTitle+" \" "+i18n.GL1431()+"");
+		flagText.setText(i18n.GL0600());
+		inappropriateText.setText(i18n.GL0612());
+		unavailableText.setText(i18n.GL0613());
+		inaccurateText.setText(i18n.GL0614());
+		otherReasonText.setText(i18n.GL0606());
+		provideMoretext.setText(i18n.GL0607());
+		cancelButton.setText(i18n.GL0608());
+		submitButton.setText(i18n.GL0486());
+		submitButtonGray.setText(i18n.GL0486());
+		popUpCloseButton.setAltText(i18n.GL1050());
 		cancelButton.getElement().setAttribute("id", "cancelButton");
 		submitButton.getElement().setAttribute("id", "SubmitButton");
 		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");

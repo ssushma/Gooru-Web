@@ -30,6 +30,7 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -52,7 +53,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ProfilePageDescriptionEditUc extends Composite implements
-		HasValue<String>,MessageProperties {
+		HasValue<String> {
 
 	private static ProfileBiographyEditUCUiBinder uiBinder = GWT
 			.create(ProfileBiographyEditUCUiBinder.class);
@@ -60,6 +61,8 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 	interface ProfileBiographyEditUCUiBinder extends
 			UiBinder<Widget, ProfilePageDescriptionEditUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField
 	protected HTMLPanel editLabel;
@@ -86,11 +89,11 @@ public class ProfilePageDescriptionEditUc extends Composite implements
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
 		deckPanel.showWidget(0);
-		errorLabel.setText(GL1043);
+		errorLabel.setText(i18n.GL1043());
 		biographyLabel = new Label();
 		biographyLabel.getElement().setAttribute("style", "float: left; max-width: 709px; min-height: 33px;");
 		
-		biographyEditImage = new Label(GL1786);
+		biographyEditImage = new Label(i18n.GL1786());
 		biographyEditImage.setStyleName(res.css().editImage());
 		errorLabel.setVisible(false);
 		errorLabelForEditText.getElement().setAttribute("style", "float: left;text-align: right;width: 76%;");

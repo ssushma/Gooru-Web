@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 
 import org.ednovo.gooru.player.resource.client.view.resourceplayer.flag.FlagBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -41,13 +42,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ThankYouToolTip extends PopupPanel implements MessageProperties {
+public class ThankYouToolTip extends PopupPanel{
 
 	private static ThankYouToolTipUiBinder uiBinder = GWT
 			.create(ThankYouToolTipUiBinder.class);
 
 	interface ThankYouToolTipUiBinder extends UiBinder<Widget, ThankYouToolTip> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	HTMLEventPanel closeButton;
 	
@@ -66,11 +70,11 @@ public class ThankYouToolTip extends PopupPanel implements MessageProperties {
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
 		FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().ensureInjected();
-		successPopupTitle.setText(GL0600);
-		popUpCloseButton.setAltText(GL1050);
-		successPopupMessage.setText(GL0615);
-		emailConfirmationText.setText(GL0648);
-		okButton.setText(GL0190);
+		successPopupTitle.setText(i18n.GL0600());
+		popUpCloseButton.setAltText(i18n.GL1050());
+		successPopupMessage.setText(i18n.GL0615());
+		emailConfirmationText.setText(i18n.GL0648());
+		okButton.setText(i18n.GL0190());
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 		okButton.getElement().setAttribute("id","okButton");
 		successPopupMessage.setVisible(true);
