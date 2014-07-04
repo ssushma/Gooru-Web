@@ -57,11 +57,13 @@ import org.ednovo.gooru.shared.model.content.CollectionQuestionItemDo;
 import org.ednovo.gooru.shared.model.content.ExistsResourceDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
@@ -472,6 +474,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
 		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
+			drivePresenter.setAddResourcePresenter(this);
 			drivePresenter.getGoogleDriveFiles(null, null, true);
 			drivePresenter.setBreadCrumbLabel(null,null);
 		//}else{
@@ -480,6 +483,10 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 		tabContainer.add(drivePresenter.getWidget());
 	}
 	
+	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){
+		googleDriveContainer.clear();
+		getView().showAddWebResourceWidget(isGoogleDriveFile,googleDriveContainer,googleDriveItemDo);
+	}
 	
 
 }

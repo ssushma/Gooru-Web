@@ -48,6 +48,7 @@ import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.gwtplatform.mvp.client.PopupView;
 
 public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddResourceUiHandlers>{
@@ -75,5 +76,7 @@ public interface IsAddResourceView extends PopupView, IsViewWithHandlers<AddReso
 	void getDriveDetails(GoogleDriveItemDo driveDo);
 	
 	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result); 
+	
+	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo);
 
 }

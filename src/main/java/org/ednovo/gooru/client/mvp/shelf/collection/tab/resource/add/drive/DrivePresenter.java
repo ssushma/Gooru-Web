@@ -24,24 +24,19 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
-import java.util.Map;
-
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
 import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
-import org.ednovo.gooru.client.mvp.image.upload.ImageUploadPresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEventHandler;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEventHandlers;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -55,7 +50,7 @@ public class DrivePresenter extends
 		DriveUiHandlers {
 
 	
-	protected static ImageUploadPresenter imageUploadPresenter;
+	private AddResourcePresenter addResourcePresenter;
 	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.DRIVE)
@@ -64,14 +59,9 @@ public class DrivePresenter extends
 	}
 
 	@Inject
-	public DrivePresenter(IsDriveView view, IsDriveyProxy proxy,ImageUploadPresenter imageUploadPresenter) {
+	public DrivePresenter(IsDriveView view, IsDriveyProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		this.setImageUploadPresenter(imageUploadPresenter);
-		addRegisteredHandler(DriveEvent.TYPE, driveEvent);
-		addRegisteredHandler(FolderEvent.TYPE, folderEvent);
-
-		
 	}
 
 	@Override
@@ -82,7 +72,6 @@ public class DrivePresenter extends
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		System.out.println("reveal in drive");
 	}
 
 	@Override
@@ -101,53 +90,6 @@ public class DrivePresenter extends
 		return PlaceTokens.HOME;
 	}
 
-	@Override
-	public Map<String, Object> redirect() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	DriveEventHandler driveEvent = new DriveEventHandler() {
-
-		@Override
-		public void clearDrivepage(GoogleDriveItemDo driveDo) {
-			getView().getDriveDetails(driveDo);
-			// TODO Auto-generated method stub
-
-		}
-	};
-
-	FolderEventHandlers folderEvent = new FolderEventHandlers() {
-
-		@Override
-		public void clearFolderpage(String title, String id,
-				List<GoogleDriveItemDo> result) {
-			getView().getFolderDetails(title, id, result);
-		}
-
-	};
-
-	@Override
-	public void getdriveListAgain() {
-//		AppClientFactory.getInjector().getResourceService()
-//				.getDrive(new AsyncCallback<List<GoogleDriveItemDo>>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//						// TODO Auto-generated method stub
-//
-//					}
-//
-//					@Override
-//					public void onSuccess(List<GoogleDriveItemDo> result) {
-//						getView().driveContentList(result);
-//						// TODO Auto-generated method stub
-//
-//					}
-//
-//				});
-
-	}
 	
 	public void showDriveNotConnectedErrorMessage(){
 		getView().getPanelFileList().clear();
@@ -179,20 +121,6 @@ public class DrivePresenter extends
 			}
 		});
 	}
-	@Override
-	public void resourceImageUpload() {
-		addToPopupSlot(imageUploadPresenter);
-		imageUploadPresenter.setCollectionImage(false);
-		imageUploadPresenter.setQuestionImage(false);
-		imageUploadPresenter.setEditResourceImage(false);
-		imageUploadPresenter.setUserOwnResourceImage(false);
-		imageUploadPresenter.setEditUserOwnResourceImage(false);
-		imageUploadPresenter.getView().isFromEditQuestion(true);
-	}
-	
-	public void setImageUploadPresenter(ImageUploadPresenter imageUploadPresenter) {
-		this.imageUploadPresenter = imageUploadPresenter;
-	}
 	
 	public Label setLoadingPanel(){
 		Label loadingImage=new Label();
@@ -221,4 +149,19 @@ public class DrivePresenter extends
 	public void isShortenUrl(String userUrlStr) {
 		throw new RuntimeException("Not implemented");
 	}
+
+	public AddResourcePresenter getAddResourcePresenter() {
+		return addResourcePresenter;
+	}
+
+	public void setAddResourcePresenter(AddResourcePresenter addResourcePresenter) {
+		this.addResourcePresenter = addResourcePresenter;
+	}
+	
+	public void showAddResourceWidget(GoogleDriveItemDo googleDriveItemDo){
+		if(addResourcePresenter!=null){
+			addResourcePresenter.showAddWebResourceWidget(true, getView().getPanelFileList(),googleDriveItemDo);
+		}
+	}
+	
 }

@@ -83,6 +83,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -109,7 +110,6 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 	private AddQuestionResourceWidget addQuestionResourceWidget;
 	private AddSearchResourceWidget addSearchResourceWidget;
 	private AddUserOwnResourceWidget addUserOwnResourceWidget;
-	private AddGoogleResourceWidget addGoogleResourceWidget;
 
 
 	private DeleteConfirmationPopupVc deleteConfirmationPopup;
@@ -188,17 +188,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			@Override
 			public void onClick(ClickEvent event) {
 				tabViewContainer.clear();
-				questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
-				trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
-				openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
-				fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
-				addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails());
-				tabViewContainer.add(addWebResourceWidget);
-				urlTabButton.setStyleName(res.css().buttonSelected());
-				questionTabButton.setStyleName(res.css().buttonDeSelected());
-				searchTabButton.setStyleName(res.css().buttonDeSelected());
-				myComputerTabButton.setStyleName(res.css().buttonDeSelected());
-				myDriveButton.setStyleName(res.css().buttonDeSelected());
+				showAddWebResourceWidget(false,null,null);
 				MixpanelUtil.Add_Resource_Click_Computer();
 			}
 		});
@@ -257,6 +247,25 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		});
 			
 	}
+	
+	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){
+		questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
+		trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
+		openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
+		fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
+		addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),isGoogleDriveFile,googleDriveItemDo);
+		if(isGoogleDriveFile){
+			addWebResourceWidget.setStyleName(res.css().driveWebContainer());
+			googleDriveContainer.add(addWebResourceWidget);
+		}else{
+			tabViewContainer.add(addWebResourceWidget);
+		}
+		urlTabButton.setStyleName(res.css().buttonSelected());
+		questionTabButton.setStyleName(res.css().buttonDeSelected());
+		searchTabButton.setStyleName(res.css().buttonDeSelected());
+		myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+		myDriveButton.setStyleName(res.css().buttonDeSelected());
+	}
 	@Override
 	public void setCollectionItemDo(CollectionItemDo collectionItemDo){
 		this.collectionItemDo=collectionItemDo;
@@ -275,7 +284,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		openEndedButton.setStyleName(res.css().buttonDeSelected());
 		closeAddResourcePopup();
 		tabViewContainer.clear();	
-		addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails());
+		addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 		tabViewContainer.add(addWebResourceWidget);
 		urlTabButton.setStyleName(res.css().buttonSelected());
 		myComputerTabButton.setStyleName(res.css().buttonSelected());
@@ -283,17 +292,11 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		searchTabButton.setStyleName(res.css().buttonDeSelected());
 		myDriveButton.setStyleName(res.css().buttonDeSelected());
 	}
-	public class AddGoogleResourceWidget extends DrivePresenter{
-
-		public AddGoogleResourceWidget(IsDriveView view, IsDriveyProxy proxy) {
-			super(view, proxy, imageUploadPresenter);
-		}
-	}
 	
 	public class AddWebResourceWidget extends AddWebResourceView{
 
-		public AddWebResourceWidget(CollectionDo parentCollectionDetails) {
-			super(parentCollectionDetails);
+		public AddWebResourceWidget(CollectionDo parentCollectionDetails,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) {
+			super(parentCollectionDetails,isGoogleDriveFile,googleDriveItemDo);
 		}
 
 
@@ -472,7 +475,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		public void hidePopup() {
 			closeAddResourcePopup();
 			tabViewContainer.clear();	
-			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails());
+			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 			tabViewContainer.add(addWebResourceWidget);
 			urlTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
@@ -795,7 +798,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
 			multipleAnswerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			fillInTheBlankTabButton.getElement().getStyle().setDisplay(Display.NONE);
-			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails());
+			addWebResourceWidget=new AddWebResourceWidget(getUiHandlers().getParentCollectionDetails(),false,null);
 			tabViewContainer.add(addWebResourceWidget);
 			urlTabButton.setStyleName(res.css().buttonSelected());
 			questionTabButton.setStyleName(res.css().buttonDeSelected());
