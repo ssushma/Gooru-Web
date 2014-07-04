@@ -112,12 +112,30 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
         alreadyExistsText.getElement().setInnerHTML(GL0932+GL_SPL_EXCLAMATION);
+        alreadyExistsText.getElement().setId("pnlAlreadyExistsText");
+        alreadyExistsText.getElement().setAttribute("alt", GL0932);
+        alreadyExistsText.getElement().setAttribute("title", GL0932);
         resourceExistsText.getElement().setInnerHTML(GL0933+GL_SPL_EXCLAMATION);
+        resourceExistsText.getElement().setId("pnlResourceExistsText");
+        resourceExistsText.getElement().setAttribute("alt", GL0933);
+        resourceExistsText.getElement().setAttribute("title", GL0933);
+        resourceThumbnailImg.getElement().setId("imgResourceThumbnailImg");
         resourceThumbnailImg.setUrl("images/thumbimg-I.png");
+        
         resourceTitleLbl.setText(GL0935);
+        resourceTitleLbl.getElement().setId("lblResourceTitleLbl");
+        resourceTitleLbl.getElement().setAttribute("alt", GL0935);
+        resourceTitleLbl.getElement().setAttribute("title", GL0935);
         addExistsResourceBtnLbl.setText(GL0590);
+        addExistsResourceBtnLbl.getElement().setAttribute("alt", GL0590);
+        addExistsResourceBtnLbl.getElement().setAttribute("title", GL0590);
         cancelExistsResourcePopupBtnLbl.setText(GL0142);
+        cancelExistsResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
+        cancelExistsResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
         loadingTextLbl.setText(GL0591.toLowerCase());
+        loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+        loadingTextLbl.getElement().setAttribute("alt", GL0591);
+        loadingTextLbl.getElement().setAttribute("title", GL0591);
         addExistsResourceBtnLbl.getElement().setId("lblAdd");
         cancelExistsResourcePopupBtnLbl.getElement().setId("lblCancel");
 		cancelExistsResourcePopupBtnLbl.addClickHandler(new CloseExistsClickHandler());
@@ -126,6 +144,10 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 		loadingTextLbl.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 		buttonContainer.setVisible(true);
 		loadingTextLbl.setVisible(false);
+		resourceUrlLbl.getElement().setId("lblResourceUrlLbl");
+		resourceIconImg.getElement().setId("imgResourceIconImg");
+		buttonContainer.getElement().setId("pnlButtonContainer");
+		reportResInfoLbl.getElement().setId("lnkReportResInfoLbl");
 		}
 	
 	@UiHandler("reportResInfoLbl")
@@ -200,6 +222,16 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 		category = existsResourceDo.getCategory().toLowerCase();
 		thumbnailUrl = existsResourceDo.getThumbnails().getUrl();
 		resourceUrlLbl.setText(url);
+		resourceUrlLbl.getElement().setId("lblResourceUrlLbl");
+		resourceUrlLbl.getElement().setAttribute("alt", url);
+		resourceUrlLbl.getElement().setAttribute("title", url);
+		resourceIconImg.getElement().setId("imgResourceIconImg");
+		resourceThumbnailImg.getElement().setId("imgResourceThumbnailImg");
+		buttonContainer.getElement().setId("pnlButtonContainer");
+		reportResInfoLbl.getElement().setId("lnkReportResInfoLbl");
+		resourceTitleLbl.getElement().setId("lblResourceTitleLbl");
+	    resourceTitleLbl.getElement().setAttribute("alt", title);
+	    resourceTitleLbl.getElement().setAttribute("title", title);
 		resourceTitleLbl.setText(title);
 		if(thumbnailUrl!=null && !thumbnailUrl.equalsIgnoreCase("")){
 		if (thumbnailUrl.endsWith("null")){
@@ -224,10 +256,15 @@ public class ExistsResourceView extends AppPopUp implements MessageProperties{
 			public void onSuccess(GetFlagContentDO result) {
 				if(result==null ){
 					reportResInfoLbl.setText(GL1497);
+					reportResInfoLbl.getElement().setAttribute("alt", GL1497);
+					reportResInfoLbl.getElement().setAttribute("title", GL1497);
 				}
 				else
 				{
 					reportResInfoLbl.setText(GL1498);	
+					reportResInfoLbl.getElement().setAttribute("alt", GL1498);
+					reportResInfoLbl.getElement().setAttribute("title", GL1498);
+
 				}
 			}
 		});
