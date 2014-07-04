@@ -84,5 +84,7 @@ public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 	*/
 	
 	void showLoading();
+	
+	public void showDriveNotConnectedErrorMessage();
 
 }

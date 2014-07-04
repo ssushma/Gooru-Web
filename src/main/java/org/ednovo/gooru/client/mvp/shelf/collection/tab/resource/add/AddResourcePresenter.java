@@ -102,7 +102,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 
 	IsCollectionResourceTabView isCollResourceTabView=null;
 	
-private DrivePresenter drivePresenter=null;
+	private DrivePresenter drivePresenter=null;
 	
 	public DrivePresenter getDrivePresenter() {
 		return drivePresenter;
@@ -471,8 +471,12 @@ private DrivePresenter drivePresenter=null;
 
 	@Override
 	public void showDriveResoureView(HTMLPanel tabContainer) {
-		drivePresenter.getGoogleDriveFiles(null, null, true);
-		drivePresenter.setBreadCrumbLabel(null,null);
+		//if(AppClientFactory.getLoggedInUser().getAccessToken()!=null){
+			drivePresenter.getGoogleDriveFiles(null, null, true);
+			drivePresenter.setBreadCrumbLabel(null,null);
+		//}else{
+			//drivePresenter.showDriveNotConnectedErrorMessage();
+		//}
 		tabContainer.add(drivePresenter.getWidget());
 	}
 	

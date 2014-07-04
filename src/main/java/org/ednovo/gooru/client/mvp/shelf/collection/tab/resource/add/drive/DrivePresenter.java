@@ -122,9 +122,7 @@ public class DrivePresenter extends
 		@Override
 		public void clearFolderpage(String title, String id,
 				List<GoogleDriveItemDo> result) {
-			// TODO Auto-generated method stub
 			getView().getFolderDetails(title, id, result);
-
 		}
 
 	};
@@ -150,7 +148,11 @@ public class DrivePresenter extends
 //				});
 
 	}
-
+	
+	public void showDriveNotConnectedErrorMessage(){
+		getView().getPanelFileList().clear();
+		getView().showDriveNotConnectedErrorMessage();
+	}
 	public void getGoogleDriveFiles(String folderId,String nextPageToken,final boolean isPanelClear) {
 		if(isPanelClear){
 			getView().getPanelFileList().clear();
@@ -162,16 +164,17 @@ public class DrivePresenter extends
 				if(isPanelClear){
 					getView().getPanelFileList().clear();
 				}
-				if (googleDriveDo!=null){
-					getView().showNoDriveAccess(401);
-				}else if (googleDriveDo.getError().getCode() == 401){
-					getView().showNoDriveAccess(401);
-				}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-					getView().showNoDriveAccess(403);
-				}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-					getView().showNoDriveAccess(401);
+
+				if(googleDriveDo!=null){
+					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+						getView().showNoDriveAccess(401);
+					}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+						getView().showNoDriveAccess(403);
+					}else{
+						getView().driveContentList(googleDriveDo);
+					}
 				}else{
-					getView().driveContentList(googleDriveDo);
+					getView().showNoDriveAccess(401);
 				}
 			}
 		});
