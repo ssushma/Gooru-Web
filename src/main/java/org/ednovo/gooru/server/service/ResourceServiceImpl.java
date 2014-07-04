@@ -1457,7 +1457,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		String enocodedString="";
 		try {
 			enocodedString = URLEncoder.encode("(mimeType = 'application/vnd.google-apps.document' or mimeType = 'application/vnd.google-apps.spreadsheet' or mimeType = 'application/vnd.google-apps.folder' or mimeType='application/vnd.google-apps.form' or mimeType='application/vnd.google-apps.presentation' or mimeType='application/vnd.google-apps.drawing')","UTF-8");
-			folderId=folderId!=null?folderId:"root";
+			folderId = folderId != null ? folderId : "root";
 			enocodedString=enocodedString+URLEncoder.encode(" and '"+folderId+"' in parents","UTF-8");
 			if(nextPageToken!=null){
 				enocodedString=enocodedString+"&pageToken="+nextPageToken;
@@ -1466,6 +1466,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			e.printStackTrace();
 		}
 		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=20&q="+enocodedString).webInvokeforget("GET", "", contentType, access_token);
+
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}

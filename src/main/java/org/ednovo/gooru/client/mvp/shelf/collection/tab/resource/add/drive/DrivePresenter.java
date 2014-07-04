@@ -90,7 +90,6 @@ public class DrivePresenter extends
 		return PlaceTokens.HOME;
 	}
 
-
 	
 	public void showDriveNotConnectedErrorMessage(){
 		getView().getPanelFileList().clear();
@@ -107,6 +106,7 @@ public class DrivePresenter extends
 				if(isPanelClear){
 					getView().getPanelFileList().clear();
 				}
+
 				if(googleDriveDo!=null){
 					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
 						getView().showNoDriveAccess(401);
