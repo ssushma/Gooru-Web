@@ -8,7 +8,7 @@
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
 	<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="contentPanel">
-        <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
+        <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}" ui:field="urlContianer">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormInputControl}">
             <g:TextBox ui:field="urlTextBox" styleName="{res.css.inputTextBox}"/>
