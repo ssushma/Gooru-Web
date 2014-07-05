@@ -29,32 +29,12 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.BaseUiHandlers;
 import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 public interface DriveUiHandlers extends BaseUiHandlers{
-	public Map<String,Object>redirect();
 
-	public void getdriveListAgain();
 	public void getGoogleDriveFiles(String folderId,String nextPageToken,boolean isPanelClear);
 
-	/**
-	 * @function resourceImageUpload 
-	 * 
-	 * @created_date : Jul 3, 2014
-	 * 
-	 * @description
-	 * 
-	 * 
-	 * 
-	 * @return : void
-	 *
-	 * @throws : <Mentioned if any exceptions>
-	 *
-	 * 
-	 *
-	 * 
-	*/
-	
-	public void resourceImageUpload();
 
 	/**
 	 * @function addResource 
@@ -109,4 +89,6 @@ public interface DriveUiHandlers extends BaseUiHandlers{
 	*/
 	
 	public void isShortenUrl(String userUrlStr);
+	
+	public void showAddResourceWidget(GoogleDriveItemDo googleDriveItemDo);
 }

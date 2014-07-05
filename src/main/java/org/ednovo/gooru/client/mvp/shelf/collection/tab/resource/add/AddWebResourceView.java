@@ -37,6 +37,7 @@ import org.ednovo.gooru.client.mvp.faq.TermsAndPolicyVc;
 import org.ednovo.gooru.client.mvp.faq.TermsOfUse;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.DriveView;
 import org.ednovo.gooru.client.uc.AppMultiWordSuggestOracle;
 import org.ednovo.gooru.client.uc.AppSuggestBox;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
@@ -48,6 +49,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
@@ -128,7 +130,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		unitPlanText,projectPlanText,readingText,textbookText,articleText,bookText,activityText,handoutText,descCharcterLimit,contentPanel,panelContentRights,titleText,categoryTitle,educationalTitle,momentsOfLearningTitle,orText,refreshText;
 
 	@UiField
-	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText;//otherText
+	public HTMLPanel addResourceBtnPanel,loadingPanel,urlTitle,descriptionLabel,videoLabel,interactiveText,websiteText,imagesText,textsText,audioText,urlContianer;//otherText
 
 	@UiField
 	HTMLPanel categorypanel, video, interactive, website,thumbnailText,audio,texts,image;//other
@@ -186,7 +188,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	final StandardsPreferenceOrganizeToolTip standardsPreferenceOrganizeToolTip=new StandardsPreferenceOrganizeToolTip();
 	
-	public AddWebResourceView(CollectionDo collectionDo) { 
+	private boolean isGoogleDriveFile=false;
+	private GoogleDriveItemDo googleDriveItemDo=null;
+	public AddWebResourceView(CollectionDo collectionDo,boolean isGoogleDriveFile,GoogleDriveItemDo googleDriveItemDo) { 
+		this.isGoogleDriveFile=isGoogleDriveFile;
+		this.googleDriveItemDo=googleDriveItemDo;
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
 		standardSearchDo.setPageSize(10);
 		standardSgstBox = new AppSuggestBox(standardSuggestOracle) {
@@ -314,9 +320,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		cancelResourcePopupBtnLbl.getElement().setId("lblCancel");
 		descriptionTxtAera.getElement().setId("taDescription");
 		descriptionTxtAera.getElement().setAttribute("placeholder", GL0359);
-		
-		urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
-		urlTextBox.addBlurHandler(new UrlBlurHandler());
+		if(!isGoogleDriveFile){
+			urlTextBox.addKeyUpHandler(new UrlKeyUpHandler());
+			urlTextBox.addBlurHandler(new UrlBlurHandler());
+		}
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
@@ -442,11 +449,32 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		});
 	}
+	
+	public void setDriveFileDetails(){
+//		urlTitle.setVisible(false);
+//		urlTextBox.setVisible(false);
+//		urlContianer.setVisible(false);
+		urlTextBox.setValue(googleDriveItemDo.getAlternateLink());
+		titleTextBox.setValue(googleDriveItemDo.getTitle());
+		urlTextBox.setReadOnly(true);
+		titleTextBox.setFocus(true);
+		if(googleDriveItemDo.getMimeType().equals(DriveView.DOCUMENT_MIMETYPE)||googleDriveItemDo.getMimeType().equals(DriveView.PRESENTATION_MIMETYPE)
+				||googleDriveItemDo.getMimeType().equals(DriveView.SPREADSHEET_MIMETYPE)){
+			handoutResourcePanel(null);
+		}else if(googleDriveItemDo.getMimeType().equals(DriveView.DRAWING_MIMETYPE)){
+			slideResourcePanel(null);
+		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
+			interactiveResourcePanel(null);
+		}
+	}
 
 	public void onLoad() {
 		super.onLoad();
 		urlTextBox.setFocus(true);
 		clearFields();
+		if(isGoogleDriveFile){
+			setDriveFileDetails();
+		}
 		// resourceDescriptionContainer.clear();
 		// tinyMce=new TinyMCE();
 		// resourceDescriptionContainer.add(tinyMce);
@@ -982,13 +1010,15 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 	@UiHandler("resoureDropDownLbl")
 	public void dropDownClick(ClickEvent event) {
-		if (resoureDropDownLblOpen == false) {
-			resourceTypePanel.setVisible(true);
-			resoureDropDownLblOpen = true;
-
-		} else {
-			resourceTypePanel.setVisible(false);
-			resoureDropDownLblOpen = false;
+		if(!isGoogleDriveFile){
+			if (resoureDropDownLblOpen == false) {
+				resourceTypePanel.setVisible(true);
+				resoureDropDownLblOpen = true;
+	
+			} else {
+				resourceTypePanel.setVisible(false);
+				resoureDropDownLblOpen = false;
+			}
 		}
 
 	}
