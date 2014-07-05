@@ -26,6 +26,7 @@ package org.ednovo.gooru.client.mvp.settings;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -39,7 +40,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SavePopup extends PopupPanel implements MessageProperties{
+public class SavePopup extends PopupPanel{
 	
 	
 	@UiField Label lbOk;
@@ -50,12 +51,14 @@ public class SavePopup extends PopupPanel implements MessageProperties{
 	interface SavePopupUiBinder extends UiBinder<Widget, SavePopup> {
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public SavePopup(){
 		super();
 		setWidget(uiBinder.createAndBindUi(this));
-		confirmEmail.getElement().setInnerText(GL1483);
-		checkMailLbl.getElement().setInnerText(GL1484);
-		lbOk.setText(GL1386);
+		confirmEmail.getElement().setInnerText(i18n.GL1483());
+		checkMailLbl.getElement().setInnerText(i18n.GL1484());
+		lbOk.setText(i18n.GL1386());
 		setGlassEnabled(true);
 		Window.enableScrolling(false);
 		AppClientFactory.fireEvent(new SetHeaderZIndexEvent(98, false));
