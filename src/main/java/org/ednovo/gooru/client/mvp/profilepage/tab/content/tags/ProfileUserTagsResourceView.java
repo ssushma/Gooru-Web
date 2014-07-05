@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.UserTagsResourceDO;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -45,7 +46,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfileUserTagsResourceView extends Composite implements MessageProperties {
+public class ProfileUserTagsResourceView extends Composite{
 
 	private static ProfileUserTagsResourceViewUiBinder uiBinder = GWT
 			.create(ProfileUserTagsResourceViewUiBinder.class);
@@ -53,6 +54,9 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	interface ProfileUserTagsResourceViewUiBinder extends
 			UiBinder<Widget, ProfileUserTagsResourceView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField HTMLPanel userTagsResourceContainerConatiner,tagContainer;
 	@UiField Label TagTextMessage,tagType,tagCount;
 	@UiField
@@ -101,8 +105,8 @@ public class ProfileUserTagsResourceView extends Composite implements MessagePro
 	public void setData(List<UserTagsResourceDO> result){
 		
 		tagContainer.setVisible(true);
-		TagTextMessage.setText(GL1915);
-		tagMessage.setText(GL1944);
+		TagTextMessage.setText(i18n.GL1915());
+		tagMessage.setText(i18n.GL1944());
 		tagContainer.getElement().setAttribute("alt", labelName);
 		tagContainer.setTitle(labelName);
 		
