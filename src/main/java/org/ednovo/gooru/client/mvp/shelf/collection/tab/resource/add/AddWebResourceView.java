@@ -49,6 +49,7 @@ import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -454,7 +455,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
 //		urlContianer.setVisible(false);
-		urlTextBox.setValue(googleDriveItemDo.getAlternateLink());
+		urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 		titleTextBox.setValue(googleDriveItemDo.getTitle());
 		urlTextBox.setReadOnly(true);
 		titleTextBox.setFocus(true);
@@ -649,10 +650,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												urlStr = urlStr.substring(0, urlStr.length() - 1);
 											}
 
-											String descriptionStr = descriptionTxtAera.getText().trim(); // tinyMce.getText().trim();
-											String titleStr = titleTextBox.getText().trim();
-											String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
-											String idStr = "";
+											 String descriptionStr = descriptionTxtAera.getText().trim(); // tinyMce.getText().trim();
+											final String titleStr = titleTextBox.getText().trim();
+											final String categoryStr = resourceCategoryLabel.getText();// resourceTypeListBox.getItemText(resourceTypeListBox.getSelectedIndex());
+											final String idStr = "";
 
 											if (urlStr.contains("goorulearning.org")) {
 												if (urlStr.contains("support.goorulearning.org")
@@ -750,46 +751,35 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												// String descriptionStr ="";
 												urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
 												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
+												final String urlStrFinal=urlStr;
+												final String descriptionStrFinal=descriptionStr;
 												if(collectionDo.getSharing().equalsIgnoreCase("public")){
-													
-													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-													addResourceBtnLbl.setEnabled(true);
-													/*WebResourcePreview webResourcePreview = new WebResourcePreview() {
-														
-														@Override
-														public void showAddResourcePopup() {
-															
-														}
-														
-														@Override
-														public void closeAppPopUp() {
-															
-														}
-														
-														@Override
-														public void addWebResource() {
-															
-														}
-													};
-													webResourcePreview.filePathValueLbl.setText(urlStr);
-													webResourcePreview.resourceTitleValueLbl.setText(titleStr);
-													webResourcePreview.descriptionTxtValueLbl.setText(descriptionStr);
-													webResourcePreview.categoryValueLbl.setText(categoryStr);
-													if(thumbnailUrlStr!=null){
-														webResourcePreview.setThumbnailImage.setUrl(thumbnailUrlStr);
+													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
+															@Override
+															public void onSuccess(GoogleDriveDo result) {
+																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+																addResourceBtnLbl.setEnabled(true);
+															}
+														});
 													}else{
-														webResourcePreview.setThumbnailImage.setVisible(false);
-														webResourcePreview.thumbnailLbl.setVisible(false);
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+														addResourceBtnLbl.setEnabled(true);
 													}
-													webResourcePreview.setGlassEnabled(true);
-													webResourcePreview.show();
-													webResourcePreview.center();*/
-													
-													
 												}
 												else{
-													addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-													addResourceBtnLbl.setEnabled(true);
+													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
+															@Override
+															public void onSuccess(GoogleDriveDo result) {
+																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+																addResourceBtnLbl.setEnabled(true);
+															}
+														});
+													}else{
+														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+														addResourceBtnLbl.setEnabled(true);
+													}
 												}
 												
 											}
