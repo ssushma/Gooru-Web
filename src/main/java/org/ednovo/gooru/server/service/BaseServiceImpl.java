@@ -152,6 +152,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	private static final String SERVER_REDIRECT_URL="redirect.url";
 	
+	private static final String GOOGLE_RESTENDPOINT="google.restendpoint";
+	
 	public BaseServiceImpl() {
 
 	}
@@ -300,6 +302,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	public String getRedirectUrl(){
 		String serverRedirectUrl = restConstants.getProperty(SERVER_REDIRECT_URL);
 		return serverRedirectUrl;
+	}
+	
+	public String getGoogleRestEndPoint(){
+		return restConstants.getProperty(GOOGLE_RESTENDPOINT);
 	}
 
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	

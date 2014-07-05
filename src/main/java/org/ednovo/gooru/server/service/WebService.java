@@ -61,19 +61,8 @@ public class WebService {
 		webServiceUrl = serviceName;
 	} // Use this method to do a HttpPost\WebInvoke on a Web Service
 
-	public String webInvoke(String methodName, Map<String, Object> params) {
-		JSONObject jsonObject = new JSONObject();
-		for (Map.Entry<String, Object> param : params.entrySet()) {
-			try {
-				jsonObject.put(param.getKey(), (JSONValue) param.getValue());
-			} catch (JSONException e) {
 
-			}
-		}
-		return webInvoke(methodName, jsonObject.toString(), "application/json");
-	}
-
-	public String webInvoke(String methodName, String data, String contentType) {
+	public String postWebservice(String methodName, String data, String contentType,String accessToken) {
 		ret = null;
 
 		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
@@ -86,6 +75,7 @@ public class WebService {
 		httpPost.setHeader(
 				"Accept",
 				"text/html,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+		httpPost.setHeader("Authorization","Bearer "+accessToken);
 		if (contentType != null) {
 			httpPost.setHeader("Content-Type", contentType);
 
@@ -222,8 +212,7 @@ public class WebService {
 		if (accessToken !=null){		
 			if (contentType != null) {
 				httpGet.setHeader("Content-Type", contentType);
-				httpGet.setHeader("Authorization",
-						"Bearer "+accessToken);
+				httpGet.setHeader("Authorization","Bearer "+accessToken);
 	
 			} else {
 				httpGet.setHeader("Content-Type",
@@ -254,90 +243,8 @@ public class WebService {
 		return ret;
 	}
 
-	public String webInvoke(String methodName, String data, String contentType,
-			String appsessionid, String userid, String sid, String appid,
-			String jsessionid) {
-		//
-		ret = null;
-
-		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
-				CookiePolicy.RFC_2965);
-		httpPost = new HttpPost(webServiceUrl + methodName);
-		response = null;
-		StringEntity tmp = null;
-
-		BasicCookieStore cookieStore = new BasicCookieStore();
-
-		String[] cookie_parts = null;
-
-		httpClient.setCookieStore(cookieStore);
-
-		localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-
-		httpPost.setHeader(
-				"Accept",
-				"text/html,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
-		if (contentType != null) {
-			httpPost.setHeader("Content-Type", contentType);
-		} else {
-			httpPost.setHeader("Content-Type",
-					"application/x-www-form-urlencoded");
-		}
-		try {
-			tmp = new StringEntity(data, "UTF-8");
-
-		} catch (UnsupportedEncodingException e) {
-
-		}
-		httpPost.setEntity(tmp);
-
-		try {
-			response = httpClient.execute(httpPost, localContext);
-
-			if (response != null) {
-				ret = EntityUtils.toString(response.getEntity());
-
-			}
-		} catch (Exception e) {
-
-		}
-		return ret;
-	}
-
-	// Use this method to do a HttpGet/WebGet on the web service
-	public String webGet(String methodName, Map<String, String> params) {
-		String getUrl = webServiceUrl + methodName;
-		int i = 0;
-		for (Map.Entry<String, String> param : params.entrySet()) {
-			if (i == 0) {
-				getUrl += "?";
-			} else {
-				getUrl += "&";
-			}
-			try {
-				getUrl += param.getKey() + "="
-						+ URLEncoder.encode(param.getValue(), "UTF-8");
-			} catch (UnsupportedEncodingException e) { // TODO Auto-generated
-
-				e.printStackTrace();
-			}
-			i++;
-		}
-		httpGet = new HttpGet(getUrl);
-
-		try {
-			response = httpClient.execute(httpGet);
-		} catch (Exception e) {
-
-		}
-		// we assume that the response body contains the error message
-		try {
-			ret = EntityUtils.toString(response.getEntity());
-		} catch (IOException e) {
-
-		}
-		return ret;
-	}
+	
+	
 
 	public InputStream getHttpStream(String urlString) throws IOException {
 		InputStream in = null;

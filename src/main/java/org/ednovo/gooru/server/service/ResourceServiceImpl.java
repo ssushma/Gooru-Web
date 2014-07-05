@@ -1465,7 +1465,31 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=20&q="+enocodedString).webInvokeforget("GET", "", contentType, access_token);
+		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
+		System.out.println("url ======>"+url);
+		String response=new WebService(url).webInvokeforget("GET", "", contentType, access_token);
+
+		if (response!=null){
+			googleDriveDo=deserializeGoogleDriveFilesList(response);
+		}
+		return googleDriveDo;
+	}
+	
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId){
+		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
+		String contentType="application/json";
+		String access_token = getLoggedInAccessToken() != null ? getLoggedInAccessToken() : null;
+		JSONObject premissonJsonObject=new JSONObject();
+		try {
+			premissonJsonObject.put("role", "reader");
+			premissonJsonObject.put("type", "anyone");
+			premissonJsonObject.put("withLink", true);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.UPDATE_FILE_PERMISSION, driveFileId);
+		System.out.println("url ======>"+url);
+		String response=new WebService(url).postWebservice("POST",premissonJsonObject.toString(),contentType,access_token);
 
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
@@ -1508,28 +1532,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
         return new GoogleDriveItemDo();
 }
 
-//	@Override
-//	public List<GoogleDriveItemDo> getfolderList(String id) {
-//		String driveKind=null;
-//		List<GoogleDriveItemDo> driveDo=null;
-//		
-//		String contentType="application/json";
-//		String response=new WebService("https://www.googleapis.com/drive/v2/files?maxResults=999&q='0B0Mk6043Vojid0djTjNSVnVoZm8'+in+parents&fields=items(alternateLink%2CcreatedDate%2Cdescription%2Cid%2CmimeType%2Ctitle)").webInvokeforget("GET", "", contentType);
-//		System.out.println("response in  add r"+response);
-//		try{
-//		JSONObject responseObj;
-//		responseObj=new JSONObject(response);
-//		driveDo=deserializeFolderContent(responseObj.getJSONArray("items"));
-//	
-//		}catch(JSONException e){
-//			e.printStackTrace();
-//		}
-//	
-//	
-//		
-//		return driveDo;
-//		
-//	}
+
 	public List<GoogleDriveItemDo> deserializeFolderContent(JSONArray FolderContentJsonArray){
 		GoogleDriveItemDo driveObj=new GoogleDriveItemDo();
 		List<GoogleDriveItemDo> folderResult=new ArrayList<GoogleDriveItemDo>();
@@ -1557,31 +1560,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
         return new GoogleDriveItemDo();
 	}
 
-//	@Override
-//	public GoogleDriveItemDo updatePermissions(GoogleDriveItemDo driveObject) throws GwtException,
-//			ServerDownException {
-//		
-//		String contentType="application/json";
-//		String response=new WebService("https://www.googleapis.com/drive/v2/files/0B0Mk6043VojiT3A4ZU4zZXJRZUE/permissions?fields=id%2Crole%2Ctype").webInvokeforget("GET", "", contentType);
-//		System.out.println("response in  add r in update permission api"+response);
-//		JSONObject responseObj=null;
-//		try{
-//			responseObj=new JSONObject(response);
-//		}catch(JSONException e){
-//			e.printStackTrace();
-//		}
-//		return deserializeUpdateContent(responseObj);
-//	}
-//	private GoogleDriveItemDo deserializeUpdateContent(JSONObject jsonRep) {
-//        if (jsonRep != null ) {
-//                try {
-//                        return JsonDeserializer.deserialize(jsonRep.toString(), GoogleDriveItemDo.class);
-//                } catch (Exception e) {
-//                        e.printStackTrace();
-//                }
-//        }
-//        return new GoogleDriveItemDo();
-//}
 	
 	
 }
