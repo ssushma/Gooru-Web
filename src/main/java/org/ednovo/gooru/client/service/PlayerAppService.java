@@ -180,4 +180,6 @@ public interface PlayerAppService extends BaseService {
 	
 	public void deleteRating(String deleteRatingGooruOid) throws GwtException, ServerDownException;
 	
+	public int getGoogleDriveFileStatusCode(String fileUrl) throws GwtException, ServerDownException;
+	
 }

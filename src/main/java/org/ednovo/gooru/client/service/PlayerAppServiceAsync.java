@@ -172,5 +172,7 @@ public interface PlayerAppServiceAsync extends BaseServiceAsync {
 	
 	public void deleteRating(String deleteRatingGooruOid,AsyncCallback<Void> callback);
 	
+	public void getGoogleDriveFileStatusCode(String fileUrl,AsyncCallback<Integer> callback);
+	
 	
 }

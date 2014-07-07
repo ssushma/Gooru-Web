@@ -152,7 +152,6 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 		JsonRepresentation jsonRepresentation = null;
 		String url = UrlGenerator.generateUrl(getRestEndPoint(),UrlToken.V2_GET_COLLECTION,simpleCollectionId,getLoggedInSessionToken());
 		url+=getStandardId(rootNodeId);
-		System.out.println("getSimpleCollectionDetils::"+url);
 		JsonResponseRepresentation jsonResponseRep=ServiceProcessor.get(url, getRestUsername(), getRestPassword());
 		jsonRepresentation=jsonResponseRep.getJsonRepresentation();
 		if(jsonResponseRep.getStatusCode()==200){
@@ -1391,7 +1390,11 @@ public class PlayerAppServiceImpl extends BaseServiceImpl implements PlayerAppSe
 			String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.DELETE_RATINGS,deleteRatingGooruOid, getLoggedInSessionToken());
 			ServiceProcessor.delete(url, getRestUsername(), getRestPassword());
 		}catch(Exception e){}
-		
 	}
-
+	
+	@Override
+	public int getGoogleDriveFileStatusCode(String fileUrl){
+		int responseStatusCode=new WebService(fileUrl,true).getStatusCode("GET");
+		return 	responseStatusCode;	
+	}
 }

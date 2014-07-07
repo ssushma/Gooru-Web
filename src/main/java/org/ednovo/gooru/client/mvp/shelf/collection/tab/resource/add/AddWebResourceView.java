@@ -101,7 +101,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			.create(AddWebResourceViewUiBinder.class);
 
 	@UiField
-	public Label standardsDefaultText,mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl;
+	public Label standardsDefaultText,mandatoryEducationalLbl, cancelResourcePopupBtnLbl, generateImageLbl,agreeText,andText,additionalText,mandatorymomentsOfLearninglLbl,driveFileInfoLbl;
 	@UiField
 	public BlueButtonUc addResourceBtnLbl;
 
@@ -455,16 +455,20 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
 //		urlContianer.setVisible(false);
-		urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
+		
 		titleTextBox.setValue(googleDriveItemDo.getTitle());
 		urlTextBox.setReadOnly(true);
 		titleTextBox.setFocus(true);
 		if(googleDriveItemDo.getMimeType().equals(DriveView.DOCUMENT_MIMETYPE)||googleDriveItemDo.getMimeType().equals(DriveView.PRESENTATION_MIMETYPE)
 				||googleDriveItemDo.getMimeType().equals(DriveView.SPREADSHEET_MIMETYPE)){
+			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			handoutResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.DRAWING_MIMETYPE)){
+			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			slideResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
+			String alternativeLink=googleDriveItemDo.getDefaultOpenWithLink();
+			urlTextBox.setValue(alternativeLink.replaceFirst("edit", "viewform"));
 			interactiveResourcePanel(null);
 		}
 	}
@@ -475,6 +479,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		clearFields();
 		if(isGoogleDriveFile){
 			setDriveFileDetails();
+			driveFileInfoLbl.setText("If file is private, we will automatically update to public");
+		}else{
+			driveFileInfoLbl.removeFromParent();
 		}
 		// resourceDescriptionContainer.clear();
 		// tinyMce=new TinyMCE();
