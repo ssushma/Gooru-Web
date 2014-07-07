@@ -181,26 +181,27 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	public ResourceInfoView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		standardsInfoConatiner.clear();
-		publisherText.setText(GL0566+" "+GL_SPL_SEMICOLON);
+
+		publisherText.setText(GL1835+GL_SPL_SEMICOLON);
 		publisherText.getElement().setId("lblPublisherText");
-		publisherText.getElement().setAttribute("alt",GL0566);
-		publisherText.getElement().setAttribute("title",GL0566);
-		
-		courseText.setText(GL1701+ " "+GL_SPL_SEMICOLON);
+		publisherText.getElement().setAttribute("alt",GL1835);
+		publisherText.getElement().setAttribute("title",GL1835);
+
+		courseText.setText(GL1701+GL_SPL_SEMICOLON);
 		courseText.getElement().setId("lblCourseText");
 		courseText.getElement().setAttribute("alt",GL1701);
 		courseText.getElement().setAttribute("title",GL1701);
 		
-		legalText.setText(GL0730+ " "+GL_SPL_SEMICOLON);
+		legalText.setText(GL0730+GL_SPL_SEMICOLON);
 		legalText.getElement().setId("lblLegalText");
 		legalText.getElement().setAttribute("alt",GL0730);
 		legalText.getElement().setAttribute("title",GL0730);
 		
-		standardsText.setText(GL1877+" "+GL_SPL_SEMICOLON);
+		standardsText.setText(GL1877+GL_SPL_SEMICOLON);
 		standardsText.getElement().setId("lblStandardsText");
 		standardsText.getElement().setAttribute("alt",GL1877);
 		standardsText.getElement().setAttribute("title",GL1877);
-		
+
 		collectionsText.getElement().setInnerHTML(GL0620);
 		collectionsText.getElement().setId("pnlCollectionsText");
 		collectionsText.getElement().setAttribute("alt",GL0620);
@@ -216,16 +217,16 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		resourceInfoText.getElement().setAttribute("alt",GL0621);
 		resourceInfoText.getElement().setAttribute("title",GL0621);
 		
-		gradeTitle.setText(GL0165+" "+GL_SPL_SEMICOLON+" ");
+		gradeTitle.setText(GL0165+GL_SPL_SEMICOLON+" ");
 		gradeTitle.getElement().setId("lblGradeTitle");
 		gradeTitle.getElement().setAttribute("alt",GL0165);
 		gradeTitle.getElement().setAttribute("title",GL0165);
-		
-		originalUrlTitle.setText(GL0976+ " "+GL_SPL_SEMICOLON);
+
+		originalUrlTitle.setText(GL0976+GL_SPL_SEMICOLON);
 		originalUrlTitle.getElement().setId("lblOriginalUrlTitle");
 		originalUrlTitle.getElement().setAttribute("alt",GL0976);
 		originalUrlTitle.getElement().setAttribute("title",GL0976);
-		
+
 		generalLbl.setText(GL1708);
 		generalLbl.getElement().setId("lblGeneralLbl");
 		generalLbl.getElement().setAttribute("alt",GL1708);
@@ -877,7 +878,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			
 			if(isAggregator){
 				aggregatorPanel.setVisible(true);
-				aggregatorText.setText(GL1748+" "+GL_SPL_SEMICOLON);
+				aggregatorText.setText(GL1748);
 				aggregatorText.getElement().setAttribute("alt",GL1748);
 				aggregatorText.getElement().setAttribute("title",GL1748);
 				aggregatorText.setVisible(true);
@@ -1034,7 +1035,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(addsdetails == null || addsdetails.size() == 0 || addsdetails.contains(null) || addsdetails.contains("") ){
 			addsPanel.setVisible(false);
 		}else{
-			addsTitle.setText(GL1878+" "+GL_SPL_SEMICOLON);
+			addsTitle.setText(GL1878+GL_SPL_SEMICOLON);
 			addsTitle.getElement().setAttribute("alt",GL1878);
 			addsTitle.getElement().setAttribute("title",GL1878);
 		if(addsdetails.size()>0){
@@ -1072,7 +1073,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 		if(cfSchoolLevel!=null&&!cfSchoolLevel.equalsIgnoreCase("")&&!cfSchoolLevel.equalsIgnoreCase("null")){
 			schoolLevelPanel.setVisible(true);
-			schoolLevelLbl.setText(GL1868+" "+GL_SPL_SEMICOLON);
+			schoolLevelLbl.setText(GL1868+GL_SPL_SEMICOLON);
 			schoolLevelLbl.getElement().setAttribute("alt",GL1868);
 			schoolLevelLbl.getElement().setAttribute("title",GL1868);
 			schoolLevelType.setText(" "+cfSchoolLevel);
@@ -1110,7 +1111,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 		if(oerdetails!=null&&!oerdetails.equalsIgnoreCase("")&&!oerdetails.equalsIgnoreCase("null")){
 			oerPanel.setVisible(true);
-			oerLbl.setText(GL1834+" "+GL_SPL_SEMICOLON);
+			oerLbl.setText(GL1834+GL_SPL_SEMICOLON);
 			oerLbl.getElement().setAttribute("alt",GL1834);
 			oerLbl.getElement().setAttribute("title",GL1834);
 			oerAvailability.setText(" "+oerdetails);
@@ -1126,7 +1127,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(momentoflearningdetails == null || momentoflearningdetails.size() == 0 || momentoflearningdetails.contains(null) || momentoflearningdetails.contains("") ){
 			momentsoflearningPanel.setVisible(false);
 		}else{
-			momentsoflearningLbl.setText(GL1678+" "+GL_SPL_SEMICOLON);
+	        momentsoflearningLbl.setText(GL1678+GL_SPL_SEMICOLON);
 			momentsoflearningLbl.getElement().setAttribute("alt",GL1678);
 			momentsoflearningLbl.getElement().setAttribute("title",GL1678);
 		if(momentoflearningdetails.size()>0){
@@ -1154,7 +1155,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(depthOfKnowledgedetails == null || depthOfKnowledgedetails.size() == 0 || depthOfKnowledgedetails.contains(null) || depthOfKnowledgedetails.contains("") ){
 			dKnowledgePanel.setVisible(false);
 		}else{
-			dKnowledgeLbl.setText(GL1693+" "+GL_SPL_SEMICOLON);
+			dKnowledgeLbl.setText(GL1693+GL_SPL_SEMICOLON);
 			dKnowledgeLbl.getElement().setAttribute("alt",GL1693);
 			dKnowledgeLbl.getElement().setAttribute("title",GL1693);
 		if(depthOfKnowledgedetails.size()>0){
@@ -1204,7 +1205,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			educationallLbl.setText(GL1720);
 			educationallLbl.getElement().setAttribute("alt",GL1720);
 			educationallLbl.getElement().setAttribute("title",GL1720);
-			eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
+			eduUseLbl.setText(GL1664+GL_SPL_SEMICOLON);
 			eduUseLbl.getElement().setAttribute("alt",GL1664);
 			eduUseLbl.getElement().setAttribute("title",GL1664);
 			educationallLbl.setVisible(true);
@@ -1235,7 +1236,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			acessHazardType.setText(" "+accesshazard);
 			acessHazardType.getElement().setAttribute("alt"," "+accesshazard);
 			acessHazardType.getElement().setAttribute("title"," "+accesshazard);
-			acessHazardlLbl.setText(GL1705+" "+GL_SPL_SEMICOLON);
+			acessHazardlLbl.setText(GL1705+GL_SPL_SEMICOLON);
 			acessHazardlLbl.getElement().setAttribute("alt",GL1705);
 			acessHazardlLbl.getElement().setAttribute("title",GL1705);
 		}else{
@@ -1250,7 +1251,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			controlType.setText(" "+controlflexibility);
 			controlType.getElement().setAttribute("alt"," "+controlflexibility);
 			controlType.getElement().setAttribute("title"," "+controlflexibility);
-			controlLbl.setText(GL1704+" "+GL_SPL_SEMICOLON);
+			controlLbl.setText(GL1704+GL_SPL_SEMICOLON);
 			controlLbl.getElement().setAttribute("alt",GL1704);
 			controlLbl.getElement().setAttribute("title",GL1704);
 		}else{
@@ -1264,7 +1265,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(mediaFeatures == null || mediaFeatures.size() == 0 || mediaFeatures.contains(null) || mediaFeatures.contains("") ){
 			mediaFeaturePanel.setVisible(false);
 		}else{
-			mediaFeatureLbl.setText(GL1706+" "+GL_SPL_SEMICOLON);
+            mediaFeatureLbl.setText(GL1706+GL_SPL_SEMICOLON);
 			mediaFeatureLbl.getElement().setAttribute("alt",GL1706);
 			mediaFeatureLbl.getElement().setAttribute("title",GL1706);
 		if(mediaFeatures.size()>0){
@@ -1302,7 +1303,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(acessmode == null || acessmode.size() == 0 || acessmode.contains(null) || acessmode.contains("") ){
 			accessModePanel.setVisible(false);
 		}else{
-			accessModelLbl.setText(GL1707+" "+GL_SPL_SEMICOLON);
+			accessModelLbl.setText(GL1707+GL_SPL_SEMICOLON);
 			accessModelLbl.getElement().setAttribute("alt",GL1707);
 			accessModelLbl.getElement().setAttribute("title",GL1707);
 		if(acessmode.size()>0){
@@ -1340,7 +1341,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		if(mediaType!=null&&!mediaType.equalsIgnoreCase("")&&!mediaType.equalsIgnoreCase("null")){
 			if(mediaType.equals(NOT_FRIENDY_TAG)){
 				mobileFriendlyPanel.setVisible(true);
-				mbFriendlyLbl.setText(GL1687+" "+GL_SPL_SEMICOLON);
+				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 				mbFriendlyLbl.getElement().setAttribute("alt",GL1687);
 				mbFriendlyLbl.getElement().setAttribute("title",GL1687);
 				mbFriendlyText.setText(" "+GL1735.toUpperCase());
@@ -1349,10 +1350,9 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				isAccessibilityInfo=true;
 			}else{
 				mobileFriendlyPanel.setVisible(true);
-				mbFriendlyLbl.setText(GL1687+" "+GL_SPL_SEMICOLON);
+				mbFriendlyLbl.setText(GL1687+GL_SPL_SEMICOLON);
 				mbFriendlyLbl.getElement().setAttribute("alt",GL1687);
 				mbFriendlyLbl.getElement().setAttribute("title",GL1687);
-				
 				mbFriendlyText.setText(" "+GL_GRR_YES.toUpperCase());
 				mbFriendlyText.getElement().setAttribute("alt"," "+GL_GRR_YES.toUpperCase());
 				mbFriendlyText.getElement().setAttribute("title"," "+GL_GRR_YES.toUpperCase());
@@ -1371,7 +1371,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 		if(readinglevel.size()>0){
 			if(readinglevel.size()==1){
-				readingLevelLbl.setText(GL1694+" "+GL_SPL_SEMICOLON);
+				readingLevelLbl.setText(GL1694+GL_SPL_SEMICOLON);
 				readingLevelLbl.getElement().setAttribute("alt",GL1694);
 				readingLevelLbl.getElement().setAttribute("title",GL1694);
 				final Label readingLabel=new Label(" "+readinglevel.get(0));
@@ -1415,7 +1415,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 		}else{
 		if(keywords.size()>0){
 			if(keywords.size()==1){
-				keywordsTitle.setText(GL1876+" "+GL_SPL_SEMICOLON);
+				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 				keywordsTitle.getElement().setAttribute("alt",GL1876);
 				keywordsTitle.getElement().setAttribute("title",GL1876);
 				final Label keywordLabel=new Label(" "+keywords.get(0));
@@ -1423,7 +1423,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 				keywordsInfo.add(keywordLabel);
 				keyWordsPanel.setVisible(true);
 			} if(keywords.size()==2){
-				keywordsTitle.setText(GL1876+" "+GL_SPL_SEMICOLON);
+				keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 				keywordsTitle.getElement().setAttribute("alt",GL1876);
 				keywordsTitle.getElement().setAttribute("title",GL1876);
 				final Label keywordLabel=new Label(" "+keywords.get(0)+","+keywords.get(1));
@@ -1433,7 +1433,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			}
 		}
 		if(keywords.size()>2){
-			keywordsTitle.setText(GL1876+" "+GL_SPL_SEMICOLON);
+			keywordsTitle.setText(GL1876+GL_SPL_SEMICOLON);
 			keywordsTitle.getElement().setAttribute("alt",GL1876);
 			keywordsTitle.getElement().setAttribute("title",GL1876);
 			final Label keywordCountLabel=new Label("+"+(keywords.size()-2)); 
@@ -1457,7 +1457,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			copyRightType.setText(" "+copyRightHolder);
 			copyRightType.getElement().setAttribute("alt",copyRightHolder);
 			copyRightType.getElement().setAttribute("title",copyRightHolder);
-			copyRightLbl.setText(GL1699+" "+GL_SPL_SEMICOLON);
+			copyRightLbl.setText(GL1699+GL_SPL_SEMICOLON);
 			copyRightLbl.getElement().setAttribute("alt",GL1699);
 			copyRightLbl.getElement().setAttribute("title",GL1699);
 		}else{
@@ -1469,7 +1469,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	
 		if(author!=null&&!author.equalsIgnoreCase("")&&!author.equalsIgnoreCase("null")){
 			authorPanel.setVisible(true);
-			authorLbl.setText(GL0573+" "+GL_SPL_SEMICOLON);
+			authorLbl.setText(GL0573+GL_SPL_SEMICOLON);
 			authorLbl.getElement().setAttribute("alt",GL0573);
 			authorLbl.getElement().setAttribute("title",GL0573);
 			authorName.setText(" "+author);
@@ -1487,7 +1487,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			dataTypeFormat.setText(" "+dataType);
 			dataTypeFormat.getElement().setAttribute("alt",dataType);
 			dataTypeFormat.getElement().setAttribute("title",dataType);
-			dataTypeLbl.setText(GL1688+" "+GL_SPL_SEMICOLON);
+			dataTypeLbl.setText(GL1688+GL_SPL_SEMICOLON);
 			dataTypeLbl.getElement().setAttribute("alt",GL1688);
 			dataTypeLbl.getElement().setAttribute("title",GL1688);
 		}else{
@@ -1502,7 +1502,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			languageType.setText(" "+language);
 			languageType.getElement().setAttribute("alt",language);
 			languageType.getElement().setAttribute("title",language);
-			languageLbl.setText(GL1696+" "+GL_SPL_SEMICOLON);
+			languageLbl.setText(GL1696+GL_SPL_SEMICOLON);
 			languageLbl.getElement().setAttribute("alt",GL1696);
 			languageLbl.getElement().setAttribute("title",GL1696);
 		}else{
@@ -1517,7 +1517,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			countryCodeType.setText(" "+countryCode);
 			countryCodeType.getElement().setAttribute("alt",countryCode);
 			countryCodeType.getElement().setAttribute("title",countryCode);
-			countryCodeLbl.setText(GL1697+" "+GL_SPL_SEMICOLON);
+			countryCodeLbl.setText(GL1697+GL_SPL_SEMICOLON);
 			countryCodeLbl.getElement().setAttribute("alt",GL1697);
 			countryCodeLbl.getElement().setAttribute("title",GL1697);
 		}else{
@@ -1532,7 +1532,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			ageRangeType.setText(" "+ageRange);
 			ageRangeType.getElement().setAttribute("alt",ageRange);
 			ageRangeType.getElement().setAttribute("title",ageRange);
-			ageRangeLbl.setText(GL1692+" "+GL_SPL_SEMICOLON);
+			ageRangeLbl.setText(GL1692+GL_SPL_SEMICOLON);
 			ageRangeLbl.getElement().setAttribute("alt",GL1692);
 			ageRangeLbl.getElement().setAttribute("title",GL1692);
 		}else{
@@ -1547,7 +1547,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			interactiveType.setText(" "+interactivityType);
 			interactiveType.getElement().setAttribute("alt",interactivityType);
 			interactiveType.getElement().setAttribute("title",interactivityType);
-			interactiveLbl.setText(GL1689+" "+GL_SPL_SEMICOLON);
+			interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
 			interactiveLbl.getElement().setAttribute("alt",GL1689);
 			interactiveLbl.getElement().setAttribute("title",GL1689);
 		}else{
@@ -1561,7 +1561,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduRoleType.setText(" "+educationalRole);
 			eduRoleType.getElement().setAttribute("alt",educationalRole);
 			eduRoleType.getElement().setAttribute("title",educationalRole);
-			eduRoleLbl.setText(GL1691+" "+GL_SPL_SEMICOLON);
+			interactiveLbl.setText(GL1689+GL_SPL_SEMICOLON);
 			eduRoleLbl.getElement().setAttribute("alt",GL1691);
 			eduRoleLbl.getElement().setAttribute("title",GL1691);
 		}else{
@@ -1576,7 +1576,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 			eduAllignType.setText(" "+educationalAlignment);
 			eduAllignType.getElement().setAttribute("alt",educationalAlignment);
 			eduAllignType.getElement().setAttribute("title",educationalAlignment);
-			eduAllignLbl.setText(GL1690+" "+GL_SPL_SEMICOLON);
+			eduAllignLbl.setText(GL1690+GL_SPL_SEMICOLON);
 			eduAllignLbl.getElement().setAttribute("alt",GL1690);
 			eduAllignLbl.getElement().setAttribute("title",GL1690);
 		}else{
@@ -1587,7 +1587,7 @@ public class ResourceInfoView extends BaseViewWithHandlers<ResourceInfoUiHandler
 	private void setHostDetails(String host) {
 		if(host!=null&&!host.equalsIgnoreCase("")&&!host.equalsIgnoreCase("null")){
 			hostPanel.setVisible(true);
-			hostLbl.setText(GL1700+" "+GL_SPL_SEMICOLON);
+			hostLbl.setText(GL1700+GL_SPL_SEMICOLON);
 			hostLbl.getElement().setAttribute("alt",GL1700);
 			hostLbl.getElement().setAttribute("title",GL1700);
 			hostType.setText(" "+host);

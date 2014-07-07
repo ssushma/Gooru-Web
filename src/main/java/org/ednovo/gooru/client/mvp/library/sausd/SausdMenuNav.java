@@ -34,13 +34,14 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryListDo;
 import org.ednovo.gooru.shared.model.library.SubjectDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.TextAlign;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -53,7 +54,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class SausdMenuNav extends Composite implements MessageProperties{
+public abstract class SausdMenuNav extends Composite {
 
 	@UiField HTMLPanel tabsInner, scienceCourses, mathCourses, socialCourses, elaCourses,learnCourses;
 	
@@ -65,7 +66,7 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	
 	@UiField Anchor aboutGooruAnr;
 	
-	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "elementary";
+	private static final String SCIENCE = "science", MATH = "math", SOCIAL="social-sciences", LANGUAGE="language-arts", LEARNING = "learning";
 	
 	private static final String LIBRARY_PAGE = "page";
 	
@@ -81,6 +82,8 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	
     private static SausdMenuNavUiBinder uiBinder = GWT.create(SausdMenuNavUiBinder.class);
 
+    private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+    
 	interface SausdMenuNavUiBinder extends UiBinder<Widget, SausdMenuNav> {
 	}
 
@@ -88,7 +91,6 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 		initWidget(uiBinder.createAndBindUi(this));
 		setPlaceToken(placeToken);
 		setAssets();
-		learnPanel.setVisible(false);
 		sciencePanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -132,45 +134,47 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 		learnPanel.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				if(!isLearningHovered) {
-					isLearningHovered = true;
-					getTaxonomyData(subjectIdList.get(LEARNING),LEARNING);
+				if(subjectIdList.get(LEARNING)!=null) {
+					if(!isLearningHovered) {
+						isLearningHovered = true;
+						getTaxonomyData(subjectIdList.get(LEARNING),LEARNING);
+					}
 				}
 			}
 		});
 	}
 	
 	private void setAssets() {
-		scienceText.setText(GL1000);
+		scienceText.setText(i18n.GL1000());
 		scienceText.getElement().setId("lblScienceText");
-		scienceText.getElement().setAttribute("alt",GL1000);
-		scienceText.getElement().setAttribute("title",GL1000);
+		scienceText.getElement().setAttribute("alt",i18n.GL1000());
+		scienceText.getElement().setAttribute("title",i18n.GL1000());
 		
-		mathText.setText(GL1001);
+		mathText.setText(i18n.GL1001());
 		mathText.getElement().setId("lblMathText");
-		mathText.getElement().setAttribute("alt",GL1001);
-		mathText.getElement().setAttribute("title",GL1001);
+		mathText.getElement().setAttribute("alt",i18n.GL1001());
+		mathText.getElement().setAttribute("title",i18n.GL1001());
 		
 		socialSciencesText.setText("Social Studies");
 		socialSciencesText.getElement().setId("lblSocialSciencesText");
 		socialSciencesText.getElement().setAttribute("alt","Social Studies");
 		socialSciencesText.getElement().setAttribute("title","Social Studies");
 		
-		languageArtsText.setText(GL1003);
+		languageArtsText.setText(i18n.GL1003());
 		languageArtsText.getElement().setId("lblLanguageArtsText");
-		languageArtsText.getElement().setAttribute("alt",GL1003);
-		languageArtsText.getElement().setAttribute("title",GL1003);
+		languageArtsText.getElement().setAttribute("alt",i18n.GL1003());
+		languageArtsText.getElement().setAttribute("title",i18n.GL1003());
 		
-		learnText.setText("Elementary");
+		learnText.setText("Professional Learning");
 		learnText.getElement().setId("lblLearnText");
 		learnText.getElement().setAttribute("alt","Elementary");
 		learnText.getElement().setAttribute("title","Elementary");
 		
 		if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SAUSD_LIBRARY)) {
-			aboutGooruAnr.setText(GL1899);
-			aboutGooruAnr.getElement().setAttribute("alt",GL1899);
-			aboutGooruAnr.getElement().setAttribute("title",GL1899);
-			aboutGooruAnr.setHref(GL1900);
+			aboutGooruAnr.setText(i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("alt",i18n.GL1899());
+			aboutGooruAnr.getElement().setAttribute("title",i18n.GL1899());
+			aboutGooruAnr.setHref(i18n.GL1900());
 		}
 		aboutGooruAnr.setTarget("_blank");
 		aboutGooruAnr.addStyleName(sausdStyleUc.aboutGooruAnrPadding());
@@ -192,13 +196,14 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 		elaPanel.getElement().setId("epnlElaPanel");
 		elaCourses.getElement().setId("pnlElaCourses");
 		learnPanel.getElement().setId("epnlLearnPanel");
+		learnPanel.getElement().getStyle().setWidth(171, Unit.PX);
+		learnPanel.getElement().getStyle().setPadding(0, Unit.PX);
 		learnCourses.getElement().setId("pnlLearnCourses");
 		aboutGooruAnr.getElement().setId("lnkAboutGooruAnr");
 	}
 	
 	public void getTaxonomyData(final String subjectCode, final String subjectName) {
 		AppClientFactory.getInjector().getLibraryService().getLibraryCoursesList(subjectCode, "public", "0", new SimpleAsyncCallback<ProfileLibraryListDo>() {
-
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				setTaxonomyData(subjectName, subjectCode, profileLibraryListDo);
@@ -211,7 +216,6 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);
-				//setTaxonomyData(subjectName, subjectCode, profileLibraryListDo);
 			}
 		});
 	}
@@ -235,28 +239,27 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 	protected void setTaxonomyData(final String subjectname, final String subjectCode, ProfileLibraryListDo profileLibraryListDo) {
 		if (profileLibraryListDo.getSearchResult() != null) {
 			for (final ProfileLibraryDo profileLibraryDo : profileLibraryListDo.getSearchResult()) {
-					Label courseTitle = new Label(profileLibraryDo.getTitle());
-					courseTitle.setStyleName(sausdStyleUc.courseOption());
-					final String courseId = profileLibraryDo.getGooruOid().toString();
-					courseTitle.addClickHandler(new ClickHandler() {
-						@Override
-						public void onClick(ClickEvent event) {
-							setTabSelection(subjectname);
-							getCourse(courseId, subjectname, profileLibraryDo);
-							//clickOnCourse(profileLibraryDo.getCollectionItems(), courseId, profileLibraryDo);
-						}
-					});
-					if(subjectname.equalsIgnoreCase(SCIENCE)) {
-						scienceCourses.add(courseTitle);
-					} else if(subjectname.equalsIgnoreCase(MATH)) {
-						mathCourses.add(courseTitle);
-					} else if(subjectname.equalsIgnoreCase(SOCIAL)) {
-						socialCourses.add(courseTitle);
-					} else if(subjectname.equalsIgnoreCase(LANGUAGE)) {
-						elaCourses.add(courseTitle);
-					} else if(subjectname.equalsIgnoreCase(LEARNING)) {
-						learnCourses.add(courseTitle);
+				Label courseTitle = new Label(profileLibraryDo.getTitle());
+				courseTitle.setStyleName(sausdStyleUc.courseOption());
+				final String courseId = profileLibraryDo.getGooruOid().toString();
+				courseTitle.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						setTabSelection(subjectname);
+						getCourse(courseId, subjectname, profileLibraryDo);
 					}
+				});
+				if(subjectname.equalsIgnoreCase(SCIENCE)) {
+					scienceCourses.add(courseTitle);
+				} else if(subjectname.equalsIgnoreCase(MATH)) {
+					mathCourses.add(courseTitle);
+				} else if(subjectname.equalsIgnoreCase(SOCIAL)) {
+					socialCourses.add(courseTitle);
+				} else if(subjectname.equalsIgnoreCase(LANGUAGE)) {
+					elaCourses.add(courseTitle);
+				} else if(subjectname.equalsIgnoreCase(LEARNING)) {
+					learnCourses.add(courseTitle);
+				}
 			}
 		}
 	}
@@ -275,9 +278,18 @@ public abstract class SausdMenuNav extends Composite implements MessagePropertie
 				subjectIdList.put(SCIENCE, profileListDo.getGooruOid());
 			} else if(profileListDo.getTitle().toLowerCase().contains("language")) {
 				subjectIdList.put(LANGUAGE, profileListDo.getGooruOid());
-			} else {
+			} else if(profileListDo.getTitle().toLowerCase().contains("learning")) {
 				subjectIdList.put(LEARNING, profileListDo.getGooruOid());
 			}
+			setLearningTabStyle();
+ 		}
+	}
+	
+	private void setLearningTabStyle() {
+		if(subjectIdList.get(LEARNING) != null) {
+			learnPanel.removeStyleName(sausdStyleUc.tabsLiInactive());
+		} else {
+			learnPanel.addStyleName(sausdStyleUc.tabsLiInactive());
 		}
 	}
 	

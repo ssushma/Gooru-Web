@@ -419,8 +419,12 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					{
 						collectionItemDo.getResource().setUrl(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
 					}
-					final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl());
-					resourceWidgetContainer.add(webResourceWidget);
+					if(collectionItemDo.getResource().getUrl().contains("docs.google.com")){
+						getUiHandlers().getGoogleDriveFile(collectionItemDo.getResource().getUrl());
+					}else{
+						final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl());
+						resourceWidgetContainer.add(webResourceWidget);
+					}
 				}
 			}
 		}else {
@@ -439,6 +443,21 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
 				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceSourceUrl));
 			}
+		}
+	}
+	
+	public void setGoogleDriveFileStatusCode(Integer statusCode){
+		if(statusCode==302){
+			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(null);
+			resourceFrameBreakerViewnew.setFilePermissionMessage();
+			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
+		}else if(statusCode==404){
+			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(null);
+			resourceFrameBreakerViewnew.setFileDeletedMessage();
+			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
+		}else{
+			final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl());
+			resourceWidgetContainer.add(webResourceWidget);
 		}
 	}
 	
@@ -909,7 +928,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				isProtocolsMatched=sourceUrl.contains("https");
 			}
 		}
-		if(sourceUrl.toLowerCase().endsWith("jpg")){
+		if(sourceUrl.toLowerCase().endsWith("jpg")||sourceUrl.toLowerCase().endsWith("jpeg")){
 			{
 				isProtocolsMatched=sourceUrl.contains("https");
 			}

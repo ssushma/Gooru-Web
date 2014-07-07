@@ -106,6 +106,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 
 	private static final String GOORU_SESSION_TOKEN = "gooru-session-token";
 	
+	private static final String GOORU_ACCESS_TOKEN = "google-access-token";
+	
 	private static final String GOORU_ACTIVE_USER = "gooru-active-user";
 
 	private static final String SIGNED_USER_UID = "signed-user-uid";
@@ -123,6 +125,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	private static final String PRODUCTION_SWITCH = "production.switch";
 	
 	private static final String GOOGLE_SIGNIN = "google.signin";
+	
+	private static final String GOOGLE_DRIVE = "drive.api";
 	
 	private static final String PROFILE_IMAGE_RESPOSITORY_URL="profile.image.url";
 	
@@ -147,6 +151,8 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	private static final String SIGNED_USER_DOB = "signed-user-dob";
 	
 	private static final String SERVER_REDIRECT_URL="redirect.url";
+	
+	private static final String GOOGLE_RESTENDPOINT="google.restendpoint";
 	
 	public BaseServiceImpl() {
 
@@ -173,6 +179,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 	
 	public String getGoogleSignin(){
 		return restConstants.getProperty(GOOGLE_SIGNIN);
+	}
+	
+	public String getDriveGoogle(){
+		return restConstants.getProperty(GOOGLE_DRIVE);
 	}
 	
 	public String getWhatsNewMosLink(){
@@ -293,6 +303,10 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		String serverRedirectUrl = restConstants.getProperty(SERVER_REDIRECT_URL);
 		return serverRedirectUrl;
 	}
+	
+	public String getGoogleRestEndPoint(){
+		return restConstants.getProperty(GOOGLE_RESTENDPOINT);
+	}
 
 	protected static Integer stringtoInteger(JSONObject jsonObject, String key) {	
 		if (jsonObject != null && jsonObject.has(key)) {
@@ -370,6 +384,34 @@ public class BaseServiceImpl extends GwtAbstractServiceImpl implements RemoteSer
 		return token;
 	}
 
+	protected String getLoggedInAccessToken() {
+		String token = getCookie(GOORU_ACCESS_TOKEN);
+		if (token == null) {
+			token = (String) getHttpRequest().getSession().getAttribute(GOORU_ACCESS_TOKEN);
+			//Fix for handling when cookie get disabled.
+			if (token == null || token.equalsIgnoreCase("null")) { 
+				getHttpRequest().getSession().setAttribute(GOORU_ACCESS_TOKEN, token);
+			}
+			setLoggedInAccessToken(token);
+		}
+		return token;
+	}
+	protected void setLoggedInAccessToken(String accessToken) {
+		Cookie cookie = new Cookie(GOORU_ACCESS_TOKEN, accessToken);
+		cookie.setDomain(AppSessionHolder.getInstance().getRequest().getServerName());
+		cookie.setPath(COOKIE_PATH);
+		if (accessToken != null && accessToken.length() > 0) {
+			cookie.setMaxAge(COOKIE_AGE);
+		} else {
+			cookie.setMaxAge(0);
+		}
+		getHttpResponse().addCookie(cookie);
+		if (accessToken != null) {
+			getHttpRequest().getSession().setAttribute(GOORU_ACCESS_TOKEN, accessToken);
+		} else {
+			getHttpRequest().getSession().removeAttribute(GOORU_ACCESS_TOKEN);
+		}
+	}
 	private String getCookie(String name) {
 		Cookie[] cookies = getHttpRequest().getCookies();
 		if (cookies != null) {

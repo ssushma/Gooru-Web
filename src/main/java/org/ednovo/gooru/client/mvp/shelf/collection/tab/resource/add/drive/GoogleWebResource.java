@@ -1,11 +1,8 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
-import java.util.List;
-
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEvent;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -13,7 +10,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -42,9 +38,9 @@ public class GoogleWebResource extends Composite implements MessageProperties {
 	@UiField
 	HTMLPanel folderContent;
 
-	DriveDo driveDo = new DriveDo();
+	GoogleDriveItemDo driveDo = new GoogleDriveItemDo();
 
-	public GoogleWebResource(DriveDo driveDo) {
+	public GoogleWebResource(GoogleDriveItemDo driveDo) {
 
 		initWidget(uiBinder.createAndBindUi(this));
 		this.driveDo = driveDo;
@@ -84,37 +80,37 @@ public class GoogleWebResource extends Composite implements MessageProperties {
 	private void folderContent(String id) {
 		folderContent.clear();
 		// TODO Auto-generated method stub
-		AppClientFactory.getInjector().getResourceService()
-				.getfolderList(id, new AsyncCallback<List<DriveDo>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onSuccess(List<DriveDo> result) {
-
-						System.out.println("enteringb   successssssss");
-						AppClientFactory.fireEvent(new FolderEvent(driveDo
-								.getTitle(), driveDo.getId(), result));
-						// TODO Auto-generated method stub
-						// System.out.println("on sucesssss"+result.get(0).getTitle());
-						/*
-						 * if (result != null) {
-						 * 
-						 * for(int m=0;m<result.size();m++){
-						 * 
-						 * folderContent.add(new
-						 * GoogleWebResource(result.get(m)));
-						 * 
-						 * }
-						 * 
-						 * }
-						 */
-					}
-				});
+//		AppClientFactory.getInjector().getResourceService()
+//				.getfolderList(id, new AsyncCallback<List<GoogleDriveItemDo>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						// TODO Auto-generated method stub
+//
+//					}
+//
+//					@Override
+//					public void onSuccess(List<GoogleDriveItemDo> result) {
+//
+//						System.out.println("enteringb   successssssss");
+//						AppClientFactory.fireEvent(new FolderEvent(driveDo
+//								.getTitle(), driveDo.getId(), result));
+//						// TODO Auto-generated method stub
+//						// System.out.println("on sucesssss"+result.get(0).getTitle());
+//						/*
+//						 * if (result != null) {
+//						 * 
+//						 * for(int m=0;m<result.size();m++){
+//						 * 
+//						 * folderContent.add(new
+//						 * GoogleWebResource(result.get(m)));
+//						 * 
+//						 * }
+//						 * 
+//						 * }
+//						 */
+//					}
+//				});
 
 	}
 }

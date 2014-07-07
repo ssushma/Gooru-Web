@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.LibraryUserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -53,7 +54,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LibraryContributorsView extends Composite implements MessageProperties {
+public class LibraryContributorsView extends Composite{
 
 	@UiField HTMLPanel container,contributorsText;
 	@UiField HTMLPanel featuredEducatorsPanel;
@@ -64,13 +65,15 @@ public class LibraryContributorsView extends Composite implements MessagePropert
 	interface LibraryContributorsViewUiBinder extends
 			UiBinder<Widget, LibraryContributorsView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public LibraryContributorsView(String placeToken) {
 		initWidget(uiBinder.createAndBindUi(this));
-		contributorsText.getElement().setInnerText(GL1182);
+		contributorsText.getElement().setInnerText(i18n.GL1182());
 		contributorsText.getElement().setId("pnlContributorsText");
-		contributorsText.getElement().setAttribute("alt",GL1182);
-		contributorsText.getElement().setAttribute("title",GL1182);
+		contributorsText.getElement().setAttribute("alt",i18n.GL1182());
+		contributorsText.getElement().setAttribute("title",i18n.GL1182());
 		featuredEducatorsPanel.getElement().setId("pnlFeaturedEducatorsPanel");
 		getFeaturedUsers(placeToken);
 	}

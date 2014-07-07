@@ -1,7 +1,7 @@
 package org.ednovo.gooru.client.mvp.library.sausd.metadata;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.library.ProfileLibraryDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LibraryMetaDataContentUc extends Composite implements MessageProperties{
+public class LibraryMetaDataContentUc extends Composite {
 
 	@UiField Label ideasStaticLbl, questionsStaticLbl, tasksStaticLbl;
 	
@@ -23,6 +23,8 @@ public class LibraryMetaDataContentUc extends Composite implements MessageProper
 	private static LibraryMetaDataContentUcUiBinder uiBinder = GWT
 			.create(LibraryMetaDataContentUcUiBinder.class);
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	interface LibraryMetaDataContentUcUiBinder extends
 			UiBinder<Widget, LibraryMetaDataContentUc> {
 	}
@@ -36,21 +38,20 @@ public class LibraryMetaDataContentUc extends Composite implements MessageProper
 		String strIdeas = profileLibraryDo.getIdeas();
 		String strPerformance = profileLibraryDo.getPerformanceTasks();
 		String strQuestions = profileLibraryDo.getQuestions();
-		
-		ideasStaticLbl.setText(GL1731);
+		ideasStaticLbl.setText(i18n.GL1731());
 		ideasStaticLbl.getElement().setId("lblIdeasStaticLbl");
-		ideasStaticLbl.getElement().setAttribute("alt",GL1731);
-		ideasStaticLbl.getElement().setAttribute("title",GL1731);
+		ideasStaticLbl.getElement().setAttribute("alt",i18n.GL1731());
+		ideasStaticLbl.getElement().setAttribute("title",i18n.GL1731());
 	
-		questionsStaticLbl.setText(GL1732);
+		questionsStaticLbl.setText(i18n.GL1732());
 		questionsStaticLbl.getElement().setId("lblQuestionsStaticLbl");
-		questionsStaticLbl.getElement().setAttribute("alt",GL1732);
-		questionsStaticLbl.getElement().setAttribute("title",GL1732);
+		questionsStaticLbl.getElement().setAttribute("alt",i18n.GL1732());
+		questionsStaticLbl.getElement().setAttribute("title",i18n.GL1732());
 		
-		tasksStaticLbl.setText(GL1733);
+		tasksStaticLbl.setText(i18n.GL1733());
 		tasksStaticLbl.getElement().setId("lblTasksStaticLbl");
-		tasksStaticLbl.getElement().setAttribute("alt",GL1733);
-		tasksStaticLbl.getElement().setAttribute("title",GL1733);
+		tasksStaticLbl.getElement().setAttribute("alt",i18n.GL1733());
+		tasksStaticLbl.getElement().setAttribute("title",i18n.GL1733());
 		
 		bigIdeasPanel.getElement().setId("pnlBigIdeasPanel");
 		bigIdeasLbl.getElement().setId("htmlBigIdeasLbl");
@@ -58,6 +59,7 @@ public class LibraryMetaDataContentUc extends Composite implements MessageProper
 		essentialQuestionsLbl.getElement().setId("htmlEssentialQuestionsLbl");
 		performanceTaskPanel.getElement().setId("pnlPerformanceTaskPanel");
 		performanceTaskLbl.getElement().setId("htmlPerformanceTaskLbl");
+
 		
 		if(strPerformance!=null&&!strPerformance.isEmpty()) {
 			performanceTaskLbl.setHTML(strPerformance);

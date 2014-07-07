@@ -468,6 +468,8 @@ public interface CollectionEditResourceCBundle extends ClientBundle {
 		String myFolderCollectionFolderUpdateDropdownPanel();
 		String loadingpanelImage();
         String dDriveSlides();
+        
+        String driveWebContainer();
 	}
 
 	@Source("CollectionEditResource.css")

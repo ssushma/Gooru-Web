@@ -34,10 +34,12 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.UcCBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -51,7 +53,7 @@ import com.gwtplatform.mvp.client.View;
  * @author Search Team
  *
  */
-public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistrationView> implements UserRegistrationUiHandlers,MessageProperties {
+public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistrationView> implements UserRegistrationUiHandlers{
 
 	private static final String GOORU_UID = "gooruuid";
 	private static final String SESSION_Id = "sessionid";
@@ -84,7 +86,7 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 	
 	private static final String PARENT = "Parent";
 	
-	private static final String OH_NO_TEXT = GL1415+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP+GL_SPL_FULLSTOP;
+//	private static final String OH_NO_TEXT = i18n.GL1415+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP+i18n.GL_SPL_FULLSTOP;
 	
 	private static final String ACCOUNT_TYPE = "accountType";
 	
@@ -105,6 +107,8 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 	private static final String CHILD_FIRST_NAME = "childfirstname";
 	
 	private static final String GMAIL_ADDRESS = "@gmail.com";
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -143,7 +147,7 @@ public class UserRegistrationPresenter extends PresenterWidget<IsUserRegistratio
 			@Override
 			public void onFailure(Throwable caught) {
 				UcCBundle.INSTANCE.css().ensureInjected();
-				new AlertContentUc(OH_NO_TEXT, caught.getMessage()).getAlertBox().addStyleName(UcCBundle.INSTANCE.css().increaseZindex());
+				new AlertContentUc((i18n.GL1415()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()+i18n.GL_SPL_FULLSTOP()), caught.getMessage()).getAlertBox().addStyleName(UcCBundle.INSTANCE.css().increaseZindex());
 			}
 
 		});

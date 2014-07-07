@@ -27,14 +27,45 @@ package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.IsViewWithHandlers;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
+
+import com.google.gwt.user.client.ui.FlowPanel;
 
 public interface IsDriveView extends IsViewWithHandlers<DriveUiHandlers>{
 
-	void getDriveDetails(DriveDo driveDo);
+	void getDriveDetails(GoogleDriveItemDo driveDo);
 
-	void getFolderDetails(String title, String id, List<DriveDo> result);
+	void getFolderDetails(String title, String id, List<GoogleDriveItemDo> result);
 
-	void driveContentList(List<DriveDo> result);
+	void driveContentList(GoogleDriveDo googleDriveDo);
+	
+	public FlowPanel getPanelFileList();
+	
+	public void setBreadCrumbLabel(String folderId,String folderTitle);
+
+	/**
+	 * @function showNoDriveAccess 
+	 * 
+	 * @created_date : Jul 3, 2014
+	 * 
+	 * @description
+	 * 
+	 * 
+	 * @param errorCode
+	 * 
+	 * @return : void
+	 *
+	 * @throws : <Mentioned if any exceptions>
+	 *
+	 * 
+	 *
+	 * 
+	*/
+	
+	void showNoDriveAccess(int errorCode);
+
+	
+	public void showDriveNotConnectedErrorMessage();
 
 }

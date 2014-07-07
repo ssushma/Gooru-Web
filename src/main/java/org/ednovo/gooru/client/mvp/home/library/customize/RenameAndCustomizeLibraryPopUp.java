@@ -13,6 +13,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.service.ResourceServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -44,7 +45,7 @@ import com.google.inject.Inject;
  * @author BLR Team
  * 
  */
-public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implements MessageProperties {
+public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel{
 
 	@UiField
 	HTMLPanel popupContentAssign,loginCustom, copyCollectionSuccess, panelAssign,loadingImageLabel,popupcontentCustomize,customizeText;
@@ -74,6 +75,8 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 	}
 
 	private static final Binder binder = GWT.create(Binder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	private boolean isCustomizePopup = false,isHavingBadWords;
 	
@@ -131,20 +134,20 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		errorLabel.getElement().setId("errlblErrorLabel");
 		errorLabel.setVisible(false);
 		this.setGlassEnabled(true);
-		customizeText.getElement().setInnerHTML(GL0743);
+		customizeText.getElement().setInnerHTML(i18n.GL0743());
 		customizeText.getElement().setId("pnlCustomizeText");
-		customizeText.getElement().setAttribute("alt",GL0743);
-		customizeText.getElement().setAttribute("title",GL0743);
+		customizeText.getElement().setAttribute("alt",i18n.GL0743());
+		customizeText.getElement().setAttribute("title",i18n.GL0743());
 		
-		backtoLibrary.setText(GL0142);
+		backtoLibrary.setText(i18n.GL0142());
 		backtoLibrary.getElement().setId("btnBacktoLibrary");
-		backtoLibrary.getElement().setAttribute("alt",GL0142);
-		backtoLibrary.getElement().setAttribute("title",GL0142);
+		backtoLibrary.getElement().setAttribute("alt",i18n.GL0142());
+		backtoLibrary.getElement().setAttribute("title",i18n.GL0142());
 		
-		editCollection.setText(GL0636);
+		editCollection.setText(i18n.GL0636());
 		editCollection.getElement().setId("btnEditCollection");
-		editCollection.getElement().setAttribute("alt",GL0636);
-		editCollection.getElement().setAttribute("title",GL0636);
+		editCollection.getElement().setAttribute("alt",i18n.GL0636());
+		editCollection.getElement().setAttribute("title",i18n.GL0636());
 		
 		panelAssign.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		loginCustom.getElement().getStyle().setMarginBottom(15, Unit.PX);
@@ -159,20 +162,20 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		
 		editCollection.getElement().setAttribute("collectionId", collectionId);
 		
-		assignDes.setText(GL0744);
+		assignDes.setText(i18n.GL0744());
 		assignDes.getElement().setId("lblAssignDes");
-		assignDes.getElement().setAttribute("alt",GL0744);
-		assignDes.getElement().setAttribute("title",GL0744);
+		assignDes.getElement().setAttribute("alt",i18n.GL0744());
+		assignDes.getElement().setAttribute("title",i18n.GL0744());
 		
-		lblpopupTitle.setText(GL0743);
+		lblpopupTitle.setText(i18n.GL0743());
 		lblpopupTitle.getElement().setId("lblpopupTitle");
-		lblpopupTitle.getElement().setAttribute("alt",GL0743);
-		lblpopupTitle.getElement().setAttribute("title",GL0743);
+		lblpopupTitle.getElement().setAttribute("alt",i18n.GL0743());
+		lblpopupTitle.getElement().setAttribute("title",i18n.GL0743());
 		
-		lbltxtBoxTitle.setText(GL0553);
+		lbltxtBoxTitle.setText(i18n.GL0553());
 		lbltxtBoxTitle.getElement().setId("lbltxtBoxTitle");
-		lbltxtBoxTitle.getElement().setAttribute("alt",GL0553);
-		lbltxtBoxTitle.getElement().setAttribute("title",GL0553);
+		lbltxtBoxTitle.getElement().setAttribute("alt",i18n.GL0553());
+		lbltxtBoxTitle.getElement().setAttribute("title",i18n.GL0553());
 		
 		copycollectionTextbox.addBlurHandler(new BlurHandler() {
 			
@@ -220,7 +223,7 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		loginCustom.setVisible(false);
 		copyCollectionSuccess.setVisible(true);
 		editCollection.getElement().setAttribute("collectionId", collectionId);
-		customizeText.getElement().setInnerHTML(GL0743);
+		customizeText.getElement().setInnerHTML(i18n.GL0743());
 	}
 
 	/**
@@ -286,9 +289,9 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 							}
 							else
 							{
-								errorLabel.setText(GL0693);
-								errorLabel.getElement().setAttribute("alt",GL0693);
-								errorLabel.getElement().setAttribute("title",GL0693);
+								errorLabel.setText(i18n.GL0693());
+								errorLabel.getElement().setAttribute("alt",i18n.GL0693());
+								errorLabel.getElement().setAttribute("title",i18n.GL0693());
 								errorLabel.setVisible(true);	
 							}
 						}
@@ -324,9 +327,9 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 		public void onKeyPress(KeyPressEvent event) {
 			String collTitle=copycollectionTextbox.getText().trim();
 			if(collTitle.length()>=50){
-				errorLabel.setText(GL0143);
-				errorLabel.getElement().setAttribute("alt",GL0143);
-				errorLabel.getElement().setAttribute("title",GL0143);
+				errorLabel.setText(i18n.GL0143());
+				errorLabel.getElement().setAttribute("alt",i18n.GL0143());
+				errorLabel.getElement().setAttribute("title",i18n.GL0143());
 				errorLabel.setVisible(true);
 			}else{
 				errorLabel.setText("");
@@ -343,9 +346,9 @@ public abstract class RenameAndCustomizeLibraryPopUp extends PopupPanel implemen
 			public void onKeyUp(KeyUpEvent event) {
 				String collTitle=copycollectionTextbox.getText().trim();
 				if(collTitle.length()>=50){
-					errorLabel.setText(GL0143);
-					errorLabel.getElement().setAttribute("alt",GL0143);
-					errorLabel.getElement().setAttribute("title",GL0143);
+					errorLabel.setText(i18n.GL0143());
+					errorLabel.getElement().setAttribute("alt",i18n.GL0143());
+					errorLabel.getElement().setAttribute("title",i18n.GL0143());
 					errorLabel.setVisible(true);
 				}else{
 					errorLabel.setText("");

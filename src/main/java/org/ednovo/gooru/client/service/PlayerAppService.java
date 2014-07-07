@@ -94,37 +94,37 @@ public interface PlayerAppService extends BaseService {
 	
 	public String copyCollection(String collectionId,String collectionTile) throws GwtException, ServerDownException;
 	
-	public String copyCollectionItem(String collectionItemId,String collectionId);
+	public String copyCollectionItem(String collectionItemId,String collectionId) throws GwtException, ServerDownException;
 	
-	public ArrayList<CollectionItemsList> getWorkspaceCollections(String userId,String offset,String limit);
+	public ArrayList<CollectionItemsList> getWorkspaceCollections(String userId,String offset,String limit)  throws GwtException, ServerDownException;
 	
-	public String updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing);
+	public String updateContentThumbsRating(String resourceGooruOid,int userThumbsRataing) throws GwtException, ServerDownException;
 	
-	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid);
+	public ArrayList<ContentReportDo> getContentReport(String associatedGooruOid,String gooruUid) throws GwtException, ServerDownException;
 	
-	public ContentReportDo createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids);
+	public ContentReportDo createContentReport(String associatedGooruOid,String freeText,ArrayList<String> contentReportList,String deleteContentReportGooruOids) throws GwtException, ServerDownException;
 	
-	public void deleteContentReport(String associatedGooruOid);
+	public void deleteContentReport(String associatedGooruOid) throws GwtException, ServerDownException;
 	
-	public CommentsDo createCommentForCollection(String gooruCollectionId, String userCommentsEntered);
+	public CommentsDo createCommentForCollection(String gooruCollectionId, String userCommentsEntered) throws GwtException, ServerDownException;
 	
-	public CommentsListDo getCollectionCommentsList(String gooruOid,String offset, String pageLimit);
+	public CommentsListDo getCollectionCommentsList(String gooruOid,String offset, String pageLimit) throws GwtException, ServerDownException;
 	
-	public void deleteCollectionCommentbyCommentUid(String commentUid);
+	public void deleteCollectionCommentbyCommentUid(String commentUid) throws GwtException, ServerDownException;
 	
-	public CommentsDo updateCollectionCommentbyCommentUid(String commentUid, String commentsUpdatedByUser);
+	public CommentsDo updateCollectionCommentbyCommentUid(String commentUid, String commentsUpdatedByUser) throws GwtException, ServerDownException;
 	
-	public ReactionDo createReaction(String resourceId, String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction);
+	public ReactionDo createReaction(String resourceId, String reactionText,String gooruReactionId,String collectionId, String createStudyPlayerReaction) throws GwtException, ServerDownException;
 	
-	public ArrayList<ReactionDo> getResourceReaction(String resourceId, String gooruUid);
+	public ArrayList<ReactionDo> getResourceReaction(String resourceId, String gooruUid) throws GwtException, ServerDownException;
 	
-	public String generatePdf(String innerHtml,String completedDateTime);
+	public String generatePdf(String innerHtml,String completedDateTime) throws GwtException, ServerDownException;
 	
-	public String sendEmailWithPdf(String toAddress, String fromAddress, String cfm, String subject, String message, String Url, String FileName);
+	public String sendEmailWithPdf(String toAddress, String fromAddress, String cfm, String subject, String message, String Url, String FileName) throws GwtException, ServerDownException;
 
-	public ArrayList<FeaturedContentDo> getFeaturedContent();
+	public ArrayList<FeaturedContentDo> getFeaturedContent() throws GwtException, ServerDownException;
 	
-	public void deleteReaction(String gooruReactionId);
+	public void deleteReaction(String gooruReactionId) throws GwtException, ServerDownException;
 	
 	/**
 	 * Creates the star rating by calling an API.
@@ -133,7 +133,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param starRatingValue {@link Integer} Input given by the user i.e score out of 5
 	 * @param callback {@link AsyncCallback}  The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method. 
 	 */
-	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue,String userReview);
+	public StarRatingsDo createStarRatings(String associateGooruOid,int starRatingValue,String userReview) throws GwtException, ServerDownException;
 	
 	/**
 	 * Gets the resource star ratings.
@@ -142,7 +142,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param gooruUid {@link String}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method. 
 	 */
-	public StarRatingsDo getResourceStarRatings(String gooruOid, String gooruUid);
+	public StarRatingsDo getResourceStarRatings(String gooruOid, String gooruUid) throws GwtException, ServerDownException;
 	
 
 	/**
@@ -150,7 +150,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param gooruOid {@link String}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public ContentStarRatingsDo getContentStarRatings(String gooruOid);
+	public ContentStarRatingsDo getContentStarRatings(String gooruOid) throws GwtException, ServerDownException;
 	
 	/**
 	 * Updates the resource ratings.
@@ -158,7 +158,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param score {@link Integer}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public ArrayList<StarRatingsDo> updateResourceStarRatings(String gooruOid, int score);
+	public ArrayList<StarRatingsDo> updateResourceStarRatings(String gooruOid, int score) throws GwtException, ServerDownException;
 	
 
 	/**
@@ -166,7 +166,7 @@ public interface PlayerAppService extends BaseService {
 	 * @param gooruUid {@link String}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public UserStarRatingsDo getUserStarRatings(String gooruOid); 
+	public UserStarRatingsDo getUserStarRatings(String gooruOid) throws GwtException, ServerDownException; 
 	
 	/**
 	 * Gets the resource star ratings and reviews.
@@ -174,10 +174,12 @@ public interface PlayerAppService extends BaseService {
 	 * @param gooruUid {@link String}
 	 * @param callback {@link AsyncCallback} The asynchronous method always takes an AsyncCallback<T> as its last parameter, where T is the return type of the correlated synchronous method.
 	 */
-	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid,int offSet);
+	public ArrayList<StarRatingsDo> getResourceRatingWithReviews(String resourceId, String gooruUid,int offSet) throws GwtException, ServerDownException;
 	
-	public ArrayList<StarRatingsDo> updateResourceStarReviews(String deleteRatingGooruOid,Integer score, String userReview);
+	public ArrayList<StarRatingsDo> updateResourceStarReviews(String deleteRatingGooruOid,Integer score, String userReview) throws GwtException, ServerDownException;
 	
-	public void deleteRating(String deleteRatingGooruOid);
+	public void deleteRating(String deleteRatingGooruOid) throws GwtException, ServerDownException;
+	
+	public int getGoogleDriveFileStatusCode(String fileUrl) throws GwtException, ServerDownException;
 	
 }

@@ -24,7 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event;
 
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
 import com.google.gwt.event.shared.EventHandler;
 /**
@@ -63,6 +63,6 @@ public interface DriveEventHandler extends EventHandler {
 	 *
 	 *
 	 */
-	void clearDrivepage(DriveDo driveDo);
+	void clearDrivepage(GoogleDriveItemDo driveDo);
 
 }

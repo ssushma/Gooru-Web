@@ -523,10 +523,6 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			AppClientFactory.getInjector().getClasspageService().getCollectionClasspageAssoc(collectionId, new SimpleAsyncCallback<List<ClassPageCollectionDo>>() {
 
 				@Override
-				public void onFailure(Throwable caught) {
-				}
-
-				@Override
 				public void onSuccess(List<ClassPageCollectionDo> result) {
 
 					if(result.size()!=0){

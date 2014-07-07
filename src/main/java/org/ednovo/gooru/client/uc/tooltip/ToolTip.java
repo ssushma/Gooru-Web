@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc.tooltip;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -41,7 +41,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOutHandlers{
+public class ToolTip extends PopupPanel implements HasMouseOutHandlers{
 	
 	@UiField
 	HTMLPanel panelCode;
@@ -58,17 +58,19 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 	public static ToolTipUiBinder toolTipUiBinder=GWT.create(ToolTipUiBinder.class);{
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class); 
+	
 	public ToolTip(){
 		setWidget(toolTipUiBinder.createAndBindUi(this));
 	//	lblTitle.setText(GL0450);
-		lblTitle.setTitle(GL0450);
+		lblTitle.setTitle(i18n.GL0450()+" ");
 		lblTitle.getElement().setId("pnlLblTitle");
-		lblTitle.getElement().setAttribute("alt", GL0450);
-		lblTitle.getElement().setAttribute("title", GL0450);
-		lblLink.setText(GL0451);
+		lblTitle.getElement().setAttribute("alt",i18n.GL0450()+" ");
+		lblTitle.getElement().setAttribute("title", i18n.GL0450()+" ");
+		lblLink.setText(i18n.GL0451());
 		lblLink.getElement().setId("lnkLblLink");
-		lblLink.getElement().setAttribute("alt", GL0451);
-		lblLink.getElement().setAttribute("title", GL0451);
+		lblLink.getElement().setAttribute("alt", i18n.GL0451());
+		lblLink.getElement().setAttribute("title", i18n.GL0451());
 
 		lblLink.setTarget("_blank");
 		panelCode.getElement().setId("pnlPanelCode");
@@ -93,10 +95,10 @@ public class ToolTip extends PopupPanel implements MessageProperties, HasMouseOu
 		
 		setWidget(toolTipUiBinder.createAndBindUi(this));
 		lblTitle.getElement().setInnerHTML(description);
-		lblLink.setText(GL0451);
+		lblLink.setText(i18n.GL0451());
 		lblLink.getElement().setId("lnkLblLink");
-		lblLink.getElement().setAttribute("alt", GL0451);
-		lblLink.getElement().setAttribute("title", GL0451);
+		lblLink.getElement().setAttribute("alt", i18n.GL0451());
+		lblLink.getElement().setAttribute("title", i18n.GL0451());
 		lblLink.setTarget("_blank");
 		panelCode.getElement().setId("pnlPanelCode");
 		lblTitle.getElement().setId("pnlLblTitle");

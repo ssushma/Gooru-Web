@@ -24,20 +24,20 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
-import java.util.Map;
-
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BasePlacePresenter;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.DriveEventHandler;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEvent;
-import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive.event.FolderEventHandlers;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.client.mvp.classpages.edit.EditClasspageCBundle;
+import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
+import org.ednovo.gooru.shared.model.code.CodeDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
@@ -49,6 +49,9 @@ public class DrivePresenter extends
 		BasePlacePresenter<IsDriveView, DrivePresenter.IsDriveyProxy> implements
 		DriveUiHandlers {
 
+	
+	private AddResourcePresenter addResourcePresenter;
+	
 	@ProxyCodeSplit
 	@NameToken(PlaceTokens.DRIVE)
 	@UseGatekeeper(AppPlaceKeeper.class)
@@ -59,10 +62,6 @@ public class DrivePresenter extends
 	public DrivePresenter(IsDriveView view, IsDriveyProxy proxy) {
 		super(view, proxy);
 		getView().setUiHandlers(this);
-		addRegisteredHandler(DriveEvent.TYPE, driveEvent);
-		addRegisteredHandler(FolderEvent.TYPE, folderEvent);
-
-		
 	}
 
 	@Override
@@ -73,7 +72,6 @@ public class DrivePresenter extends
 	@Override
 	public void onReveal() {
 		super.onReveal();
-		System.out.println("reveal in drive");
 	}
 
 	@Override
@@ -92,66 +90,78 @@ public class DrivePresenter extends
 		return PlaceTokens.HOME;
 	}
 
-	@Override
-	public Map<String, Object> redirect() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void showDriveNotConnectedErrorMessage(){
+		getView().getPanelFileList().clear();
+		getView().showDriveNotConnectedErrorMessage();
 	}
-
-	DriveEventHandler driveEvent = new DriveEventHandler() {
-
-		@Override
-		public void clearDrivepage(DriveDo driveDo) {
-			getView().getDriveDetails(driveDo);
-			// TODO Auto-generated method stub
-
+	public void getGoogleDriveFiles(String folderId,String nextPageToken,final boolean isPanelClear) {
+		if(isPanelClear){
+			getView().getPanelFileList().clear();
+			getView().getPanelFileList().add(setLoadingPanel());
 		}
-	};
-
-	FolderEventHandlers folderEvent = new FolderEventHandlers() {
-
-		@Override
-		public void clearFolderpage(String title, String id,
-				List<DriveDo> result) {
-			// TODO Auto-generated method stub
-			getView().getFolderDetails(title, id, result);
-
-		}
-
-	};
-
-	@Override
-	public void getdriveListAgain() {
-		AppClientFactory.getInjector().getResourceService()
-				.getDrive(new AsyncCallback<List<DriveDo>>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onSuccess(List<DriveDo> result) {
-						getView().driveContentList(result);
-						// TODO Auto-generated method stub
-
-					}
-
-				});
-
-	}
-
-	public void callDriveContent() {
-		// TODO Auto-generated method stub
-		AppClientFactory.getInjector().getResourceService()
-			.getDrive(new SimpleAsyncCallback<List<DriveDo>>() {
-
-				@Override
-				public void onSuccess(List<DriveDo> result) {
-					getView().driveContentList(result);	
+		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
+			@Override
+			public void onSuccess(GoogleDriveDo googleDriveDo) {
+				if(isPanelClear){
+					getView().getPanelFileList().clear();
 				}
-			});
+
+				if(googleDriveDo!=null){
+					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+						getView().showNoDriveAccess(401);
+					}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+						getView().showNoDriveAccess(403);
+					}else{
+						getView().driveContentList(googleDriveDo);
+					}
+				}else{
+					getView().showNoDriveAccess(401);
+				}
+			}
+		});
+	}
+	
+	public Label setLoadingPanel(){
+		Label loadingImage=new Label();
+		EditClasspageCBundle.INSTANCE.css().ensureInjected();
+		loadingImage.setStyleName(EditClasspageCBundle.INSTANCE.css().loadingpanelImage());
+		loadingImage.getElement().getStyle().setMarginLeft(70, Unit.PX);
+		loadingImage.getElement().getStyle().setMarginTop(25, Unit.PX);
+		return loadingImage;
+	}
+	
+	public void setBreadCrumbLabel(String folderId,String folderTitle){
+		getView().setBreadCrumbLabel(folderId,folderTitle);
 	}
 
+	
+	@Override
+	public void addResource(String idStr, String urlStr, String titleStr,
+			String descriptionStr, String webResourceCategory,
+			String thumbnailUrlStr, Integer endTime, String educationalUse,
+			String momentsOfLearning, List<CodeDo> standards) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	
+	@Override
+	public void isShortenUrl(String userUrlStr) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	public AddResourcePresenter getAddResourcePresenter() {
+		return addResourcePresenter;
+	}
+
+	public void setAddResourcePresenter(AddResourcePresenter addResourcePresenter) {
+		this.addResourcePresenter = addResourcePresenter;
+	}
+	
+	public void showAddResourceWidget(GoogleDriveItemDo googleDriveItemDo){
+		if(addResourcePresenter!=null){
+			addResourcePresenter.showAddWebResourceWidget(true, getView().getPanelFileList(),googleDriveItemDo);
+		}
+	}
+	
 }

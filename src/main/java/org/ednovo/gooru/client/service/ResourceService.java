@@ -40,7 +40,7 @@ import org.ednovo.gooru.shared.model.content.MetaDO;
 import org.ednovo.gooru.shared.model.content.ProfanityCheckDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
-import org.ednovo.gooru.shared.model.drive.DriveDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
 import org.ednovo.gooru.shared.model.user.MediaUploadDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
@@ -389,10 +389,12 @@ public interface ResourceService extends BaseService {
 	
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException, ServerDownException;
 
-	List<DriveDo> getDrive()throws GwtException, ServerDownException;
+	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException;
+	
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException;
 
-	List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
+	//List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
 
-	DriveDo updatePermissions(DriveDo driveObject)throws GwtException, ServerDownException;
+	//DriveDo updatePermissions(DriveDo driveObject)throws GwtException, ServerDownException;
 		 
 }

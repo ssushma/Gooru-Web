@@ -175,7 +175,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		customizeCollectionBtn.setText(GL0631);
 		noCollectionLbl.setText(GL1170);
 		setTopicLabel(profileFolderDo.getTitle());
-		
+		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
 			setOnlyConceptData(profileFolderDo.getCollectionItems(), false, profileFolderDo.getGooruOid(), profileFolderDo.getItemCount());
 			try {
@@ -222,7 +222,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		setTopicLabel(profileFolderDo.getTitle());
 		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
-
+		
 		try {
 			setConceptData(profileFolderDo,conceptNumber,null, null,null);
 		} catch(Exception e) {
@@ -332,6 +332,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 					id=conceptDo.getGooruOid();
 				}
 				if(id!=null) {
+					collectionViewer.setVisible(true);
 					collectionInfo.setVisible(true);
 					resourcesInside.setVisible(true);
 					noCollectionLbl.setVisible(false);
@@ -511,6 +512,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 			}
 			loadingImage.setVisible(false);
 			collectionViewer.setVisible(true);
+			collectionInfo.setVisible(true);
 	}
 
 	public String getPlaceToken() {

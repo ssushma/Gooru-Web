@@ -75,6 +75,8 @@
 				<prop key="facebook.dialogfeedurl">${facebook.dialogfeedurl}</prop>
 				<prop key="taxonomy.preferences">${taxonomy.preferences}</prop>
 				<prop key="redirect.url">${redirect.url}</prop>
+				<prop key="drive.api">${drive.api}</prop>
+				<prop key="google.restendpoint">${google.restendpoint}</prop>
 			</props>
 		</property>
 	</bean>
