@@ -50,7 +50,7 @@
 							ui:field="multipleAnswerTabButton">
 							<g:RadioButton name="questionTypeGrouop" ui:field="multipleAnswerRadioButton"
 									styleName="{res.css.questionRadioButtonStyle}"></g:RadioButton>
-							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}">Multiple Answer</g:Anchor>
+							<g:Anchor styleName="{res.css.myFolderCollectionUrlbgTitle}" ui:field="multipleAnswerAnc"></g:Anchor>
 						</uc:HTMLEventPanel>
 						<uc:HTMLEventPanel styleName="{res.css.buttonDeSelected}"
 							ui:field="trueOrFlaseButton">

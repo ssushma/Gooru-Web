@@ -687,7 +687,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 		setTab(getPersistantTabObjectUsingTabFlag());
 		collectionTitleUc.setText(collection.getTitle());
-		collectionDescriptionUc.setText(collection.getGoals());
+		collectionDescriptionUc.setText(collection.getDescription());
 		collectionImageShelfUc.setUrl(collection.getThumbnails().getUrl());
 		collectionImageShelfUc.getCollectionImg().setAltText(collection.getTitle());
 		collectionImageShelfUc.getCollectionImg().setTitle(collection.getTitle());

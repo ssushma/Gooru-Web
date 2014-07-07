@@ -46,6 +46,7 @@ public class GoogleDriveItemDo implements Serializable {
 	private String defaultOpenWithLink;
 	private String iconLink;
 	private String thumbnailLink;
+	private boolean shared;
 	
 	public String getRole() {
 		return role;
@@ -178,6 +179,12 @@ public class GoogleDriveItemDo implements Serializable {
 	}
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+	public boolean isShared() {
+		return shared;
+	}
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 	
 }

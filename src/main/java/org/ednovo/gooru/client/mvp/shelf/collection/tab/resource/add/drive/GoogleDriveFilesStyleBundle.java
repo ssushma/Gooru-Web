@@ -51,4 +51,15 @@ public interface GoogleDriveFilesStyleBundle extends CssResource {
 
 	String googleDrivePptStyle();
 	
+	String googleDriveFormStyle();
+	
+	String googleDriveDrawingStyle();
+	
+	String breadCrumbsText();
+	
+	String breadCrumbsArrow();
+	
+	String errorHeading();
+	
+	String pannelError();
 }

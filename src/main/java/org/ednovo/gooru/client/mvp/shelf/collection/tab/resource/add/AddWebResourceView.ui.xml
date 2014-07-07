@@ -8,7 +8,7 @@
 		type="org.ednovo.gooru.client.mvp.shelf.collection.CollectionCBundle"
 		field="res1" />
 	<g:HTMLPanel styleName="{res.css.myFolderCollectionFormContainer}" ui:field="contentPanel">
-        <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}">
+        <g:HTMLPanel styleName="{res.css.myFolderCollectionFormContent}" ui:field="urlContianer">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormTitle}" ui:field="urlTitle"></g:HTMLPanel>
           <g:HTMLPanel styleName="{res.css.myFolderCollectionFormInputControl}">
             <g:TextBox ui:field="urlTextBox" styleName="{res.css.inputTextBox}"/>
@@ -441,6 +441,7 @@
 					</g:FlowPanel>
 				</g:FlowPanel>
         <!-- Standards End -->
+        <g:Label styleName="" ui:field="driveFileInfoLbl"></g:Label>
           <g:HTMLPanel styleName="{res.css.resourceRightsContainer}">
         	<g:CheckBox ui:field="rightsChkBox" styleName="{res.css.resourceRightsCheckBox}" checked="true"></g:CheckBox>
         	<g:Label ui:field="rightsLbl" styleName="{res.css.ownResourceFormDeclarationText}"></g:Label> 
@@ -461,7 +462,6 @@
 				</g:HTMLPanel>
         	</uc:HTMLEventPanel>
          </g:HTMLPanel>
-        
        <g:HTMLPanel styleName="{res.css.myFolderCollectionButtonContainer}" ui:field="buttonsPanel">
           <g:HTMLPanel styleName="{res.css.myFolderCollectionOk}" ui:field="addResourceBtnPanel">
 	          <gg:BlueButtonUc styleName="primary" ui:field="addResourceBtnLbl"/>

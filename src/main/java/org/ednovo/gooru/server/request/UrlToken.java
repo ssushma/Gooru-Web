@@ -570,7 +570,11 @@ public enum UrlToken {
 	
 	GET_STANDARD_LIBRARY_MENUS("/v2/library/{0}/item?sessionToken={1}"),
 	
-	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api");
+	SERVER_STATUS_URL("http://status.goorulearning.org/api/v1/services/gooru-production-api"),
+	
+	GET_GOOGLEDRIVE_FIlES("/v2/files?maxResults=20&q={0}"),
+	
+	UPDATE_FILE_PERMISSION("/v2/files/{0}/permissions");
 
 
 	
