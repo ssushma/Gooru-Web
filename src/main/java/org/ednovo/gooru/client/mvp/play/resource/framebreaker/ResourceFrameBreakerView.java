@@ -135,8 +135,15 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 		}else{
 			btnResourceLink.removeFromParent();
 			imgFieldTrip.removeFromParent();
-			lblGooruFieldTrip.setText("You don't have permission to see this file.");
 		}
+	}
+	public void setFileDeletedMessage(){
+		btnResourceLink.removeFromParent();
+		imgFieldTrip.removeFromParent();
+		lblGooruFieldTrip.setText("This file has been deleted permanently");
+	}
+	public void setFilePermissionMessage(){
+		lblGooruFieldTrip.setText("You don't have permission to see this file.");
 	}
 	/**
 	 * 

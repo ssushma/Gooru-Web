@@ -417,7 +417,13 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
-			resourceWidgetContainer.add(new ResourceFrameBreakerView(null));
+			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(null);
+			resourceFrameBreakerViewnew.setFilePermissionMessage();
+			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
+		}else if(statusCode==404){
+			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(null);
+			resourceFrameBreakerViewnew.setFileDeletedMessage();
+			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
 		}else{
 			final WebResourceWidget webResourceWidget=new WebResourceWidget(collectionItemDo.getResource().getUrl());
 			resourceWidgetContainer.add(webResourceWidget);
