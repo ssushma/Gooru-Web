@@ -14,6 +14,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -24,8 +25,9 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 	@UiField public FlowPanel ratingWidgetPanel;
 	private RatingWidgetView ratingWidgetView=null;
 	String assocGooruOId,createrName;
-	@UiField Label reviewRatingText;
-	@UiField HTMLPanel averageRationPanel;
+	@UiField Label reviewRatingText,saveAndPsotLbl;
+	@UiField HTMLPanel averageRationPanel,buttonsContainer;
+	@UiField Image imgSuccessIcon;
 	
 	private static RatingsConfirmationPopupUiBinder uiBinder = GWT
 			.create(RatingsConfirmationPopupUiBinder.class);
@@ -40,9 +42,25 @@ public class RatingsConfirmationPopup extends PopupPanel implements MessagePrope
 			this.assocGooruOId=assocGooruOId;
 			this.createrName = createrName;
 			reviewRatingText.setText(GL1856);
+			reviewRatingText.getElement().setId("lblReviewRatingText");
+			reviewRatingText.getElement().setAttribute("alt",GL1856);
+			reviewRatingText.getElement().setAttribute("title",GL1856);
+			
 			averageRationPanel.getElement().setInnerHTML(GL1848);
+			averageRationPanel.getElement().setId("pnlAverageRationPanel");
+			averageRationPanel.getElement().setAttribute("alt",GL1848);
+			averageRationPanel.getElement().setAttribute("title",GL1848);
+			
 			btnOk.setText(GL0190);
+			btnOk.getElement().setId("btnOk");
+			btnOk.getElement().setAttribute("alt",GL0190);
+			btnOk.getElement().setAttribute("title",GL0190);
 			setAvgRatingWidget(assocGooruOId,score,count,average,createrName);
+			
+			imgSuccessIcon.getElement().setId("btnOk");
+			ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+			buttonsContainer.getElement().setId("pnlButtonsContainer");
+			saveAndPsotLbl.getElement().setId("lblSaveAndPsotLbl");
 	}
 	/**
 	 * Average star ratings widget will get integrated.

@@ -128,15 +128,35 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		setWidget(uiBinder.createAndBindUi(this));
 		AddAssignmentContainerCBundle.INSTANCE.css().ensureInjected();
 		hideText.setText(GL0592);
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",GL0592);
+		hideText.getElement().setAttribute("title",GL0592);
+		
 		addresourceText.getElement().setInnerHTML(GL0698);
+		addresourceText.getElement().setId("pnlAddresourceText");
+		addresourceText.getElement().setAttribute("alt",GL0592);
+		addresourceText.getElement().setAttribute("title",GL0592);
+		
 		dropdownListPlaceHolder.getElement().setInnerHTML(GL0105);
+		dropdownListPlaceHolder.getElement().setId("spnDropdownListPlaceHolder");
+		dropdownListPlaceHolder.getElement().setAttribute("alt",GL0105);
+		dropdownListPlaceHolder.getElement().setAttribute("title",GL0105);
+		
 		dropdownListContainerScrollPanel.getElement().getStyle().setDisplay(Display.NONE);
 		dropdownListPlaceHolder.addClickHandler(new OnDropdownListPlaceHolderClick());
 		dropdownListContainerScrollPanel.addScrollHandler(new ScrollDropdownListContainer());
 		getAddResourceToCollectionButton().addClickHandler(new OnAddResourceButtonClick());
 		resourceAddedSuccessMessageContainer.setVisible(false);
 		addNewCollectionLabel.setText(GL0696);
+		addNewCollectionLabel.getElement().setId("lblAddNewCollectionLabel");
+		addNewCollectionLabel.getElement().setAttribute("alt",GL0696);
+		addNewCollectionLabel.getElement().setAttribute("title",GL0696);
+		
 		resourceAdditionErrorStyle.setText(GL0659);
+		resourceAdditionErrorStyle.getElement().setId("lblResourceAdditionErrorStyle");
+		resourceAdditionErrorStyle.getElement().setAttribute("alt",GL0659);
+		resourceAdditionErrorStyle.getElement().setAttribute("title",GL0659);
+		
 		folderTreePanel.addSelectionHandler(new SelectionHandler<TreeItem>() {
 			  @Override
 			  public void onSelection(SelectionEvent<TreeItem> event) {
@@ -177,6 +197,7 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		dropdownListContainer.add(folderTreePanel);
 		folderTreePanel.addItem(loadingTreeItem());
 		existingCollectionContainer.setVisible(true);
+		setId();
 	}
 	public void setSelectedCollectionTitle(){
 		if(cureentcollectionTreeItem!=null){
@@ -630,17 +651,27 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		addResourceToCollectionButton.setVisible(true);
 		if(getAddResourceToCollectionButton().getText().equalsIgnoreCase("Add Again")){
 			successMessageLabelText.setText(GL0699);
+			successMessageLabelText.getElement().setAttribute("alt",GL0699);
+			successMessageLabelText.getElement().setAttribute("title",GL0699);
 		}else{
 			successMessageLabelText.setText(GL0663);
+			successMessageLabelText.getElement().setAttribute("alt",GL0663);
+			successMessageLabelText.getElement().setAttribute("title",GL0663);
 			addResourceToCollectionButton.setText(GL0691);
+			addResourceToCollectionButton.getElement().setAttribute("alt",GL0691);
+			addResourceToCollectionButton.getElement().setAttribute("title",GL0691);
 		}
 		workSpaceBtn.setText(GL1630);
+		workSpaceBtn.getElement().setAttribute("alt",GL1630);
+		workSpaceBtn.getElement().setAttribute("title",GL1630);
 //		workSpaceLink.setText(GL0589);
 		//workSpaceLink.setHref("#organize&id="+collectionId+"&eventType=refresh");
 		this.collectionId=collectionId;
 		addCollectionInsteadLabelContainer.clear();
 		Label colletionIsteadButton=getAddCollectionViewButton();
 		colletionIsteadButton.setText(GL0664);
+		colletionIsteadButton.getElement().setAttribute("alt",GL0664);
+		colletionIsteadButton.getElement().setAttribute("title",GL0664);
 		colletionIsteadButton.getElement().getStyle().setMarginRight(138, Unit.PX);
 		//colletionIsteadButton.getElement().getStyle().setMarginTop(-15, Unit.PX);
 		addCollectionInsteadLabelContainer.add(colletionIsteadButton);
@@ -657,11 +688,15 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		errorMessage.setVisible(false);
 		addResourceToCollectionButton.setVisible(true);
 		addResourceToCollectionButton.setText(GL0590);
+		addResourceToCollectionButton.getElement().setAttribute("alt",GL0590);
+		addResourceToCollectionButton.getElement().setAttribute("title",GL0590);
 		addCollectionContainer.clear();
 		Label colletionIsteadButton=getAddCollectionViewButton();
 		colletionIsteadButton.getElement().getStyle().clearMarginRight();
 		colletionIsteadButton.getElement().getStyle().clearMarginTop();
 		colletionIsteadButton.setText(GL0664);
+		colletionIsteadButton.getElement().setAttribute("alt",GL0664);
+		colletionIsteadButton.getElement().setAttribute("title",GL0664);
 		addCollectionContainer.add(colletionIsteadButton);
 	}
 
@@ -679,6 +714,8 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		cureentcollectionTreeItem=null;
 		previousSelectedItem=null;
 		errorMessage.setText("");
+		errorMessage.getElement().setAttribute("alt","");
+		errorMessage.getElement().setAttribute("title","");
 		dropdownListContainerScrollPanel.getElement().getStyle().setDisplay(Display.NONE);
 		getDropdownListPlaceHolder().setText(GL0105);
 	}
@@ -688,15 +725,23 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 			if(dropdownListPlaceHolder.getText().equalsIgnoreCase(GL0105)){
 				errorMessage.setVisible(true);
 				errorMessage.setText(GL0699_1);
+				errorMessage.getElement().setAttribute("alt",GL0699_1);
+				errorMessage.getElement().setAttribute("title",GL0699_1);
 			}else if(cureentcollectionTreeItem!=null){
 				errorMessage.setVisible(false);
 				if(cureentcollectionTreeItem.getItemsCount()>=25){
 					errorMessage.setVisible(true);
 					errorMessage.setText(GL0699_2);
+					errorMessage.getElement().setAttribute("alt",GL0699_2);
+					errorMessage.getElement().setAttribute("title",GL0699_2);
 				}else{
 					getAddResourceToCollectionButton().getElement().getStyle().setDisplay(Display.NONE);
 					errorMessage.setText("");
+					errorMessage.getElement().setAttribute("alt","");
+					errorMessage.getElement().setAttribute("title","");
 					addingLabel.setText(GL0591);
+					addingLabel.getElement().setAttribute("alt",GL0591);
+					addingLabel.getElement().setAttribute("title",GL0591);
 					getAddingLabel().getElement().getStyle().setDisplay(Display.BLOCK);
 					copyCollectionItem(resourceId, cureentcollectionTreeItem.getGooruOid());
 				}
@@ -799,5 +844,24 @@ public class AddResourceCollectionView extends BaseViewWithHandlers<AddResourceC
 		loadingText.setStyleName(AddAssignmentContainerCBundle.INSTANCE.css().loadingText());
 		return new TreeItem(loadingText);
 	}
-	
+	public void setId(){
+		resourceImageContainerInAddResource.getElement().setId("pnlResourceImageContainerInAddResource");
+		addCollectionContainer.getElement().setId("pnlAddCollectionContainer");
+		addToExistingColl.getElement().setId("lblAddToExistingColl");
+		resourceAddedSuccessMessageContainer.getElement().setId("fpnlResourceAddedSuccessMessageContainer");
+		successMessageLabelText.getElement().setId("lblSuccessMessageLabelText");
+		workSpaceBtn.getElement().setId("btnWorkSpaceBtn");
+		addCollectionInsteadLabelContainer.getElement().setId("pnlAddCollectionInsteadLabelContainer");
+		addCollectionInsteadLabelText.getElement().setId("lblAddCollectionInsteadLabelText");
+		existingCollectionContainer.getElement().setId("pnlExistingCollectionContainer");
+		dropdownListContainerScrollPanel.getElement().setId("sbDropdownListContainerScrollPanel");
+		dropdownListContainer.getElement().setId("pnlDropdownListContainer");
+		addResourceToCollectionButton.getElement().setId("btnAddResourceToCollectionButton");
+		addingLabel.getElement().setId("lblAddingLabel");
+		resourceAdditionErrorStyle.getElement().setId("lblResourceAdditionErrorStyle");
+		createCollectionLabelContainer.getElement().setId("pnlCreateCollectionLabelContainer");
+		errorMessage.getElement().setId("lblErrorMessage");
+		sizeMessage.getElement().setId("lblSizeMessage");
+		hideButton.getElement().setId("epnlHideButton");
+	}
 }

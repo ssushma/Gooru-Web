@@ -100,11 +100,39 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		resourceShareTextArea.setReadOnly(true);
 		resourceShareTextArea.getElement().setAttribute("readOnly", "");
 		embedLink.setText(SWITCH_EMBED_CODE);
+		embedLink.getElement().setId("spnEmbedLink");
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
+		
 		bitlyLink.setText(SWITCH_BITLY);
+		bitlyLink.getElement().setId("spnBitlyLink");
+		bitlyLink.getElement().setAttribute("alt",SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("title",SWITCH_BITLY);
+		
 		shareMainTitle.getElement().setInnerHTML(GL0644);
+		shareMainTitle.getElement().setId("pnlShareMainTitle");
+		shareMainTitle.getElement().setAttribute("alt",GL0644);
+		shareMainTitle.getElement().setAttribute("title",GL0644);
+		
 		bitlyLink.getElement().setInnerHTML(GL0639);
+		bitlyLink.getElement().setId("spnBitlyLink");
+		bitlyLink.getElement().setAttribute("alt",GL0639);
+		bitlyLink.getElement().setAttribute("title",GL0639);
+		
 		embedLink.getElement().setInnerHTML(GL0640);
+		embedLink.getElement().setAttribute("alt",GL0640);
+		embedLink.getElement().setAttribute("title",GL0640);
+		
 		hideText.setText(GL0592);
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",GL0592);
+		hideText.getElement().setAttribute("title",GL0592);
+		
+		resourceTitleText.getElement().setId("lblResourceTitleText");
+		resourceShareTextArea.getElement().setId("tatResourceShareTextArea");
+		socialSharePanel.getElement().setId("fpnlSocialSharePanel");
+		sharePanel.getElement().setId("pnlSharePanel");
+		hideButton.getElement().setId("epnlHideButton");
 	}
 	
 	public void setResourceShareData(Map<String, String> shareUrlsList){
@@ -119,13 +147,21 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 		resourceShareMap.put(SWITCH_FULL_URL, shareUrl);
 		resourceShareMap.put(SWITCH_BITLY, shareBitlyUrl);
 		resourceShareTextArea.setText(shareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",shareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",shareUrl);
 		embedLink.setText(SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("alt",SWITCH_EMBED_CODE);
+		embedLink.getElement().setAttribute("title",SWITCH_EMBED_CODE);
 		bitlyLink.setText(SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("alt",SWITCH_BITLY);
+		bitlyLink.getElement().setAttribute("title",SWITCH_BITLY);
 	}
 	
 	public void setResourceShareData(){
 		String resourceShareUrl=resourceShareMap.get(SWITCH_FULL_URL);
 		resourceShareTextArea.setText(resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("alt",resourceShareUrl);
+		resourceShareTextArea.getElement().setAttribute("title",resourceShareUrl);
 	}
 	public String removeHtmlTags(String content){
 		return content.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
@@ -192,7 +228,11 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			String value= resourceShareMap.get(key);
 			if(shareTxt.equalsIgnoreCase(value)){
 				embedLink.setText(key);
+				embedLink.getElement().setAttribute("alt",key);
+				embedLink.getElement().setAttribute("title",key);
 				resourceShareTextArea.setText(resourceShareMap.get(embed));
+				resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(embed));
+				resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(embed));
 			}
 		}
 
@@ -208,7 +248,11 @@ public class ResourceShareView extends BaseViewWithHandlers<ResourceShareUiHandl
 			String value= resourceShareMap.get(key);
 			if(shareTxt.equalsIgnoreCase(value)){
 				bitlyLink.setText(key);
+				bitlyLink.getElement().setAttribute("alt",key);
+				bitlyLink.getElement().setAttribute("title",key);
 				resourceShareTextArea.setText(resourceShareMap.get(linkUrl));
+				resourceShareTextArea.getElement().setAttribute("alt",resourceShareMap.get(linkUrl));
+				resourceShareTextArea.getElement().setAttribute("title",resourceShareMap.get(linkUrl));
 			}
 		}
 	}

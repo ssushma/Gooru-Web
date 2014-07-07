@@ -73,6 +73,14 @@ public class CollectionPlayerTocView extends BaseViewWithHandlers<CollectionPlay
 	public CollectionPlayerTocView(){
 		setWidget(uiBinder.createAndBindUi(this));
 		hideText.setText(GL0592);
+		hideText.getElement().setId("lblHideText");
+		hideText.getElement().setAttribute("alt",GL0592);
+		hideText.getElement().setAttribute("title",GL0592);
+		
+		previousButton.getElement().setId("lblPreviousButton");
+		navgationTocContainer.getElement().setId("fpnlNavgationTocContainer");
+		nextButton.getElement().setId("lblNextButton");
+		hideButton.getElement().setId("epnlHideButton");
 	}
 	public void clearNavigationPanel(){
 		navgationTocContainer.clear();

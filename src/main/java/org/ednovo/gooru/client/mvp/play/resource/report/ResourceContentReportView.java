@@ -91,14 +91,49 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		this.setGlassStyleName(FlagBundle.IMAGEBUNDLEINSTANCE.flagstyle().glassStyle());
 		setGlassEnabled(true);
 		flagText.setText(GL0600);
+		flagText.getElement().setId("lblFlagText");
+		flagText.getElement().setAttribute("alt",GL0600);
+		flagText.getElement().setAttribute("title",GL0600);
+		
 		inappropriateText.setText(GL0612);
+		inappropriateText.getElement().setId("lblInappropriateText");
+		inappropriateText.getElement().setAttribute("alt",GL0612);
+		inappropriateText.getElement().setAttribute("title",GL0612);
+		
 		unavailableText.setText(GL0613);
+		unavailableText.getElement().setId("lblUnavailableText");
+		unavailableText.getElement().setAttribute("alt",GL0613);
+		unavailableText.getElement().setAttribute("title",GL0613);
+		
 		inaccurateText.setText(GL0614);
+		inaccurateText.getElement().setId("lblInaccurateText");
+		inaccurateText.getElement().setAttribute("alt",GL0614);
+		inaccurateText.getElement().setAttribute("title",GL0614);
+		
 		otherReasonText.setText(GL0606);
+		otherReasonText.getElement().setId("lblOtherReasonText");
+		otherReasonText.getElement().setAttribute("alt",GL0606);
+		otherReasonText.getElement().setAttribute("title",GL0606);
+		
 		provideMoreText.setText(GL0607);
+		provideMoreText.getElement().setId("lblProvideMoreText");
+		provideMoreText.getElement().setAttribute("alt",GL0607);
+		provideMoreText.getElement().setAttribute("title",GL0607);
+		
 		cancelButton.setText(GL0608);
+		cancelButton.getElement().setAttribute("id", "cancelButton");
+		cancelButton.getElement().setAttribute("alt",GL0608);
+		cancelButton.getElement().setAttribute("title",GL0608);
+		
 		submitButton.setText(GL0486);
+		submitButton.getElement().setAttribute("id", "SubmitButton");
+		submitButton.getElement().setAttribute("alt",GL0486);
+		submitButton.getElement().setAttribute("title",GL0486);
+		
 		submitButtonGray.setText(GL0486);
+		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
+		submitButtonGray.getElement().setAttribute("alt",GL0486);
+		submitButtonGray.getElement().setAttribute("title",GL0486);
 		
 		this.restEndPoint=restEndPoint;
 		this.session=session;
@@ -106,11 +141,14 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 		this.resourceflagButton=resourceflagButton;
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.getElement().setAttribute("alt",GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.getElement().setAttribute("title",GL1430 +resourceTitle+" \" "+GL1431+"");
+		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
-		cancelButton.getElement().setAttribute("id", "cancelButton");
-		submitButton.getElement().setAttribute("id", "SubmitButton");
-		submitButtonGray.getElement().setAttribute("id", "SubmitButtonInactive");
+		
+	
+	
 		resourcePlayerPresenter=new ResourcePlayerPresenter();
 		popUpCloseButton.setResource(FlagBundle.IMAGEBUNDLEINSTANCE.closeFlagPopUpImages());
 
@@ -136,6 +174,14 @@ public class ResourceContentReportView extends PopupPanel implements MessageProp
 			}
 		});
 		
+		closeButton.getElement().setId("epnlCloseButton");
+		popUpCloseButton.getElement().setId("imgPopUpCloseButton");
+		titleText.getElement().setId("htmlTitleText");
+		checkBox4.getElement().setId("chkCheckBox4");
+		checkBox3.getElement().setId("chkCheckBox3");
+		checkBox2.getElement().setId("chkCheckBox2");
+		checkBox1.getElement().setId("chkCheckBox1");
+		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
 	}
 
 	@UiHandler("closeButton")
