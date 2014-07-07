@@ -118,7 +118,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 	@UiField HTMLEventPanel addQuestionResourceButton,lblContentRights;
 	@UiField HTMLPanel questionAnswerChoiceContainer,questionTrueOrFalseAnswerChoiceContainer;
 	@UiField public static Label errorMessageForQuestion;
-	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl;
+	@UiField Label questionTypeHeader,questionTypeText,loadingTextLbl,rightsLbl,explanationLabel,andText,additionalText,agreeText,questionNameErrorLbl,explainationErrorLbl,depthOfKnowledgeTitle;
 	@UiField Anchor addAnswerChoice,addHintsLabel;
 
 	@UiField Anchor addQuestionImg;
@@ -220,41 +220,130 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initWidget(uiBinder.createAndBindUi(this));
 		setHeaderAndBodyText("MC");
 		isEditResource=false;
+		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
+		questionTypeText.getElement().setId("lblQuestionTypeText");
+		questionText.getElement().setId("pnlQuestionText");
 		questionText.getElement().setInnerHTML(" "+GL0863);
+		questionText.getElement().setAttribute("alt", GL0863);
+		questionText.getElement().setAttribute("title", GL0863);
+		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
 		addQuestionImg.setText(GL_SPL_PLUS+" "+GL0860);
+		addQuestionImg.getElement().setAttribute("alt", GL0860);
+		addQuestionImg.getElement().setAttribute("title", GL0860);
+		addResourceFormTitleChoice.getElement().setId("lblAddResourceFormTitleChoice");
+		addResourceFormTitleChoice.getElement().setAttribute("alt", GL0864);
+		addResourceFormTitleChoice.getElement().setAttribute("title", GL0864);
 		addResourceFormTitleChoice.setText(GL0864);
+		correctText.getElement().setId("pnlCorrectText");
+		noLabelText.getElement().setId("pnlNoLabelText");
 		correctText.getElement().setInnerHTML(GL0314);
+		correctText.getElement().setAttribute("alt", GL0314);
+		correctText.getElement().setAttribute("title", GL0314);
 		noLabelText.setVisible(false);
+		alphaLetterA.getElement().setId("qacAlphaLetterA");
+		alphaLetterA.getElement().setAttribute("alt", GL_GRR_ALPHABET_A);
+		alphaLetterA.getElement().setAttribute("title", GL_GRR_ALPHABET_A);
 		alphaLetterA.setLabelName(GL_GRR_ALPHABET_A);
 		alphaLetterB.setLabelName(GL_GRR_ALPHABET_B);
+		alphaLetterB.getElement().setId("qacAlphaLetterB");
+		alphaLetterB.getElement().setAttribute("alt", GL_GRR_ALPHABET_B);
+		alphaLetterB.getElement().setAttribute("title", GL_GRR_ALPHABET_B);
 		addAnswerChoice.setText(GL0866);
+		addAnswerChoice.getElement().setAttribute("alt", GL0866);
+		addAnswerChoice.getElement().setAttribute("title", GL0866);
 		explanationLabel.setText(" "+GL0867);
+		explanationLabel.getElement().setId("lblExplanationLabel");
+		explanationLabel.getElement().setAttribute("alt", GL0867);
+		explanationLabel.getElement().setAttribute("title", GL0867);
 		addHintsLabel.setText(GL0868);
+		addHintsLabel.getElement().setAttribute("alt", GL0868);
+		addHintsLabel.getElement().setAttribute("title", GL0868);
 		rightsLbl.setText(GL0869);
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt", GL0869);
+		rightsLbl.getElement().setAttribute("title", GL0869);
 		agreeText.setText(GL0870);
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt", GL0870);
+		agreeText.getElement().setAttribute("title", GL0870);
 		commuGuideLinesAnr.setText(GL0871);
+		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
+		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
+		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
 		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
+		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872);
+		termsAndPolicyAnr.getElement().setAttribute("title", GL0872);
 		privacyAnr.setText(" "+GL0873);
+		privacyAnr.getElement().setId("lnkPrivacyAnr");
+		privacyAnr.getElement().setAttribute("alt", GL0873);
+		privacyAnr.getElement().setAttribute("title", GL0873);
 		andText.setText(" "+GL_GRR_AND+" ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt", GL_GRR_AND);
+		andText.getElement().setAttribute("title", GL_GRR_AND);
 		copyRightAnr.setText(" "+GL0875);
+		copyRightAnr.getElement().setId("lnkCopyRightAnr");
+		copyRightAnr.getElement().setAttribute("alt", GL0875);
+		copyRightAnr.getElement().setAttribute("title", GL0875);
 		additionalText.setText(GL0874);
+		additionalText.getElement().setId("lblAdditionalText");
+		additionalText.getElement().setAttribute("alt", GL0874);
+		additionalText.getElement().setAttribute("title", GL0874);
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setAttribute("alt", GL0142);
+		cancelButton.getElement().setAttribute("title", GL0142);
 		addbutton.setText(GL0590);
+		addbutton.getElement().setAttribute("alt", GL0590);
+		addbutton.getElement().setAttribute("title", GL0590);
 		loadingTextLbl.setText(GL0591.toLowerCase());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt", GL0591.toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title", GL0591.toLowerCase());
+		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
 		questionNameTextArea.getElement().setAttribute("maxlength", "500");
 		explainationTextArea.getElement().setAttribute("maxlength", "400");
+		explainationTextArea.getElement().setId("tinyMCEExplainationTextArea");
 		addbutton.getElement().setId("btnAdd");
 		cancelButton.getElement().setId("btnCancel");
 		addQuestionImg.getElement().setId("lnkAddQuestionImg");
 		addAnswerChoice.getElement().setId("lnkAnswerChoice");
 		addHintsLabel.getElement().setId("lnkHints");
 		panelContentRights.setVisible(false);
+		panelContentRights.getElement().setId("pnlPanelContentRights");
 		questionNameTextArea.markAsBlankPanel.setVisible(false);
 		loadingTextLbl.getElement().getStyle().setFontStyle(FontStyle.ITALIC);
+		buttonContainer.getElement().setId("pnlButtonContainer");
 	    buttonContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		loadingTextLbl.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
+		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
+		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
+		answerchoiceTitleContainer.getElement().setId("fpnlAnswerchoiceTitleContainer");
+		questionAnswerChoiceContainer.getElement().setId("pnlQuestionAnswerChoiceContainer");
+		questionTrueOrFalseAnswerChoiceContainer.getElement().setId("pnlQuestionTrueOrFalseAnswerChoiceContainer");
+		errorMessageForAnsCheck.getElement().setId("lblErrorMessageForAnsCheck");
+		ansChoiceErrMsg.getElement().setId("lblAnsChoiceErrMsg");
+		explanationContainer.getElement().setId("fpnlExplanationContainer");
+		explainationErrorLbl.getElement().setId("errlblExplainationErrorLbl");
+		hintsContainer.getElement().setId("pnlHintsContainer");
+		errorMessageForHintsCheck.getElement().setId("errlblErrorMessageForHintsCheck");
+		depthOfKnowledgeHeader.getElement().setId("lblDepthOfKnowledgeHeader");
+		depthOfKnoweldgeToolTip.getElement().setId("imgDepthOfKnoweldgeToolTip");
+		depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
+		chkLevelRecall.getElement().setId("chkChkLevelRecall");
+		chkLevelSkillConcept.getElement().setId("chkChkLevelSkillConcept");
+		chkLevelStrategicThinking.getElement().setId("chkChkLevelStrategicThinking");
+		chkLevelExtendedThinking.getElement().setId("chkChkLevelExtendedThinking");
+		standardContainer.getElement().setId("fpnlStandardContainer");
+		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
+		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardsPanel.getElement().setId("fpnlStandardsPanel");
+		lblContentRights.getElement().setId("epnlLblContentRights");
+		rightsContent.getElement().setId("pnlRightsContent");
+		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
 		setTextForTheFields();
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
@@ -348,24 +437,107 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		initWidget(uiBinder.createAndBindUi(this));
 		this.collectionItemDo=collectionItemDo;
 		isEditResource=true;
+		questionTypeHeader.getElement().setId("lblQuestionTypeHeader");
+		questionTypeText.getElement().setId("lblQuestionTypeText");
+		questionNameErrorLbl.getElement().setId("errlblQuestionNameErrorLbl");
+		questionNameTextArea.getElement().setId("tinyMCEQuestionNameTextArea");
+		addQuestionImg.getElement().setId("lnkAddQuestionImg");
 		addbutton.setText(GL0141);
+		addbutton.getElement().setId("btnAdd");
+		addbutton.getElement().setAttribute("alt", GL0141);
+		addbutton.getElement().setAttribute("title", GL0141);
 		loadingTextLbl.setVisible(false);
 		loadingTextLbl.setText(GL0808);
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt", GL0808);
+		loadingTextLbl.getElement().setAttribute("title", GL0808);
 		rightsLbl.setText(GL0869);
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt", GL0869);
+		rightsLbl.getElement().setAttribute("title", GL0869);
 		agreeText.setText(GL0870);
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt", GL0870);
+		agreeText.getElement().setAttribute("title", GL0870);
 		commuGuideLinesAnr.setText(GL0871);
+		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
+		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
+		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
 		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
+		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872);
+		termsAndPolicyAnr.getElement().setAttribute("title", GL0872);
 		privacyAnr.setText(" "+GL0873);
+		privacyAnr.getElement().setId("lnkPrivacyAnr");
+		privacyAnr.getElement().setAttribute("alt", GL0873);
+		privacyAnr.getElement().setAttribute("title", GL0873);
 		andText.setText(" "+GL_GRR_AND+" ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt", GL_GRR_AND);
+		andText.getElement().setAttribute("title", GL_GRR_AND);
 		copyRightAnr.setText(" "+GL0875);
+		copyRightAnr.getElement().setId("lnkCopyRightAnr");
+		copyRightAnr.getElement().setAttribute("alt", GL0875);
+		copyRightAnr.getElement().setAttribute("title", GL0875);
 		additionalText.setText(GL0874);
+		additionalText.getElement().setId("lblAdditionalText");
+		additionalText.getElement().setAttribute("alt", GL0874);
+		additionalText.getElement().setAttribute("title", GL0874);
 		cancelButton.setText(GL0142);
+		cancelButton.getElement().setId("btnCancel");
+		cancelButton.getElement().setAttribute("alt", GL0142);
+		cancelButton.getElement().setAttribute("title", GL0142);
 		loadingTextLbl.setText(GL0808.toLowerCase());
+		loadingTextLbl.getElement().setId("lblLoadingTextLbl");
+		loadingTextLbl.getElement().setAttribute("alt", GL0808.toLowerCase());
+		loadingTextLbl.getElement().setAttribute("title", GL0808.toLowerCase());
 		explanationLabel.setText(" "+GL0867);
+		explanationLabel.getElement().setId("lblExplanationLabel");
+		explanationLabel.getElement().setAttribute("alt", GL0867);
+		explanationLabel.getElement().setAttribute("title", GL0867);
 		addAnswerChoice.setText(GL0866);
+		addAnswerChoice.getElement().setAttribute("alt", GL0866);
+		addAnswerChoice.getElement().setAttribute("title", GL0866);
+		addAnswerChoice.getElement().setId("lnkAnswerChoice");
 		addHintsLabel.setText(GL0868);
+		addHintsLabel.getElement().setAttribute("alt", GL0868);
+		addHintsLabel.getElement().setAttribute("title", GL0868);
+		addHintsLabel.getElement().setId("lnkHints");
+		errorMessageForQuestion.getElement().setId("errlblErrorMessageForQuestion");
+		addQuestImgContainer.getElement().setId("pnlAddQuestImgContainer");
+		answerchoiceTitleContainer.getElement().setId("fpnlAnswerchoiceTitleContainer");
+		addResourceFormTitleChoice.getElement().setId("lblAddResourceFormTitleChoice");
+		questionAnswerChoiceContainer.getElement().setId("pnlQuestionAnswerChoiceContainer");
+		questionTrueOrFalseAnswerChoiceContainer.getElement().setId("pnlQuestionTrueOrFalseAnswerChoiceContainer");
+		errorMessageForAnsCheck.getElement().setId("lblErrorMessageForAnsCheck");
+		ansChoiceErrMsg.getElement().setId("lblAnsChoiceErrMsg");
+		correctText.getElement().setId("pnlCorrectText");
+		noLabelText.getElement().setId("pnlNoLabelText");
+		alphaLetterA.getElement().setId("qacAlphaLetterA");
+		explanationContainer.getElement().setId("fpnlExplanationContainer");
+		explainationTextArea.getElement().setId("tinyMCEExplainationTextArea");
+		explainationErrorLbl.getElement().setId("errlblExplainationErrorLbl");
+		hintsContainer.getElement().setId("pnlHintsContainer");
+		errorMessageForHintsCheck.getElement().setId("errlblErrorMessageForHintsCheck");
+		depthOfKnowledgeHeader.getElement().setId("lblDepthOfKnowledgeHeader");
+		depthOfKnoweldgeToolTip.getElement().setId("imgDepthOfKnoweldgeToolTip");
+		depthOfKnowledgeTitle.getElement().setId("lblDepthOfKnowledgeTitle");
+		chkLevelRecall.getElement().setId("chkChkLevelRecall");
+		chkLevelSkillConcept.getElement().setId("chkChkLevelSkillConcept");
+		chkLevelStrategicThinking.getElement().setId("chkChkLevelStrategicThinking");
+		chkLevelExtendedThinking.getElement().setId("chkChkLevelExtendedThinking");
+		standardContainer.getElement().setId("fpnlStandardContainer");
+		standardsDefaultText.getElement().setId("lblStandardsDefaultText");
+		standardSgstBox.getElement().setId("appSuggestBoxStandardSgstBox");
+		standardMaxMsg.getElement().setId("lblStandardMaxMsg");
+		standardsPanel.getElement().setId("fpnlStandardsPanel");
+		lblContentRights.getElement().setId("epnlLblContentRights");
+		panelContentRights.getElement().setId("pnlPanelContentRights");
+		rightsContent.getElement().setId("pnlRightsContent");
+		buttonContainer.getElement().setId("pnlButtonContainer");
 		setQuestionTypeStaticTexts();
 		rightsChkBox.addClickHandler(new rightsChecked());
+		rightsChkBox.getElement().setId("chkRights");
 		setTrueOrFalseFields();
 		setTextForTheFields();
 	}
@@ -457,13 +629,28 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		educationalUsePanel.setVisible(false);
 		resourceEducationalLabel.setText(GL1684);*/
 		standardsDefaultText.setText(GL1682);
+		standardsDefaultText.getElement().setAttribute("alt", GL1682);
+		standardsDefaultText.getElement().setAttribute("title", GL1682);
 		depthOfKnowledgeHeader.setText(GL1693);
+		depthOfKnowledgeHeader.getElement().setAttribute("alt", GL1693);
+		depthOfKnowledgeHeader.getElement().setAttribute("title", GL1693);
 		chkLevelRecall.setText(GL1645);
+		chkLevelRecall.getElement().setAttribute("alt", GL1645);
+		chkLevelRecall.getElement().setAttribute("title", GL1645);
 		chkLevelSkillConcept.setText(GL1646);
+		chkLevelSkillConcept.getElement().setAttribute("alt", GL1646);
+		chkLevelSkillConcept.getElement().setAttribute("title", GL1646);
 		chkLevelStrategicThinking.setText(GL1647);
+		chkLevelStrategicThinking.getElement().setAttribute("alt", GL1647);
+		chkLevelStrategicThinking.getElement().setAttribute("title", GL1647);
 		chkLevelExtendedThinking.setText(GL1648);
+		chkLevelExtendedThinking.getElement().setAttribute("alt", GL1648);
+		chkLevelExtendedThinking.getElement().setAttribute("title", GL1648);
 		depthOfKnoweldgeToolTip.setUrl("images/mos/questionmark.png");
 		depthOfKnoweldgeToolTip.setTitle("Question Mark");
+		depthOfKnoweldgeToolTip.getElement().setAttribute("alt", "Question Mark");
+		depthOfKnoweldgeToolTip.getElement().setAttribute("title", "Question Mark");
+		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
 		addClickEventsForCheckBox();
 		AppClientFactory.getInjector().getUserService().getUserProfileV2Details(AppClientFactory.getGooruUid(),USER_META_ACTIVE_FLAG,new SimpleAsyncCallback<ProfileDo>() {
 
@@ -1060,6 +1247,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
 						fieldValidationCheck = false;
 						ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
+						ansChoiceErrMsg.getElement().setAttribute("alt", ERROR_MSG_ANSWER_SELECTED);
+						ansChoiceErrMsg.getElement().setAttribute("title", ERROR_MSG_ANSWER_SELECTED);
 						explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 						isAddBtnClicked=true;
 					}else{
@@ -1077,6 +1266,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					ansChoiceErrMsg.setText(errorMessage);
+					ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
+					ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
 					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
@@ -1094,6 +1285,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
 					String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
 					ansChoiceErrMsg.setText(errorMessage);
+					ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
+					ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
 					explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
 					fieldValidationCheck = false;
 					isAddBtnClicked=true;
@@ -1141,6 +1334,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						    	errorMessageForQuestion.setText("");
     						        if(questionNameTextArea.getText()==null||questionNameTextArea.getText().trim().equals("")){
     						        	errorMessageForQuestion.setText(ERROR_MSG_QUESTION);
+    						        	errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION);
+    						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION);
     						        	fieldValidationStaus=false;
     						        	isQuestEnteredFlag=false;
     						        	isAddBtnClicked=true;
@@ -1149,12 +1344,16 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     						        String questionNameText = questionNameTextArea.getText().replaceAll("\\<.*?>","");
     						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
     						        	errorMessageForQuestion.setText(ERROR_MSG_QUESTION_LENGTH);
+    						        	errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION_LENGTH);
+    						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;
     						        }
     						        errorMessageForExplanation.setText("");
     						        if(questionNameText.length()>QUESTION_TEXT_LENGTH){
     						        	errorMessageForQuestion.setText(ERROR_MSG_QUESTION_LENGTH);
+    						        	errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_QUESTION_LENGTH);
+    						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_QUESTION_LENGTH);
     						        	fieldValidationStaus=false;
     						        	isAddBtnClicked=true;
     						        }
@@ -1175,6 +1374,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionTrueOrFalseAnswerChoiceContainer)) {
     												fieldValidationStaus = false;
     												ansChoiceErrMsg.setText(ERROR_MSG_ANSWER_SELECTED);
+    												ansChoiceErrMsg.getElement().setAttribute("alt", ERROR_MSG_ANSWER_SELECTED);
+    												ansChoiceErrMsg.getElement().setAttribute("title", ERROR_MSG_ANSWER_SELECTED);
     												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												isAddBtnClicked=true;
     											}else{
@@ -1195,6 +1396,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isAnswerChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
+    												ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
+    												ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
     												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
@@ -1216,6 +1419,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     											if (!isYesOrNoChoiceSelected(questionAnswerChoiceContainer)) {
     												String errorMessage=getQuestionType().equalsIgnoreCase("MA")?ERROR_MSG_ATLEAST_SELECTED:ERROR_MSG_ANSWER_SELECTED;
     												ansChoiceErrMsg.setText(errorMessage);
+    												ansChoiceErrMsg.getElement().setAttribute("alt", errorMessage);
+    												ansChoiceErrMsg.getElement().setAttribute("title", errorMessage);
     												explanationContainer.getElement().setAttribute("style", "padding-top: 20px;");
     												fieldValidationStaus = false;
     												isAddBtnClicked=true;
@@ -1235,6 +1440,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									boolean isBalanced=true;
     									if(!isFIBQuestionBalanced(questionTextFIB) && (questionNameTextArea.getText().trim()!=null || !questionNameTextArea.getText().trim().equalsIgnoreCase(""))){ 
     										errorMessageForQuestion.setText(ERROR_MSG_FIB_BALANCED);
+    										errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_FIB_BALANCED);
+        						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_FIB_BALANCED);
     							        	fieldValidationStaus=false;
     							        	isBalanced=false;
     							        	isAddBtnClicked=true;
@@ -1251,6 +1458,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									
     									if(answersListFIB.size()==0 && isQuestEnteredFlag){
     										errorMessageForQuestion.setText(ERROR_MSG_FIB_BALANCED);
+    										errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_FIB_BALANCED);
+        						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_FIB_BALANCED);
     										fieldValidationStaus=false;
     										isAddBtnClicked=true;
     									}
@@ -1258,6 +1467,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     										for(String answer:answersListFIB){
     											if(answer.contains("[") || answer.contains("]")){
     												errorMessageForQuestion.setText(ERROR_MSG_MULTIPLE_FIB);
+    												errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_MULTIPLE_FIB);
+    	        						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_MULTIPLE_FIB);
     												fieldValidationStaus=false;
     												break;
     											}
@@ -1265,6 +1476,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}
     									if(isAnsweEmpty){
     										errorMessageForQuestion.setText(ERROR_MSG_MARK_AS_BLANK);
+    										errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_MARK_AS_BLANK);
+        						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_MARK_AS_BLANK);
     										isAnsweEmpty=false;
     										fieldValidationStaus=false;
     										isAddBtnClicked=true;
@@ -1273,6 +1486,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
     									}
     									if(answersListFIB.size()>3 && isQuestEnteredFlag){
     										errorMessageForQuestion.setText(ERROR_MSG_FIB_BLANKS);
+    										errorMessageForQuestion.getElement().setAttribute("alt", ERROR_MSG_FIB_BLANKS);
+        						        	errorMessageForQuestion.getElement().setAttribute("title", ERROR_MSG_FIB_BLANKS);
     										fieldValidationStaus=false;
     									}
     									if(isAnsweEmpty && !isHintsAdded(hintsContainer)){
@@ -1763,21 +1978,41 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		if(tabType.equals("MC")){
 			questionTypeHeader.setText(GL0349);
 			questionTypeText.setText(GL0350);
+			questionTypeHeader.getElement().setAttribute("alt", GL0349);
+			questionTypeHeader.getElement().setAttribute("title", GL0349);
+			questionTypeText.getElement().setAttribute("alt", GL0350);
+			questionTypeText.getElement().setAttribute("title", GL0350);
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}else if(tabType.equals("MA")){
 			questionTypeHeader.setText(GL0351);
+			questionTypeHeader.getElement().setAttribute("alt", GL0351);
+			questionTypeHeader.getElement().setAttribute("title", GL0351);
 			questionTypeText.setText(GL0352);
+			questionTypeText.getElement().setAttribute("alt", GL0352);
+			questionTypeText.getElement().setAttribute("title", GL0352);
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}else if(tabType.equals("T/F")){
 			questionTypeHeader.setText(GL0353);
+			questionTypeHeader.getElement().setAttribute("alt", GL0353);
+			questionTypeHeader.getElement().setAttribute("title", GL0353);
 			questionTypeText.setText(GL0354);
+			questionTypeText.getElement().setAttribute("alt", GL0354);
+			questionTypeText.getElement().setAttribute("title", GL0354);
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}else if(tabType.equals("FIB")){
 			questionTypeHeader.setText(GL0355);
+			questionTypeHeader.getElement().setAttribute("alt", GL0355);
+			questionTypeHeader.getElement().setAttribute("title", GL0355);
 			questionTypeText.setText(GL0356);
+			questionTypeText.getElement().setAttribute("alt", GL0356);
+			questionTypeText.getElement().setAttribute("title", GL0356);
 		}else if(tabType.equals("OE")){
 			questionTypeHeader.setText(GL0357);
+			questionTypeHeader.getElement().setAttribute("alt", GL0357);
+			questionTypeHeader.getElement().setAttribute("title", GL0357);
 			questionTypeText.setText(GL0358);
+			questionTypeText.getElement().setAttribute("alt", GL0358);
+			questionTypeText.getElement().setAttribute("title", GL0358);
 			questionNameTextArea.markAsBlankPanel.setVisible(false);
 		}
 	}
@@ -1835,10 +2070,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 					 }
 				 }
 				 questionNameTextArea.setText(questionText.toString());
+				 questionNameTextArea.getElement().setAttribute("alt", questionText.toString());
+				 questionNameTextArea.getElement().setAttribute("title", questionText.toString());
 				 explainationTextArea.setText(collectionItemDo.getResource().getExplanation());
+				 explainationTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getExplanation());
+				 explainationTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getExplanation());
 			 }else{
 				 questionNameTextArea.setText(collectionItemDo.getResource().getTitle());
+				 questionNameTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+				 questionNameTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 				 explainationTextArea.setText(collectionItemDo.getResource().getExplanation());
+				 explainationTextArea.getElement().setAttribute("alt", collectionItemDo.getResource().getExplanation());
+				 explainationTextArea.getElement().setAttribute("title", collectionItemDo.getResource().getExplanation());
 			 }
 			
 		}
@@ -1856,8 +2099,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		}
 		if(collectionItemDo.getResource().getType()==1){
 			addResourceFormTitleChoice.setText(GL0864);
+			addResourceFormTitleChoice.getElement().setAttribute("alt", GL0864);
+			addResourceFormTitleChoice.getElement().setAttribute("title", GL0864);
 			correctText.clear();
 			correctText.getElement().setInnerHTML(GL0314);
+			correctText.getElement().setAttribute("alt", GL0314);
+			correctText.getElement().setAttribute("title", GL0314);
 			setCorrectTextStyle();
 			noLabelText.setVisible(false);
 			questionAnswerChoiceContainer.clear();
@@ -1875,10 +2122,18 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}else if(collectionItemDo.getResource().getType()==7){
 			addResourceFormTitleChoice.setText("Enter answers and select correct ones *");
+			addResourceFormTitleChoice.getElement().setAttribute("alt", "Enter answers and select correct ones *");
+			addResourceFormTitleChoice.getElement().setAttribute("title", "Enter answers and select correct ones *");
 			correctText.clear();
 			correctText.getElement().setInnerHTML("Yes");
+			correctText.getElement().setAttribute("alt", "Yes");
+			correctText.getElement().setAttribute("title", "Yes");
 			noLabelText.setVisible(true);
 			noLabelText.getElement().setInnerHTML("No");
+			noLabelText.getElement().setAttribute("alt", "No");
+			noLabelText.getElement().setAttribute("title", "No");
+			correctText.getElement().setAttribute("alt", "No");
+			correctText.getElement().setAttribute("title", "No");
 			setYesOrNoLabelStyles();
 			questionAnswerChoiceContainer.clear();
 			while (it.hasNext()) {
@@ -1896,8 +2151,12 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			}
 		}else if(collectionItemDo.getResource().getType()==3){
 			addResourceFormTitleChoice.setText(GL0864);
+			addResourceFormTitleChoice.getElement().setAttribute("alt", GL0864);
+			addResourceFormTitleChoice.getElement().setAttribute("title", GL0864);
 			correctText.clear();
 			correctText.getElement().setInnerHTML(GL0314);
+			correctText.getElement().setAttribute("alt", GL0314);
+			correctText.getElement().setAttribute("title", GL0314);
 			setCorrectTextStyle();
 			noLabelText.setVisible(false);
 			setMultipleChoiceAnswerFields();
