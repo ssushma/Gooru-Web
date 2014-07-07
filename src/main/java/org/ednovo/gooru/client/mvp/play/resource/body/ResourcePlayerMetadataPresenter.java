@@ -417,6 +417,17 @@ public class ResourcePlayerMetadataPresenter extends PresenterWidget<IsResourceP
 		getView().deleteRatingsValue();
 	}
 
+	public void getGoogleDriveFile(String fileUrl) {
+		AppClientFactory.getInjector().getPlayerAppService().getGoogleDriveFileStatusCode(fileUrl, new SimpleAsyncCallback<Integer>() {
+			@Override
+			public void onSuccess(Integer statusCode) {
+				getView().setGoogleDriveFileStatusCode(statusCode);
+			}
+		});
+		
+	}
+
+	
 	/*@Override
 	public void updateStarRatingAndreviews(String assocGooruOId,
 			String loogedInGooruOId, ArrayList<StarRatingsDo> starRatingsDo) {
