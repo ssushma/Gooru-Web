@@ -5,6 +5,7 @@ import java.util.List;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.home.library.events.StandardPreferenceSettingEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -28,6 +29,9 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 	interface UserSettingStandardDeleteViewUiBinder extends
 			UiBinder<Widget, UserSettingStandardDeleteView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField Label titleLabel,headerLabel,descriptionLabel;
 	@UiField Button cancelButton,removeButton;
 	String gooruUid="";
@@ -52,11 +56,11 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 	}
 	public void setTextAndUi()
 	{
-		titleLabel.setText(MessageProperties.GL1162);	
-		//headerLabel.setText(MessageProperties.GL1565);	
-		descriptionLabel.setText(MessageProperties.GL1564);	
-		cancelButton.setText(MessageProperties.GL0142);	
-		removeButton.setText(MessageProperties.GL0237);	
+		titleLabel.setText(i18n.GL1162());	
+		//headerLabel.setText(MessageProperties.i18n.GL1565);	
+		descriptionLabel.setText(i18n.GL1564());	
+		cancelButton.setText(i18n.GL0142());	
+		removeButton.setText(i18n.GL0237());	
 	}
 	 @UiHandler("cancelButton")
 	 public void onClickCancelButton(ClickEvent event)
@@ -71,7 +75,7 @@ public class UserSettingStandardDeleteView extends PopupPanel {
 		 Window.enableScrolling(true);
 		 standardsEditButton.setVisible(false);
 		 standardsSaveCancelButtonContainer.setVisible(false);
-		 standardSavingTextLabel.setText(MessageProperties.GL0808);
+		 standardSavingTextLabel.setText(i18n.GL0808());
 		 AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,USER_TAXONOMY_ROOT_CODE,"",new SimpleAsyncCallback<Void>() {
 
 				@Override

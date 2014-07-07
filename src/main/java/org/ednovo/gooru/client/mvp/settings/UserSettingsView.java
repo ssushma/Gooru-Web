@@ -109,7 +109,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.tractionsoftware.gwt.user.client.ui.GroupedListBox;
 
-public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandlers> implements IsUserSettingsView,MessageProperties{
+public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandlers> implements IsUserSettingsView{
 	private static UserSettingsViewUiBinder uiBinder = GWT
 			.create(UserSettingsViewUiBinder.class);
 
@@ -117,6 +117,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			UiBinder<Widget, UserSettingsView> {
 
 	}
+	
 
 	boolean isChildAccount = false;
 	
@@ -171,7 +172,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	private ProfileDo profileDo;
 	private static String USER_META_ACTIVE_FLAG = "1";
-	private static String NONE_ADDED = GL1476;
+//	private static String NONE_ADDED = i18n.GL1476;
 	private GroupedListBox collectionCourseLst;
 	HTML defaultCoursePanel;
 	private SettingDo settingDo;
@@ -227,7 +228,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			}
 			
 			public void checkCharacterLimit(String text) {
-				//	titleAlertMessageLbl.setText(MessageProperties.GL0143);
+				//	titleAlertMessageLbl.setText(MessageProperties.i18n.GL0143);
 					if (text.length() >= 25) {
 						charLimitFNameLbl.setVisible(true);	
 					} else {
@@ -245,7 +246,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		
 			}
 			public void checkCharacterLimit(String text) {
-			//	titleAlertMessageLbl.setText(MessageProperties.GL0143);
+			//	titleAlertMessageLbl.setText(MessageProperties.i18n.GL0143);
 				if (text.length() >= 25) {
 					charLimitFNameLbl.setVisible(true);	
 				} else {
@@ -286,61 +287,61 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		btnConnect.setEnabled(true);
 		
 		courseData.getElement().getStyle().setWidth(324, Unit.PX);
-		settingsText.getElement().setInnerHTML(GL0192);
-		uploadProfilImageButton.setText(GL0800);
-		profilePageText.getElement().setInnerHTML(GL0801);
-		profileOnButton.setText(GL0802);
-		profileOffButton.setText(GL0803);
-		aboutUsText.getElement().setInnerHTML(GL0804);
-		appearText.getElement().setInnerHTML(GL0805);
-		aboutUsCharacterValidation.setText(GL0143);
-		btnSave.setText(GL0141);
-		biographyCancelButton.getElement().setInnerHTML(GL0142);
-		btnSeeMyProfile.setText(GL0806);
-		accountText.getElement().setInnerHTML(GL0807);
-		accountSavingTextLabel.setText(GL0808);
-		editButtonAccount.setText(GL0140);
-		settingCancelButton.setText(GL0142);
-		settingsSaveButton.setText(GL0141);
-		usernameText.getElement().setInnerHTML(GL0652);
-		nametext.getElement().setInnerHTML(GL0649);
-		uploadProfileImage.setTitle(GL0823);
-		uploadProfileImage.setAltText(GL0823);
-		//GL0823
-		charLimitFNameLbl.setText(GL0143);
-		genderText.getElement().setInnerHTML(GL0809+GL_SPL_SEMICOLON);
-		lbMaleText.setText(GL0810);
-		lbFemaleText.setText(GL0811);
-		lbOtherText.setText(GL0419);
-		notToShareText.setText(GL0812);
-		emailtext.getElement().setInnerHTML(GL0212);
-		SavingTextLabel.setText(GL0808);
-		editButtonContact.setText(GL0140);
-		emailCancelButton.setText(GL0142);
-		emailSaveButton.setText(GL0141);
-		email.setText(GL0212+GL_SPL_SEMICOLON);
-		emailTextConfirmation.setText(GL0813);
-		securityText.getElement().setInnerHTML(GL0814);
-		forgetPasswordMsg.setText(GL0815);
-		forgetPassword.setText(" "+GL0816);
-		lblPleaseWait.setText(GL0339);
-		settingsinfoText.getElement().setInnerHTML(GL0817);
-		EduSavingTextLabel.setText(GL0808);
-		editButtonEdu.setText(GL0140);
-		eduInfoCancelButton.setText(GL0142);
-		eduInfoSaveButton.setText(GL0141);
-		roleText.setText(" "+GL0818);
-		gradeText.setText(GL0819);
-		gradeLbl.setText(GL0820);
-		courseLabel.setText(GL0821);
-		courseLbl.setText(GL0820);
-		courseMaxMsg.setText(GL0822);
-		htmlToolTipDesc.setHTML(GL1539);
+		settingsText.getElement().setInnerHTML(i18n.GL0192());
+		uploadProfilImageButton.setText(i18n.GL0800());
+		profilePageText.getElement().setInnerHTML(i18n.GL0801());
+		profileOnButton.setText(i18n.GL0802());
+		profileOffButton.setText(i18n.GL0803());
+		aboutUsText.getElement().setInnerHTML(i18n.GL0804());
+		appearText.getElement().setInnerHTML(i18n.GL0805());
+		aboutUsCharacterValidation.setText(i18n.GL0143());
+		btnSave.setText(i18n.GL0141());
+		biographyCancelButton.getElement().setInnerHTML(i18n.GL0142());
+		btnSeeMyProfile.setText(i18n.GL0806());
+		accountText.getElement().setInnerHTML(i18n.GL0807());
+		accountSavingTextLabel.setText(i18n.GL0808());
+		editButtonAccount.setText(i18n.GL0140());
+		settingCancelButton.setText(i18n.GL0142());
+		settingsSaveButton.setText(i18n.GL0141());
+		usernameText.getElement().setInnerHTML(i18n.GL0652());
+		nametext.getElement().setInnerHTML(i18n.GL0649());
+		uploadProfileImage.setTitle(i18n.GL0823());
+		uploadProfileImage.setAltText(i18n.GL0823());
+		//i18n.GL0823
+		charLimitFNameLbl.setText(i18n.GL0143());
+		genderText.getElement().setInnerHTML(i18n.GL0809()+i18n.GL_SPL_SEMICOLON());
+		lbMaleText.setText(i18n.GL0810());
+		lbFemaleText.setText(i18n.GL0811());
+		lbOtherText.setText(i18n.GL0419());
+		notToShareText.setText(i18n.GL0812());
+		emailtext.getElement().setInnerHTML(i18n.GL0212());
+		SavingTextLabel.setText(i18n.GL0808());
+		editButtonContact.setText(i18n.GL0140());
+		emailCancelButton.setText(i18n.GL0142());
+		emailSaveButton.setText(i18n.GL0141());
+		email.setText(i18n.GL0212()+i18n.GL_SPL_SEMICOLON());
+		emailTextConfirmation.setText(i18n.GL0813());
+		securityText.getElement().setInnerHTML(i18n.GL0814());
+		forgetPasswordMsg.setText(i18n.GL0815());
+		forgetPassword.setText(" "+i18n.GL0816());
+		lblPleaseWait.setText(i18n.GL0339());
+		settingsinfoText.getElement().setInnerHTML(i18n.GL0817());
+		EduSavingTextLabel.setText(i18n.GL0808());
+		editButtonEdu.setText(i18n.GL0140());
+		eduInfoCancelButton.setText(i18n.GL0142());
+		eduInfoSaveButton.setText(i18n.GL0141());
+		roleText.setText(" "+i18n.GL0818());
+		gradeText.setText(i18n.GL0819());
+		gradeLbl.setText(i18n.GL0820());
+		courseLabel.setText(i18n.GL0821());
+		courseLbl.setText(i18n.GL0820());
+		courseMaxMsg.setText(i18n.GL0822());
+		htmlToolTipDesc.setHTML(i18n.GL1539());
 		panelToolTipContent.getElement().getStyle().setWidth(247, Unit.PX);
 		panelTooltipContainer.getElement().getStyle().setWidth(277, Unit.PX);
 		panelTooltipContainer.getElement().getStyle().setLeft(-127, Unit.PX);
 		emailPanel.setVisible(true);
-		//GL0820
+		//i18n.GL0820
 		//For 5.9 release
 		editButtonAccount.addClickHandler(new onEditImageName());
 		editButtonContact.addClickHandler(new onEditForEmail());
@@ -404,36 +405,36 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			public void onKeyUp(KeyUpEvent event) {
 				clearErrorMessage();
 				if (txtUserName.getText().length() <4 || txtUserName.getText().length() >20){
-					setErrorMessage(GL0473);
+					setErrorMessage(i18n.GL0473);
 				}
 			}
 		});*/
 		//added in 6.1
-		standardsEditButton.setText(GL0140);
-		standardsSaveButton.setText(GL0141);
-		standardsCancelButton.setText(GL0142);
-		standardsText.getElement().setInnerHTML(GL1559);
+		standardsEditButton.setText(i18n.GL0140());
+		standardsSaveButton.setText(i18n.GL0141());
+		standardsCancelButton.setText(i18n.GL0142());
+		standardsText.getElement().setInnerHTML(i18n.GL1559());
 		standardsSaveCancelButtonContainer.setVisible(false);
 		
-		lblCommonCore.setText(GL1560);
-		lblCaliforniaScience.setText(GL1561);
-		lblTexas.setText(GL1562);
-		lblNgss.setText(GL1655);
+		lblCommonCore.setText(i18n.GL1560());
+		lblCaliforniaScience.setText(i18n.GL1561());
+		lblTexas.setText(i18n.GL1562());
+		lblNgss.setText(i18n.GL1655());
 		
-		description.setText(GL1583);
+		description.setText(i18n.GL1583());
 		userStandardEditView.setVisible(false);
 		userStandardTextPanel.add(commonCoreChk);
 		userStandardTextPanel.add(californiaStandChk);
 		userStandardTextPanel.add(texasChk);
 		userStandardTextPanel.add(ngssChk);
 		
-		commonCoreChk.setText(GL1560);
+		commonCoreChk.setText(i18n.GL1560());
 		commonCoreChk.setName("27787,24146");
-		californiaStandChk.setText(GL1561);
+		californiaStandChk.setText(i18n.GL1561());
 		californiaStandChk.setName("30424,42236,42237");
-		texasChk.setText(GL1562);
+		texasChk.setText(i18n.GL1562());
 		texasChk.setName("72168");
-		ngssChk.setText(GL1655);
+		ngssChk.setText(i18n.GL1655());
 		ngssChk.setName("77271");
 		
 		commonCoreChk.setStyleName(Settings.standardsCheckBox());
@@ -442,7 +443,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 
 		ngssChk.setStyleName(Settings.standardsCheckBox());
 	//added in 6.4
-		btnViewAdmin.setText(GL1993);
+		btnViewAdmin.setText(i18n.GL1993() );
 		if(AppClientFactory.getLoggedInUser().getUserRoleSetString().contains("Content_Admin")){
 			btnViewAdmin.setVisible(true);
 		}else{
@@ -458,7 +459,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		lblCaliforniaScience.setVisible(false);
 		lblCommonCore.setVisible(false);
 		lblNgss.setVisible(false);
-		lblUserMessage.setText(GL1476);
+		lblUserMessage.setText(i18n.GL1476());
 		lblUserMessage.setVisible(false);
 		commonCoreChk.addClickHandler(new ClickHandler() {
 			
@@ -547,7 +548,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		public void onKeyUp(KeyUpEvent event) {
 			clearErrorMessage();
 			if (txtUserName.getText().length() <4 || txtUserName.getText().length() >20){
-				setErrorMessage(GL0473);
+				setErrorMessage(i18n.GL0473());
 			}
 			if (txtUserName.getText().equalsIgnoreCase(lbUName.getText().trim())){
 				isUserNameChanged = false;
@@ -567,14 +568,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				if(!userNameValidate){
 					 if(!txtUserName.getText().contains(" ")){
 							if (txtUserName.isVisible()){
-									setErrorMessage(GL0475);
+									setErrorMessage(i18n.GL0475());
 								}
 					}else if(txtUserName.getText().contains(" ")){
-						setErrorMessage(GL1635);
+						setErrorMessage(i18n.GL1635());
 					}
 				}else if (txtUserName.getText().length() <4 || txtUserName.getText().length() >20){
 					if (txtUserName.isVisible())
-						setErrorMessage(GL0473);
+						setErrorMessage(i18n.GL0473());
 				}else{
 					// Check for profanity for user name
 					if (txtUserName.isVisible())
@@ -615,7 +616,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				isProfanityCleared = !value;
 				if (value){
 					if (txtUserName.isVisible()){
-						setErrorMessage(GL0554);
+						setErrorMessage(i18n.GL0554());
 						disableAccSaveButton();
 					}
 				}else{
@@ -646,7 +647,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 						if (type.equalsIgnoreCase(BY_USERNAME) && isAvailable) {
 							isValidUserName = result.isAvailability();
 							if (txtUserName.isVisible()){
-								setErrorMessage(GL0444);
+								setErrorMessage(i18n.GL0444());
 								disableAccSaveButton();
 							}
 
@@ -993,22 +994,22 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 //		gooruUid=settingDo.getUser().getGooruUId();
 //		if(role != null){
 //			if(role.equalsIgnoreCase("Teacher")){
-//				gradeLbl.setText(GL1477);
-//				courseLbl.setText(GL1478);
+//				gradeLbl.setText(i18n.GL1477);
+//				courseLbl.setText(i18n.GL1478);
 //			}
 //			else if(role.equalsIgnoreCase("Student")){
-//				gradeLbl.setText(GL1479);
-//				courseLbl.setText(GL1480);
+//				gradeLbl.setText(i18n.GL1479);
+//				courseLbl.setText(i18n.GL1480);
 //			}
 //			else{
-//				gradeLbl.setText(GL1481);
-//				courseLbl.setText(GL1482);
+//				gradeLbl.setText(i18n.GL1481);
+//				courseLbl.setText(i18n.GL1482);
 //			}
 //		}
 //		else{
 //			if(settingDo.getUser().getAccountTypeId() == 2){
-//				gradeLbl.setText(GL1479);
-//				courseLbl.setText(GL1480);
+//				gradeLbl.setText(i18n.GL1479);
+//				courseLbl.setText(i18n.GL1480);
 //			}
 //			
 //		}
@@ -1025,22 +1026,22 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		gooruUid=v2userDo.getUser().getGooruUId();
 		if(role != null){
 			if(role.equalsIgnoreCase("Teacher")){
-				gradeLbl.setText(GL1477);
-				courseLbl.setText(GL1478);
+				gradeLbl.setText(i18n.GL1477());
+				courseLbl.setText(i18n.GL1478());
 			}
 			else if(role.equalsIgnoreCase("Student")){
-				gradeLbl.setText(GL1479);
-				courseLbl.setText(GL1480);
+				gradeLbl.setText(i18n.GL1479());
+				courseLbl.setText(i18n.GL1480());
 			}
 			else{
-				gradeLbl.setText(GL1481);
-				courseLbl.setText(GL1482);
+				gradeLbl.setText(i18n.GL1481());
+				courseLbl.setText(i18n.GL1482());
 			}
 		}
 		else{
 			if(v2userDo.getUser().getAccountTypeId() == 2){
-				gradeLbl.setText(GL1479);
-				courseLbl.setText(GL1480);
+				gradeLbl.setText(i18n.GL1479());
+				courseLbl.setText(i18n.GL1480());
 			}
 			
 		}
@@ -1058,7 +1059,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 						lblPleaseWait.setVisible(false);
 						forgetPassword.setVisible(true);
 					if (result != null && result.containsKey("error") && result.get("error").toString().length() > 0) {
-						alertContentUc=new AlertContentUc(GL0061, (String) result.get("error"));
+						alertContentUc=new AlertContentUc(i18n.GL0061(), (String) result.get("error"));
 						return;
 					}
 					if (result != null && result.containsKey("gooruUid") && result.get("gooruUid").toString().length() > 0) {
@@ -1231,7 +1232,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			Label defaultCourseLabel=new Label();
 			defaultCourseLabel.setStyleName(Settings.defaultTextcss());
 			defaultCourseLabel.getElement().setAttribute("style","margin-left: 0px !important");
-			defaultCourseLabel.setText(NONE_ADDED);
+			defaultCourseLabel.setText(i18n.GL1476());
 			collectionCourseDefaultLstPanel.add(defaultCourseLabel);
 		}
 		
@@ -1292,7 +1293,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 			DefaultGardeContainer.clear();
 			Label defaulTextLabel=new Label();
 			defaulTextLabel.setStyleName(Settings.defaultTextcss());
-			defaulTextLabel.setText(NONE_ADDED);
+			defaulTextLabel.setText(i18n.GL1476());
 			DefaultGardeContainer.add(defaulTextLabel);
 			
 		}
@@ -1302,8 +1303,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		gradeTopList.clear();
 		gradeMiddleList.clear();
 		
-		KinderGarten.add(new ProfilePageGradeLabel(GL0850, profileDo));
-		higherEducation.add(new ProfilePageGradeLabel(GL0169,profileDo));
+		KinderGarten.add(new ProfilePageGradeLabel(i18n.GL0850(), profileDo));
+		higherEducation.add(new ProfilePageGradeLabel(i18n.GL0169(),profileDo));
 		for (int i = 1; i <= 12; i++) {
 			if (i <= 6) {
 				gradeTopList.add(new ProfilePageGradeLabel(i + "", profileDo));
@@ -1389,7 +1390,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 					return;
 				}
 				if (validateCourse(courseCodeLabel) && courseCode != null) {
-					alertContentUc=	new AlertContentUc(GL1089, GL1090);
+					alertContentUc=	new AlertContentUc(i18n.GL1089(), i18n.GL1090());
 				} else {
 					Set<ProfileCodeDo> profileCodeDoSet = new HashSet<ProfileCodeDo>();
 					ProfileCodeDo profileCodeDo = new ProfileCodeDo();
