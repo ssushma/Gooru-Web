@@ -41,6 +41,8 @@ public class GoogleDriveDo implements Serializable{
 	private String nextLink;
 	private ArrayList<GoogleDriveItemDo> items;
 	private ErrorDo error;
+	private String role;
+	private String type;
 	
 	/**
 	 * @return the kind
@@ -107,5 +109,17 @@ public class GoogleDriveDo implements Serializable{
 	 */
 	public void setError(ErrorDo error) {
 		this.error = error;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

@@ -390,6 +390,8 @@ public interface ResourceService extends BaseService {
 	public void deleteTagsServiceRequest(String resourceId, String addedTags)throws GwtException, ServerDownException;
 
 	public GoogleDriveDo getGoogleDriveFilesList(String folderId,String nextPageToken) throws GwtException, ServerDownException;
+	
+	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId) throws GwtException, ServerDownException;
 
 	//List<DriveDo> getfolderList(String id)throws GwtException, ServerDownException;
 
