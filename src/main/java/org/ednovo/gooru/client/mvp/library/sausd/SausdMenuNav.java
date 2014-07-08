@@ -212,7 +212,7 @@ public abstract class SausdMenuNav extends Composite {
 	}
 
 	public void getCourse(final String subjectCode, final String subjectName, final ProfileLibraryDo profileLibraryDo) {
-		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 14, new SimpleAsyncCallback<ProfileLibraryListDo>() {
+		AppClientFactory.getInjector().getLibraryService().getLibraryPaginationWorkspace(subjectCode, "public", 15, new SimpleAsyncCallback<ProfileLibraryListDo>() {
 			@Override
 			public void onSuccess(ProfileLibraryListDo profileLibraryListDo) {
 				clickOnCourse(profileLibraryListDo.getSearchResult(), subjectCode, profileLibraryDo);
