@@ -72,6 +72,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -162,7 +163,9 @@ public class UserSettingsPresenter
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
+//		Cookies.setCookie("google-access-token", "ya29.PAAfKKgX6vgzcxsAAACEfF1i-o4TckiuN5ulmAro7IXXvftylhEW7zG1ody__Q");
 		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : null;
+		StringUtil.consoleLog("access_token : "+access_token);
 		if (access_token !=null ){
 			UserDo user = AppClientFactory.getLoggedInUser();
 			user.setAccessToken(access_token);
@@ -1089,5 +1092,4 @@ public class UserSettingsPresenter
 		});
 		
 	}
-
 }

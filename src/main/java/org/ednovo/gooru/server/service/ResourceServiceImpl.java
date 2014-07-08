@@ -1468,7 +1468,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		System.out.println("url ======>"+url);
 		String response=new WebService(url).webInvokeforget("GET", "", contentType, access_token);
-
+		System.out.println("response ======>"+response);
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}
