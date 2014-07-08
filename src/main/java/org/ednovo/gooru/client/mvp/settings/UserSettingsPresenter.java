@@ -165,7 +165,6 @@ public class UserSettingsPresenter
 				.getRequestParameter("newMailId");
 //		Cookies.setCookie("google-access-token", "ya29.PAAfKKgX6vgzcxsAAACEfF1i-o4TckiuN5ulmAro7IXXvftylhEW7zG1ody__Q");
 		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : null;
-		StringUtil.consoleLog("access_token : "+access_token);
 		if (access_token !=null ){
 			UserDo user = AppClientFactory.getLoggedInUser();
 			user.setAccessToken(access_token);
