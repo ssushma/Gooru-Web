@@ -467,8 +467,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			slideResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
-			String alternativeLink=googleDriveItemDo.getDefaultOpenWithLink();
-			urlTextBox.setValue(alternativeLink.replaceFirst("edit", "viewform"));
+			try{
+				urlTextBox.setValue(googleDriveItemDo.getDefaultOpenWithLink().replaceFirst("edit", "viewform"));
+			}catch(Exception e){
+				urlTextBox.setValue(googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
+			}
 			interactiveResourcePanel(null);
 		}
 	}
