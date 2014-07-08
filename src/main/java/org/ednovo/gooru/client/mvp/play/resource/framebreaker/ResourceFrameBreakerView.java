@@ -99,38 +99,51 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo = collectionItemDo;
-		setLabelsAndIds();
-		supportTip.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().supportTip());
-		supportTip.setText(GL1453);
-		btnResourceLink.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().btnResourceLink());
-		imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
-		defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
+		if(collectionItemDo!=null){
+			setLabelsAndIds();
+			supportTip.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().supportTip());
+			supportTip.setText(GL1453);
+			btnResourceLink.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().btnResourceLink());
+			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
+			}
+			if(defaultResourceCategory!=null){
+				if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
+				{
+					defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
+				}
+				if(defaultResourceCategory.equalsIgnoreCase("Slide"))
+				{
+					defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
+				}
+				if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
+				{
+					defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
+				}
+			}
+			imgFieldTrip.addErrorHandler(new ErrorHandler() {
+				
+				@Override
+				public void onError(ErrorEvent event) {
+					imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
+				}
+			});
+			if(collectionItemDo.getResource().getResourceFormat()!=null){
+				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
+			}
+		}else{
+			btnResourceLink.removeFromParent();
+			imgFieldTrip.removeFromParent();
 		}
-		if(defaultResourceCategory!=null){
-			if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
-			{
-				defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
-			}
-			if(defaultResourceCategory.equalsIgnoreCase("Slide"))
-			{
-				defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
-			}
-			if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
-			{
-				defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
-			}
-		}
-		imgFieldTrip.addErrorHandler(new ErrorHandler() {
-			
-			@Override
-			public void onError(ErrorEvent event) {
-				imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
-			}
-		});
-		if(collectionItemDo.getResource().getResourceFormat()!=null){
-			resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
-		}
+	}
+	public void setFileDeletedMessage(){
+		btnResourceLink.removeFromParent();
+		imgFieldTrip.removeFromParent();
+		lblGooruFieldTrip.setText("This file has been deleted permanently");
+	}
+	public void setFilePermissionMessage(){
+		lblGooruFieldTrip.setText("You don't have permission to see this file.");
 	}
 	/**
 	 * 

@@ -299,12 +299,14 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 		}else{
 			tabViewContainer.add(addWebResourceWidget);
 			tabViewContainer.getElement().setId("pnlTabViewContainer");
+			urlTabButton.setStyleName(res.css().buttonSelected());
+			questionTabButton.setStyleName(res.css().buttonDeSelected());
+			searchTabButton.setStyleName(res.css().buttonDeSelected());
+			myComputerTabButton.setStyleName(res.css().buttonDeSelected());
+			myDriveButton.setStyleName(res.css().buttonDeSelected());
+
 		}
-		urlTabButton.setStyleName(res.css().buttonSelected());
-		questionTabButton.setStyleName(res.css().buttonDeSelected());
-		searchTabButton.setStyleName(res.css().buttonDeSelected());
-		myComputerTabButton.setStyleName(res.css().buttonDeSelected());
-		myDriveButton.setStyleName(res.css().buttonDeSelected());
+		
 	}
 	@Override
 	public void setCollectionItemDo(CollectionItemDo collectionItemDo){
@@ -840,6 +842,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 			urlTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			searchTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			myComputerTabButton.getElement().getStyle().setDisplay(Display.BLOCK);
+			myDriveButton.getElement().getStyle().setDisplay(Display.BLOCK);
 			questionTabButton.getElement().getStyle().setDisplay(Display.NONE);
 			trueOrFlaseButton.getElement().getStyle().setDisplay(Display.NONE);
 			openEndedButton.getElement().getStyle().setDisplay(Display.NONE);
@@ -868,6 +871,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
+				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
 				setRadioButtonValues();
 				addQuestionResourceWidget.setQuestionType("MC");
 				addQuestionResourceWidget.showMulipleChoice();
@@ -902,6 +906,7 @@ public class AddResourceView extends PopupViewWithUiHandlers<AddResourceUiHandle
 				urlTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				myComputerTabButton.getElement().getStyle().setDisplay(Display.NONE);
 				searchTabButton.getElement().getStyle().setDisplay(Display.NONE);
+				myDriveButton.getElement().getStyle().setDisplay(Display.NONE);
 				tabViewContainer.add(addQuestionResourceWidget);
 				tabViewContainer.getElement().setId("pnlTabViewContainer");
 				int questionTypeNum=collectionItemDo.getResource().getType();

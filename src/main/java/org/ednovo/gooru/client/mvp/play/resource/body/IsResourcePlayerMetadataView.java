@@ -52,4 +52,5 @@ public interface IsResourcePlayerMetadataView extends IsViewWithHandlers<Resourc
 	public void clearAllStarsForAnnonymous();
 	public void childLoggedIn(boolean isChild);
 	public void deleteRatingsValue(); 
+	public void setGoogleDriveFileStatusCode(Integer statusCode);
 }
