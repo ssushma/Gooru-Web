@@ -32,6 +32,8 @@ import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -161,6 +163,9 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void driveContentList(GoogleDriveDo googleDriveDo) {
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
+		StringUtil.consoleLog("googleDriveDo : "+googleDriveDo);
+		StringUtil.consoleLog("googleDriveDo.getItems() : "+googleDriveDo.getItems());
+		StringUtil.consoleLog("googleDriveDo.getItems().size() : "+googleDriveDo.getItems().size());
 		if (googleDriveDo != null && googleDriveDo.getItems() != null
 				&& googleDriveDo.getItems().size() > 0) {
 			pageToken=googleDriveDo.getNextPageToken();
