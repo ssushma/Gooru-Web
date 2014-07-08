@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -183,7 +184,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void showNoDriveAccess(int errorCode) {
 		panelFileList.clear();
 		panelDriveBreadCrums.setVisible(false);
-		Cookies.removeCookie("google-access-token");
+		Cookies.setCookie("google-access-token", "", new Date());
 		if (errorCode==401){
 			showErrorMessage(i18n.GL2013(),i18n.GL2014());
 		}else if (errorCode==0){
