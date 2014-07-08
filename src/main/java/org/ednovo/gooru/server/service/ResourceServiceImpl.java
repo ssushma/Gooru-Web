@@ -459,7 +459,6 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		JsonRepresentation jsonRep = null;
 		CollectionDo collectionDoObj= new CollectionDo();
 	    String url = UrlGenerator.generateUrl(getRestEndPoint(), UrlToken.UPDATE_V2_COLLLECTION, collectionId, getLoggedInSessionToken());
-	    System.out.println("updateCollectionMetadata:"+url);
 	    JSONObject classPageJsonObject=new JSONObject();
 		JSONObject collectionTypeJsonObject=new JSONObject();
 		try{
@@ -491,7 +490,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 				collectionTypeJsonObject.put("action", action);
 			}
 			classPageJsonObject.put("collection", collectionTypeJsonObject);
-			  System.out.println("out"+classPageJsonObject.toString());
+			  
 			
 		}catch(Exception e){
 			
@@ -1467,9 +1466,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			e.printStackTrace();
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
-		System.out.println("url ======>"+url);
+		
 		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
-		System.out.println("response ======>"+response);
+		
 		
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);

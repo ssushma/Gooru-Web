@@ -95,6 +95,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -190,6 +191,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	
 	String USER_TAXONOMY_ROOT_CODE="user_taxonomy_root_code";
 	List<String> userStandardPrefcode=new ArrayList<String>();
+	
+	boolean isDriveConnected = false;
 	
 	public CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
@@ -759,16 +762,21 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	@UiHandler("btnConnect")
 	public void onClickConnect(ClickEvent event){
-		Map<String, String> parms = new HashMap<String, String>();
-		parms = StringUtil.splitQuery(Window.Location.getHref());
-		AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
-
-			@Override
-			public void onSuccess(String redirectUrl) {
-				MixpanelUtil.mixpanelEvent("Access_Google_Drive");
-				Window.Location.replace(redirectUrl);
-			}
-		});
+		if (!isDriveConnected){
+			Map<String, String> parms = new HashMap<String, String>();
+			parms = StringUtil.splitQuery(Window.Location.getHref());
+			AppClientFactory.getInjector().getSearchService().getGoogleDrive(Window.Location.getHref(), parms, new SimpleAsyncCallback<String>() {
+	
+				@Override
+				public void onSuccess(String redirectUrl) {
+					MixpanelUtil.mixpanelEvent("Access_Google_Drive");
+					Window.Location.replace(redirectUrl);
+				}
+			});
+		}else{
+			Cookies.removeCookie("google-access-token");
+			googleDirveStatus(false);
+		}
 	}
 	
 	@UiHandler("settingsSaveButton")
@@ -1805,15 +1813,14 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 	}
 	@Override
 	public void googleDirveStatus(boolean isConnected){
-//		lblDisconnect.setVisible(isConnected);
+		this.isDriveConnected = isConnected;
+		lblDisconnect.setVisible(isConnected);
 		if (isConnected){
 			btnConnect.getElement().addClassName("green");
 			btnConnect.setText(i18n.GL2012());
-			btnConnect.setEnabled(false);
 		}else{
 			btnConnect.getElement().removeClassName("green");
 			btnConnect.setText(i18n.GL2008());
-			btnConnect.setEnabled(true);
 		}
 	}
 }

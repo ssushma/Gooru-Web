@@ -109,23 +109,14 @@ public class DrivePresenter extends
 				}
 
 				if(googleDriveDo!=null){
-					System.out.println("googleDrive Do is not null");
 					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
-						System.out.println("401 erroor");
-						StringUtil.consoleLog("401 erroor");
 						getView().showNoDriveAccess(401);
 					}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
-						System.out.println("403 erroor");
-						StringUtil.consoleLog("403 erroor");
 						getView().showNoDriveAccess(403);
 					}else{
-						StringUtil.consoleLog("received data..");
-						System.out.println("received data");
 						getView().driveContentList(googleDriveDo);
 					}
 				}else{
-					System.out.println("googleDrive Do is null");
-					StringUtil.consoleLog("googleDrive Do is null");
 					getView().showNoDriveAccess(401);
 				}
 			}

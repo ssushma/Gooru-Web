@@ -163,9 +163,6 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void driveContentList(GoogleDriveDo googleDriveDo) {
 		panelFileList.setVisible(true);
 		panelDriveBreadCrums.setVisible(true);
-		StringUtil.consoleLog("googleDriveDo : "+googleDriveDo);
-		StringUtil.consoleLog("googleDriveDo.getItems() : "+googleDriveDo.getItems());
-		StringUtil.consoleLog("googleDriveDo.getItems().size() : "+googleDriveDo.getItems().size());
 		if (googleDriveDo != null && googleDriveDo.getItems() != null
 				&& googleDriveDo.getItems().size() > 0) {
 			pageToken=googleDriveDo.getNextPageToken();
