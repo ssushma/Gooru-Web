@@ -63,6 +63,7 @@ import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
 import org.ednovo.gooru.shared.model.content.ResourceMetaInfoDo;
 import org.ednovo.gooru.shared.model.content.ResourceTagsDo;
 import org.ednovo.gooru.shared.model.content.checkboxSelectedDo;
+import org.ednovo.gooru.shared.model.drive.ErrorDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
@@ -1458,7 +1459,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		try {
 			enocodedString = URLEncoder.encode("(mimeType = 'application/vnd.google-apps.document' or mimeType = 'application/vnd.google-apps.spreadsheet' or mimeType = 'application/vnd.google-apps.folder' or mimeType='application/vnd.google-apps.form' or mimeType='application/vnd.google-apps.presentation' or mimeType='application/vnd.google-apps.drawing')","UTF-8");
 			folderId = folderId != null ? folderId : "root";
-			enocodedString=enocodedString+URLEncoder.encode(" and '"+folderId+"' in parents","UTF-8");
+			enocodedString=enocodedString+URLEncoder.encode(" and '"+folderId+"' in parents and trashed!=true","UTF-8");
 			if(nextPageToken!=null){
 				enocodedString=enocodedString+"&pageToken="+nextPageToken;
 			}
@@ -1472,6 +1473,9 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
+		}else{
+			googleDriveDo.setError(new ErrorDo());
+			googleDriveDo.getError().setCode(401);
 		}
 		return googleDriveDo;
 	}

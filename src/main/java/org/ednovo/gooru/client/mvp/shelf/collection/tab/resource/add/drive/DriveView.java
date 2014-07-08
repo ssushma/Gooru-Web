@@ -189,6 +189,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 			showErrorMessage(i18n.GL2013(),i18n.GL2014());
 		}else if (errorCode==0){
 			showErrorMessage("",i18n.GL2018());
+			panelDriveBreadCrums.setVisible(true);
 		}else if (errorCode==403){
 			showErrorMessage(i18n.GL2013(),i18n.GL2015());
 		}
@@ -202,14 +203,14 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		errorContainer.setStyleName(driveStyle.pannelError());
 		Label lblErrorHeading=new Label();
 		lblErrorHeading.setStyleName(driveStyle.errorHeading());
-		lblErrorHeading.setText(i18n.GL2013());
-		lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
-		lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
+		lblErrorHeading.setText(errorHeading);
+		lblErrorHeading.getElement().setAttribute("alt", errorHeading); 
+		lblErrorHeading.getElement().setAttribute("title", errorHeading);
 		Label lblErrorSubHeading=new Label();
 		lblErrorSubHeading.setStyleName("");
-		lblErrorSubHeading.setText(i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+		lblErrorSubHeading.setText(errorSubHeading);
+		lblErrorSubHeading.getElement().setAttribute("alt", errorSubHeading);
+		lblErrorSubHeading.getElement().setAttribute("title", errorSubHeading);
 		errorContainer.add(lblErrorHeading);
 		errorContainer.add(lblErrorSubHeading);
 		panelFileList.add(errorContainer);
