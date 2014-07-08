@@ -370,6 +370,19 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
 		}else if(resourceTypeName.equalsIgnoreCase("animation/kmz")){
 			resourceWidgetContainer.add(new GwtEarthWidget(collectionItemDo.getResource().getUrl()));
+		}else if(resourceTypeName.equalsIgnoreCase("animation/swf")){
+			String resourceSourceUrl="";
+			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)){
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo));
+			}else{
+				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
+					resourceSourceUrl = collectionItemDo.getResource().getUrl();
+					resourceSourceUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceSourceUrl;
+				}else{
+					resourceSourceUrl=collectionItemDo.getResource().getUrl();
+				}
+				resourceWidgetContainer.add(new WebResourceWidget(resourceSourceUrl));
+			}
 		}else if(resourceTypeName.equalsIgnoreCase("assessment-question")){
 			getUiHandlers().showQuestionView(collectionItemDo);
 		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")){
@@ -384,8 +397,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 					resourceWidgetContainer.add(webResourceWidget);
 				}
 				else{
-					if(!collectionItemDo.getResource().getUrl().startsWith("http"))
-					{
+					if(!collectionItemDo.getResource().getUrl().startsWith("http")){
 						collectionItemDo.getResource().setUrl(collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+collectionItemDo.getResource().getUrl());
 					}
 					if(collectionItemDo.getResource().getUrl().contains("docs.google.com")){
