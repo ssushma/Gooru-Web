@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.server.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -1467,13 +1468,15 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.GET_GOOGLEDRIVE_FIlES, enocodedString);
 		System.out.println("url ======>"+url);
-		String response=new WebService(url).webInvokeforget("GET", "", contentType, access_token);
+		String response=new WebService(url,false).webInvokeforget("GET", "", contentType, access_token);
 		System.out.println("response ======>"+response);
+		
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);
 		}
 		return googleDriveDo;
 	}
+	
 	
 	public GoogleDriveDo updateFileShareToAnyoneWithLink(String driveFileId){
 		GoogleDriveDo googleDriveDo=new GoogleDriveDo();
@@ -1488,8 +1491,7 @@ public class ResourceServiceImpl extends BaseServiceImpl implements MessagePrope
 			e.printStackTrace();
 		}
 		String url = UrlGenerator.generateUrl(getGoogleRestEndPoint(), UrlToken.UPDATE_FILE_PERMISSION, driveFileId);
-		System.out.println("url ======>"+url);
-		String response=new WebService(url).postWebservice("POST",premissonJsonObject.toString(),contentType,access_token);
+		String response=new WebService(url,false).postWebservice("POST",premissonJsonObject.toString(),contentType,access_token);
 
 		if (response!=null){
 			googleDriveDo=deserializeGoogleDriveFilesList(response);

@@ -264,6 +264,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 				getGoogleFolderItems(googleDriveItemDo.getId());
 				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}else {
+				pageToken=null;
 				getUiHandlers().showAddResourceWidget(googleDriveItemDo);
 				setBreadCrumbLabel(googleDriveItemDo.getId(),googleDriveItemDo.getTitle());
 			}
