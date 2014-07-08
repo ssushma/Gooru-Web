@@ -2569,5 +2569,8 @@ public interface MessageProperties {
     	String GL2004 = "High School Courses";
     	String GL2005 = "Follower";
     	String GL2006 = "Assignments Order";
+    	String GL2007="Unfortunately, it looks like this resource has been deleted by its owner!";
+    	String GL2008="Unfortunately, it looks like this resource is no longer accessible.";
+    	String GL2009="";
 
 }

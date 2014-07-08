@@ -30,6 +30,7 @@ import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
@@ -140,10 +141,12 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 	public void setFileDeletedMessage(){
 		btnResourceLink.removeFromParent();
 		imgFieldTrip.removeFromParent();
-		lblGooruFieldTrip.setText("This file has been deleted permanently");
+		lblGooruFieldTrip.getElement().getStyle().setMarginTop(230, Unit.PX);
+		lblGooruFieldTrip.setText(GL2007);
 	}
 	public void setFilePermissionMessage(){
-		lblGooruFieldTrip.setText("You don't have permission to see this file.");
+		lblGooruFieldTrip.getElement().getStyle().setMarginTop(230, Unit.PX);
+		lblGooruFieldTrip.setText(GL2008);
 	}
 	/**
 	 * 
