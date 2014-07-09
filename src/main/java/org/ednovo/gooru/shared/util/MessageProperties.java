@@ -2569,7 +2569,7 @@ public interface MessageProperties {
     	String GL2004 = "High School Courses";
     	String GL2005 = "Follower";
     	String GL2006 = "Assignments Order";
-    	String GL2007="Unfortunately, it looks like this Google Drive resource has been set to private, or has been deleted by is owner!";
+    	String GL2007="Unfortunately, it looks like this Google Drive resource has been set to private, or has been deleted by its owner!";
     	String GL2008="Unfortunately, it looks like this resource is no longer accessible.";
     	String GL2009="Private doc detected. Others won't be able to view it.";
 
