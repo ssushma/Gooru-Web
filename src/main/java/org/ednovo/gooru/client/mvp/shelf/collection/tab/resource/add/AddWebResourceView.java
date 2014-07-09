@@ -455,7 +455,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
 //		urlContianer.setVisible(false);
-		
+		if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+			mandatoryUrlLbl.setText(GL2009);
+			mandatoryUrlLbl.setVisible(true);
+		}
 		titleTextBox.setValue(googleDriveItemDo.getTitle());
 		urlTextBox.setReadOnly(true);
 		titleTextBox.setFocus(true);
@@ -482,7 +485,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		clearFields();
 		if(isGoogleDriveFile){
 			setDriveFileDetails();
-			driveFileInfoLbl.setText("If file is private, we will automatically update to public");
+			//driveFileInfoLbl.setText("If file is private, we will automatically update to public");
+			driveFileInfoLbl.removeFromParent();
 		}else{
 			driveFileInfoLbl.removeFromParent();
 		}
@@ -675,6 +679,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													mandatoryUrlLbl.setVisible(true);
 													isValidate = false;
 												}
+											}
+											if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+													mandatoryUrlLbl.setText(GL2009);
+													mandatoryUrlLbl.setVisible(true);
+													isValidate = false;
 											}
 											if(!rightsChkBox.getValue()){
 												rightsLbl.getElement().getStyle().setColor("orange");
