@@ -775,8 +775,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				}
 			});
 		}else{
-			Cookies.setCookie("google-access-token", "",  new Date(), ".www.goorulearning.org", "/", false);
-			Cookies.removeCookie("google-access-token");
+			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 			googleDirveStatus(false);
 		}
 	}
@@ -1823,8 +1822,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}else{
 			btnConnect.getElement().removeClassName("green");
 			btnConnect.setText(i18n.GL2008());
-			Cookies.setCookie("google-access-token", "",  new Date(), ".www.goorulearning.org", "/", false);
-			Cookies.removeCookie("google-access-token");
+			StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 		}
 	}
 }

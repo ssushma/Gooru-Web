@@ -184,8 +184,7 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void showNoDriveAccess(int errorCode) {
 		panelFileList.clear();
 		panelDriveBreadCrums.setVisible(false);
-		Cookies.setCookie("google-access-token", "",  new Date(), ".www.goorulearning.org", "/", false);
-		Cookies.removeCookie("google-access-token");
+		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 		if (errorCode==401){
 			showErrorMessage(i18n.GL2013(),i18n.GL2014());
 		}else if (errorCode==0){
