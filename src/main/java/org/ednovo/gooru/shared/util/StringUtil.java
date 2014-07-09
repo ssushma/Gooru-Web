@@ -292,6 +292,6 @@ public class StringUtil {
 		consoleLog("Removed cookies...");
 		consoleLog("Window.Location.getHost() :"+Window.Location.getHost());
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
-		Cookies.removeCookie("google-access-token");
+		Cookies.removeCookie("google-access-token", "/");
 	}
 }
