@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 
 
 /**
@@ -289,7 +290,8 @@ public class StringUtil {
 	
 	public static void clearCookies(String key, String path, String domain){
 		consoleLog("Removed cookies...");
-		Cookies.setCookie(key, "",  new Date(), domain, path, false);
+		consoleLog("Window.Location.getHost() :"+Window.Location.getHost());
+		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
 		Cookies.removeCookie("google-access-token");
 	}
 }
