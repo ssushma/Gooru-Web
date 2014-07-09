@@ -105,7 +105,7 @@ public class FoldersWelcomePage extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("#preview-play&id=b2dc729a-4a18-494e-8696-b06bc704bc98", "_blank", "");
+				Window.open("#preview-play&id=2548d591-9131-4577-b873-83b8f172eda5", "_blank", "");
 			}
 		});*/
 	}
