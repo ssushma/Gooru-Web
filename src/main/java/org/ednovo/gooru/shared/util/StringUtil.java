@@ -280,4 +280,7 @@ public class StringUtil {
 		
 		return str;
 	}
+	public static native void consoleLog(String message) /*-{
+		console.log(message );
+	}-*/;
 }

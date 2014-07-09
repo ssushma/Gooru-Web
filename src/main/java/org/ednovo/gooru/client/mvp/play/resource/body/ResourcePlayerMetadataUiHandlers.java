@@ -60,4 +60,6 @@ public interface ResourcePlayerMetadataUiHandlers extends BaseUiHandlers,PostUse
 	void createCollectionContentReport(String associatedGooruOid,
 			String freeText, ArrayList<String> contentReportList,
 			String deleteContentReportGooruOids);
+	
+	public void getGoogleDriveFile(String fileUrl);
 }

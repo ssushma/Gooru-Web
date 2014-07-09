@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -30,6 +31,7 @@ import org.apache.http.util.EntityUtils;
 import com.google.gwt.json.client.JSONException;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.rpc.StatusCodeException;
 
 /**
  * This class is mainly used for invoking the web services and return the
@@ -43,7 +45,7 @@ public class WebService {
 	DefaultHttpClient httpClient;
 	HttpContext localContext;
 	String ret;
-	public static HttpResponse response = null;
+	public  HttpResponse response = null;
 	HttpPost httpPost = null;
 	HttpDelete httpDelete = null;
 	HttpGet httpGet = null;
@@ -52,13 +54,17 @@ public class WebService {
 
 	// The serviceName should be the name of the Service you are going to be
 	// using.
-	public WebService(String serviceName) {
+	public WebService(String url,boolean isGoogleDriveFile) {
 		HttpParams myParams = new BasicHttpParams();
+		if(isGoogleDriveFile){
+			myParams.setParameter("http.protocol.handle-redirects",false);
+			myParams.setParameter("http.protocol.single-cookie-header", true);
+		}
 		HttpConnectionParams.setConnectionTimeout(myParams, 10000);
 		HttpConnectionParams.setSoTimeout(myParams, 10000);
 		httpClient = new DefaultHttpClient(myParams);
 		localContext = new BasicHttpContext();
-		webServiceUrl = serviceName;
+		webServiceUrl = url;
 	} // Use this method to do a HttpPost\WebInvoke on a Web Service
 
 
@@ -225,13 +231,10 @@ public class WebService {
 
 			}
 			try {
-				
 				response = httpClient.execute(httpGet, localContext);
-				
 //				response = httpConn.getResponseCode();
 				if (response != null) {
 					ret = EntityUtils.toString(response.getEntity());
-
 				}
 			} catch (Exception e) {
 
@@ -242,9 +245,25 @@ public class WebService {
 		
 		return ret;
 	}
+	
+	public int getStatusCode(String methodName) {
+		int statusCode=0;
+		ret = null;
+		httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,CookiePolicy.RFC_2965);
+		httpGet = new HttpGet(webServiceUrl);
+		response = null;
+		httpGet.setHeader("Accept","text/html,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+		httpGet.setHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
+		try {
+			response = httpClient.execute(httpGet, localContext);
+			if (response != null) {
+				statusCode=response.getStatusLine().getStatusCode();
+			}
+		} catch (Exception e) {
 
-	
-	
+		}
+		return statusCode;
+	}
 
 	public InputStream getHttpStream(String urlString) throws IOException {
 		InputStream in = null;

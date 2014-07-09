@@ -65,6 +65,7 @@ import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
+import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.user.BiographyDo;
 import org.ednovo.gooru.shared.model.user.FilterSettings;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
@@ -73,6 +74,7 @@ import org.ednovo.gooru.shared.model.user.SettingDo;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -166,13 +168,32 @@ public class UserSettingsPresenter
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
-		String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : null;
+//		Cookies.setCookie("google-access-token", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
+		final String access_token = Cookies.getCookie("google-access-token") !=null && !Cookies.getCookie("google-access-token").equalsIgnoreCase("") ? Cookies.getCookie("google-access-token") : null;
+
 		if (access_token !=null ){
-			UserDo user = AppClientFactory.getLoggedInUser();
-			user.setAccessToken(access_token);
-			AppClientFactory.setLoggedInUser(user);
 			
-			getView().googleDirveStatus(true);
+			AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {
+				@Override
+				public void onSuccess(GoogleDriveDo googleDriveDo) {
+
+					if(googleDriveDo!=null){
+						if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
+							getView().googleDirveStatus(false);
+						}else if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode()==403){
+							getView().googleDirveStatus(false);
+						}else{
+							UserDo user = AppClientFactory.getLoggedInUser();
+							user.setAccessToken(access_token);
+							AppClientFactory.setLoggedInUser(user);
+							
+							getView().googleDirveStatus(true);
+						}
+					}else{
+						getView().googleDirveStatus(false);
+					}
+				}
+			});
 		}else{
 			getView().googleDirveStatus(false);
 		}
@@ -1093,5 +1114,4 @@ public class UserSettingsPresenter
 		});
 		
 	}
-
 }
