@@ -373,7 +373,7 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		}else if(resourceTypeName.equalsIgnoreCase("animation/swf")){
 			String resourceSourceUrl="";
 			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)){
-				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo));
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else{
 				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
 					resourceSourceUrl = collectionItemDo.getResource().getUrl();
@@ -387,9 +387,9 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 			getUiHandlers().showQuestionView(collectionItemDo);
 		}else if(resourceTypeName.equalsIgnoreCase("resource/url")||resourceTypeName.equalsIgnoreCase("image/png")){
 			if(collectionItemDo.getResource().getHasFrameBreaker()!=null&&collectionItemDo.getResource().getHasFrameBreaker().equals(true)||isProtocolMatched(collectionItemDo.getResource().getUrl())){
-				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo));
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}else if(collectionItemDo.getResource().getUrl().contains("imdb")){
-				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo));
+				resourceWidgetContainer.add(new ResourceFrameBreakerView(collectionItemDo,false));
 			}
 			else{
 				if(resourceTypeName.equalsIgnoreCase("image/png")){
@@ -429,11 +429,11 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 	
 	public void setGoogleDriveFileStatusCode(Integer statusCode){
 		if(statusCode==302){
-			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(null);
+			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(collectionItemDo,true);
 			resourceFrameBreakerViewnew.setFilePermissionMessage();
 			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
 		}else if(statusCode==404){
-			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(null);
+			ResourceFrameBreakerView resourceFrameBreakerViewnew =new ResourceFrameBreakerView(collectionItemDo,true);
 			resourceFrameBreakerViewnew.setFileDeletedMessage();
 			resourceWidgetContainer.add(resourceFrameBreakerViewnew);
 		}else{

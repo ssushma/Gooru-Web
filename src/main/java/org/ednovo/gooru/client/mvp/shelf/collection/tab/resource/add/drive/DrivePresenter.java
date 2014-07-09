@@ -24,7 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 import java.util.List;
-
 import org.ednovo.gooru.client.AppPlaceKeeper;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
@@ -35,9 +34,9 @@ import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResource
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
-import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.annotations.NameToken;
@@ -101,13 +100,14 @@ public class DrivePresenter extends
 			getView().getPanelFileList().clear();
 			getView().getPanelFileList().add(setLoadingPanel());
 		}
+		//Cookies.setCookie("google-access-token","ya29.PQDLmyffPAv5OBsAAAA3btJFHswFsQaaH5X3yDRTwUw18oRTkFawy7HCq8_mtg");
+		//Cookies.removeCookie("google-access-token");
 		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
 			@Override
 			public void onSuccess(GoogleDriveDo googleDriveDo) {
 				if(isPanelClear){
 					getView().getPanelFileList().clear();
 				}
-
 				if(googleDriveDo!=null){
 					if (googleDriveDo.getError()!=null && googleDriveDo.getError().getCode() == 401){
 						getView().showNoDriveAccess(401);
@@ -164,4 +164,5 @@ public class DrivePresenter extends
 			addResourcePresenter.showAddWebResourceWidget(true, getView().getPanelFileList(),googleDriveItemDo);
 		}
 	}
+	
 }
