@@ -288,9 +288,11 @@ public class StringUtil {
 		console.log(message );
 	}-*/;
 	
+	public static native void clearCookes() /*-{
+		$doc.cookie = "google-access-token=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	}-*/;
+	
 	public static void clearCookies(String key, String path, String domain){
-		consoleLog("Removed cookies...");
-		consoleLog("Window.Location.getHost() :"+Window.Location.getHost());
 		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
 		Cookies.removeCookie("google-access-token", "/");
 	}
