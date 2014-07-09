@@ -312,6 +312,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		cancelResourcePopupBtnLbl.setText(GL0142);
 		loadingTextLbl.setText(GL0591.toLowerCase());
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
+		addResourceBtnLbl.setEnable(true);
+		addResourceBtnLbl.getElement().removeClassName("secondary");
+		addResourceBtnLbl.getElement().addClassName("primary");
+		
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		uploadImageLbl.getElement().setId("lblUploadImage");
@@ -629,7 +633,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		@Override
 		public void onClick(ClickEvent event) {
-			addResourceBtnLbl.setEnabled(false);
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -638,7 +641,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						isHavingBadWordsInTextbox = value;
 						if(value){
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
-							addResourceBtnLbl.setEnabled(true);
+					/*		addResourceBtnLbl.setEnabled(true);
+							addResourceBtnLbl.getElement().removeClassName("secondary");
+							addResourceBtnLbl.getElement().addClassName("primary");	*/			
 						}else{
 							parms.put("text", descriptionTxtAera.getText());
 							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
@@ -649,7 +654,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 									isHavingBadWordsInRichText=result;
 									if(result){
 										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
-										addResourceBtnLbl.setEnabled(true);
+							/*			addResourceBtnLbl.setEnabled(true);
+										addResourceBtnLbl.getElement().removeClassName("secondary");
+										addResourceBtnLbl.getElement().addClassName("primary");	*/
 									}else{
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 											
@@ -783,7 +790,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //														});
 //													}else{
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-														addResourceBtnLbl.setEnabled(true);
+														/*addResourceBtnLbl.setEnabled(true);
+														addResourceBtnLbl.getElement().removeClassName("secondary");
+														addResourceBtnLbl.getElement().addClassName("primary");*/	
 //													}
 												}
 												else{
@@ -797,12 +806,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //														});
 //													}else{
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-														addResourceBtnLbl.setEnabled(true);
+														/*addResourceBtnLbl.setEnabled(true);
+														addResourceBtnLbl.getElement().removeClassName("secondary");
+														addResourceBtnLbl.getElement().addClassName("primary");*/	
 //													}
 												}
 												
 											}
-											addResourceBtnLbl.setEnabled(true);
+							/*				addResourceBtnLbl.setEnabled(true);
+											addResourceBtnLbl.getElement().removeClassName("secondary");
+											addResourceBtnLbl.getElement().addClassName("primary");	*/
 										}
 									}
 								}
@@ -1361,12 +1374,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				descCharcterLimit.setVisible(false);
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtnLbl.setEnabled(false);
+/*			addResourceBtnLbl.setEnabled(false);
+			addResourceBtnLbl.getElement().removeClassName("primary");	
+			addResourceBtnLbl.getElement().addClassName("secondary");*/
+
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtnLbl.setEnabled(true);
+					addResourceBtnLbl.getElement().removeClassName("secondary");	
+					addResourceBtnLbl.getElement().addClassName("primary");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
