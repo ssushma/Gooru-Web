@@ -93,6 +93,7 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		setWidget(uiBinder.createAndBindUi(this));
 		setStaticText(moveType);
 		setPageNumber(0);
+		setId();
 		getFolderData(moveType);
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 
@@ -139,6 +140,8 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 			
 			if(!moveType.equalsIgnoreCase(COLLECTION_MOVE)) {
 				inputDescLbl.setText(GL1329);
+				inputDescLbl.getElement().setAttribute("alt",GL1329);
+				inputDescLbl.getElement().setAttribute("title",GL1329);
 			}
 		}else{
 			inputDescLbl.setVisible(false);
@@ -153,10 +156,24 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 			inputTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
 			folderTitle.getElement().getStyle().setDisplay(Display.NONE);
 			popupHeaderTitleLbl.setText(GL1264);
+			popupHeaderTitleLbl.getElement().setAttribute("alt",GL1264);
+			popupHeaderTitleLbl.getElement().setAttribute("title",GL1264);
+			
 			inputDescLbl.setText(GL1364);
+			inputDescLbl.getElement().setAttribute("alt",GL1364);
+			inputDescLbl.getElement().setAttribute("title",GL1364);
+			
 			addingLbl.setText(GL1362);
+			addingLbl.getElement().setAttribute("alt",GL1362);
+			addingLbl.getElement().setAttribute("title",GL1362);
+			
 			okBtn.setText(GL1261);
+			okBtn.getElement().setAttribute("alt",GL1261);
+			okBtn.getElement().setAttribute("title",GL1261);
+			
 			cancelBtn.setText(GL0142);
+			cancelBtn.getElement().setAttribute("alt",GL0142);
+			cancelBtn.getElement().setAttribute("title",GL0142);
 			if(AppClientFactory.getPlaceManager().getRequestParameter(O1_LEVEL)==null){
 				okBtn.getElement().removeClassName("enabled");
 				okBtn.getElement().addClassName("disabled");
@@ -169,11 +186,28 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		}else{
 			isCollectionMove = false;
 			popupHeaderTitleLbl.setText(GL1266);
+			popupHeaderTitleLbl.getElement().setAttribute("alt",GL1266);
+			popupHeaderTitleLbl.getElement().setAttribute("title",GL1266);
+			
 			inputTitleLbl.setText(GL1262);
+			inputTitleLbl.getElement().setAttribute("alt",GL1262);
+			inputTitleLbl.getElement().setAttribute("title",GL1262);
+			
 			inputDescLbl.setText(GL1263);
+			inputDescLbl.getElement().setAttribute("alt",GL1263);
+			inputDescLbl.getElement().setAttribute("title",GL1263);
+			
 			addingLbl.setText(GL0591.toLowerCase());
+			addingLbl.getElement().setAttribute("alt",GL0591.toLowerCase());
+			addingLbl.getElement().setAttribute("title",GL0591.toLowerCase());
+			
 			okBtn.setText(GL0190);
+			okBtn.getElement().setAttribute("alt",GL0190);
+			okBtn.getElement().setAttribute("title",GL0190);
+			
 			cancelBtn.setText(GL0142);
+			cancelBtn.getElement().setAttribute("alt",GL0142);
+			cancelBtn.getElement().setAttribute("title",GL0142);
 		}
 	}
 
@@ -344,11 +378,15 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 			folderTitle.removeStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 			if (folderTitle.getText().length() >= 50) {
 				validationTitleLbl.setText(GL0143);
+				validationTitleLbl.getElement().setAttribute("alt",GL0143);
+				validationTitleLbl.getElement().setAttribute("title",GL0143);
 				validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 				folderTitle.addStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
 			}else if(folderTitle.getText().equalsIgnoreCase("") && validationTitleLbl.isVisible()){
 				validationTitleLbl.setText(GL0173);
+				validationTitleLbl.getElement().setAttribute("alt",GL0173);
+				validationTitleLbl.getElement().setAttribute("title",GL0173);
 				folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
 			}else{
 				validationTitleLbl.getElement().getStyle().setDisplay(Display.NONE);
@@ -372,6 +410,8 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 					if (result){
 						folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
 						validationTitleLbl.setText(GL0554);
+						validationTitleLbl.getElement().setAttribute("alt",GL0554);
+						validationTitleLbl.getElement().setAttribute("title",GL0554);
 						validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 //						validationTitleLbl.setStyleName(CollectionCBundle.INSTANCE.css().mandatoryLabelError());
 					}else{
@@ -484,6 +524,8 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 //							SetStyleForProfanity.SetStyleForProfanityForTextBox(folderTitle, validationTitleLbl, result);
 							folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");	
 							validationTitleLbl.setText(GL0554);
+							validationTitleLbl.getElement().setAttribute("alt",GL0554);
+							validationTitleLbl.getElement().setAttribute("title",GL0554);
 							validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 						}else{
 							showAddingMsg(false);
@@ -503,6 +545,8 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 		String title=folderTitle.getText().trim();
 		if(title==null || title.equals("")){
 			validationTitleLbl.setText(GL0173);
+			validationTitleLbl.getElement().setAttribute("alt",GL0173);
+			validationTitleLbl.getElement().setAttribute("title",GL0173);
 			validationTitleLbl.getElement().getStyle().setDisplay(Display.BLOCK);
 			folderTitle.addStyleName(ShelfCBundle.INSTANCE.css().folderBorderColor());
 			folderTitle.getElement().setAttribute("style", "border-color:#fab03a !important");
@@ -570,5 +614,18 @@ public abstract class FolderPopupUc extends PopupPanel implements MessagePropert
 	
 	public void setPageNumber(Integer pageNumber) {
 		this.pageNumber = pageNumber;
+	}
+	public void setId(){
+		popupHeaderTitleLbl.getElement().setId("lblPopupHeaderTitleLbl");
+		inputTitleLbl.getElement().setId("lblInputTitleLbl");
+		folderTitle.getElement().setId("txtFolderTitle");
+		validationTitleLbl.getElement().setId("lblValidationTitleLbl");
+		inputDescLbl.getElement().setId("lblInputDescLbl");
+		loadingImageLabel.getElement().setId("pnlLoadingImageLabel");
+		folderStructureTree.getElement().setId("pnlFolderStructureTree");
+		addingLbl.getElement().setId("lblAddingLbl");
+		buttonsContainer.getElement().setId("pnlButtonsContainer");
+		cancelBtn.getElement().setId("btnCancelBtn");
+		okBtn.getElement().setId("btnOkBtn");
 	}
 }

@@ -76,7 +76,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -622,6 +621,7 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		@Override
 		public void onClick(ClickEvent event) {
+			System.out.println("in");
 			addResourceBtnLbl.setEnabled(false);
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());

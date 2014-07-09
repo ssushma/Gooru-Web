@@ -83,10 +83,24 @@ public class CollectionCollaboratorTabVc extends Composite implements MessagePro
 		this.collection = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		collaboratorsText.setText(GL0832);
+		collaboratorsText.getElement().setId("lblCollaboratorsText");
+		collaboratorsText.getElement().setAttribute("alt",GL0832);
+		collaboratorsText.getElement().setAttribute("title",GL0832);
+		
 		gooruBlueLbl.setText(GL0590);
+		gooruBlueLbl.getElement().setId("lblGooruBlueLbl");
+		gooruBlueLbl.getElement().setAttribute("alt",GL0590);
+		gooruBlueLbl.getElement().setAttribute("title",GL0590);
+		
 		addRecentText.setText(GL0833);
+		addRecentText.getElement().setId("lblAddRecentText");
+		addRecentText.getElement().setAttribute("alt",GL0833);
+		addRecentText.getElement().setAttribute("title",GL0833);
+		
 		getCollaboratorUsers(collectionDo.getGooruOid());
 		collaboratorTxtBox.addKeyUpHandler(new OnTextPress());
+		collaboratorTxtBox.getElement().setId("txtCollaboratorTxtBox");
+		addedCollaboratorFloPanel.getElement().setId("fpnlAddedCollaboratorFloPanel");
 	}
 
 	/**

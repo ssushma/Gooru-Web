@@ -522,27 +522,15 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		editCollectionDescTitle.getElement().setId("epnlEditCollectionDescTitle");
 		simplePencilPanel.getElement().setId("lblSimplePencilPanel");
 		panelFriendly.getElement().setId("pnlPanelFriendly");
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		imgFriendly.getElement().setId("imgImgFriendly");
+		lblFriendly.getElement().setId("lblFriendly");
+		collPopup.getElement().setId("pnlCollPopup");
+		statPopup.getElement().setId("pnlStatPopup");
+		rbPublicPanel.getElement().setId("pnlRbPublicPanel");
+		rbPublic.getElement().setId("btnRbPublic");
+		publishedPanel.getElement().setId("pnlPublishedPanel");
+		collectionMetaDataSimPanel.getElement().setId("spnlCollectionMetaDataSimPanel");
+		panelFoooter.getElement().setId("footerOrganizePanelFoooter");
 		
 		/* Disabled */
 //		collaboratorTabVc.addStyleName("deactivated");
@@ -550,15 +538,7 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 //		statisticsTabVc.addStyleName("deactivated");
 		
 		collectionEditImageLbl.setVisible(false);
-		
-		
-		
-	
-	
-		
 		statisticsTabVc.setVisible(false);
-		
-		
 		deleteUserCollectionLbl.getElement().setId("lblDeleteUserCollection");
 	
 		editSelfCollectionDescSaveButtonCancel.getElement().setAttribute(
@@ -590,7 +570,14 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		lblPublishPending.setVisible(false);
 		lblPublishPending.getElement().getStyle().setMarginTop(9, Unit.PX);
 		lblPublishPending.setText(GL1943);
+		lblPublishPending.getElement().setId("lblPublishPending");
+		lblPublishPending.getElement().setAttribute("alt",GL1943);
+		lblPublishPending.getElement().setAttribute("title",GL1943);
+		
 		lblPublish.setText(GL1942);
+		lblPublish.getElement().setId("lblPublish");
+		lblPublish.getElement().setAttribute("alt",GL1942);
+		lblPublish.getElement().setAttribute("title",GL1942);
 
 		handelChangeImageEvent();
 		// simplePencilFocPanel.addMouseOverHandler(new hideEditPencil());
@@ -716,7 +703,12 @@ public class ShelfView extends BaseViewWithHandlers<ShelfUiHandlers> implements
 		
 		panelFoooter.setVisible(true);
 		rbPublic.setText(GL1921);
+		rbPublic.getElement().setAttribute("alt",GL1921);
+		rbPublic.getElement().setAttribute("title",GL1921);
+		
 		lblPublish.setText(GL1942);
+		lblPublish.getElement().setAttribute("alt",GL1942);
+		lblPublish.getElement().setAttribute("title",GL1942);
 //		if (AppClientFactory.getLoggedInUser().getConfirmStatus() == 1){
 //			shelfViewMainContainer.getElement().getStyle().clearMarginTop();
 //		}else{

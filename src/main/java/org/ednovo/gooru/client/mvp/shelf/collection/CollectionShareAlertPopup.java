@@ -70,12 +70,28 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		setWidget(uiBinder.createAndBindUi(this));
 //		gooruPublicShare.setUrl("images/gooru-public-share-popup.png");
 		privateResourceLbl.setText(GL0840);
+		privateResourceLbl.getElement().setId("lblPrivateResourceLbl");
+		privateResourceLbl.getElement().setAttribute("alt",GL0840);
+		privateResourceLbl.getElement().setAttribute("title",GL0840);
+		
 //		goBackBtn.setText(GL0841);
 		goBackBtn.setText(GL1923);
+		goBackBtn.getElement().setAttribute("alt",GL1923);
+		goBackBtn.getElement().setAttribute("title",GL1923);
 //		okButton.setText(GL0190);
 		okButton.setText(GL1922);
+		okButton.getElement().setAttribute("alt",GL1922);
+		okButton.getElement().setAttribute("title",GL1922);
 		okButton.getElement().setId("btnOk");
 		goBackBtn.getElement().setId("btnGoBack");
+		shareAlertPopup.getElement().setId("pnlShareAlertPopup");
+		alertBodyStyle.getElement().setId("pnlAlertBodyStyle");
+		gooruPublicShare.getElement().setId("imgGooruPublicShare");
+		alertSuccessTitleTxt.getElement().setId("pnlAlertSuccessTitleTxt");
+		alertSuccessTxt.getElement().setId("pnlAlertSuccessTxt");
+		resourceHeaderPanel.getElement().setId("sbResourceHeaderPanel");
+		privateResourcePanel.getElement().setId("pnlPrivateResourcePanel");
+		buttonContainer.getElement().setId("pnlButtonContainer");
 	}
 
 	@UiHandler("okButton")
@@ -104,8 +120,14 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		if(isPrivateResource) {
 			setVisibilityData(false, false);
 			shareMsgTitle.setText(GL0363);
+			shareMsgTitle.getElement().setAttribute("alt",GL0363);
+			shareMsgTitle.getElement().setAttribute("title",GL0363);
 			shareMsgTxt.setText(GL0364);
+			shareMsgTxt.getElement().setAttribute("alt",GL0364);
+			shareMsgTxt.getElement().setAttribute("title",GL0364);
 			shareMsgLbl.setText(GL0365);
+			shareMsgLbl.getElement().setAttribute("alt",GL0365);
+			shareMsgLbl.getElement().setAttribute("title",GL0365);
 			alertSuccessTitleTxt.setVisible(true);
 		} else {
 			setPublicMsgData();
@@ -118,33 +140,59 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		setVisibilityData(true, true);
 //		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
 		shareMsgTitle.setText(GL1965);
+		shareMsgTitle.getElement().setAttribute("alt",GL1965);
+		shareMsgTitle.getElement().setAttribute("title",GL1965);
 		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
 		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
 		shareMsgTxt.setText(GL1919);
+		shareMsgTxt.getElement().setAttribute("alt",GL1919);
+		shareMsgTxt.getElement().setAttribute("title",GL1919);
 		shareMsgLbl.setText(GL1920);
+		shareMsgLbl.getElement().setAttribute("alt",GL1920);
+		shareMsgLbl.getElement().setAttribute("title",GL1920);
 		gooruPublicShare.setVisible(true);
 		alertSuccessTxt.setVisible(true);
 		alertSuccessTitleTxt.setVisible(true);
 		okButton.setText(GL1922);
+		okButton.getElement().setAttribute("alt",GL1922);
+		okButton.getElement().setAttribute("title",GL1922);
 		goBackBtn.setText(GL1923);
+		goBackBtn.getElement().setAttribute("alt",GL1923);
+		goBackBtn.getElement().setAttribute("title",GL1923);
 		goBackBtn.setVisible(true);
 	}
 	
 	public void setPrivateMsgData() {
 		setVisibilityData(true, false);
 		shareMsgTitle.setText(GL0362 + GL0700);
+		shareMsgTitle.getElement().setAttribute("alt",GL0362 + GL0700);
+		shareMsgTitle.getElement().setAttribute("title",GL0362 + GL0700);
 		shareMsgTxt.setText(GL0688 + GL0687 + GL0333 +GL0686);
+		shareMsgTxt.getElement().setAttribute("alt",GL0688 + GL0687 + GL0333 +GL0686);
+		shareMsgTxt.getElement().setAttribute("title",GL0688 + GL0687 + GL0333 +GL0686);
 		shareMsgLbl.setText(GL0366);
+		shareMsgLbl.getElement().setAttribute("alt",GL0366);
+		shareMsgLbl.getElement().setAttribute("title",GL0366);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
 		goBackBtn.setVisible(false);
 	}
 
 	public void setShareableMsgData() {
 		setVisibilityData(true, false);
 		shareMsgTitle.setText(GL0362 + GL0701);
+		shareMsgTitle.getElement().setAttribute("alt",GL0362 + GL0701);
+		shareMsgTitle.getElement().setAttribute("title",GL0362 + GL0701);
 		shareMsgTxt.setText(GL0689 + GL0687 + GL0331 + GL0686);
+		shareMsgTxt.getElement().setAttribute("alt",GL0689 + GL0687 + GL0331 + GL0686);
+		shareMsgTxt.getElement().setAttribute("title",GL0689 + GL0687 + GL0331 + GL0686);
 		shareMsgLbl.setText(GL0367);
+		shareMsgLbl.getElement().setAttribute("alt",GL0367);
+		shareMsgLbl.getElement().setAttribute("title",GL0367);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
 		goBackBtn.setVisible(false);
 	}
 	
@@ -153,15 +201,25 @@ public abstract class CollectionShareAlertPopup extends PopupPanel implements Me
 		setVisibilityData(true, true);
 //		shareMsgTitle.setText(GL0362 + GL0329 +GL0686);
 		shareMsgTitle.setText(GL0748);
+		shareMsgTitle.getElement().setAttribute("alt",GL0748);
+		shareMsgTitle.getElement().setAttribute("title",GL0748);
 		shareMsgTxt.getElement().getStyle().setFontSize(12, Unit.PX);
 		shareMsgTxt.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
 		shareMsgTxt.setText(GL1954);
+		shareMsgTxt.getElement().setAttribute("alt",GL1954);
+		shareMsgTxt.getElement().setAttribute("title",GL1954);
 		shareMsgLbl.setText(GL1955);
+		shareMsgLbl.getElement().setAttribute("alt",GL1955);
+		shareMsgLbl.getElement().setAttribute("title",GL1955);
 		gooruPublicShare.setVisible(true);
 		alertSuccessTxt.setVisible(true);
 		alertSuccessTitleTxt.setVisible(true);
 		okButton.setText(GL0190);
+		okButton.getElement().setAttribute("alt",GL0190);
+		okButton.getElement().setAttribute("title",GL0190);
 		goBackBtn.setText(GL1956);
+		goBackBtn.getElement().setAttribute("alt",GL1956);
+		goBackBtn.getElement().setAttribute("title",GL1956);
 		goBackBtn.setVisible(true);
 	}
 	
