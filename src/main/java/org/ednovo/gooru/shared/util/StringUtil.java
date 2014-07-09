@@ -29,6 +29,7 @@
 package org.ednovo.gooru.shared.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,6 +38,9 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
+
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
 
 
 /**
@@ -279,5 +283,15 @@ public class StringUtil {
 		str = originalString.replaceAll("%22", "\"").replaceAll("%27", "'");
 		
 		return str;
+	}
+	public static native void consoleLog(String message) /*-{
+		console.log(message );
+	}-*/;
+	
+	public static void clearCookies(String key, String path, String domain){
+		consoleLog("Removed cookies...");
+		consoleLog("Window.Location.getHost() :"+Window.Location.getHost());
+		Cookies.setCookie(key, "",  new Date(), "."+Window.Location.getHost(), path, false);
+		Cookies.removeCookie("google-access-token", "/");
 	}
 }

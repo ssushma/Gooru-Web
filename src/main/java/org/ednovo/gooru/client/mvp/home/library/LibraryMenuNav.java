@@ -479,15 +479,19 @@ public class LibraryMenuNav extends Composite{
 							}
 						}
 					});
-//					AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
-//						@Override
-//						public void onSuccess(ArrayList<StandardCourseDo> standardCourseList) {
-//							if(!getSubjectSelected(STANDARDS)) {
-//								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, standardCourseList);
-//							}
-//						}
-//						
-//					});
+				/*	AppClientFactory.getInjector().getLibraryService().getStandardLibraryMenuList(subjectCode, getPlaceToken(), new SimpleAsyncCallback<ArrayList<StandardCourseDo>>(){
+						@Override
+						public void onSuccess(ArrayList<StandardCourseDo> standardCourseList) {
+							setSubjectPanelIdsForStandardsCustomized(standardCourseList);
+							StandardsDo standardsDoObject = new StandardsDo();
+							standardsDoObject.setData(standardCourseList);
+							AppClientFactory.fireEvent(new SetStandardDoEvent(STANDARDS,standardsDoObject));
+							if(!getSubjectSelected(STANDARDS)) {
+								setTaxonomyDataforStandards(STANDARDS, subjectCode, courseId, standardCourseList);
+							}
+						}
+						
+					});*/
 					
 				}
 				else
@@ -863,6 +867,12 @@ public class LibraryMenuNav extends Composite{
 	public void setSubjectPanelIdsForStandards(HashMap<String, StandardsDo> subjectList) {
 		for (Map.Entry<String, StandardsDo> entry : subjectList.entrySet()) {
 			subjectIdList.put(entry.getKey(), entry.getValue().getCode()+"");
+		}
+	}
+	
+	public void setSubjectPanelIdsForStandardsCustomized(ArrayList<StandardCourseDo> subjectList) {
+		for (int k=0;k<subjectList.size();k++) {
+			subjectIdList.put(subjectList.get(k).getCodeId().toString(), subjectList.get(k).getCode()+"");
 		}
 	}
 	

@@ -454,7 +454,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
 //		urlContianer.setVisible(false);
-		
+		if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+			mandatoryUrlLbl.setText(GL2009);
+			mandatoryUrlLbl.setVisible(true);
+		}
 		titleTextBox.setValue(googleDriveItemDo.getTitle());
 		urlTextBox.setReadOnly(true);
 		titleTextBox.setFocus(true);
@@ -466,8 +469,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			urlTextBox.setValue(googleDriveItemDo.getEmbedLink());
 			slideResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
-			String alternativeLink=googleDriveItemDo.getDefaultOpenWithLink();
-			urlTextBox.setValue(alternativeLink.replaceFirst("edit", "viewform"));
+			try{
+				urlTextBox.setValue(googleDriveItemDo.getDefaultOpenWithLink().replaceFirst("edit", "viewform"));
+			}catch(Exception e){
+				urlTextBox.setValue(googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
+			}
 			interactiveResourcePanel(null);
 		}
 	}
@@ -478,7 +484,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		clearFields();
 		if(isGoogleDriveFile){
 			setDriveFileDetails();
-			driveFileInfoLbl.setText("If file is private, we will automatically update to public");
+			//driveFileInfoLbl.setText("If file is private, we will automatically update to public");
+			driveFileInfoLbl.removeFromParent();
 		}else{
 			driveFileInfoLbl.removeFromParent();
 		}
@@ -673,6 +680,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													isValidate = false;
 												}
 											}
+											if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+													mandatoryUrlLbl.setText(GL2009);
+													mandatoryUrlLbl.setVisible(true);
+													isValidate = false;
+											}
 											if(!rightsChkBox.getValue()){
 												rightsLbl.getElement().getStyle().setColor("orange");
 												isValidate = false;
@@ -758,35 +770,35 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												// String descriptionStr ="";
 												urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
 												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
-												final String urlStrFinal=urlStr;
-												final String descriptionStrFinal=descriptionStr;
+//												final String urlStrFinal=urlStr;
+//												final String descriptionStrFinal=descriptionStr;
 												if(collectionDo.getSharing().equalsIgnoreCase("public")){
-													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
-															@Override
-															public void onSuccess(GoogleDriveDo result) {
-																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-																addResourceBtnLbl.setEnabled(true);
-															}
-														});
-													}else{
+//													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+//														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
+//															@Override
+//															public void onSuccess(GoogleDriveDo result) {
+//																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+//																addResourceBtnLbl.setEnabled(true);
+//															}
+//														});
+//													}else{
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
 														addResourceBtnLbl.setEnabled(true);
-													}
+//													}
 												}
 												else{
-													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
-															@Override
-															public void onSuccess(GoogleDriveDo result) {
-																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-																addResourceBtnLbl.setEnabled(true);
-															}
-														});
-													}else{
+//													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+//														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
+//															@Override
+//															public void onSuccess(GoogleDriveDo result) {
+//																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+//																addResourceBtnLbl.setEnabled(true);
+//															}
+//														});
+//													}else{
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
 														addResourceBtnLbl.setEnabled(true);
-													}
+//													}
 												}
 												
 											}
