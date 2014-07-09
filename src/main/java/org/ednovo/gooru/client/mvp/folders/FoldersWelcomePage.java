@@ -29,15 +29,12 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetButtonHandler;
 import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -87,7 +84,7 @@ public class FoldersWelcomePage extends Composite {
 		
 		setText();
 		
-		imgSampleCollection.setHref("#preview-play&id=b2dc729a-4a18-494e-8696-b06bc704bc98");
+		imgSampleCollection.setHref("#preview-play&id=2548d591-9131-4577-b873-83b8f172eda5");
 		imgSampleCollection.setTarget("_blank");
 		
 		Image imgComponent = new Image();
