@@ -164,8 +164,9 @@ public class UserSettingsPresenter
 		boolean isConfirmStatus = true;
 		String newMailId = AppClientFactory.getPlaceManager()
 				.getRequestParameter("newMailId");
-//		Cookies.setCookie("google-access-token", "ya29.PABMpZnzSe8cBRsAAACNcbA_WpOv023CA1MLfxqrxPmwZ60XFc6u2y4jnuz52Q");
-		final String access_token = Cookies.getCookie("google-access-token") !=null ? Cookies.getCookie("google-access-token") : null;
+//		Cookies.setCookie("google-access-token", "ya29.PADXXYiamS8JHxsAAADsdCb743SQMuoXVuZlTw5kC3kLVP_-UThz6jTa0kv7NA");
+		final String access_token = Cookies.getCookie("google-access-token") !=null && !Cookies.getCookie("google-access-token").equalsIgnoreCase("") ? Cookies.getCookie("google-access-token") : null;
+
 		if (access_token !=null ){
 			
 			AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(null,null,new SimpleAsyncCallback<GoogleDriveDo>() {

@@ -40,6 +40,7 @@ package org.ednovo.gooru.client.mvp.settings;
 */
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -774,6 +775,7 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 				}
 			});
 		}else{
+			Cookies.setCookie("google-access-token", "",  new Date(), ".www.goorulearning.org", "/", false);
 			Cookies.removeCookie("google-access-token");
 			googleDirveStatus(false);
 		}
@@ -1821,6 +1823,8 @@ public class UserSettingsView extends BaseViewWithHandlers<UserSettingsUiHandler
 		}else{
 			btnConnect.getElement().removeClassName("green");
 			btnConnect.setText(i18n.GL2008());
+			Cookies.setCookie("google-access-token", "",  new Date(), ".www.goorulearning.org", "/", false);
+			Cookies.removeCookie("google-access-token");
 		}
 	}
 }
