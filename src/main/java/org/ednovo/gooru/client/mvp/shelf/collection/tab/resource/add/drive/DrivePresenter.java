@@ -100,7 +100,7 @@ public class DrivePresenter extends
 			getView().getPanelFileList().clear();
 			getView().getPanelFileList().add(setLoadingPanel());
 		}
-		Cookies.setCookie("google-access-token","ya29.PQDLmyffPAv5OBsAAAA3btJFHswFsQaaH5X3yDRTwUw18oRTkFawy7HCq8_mtg");
+		//Cookies.setCookie("google-access-token","ya29.PQDLmyffPAv5OBsAAAA3btJFHswFsQaaH5X3yDRTwUw18oRTkFawy7HCq8_mtg");
 		//Cookies.removeCookie("google-access-token");
 		AppClientFactory.getInjector().getResourceService().getGoogleDriveFilesList(folderId,nextPageToken,new SimpleAsyncCallback<GoogleDriveDo>() {
 			@Override
