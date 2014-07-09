@@ -96,57 +96,58 @@ public class ResourceFrameBreakerView extends Composite implements MessageProper
 	 * @param collectionItemDo
 	 */
 	@UiConstructor
-	public ResourceFrameBreakerView(final CollectionItemDo collectionItemDo){
+	public ResourceFrameBreakerView(final CollectionItemDo collectionItemDo,boolean isGoogleFile){
 		initWidget(uiBinder.createAndBindUi(this));
 		PlayerBundle.INSTANCE.getPlayerStyle().ensureInjected();
 		this.collectionItemDo = collectionItemDo;
-		if(collectionItemDo!=null){
+		if(!isGoogleFile){
 			setLabelsAndIds();
 			supportTip.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().supportTip());
 			supportTip.setText(GL1453);
 			btnResourceLink.addStyleName(PlayerBundle.INSTANCE.getPlayerStyle().btnResourceLink());
-			imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
-			if(collectionItemDo.getResource().getResourceFormat()!=null){
-				defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
-			}
-			if(defaultResourceCategory!=null){
-				if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
-				{
-					defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
-				}
-				if(defaultResourceCategory.equalsIgnoreCase("Slide"))
-				{
-					defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
-				}
-				if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
-				{
-					defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
-				}
-			}
-			imgFieldTrip.addErrorHandler(new ErrorHandler() {
-				
-				@Override
-				public void onError(ErrorEvent event) {
-					imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
-				}
-			});
-			if(collectionItemDo.getResource().getResourceFormat()!=null){
-				resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
-			}
 		}else{
 			btnResourceLink.removeFromParent();
-			imgFieldTrip.removeFromParent();
 		}
+		imgFieldTrip.setUrl(collectionItemDo.getResource().getThumbnailUrl());
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			defaultResourceCategory = collectionItemDo.getResource().getResourceFormat().getDisplayName();
+		}
+		if(defaultResourceCategory!=null){
+			if(defaultResourceCategory.equalsIgnoreCase("Lesson")||defaultResourceCategory.equalsIgnoreCase("Textbook")||defaultResourceCategory.equalsIgnoreCase("Handout"))
+			{
+				defaultResourceCategory=defaultResourceCategory.replaceAll("Lesson", "Text").replaceAll("Textbook", "Text").replaceAll("Handout", "Text").replaceAll("lesson", "Text").replaceAll("textbook", "Text").replaceAll("handout", "Text");
+			}
+			if(defaultResourceCategory.equalsIgnoreCase("Slide"))
+			{
+				defaultResourceCategory=defaultResourceCategory.replaceAll("Slide","Image").replaceAll("slide","Image");
+			}
+			if(defaultResourceCategory.equalsIgnoreCase("Exam") || defaultResourceCategory.equalsIgnoreCase("Challenge")||defaultResourceCategory.equalsIgnoreCase("Website"))
+			{
+				defaultResourceCategory=defaultResourceCategory.replaceAll("Exam","Webpage").replaceAll("Challenge", "Webpage").replaceAll("exam","Webpage").replaceAll("challenge", "Webpage");
+			}
+		}
+		imgFieldTrip.addErrorHandler(new ErrorHandler() {
+			
+			@Override
+			public void onError(ErrorEvent event) {
+				imgFieldTrip.setUrl(DEFULT_IMAGE_PREFIX + defaultResourceCategory.toLowerCase() + PNG);
+			}
+		});
+		if(collectionItemDo.getResource().getResourceFormat()!=null){
+			resourceCategory.addStyleName(getResourceTypeImage(collectionItemDo.getResource().getResourceFormat().getDisplayName()));
+		}
+		
 	}
 	public void setFileDeletedMessage(){
 		btnResourceLink.removeFromParent();
-		imgFieldTrip.removeFromParent();
-		lblGooruFieldTrip.getElement().getStyle().setMarginTop(230, Unit.PX);
+		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
+		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
 		lblGooruFieldTrip.setText(GL2007);
 	}
 	public void setFilePermissionMessage(){
-		lblGooruFieldTrip.getElement().getStyle().setMarginTop(230, Unit.PX);
-		lblGooruFieldTrip.setText(GL2008);
+		lblGooruFieldTrip.getElement().getStyle().setPaddingLeft(50, Unit.PX);
+		lblGooruFieldTrip.getElement().getStyle().setPaddingRight(50, Unit.PX);
+		lblGooruFieldTrip.setText(GL2007);
 	}
 	/**
 	 * 
