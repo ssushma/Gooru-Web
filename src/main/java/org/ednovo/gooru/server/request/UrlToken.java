@@ -574,6 +574,8 @@ public enum UrlToken {
 	
 	GET_GOOGLEDRIVE_FIlES("/v2/files?maxResults=20&q={0}"),
 	
+	GET_COURSE_DETAILS_STANDARDS("/v2/library/{0}/item/course/{1}?sessionToken={2}"),
+	
 	UPDATE_FILE_PERMISSION("/v2/files/{0}/permissions");
 
 
