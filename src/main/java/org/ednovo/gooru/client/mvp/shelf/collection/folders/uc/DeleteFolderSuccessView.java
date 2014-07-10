@@ -1,6 +1,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.folders.uc;
 
 import org.ednovo.gooru.client.uc.AppPopUp;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -20,10 +21,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public abstract class DeleteFolderSuccessView extends Composite implements MessageProperties{
+public abstract class DeleteFolderSuccessView extends Composite {
 
 	private static DeleteFolderSuccessViewUiBinder uiBinder = GWT
 			.create(DeleteFolderSuccessViewUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface DeleteFolderSuccessViewUiBinder extends
 			UiBinder<Widget, DeleteFolderSuccessView> {
@@ -42,23 +45,23 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
 		appPopUp.getElement().getStyle().setHeight(245, Unit.PX);
 		appPopUp.getHeaderPanel().getElement().getStyle().setMarginBottom(-2, Unit.PX);
-		appPopUp.setContent(GL1176, uiBinder.createAndBindUi(this));
+		appPopUp.setContent(i18n.GL1176(), uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		cancelButton.setText(GL0142);
-		cancelButton.getElement().setAttribute("alt",GL0142);
-		cancelButton.getElement().setAttribute("title",GL0142);
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
 		
 		Window.enableScrolling(false);
-		okButton.setText(GL0190);
-		okButton.getElement().setAttribute("alt",GL0190);
-		okButton.getElement().setAttribute("title",GL0190);
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
 		
-		headerTitle.setText(GL1173);
-		headerTitle.getElement().setAttribute("alt",GL1173);
-		headerTitle.getElement().setAttribute("title",GL1173);
+		headerTitle.setText(i18n.GL1173());
+		headerTitle.getElement().setAttribute("alt",i18n.GL1173());
+		headerTitle.getElement().setAttribute("title",i18n.GL1173());
 		
-//		titleLabel.setText(MessageProperties.GL1176);
+//		titleLabel.setText(MessageProperties.i18n.GL1176);
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
 		headerTitleDes.setVisible(false);
@@ -73,21 +76,21 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.getElement().getStyle().setWidth(456, Unit.PX);
 		appPopUp.getElement().getStyle().setHeight(245, Unit.PX);
 		appPopUp.getHeaderPanel().getElement().getStyle().setMarginBottom(-2, Unit.PX);
-		appPopUp.setContent(GL1367, uiBinder.createAndBindUi(this));
+		appPopUp.setContent(i18n.GL1367(), uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		cancelButton.setText(GL0142);
-		cancelButton.getElement().setAttribute("alt",GL0142);
-		cancelButton.getElement().setAttribute("title",GL0142);
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
 		
 		Window.enableScrolling(false);
-		okButton.setText(GL0190);
-		okButton.getElement().setAttribute("alt",GL0190);
-		okButton.getElement().setAttribute("title",GL0190);
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
 		
-		headerTitle.setText(GL1366+"\""+movedFolderName+"\"");
-		headerTitle.getElement().setAttribute("alt",GL1366+"\""+movedFolderName+"\"");
-		headerTitle.getElement().setAttribute("title",GL1366+"\""+movedFolderName+"\"");
+		headerTitle.setText(i18n.GL1366()+"\""+movedFolderName+"\"");
+		headerTitle.getElement().setAttribute("alt",i18n.GL1366()+"\""+movedFolderName+"\"");
+		headerTitle.getElement().setAttribute("title",i18n.GL1366()+"\""+movedFolderName+"\"");
 		
 		cancelButton.setVisible(false);
 		buttonContainer.getElement().setAttribute("Style", "margin-bottom: 22px !important;");
@@ -106,14 +109,14 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.setContent(title, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		cancelButton.setText(GL0142);
-		cancelButton.getElement().setAttribute("alt",GL0142);
-		cancelButton.getElement().setAttribute("title",GL0142);
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
 		
 		Window.enableScrolling(false);
-		okButton.setText(GL0190);
-		okButton.getElement().setAttribute("alt",GL0190);
-		okButton.getElement().setAttribute("title",GL0190);
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
 		
 		contentPnl.getElement().getStyle().setHeight(117, Unit.PX);
 		headerTitle.getElement().setInnerHTML(desc);	
@@ -135,14 +138,14 @@ public abstract class DeleteFolderSuccessView extends Composite implements Messa
 		appPopUp.setContent(title, uiBinder.createAndBindUi(this));
 		appPopUp.show();
 		appPopUp.center();
-		cancelButton.setText(GL0142);
-		cancelButton.getElement().setAttribute("alt",GL0142);
-		cancelButton.getElement().setAttribute("title",GL0142);
+		cancelButton.setText(i18n.GL0142());
+		cancelButton.getElement().setAttribute("alt",i18n.GL0142());
+		cancelButton.getElement().setAttribute("title",i18n.GL0142());
 		
 		Window.enableScrolling(false);
-		okButton.setText(GL0190);
-		okButton.getElement().setAttribute("alt",GL0190);
-		okButton.getElement().setAttribute("title",GL0190);
+		okButton.setText(i18n.GL0190());
+		okButton.getElement().setAttribute("alt",i18n.GL0190());
+		okButton.getElement().setAttribute("title",i18n.GL0190());
 		
 		contentPnl.getElement().getStyle().setHeight(117, Unit.PX);
 		headerTitleDes.getElement().setInnerHTML(desc);	

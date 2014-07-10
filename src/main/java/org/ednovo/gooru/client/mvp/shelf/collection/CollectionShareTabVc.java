@@ -45,11 +45,11 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ClassPageCollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
 import org.ednovo.gooru.shared.model.user.SettingDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -71,7 +71,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -85,10 +84,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class CollectionShareTabVc extends Composite implements MessageProperties{
+public class CollectionShareTabVc extends Composite {
 
 	private static CollectionShareTabVcUiBinder uiBinder = GWT
 			.create(CollectionShareTabVcUiBinder.class);
+	
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@UiField
 	HTMLEventPanel publicShareFloPanel;
@@ -149,7 +150,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	
 	private static final String GOORU_UID = "gooruuid";
 	
-	private static String CONFIRM_MESSAGE = GL1490+GL_SPL_EXCLAMATION;
+	private static String CONFIRM_MESSAGE = i18n.GL1490()+i18n.GL_SPL_EXCLAMATION();
 	
 	private CollectionShareAlertPopup collectionShareAlertPopup;
 	
@@ -175,25 +176,25 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		this.collection = collection;
 		initWidget(uiBinder.createAndBindUi(this));
 		shareViaText = new HTMLPanel("");
-		visibilityText.setText(GL0842);
+		visibilityText.setText(i18n.GL0842());
 		visibilityText.getElement().setId("lblVisibilityText");
-		visibilityText.getElement().setAttribute("alt",GL0842);
-		visibilityText.getElement().setAttribute("title",GL0842);
+		visibilityText.getElement().setAttribute("alt",i18n.GL0842());
+		visibilityText.getElement().setAttribute("title",i18n.GL0842());
 		
-		visibilityTextTeacherTip.setText(GL1658);
+		visibilityTextTeacherTip.setText(i18n.GL1658());
 		visibilityTextTeacherTip.getElement().setId("lblVisibilityTextTeacherTip");
-		visibilityTextTeacherTip.getElement().setAttribute("alt",GL1658);
-		visibilityTextTeacherTip.getElement().setAttribute("title",GL1658);
+		visibilityTextTeacherTip.getElement().setAttribute("alt",i18n.GL1658());
+		visibilityTextTeacherTip.getElement().setAttribute("title",i18n.GL1658());
 		
-		visibilityOptiontext.setText(GL0843);
+		visibilityOptiontext.setText(i18n.GL0843());
 		visibilityOptiontext.getElement().setId("lblVisibilityOptiontext");
-		visibilityOptiontext.getElement().setAttribute("alt",GL0843);
-		visibilityOptiontext.getElement().setAttribute("title",GL0843);
+		visibilityOptiontext.getElement().setAttribute("alt",i18n.GL0843());
+		visibilityOptiontext.getElement().setAttribute("title",i18n.GL0843());
 		
-		visibilityOptiontextTeacherTip.setText(GL1659);
+		visibilityOptiontextTeacherTip.setText(i18n.GL1659());
 		visibilityOptiontextTeacherTip.getElement().setId("lblVisibilityOptiontextTeacherTip");
-		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",GL1659);
-		visibilityOptiontextTeacherTip.getElement().setAttribute("title",GL1659);
+		visibilityOptiontextTeacherTip.getElement().setAttribute("alt",i18n.GL1659());
+		visibilityOptiontextTeacherTip.getElement().setAttribute("title",i18n.GL1659());
 
 		
 		//teacherTipTextarea.addKeyUpHandler(new OnKeyUpHandler());
@@ -207,17 +208,17 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		finalTeacherTipLabelContainer
 		.addMouseOutHandler(new OnCollectionDescriptionOut());
 		
-		shareCollectiontext.setText(GL0545.toUpperCase());
+		shareCollectiontext.setText(i18n.GL0545().toUpperCase());
 		shareCollectiontext.getElement().setId("lblShareCollectiontext");
-		shareCollectiontext.getElement().setAttribute("alt",GL0545);
-		shareCollectiontext.getElement().setAttribute("title",GL0545);
+		shareCollectiontext.getElement().setAttribute("alt",i18n.GL0545());
+		shareCollectiontext.getElement().setAttribute("title",i18n.GL0545());
 		
-		shareViaText.getElement().setInnerHTML(GL0638);
+		shareViaText.getElement().setInnerHTML(i18n.GL0638());
 		shareViaText.getElement().setId("pnlShareViaText");
-		shareViaText.getElement().setAttribute("alt",GL0638);
-		shareViaText.getElement().setAttribute("title",GL0638);
+		shareViaText.getElement().setAttribute("alt",i18n.GL0638());
+		shareViaText.getElement().setAttribute("title",i18n.GL0638());
 		
-		//GL0638
+		//i18n.GL0638
 		socialShareLinksView = new SocialShareLinksView();
 		this.setData(collection);
 		
@@ -245,7 +246,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			@Override
 			public void onFocus(FocusEvent event) {
 				String directionText=teacherTipTextarea.getText().trim();
-				if(directionText.equalsIgnoreCase(GL1709)){
+				if(directionText.equalsIgnoreCase(i18n.GL1709())){
 					teacherTipTextarea.setText("");
 				}
 				teacherTipTextarea.getElement().getStyle().setColor("black");
@@ -266,7 +267,7 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 			public void onBlur(BlurEvent event) {
 				if(teacherTipTextarea.getText().length() == 0)
 				{
-					teacherTipTextarea.setText(GL1709);
+					teacherTipTextarea.setText(i18n.GL1709());
 					teacherTipTextarea.getElement().getStyle().setColor("#999");
 				}
 				else
@@ -309,13 +310,13 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		
 		publicFocPanel = new FlowPanel();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
-		shareViewPublicUc = new ShareViewUc(GL0329, GL0330);
+		shareViewPublicUc = new ShareViewUc(i18n.GL0329(), i18n.GL0330());
 		shareViewPublicUc.setTitleDescriptionStyle(52, 44);
 		publicFocPanel.add(shareViewPublicUc);
 //		publicFocPanel.add(rbPublicPanel);
 		publicShareFloPanel.add(publicFocPanel);
 		linkFocPanel = new FlowPanel();
-		shareViewShareableUc = new ShareViewUc(GL0331, GL0332);
+		shareViewShareableUc = new ShareViewUc(i18n.GL0331(), i18n.GL0332());
 		shareViewShareableUc.setTitleDescriptionStyle(12, 44);
 		linkFocPanel.add(shareViewShareableUc);
 		linkFocPanel.add(rbShareablePanel);
@@ -323,23 +324,23 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		rbPublic.setVisible(true);
 		lblPublishPending.setVisible(false);
 		publishedPanel.setVisible(false);
-		lblPublishPending.setText(GL1924);
+		lblPublishPending.setText(i18n.GL1924());
 		lblPublishPending.getElement().setId("lblPublishPending");
-		lblPublishPending.getElement().setAttribute("alt",GL1924);
-		lblPublishPending.getElement().setAttribute("title",GL1924);
+		lblPublishPending.getElement().setAttribute("alt",i18n.GL1924());
+		lblPublishPending.getElement().setAttribute("title",i18n.GL1924());
 		
-		lblPublish.setText(GL1942);
+		lblPublish.setText(i18n.GL1942());
 		lblPublish.getElement().setId("lblPublish");
-		lblPublish.getElement().setAttribute("alt",GL1942);
-		lblPublish.getElement().setAttribute("title",GL1942);
+		lblPublish.getElement().setAttribute("alt",i18n.GL1942());
+		lblPublish.getElement().setAttribute("title",i18n.GL1942());
 		
-		rbPublic.setText(GL1921);
+		rbPublic.setText(i18n.GL1921());
 		rbPublic.getElement().setId("btnRbPublic");
-		rbPublic.getElement().setAttribute("alt",GL1921);
-		rbPublic.getElement().setAttribute("title",GL1921);
+		rbPublic.getElement().setAttribute("alt",i18n.GL1921());
+		rbPublic.getElement().setAttribute("title",i18n.GL1921());
 
 		privateFocPanel = new FlowPanel();
-		shareViewPrivateUc = new ShareViewUc(GL0333, GL0334); 
+		shareViewPrivateUc = new ShareViewUc(i18n.GL0333(), i18n.GL0334()); 
 		shareViewPrivateUc.setTitleDescriptionStyle(40, 44);
 		privateFocPanel.add(shareViewPrivateUc);
 		privateFocPanel.add(rbPrivatePanel);
@@ -583,20 +584,20 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 						for(int i=0;i<result.size();i++){
 							if (result.size() >1){
 								if(i==result.size()-1){
-									sb.append(" "+GL_GRR_AND+" ");
+									sb.append(" "+i18n.GL_GRR_AND()+" ");
 								}else{
 									if (i==0){
 									}else{
-										sb.append(GL_GRR_COMMA+" ");
+										sb.append(i18n.GL_GRR_COMMA()+" ");
 									}
 								}
 							}
 							sb.append(result.get(i).getTitle());
 						}
 						if(result.size()>1){
-							sb.append(" "+GL1154+".");
+							sb.append(" "+i18n.GL1154()+".");
 						}else{
-							sb.append(" "+GL0102+".");
+							sb.append(" "+i18n.GL0102()+".");
 						}
 						
 						 String titles=sb.toString();
@@ -808,9 +809,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		}
 		else
 		{
-		userTeacherTipText.setText(GL1709);
-		userTeacherTipText.getElement().setAttribute("alt",GL1709);
-		userTeacherTipText.getElement().setAttribute("title",GL1709);
+		userTeacherTipText.setText(i18n.GL1709());
+		userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
+		userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
 		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 
@@ -833,9 +834,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		}
 		else
 		{
-		userTeacherTipText.setText(GL1709);
-		userTeacherTipText.getElement().setAttribute("alt",GL1709);
-		userTeacherTipText.getElement().setAttribute("title",GL1709);
+		userTeacherTipText.setText(i18n.GL1709());
+		userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
+		userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
 		userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 	
@@ -1021,9 +1022,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 		}
 		else
 		{
-			userTeacherTipText.setText(GL1709);
-			userTeacherTipText.getElement().setAttribute("alt",GL1709);
-			userTeacherTipText.getElement().setAttribute("title",GL1709);
+			userTeacherTipText.setText(i18n.GL1709());
+			userTeacherTipText.getElement().setAttribute("alt",i18n.GL1709());
+			userTeacherTipText.getElement().setAttribute("title",i18n.GL1709());
 			userTeacherTipText.getElement().setAttribute("style", "color:#999;");
 		}
 		
@@ -1033,9 +1034,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 	public void displayErrorMsgTeacherTip(){
 
 		errorLabelForTeacherTip.setVisible(true);
-		errorLabelForTeacherTip.setText(MessageProperties.GL1116);
-		errorLabelForTeacherTip.getElement().setAttribute("alt",MessageProperties.GL1116);
-		errorLabelForTeacherTip.getElement().setAttribute("title",MessageProperties.GL1116);
+		errorLabelForTeacherTip.setText(i18n.GL1116());
+		errorLabelForTeacherTip.getElement().setAttribute("alt",i18n.GL1116());
+		errorLabelForTeacherTip.getElement().setAttribute("title",i18n.GL1116());
 		
 	}
 	
@@ -1057,9 +1058,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 				teacherTipTextarea.setText(teacherTipTextarea.getText().trim()
 						.substring(0, 500));
 				errorLabelForTeacherTip.setText("");
-				errorLabelForTeacherTip.setText(MessageProperties.GL0143);
-				errorLabelForTeacherTip.getElement().setAttribute("alt",MessageProperties.GL0143);
-				errorLabelForTeacherTip.getElement().setAttribute("title",MessageProperties.GL0143);
+				errorLabelForTeacherTip.setText(i18n.GL0143());
+				errorLabelForTeacherTip.getElement().setAttribute("alt",i18n.GL0143());
+				errorLabelForTeacherTip.getElement().setAttribute("title",i18n.GL0143());
 				errorLabelForTeacherTip.setVisible(true);
 			}
 			else
@@ -1089,9 +1090,9 @@ public class CollectionShareTabVc extends Composite implements MessageProperties
 								Window.enableScrolling(true);
 							}
 						};
-						success.setPopupTitle(GL1921);
-	                    success.setDescText(GL1917+"<br>"+GL1918);
-	                    success.setPositiveButtonText(GL0190);
+						success.setPopupTitle(i18n.GL1921());
+	                    success.setDescText(i18n.GL1917()+"<br>"+i18n.GL1918());
+	                    success.setPositiveButtonText(i18n.GL0190());
 						
 					}
 				};
