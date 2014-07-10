@@ -53,8 +53,18 @@ public class UpdateQuestionImageView extends Composite implements MessagePropert
 	public UpdateQuestionImageView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		questionImageText.getElement().setInnerHTML(GL0860);
+		questionImageText.getElement().setId("pnlUploadName");
+		questionImageText.getElement().setAttribute("alt", GL0860);
+		questionImageText.getElement().setAttribute("title", GL0860);
+		updateQuestionImage.getElement().setId("imgUpdateQuestionImage");
 		uploadImage.setText(GL0861);
+		uploadImage.getElement().setId("lblUploadImage");
+		uploadImage.getElement().setAttribute("alt", GL0861);
+		uploadImage.getElement().setAttribute("title", GL0861);
 		removeImage.setText(GL0862);
+		removeImage.getElement().setId("lblRemoveImage");
+		removeImage.getElement().setAttribute("alt", GL0862);
+		removeImage.getElement().setAttribute("title", GL0862);
 	}
 
 

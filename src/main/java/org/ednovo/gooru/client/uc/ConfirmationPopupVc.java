@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -45,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public abstract class ConfirmationPopupVc extends Composite implements MessageProperties {
+public abstract class ConfirmationPopupVc extends Composite {
 
 	private AppPopUp appPopUp;
 	private boolean isEditQuestion=false;
@@ -62,6 +62,8 @@ public abstract class ConfirmationPopupVc extends Composite implements MessagePr
 	FlowPanel buttonContainer;
 	
 	private static RemoveResourcePopupVcUiBinder uiBinder = GWT.create(RemoveResourcePopupVcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface RemoveResourcePopupVcUiBinder extends UiBinder<Widget, ConfirmationPopupVc> {
 	}
@@ -79,10 +81,10 @@ public abstract class ConfirmationPopupVc extends Composite implements MessagePr
 		contentText.setText(messageContent);
 		appPopUp.show();
 		appPopUp.center();
-		cancelButton.setText(GL0142);
-		okButton.setText(GL0190);
+		cancelButton.setText(i18n.GL0142());
+		okButton.setText(i18n.GL0190());
 		okButton.getElement().setId("btnOk");
-		loadingTextLbl.setText(GL1021);
+		loadingTextLbl.setText(i18n.GL1021());
 		cancelButton.getElement().setId("lnkCancel");
 		loadingTextLbl.setVisible(false);
         buttonContainer.setVisible(true);

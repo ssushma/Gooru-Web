@@ -27,8 +27,6 @@ package org.ednovo.gooru.client.mvp.rating.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-import com.google.gwt.event.shared.GwtEvent.Type;
-
 public class UpdateResourceRatingCountEvent extends GwtEvent<UpdateResourceRatingCountEventHandler> {
 	
 	public static final Type<UpdateResourceRatingCountEventHandler> TYPE = new Type<UpdateResourceRatingCountEventHandler>();

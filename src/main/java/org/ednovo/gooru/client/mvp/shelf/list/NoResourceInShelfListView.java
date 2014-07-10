@@ -26,7 +26,7 @@ package org.ednovo.gooru.client.mvp.shelf.list;
 
 import org.ednovo.gooru.client.effects.FadeInAndOut;
 import org.ednovo.gooru.client.mvp.shelf.FolderStyleBundle;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Display;
@@ -43,7 +43,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class NoResourceInShelfListView extends Composite implements MessageProperties{
+public class NoResourceInShelfListView extends Composite {
 
 	
 
@@ -51,15 +51,17 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 	}
 	private static NoResourceInShelfListViewUiBinder uiBinder = GWT.create(NoResourceInShelfListViewUiBinder.class);
 	
-	private static final String  infoMsg_1 =GL0982;
-	private static final String  infoMsg_2 =GL0983;
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
-	private static final String  congratsMsg_1 =GL0984;
-	private static final String  congratsMsg_2 =GL0985;
-	private final String CONGRATS_MSG=GL0483.toLowerCase();
-	private final String INFO_MSG =GL0986;
-	private final String MSG_NO_IMG =GL0987;
-	private final String CONGRATS_NO_IMG =GL0988;
+	private static final String  infoMsg_1 =i18n.GL0982();
+	private static final String  infoMsg_2 =i18n.GL0983();
+	
+	private static final String  congratsMsg_1 = i18n.GL0984();
+	private static final String  congratsMsg_2 = i18n.GL0985();
+	private final String CONGRATS_MSG = i18n.GL0483().toLowerCase();
+	private final String INFO_MSG = i18n.GL0986();
+	private final String MSG_NO_IMG = i18n.GL0987();
+	private final String CONGRATS_NO_IMG = i18n.GL0988();
 	
 	@UiField
 	Label userInfoMsg_1,userInfoMsg_2,emptyCollMsg_1,emptyCollMsg_2;
@@ -180,13 +182,13 @@ public class NoResourceInShelfListView extends Composite implements MessagePrope
 			shelfUserInfoMsg.schedule(5000);
 			
 		}else{
-			emptyCollMsg_1.setText(GL1056);
-			emptyCollMsg_1.getElement().setAttribute("alt", GL1056);
-			emptyCollMsg_1.getElement().setAttribute("title", GL1056);
+			emptyCollMsg_1.setText(i18n.GL1056());
+			emptyCollMsg_1.getElement().setAttribute("alt", i18n.GL1056());
+			emptyCollMsg_1.getElement().setAttribute("title", i18n.GL1056());
 
-			emptyCollMsg_2.setText(" "+GL1057);
-			emptyCollMsg_2.getElement().setAttribute("alt", GL1057);
-			emptyCollMsg_2.getElement().setAttribute("title", GL1057);
+			emptyCollMsg_2.setText(" "+i18n.GL1057());
+			emptyCollMsg_2.getElement().setAttribute("alt", i18n.GL1057());
+			emptyCollMsg_2.getElement().setAttribute("title", i18n.GL1057());
 		}
 		
 		

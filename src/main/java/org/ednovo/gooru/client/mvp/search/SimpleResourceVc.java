@@ -33,13 +33,12 @@ import org.ednovo.gooru.client.mvp.rating.events.OpenReviewPopUpEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeEvent;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsInRealTimeHandler;
 import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDragWithImgUc;
-import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.ResourceImageUc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionItemSearchResultDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -68,9 +67,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  *
  */
-public class SimpleResourceVc extends Composite implements IsDraggable,MessageProperties {
+public class SimpleResourceVc extends Composite implements IsDraggable {
 
 	private static SimpleResourceVcUiBinder uiBinder = GWT.create(SimpleResourceVcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SimpleResourceVcUiBinder extends UiBinder<Widget, SimpleResourceVc> {
 	}
@@ -107,8 +108,8 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 	public SimpleResourceVc(CollectionItemSearchResultDo resourceSearchResultDo, int position) {
 		initWidget(uiBinder.createAndBindUi(this));
 		positionLbl.setText(position + "");
-		imgNotFriendly.setTitle(GL0737);
-		imgNotFriendly.setAltText(GL0737);
+		imgNotFriendly.setTitle(i18n.GL0737());
+		imgNotFriendly.setAltText(i18n.GL0737());
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		setData(resourceSearchResultDo);
 		AppClientFactory.getEventBus().addHandler(UpdateRatingsInRealTimeEvent.TYPE,setRatingWidgetMetaData);
@@ -162,7 +163,7 @@ public class SimpleResourceVc extends Composite implements IsDraggable,MessagePr
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
 				
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
 				toolTip.setPopupPosition(imgNotFriendly.getAbsoluteLeft()-(50+22), imgNotFriendly.getAbsoluteTop()+22);

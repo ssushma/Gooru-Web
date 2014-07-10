@@ -33,17 +33,16 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareLinksView;
 import org.ednovo.gooru.client.mvp.socialshare.SocialShareView;
 import org.ednovo.gooru.client.util.PlayerDataLogEvents;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.social.SocialShareDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -54,10 +53,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class SearchShareVc extends Composite implements MessageProperties {
+public class SearchShareVc extends Composite {
 
 	private static SearchShareVcUiBinder uiBinder = GWT
 			.create(SearchShareVcUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SearchShareVcUiBinder extends UiBinder<Widget, SearchShareVc> {
 	}
@@ -97,8 +98,8 @@ public class SearchShareVc extends Composite implements MessageProperties {
 		initWidget(uiBinder.createAndBindUi(this));
 		socialShareLinksView = new SocialShareLinksView();
 		socialShareLinksView.getshareLinkTxtBox().setReadOnly(true);
-		shareViaText.setText(GL0638);
-		socialShareLinksView.getShareLbl().setText(GL0511);
+		shareViaText.setText(i18n.GL0638());
+		socialShareLinksView.getShareLbl().setText(i18n.GL0511());
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setPaddingTop(0, Unit.PX);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setWidth(22, Unit.PC);
 		socialShareLinksView.getShareLinkFlwPl().getElement().getStyle().setFloat(Float.LEFT);
