@@ -55,8 +55,18 @@ public class AddQuestionImg extends Composite implements MessageProperties
 	public AddQuestionImg() {
 		initWidget(addQuestionImageUiBinder.createAndBindUi(this));
 		displayQuestLbl.setText(GL0860);
+		displayQuestLbl.getElement().setId("lblDisplayQuestLbl");
+		displayQuestLbl.getElement().setAttribute("alt", GL0860);
+		displayQuestLbl.getElement().setAttribute("title",GL0860);
+		questionImageContainer.getElement().setId("imgQuestionImageContainer");
 		changeImgLbl.setText(GL0861);
+		changeImgLbl.getElement().setId("lblChangeImgLbl");
+		changeImgLbl.getElement().setAttribute("alt", GL0861);
+		changeImgLbl.getElement().setAttribute("title",GL0861);
 		removeImgLbl.setText(GL0862);
+		removeImgLbl.getElement().setId("lblChangeImgLbl");
+		removeImgLbl.getElement().setAttribute("alt", GL0862);
+		removeImgLbl.getElement().setAttribute("title",GL0862);
 	}
 	
 	

@@ -27,8 +27,8 @@ package org.ednovo.gooru.client.mvp.search;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -45,9 +45,11 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Search Team
  * 
  */
-public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> implements IsSearchRootView, MessageProperties {
+public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> implements IsSearchRootView {
 
 	private static SearchRootViewUiBinder uiBinder = GWT.create(SearchRootViewUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SearchRootViewUiBinder extends UiBinder<Widget, SearchRootView> {
 	}
@@ -187,18 +189,18 @@ public class SearchRootView extends BaseViewWithHandlers<SearchRootUiHandlers> i
 		     {
 				if(countValue > 0){
 					searchText=searchText.substring(0, 50)+"...";
-					searchText = " "+GL1468+" <b>" + searchText + "</b>";
+					searchText = " "+i18n.GL1468()+" <b>" + searchText + "</b>";
 				}else{
 					searchText=searchText.substring(0, 50)+"...";
-					searchText = GL0507+" <b>" + searchText + "</b>";
+					searchText = i18n.GL0507()+" <b>" + searchText + "</b>";
 				}
 				
 		     }
 		     else{
 		    	 if(countValue > 0){
-		    		 searchText = ""+GL1468+" <b>" + searchText + "</b>";
+		    		 searchText = ""+i18n.GL1468()+" <b>" + searchText + "</b>";
 		    	 }else{
-		    		 searchText =GL0507+" <b>" + searchText + "</b>";
+		    		 searchText =i18n.GL0507()+" <b>" + searchText + "</b>";
 		    	 }
 		}
 		

@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -65,7 +66,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class EditableTextAreaUc extends Composite implements HasValue<String>,MessageProperties {
+public class EditableTextAreaUc extends Composite implements HasValue<String> {
 
 	private static EditableLabelUiBinder uiBinder = GWT
 			.create(EditableLabelUiBinder.class);
@@ -73,6 +74,8 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 	interface EditableLabelUiBinder extends
 			UiBinder<Widget, EditableTextAreaUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField
 	protected HTML html;
@@ -119,7 +122,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 						boolean isHavingBadWords = value;
 						if (value){
 							textArea.getElement().getStyle().setBorderColor("orange");
-							lblErrorMessage.setText(GL0554);
+							lblErrorMessage.setText(i18n.GL0554());
 							lblErrorMessage.setVisible(true);
 							showProfanityError(true);
 						}else{
@@ -181,7 +184,7 @@ public class EditableTextAreaUc extends Composite implements HasValue<String>,Me
 				boolean isHavingBadWords = value;
 				if (value){
 					textArea.getElement().getStyle().setBorderColor("orange");
-					lblErrorMessage.setText(GL0554);
+					lblErrorMessage.setText(i18n.GL0554());
 					lblErrorMessage.setVisible(true);
 					showProfanityError(true);
 				}else{

@@ -54,6 +54,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshType;
 import org.ednovo.gooru.client.uc.AlertContentUc;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.ResourceFormatDo;
@@ -61,7 +62,6 @@ import org.ednovo.gooru.shared.model.content.ThumbnailDo;
 import org.ednovo.gooru.shared.model.folder.FolderDo;
 import org.ednovo.gooru.shared.model.folder.FolderItemDo;
 import org.ednovo.gooru.shared.model.folder.FolderListDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
@@ -100,9 +100,11 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 r * @author Search Team
  * 
  */
-public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> implements IsShelfListView,ClickHandler,MessageProperties {
+public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> implements IsShelfListView,ClickHandler {
 
 	private static ShelfTabViewUiBinder uiBinder = GWT.create(ShelfTabViewUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface ShelfTabViewUiBinder extends UiBinder<Widget, ShelfListView> {
 	}
@@ -166,9 +168,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 
 	private static final List<FolderDo> SHELF_COLLECTIONS = new ArrayList<FolderDo>();
 
-	private static final String NO_COLLECTION_MESSAGE =GL0995;
+	private static final String NO_COLLECTION_MESSAGE = i18n.GL0995();
 	
-	private static final String LOADING_COLLECTION_MESSAGE =GL0996;
+	private static final String LOADING_COLLECTION_MESSAGE = i18n.GL0996();
 
 	@Inject
 	ShelfView shelfView;
@@ -186,11 +188,11 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	int collectionItemDoSize;
 
 	private static String openedCollectionId = "";
-	private final String NEW_RESOURCE_DRAG_MSG =GL0997;
-	private final String NEW_COLLECTION_DRAG_MSG =GL0998;
-	private final String CONGRATS_NO_IMG = GL0988;
-	private final String MSG_NO_IMG =GL0987;
-	private final String INFO_MSG =GL0986;
+	private final String NEW_RESOURCE_DRAG_MSG =i18n.GL0997();
+	private final String NEW_COLLECTION_DRAG_MSG =i18n.GL0998();
+	private final String CONGRATS_NO_IMG = i18n.GL0988();
+	private final String MSG_NO_IMG =i18n.GL0987();
+	private final String INFO_MSG =i18n.GL0986();
 	
 	int widgetPosition = 0;
 	
@@ -204,9 +206,9 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 	
 	private PlaceRequest searchRequest = null;
 	
-    private static final String PRE_SEARCH_LINK = GL1487;
+    private static final String PRE_SEARCH_LINK = i18n.GL1487();
 	
-	private static final String PRE_CLASSPAGE_LINK=GL1486;
+	private static final String PRE_CLASSPAGE_LINK=i18n.GL1486();
 	
 	private static final String O1_LEVEL = "o1";
 	
@@ -229,13 +231,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		res.css().ensureInjected();
 		ShelfCBundle.INSTANCE.css().ensureInjected();
 		setWidget(uiBinder.createAndBindUi(this));
-		newCollectionShelf.setLabel(GL0993);
-		newCollectionShelf.getElement().setAttribute("alt", GL0993);
-		newCollectionShelf.getElement().setAttribute("title", GL0993);
-		foldersText.setText(GL0994);
+		newCollectionShelf.setLabel(i18n.GL0993());
+		newCollectionShelf.getElement().setAttribute("alt", i18n.GL0993());
+		newCollectionShelf.getElement().setAttribute("title",i18n.GL0993());
+		foldersText.setText(i18n.GL0994());
 		foldersText.getElement().setId("lblFoldersText");
-		foldersText.getElement().setAttribute("alt", GL0994);
-		foldersText.getElement().setAttribute("title", GL0994);
+		foldersText.getElement().setAttribute("alt", i18n.GL0994());
+		foldersText.getElement().setAttribute("title", i18n.GL0994());
 		
 		noCollectionMsgLbl.getElement().setId("lblNoCollectionMsgLbl");
 		noCollectionMsgLbl.setText(LOADING_COLLECTION_MESSAGE);
@@ -243,29 +245,29 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 		noCollectionMsgLbl.getElement().setAttribute("title", LOADING_COLLECTION_MESSAGE);
 		noCollectionMsgLbl.setVisible(true);
 		newCollectionShelf.getElement().setId("lblNewCollection");
-		backArrowButton.setText(GL1500);
+		backArrowButton.setText(i18n.GL1500());
 		backArrowButton.getElement().setId("btnBackArrowButton");
-		backArrowButton.getElement().setAttribute("alt", GL1500);
-		backArrowButton.getElement().setAttribute("title", GL1500);
+		backArrowButton.getElement().setAttribute("alt", i18n.GL1500());
+		backArrowButton.getElement().setAttribute("title", i18n.GL1500());
 
 		backArrowButton.setVisible(false);
 		backArrowButton.addClickHandler(this);
-		createBtn.setText(GL1335);
+		createBtn.setText(i18n.GL1335());
 		createBtn.getElement().setId("btnCreateBtn");
-		createBtn.getElement().setAttribute("alt", GL1335);
-		createBtn.getElement().setAttribute("title", GL1335);
-		folderLabel.setText(GL1501);
+		createBtn.getElement().setAttribute("alt", i18n.GL1335());
+		createBtn.getElement().setAttribute("title",i18n.GL1335());
+		folderLabel.setText(i18n.GL1501());
 		folderLabel.getElement().setId("lblFolderLabel");
-		folderLabel.getElement().setAttribute("alt", GL1501);
-		folderLabel.getElement().setAttribute("title", GL1501);
-		collectionLabel.setText(GL0645);
+		folderLabel.getElement().setAttribute("alt", i18n.GL1501());
+		folderLabel.getElement().setAttribute("title", i18n.GL1501());
+		collectionLabel.setText(i18n.GL0645());
 		collectionLabel.getElement().setId("lblCollectionLabel");
-		collectionLabel.getElement().setAttribute("alt", GL0645);
-		collectionLabel.getElement().setAttribute("title", GL0645);
-		organizelbl.getElement().setInnerText(GL0180);
+		collectionLabel.getElement().setAttribute("alt", i18n.GL0645());
+		collectionLabel.getElement().setAttribute("title", i18n.GL0645());
+		organizelbl.getElement().setInnerText(i18n.GL0180());
 		organizelbl.getElement().setId("pnlOrganizelbl");
-		organizelbl.getElement().setAttribute("alt", GL0180);
-		organizelbl.getElement().setAttribute("title", GL0180);
+		organizelbl.getElement().setAttribute("alt", i18n.GL0180());
+		organizelbl.getElement().setAttribute("title", i18n.GL0180());
 		shelfFocPanel.getElement().setId("focuspnlShelfFocPanel");
 		collectionListScrollpanel.getElement().setId("sbCollectionListScrollpanel");
 		folderCollectionPanel.getElement().setId("fpnlFolderCollectionPanel");
@@ -285,7 +287,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					AppClientFactory.fireEvent(new InvokeLoginEvent());
 				} else {
 					if (checkFolderCollectionSize()) {
-						AlertContentUc alertContentUc = new AlertContentUc(GL0061,GL0999);
+						AlertContentUc alertContentUc = new AlertContentUc(i18n.GL0061(),i18n.GL0999());
 					} else {
 						Window.enableScrolling(false);
 						AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -889,7 +891,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				collectionListScrollpanel.getElement().getStyle().setWidth(295, Unit.PX);
 				if(treeItemShelfCollection!=null) {
 					if(organizeRootPnl.getStyleName().contains(folderStyle.active())) {
-						AppClientFactory.fireEvent(new SetFolderParentNameEvent(GL0180));
+						AppClientFactory.fireEvent(new SetFolderParentNameEvent(i18n.GL0180()));
 						treeItemShelfCollection.setActiveStyle(false);
 					} else {
 						treeItemShelfCollection.setActiveStyle(true);
@@ -1325,7 +1327,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				if(selectedWidget.getCollectionDo().getGooruOid().equalsIgnoreCase(folderDo.getGooruOid())) {
 					TreeItem parentSelectedItem = treeChildSelectedItem.getParentItem();
 					if(selectedWidget.getLevel()==1) {
-						AppClientFactory.fireEvent(new SetFolderParentNameEvent(GL0180));
+						AppClientFactory.fireEvent(new SetFolderParentNameEvent(i18n.GL0180()));
 						treeChildSelectedItem.remove();
 					} else {
 						treeChildSelectedItem.remove();
@@ -1340,7 +1342,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 					 ShelfCollection deletedItem = (ShelfCollection) item.getWidget();
 					 if(folderDo.getGooruOid().equalsIgnoreCase(deletedItem.getCollectionDo().getGooruOid())) {
 						 item.remove();
-						 AppClientFactory.fireEvent(new SetFolderParentNameEvent(GL0180));
+						 AppClientFactory.fireEvent(new SetFolderParentNameEvent(i18n.GL0180()));
 					 }
 				 }
 			}
@@ -1392,13 +1394,13 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			if(selectedWidget.getCollectionDo().getGooruOid().equalsIgnoreCase(sourceId)) {
 				TreeItem parentSelectedItem = treeChildSelectedItem.getParentItem();
 				if(selectedWidget.getLevel()==0){
-					AppClientFactory.fireEvent(new SetFolderParentNameEvent(GL0180));
+					AppClientFactory.fireEvent(new SetFolderParentNameEvent(i18n.GL0180()));
 					treeChildSelectedItem.remove();
 					setCollectionActiveStyle(selectedWidget);
 					return;
 				}
 				if(selectedWidget.getLevel()==1) {
-					AppClientFactory.fireEvent(new SetFolderParentNameEvent(GL0180));
+					AppClientFactory.fireEvent(new SetFolderParentNameEvent(i18n.GL0180()));
 					treeChildSelectedItem.remove();
 					setCollectionActiveStyle(selectedWidget);
 					return;
@@ -1418,7 +1420,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 				 TreeItem item = myShelfVerPanel.getItem(i);
 				 ShelfCollection deletedItem = (ShelfCollection) item.getWidget();
 				 item.remove();
-				 AppClientFactory.fireEvent(new SetFolderParentNameEvent(GL0180));
+				 AppClientFactory.fireEvent(new SetFolderParentNameEvent(i18n.GL0180()));
 				 setCollectionActiveStyle(selectedWidget);
 				 return;
 			 }

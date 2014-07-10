@@ -30,7 +30,6 @@ import java.util.Map;
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.util.MixpanelUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -51,7 +50,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
  * @author Search Team
  *
  */
-public class CollectionImageUc extends Composite implements ClickHandler,MessageProperties {
+public class CollectionImageUc extends Composite implements ClickHandler {
 
 	private static CollectionImageUcUiBinder uiBinder = GWT.create(CollectionImageUcUiBinder.class);
 

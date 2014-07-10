@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.uc;
 
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -57,7 +58,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class SettingEditLabelUc extends Composite implements MessageProperties,HasValue<String> {
+public class SettingEditLabelUc extends Composite implements HasValue<String> {
 
 
 	private static SettingEditLabelUcUiBinder uiBinder = GWT
@@ -66,6 +67,9 @@ public class SettingEditLabelUc extends Composite implements MessageProperties,H
 	interface SettingEditLabelUcUiBinder extends
 			UiBinder<Widget, SettingEditLabelUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	protected Label editLabel,errorLabel;
 
@@ -129,7 +133,7 @@ public class SettingEditLabelUc extends Composite implements MessageProperties,H
 		if (editTextBox.getText().trim().length() > 0) {
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else {
-			errorLabel.setText(StringUtil.generateMessage(GL0082, FNAME));
+			errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), FNAME));
 			errorLabel.setVisible(true);
 			return;
 		}

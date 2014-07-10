@@ -6,6 +6,7 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerView;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -38,13 +39,15 @@ import com.google.inject.Inject;
  *
  * @Reviewer: Gooru Team
  */
-public abstract class NarrationUc extends PopupPanel implements MessageProperties {
+public abstract class NarrationUc extends PopupPanel {
 
 	private static NarrationUcUiBinder uiBinder = GWT
 			.create(NarrationUcUiBinder.class);
 
 	interface NarrationUcUiBinder extends UiBinder<Widget, NarrationUc> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@UiField Label lblResourceTitle,lblClose,lblUserName;
 
@@ -83,8 +86,8 @@ public abstract class NarrationUc extends PopupPanel implements MessagePropertie
 		super(true);
 		setWidget(uiBinder.createAndBindUi(this));
 		lblResourceTitle.setText("1.Resource Title");
-		lblUserName.setText(GL1035);
-		btnOk.setText(GL0703);
+		lblUserName.setText(i18n.GL1035());
+		btnOk.setText(i18n.GL0703());
 		setUserProfileDetails(collectionItemDo);
 		setUserProfileImage(collectionItemDo.getResource().getUser().getGooruUId());
 		setGlassEnabled(true);

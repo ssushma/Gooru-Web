@@ -38,17 +38,16 @@ import org.ednovo.gooru.client.uc.ErrorMessagePanel;
 import org.ednovo.gooru.client.uc.LicencegItemVc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.tooltip.ToolTip;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.TagDo;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.model.search.SearchDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.Style.Position;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -70,10 +69,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T>
  * @param <C>
  */
-public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo>	extends FocusPanel implements MessageProperties{
+public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C extends ResourceSearchResultDo>	extends FocusPanel{
 
 	protected static SearchMoreInfoVcUiBinder uiBinder = GWT
 			.create(SearchMoreInfoVcUiBinder.class);
+	
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SearchMoreInfoVcUiBinder extends
 			UiBinder<Widget, SearchMoreInfoVc<?, ?>> {
@@ -116,9 +117,9 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 	private SearchDo<C> usedInSearchDo;
 
-	protected static final String OER_DESCRIPTION = GL1092;
+	protected static final String OER_DESCRIPTION = i18n.GL1092();
 
-	protected static final String OER_TITLE = GL1093;
+	protected static final String OER_TITLE = i18n.GL1093();
 
 	private static final String OER_PNG_IMG = "oer.png";
 
@@ -128,7 +129,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 
 	private static final String NULL = "null";
 	
-	private static final String ALL_GRADES = GL1467.toUpperCase();
+	private static final String ALL_GRADES = i18n.GL1467().toUpperCase();
 	
 	ToolTip toolTip = null;
 	
@@ -164,11 +165,11 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		setWidget(uiBinder.createAndBindUi(this));
 
 		rightsLbl.setText("");
-		resourceSearchRightsFieldVc.setToolTip(GL0730);
-		imgQuestionImage.setTitle(GL0732);
-		imgQuestionImage.setAltText(GL0732);
+		resourceSearchRightsFieldVc.setToolTip(i18n.GL0730());
+		imgQuestionImage.setTitle(i18n.GL0732());
+		imgQuestionImage.setAltText(i18n.GL0732());
 		imgQuestionImage.setUrl("images/mos/questionmark.png");
-		resourceSearchGradeFieldVc.setToolTip(GL0325);
+		resourceSearchGradeFieldVc.setToolTip(i18n.GL0325());
 		rightsLbl.setVisible(false);
 		
 
@@ -224,7 +225,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				toolTip = new ToolTip(GL0454+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+GL04431);
+				toolTip = new ToolTip(i18n.GL0454()+""+"<img src='/images/mos/ipadFriendly.png' style='margin-top:0px;'/>"+" "+i18n.GL04431());
 				
 				toolTip.getElement().getStyle().setBackgroundColor("transparent");
 				toolTip.getElement().getStyle().setPosition(Position.ABSOLUTE);
@@ -323,9 +324,7 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 			
 			List<Integer> gradeListInt = new ArrayList<Integer>();
-			finalGradeStringB.append(gradeListSize > 1 ? GL1320_1+GL_SPL_SEMICOLON+" " : GL0325+GL_SPL_SEMICOLON+" ");
-			
-
+			finalGradeStringB.append(gradeListSize > 1 ? i18n.GL1320_1()+i18n.GL_SPL_SEMICOLON()+" " : i18n.GL0325()+i18n.GL_SPL_SEMICOLON()+" ");
 			
 			
 			for (String eachGrade1 : gradeList) {
@@ -416,8 +415,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 		}*/
 		if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getIcon() != null&& !searchResultDo.getLicense().getIcon().equals(NULL)) {
 			Image image = new Image(searchResultDo.getAssetURI()+ searchResultDo.getLicense().getIcon());
-			image.setAltText(GL0730);
-			image.setTitle(GL0730);
+			image.setAltText(i18n.GL0730());
+			image.setTitle(i18n.GL0730());
 			rightsLbl.getElement().setAttribute("style", "padding-left: 309px;");
 			StandardSgItemVc standardItem = null;
 			LicencegItemVc licencegItemVcObj=null;
@@ -441,8 +440,8 @@ public abstract class SearchMoreInfoVc<T extends ResourceSearchResultDo, C exten
 			
 		} else if (searchResultDo.getLicense() != null	&& searchResultDo.getLicense().getTag() == OER|| (searchResultDo.getUrl() != null && searchResultDo.getUrl().indexOf(OERCOMMONS_ORG) >= 0)) {
 			Image image = new Image(LICENSE_FOLDER + OER_PNG_IMG);
-			image.setAltText(GL1098);
-			image.setTitle(GL1098);
+			image.setAltText(i18n.GL1098());
+			image.setTitle(i18n.GL1098());
 			StandardSgItemVc standardItem = new StandardSgItemVc(OER_TITLE,	OER_DESCRIPTION);
 			standardItem.setHeight("100px");
 			DownToolTipWidgetUc widget = new DownToolTipWidgetUc(image,	standardItem);

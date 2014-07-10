@@ -33,11 +33,9 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.rating.events.UpdateRatingsGraphEvent;
 import org.ednovo.gooru.shared.model.content.ContentStarRatingsDo;
 import org.ednovo.gooru.shared.model.content.StarRatingsDo;
-import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 
-import com.google.inject.Inject;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class RatingAndReviewPopupPresenter extends PresenterWidget<IsRatingAndReviewPopupView> implements RatingAndReviewPopupUiHandlers{

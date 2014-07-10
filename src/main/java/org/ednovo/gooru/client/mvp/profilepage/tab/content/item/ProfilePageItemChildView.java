@@ -33,6 +33,7 @@ import org.ednovo.gooru.client.mvp.profilepage.event.RefreshProfileListEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestCollectionOpenEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.RequestFolderOpenEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
@@ -54,7 +55,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Gooru Team
  * 
  */
-public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPresenter> implements IsProfilePageItemView,MessageProperties {
+public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPresenter> implements IsProfilePageItemView {
 
 	@UiField
 	FlowPanel childItemFolderIcon, actionVerPanel;
@@ -68,6 +69,8 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 	private static ProfilePageItemChildViewUiBinder uiBinder = GWT.create(ProfilePageItemChildViewUiBinder.class);
 
 	interface ProfilePageItemChildViewUiBinder extends UiBinder<Widget, ProfilePageItemChildView> {}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	/**
 	 * Class constructor
@@ -106,7 +109,7 @@ public class ProfilePageItemChildView extends ChildView<ProfilePageItemChildPres
 	private void setData(final CollectionItemDo collectionItemDo) {
 		lblChildItemTitle.setText(collectionItemDo.getResource().getTitle());
 		lblChildItemDescription.setText(collectionItemDo.getResource().getGoals());
-		childItemOpenBtn.setText(GL1115);
+		childItemOpenBtn.setText(i18n.GL1115());
 		childItemOpenBtn.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

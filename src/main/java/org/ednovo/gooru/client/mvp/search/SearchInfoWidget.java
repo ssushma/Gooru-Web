@@ -13,13 +13,12 @@ import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.event.InvokeLoginEvent;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.addTagesPopup.AddTagesPopupView;
-import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOutHideToolTip;
-import org.ednovo.gooru.client.mvp.play.collection.info.ResourceInfoView.MouseOverShowToolTip;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.collaborators.vc.SuccessPopupViewVc;
 import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.ToolTipPopUp;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
 import org.ednovo.gooru.shared.model.content.LicenseDo;
@@ -27,7 +26,6 @@ import org.ednovo.gooru.shared.model.content.ResourceDo;
 import org.ednovo.gooru.shared.model.content.customFieldValuesDO;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
 import org.ednovo.gooru.shared.util.InfoUtil;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,10 +51,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author mitraJ
  *
  */
-public class SearchInfoWidget extends Composite implements MessageProperties{
+public class SearchInfoWidget extends Composite {
 
 	private static SearchInfoWidgetUiBinder uiBinder = GWT
 			.create(SearchInfoWidgetUiBinder.class);
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface SearchInfoWidgetUiBinder extends
 	UiBinder<Widget, SearchInfoWidget> {
@@ -134,46 +134,46 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 	}
 
 	private void setResourceInfoData() {
-		publisherText.setText(GL0566+" ");
-		lblAggregation.setText(GL1628+" "+GL_SPL_SEMICOLON);
-		courseText.setText(GL0616+" ");
-		legalText.setText(GL0730+" "+GL_SPL_SEMICOLON);
-		standardsText.setText(GL0619+" ");
-		//		resourceInfoText.setText(GL0621);
-		gradeTitle.setText(GL0325+" "+GL_SPL_SEMICOLON);
-		originalUrlTitle.setText(GL0976+" "+GL_SPL_SEMICOLON);
-		generalLbl.setText(GL1708);
-		hostLbl.setText(GL1700+" "+GL_SPL_SEMICOLON);
+		publisherText.setText(i18n.GL0566()+" ");
+		lblAggregation.setText(i18n.GL1628()+" "+i18n.GL_SPL_SEMICOLON());
+		courseText.setText(i18n.GL0616()+" ");
+		legalText.setText(i18n.GL0730()+" "+i18n.GL_SPL_SEMICOLON());
+		standardsText.setText(i18n.GL0619()+" ");
+		//		resourceInfoText.setText(i18n.GL0621);
+		gradeTitle.setText(i18n.GL0325()+" "+i18n.GL_SPL_SEMICOLON());
+		originalUrlTitle.setText(i18n.GL0976()+" "+i18n.GL_SPL_SEMICOLON());
+		generalLbl.setText(i18n.GL1708());
+		hostLbl.setText(i18n.GL1700()+" "+i18n.GL_SPL_SEMICOLON());
 		
 		//Educational static data
-		educationallLbl.setText(GL1720);
-		eduAllignLbl.setText(GL1690+" "+GL_SPL_SEMICOLON);
-		eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
-		eduRoleLbl.setText(GL1867+" ");
-		interactiveLbl.setText(GL1689+" "+GL_SPL_SEMICOLON);
-		ageRangeLbl.setText(GL1692+" "+GL_SPL_SEMICOLON);
-		dKnowledgeLbl.setText(GL1693+" "+GL_SPL_SEMICOLON);
-		momentsoflearningLbl.setText(GL1678+" "+GL_SPL_SEMICOLON);
-		readingLevelLbl.setText(GL1694+" "+GL_SPL_SEMICOLON);
-		schLevelLbl.setText(GL1868+" "+GL_SPL_SEMICOLON);
+		educationallLbl.setText(i18n.GL1720());
+		eduAllignLbl.setText(i18n.GL1690()+" "+i18n.GL_SPL_SEMICOLON());
+		eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
+		eduRoleLbl.setText(i18n.GL1867()+" ");
+		interactiveLbl.setText(i18n.GL1689()+" "+i18n.GL_SPL_SEMICOLON());
+		ageRangeLbl.setText(i18n.GL1692()+" "+i18n.GL_SPL_SEMICOLON());
+		dKnowledgeLbl.setText(i18n.GL1693()+" "+i18n.GL_SPL_SEMICOLON());
+		momentsoflearningLbl.setText(i18n.GL1678()+" "+i18n.GL_SPL_SEMICOLON());
+		readingLevelLbl.setText(i18n.GL1694()+" "+i18n.GL_SPL_SEMICOLON());
+		schLevelLbl.setText(i18n.GL1868()+" "+i18n.GL_SPL_SEMICOLON());
 		
 		//Resource Info Static data
-		resourceInfoLbl.setText(GL1716);
-//		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
-		countryCodeLbl.setText(GL1697+" "+GL_SPL_SEMICOLON);
-		languageLbl.setText(GL1696+" "+GL_SPL_SEMICOLON);
-		dataTypeLbl.setText(GL1688+" "+GL_SPL_SEMICOLON);
-		authorLbl.setText(GL0573+" "+GL_SPL_SEMICOLON);
-		copyRightLbl.setText(GL1699+" "+GL_SPL_SEMICOLON);
-		keywordsTitle.setText(GL1876+" "+GL_SPL_SEMICOLON);
-		adsTitle.setText(GL1800+" "+GL_SPL_SEMICOLON);
+		resourceInfoLbl.setText(i18n.GL1716());
+//		dateCreatedLbl.setText(i18n.GL1717+i18n.GL_SPL_SEMICOLON);
+		countryCodeLbl.setText(i18n.GL1697()+" "+i18n.GL_SPL_SEMICOLON());
+		languageLbl.setText(i18n.GL1696()+" "+i18n.GL_SPL_SEMICOLON());
+		dataTypeLbl.setText(i18n.GL1688()+" "+i18n.GL_SPL_SEMICOLON());
+		authorLbl.setText(i18n.GL0573()+" "+i18n.GL_SPL_SEMICOLON());
+		copyRightLbl.setText(i18n.GL1699()+" "+i18n.GL_SPL_SEMICOLON());
+		keywordsTitle.setText(i18n.GL1876()+" "+i18n.GL_SPL_SEMICOLON());
+		adsTitle.setText(i18n.GL1800()+" "+i18n.GL_SPL_SEMICOLON());
 		//Accessibility Static data
-		accesibilityLbl.setText(GL1703);
-		mbFriendlyLbl.setText(GL1687+" "+GL_SPL_SEMICOLON);
-		accessModelLbl.setText(GL1707+" "+GL_SPL_SEMICOLON);
-		mediaFeatureLbl.setText(GL1706+" "+GL_SPL_SEMICOLON);
-		controlLbl.setText(GL1704+" "+GL_SPL_SEMICOLON);
-		acessHazardlLbl.setText(GL1705+" "+GL_SPL_SEMICOLON);
+		accesibilityLbl.setText(i18n.GL1703());
+		mbFriendlyLbl.setText(i18n.GL1687()+" "+i18n.GL_SPL_SEMICOLON());
+		accessModelLbl.setText(i18n.GL1707()+" "+i18n.GL_SPL_SEMICOLON());
+		mediaFeatureLbl.setText(i18n.GL1706()+" "+i18n.GL_SPL_SEMICOLON());
+		controlLbl.setText(i18n.GL1704()+" "+i18n.GL_SPL_SEMICOLON());
+		acessHazardlLbl.setText(i18n.GL1705()+" "+i18n.GL_SPL_SEMICOLON());
 		
 	}
 
@@ -602,7 +602,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		}else{
 			licenceCodePanel.setVisible(true);
 			licenceCodeType.setText(code);
-			licenceCodeLbl.setText(GL1719+GL_SPL_SEMICOLON);
+			licenceCodeLbl.setText(i18n.GL1719+i18n.GL_SPL_SEMICOLON);
 		}		
 	}*/
 	/**
@@ -614,7 +614,7 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		String dateString = DateTimeFormat.getFormat("MM/dd/yyyy").format(createdOn);
 		dateCreatedPanel.setVisible(true);
 		createdDateInfo.setText(dateString);
-		dateCreatedLbl.setText(GL1717+GL_SPL_SEMICOLON);
+		dateCreatedLbl.setText(i18n.GL1717+i18n.GL_SPL_SEMICOLON);
 	}*/
 	/**
 	 * 
@@ -692,15 +692,15 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 		if(eduUsedetails == null || eduUsedetails.size() == 0 || eduUsedetails.contains(null) || eduUsedetails.contains("") ){
 			eduUsePanel.setVisible(false);
 		}else{
-			educationallLbl.setText(GL1720);
+			educationallLbl.setText(i18n.GL1720());
 			if(eduUsedetails.size()>0){
 				isEducationalInfo=true;
 				final Label eduUseLabel=new Label(" "+eduUsedetails.get(0));
 				eduUseLabel.getElement().setAttribute("style", "float: left;");
 				eduUseType.add(eduUseLabel);
 				eduUsePanel.setVisible(true);
-				educationallLbl.setText(GL1720);
-				eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
+				educationallLbl.setText(i18n.GL1720());
+				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
 				educationallLbl.setVisible(true);
 			}
 			if(eduUsedetails.size()>2){
@@ -712,8 +712,8 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 				eduUseLabel.addMouseOverHandler(new MouseOverShowToolTip(eduusewidget));
 				eduUseLabel.addMouseOutHandler(new MouseOutHideToolTip());
 				eduUsePanel.setVisible(true);
-				educationallLbl.setText(GL1720);
-				eduUseLbl.setText(GL1664+" "+GL_SPL_SEMICOLON);
+				educationallLbl.setText(i18n.GL1720());
+				eduUseLbl.setText(i18n.GL1664()+" "+i18n.GL_SPL_SEMICOLON());
 				educationallLbl.setVisible(true);
 			}
 		}
@@ -995,11 +995,11 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 			if(mobileFriendly!=null && !mobileFriendly.equals("")){
 				if(mobileFriendly.equalsIgnoreCase(IPAD_FRIENDLY)){
 					mobileFriendlyPanel.setVisible(true);
-					mbFriendlyText.setText(" "+GL_GRR_YES);
+					mbFriendlyText.setText(" "+i18n.GL_GRR_YES());
 					isAccessibilityInfo=true;
 				}else{
 					mobileFriendlyPanel.setVisible(true);
-					mbFriendlyText.setText(" "+GL1735);
+					mbFriendlyText.setText(" "+i18n.GL1735());
 					isAccessibilityInfo=true;
 				}
 			}else{
@@ -1103,10 +1103,10 @@ public class SearchInfoWidget extends Composite implements MessageProperties{
 						};
 						success.setHeight("253px");
 						success.setWidth("450px");
-						success.setPopupTitle(GL1795);
-						success.setDescText(GL1796);
+						success.setPopupTitle(i18n.GL1795());
+						success.setDescText(i18n.GL1796());
 						success.enableTaggingImage();
-						success.setPositiveButtonText(GL0190);
+						success.setPositiveButtonText(i18n.GL0190());
 						success.center();
 						success.show();
 					 }else{

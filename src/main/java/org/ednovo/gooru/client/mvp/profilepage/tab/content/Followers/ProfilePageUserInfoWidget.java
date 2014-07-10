@@ -41,7 +41,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProfilePageUserInfoWidget extends Composite implements MessageProperties{
+public class ProfilePageUserInfoWidget extends Composite{
 
 	private static ProfilePageUserInfoUiBinder uiBinder = GWT
 			.create(ProfilePageUserInfoUiBinder.class);
