@@ -106,7 +106,7 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 	FlowPanel metaDataFloPanel;
 
 	@UiField
-	FlowPanel ratingWidgetPanel,resourceHeaderPanel;
+	FlowPanel ratingWidgetPanel,resourceHeaderPanel,contentPanel,resourceTitlePanel;
 	
 	@UiField
 	HTML resourceDescriptionHtml;
@@ -157,6 +157,20 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		initWidget(uiBinder.createAndBindUi(this));
 		res.css().ensureInjected();
 		res1.css().ensureInjected();
+		suggestedWrapperPanel.getElement().setId("pnlSuggestedWrapperPanel");
+		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
+		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		resourceHeaderPanel.getElement().setId("fpnlResourceHeaderPanel");
+		resourceImageUc.getElement().setId("resourceImageUc");
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		imgNotFriendly.getElement().setId("imgImgNotFriendly");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+		buttonsPanel.getElement().setId("pnlButtonsPanel");
 	}
 
 	public AddSearchSuggestedResourceView(
@@ -166,14 +180,31 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		buttonsPanel.setVisible(true);
 		this.collectionId = collectionid;
 		addResourceBtnLbl.setText(GL0590_1);
+		addResourceBtnLbl.getElement().setAttribute("alt", GL0590_1);
+		addResourceBtnLbl.getElement().setAttribute("title", GL0590_1);
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		imgNotFriendly.setTitle(GL0737);
+		
+		suggestedWrapperPanel.getElement().setId("pnlSuggestedWrapperPanel");
+		addResourceBtnPanel.getElement().setId("pnlAddResourceBtnPanel");
+		addResourceBtnLbl.getElement().setId("bluebtnAddResourceBtnLbl");
 		imgNotFriendly.setAltText(GL0737);
+		imgNotFriendly.getElement().setId("imgImgNotFriendly");
 		imgNotFriendly.setUrl("images/mos/ipadFriendly.png");
 		AppClientFactory.getEventBus().addHandler(UpdateSearchResultMetaDataEvent.TYPE,setUpdateMetaData);
 		AppClientFactory.getEventBus().addHandler(UpdateResourceRatingCountEvent.TYPE,setRatingCount);
 		ratingWidgetView=new RatingWidgetView();
 		ratingWidgetPanel.add(ratingWidgetView);
+		ratingWidgetPanel.getElement().setId("fpnlRatingWidgetPanel");
+		contentPanel.getElement().setId("fpnlContentPanel");
+		resourceHeaderPanel.getElement().setId("fpnlResourceHeaderPanel");
+		resourceImageUc.getElement().setId("resourceImageUc");
+		resourceTitlePanel.getElement().setId("fpnlResourceTitlePanel");
+		resourceTitleContainer.getElement().setId("epnlResourceTitleContainer");
+		metaDataFloPanel.getElement().setId("fpnlMetaDataFloPanel");
+		standardsFloPanel.getElement().setId("fpnlStandardsFloPanel");
+		resourceDescriptionHtml.getElement().setId("htmlResourceDescriptionHtml");
+		buttonsPanel.getElement().setId("pnlButtonsPanel");
 		setData(resourceSearchResultDo);
 	/*	MouseOutHandler mouseouthandler = new MouseOutHandler() {
 			
@@ -319,6 +350,8 @@ public abstract  class AddSearchSuggestedResourceView extends Composite implemen
 		}
 		title = title.replaceAll("<p>", "").replaceAll("</p>", "");
 		lblResourceTitle.setHTML(title);
+		lblResourceTitle.getElement().setAttribute("alt", title);
+		lblResourceTitle.getElement().setAttribute("title", title);
 		resourceTitle=resourceSearchResultDo.getResourceTitle();
 		lblResourceTitle.getElement().setId(resourceSearchResultDo.getGooruOid());
 		if (lblResourceTitle.getText().length()>38){
