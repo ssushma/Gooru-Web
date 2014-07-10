@@ -24,8 +24,6 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.wrap;
 
-import java.util.HashMap;
-
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.gin.BaseView;
@@ -33,19 +31,17 @@ import org.ednovo.gooru.client.mvp.home.HeaderUc;
 import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
 import org.ednovo.gooru.client.mvp.home.library.LibraryView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfView;
-import org.ednovo.gooru.client.mvp.shelf.collection.folders.uc.FolderPopupUc;
 import org.ednovo.gooru.client.mvp.shelf.list.ShelfListView;
 import org.ednovo.gooru.client.uc.tooltip.DiscoverToolTip;
-import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.model.user.UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
-import org.ednovo.gooru.shared.util.PlayerConstants;
 import org.ednovo.gooru.shared.util.StringUtil;
 import org.ednovo.gooru.shared.util.UAgentInfo;
 
-import com.anotherbigidea.flash.movie.Image;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -130,6 +126,7 @@ public class WrapView extends BaseView implements IsWrapView,MessageProperties {
 			  headerUc.getElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 			 // wrapperPanel.getElement().getFirstChildElement().getFirstChildElement().setAttribute("style", "position:fixed;");
 		  }
+		 
 		  setUiText();
 	}
 

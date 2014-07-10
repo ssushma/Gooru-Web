@@ -349,6 +349,7 @@ public class ShelfListView extends BaseViewWithHandlers<ShelfListUiHandlers> imp
 			shelfFocPanel.setStyleName(res.css().shelfPanelForShelf());
 		} else {
 			shelfFocPanel.setStyleName(res.css().shelfPanel());
+			shelfFocPanel.addStyleName("mediaCssToHide");
 		}
 	}
 
