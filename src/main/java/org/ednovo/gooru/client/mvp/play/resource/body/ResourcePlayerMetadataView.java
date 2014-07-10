@@ -396,6 +396,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 		resourceWidgetContainer.clear();
 		String resourceTypeName=collectionItemDo.getResource().getResourceType().getName();
 		wrapperContainerField.getElement().getStyle().clearHeight();
+		System.out.println("resourceTypeName:::"+resourceTypeName);
+		System.out.println("collectionItemDo.getResource().getUrl():::"+collectionItemDo.getResource().getUrl());
 		if(resourceTypeName.equalsIgnoreCase("video/youtube")){
 			wrapperContainerField.getElement().getStyle().setHeight(525	, Unit.PX);
 			resourceWidgetContainer.add(new FlashAndVideoPlayerWidget(ResourceImageUtil.getYoutubeVideoId(collectionItemDo.getResource().getUrl()), collectionItemDo.getStart(), collectionItemDo.getStop()));
@@ -440,6 +442,8 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				}
 			}
 		}else {
+
+			
 			String[] urlFormat = collectionItemDo.getResource().getUrl().split("\\.");
 			String urlExtension = urlFormat[urlFormat.length - 1];
 			if(urlExtension.equalsIgnoreCase("pdf")){
@@ -454,6 +458,17 @@ public class ResourcePlayerMetadataView extends BaseViewWithHandlers<ResourcePla
 				String signedFlag=resourceSourceUrl.contains("http")||resourceSourceUrl.contains("https")?"0":"1";
 				String startPage=collectionItemDo.getStart()!=null?collectionItemDo.getStart():"1";
 				resourceWidgetContainer.add(new WebResourceWidget(AppClientFactory.getLoggedInUser().getSettings().getDocViewerHome()+"?startPage="+startPage+"&endPage=&signedFlag="+signedFlag+"&oid="+collectionItemDo.getResource().getGooruOid()+"&appKey="+AppClientFactory.getLoggedInUser().getSettings().getDocViewerPoint()+"&url="+resourceSourceUrl));
+			}
+			else
+			{
+				String resourceSourceUrl="";
+				if(!collectionItemDo.getResource().getUrl().substring(0, 4).equalsIgnoreCase("http")){
+					resourceSourceUrl = collectionItemDo.getResource().getUrl();
+					resourceSourceUrl=collectionItemDo.getResource().getAssetURI()+collectionItemDo.getResource().getFolder()+resourceSourceUrl;
+				}else{
+					resourceSourceUrl=collectionItemDo.getResource().getUrl();
+				}
+				resourceWidgetContainer.add(new WebResourceWidget(resourceSourceUrl));
 			}
 		}
 	}
