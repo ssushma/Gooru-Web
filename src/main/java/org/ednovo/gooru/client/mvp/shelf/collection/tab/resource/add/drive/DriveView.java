@@ -25,6 +25,7 @@
 package org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.drive;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.ednovo.gooru.client.gin.BaseViewWithHandlers;
@@ -32,6 +33,8 @@ import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveDo;
 import org.ednovo.gooru.shared.model.drive.GoogleDriveItemDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.util.StringUtil;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -181,11 +184,12 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 	public void showNoDriveAccess(int errorCode) {
 		panelFileList.clear();
 		panelDriveBreadCrums.setVisible(false);
-		Cookies.removeCookie("google-access-token");
+		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 		if (errorCode==401){
 			showErrorMessage(i18n.GL2013(),i18n.GL2014());
 		}else if (errorCode==0){
 			showErrorMessage("",i18n.GL2018());
+			panelDriveBreadCrums.setVisible(true);
 		}else if (errorCode==403){
 			showErrorMessage(i18n.GL2013(),i18n.GL2015());
 		}
@@ -199,14 +203,14 @@ public class DriveView extends BaseViewWithHandlers<DriveUiHandlers> implements
 		errorContainer.setStyleName(driveStyle.pannelError());
 		Label lblErrorHeading=new Label();
 		lblErrorHeading.setStyleName(driveStyle.errorHeading());
-		lblErrorHeading.setText(i18n.GL2013());
-		lblErrorHeading.getElement().setAttribute("alt", i18n.GL2013()); 
-		lblErrorHeading.getElement().setAttribute("title", i18n.GL2013());
+		lblErrorHeading.setText(errorHeading);
+		lblErrorHeading.getElement().setAttribute("alt", errorHeading); 
+		lblErrorHeading.getElement().setAttribute("title", errorHeading);
 		Label lblErrorSubHeading=new Label();
 		lblErrorSubHeading.setStyleName("");
-		lblErrorSubHeading.setText(i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("alt", i18n.GL2014());
-		lblErrorSubHeading.getElement().setAttribute("title", i18n.GL2014());
+		lblErrorSubHeading.setText(errorSubHeading);
+		lblErrorSubHeading.getElement().setAttribute("alt", errorSubHeading);
+		lblErrorSubHeading.getElement().setAttribute("title", errorSubHeading);
 		errorContainer.add(lblErrorHeading);
 		errorContainer.add(lblErrorSubHeading);
 		panelFileList.add(errorContainer);

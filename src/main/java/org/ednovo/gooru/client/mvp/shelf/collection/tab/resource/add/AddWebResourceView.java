@@ -435,6 +435,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		loadingTextLbl.getElement().setAttribute("alt", GL0591.toLowerCase());
 		loadingTextLbl.getElement().setAttribute("title", GL0591.toLowerCase());
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
+		addResourceBtnLbl.setEnable(true);
+		addResourceBtnLbl.getElement().removeClassName("secondary");
+		addResourceBtnLbl.getElement().addClassName("primary");
+		
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		uploadImageLbl.getElement().setId("lblUploadImage");
@@ -670,7 +674,10 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 //		urlTitle.setVisible(false);
 //		urlTextBox.setVisible(false);
 //		urlContianer.setVisible(false);
-		
+		if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+			mandatoryUrlLbl.setText(GL2009);
+			mandatoryUrlLbl.setVisible(true);
+		}
 		titleTextBox.setValue(googleDriveItemDo.getTitle());
 		titleTextBox.getElement().setAttribute("alt", googleDriveItemDo.getTitle());
 		titleTextBox.getElement().setAttribute("title", googleDriveItemDo.getTitle());
@@ -688,10 +695,16 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 			urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getEmbedLink());
 			slideResourcePanel(null);
 		}else if(googleDriveItemDo.getMimeType().equals(DriveView.FORM_MIMETYPE)){
-			String alternativeLink=googleDriveItemDo.getDefaultOpenWithLink();
-			urlTextBox.setValue(alternativeLink.replaceFirst("edit", "viewform"));
-			urlTextBox.getElement().setAttribute("alt",alternativeLink.replaceFirst("edit", "viewform"));
-			urlTextBox.getElement().setAttribute("title", alternativeLink.replaceFirst("edit", "viewform"));
+			try{
+				urlTextBox.setValue(googleDriveItemDo.getDefaultOpenWithLink().replaceFirst("edit", "viewform"));
+				urlTextBox.getElement().setAttribute("alt",googleDriveItemDo.getDefaultOpenWithLink().replaceFirst("edit", "viewform"));
+				urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getDefaultOpenWithLink().replaceFirst("edit", "viewform"));
+			}catch(Exception e){
+				urlTextBox.setValue(googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
+				urlTextBox.getElement().setAttribute("alt",googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
+				urlTextBox.getElement().setAttribute("title", googleDriveItemDo.getAlternateLink().replaceFirst("edit", "viewform"));
+			}
+
 			interactiveResourcePanel(null);
 		}
 	}
@@ -702,9 +715,8 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 		clearFields();
 		if(isGoogleDriveFile){
 			setDriveFileDetails();
-			driveFileInfoLbl.setText("If file is private, we will automatically update to public");
-			driveFileInfoLbl.getElement().setAttribute("alt", "If file is private, we will automatically update to public");
-			driveFileInfoLbl.getElement().setAttribute("title", "If file is private, we will automatically update to public");
+			//driveFileInfoLbl.setText("If file is private, we will automatically update to public");
+			driveFileInfoLbl.removeFromParent();
 		}else{
 			driveFileInfoLbl.removeFromParent();
 		}
@@ -847,7 +859,6 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 
 		@Override
 		public void onClick(ClickEvent event) {
-			addResourceBtnLbl.setEnabled(false);
 			final Map<String, String> parms = new HashMap<String, String>();
 			parms.put("text", titleTextBox.getValue());
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
@@ -856,7 +867,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 						isHavingBadWordsInTextbox = value;
 						if(value){
 							SetStyleForProfanity.SetStyleForProfanityForTextBox(titleTextBox, mandatoryTitleLblForSwareWords,value);
-							addResourceBtnLbl.setEnabled(true);
+					/*		addResourceBtnLbl.setEnabled(true);
+							addResourceBtnLbl.getElement().removeClassName("secondary");
+							addResourceBtnLbl.getElement().addClassName("primary");	*/			
 						}else{
 							parms.put("text", descriptionTxtAera.getText());
 							AppClientFactory.getInjector().getResourceService().checkProfanity(parms,new SimpleAsyncCallback<Boolean>() {
@@ -867,7 +880,9 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 									isHavingBadWordsInRichText=result;
 									if(result){
 										SetStyleForProfanity.SetStyleForProfanityForTextArea(descriptionTxtAera, mandatoryDescLblForSwareWords, result);
-										addResourceBtnLbl.setEnabled(true);
+							/*			addResourceBtnLbl.setEnabled(true);
+										addResourceBtnLbl.getElement().removeClassName("secondary");
+										addResourceBtnLbl.getElement().addClassName("primary");	*/
 									}else{
 										if (!isHavingBadWordsInRichText && !isHavingBadWordsInTextbox) {
 											
@@ -899,6 +914,11 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 													mandatoryUrlLbl.setVisible(true);
 													isValidate = false;
 												}
+											}
+											if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+													mandatoryUrlLbl.setText(GL2009);
+													mandatoryUrlLbl.setVisible(true);
+													isValidate = false;
 											}
 											if(!rightsChkBox.getValue()){
 												rightsLbl.getElement().getStyle().setColor("orange");
@@ -1003,39 +1023,45 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 												// String descriptionStr ="";
 												urlStr = urlStr.replaceAll("feature=player_detailpage&", "");
 												urlStr = urlStr.replaceAll("feature=player_embedded&", "");
-												final String urlStrFinal=urlStr;
-												final String descriptionStrFinal=descriptionStr;
+//												final String urlStrFinal=urlStr;
+//												final String descriptionStrFinal=descriptionStr;
 												if(collectionDo.getSharing().equalsIgnoreCase("public")){
-													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
-															@Override
-															public void onSuccess(GoogleDriveDo result) {
-																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-																addResourceBtnLbl.setEnabled(true);
-															}
-														});
-													}else{
+//													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+//														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
+//															@Override
+//															public void onSuccess(GoogleDriveDo result) {
+//																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+//																addResourceBtnLbl.setEnabled(true);
+//															}
+//														});
+//													}else{
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),true,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-														addResourceBtnLbl.setEnabled(true);
-													}
+														/*addResourceBtnLbl.setEnabled(true);
+														addResourceBtnLbl.getElement().removeClassName("secondary");
+														addResourceBtnLbl.getElement().addClassName("primary");*/	
+//													}
 												}
 												else{
-													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
-														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
-															@Override
-															public void onSuccess(GoogleDriveDo result) {
-																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-																addResourceBtnLbl.setEnabled(true);
-															}
-														});
-													}else{
+//													if(isGoogleDriveFile&&!googleDriveItemDo.isShared()){
+//														AppClientFactory.getInjector().getResourceService().updateFileShareToAnyoneWithLink(googleDriveItemDo.getId(), new SimpleAsyncCallback<GoogleDriveDo>() {
+//															@Override
+//															public void onSuccess(GoogleDriveDo result) {
+//																addResource(idStr, urlStrFinal, titleStr, descriptionStrFinal,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
+//																addResourceBtnLbl.setEnabled(true);
+//															}
+//														});
+//													}else{
 														addResource(idStr, urlStr, titleStr, descriptionStr,categoryStr, thumbnailUrlStr, getVideoDuration(),false,resourceEducationalLabel.getText(),resourcemomentsOfLearningLabel.getText(),standardsDo);
-														addResourceBtnLbl.setEnabled(true);
-													}
+														/*addResourceBtnLbl.setEnabled(true);
+														addResourceBtnLbl.getElement().removeClassName("secondary");
+														addResourceBtnLbl.getElement().addClassName("primary");*/	
+//													}
 												}
 												
 											}
-											addResourceBtnLbl.setEnabled(true);
+							/*				addResourceBtnLbl.setEnabled(true);
+											addResourceBtnLbl.getElement().removeClassName("secondary");
+											addResourceBtnLbl.getElement().addClassName("primary");	*/
 										}
 									}
 								}
@@ -1657,12 +1683,17 @@ public abstract class AddWebResourceView extends Composite implements SelectionH
 				descCharcterLimit.setVisible(false);
 				parms.put("text", textArea.getText());
 			}
-			addResourceBtnLbl.setEnabled(false);
+/*			addResourceBtnLbl.setEnabled(false);
+			addResourceBtnLbl.getElement().removeClassName("primary");	
+			addResourceBtnLbl.getElement().addClassName("secondary");*/
+
 			AppClientFactory.getInjector().getResourceService().checkProfanity(parms, new SimpleAsyncCallback<Boolean>() {
 
 				@Override
 				public void onSuccess(Boolean value) {
 					addResourceBtnLbl.setEnabled(true);
+					addResourceBtnLbl.getElement().removeClassName("secondary");	
+					addResourceBtnLbl.getElement().addClassName("primary");
 					if(textBox!=null){
 						isHavingBadWordsInTextbox = value;
 						SetStyleForProfanity.SetStyleForProfanityForTextBox(textBox, label, value);
