@@ -61,6 +61,8 @@ public abstract class SuccessPopupVc extends PopupPanel implements MessageProper
 	
 	@UiField Button classPageDoneBtn;
 	
+	@UiField Label cancelButton;
+	
 	@UiField(provided = true)
 	CollectionAssignCBundle res;
 	
@@ -85,15 +87,30 @@ public abstract class SuccessPopupVc extends PopupPanel implements MessageProper
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
         
         successPopUpHeader.getElement().setInnerHTML(GL1183);
+        successPopUpHeader.getElement().setId("pnlSuccessPopUpHeader");
+        successPopUpHeader.getElement().setAttribute("alt",GL1183);
+        successPopUpHeader.getElement().setAttribute("title",GL1183);
+		
         
     	assignMoreCpLbl.setText(GL0521);
+    	assignMoreCpLbl.getElement().setId("spnAssignMoreCpLbl");
+    	assignMoreCpLbl.getElement().setAttribute("alt",GL0521);
+    	assignMoreCpLbl.getElement().setAttribute("title",GL0521);
+           
 		ancClasspageTitle.setText(classpageTitle);
-		
+		ancClasspageTitle.getElement().setId("spnAncClasspageTitle");
+		ancClasspageTitle.getElement().setAttribute("alt",classpageTitle);
+		ancClasspageTitle.getElement().setAttribute("title",classpageTitle);
+    	
 		classPageDoneBtn.setText(GL0190);
-		
+		classPageDoneBtn.getElement().setId("btnClassPageDoneBtn");
+		classPageDoneBtn.getElement().setAttribute("alt",GL0190);
+		classPageDoneBtn.getElement().setAttribute("title",GL0190);
 		
 		ancClasspageTitle.getElement().setAttribute("classpageId", classpageId);
-        
+		cancelButton.getElement().setId("lblCancelButton");
+		assignMoreCpContainer.getElement().setId("pnlAssignMoreCpContainer");
+		
 		this.center();
 
 	}

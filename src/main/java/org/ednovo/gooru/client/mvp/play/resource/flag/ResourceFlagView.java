@@ -86,18 +86,60 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		appPopUp = new FlagPopupPanel(false);
 		appPopUp.setWidget(uiBinder.createAndBindUi(this));
 		cancelButton.setText(GL0608);
-		submitButton.setText(GL0486);
-		submitButtonGray.setText(GL0486);
 		cancelButton.getElement().setAttribute("id", "cancelButton");
+		cancelButton.getElement().setAttribute("alt",GL0608);
+		cancelButton.getElement().setAttribute("title",GL0608);
+		
+		submitButton.setText(GL0486);
 		submitButton.getElement().setAttribute("id", "SubmitButton");
+		submitButton.getElement().setAttribute("alt",GL0486);
+		submitButton.getElement().setAttribute("title",GL0486);
+		
+		submitButtonGray.setText(GL0486);
+		submitButtonGray.getElement().setId("btnSubmitButtonGray");
+		submitButtonGray.getElement().setAttribute("alt",GL0486);
+		submitButtonGray.getElement().setAttribute("title",GL0486);
+		
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
 		flagText.setText(GL0600);
+		flagText.getElement().setId("lblFlagText");
+		flagText.getElement().setAttribute("alt",GL0600);
+		flagText.getElement().setAttribute("title",GL0600);
+		
 		inappropriateText.setText(GL0612);
+		inappropriateText.getElement().setId("lblInappropriateText");
+		inappropriateText.getElement().setAttribute("alt",GL0612);
+		inappropriateText.getElement().setAttribute("title",GL0612);
+		
 		inaccurateText.setText(GL0614);
+		inaccurateText.getElement().setId("lblInaccurateText");
+		inaccurateText.getElement().setAttribute("alt",GL0614);
+		inaccurateText.getElement().setAttribute("title",GL0614);
+		
 		unavailableText.setText(GL0613);
+		unavailableText.getElement().setId("lblUnavailableText");
+		unavailableText.getElement().setAttribute("alt",GL0613);
+		unavailableText.getElement().setAttribute("title",GL0613);
+		
 		otherReasonText.setText(GL0606);
+		otherReasonText.getElement().setId("lblOtherReasonText");
+		otherReasonText.getElement().setAttribute("alt",GL0606);
+		otherReasonText.getElement().setAttribute("title",GL0606);
+		
 		provideMoreText.setText(GL0607);
+		provideMoreText.getElement().setId("lblProvideMoreText");
+		provideMoreText.getElement().setAttribute("alt",GL0607);
+		provideMoreText.getElement().setAttribute("title",GL0607);
+		
+		closeButton.getElement().setId("epnlCloseButton");
+		titleText.getElement().setId("htmlTitleText");
+		checkBox4.getElement().setId("chkCheckBox4");
+		checkBox3.getElement().setId("chkCheckBox3");
+		checkBox2.getElement().setId("chkCheckBox2");
+		checkBox1.getElement().setId("chkCheckBox1");
+		descriptionTextArea.getElement().setId("tatDescriptionTextArea");
+		
 		closeButton.addClickHandler(new CloseFlagPopupEvent());
 	}
 	@UiHandler("cancelButton")
@@ -218,6 +260,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		collectionItemId=collectionItemDo.getCollectionItemId();
 		resourceTitle=resourceTitle.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");
 		titleText.setHTML(GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.getElement().setAttribute("alt",GL1430 +resourceTitle+" \" "+GL1431+"");
+		titleText.getElement().setAttribute("title",GL1430 +resourceTitle+" \" "+GL1431+"");
 	}
 
 	@Override
@@ -243,6 +287,8 @@ public class ResourceFlagView extends PopupViewWithUiHandlers<ResourceFlagUiHand
 		checkBox3.setChecked(false);
 		checkBox4.setChecked(false);
 		descriptionTextArea.setText("");
+		descriptionTextArea.getElement().setAttribute("alt","");
+		descriptionTextArea.getElement().setAttribute("title","");
 		submitButtonGray.setVisible(true);
 		submitButton.setVisible(false);
 		contentReportList.clear();

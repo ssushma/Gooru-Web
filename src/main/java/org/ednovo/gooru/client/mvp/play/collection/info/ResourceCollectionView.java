@@ -82,16 +82,29 @@ public class ResourceCollectionView extends Composite implements MessageProperti
 	public ResourceCollectionView(){
 		initWidget(uiBinder.createAndBindUi(this));
 		createdByText.setText(GL0622);
+		createdByText.getElement().setAttribute("alt",GL0622);
+		createdByText.getElement().setAttribute("title",GL0622);
+		setId();
+		
 	}
-	
+	public void setId(){
+		createdByText.getElement().setId("lblCreatedByText");
+		imageContainer.getElement().setId("pnlImageContainer");
+		collectionThumbnail.getElement().setId("imgCollectionThumbnail");
+		collectionTitle.getElement().setId("lnkCollectionTitle");
+		userName.getElement().setId("lblUserName");
+		metadataContainer.getElement().setId("pnlMetadataContainer");
+	}
 	@UiConstructor
 	public ResourceCollectionView(final ResourceSearchResultDo resourceSearchResultDo){
 		initWidget(uiBinder.createAndBindUi(this));
 		createdByText.setText(GL0622);
+		createdByText.getElement().setAttribute("alt",GL0622);
+		createdByText.getElement().setAttribute("title",GL0622);
 		this.resourceSearchResultDo=resourceSearchResultDo;
 		setCollectionTitle(resourceSearchResultDo.getResourceTitle());
 		//This is used for to enable partner names hyperlinks (FTE, Lessonopoly, and Autodesk)
-		
+		setId();
 		String ownerUserName = resourceSearchResultDo.getOwner().getUsername();
 			AppClientFactory.getInjector().getPlayerAppService().getUserProfileVisibility(resourceSearchResultDo.getGooruUId(), new SimpleAsyncCallback<Boolean>() {
 				@Override

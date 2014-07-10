@@ -61,6 +61,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -97,7 +98,8 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 	SimplePanel dateSimPanel;
 	
 	@UiField Label wantToSaveAndShareText,getAnAccountText,signUpGooruText,birthDateText,emailText;
-  
+  @UiField FlowPanel headerPanel,buttonContainer,loginContainer;
+	
 	private DateBoxUc dateBoxUc;
 
 	protected UserDo userDo;
@@ -166,13 +168,44 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 		this.setAutoHideEnabled(true);
 		setGlassEnabled(true);
 		wantToSaveAndShareText.setText(GL0669);
+		wantToSaveAndShareText.getElement().setId("lblWantToSaveAndShareText");
+		wantToSaveAndShareText.getElement().setAttribute("alt",GL0669);
+		wantToSaveAndShareText.getElement().setAttribute("title",GL0669);
+		
 		getAnAccountText.setText(GL0670);
+		getAnAccountText.getElement().setId("lblGetAnAccountText");
+		getAnAccountText.getElement().setAttribute("alt",GL0670);
+		getAnAccountText.getElement().setAttribute("title",GL0670);
+		
 		signUpGooruText.setText(GL0671);
+		signUpGooruText.getElement().setId("lblSignUpGooruText");
+		signUpGooruText.getElement().setAttribute("alt",GL0671);
+		signUpGooruText.getElement().setAttribute("title",GL0671);
+		
 		birthDateText.setText(GL0672);
+		birthDateText.getElement().setId("lblBirthDateText");
+		birthDateText.getElement().setAttribute("alt",GL0672);
+		birthDateText.getElement().setAttribute("title",GL0672);
+		
 		emailText.setText(GL0212);
+		emailText.getElement().setId("lblEmailText");
+		emailText.getElement().setAttribute("alt",GL0212);
+		emailText.getElement().setAttribute("title",GL0212);
+		
 		goBtnUc.setText(GL0673);
+		goBtnUc.getElement().setId("btnSignMeUp");
+		goBtnUc.getElement().setAttribute("alt",GL0673);
+		goBtnUc.getElement().setAttribute("title",GL0673);
+		
 		cancelAnr.setText(GL0674);
+		cancelAnr.getElement().setId("lnkCancel");
+		cancelAnr.getElement().setAttribute("alt",GL0674);
+		cancelAnr.getElement().setAttribute("title",GL0674);
+		
 		iHaveAcc.setText(GL0675);
+		iHaveAcc.getElement().setId("lnkHaveAcc");
+		iHaveAcc.getElement().setAttribute("alt",GL0675);
+		iHaveAcc.getElement().setAttribute("title",GL0675);
 		
 		//GL0675
 		dateBoxUc = new DateBoxUc(true,false,false);
@@ -188,9 +221,9 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 		emailIdTxtBox.addFocusHandler(new OnEmailFocus());
 		emailIdTxtBox.addBlurHandler(new OnEmailBlur());
 		emailIdTxtBox.getElement().setId("txtEmail");
-		goBtnUc.getElement().setId("btnSignMeUp");
-		cancelAnr.getElement().setId("lnkCancel");
-		iHaveAcc.getElement().setId("lnkHaveAcc");
+	
+	
+	
 		dateBoxUc.getDoneButton().addClickHandler(new OnDoneClick());
 		
 		emailValidationUc.setVisible(false);
@@ -202,7 +235,15 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 		
 		this.setStyleName("guidePopUpContainer");
 		this.getElement().getStyle().setWidth(790, Unit.PX);
-//		this.getElement().getStyle().setZIndex(100001);
+		
+		headerPanel.getElement().setId("fpnlHeaderPanel");
+		dateSimPanel.getElement().setId("spnlDateSimPanel");
+		dateValidationUc.getElement().setId("errlblDateValidationUc");
+		emailValidationUc.getElement().setId("errlblEmailValidationUc");
+		buttonContainer.getElement().setId("fpnlButtonContainer");
+		loginContainer.getElement().setId("fpnlLoginContainer");
+
+		//		this.getElement().getStyle().setZIndex(100001);
 		this.center();
 
 	}
@@ -393,8 +434,15 @@ public class ResourceRegister extends PopupPanel implements MessageProperties{
 				&& (dob == null || (dob != null && dob.isEmpty()))) {
 			emailValidationUc
 					.setText(StringUtil.generateMessage(GL0082, EMAIL));
+			emailValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0082, EMAIL));
+			emailValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0082, EMAIL));
+			  
 			emailValidationUc.setVisible(true);
 			dateValidationUc.setText(StringUtil.generateMessage(GL0082,
+					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("alt",StringUtil.generateMessage(GL0082,
+					BIRTH_DAY));
+			dateValidationUc.getElement().setAttribute("title",StringUtil.generateMessage(GL0082,
 					BIRTH_DAY));
 			dateValidationUc.setVisible(true);
 			dateBoxUc.addStyleName(NewRegisterCBundle.INSTANCE.css().gooruDateBoxError());

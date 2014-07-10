@@ -80,7 +80,19 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 		narrationCloseButton.addClickHandler(new CloseNarrationPopupEvent());
 		okButton.addClickHandler(new CloseNarrationPopupEvent());
 		authorName.setText(GL0423);
+		authorName.getElement().setId("lblAuthorName");
+		authorName.getElement().setAttribute("alt",GL0423);
+		authorName.getElement().setAttribute("title",GL0423);
+		
 		okButton.setText(GL0703);
+		okButton.getElement().setId("btnOkButton");
+		okButton.getElement().setAttribute("alt",GL0703);
+		okButton.getElement().setAttribute("title",GL0703);
+		
+		resourceTitle.getElement().setId("htmlResourceTitle");
+		narrationCloseButton.getElement().setId("lblNarrationCloseButton");
+		authorImage.getElement().setId("imgAuthorImage");
+		narrationText.getElement().setId("htmlNarrationText");
 	}
 	@Override
 	public void setNarrationMetadata(CollectionItemDo collectionItemDo,String userName,String gooruUid){
@@ -90,9 +102,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 				narration=narration.replaceAll("background-color", "");
 			}
 			narrationText.setHTML(narration !=null ? narration : "");
+			narrationText.getElement().setAttribute("alt",narration !=null ? narration : "");
+			narrationText.getElement().setAttribute("title",narration !=null ? narration : "");
 			resourceTitle.setHTML(collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitle.getElement().setAttribute("alt",collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
+			resourceTitle.getElement().setAttribute("title",collectionItemDo.getItemSequence()+". "+removeHtmlTags(collectionItemDo.getResource().getTitle()));
 			setUserProfileImage(gooruUid);
 			authorName.setText(userName);
+			authorName.getElement().setAttribute("alt",userName);
+			authorName.getElement().setAttribute("title",userName);
 		}
 	}
 	private void setUserProfileImage(String profileUserId) {
@@ -104,9 +122,15 @@ public class ResourceNarrationView extends PopupViewWithUiHandlers<ResourceNarra
 	}
 	public void resetNattationData(){
 		narrationText.setHTML("");
+		narrationText.getElement().setAttribute("alt","");
+		narrationText.getElement().setAttribute("title","");
 		authorImage.getElement().removeAttribute("src");
 		resourceTitle.setHTML("");
+		resourceTitle.getElement().setAttribute("alt","");
+		resourceTitle.getElement().setAttribute("title","");
 		authorName.setText("");
+		authorName.getElement().setAttribute("alt","");
+		authorName.getElement().setAttribute("title","");
 	}
 	private String removeHtmlTags(String html){
         html = html.replaceAll("</p>", " ").replaceAll("<p>", "").replaceAll("<br data-mce-bogus=\"1\">", "").replaceAll("<br>", "").replaceAll("</br>", "");

@@ -77,10 +77,23 @@ public abstract class NavigationConfirmPopup extends PopupPanel implements Messa
 	}
 	public void setStaticTexts(){
 		popupHeader.setText(GL1660);
+		popupHeader.getElement().setId("lblPopupHeader");
+		popupHeader.getElement().setAttribute("alt",GL1660);
+		popupHeader.getElement().setAttribute("title",GL1660);
+		
 		popupText.setText(GL1661);
+		popupText.getElement().setId("lblPopupText");
+		popupText.getElement().setAttribute("alt",GL1661);
+		popupText.getElement().setAttribute("title",GL1661);
+		
 		continueButton.setText(GL1663);
-		backToResponseButton.setText(GL1662);
 		continueButton.getElement().setId("backtoresponse");
+		continueButton.getElement().setAttribute("alt",GL1663);
+		continueButton.getElement().setAttribute("title",GL1663);
+		
+		backToResponseButton.setText(GL1662);
+		backToResponseButton.getElement().setAttribute("alt",GL1662);
+		backToResponseButton.getElement().setAttribute("title",GL1662);
 		backToResponseButton.getElement().setId("continue");
 	}
 	

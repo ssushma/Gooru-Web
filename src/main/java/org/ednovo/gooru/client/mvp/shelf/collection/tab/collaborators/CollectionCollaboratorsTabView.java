@@ -100,7 +100,7 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	@UiField VerticalPanel panelPendingCollabListContainer, panelActiveCollabListContainer;
 	
-	@UiField HTMLPanel panelPendingContainer, panelActiveContainer, panelSuggestBox, panelActions;
+	@UiField HTMLPanel panelCode,panelPendingContainer, panelActiveContainer, panelSuggestBox, panelActions;
 	
 	@UiField Label lblCollectionCreator, lblCurrentCollaborators, lblYouAreTheCollectionCreator, lblAddCollaborator, lblCollaboratorsDesc, lblInviteCollaborators, lblErrorMessage;
 	
@@ -193,33 +193,84 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	public void setLabelsAndIds(){
 		
 		lblCollectionCreator.setText(GL0936);
+		lblCollectionCreator.getElement().setId("lblCollectionCreator");
+		lblCollectionCreator.getElement().setAttribute("alt",GL0936);
+		lblCollectionCreator.getElement().setAttribute("title",GL0936);
+		
 		lblCurrentCollaborators.setText( GL0939);
+		lblCurrentCollaborators.getElement().setId("lblCurrentCollaborators");
+		lblCurrentCollaborators.getElement().setAttribute("alt",GL0939);
+		lblCurrentCollaborators.getElement().setAttribute("title",GL0939);
 		
 		lblYouAreTheCollectionCreator.setText(GL0940);
+		lblYouAreTheCollectionCreator.getElement().setId("lblYouAreTheCollectionCreator");
+		lblYouAreTheCollectionCreator.getElement().setAttribute("alt",GL0940);
+		lblYouAreTheCollectionCreator.getElement().setAttribute("title",GL0940);
+		
 		lblAddCollaborator.setText(GL0941);
+		lblAddCollaborator.getElement().setId("lblAddCollaborator");
+		lblAddCollaborator.getElement().setAttribute("alt",GL0941);
+		lblAddCollaborator.getElement().setAttribute("title",GL0941);
+		
 		lblCollaboratorsDesc.setText(GL0942);
+		lblCollaboratorsDesc.getElement().setId("lblCollaboratorsDesc");
+		lblCollaboratorsDesc.getElement().setAttribute("alt",GL0942);
+		lblCollaboratorsDesc.getElement().setAttribute("title",GL0942);
+		
 		lblInviteCollaborators.setText(GL0943);
+		lblInviteCollaborators.getElement().setId("lblInviteCollaborators");
+		lblInviteCollaborators.getElement().setAttribute("alt",GL0943);
+		lblInviteCollaborators.getElement().setAttribute("title",GL0943);
+		
 		lblPendingInvitations.setText(GL1114);
+		lblPendingInvitations.getElement().setId("lblPendingInvitations");
+		lblPendingInvitations.getElement().setAttribute("alt",GL1114);
+		lblPendingInvitations.getElement().setAttribute("title",GL1114);
+		
 		lblCurrentCollabTitle.setText(GL1113);
+		lblCurrentCollabTitle.getElement().setId("lblCurrentCollabTitle");
+		lblCurrentCollabTitle.getElement().setAttribute("alt",GL1113);
+		lblCurrentCollabTitle.getElement().setAttribute("title",GL1113);
 		
 		btnInvite.setText(GL0944);
+		btnInvite.getElement().setId("btnInvite");
+		btnInvite.getElement().setAttribute("alt",GL0944);
+		btnInvite.getElement().setAttribute("title",GL0944);
 		
 		lblPii.setText(GL1892);
+		lblPii.getElement().setId("lblPii");
+		lblPii.getElement().setAttribute("alt",GL1892);
+		lblPii.getElement().setAttribute("title",GL1892);
+		
 		privacyLabelPanel.setVisible(false);
 		ancprivacy.setText(GL1893);
-		toUsText.setText(GL1894);
+		ancprivacy.getElement().setId("lnkAncprivacy");
+		ancprivacy.getElement().setAttribute("alt",GL1893);
+		ancprivacy.getElement().setAttribute("title",GL1893);
 		
-		btnInvite.getElement().setId("btnInvite");
+		toUsText.setText(GL1894);
+		toUsText.getElement().setId("spnToUsText");
+		toUsText.getElement().setAttribute("alt",GL1894);
+		toUsText.getElement().setAttribute("title",GL1894);
+	
 		btnInvite.setEnabled(false);
 		panelActions.getElement().addClassName(res.css().buttonTooltip());
 		btnInvite.setVisible(true);
 		lblText.setText(GL1184);
+		lblText.getElement().setId("lblText");
+		lblText.getElement().setAttribute("alt",GL1184);
+		lblText.getElement().setAttribute("title",GL1184);
+		
 //		btnInvite.addMouseOverHandler(new OnBtnInviteMouseOver());
 //		btnInvite.addMouseOutHandler(new OnBtnInviteMouseOut());
 		
 		btnRemoveSelectedInvities.setText(GL0237);
-		btnRemoveSelectedInvities.setVisible(false);
 		btnRemoveSelectedInvities.getElement().setId("btnRemoveSelectedInvities");
+		btnRemoveSelectedInvities.getElement().setAttribute("alt",GL0237);
+		btnRemoveSelectedInvities.getElement().setAttribute("title",GL0237);
+		
+		btnRemoveSelectedInvities.setVisible(false);
+		
 		
 		
 /*		lblToolTip.setText(GL1165_1);
@@ -230,6 +281,9 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		setInviteButtonEnable(overAllCollabCount);
 		
 		lblPleaseWait.setText(GL1137);
+		lblPleaseWait.getElement().setId("lblPleaseWait");
+		lblPleaseWait.getElement().setAttribute("alt",GL1137);
+		lblPleaseWait.getElement().setAttribute("title",GL1137);
 		
 		panelCollaboratorsList.clear();		// View mode
 		panelPendingCollabListContainer.clear();	//edit mode
@@ -238,6 +292,22 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 		lblPleaseWait.setVisible(false);
 		
 		createAutoSuggestBox();
+		
+		panelViewMode.getElement().setId("pnlPanelViewMode");
+		panelCreator.getElement().setId("pnlPanelCreator");
+		panelCollaboratorsList.getElement().setId("pnlPanelCollaboratorsList");
+		panelLoading.getElement().setId("pnlPanelLoading");
+		panelEditMode.getElement().setId("pnlPanelEditMode");
+		panelSuggestBox.getElement().setId("pnlPanelSuggestBox");
+		panelActions.getElement().setId("pnlPanelActions");
+		panelCode.getElement().setId("pnlPanelCode");
+		lblErrorMessage.getElement().setId("lblErrorMessage");
+		privacyLabelPanel.getElement().setId("pnlPrivacyLabelPanel");
+		panelPendingSmallLoadingIcon.getElement().setId("pnlPanelPendingSmallLoadingIcon");
+		panelPendingContainer.getElement().setId("pnlPanelPendingContainer");
+		panelPendingCollabListContainer.getElement().setId("vpnlPanelPendingCollabListContainer");
+		panelActiveContainer.getElement().setId("pnlPanelActiveContainer");
+		panelActiveCollabListContainer.getElement().setId("vpnlPanelActiveCollabListContainer");
 	}
 	/**
 	 * @function setInviteButtonEnable 
@@ -479,6 +549,8 @@ public class CollectionCollaboratorsTabView extends BaseViewWithHandlers<Collect
 	
 	public void showErrorMessage(String errorMessage){
 		lblErrorMessage.setText(errorMessage);
+		lblErrorMessage.getElement().setAttribute("alt",errorMessage);
+		lblErrorMessage.getElement().setAttribute("title",errorMessage);
 		lblErrorMessage.setVisible(true);
 	}
 	

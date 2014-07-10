@@ -15,6 +15,7 @@ public class FoldersWelcomePageToolTip extends Composite implements MessagePrope
 	
 	@UiField Label mainHeadTitle;
 	@UiField Label gerStartedLbl;
+	@UiField HTMLPanel descTextLineOne,descTextLineTwo;
 
 	private static FoldersWelcomePageToolTipUiBinder uiBinder = GWT.create(FoldersWelcomePageToolTipUiBinder.class);
 
@@ -24,7 +25,16 @@ public class FoldersWelcomePageToolTip extends Composite implements MessagePrope
 	public FoldersWelcomePageToolTip() {
 		initWidget(uiBinder.createAndBindUi(this));
 		mainHeadTitle.setText(GL1293+GL_SPL_EXCLAMATION);
+		mainHeadTitle.getElement().setId("lblMainHeadTitle");
+		mainHeadTitle.getElement().setAttribute("alt",GL1293);
+		mainHeadTitle.getElement().setAttribute("title",GL1293);
 		gerStartedLbl.setText(GL1474);
+		gerStartedLbl.getElement().setId("lblGerStartedLbl");
+		gerStartedLbl.getElement().setAttribute("alt",GL1474);
+		gerStartedLbl.getElement().setAttribute("title",GL1474);
+		
+		descTextLineOne.getElement().setId("pnlDescTextLineOne");
+		descTextLineTwo.getElement().setId("pnlDescTextLineTwo");
 	}
 	
 }

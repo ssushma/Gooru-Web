@@ -119,13 +119,44 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		commentField.addKeyUpHandler(new ValidateConfirmText());
 		commentField.addBlurHandler(new OnCommentsFieldBlur());
 		authorBadge.getElement().setInnerHTML(GL0573);
+		authorBadge.getElement().setId("pnlAuthorBadge");
+		authorBadge.getElement().setAttribute("alt",GL0573);
+		authorBadge.getElement().setAttribute("title",GL0573);
+		
 		editPanel.getElement().setInnerHTML(GL0140);
+		editPanel.getElement().setId("epnlEditPanel");
+		editPanel.getElement().setAttribute("alt",GL0140);
+		editPanel.getElement().setAttribute("title",GL0140);
+		
 		deletePanel.getElement().setInnerHTML(GL0558);
+		deletePanel.getElement().setId("epnlDeletePanel");
+		deletePanel.getElement().setAttribute("alt",GL0558);
+		deletePanel.getElement().setAttribute("title",GL0558);
+		
 		tooltipDeletetext.getElement().setInnerHTML(GL0558);
+		tooltipDeletetext.getElement().setId("epnlTooltipDeletetext");
+		tooltipDeletetext.getElement().setAttribute("alt",GL0558);
+		tooltipDeletetext.getElement().setAttribute("title",GL0558);
+		
 		postCommentBtn.setText(GL0571);
+		postCommentBtn.getElement().setId("btnPostCommentBtn");
+		postCommentBtn.getElement().setAttribute("alt",GL0571);
+		postCommentBtn.getElement().setAttribute("title",GL0571);
+		
 		postCommentCancel.setText(GL0142);
+		postCommentCancel.getElement().setId("btnPostCommentCancel");
+		postCommentCancel.getElement().setAttribute("alt",GL0142);
+		postCommentCancel.getElement().setAttribute("title",GL0142);
+		
 		characterLimit.setText(GL0143);
+		characterLimit.getElement().setId("lblCharacterLimit");
+		characterLimit.getElement().setAttribute("alt",GL0143);
+		characterLimit.getElement().setAttribute("title",GL0143);
+		
 		successPostMsg.setText(GL0570);
+		successPostMsg.getElement().setId("lblSuccessPostMsg");
+		successPostMsg.getElement().setAttribute("alt",GL0570);
+		successPostMsg.getElement().setAttribute("title",GL0570);
 		
 		editButton.setVisible(false);
 		deleteButton.setVisible(false);		
@@ -134,6 +165,15 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 		
 		setCommentData(commentsDo, collectionDo);
 		
+		
+		userPhoto.getElement().setId("imgUserPhoto");
+		messageInfo.getElement().setId("pnlMessageInfo");
+		userName.getElement().setId("lblUserName");
+		timestamp.getElement().setId("lblTimestamp");
+		commentHtml.getElement().setId("htmlCommentHtml");
+		editButton.getElement().setId("pnlEditButton");
+		deleteButton.getElement().setId("epnlDeleteButton");
+		commentField.getElement().setId("tatCommentField");
 	}
 	
 	/*
@@ -194,9 +234,14 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 			}
 			
 			timestamp.setText(commentTime); 
+			timestamp.getElement().setAttribute("alt",commentTime);
+			timestamp.getElement().setAttribute("title",commentTime);
 			commentHtml.setHTML(commentsDo.getComment());
+			commentHtml.getElement().setAttribute("alt",commentsDo.getComment());
+			commentHtml.getElement().setAttribute("title",commentsDo.getComment());
 			commentField.setText(commentsDo.getComment());
-
+			commentField.getElement().setAttribute("alt",commentsDo.getComment());
+			commentField.getElement().setAttribute("title",commentsDo.getComment());
 			setOptionsButtons();
 			
 		}catch(Exception e){
@@ -257,7 +302,11 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 	@UiHandler("postCommentCancel")
 	public void clickOnPostCommentCancel(ClickEvent event) {
     	commentHtml.setHTML(commentsDo.getComment());
+    	commentHtml.getElement().setAttribute("alt",commentsDo.getComment());
+		commentHtml.getElement().setAttribute("title",commentsDo.getComment());
     	commentField.setText(commentsDo.getComment());
+    	commentField.getElement().setAttribute("alt",commentsDo.getComment());
+    	commentField.getElement().setAttribute("title",commentsDo.getComment());
 		AppClientFactory.fireEvent(new UpdateCommentChildViewEvent("",EDIT));
 		enableEditFunction(false);
 		characterLimit.setVisible(false);
@@ -292,6 +341,8 @@ public class CommentWidgetChildView extends ChildView<CommentWidgetChildPresente
 				            	String commentTime = getCreatedTime(commentsDo.getCreatedOn());
 				    			commentTime = commentTime+ " "+GL_GRR_Hyphen+" "+GL1434;
 				    			timestamp.setText(commentTime);
+				    			timestamp.getElement().setAttribute("alt",commentTime);
+				    			timestamp.getElement().setAttribute("title",commentTime);
 				            	successPostMsg.setVisible(false);
 				            	enableEditFunction(false);
 				            }

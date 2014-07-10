@@ -28,10 +28,24 @@ public class ResourceNonExitView extends Composite {
 	public ResourceNonExitView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		defaultImage.setUrl("images/resource_error.png");
+		
+		defaultImage.getElement().setId("imgDefaultImage");
+		
 		ancLearnMore.setText(MessageProperties.GL0343);
+		ancLearnMore.getElement().setId("lnkAncLearnMore");
+		ancLearnMore.getElement().setAttribute("alt",MessageProperties.GL0343);
+		ancLearnMore.getElement().setAttribute("title",MessageProperties.GL0343);
+		
 		lblNoLongerMessage.setText(MessageProperties.GL1760);
+		lblNoLongerMessage.getElement().setId("lblNoLongerMessage");
+		lblNoLongerMessage.getElement().setAttribute("alt",MessageProperties.GL1760);
+		lblNoLongerMessage.getElement().setAttribute("title",MessageProperties.GL1760);
+		
 		//lblNextResourceMsg.setText(MessageProperties.GL1761);
 		lblDesc.getElement().setInnerHTML(MessageProperties.GL1762);
+		lblDesc.getElement().setId("lblDesc");
+		lblDesc.getElement().setAttribute("alt",MessageProperties.GL1762);
+		lblDesc.getElement().setAttribute("title",MessageProperties.GL1762);
 }
 
 }

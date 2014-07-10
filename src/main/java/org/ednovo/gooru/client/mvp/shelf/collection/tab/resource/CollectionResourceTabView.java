@@ -146,16 +146,61 @@ public class CollectionResourceTabView extends
 	public CollectionResourceTabView() {
 		setWidget(uiBinder.createAndBindUi(this));
 		buttonContainer.setText(GL0851);
+		buttonContainer.getElement().setId("btnNewResource");
+		buttonContainer.getElement().setAttribute("alt",GL0851);
+		buttonContainer.getElement().setAttribute("title",GL0851);
+		
 		buttonContainerAddGray.setText(GL0851);
+		buttonContainerAddGray.getElement().setId("btnButtonContainerAddGray");
+		buttonContainerAddGray.getElement().setAttribute("alt",GL0851);
+		buttonContainerAddGray.getElement().setAttribute("title",GL0851);
+		
 		buttonContainerForQuestion.setText(GL0852);
+		buttonContainerForQuestion.getElement().setId("btnNewQuestion");
+		buttonContainerForQuestion.getElement().setAttribute("alt",GL0852);
+		buttonContainerForQuestion.getElement().setAttribute("title",GL0852);
+		
 		buttonContainerForQuestionGreay.setText(GL0852);
+		buttonContainerForQuestionGreay.getElement().setId("btnButtonContainerForQuestionGreay");
+		buttonContainerForQuestionGreay.getElement().setAttribute("alt",GL0852);
+		buttonContainerForQuestionGreay.getElement().setAttribute("title",GL0852);
+		
 		dragAndDropLabel.setText(GL0853);
+		dragAndDropLabel.getElement().setId("lblDragAndDropLabel");
+		dragAndDropLabel.getElement().setAttribute("alt",GL0853);
+		dragAndDropLabel.getElement().setAttribute("title",GL0853);
+		
 		noResourceLineOneLabel.setText(GL0854);
+		noResourceLineOneLabel.getElement().setId("lblNoResourceLineOneLabel");
+		noResourceLineOneLabel.getElement().setAttribute("alt",GL0854);
+		noResourceLineOneLabel.getElement().setAttribute("title",GL0854);
+		
+		
 		noResourceLineTwoLabel.setText(GL0855);
+		noResourceLineTwoLabel.getElement().setId("lblNoResourceLineTwoLabel");
+		noResourceLineTwoLabel.getElement().setAttribute("alt",GL0855);
+		noResourceLineTwoLabel.getElement().setAttribute("title",GL0855);
+		
 		noResourceLineThreeLabel.setText(" "+GL0856);
+		noResourceLineThreeLabel.getElement().setId("lblNoResourceLineThreeLabel");
+		noResourceLineThreeLabel.getElement().setAttribute("alt",GL0856);
+		noResourceLineThreeLabel.getElement().setAttribute("title",GL0856);
+		
 		noResourceLineSixLabel.setText(" "+GL0209+" ");
+		noResourceLineSixLabel.getElement().setId("lblNoResourceLineSixLabel");
+		noResourceLineSixLabel.getElement().setAttribute("alt",GL0209);
+		noResourceLineSixLabel.getElement().setAttribute("title",GL0209);
+		
 		noResourceLineFiveLabel.setText(" "+GL0857);
+		noResourceLineFiveLabel.getElement().setId("lblNoResourceLineFiveLabel");
+		noResourceLineFiveLabel.getElement().setAttribute("alt",GL0857);
+		noResourceLineFiveLabel.getElement().setAttribute("title",GL0857);
+		
 		noResourceLineFourLabel.setText(" "+GL0858);
+		noResourceLineFourLabel.getElement().setId("lblNoResourceLineFourLabel");
+		noResourceLineFourLabel.getElement().setAttribute("alt",GL0858);
+		noResourceLineFourLabel.getElement().setAttribute("title",GL0858);
+		
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		css = CollectionEditResourceCBundle.INSTANCE.css();
 
@@ -165,8 +210,8 @@ public class CollectionResourceTabView extends
 		noResourceLineThreeLabel.setVisible(false);
 		noResourceLineFourLabel.setVisible(false);
 		// popupPanel.setVisible(false);
-		buttonContainer.getElement().setId("btnNewResource");
-		buttonContainerForQuestion.getElement().setId("btnNewQuestion");
+		
+		
 		buttonContainer.addClickHandler(new NewResourceClickEvent());
 		buttonContainerForQuestion.addClickHandler(new NewQuestionClickEvent());
 		// searchLabel.addClickHandler(new NewSearchResourceClickEvent());
@@ -176,7 +221,13 @@ public class CollectionResourceTabView extends
 		panelLoading.getElement().getStyle().setDisplay(Display.BLOCK);
 		// downArrowPanel.addClickHandler(new ShowPopupClickHandler());
 		collectionResourcePanelVc.getElement().setId("editPanelShelf");
-
+		panelLoading.getElement().setId("pnlPanelLoading");
+		contentPanel.getElement().setId("pnlContentPanel");
+		sequenceVerPanel.getElement().setId("vpnlSequenceVerPanel");
+		panelNoResourceContainer.getElement().setId("pnlPanelNoResourceContainer");
+		
+		
+		
 	}
 
 	@Override

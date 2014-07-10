@@ -86,10 +86,25 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		initWidget(uiBinder.createAndBindUi(this));
 		setQuestionTypeCaption();
 		answerText.getElement().setInnerHTML(GL0665);
+		answerText.getElement().setAttribute("alt",GL0665);
+		answerText.getElement().setAttribute("title",GL0665);
+		
 		checkAnswer.setText(GL0666);
+		checkAnswer.getElement().setAttribute("alt",GL0666);
+		checkAnswer.getElement().setAttribute("title",GL0666);
+		
+		messageBodyText.getElement().setAttribute("title",GL0666);
+		
 		renderFibQuestion();
+		setId();
 	}
-	
+	public void setId(){
+		answerText.getElement().setId("pnlAnswerText");
+		checkAnswer.getElement().setId("btnCheckAnswer");
+		messageBodyText.getElement().setId("lblMessageBodyText");
+		optionsContainer.getElement().setId("fpnlOptionsContainer");
+		resultPanel.getElement().setId("fpnlResultPanel");
+	}
 	@UiConstructor
 	public FillIntheBlankQuestionView(CollectionItemDo collectionItemDo,AttemptedAnswersDo attemptedAnswerDo){
 		initWidget(uiBinder.createAndBindUi(this));
@@ -98,11 +113,18 @@ public class FillIntheBlankQuestionView extends Composite implements MessageProp
 		setQuestionTypeCaption();
 		renderFibQuestion();
 		answerText.getElement().setInnerHTML(GL0665);
+		answerText.getElement().setAttribute("alt",GL0665);
+		answerText.getElement().setAttribute("title",GL0665);
 		checkAnswer.setText(GL0666);
+		checkAnswer.getElement().setAttribute("alt",GL0666);
+		checkAnswer.getElement().setAttribute("title",GL0666);
+		setId();
 	}
 	
 	public void setQuestionTypeCaption(){
 		messageBodyText.setText(FIB_BODY_TEXT);
+		messageBodyText.getElement().setAttribute("alt",FIB_BODY_TEXT);
+		messageBodyText.getElement().setAttribute("title",FIB_BODY_TEXT);
 	}
 	
 	public void renderFibQuestion(){
