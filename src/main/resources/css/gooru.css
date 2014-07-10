@@ -1927,3 +1927,18 @@ fieldset {
     background-color: #000;
 	opacity: 0.3;   
 }
+
+/* Media Css for hiding specif objects */
+
+.searchResults{
+	
+}
+.mediaCssToHide{
+	
+}
+
+@media screen and (min-width: 0px) and (max-width: 1000px) {
+	.searchResults > .mediaCssToHide{
+		display: none;
+	}
+}
