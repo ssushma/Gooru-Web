@@ -43,14 +43,13 @@ import org.ednovo.gooru.client.uc.CollectionImageUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.UserProfileUc;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
 import org.ednovo.gooru.shared.model.user.ProfileDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -72,9 +71,11 @@ import com.google.inject.Inject;
  * @author Search Team
  *
  */
-public class CollectionSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc , MessageProperties{
+public class CollectionSearchResultVc extends Composite implements IsDraggable, IsSearchResultVc{
 
 	private static CollectionSearchResultVcUiBinder uiBinder = GWT.create(CollectionSearchResultVcUiBinder.class);
+	
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface CollectionSearchResultVcUiBinder extends UiBinder<Widget, CollectionSearchResultVc> {
 	}
@@ -111,18 +112,18 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 	
 	private CollectionSearchResultDo collectionResultDo;
 	
-	private static final String VIEWS = " "+GL1099;
-	private static final String VIEW = " "+GL1428;
+	private static final String VIEWS = " "+i18n.GL1099();
+	private static final String VIEW = " "+i18n.GL1428();
 	
-	private static final String CREATED_BY = GL0622;
+	private static final String CREATED_BY = i18n.GL0622();
 	
-	private static final String RESOURCES = " "+GL0174;
+	private static final String RESOURCES = " "+i18n.GL0174();
 	
-	private static final String RESOURCE = " "+GL1110;
+	private static final String RESOURCE = " "+i18n.GL1110();
 
-	private static final String QUESTIONS = " "+GL1042;
+	private static final String QUESTIONS = " "+i18n.GL1042();
 	
-	private static final String QUESTION = " "+GL0308;
+	private static final String QUESTION = " "+i18n.GL0308();
 
 	private static final String USER_META_ACTIVE_FLAG = "0";
 	/**
@@ -201,7 +202,7 @@ public class CollectionSearchResultVc extends Composite implements IsDraggable, 
 		if (collectionResultDo.getCollaboratorCount()!=null && collectionResultDo.getCollaboratorCount()>0){
 			 CollaboratorsUc collaboratorsUc=new CollaboratorsUc(collectionResultDo);
 			 teamFlowPanel.add(collaboratorsUc);
-				creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername() +" " + GL_GRR_AND +" ");
+				creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername() +" " + i18n.GL_GRR_AND() +" ");
 		}else{
 			creatorNameLblValue.setText(collectionResultDo.getOwner().getUsername());
 		}

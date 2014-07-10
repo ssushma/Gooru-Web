@@ -21,6 +21,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	width: 155px;
 	/* width: 364px; */
 	cursor: pointer;
 	/* float: left; */

@@ -26,7 +26,6 @@ package org.ednovo.gooru.client.uc;
 
 import org.ednovo.gooru.client.mvp.shelf.ShelfCBundle;
 
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -79,7 +78,6 @@ public class AppPopUp extends PopupPanel {
 			content = new FlowPanel();
 			this.setWidget(content);
 			setGlassEnabled(true);
-		
 	}
 	
 	/**
@@ -128,6 +126,8 @@ public class AppPopUp extends PopupPanel {
 	
 	public void setViewTitle(String title) {
 		labletitle.setText(title);
+		labletitle.getElement().setAttribute("alt",title);
+		labletitle.getElement().setAttribute("title",title);
 	}
 	
 }

@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.mvp.home;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
@@ -131,6 +132,7 @@ public class LogoutPopupVc extends Composite{
 	 */
 	@UiHandler("okBtnUc")
 	public void userLogout(ClickEvent clickEvent) {
+		StringUtil.clearCookies("google-access-token", "/", ".www.goorulearning.org");
 		AppClientFactory.getInjector().getAppService().v2Signout(new SimpleAsyncCallback<UserDo>() {
 
 			@Override
@@ -194,7 +196,6 @@ public class LogoutPopupVc extends Composite{
 				}else{
 					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.HOME);
 				}
-				Cookies.removeCookie("google-access-token");
 				appPopUp.hide();
 			}
 

@@ -28,8 +28,10 @@ import java.util.Date;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -42,7 +44,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
  * @author Search Team
  *
  */
-public class DatePickerUc extends PopupPanel implements MessageProperties{
+public class DatePickerUc extends PopupPanel {
 	
 	private DatePicker datePicker;
 
@@ -59,6 +61,8 @@ public class DatePickerUc extends PopupPanel implements MessageProperties{
 	private Button doneButton;
 
 	private Button todayButton;
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	Date date = new Date();
 
@@ -91,8 +95,8 @@ public class DatePickerUc extends PopupPanel implements MessageProperties{
 		
 		datePicker = new DatePicker();
 		buttonContainer = new FlowPanel();
-		todayButton = new Button(GL1506);
-		doneButton = new Button(GL0745);
+		todayButton = new Button(i18n.GL1506());
+		doneButton = new Button(i18n.GL0745());
 		datePickerBox = new FlowPanel();
 		monthYearContainer.setStyleName(UcCBundle.INSTANCE.css()
 				.monthYearContainer());
