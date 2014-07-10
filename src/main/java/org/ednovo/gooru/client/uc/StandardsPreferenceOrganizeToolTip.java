@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -17,11 +18,14 @@ public class StandardsPreferenceOrganizeToolTip extends PopupPanel {
 	interface StandardsPreferenceOrganizeToolTipUiBinder extends
 			UiBinder<Widget, StandardsPreferenceOrganizeToolTip> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	HTMLPanel lblTitle;
 	public StandardsPreferenceOrganizeToolTip() {
 		setWidget(uiBinder.createAndBindUi(this));
-		lblTitle.getElement().setInnerHTML(MessageProperties.GL1613);
+		lblTitle.getElement().setInnerHTML(i18n.GL1613());
 	}
 
 }

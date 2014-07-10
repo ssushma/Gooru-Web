@@ -1,5 +1,6 @@
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -17,6 +18,9 @@ public class StandardPreferenceTooltip extends PopupPanel {
 	interface StandardPreferenceTooltipUiBinder extends
 			UiBinder<Widget, StandardPreferenceTooltip> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	HTMLPanel panelCode;
 	
@@ -24,7 +28,7 @@ public class StandardPreferenceTooltip extends PopupPanel {
 	HTMLPanel lblTitle;
 	public StandardPreferenceTooltip() {
 		setWidget(uiBinder.createAndBindUi(this));
-		lblTitle.getElement().setInnerHTML(MessageProperties.GL1613);
+		lblTitle.getElement().setInnerHTML(i18n.GL1613());
 	}
 
 }

@@ -34,6 +34,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.uc.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
@@ -59,7 +60,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SignUpGradeCourseView extends PopupPanel implements MessageProperties{
+public class SignUpGradeCourseView extends PopupPanel{
 
 	@UiField HTMLPanel signupBgPanel, metaDataSelectionPanel, courseContainer,congratsLbl,accountCreatedText;
 	
@@ -104,6 +105,8 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
 	interface SignUpGradeCourseViewUiBinder extends
 			UiBinder<Widget, SignUpGradeCourseView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public SignUpGradeCourseView(UserDo userDo) {
 		this.userDo = userDo;
@@ -115,10 +118,10 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
 		metaDataSelectionPanel.getElement().getStyle().setPadding(15, Unit.PX);
 		metaDataSelectionPanel.getElement().setId("pnlMetaDataSelectionPanel");
 		
-		lblTitle.setText(GL0186 + GL_SPL_EXCLAMATION);
+		lblTitle.setText(i18n.GL0186() + i18n.GL_SPL_EXCLAMATION());
 		lblTitle.getElement().setId("lblTitle");
-		lblTitle.getElement().setAttribute("alt",GL0186);
-		lblTitle.getElement().setAttribute("title",GL0186);
+		lblTitle.getElement().setAttribute("alt",i18n.GL0186());
+		lblTitle.getElement().setAttribute("title",i18n.GL0186());
 		
 		lblCancel.getElement().setId("lblCancel");
 		lblCancel.getElement().setAttribute("alt","");
@@ -140,10 +143,10 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
 		setRegisterCourseList();
 		
 		lblErrorMessage.setVisible(false);
-		lblErrorMessage.setText(GL0500);
+		lblErrorMessage.setText(i18n.GL0500());
 		lblErrorMessage.getElement().setId("errlblCourse");
-		lblErrorMessage.getElement().setAttribute("alt",GL0500);
-		lblErrorMessage.getElement().setAttribute("title",GL0500);
+		lblErrorMessage.getElement().setAttribute("alt",i18n.GL0500());
+		lblErrorMessage.getElement().setAttribute("title",i18n.GL0500());
 		lblErrorMessage.getElement().getStyle().clearMarginLeft();
 		lblErrorMessage.getElement().getStyle().clearWidth();
 		lblErrorMessage.getElement().getStyle().setFloat(Float.RIGHT);
@@ -158,20 +161,20 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
         this.setGlassStyleName(SignUpCBundle.INSTANCE.css().signUpPopUpGlassCss());
         this.show();
         this.center();
-        congratsLbl.getElement().setInnerHTML(GL1159+GL_SPL_EXCLAMATION);
+        congratsLbl.getElement().setInnerHTML(i18n.GL1159()+i18n.GL_SPL_EXCLAMATION());
         congratsLbl.getElement().setId("pnlCongrats");
-        congratsLbl.getElement().setAttribute("alt",GL1159);
-        congratsLbl.getElement().setAttribute("title",GL1159);
+        congratsLbl.getElement().setAttribute("alt",i18n.GL1159());
+        congratsLbl.getElement().setAttribute("title",i18n.GL1159());
         
-        accountCreatedText.getElement().setInnerHTML(GL1160);
+        accountCreatedText.getElement().setInnerHTML(i18n.GL1160());
         accountCreatedText.getElement().setId("pnlAccountCreatedText");
-        accountCreatedText.getElement().setAttribute("alt",GL1160);
-        accountCreatedText.getElement().setAttribute("title",GL1160);
+        accountCreatedText.getElement().setAttribute("alt",i18n.GL1160());
+        accountCreatedText.getElement().setAttribute("title",i18n.GL1160());
         
-        imgLoading.setAltText(GL0110);
-        imgLoading.setTitle(GL0110);
+        imgLoading.setAltText(i18n.GL0110());
+        imgLoading.setTitle(i18n.GL0110());
         imgLoading.getElement().setId("imgLoadingImage");
-        imgLoading.getElement().setAttribute("alt",GL0110);
+        imgLoading.getElement().setAttribute("alt",i18n.GL0110());
      
         registerGradeList.getElement().setId("fpnlGradesList");
         scienceCourseLbl.getElement().setId("epnlSienceCourse");
@@ -180,15 +183,15 @@ public class SignUpGradeCourseView extends PopupPanel implements MessageProperti
         elaCourseLbl.getElement().setId("epnlElaCourse");
         courseContainer.getElement().setId("pnlCourseContainer");
         
-        skipBtn.setText(GL1004);
+        skipBtn.setText(i18n.GL1004());
         skipBtn.getElement().setId("btnSkip");
-        skipBtn.getElement().setAttribute("alt",GL1004);
-        skipBtn.getElement().setAttribute("title",GL1004);
+        skipBtn.getElement().setAttribute("alt",i18n.GL1004());
+        skipBtn.getElement().setAttribute("title",i18n.GL1004());
         
-        submitBtn.setText(GL0486);
+        submitBtn.setText(i18n.GL0486());
         submitBtn.getElement().setId("btnSubmit");
-        submitBtn.getElement().setAttribute("alt",GL1004);
-        submitBtn.getElement().setAttribute("title",GL1004);
+        submitBtn.getElement().setAttribute("alt",i18n.GL1004());
+        submitBtn.getElement().setAttribute("title",i18n.GL1004());
 	}
 	/**
 	 * 

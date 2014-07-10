@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.play.collection.preview.PreviewPlayerPresenter;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -51,7 +52,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class TocCollectionHomeView extends Composite implements HasClickHandlers,MessageProperties {
+public class TocCollectionHomeView extends Composite implements HasClickHandlers {
 
 	@UiField Image resourceThumbnail;
 	@UiField HTMLPanel resourceTitle;
@@ -62,16 +63,18 @@ public class TocCollectionHomeView extends Composite implements HasClickHandlers
 	interface TocResourceViewUiBinder extends UiBinder<Widget, TocCollectionHomeView> {
 	}
 	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	public TocCollectionHomeView(){
 		initWidget(uiBinder.createAndBindUi(this));
-		resourceTitle.getElement().setInnerHTML(GL1052);
+		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
 	}
 	
 	@UiConstructor
 	public TocCollectionHomeView(String thumbnailUrl){
 		initWidget(uiBinder.createAndBindUi(this));
 		this.thumbnailUrl=thumbnailUrl;
-		resourceTitle.getElement().setInnerHTML(GL1052);
+		resourceTitle.getElement().setInnerHTML(i18n.GL1052());
 		//setResourcePlayLink();
 		//this.addClickHandler(new ResourceRequest());
 	}

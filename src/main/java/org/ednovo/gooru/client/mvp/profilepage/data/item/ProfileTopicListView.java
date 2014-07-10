@@ -50,6 +50,7 @@ import org.ednovo.gooru.client.uc.tooltip.GlobalToolTip;
 import org.ednovo.gooru.client.uc.tooltip.LibraryTopicCollectionToolTip;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.StandardFo;
 import org.ednovo.gooru.shared.model.library.LessonDo;
 import org.ednovo.gooru.shared.model.library.PartnerConceptListDo;
@@ -88,7 +89,7 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class ProfileTopicListView extends Composite implements MessageProperties{
+public class ProfileTopicListView extends Composite{
 
 	@UiField ScrollPanel lessonScrollPanel;
 	@UiField HTMLPanel topicBlock, conceptList,collectionInfo,resourcesInside;
@@ -162,6 +163,8 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 	interface ProfileTopicListViewUiBinder extends
 			UiBinder<Widget, ProfileTopicListView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public ProfileTopicListView() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -171,9 +174,9 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = topicNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
-		noCollectionLbl.setText(GL1170);
+		assignCollectionBtn.setText(i18n.GL0104());
+		customizeCollectionBtn.setText(i18n.GL0631());
+		noCollectionLbl.setText(i18n.GL1170());
 		setTopicLabel(profileFolderDo.getTitle());
 		collectionInfo.setVisible(false);
 		if(profileFolderDo.getCollections()!=null) {
@@ -217,8 +220,8 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		initWidget(uiBinder.createAndBindUi(this));
 		this.topicId = conceptNumber;
 		setPlaceToken(placeToken);
-		assignCollectionBtn.setText(GL0104);
-		customizeCollectionBtn.setText(GL0631);
+		assignCollectionBtn.setText(i18n.GL0104());
+		customizeCollectionBtn.setText(i18n.GL0631());
 		setTopicLabel(profileFolderDo.getTitle());
 		topicTitleLbl.addStyleName(style.collection());
 		searchTitle=profileFolderDo.getTitle();
@@ -378,7 +381,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 					if(libraryResources!=null) {
 						int resourceCount = libraryResources.size();
 						int resources=resourceCount<=4?resourceCount:4;
-						final Label resourceCountLbl = new Label(resources+" "+GL_GRR_OF+" "+GL_GRR_THE+" "+resourceCount+" "+GL1094.toLowerCase());
+						final Label resourceCountLbl = new Label(resources+" "+i18n.GL_GRR_OF()+" "+i18n.GL_GRR_THE()+" "+resourceCount+" "+i18n.GL1094().toLowerCase());
 						resourcesInside.add(resourceCountLbl);
 						for(int i=0;i<resources;i++) {
 							try {
@@ -649,7 +652,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL0676));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0676()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(assignCollectionBtn.getElement().getAbsoluteLeft()+8, assignCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);
@@ -669,7 +672,7 @@ public class ProfileTopicListView extends Composite implements MessageProperties
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			toolTipPopupPanelNew.clear();
-			toolTipPopupPanelNew.setWidget(new GlobalToolTip(GL0677));
+			toolTipPopupPanelNew.setWidget(new GlobalToolTip(i18n.GL0677()));
 			toolTipPopupPanelNew.setStyleName("");
 			toolTipPopupPanelNew.setPopupPosition(customizeCollectionBtn.getElement().getAbsoluteLeft()+18, customizeCollectionBtn.getElement().getAbsoluteTop()+10);
 			toolTipPopupPanelNew.getElement().getStyle().setZIndex(999999);

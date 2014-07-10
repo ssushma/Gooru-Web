@@ -61,6 +61,7 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderEvent;
 import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.service.UserServiceAsync;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.code.ProfileCodeDo;
@@ -75,6 +76,7 @@ import org.ednovo.gooru.shared.model.user.V2UserDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
@@ -141,6 +143,8 @@ public class UserSettingsPresenter
 			ProxyPlace<UserSettingsPresenter> {
 
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	@Inject
 	public UserSettingsPresenter(final IsUserSettingsView view,
@@ -325,8 +329,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										GL1199,
-										GL0812);
+										i18n.GL1199(),
+										i18n.GL0812());
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -365,14 +369,14 @@ public class UserSettingsPresenter
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
 							if (age < 13) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 							} else {
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 								
 							} else {
 								getView().getLbRole().setText(
@@ -620,8 +624,8 @@ public class UserSettingsPresenter
 									+ user.getGender().getName().substring(1);
 							if ("Do not wish to share".equalsIgnoreCase(gender)) {
 								String gender1 = gender.replace(
-										GL1199,
-										GL0812);
+										i18n.GL1199(),
+										i18n.GL0812());
 								getView().getGenderText().setText(gender1);
 							} else {
 								getView().getGenderText().setText(gender);
@@ -655,14 +659,14 @@ public class UserSettingsPresenter
 							getView().getLbUName().getElement()
 									.setAttribute("date", "" + age);
 							if (age < 13) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 							} else {
 								getView().getLbRole().setText(
 										user.getUserType());
 							}
 						} else if (user.getUser().getAccountTypeId() != null) {
 							if (user.getUser().getAccountTypeId() == 2) {
-								getView().getLbRole().setText(GL0417);
+								getView().getLbRole().setText(i18n.GL0417());
 								
 							} else {
 								getView().getLbRole().setText(
@@ -1084,7 +1088,7 @@ public class UserSettingsPresenter
 
 	@Override
 	public void updatePartyCustomField(String optionKey, String optionValue) {
-		getView().getStandardSavingTextLabel().setText(MessageProperties.GL0808);
+		getView().getStandardSavingTextLabel().setText(i18n.GL0808());
 		getView().getstandardsSaveCancelButtonContainer().setVisible(false);
 		getView().getstandardsEditButton().setVisible(false);
 		AppClientFactory.getInjector().getUserService().updatePartyCustomField(gooruUid,optionKey,optionValue,new SimpleAsyncCallback<Void>() {

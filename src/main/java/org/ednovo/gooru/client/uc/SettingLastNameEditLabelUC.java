@@ -23,6 +23,7 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
@@ -55,7 +56,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @Reviewer:
  */
-public class SettingLastNameEditLabelUC extends Composite implements MessageProperties,HasValue<String>{
+public class SettingLastNameEditLabelUC extends Composite implements HasValue<String>{
 
 	private static SettingLastNameEditLabelUCUiBinder uiBinder = GWT
 			.create(SettingLastNameEditLabelUCUiBinder.class);
@@ -63,6 +64,9 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 	interface SettingLastNameEditLabelUCUiBinder extends
 			UiBinder<Widget, SettingLastNameEditLabelUC> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	protected Label editLabel,errorLabel;
 
@@ -75,7 +79,7 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 	@UiField
 	protected FocusPanel focusPanel;
 	protected String text;
-	private static final String LNAME = GL1048;
+//	private static final String LNAME = i18n.GL1048;
 	
 	@UiField(provided = true)
 	UcCBundle res;
@@ -125,7 +129,7 @@ public class SettingLastNameEditLabelUC extends Composite implements MessageProp
 		if (editTextBox.getText().trim().length() > 0) {
 			setValue(editTextBox.getText(), true); // fires events, too
 		}else {
-		errorLabel.setText(StringUtil.generateMessage(GL0082, LNAME));
+		errorLabel.setText(StringUtil.generateMessage(i18n.GL0082(), i18n.GL1048()));
 			errorLabel.setVisible(true);
 			return;
 		}

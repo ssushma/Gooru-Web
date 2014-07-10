@@ -24,6 +24,7 @@
  ******************************************************************************/
 package org.ednovo.gooru.client.uc;
 
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
@@ -52,7 +53,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @Reviewer:
  */
 
-public class UserProfileUc extends Composite implements MessageProperties{
+public class UserProfileUc extends Composite{
 
 	private static UserProfileUcUiBinder uiBinder = GWT
 			.create(UserProfileUcUiBinder.class);
@@ -60,6 +61,8 @@ public class UserProfileUc extends Composite implements MessageProperties{
 	interface UserProfileUcUiBinder extends UiBinder<Widget, UserProfileUc> {
 	}
 
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	@UiField
 	Label userNameLbl, userProfileDesc;
 
@@ -79,8 +82,8 @@ public class UserProfileUc extends Composite implements MessageProperties{
 				this.aboutUser = this.aboutUser.substring(0, 60) + "...";
 			}
 		}
-		userNameLbl.setText(GL1053);
-		userProfileDesc.setText(GL1054);
+		userNameLbl.setText(i18n.GL1053());
+		userProfileDesc.setText(i18n.GL1054());
 		userNameLbl.setText(userName);
 		userProfileDesc.setText(this.aboutUser);
 		profileImage.addErrorHandler(new ProfileDefaultImage());
