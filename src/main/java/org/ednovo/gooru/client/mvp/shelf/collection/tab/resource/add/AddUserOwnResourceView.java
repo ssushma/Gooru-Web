@@ -37,6 +37,9 @@ import org.ednovo.gooru.client.mvp.search.event.SetHeaderZIndexEvent;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.uc.BlueButtonUc;
 import org.ednovo.gooru.client.ui.HTMLEventPanel;
+
+
+
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.client.util.SetStyleForProfanity;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
@@ -87,7 +90,7 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 	}
 	public static AddUserOwnResourceViewUiBinder uiBinder = GWT.create(AddUserOwnResourceViewUiBinder.class);
 	
-	@UiField HTMLPanel loadingImagePanel;
+	@UiField HTMLPanel loadingImagePanel,rightsContent;
 	
 	@UiField
 	public Button cancelResourcePopupBtnLbl,uploadImageLbl,browseResourceBtn;
@@ -147,6 +150,12 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 
 	@UiField Label lblAdding;
 	
+	@UiField org.ednovo.gooru.client.uc.HTMLEventPanel imageResourcePanel,textsResourcePanel;
+	
+	 
+	
+	
+	
 	/** 
 	 * This method is to get the lblAdding
 	 */
@@ -193,26 +202,84 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		this.collectionDo = collectionDo;
 		initWidget(uiBinder.createAndBindUi(this));
 		fileSizeLimit.getElement().setInnerHTML(" "+GL0901);
+		fileSizeLimit.getElement().setId("pnlFileSizeLimit");
+		fileSizeLimit.getElement().setAttribute("alt", GL0901);
+		fileSizeLimit.getElement().setAttribute("title", GL0901);
 		browseResourceBtn.setText(GL0902);
+		browseResourceBtn.getElement().setId("btnBrowseResourceBtn");
+		browseResourceBtn.getElement().setAttribute("alt", GL0902);
+		browseResourceBtn.getElement().setAttribute("title", GL0902);
 		titleText.getElement().setInnerHTML(GL0318);
+		titleText.getElement().setId("pnlTitleText");
+		titleText.getElement().setAttribute("alt", GL0318);
+		titleText.getElement().setAttribute("title", GL0318);
 		descriptionText.getElement().setInnerHTML(GL0904);
+		descriptionText.getElement().setId("pnlDescriptionText");
+		descriptionText.getElement().setAttribute("alt", GL0904);
+		descriptionText.getElement().setAttribute("title", GL0904);
 		categoryPanelText.getElement().setInnerHTML(GL0906);
+		categoryPanelText.getElement().setId("pnlCategoryPanelText");
+		categoryPanelText.getElement().setAttribute("alt", GL0906);
+		categoryPanelText.getElement().setAttribute("title", GL0906);
 		textsPanelLabel.getElement().setInnerHTML(GL1044);
+		textsPanelLabel.getElement().setId("pnlTextsPanelLabel");
+		textsPanelLabel.getElement().setAttribute("alt", GL1044);
+		textsPanelLabel.getElement().setAttribute("title", GL1044);
+		
 		imageText.getElement().setInnerHTML(GL1046);
+		imageText.getElement().setId("pnlImageText");
+		imageText.getElement().setAttribute("alt", GL1046);
+		imageText.getElement().setAttribute("title", GL1046);
 		
 		thumbnailImageText.getElement().setInnerHTML(GL0911);
+		thumbnailImageText.getElement().setId("pnlThumbnailImageText");
+		thumbnailImageText.getElement().setAttribute("alt", GL0911);
+		thumbnailImageText.getElement().setAttribute("title", GL0911);
+		
 		uploadImageLbl.setText(GL0912);
+		uploadImageLbl.getElement().setAttribute("alt", GL0912);
+		uploadImageLbl.getElement().setAttribute("title", GL0912);
 		rightsLbl.setText(GL0869);
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt", GL0869);
+		rightsLbl.getElement().setAttribute("title", GL0869);
 		agreeText.setText(GL0870);
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt", GL0870);
+		agreeText.getElement().setAttribute("title", GL0870);
 		commuGuideLinesAnr.setText(GL0871);
+		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
+		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
+		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
 		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
+		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872);
+		termsAndPolicyAnr.getElement().setAttribute("title", GL0872);
 		privacyAnr.setText(" "+GL0873);
+		privacyAnr.getElement().setId("lnkPrivacyAnr");
+		privacyAnr.getElement().setAttribute("alt", GL0873);
+		privacyAnr.getElement().setAttribute("title", GL0873);
 		andText.setText(" "+GL_GRR_AND+" ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt", GL_GRR_AND);
+		andText.getElement().setAttribute("title", GL_GRR_AND);
 		copyRightAnr.setText(" "+GL0875);
+		copyRightAnr.getElement().setId("lnkCopyRightAnr");
+		copyRightAnr.getElement().setAttribute("alt", GL0875);
+		copyRightAnr.getElement().setAttribute("title", GL0875);
 		additionalText.setText(GL0874);
+		additionalText.getElement().setId("lblAdditionalText");
+		additionalText.getElement().setAttribute("alt", GL0874);
+		additionalText.getElement().setAttribute("title", GL0874);
 		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
 		addResourceBtnLbl.setText(GL0590);
+		addResourceBtnLbl.getElement().setAttribute("alt", GL0590);
+		addResourceBtnLbl.getElement().setAttribute("title", GL0590);
 		lblAdding.setText(GL0591.toLowerCase());
+		lblAdding.getElement().setAttribute("alt", GL0591.toLowerCase());
+		lblAdding.getElement().setAttribute("title", GL0591.toLowerCase());
 		CollectionEditResourceCBundle.INSTANCE.css().ensureInjected();
 		cancelResourcePopupBtnLbl.addClickHandler(new CloseClickHandler());
 		addResourceBtnLbl.addClickHandler(new AddClickHandler());
@@ -233,16 +300,43 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
 		resourceCategoryLabel.setText(GL0360);
+		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
+		resourceCategoryLabel.getElement().setAttribute("alt", GL0360);
+		resourceCategoryLabel.getElement().setAttribute("title", GL0360);
 		resourceContentChkLbl.setVisible(false);
+		resourceContentChkLbl.getElement().setId("lblResourceContentChkLbl");
+		loadingPanel.getElement().setId("pnlLoadingPanel");
 		mandatoryTitleLbl.setVisible(false);
+		mandatoryTitleLbl.getElement().setId("lblMandatoryTitleLbl");
+		descCharcterLimit.getElement().setId("lblDescCharcterLimit");
 		descCharcterLimit.setVisible(false);
+		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		setThumbnailImage.setVisible(false);
 		resourceTypePanel.setVisible(false);
 		loadingPanel.setVisible(false);
 		panelContentRights.setVisible(false);
+		panelContentRights.getElement().setId("pnlPanelContentRights");
+		imageContainer.getElement().setId("pnlImageContainer");
 		imageContainer.getElement().getStyle().setDisplay(Display.NONE);
 		rightsLbl.getElement().getStyle().setColor("black");
 		chooseResourceBtn.getElement().setId("fileUpload1");
+		filePathContainer.getElement().setId("pnlFilePathContainer");
+		fileuploadForm.getElement().setId("fpFileuploadForm");
+		resourceTitleContainer.getElement().setId("pnlResourceTitleContainer");
+		mandatoryTitleLblForSwareWords.getElement().setId("lblMandatoryTitleLblForSwareWords");
+		resourceDescriptionContainer.getElement().setId("pnlResourceDescriptionContainer");
+		mandatoryDescLblForSwareWords.getElement().setId("lblMandatoryDescLblForSwareWords");
+		categorypanel.getElement().setId("pnlCategorypanel");
+		resoureDropDownLbl.getElement().setId("lblResoureDropDownLbl");
+		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
+		imageResourcePanel.getElement().setId("epnlImageResourcePanel");
+		image.getElement().setId("pnlImage");
+		textsResourcePanel.getElement().setId("epnlTextsResourcePanel");
+		texts.getElement().setId("pnlTexts");
+		lblContentRights.getElement().setId("epnlLblContentRights");
+		rightsContent.getElement().setId("pnlRightsContent");
+		panelAction.getElement().setId("pnlPanelAction");
+		loadingImagePanel.getElement().setId("pnlLoadingImagePanel");
 		clearFields();
 		handelFormEvent();
 		
@@ -316,6 +410,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		
 		
 		resourceCategoryLabel.setText(GL1044);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -341,6 +437,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 			if(sizeOfImage>5){
 				isValidImageSize=false;
 				resourceContentChkLbl.setText(GL0913);
+				resourceContentChkLbl.getElement().setAttribute("alt", GL0913);
+				resourceContentChkLbl.getElement().setAttribute("title", GL0913);
 				resourceContentChkLbl.setVisible(true);
 				fileuploadForm.reset();
 				if(!resourcePathTextBox.getText().equalsIgnoreCase("")){
@@ -361,11 +459,15 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 					 isValidImageSize=true;
 					 resourceContentChkLbl.setVisible(false);
 					 resourcePathTextBox.setText(chooseResourceBtn.getFilename().trim());
+					 resourcePathTextBox.getElement().setAttribute("alt", chooseResourceBtn.getFilename().trim());
+					 resourcePathTextBox.getElement().setAttribute("title", chooseResourceBtn.getFilename().trim());
 				 }
 				 else{
 					 if(!chooseResourceBtn.getFilename().trim().equalsIgnoreCase("")){
 						 resourceContentChkLbl.setVisible(true);
 						 resourceContentChkLbl.setText(RESOURCE_FILE_SUPPORT_MSG);
+						 resourceContentChkLbl.getElement().setAttribute("alt", RESOURCE_FILE_SUPPORT_MSG);
+						 resourceContentChkLbl.getElement().setAttribute("title", RESOURCE_FILE_SUPPORT_MSG);
 					 }
 					 
 				 }
@@ -392,6 +494,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 		descriptionTxtAera.setText("");
 		setThumbnailImage.setUrl("");
 		resourceCategoryLabel.setText(GL0360);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL0360);
+		resourceCategoryLabel.getElement().setAttribute("title", GL0360);
 		categorypanel.setStyleName("");
 		mandatoryTitleLbl.setVisible(false);
 		resourceContentChkLbl.setVisible(false);
@@ -439,6 +543,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 											 isEnabled = false;
 											 resourcePathTextBox.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().ownResourceFormInputControlForErrors());
 											 resourceContentChkLbl.setText(GL0914);
+											 resourceContentChkLbl.getElement().setAttribute("alt", GL0914);
+											 resourceContentChkLbl.getElement().setAttribute("title", GL0914);
 											 resourceContentChkLbl.setVisible(true);
 										}
 										if(resourceTitle==null || resourceTitle.equals("")){
@@ -446,6 +552,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 											isEnabled = false;
 											resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControlForErrors());
 											mandatoryTitleLbl.setText(GL0903);
+											mandatoryTitleLbl.getElement().setAttribute("alt", GL0903);
+											mandatoryTitleLbl.getElement().setAttribute("title", GL0903);
 											mandatoryTitleLbl.setVisible(true);
 										}
 										if(resourceDesc==null || resourceDesc.equals("")){
@@ -455,6 +563,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 											resourceDescriptionContainer.addStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormTextarea());
 										
 											descCharcterLimit.setText(GL0905);
+											descCharcterLimit.getElement().setAttribute("alt", GL0905);
+											descCharcterLimit.getElement().setAttribute("title", GL0905);
 											descCharcterLimit.setVisible(true);
 										}
 										if(resourceCategory==null || resourceCategory.equals("-1") || resourceCategory.equalsIgnoreCase("Choose a resource format") ){ 
@@ -591,6 +701,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 			resourceTitleContainer.setStyleName(CollectionEditResourceCBundle.INSTANCE.css().myFolderCollectionFormInputControl());
 			if (titleTextBox.getText().length() >= 50) {
 				mandatoryTitleLbl.setText(GL0143);
+				mandatoryTitleLbl.getElement().setAttribute("alt", GL0143);
+				mandatoryTitleLbl.getElement().setAttribute("title", GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
@@ -605,6 +717,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 			if (descriptionTxtAera.getText().length() >= 300) {
 //				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0, 300));
 				descCharcterLimit.setText(GL0143);
+				descCharcterLimit.getElement().setAttribute("alt", GL0143);
+				descCharcterLimit.getElement().setAttribute("title", GL0143);
 				descCharcterLimit.setVisible(true);
 			}
 
@@ -615,6 +729,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 	void slideResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
 		resourceCategoryLabel.setText(GL1046);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1046);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1046);
 		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -624,6 +740,8 @@ public abstract class AddUserOwnResourceView extends Composite implements Messag
 	void handoutResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
 		resourceCategoryLabel.setText(GL1044);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;

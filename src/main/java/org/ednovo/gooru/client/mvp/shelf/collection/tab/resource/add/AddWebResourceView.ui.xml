@@ -363,7 +363,7 @@
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="readingPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						
 						<g:HTMLPanel styleName="{res.css.myEducationalPanelSubTitles}" ui:field="readingText"></g:HTMLPanel>
-					</g:HTMLPanel>
+					</g:HTMLPanel>pnlPreparingTheLearningText
 				</uc:HTMLEventPanel>
 				<uc:HTMLEventPanel styleName="{res.css.myFolderCollectionFolderVideoOuterContainer}" ui:field="textbookPanel">
 					<g:HTMLPanel styleName="{res.css.myFolderCollectionFolderVideoContainer}">						

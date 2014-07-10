@@ -89,7 +89,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	FormPanel fileuploadForm;
 	
 	@UiField
-	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText;
+	HTMLPanel uploadContainer,uploadName,defaultFileTxtContainer,panelContentRights,imagesText,textsText,imageContainer,rightsContent;
 	
 
 	@UiField
@@ -109,7 +109,7 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	
 	@UiField Label lblAdding,resoureDropDownLbl;
 	
-	@UiField HTMLEventPanel lblContentRights;
+	@UiField HTMLEventPanel lblContentRights,imageResourcePanel,textResourcePanel;
 
 	@UiField
 	Image setThumbnailImage,clipImage;
@@ -164,14 +164,43 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		this.collectionItemDo = collectionItemDo;
 		setContent(GL0949, uiBinder.createAndBindUi(this));
 		uploadName.getElement().setInnerHTML(" "+GL0948);
+		uploadName.getElement().setId("pnlUploadName");
+		uploadName.getElement().setAttribute("alt", GL0948);
+		uploadName.getElement().setAttribute("title", GL0948);
+		uploadContainer.getElement().setId("pnlUploadContainer");
 		browseResourceBtn.setText(GL0902);
+		browseResourceBtn.getElement().setId("btnBrowseResourceBtn");
+		browseResourceBtn.getElement().setAttribute("alt", GL0902);
+		browseResourceBtn.getElement().setAttribute("title", GL0902);
+		fileuploadForm.getElement().setId("fpFileuploadForm");
 		rollBackToPaperClip.setText(GL0950);
+		rollBackToPaperClip.getElement().setId("lnkRollBackToPaperClip");
+		rollBackToPaperClip.getElement().setAttribute("alt", GL0950);
+		rollBackToPaperClip.getElement().setAttribute("title", GL0950);
 		changeFileBtn.setText(GL0951);
+		changeFileBtn.getElement().setId("btnChangeFileBtn");
+		changeFileBtn.getElement().setAttribute("alt", GL0951);
+		changeFileBtn.getElement().setAttribute("title", GL0951);
 		fileTitleText.getElement().setInnerHTML(GL0952);
+		fileTitleText.getElement().setId("pnlFileTitleText");
+		fileTitleText.getElement().setAttribute("alt", GL0952);
+		fileTitleText.getElement().setAttribute("title", GL0952);
 		mandatoryTitleLbl.setText(GL0173);
+		mandatoryTitleLbl.getElement().setId("lblMandatoryTitleLbl");
+		mandatoryTitleLbl.getElement().setAttribute("alt", GL0173);
+		mandatoryTitleLbl.getElement().setAttribute("title", GL0173);
 		descriptionText.getElement().setInnerHTML(GL0904);
+		descriptionText.getElement().setId("pnlDescriptionText");
+		descriptionText.getElement().setAttribute("alt", GL0904);
+		descriptionText.getElement().setAttribute("title", GL0904);
 		categoryLabel.getElement().setInnerHTML(GL0906);
+		categoryLabel.getElement().setId("pnlCategoryLabel");
+		categoryLabel.getElement().setAttribute("alt", GL0906);
+		categoryLabel.getElement().setAttribute("title", GL0906);
 		mandatoryCategoryLbl.setText(GL0917);
+		mandatoryCategoryLbl.getElement().setId("lblMandatoryCategoryLbl");
+		mandatoryCategoryLbl.getElement().setAttribute("alt", GL0917);
+		mandatoryCategoryLbl.getElement().setAttribute("title", GL0917);
 		/*videoLabel.getElement().setInnerHTML(GL0918);
 		interactiveText.getElement().setInnerHTML(GL0919);
 		websiteText.getElement().setInnerHTML(GL0920);*/
@@ -181,8 +210,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		lessonText.getElement().setInnerHTML(GL0910);
 		examText.getElement().setInnerHTML(GL0921);*/
 		textsText.getElement().setInnerHTML(GL1044);
+		textsText.getElement().setId("pnlTextsText");
+		textsText.getElement().setAttribute("alt", GL1044);
+		textsText.getElement().setAttribute("title", GL1044);
 		//audioText.getElement().setInnerHTML(GL1045);
 		imagesText.getElement().setInnerHTML(GL1046);
+		imagesText.getElement().setId("pnlImagesText");
+		imagesText.getElement().setAttribute("alt", GL1046);
+		imagesText.getElement().setAttribute("title", GL1046);
 		//otherText.getElement().setInnerHTML(GL1047);
 		
 		
@@ -192,41 +227,100 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		textbookLabel.getElement().setInnerHTML(GL0909);
 		lessonText.getElement().setInnerHTML(GL0910);*/
 		thumbnailImageText.getElement().setInnerHTML(GL0911);
+		thumbnailImageText.getElement().setId("pnlThumbnailImageText");
+		thumbnailImageText.getElement().setAttribute("alt", GL0911);
+		thumbnailImageText.getElement().setAttribute("title", GL0911);
 		uploadImageLbl.setText(GL0912);
+		uploadImageLbl.getElement().setId("lblUploadImageLbl");
+		uploadImageLbl.getElement().setAttribute("alt", GL0912);
+		uploadImageLbl.getElement().setAttribute("title", GL0912);
 		rightsLbl.setText(GL0869);
+		rightsLbl.getElement().setId("lblRightsLbl");
+		rightsLbl.getElement().setAttribute("alt", GL0869);
+		rightsLbl.getElement().setAttribute("title", GL0869);
 		agreeText.setText(GL0870);
+		agreeText.getElement().setId("lblAgreeText");
+		agreeText.getElement().setAttribute("alt", GL0870);
+		agreeText.getElement().setAttribute("title", GL0870);
 		commuGuideLinesAnr.setText(GL0871);
+		commuGuideLinesAnr.getElement().setId("lnkCommuGuideLinesAnr");
+		commuGuideLinesAnr.getElement().setAttribute("alt", GL0871);
+		commuGuideLinesAnr.getElement().setAttribute("title", GL0871);
 		termsAndPolicyAnr.setText(" "+GL0872+GL_GRR_COMMA);
+		termsAndPolicyAnr.getElement().setId("lnkTermsAndPolicyAnr");
+		termsAndPolicyAnr.getElement().setAttribute("alt", GL0872);
+		termsAndPolicyAnr.getElement().setAttribute("title", GL0872);
 		privacyAnr.setText(" "+GL0873);
+		privacyAnr.getElement().setId("lnkPrivacyAnr");
+		privacyAnr.getElement().setAttribute("alt", GL0873);
+		privacyAnr.getElement().setAttribute("title", GL0873);
 		andText.setText(" "+GL_GRR_AND+" ");
+		andText.getElement().setId("lblAndText");
+		andText.getElement().setAttribute("alt", GL_GRR_AND);
+		andText.getElement().setAttribute("title", GL_GRR_AND);
 		copyRightAnr.setText(" "+GL0875);
+		copyRightAnr.getElement().setId("lnkCopyRightAnr");
+		copyRightAnr.getElement().setAttribute("alt", GL0875);
+		copyRightAnr.getElement().setAttribute("title", GL0875);
 		additionalText.setText(GL0874);
+		additionalText.getElement().setId("lblAdditionalText");
+		additionalText.getElement().setAttribute("alt", GL0874);
+		additionalText.getElement().setAttribute("title", GL0874);
 		addResourceBtn.setText(GL0141);
+		addResourceBtn.getElement().setId("btnAddResourceBtn");
+		addResourceBtn.getElement().setAttribute("alt", GL0141);
+		addResourceBtn.getElement().setAttribute("title", GL0141);
 		cancelResourcePopupBtnLbl.setText(GL0142);
+		cancelResourcePopupBtnLbl.getElement().setId("lnkCancelResourcePopupBtnLbl");
+		cancelResourcePopupBtnLbl.getElement().setAttribute("alt", GL0142);
+		cancelResourcePopupBtnLbl.getElement().setAttribute("title", GL0142);
 		lblAdding.setText(GL0591.toLowerCase());
+		lblAdding.getElement().setId("lblLblAdding");
+		lblAdding.getElement().setAttribute("alt", GL0591);
+		lblAdding.getElement().setAttribute("title", GL0591);
+		clipImage.getElement().setId("imgClipImage");
 		clipImage.setUrl("images/paperclip.png");
 		addResourceBtn.addClickHandler(new AddClickHandler());
 		addResourceBtn.getElement().getStyle().setFloat(Float.LEFT);
 		uploadImageLbl.addClickHandler(new OnEditImageClick());
 		
 		changeFileBtn.addClickHandler(new ChangeFileBtnClick());
-
+		titleTextBox.getElement().setId("txtTitleTextBox");
 		titleTextBox.addKeyUpHandler(new TitleKeyUpHandler());
+		descriptionTxtAera.getElement().setId("tatDescriptionTxtAera");
 		descriptionTxtAera.addKeyUpHandler(new DescriptionKeyUpHandler());
+		resourcePathTextBox.getElement().setId("txtResourcePathTextBox");
 		resourcePathTextBox.addKeyUpHandler(new ResourcePathKeyUpHandler());
 		titleTextBox.getElement().setAttribute("maxlength", "50");
 		descriptionTxtAera.getElement().setAttribute("maxlength", "300");
+		resourceContentChkLbl.getElement().setId("lblResourceContentChkLbl");
 		resourceContentChkLbl.setVisible(false);
 		mandatoryTitleLbl.setVisible(false);
 		mandatoryCategoryLbl.setVisible(false);
+		descCharcterLimit.getElement().setId("lblDescCharcterLimit");
 		descCharcterLimit.setVisible(false);
+		setThumbnailImage.getElement().setId("imgSetThumbnailImage");
 		setThumbnailImage.setVisible(true);
 		resourceTypePanel.setVisible(false);
 		chooseResourceBtn.getElement().setId("uploadFile");
+		panelContentRights.getElement().setId("pnlPanelContentRights");
 		panelContentRights.setVisible(false);
 		rightsChkBox.addClickHandler(new rightsChecked());
 		rightsChkBox.getElement().setId("chkRights");
-
+		categorypanel.getElement().setId("pnlCategorypanel");
+		resourceCategoryLabel.getElement().setId("lblResourceCategoryLabel");
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+		resoureDropDownLbl.getElement().setId("lblResoureDropDownLbl");
+		resourceTypePanel.getElement().setId("pnlResourceTypePanel");
+		imageResourcePanel.getElement().setId("epnlImageResourcePanel");
+		image.getElement().setId("pnlImage");
+		textResourcePanel.getElement().setId("epnlTextResourcePanel");
+		texts.getElement().setId("pnlTexts");
+		imageContainer.getElement().setId("pnlImageContainer");
+		lblContentRights.getElement().setId("epnlLblContentRights");
+		rightsContent.getElement().setId("pnlRightsContent");
+		panelAction.getElement().setId("pnlPanelAction");
+		
         setModal(true);
 		Window.enableScrolling(false);
         AppClientFactory.fireEvent(new SetHeaderZIndexEvent(99, false));
@@ -241,11 +335,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		
 		lblAdding.getElement().getStyle().setDisplay(Display.NONE);
 		panelAction.getElement().getStyle().setDisplay(Display.BLOCK);
-		
+		defaultFileTxtContainer.getElement().setId("pnlDefaultFileTxtContainer");
 		defaultFileTxtContainer.getElement().getStyle().setDisplay(Display.BLOCK);
 		uploadContainer.getElement().getStyle().setDisplay(Display.NONE);
 		uploadName.getElement().getStyle().setDisplay(Display.NONE);
 		fileTextLbl.setText(GL0954);
+		fileTextLbl.getElement().setId("lblFileTextLbl");
+		fileTextLbl.getElement().setAttribute("alt", GL0954);
+		fileTextLbl.getElement().setAttribute("title", GL0954);
 		browseResourceBtn.getElement().getStyle().setMarginRight(9, Unit.PX);
 		copyRightAnr.addClickHandler(new ClickHandler() {
 			@Override
@@ -372,6 +469,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	
 	public void setResourceDescription(){
 		descriptionTxtAera.setText(collectionItemDo.getResource().getDescription());
+		descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+		descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 	}
 	
 	@UiHandler("chooseResourceBtn")
@@ -382,6 +481,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			if(sizeOfImage>5){
 				isValidImageSize=false;
 				resourceContentChkLbl.setText(GL0913);
+				resourceContentChkLbl.getElement().setAttribute("alt", GL0913);
+				resourceContentChkLbl.getElement().setAttribute("title", GL0913);
 				resourceContentChkLbl.setVisible(true);
 				fileuploadForm.reset();
 				if(!resourcePathTextBox.getText().equalsIgnoreCase("")){
@@ -397,15 +498,24 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 		if (collectionItemDo.getResource().getDescription().length() >= 300) {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription().substring(0, 300));
+			descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+			descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 		} else {
 			descriptionTxtAera.setText(collectionItemDo.getResource()
 					.getDescription());
+			descriptionTxtAera.getElement().setAttribute("alt", collectionItemDo.getResource().getDescription());
+			descriptionTxtAera.getElement().setAttribute("title", collectionItemDo.getResource().getDescription());
 		}
 		if (collectionItemDo.getResource().getTitle().length() >= 50) {
 			titleTextBox.setText(collectionItemDo.getResource().getTitle()
 					.substring(0, 50));
+			titleTextBox.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
+			
 		} else {
 			titleTextBox.setText(collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("alt", collectionItemDo.getResource().getTitle());
+			titleTextBox.getElement().setAttribute("title", collectionItemDo.getResource().getTitle());
 		}
 
 		setThumbnailImage.setVisible(true);
@@ -428,6 +538,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			resoureDropDownLblOpen=false;
 		} */  if (category.equalsIgnoreCase(GL1046) || category.equalsIgnoreCase("slide")||category.equalsIgnoreCase("image")) {
 			resourceCategoryLabel.setText(GL1046);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1046);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1046);
 			categorypanel.setStyleName(image.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -438,6 +550,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 //			resoureDropDownLblOpen=false;
 		} else if (category.equalsIgnoreCase(GL1044)|| category.equalsIgnoreCase("Textbook")|| category.equalsIgnoreCase("Lesson")|| category.equalsIgnoreCase("Handout")||category.equalsIgnoreCase("Text")) {
 			resourceCategoryLabel.setText(GL1044);
+			resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+			resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 			categorypanel.setStyleName(texts.getStyleName());
 			resourceTypePanel.setVisible(false);
 			resoureDropDownLblOpen=false;
@@ -535,6 +649,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			 if(uploadContainer.isVisible()){
 				 if(resourcePathTextBox.getText().trim() == null || resourcePathTextBox.getText().trim().equalsIgnoreCase("")){
 					 resourceContentChkLbl.setText(GL0914);
+					 resourceContentChkLbl.getElement().setAttribute("alt", GL0914);
+					 resourceContentChkLbl.getElement().setAttribute("title", GL0914);
 					 resourceContentChkLbl.setVisible(true);
 					 isValidate = false;
 				 }
@@ -543,6 +659,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			
 			if (titleStr == null || titleStr.equalsIgnoreCase("")) {
 				mandatoryTitleLbl.setText(GL0173);
+				mandatoryTitleLbl.getElement().setAttribute("alt", GL0173);
+				mandatoryTitleLbl.getElement().setAttribute("title", GL0173);
 				mandatoryTitleLbl.setVisible(true);
 				isValidate = false;
 			}
@@ -553,10 +671,14 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			if(descriptionTxtAera.getText().trim()==null || descriptionTxtAera.getText().trim().equals("")){
 				isValidate = false;
 				descCharcterLimit.setText(GL0905);
+				descCharcterLimit.getElement().setAttribute("alt", GL0905);
+				descCharcterLimit.getElement().setAttribute("title", GL0905);
 				descCharcterLimit.setVisible(true);
 			}
 			if (categoryStr == null	|| categoryStr.equalsIgnoreCase("-1")|| categoryStr.equalsIgnoreCase("Choose a resource category")) {
 				mandatoryCategoryLbl.setText(GL0917);
+				mandatoryCategoryLbl.getElement().setAttribute("alt", GL0917);
+				mandatoryCategoryLbl.getElement().setAttribute("title", GL0917);
 				mandatoryCategoryLbl.setVisible(true);
 				isValidate = false;
 			}
@@ -636,6 +758,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			mandatoryTitleLbl.setVisible(false);
 			if (titleTextBox.getText().length() >= 50) {
 				mandatoryTitleLbl.setText(GL0143);
+				mandatoryTitleLbl.getElement().setAttribute("alt", GL0143);
+				mandatoryTitleLbl.getElement().setAttribute("title", GL0143);
 				mandatoryTitleLbl.setVisible(true);
 			}
 		}
@@ -647,7 +771,11 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 			descCharcterLimit.setVisible(false);
 			if (descriptionTxtAera.getText().length() >= 300) {
 				descriptionTxtAera.setText(descriptionTxtAera.getText().trim().substring(0,300));
+				descriptionTxtAera.getElement().setAttribute("alt", descriptionTxtAera.getText());
+				descriptionTxtAera.getElement().setAttribute("title",descriptionTxtAera.getText());
 				descCharcterLimit.setText(GL0143);
+				descCharcterLimit.getElement().setAttribute("alt", GL0143);
+				descCharcterLimit.getElement().setAttribute("title", GL0143);
 				descCharcterLimit.setVisible(true);
 			}
 		}
@@ -689,6 +817,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	void slideResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_image_selected");
 		resourceCategoryLabel.setText(GL1046);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1046);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1046);
 		categorypanel.setStyleName(image.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -699,6 +829,8 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 	void handoutResourcePanel(ClickEvent event) {
 		MixpanelUtil.mixpanelEvent("organize_add_resource_text_selected");
 		resourceCategoryLabel.setText(GL1044);
+		resourceCategoryLabel.getElement().setAttribute("alt", GL1044);
+		resourceCategoryLabel.getElement().setAttribute("title", GL1044);
 		categorypanel.setStyleName(texts.getStyleName());
 		resourceTypePanel.setVisible(false);
 		resoureDropDownLblOpen = false;
@@ -778,12 +910,16 @@ public abstract class EditUserOwnResourcePopupVc extends AppPopUp implements Mes
 					 isValidImageSize=true;
 					 resourceContentChkLbl.setVisible(false);
 					 resourcePathTextBox.setText(chooseResourceBtn.getFilename().trim());
+					 resourcePathTextBox.getElement().setAttribute("alt", chooseResourceBtn.getFilename().trim());
+					 resourcePathTextBox.getElement().setAttribute("title", chooseResourceBtn.getFilename().trim());
 					 fileChanged=true;
 					 
 				 }
 				 else{
 						if(!chooseResourceBtn.getFilename().trim().equalsIgnoreCase("")){
 							 resourceContentChkLbl.setText(RESOURCE_FILE_SUPPORT_MSG);
+							 resourceContentChkLbl.getElement().setAttribute("alt", RESOURCE_FILE_SUPPORT_MSG);
+							 resourceContentChkLbl.getElement().setAttribute("title", RESOURCE_FILE_SUPPORT_MSG);
 							 resourceContentChkLbl.setVisible(true);
 							 
 						 }

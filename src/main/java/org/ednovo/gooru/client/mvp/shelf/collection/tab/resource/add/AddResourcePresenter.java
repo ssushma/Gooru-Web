@@ -481,6 +481,7 @@ public class AddResourcePresenter extends PresenterWidget<IsAddResourceView> imp
 			//drivePresenter.showDriveNotConnectedErrorMessage();
 		//}
 		tabContainer.add(drivePresenter.getWidget());
+		tabContainer.getElement().setId("pnlTabViewContainer");
 	}
 	
 	public void showAddWebResourceWidget(boolean isGoogleDriveFile,FlowPanel googleDriveContainer,GoogleDriveItemDo googleDriveItemDo){

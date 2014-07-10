@@ -56,24 +56,45 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
 	private String hintText=null;
 	public AddHintsView(){
 		initWidget(obj.createAndBindUi(this)); 
+		hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
+		hintNumLbl.getElement().setId("lblHintNumLbl");
+		hintTextBox.getElement().setId("tinyMCEHintTextBox");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
 	}
 	
 	public AddHintsView(int widgetsCount){
 		initWidget(obj.createAndBindUi(this)); 
 		showHintsMessage(widgetsCount);
+		hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
+		hintNumLbl.getElement().setId("lblHintNumLbl");
+		hintTextBox.getElement().setId("tinyMCEHintTextBox");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
 	}
 	public AddHintsView(int widgetsCount,String hintText){
 		initWidget(obj.createAndBindUi(this)); 
 		this.hintText=hintText;
 		showHintsMessage(widgetsCount);
+		hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
+		hintNumLbl.getElement().setId("lblHintNumLbl");
+		hintTextBox.getElement().setId("tinyMCEHintTextBox");
+		deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
 	}
 	public void showHintsMessage(int widgetsCount){
 		if(widgetsCount==1){
 			hintNumLbl.setText(""+widgetsCount);
+			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
+			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);	
 			hintsTextLblVal.setText(GL0859);
+			hintsTextLblVal.getElement().setAttribute("alt", GL0859);
+			hintsTextLblVal.getElement().setAttribute("title", GL0859);
 		}
 		else{
 			hintNumLbl.setText(""+widgetsCount);
+			hintNumLbl.getElement().setAttribute("alt", ""+widgetsCount);
+			hintNumLbl.getElement().setAttribute("title", ""+widgetsCount);	
 		}
 		hintDelLbl.setStyleName(addWebResourceStyle.addResourceFormAnswerDelete());
 		hintDelLbl.getElement().getStyle().setDisplay(Display.NONE);
@@ -90,8 +111,15 @@ public class AddHintsView extends Composite implements HasMouseOutHandlers,HasMo
         });
 	}
 	 public void setHintText(){
+		 hintsTextLblVal.getElement().setId("lblHintsTextLblVal");
+		 hintNumLbl.getElement().setId("lblHintNumLbl");
+		 hintTextBox.getElement().setId("tinyMCEHintTextBox");
+		 deleteButtonContainer.getElement().setId("pnlDeleteButtonContainer");
+		 errorMessageforHints.getElement().setId("errlblErrorMessageforHints");
 		  if(hintText!=null){
 			  hintTextBox.setText(hintText);
+			  hintTextBox.getElement().setAttribute("alt", hintText);
+			  hintTextBox.getElement().setAttribute("title", hintText);
 		  }
 	  }
 	public interface Binder extends UiBinder<Widget, AddHintsView> 
