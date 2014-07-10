@@ -40,6 +40,7 @@ import org.ednovo.gooru.client.mvp.shelf.event.RefreshUserShelfCollectionsEvent;
 import org.ednovo.gooru.client.uc.PlayerBundle;
 import org.ednovo.gooru.client.uc.tooltip.GlobalTooltipWithButton;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.ContentReportDo;
 import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
@@ -66,7 +67,7 @@ import com.gwtplatform.mvp.client.proxy.NavigationEvent;
 import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 
-public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView , MessageProperties{
+public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPlayerUiHandlers> implements IsCollectionPlayerView{
 	
 	
 	@UiField FlowPanel playerBodyContainer,navigationContainer;
@@ -111,6 +112,8 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 
 	interface CollectionPlayerViewUiBinder extends UiBinder<Widget, CollectionPlayerView> {
 	}
+	
+	private CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 	
 	@Inject
 	public CollectionPlayerView(EventBus eventBus){
@@ -490,7 +493,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		/*String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(GL0542, GL0543);
+			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0542, i18n.GL0543);
 			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 			globalTooltipWithButton.setStyleName("");
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
@@ -546,7 +549,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 /*		String resourcePlayerFirstTimeUser = Cookies.getCookie("resourcePlayerFirstTimeUser");
 		if(resourcePlayerFirstTimeUser==null){
 			Cookies.setCookie("resourcePlayerFirstTimeUser", "1");
-			globalTooltipWithButton=new GlobalTooltipWithButton(GL0681, GL0543);
+			globalTooltipWithButton=new GlobalTooltipWithButton(i18n.GL0681, i18n.GL0543);
 			globalTooltipWithButton.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 			globalTooltipWithButton.setStyleName("");
 			globalTooltipWithButton.getElement().getStyle().setZIndex(999999);
@@ -565,7 +568,7 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 			if(AppClientFactory.isAnonymous()){
 				if(resourcePlayerFirstTimeUser==null){
 					//Cookies.setCookie("lp", "1");
-					logOutToolTip=new GlobalTooltipWithButton(GL1614,GL1615, GL0543);
+					logOutToolTip=new GlobalTooltipWithButton(i18n.GL1614(),i18n.GL1615(), i18n.GL0543());
 					logOutToolTip.getCloseButton().addClickHandler(new StoreCookieHandler());
 					logOutToolTip.setGlassStyleName(HomeCBundle.INSTANCE.css().playerAddToolTipGlassStyle());
 					logOutToolTip.setStyleName("");
@@ -629,35 +632,35 @@ public class CollectionPlayerView extends BasePopupViewWithHandlers<CollectionPl
 		  navigationContainer.getElement().setId("fpnlNavigationContainer");
 		  playerBodyContainer.getElement().setId("fpnlPlayerBodyContainer");
 		  
-		  msglinkPanel.getElement().setInnerHTML(GL1984);
+		  msglinkPanel.getElement().setInnerHTML(i18n.GL1984());
 		  msglinkPanel.getElement().setId("pnlMsglinkPanel");
-		  msglinkPanel.getElement().setAttribute("alt",GL1984);
-		  msglinkPanel.getElement().setAttribute("title",GL1984);
+		  msglinkPanel.getElement().setAttribute("alt",i18n.GL1984());
+		  msglinkPanel.getElement().setAttribute("title",i18n.GL1984());
 
-		  msgPanel.getElement().setInnerHTML(GL1983);
+		  msgPanel.getElement().setInnerHTML(i18n.GL1983());
 		  msgPanel.getElement().setId("pnlMsgPanel");
-		  msgPanel.getElement().setAttribute("alt",GL1983);
-		  msgPanel.getElement().setAttribute("title",GL1983);
+		  msgPanel.getElement().setAttribute("alt",i18n.GL1983());
+		  msgPanel.getElement().setAttribute("title",i18n.GL1983());
 		  
-		  gooruPanel.getElement().setInnerHTML(GL0733);
+		  gooruPanel.getElement().setInnerHTML(i18n.GL0733());
 		  gooruPanel.getElement().setId("pnlGooruPanel");
-		  gooruPanel.getElement().setAttribute("alt",GL0733);
-		  gooruPanel.getElement().setAttribute("title",GL0733);
+		  gooruPanel.getElement().setAttribute("alt",i18n.GL0733());
+		  gooruPanel.getElement().setAttribute("title",i18n.GL0733());
 		  
-		  ednovoPanel.getElement().setInnerHTML(GL1985);
+		  ednovoPanel.getElement().setInnerHTML(i18n.GL1985());
 		  ednovoPanel.getElement().setId("pnlEdnovoPanel");
-		  ednovoPanel.getElement().setAttribute("alt",GL1985);
-		  ednovoPanel.getElement().setAttribute("title",GL1985);
+		  ednovoPanel.getElement().setAttribute("alt",i18n.GL1985());
+		  ednovoPanel.getElement().setAttribute("title",i18n.GL1985());
 		  
-		  appstorePanel.getElement().setInnerHTML(GL1986);
+		  appstorePanel.getElement().setInnerHTML(i18n.GL1986());
 		  appstorePanel.getElement().setId("pnlAppstorePanel");
-		  appstorePanel.getElement().setAttribute("alt",GL1986);
-		  appstorePanel.getElement().setAttribute("title",GL1986);
+		  appstorePanel.getElement().setAttribute("alt",i18n.GL1986());
+		  appstorePanel.getElement().setAttribute("title",i18n.GL1986());
 		  
-		  viewAnchor.setText(GL1428);
+		  viewAnchor.setText(i18n.GL1428());
 		  viewAnchor.getElement().setId("lnkViewAnchor");
-		  viewAnchor.getElement().setAttribute("alt",GL1428);
-		  viewAnchor.getElement().setAttribute("title",GL1428);
+		  viewAnchor.getElement().setAttribute("alt",i18n.GL1428());
+		  viewAnchor.getElement().setAttribute("title",i18n.GL1428());
 	}
 	
 }

@@ -65,7 +65,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 	
 	@UiField HTMLPanel mainSection, panelTitleSection;
 	@UiField VerticalPanel folderContentBlock;
-	@UiField Label errorMessage,editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
+	@UiField Label editFolderLbl, deleteFolderLbl, folderTitleErrorLbl, editMetaLbl;
 	@UiField Button newCollectionBtn, newFolderBtn;
 	@UiField HTMLEventPanel editButtonEventPanel;
 	@UiField FlowPanel folderContentPanel;
@@ -158,7 +158,7 @@ public class FolderItemTabView extends BaseViewWithHandlers<FolderItemTabUiHandl
 		editMetaLbl.getElement().setId("lblEditMetaLbl");
 		editFolderSaveBtn.getElement().setId("btnEditFolderSaveBtn");
 		editFolderCancelBtn.getElement().setId("btnEditFolderCancelBtn");
-		errorMessage.getElement().setId("lblErrorMessage");
+		
 		folderItemMetaDataUc.getElement().setId("folderItemMetaDataUc");
 		mainSection.getElement().setId("pnlMainSection");
 	}

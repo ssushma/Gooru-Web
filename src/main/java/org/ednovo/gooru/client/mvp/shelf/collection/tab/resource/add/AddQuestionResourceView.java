@@ -128,7 +128,7 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 */	
 	@UiField HTMLPanel hintsContainer,buttonContainer,questionText,correctText,noLabelText;
 
-	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent;
+	@UiField HTMLPanel addQuestImgContainer,panelContentRights,rightsContent,errorContainer;
 	/*@UiField ListBox questionTypeTextBox;*/
 	@UiField BlueButtonUc addbutton;
 	/*@UiField TextArea explainationTextArea;*/
@@ -345,6 +345,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		rightsContent.getElement().setId("pnlRightsContent");
 		addQuestionResourceButton.getElement().setId("epnlAddQuestionResourceButton");
 		setTextForTheFields();
+		errorContainer.setVisible(false);
+		errorContainer.add(standardsPreferenceOrganizeToolTip);
 		alphaLetterA.addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
@@ -540,6 +542,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 		rightsChkBox.getElement().setId("chkRights");
 		setTrueOrFalseFields();
 		setTextForTheFields();
+		errorContainer.setVisible(false);
+		errorContainer.add(standardsPreferenceOrganizeToolTip);
 	}
 	public void initializeAutoSuggestedBox(){
 		standardSuggestOracle = new AppMultiWordSuggestOracle(true);
@@ -548,7 +552,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void keyAction(String text) {
 				text=text.toUpperCase();
-				standardsPreferenceOrganizeToolTip.hide();
+				//standardsPreferenceOrganizeToolTip.hide();
+				errorContainer.setVisible(false);
 				standardSearchDo.setSearchResults(null);
 				boolean standardsPrefDisplayPopup = false;
 				standardSgstBox.hideSuggestionList();
@@ -559,7 +564,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 				}
 				standardSearchDo.setQuery(text);
 				if (text != null && text.trim().length() > 0) {
-					standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
+				//	standardsPreferenceOrganizeToolTip.hide();
 					if(standardPreflist!=null){
 						for(int count=0; count<standardPreflist.size();count++) {
 							if(text.contains(standardPreflist.get(count))) {
@@ -571,7 +577,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						}						
 					}
 					if(standardsPrefDisplayPopup){
-						standardsPreferenceOrganizeToolTip.hide();
+						errorContainer.setVisible(false);
+						//standardsPreferenceOrganizeToolTip.hide();
 						AppClientFactory.getInjector().getSearchService().getSuggestStandardByFilterCourseId(standardSearchDo, new SimpleAsyncCallback<SearchDo<CodeDo>>() {
 							@Override
 							public void onSuccess(SearchDo<CodeDo> result) {
@@ -583,12 +590,13 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 						standardSgstBox.showSuggestionList();
 						}
 					else{
+						errorContainer.setVisible(true);
 						standardSgstBox.hideSuggestionList();
 						standardSuggestOracle.clear();
-						standardsPreferenceOrganizeToolTip.show();
+						/*standardsPreferenceOrganizeToolTip.show();
 						standardsPreferenceOrganizeToolTip.setPopupPosition(standardSgstBox.getAbsoluteLeft()+3, standardSgstBox.getAbsoluteTop()+33);
 						standardsPreferenceOrganizeToolTip.getElement().getStyle().setZIndex(1111);
-						//standardSuggestOracle.add(GL1613);
+					*/	//standardSuggestOracle.add(GL1613);
 					}
 					}
 			}
@@ -603,7 +611,8 @@ public abstract class AddQuestionResourceView extends Composite implements Selec
 			@Override
 			public void onBlur(BlurEvent event) {
 				if(standardsPreferenceOrganizeToolTip.isShowing()){
-				standardsPreferenceOrganizeToolTip.hide();
+					errorContainer.setVisible(false);
+				//standardsPreferenceOrganizeToolTip.hide();
 				}
 			}
 		};

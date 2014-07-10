@@ -183,7 +183,22 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			metaDataFloPanel.clear();
 			String category = resourceSearchResultDo.getResourceFormat().getValue() != null ? resourceSearchResultDo.getResourceFormat().getValue() : "webpage";
 			boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
-			
+			if(resourceSearchResultDo.getPublisher()!=null){
+				String publisherData = "";
+				for (String publisher: resourceSearchResultDo.getPublisher()) {
+					if(resourceSearchResultDo.getPublisher().size()>1){
+						publisherData = publisherData+publisher+",";
+					}else
+					{
+						publisherData = publisher;
+					}
+				
+				}
+				if(publisherData.endsWith(",")){
+					publisherData=publisherData.substring(0, publisherData.length()-1);
+				}
+				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+			}
 			//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 			//SearchUiUtil.renderSourceMetadata(metaDataFloPanel, source ,null, shortenMetaLength ? 15 : 25);
 			if(resourceSearchResultDo.getAggregator()!=null){
@@ -203,22 +218,7 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 			}
 			
-			if(resourceSearchResultDo.getPublisher()!=null){
-				String publisherData = "";
-				for (String publisher: resourceSearchResultDo.getPublisher()) {
-					if(resourceSearchResultDo.getPublisher().size()>1){
-						publisherData = publisherData+publisher+",";
-					}else
-					{
-						publisherData = publisher;
-					}
-				
-				}
-				if(publisherData.endsWith(",")){
-					publisherData=publisherData.substring(0, publisherData.length()-1);
-				}
-				SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
-			}
+			
 			SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
 			
 	        SearchUiUtil.renderMetaData(metaDataFloPanel, count + (Integer.parseInt(count) == 1 ? VIEW : VIEWS));
@@ -253,6 +253,22 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
         }
 		boolean shortenMetaLength = category.equalsIgnoreCase(VIDEO) || category.equalsIgnoreCase(QUESTION) ? true : false;
 		
+		if(resourceSearchResultDo.getPublisher()!=null){
+			String publisherData = "";
+			for (String publisher: resourceSearchResultDo.getPublisher()) {
+				if(resourceSearchResultDo.getPublisher().size()>1){
+					publisherData = publisherData+publisher+",";
+				}else
+				{
+					publisherData = publisher;
+				}
+			
+			}
+			if(publisherData.endsWith(",")){
+				publisherData=publisherData.substring(0, publisherData.length()-1);
+			}
+			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
+		}
 		
 		//String source = resourceSearchResultDo.getResourceSource() != null ? resourceSearchResultDo.getResourceSource().getAttribution() : null;
 		if(resourceSearchResultDo.getAggregator()!=null){
@@ -272,22 +288,6 @@ public class ResourceSearchResultVc extends Composite implements IsDraggable, Is
 			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, aggregatorData ,null, shortenMetaLength ? 15 : 25);
 		}
 		
-		if(resourceSearchResultDo.getPublisher()!=null){
-			String publisherData = "";
-			for (String publisher: resourceSearchResultDo.getPublisher()) {
-				if(resourceSearchResultDo.getPublisher().size()>1){
-					publisherData = publisherData+publisher+",";
-				}else
-				{
-					publisherData = publisher;
-				}
-			
-			}
-			if(publisherData.endsWith(",")){
-				publisherData=publisherData.substring(0, publisherData.length()-1);
-			}
-			SearchUiUtil.renderSourceMetadata(metaDataFloPanel, publisherData ,null, shortenMetaLength ? 15 : 25);
-		}
 		
 		SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getCourseNames(), shortenMetaLength ? 15 : 18);
         SearchUiUtil.renderMetaData(metaDataFloPanel, resourceSearchResultDo.getTotalViews() + (resourceSearchResultDo.getTotalViews() == 1 ? VIEW : VIEWS));
