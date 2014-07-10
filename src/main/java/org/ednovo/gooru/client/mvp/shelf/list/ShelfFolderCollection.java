@@ -38,9 +38,9 @@ import org.ednovo.gooru.client.mvp.resource.dnd.ResourceDropController;
 import org.ednovo.gooru.client.mvp.search.event.RegisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.search.event.UnregisterSearchDropEvent;
 import org.ednovo.gooru.client.mvp.shelf.event.CreateCollectionItemEvent;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.content.CollectionItemDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -67,11 +67,12 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class ShelfFolderCollection extends FocusPanel implements DropBox,
-		MouseOverHandler, ClickHandler,MessageProperties {
+		MouseOverHandler, ClickHandler {
 
 	private static ShelfCollectionUiBinder uiBinder = GWT
 			.create(ShelfCollectionUiBinder.class);
-
+	private static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
+	
 	interface ShelfCollectionUiBinder extends UiBinder<Widget, ShelfFolderCollection> {
 	}
 
@@ -93,9 +94,9 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 
 	private ResourceDropController dropController;
 
-	private static final String ADD_TO_THIS_COLLECTION =GL0990;
+	private static final String ADD_TO_THIS_COLLECTION =i18n.GL0990();
 
-	private static final String EDIT_THIS_COLLECTION =GL0991;
+	private static final String EDIT_THIS_COLLECTION =i18n.GL0991();
 
 	private static ShelfFolderCollection shelfCollection;
 
@@ -132,7 +133,7 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 				addCollectionItem(collectionItem, false);
 			}
 		} else {
-			htmlPanel = new HTMLPanel(GL0854+GL_SPL_EXCLAMATION+GL_SPL_EXCLAMATION+GL_SPL_EXCLAMATION+GL_SPL_EXCLAMATION+GL_SPL_EXCLAMATION);
+			htmlPanel = new HTMLPanel(i18n.GL0854()+i18n.GL_SPL_EXCLAMATION()+i18n.GL_SPL_EXCLAMATION()+i18n.GL_SPL_EXCLAMATION()+i18n.GL_SPL_EXCLAMATION()+i18n.GL_SPL_EXCLAMATION());
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 			htmlPanel.getElement().getStyle().setColor("#999999");
@@ -206,7 +207,7 @@ public class ShelfFolderCollection extends FocusPanel implements DropBox,
 		if (shelfResource != null) {
 		}
 		if (collectionItemDo.getCollection().getCollectionItems().size() <= 0) {
-			htmlPanel = new HTMLPanel(GL0854);
+			htmlPanel = new HTMLPanel(i18n.GL0854());
 			htmlPanel.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 			htmlPanel.getElement().getStyle().setMarginLeft(19, Unit.PX);
 			htmlPanel.getElement().getStyle().setColor("#999999");

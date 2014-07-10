@@ -10,10 +10,10 @@ import java.util.Map;
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.search.SearchResultWrapperCBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.content.CollaboratorsDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
 import org.ednovo.gooru.shared.model.search.CollectionSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -27,10 +27,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @author gooru
  *
  */
-public class CollaboratorsUc extends Composite implements MessageProperties {
+public class CollaboratorsUc extends Composite {
 
 	private static CollaboratorsUcUiBinder uiBinder = GWT
 			.create(CollaboratorsUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface CollaboratorsUcUiBinder extends UiBinder<Widget, CollaboratorsUc> {
 	}
@@ -96,10 +98,10 @@ public class CollaboratorsUc extends Composite implements MessageProperties {
 		}
 		if (teamMembersNames != null && teamMembersNames.size() > 0) {
 //			Integer moreCount = teamMembersNames.size() - 1;
-			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(" "+GL1117), toolTipwidgets);
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(" "+i18n.GL1117()), toolTipwidgets);
 			toolTipUc.setStyleName(PlayerBundle.INSTANCE.getPlayerStyle().teamHyperLink());
 			teamContainer2.add(toolTipUc);
-			toolTipUc.getTooltipPopUpUc(GL1117);
+			toolTipUc.getTooltipPopUpUc(i18n.GL1117());
 		}
 		
 	}

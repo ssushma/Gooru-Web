@@ -36,10 +36,10 @@ import org.ednovo.gooru.client.gin.AppClientFactory;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.item.CollectionEditResourceCBundle;
 import org.ednovo.gooru.client.mvp.shelf.event.AddCourseEvent;
 import org.ednovo.gooru.client.util.MixpanelUtil;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.code.CodeDo;
 import org.ednovo.gooru.shared.model.code.LibraryCodeDo;
 import org.ednovo.gooru.shared.model.content.CollectionDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -55,10 +55,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CourseListUc extends PopupPanel implements MessageProperties {
+public class CourseListUc extends PopupPanel {
 
 	private static CourseListUcUiBinder uiBinder = GWT
 			.create(CourseListUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface CourseListUcUiBinder extends UiBinder<Widget, CourseListUc> {
 	}
@@ -109,9 +111,9 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 		isSelected=false;
 		this.center();
 		this.show();
-		titleLbl.setText(GL0847);
-		cancelCourseBtn.setText(GL0142);
-		addCourseBtnLbl.setText(GL0590);
+		titleLbl.setText(i18n.GL0847());
+		cancelCourseBtn.setText(i18n.GL0142());
+		addCourseBtnLbl.setText(i18n.GL0590());
 		loadingPanel.setVisible(true);
 		setCourseData();
 		collectionId=collectionDo.getGooruOid();
@@ -263,7 +265,7 @@ public class CourseListUc extends PopupPanel implements MessageProperties {
 			hide();
 			Window.enableScrolling(true);
 		}else{
-			new AlertContentUc(GL0061,GL1022);
+			new AlertContentUc(i18n.GL0061(),i18n.GL1022());
 		}
 		
 		

@@ -36,10 +36,11 @@ import org.ednovo.gooru.client.uc.DownToolTipWidgetUc;
 import org.ednovo.gooru.client.uc.SeparatorUc;
 import org.ednovo.gooru.client.uc.StandardSgItemVc;
 import org.ednovo.gooru.client.uc.UcCBundle;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 import org.ednovo.gooru.shared.model.search.ResourceSearchResultDo;
-import org.ednovo.gooru.shared.util.MessageProperties;
 import org.ednovo.gooru.shared.util.StringUtil;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -49,11 +50,13 @@ import com.google.gwt.user.client.ui.Label;
  * @author Search Team
  * 
  */
-public class SearchUiUtil implements MessageProperties{
+public class SearchUiUtil{
 
 	public static final String STANDARD_CODE = "code";
 
 	public static final String STANDARD_DESCRIPTION = "description";
+	
+	static CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	public static void renderStandards(FlowPanel standardsContainer, ResourceSearchResultDo searchResultDo) {
 		if (searchResultDo.getStandards() != null) {
@@ -78,12 +81,12 @@ public class SearchUiUtil implements MessageProperties{
 				count++;
 			}
 			if (standards.size()>18){
-				final Label left = new Label(GL_SPL_PLUS+(standards.size() - 18));
+				final Label left = new Label(i18n.GL_SPL_PLUS()+(standards.size() - 18));
 				toolTipwidgets.add(left);
 			}
 			if (searchResultDo.getStandards().size() > 2) {
 				Integer moreStandardsCount = searchResultDo.getStandards().size() - 2;
-				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreStandardsCount), toolTipwidgets, standards);
+				DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreStandardsCount), toolTipwidgets, standards);
 				toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLink());
 				standardsContainer.add(toolTipUc);
 				toolTipUc.getTooltipPopUpUcCount(moreStandardsCount);
@@ -157,7 +160,7 @@ public class SearchUiUtil implements MessageProperties{
 		}
 		if (datas != null && datas.size() > 1) {
 			Integer moreCount = datas.size() - 1;
-			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(GL_SPL_PLUS + moreCount), toolTipwidgets);
+			DownToolTipWidgetUc toolTipUc = new DownToolTipWidgetUc(new Label(i18n.GL_SPL_PLUS() + moreCount), toolTipwidgets);
 			toolTipUc.setStyleName(SearchResultWrapperCBundle.INSTANCE.css().blueLinkPad());
 			flowPanel.add(toolTipUc);
 		}

@@ -29,7 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.SimpleAsyncCallback;
 import org.ednovo.gooru.client.gin.AppClientFactory;
-import org.ednovo.gooru.shared.util.MessageProperties;
+import org.ednovo.gooru.shared.i18n.CopyOfMessageProperties;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
@@ -53,10 +53,12 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AssignmentEditLabelUc extends Composite implements
-		HasValue<String>,MessageProperties {
+		HasValue<String> {
 
 	private static AssignmentEditLabelUcUiBinder uiBinder = GWT
 			.create(AssignmentEditLabelUcUiBinder.class);
+	
+	CopyOfMessageProperties i18n = GWT.create(CopyOfMessageProperties.class);
 
 	interface AssignmentEditLabelUcUiBinder extends
 			UiBinder<Widget, AssignmentEditLabelUc> {
@@ -73,11 +75,14 @@ public class AssignmentEditLabelUc extends Composite implements
 
 	@UiField
 	protected FocusPanel focusPanel;
+	
+	@UiField 
+	Label errorLabel;
 
 	protected String placeholder = "";
 
 	protected String text;
-	@UiField Label errorLabel;
+	
 
 	// static boolean pencilVisiblity = true;
 
@@ -89,7 +94,9 @@ public class AssignmentEditLabelUc extends Composite implements
 	public AssignmentEditLabelUc() {
 		this.res = UcCBundle.INSTANCE;
 		initWidget(uiBinder.createAndBindUi(this));
-		errorLabel.setText(GL0173);
+		
+		setIds();
+		errorLabel.setText(i18n.GL0173());
 		errorLabel.setVisible(false);
 		deckPanel.showWidget(0);
 
@@ -107,7 +114,7 @@ public class AssignmentEditLabelUc extends Composite implements
 						isHavingBadWords = value;
 						if (value){
 							editTextBox.getElement().getStyle().setBorderColor("orange");
-							errorLabel.setText(GL0554);
+							errorLabel.setText(i18n.GL0554());
 							errorLabel.setVisible(true);
 						}else{
 							setValue(editTextBox.getText(), true); // fires events, too
@@ -136,7 +143,7 @@ public class AssignmentEditLabelUc extends Composite implements
 							isHavingBadWords = value;
 							if (value){
 								editTextBox.getElement().getStyle().setBorderColor("orange");
-								errorLabel.setText(GL0554);
+								errorLabel.setText(i18n.GL0554());
 								errorLabel.setVisible(true);
 							}else{
 								switchToLabel();
@@ -154,6 +161,14 @@ public class AssignmentEditLabelUc extends Composite implements
 		
 		editTextBox.addKeyUpHandler(new ValidateConfirmText());
 
+	}
+
+	public void setIds() {
+		focusPanel.getElement().setId("focuspnlFocusPanel");
+		deckPanel.getElement().setId("dpnlDeckPanel");
+		editLabel.getElement().setId("lblEditLabel");
+		errorLabel.getElement().setId("lblErrorLabel");
+		editTextBox.getElement().setId("txtEditTextBox");
 	}
 
 	private class ValidateConfirmText implements KeyUpHandler {
@@ -203,9 +218,9 @@ public class AssignmentEditLabelUc extends Composite implements
 		}else {
 			
 			if (isHavingBadWords){
-				errorLabel.setText(GL0554);
+				errorLabel.setText(i18n.GL0554());
 			}else{
-				errorLabel.setText(GL0173);
+				errorLabel.setText(i18n.GL0173());
 			}
 			errorLabel.setVisible(true);
 //			new AlertContentUc("Oops", "Title Shouldn't be empty!");
